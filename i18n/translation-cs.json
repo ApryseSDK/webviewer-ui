@@ -311,7 +311,7 @@
     "selectFile": "Zvolte soubor",
     "selectPageToReplace": "Vyberte stránky v dokumentu, kterými chcete nahradit.",
     "embeddedFiles": "Vložené soubory",
-    "pageNum": "Číslo stránky",
+    "pageNum": "Strana",
     "viewBookmark": "Zobrazit záložku na stránce",
     "error": "Chyba",
     "errorPageNumber": "Neplatné číslo stránky. Limit je",
@@ -428,7 +428,6 @@
       "includeComments": "Zahrnout komentáře",
       "printSettings": "Nastavení tisku",
       "printGrayscale": "Tisk ve stupních šedi",
-      "flatten": "Vyrovnat dokument",
       "printCurrentDisabled": "Aktuální zobrazení je dostupné pouze při prohlížení jedné stránky."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Začněte redigovat označením textu, regionů, stránek nebo hledáním.",
-    "redactionSearchPlaceholder": "Přidejte podle vyhledávání klíčových slov nebo vzorů",
+    "redactionSearchPlaceholder": "Upravte pomocí klávesnice nebo vzorů",
     "redactionCounter": "Označeno k redigování",
     "clearMarked": "Průhledná",
     "redactAllMarked": "Upravit vše",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Telefonní čísla",
       "images": "snímky",
       "emails": "e-maily",
-      "pattern": "Vzor",
+      "pattern": "Vzory",
       "start": "Začněte hledat"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Vytvořit složku",
     "portfolioPanelTitle": "Portfolio PDF",
     "portfolioNewFolder": "Nová složka",
+    "portfolioDocumentTitle": "Název dokumentu",
     "portfolioFolderPlaceholder": "Název složky",
     "portfolioFilePlaceholder": "Název souboru",
     "folderNameAlreadyExists": "Název složky již existuje",

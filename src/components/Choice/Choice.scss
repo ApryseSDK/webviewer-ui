@@ -30,6 +30,10 @@
       }
     }
 
+    &--focus {
+      outline: var(--focus-visible-outline);
+    }
+
     .ui__choice__input__toggle {
       height: 10px !important;
       width: 10px !important;

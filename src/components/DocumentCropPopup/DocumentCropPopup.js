@@ -11,6 +11,7 @@ import actions from 'actions';
 import { useDispatch } from 'react-redux';
 import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import DataElements from 'constants/dataElement';
+import Button from 'components/Button';
 
 import './DocumentCropPopup.scss';
 
@@ -458,17 +459,19 @@ const DocumentCropPopup = ({
         <div className="divider" />
       </div>
       <div className="buttons">
-        <button className="cancel-button" data-element="cropCancelButton" onClick={() => handleButtonPressed('cancel')}>
-          {t('action.cancel')}
-        </button>
-        <button
+        <Button
+          className="cancel-button"
+          dataElement="cropCancelButton"
+          onClick={() => handleButtonPressed('cancel')}
+          label={t('action.cancel')}
+        />
+        <Button
           className="save-button"
-          data-element="cropApplyButton"
+          dataElement="cropApplyButton"
           onClick={() => handleButtonPressed('apply')}
           disabled={!isCropping || pageNumberError}
-        >
-          {t('action.apply')}
-        </button>
+          label={t('action.apply')}
+        />
       </div>
     </div>
   );

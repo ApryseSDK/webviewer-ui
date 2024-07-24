@@ -83,7 +83,7 @@ describe('RedactionSearchPanel', () => {
       screen.getByText(/Page 2/);
 
       // Renders the correct total number of results message
-      screen.getByText((_, node) => node.textContent === `Search results (${mockSearchResults.length})`);
+      screen.getByText((_, node) => node.textContent === `Search Results (${mockSearchResults.length})`);
     });
 
     it('when user clicks on Select All and Unselect, we select and deselect all results', () => {

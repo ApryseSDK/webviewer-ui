@@ -311,7 +311,7 @@
     "selectFile": "Datei auswählen",
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
-    "pageNum": "Seitennummer",
+    "pageNum": "Seite",
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler",
     "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
@@ -428,7 +428,6 @@
       "includeComments": "Kommentare einfügen",
       "printSettings": "Druckeinstellungen",
       "printGrayscale": "Graustufen drucken",
-      "flatten": "Dokument reduzieren",
       "printCurrentDisabled": "Die aktuelle Ansicht ist nur beim Anzeigen einer einzelnen Seite verfügbar."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
-    "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
+    "redactionSearchPlaceholder": "Schwärzen per Tastatur oder Muster",
     "redactionCounter": "Zur Schwärzung markiert",
     "clearMarked": "Markierung entfernen",
     "redactAllMarked": "Alle schwärzen",
@@ -1177,6 +1176,7 @@
     "createFolder": "Ordner erstellen",
     "portfolioPanelTitle": "PDF-Portfolio",
     "portfolioNewFolder": "Neuer Ordner",
+    "portfolioDocumentTitle": "Dokumenttitel",
     "portfolioFolderPlaceholder": "Ordnernamen",
     "portfolioFilePlaceholder": "Dateiname",
     "folderNameAlreadyExists": "Der Ordnername existiert bereits",
@@ -1224,7 +1224,9 @@
     "viewOnly": "Nur anschauen",
     "viewOnlyDescription": "Ohne Vorschläge anzeigen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt.",
-    "previewAllChanges": "Vorschau aller Änderungen"
+    "previewAllChanges": "Vorschau aller Änderungen",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen"
   },
   "insertPageModal": {
     "title": "Neue Seite hinzufügen",

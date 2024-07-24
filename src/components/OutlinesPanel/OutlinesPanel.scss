@@ -33,6 +33,10 @@
         background: none;
       }
 
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
+
       .bookmark-outline-input:active {
         border-color: var(--focus-border)
       }

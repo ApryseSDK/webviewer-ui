@@ -6,6 +6,8 @@ import Button from 'components/Button';
 import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
+import parseFontSize from 'helpers/parseFontSize';
+
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -133,10 +135,9 @@ const TextStylePicker = ({
     onPropertyChange('TextVerticalAlign', yAlign);
   };
 
-  const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
-
   const [error, setError] = useState('');
-  const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || undefined;
+  const fontSizeResult = parseFontSize(fontSize);
+  const fontSizePropsToUpdate = fontSizeResult[0];
 
   const defaultConfig = {
     quillFont: {
@@ -244,7 +245,7 @@ const TextStylePicker = ({
           <FontSizeDropdown
             fontSize={fontSizePropsToUpdate}
             key={fontSizePropsToUpdate}
-            fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
+            fontUnit={fontSizeResult[1]}
             onFontSizeChange={changeFontSize}
             onError={setError}
             applyOnlyOnBlur={isContentEditing}

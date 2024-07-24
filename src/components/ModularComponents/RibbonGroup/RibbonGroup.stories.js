@@ -3,6 +3,7 @@ import RibbonGroup from './RibbonGroup';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { mockModularComponents } from '../AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 export default {
   title: 'ModularComponents/RibbonGroup',
@@ -118,6 +119,8 @@ export const ribbonGroupFull = () => {
     items: [temp1, temp2, temp3, temp4, temp5, item6, item7, item8],
   };
 
+  setItemToFlyoutStore(store);
+
   return (
     <Provider store={store}>
       <div style={{ display: 'flex', maxWidth: '100%' }}>
@@ -132,7 +135,7 @@ const initialStateDropdown = {
   viewer: {
     ...initialState.viewer,
     customElementSizes: {
-      'ribbon-group': 3
+      'ribbon-group': 2,
     },
     activeGroupedItems: [],
     activeCustomRibbon: 'toolbarGroup-View',
@@ -151,6 +154,8 @@ export const ribbonGroupDropdown = () => {
     headerDirection: 'row',
     items: [item1, item2, item3],
   };
+
+  setItemToFlyoutStore(storeDropdown);
 
   return (
     <Provider store={storeDropdown}>

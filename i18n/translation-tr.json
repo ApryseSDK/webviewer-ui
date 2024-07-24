@@ -311,7 +311,7 @@
     "selectFile": "Dosya Seç",
     "selectPageToReplace": "Belgede değiştirmek istediğiniz sayfaları seçin.",
     "embeddedFiles": "Gömülü Dosyalar",
-    "pageNum": "Sayfa numarası",
+    "pageNum": "Sayfa",
     "viewBookmark": "Sayfadaki Yer İşaretini Görüntüle",
     "error": "Hata",
     "errorPageNumber": "Geçersiz sayfa numarası. Sınır (şimdiki değeri)",
@@ -428,7 +428,6 @@
       "includeComments": "Yorumları dahil et",
       "printSettings": "Yazdırma Ayarları",
       "printGrayscale": "Gri Tonlamalı Yazdır",
-      "flatten": "Belgeyi düzleştir",
       "printCurrentDisabled": "Geçerli görünüm yalnızca tek bir sayfa görüntülenirken kullanılabilir."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Metni, bölgeleri, sayfaları işaretleyerek veya arama yaparak redaksiyona başlayın.",
-    "redactionSearchPlaceholder": "Anahtar kelime araması veya kalıplara göre ekleyin",
+    "redactionSearchPlaceholder": "Klavyeye veya desenlere göre düzenleme",
     "redactionCounter": "Redaksiyon için işaretlendi",
     "clearMarked": "Temizlemek",
     "redactAllMarked": "Tümünü Düzelt",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Telefon numaraları",
       "images": "Görüntüler",
       "emails": "e-postalar",
-      "pattern": "Desen",
+      "pattern": "Desenler",
       "start": "Aramanızı yapmaya başlayın"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Klasör oluşturun",
     "portfolioPanelTitle": "PDF Portföyü",
     "portfolioNewFolder": "Yeni dosya",
+    "portfolioDocumentTitle": "Belge başlığı",
     "portfolioFolderPlaceholder": "Klasör adı",
     "portfolioFilePlaceholder": "Dosya adı",
     "folderNameAlreadyExists": "Klasör adı zaten var",

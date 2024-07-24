@@ -304,12 +304,16 @@ const StylePanel = () => {
         if (colorProperties.includes(property)) {
           const colorRGB = hexToRGBA(value);
           const color = new Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-          annot[property] = color;
+          core.setAnnotationStyles(annot, {
+            [property]: color,
+          }, activeDocumentViewerKey);
           if (isAnnotationToolStyleSyncingEnabled) {
             setToolStyles(annot.ToolName, property, color);
           }
         } else {
-          annot[property] = value;
+          core.setAnnotationStyles(annot, {
+            [property]: value,
+          }, activeDocumentViewerKey);
           if (annot instanceof Annotations.FreeTextAnnotation) {
             if (property === 'FontSize' || property === 'Font' || property === 'StrokeThickness') {
               adjustFreeTextBoundingBox(annot);

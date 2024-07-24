@@ -8,7 +8,13 @@
     }
 
     .bookmark-outline-text {
-      flex-basis: calc(100% - 38px); // icon + mr + more-button width + ml = 38px
+      flex-basis: calc(100% - 40px); // icon + mr + more-button width + ml = 40px
+    }
+
+
+    .portfolio-input-label {
+      font-weight: 600;
+      padding-bottom: var(--padding-small);
     }
 
     .portfolio-input {

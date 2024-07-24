@@ -1,5 +1,10 @@
 import React from 'react';
 import ColorPickerModal from './ColorPickerModal';
+import { Provider } from 'react-redux';
+import initialState from 'src/redux/initialState';
+import { configureStore } from '@reduxjs/toolkit';
+
+const store = configureStore({ reducer: () => initialState });
 
 export default {
   title: 'Components/ColorPickerModal',
@@ -28,8 +33,8 @@ export function Basic() {
     handleChangeCancel,
   };
   return (
-    <div>
+    <Provider store={store}>
       <ColorPickerModal {...props} />
-    </div>
+    </Provider>
   );
 }

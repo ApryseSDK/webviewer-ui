@@ -311,7 +311,7 @@
     "selectFile": "Selectați fișierul",
     "selectPageToReplace": "Selectați paginile din document cu care doriți să le înlocuiți.",
     "embeddedFiles": "Fișiere încorporate",
-    "pageNum": "Numărul paginii",
+    "pageNum": "Pagină",
     "viewBookmark": "Vizualizați marcajul pe pagină",
     "error": "Eroare",
     "errorPageNumber": "Număr de pagină nevalid. Limita este",
@@ -428,7 +428,6 @@
       "includeComments": "Includeți comentarii",
       "printSettings": "Setări de imprimare",
       "printGrayscale": "Imprimare în tonuri de gri",
-      "flatten": "Aplatizați documentul",
       "printCurrentDisabled": "Vizualizarea curentă este disponibilă numai când vizualizați o singură pagină."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Începeți să redactați prin marcarea textului, regiunilor, paginilor sau efectuând o căutare.",
-    "redactionSearchPlaceholder": "Adăugați prin căutare de cuvinte cheie sau modele",
+    "redactionSearchPlaceholder": "Redactați după tastatură sau modele",
     "redactionCounter": "Marcat pentru redactare",
     "clearMarked": "clar",
     "redactAllMarked": "Redact All",
@@ -1145,13 +1144,13 @@
     },
     "expand": "Extinde",
     "collapse": "Colaps",
-    "searchResults": "Rezultatele cautarii",
+    "searchResults": "rezultatele cautarii",
     "search": {
       "creditCards": "Card de credit",
       "phoneNumbers": "Numere de telefon",
       "images": "Imagini",
       "emails": "E-mailuri",
-      "pattern": "Model",
+      "pattern": "Modele",
       "start": "Începeți să căutați"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Creeaza dosar",
     "portfolioPanelTitle": "Portofoliu PDF",
     "portfolioNewFolder": "Dosar nou",
+    "portfolioDocumentTitle": "Titlul documentului",
     "portfolioFolderPlaceholder": "Numele fisierului",
     "portfolioFilePlaceholder": "Nume de fișier",
     "folderNameAlreadyExists": "Numele dosarului există deja",

@@ -99,6 +99,10 @@
         border: 1px solid var(--primary-button-hover);
         color: var(--primary-button-hover);
       }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
+      }
     }
   }
 

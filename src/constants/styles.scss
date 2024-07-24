@@ -353,6 +353,11 @@ $light-gray: #e7ebee;
   @include tablet-and-desktop {
     height: calc(100% - 37px); // minus the height of the top header;
 
+    &.ModularPanel {
+      height: calc(100% - 49px); // minus the height of the top header - in modular UI we change the height of the top header
+    }
+
+
     &.logo-bar-enabled {
       height: calc(100% - 37px - $logo-bar-height);
     }
@@ -360,16 +365,33 @@ $light-gray: #e7ebee;
     &.tools-header-open {
       height: calc(100% - 76px); // minus the height of both headers;
 
+      &.ModularPanel {
+        height: calc(100% - 98px); // minus the height of the top header - in modular UI we change the height of the top header
+      }
+
       &.logo-bar-enabled {
         height: calc(100% - 76px - $logo-bar-height);
       }
     }
 
     &.multi-tab-active {
-      height: calc(100% - 115px); // minus the height of both headers and of the tabs;
+
+      height: calc(100% - 70px);
+
+      &.ModularPanel {
+        height: calc(100% - 85px); // minus the height of the top header - in modular UI we change the height of the top header
+      }
 
       &.logo-bar-enabled {
         height: calc(100% - 115px - $logo-bar-height);
+      }
+
+      &.tools-header-open {
+        height: calc(100% - 110px); // minus the height of both headers and tabs;
+
+        &.ModularPanel {
+          height: calc(100% - 134px); // minus the height of the top header - in modular UI we change the height of the top header
+        }
       }
     }
 
@@ -381,7 +403,7 @@ $light-gray: #e7ebee;
       }
 
       &.multi-tab-active {
-        height: calc(100% - 140px); // minus the height of both headers and of the tabs;
+        height: calc(100% - 36px); // minus the height of both headers and of the tabs;
 
         &.logo-bar-enabled {
           height: calc(100% - 140px - $logo-bar-height);

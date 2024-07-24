@@ -311,7 +311,7 @@
     "selectFile": "Válaszd ki a fájlt",
     "selectPageToReplace": "Válassza ki a dokumentum azon oldalait, amelyekre le szeretné cserélni.",
     "embeddedFiles": "Beágyazott fájlok",
-    "pageNum": "Oldalszám",
+    "pageNum": "oldal",
     "viewBookmark": "Könyvjelző megtekintése az oldalon",
     "error": "Hiba",
     "errorPageNumber": "Érvénytelen oldalszám. A határ az",
@@ -428,7 +428,6 @@
       "includeComments": "Tartalmazza a megjegyzéseket",
       "printSettings": "Nyomtatási beállítások",
       "printGrayscale": "Nyomtatás Szürkeárnyalatos",
-      "flatten": "Lapos dokumentum",
       "printCurrentDisabled": "Az aktuális nézet csak egyetlen oldal megtekintésekor érhető el."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Kezdje el a szerkesztést szöveg, régiók, oldalak megjelölésével vagy kereséssel.",
-    "redactionSearchPlaceholder": "Hozzáadás kulcsszavas kereséssel vagy mintákkal",
+    "redactionSearchPlaceholder": "Szerkesztés billentyűzet vagy minták alapján",
     "redactionCounter": "Szerkesztésre megjelölve",
     "clearMarked": "Egyértelmű",
     "redactAllMarked": "Összes szerkesztése",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Telefonszámok",
       "images": "Képek",
       "emails": "E-mailek",
-      "pattern": "Minta",
+      "pattern": "Minták",
       "start": "Kezdje el a keresést"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Mappa létrehozás",
     "portfolioPanelTitle": "PDF portfólió",
     "portfolioNewFolder": "Új mappa",
+    "portfolioDocumentTitle": "Dokumentum címe",
     "portfolioFolderPlaceholder": "Mappa neve",
     "portfolioFilePlaceholder": "Fájl név",
     "folderNameAlreadyExists": "A mappanév már létezik",

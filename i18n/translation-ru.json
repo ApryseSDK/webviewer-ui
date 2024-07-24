@@ -311,7 +311,7 @@
     "selectFile": "Выберите файл",
     "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
-    "pageNum": "Номер страницы",
+    "pageNum": "Страница",
     "viewBookmark": "Посмотреть закладку на странице",
     "error": "Ошибка",
     "errorPageNumber": "Неверный номер страницы. Лимит",
@@ -428,7 +428,6 @@
       "includeComments": "Приложить комментарии",
       "printSettings": "Параметры печати",
       "printGrayscale": "Печать оттенков серого",
-      "flatten": "Сгладить документ",
       "printCurrentDisabled": "Текущий вид доступен только при просмотре одной страницы."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
-    "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
+    "redactionSearchPlaceholder": "Редактирование с помощью клавиатуры или шаблонов",
     "redactionCounter": "Помечено для редактирования",
     "clearMarked": "Прозрачный",
     "redactAllMarked": "Редактировать все",
@@ -1145,13 +1144,13 @@
     },
     "expand": "Расширять",
     "collapse": "Крах",
-    "searchResults": "Результаты поиска",
+    "searchResults": "результаты поиска",
     "search": {
       "creditCards": "Кредитная карта",
       "phoneNumbers": "Телефонные номера",
       "images": "Картинки",
       "emails": "электронные письма",
-      "pattern": "Шаблон",
+      "pattern": "Узоры",
       "start": "Начните поиск"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Создать папку",
     "portfolioPanelTitle": "PDF-портфолио",
     "portfolioNewFolder": "Новая папка",
+    "portfolioDocumentTitle": "Заголовок документа",
     "portfolioFolderPlaceholder": "Имя папки",
     "portfolioFilePlaceholder": "Имя файла",
     "folderNameAlreadyExists": "Имя папки уже существует",

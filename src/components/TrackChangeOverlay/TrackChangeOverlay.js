@@ -17,10 +17,6 @@ const items = [
     key: OFFICE_EDITOR_EDIT_MODE.REVIEWING,
     description: 'reviewingDescription',
   },
-  {
-    key: OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY,
-    description: 'viewOnlyDescription',
-  }
 ];
 const translationPrefix = 'officeEditor.';
 

@@ -12,12 +12,10 @@ import ListSeparator from 'components/ListSeparator';
 import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
-import Choice from 'components/Choice';
 
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import { getSortStrategies } from 'constants/sortStrategies';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -476,16 +474,6 @@ const NotesPanel = ({
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
           {isMultiSelectMode ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder) : null}
-          {isOfficeEditorMode && !isMultiSelectMode && (notesToRender.length > 0) && (
-            <div className="preview-all-changes">
-              <div className="divider" />
-              <Choice
-                isSwitch
-                label={t('officeEditor.previewAllChanges')}
-                onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OFFICE_EDITOR_EDIT_MODE.PREVIEW : OFFICE_EDITOR_EDIT_MODE.REVIEWING)}
-              />
-            </div>
-          )}
         </>
       </div>
       {isMultiSelectMode && (

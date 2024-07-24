@@ -311,7 +311,7 @@
     "selectFile": "फ़ाइल का चयन करें",
     "selectPageToReplace": "दस्तावेज़ में उन पृष्ठों का चयन करें जिनसे आप बदलना चाहते हैं।",
     "embeddedFiles": "एंबेडेड फ़ाइलें",
-    "pageNum": "पृष्ठ संख्या",
+    "pageNum": "पृष्ठ",
     "viewBookmark": "पेज पर बुकमार्क देखें",
     "error": "त्रुटि",
     "errorPageNumber": "अमान्य पृष्ठ संख्या। सीमा है",
@@ -428,7 +428,6 @@
       "includeComments": "टिप्पणियाँ शामिल करें",
       "printSettings": "प्रिंट सेटिंग्स",
       "printGrayscale": "ग्रेस्केल प्रिंट करें",
-      "flatten": "दस्तावेज़ समतल करें",
       "printCurrentDisabled": "वर्तमान दृश्य केवल एकल पृष्ठ देखने पर ही उपलब्ध होता है।"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "पाठ, क्षेत्रों, पृष्ठों को चिह्नित करके या खोज करके पुनः अभिनय करना प्रारंभ करें।",
-    "redactionSearchPlaceholder": "कीवर्ड खोज या पैटर्न द्वारा जोड़ें",
+    "redactionSearchPlaceholder": "कीबोर्ड या पैटर्न द्वारा संपादित करें",
     "redactionCounter": "रिडक्शन के लिए चिह्नित",
     "clearMarked": "स्पष्ट",
     "redactAllMarked": "Redact All",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "दूरभाष संख्या",
       "images": "इमेजिस",
       "emails": "ईमेल",
-      "pattern": "प्रतिरूप",
+      "pattern": "पैटर्न्स",
       "start": "अपनी खोज शुरू करें"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "फोल्डर बनाएं",
     "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
     "portfolioNewFolder": "नया फ़ोल्डर",
+    "portfolioDocumentTitle": "दस्तावेज़ का शीर्षक",
     "portfolioFolderPlaceholder": "फ़ोल्डर का नाम",
     "portfolioFilePlaceholder": "फ़ाइल का नाम",
     "folderNameAlreadyExists": "फ़ोल्डर नाम पहले से मौजूद है",

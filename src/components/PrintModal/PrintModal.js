@@ -26,8 +26,6 @@ const PrintModal = ({
   printQuality,
   isGrayscale,
   setIsGrayscale,
-  shouldFlatten,
-  setShouldFlatten,
   setIsCurrentView,
   isCurrentViewDisabled,
   includeAnnotations,
@@ -57,8 +55,6 @@ const PrintModal = ({
     printQuality: PropTypes.number,
     isGrayscale: PropTypes.bool,
     setIsGrayscale: PropTypes.func,
-    shouldFlatten: PropTypes.bool,
-    setShouldFlatten: PropTypes.func,
     setIsCurrentView: PropTypes.func,
     isCurrentViewDisabled: PropTypes.bool,
     includeAnnotations: PropTypes.bool,
@@ -327,16 +323,6 @@ const PrintModal = ({
                             center
                           />
                           <Choice
-                            dataElement="flattenPrintOption"
-                            id="print-flatten"
-                            name="flatten"
-                            label={t('option.print.flatten')}
-                            disabled={isPrinting}
-                            onChange={() => setShouldFlatten((prevState) => !prevState)}
-                            checked={shouldFlatten}
-                            center
-                          />
-                          <Choice
                             dataElement="commentsPrintOption"
                             ref={includeCommentsRef}
                             id="include-comments"
@@ -353,16 +339,29 @@ const PrintModal = ({
                   </>
                 )}
                 {!embedPrintValid && (
-                  <Choice
-                    dataElement="grayscalePrintOption"
-                    id="print-grayscale"
-                    name="grayscale"
-                    label={t('option.print.printGrayscale')}
-                    disabled={isPrinting}
-                    onChange={() => setIsGrayscale((prevState) => !prevState)}
-                    checked={isGrayscale}
-                    center
-                  />
+                  <>
+                    <Choice
+                      dataElement="grayscalePrintOption"
+                      id="print-grayscale"
+                      name="grayscale"
+                      label={t('option.print.printGrayscale')}
+                      disabled={isPrinting}
+                      onChange={() => setIsGrayscale((prevState) => !prevState)}
+                      checked={isGrayscale}
+                      center
+                    />
+                    <Choice
+                      dataElement="commentsPrintOption"
+                      ref={includeCommentsRef}
+                      id="include-comments"
+                      name="comments"
+                      label={t('option.print.includeComments')}
+                      onChange={() => setIncludeComments((prevState) => !prevState)}
+                      disabled={isPrinting}
+                      checked={includeComments}
+                      center
+                    />
+                  </>
                 )}
               </form>
             </div>

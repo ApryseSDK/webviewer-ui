@@ -311,7 +311,7 @@
     "selectFile": "Επιλέξτε αρχείο",
     "selectPageToReplace": "Επιλέξτε τις σελίδες του εγγράφου με τις οποίες θέλετε να αντικαταστήσετε.",
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
-    "pageNum": "Αριθμός σελίδας",
+    "pageNum": "Σελίδα",
     "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
     "error": "Λάθος",
     "errorPageNumber": "Μη έγκυρος αριθμός σελίδας. Όριο είναι",
@@ -428,7 +428,6 @@
       "includeComments": "Συμπεριλάβετε σχόλια",
       "printSettings": "Ρυθμίσεις εκτύπωσης",
       "printGrayscale": "Εκτύπωση κλίμακας του γκρι",
-      "flatten": "Ισοπεδώστε το έγγραφο",
       "printCurrentDisabled": "Η τρέχουσα προβολή είναι διαθέσιμη μόνο κατά την προβολή μιας σελίδας."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Ξεκινήστε τη σύνταξη επισημαίνοντας κείμενο, περιοχές, σελίδες ή κάνοντας μια αναζήτηση.",
-    "redactionSearchPlaceholder": "Προσθήκη κατά αναζήτηση λέξης-κλειδιού ή μοτίβα",
+    "redactionSearchPlaceholder": "Επεξεργασία με πληκτρολόγιο ή μοτίβα",
     "redactionCounter": "Επισήμανση για Επιμέλεια",
     "clearMarked": "Σαφή",
     "redactAllMarked": "Διορθώστε όλα",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Τηλεφωνικοί αριθμοί",
       "images": "εικόνες",
       "emails": "Email",
-      "pattern": "Πρότυπο",
+      "pattern": "Μοτίβα",
       "start": "Ξεκινήστε να κάνετε την αναζήτησή σας"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
     "portfolioNewFolder": "Νέος φάκελος",
+    "portfolioDocumentTitle": "Τίτλος εγγράφου",
     "portfolioFolderPlaceholder": "Ονομα φακέλου",
     "portfolioFilePlaceholder": "Ονομα αρχείου",
     "folderNameAlreadyExists": "Το όνομα φακέλου υπάρχει ήδη",

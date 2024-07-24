@@ -311,7 +311,7 @@
     "selectFile": "เลือกไฟล์",
     "selectPageToReplace": "เลือกหน้าในเอกสารที่คุณต้องการแทนที่ด้วย",
     "embeddedFiles": "ไฟล์ที่ฝังตัว",
-    "pageNum": "เลขหน้า",
+    "pageNum": "หน้าหนังสือ",
     "viewBookmark": "ดูบุ๊กมาร์กบนเพจ",
     "error": "ข้อผิดพลาด",
     "errorPageNumber": "หมายเลขหน้าไม่ถูกต้อง ขีดจำกัดคือ",
@@ -428,7 +428,6 @@
       "includeComments": "รวมความคิดเห็น",
       "printSettings": "การตั้งค่าการพิมพ์",
       "printGrayscale": "พิมพ์โทนสีเทา",
-      "flatten": "เรียบเอกสาร",
       "printCurrentDisabled": "มุมมองปัจจุบันใช้ได้เฉพาะเมื่อดูหน้าเดียวเท่านั้น"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "เริ่มแก้ไขด้วยการทำเครื่องหมายข้อความ ภูมิภาค หน้า หรือทำการค้นหา",
-    "redactionSearchPlaceholder": "เพิ่มด้วยการค้นหาคำสำคัญหรือรูปแบบ",
+    "redactionSearchPlaceholder": "ตรวจทานด้วยแป้นพิมพ์หรือรูปแบบ",
     "redactionCounter": "ถูกทำเครื่องหมายสำหรับ Redaction",
     "clearMarked": "ชัดเจน",
     "redactAllMarked": "แก้ไขทั้งหมด",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "หมายเลขโทรศัพท์",
       "images": "รูปภาพ",
       "emails": "อีเมล",
-      "pattern": "ลวดลาย",
+      "pattern": "รูปแบบ",
       "start": "เริ่มทำการค้นหาของคุณ"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "สร้างโฟลเดอร์",
     "portfolioPanelTitle": "ไฟล์ PDF",
     "portfolioNewFolder": "แฟ้มใหม่",
+    "portfolioDocumentTitle": "ชื่อเอกสาร",
     "portfolioFolderPlaceholder": "ชื่อโฟลเดอร์",
     "portfolioFilePlaceholder": "ชื่อไฟล์",
     "folderNameAlreadyExists": "ชื่อโฟลเดอร์มีอยู่แล้ว",

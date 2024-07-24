@@ -311,7 +311,7 @@
     "selectFile": "Seleccione Archivo",
     "selectPageToReplace": "Seleccione las páginas del documento por las que le gustaría reemplazar.",
     "embeddedFiles": "Archivos incrustados",
-    "pageNum": "Número de página",
+    "pageNum": "Página",
     "viewBookmark": "Ver marcador en la página",
     "error": "Error",
     "errorPageNumber": "Número de página no válido. El límite es",
@@ -428,7 +428,6 @@
       "includeComments": "Incluir comentarios",
       "printSettings": "Configuración de impresión",
       "printGrayscale": "Imprimir en escala de grises",
-      "flatten": "Aplanar documento",
       "printCurrentDisabled": "La vista actual solo está disponible cuando se visualiza una sola página."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
-    "redactionSearchPlaceholder": "Agregar por búsqueda de palabra clave o patrones",
+    "redactionSearchPlaceholder": "Redactar por teclado o patrones",
     "redactionCounter": "Marcado para Redacción",
     "clearMarked": "Claro",
     "redactAllMarked": "Redactar todo",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Números de teléfono",
       "images": "Imágenes",
       "emails": "Correos electrónicos",
-      "pattern": "Patrón",
+      "pattern": "Patrones",
       "start": "Empieza a hacer tu búsqueda"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Crear carpeta",
     "portfolioPanelTitle": "Portafolio PDF",
     "portfolioNewFolder": "Nueva carpeta",
+    "portfolioDocumentTitle": "Titulo del documento",
     "portfolioFolderPlaceholder": "Nombre de la carpeta",
     "portfolioFilePlaceholder": "Nombre del archivo",
     "folderNameAlreadyExists": "El nombre de la carpeta ya existe",

@@ -115,7 +115,7 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
         return (
           <div key={pageNumber} className="section">
             <p className="title">
-              {t('message.pageNum')}: {pageNumber}
+              {t('message.pageNum')} {pageNumber}
             </p>
             <ul className="downloadable">
               {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(

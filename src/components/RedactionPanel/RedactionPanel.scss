@@ -84,20 +84,25 @@
     justify-content: flex-end;
     padding-right: 16px;
 
-    .redact-all-marked {
+    .Button.redact-all-marked {
       @include button-reset;
       background-color: var(--primary-button);
       color: var(--primary-button-text);
       border-radius: 4px;
       height: 32px;
       width: 90px;
-      cursor: pointer;
+
+      &:hover:not(.disabled) {
+        background-color: var(--primary-button-hover);
+      }
 
       &.disabled {
         opacity: 0.5;
-        cursor: not-allowed;
-      }
 
+        span {
+          color: var(--primary-button-text);
+        }
+      }
     }
 
     .clear-all-marked {
@@ -107,12 +112,20 @@
       border: none;
       height: 32px;
       width: 70px;
-      padding-right: 5px;
+      margin-right: 8px;
       cursor: pointer;
+
+      &:hover:not(.disabled) {
+        color: var(--secondary-button-hover);
+      }
 
       &.disabled {
         opacity: 0.5;
         cursor: not-allowed;
+
+        span {
+          color: var(--secondary-button-text);
+        }
       }
     }
 
@@ -122,13 +135,18 @@
   }
 
   .redaction-group-container {
-    overflow-y: scroll;
     flex: 1 1 auto;
+  }
+
+  button {
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
   }
 }
 
 
-.flx-Panel-container .RedactionPanel {
+.ModularPanel-container .RedactionPanel {
   height: 100%;
   padding: unset;
 

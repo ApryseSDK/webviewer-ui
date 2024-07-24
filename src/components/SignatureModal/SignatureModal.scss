@@ -199,6 +199,10 @@
         &:disabled {
           opacity: 0.5;
         }
+
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
+        }
       }
     }
 
@@ -307,6 +311,11 @@
 
     &:disabled {
       opacity: 0.5;
+    }
+
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
     }
   }
 

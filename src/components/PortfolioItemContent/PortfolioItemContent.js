@@ -135,7 +135,7 @@ const PortfolioItemContent = ({
             className="bookmark-outline-more-button"
             dataElement={`portfolio-item-more-button-${id}`}
             img="icon-tool-more"
-            tabIndex={-1}
+            tabIndex={0}
             onClick={(e) => {
               e.stopPropagation(); // click on this button won't select the file/folder
               setContextMenuOpen(true);
@@ -171,13 +171,13 @@ const PortfolioItemContent = ({
 
       {(isAdding || isPortfolioRenaming) &&
         <>
+          <label className='portfolio-input-label' htmlFor={id}>{isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioDocumentTitle')}</label>
           <Input
+            id={id}
             type="text"
             name="outline"
             ref={inputRef}
             wrapperClassName="portfolio-input"
-            placeholder={isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioFilePlaceholder')}
-            aria-label={t('action.name')}
             value={portfolioEditName}
             onKeyDown={handleKeyDown}
             onChange={(e) => setPortfolioEditName(e.target.value)}

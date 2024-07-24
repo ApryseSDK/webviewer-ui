@@ -311,7 +311,7 @@
     "selectFile": "Select file",
     "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
-    "pageNum": "Page Number",
+    "pageNum": "Page",
     "viewBookmark": "View Bookmark on Page",
     "error": "Error",
     "errorPageNumber": "Invalid page number. Limit is ",
@@ -428,7 +428,6 @@
       "includeComments": "Include comments",
       "printSettings": "Print Settings",
       "printGrayscale": "Print Grayscale",
-      "flatten": "Flatten document",
       "printCurrentDisabled": "Current view is only available when viewing a single page."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Start redacting by marking text, regions, pages or making a search.",
-    "redactionSearchPlaceholder": "Add by keyword search or patterns",
+    "redactionSearchPlaceholder": "Redact by keyboard or patterns",
     "redactionCounter": "Marked for Redaction",
     "clearMarked": "Clear",
     "redactAllMarked": "Redact All",
@@ -1145,13 +1144,13 @@
     },
     "expand": "Expand",
     "collapse": "Collapse",
-    "searchResults": "Search results",
+    "searchResults": "Search Results",
     "search": {
       "creditCards": "Credit Card",
       "phoneNumbers": "Phone Numbers",
       "images": "Images",
       "emails": "Emails",
-      "pattern": "Pattern",
+      "pattern": "Patterns",
       "start": "Start making your search"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Create Folder",
     "portfolioPanelTitle": "PDF Portfolio",
     "portfolioNewFolder": "New Folder",
+    "portfolioDocumentTitle": "Document Title",
     "portfolioFolderPlaceholder": "Folder Name",
     "portfolioFilePlaceholder": "File Name",
     "folderNameAlreadyExists": "Folder name already exists",

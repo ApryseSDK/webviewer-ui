@@ -12,6 +12,7 @@ import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
+import { workerTypes } from 'constants/types';
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -146,7 +147,11 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
 
   const contextValue = {
     searchInput: '',
-    resize: () => { },
+    resize: () => {
+      if (core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR) {
+        setPosition(getPopupPosition(annotation, popupRef, activeDocumentViewerKey));
+      }
+    },
     isSelected: true,
     isContentEditable: core.canModifyContents(annotation) && !annotation.getContents(),
     pendingEditTextMap,

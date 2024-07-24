@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
 import SearchStatus from 'constants/searchStatus';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
+import Button from 'components/Button';
 
 function RedactionSearchResults(props) {
   const {
@@ -148,20 +149,26 @@ function RedactionSearchResults(props) {
             <div className="redaction-search-results-counter">
               <span>{t('redactionPanel.searchResults')}</span> ({redactionSearchResults.length})
             </div>
-            <button
+            <Button
+              className={classNames({
+                'inactive': selectedIndexes.length < 1
+              })}
               onClick={selectAllResults}
               disabled={isEmptyList}
-              aria-label={t('action.selectAll')}
+              label={t('action.selectAll')}
             >
               {t('action.selectAll')}
-            </button>
-            <button
+            </Button>
+            <Button
+              className={classNames({
+                'inactive': selectedIndexes.length < 1
+              })}
               disabled={isEmptyList}
               onClick={unselectAllResults}
-              aria-label={t('action.unselect')}
+              label={t('action.unselect')}
             >
               {t('action.unselect')}
-            </button>
+            </Button>
           </>)}
       </div>
       <div className={resultsContainerClass} role="list">
@@ -171,29 +178,29 @@ function RedactionSearchResults(props) {
         {(searchStatus === SearchStatus['SEARCH_IN_PROGRESS'] || searchStatus === SearchStatus['SEARCH_DONE']) && renderSearchResults()}
       </div>
       <div className="redaction-search-panel-controls" >
-        <button
+        <Button
           onClick={onCancelHandler}
-          aria-label={t('action.cancel')}
+          label={t('action.cancel')}
           className="cancel"
         >
           {t('action.cancel')}
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={selectedIndexes.length === 0}
-          aria-label={t('annotation.redact')}
+          label={t('annotation.redact')}
           className={redactAllButtonClass}
           onClick={onRedactSelectedResults}
         >
           {t('annotation.redact')}
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={selectedIndexes.length === 0}
-          aria-label={t('action.addMark')}
+          label={t('action.addMark')}
           className={markAllForRedactionButtonClass}
           onClick={onMarkAllForRedaction}
         >
           {t('action.addMark')}
-        </button>
+        </Button>
       </div >
     </>
   );

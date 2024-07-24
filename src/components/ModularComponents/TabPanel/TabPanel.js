@@ -95,7 +95,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       case panelNames.STYLE:
         return <StylePanel dataElement={dataElement}/>;
       case panelNames.REDACTION:
-        return <RedactionPanel dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList}/>;
+        return <RedactionPanel dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true}/>;
       case panelNames.SEARCH:
         return <SearchPanel dataElement={dataElement} parentDataElement={tabPanelDataElement}/>;
       case panelNames.NOTES:

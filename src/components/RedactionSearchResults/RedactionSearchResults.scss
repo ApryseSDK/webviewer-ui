@@ -3,17 +3,18 @@
 .redaction-search-counter-controls {
   display: flex;
   flex-direction: row;
-  margin-top: 49px;
+  margin-top: 36px;
   font-size: var(--font-size-default);
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--lighter-border);
   background-color: var(--gray-0);
   border-radius: 4px 4px 0px 0px;
   max-height: 50px;
   min-height: 50px;
+  column-gap: var(--padding-medium);
 
   .redaction-search-results-counter {
-    flex: 3 1 auto;
+    flex: 2 1 auto;
 
     span {
       font-weight: bold;
@@ -31,10 +32,24 @@
     color: var(--secondary-button-text);
     border: none;
     cursor: pointer;
+    height: 100%;
+
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      color: var(--secondary-button-hover)
+    }
+
+    @include mobile {
+      font-size: var(--font-size-default);
+    }
 
     &.disabled {
       opacity: 0.5;
-      cursor: not-allowed;
+
+      span {
+        color: var(--secondary-button-text);
+      }
     }
   }
 
@@ -43,10 +58,10 @@
 .redaction-search-results-container {
   flex: 1 1 auto;
   background-color: var(--gray-2);
-  color: var(--placeholder-text);
+  color: var(--faded-text);
   font-size: 13px;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--lighter-border);
+  border-right: 1px solid var(--lighter-border);
   display: flex;
   flex-direction: column;
 
@@ -67,13 +82,13 @@
   flex: 0 1 52px;
   padding: 12px;
   background-color: var(--component-background);
-  border: 1px solid var(--border);
+  border: 1px solid var(--lighter-border);
   margin-bottom: 16px;
 
   button {
     @include button-reset;
     height: 28px;
-    padding: 6px 16px;
+    padding: 0 16px;
     cursor: pointer;
 
     @include mobile {
@@ -81,40 +96,67 @@
     }
   }
 
-  .cancel {
-    flex: 2 1 auto;
-    color: var(--secondary-button-text);
-    border: none;
-    cursor: pointer;
-    margin-right: 20px;
-  }
+  .Button {
+    white-space: nowrap;
 
-  .redact-all-selected {
-    flex: 1 1 auto;
-    border: 1px solid var(--secondary-button-text);
-    border-radius: 4px;
-    color: var(--secondary-button-text);
-    margin-right: 8px;
-
-    &.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    @include mobile {
+      font-size: var(--font-size-default);
     }
-  }
 
-  .mark-all-selected {
-    flex: 1 1 auto;
-    background-color: var(--primary-button);
-    border: 1px solid var(--primary-button);
-    border-radius: 4px;
-    color: var(--primary-button-text);
-    border-radius: 4px;
-    // width: 90px;
-    cursor: pointer;
+    &.cancel {
+      flex: 2 1 auto;
+      color: var(--secondary-button-text);
+      border: none;
+      cursor: pointer;
+      margin-right: 20px;
 
-    &.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+      &:hover:not(.disabled) {
+        span {
+          color: var(--secondary-button-hover);
+        }
+      }
+    }
+
+    &.redact-all-selected {
+      flex: 1 1 auto;
+      border: 1px solid var(--secondary-button-text);
+      border-radius: 4px;
+      margin-right: 8px;
+
+      span {
+        color: var(--secondary-button-text);
+      }
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      &:hover:not(.disabled) {
+        span {
+          color: var(--secondary-button-hover);
+        }
+        border-color: var(--secondary-button-hover);
+      }
+    }
+
+    &.mark-all-selected {
+      flex: 2 1 auto;
+      background-color: var(--primary-button) !important;
+      border: 1px solid var(--primary-button);
+      border-radius: 4px;
+
+      span {
+        color: var(--primary-button-text);
+      }
+
+      &:hover:not(.disabled) {
+        border-color: var(--primary-button-hover);
+        background-color: var(--primary-button-hover) !important;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+      }
     }
   }
 }

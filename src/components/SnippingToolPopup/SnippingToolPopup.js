@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
 import './SnippingToolPopup.scss';
+import Button from 'components/Button';
 
 const SnippingToolPopup = ({
   snippingMode,
@@ -136,17 +137,19 @@ const SnippingToolPopup = ({
       </div>
       <div className="divider" />
       <div className="buttons">
-        <button className="cancel-button" data-element="snippingCancelButton" onClick={() => handleButtonPressed('cancel')}>
-          {t('action.cancel')}
-        </button>
-        <button
+        <Button
+          className="cancel-button"
+          dataElement="snippingCancelButton"
+          onClick={() => handleButtonPressed('cancel')}
+          label={t('action.cancel')} />
+
+        <Button
           className="save-button"
-          data-element="snippingApplyButton"
+          dataElement="snippingApplyButton"
           onClick={() => handleButtonPressed('apply')}
           disabled={!isSnipping}
-        >
-          {t('action.apply')}
-        </button>
+          label={t('action.apply')}
+        />
       </div>
     </div>
   );

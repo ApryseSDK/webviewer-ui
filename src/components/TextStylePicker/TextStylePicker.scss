@@ -85,6 +85,10 @@
         height: 26px !important;
         width: 26px !important;
         color: var(--icon-color);
+
+        &:disabled, &.disabled {
+          color: var(--disabled-icon);
+        }
       }
 
       &.active {

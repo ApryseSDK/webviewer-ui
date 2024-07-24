@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { SketchPicker } from 'react-color';
 import { Swipeable } from 'react-swipeable';
 import DataElements from 'src/constants/dataElement';
+import Button from 'components/Button';
 
 import './ColorPickerModal.scss';
 
@@ -46,12 +47,8 @@ const ColorPickerModal = ({ isDisabled, isOpen, color, closeModal, handleChangeS
             presetColors={[]}
           />
           <div className="buttons">
-            <button className="cancel-button" onClick={handleChangeCancel}>
-              {t('action.cancel')}
-            </button>
-            <button className="save-button" onClick={handleSave}>
-              {t('action.ok')}
-            </button>
+            <Button className="cancel-button" onClick={handleChangeCancel} label={t('action.cancel')} />
+            <Button className="save-button" onClick={handleSave} label={t('action.ok')} />
           </div>
         </div>
       </div>

@@ -34,12 +34,10 @@ export const renderPermissionStatus = ({
       );
       break;
     case ModificationPermissionsStatus.e_unmodified:
-      content = `${
-        translate('digitalSignatureVerification.permissionStatus.unmodified')
-      } ${
-        isCertification
-          ? translate('digitalSignatureVerification.certified')
-          : translate('digitalSignatureVerification.signed')
+      content = `${translate('digitalSignatureVerification.permissionStatus.unmodified')
+      } ${isCertification
+        ? translate('digitalSignatureVerification.certified')
+        : translate('digitalSignatureVerification.signed')
       }.`;
       break;
     case ModificationPermissionsStatus.e_permissions_verification_disabled:
@@ -151,9 +149,8 @@ const WidgetInfo = ({ name, collapsible, field }) => {
     return (
       <div
         className="title collapsible"
-        role="button"
         onClick={titleInteraction}
-        onKeyPress={titleInteraction}
+        onKeyDown={titleInteraction}
         tabIndex={0}
       >
         {collapsible && (
@@ -168,7 +165,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
             <Icon glyph="ic_chevron_right_black_24px" />
           </button>
         )}
-        <SignatureIcon badge={badgeIcon} size="small"/>
+        <SignatureIcon badge={badgeIcon} size="small" />
         <p>{content}</p>
       </div>
     );
@@ -206,12 +203,10 @@ const WidgetInfo = ({ name, collapsible, field }) => {
         );
         break;
       case ModificationPermissionsStatus.e_unmodified:
-        content = `${
-          translate('digitalSignatureVerification.permissionStatus.unmodified')
-        } ${
-          isCertification
-            ? translate('digitalSignatureVerification.certified')
-            : translate('digitalSignatureVerification.signed')
+        content = `${translate('digitalSignatureVerification.permissionStatus.unmodified')
+        } ${isCertification
+          ? translate('digitalSignatureVerification.certified')
+          : translate('digitalSignatureVerification.signed')
         }.`;
         break;
       case ModificationPermissionsStatus.e_permissions_verification_disabled:
@@ -311,7 +306,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
       return null;
     }
     return (
-      <button
+      <div
         className='signatureDetails'
         onClick={() => jumpToWidget(field)}
         tabIndex={-1}
@@ -400,7 +395,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
             </div>
           )
         }
-      </button>
+      </div>
     );
   };
 
@@ -417,7 +412,6 @@ const WidgetInfo = ({ name, collapsible, field }) => {
       <div
         onClick={openSignatureModal}
         onKeyPress={openSignatureModal}
-        role="button"
         tabIndex={0}
         className="signatureProperties link"
       >
@@ -427,12 +421,12 @@ const WidgetInfo = ({ name, collapsible, field }) => {
   };
 
   return (
-    <div className="signature-widget-info">
+    <div className="signature-widget-info" tabIndex='0'>
       {signed ? (
         <React.Fragment>
           {renderTitle()}
           {isExpanded && (
-            <button
+            <div
               className='verificationDetails'
               onClick={() => jumpToWidget(field)}
               onKeyPress={() => jumpToWidget(field)}
@@ -462,7 +456,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
               <div className="header header-with-arrow">
                 {renderSignatureDetails()}
               </div>
-            </button>
+            </div>
           )}
         </React.Fragment>
       ) : (

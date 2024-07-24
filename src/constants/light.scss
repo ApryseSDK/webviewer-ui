@@ -81,7 +81,7 @@
 
   --divider: var(--gray-5);
   --reply-divider: var(--gray-3);
-  
+
   --side-panel-border: var(--divider);
   --border: var(--gray-5);
   --lighter-border: var(--gray-4);
@@ -114,6 +114,9 @@
 
   --tools-overlay-button-hover: var(--blue-1);
   --tools-overlay-button-active: var(--blue-2);
+
+  --fileAttachment-title-padding: 16px;
+  --fileAttachment-list-padding: 40px;
 
   --outline-color: var(--blue-5);
   --outline-hover: var(--gray-2);
@@ -170,4 +173,6 @@
   --colorpicker-tool-bg: none;
 
   --input-switch-default-color: var(--gray-3);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
 }
