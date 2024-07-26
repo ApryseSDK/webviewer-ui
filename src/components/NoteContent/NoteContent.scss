@@ -2,6 +2,8 @@
 @import '../../constants/note';
 
 .NoteContent {
+  --note-content-right-padding-width: 12px;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -16,7 +18,7 @@
 
   &.unread {
     &.isReply {
-      background: rgba($color:$pdftron-blue, $alpha: 0.08);
+      background: rgba($color: $pdftron-blue, $alpha: 0.08);
     }
 
     &.clicked {
@@ -42,7 +44,7 @@
     user-select: text;
     cursor: text;
     padding-left: 52px;
-    padding-right: 12px;
+    padding-right: var(--note-content-right-padding-width);
   }
 
   .container-reply {
@@ -96,7 +98,7 @@
       justify-content: flex-end;
       margin-top: 8px;
 
-      > div {
+      >div {
         margin-right: 4px;
       }
 
@@ -106,6 +108,7 @@
         flex-shrink: 0;
         background: var(--primary-button);
         border-radius: 4px;
+        width: fit-content;
         border: none;
         height: 28px;
         display: flex;
@@ -121,9 +124,13 @@
         }
 
         &.disabled {
-          background: var(--gray-6);
-          border-color: var(--gray-6);
+          background: var(--gray-6) !important;
+          border-color: var(--gray-6) !important;
           cursor: not-allowed;
+
+          span {
+            color: var(--primary-button-text);
+          }
         }
       }
 
@@ -131,6 +138,7 @@
         @include button-reset;
         color: var(--secondary-button-text);
         padding: 0 10px;
+        width: fit-content;
         height: 28px;
         display: flex;
         align-items: center;

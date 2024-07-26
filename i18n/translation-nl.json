@@ -311,7 +311,7 @@
     "selectFile": "Selecteer bestand",
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
-    "pageNum": "Paginanummer",
+    "pageNum": "Bladzijde",
     "viewBookmark": "Bekijk bladwijzer op pagina",
     "error": "Fout",
     "errorPageNumber": "Ongeldig paginanummer. Limiet is",
@@ -428,7 +428,6 @@
       "includeComments": "Inclusief commentaar",
       "printSettings": "Afdrukinstellingen",
       "printGrayscale": "Grijstinten afdrukken",
-      "flatten": "Document plat maken",
       "printCurrentDisabled": "De huidige weergave is alleen beschikbaar als u één pagina bekijkt."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
-    "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
+    "redactionSearchPlaceholder": "Redigeren via toetsenbord of patronen",
     "redactionCounter": "Gemarkeerd voor redactie",
     "clearMarked": "Duidelijk",
     "redactAllMarked": "Alles redigeren",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Telefoonnummers",
       "images": "Afbeeldingen",
       "emails": "E-mails",
-      "pattern": "Patroon",
+      "pattern": "Patronen",
       "start": "Begin met zoeken"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Map aanmaken",
     "portfolioPanelTitle": "PDF-portfolio",
     "portfolioNewFolder": "Nieuwe map",
+    "portfolioDocumentTitle": "Document titel",
     "portfolioFolderPlaceholder": "Naam van de map",
     "portfolioFilePlaceholder": "Bestandsnaam",
     "folderNameAlreadyExists": "Mapnaam bestaat al",

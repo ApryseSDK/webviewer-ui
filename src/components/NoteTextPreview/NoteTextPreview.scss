@@ -1,11 +1,11 @@
 .note-text-preview {
   font-size: 13px;
   color: var(--gray-7);
-  padding-right: 12px;
+  padding-right: var(--note-content-right-padding-width);
   user-select: text !important;
   cursor: text;
   height: fit-content;
-  width: calc(100% - 12px);
+  width: calc(100% - var(--note-content-right-padding-width));
   overflow: hidden;
 }
 
@@ -19,5 +19,13 @@
 
   &:hover {
     color: var(--primary-button-hover);
+  }
+}
+
+.trackedChangePopup {
+  .note-text-preview {
+    max-height: 400px;
+    overflow-y: auto;
+    width: calc(100% + var(--note-content-right-padding-width));
   }
 }

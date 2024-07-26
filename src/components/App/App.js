@@ -328,7 +328,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.STYLE:
         return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
       case panelNames.REDACTION:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true} />;
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
       case panelNames.NOTES:
@@ -355,6 +355,7 @@ const App = ({ removeEventHandlers }) => {
               display={panel.dataElement}
               dataElement={panel.dataElement}
               render={panel.render}
+              isCustomPanel={true}
             />
           )}
         </Panel>

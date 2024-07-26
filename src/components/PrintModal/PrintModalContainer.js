@@ -60,7 +60,6 @@ const PrintModalContainer = () => {
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
   const [pagesToPrint, setPagesToPrint] = useState([]);
   const [isGrayscale, setIsGrayscale] = useState(false);
-  const [shouldFlatten, setShouldFlatten] = useState(false);
   const [isWatermarkModalVisible, setIsWatermarkModalVisible] = useState(false);
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
@@ -128,7 +127,7 @@ const PrintModalContainer = () => {
     }
     const document = core.getDocument();
     const annotManager = core.getAnnotationManager();
-    const printingOptions = { isCurrentView, includeAnnotations, shouldFlatten, includeComments };
+    const printingOptions = { isCurrentView, includeAnnotations, includeComments };
     let pdf = await createPages(
       document,
       annotManager,
@@ -210,8 +209,6 @@ const PrintModalContainer = () => {
       isGrayscale={isGrayscale}
       setIsGrayscale={setIsGrayscale}
       setIsCurrentView={setIsCurrentView}
-      shouldFlatten={shouldFlatten}
-      setShouldFlatten={setShouldFlatten}
       isCurrentViewDisabled={isCurrentViewDisabled}
       checkCurrentView={checkCurrentView}
       includeAnnotations={includeAnnotations}

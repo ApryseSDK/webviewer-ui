@@ -24,7 +24,7 @@
     margin-left: 23px;
     height: 32px;
     display: flex;
-    
+
     Button {
       margin-top: 0;
     }
@@ -44,7 +44,7 @@
     margin-left: 23px;
     height: 32px;
     display: flex;
-    
+
     Button {
       margin-top: 0;
     }
@@ -86,6 +86,10 @@
       height: 18px;
       width: 18px;
     }
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
   }
 
   .menu-items {
@@ -118,6 +122,7 @@
     border-radius: 4px;
     border: 0;
     height: 32px;
+    width: fit-content;
     cursor: pointer;
 
     &:disabled {
@@ -134,12 +139,16 @@
     padding: 6px 16px;
     margin-right: 4px;
     height: 32px;
+    width: fit-content;
+
     &:hover {
       color: var(--secondary-button-hover);
     }
+
     &:focus {
       outline: none;
     }
+
     &:disabled {
       opacity: 0.5;
       cursor: auto;
@@ -304,15 +313,15 @@
     .DocumentCropPopup {
       width: 100%;
     }
-    
+
     .document-crop-mobile-container {
       display: flex;
       align-items: center;
 
       .customSelector {
         width: 100%;
-      }     
-    
+      }
+
       .Dropdown {
         height: 32px;
         min-width: 150px;
@@ -337,12 +346,13 @@
       .wrapper {
         z-index: max($modal-z-index, $popup-z-index) - 1;
       }
-    
+
       .save-button {
         margin-left: 6px;
         min-width: 75px;
       }
     }
+
     .cancel-button {
       padding: 0;
 
@@ -366,7 +376,7 @@
         height: 32px;
       }
     }
-  
+
     .page-number-input {
       width: 100%;
       min-width: 150px;

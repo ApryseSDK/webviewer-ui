@@ -170,7 +170,6 @@
 
     .modal-btn {
       @include button-reset;
-      background: var(--primary-button);
       border-radius: 4px;
       padding: 8px 16px;
       height: 32px;
@@ -179,7 +178,6 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      color: var(--primary-button-text);
       font-weight: 400;
       cursor: pointer;
 
@@ -188,8 +186,13 @@
         width: 100px;
       }
 
-      &:hover {
-        background: var(--primary-button-hover);
+      &:not(:disabled):not(.disabled) {
+        background: var(--primary-button);
+        color: var(--primary-button-text);
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
       }
     }
 

@@ -41,7 +41,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: var(--padding-tiny);
+  padding: var(--padding-tiny);
   border-bottom: 1px solid var(--divider);
 
   .header-title {
@@ -70,7 +70,8 @@
     border: 1px solid transparent;
 
     &.hover,
-    &:hover, &:focus-within {
+    &:hover,
+    &:focus-within {
       cursor: pointer;
 
       .bookmark-outline-more-button {
@@ -89,18 +90,26 @@
     }
 
     &:focus-within {
-      border: 1px solid var(--bookmark-outline-hover-border);
+      outline: 1px solid var(--bookmark-outline-hover-border);
       background-color: var(--outline-selected);
     }
 
     .bookmark-outline-label-row {
       overflow: hidden;
     }
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline) !important;
+    }
   }
 
   &.editing {
     background-color: var(--faded-component-background);
     padding: var(--padding-medium) 20px;
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline) !important;
+    }
   }
 
 
@@ -186,6 +195,7 @@
       &.icon-only {
         border: none;
       }
+
       .Icon {
         color: var(--focus-border);
       }
@@ -193,6 +203,7 @@
   }
 
   .bookmark-outline-editing-controls {
+    padding: 2px;
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -282,10 +293,11 @@
       background-color: transparent;
     }
 
-    &:disabled, &.disabled {
+    &:disabled,
+    &.disabled {
       &:hover {
         box-shadow: none;
       }
-    }  
+    }
   }
 }

@@ -311,7 +311,7 @@
     "selectFile": "ফাইল নির্বাচন",
     "selectPageToReplace": "নথিতে যে পৃষ্ঠাগুলি আপনি প্রতিস্থাপন করতে চান তা নির্বাচন করুন৷",
     "embeddedFiles": "এমবেডেড ফাইল",
-    "pageNum": "পৃষ্ঠা সংখ্যা",
+    "pageNum": "পাতা",
     "viewBookmark": "পৃষ্ঠায় বুকমার্ক দেখুন",
     "error": "ত্রুটি",
     "errorPageNumber": "অবৈধ পৃষ্ঠা নম্বর। সীমা হল",
@@ -428,7 +428,6 @@
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
       "printSettings": "প্রিন্ট সেটিংস",
       "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন",
-      "flatten": "সমতল নথি",
       "printCurrentDisabled": "বর্তমান দৃশ্য শুধুমাত্র একটি একক পৃষ্ঠা দেখার সময় উপলব্ধ।"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "টেক্সট, অঞ্চল, পৃষ্ঠা চিহ্নিত করে বা একটি অনুসন্ধান করে সংশোধন করা শুরু করুন।",
-    "redactionSearchPlaceholder": "কীওয়ার্ড অনুসন্ধান বা নিদর্শন দ্বারা যোগ করুন",
+    "redactionSearchPlaceholder": "কীবোর্ড বা নিদর্শন দ্বারা সংশোধন করুন",
     "redactionCounter": "সংস্কারের জন্য চিহ্নিত",
     "clearMarked": "স্পষ্ট",
     "redactAllMarked": "সমস্ত সংশোধন করুন",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "ফোন নাম্বারগুলো",
       "images": "ছবি",
       "emails": "ইমেইল",
-      "pattern": "প্যাটার্ন",
+      "pattern": "নিদর্শন",
       "start": "আপনার অনুসন্ধান করা শুরু করুন"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "ফোল্ডার তৈরি করুন",
     "portfolioPanelTitle": "পিডিএফ পোর্টফোলিও",
     "portfolioNewFolder": "নতুন ফোল্ডার",
+    "portfolioDocumentTitle": "নথির শিরোনাম",
     "portfolioFolderPlaceholder": "ফোল্ডারের নাম",
     "portfolioFilePlaceholder": "ফাইলের নাম",
     "folderNameAlreadyExists": "ফোল্ডারের নাম আগে থেকেই আছে",

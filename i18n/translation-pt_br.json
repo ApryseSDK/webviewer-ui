@@ -311,7 +311,7 @@
     "selectFile": "Selecione o arquivo",
     "selectPageToReplace": "Selecione as páginas do documento que deseja substituir.",
     "embeddedFiles": "Arquivos incorporados",
-    "pageNum": "Número de página",
+    "pageNum": "Página",
     "viewBookmark": "Ver marcador na página",
     "error": "Erro",
     "errorPageNumber": "Número de página inválido. Limite é",
@@ -428,7 +428,6 @@
       "includeComments": "Incluir comentários",
       "printSettings": "Configurações de impressão",
       "printGrayscale": "Imprimir escala de cinza",
-      "flatten": "Achatar documento",
       "printCurrentDisabled": "A visualização atual só está disponível ao visualizar uma única página."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Comece a redigir marcando texto, regiões, páginas ou fazendo uma pesquisa.",
-    "redactionSearchPlaceholder": "Adicionar por pesquisa de palavras-chave ou padrões",
+    "redactionSearchPlaceholder": "Editar por teclado ou padrões",
     "redactionCounter": "Marcado para redação",
     "clearMarked": "Claro",
     "redactAllMarked": "Redigir tudo",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Números de telefone",
       "images": "Imagens",
       "emails": "E-mails",
-      "pattern": "Padrão",
+      "pattern": "Padrões",
       "start": "Comece a fazer sua pesquisa"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Criar pasta",
     "portfolioPanelTitle": "Portfólio PDF",
     "portfolioNewFolder": "Nova pasta",
+    "portfolioDocumentTitle": "Título do documento",
     "portfolioFolderPlaceholder": "Nome da pasta",
     "portfolioFilePlaceholder": "Nome do arquivo",
     "folderNameAlreadyExists": "O nome da pasta já existe",

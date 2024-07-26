@@ -311,7 +311,7 @@
     "selectFile": "Виберіть файл",
     "selectPageToReplace": "Виберіть сторінки в документі, якими потрібно замінити.",
     "embeddedFiles": "Вбудовані файли",
-    "pageNum": "Номер сторінки",
+    "pageNum": "Сторінка",
     "viewBookmark": "Переглянути закладку на сторінці",
     "error": "Помилка",
     "errorPageNumber": "Недійсний номер сторінки. Обмеження є",
@@ -428,7 +428,6 @@
       "includeComments": "Включіть коментарі",
       "printSettings": "Налаштування друку",
       "printGrayscale": "Друк у градаціях сірого",
-      "flatten": "Звести документ",
       "printCurrentDisabled": "Поточний перегляд доступний лише під час перегляду однієї сторінки."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Почніть редагувати, позначивши текст, регіони, сторінки або здійснивши пошук.",
-    "redactionSearchPlaceholder": "Додайте за допомогою пошуку за ключовими словами або шаблонів",
+    "redactionSearchPlaceholder": "Редагувати за допомогою клавіатури або шаблонів",
     "redactionCounter": "Позначено для редагування",
     "clearMarked": "Ясно",
     "redactAllMarked": "Редагувати все",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "Номери телефонів",
       "images": "Зображення",
       "emails": "Електронні листи",
-      "pattern": "Візерунок",
+      "pattern": "Візерунки",
       "start": "Почніть пошук"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Створити папку",
     "portfolioPanelTitle": "PDF-портфоліо",
     "portfolioNewFolder": "Нова папка",
+    "portfolioDocumentTitle": "Назва документа",
     "portfolioFolderPlaceholder": "Назва папки",
     "portfolioFilePlaceholder": "Ім'я файлу",
     "folderNameAlreadyExists": "Назва папки вже існує",

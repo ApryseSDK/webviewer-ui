@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import Button from 'components/Button';
 
 import {
   renderPermissionStatus,
@@ -134,7 +135,7 @@ const SignatureValidationModal = () => {
           {translate('digitalSignatureModal.title', { type: typeCapitalized })}
         </div>
         <div className="summary-box">
-          <SignatureIcon badge={badgeIcon} size="medium"/>
+          <SignatureIcon badge={badgeIcon} size="medium" />
           <div>
             {
               translate(
@@ -469,12 +470,11 @@ const SignatureValidationModal = () => {
           </div>
         </div>
         <div className="modal-footer">
-          <button
+          <Button
             className="close-modal-button"
             onClick={closeModal}
-          >
-            OK
-          </button>
+            label={translate('action.close')}
+          />
         </div>
       </>
     );

@@ -7,9 +7,25 @@
     background-color: var(--view-header-button-hover);
     cursor: pointer;
   }
+
+  &:focus-visible {
+    outline: var(--focus-visible-outline);
+  }
+
+  &.modular-ui {
+    &:hover:not(:disabled):not(.disabled) {
+      // TODO: remove this background color and the one above when there is no legacy UI
+      background-color: transparent;
+      box-shadow: inset 0 0 0 1px var(--hover-border);
+    }
+  }
 }
 
 .redaction-item-selected {
+  &.modular-ui {
+    box-shadow: inset 0 0 0 1px var(--focus-border);
+  }
+
   background-color: var(--view-header-button-active) !important;
 }
 
@@ -32,4 +48,10 @@
 .redaction-item-label-text {
   font-size: 10px;
   margin: 2px 0;
+}
+
+.redaction-item-delete.customUI {
+  &:hover {
+    box-shadow: inset 0 0 0 1px var(--hover-border);
+  }
 }

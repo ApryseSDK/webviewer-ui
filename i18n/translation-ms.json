@@ -311,7 +311,7 @@
     "selectFile": "Pilih fail",
     "selectPageToReplace": "Pilih halaman dalam dokumen yang anda ingin gantikan.",
     "embeddedFiles": "Fail Terbenam",
-    "pageNum": "Mukasurat",
+    "pageNum": "Halaman",
     "viewBookmark": "Lihat Penanda Halaman pada Halaman",
     "error": "ralat",
     "errorPageNumber": "Nombor halaman tidak sah. Had ialah",
@@ -428,7 +428,6 @@
       "includeComments": "Sertakan ulasan",
       "printSettings": "Tetapan Cetak",
       "printGrayscale": "Cetak Skala Kelabu",
-      "flatten": "Ratakan dokumen",
       "printCurrentDisabled": "Paparan semasa hanya tersedia apabila melihat satu halaman."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Mula menyunting dengan menandakan teks, kawasan, halaman atau membuat carian.",
-    "redactionSearchPlaceholder": "Tambahkan mengikut carian kata kunci atau corak",
+    "redactionSearchPlaceholder": "Redaksi mengikut papan kekunci atau corak",
     "redactionCounter": "Ditanda untuk Redaksi",
     "clearMarked": "Jelas",
     "redactAllMarked": "Redaksi Semua",
@@ -1177,6 +1176,7 @@
     "createFolder": "Buat Folder",
     "portfolioPanelTitle": "Portfolio PDF",
     "portfolioNewFolder": "Fail baharu",
+    "portfolioDocumentTitle": "Tajuk dokumen",
     "portfolioFolderPlaceholder": "Nama folder",
     "portfolioFilePlaceholder": "Nama fail",
     "folderNameAlreadyExists": "Nama folder sudah wujud",

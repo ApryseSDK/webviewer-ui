@@ -41,7 +41,7 @@ export default function useOnContextMenuOpen() {
     useCallback(async (e) => {
       const { pageX: left, pageY: top } = e;
       const annotationUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
-      if ((!isRightClickAnnotationPopupEnabledRef.current && !isMobile) || (isRightClickAnnotationPopupEnabledRef.current && !annotationUnderMouse)) {
+      if ((!isRightClickAnnotationPopupEnabledRef.current && !isMobile) || (isRightClickAnnotationPopupEnabledRef.current && (!annotationUnderMouse || isOfficeEditorMode()))) {
         if (popupItems.length > 0) {
           setClickPosition({ left, top });
           if (isOfficeEditorMode()) {

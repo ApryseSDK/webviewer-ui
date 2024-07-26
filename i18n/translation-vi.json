@@ -311,7 +311,7 @@
     "selectFile": "Chọn tệp",
     "selectPageToReplace": "Chọn các trang trong tài liệu bạn muốn thay thế.",
     "embeddedFiles": "Tệp Nhúng",
-    "pageNum": "Số Trang",
+    "pageNum": "Trang",
     "viewBookmark": "Xem dấu trang trên trang",
     "error": "Lỗi",
     "errorPageNumber": "Số trang không hợp lệ. Giới hạn là",
@@ -428,7 +428,6 @@
       "includeComments": "Bao gồm bình luận",
       "printSettings": "Cài đặt in",
       "printGrayscale": "In thang độ xám",
-      "flatten": "Làm phẳng tài liệu",
       "printCurrentDisabled": "Chế độ xem hiện tại chỉ khả dụng khi xem một trang duy nhất."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
-    "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
+    "redactionSearchPlaceholder": "Chỉnh sửa bằng bàn phím hoặc mẫu",
     "redactionCounter": "Đã Đánh Dấu để Biên Tập",
     "clearMarked": "Xóa",
     "redactAllMarked": "Biên Tập Tất Cả",
@@ -1145,13 +1144,13 @@
     },
     "expand": "Mở rộng",
     "collapse": "Thu gọn",
-    "searchResults": "Kết quả tìm kiếm",
+    "searchResults": "kết quả tìm kiếm",
     "search": {
       "creditCards": "Thẻ tín dụng",
       "phoneNumbers": "Số điện thoại",
       "images": "Hình ảnh",
       "emails": "Email",
-      "pattern": "Mẫu",
+      "pattern": "mẫu",
       "start": "Bắt đầu thực hiện tìm kiếm của bạn"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "Tạo thư mục",
     "portfolioPanelTitle": "Danh mục đầu tư PDF",
     "portfolioNewFolder": "Thư mục mới",
+    "portfolioDocumentTitle": "Tiêu đề tài liệu",
     "portfolioFolderPlaceholder": "Tên thư mục",
     "portfolioFilePlaceholder": "Tên tệp",
     "folderNameAlreadyExists": "Tên thư mục đã tồn tại",

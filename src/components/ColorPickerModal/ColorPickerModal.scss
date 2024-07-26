@@ -31,35 +31,42 @@
       width: 220px !important;
       padding: 0px !important;
       background: var(--component-background) !important;
-      > div{
+
+      >div {
         border-radius: 2px !important;
       }
 
       .saturation-white {
+
         // Make the color picker dot a little bit bigger
-        > div > div {
+        >div>div {
           width: 12px !important;
           height: 12px !important;
           transform: translateX(-6px) translateY(-6px) !important;
         }
       }
+
       .flexbox-fix:nth-child(2) {
         span {
           color: var(--text-color) !important;
           cursor: default !important;
         }
+
         // style for hue selector
-        > div:nth-child(1) {
+        >div:nth-child(1) {
           border-radius: 2px;
-          > div {
+
+          >div {
             margin-top: 6px;
             cursor: ew-resize !important;
             overflow: visible !important;
           }
         }
-        .hue-horizontal{
+
+        .hue-horizontal {
           width: 97%;
           border-radius: 2px;
+
           div div {
             transform: translateX(-7px) translateY(-3px) !important;
             height: 14px !important;
@@ -67,26 +74,31 @@
             border-radius: 14px !important;
           }
         }
+
         // style for color preview
-        > div:nth-child(2) {
+        >div:nth-child(2) {
           height: 24px !important;
           border-radius: 12px !important;
-          > div {
+
+          >div {
             border-radius: 12px !important;
           }
         }
       }
+
       .flexbox-fix:nth-child(3) {
+
         // input boxes
         input {
           width: 100% !important;
           text-align: center;
           border-radius: 2px;
-          box-shadow: var(--border) 0px 0px 0px 1px inset!important;
+          box-shadow: var(--border) 0px 0px 0px 1px inset !important;
         }
+
         // style for input box label
-        label{
-          color: var(--text-color)!important;
+        label {
+          color: var(--text-color) !important;
         }
       }
     }
@@ -98,6 +110,7 @@
       margin-top: 20px;
       display: flex;
       justify-content: flex-end;
+
       .save-button {
         background-color: transparent;
         color: var(--primary-button-text);
@@ -107,7 +120,9 @@
         border: 0;
         height: 32px;
         cursor: pointer;
+        width: fit-content;
       }
+
       .cancel-button {
         cursor: pointer;
         background: none;
@@ -116,11 +131,10 @@
         padding: 6px 16px;
         margin-right: 4px;
         height: 32px;
+        width: fit-content;
+
         &:hover {
           color: var(--secondary-button-hover);
-        }
-        &:focus {
-          outline: none;
         }
       }
     }

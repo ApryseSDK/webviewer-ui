@@ -59,6 +59,7 @@ const ToggleElementButton = (props) => {
         title={title}
         onClick={onClick}
         disabled={isElementDisabled}
+        className={props.className}
       >
         {props.children}
       </Button>
@@ -74,6 +75,7 @@ ToggleElementButton.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   toggleElement: PropTypes.string.isRequired,
   setFlyoutTriggerRef: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default ToggleElementButton;

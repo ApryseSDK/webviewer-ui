@@ -441,7 +441,9 @@ const OfficeEditorToolsHeader = () => {
                     items={availableFontFaces}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
-                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      if (typeof fontFace === 'string') {
+                        core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      }
                     }}
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}

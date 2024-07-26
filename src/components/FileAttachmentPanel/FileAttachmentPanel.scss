@@ -7,11 +7,14 @@
   font-size: var(--font-size-default);
 
   .section{
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     p.title{
-      margin-left:16px;
+      font-weight: bold;
+      padding-left: var(--fileAttachment-title-padding);
+      margin: 12px 0;
     }
     ul.downloadable{
+      padding-left: var(--fileAttachment-list-padding);
       &>li{
         cursor: pointer;
         color: var(--secondary-button-text);
@@ -19,6 +22,10 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;text-overflow: ellipsis;
+        padding: 4px 0;
+        &:hover{
+          color: var(--secondary-button-hover);
+        }
       }
       .embedSpinner{
         display: flex;

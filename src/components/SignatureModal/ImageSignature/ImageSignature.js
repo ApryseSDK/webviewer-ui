@@ -215,12 +215,12 @@ const ImageSignature = ({
           onChange={handleFullSignatureFileChange}
           disabled={!(isModalOpen && isTabPanelSelected)}
         />
-        <div
+        <button
           onClick={() => fullSignatureInputRef.current.click()}
           className="pick-image-button"
         >
           {t('option.signatureModal.pickImage')}
-        </div>
+        </button>
       </div>
       {fullSignatureErrorMessage && (
         <div className="image-signature-error">{fullSignatureErrorMessage}</div>
@@ -249,12 +249,12 @@ const ImageSignature = ({
           onChange={handleInitialsFileChange}
           disabled={!(isModalOpen && isTabPanelSelected)}
         />
-        <div
+        <button
           onClick={() => initialsInputRef.current.click()}
           className="pick-image-button"
         >
           {t('option.signatureModal.pickInitialsFile')}
-        </div>
+        </button>
       </div>
       {initialsErrorMessage && (
         <div className="image-signature-error">{initialsErrorMessage}</div>

@@ -36,6 +36,10 @@
         background: var(--popup-button-active);
         cursor: default;
       }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
+      }
     }
 
   }
@@ -47,12 +51,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline) !important;
+    }
   }
 }
 
 @mixin tab-border-defaults {
   .tab-list {
-    .tab-options-divider + .tab-options-button {
+    .tab-options-divider+.tab-options-button {
       border-left: none !important;
     }
 
@@ -75,10 +83,11 @@
         border-bottom: solid 1px var(--tab-border-color-hover);
         border-right: 1px solid var(--tab-border-color-hover);
 
-        + div {
+        +div {
           border-left: none;
         }
-        + button {
+
+        +button {
           border-left: none;
         }
       }
@@ -86,13 +95,16 @@
       &.selected {
         border: 1px solid var(--tab-border-color-selected);
         color: var(--tab-text-color-selected);
-        + div {
+
+        +div {
           border-left: none !important;
         }
-        + button {
+
+        +button {
           border-left: none !important;
         }
       }
+
       &:not(.selected) {
         border-right: solid 1px var(--tab-border-color);
       }

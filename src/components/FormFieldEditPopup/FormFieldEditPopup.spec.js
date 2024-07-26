@@ -13,7 +13,7 @@ function noop() { }
 const inputFields = [
   {
     label: 'formField.formFieldPopup.fieldName',
-    onChange: noop,
+    confirmChange: noop,
     value: 'fieldName',
     required: true,
     type: 'text',
@@ -21,7 +21,7 @@ const inputFields = [
   },
   {
     label: 'formField.formFieldPopup.fieldValue',
-    onChange: noop,
+    confirmChange: noop,
     value: 'fieldValue',
     type: 'text',
   },
@@ -30,7 +30,7 @@ const inputFields = [
 const selectField = [
   {
     label: 'formField.formFieldPopup.fieldName',
-    onChange: noop,
+    confirmChange: noop,
     value: 'fieldName',
     required: true,
     type: 'select',
@@ -41,13 +41,19 @@ const selectField = [
 const sampleFlags = [
   {
     label: 'formField.formFieldPopup.readOnly',
-    onChange: noop,
+    confirmChange: noop,
     isChecked: true,
+    setIsChecked: (bool) => {
+      sampleFlags[0].isChecked = bool;
+    }
   },
   {
     label: 'formField.formFieldPopup.multiLine',
-    onChange: noop,
+    confirmChange: noop,
     isChecked: false,
+    setIsChecked: (bool) => {
+      sampleFlags[1].isChecked = bool;
+    }
   },
 ];
 
@@ -55,18 +61,18 @@ const INDICATOR_TEXT = 'This is an indicator';
 
 const indicator = {
   label: 'formField.formFieldPopup.documentFieldIndicator',
-  toggleIndicator: noop,
+  confirmToggleIndicator: noop,
   isChecked: true,
-  onChange: noop,
-  value: INDICATOR_TEXT,
+  confirmTextChange: noop,
+  textValue: INDICATOR_TEXT,
 };
 
 const emptyIndicator = {
   label: 'formField.formFieldPopup.documentFieldIndicator',
-  toggleIndicator: noop,
+  confirmToggleIndicator: noop,
   isChecked: false,
-  onChange: noop,
-  value: null,
+  confirmTextChange: noop,
+  textValue: null,
 };
 
 const createMockAnnotation = () => {
@@ -145,7 +151,7 @@ describe('FormFieldEditPopup', () => {
       expect(container.querySelectorAll('.radio-group-label')).toHaveLength(selectField.length);
     });
 
-    it('Renders an check input for each of the Field Flags passed in', () => {
+    it('Should not confirm changes when the cancel button is clicked', () => {
       const { container } = render(
         <TestFormFieldEditPopup
           fields={inputFields}
@@ -164,8 +170,11 @@ describe('FormFieldEditPopup', () => {
       expect(container.querySelectorAll('.ui__choice__input')).toHaveLength(sampleFlags.length + 1);
     });
 
-    it('Should call handler to close popup when OK button is clicked', () => {
-      const closeFormFieldEditPopup = jest.fn();
+    it('Should confirm changes when the OK button is clicked', () => {
+      let confirming = false;
+      const closeFormFieldEditPopup = jest.fn((isConfirmingChanges) => {
+        confirming = isConfirmingChanges;
+      });
       const { container } = render(
         <TestFormFieldEditPopup
           fields={inputFields}
@@ -173,10 +182,12 @@ describe('FormFieldEditPopup', () => {
           closeFormFieldEditPopup={closeFormFieldEditPopup}
           isOpen
           isValid
+          setValidationMessage={noop}
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
           getPageWidth={noop}
+          confirmFieldOptionsChange={noop}
           indicator={indicator}
         />,
       );
@@ -184,6 +195,34 @@ describe('FormFieldEditPopup', () => {
       expect(OKButton).toBeInTheDocument();
       fireEvent.click(OKButton);
       expect(closeFormFieldEditPopup).toBeCalled();
+      expect(confirming).toBeTruthy();
+    });
+
+    it('Call check when Cancel button is clicked', () => {
+      let confirming = false;
+      const closeFormFieldEditPopup = jest.fn((isConfirmingChanges) => {
+        confirming = isConfirmingChanges;
+      });
+      const { container } = render(
+        <TestFormFieldEditPopup
+          isOpen
+          isValid
+          fields={inputFields}
+          flags={sampleFlags}
+          indicator={indicator}
+          closeFormFieldEditPopup={closeFormFieldEditPopup}
+          annotation={createMockAnnotation()}
+          getPageHeight={noop}
+          redrawAnnotation={noop}
+          getPageWidth={noop}
+          confirmFieldOptionsChange={noop}
+        />,
+      );
+      const cancelButton = container.querySelector('.cancel-form-field-button');
+      expect(cancelButton).toBeInTheDocument();
+      fireEvent.click(cancelButton);
+      expect(closeFormFieldEditPopup).toBeCalled();
+      expect(confirming).toBeFalsy();
     });
 
     it('Should render text input with Warning if field is not valid', () => {
@@ -408,7 +447,7 @@ describe('FormFieldEditPopup', () => {
       const mockInputFieldWithEmptyName = [
         {
           label: 'formField.formFieldPopup.fieldName',
-          onChange: noop,
+          confirmChange: noop,
           value: '', // This means the name is empty/blank
           required: true,
           type: 'text',
@@ -416,7 +455,7 @@ describe('FormFieldEditPopup', () => {
         },
         {
           label: 'formField.formFieldPopup.fieldValue',
-          onChange: noop,
+          confirmChange: noop,
           value: 'fieldValue',
           type: 'text',
         },

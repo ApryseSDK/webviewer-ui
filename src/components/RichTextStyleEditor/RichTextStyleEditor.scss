@@ -22,6 +22,10 @@
       .auto-size-checkbox {
         padding-top: 4px;
         padding-bottom: 8px;
+
+        .ui__choice__input__check--focus {
+          outline: var(--focus-visible-outline);
+        }
       }
     }
   }

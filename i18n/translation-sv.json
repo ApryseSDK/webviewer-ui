@@ -166,12 +166,12 @@
     "formFillDot": "Punkt",
     "signature": "Signatur",
     "snipping": "Beskärningsverktyg",
-    "squiggly": "Snyggt",
+    "squiggly": "Snirklig",
     "stamp": "Stämpel",
     "stickyNote": "Notera",
     "strikeout": "Överstrykning",
     "underline": "Understrykning",
-    "custom": "Beställnings",
+    "custom": "Anpassad",
     "rubberStamp": "Gummistämpel",
     "note": "Notera",
     "textField": "Textfält",
@@ -210,7 +210,7 @@
     "SHWitness": "Bevittna",
     "SHInitialHere": "Inledande här",
     "SHAccepted": "Accepterad",
-    "SBRejected": "avvisade"
+    "SBRejected": "Avvisade"
   },
   "component": {
     "attachmentPanel": "Bilagor",
@@ -311,7 +311,7 @@
     "selectFile": "Välj fil",
     "selectPageToReplace": "Välj sidorna i dokumentet som du vill ersätta med.",
     "embeddedFiles": "Inbäddade filer",
-    "pageNum": "Sidonummer",
+    "pageNum": "Sida",
     "viewBookmark": "Visa bokmärke på sidan",
     "error": "Fel",
     "errorPageNumber": "Ogiltigt sidnummer. Gränsen är",
@@ -321,7 +321,7 @@
   "option": {
     "type": {
       "caret": "Markör",
-      "custom": "Beställnings",
+      "custom": "Anpassad",
       "ellipse": "Ellips",
       "fileattachment": "Bifogad fil",
       "freehand": "Fri hand",
@@ -369,7 +369,7 @@
       "toolbarGroup-Redact": "Redigera"
     },
     "annotationColor": {
-      "StrokeColor": "Stroke",
+      "StrokeColor": "Streck",
       "FillColor": "Fylla",
       "TextColor": "Text"
     },
@@ -428,7 +428,6 @@
       "includeComments": "Inkludera kommentarer",
       "printSettings": "Utskriftsinställningar",
       "printGrayscale": "Skriv ut gråskala",
-      "flatten": "Platta till dokument",
       "printCurrentDisabled": "Aktuell vy är endast tillgänglig när du visar en enskild sida."
     },
     "printInfo": {
@@ -441,7 +440,7 @@
     },
     "searchPanel": {
       "caseSensitive": "Skiftlägeskänsliga",
-      "wholeWordOnly": "Hela världen",
+      "wholeWordOnly": "Hela ord",
       "wildcard": "Jokertecken",
       "replace": "Byta ut",
       "replaceAll": "Ersätt alla",
@@ -501,7 +500,7 @@
     },
     "state": {
       "accepted": "Accepterad",
-      "rejected": "avvisade",
+      "rejected": "Avvisade",
       "completed": "Avslutad",
       "cancelled": "Inställt",
       "set": "Ange status:",
@@ -534,7 +533,7 @@
     "measurement": {
       "scaleModal": {
         "calibrate": "Kalibrera",
-        "custom": "Beställnings",
+        "custom": "Anpassad",
         "fractionalUnits": "Fraktionella enheter",
         "precision": "Precision",
         "preset": "Förinställa",
@@ -676,7 +675,7 @@
       "title": "Stil"
     },
     "settings": {
-      "settings": "inställningar",
+      "settings": "Inställningar",
       "searchSettings": "Sökinställningar",
       "general": "Allmän",
       "language": "Språk",
@@ -849,7 +848,7 @@
     "Marquee": "Marquee Zoom",
     "Link": "Länk URL eller sida",
     "Standard": "Standard",
-    "Custom": "Beställnings"
+    "Custom": "Anpassad"
   },
   "link": {
     "url": "URL",
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Börja redigera genom att markera text, regioner, sidor eller göra en sökning.",
-    "redactionSearchPlaceholder": "Lägg till genom nyckelordssökning eller mönster",
+    "redactionSearchPlaceholder": "Redigera med tangentbord eller mönster",
     "redactionCounter": "Markerad för redigering",
     "clearMarked": "Klar",
     "redactAllMarked": "Redigera alla",
@@ -1177,6 +1176,7 @@
     "createFolder": "Skapa mapp",
     "portfolioPanelTitle": "PDF-portfölj",
     "portfolioNewFolder": "Ny mapp",
+    "portfolioDocumentTitle": "Dokument titel",
     "portfolioFolderPlaceholder": "Mapp namn",
     "portfolioFilePlaceholder": "Filnamn",
     "folderNameAlreadyExists": "Mappnamnet finns redan",
@@ -1254,7 +1254,7 @@
         "letter": "Brev",
         "halfLetter": "Halv bokstav",
         "juniorLegal": "Junior juridisk",
-        "custom": "Beställnings"
+        "custom": "Anpassad"
       },
       "units": "Enheter"
     },

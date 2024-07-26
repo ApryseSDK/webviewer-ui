@@ -56,7 +56,7 @@ const cropDocumentToCurrentView = async (document) => {
   return document;
 };
 
-// printingOptions: isCurrentView, includeAnnotations, shouldFlatten
+// printingOptions: isCurrentView, includeAnnotations
 export const createPages = async (document, annotManager, pagesToPrint, printingOptions, watermarkModalOptions) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
@@ -81,11 +81,7 @@ export const createPages = async (document, annotManager, pagesToPrint, printing
 
   if (watermarkModalOptions) {
     result.setWatermark(watermarkModalOptions);
-  }
-
-  if (printingOptions?.shouldFlatten || watermarkModalOptions) {
-    const fileDataOptions = { flatten: printingOptions?.shouldFlatten };
-    result = await createDocumentForPrint(result, fileDataOptions);
+    result = await createDocumentForPrint(result);
   }
 
   if (printingOptions?.includeComments) {

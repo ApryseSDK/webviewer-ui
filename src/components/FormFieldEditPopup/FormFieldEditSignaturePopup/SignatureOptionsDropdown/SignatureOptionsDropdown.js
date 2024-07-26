@@ -9,13 +9,17 @@ import ReactSelectWebComponentProvider from 'src/components/ReactSelectWebCompon
 import './SignatureOptionsDropdown.scss';
 
 const getStyles = () => ({
-  control: (provided) => ({
+  control: (provided, state) => ({
     ...provided,
     minHeight: '28px',
     backgroundColor: 'var(--component-background)',
-    borderColor: 'hsl(0, 0%, 80%)',
-    boxShadow: null,
-    '&:hover': null,
+    borderColor: state.isFocused ? 'var(--gray-10)' : 'hsl(0, 0%, 80%)',
+    borderRadius: state.isFocused ? '4px' : provided.borderRadius,
+    borderWidth: state.isFocused ? '2px' : provided.borderWidth,
+    boxShadow: state.isFocused ? '0 0 0 1px var(--gray-10)' : null,
+    '&:hover': {
+      borderColor: state.isFocused ? 'var(--gray-10)' : 'hsl(0, 0%, 70%)',
+    },
   }),
   valueContainer: (provided) => ({
     ...provided,
@@ -29,13 +33,17 @@ const getStyles = () => ({
     ...provided,
     backgroundColor: 'var(--component-background)',
   }),
-  option: (provided) => ({
+  option: (provided, state) => ({
     ...provided,
-    backgroundColor: 'var(--component-background)',
-    color: 'var(--text-color)',
+    backgroundColor: state.isSelected ? 'var(--blue-5)' : 'var(--component-background)',
     '&:hover': {
-      backgroundColor: 'var(--popup-button-hover)',
-    }
+      backgroundColor: 'var(--blue-6)',
+      color: 'var(--gray-0)',
+    },
+    '&:active': {
+      backgroundColor: state.isSelected ? 'var(--blue-5)' : 'var(--blue-6)',
+    },
+    border: state.isFocused ? 'var(--focus-visible-outline) !important' : 'null',
   }),
   indicatorsContainer: (provided) => ({
     ...provided,

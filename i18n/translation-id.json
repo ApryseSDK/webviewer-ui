@@ -311,7 +311,7 @@
     "selectFile": "Pilih file",
     "selectPageToReplace": "Pilih halaman dalam dokumen yang ingin Anda ganti.",
     "embeddedFiles": "File Tertanam",
-    "pageNum": "Nomor halaman",
+    "pageNum": "Halaman",
     "viewBookmark": "Lihat Bookmark di Halaman",
     "error": "Kesalahan",
     "errorPageNumber": "Nomor halaman tidak valid. Batasnya adalah",
@@ -428,7 +428,6 @@
       "includeComments": "Sertakan komentar",
       "printSettings": "Pengaturan Cetak",
       "printGrayscale": "Cetak Skala abu-abu",
-      "flatten": "Ratakan dokumen",
       "printCurrentDisabled": "Tampilan saat ini hanya tersedia saat melihat satu halaman."
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Mulai menyunting dengan menandai teks, wilayah, halaman, atau melakukan pencarian.",
-    "redactionSearchPlaceholder": "Tambahkan dengan pencarian atau pola kata kunci",
+    "redactionSearchPlaceholder": "Sunting berdasarkan keyboard atau pola",
     "redactionCounter": "Ditandai untuk Redaksi",
     "clearMarked": "Jernih",
     "redactAllMarked": "Redaksi Semua",
@@ -1177,6 +1176,7 @@
     "createFolder": "Membuat folder",
     "portfolioPanelTitle": "Portofolio PDF",
     "portfolioNewFolder": "Folder baru",
+    "portfolioDocumentTitle": "Judul dokumen",
     "portfolioFolderPlaceholder": "Nama folder",
     "portfolioFilePlaceholder": "Nama file",
     "folderNameAlreadyExists": "Nama folder sudah ada",

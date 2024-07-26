@@ -7,6 +7,7 @@ import FormFieldPopupDimensionsInput from '../FormFieldPopupDimensionsInput';
 import FormFieldEditPopupIndicator from '../FormFieldEditPopupIndicator';
 import SignatureOptionsDropdown from './SignatureOptionsDropdown';
 import HorizontalDivider from 'components/HorizontalDivider';
+import core from 'core';
 
 import '../FormFieldEditPopup.scss';
 
@@ -20,10 +21,11 @@ const FormFieldEditSignaturePopup = ({
   getPageHeight,
   getPageWidth,
   redrawAnnotation,
-  onSignatureOptionChange,
   getSignatureOptionHandler,
   indicator,
   onCancelEmptyFieldName,
+  setIsValid,
+  setValidationMessage,
 }) => {
   const { t } = useTranslation();
   const className = classNames({
@@ -37,7 +39,8 @@ const FormFieldEditSignaturePopup = ({
   const [initialWidth] = useState((annotation.Width).toFixed(0));
   const [initialHeight] = useState((annotation.Height).toFixed(0));
   const [indicatorPlaceholder, setIndicatorPlaceholder] = useState(t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${getSignatureOptionHandler(annotation)}`));
-
+  const formFieldCreationManager = core.getFormFieldCreationManager();
+  const [signatureOption, setSignatureOption] = useState();
 
   function onWidthChange(width) {
     const validatedWidth = validateWidth(width);
@@ -89,16 +92,55 @@ const FormFieldEditSignaturePopup = ({
     closeFormFieldEditPopup();
   }
 
+  const onSignatureOptionChange = (option) => {
+    const { value } = option;
+    setSignatureOption(value);
+  };
+
+  function onConfirm() {
+    for (let i = 0; i < fields.length; i++) {
+      if (fields[i].label.includes('fieldName') && fields[i].value.trim() === '') {
+        setIsValid(false);
+        setValidationMessage('formField.formFieldPopup.invalidField.empty');
+        return;
+      }
+      if (fields[i].label.includes('fieldName')) {
+        fields[i].confirmChange(fields[i].value);
+      }
+    }
+    for (let i = 0; i < flags.length; i++) {
+      flags[i].confirmChange(flags[i].isChecked);
+    }
+
+    formFieldCreationManager.setSignatureOption(annotation, signatureOption);
+    confirmIndicatorChange();
+    closeFormFieldEditPopup(true);
+  }
+
+  const confirmIndicatorChange = () => {
+    indicator.confirmToggleIndicator(indicator.isChecked);
+    if (indicator.isChecked) {
+      indicator.confirmTextChange(indicator.textValue || indicatorPlaceholder);
+    }
+  };
+
+  function handleTextChange(event, field) {
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
+    field.setValue(event.target.value);
+  }
+
   function renderTextInput(field) {
     return (
       <Input
         type="text"
-        onChange={(event) => field.onChange(event.target.value)}
         value={field.value}
         fillWidth="false"
         messageText={field.required && !isValid ? t(validationMessage) : ''}
         message={field.required && !isValid ? 'warning' : 'default'}
         autoFocus={field.focus}
+        onChange={(e) => handleTextChange(e, field)}
       />
     );
   }
@@ -128,8 +170,8 @@ const FormFieldEditSignaturePopup = ({
           <Choice
             key={flag.label}
             checked={flag.isChecked}
-            onChange={(event) => flag.onChange(event.target.checked)}
             label={t(flag.label)}
+            onChange={(event) => flag.setIsChecked(event.target.checked)}
           />
         ))}
       </div>
@@ -153,10 +195,10 @@ const FormFieldEditSignaturePopup = ({
         />
         <Button
           className="ok-form-field-button"
-          onClick={closeFormFieldEditPopup}
           dataElement="formFieldOK"
           label={t('action.ok')}
           disabled={!isValid}
+          onClick={onConfirm}
         />
       </div>
     </div>

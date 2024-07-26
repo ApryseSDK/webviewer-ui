@@ -1,7 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants/panel';
 
-.flx-Panel {
+.ModularPanel {
   z-index: 65;
   background-color: var(--panel-background);
   display: flex;
@@ -29,7 +29,7 @@
     z-index: 95;
   }
 
-  .flx-Panel-container {
+  .ModularPanel-container {
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -60,11 +60,11 @@
 
         .NotesPanel {
           width: 100%;
-  
+
           [data-element=notesPanelHeader] {
             padding-right: 16px;
           }
-  
+
           .virtualized-notes-container,
           .normal-notes-container {
             padding-right: 16px;
@@ -87,6 +87,7 @@
       -webkit-overflow-scrolling: touch;
       flex: 1;
       flex-direction: column;
+      padding: 0;
     }
 
     .documentControls {
@@ -199,8 +200,8 @@
       color: var(--gray-7)
     }
 
-    &.flx-Panel {
-      .flx-Panel-container {
+    &.ModularPanel {
+      .ModularPanel-container {
         .documentControls {
           border-color: var(--lighter-border);
 
@@ -252,8 +253,10 @@
         }
 
         .thumbnailControls-overlay.modular-ui {
+          padding-left: 2px;
+
           .Button {
-            &:hover:not(.active){
+            &:hover:not(.active) {
               @extend %icon-button-hover;
             }
 
@@ -265,7 +268,8 @@
       }
     }
 
-    .OutlinesPanel, .BookmarksPanel {
+    .OutlinesPanel,
+    .BookmarksPanel {
       padding: 0;
 
       .bookmark-outline-footer .multi-selection-button {

@@ -1,0 +1,12 @@
+.redaction-search-multi-select-search-icon-container {
+  height: 28px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  margin: 0 var(--padding-tiny);
+
+  .Icon {
+    width: 16px;
+    height: 16px;
+  }
+}

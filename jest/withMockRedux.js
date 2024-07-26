@@ -32,8 +32,10 @@ const initialState = {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
-      { dataElement: 'annotationAlignButton'}
+      { dataElement: 'annotationAlignButton' }
     ],
+    savedSignatures: [],
+    maxSignatureCount: 10,
   },
   search: {
     redactionSearchPatterns: {},

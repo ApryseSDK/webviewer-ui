@@ -311,7 +311,7 @@
     "selectFile": "选择文件",
     "selectPageToReplace": "选择文档中要替换的页面。",
     "embeddedFiles": "嵌入文件",
-    "pageNum": "页码",
+    "pageNum": "页",
     "viewBookmark": "在页面上查看书签",
     "error": "错误",
     "errorPageNumber": "页码无效。限制是",
@@ -428,7 +428,6 @@
       "includeComments": "包括评论",
       "printSettings": "打印设置",
       "printGrayscale": "灰度打印",
-      "flatten": "展平文件",
       "printCurrentDisabled": "当前视图仅在查看单个页面时可用。"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "通过标记文本、区域、页面或进行搜索来开始编辑。",
-    "redactionSearchPlaceholder": "通过关键字搜索或模式添加",
+    "redactionSearchPlaceholder": "通过键盘或图案编辑",
     "redactionCounter": "标记为编辑",
     "clearMarked": "清除",
     "redactAllMarked": "全部编辑",
@@ -1151,7 +1150,7 @@
       "phoneNumbers": "电话号码",
       "images": "图片",
       "emails": "电子邮件",
-      "pattern": "图案",
+      "pattern": "模式",
       "start": "开始搜索"
     }
   },
@@ -1177,6 +1176,7 @@
     "createFolder": "创建文件夹",
     "portfolioPanelTitle": "PDF 作品集",
     "portfolioNewFolder": "新建文件夹",
+    "portfolioDocumentTitle": "文件名",
     "portfolioFolderPlaceholder": "文件夹名称",
     "portfolioFilePlaceholder": "文件名",
     "folderNameAlreadyExists": "文件夹名称已存在",

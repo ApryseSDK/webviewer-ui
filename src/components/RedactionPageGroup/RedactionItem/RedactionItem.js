@@ -8,8 +8,16 @@ import './RedactionItem.scss';
 import RedactionTextPreview from 'components/RedactionTextPreview';
 import classNames from 'classnames';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 const RedactionItem = (props) => {
+  // Remove if we get rid of legacy UI along with stylesheet changes
+  const [isCustomUI] = useSelector(
+    (state) => [
+      selectors.getFeatureFlags(state)?.customizableUI,
+    ]
+  );
   const {
     iconColor,
     annotation,
@@ -33,7 +41,7 @@ const RedactionItem = (props) => {
 
   const formattedDate = date ? dayjs(date).locale(language).format(dateFormat) : t('option.notesPanel.noteContent.noDate');
   const dateAndAuthor = `${author} - ${formattedDate}`;
-  const className = classNames('redaction-item', { 'redaction-item-selected': isSelected });
+  const className = classNames('redaction-item', { 'redaction-item-selected': isSelected }, { 'modular-ui': isCustomUI });
   const {
     label,
     icon = 'icon-form-field-text', // Default icon if none provided
@@ -85,6 +93,7 @@ const RedactionItem = (props) => {
         </div>
       </div>
       <Button
+        className='redaction-item-delete'
         style={{ marginLeft: 'auto' }}
         img={'icon-close'}
         onClick={onRedactionItemDelete}

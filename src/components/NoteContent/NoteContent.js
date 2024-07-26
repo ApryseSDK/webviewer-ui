@@ -31,6 +31,7 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import { COMMON_COLORS } from 'constants/commonColors';
+import Button from 'components/Button';
 
 import './NoteContent.scss';
 
@@ -646,8 +647,9 @@ const ContentArea = ({
         onFocus={onFocus}
       />
       <div className="edit-buttons">
-        <button
+        <Button
           className="cancel-button"
+          label={t('action.cancel')}
           onClick={(e) => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
@@ -655,19 +657,16 @@ const ContentArea = ({
             onTextAreaValueChange(undefined, annotation.Id);
             clearAttachments(annotation.Id);
           }}
-        >
-          {t('action.cancel')}
-        </button>
-        <button
+        />
+        <Button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
           disabled={!textAreaValue}
+          label={t('action.save')}
           onClick={(e) => {
             e.stopPropagation();
             setContents(e);
           }}
-        >
-          {t('action.save')}
-        </button>
+        />
       </div>
     </div>
   );

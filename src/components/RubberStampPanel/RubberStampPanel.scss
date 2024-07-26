@@ -38,6 +38,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      padding-top: 2px;
       padding-bottom: 16px;
 
       .rubber-stamp {
@@ -114,6 +115,7 @@
     }
 
     &.small-size {
+
       .CreateRubberStampButton,
       .Divider,
       .collapsible-page-group-header,
@@ -133,15 +135,16 @@
       }
 
       .rubber-stamps-list {
-          .rubber-stamp,
-          .icon-button {
-            &:hover {
-              background-color: var(--gray-0);
-            }
 
-            &.active {
-              background: var(--tools-overlay-button-active);
-            }
+        .rubber-stamp,
+        .icon-button {
+          &:hover {
+            background-color: var(--gray-0);
+          }
+
+          &.active {
+            background: var(--tools-overlay-button-active);
+          }
         }
       }
 
@@ -152,8 +155,12 @@
   }
 
   &.modular-ui-panel {
-    .rubber-stamps-list .rubber-stamp{
+    .rubber-stamps-list .rubber-stamp {
       border-color: var(--lighter-border);
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
     }
   }
 }

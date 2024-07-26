@@ -51,7 +51,8 @@
   }
 
   .signature-list {
-    padding-top: 16px;
+    padding: 16px 2px 0 2px;
+
     overflow: auto;
   }
 
@@ -141,6 +142,10 @@
 
       &.active {
         background: var(--tools-overlay-button-active);
+      }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
       }
 
       .signature-button-icon {

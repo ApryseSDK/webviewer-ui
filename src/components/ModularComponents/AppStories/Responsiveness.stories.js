@@ -51,12 +51,12 @@ const Template = (args) => {
       lastPickedToolForGroupedItems: {
         annotateGroupedItems: 'AnnotationCreateTextUnderline',
       },
-      activeCustomRibbon: 'annotations-ribbon-item',
+      activeCustomRibbon: args.activeCustomRibbon,
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateTextUnderline',
         group: ['annotateGroupedItems'],
       },
-      activeToolName: 'AnnotationCreateTextUnderline'
+      activeToolName: 'AnnotationCreateTextUnderline',
     },
     featureFlags: {
       customizableUI: true,
@@ -69,10 +69,11 @@ function createTemplate({
   width = '100%',
   height = '100%',
   headers = mockHeadersNormalized,
-  components = mockModularComponents
+  components = mockModularComponents,
+  activeCustomRibbon = 'annotations-ribbon-item',
 } = {}) {
   const template = Template.bind({});
-  template.args = { headers, components, width, height };
+  template.args = { headers, components, width, height, activeCustomRibbon };
   template.parameters = { layout: 'fullscreen' };
   return template;
 }
@@ -145,3 +146,5 @@ export const ExtraItemsAdded = createTemplate({
   components: ExtraItemsAddedComponents
 });
 
+export const RibbonItemsOverflow = createTemplate({ width: '690px' });
+export const RibbonItemsOverflowActive = createTemplate({ width: '750px', activeCustomRibbon: 'toolbarGroup-Insert' });

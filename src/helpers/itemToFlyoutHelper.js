@@ -14,10 +14,12 @@ export const itemToFlyout = (item, {
   onClick = undefined,
   children = undefined,
   useOverrideClickOnly = false,
+  extraProps = {},
 } = {}) => {
   const itemProps = item.props || item;
 
-  if (!itemProps || !itemProps.type || !Object.values(ITEM_TYPE).includes(itemProps.type)) {
+  const isDisabledItem = itemProps?.dataElement && store && selectors.isElementDisabled(store.getState(), itemProps.dataElement);
+  if (!itemProps || !itemProps.type || !Object.values(ITEM_TYPE).includes(itemProps.type) || isDisabledItem) {
     return null;
   }
 
@@ -35,6 +37,7 @@ export const itemToFlyout = (item, {
     icon: itemProps.icon || itemProps.img,
     children,
     disabled: itemProps.disabled,
+    ...extraProps,
   };
 
   if (itemProps.type === ITEM_TYPE.BUTTON) {

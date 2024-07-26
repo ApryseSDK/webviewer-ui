@@ -36,10 +36,10 @@
       width: 32px;
       height: 32px;
       font-size: 13px;
-      
+
       button {
         @include mobile {
-          font-size : var(--font-size-default);
+          font-size: var(--font-size-default);
         }
       }
 
@@ -62,6 +62,10 @@
         min-width: 28px;
         text-align: right;
       }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
     }
   }
 
@@ -74,6 +78,7 @@
 
   &.size1 {
     background: none !important;
+
     .Button:hover,
     .Button.active {
       background-color: var(--view-header-button-active) !important;

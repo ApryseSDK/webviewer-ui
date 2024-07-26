@@ -311,7 +311,7 @@
     "selectFile": "ファイルを選ぶ",
     "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
-    "pageNum": "ページ番号",
+    "pageNum": "ページ",
     "viewBookmark": "ページにブックマークを表示",
     "error": "エラー",
     "errorPageNumber": "ページ番号が無効です。限界は",
@@ -428,7 +428,6 @@
       "includeComments": "コメントを含める",
       "printSettings": "印刷設定",
       "printGrayscale": "グレースケール印刷",
-      "flatten": "ドキュメントをフラット化する",
       "printCurrentDisabled": "現在のビューは、単一のページを表示する場合にのみ使用できます。"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
-    "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
+    "redactionSearchPlaceholder": "キーボードまたはパターンによる編集",
     "redactionCounter": "墨消しのマーク",
     "clearMarked": "クリア",
     "redactAllMarked": "すべて編集",
@@ -1177,6 +1176,7 @@
     "createFolder": "フォルダーを作る",
     "portfolioPanelTitle": "PDFポートフォリオ",
     "portfolioNewFolder": "新しいフォルダー",
+    "portfolioDocumentTitle": "ドキュメントのタイトル",
     "portfolioFolderPlaceholder": "フォルダ名",
     "portfolioFilePlaceholder": "ファイル名",
     "folderNameAlreadyExists": "フォルダ名はすでに存在します",

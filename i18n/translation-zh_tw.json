@@ -311,7 +311,7 @@
     "selectFile": "選擇文件",
     "selectPageToReplace": "選擇文檔中要替換的頁面。",
     "embeddedFiles": "嵌入文件",
-    "pageNum": "頁碼",
+    "pageNum": "頁",
     "viewBookmark": "在頁面上查看書籤",
     "error": "錯誤",
     "errorPageNumber": "頁碼無效。限制是",
@@ -428,7 +428,6 @@
       "includeComments": "包括評論",
       "printSettings": "打印設置",
       "printGrayscale": "灰度打印",
-      "flatten": "展平文檔",
       "printCurrentDisabled": "目前視圖僅在查看單一頁面時可用。"
     },
     "printInfo": {
@@ -1131,7 +1130,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "通過標記文本、區域、頁面或進行搜索來開始編輯。",
-    "redactionSearchPlaceholder": "通過關鍵字搜索或模式添加",
+    "redactionSearchPlaceholder": "透過鍵盤或模式進行編輯",
     "redactionCounter": "標記為編輯",
     "clearMarked": "清除",
     "redactAllMarked": "全部編輯",
@@ -1145,7 +1144,7 @@
     },
     "expand": "擴張",
     "collapse": "坍塌",
-    "searchResults": "搜索結果",
+    "searchResults": "搜尋結果",
     "search": {
       "creditCards": "信用卡",
       "phoneNumbers": "電話號碼",
@@ -1177,6 +1176,7 @@
     "createFolder": "創建文件夾",
     "portfolioPanelTitle": "PDF 作品集",
     "portfolioNewFolder": "新建文件夾",
+    "portfolioDocumentTitle": "檔案名稱",
     "portfolioFolderPlaceholder": "文件夾名稱",
     "portfolioFilePlaceholder": "文件名",
     "folderNameAlreadyExists": "文件夾名稱已存在",

@@ -113,6 +113,9 @@
   --tools-overlay-button-hover: var(--blue-1);
   --tools-overlay-button-active: var(--blue-2);
 
+  --fileAttachment-title-padding: 0;
+  --fileAttachment-list-padding: 24px;
+
   --outline-color: var(--blue-5);
   --outline-hover: var(--gray-2);
   --outline-selected: var(--gray-2);
@@ -170,4 +173,6 @@
   --colorpicker-tool-bg: var(--tools-button-hover);
 
   --input-switch-default-color: var(--gray-6);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
 }

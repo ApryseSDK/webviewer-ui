@@ -54,6 +54,14 @@
     color: var(--disabled-icon);
     pointer-events: none;
   }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-visible-outline) !important;
+  }
 }
 
 .Dropdown__items {
@@ -92,15 +100,20 @@
   border-radius: 0px;
   padding-right: 32px;
 
-  &.active, &:hover {
+  &.active,
+  &:hover {
     color: var(--dropdown-item-active-text);
-    .Icon, .Icon svg * {
+
+    .Icon,
+    .Icon svg * {
       color: var(--dropdown-item-active-icon);
     }
   }
+
   &.active {
     background-color: var(--dropdown-item-active);
   }
+
   &:hover {
     background-color: var(--dropdown-item-hover);
   }
