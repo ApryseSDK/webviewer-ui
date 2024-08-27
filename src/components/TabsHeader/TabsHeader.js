@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import useWindowDimensions from 'helpers/useWindowsDimensions';
 import getRootNode from 'helpers/getRootNode';
 import ToggleElementButton from 'components/ToggleElementButton';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 
 const TabsHeader = () => {
@@ -93,7 +94,7 @@ const TabsHeader = () => {
   const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!getRootNode().getElementsByClassName('TabsHeader')[0]?.contains(e.target)) {
+    if (!getRootNode().querySelectorAll('.TabsHeader')[0]?.contains(e.target)) {
       hoveredTab.current.remove();
     }
     setHovering(false);
@@ -164,7 +165,7 @@ const TabsHeader = () => {
     tabManager.deleteTab(id, dispatch);
   }
 
-  const openFile = () => dispatch(actions.openElement('OpenFileModal'));
+  const openFile = useFocusHandler(() => dispatch(actions.openElement('OpenFileModal')));
 
   if (!isMultiTab) {
     return null;
@@ -174,7 +175,7 @@ const TabsHeader = () => {
       {tabs}
       <div className={classNames({
         'add-button': true,
-        'add-button-with-label': isEmptyPageOpen
+        'add-button-with-label': isEmptyPageOpen,
       })}>
         {additionalTabs?.length > 0 && <ToggleElementButton
           className="dropdown-menu tab-dropdown-button"
@@ -186,6 +187,7 @@ const TabsHeader = () => {
           title="action.openFile"
           img="icon-menu-add"
           onClick={openFile}
+          dataElement={'addTabButton'}
           label={isEmptyPageOpen ? 'action.openFile' : ''}
         />
         {additionalTabs?.length > 0 && <FlyoutMenu

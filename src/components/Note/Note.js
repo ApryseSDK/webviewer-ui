@@ -18,7 +18,7 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OFFICE_EDITOR_EDIT_MODE, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 
 import './Note.scss';
 
@@ -120,7 +120,7 @@ const Note = ({
 
   useEffect(() => {
     if (noteTransformFunction) {
-      const notesPanelElement = getRootNode().getElementsByClassName('NotesPanel')[0];
+      const notesPanelElement = getRootNode().querySelectorAll('.NotesPanel')[0];
       ids.current.forEach((id) => {
         const child = notesPanelElement.querySelector(`[data-webviewer-custom-element=${id}]`);
         if (child) {
@@ -164,7 +164,7 @@ const Note = ({
     }
   }, [isDocumentReadOnly, isContentEditable, setIsEditing]);
 
-  const handleNoteClick = (e) => {
+  const handleNoteClick = async (e) => {
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
     e && e.stopPropagation();
@@ -186,6 +186,11 @@ const Note = ({
       core.jumpToAnnotation(annotation, documentViewerKey);
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
+      }
+      if (isOfficeEditorMode) {
+        const trackedChangeId = annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
+        await core.getOfficeEditor().moveCursorToTrackedChange(trackedChangeId);
+        core.getOfficeEditor().freezeMainCursor();
       }
     }
   };
@@ -264,12 +269,6 @@ const Note = ({
 
   const groupAnnotations = core.getGroupAnnotations(annotation, documentViewerKey);
   const isGroup = groupAnnotations.length > 1;
-  let isCaretAnnotation = false;
-  isCaretAnnotation = groupAnnotations.some((annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation);
-  if (isCaretAnnotation) {
-    isMultiSelectMode = false;
-    isMultiSelected = false;
-  }
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
