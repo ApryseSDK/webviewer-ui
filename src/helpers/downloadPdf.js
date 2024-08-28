@@ -16,9 +16,27 @@ import { isOfficeEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 
+let isDownloaded = false;
+let previousWatermarkSettings = { };
+let previousFileName = '';
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
   let doc = core.getDocument(documentViewerKey);
+  if (previousFileName !== doc?.getFilename()) {
+    previousFileName = doc?.getFilename();
+    isDownloaded = false;
+  }
+
+  const documentViewer = core.getDocumentViewer();
+  previousWatermarkSettings = await documentViewer.getWatermark();
+  if (isDownloaded) {
+    documentViewer.setWatermark();
+  } else {
+    isDownloaded = true;
+    doc.enableWatermarkApplied();
+  }
+
+
   const {
     filename = doc?.getFilename() || 'document',
     includeAnnotations = true,
@@ -51,6 +69,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (includeComments || convertToPDF) {
       doc.unloadResources();
     }
+
+    documentViewer.setWatermark(previousWatermarkSettings);
   };
 
   // We currently don't convert to pdf, png, etc. for office editor.
