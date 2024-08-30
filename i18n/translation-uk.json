@@ -123,13 +123,17 @@
     "showComparison": "Показати порівняння",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
+    "clearInitial": "Чистий ініціал",
     "readOnlySignature": "Підпис лише для читання не можна видалити",
     "newDocument": "Новий документ",
     "sideBySideView": "Пліч-о-пліч",
     "pageNumberInput": "Введення номера сторінки",
     "addNewColor": "Додати новий колір",
     "deleteColor": "Видалити вибраний колір",
-    "copySelectedColor": "Копіювати вибраний колір"
+    "copySelectedColor": "Копіювати вибраний колір",
+    "showMoreColors": "Показати більше кольорів",
+    "showLessColors": "Показати менше кольорів",
+    "fromCustomColorPicker": "із спеціальної палітри кольорів"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Звук",
     "changeView": "Змінити вигляд",
-    "newImage": "Нове зображення"
+    "newImage": "Нове зображення",
+    "defaultCustomStampTitle": "Спеціальний штамп"
   },
   "rubberStamp": {
     "Approved": "Затверджено",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "Не показуйте мені цього більше",
     "doNotAskAgain": "Не запитуй знову",
     "enterReplacementText": "Введіть текст, який потрібно замінити",
+    "sort": "Сортувати",
     "sortBy": "Сортувати",
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
     "unpostedComment": "Неопублікований коментар",
@@ -311,10 +317,11 @@
     "selectFile": "Виберіть файл",
     "selectPageToReplace": "Виберіть сторінки в документі, якими потрібно замінити.",
     "embeddedFiles": "Вбудовані файли",
-    "pageNum": "Номер сторінки",
+    "pageNum": "Сторінка",
     "viewBookmark": "Переглянути закладку на сторінці",
     "error": "Помилка",
     "errorPageNumber": "Недійсний номер сторінки. Обмеження є",
+    "errorBlankPageNumber": "Будь ласка, вкажіть номер сторінки",
     "errorLoadingDocument": "Під час читання цього документа виникла проблема, тому деякі сторінки можуть не відображатися. Це означає, що документ може бути пошкоджено. Загальна кількість сторінок становить {{totalPageCount}}, а кількість сторінок, які відображаються, — {{displayedPageCount}}.",
     "noRevisions": "Цей документ не має змін."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Редагувати текст",
       "toolbarGroup-FillAndSign": "Заповніть і підпишіть",
       "toolbarGroup-Forms": "Форми",
-      "toolbarGroup-Redact": "Редагувати"
+      "toolbarGroup-Redact": "Редагувати",
+      "toolbarGroup-oe-Home": "додому",
+      "toolbarGroup-oe-Insert": "Вставка",
+      "toolbarGroup-oe-Review": "огляд"
     },
     "annotationColor": {
       "StrokeColor": "Інсульт",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(без імені)",
         "noDate": "(без дати)"
-      }
+      },
+      "toggleMultiSelect": "Увімкнути Multi Select для анотації"
     },
     "pageTransition": {
       "continuous": "Безперервна сторінка",
@@ -428,7 +439,6 @@
       "includeComments": "Включіть коментарі",
       "printSettings": "Налаштування друку",
       "printGrayscale": "Друк у градаціях сірого",
-      "flatten": "Звести документ",
       "printCurrentDisabled": "Поточний перегляд доступний лише під час перегляду однієї сторінки."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Введіть ініціали*",
       "drawSignature": "Намалювати підпис*",
       "drawInitial": "Намалювати ініціали*",
+      "imageSignature": "Підпис зображення",
+      "imageInitial": "Ініціали зображення",
       "pickInitialsFile": "Виберіть Ініціали",
       "noSignatures": "Наразі немає збережених підписів.",
       "fontStyle": "стиль шрифту"
@@ -523,7 +535,9 @@
       "countMeasurement": "Вимірювання підрахунку",
       "radius": "Радіус",
       "count": "Рахувати",
-      "length": "Довжина"
+      "length": "Довжина",
+      "xAxis": "Вісь X",
+      "yAxis": "Вісь Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Динамічне масштабування розміру шрифту"
@@ -541,7 +555,8 @@
         "paperUnits": "Паперові одиниці",
         "displayUnits": "Блоки відображення",
         "fractionUnitsTooltip": "Одиниці частки застосовуються лише до in та ft-in",
-        "incorrectSyntax": "Неправильний синтаксис"
+        "incorrectSyntax": "Неправильний синтаксис",
+        "units": "одиниці"
       },
       "scaleOverlay": {
         "addNewScale": "Додати новий масштаб",
@@ -560,6 +575,7 @@
         "irreversible": "незворотні",
         "willDeleteMeasurement": "і видалить пов’язані вимірювання.",
         "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?",
+        "thisCantBeUndone": " Цю дію не можна скасувати.",
         "ifChangeScale": "Якщо ви змінюєте масштаб для вибраного вимірювання або інструменту, масштабуйте",
         "notUsedWillDelete": " більше не використовуватимуться для вимірювань чи інструментів і будуть видалені. Видалення незворотне.",
         "ifToContinue": "Ви впевнені, що бажаєте продовжити?"
@@ -669,8 +685,7 @@
       "current": "Поточна сторінка",
       "specify": "Вкажіть сторінки",
       "odd": "Тільки непарні сторінки",
-      "even": "Лише парні сторінки",
-      "header": "Позначте Редагування сторінок"
+      "even": "Лише парні сторінки"
     },
     "lineStyleOptions": {
       "title": "Стиль"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Редагувати комбінацію клавіш",
       "setShorcut": "Встановити ярлик",
       "pressKeyToSet": "Натисніть клавішу або клавіші, щоб встановити новий ярлик.",
-      "shortcutAlreadyExists": "Комбінація клавіш вище вже існує."
+      "shortcutAlreadyExists": "Комбінація клавіш вище вже існує.",
+      "close": "Закрити підказку"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Видалити сторінку",
-      "deleteMessage": "Ви впевнені, що хочете видалити вибрані сторінки? Це не можна скасувати",
+      "deleteMessage": "Ви впевнені, що бажаєте видалити вибрані сторінки? Цю дію не можна скасувати.",
       "deleteLastPageMessage": "Ви не можете видалити всі сторінки в документі."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Розміри урожаю",
     "dimensionInput": {
       "unitOfMeasurement": "одиниця",
-      "autoTrim": "Автотримування"
+      "autoTrim": "Автотримування",
+      "autoTrimCustom": "Custom"
     },
     "cropModal": {
       "applyTitle": "Застосовувати культуру?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Почніть редагувати, позначивши текст, регіони, сторінки або здійснивши пошук.",
-    "redactionSearchPlaceholder": "Додайте за допомогою пошуку за ключовими словами або шаблонів",
+    "redactionSearchPlaceholder": "Редагувати за допомогою клавіатури або шаблонів",
     "redactionCounter": "Позначено для редагування",
     "clearMarked": "Ясно",
     "redactAllMarked": "Редагувати все",
+    "redactionItems": "Елементи редакції",
     "redactionItem": {
       "regionRedaction": "Регіональна редакція",
       "fullPageRedaction": "Повна редакція сторінки",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "Номери телефонів",
       "images": "Зображення",
       "emails": "Електронні листи",
-      "pattern": "Візерунок",
+      "pattern": "Візерунки",
       "start": "Почніть пошук"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "Створити папку",
     "portfolioPanelTitle": "PDF-портфоліо",
     "portfolioNewFolder": "Нова папка",
+    "portfolioDocumentTitle": "Назва документа",
     "portfolioFolderPlaceholder": "Назва папки",
     "portfolioFilePlaceholder": "Ім'я файлу",
     "folderNameAlreadyExists": "Назва папки вже існує",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях.",
     "previewAllChanges": "Переглянути всі зміни",
     "accept": "прийняти",
-    "reject": "Відхиляти"
+    "reject": "Відхиляти",
+    "pastingTitle": "Вклеювання недоступне",
+    "pastingMessage": "Вставлення не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
+    "pastingWithoutFormatTitle": "Вставлення без форматування недоступне",
+    "pastingWithoutFormatMessage": "Вставлення без форматування не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
+    "numberDropdown": {
+      "dropdownLabel": "Попередні налаштування нумерації"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Попередні налаштування маркерів"
+    },
+    "fontSize": {
+      "dropdownLabel": "Розмір шрифту"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Стилі шрифтів"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Сімейство шрифтів"
+    }
   },
   "insertPageModal": {
-    "title": "Додати нову сторінку",
+    "title": "Вставити нову сторінку",
     "tabs": {
       "blank": "Пустий",
       "upload": "Завантажити"
@@ -1280,7 +1318,7 @@
     "save": "Зберегти документ",
     "comparePanel": {
       "Find": "Знайти в документі",
-      "changesList": "Список змін",
+      "changesList": "Перелік змін",
       "change": "Зміна",
       "old": "Старий",
       "new": "новий",
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Марки",
     "standard": "Стандартні штампи"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Палітра кольорів"
   }
 }

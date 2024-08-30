@@ -123,13 +123,17 @@
     "showComparison": "Tunjukkan Perbandingan",
     "back": "belakang",
     "clearSignature": "Tandatangan yang jelas",
+    "clearInitial": "Kosongkan awalan",
     "readOnlySignature": "Tandatangan baca sahaja tidak boleh dipadamkan",
     "newDocument": "Dokumen Baharu",
     "sideBySideView": "Pandangan Sebelah",
     "pageNumberInput": "Input nombor halaman",
     "addNewColor": "Tambah Warna Baru",
     "deleteColor": "Padamkan Warna yang Dipilih",
-    "copySelectedColor": "Salin Warna yang Dipilih"
+    "copySelectedColor": "Salin Warna yang Dipilih",
+    "showMoreColors": "Tunjukkan Lebih Banyak Warna",
+    "showLessColors": "Tunjukkan Kurang Warna",
+    "fromCustomColorPicker": "daripada Pemilih Warna Tersuai"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Bunyi",
     "changeView": "Tukar Pandangan",
-    "newImage": "Imej Baharu"
+    "newImage": "Imej Baharu",
+    "defaultCustomStampTitle": "Setem Tersuai"
   },
   "rubberStamp": {
     "Approved": "Diluluskan",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "Jangan tunjukkan ini kepada saya lagi",
     "doNotAskAgain": "Jangan tanya lagi",
     "enterReplacementText": "Masukkan teks yang ingin anda gantikan",
+    "sort": "Isih",
     "sortBy": "Isih",
     "emptyCustomStampInput": "Teks setem tidak boleh kosong",
     "unpostedComment": "Komen Tidak Disiarkan",
@@ -311,10 +317,11 @@
     "selectFile": "Pilih fail",
     "selectPageToReplace": "Pilih halaman dalam dokumen yang anda ingin gantikan.",
     "embeddedFiles": "Fail Terbenam",
-    "pageNum": "Mukasurat",
+    "pageNum": "Halaman",
     "viewBookmark": "Lihat Penanda Halaman pada Halaman",
     "error": "ralat",
     "errorPageNumber": "Nombor halaman tidak sah. Had ialah",
+    "errorBlankPageNumber": "Sila nyatakan nombor halaman",
     "errorLoadingDocument": "Terdapat masalah membaca dokumen ini dan beberapa halaman mungkin tidak dipaparkan. Ini menunjukkan dokumen itu mungkin rosak. Jumlah kiraan halaman ialah {{totalPageCount}} dan nombor halaman yang dipaparkan ialah {{displayedPageCount}}.",
     "noRevisions": "Dokumen ini tidak mempunyai semakan."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Edit Teks",
       "toolbarGroup-FillAndSign": "Isi dan Tandatangani",
       "toolbarGroup-Forms": "Borang",
-      "toolbarGroup-Redact": "sunting"
+      "toolbarGroup-Redact": "sunting",
+      "toolbarGroup-oe-Home": "Rumah",
+      "toolbarGroup-oe-Insert": "Sisipkan",
+      "toolbarGroup-oe-Review": "Semakan"
     },
     "annotationColor": {
       "StrokeColor": "Strok",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(tiada nama)",
         "noDate": "(tiada tarikh)"
-      }
+      },
+      "toggleMultiSelect": "Togol Berbilang Pilih untuk Anotasi"
     },
     "pageTransition": {
       "continuous": "Halaman Berterusan",
@@ -428,7 +439,6 @@
       "includeComments": "Sertakan ulasan",
       "printSettings": "Tetapan Cetak",
       "printGrayscale": "Cetak Skala Kelabu",
-      "flatten": "Ratakan dokumen",
       "printCurrentDisabled": "Paparan semasa hanya tersedia apabila melihat satu halaman."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Jenis Awal*",
       "drawSignature": "Lukis Tandatangan*",
       "drawInitial": "Lukis Huruf Awal*",
+      "imageSignature": "Tandatangan Imej",
+      "imageInitial": "Gambar Awal",
       "pickInitialsFile": "Pilih Inisial",
       "noSignatures": "Pada masa ini tiada tandatangan yang disimpan.",
       "fontStyle": "gaya fon"
@@ -523,7 +535,9 @@
       "countMeasurement": "Kira ukuran",
       "radius": "Jejari",
       "count": "Kira",
-      "length": "Panjang"
+      "length": "Panjang",
+      "xAxis": "Paksi X",
+      "yAxis": "Paksi Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Skalakan saiz fon secara dinamik"
@@ -541,7 +555,8 @@
         "paperUnits": "Unit Kertas",
         "displayUnits": "Unit Paparan",
         "fractionUnitsTooltip": "Unit pecahan hanya digunakan untuk in dan ft-in",
-        "incorrectSyntax": "Sintaks salah"
+        "incorrectSyntax": "Sintaks salah",
+        "units": "Unit"
       },
       "scaleOverlay": {
         "addNewScale": "Tambah Skala Baharu",
@@ -560,6 +575,7 @@
         "irreversible": "tak boleh balik",
         "willDeleteMeasurement": "dan akan memadamkan ukuran yang berkaitan.",
         "confirmDelete": "Adakah anda pasti mahu memadamkan skala ini?",
+        "thisCantBeUndone": " Ini tidak boleh dibuat asal.",
         "ifChangeScale": "Jika anda menukar skala untuk ukuran atau alat yang dipilih, skala",
         "notUsedWillDelete": " tidak akan digunakan lagi oleh sebarang ukuran atau alat dan akan dipadamkan. Pemadaman tidak dapat dipulihkan.",
         "ifToContinue": "Adakah anda pasti mahu meneruskan?"
@@ -669,8 +685,7 @@
       "current": "Muka surat ini",
       "specify": "Tentukan Halaman",
       "odd": "Muka surat ganjil sahaja",
-      "even": "Muka surat genap sahaja",
-      "header": "Tandakan Penyuntingan Halaman"
+      "even": "Muka surat genap sahaja"
     },
     "lineStyleOptions": {
       "title": "Gaya"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Edit Pintasan Papan Kekunci",
       "setShorcut": "Tetapkan Shortcut",
       "pressKeyToSet": "Tekan kekunci atau kekunci untuk menetapkan pintasan baharu.",
-      "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud."
+      "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud.",
+      "close": "Tutup petua alat"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Padam Halaman",
-      "deleteMessage": "Adakah anda pasti mahu memadamkan halaman yang dipilih. Ini tidak boleh dibuat asal",
+      "deleteMessage": "Adakah anda pasti mahu memadamkan halaman yang dipilih. Ini tidak boleh dibuat asal.",
       "deleteLastPageMessage": "Anda tidak boleh memadam semua halaman dalam dokumen."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Dimensi Tanaman",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
-      "autoTrim": "Auto-trim"
+      "autoTrim": "Auto-trim",
+      "autoTrimCustom": "Adat"
     },
     "cropModal": {
       "applyTitle": "Gunakan tanaman?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Mula menyunting dengan menandakan teks, kawasan, halaman atau membuat carian.",
-    "redactionSearchPlaceholder": "Tambahkan mengikut carian kata kunci atau corak",
+    "redactionSearchPlaceholder": "Redaksi mengikut papan kekunci atau corak",
     "redactionCounter": "Ditanda untuk Redaksi",
     "clearMarked": "Jelas",
     "redactAllMarked": "Redaksi Semua",
+    "redactionItems": "Item Redaksi",
     "redactionItem": {
       "regionRedaction": "Penyuntingan wilayah",
       "fullPageRedaction": "Penyuntingan halaman penuh",
@@ -1177,6 +1195,7 @@
     "createFolder": "Buat Folder",
     "portfolioPanelTitle": "Portfolio PDF",
     "portfolioNewFolder": "Fail baharu",
+    "portfolioDocumentTitle": "Tajuk dokumen",
     "portfolioFolderPlaceholder": "Nama folder",
     "portfolioFilePlaceholder": "Nama fail",
     "folderNameAlreadyExists": "Nama folder sudah wujud",
@@ -1200,7 +1219,7 @@
     "rightAlign": "Jajar ke kanan",
     "justify": "Mewajarkan",
     "lineSpacing": "Jarak baris & perenggan",
-    "bulletList": "Senarai berbulet",
+    "bulletList": "Senarai bertitik tumpu mata",
     "numberList": "Senarai bernombor",
     "decreaseIndent": "Kurangkan inden",
     "increaseIndent": "Tingkatkan inden",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih.",
     "previewAllChanges": "Pratonton semua perubahan",
     "accept": "Terima",
-    "reject": "Tolak"
+    "reject": "Tolak",
+    "pastingTitle": "Menampal tidak tersedia",
+    "pastingMessage": "Menampal tidak disokong dalam penyemak imbas anda. Sebaliknya, anda boleh menggunakan pintasan papan kekunci",
+    "pastingWithoutFormatTitle": "Menampal tanpa pemformatan tidak tersedia",
+    "pastingWithoutFormatMessage": "Menampal tanpa pemformatan tidak disokong dalam penyemak imbas anda. Sebaliknya, anda boleh menggunakan pintasan papan kekunci",
+    "numberDropdown": {
+      "dropdownLabel": "Pratetap Penomboran"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Pratetap Peluru"
+    },
+    "fontSize": {
+      "dropdownLabel": "Saiz Font"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Gaya Font"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Keluarga Font"
+    }
   },
   "insertPageModal": {
-    "title": "Tambah Halaman Baharu",
+    "title": "Sisipkan Halaman Baharu",
     "tabs": {
       "blank": "kosong",
       "upload": "Muat naik"
@@ -1280,7 +1318,7 @@
     "save": "Simpan Dokumen",
     "comparePanel": {
       "Find": "Cari dalam dokumen",
-      "changesList": "Senarai Perubahan",
+      "changesList": "Tukar senarai",
       "change": "Ubah",
       "old": "Tua",
       "new": "Baru",
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "setem",
     "standard": "Setem Standard"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Pemilih Warna"
   }
 }

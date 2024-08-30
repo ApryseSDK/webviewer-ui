@@ -110,7 +110,7 @@
     "movePageToTop": "Mover página para o topo",
     "movePageToBottom": "Mover a página para baixo",
     "backToMenu": "Voltar ao menu",
-    "redactPages": "Redigir páginas",
+    "redactPages": "Redigir Páginas",
     "playAudio": "Reproduzir áudio",
     "pauseAudio": "pausa de áudio",
     "selectAll": "Selecionar tudo",
@@ -123,13 +123,17 @@
     "showComparison": "Mostrar comparação",
     "back": "De volta",
     "clearSignature": "Assinatura clara",
+    "clearInitial": "Limpar inicial",
     "readOnlySignature": "A assinatura somente leitura não pode ser excluída",
     "newDocument": "Novo Documento",
     "sideBySideView": "Vista lado a lado",
     "pageNumberInput": "Entrada do número da página",
     "addNewColor": "Adicionar nova cor",
     "deleteColor": "Excluir cor selecionada",
-    "copySelectedColor": "Copiar cor selecionada"
+    "copySelectedColor": "Copiar cor selecionada",
+    "showMoreColors": "Mostrar mais cores",
+    "showLessColors": "Mostrar menos cores",
+    "fromCustomColorPicker": "do seletor de cores personalizado"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Som",
     "changeView": "Alterar visualização",
-    "newImage": "Nova imagem"
+    "newImage": "Nova imagem",
+    "defaultCustomStampTitle": "Carimbo personalizado"
   },
   "rubberStamp": {
     "Approved": "Aprovado",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "não me mostre isso novamente",
     "doNotAskAgain": "Não pergunte novamente",
     "enterReplacementText": "Digite o texto que deseja substituir",
+    "sort": "Organizar",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
     "unpostedComment": "Comentário Não Postado",
@@ -311,10 +317,11 @@
     "selectFile": "Selecione o arquivo",
     "selectPageToReplace": "Selecione as páginas do documento que deseja substituir.",
     "embeddedFiles": "Arquivos incorporados",
-    "pageNum": "Número de página",
+    "pageNum": "Página",
     "viewBookmark": "Ver marcador na página",
     "error": "Erro",
     "errorPageNumber": "Número de página inválido. Limite é",
+    "errorBlankPageNumber": "Por favor especifique um número de página",
     "errorLoadingDocument": "Ocorreu um problema ao ler este documento e algumas páginas podem não ser exibidas. Isso indica que o documento pode estar corrompido. A contagem total de páginas é {{totalPageCount}} e o número de páginas exibidas é {{displayedPageCount}}.",
     "noRevisions": "Este documento não possui revisões."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Editar texto",
       "toolbarGroup-FillAndSign": "Preencher e assinar",
       "toolbarGroup-Forms": "Formulários",
-      "toolbarGroup-Redact": "Redigir"
+      "toolbarGroup-Redact": "Redigir",
+      "toolbarGroup-oe-Home": "Lar",
+      "toolbarGroup-oe-Insert": "Inserir",
+      "toolbarGroup-oe-Review": "Análise"
     },
     "annotationColor": {
       "StrokeColor": "Cor da borda",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(sem nome)",
         "noDate": "(sem data)"
-      }
+      },
+      "toggleMultiSelect": "Alternar seleção múltipla para anotação"
     },
     "pageTransition": {
       "continuous": "Contínuo",
@@ -428,7 +439,6 @@
       "includeComments": "Incluir comentários",
       "printSettings": "Configurações de impressão",
       "printGrayscale": "Imprimir escala de cinza",
-      "flatten": "Achatar documento",
       "printCurrentDisabled": "A visualização atual só está disponível ao visualizar uma única página."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Digite as iniciais*",
       "drawSignature": "Desenhar Assinatura*",
       "drawInitial": "Desenhe iniciais*",
+      "imageSignature": "Assinatura de imagem",
+      "imageInitial": "Iniciais da imagem",
       "pickInitialsFile": "Escolha as iniciais",
       "noSignatures": "No momento, não há assinaturas salvas.",
       "fontStyle": "estilo de fonte"
@@ -523,7 +535,9 @@
       "countMeasurement": "Medição de contagem",
       "radius": "Raio",
       "count": "Contagem",
-      "length": "Comprimento"
+      "length": "Comprimento",
+      "xAxis": "Eixo X",
+      "yAxis": "Eixo Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Dimensione o tamanho da fonte dinamicamente"
@@ -541,7 +555,8 @@
         "paperUnits": "Unidades de papel",
         "displayUnits": "Unidades de exibição",
         "fractionUnitsTooltip": "Unidades de fração aplicam-se apenas a in e ft-in",
-        "incorrectSyntax": "Sintaxe incorreta"
+        "incorrectSyntax": "Sintaxe incorreta",
+        "units": "Unidades"
       },
       "scaleOverlay": {
         "addNewScale": "Adicionar nova escala",
@@ -560,6 +575,7 @@
         "irreversible": "irreversível",
         "willDeleteMeasurement": "e excluirá as medições associadas.",
         "confirmDelete": "Tem certeza de que deseja excluir esta escala?",
+        "thisCantBeUndone": " Isso não pode ser desfeito.",
         "ifChangeScale": "Se você alterar a escala da medida ou ferramenta selecionada, a escala",
         "notUsedWillDelete": " não será mais usado por nenhuma medida ou ferramenta e será excluído. A exclusão é irreversível.",
         "ifToContinue": "Tem certeza de que deseja continuar?"
@@ -669,8 +685,7 @@
       "current": "Pagina atual",
       "specify": "Especificar páginas",
       "odd": "Somente páginas ímpares",
-      "even": "Apenas páginas pares",
-      "header": "Marcar Redação de Páginas"
+      "even": "Apenas páginas pares"
     },
     "lineStyleOptions": {
       "title": "Estilo"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Editar atalho de teclado",
       "setShorcut": "Definir atalho",
       "pressKeyToSet": "Pressione a tecla ou as teclas para definir um novo atalho.",
-      "shortcutAlreadyExists": "O atalho de teclado acima já existe."
+      "shortcutAlreadyExists": "O atalho de teclado acima já existe.",
+      "close": "Fechar dica"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Excluir página",
-      "deleteMessage": "Esta ação excluirá permanentemente as páginas selecionadas. Isso não pode ser desfeito",
+      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas? Isso não pode ser desfeito.",
       "deleteLastPageMessage": "Você não pode excluir todas as páginas do documento."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Dimensões de corte",
     "dimensionInput": {
       "unitOfMeasurement": "Unidade",
-      "autoTrim": "Corte automático"
+      "autoTrim": "Corte automático",
+      "autoTrimCustom": "Personalizado"
     },
     "cropModal": {
       "applyTitle": "Aplicar colheita?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Comece a redigir marcando texto, regiões, páginas ou fazendo uma pesquisa.",
-    "redactionSearchPlaceholder": "Adicionar por pesquisa de palavras-chave ou padrões",
+    "redactionSearchPlaceholder": "Editar por teclado ou padrões",
     "redactionCounter": "Marcado para redação",
     "clearMarked": "Claro",
     "redactAllMarked": "Redigir tudo",
+    "redactionItems": "Itens de Redação",
     "redactionItem": {
       "regionRedaction": "Redação da região",
       "fullPageRedaction": "Redação de página inteira",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "Números de telefone",
       "images": "Imagens",
       "emails": "E-mails",
-      "pattern": "Padrão",
+      "pattern": "Padrões",
       "start": "Comece a fazer sua pesquisa"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "Criar pasta",
     "portfolioPanelTitle": "Portfólio PDF",
     "portfolioNewFolder": "Nova pasta",
+    "portfolioDocumentTitle": "Título do documento",
     "portfolioFolderPlaceholder": "Nome da pasta",
     "portfolioFilePlaceholder": "Nome do arquivo",
     "folderNameAlreadyExists": "O nome da pasta já existe",
@@ -1201,7 +1220,7 @@
     "justify": "Justificar",
     "lineSpacing": "Espaçamento entre linhas e parágrafos",
     "bulletList": "Lista com marcadores",
-    "numberList": "lista numerada",
+    "numberList": "Lista numerada",
     "decreaseIndent": "Recuar devagar",
     "increaseIndent": "Aumentar recuo",
     "insertLink": "Inserir link",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis.",
     "previewAllChanges": "Visualizar todas as alterações",
     "accept": "Aceitar",
-    "reject": "Rejeitar"
+    "reject": "Rejeitar",
+    "pastingTitle": "Colagem não disponível",
+    "pastingMessage": "Colar não é compatível com seu navegador. Em vez disso, você pode usar um atalho de teclado",
+    "pastingWithoutFormatTitle": "Colar sem formatação não disponível",
+    "pastingWithoutFormatMessage": "Colar sem formatação não é compatível com seu navegador. Em vez disso, você pode usar um atalho de teclado",
+    "numberDropdown": {
+      "dropdownLabel": "Predefinições de numeração"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Predefinições de marcadores"
+    },
+    "fontSize": {
+      "dropdownLabel": "Tamanho da fonte"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Estilos de fonte"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Família de fontes"
+    }
   },
   "insertPageModal": {
-    "title": "Adicionar nova página",
+    "title": "Inserir nova página",
     "tabs": {
       "blank": "Em branco",
       "upload": "Envio"
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Selos",
     "standard": "Selos padrão"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Seletor de cores"
   }
 }

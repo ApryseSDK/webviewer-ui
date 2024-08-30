@@ -4,12 +4,12 @@ import core from 'core';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import actions from 'actions';
-import Icon from 'components/Icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { isMobileSize } from 'src/helpers/getDeviceSize';
 import { PANEL_SIZES } from 'src/constants/panel';
 import { isNull } from 'lodash';
 import PropTypes from 'prop-types';
+import Button from 'components/Button';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
@@ -24,31 +24,45 @@ const CustomRubberStamp = React.memo((
     isActive,
   }) => {
   const [t] = useTranslation();
-
+  const customStampData = annotation.getCustomData('trn-custom-stamp');
+  let stampInfo;
+  try {
+    stampInfo = JSON.parse(customStampData);
+  } catch (e) {
+    stampInfo = { title: `${t('annotation.defaultCustomStampTitle')}` };
+  }
   return (
-    <div className='custom-rubber-stamp-row' tabIndex='0'>
+    <div className='custom-rubber-stamp-row' tabIndex='-1'>
       <button
         key={index}
         className={classNames('rubber-stamp', { 'active': isActive })}
-        aria-label={`${t('annotation.stamp')} ${index + 1}`}
+        aria-label={`${t('annotation.stamp')} ${stampInfo.title} ${stampInfo.author} ${annotation.DateCreated}`}
         onClick={() => onClick(annotation, index + standardStampsOffset)}
       >
         <img src={imgSrc} alt="" />
       </button>
-      <button
-        className="icon-button"
+      <Button
         data-element="defaultSignatureDeleteButton"
         onClick={() => {
           deleteHandler(index);
         }}
-      >
-        <Icon glyph="icon-delete-line" />
-      </button>
+        img="icon-delete-line"
+        ariaLabel={`${t('action.delete')} ${t('annotation.stamp')} ${index + 1}`}
+      />
     </div>
   );
 });
 
 CustomRubberStamp.displayName = 'CustomRubberStamp';
+CustomRubberStamp.propTypes = {
+  imgSrc: PropTypes.string,
+  annotation: PropTypes.object,
+  index: PropTypes.number,
+  onClick: PropTypes.func,
+  deleteHandler: PropTypes.func,
+  standardStampsOffset: PropTypes.number,
+  isActive: PropTypes.bool,
+};
 
 
 const CustomRubberStamps = (

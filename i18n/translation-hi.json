@@ -123,13 +123,17 @@
     "showComparison": "तुलना दिखाएँ",
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
+    "clearInitial": "प्रारंभिक साफ़ करें",
     "readOnlySignature": "केवल पढ़ने योग्य हस्ताक्षर को हटाया नहीं जा सकता",
     "newDocument": "नया दस्तावेज़",
     "sideBySideView": "अगल-बगल का दृश्य",
     "pageNumberInput": "पेज नंबर इनपुट",
     "addNewColor": "नया रंग जोड़ें",
     "deleteColor": "चयनित रंग हटाएँ",
-    "copySelectedColor": "चयनित रंग कॉपी करें"
+    "copySelectedColor": "चयनित रंग कॉपी करें",
+    "showMoreColors": "और अधिक रंग दिखाएं",
+    "showLessColors": "कम रंग दिखाएं",
+    "fromCustomColorPicker": "कस्टम कलर पिकर से"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -185,7 +189,8 @@
     "3D": "3डी",
     "sound": "ध्वनि",
     "changeView": "परिवर्तन देखें",
-    "newImage": "नया चित्र"
+    "newImage": "नया चित्र",
+    "defaultCustomStampTitle": "कस्टम स्टाम्प"
   },
   "rubberStamp": {
     "Approved": "स्वीकृत",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "मुझे फिर से न दिखाएं",
     "doNotAskAgain": "फिर से न पूछें",
     "enterReplacementText": "वह टेक्स्ट दर्ज करें जिसे आप बदलना चाहते हैं",
+    "sort": "क्रम से लगाना",
     "sortBy": "तरह",
     "emptyCustomStampInput": "स्टाम्प टेक्स्ट खाली नहीं हो सकता",
     "unpostedComment": "पोस्ट नहीं की गई टिप्पणी",
@@ -311,10 +317,11 @@
     "selectFile": "फ़ाइल का चयन करें",
     "selectPageToReplace": "दस्तावेज़ में उन पृष्ठों का चयन करें जिनसे आप बदलना चाहते हैं।",
     "embeddedFiles": "एंबेडेड फ़ाइलें",
-    "pageNum": "पृष्ठ संख्या",
+    "pageNum": "पृष्ठ",
     "viewBookmark": "पेज पर बुकमार्क देखें",
     "error": "त्रुटि",
     "errorPageNumber": "अमान्य पृष्ठ संख्या। सीमा है",
+    "errorBlankPageNumber": "कृपया पृष्ठ संख्या निर्दिष्ट करें",
     "errorLoadingDocument": "इस दस्तावेज़ को पढ़ने में एक समस्या थी और हो सकता है कि कुछ पृष्ठ प्रदर्शित न हों। यह इंगित करता है कि दस्तावेज़ दूषित हो सकता है। कुल पृष्ठ संख्या {{totalPageCount}} है और प्रदर्शित किए जा रहे पृष्ठों की संख्या {{displayedPageCount}} है।",
     "noRevisions": "इस दस्तावेज़ में कोई संशोधन नहीं है।"
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "लिखाई में बदलाव",
       "toolbarGroup-FillAndSign": "भरें और हस्ताक्षर करें",
       "toolbarGroup-Forms": "फार्म",
-      "toolbarGroup-Redact": "संपादन"
+      "toolbarGroup-Redact": "संपादन",
+      "toolbarGroup-oe-Home": "घर",
+      "toolbarGroup-oe-Insert": "डालना",
+      "toolbarGroup-oe-Review": "समीक्षा"
     },
     "annotationColor": {
       "StrokeColor": "आघात",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(कोई नाम नहीं)",
         "noDate": "(कोई तारीख नहीं)"
-      }
+      },
+      "toggleMultiSelect": "एनोटेशन के लिए मल्टी सेलेक्ट टॉगल करें"
     },
     "pageTransition": {
       "continuous": "सतत पृष्ठ",
@@ -428,7 +439,6 @@
       "includeComments": "टिप्पणियाँ शामिल करें",
       "printSettings": "प्रिंट सेटिंग्स",
       "printGrayscale": "ग्रेस्केल प्रिंट करें",
-      "flatten": "दस्तावेज़ समतल करें",
       "printCurrentDisabled": "वर्तमान दृश्य केवल एकल पृष्ठ देखने पर ही उपलब्ध होता है।"
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "प्रारंभिक टाइप करें*",
       "drawSignature": "हस्ताक्षर बनाएं*",
       "drawInitial": "आद्याक्षर ड्रा करें*",
+      "imageSignature": "छवि हस्ताक्षर",
+      "imageInitial": "छवि के प्रारंभिक अक्षर",
       "pickInitialsFile": "आद्याक्षर चुनें",
       "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।",
       "fontStyle": "लिपि शैली"
@@ -523,7 +535,9 @@
       "countMeasurement": "गणना माप",
       "radius": "RADIUS",
       "count": "गिनती",
-      "length": "लंबाई"
+      "length": "लंबाई",
+      "xAxis": "X- अक्ष",
+      "yAxis": "शाफ़्ट"
     },
     "freeTextOption": {
       "autoSizeFont": "फ़ॉन्ट आकार को गतिशील रूप से स्केल करें"
@@ -541,7 +555,8 @@
         "paperUnits": "कागज इकाइयाँ",
         "displayUnits": "प्रदर्शन इकाइयां",
         "fractionUnitsTooltip": "भिन्न इकाइयाँ केवल in और ft-in . पर लागू होती हैं",
-        "incorrectSyntax": "गलत वाक्य रचना"
+        "incorrectSyntax": "गलत वाक्य रचना",
+        "units": "इकाइयों"
       },
       "scaleOverlay": {
         "addNewScale": "नया पैमाना जोड़ें",
@@ -560,6 +575,7 @@
         "irreversible": "अचल",
         "willDeleteMeasurement": "और संबंधित माप हटा देगा।",
         "confirmDelete": "क्या आप वाकई इस पैमाने को हटाना चाहते हैं?",
+        "thisCantBeUndone": "इसे पूर्ववत नहीं किया जा सकता.",
         "ifChangeScale": "यदि आप चयनित माप या उपकरण के लिए पैमाना बदलते हैं, तो पैमाना",
         "notUsedWillDelete": " अब किसी भी माप या उपकरण द्वारा उपयोग नहीं किया जाएगा और हटा दिया जाएगा। हटाना अपरिवर्तनीय है।",
         "ifToContinue": "क्या आप वाकई जारी रखना चाहते हैं?"
@@ -669,8 +685,7 @@
       "current": "वर्तमान पृष्ठ",
       "specify": "पृष्ठ निर्दिष्ट करें",
       "odd": "केवल विषम पृष्ठ",
-      "even": "केवल सम पृष्ठ",
-      "header": "मार्क पेज रिडक्शन"
+      "even": "केवल सम पृष्ठ"
     },
     "lineStyleOptions": {
       "title": "शैली"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "कीबोर्ड शॉर्टकट संपादित करें",
       "setShorcut": "शॉर्टकट सेट करें",
       "pressKeyToSet": "नया शॉर्टकट सेट करने के लिए कुंजी या कुंजियां दबाएं।",
-      "shortcutAlreadyExists": "ऊपर दिया गया कीबोर्ड शॉर्टकट पहले से मौजूद है।"
+      "shortcutAlreadyExists": "ऊपर दिया गया कीबोर्ड शॉर्टकट पहले से मौजूद है।",
+      "close": "टूलटिप बंद करें"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "पेज हटाएं",
-      "deleteMessage": "क्या आप वाकई चयनित पृष्ठ (पृष्ठों) को हटाना चाहते हैं। इसे पूर्ववत नहीं किया जा सकता",
+      "deleteMessage": "क्या आप वाकई चयनित पृष्ठ(पृष्ठों) को हटाना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता.",
       "deleteLastPageMessage": "आप दस्तावेज़ के सभी पृष्ठ नहीं हटा सकते।"
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "फसल आयाम",
     "dimensionInput": {
       "unitOfMeasurement": "इकाई",
-      "autoTrim": "ऑटो-ट्रिम"
+      "autoTrim": "ऑटो-ट्रिम",
+      "autoTrimCustom": "रिवाज़"
     },
     "cropModal": {
       "applyTitle": "फसल लागू करें?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "पाठ, क्षेत्रों, पृष्ठों को चिह्नित करके या खोज करके पुनः अभिनय करना प्रारंभ करें।",
-    "redactionSearchPlaceholder": "कीवर्ड खोज या पैटर्न द्वारा जोड़ें",
+    "redactionSearchPlaceholder": "कीबोर्ड या पैटर्न द्वारा संपादित करें",
     "redactionCounter": "रिडक्शन के लिए चिह्नित",
     "clearMarked": "स्पष्ट",
     "redactAllMarked": "Redact All",
+    "redactionItems": "संपादन आइटम",
     "redactionItem": {
       "regionRedaction": "रीजन रिडक्शन",
       "fullPageRedaction": "पूरा पेज रिडक्शन",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "दूरभाष संख्या",
       "images": "इमेजिस",
       "emails": "ईमेल",
-      "pattern": "प्रतिरूप",
+      "pattern": "पैटर्न्स",
       "start": "अपनी खोज शुरू करें"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "फोल्डर बनाएं",
     "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
     "portfolioNewFolder": "नया फ़ोल्डर",
+    "portfolioDocumentTitle": "दस्तावेज़ का शीर्षक",
     "portfolioFolderPlaceholder": "फ़ोल्डर का नाम",
     "portfolioFilePlaceholder": "फ़ाइल का नाम",
     "folderNameAlreadyExists": "फ़ोल्डर नाम पहले से मौजूद है",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।",
     "previewAllChanges": "सभी परिवर्तनों का पूर्वावलोकन करें",
     "accept": "स्वीकार करना",
-    "reject": "अस्वीकार करना"
+    "reject": "अस्वीकार करना",
+    "pastingTitle": "चिपकाना उपलब्ध नहीं है",
+    "pastingMessage": "आपके ब्राउज़र में पेस्ट करना समर्थित नहीं है। इसके बजाय, आप कीबोर्ड शॉर्टकट का उपयोग कर सकते हैं",
+    "pastingWithoutFormatTitle": "बिना फ़ॉर्मेटिंग के पेस्ट करना उपलब्ध नहीं है",
+    "pastingWithoutFormatMessage": "आपके ब्राउज़र में बिना फ़ॉर्मेटिंग के पेस्ट करना समर्थित नहीं है। इसके बजाय, आप कीबोर्ड शॉर्टकट का उपयोग कर सकते हैं",
+    "numberDropdown": {
+      "dropdownLabel": "नंबरिंग प्रीसेट"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "बुलेट प्रीसेट"
+    },
+    "fontSize": {
+      "dropdownLabel": "फ़ॉन्ट आकार"
+    },
+    "fontStyles": {
+      "dropdownLabel": "फ़ॉन्ट शैलियाँ"
+    },
+    "fontFamily": {
+      "dropdownLabel": "फुहारा परिवार"
+    }
   },
   "insertPageModal": {
-    "title": "नया पेज जोड़ें",
+    "title": "नया पेज डालें",
     "tabs": {
       "blank": "खाली",
       "upload": "डालना"
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "टिकटों",
     "standard": "मानक टिकटें"
+  },
+  "colorPickerModal": {
+    "modalTitle": "रंग चुनने वाली मशीन"
   }
 }

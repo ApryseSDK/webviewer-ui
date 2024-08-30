@@ -123,13 +123,17 @@
     "showComparison": "Mostrar comparación",
     "back": "atrás",
     "clearSignature": "Firma clara",
+    "clearInitial": "Inicial clara",
     "readOnlySignature": "La firma de solo lectura no se puede eliminar",
     "newDocument": "Nuevo documento",
     "sideBySideView": "Vista de lado a lado",
     "pageNumberInput": "Entrada del número de página",
     "addNewColor": "Agregar nuevo color",
     "deleteColor": "Eliminar color seleccionado",
-    "copySelectedColor": "Copiar color seleccionado"
+    "copySelectedColor": "Copiar color seleccionado",
+    "showMoreColors": "Mostrar más colores",
+    "showLessColors": "Mostrar menos colores",
+    "fromCustomColorPicker": "del Selector de color personalizado"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Sonar",
     "changeView": "Cambio Vista",
-    "newImage": "Nueva imagen"
+    "newImage": "Nueva imagen",
+    "defaultCustomStampTitle": "Sello personalizado"
   },
   "rubberStamp": {
     "Approved": "Aprobada",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "no me muestres esto otra vez",
     "doNotAskAgain": "No preguntes de nuevo",
     "enterReplacementText": "Ingrese el texto que desea reemplazar",
+    "sort": "Clasificar",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
     "unpostedComment": "Comentario no publicado",
@@ -311,10 +317,11 @@
     "selectFile": "Seleccione Archivo",
     "selectPageToReplace": "Seleccione las páginas del documento por las que le gustaría reemplazar.",
     "embeddedFiles": "Archivos incrustados",
-    "pageNum": "Número de página",
+    "pageNum": "Página",
     "viewBookmark": "Ver marcador en la página",
     "error": "Error",
     "errorPageNumber": "Número de página no válido. El límite es",
+    "errorBlankPageNumber": "Por favor especifique un número de página",
     "errorLoadingDocument": "Hubo un problema al leer este documento y es posible que no se muestren algunas páginas. Esto indica que el documento puede estar dañado. El recuento total de páginas es {{totalPageCount}} y el número de páginas que se muestran es {{displayedPageCount}}.",
     "noRevisions": "Este documento no tiene revisiones."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Editar texto",
       "toolbarGroup-FillAndSign": "Llenar y firmar",
       "toolbarGroup-Forms": "Formularios",
-      "toolbarGroup-Redact": "Redactar"
+      "toolbarGroup-Redact": "Redactar",
+      "toolbarGroup-oe-Home": "Hogar",
+      "toolbarGroup-oe-Insert": "Insertar",
+      "toolbarGroup-oe-Review": "Revisar"
     },
     "annotationColor": {
       "StrokeColor": "Color del borde",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(sin nombre)",
         "noDate": "(sin cita)"
-      }
+      },
+      "toggleMultiSelect": "Alternar selección múltiple para anotación"
     },
     "pageTransition": {
       "continuous": "Continua",
@@ -428,7 +439,6 @@
       "includeComments": "Incluir comentarios",
       "printSettings": "Configuración de impresión",
       "printGrayscale": "Imprimir en escala de grises",
-      "flatten": "Aplanar documento",
       "printCurrentDisabled": "La vista actual solo está disponible cuando se visualiza una sola página."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Tipo Iniciales*",
       "drawSignature": "Dibujar Firma*",
       "drawInitial": "Dibujar iniciales*",
+      "imageSignature": "Firma de imagen",
+      "imageInitial": "Iniciales de imagen",
       "pickInitialsFile": "Elija Iniciales",
       "noSignatures": "Actualmente no hay firmas guardadas.",
       "fontStyle": "Estilo de fuente"
@@ -523,7 +535,9 @@
       "countMeasurement": "Medida de conteo",
       "radius": "Radio",
       "count": "Contar",
-      "length": "Longitud"
+      "length": "Longitud",
+      "xAxis": "Eje X",
+      "yAxis": "Y-Axis"
     },
     "freeTextOption": {
       "autoSizeFont": "Escalar el tamaño de fuente dinámicamente"
@@ -541,7 +555,8 @@
         "paperUnits": "Unidades de papel",
         "displayUnits": "Unidades de visualización",
         "fractionUnitsTooltip": "Las unidades de fracción solo se aplican a pulgadas y pies-pulgadas.",
-        "incorrectSyntax": "Sintaxis incorrecta"
+        "incorrectSyntax": "Sintaxis incorrecta",
+        "units": "Unidades"
       },
       "scaleOverlay": {
         "addNewScale": "Agregar nueva escala",
@@ -560,6 +575,7 @@
         "irreversible": "irreversible",
         "willDeleteMeasurement": "y eliminará las medidas asociadas.",
         "confirmDelete": "¿Está seguro de que desea eliminar esta escala?",
+        "thisCantBeUndone": " Esto no se puede deshacer.",
         "ifChangeScale": "Si cambia la escala para la medida o herramienta seleccionada, la escala",
         "notUsedWillDelete": " ya no será utilizado por ninguna medida o herramienta y será eliminado. La eliminación es irreversible.",
         "ifToContinue": "¿Está seguro de que desea continuar?"
@@ -669,8 +685,7 @@
       "current": "Página actual",
       "specify": "Especificar páginas",
       "odd": "Solo páginas impares",
-      "even": "Sólo las páginas pares",
-      "header": "Marcar la redacción de páginas"
+      "even": "Sólo las páginas pares"
     },
     "lineStyleOptions": {
       "title": "Estilo"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Editar atajo de teclado",
       "setShorcut": "Establecer acceso directo",
       "pressKeyToSet": "Pulse la tecla o las teclas para establecer un nuevo acceso directo.",
-      "shortcutAlreadyExists": "El método abreviado de teclado anterior ya existe."
+      "shortcutAlreadyExists": "El método abreviado de teclado anterior ya existe.",
+      "close": "Cerrar información sobre herramientas"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Eliminar página",
-      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer",
+      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer.",
       "deleteLastPageMessage": "No puede eliminar todas las páginas del documento."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Dimensiones de cultivo",
     "dimensionInput": {
       "unitOfMeasurement": "Unidad",
-      "autoTrim": "Recorte automático"
+      "autoTrim": "Recorte automático",
+      "autoTrimCustom": "Costumbre"
     },
     "cropModal": {
       "applyTitle": "¿Aplicar cultivo?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
-    "redactionSearchPlaceholder": "Agregar por búsqueda de palabra clave o patrones",
+    "redactionSearchPlaceholder": "Redactar por teclado o patrones",
     "redactionCounter": "Marcado para Redacción",
     "clearMarked": "Claro",
     "redactAllMarked": "Redactar todo",
+    "redactionItems": "Elementos de redacción",
     "redactionItem": {
       "regionRedaction": "Redacción de la región",
       "fullPageRedaction": "Redacción de página completa",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "Números de teléfono",
       "images": "Imágenes",
       "emails": "Correos electrónicos",
-      "pattern": "Patrón",
+      "pattern": "Patrones",
       "start": "Empieza a hacer tu búsqueda"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "Crear carpeta",
     "portfolioPanelTitle": "Portafolio PDF",
     "portfolioNewFolder": "Nueva carpeta",
+    "portfolioDocumentTitle": "Titulo del documento",
     "portfolioFolderPlaceholder": "Nombre de la carpeta",
     "portfolioFilePlaceholder": "Nombre del archivo",
     "folderNameAlreadyExists": "El nombre de la carpeta ya existe",
@@ -1201,7 +1220,7 @@
     "justify": "Justificar",
     "lineSpacing": "Espaciado de líneas y párrafos",
     "bulletList": "Lista con viñetas",
-    "numberList": "lista numerada",
+    "numberList": "Lista numerada",
     "decreaseIndent": "Disminuir sangría",
     "increaseIndent": "Aumentar sangría",
     "insertLink": "Insertar el link",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "La edición de Office no es compatible con dispositivos móviles.",
     "previewAllChanges": "Vista previa de todos los cambios",
     "accept": "Aceptar",
-    "reject": "Rechazar"
+    "reject": "Rechazar",
+    "pastingTitle": "Pegar no disponible",
+    "pastingMessage": "Su navegador no admite pegar. En su lugar, puedes usar un atajo de teclado.",
+    "pastingWithoutFormatTitle": "Pegar sin formatear no está disponible",
+    "pastingWithoutFormatMessage": "Su navegador no admite pegar sin formatear. En su lugar, puedes usar un atajo de teclado.",
+    "numberDropdown": {
+      "dropdownLabel": "Preajustes de numeración"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Preajustes de viñetas"
+    },
+    "fontSize": {
+      "dropdownLabel": "Tamaño de fuente"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Estilos de fuente"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Familia de fuentes"
+    }
   },
   "insertPageModal": {
-    "title": "Agregar nueva página",
+    "title": "Insertar nueva página",
     "tabs": {
       "blank": "Vacío",
       "upload": "Subir"
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Sellos",
     "standard": "Sellos estándar"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Selector de color"
   }
 }

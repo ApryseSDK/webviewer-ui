@@ -123,13 +123,17 @@
     "showComparison": "Hiển thị so sánh",
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
+    "clearInitial": "Xóa chữ cái đầu",
     "readOnlySignature": "Không thể xóa chữ ký chỉ đọc",
     "newDocument": "Tài liệu mới",
     "sideBySideView": "Xem cạnh nhau",
     "pageNumberInput": "Nhập số trang",
     "addNewColor": "Thêm màu mới",
     "deleteColor": "Xóa màu đã chọn",
-    "copySelectedColor": "Sao chép màu đã chọn"
+    "copySelectedColor": "Sao chép màu đã chọn",
+    "showMoreColors": "Hiển thị thêm màu sắc",
+    "showLessColors": "Hiển thị ít màu sắc hơn",
+    "fromCustomColorPicker": "từ Bộ chọn màu tùy chỉnh"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Âm thanh",
     "changeView": "Thay đổi góc nhìn",
-    "newImage": "Hình ảnh mới"
+    "newImage": "Hình ảnh mới",
+    "defaultCustomStampTitle": "Con dấu tùy chỉnh"
   },
   "rubberStamp": {
     "Approved": "Đã chấp thuận",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "Không hiển thị lại điều này cho tôi",
     "doNotAskAgain": "Đừng hỏi nữa",
     "enterReplacementText": "Nhập văn bản bạn muốn thay thế",
+    "sort": "Loại",
     "sortBy": "Sắp xếp",
     "emptyCustomStampInput": "Văn bản tem không thể trống",
     "unpostedComment": "Nhận Xét Chưa Đăng",
@@ -311,10 +317,11 @@
     "selectFile": "Chọn tệp",
     "selectPageToReplace": "Chọn các trang trong tài liệu bạn muốn thay thế.",
     "embeddedFiles": "Tệp Nhúng",
-    "pageNum": "Số Trang",
+    "pageNum": "Trang",
     "viewBookmark": "Xem dấu trang trên trang",
     "error": "Lỗi",
     "errorPageNumber": "Số trang không hợp lệ. Giới hạn là",
+    "errorBlankPageNumber": "Vui lòng chỉ định số trang",
     "errorLoadingDocument": "Đã xảy ra sự cố khi đọc tài liệu này và một số trang có thể không được hiển thị. Điều này cho thấy tài liệu có thể bị hỏng. Tổng số trang là {{totalPageCount}} và số trang đang được hiển thị là {{displayPageCount}}.",
     "noRevisions": "Tài liệu này không có sửa đổi."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Chỉnh sửa văn bản",
       "toolbarGroup-FillAndSign": "Điền và Ký",
       "toolbarGroup-Forms": "Biểu mẫu",
-      "toolbarGroup-Redact": "Biên tập"
+      "toolbarGroup-Redact": "Biên tập",
+      "toolbarGroup-oe-Home": "Trang chủ",
+      "toolbarGroup-oe-Insert": "Chèn",
+      "toolbarGroup-oe-Review": "Ôn tập"
     },
     "annotationColor": {
       "StrokeColor": "Nét",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(không có tên)",
         "noDate": "(không có ngày)"
-      }
+      },
+      "toggleMultiSelect": "Chuyển đổi nhiều lựa chọn cho chú thích"
     },
     "pageTransition": {
       "continuous": "Trang Liên Tục",
@@ -428,7 +439,6 @@
       "includeComments": "Bao gồm bình luận",
       "printSettings": "Cài đặt in",
       "printGrayscale": "In thang độ xám",
-      "flatten": "Làm phẳng tài liệu",
       "printCurrentDisabled": "Chế độ xem hiện tại chỉ khả dụng khi xem một trang duy nhất."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Nhập tên viết tắt *",
       "drawSignature": "Vẽ Chữ ký *",
       "drawInitial": "Rút tên viết tắt *",
+      "imageSignature": "Chữ ký hình ảnh",
+      "imageInitial": "Hình ảnh viết tắt",
       "pickInitialsFile": "Chọn tên viết tắt",
       "noSignatures": "Hiện tại không có chữ ký nào được lưu.",
       "fontStyle": "kiểu phông chữ"
@@ -523,7 +535,9 @@
       "countMeasurement": "Đo đếm",
       "radius": "Bán kính",
       "count": "Số lượng",
-      "length": "Chiều dài"
+      "length": "Chiều dài",
+      "xAxis": "Trục X",
+      "yAxis": "Trục Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Chia tỷ lệ kích thước phông chữ một cách linh hoạt"
@@ -541,7 +555,8 @@
         "paperUnits": "Đơn vị giấy",
         "displayUnits": "Đơn vị hiển thị",
         "fractionUnitsTooltip": "Đơn vị phân số chỉ áp dụng cho in và ft-in",
-        "incorrectSyntax": "Cú pháp không chính xác"
+        "incorrectSyntax": "Cú pháp không chính xác",
+        "units": "Các đơn vị"
       },
       "scaleOverlay": {
         "addNewScale": "Thêm quy mô mới",
@@ -560,6 +575,7 @@
         "irreversible": "không thể thay đổi",
         "willDeleteMeasurement": "và sẽ xóa các phép đo liên quan.",
         "confirmDelete": "Bạn có chắc chắn muốn xóa thang đo này không?",
+        "thisCantBeUndone": " Không thể hoàn tác việc này.",
         "ifChangeScale": "Nếu bạn thay đổi thang đo cho phép đo hoặc công cụ đã chọn, hãy chia tỷ lệ",
         "notUsedWillDelete": " sẽ không còn được sử dụng bởi bất kỳ phép đo hoặc công cụ nào nữa và sẽ bị xóa. Việc xóa là không thể hoàn tác.",
         "ifToContinue": "Bạn có chắc chắn muốn tiếp tục không?"
@@ -669,8 +685,7 @@
       "current": "Trang hiện tại",
       "specify": "Chỉ định các trang",
       "odd": "Chỉ các trang lẻ",
-      "even": "Chỉ trang chẵn",
-      "header": "Đánh dấu trang Redaction"
+      "even": "Chỉ trang chẵn"
     },
     "lineStyleOptions": {
       "title": "Phong cách"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Chỉnh sửa phím tắt",
       "setShorcut": "Đặt phím tắt",
       "pressKeyToSet": "Nhấn phím hoặc các phím để thiết lập phím tắt mới.",
-      "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại."
+      "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại.",
+      "close": "Đóng chú giải công cụ"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Xóa Trang",
-      "deleteMessage": "Bạn có chắc chắn muốn xóa (các) trang đã chọn không. Không thể hoàn tác điều này",
+      "deleteMessage": "Bạn có chắc chắn muốn xóa (các) trang đã chọn không? Không thể hoàn tác việc này.",
       "deleteLastPageMessage": "Bạn không thể xóa tất cả các trang trong tài liệu."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Kích thước cây trồng",
     "dimensionInput": {
       "unitOfMeasurement": "Đơn vị",
-      "autoTrim": "Tự động cắt"
+      "autoTrim": "Tự động cắt",
+      "autoTrimCustom": "Phong tục"
     },
     "cropModal": {
       "applyTitle": "Áp dụng cây trồng?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
-    "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
+    "redactionSearchPlaceholder": "Chỉnh sửa bằng bàn phím hoặc mẫu",
     "redactionCounter": "Đã Đánh Dấu để Biên Tập",
     "clearMarked": "Xóa",
     "redactAllMarked": "Biên Tập Tất Cả",
+    "redactionItems": "Các mục biên tập",
     "redactionItem": {
       "regionRedaction": "Biên tập vùng",
       "fullPageRedaction": "Biên tập toàn trang",
@@ -1145,13 +1163,13 @@
     },
     "expand": "Mở rộng",
     "collapse": "Thu gọn",
-    "searchResults": "Kết quả tìm kiếm",
+    "searchResults": "kết quả tìm kiếm",
     "search": {
       "creditCards": "Thẻ tín dụng",
       "phoneNumbers": "Số điện thoại",
       "images": "Hình ảnh",
       "emails": "Email",
-      "pattern": "Mẫu",
+      "pattern": "mẫu",
       "start": "Bắt đầu thực hiện tìm kiếm của bạn"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "Tạo thư mục",
     "portfolioPanelTitle": "Danh mục đầu tư PDF",
     "portfolioNewFolder": "Thư mục mới",
+    "portfolioDocumentTitle": "Tiêu đề tài liệu",
     "portfolioFolderPlaceholder": "Tên thư mục",
     "portfolioFilePlaceholder": "Tên tệp",
     "folderNameAlreadyExists": "Tên thư mục đã tồn tại",
@@ -1200,8 +1219,8 @@
     "rightAlign": "Căn phải",
     "justify": "biện minh",
     "lineSpacing": "Giãn cách dòng & đoạn",
-    "bulletList": "danh sách gạch đầu dòng",
-    "numberList": "danh sách được đánh số",
+    "bulletList": "Danh sách có dấu đầu dòng",
+    "numberList": "Danh sách được đánh số",
     "decreaseIndent": "Giảm thụt lề",
     "increaseIndent": "Tăng thụt lề",
     "insertLink": "Chèn đường dẫn",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động.",
     "previewAllChanges": "Xem trước tất cả các thay đổi",
     "accept": "Chấp nhận",
-    "reject": "Từ chối"
+    "reject": "Từ chối",
+    "pastingTitle": "Dán không có sẵn",
+    "pastingMessage": "Dán không được hỗ trợ trong trình duyệt của bạn. Thay vào đó, bạn có thể sử dụng phím tắt",
+    "pastingWithoutFormatTitle": "Dán không có định dạng không có sẵn",
+    "pastingWithoutFormatMessage": "Dán không có định dạng không được hỗ trợ trong trình duyệt của bạn. Thay vào đó, bạn có thể sử dụng phím tắt",
+    "numberDropdown": {
+      "dropdownLabel": "Cài đặt trước đánh số"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Cài đặt trước Bullet"
+    },
+    "fontSize": {
+      "dropdownLabel": "Kích thước phông chữ"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Kiểu phông chữ"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Họ phông chữ"
+    }
   },
   "insertPageModal": {
-    "title": "Thêm trang mới",
+    "title": "Chèn trang mới",
     "tabs": {
       "blank": "Trống",
       "upload": "Tải lên"
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Tem",
     "standard": "Tem tiêu chuẩn"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Bộ chọn màu"
   }
 }

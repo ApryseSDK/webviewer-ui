@@ -110,7 +110,7 @@
     "movePageToTop": "Μετακίνηση σελίδας στην κορυφή",
     "movePageToBottom": "Μετακινήστε τη σελίδα στο κάτω μέρος",
     "backToMenu": "Πίσω στο μενού",
-    "redactPages": "Διορθώστε σελίδες",
+    "redactPages": "Επεξεργασία σελίδων",
     "playAudio": "Αναπαραγωγή ήχου",
     "pauseAudio": "παύση ήχου",
     "selectAll": "Επιλογή όλων",
@@ -123,13 +123,17 @@
     "showComparison": "Εμφάνιση σύγκρισης",
     "back": "Πίσω",
     "clearSignature": "Καθαρή υπογραφή",
+    "clearInitial": "Καθαρό αρχικό",
     "readOnlySignature": "Η υπογραφή μόνο για ανάγνωση δεν μπορεί να διαγραφεί",
     "newDocument": "Νέο Έγγραφο",
     "sideBySideView": "Άποψη δίπλα δίπλα",
     "pageNumberInput": "Εισαγωγή αριθμού σελίδας",
     "addNewColor": "Προσθήκη νέου χρώματος",
     "deleteColor": "Διαγραφή επιλεγμένου χρώματος",
-    "copySelectedColor": "Αντιγραφή επιλεγμένου χρώματος"
+    "copySelectedColor": "Αντιγραφή επιλεγμένου χρώματος",
+    "showMoreColors": "Εμφάνιση περισσότερων χρωμάτων",
+    "showLessColors": "Εμφάνιση λιγότερων χρωμάτων",
+    "fromCustomColorPicker": "από το Custom Color Picker"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Ήχος",
     "changeView": "Αλλαξε θέα",
-    "newImage": "Νέα εικόνα"
+    "newImage": "Νέα εικόνα",
+    "defaultCustomStampTitle": "Προσαρμοσμένη σφραγίδα"
   },
   "rubberStamp": {
     "Approved": "Εγκρίθηκε",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "Μην μου το ξαναδείξεις αυτό",
     "doNotAskAgain": "Μην ξαναρωτήσεις",
     "enterReplacementText": "Εισαγάγετε το κείμενο που θέλετε να αντικαταστήσετε",
+    "sort": "Είδος",
     "sortBy": "Είδος",
     "emptyCustomStampInput": "Το κείμενο σφραγίδας δεν μπορεί να είναι κενό",
     "unpostedComment": "Μη αναρτημένο σχόλιο",
@@ -311,10 +317,11 @@
     "selectFile": "Επιλέξτε αρχείο",
     "selectPageToReplace": "Επιλέξτε τις σελίδες του εγγράφου με τις οποίες θέλετε να αντικαταστήσετε.",
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
-    "pageNum": "Αριθμός σελίδας",
+    "pageNum": "Σελίδα",
     "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
     "error": "Λάθος",
     "errorPageNumber": "Μη έγκυρος αριθμός σελίδας. Όριο είναι",
+    "errorBlankPageNumber": "Προσδιορίστε έναν αριθμό σελίδας",
     "errorLoadingDocument": "Παρουσιάστηκε πρόβλημα κατά την ανάγνωση αυτού του εγγράφου και ορισμένες σελίδες ενδέχεται να μην εμφανίζονται. Αυτό υποδηλώνει ότι το έγγραφο μπορεί να είναι κατεστραμμένο. Ο συνολικός αριθμός σελίδων είναι {{totalPageCount}} και ο αριθμός σελίδων που εμφανίζονται είναι {{displayedPageCount}}.",
     "noRevisions": "Αυτό το έγγραφο δεν έχει αναθεωρήσεις."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Επεξεργασία κειμένου",
       "toolbarGroup-FillAndSign": "Συμπληρώστε και υπογράψτε",
       "toolbarGroup-Forms": "Φόρμες",
-      "toolbarGroup-Redact": "Συντάσσω"
+      "toolbarGroup-Redact": "Συντάσσω",
+      "toolbarGroup-oe-Home": "Σπίτι",
+      "toolbarGroup-oe-Insert": "Εισάγετε",
+      "toolbarGroup-oe-Review": "Ανασκόπηση"
     },
     "annotationColor": {
       "StrokeColor": "Εγκεφαλικό",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(ΧΩΡΙΣ ΟΝΟΜΑ)",
         "noDate": "(χωρίς ημερομηνία)"
-      }
+      },
+      "toggleMultiSelect": "Εναλλαγή πολλαπλής επιλογής για σχολιασμό"
     },
     "pageTransition": {
       "continuous": "Συνεχής Σελίδα",
@@ -428,7 +439,6 @@
       "includeComments": "Συμπεριλάβετε σχόλια",
       "printSettings": "Ρυθμίσεις εκτύπωσης",
       "printGrayscale": "Εκτύπωση κλίμακας του γκρι",
-      "flatten": "Ισοπεδώστε το έγγραφο",
       "printCurrentDisabled": "Η τρέχουσα προβολή είναι διαθέσιμη μόνο κατά την προβολή μιας σελίδας."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Τύπος Αρχικών*",
       "drawSignature": "Κλήρωση υπογραφής*",
       "drawInitial": "Αρχικά κλήρωσης*",
+      "imageSignature": "Υπογραφή εικόνας",
+      "imageInitial": "Αρχικά εικόνας",
       "pickInitialsFile": "Επιλέξτε Αρχικά",
       "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές.",
       "fontStyle": "στυλ γραμματοσειράς"
@@ -523,7 +535,9 @@
       "countMeasurement": "Μέτρηση μέτρησης",
       "radius": "Ακτίνα κύκλου",
       "count": "μετρώ",
-      "length": "Μήκος"
+      "length": "Μήκος",
+      "xAxis": "Άξονας Χ",
+      "yAxis": "Υ-Άξονας"
     },
     "freeTextOption": {
       "autoSizeFont": "Κλιμάκωση μεγέθους γραμματοσειράς δυναμικά"
@@ -541,7 +555,8 @@
         "paperUnits": "Μονάδες χαρτιού",
         "displayUnits": "Μονάδες προβολής",
         "fractionUnitsTooltip": "Οι μονάδες κλασμάτων ισχύουν μόνο για in και ft-in",
-        "incorrectSyntax": "Λανθασμένη σύνταξη"
+        "incorrectSyntax": "Λανθασμένη σύνταξη",
+        "units": "Μονάδες"
       },
       "scaleOverlay": {
         "addNewScale": "Προσθήκη νέας κλίμακας",
@@ -560,6 +575,7 @@
         "irreversible": "μη αναστρεψιμο",
         "willDeleteMeasurement": "και θα διαγράψει τις σχετικές μετρήσεις.",
         "confirmDelete": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την κλίμακα;",
+        "thisCantBeUndone": " Αυτό δεν μπορεί να αναιρεθεί.",
         "ifChangeScale": "Εάν αλλάξετε την κλίμακα για την επιλεγμένη μέτρηση ή εργαλείο, κάντε κλίμακα",
         "notUsedWillDelete": " δεν θα χρησιμοποιείται πλέον από μετρήσεις ή εργαλεία και θα διαγραφεί. Η διαγραφή είναι μη αναστρέψιμη.",
         "ifToContinue": "Είστε σίγουροι ότι θέλετε να συνεχίσετε;"
@@ -669,8 +685,7 @@
       "current": "Τρέχουσα σελίδα",
       "specify": "Καθορίστε Σελίδες",
       "odd": "Μονές σελίδες μόνο",
-      "even": "Ιδιες σελιδες μονο",
-      "header": "Επισήμανση Επεξεργασίας Σελίδων"
+      "even": "Ιδιες σελιδες μονο"
     },
     "lineStyleOptions": {
       "title": "Στυλ"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Επεξεργασία συντόμευσης πληκτρολογίου",
       "setShorcut": "Ορισμός συντόμευσης",
       "pressKeyToSet": "Πατήστε το πλήκτρο ή τα πλήκτρα για να ορίσετε νέα συντόμευση.",
-      "shortcutAlreadyExists": "Η παραπάνω συντόμευση πληκτρολογίου υπάρχει ήδη."
+      "shortcutAlreadyExists": "Η παραπάνω συντόμευση πληκτρολογίου υπάρχει ήδη.",
+      "close": "Κλείστε την επεξήγηση εργαλείου"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Διαγραφή σελίδας",
-      "deleteMessage": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τις επιλεγμένες σελίδες. Αυτό δεν μπορεί να αναιρεθεί",
+      "deleteMessage": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τις επιλεγμένες σελίδες. Αυτό δεν μπορεί να αναιρεθεί.",
       "deleteLastPageMessage": "Δεν μπορείτε να διαγράψετε όλες τις σελίδες του εγγράφου."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Διαστάσεις καλλιέργειας",
     "dimensionInput": {
       "unitOfMeasurement": "Μονάδα",
-      "autoTrim": "Αυτόματη περικοπή"
+      "autoTrim": "Αυτόματη περικοπή",
+      "autoTrimCustom": "Εθιμο"
     },
     "cropModal": {
       "applyTitle": "Εφαρμογή καλλιέργειας;",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Ξεκινήστε τη σύνταξη επισημαίνοντας κείμενο, περιοχές, σελίδες ή κάνοντας μια αναζήτηση.",
-    "redactionSearchPlaceholder": "Προσθήκη κατά αναζήτηση λέξης-κλειδιού ή μοτίβα",
+    "redactionSearchPlaceholder": "Επεξεργασία με πληκτρολόγιο ή μοτίβα",
     "redactionCounter": "Επισήμανση για Επιμέλεια",
     "clearMarked": "Σαφή",
     "redactAllMarked": "Διορθώστε όλα",
+    "redactionItems": "Είδη διόρθωσης",
     "redactionItem": {
       "regionRedaction": "Διαμόρφωση περιοχής",
       "fullPageRedaction": "Διασκευή πλήρους σελίδας",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "Τηλεφωνικοί αριθμοί",
       "images": "εικόνες",
       "emails": "Email",
-      "pattern": "Πρότυπο",
+      "pattern": "Μοτίβα",
       "start": "Ξεκινήστε να κάνετε την αναζήτησή σας"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
     "portfolioNewFolder": "Νέος φάκελος",
+    "portfolioDocumentTitle": "Τίτλος εγγράφου",
     "portfolioFolderPlaceholder": "Ονομα φακέλου",
     "portfolioFilePlaceholder": "Ονομα αρχείου",
     "folderNameAlreadyExists": "Το όνομα φακέλου υπάρχει ήδη",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές.",
     "previewAllChanges": "Προεπισκόπηση όλων των αλλαγών",
     "accept": "Αποδέχομαι",
-    "reject": "Απορρίπτω"
+    "reject": "Απορρίπτω",
+    "pastingTitle": "Η επικόλληση δεν είναι διαθέσιμη",
+    "pastingMessage": "Η επικόλληση δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας. Αντίθετα, μπορείτε να χρησιμοποιήσετε μια συντόμευση πληκτρολογίου",
+    "pastingWithoutFormatTitle": "Η επικόλληση χωρίς μορφοποίηση δεν είναι διαθέσιμη",
+    "pastingWithoutFormatMessage": "Η επικόλληση χωρίς μορφοποίηση δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας. Αντίθετα, μπορείτε να χρησιμοποιήσετε μια συντόμευση πληκτρολογίου",
+    "numberDropdown": {
+      "dropdownLabel": "Προεπιλογές αρίθμησης"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Προεπιλογές κουκκίδων"
+    },
+    "fontSize": {
+      "dropdownLabel": "Μέγεθος γραμματοσειράς"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Στυλ γραμματοσειράς"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Οικογένεια γραμματοσειρών"
+    }
   },
   "insertPageModal": {
-    "title": "Προσθήκη νέας σελίδας",
+    "title": "Εισαγωγή νέας σελίδας",
     "tabs": {
       "blank": "Κενό",
       "upload": "Μεταφόρτωση"
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Γραμματόσημα",
     "standard": "Πρότυπα γραμματόσημα"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Επιλογέας χρώματος"
   }
 }

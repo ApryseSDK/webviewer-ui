@@ -123,13 +123,17 @@
     "showComparison": "Vergleich anzeigen",
     "back": "Zurück",
     "clearSignature": "Signatur zurücksetzen",
+    "clearInitial": "Klare Initiale",
     "readOnlySignature": "Die schreibgeschützte Signatur kann nicht gelöscht werden",
     "newDocument": "Neues Dokument",
     "sideBySideView": "Nebeneinander-Ansicht",
     "pageNumberInput": "Eingabe der Seitenzahl",
     "addNewColor": "Neue Farbe hinzufügen",
     "deleteColor": "Ausgewählte Farbe löschen",
-    "copySelectedColor": "Ausgewählte Farbe kopieren"
+    "copySelectedColor": "Ausgewählte Farbe kopieren",
+    "showMoreColors": "Weitere Farben anzeigen",
+    "showLessColors": "Weniger Farben anzeigen",
+    "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Klang",
     "changeView": "Ansicht ändern",
-    "newImage": "Neues Bild"
+    "newImage": "Neues Bild",
+    "defaultCustomStampTitle": "Benutzerdefinierter Stempel"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "Diese Meldung nicht mehr anzeigen",
     "doNotAskAgain": "Nicht noch einmal fragen",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
+    "sort": "Sortieren",
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unveröffentlichter Kommentar",
@@ -311,10 +317,11 @@
     "selectFile": "Datei auswählen",
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
-    "pageNum": "Seitennummer",
+    "pageNum": "Seite",
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler",
     "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
+    "errorBlankPageNumber": "Bitte geben Sie eine Seitenzahl an",
     "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}.",
     "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Text bearbeiten",
       "toolbarGroup-FillAndSign": "Füllen und unterschreiben",
       "toolbarGroup-Forms": "Formen",
-      "toolbarGroup-Redact": "Schwärzen"
+      "toolbarGroup-Redact": "Schwärzen",
+      "toolbarGroup-oe-Home": "Heim",
+      "toolbarGroup-oe-Insert": "Einfügen",
+      "toolbarGroup-oe-Review": "Rezension"
     },
     "annotationColor": {
       "StrokeColor": "Randfarbe",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(kein Name)",
         "noDate": "(kein Datum)"
-      }
+      },
+      "toggleMultiSelect": "Mehrfachauswahl für Anmerkungen ein-/ausschalten"
     },
     "pageTransition": {
       "continuous": "Fortlaufend",
@@ -428,7 +439,6 @@
       "includeComments": "Kommentare einfügen",
       "printSettings": "Druckeinstellungen",
       "printGrayscale": "Graustufen drucken",
-      "flatten": "Dokument reduzieren",
       "printCurrentDisabled": "Die aktuelle Ansicht ist nur beim Anzeigen einer einzelnen Seite verfügbar."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Typ Initialen*",
       "drawSignature": "Unterschrift zeichnen*",
       "drawInitial": "Initialen zeichnen*",
+      "imageSignature": "Bildsignatur",
+      "imageInitial": "Bildinitialen",
       "pickInitialsFile": "Wählen Sie Initialen",
       "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden.",
       "fontStyle": "Schriftstil"
@@ -523,7 +535,9 @@
       "countMeasurement": "Zählen",
       "radius": "Radius",
       "count": "Anzahl",
-      "length": "Länge"
+      "length": "Länge",
+      "xAxis": "X-Achse",
+      "yAxis": "Y-Achse"
     },
     "freeTextOption": {
       "autoSizeFont": "Skalieren Sie die Schriftgröße dynamisch"
@@ -541,7 +555,8 @@
         "paperUnits": "Papiereinheiten",
         "displayUnits": "Einheiten anzeigen",
         "fractionUnitsTooltip": "Brucheinheiten gelten nur für in und ft-in",
-        "incorrectSyntax": "Falsche Syntax"
+        "incorrectSyntax": "Falsche Syntax",
+        "units": "Einheiten"
       },
       "scaleOverlay": {
         "addNewScale": "Neuen Maßstab hinzufügen",
@@ -560,6 +575,7 @@
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "und löscht die zugehörigen Messungen.",
         "confirmDelete": "Möchten Sie diese Skala wirklich löschen?",
+        "thisCantBeUndone": "Dies kann nicht rückgängig gemacht werden.",
         "ifChangeScale": "Wenn Sie den Maßstab für die ausgewählte Messung oder das ausgewählte Werkzeug ändern, skalieren Sie",
         "notUsedWillDelete": " werden von keinen Messungen oder Werkzeugen mehr verwendet und gelöscht. Die Löschung ist irreversibel.",
         "ifToContinue": "Möchten Sie wirklich fortfahren?"
@@ -669,8 +685,7 @@
       "current": "Aktuelle Seite",
       "specify": "Seiten angeben",
       "odd": "Nur ungerade Seiten",
-      "even": "Nur gerade Seiten",
-      "header": "Schwärzung von Seiten markieren"
+      "even": "Nur gerade Seiten"
     },
     "lineStyleOptions": {
       "title": "Stil"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Tastaturkürzel bearbeiten",
       "setShorcut": "Verknüpfung festlegen",
       "pressKeyToSet": "Drücken Sie die Taste oder , um eine neue Verknüpfung festzulegen.",
-      "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits."
+      "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits.",
+      "close": "Tooltip schließen"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Seite löschen",
-      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
+      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden.",
       "deleteLastPageMessage": "Sie können nicht alle Seiten im Dokument löschen."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Zuschneidungsabmessungen",
     "dimensionInput": {
       "unitOfMeasurement": "Einheit",
-      "autoTrim": "Automatisches Trimmen"
+      "autoTrim": "Automatisches Trimmen",
+      "autoTrimCustom": "Brauch"
     },
     "cropModal": {
       "applyTitle": "Zuschneidung bestätigen",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
-    "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
+    "redactionSearchPlaceholder": "Schwärzen per Tastatur oder Muster",
     "redactionCounter": "Zur Schwärzung markiert",
     "clearMarked": "Markierung entfernen",
     "redactAllMarked": "Alle schwärzen",
+    "redactionItems": "Redaktionelle Elemente",
     "redactionItem": {
       "regionRedaction": "Region schwärzen",
       "fullPageRedaction": "Seite schwärzen",
@@ -1177,6 +1195,7 @@
     "createFolder": "Ordner erstellen",
     "portfolioPanelTitle": "PDF-Portfolio",
     "portfolioNewFolder": "Neuer Ordner",
+    "portfolioDocumentTitle": "Dokumenttitel",
     "portfolioFolderPlaceholder": "Ordnernamen",
     "portfolioFilePlaceholder": "Dateiname",
     "folderNameAlreadyExists": "Der Ordnername existiert bereits",
@@ -1200,7 +1219,7 @@
     "rightAlign": "Rechts ausrichten",
     "justify": "Blocksatz",
     "lineSpacing": "Zeilen- und Absatzabstand",
-    "bulletList": "Liste mit Aufzählungszeichen",
+    "bulletList": "Aufzählungsliste",
     "numberList": "Nummerierte Liste",
     "decreaseIndent": "Einzug verkleinern",
     "increaseIndent": "Einzug vergrößern",
@@ -1224,10 +1243,31 @@
     "viewOnly": "Nur anschauen",
     "viewOnlyDescription": "Ohne Vorschläge anzeigen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt.",
-    "previewAllChanges": "Vorschau aller Änderungen"
+    "previewAllChanges": "Vorschau aller Änderungen",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen",
+    "pastingTitle": "Einfügen nicht verfügbar",
+    "pastingMessage": "Das Einfügen wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
+    "pastingWithoutFormatTitle": "Einfügen ohne Formatierung nicht verfügbar",
+    "pastingWithoutFormatMessage": "Das Einfügen ohne Formatierung wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
+    "numberDropdown": {
+      "dropdownLabel": "Nummerierungsvorgaben"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Aufzählungszeichen-Voreinstellungen"
+    },
+    "fontSize": {
+      "dropdownLabel": "Schriftgröße"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Schriftstile"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Schriftfamilie"
+    }
   },
   "insertPageModal": {
-    "title": "Neue Seite hinzufügen",
+    "title": "Neue Seite einfügen",
     "tabs": {
       "blank": "Leer",
       "upload": "Hochladen"
@@ -1347,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "Briefmarken",
     "standard": "Standardstempel"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Farbwähler"
   }
 }

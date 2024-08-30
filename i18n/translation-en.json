@@ -110,7 +110,7 @@
     "movePageToTop": "Move Page to Top",
     "movePageToBottom": "Move Page to Bottom",
     "backToMenu": "Back to Menu",
-    "redactPages": "Redact pages",
+    "redactPages": "Redact Pages",
     "playAudio": "Play audio",
     "pauseAudio": "Pause audio",
     "selectAll": "Select all",
@@ -123,13 +123,17 @@
     "showComparison": "Show Comparison",
     "back": "Back",
     "clearSignature": "Clear signature",
+    "clearInitial": "Clear initial",
     "readOnlySignature": "Read-only signature cannot be deleted",
     "newDocument": "New Document",
     "sideBySideView": "Side By Side View",
     "pageNumberInput": "Page number input",
     "addNewColor": "Add New Color",
     "deleteColor": "Delete Selected Color",
-    "copySelectedColor": "Copy Selected Color"
+    "copySelectedColor": "Copy Selected Color",
+    "showMoreColors": "Show More Colors",
+    "showLessColors": "Show Less Colors",
+    "fromCustomColorPicker": "from Custom Color Picker"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "Sound",
     "changeView": "Change View",
-    "newImage": "New Image"
+    "newImage": "New Image",
+    "defaultCustomStampTitle": "Custom Stamp"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -287,7 +292,7 @@
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
-	  "signatureRequired": "A signature and initial is required to continue",
+    "signatureRequired": "A signature and initial is required to continue",
     "enterMeasurement": "Enter measurement between the two points",
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
@@ -296,7 +301,8 @@
     "doNotShowAgain": "Do not show me this again",
     "doNotAskAgain": "Do not ask again",
     "enterReplacementText": "Enter the text you want to replace",
-    "sortBy": "Sort",
+    "sort": "Sort",
+    "sortBy": "Sort by",
     "emptyCustomStampInput": "Stamp text cannot be empty",
     "unpostedComment": "Unposted Comment",
     "lockedLayer": "Layer is locked",
@@ -311,10 +317,11 @@
     "selectFile": "Select file",
     "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
-    "pageNum": "Page Number",
+    "pageNum": "Page",
     "viewBookmark": "View Bookmark on Page",
     "error": "Error",
     "errorPageNumber": "Invalid page number. Limit is ",
+    "errorBlankPageNumber": "Please specify a page number",
     "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}.",
     "noRevisions": "This document has no revisions."
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "Edit Text",
       "toolbarGroup-FillAndSign": "Fill and Sign",
       "toolbarGroup-Forms": "Forms",
-      "toolbarGroup-Redact": "Redact"
+      "toolbarGroup-Redact": "Redact",
+      "toolbarGroup-oe-Home": "Home",
+      "toolbarGroup-oe-Insert": "Insert",
+      "toolbarGroup-oe-Review": "Review"
     },
     "annotationColor": {
       "StrokeColor": "Stroke",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "(no name)",
         "noDate": "(no date)"
-      }
+      },
+      "toggleMultiSelect": "Toggle Multi Select for Annotation"
     },
     "pageTransition": {
       "continuous": "Continuous Page",
@@ -428,7 +439,6 @@
       "includeComments": "Include comments",
       "printSettings": "Print Settings",
       "printGrayscale": "Print Grayscale",
-      "flatten": "Flatten document",
       "printCurrentDisabled": "Current view is only available when viewing a single page."
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "Type Initials*",
       "drawSignature": "Draw Signature*",
       "drawInitial": "Draw Initials*",
+      "imageSignature": "Image Signature",
+      "imageInitial": "Image Initials",
       "pickInitialsFile": "Choose Initials",
       "noSignatures": "There are currently no saved signatures.",
       "fontStyle": "Font style"
@@ -483,7 +495,7 @@
       "chooseFile": "Choose a file",
       "localFile": "Upload",
       "pageReplaceInputLabel": "Replace Page",
-      "pageReplaceInputFromSource": "with page(s)",
+      "pageReplaceInputFromSource": "With Page(s)",
       "warning": {
         "title": "Exit replace page?",
         "message": "Exiting will cancel all of the selections you have made so far. Are you sure you still want to exit?"
@@ -523,7 +535,9 @@
       "countMeasurement": "Count measurement",
       "radius": "Radius",
       "count": "Count",
-      "length": "Length"
+      "length": "Length",
+      "xAxis": "X-Axis",
+      "yAxis": "Y-Axis"
     },
     "freeTextOption": {
       "autoSizeFont": "Scale font size dynamically"
@@ -541,7 +555,8 @@
         "paperUnits": "Paper Units",
         "displayUnits": "Display Units",
         "fractionUnitsTooltip": "Fraction units only apply to in and ft-in",
-        "incorrectSyntax": "Incorrect syntax"
+        "incorrectSyntax": "Incorrect syntax",
+        "units": "Units"
       },
       "scaleOverlay": {
         "addNewScale": "Add New Scale",
@@ -560,6 +575,7 @@
         "irreversible": "irreversible",
         "willDeleteMeasurement": "and will delete the associated measurements.",
         "confirmDelete": "Are you sure you want to delete this scale?",
+        "thisCantBeUndone": " This can't be undone.",
         "ifChangeScale": "If you change the scale for the selected measurement or tool, scale ",
         "notUsedWillDelete": " will no longer be used by any measurements or tools and will be deleted. Deletion is irreversible.",
         "ifToContinue": "Are you sure you'd like to continue?"
@@ -669,8 +685,7 @@
       "current": "Current Page",
       "specify": "Specify Pages",
       "odd": "Odd Pages only",
-      "even": "Even Pages only",
-      "header": "Mark Pages Redaction"
+      "even": "Even Pages only"
     },
     "lineStyleOptions": {
       "title": "Style"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "Edit Keyboard Shorcut",
       "setShorcut": "Set Shorcut",
       "pressKeyToSet": "Press key or keys to set new shorcut.",
-      "shortcutAlreadyExists": "The keyboard shortcut above already exists."
+      "shortcutAlreadyExists": "The keyboard shortcut above already exists.",
+      "close": "Close tooltip"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Delete Page",
-      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone.",
       "deleteLastPageMessage": "You cannot delete all pages in the document."
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "Crop Dimensions",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
-      "autoTrim": "Presets"
+      "autoTrim": "Presets",
+      "autoTrimCustom": "Custom"
     },
     "cropModal": {
       "applyTitle": "Apply crop?",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Start redacting by marking text, regions, pages or making a search.",
-    "redactionSearchPlaceholder": "Add by keyword search or patterns",
+    "redactionSearchPlaceholder": "Redact by keyboard or patterns",
     "redactionCounter": "Marked for Redaction",
     "clearMarked": "Clear",
     "redactAllMarked": "Redact All",
+    "redactionItems": "Redaction Items",
     "redactionItem": {
       "regionRedaction": "Region redaction",
       "fullPageRedaction": "Full page redaction",
@@ -1145,13 +1163,13 @@
     },
     "expand": "Expand",
     "collapse": "Collapse",
-    "searchResults": "Search results",
+    "searchResults": "Search Results",
     "search": {
       "creditCards": "Credit Card",
       "phoneNumbers": "Phone Numbers",
       "images": "Images",
       "emails": "Emails",
-      "pattern": "Pattern",
+      "pattern": "Patterns",
       "start": "Start making your search"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "Create Folder",
     "portfolioPanelTitle": "PDF Portfolio",
     "portfolioNewFolder": "New Folder",
+    "portfolioDocumentTitle": "Document Title",
     "portfolioFolderPlaceholder": "Folder Name",
     "portfolioFilePlaceholder": "File Name",
     "folderNameAlreadyExists": "Folder name already exists",
@@ -1226,10 +1245,31 @@
     "notSupportedOnMobile": "Office editing is not supported on mobile devices.",
     "previewAllChanges": "Preview all changes",
     "accept": "Accept",
-    "reject": "Reject"
+    "reject": "Reject",
+    "pastingTitle": "Pasting not available",
+    "pastingMessage": "Pasting is not supported in your browser. Instead, you can use a keyboard shortcut",
+    "pastingWithoutFormatTitle": "Pasting without formatting not available",
+    "pastingWithoutFormatMessage": "Pasting without formatting is not supported in your browser. Instead, you can use a keyboard shortcut",
+    "numberList": "Numbered list",
+    "bulletList": "Bulleted list",
+    "numberDropdown": {
+      "dropdownLabel": "Numbering Presets"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "Bullet Presets"
+    },
+    "fontSize": {
+      "dropdownLabel": "Font Size"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Font Styles"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Font Family"
+    }
   },
   "insertPageModal": {
-    "title": "Add New Page",
+    "title": "Insert New Page",
     "tabs": {
       "blank": "Blank",
       "upload": "Upload"
@@ -1280,7 +1320,7 @@
     "save": "Save Document",
     "comparePanel": {
       "Find": "Find in document",
-      "changesList": "Changes List",
+      "changesList": "Change List",
       "change": "Change",
       "old": "Old",
       "new": "New",
@@ -1349,5 +1389,8 @@
   "rubberStampPanel": {
     "header": "Stamps",
     "standard": "Standard Stamps"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Color Picker"
   }
 }

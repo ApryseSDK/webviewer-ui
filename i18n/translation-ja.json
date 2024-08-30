@@ -123,13 +123,17 @@
     "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
+    "clearInitial": "初期値をクリア",
     "readOnlySignature": "読み取り専用の署名は削除できません",
     "newDocument": "新しいドキュメント",
     "sideBySideView": "並べて表示",
     "pageNumberInput": "ページ番号入力",
     "addNewColor": "新しい色を追加",
     "deleteColor": "選択した色を削除",
-    "copySelectedColor": "選択したカラーをコピー"
+    "copySelectedColor": "選択したカラーをコピー",
+    "showMoreColors": "その他の色を表示",
+    "showLessColors": "色を少なく表示",
+    "fromCustomColorPicker": "カスタムカラーピッカーから"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "サウンド",
     "changeView": "ビューを変更",
-    "newImage": "新しいイメージ"
+    "newImage": "新しいイメージ",
+    "defaultCustomStampTitle": "カスタムスタンプ"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "次回以降は表示しない",
     "doNotAskAgain": "二度と質問しないで",
     "enterReplacementText": "置き換えるテキストを入力してください",
+    "sort": "選別",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
     "unpostedComment": "未投稿のコメント",
@@ -311,10 +317,11 @@
     "selectFile": "ファイルを選ぶ",
     "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
-    "pageNum": "ページ番号",
+    "pageNum": "ページ",
     "viewBookmark": "ページにブックマークを表示",
     "error": "エラー",
     "errorPageNumber": "ページ番号が無効です。限界は",
+    "errorBlankPageNumber": "ページ番号を指定してください",
     "errorLoadingDocument": "このドキュメントの読み取り中に問題が発生したため、一部のページが表示されない可能性があります。これは、ドキュメントが破損している可能性があることを示しています。総ページ数は {{totalPageCount}} で、表示されているページ数は {{displayedPageCount}} です。",
     "noRevisions": "この文書には改訂版はありません。"
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "テキストの編集",
       "toolbarGroup-FillAndSign": "入力と署名",
       "toolbarGroup-Forms": "フォーム",
-      "toolbarGroup-Redact": "墨消し"
+      "toolbarGroup-Redact": "墨消し",
+      "toolbarGroup-oe-Home": "家",
+      "toolbarGroup-oe-Insert": "入れる",
+      "toolbarGroup-oe-Review": "レビュー"
     },
     "annotationColor": {
       "StrokeColor": "枠線",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "（ノーネーム）",
         "noDate": "（日付なし）"
-      }
+      },
+      "toggleMultiSelect": "注釈の複数選択を切り替える"
     },
     "pageTransition": {
       "continuous": "連続表示",
@@ -428,7 +439,6 @@
       "includeComments": "コメントを含める",
       "printSettings": "印刷設定",
       "printGrayscale": "グレースケール印刷",
-      "flatten": "ドキュメントをフラット化する",
       "printCurrentDisabled": "現在のビューは、単一のページを表示する場合にのみ使用できます。"
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "タイプ イニシャル*",
       "drawSignature": "署名を描く*",
       "drawInitial": "イニシャルを描く*",
+      "imageSignature": "画像署名",
+      "imageInitial": "画像の頭文字",
       "pickInitialsFile": "イニシャルを選択",
       "noSignatures": "現在、保存されている署名はありません。",
       "fontStyle": "フォントスタイル"
@@ -523,7 +535,9 @@
       "countMeasurement": "カウント測定",
       "radius": "半径",
       "count": "カウント",
-      "length": "長さ"
+      "length": "長さ",
+      "xAxis": "X軸",
+      "yAxis": "Y軸"
     },
     "freeTextOption": {
       "autoSizeFont": "フォントサイズを動的に拡大縮小する"
@@ -541,7 +555,8 @@
         "paperUnits": "ペーパーユニット",
         "displayUnits": "ディスプレイユニット",
         "fractionUnitsTooltip": "分数単位は、inとft-inにのみ適用されます",
-        "incorrectSyntax": "構文が正しくありません"
+        "incorrectSyntax": "構文が正しくありません",
+        "units": "ユニット"
       },
       "scaleOverlay": {
         "addNewScale": "新しいスケールを追加",
@@ -560,6 +575,7 @@
         "irreversible": "不可逆",
         "willDeleteMeasurement": "関連する測定値を削除します。",
         "confirmDelete": "このスケールを削除してもよろしいですか？",
+        "thisCantBeUndone": "これは元に戻せません。",
         "ifChangeScale": "選択した測定またはツールのスケールを変更すると、スケール",
         "notUsedWillDelete": " 測定やツールで使用されなくなり、削除されます。削除は元に戻せません。",
         "ifToContinue": "続行してもよろしいですか？"
@@ -669,8 +685,7 @@
       "current": "現在のページ",
       "specify": "ページを指定",
       "odd": "奇数ページのみ",
-      "even": "偶数ページのみ",
-      "header": "ページ編集をマーク"
+      "even": "偶数ページのみ"
     },
     "lineStyleOptions": {
       "title": "スタイル"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "キーボード ショートカットの編集",
       "setShorcut": "ショートカットを設定",
       "pressKeyToSet": "キーまたはキーを押して、新しいショートカットを設定します。",
-      "shortcutAlreadyExists": "上記のキーボード ショートカットは既に存在します。"
+      "shortcutAlreadyExists": "上記のキーボード ショートカットは既に存在します。",
+      "close": "ツールチップを閉じる"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "ページを削除",
-      "deleteMessage": "選択したページを本当に削除してもよろしいですか？この変更は元に戻せません",
+      "deleteMessage": "選択したページを削除してもよろしいですか? 元に戻すことはできません。",
       "deleteLastPageMessage": "ドキュメント内のすべてのページを削除することはできません。"
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "作物の寸法",
     "dimensionInput": {
       "unitOfMeasurement": "単位",
-      "autoTrim": "自動トリム"
+      "autoTrim": "自動トリム",
+      "autoTrimCustom": "カスタム"
     },
     "cropModal": {
       "applyTitle": "作物を適用しますか？",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
-    "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
+    "redactionSearchPlaceholder": "キーボードまたはパターンによる編集",
     "redactionCounter": "墨消しのマーク",
     "clearMarked": "クリア",
     "redactAllMarked": "すべて編集",
+    "redactionItems": "編集項目",
     "redactionItem": {
       "regionRedaction": "領域の編集",
       "fullPageRedaction": "全ページの編集",
@@ -1177,6 +1195,7 @@
     "createFolder": "フォルダーを作る",
     "portfolioPanelTitle": "PDFポートフォリオ",
     "portfolioNewFolder": "新しいフォルダー",
+    "portfolioDocumentTitle": "ドキュメントのタイトル",
     "portfolioFolderPlaceholder": "フォルダ名",
     "portfolioFilePlaceholder": "ファイル名",
     "folderNameAlreadyExists": "フォルダ名はすでに存在します",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。",
     "previewAllChanges": "すべての変更をプレビュー",
     "accept": "受け入れる",
-    "reject": "拒否する"
+    "reject": "拒否する",
+    "pastingTitle": "貼り付けは利用できません",
+    "pastingMessage": "お使いのブラウザでは貼り付けはサポートされていません。代わりにキーボードショートカットを使用することができます。",
+    "pastingWithoutFormatTitle": "書式なしで貼り付けることはできません",
+    "pastingWithoutFormatMessage": "お使いのブラウザでは、書式なしの貼り付けはサポートされていません。代わりに、キーボードショートカットを使用できます。",
+    "numberDropdown": {
+      "dropdownLabel": "番号付けプリセット"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "弾丸プリセット"
+    },
+    "fontSize": {
+      "dropdownLabel": "フォントサイズ"
+    },
+    "fontStyles": {
+      "dropdownLabel": "フォントスタイル"
+    },
+    "fontFamily": {
+      "dropdownLabel": "フォントファミリー"
+    }
   },
   "insertPageModal": {
-    "title": "新しいページを追加",
+    "title": "新しいページを挿入",
     "tabs": {
       "blank": "空欄",
       "upload": "アップロード"
@@ -1280,7 +1318,7 @@
     "save": "ドキュメントを保存",
     "comparePanel": {
       "Find": "ドキュメント内を検索",
-      "changesList": "変更点一覧",
+      "changesList": "変更リスト",
       "change": "変化する",
       "old": "年",
       "new": "新しい",
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "切手",
     "standard": "標準切手"
+  },
+  "colorPickerModal": {
+    "modalTitle": "カラーピッカー"
   }
 }

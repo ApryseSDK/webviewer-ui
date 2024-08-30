@@ -123,13 +123,17 @@
     "showComparison": "显示比较",
     "back": "后退",
     "clearSignature": "清晰的签名",
+    "clearInitial": "清除首字母",
     "readOnlySignature": "只读签名无法删除",
     "newDocument": "新建文件",
     "sideBySideView": "并排视图",
     "pageNumberInput": "页码输入",
     "addNewColor": "添加新颜色",
     "deleteColor": "删除选定的颜色",
-    "copySelectedColor": "复制选定的颜色"
+    "copySelectedColor": "复制选定的颜色",
+    "showMoreColors": "显示更多颜色",
+    "showLessColors": "显示较少颜色",
+    "fromCustomColorPicker": "来自自定义颜色选择器"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -185,7 +189,8 @@
     "3D": "3D",
     "sound": "声音",
     "changeView": "更改视图",
-    "newImage": "新图片"
+    "newImage": "新图片",
+    "defaultCustomStampTitle": "定制印章"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -296,6 +301,7 @@
     "doNotShowAgain": "别再给我看这个了",
     "doNotAskAgain": "不要再问了",
     "enterReplacementText": "输入要替换的文本",
+    "sort": "种类",
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能为空",
     "unpostedComment": "未发布评论",
@@ -311,10 +317,11 @@
     "selectFile": "选择文件",
     "selectPageToReplace": "选择文档中要替换的页面。",
     "embeddedFiles": "嵌入文件",
-    "pageNum": "页码",
+    "pageNum": "页",
     "viewBookmark": "在页面上查看书签",
     "error": "错误",
     "errorPageNumber": "页码无效。限制是",
+    "errorBlankPageNumber": "请指定页码",
     "errorLoadingDocument": "阅读本文档时出现问题，某些页面可能无法显示。这表明文档可能已损坏。总页数为 {{totalPageCount}}，显示的页数为 {{displayedPageCount}}。",
     "noRevisions": "本文档没有修订。"
   },
@@ -366,7 +373,10 @@
       "toolbarGroup-EditText": "编辑文本",
       "toolbarGroup-FillAndSign": "填写并签名",
       "toolbarGroup-Forms": "形式",
-      "toolbarGroup-Redact": "纂"
+      "toolbarGroup-Redact": "纂",
+      "toolbarGroup-oe-Home": "家",
+      "toolbarGroup-oe-Insert": "插入",
+      "toolbarGroup-oe-Review": "审查"
     },
     "annotationColor": {
       "StrokeColor": "边框颜色",
@@ -408,7 +418,8 @@
       "noteContent": {
         "noName": "（无名）",
         "noDate": "（未注明日期的）"
-      }
+      },
+      "toggleMultiSelect": "切换注释的多项选择"
     },
     "pageTransition": {
       "continuous": "连续",
@@ -428,7 +439,6 @@
       "includeComments": "包括评论",
       "printSettings": "打印设置",
       "printGrayscale": "灰度打印",
-      "flatten": "展平文件",
       "printCurrentDisabled": "当前视图仅在查看单个页面时可用。"
     },
     "printInfo": {
@@ -474,6 +484,8 @@
       "typeInitial": "类型首字母*",
       "drawSignature": "绘制签名*",
       "drawInitial": "画首字母*",
+      "imageSignature": "图像签名",
+      "imageInitial": "图像首字母",
       "pickInitialsFile": "选择缩写",
       "noSignatures": "当前没有保存的签名。",
       "fontStyle": "字体样式"
@@ -523,7 +535,9 @@
       "countMeasurement": "计数测量",
       "radius": "半径",
       "count": "计数",
-      "length": "长度"
+      "length": "长度",
+      "xAxis": "X 轴",
+      "yAxis": "Y轴"
     },
     "freeTextOption": {
       "autoSizeFont": "动态缩放字体大小"
@@ -541,7 +555,8 @@
         "paperUnits": "纸张单位",
         "displayUnits": "显示单元",
         "fractionUnitsTooltip": "分数单位仅适用于 in 和 ft-in",
-        "incorrectSyntax": "语法不正确"
+        "incorrectSyntax": "语法不正确",
+        "units": "单位"
       },
       "scaleOverlay": {
         "addNewScale": "添加新比例",
@@ -560,6 +575,7 @@
         "irreversible": "不可逆转",
         "willDeleteMeasurement": "并将删除相关的测量。",
         "confirmDelete": "确定要删除此比例吗？",
+        "thisCantBeUndone": "这无法撤消。",
         "ifChangeScale": "如果您更改所选测量或工具的比例，请按比例",
         "notUsedWillDelete": " 将不再被任何测量或工具使用，并将被删除。删除是不可逆的。",
         "ifToContinue": "您确定要继续吗？"
@@ -669,8 +685,7 @@
       "current": "当前页面",
       "specify": "指定页面",
       "odd": "仅奇数页",
-      "even": "仅偶数页",
-      "header": "标记页面密文"
+      "even": "仅偶数页"
     },
     "lineStyleOptions": {
       "title": "风格"
@@ -754,13 +769,14 @@
       "editKeyboardShorcut": "编辑快捷键",
       "setShorcut": "设置快捷方式",
       "pressKeyToSet": "按 键或 键设置新的快捷方式。",
-      "shortcutAlreadyExists": "上面的键盘快捷键已经存在。"
+      "shortcutAlreadyExists": "上面的键盘快捷键已经存在。",
+      "close": "关闭工具提示"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "删除页面",
-      "deleteMessage": "您确定要删除所选页面吗？这是无法撤消的",
+      "deleteMessage": "您确定要删除所选页面吗？此操作无法撤消。",
       "deleteLastPageMessage": "您无法删除文档中的所有页面。"
     },
     "extractPage": {
@@ -1104,7 +1120,8 @@
     "cropDimensions": "作物尺寸",
     "dimensionInput": {
       "unitOfMeasurement": "单元",
-      "autoTrim": "自动修剪"
+      "autoTrim": "自动修剪",
+      "autoTrimCustom": "风俗"
     },
     "cropModal": {
       "applyTitle": "应用作物？",
@@ -1131,10 +1148,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "通过标记文本、区域、页面或进行搜索来开始编辑。",
-    "redactionSearchPlaceholder": "通过关键字搜索或模式添加",
+    "redactionSearchPlaceholder": "通过键盘或图案编辑",
     "redactionCounter": "标记为编辑",
     "clearMarked": "清除",
     "redactAllMarked": "全部编辑",
+    "redactionItems": "删除项目",
     "redactionItem": {
       "regionRedaction": "区域编辑",
       "fullPageRedaction": "整页编辑",
@@ -1151,7 +1169,7 @@
       "phoneNumbers": "电话号码",
       "images": "图片",
       "emails": "电子邮件",
-      "pattern": "图案",
+      "pattern": "模式",
       "start": "开始搜索"
     }
   },
@@ -1177,6 +1195,7 @@
     "createFolder": "创建文件夹",
     "portfolioPanelTitle": "PDF 作品集",
     "portfolioNewFolder": "新建文件夹",
+    "portfolioDocumentTitle": "文件名",
     "portfolioFolderPlaceholder": "文件夹名称",
     "portfolioFilePlaceholder": "文件名",
     "folderNameAlreadyExists": "文件夹名称已存在",
@@ -1226,10 +1245,29 @@
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。",
     "previewAllChanges": "预览所有更改",
     "accept": "接受",
-    "reject": "拒绝"
+    "reject": "拒绝",
+    "pastingTitle": "无法粘贴",
+    "pastingMessage": "您的浏览器不支持粘贴。您可以使用键盘快捷键",
+    "pastingWithoutFormatTitle": "无法进行无格式粘贴",
+    "pastingWithoutFormatMessage": "您的浏览器不支持不带格式粘贴。您可以使用键盘快捷键",
+    "numberDropdown": {
+      "dropdownLabel": "编号预设"
+    },
+    "bulletDropdown": {
+      "dropdownLabel": "项目符号预设"
+    },
+    "fontSize": {
+      "dropdownLabel": "字体大小"
+    },
+    "fontStyles": {
+      "dropdownLabel": "字体样式"
+    },
+    "fontFamily": {
+      "dropdownLabel": "字体系列"
+    }
   },
   "insertPageModal": {
-    "title": "添加新页面",
+    "title": "插入新页",
     "tabs": {
       "blank": "空白的",
       "upload": "上传"
@@ -1280,7 +1318,7 @@
     "save": "保存文档",
     "comparePanel": {
       "Find": "在文档中查找",
-      "changesList": "变更清单",
+      "changesList": "更改列表",
       "change": "改变",
       "old": "老的",
       "new": "新的",
@@ -1349,5 +1387,8 @@
   "rubberStampPanel": {
     "header": "邮票",
     "standard": "标准邮票"
+  },
+  "colorPickerModal": {
+    "modalTitle": "颜色选择器"
   }
 }
