@@ -22,6 +22,8 @@ import {
   OFFICE_BULLET_OPTIONS,
   OFFICE_NUMBER_OPTIONS,
   FONT_SIZE,
+  AVAILABLE_STYLE_PRESET_MAP,
+  AVAILABLE_POINT_SIZES,
 } from 'constants/officeEditor';
 import { rgbaToHex } from 'helpers/color';
 import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
@@ -31,43 +33,6 @@ import './OfficeHeader.scss';
 import '../HeaderItems/HeaderItems.scss';
 import { COMMON_COLORS } from 'constants/commonColors';
 
-/* eslint-disable custom/no-hex-colors */
-const availableStylePresetMap = {
-  'Normal Text': {
-    fontSize: '11pt',
-    color: '#000000',
-  },
-  'Title': {
-    fontSize: '26pt',
-    color: '#000000',
-  },
-  'Subtitle': {
-    fontSize: '15pt',
-    color: '#666666',
-  },
-  'Heading 1': {
-    fontSize: '20pt',
-    color: '#000000',
-  },
-  'Heading 2': {
-    fontSize: '16pt',
-    color: '#000000',
-  },
-  'Heading 3': {
-    fontSize: '14pt',
-    color: '#434343',
-  },
-  'Heading 4': {
-    fontSize: '12pt',
-    color: '#666666',
-  },
-  'Heading 5': {
-    fontSize: '11pt',
-    color: '#666666',
-  },
-};
-/* eslint-enable custom/no-hex-colors */
-const availablePointSizes = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
 const moreButtonWidth = 77;
@@ -190,7 +155,7 @@ const ListOptions = ({ listType }) => {
         isActive={listType === LIST_OPTIONS.Ordered}
         dataElement='office-editor-number-list'
         title='officeEditor.numberList'
-        img='icon-office-number-list'
+        img='icon-office-editor-number-list'
         className='list-style-button'
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Ordered);
@@ -230,7 +195,6 @@ const OfficeEditorToolsHeader = () => {
   const [
     isOpen,
     cursorProperties,
-    isCursorInTable,
     selectionProperties,
     availableFontFaces,
     activeTheme,
@@ -239,7 +203,6 @@ const OfficeEditorToolsHeader = () => {
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
       selectors.getOfficeEditorCursorProperties(state),
-      selectors.isCursorInTable(state),
       selectors.getOfficeEditorSelectionProperties(state),
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
@@ -350,6 +313,7 @@ const OfficeEditorToolsHeader = () => {
   const isLightMode = activeTheme === Theme.LIGHT;
   const wvFontColor = convertCoreColorToWebViewerColor(properties.color);
   const useColorIconBorder = isLightMode ? wvFontColor.toString() === 'rgba(255,255,255,1)' : wvFontColor.toString() === 'rgba(0,0,0,1)';
+  const ariaLabel = wvFontColor?.toHexString?.();
 
   const convertCursorToStylePreset = (cursorProperties) => {
     const {
@@ -372,8 +336,8 @@ const OfficeEditorToolsHeader = () => {
       ).slice(0, -2);
     }
 
-    return Object.keys(availableStylePresetMap).find(
-      (style) => availableStylePresetMap[style].fontSize === fontSize && availableStylePresetMap[style].color === color
+    return Object.keys(AVAILABLE_STYLE_PRESET_MAP).find(
+      (style) => AVAILABLE_STYLE_PRESET_MAP[style].fontSize === fontSize && AVAILABLE_STYLE_PRESET_MAP[style].color === color
     ) || defaultStylePreset;
   };
 
@@ -405,12 +369,12 @@ const OfficeEditorToolsHeader = () => {
                   ref={measureRef}
                 >
                   <Dropdown
-                    items={Object.keys(availableStylePresetMap)}
+                    items={Object.keys(AVAILABLE_STYLE_PRESET_MAP)}
                     // TODO: This shouldn't be closing more tools popup
                     // It shouldn't know about the existence of it.
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={async (item) => {
-                      const stylePreset = availableStylePresetMap[item];
+                      const stylePreset = AVAILABLE_STYLE_PRESET_MAP[item];
                       const fontPointSize = parseInt(stylePreset.fontSize, 10);
                       const fontColor = new window.Core.Annotations.Color(stylePreset.color);
                       const parsedFontColor = {
@@ -431,7 +395,7 @@ const OfficeEditorToolsHeader = () => {
                       await core.getOfficeEditor().updateParagraphStylePresets(newTextStyle);
                       await core.getOfficeEditor().setMainCursorStyle(newTextStyle);
                     }}
-                    getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
+                    getCustomItemStyle={(item) => ({ ...AVAILABLE_STYLE_PRESET_MAP[item], padding: '20px 10px', color: 'var(--gray-8)' })}
                     applyCustomStyleToButton={false}
                     currentSelectionKey={convertCursorToStylePreset(properties)}
                     width={160}
@@ -441,7 +405,9 @@ const OfficeEditorToolsHeader = () => {
                     items={availableFontFaces}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
-                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      if (typeof fontFace === 'string') {
+                        core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      }
                     }}
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}
@@ -452,7 +418,7 @@ const OfficeEditorToolsHeader = () => {
                     hasInput
                   />
                   <Dropdown
-                    items={availablePointSizes}
+                    items={AVAILABLE_POINT_SIZES}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(pointSize) => {
                       let fontPointSize = parseInt(pointSize, 10);
@@ -491,6 +457,7 @@ const OfficeEditorToolsHeader = () => {
                     onClick={() => setShowMoreTools(false)}
                     dataElement='textColorButton'
                     title='officeEditor.textColor'
+                    ariaLabel={ariaLabel}
                     img='icon-office-editor-circle'
                     element='colorPickerOverlay'
                     color={wvFontColor.toString()}
@@ -540,16 +507,6 @@ const OfficeEditorToolsHeader = () => {
                     )}
                   />
                   <div className="divider" />
-                  <ActionButton
-                    title='officeEditor.pageBreak'
-                    img='icon-office-editor-page-break'
-                    dataElement={DataElement.OFFICE_EDITOR_PAGE_BREAK}
-
-                    disabled={isCursorInTable}
-                    onClick={() => {
-                      core.getOfficeEditor().insertPageBreak();
-                    }}
-                  />
                   <Dropdown
                     dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
                     className="insert-table-dropdown"
