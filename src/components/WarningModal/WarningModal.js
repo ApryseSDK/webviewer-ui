@@ -9,8 +9,7 @@ import classNames from 'classnames';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
-import { Swipeable } from 'react-swipeable';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './WarningModal.scss';
 
@@ -112,70 +111,61 @@ const WarningModal = () => {
   };
 
   return isDisabled ? null : (
-    <Swipeable onSwipedUp={cancel} onSwipedDown={cancel} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={isOpen}>
-        <div
-          className={className}
-          onMouseDown={cancel}
-          role="alertdialog"
-          aria-modal="true"
-          aria-label={i18next.t(title, templateStrings)}
-          aria-describedby={i18next.t(title, templateStrings)}
-        >
-          <div className="container" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="swipe-indicator" />
-            <div className="header">
-              <div className="header-text">
-                <h2 aria-hidden="true">{i18next.t(title, templateStrings)}</h2>
-              </div>
-              <Button
-                img="icon-close"
-                onClick={cancel}
-                dataElement="closeModalButton"
-                title="action.cancel"
+    <div
+      className={className}
+      onMouseDown={cancel}
+      role="alertdialog"
+      aria-modal="true"
+      aria-label={i18next.t(title, templateStrings)}
+      aria-describedby={i18next.t(title, templateStrings)}
+    >
+      <ModalWrapper
+        title={i18next.t(title, templateStrings)}
+        isOpen={isOpen}
+        closeHandler={cancel}
+        onCloseClick={cancel}
+        swipeToClose>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+          <div className="body">
+            {getMessageWithNewLine()}
+          </div>
+          <div className="divider" />
+          <div className="footer">
+            {showAskAgainCheckbox && (
+              <Choice
+                dataElement="doNotAskAgainCheckbox"
+                ref={doNotAskCheckboxRef}
+                id="do-not-ask-again-checkbox"
+                name="do-not-ask-again-checkbox"
+                label={i18next.t('message.doNotAskAgain')}
+                onChange={(e) => setDisableWarning(e.target.checked)}
+                checked={disableWarning}
+                center
               />
-            </div>
-            <div className="divider" />
-            <div className="body" aria-hidden="true">
-              {getMessageWithNewLine()}
-            </div>
-            <div className="divider" />
-            <div className="footer">
-              {showAskAgainCheckbox && (
-                <Choice
-                  dataElement="doNotAskAgainCheckbox"
-                  ref={doNotAskCheckboxRef}
-                  id="do-not-ask-again-checkbox"
-                  name="do-not-ask-again-checkbox"
-                  label={i18next.t('message.doNotAskAgain')}
-                  onChange={(e) => setDisableWarning(e.target.checked)}
-                  checked={disableWarning}
-                  center
-                />
 
-              )}
-              {onSecondary && (
-                <Button
-                  className={classNames({
-                    'modal-button': true,
-                    [secondaryBtnClass]: secondaryBtnClass,
-                  })}
-                  dataElement="WarningModalClearButton"
-                  label={i18next.t(secondaryBtnText, templateStrings)}
-                  onClick={secondary}
-                />
-              )}
+            )}
+            {onSecondary && (
               <Button
-                className="confirm modal-button"
-                dataElement="WarningModalSignButton"
-                label={label}
-                onClick={confirm}
+                className={classNames({
+                  'modal-button': true,
+                  'second-option-button': true,
+                  [secondaryBtnClass]: secondaryBtnClass,
+                })}
+                dataElement="WarningModalClearButton"
+                label={i18next.t(secondaryBtnText, templateStrings)}
+                onClick={secondary}
               />
-            </div>
+            )}
+            <Button
+              className="confirm modal-button"
+              dataElement="WarningModalSignButton"
+              label={label}
+              onClick={confirm}
+            />
           </div>
         </div>
-      </FocusTrap>
-    </Swipeable>
+      </ModalWrapper>
+    </div>
   );
 };
 

@@ -6,9 +6,12 @@ import LineStyleOptions from './LineStyleOptions';
 export default {
   title: 'Components/LineStyleOptions',
   component: LineStyleOptions,
+  parameters: {
+    customizableUI: true
+  }
 };
 
-function noop() {}
+function noop() { }
 
 export function Basic() {
   const properties = {

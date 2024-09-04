@@ -77,7 +77,7 @@ const DesktopPanel = ({ children }) => {
   return (
     <div
       className={classNames({
-        'flx-Panel': true,
+        'ModularPanel': true,
         'closed': !isVisible,
         'left': isLeftSide,
         'right': isRightSide,
@@ -92,7 +92,7 @@ const DesktopPanel = ({ children }) => {
       {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
           leftDirection={true} />}
-      <div className={`flx-Panel-container ${dataElement}`} style={style}>
+      <div className={`ModularPanel-container ${dataElement}`} style={style}>
         {!isInDesktopOnlyMode && isMobile && (
           <div className="close-container">
             <div
@@ -136,7 +136,17 @@ const Panel = (props) => {
     location: location,
   });
 
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
+  const panelsWithMobileVersion =
+    [
+      panelNames.SIGNATURE_LIST,
+      panelNames.RUBBER_STAMP,
+      panelNames.STYLE,
+      panelNames.NOTES,
+      panelNames.SEARCH,
+      panelNames.TEXT_EDITING,
+      panelNames.TABS,
+      panelNames.REDACTION,
+    ];
 
   if (isOpen) {
     if (isMobile && panelsWithMobileVersion.includes(dataElement)) {

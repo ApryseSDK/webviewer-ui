@@ -50,6 +50,8 @@ const propTypes = {
   disableFocusing: PropTypes.bool,
   renderItem: PropTypes.func,
   renderSelectedItem: PropTypes.func,
+  ariaLabel: PropTypes.string,
+  showLabelInList: PropTypes.bool,
 };
 
 function Dropdown({
@@ -82,6 +84,8 @@ function Dropdown({
   disableFocusing = false,
   renderItem = (item, getTranslatedDisplayValue) => (<>{getTranslatedDisplayValue(item)}</>),
   renderSelectedItem = (item, getTranslatedDisplayValue) => (<>{getTranslatedDisplayValue(item)}</>),
+  ariaLabel,
+  showLabelInList = false,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -388,6 +392,8 @@ function Dropdown({
             'Dropdown': true,
             [className]: className,
           })}
+          aria-label={ariaLabel}
+          aria-expanded={isOpen}
           style={buttonStyle}
           onMouseDown={onToggle}
           onTouchEnd={onToggle}
@@ -418,6 +424,7 @@ function Dropdown({
         style={maxHeight ? scrollItemsStyle : undefined}
         onKeyDown={onOverlayKeyDown}
       >
+        {showLabelInList && <div className="Dropdown__label">{t(`${translationPrefix}.dropdownLabel`)}</div>}
         {children ? React.cloneElement(children, { onClose }) :
           dropdownItems.length > 0 ?
             (columns > 1 ?

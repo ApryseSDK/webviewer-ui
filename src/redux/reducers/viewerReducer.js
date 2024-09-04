@@ -1137,6 +1137,22 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
     case 'SET_NOTES_IN_LEFT_PANEL':
       return { ...state, notesInLeftPanel: payload };
+    case 'PUSH_FOCUSED_ELEMENT': {
+      return {
+        ...state,
+        focusedElementsStack: [...state.focusedElementsStack, payload],
+      };
+    }
+    case 'SET_FOCUSED_ELEMENTS_STACK': {
+      return {
+        ...state,
+        focusedElementsStack: payload,
+      };
+
+    }
+    case 'SET_KEYBOARD_OPEN': {
+      return { ...state, isKeyboardOpen: payload };
+    }
     default:
       return state;
   }

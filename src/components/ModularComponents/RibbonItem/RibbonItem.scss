@@ -13,9 +13,8 @@
     column-gap: 8px;
     row-gap: 4px;
     color: var(--faded-text);
-    &:hover {
-      background-color: var(--blue-1);
-    }
+    border-color: transparent;
+    border-style: solid;
     &.active {
       color: var(--ribbon-active-color);
       background-color: transparent;
@@ -23,13 +22,26 @@
         color: var(--ribbon-active-color);
       }
     }
+    &:hover {
+      background-color: transparent;
+      color: var(--ribbon-hover-color);
+      .Icon {
+        color: var(--ribbon-hover-color);
+      }
+    }
   }
 
   &:not(.vertical) .Button {
+    border-width: 2px 0;
     &.active {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      border-bottom: 2px solid var(--ribbon-active-color);
+      border-bottom-color: var(--ribbon-active-color);
+    }
+    &:hover {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: var(--ribbon-hover-color);
     }
   }
 
@@ -38,20 +50,17 @@
     .Button {
       flex-direction: column;
       height: 100%;
+      border-width: 0 2px;
       &.active {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
-        border-left: 2px solid var(--ribbon-active-color);
+        border-left-color: var(--ribbon-active-color);
       }
-    }
-  }
-
-  &.vertical:not(.left) .Button {
-    &.active {
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      border-left: none;
-      border-right: 2px solid var(--ribbon-active-color);
+      &:hover {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-left-color: var(--ribbon-hover-color);
+      }
     }
   }
 }

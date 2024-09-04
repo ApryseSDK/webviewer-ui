@@ -90,7 +90,7 @@ class ColorPalette extends React.PureComponent {
               onClick={() => {
                 this.setColor(bg === 'transparency' ? null : bg);
               }}
-              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
+              aria-label={`${t('option.colorPalette.colorLabel')} ${bg.toUpperCase()}`}
             >
               <div
                 className={classNames({

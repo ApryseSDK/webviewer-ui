@@ -7,15 +7,16 @@
   font-size: 0.9em;
 
   .container {
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     background: var(--component-background);
     width: 360px;
+
+    @include mobile {
+      width: 100%;
+    }
 
     .message {
       font-size: 14px;
@@ -46,7 +47,7 @@
         height: 24px;
 
         .Button {
-          height: 24px;
+          height: 32px;
         }
       }
 
@@ -106,6 +107,7 @@
                 height: 22px;
                 border-radius: 10000000px;
                 margin-left: 4px;
+                border: 1px solid var(--gray-6);
               }
             }
 
@@ -167,24 +169,30 @@
           height: 32px;
           cursor: pointer;
 
-          &:hover {
+          &.filter-annot-apply:hover {
             background: var(--primary-button-hover);
           }
 
           &.disabled {
-            background: var(--gray-6);
             border-color: var(--gray-6);
             cursor: not-allowed;
+
           }
         }
 
         .filter-annot-clear {
-          color: var(--secondary-button-text);
+          color: var(--blue-5);
           background: none;
 
-          &:hover {
+          &:not(.disabled):hover {
             color: var(--secondary-button-hover);
             background: none;
+          }
+          &:disabled {
+            opacity: 0.5;
+            span {
+              color: unset;
+            }
           }
         }
       }

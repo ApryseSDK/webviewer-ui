@@ -18,7 +18,7 @@ function ColorPickerModalRedux(props) {
   const customColors = useSelector(selectors.getCustomColors);
 
   useEffect(() => {
-    if (activeCustomColor && color && (modifyColorMode || getHexColor(activeCustomColor) === getHexColor(color))) {
+    if (activeCustomColor && color && (modifyColorMode || getHexColor(activeCustomColor) !== getHexColor(color))) {
       handleColorChange(activeCustomColor);
     }
   }, [activeCustomColor, modifyColorMode]);

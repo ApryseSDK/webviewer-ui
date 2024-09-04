@@ -193,7 +193,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
 
   const confirmScaleToDelete = (scaleToDelete, createAndApplyScale) => {
     const message = (
-      <div>
+      <div className='customMessage'>
         <p>
           <span>
             {t('option.measurement.deleteScaleModal.ifChangeScale')}
@@ -267,6 +267,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
           onApplyCalibration={onApplyCalibration}
           onAddingNewScale={onAddingNewScale}
           forceUpdate={forceUpdate}
+          tabIndex={0}
         />
       </div>
     </Draggable>

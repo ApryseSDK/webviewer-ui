@@ -16,6 +16,7 @@ import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 import DataElements from 'src/constants/dataElement';
 import { panelMinWidth } from 'constants/panel';
+import Icon from 'components/Icon';
 
 const specialChar = /([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/gm;
 
@@ -46,6 +47,7 @@ const ComparePanel = ({
   const [searchValue, setSearchValue] = React.useState('');
   const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${panelWidth}px`, minWidth: `${panelWidth}px` };
   const changeListData = useRef(initialChangeListData);
+  const [annotation, setAnnotation] = useState(null);
   const [totalChanges, setTotalChanges] = useState(initialTotalChanges);
   const [filteredListData, setFilteredListData] = useState(initialChangeListData);
   const filterfuncRef = useRef(
@@ -246,13 +248,23 @@ const ComparePanel = ({
       setTotalChanges(0);
       changeListData.current = {};
     };
+
+    const onAnnotationSelected = (annotations, action) => {
+      if (action === 'selected') {
+        setAnnotation(annotations);
+      } else if (action === 'deselected') {
+        setAnnotation(null);
+      }
+    };
     core.addEventListener(Events.COMPARE_ANNOTATIONS_LOADED, updatePanelItems, undefined, 1);
     core.addEventListener('documentUnloaded', resetPanelItems, undefined, 1);
     core.addEventListener('documentUnloaded', resetPanelItems, undefined, 2);
+    core.addEventListener('annotationSelected', onAnnotationSelected);
     return () => {
       core.removeEventListener(Events.COMPARE_ANNOTATIONS_LOADED, updatePanelItems, 1);
       core.removeEventListener('documentUnloaded', resetPanelItems, 1);
       core.removeEventListener('documentUnloaded', resetPanelItems, 2);
+      core.removeEventListener('annotationSelected', onAnnotationSelected);
     };
   }, []);
 
@@ -260,8 +272,16 @@ const ComparePanel = ({
     const changeListItems = filteredListData[pageNum];
     return <React.Fragment key={pageNum}>
       <div className="page-number">{t('multiViewer.comparePanel.page')} {pageNum}</div>
-      {changeListItems.map(((props) => <ChangeListItem
-        key={`${props.new?.Id ?? 'null'}-${props.old?.Id ?? 'null'}`} {...props} />))}
+      {
+        changeListItems.map((props) => {
+          const selectedAnnotationId = (annotation && annotation.length) ? annotation[0].Id : null;
+          return (<ChangeListItem
+            selectedAnnotationId={selectedAnnotationId}
+            key={`${props.new?.Id ?? 'null'}-${props.old?.Id ?? 'null'}`}
+            {...props}
+          />);
+        })
+      }
     </React.Fragment>;
   };
 
@@ -279,12 +299,12 @@ const ComparePanel = ({
       style={style}
     >
       <div className="input-container">
+        <Icon glyph="icon-header-search" />
         <input
           type="text"
           autoComplete="off"
           value={searchValue}
           onChange={onSearchInputChange}
-          placeholder={t('multiViewer.comparePanel.Find')}
           aria-label={t('multiViewer.comparePanel.Find')}
           id="ComparePanel__input"
           tabIndex={isOpen ? 0 : -1}

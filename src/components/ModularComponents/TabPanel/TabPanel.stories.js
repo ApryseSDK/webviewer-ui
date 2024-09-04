@@ -3,6 +3,10 @@ import TabPanel from './TabPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { panelMinWidth } from 'constants/panel';
+import initialState from 'src/redux/initialState';
+import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/TabPanel',
@@ -12,7 +16,7 @@ export default {
   },
 };
 
-const initialState = {
+const mockState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
@@ -153,7 +157,7 @@ const initialState = {
   },
 };
 
-const store = configureStore({ reducer: () => initialState });
+const store = configureStore({ reducer: () => mockState });
 
 const tabPanelTemplate = (dataElement, width) => {
   return (
@@ -170,7 +174,6 @@ export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly'
 export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
 
 export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
-
 
 const initialStateThumbnailsOnly = {
   viewer: {
@@ -254,3 +257,99 @@ export const TabPanelWithThumbnailPanelMaxWidth = () => (
   </Provider>
 );
 
+const TabPanelInApp = (location, activePanel) => {
+  const appMockState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      ...mockState.viewer,
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
+      isInDesktopOnlyMode: false,
+      genericPanels: [
+        {
+          render: 'tabPanel',
+          dataElement: 'tabPanel',
+          panelsList: [
+            {
+              'render': 'thumbnailsPanel'
+            },
+            {
+              'render': 'outlinesPanel'
+            },
+            {
+              'render': 'bookmarksPanel'
+            },
+            {
+              'render': 'layersPanel'
+            },
+            {
+              'render': 'signaturePanel',
+            },
+            {
+              'render': 'fileAttachmentPanel',
+            }
+          ],
+          location,
+        },
+        {
+          render: 'thumbnailsPanel',
+          dataElement: 'thumbnailsPanel',
+        },
+        {
+          render: 'bookmarksPanel',
+          dataElement: 'bookmarksPanel',
+        },
+        {
+          render: 'outlinesPanel',
+          dataElement: 'outlinesPanel',
+        },
+        {
+          render: 'layersPanel',
+          dataElement: 'layersPanel',
+        },
+        {
+          render: 'signaturePanel',
+          dataElement: 'signaturePanel',
+        },
+        {
+          render: 'fileAttachmentPanel',
+          dataElement: 'fileAttachmentPanel',
+        },
+      ],
+      openElements: {
+        tabPanel: true,
+      },
+      activeCustomPanel: {
+        ...initialState.viewer.activeCustomPanel,
+        'tabPanel': activePanel,
+      }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  const store = createStore(appMockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp initialState={appMockState} />;
+} ;
+
+export const TabPanelWithThumbnailsInMobile = () => (TabPanelInApp('left', 'thumbnailsPanel'));
+
+export const TabPanelWithOutlinesInMobile = () => (TabPanelInApp('left', 'outlinesPanel'));
+
+export const TabPanelWithBookmarksInMobile = () => (TabPanelInApp('left', 'bookmarksPanel'));
+
+export const TabPanelWithLayersInMobile = () => (TabPanelInApp('left', 'layersPanel'));
+
+export const TabPanelWithSignatureInMobile = () => (TabPanelInApp('left', 'signaturePanel'));
+
+export const TabPanelWithFileAttachmentInMobile = () => (TabPanelInApp('left', 'fileAttachmentPanel'));
+
+TabPanelWithThumbnailsInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithOutlinesInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithBookmarksInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithLayersInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithSignatureInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithFileAttachmentInMobile.parameters = window.storybook.MobileParameters;

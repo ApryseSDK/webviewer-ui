@@ -39,7 +39,7 @@ export const UNSUPPORTED_PANELS = [panelNames.REDACTION, panelNames.TEXT_EDITING
  * @param {TabPanelProperties} options An object that contains the properties of the tab panel.
  * @example
 const tabPanel = new UI.Components.TabPanel({
-    dataElement: 'customLeftPanel',
+    dataElement: 'tabPanel',
     panelsList: [
       {
         render: UI.Panels.THUMBNAIL

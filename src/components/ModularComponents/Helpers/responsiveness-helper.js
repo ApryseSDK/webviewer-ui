@@ -69,12 +69,3 @@ export const getIconDOMElement = (currentItem, allItems) => {
   }
   return <div className="menu-icon"></div>;
 };
-
-export const getSubMenuDOMElement = (currentItem, allItems) => {
-  const areAllitemsWithoutSubMenus = allItems.every((item) => !item.children);
-  if (areAllitemsWithoutSubMenus) {
-    return null;
-  }
-
-  return currentItem.children ? <Icon className="icon-open-submenu" glyph="icon-chevron-right" /> : null;
-};

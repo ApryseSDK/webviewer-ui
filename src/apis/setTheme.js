@@ -26,6 +26,7 @@ WebViewer(...)
 export default (store) => {
   let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
+  let previousIsCustomizableUI = false; // default
 
   store.subscribe(() => {
     const state = store.getState();
@@ -33,9 +34,10 @@ export default (store) => {
     const isHighContrastMode = selectors.getIsHighContrastMode(state);
     const isCustomizableUI = state.featureFlags.customizableUI;
 
-    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || isCustomizableUI) {
+    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || previousIsCustomizableUI !== isCustomizableUI) {
       previousActiveTheme = activeTheme;
       previousIsHighContrastMode = isHighContrastMode;
+      previousIsCustomizableUI = isCustomizableUI;
       updateColors(activeTheme, isHighContrastMode, isCustomizableUI);
     }
   });

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Swipeable } from 'react-swipeable';
-import { Choice, FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import { Choice } from '@pdftron/webviewer-react-toolkit';
 import classNames from 'classnames';
 import {
   precisionOptions,
@@ -19,10 +18,10 @@ import selectors from 'selectors';
 import ScaleCustom from './ScaleCustom';
 import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
-import Button from 'components/Button';
 import Dropdown from 'components/Dropdown';
 import Tooltip from 'components/Tooltip';
 import DataElementWrapper from 'components/DataElementWrapper';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './ScaleModal.scss';
 import '../Choice/Choice.scss';
@@ -225,128 +224,120 @@ const ScaleModal = ({ annotations, selectedTool }) => {
   const isFractionalUnitsToggleDisabled = isCustomOption && !(fractionalUnits.includes(customScale.pageScale?.unit) && fractionalUnits.includes(customScale.worldScale?.unit));
 
   return !isDisabled && (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={!isHidden}>
-        <div className={modalClass} data-element={DataElements.SCALE_MODAL}>
-          <div className="container">
-            <div className="header-container">
-              <div className="header">
-                <p>{t('option.measurementOption.scale')}</p>
-                <Button
-                  className="scaleModalCloseButton"
-                  title="action.close"
-                  img="ic_close_black_24px"
-                  onClick={closeModal}
+    <div className={modalClass} data-element={DataElements.SCALE_MODAL}>
+      <ModalWrapper
+        title="option.measurementOption.scale"
+        isOpen={isOpen}
+        onCloseClick={closeModal}
+        closeHandler={closeModal}
+        swipeToClose
+      >
+        <div className="content-container">
+          <div className="scaleSetting">
+            <div className="custom-option-wrapper">
+              <div className="custom-scale-option">
+                <Choice
+                  data-element="customScaleOption"
+                  radio
+                  name="setting"
+                  onChange={() => setScaleOption(scaleOptions.CUSTOM)}
+                  checked={isCustomOption}
+                  label={`${t('option.measurement.scaleModal.custom')}:`}
+                  center
+                />
+              </div>
+              {isCustomOption && (
+                <button data-element="calibrate" className="calibrate-btn" onMouseDown={openCalibrationTool}>
+                  {t('option.measurement.scaleModal.calibrate')}
+                </button>
+              )}
+            </div>
+            {isCustomOption ? (
+              <ScaleCustom
+                scale={customScale.getScaleRatioAsArray()}
+                onScaleChange={setCustomScale}
+                precision={precisionOption[1]}
+              />
+            ) : (
+              null
+            )}
+            <div className="custom-scale-option">
+              <Choice
+                data-element="presetScaleOption"
+                radio
+                onChange={() => setScaleOption(scaleOptions.PRESET)}
+                name="setting"
+                checked={!isCustomOption}
+                label={`${t('option.measurement.scaleModal.preset')}:`}
+                center
+              />
+            </div>
+            {!isCustomOption && (
+              <div className="scaleModal__preset-container">
+                <div className="selector">
+                  <Dropdown
+                    dataElement="presetScales"
+                    items={measurementScalePreset[presetMeasurementSystem].map((item) => item[0])}
+                    currentSelectionKey={presetScale[0]}
+                    onClickItem={(_item, i) => setPresetScale(measurementScalePreset[presetMeasurementSystem][i])}
+                  />
+                </div>
+              </div>
+            )}
+
+            {isCustomOption ? null : (
+              <div className="block" />
+            )}
+          </div>
+          <div className="precision-container">
+            <div className="precision-selector">
+              <div className="precision-title">{t('option.shared.precision')}:</div>
+              <div className="selector">
+                <Dropdown
+                  dataElement="scalePrecisions"
+                  items={precisionOptions[precisionType].map((item) => item[0])}
+                  currentSelectionKey={precisionOption[0]}
+                  onClickItem={(_item, i) => setPrecisionOption(precisionOptions[precisionType][i])}
+                  ariaLabel={t('option.shared.precision')}
                 />
               </div>
             </div>
-            <div className="content-container">
-              <div className="scaleSetting">
-                <div className="custom-option-wrapper">
-                  <div className="custom-scale-option">
-                    <Choice
-                      data-element="customScaleOption"
-                      radio
-                      name="setting"
-                      onChange={() => setScaleOption(scaleOptions.CUSTOM)}
-                      checked={isCustomOption}
-                      label={`${t('option.measurement.scaleModal.custom')}:`}
-                      center
-                    />
-                  </div>
-                  {isCustomOption && (
-                    <button data-element="calibrate" className="calibrate-btn" onMouseDown={openCalibrationTool}>
-                      {t('option.measurement.scaleModal.calibrate')}
-                    </button>
-                  )}
-                </div>
-                {isCustomOption ? (
-                  <ScaleCustom
-                    scale={customScale.getScaleRatioAsArray()}
-                    onScaleChange={setCustomScale}
-                    precision={precisionOption[1]}
-                  />
-                ) : (
-                  null
-                )}
-                <div className="custom-scale-option">
-                  <Choice
-                    data-element="presetScaleOption"
-                    radio
-                    onChange={() => setScaleOption(scaleOptions.PRESET)}
-                    name="setting"
-                    checked={!isCustomOption}
-                    label={`${t('option.measurement.scaleModal.preset')}:`}
-                    center
-                  />
-                </div>
-                {!isCustomOption && (
-                  <div className="scaleModal__preset-container">
-                    <div className="selector">
-                      <Dropdown
-                        dataElement="presetScales"
-                        items={measurementScalePreset[presetMeasurementSystem].map((item) => item[0])}
-                        currentSelectionKey={presetScale[0]}
-                        onClickItem={(_item, i) => setPresetScale(measurementScalePreset[presetMeasurementSystem][i])}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {isCustomOption ? null : (
-                  <div className="block" />
-                )}
+            <Tooltip content={t('option.measurement.scaleModal.fractionUnitsTooltip')}>
+              <div className="fractional-units-container">
+                <Choice
+                  isSwitch
+                  leftLabel
+                  id="scale-modal-fractional-units"
+                  label={t('option.measurement.scaleModal.fractionalUnits')}
+                  checked={isFractionalPrecision}
+                  onChange={toggleFractionalPrecision}
+                  disabled={isFractionalUnitsToggleDisabled}
+                />
               </div>
-              <div className="precision-container">
-                <div className="precision-selector">
-                  <div className="precision-title">{t('option.shared.precision')}:</div>
-                  <div className="selector">
-                    <Dropdown
-                      dataElement="scalePrecisions"
-                      items={precisionOptions[precisionType].map((item) => item[0])}
-                      currentSelectionKey={precisionOption[0]}
-                      onClickItem={(_item, i) => setPrecisionOption(precisionOptions[precisionType][i])}
-                    />
-                  </div>
-                </div>
-                <Tooltip content={t('option.measurement.scaleModal.fractionUnitsTooltip')}>
-                  <div>
-                    <Choice
-                      isSwitch
-                      leftLabel
-                      id="scale-modal-fractional-units"
-                      label={t('option.measurement.scaleModal.fractionalUnits')}
-                      checked={isFractionalPrecision}
-                      onChange={toggleFractionalPrecision}
-                      disabled={isFractionalUnitsToggleDisabled}
-                    />
-                  </div>
-                </Tooltip>
-              </div>
-            </div>
-            <div className="footer">
-              <DataElementWrapper
-                type={'button'}
-                onClick={onUpdate}
-                className="scale-update"
-                dataElement="updateScale"
-                disabled={isAddingNewScale || !isCurrentScaleValid || !hasScaleChanged}
-              >
-                {t('action.update')}
-              </DataElementWrapper>
-              <button
-                onClick={onCreate}
-                className="scale-create"
-                data-element="createScale"
-                disabled={!isCurrentScaleValid || (!isMultipleScalesMode && totalScalesCount) || (!isAddingNewScale && !hasScaleChanged)}
-              >
-                {t('action.create')}
-              </button>
-            </div>
+            </Tooltip>
           </div>
         </div>
-      </FocusTrap>
-    </Swipeable>
+        <div className="footer">
+          <DataElementWrapper
+            type={'button'}
+            onClick={onUpdate}
+            className="scale-update"
+            dataElement="updateScale"
+            disabled={isAddingNewScale || !isCurrentScaleValid || !hasScaleChanged}
+          >
+            {t('action.update')}
+          </DataElementWrapper>
+          <button
+            onClick={onCreate}
+            className="scale-create"
+            data-element="createScale"
+            disabled={!isCurrentScaleValid || (!isMultipleScalesMode && totalScalesCount) || (!isAddingNewScale && !hasScaleChanged)}
+          >
+            {t('action.create')}
+          </button>
+        </div>
+      </ModalWrapper>
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ import ModalWrapper from '../ModalWrapper';
 import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
 
-const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements, isCustomUI }) => {
+const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
   const { t } = useTranslation();
   const [selectedTab] = useSelector((state) => [
     selectors.getSelectedTab(state, 'openFileModal'),
@@ -124,6 +124,7 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements, isCustom
       <div className="container" onMouseDown={(e) => e.stopPropagation()}>
         <ModalWrapper
           title={t('OpenFile.newTab')}
+          isOpen={isOpen}
           closeButtonDataElement={'openFileModalClose'}
           onCloseClick={closeModal}
           swipeToClose
@@ -146,7 +147,6 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements, isCustom
                 </Tab>
               </div>
             </div>
-            <div className="page-replacement-divider" />
             <TabPanel dataElement="urlInputPanel">
               <div className="panel-body">
                 <FileInputPanel
@@ -157,7 +157,6 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements, isCustom
                   extension={(!src.length || !extension?.length) ? '' : extension}
                   setExtension={setExtension}
                   defaultValue={src}
-                  isCustomUI={isCustomUI}
                 />
               </div>
             </TabPanel>
@@ -193,7 +192,6 @@ const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, DataElements.OPEN_FILE_MODAL),
   isOpen: selectors.isElementOpen(state, DataElements.OPEN_FILE_MODAL),
   tabManager: selectors.getTabManager(state),
-  isCustomUI: selectors.getFeatureFlags(state)?.customizableUI,
 });
 
 const mapDispatchToProps = {

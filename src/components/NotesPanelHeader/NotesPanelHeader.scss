@@ -6,6 +6,10 @@
   margin-bottom: 12px;
   font-size: 16px;
 
+  @include mobile {
+    margin-top: 16px;
+  }
+
   span {
     font-weight: bold;
   }
@@ -144,12 +148,18 @@
     .Dropdown__wrapper {
       .Dropdown__items {
         .Dropdown__item {
+          font-size: 13px;
+
           &:hover {
             @extend %custom-flyout-item-hover;
           }
 
           &.active {
             @extend %custom-flyout-item-active;
+          }
+
+          .Icon .arrow {
+            margin-top: 0;
           }
         }
       }

@@ -1,0 +1,73 @@
+@import '../../../../constants/styles';
+
+.office-editor-number-list-wrapper.modular-ui{
+  display: flex;
+  flex-direction: row;
+
+  .list-style-button {
+    margin-right: 0px !important;
+  }
+
+  .list-style-dropdown {
+    background: transparent;
+    border: none;
+    width: 12px !important;
+    height: 32px !important;
+    margin-left: 0px !important;
+
+    &.Dropdown__wrapper:hover {
+      border-radius: 4px;
+    }
+
+    .Dropdown {
+      padding: 0px;
+
+      svg {
+        rect {
+          stroke: none;
+        }
+      }
+    }
+
+    .picked-option-text {
+      display: none;
+    }
+
+    .arrow {
+      padding-left: 0px;
+    }
+
+    .Dropdown__items {
+      overflow: hidden;
+
+      $button-height: 74px;
+      $button-width: 60px;
+
+      .Dropdown__item {
+        height: $button-height !important;
+        padding: 15px 0px;
+        margin: 3px;
+        cursor: pointer;
+
+        .Icon,
+        .Icon svg * {
+            color: transparent; // prevent default dropdown style to fill in svg shapes with color
+        }
+
+        &.active, &:hover {
+          background: var(--tools-button-hover);
+
+          .office-editor-list-style-item-border {
+            // svg rect border styling
+            stroke: var(--dropdown-item-active);
+          }
+        }
+
+        .officeEditor-list-style-icon {
+          width: $button-width !important;
+          height: $button-height !important;
+        }
+      }
+    }
+  }
+}

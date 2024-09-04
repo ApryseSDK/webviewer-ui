@@ -2,21 +2,22 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
-import CollapsiblePanelGroup from 'components/CollapsiblePanelGroup';
+import CollapsibleSection from 'components/CollapsibleSection';
 import { useSelector } from 'react-redux';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { PANEL_SIZES } from 'constants/panel';
 import { isNull } from 'lodash';
+import PropTypes from 'prop-types';
 
 const RubberStamp = React.memo(({ imgSrc, annotation, index, onClick, isActive }) => {
   const [t] = useTranslation();
-
+  const ariaLabel = `rubberStamp.${annotation.Icon}`;
   return (
     <button
       tabIndex={0}
       key={index}
       className={classNames('rubber-stamp', { 'active': isActive })}
-      aria-label={`${t('annotation.stamp')} ${index + 1}`}
+      aria-label={t(ariaLabel)}
       onClick={() => onClick(annotation, index)}
     >
       <img src={imgSrc} alt="" />
@@ -25,6 +26,13 @@ const RubberStamp = React.memo(({ imgSrc, annotation, index, onClick, isActive }
 });
 
 RubberStamp.displayName = 'RubberStamp';
+RubberStamp.propTypes = {
+  imgSrc: PropTypes.string,
+  annotation: PropTypes.object,
+  index: PropTypes.number,
+  onClick: PropTypes.func,
+  isActive: PropTypes.bool,
+};
 
 const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedRubberStamp }) => {
   const [t] = useTranslation();
@@ -62,19 +70,22 @@ const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedR
 
   const header = useCallback(() => {
     return (
-      <div className='rubber-stamps-list-header'>
-        {t('rubberStampPanel.standard')}
-      </div>
+      t('rubberStampPanel.standard')
     );
   }, [t]);
+  const ariaControls = 'rubber-stamps-list';
 
   return (
-    <CollapsiblePanelGroup
-      header={header}>
-      <div className='rubber-stamps-list'>
+    <CollapsibleSection
+      header={header}
+      headingLevel={2}
+      ariaControls={ariaControls}
+      expansionDescription={t('rubberStampPanel.standard')}
+    >
+      <div className='rubber-stamps-list' id={ariaControls}>
         {rubberStamps}
       </div>
-    </CollapsiblePanelGroup>
+    </CollapsibleSection>
   );
 };
 

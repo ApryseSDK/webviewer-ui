@@ -9,5 +9,5 @@
 <line x1="38" y1="49" x2="52" y2="49" stroke="#868E96" stroke-width="2"/>
 <circle cx="11" cy="61" r="3" fill="#485056"/>
 <line x1="18" y1="61" x2="52" y2="61" stroke="#868E96" stroke-width="2"/>
-<rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+<rect class="office-editor-list-style-item-border" x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
 </svg>

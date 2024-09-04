@@ -60,6 +60,7 @@
       position: relative;
       align-items: center;
       margin-bottom: 16px;
+      border-radius: 4px;
 
       .menu-title {
         padding-top: 6px;
@@ -90,6 +91,10 @@
           background: var(--gray-2);
         }
 
+      }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
       }
     }
 
@@ -134,6 +139,7 @@
   .FontSizeDropdown {
     height: 32px;
   }
+
   .overlay-text-input:focus {
     border-color: var(--blue-5);
   }

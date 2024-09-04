@@ -10,6 +10,7 @@ import DataElements from 'constants/dataElement';
 import CustomElement from '../CustomElement';
 import FormFieldPlaceHolderOverlay from './FormFieldPlaceHolderOverlay';
 import './AnnotationContentOverlay.scss';
+import getRootNode from 'src/helpers/getRootNode';
 
 const MAX_CHARACTERS = 100;
 
@@ -57,6 +58,14 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
 
       if (top <= 0) {
         top = 0;
+      }
+
+      if (window.isApryseWebViewerWebComponent) {
+        const host = getRootNode()?.host;
+        if (host) {
+          left -= host.offsetLeft;
+          top -= host.offsetTop;
+        }
       }
 
       return { left, top };

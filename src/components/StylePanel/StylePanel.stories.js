@@ -28,13 +28,16 @@ const basicMockState = {
       opacityContainer: true,
       richTextStyleContainer: true,
     },
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const StylePanelTemplate = ({ mockState = basicMockState, location = 'left' }) => (
   <Provider store={createStore(mockState)}>
     <Panel location={location} dataElement={'stylePanel'} isCustom>
-      <StylePanelContainer />
+      <StylePanelContainer dataElement="stylePanel" />
     </Panel>
   </Provider>
 );

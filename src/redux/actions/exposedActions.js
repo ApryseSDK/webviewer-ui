@@ -15,6 +15,7 @@ import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getParentGroupedItems } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -231,14 +232,12 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
           tool: firstTool,
           group: allAssociatedGroupedItems
         }));
-        dispatch(setGroupedItems(allAssociatedGroupedItems));
         return true;
       }
       return false;
     });
-  } else {
-    dispatch(setGroupedItems(allAssociatedGroupedItems));
   }
+  dispatch(setGroupedItems(allAssociatedGroupedItems));
 };
 
 export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch, getState) => {
@@ -307,7 +306,9 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     });
     core.setToolMode(defaultTool);
   } else {
-    dispatch(openElements(['toolsHeader']));
+    if (!isOfficeEditorMode()) {
+      dispatch(openElements(['toolsHeader']));
+    }
     const state = getState();
     const lastPickedToolGroup =
       toolGroup || state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);

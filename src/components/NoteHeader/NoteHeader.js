@@ -146,6 +146,7 @@ function NoteHeader(props) {
             {isMultiSelectMode && !isGroupMember && !isReply &&
               <Choice
                 id={`note-multi-select-toggle_${annotation.Id}`}
+                aria-label={`${renderAuthorName(annotation)} ${t('option.notesPanel.toggleMultiSelect')}`}
                 checked={isMultiSelected}
                 onClick={(e) => {
                   e.preventDefault();

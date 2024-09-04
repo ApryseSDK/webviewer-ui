@@ -38,6 +38,10 @@
         height: 16px;
       }
 
+      input[type="radio"]:checked {
+        accent-color: var(--blue-5);
+      }
+
       .contentContainer {
         padding-bottom: 4px;
         margin-bottom: 4px;

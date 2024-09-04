@@ -8,6 +8,9 @@ const noop = () => { };
 export default {
   title: 'Components/AlignmentPopup',
   component: AlignmentPopup,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const initialState = {
@@ -17,6 +20,9 @@ const initialState = {
     annotationPopup: [
     ],
     activeDocumentViewerKey: 1,
+  },
+  featureFlags: {
+    customizableUI: true,
   },
 };
 

@@ -12,6 +12,7 @@ const FormFieldPopupDimensionsInput = ({ width, height, onWidthChange, onHeightC
           id="form-field-width"
           type="number"
           min={0}
+          aria-label={t('formField.formFieldPopup.width')}
           value={width}
           onChange={(e) => onWidthChange(e.target.value)}
         /> {t('formField.formFieldPopup.width')}
@@ -21,6 +22,7 @@ const FormFieldPopupDimensionsInput = ({ width, height, onWidthChange, onHeightC
           id="form-field-height"
           type="number"
           min={0}
+          aria-label={t('formField.formFieldPopup.height')}
           value={height}
           onChange={(e) => onHeightChange(e.target.value)}
         /> {t('formField.formFieldPopup.height')}

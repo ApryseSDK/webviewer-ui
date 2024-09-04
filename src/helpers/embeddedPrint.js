@@ -56,13 +56,21 @@ const cropDocumentToCurrentView = async (document) => {
   return document;
 };
 
-// printingOptions: isCurrentView, includeAnnotations, shouldFlatten
+// printingOptions: isCurrentView, includeAnnotations
 export const createPages = async (document, annotManager, pagesToPrint, printingOptions, watermarkModalOptions) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
   let result;
   let data;
-  const xfdf = await extractXFDF(annotManager, pagesToPrint, printingOptions?.includeAnnotations);
+  let pagesArray = [];
+  let xfdf;
+
+  if (printingOptions?.includeComments) {
+    xfdf = await extractXFDF(annotManager, pagesToPrint, true);
+    pagesArray = getPageArray(pagesToPrint.length);
+  } else {
+    xfdf = await extractXFDF(annotManager, pagesToPrint, printingOptions?.includeAnnotations);
+  }
 
   if (extension === 'pdf' && !bbURLPromise) {
     data = await document.extractPages(pagesToPrint, xfdf);
@@ -77,19 +85,23 @@ export const createPages = async (document, annotManager, pagesToPrint, printing
 
   if (printingOptions?.isCurrentView) {
     result = await cropDocumentToCurrentView(result);
+    pagesArray = getPageArray(result.getPageCount());
   }
 
   if (watermarkModalOptions) {
     result.setWatermark(watermarkModalOptions);
+    result = await createDocumentForPrint(result);
   }
 
-  if (printingOptions?.shouldFlatten || watermarkModalOptions) {
-    const fileDataOptions = { flatten: printingOptions?.shouldFlatten };
-    result = await createDocumentForPrint(result, fileDataOptions);
-  }
+  if (printingOptions?.includeComments && printingOptions?.includeAnnotations) {
+    pagesArray = getPageArray(pagesToPrint.length);
+    result = await result.formatDocumentForPrint(pagesArray);
+  } else if (printingOptions?.includeComments && !printingOptions?.includeAnnotations) {
+    result = await result.formatDocumentForPrint(pagesArray);
+    pagesArray = getPageArray(result.getPageCount());
 
-  if (printingOptions?.includeComments) {
-    result = await result.formatDocumentForPrint(pagesToPrint);
+    data = await result.extractPages(pagesArray);
+    result = await window.Core.createDocument(data, { extension: 'pdf' });
   }
 
   return result;
@@ -252,4 +264,8 @@ const createDocumentForPrint = async (document, fileDataOptions) => {
   const blob = new Blob([fileData], { type: 'application/pdf' });
   const result = await window.Core.createDocument(blob, { extension: 'pdf' });
   return result;
+};
+
+const getPageArray = (pageCount) => {
+  return Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
 };

@@ -53,9 +53,9 @@ export const OFFICE_EDITOR_EDIT_MODE = {
   PREVIEW: 'preview'
 };
 
-export const officeEditorScope = 'office-editor';
+export const OFFICE_EDITOR_SCOPE = 'office-editor';
 
-export const elementsToDisableInOfficeEditor = [
+export const ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR = [
   'toggleNotesButton',
   'toolsHeader',
   'viewControlsButton',
@@ -70,7 +70,46 @@ export const elementsToDisableInOfficeEditor = [
   DataElements.ANNOTATION_CONTENT_OVERLAY,
 ];
 
-export const elementsToEnableInOfficeEditor = [
+export const ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR = [
   DataElements.OFFICE_EDITOR_TOOLS_HEADER,
   DataElements.INLINE_COMMENT_POPUP
 ];
+
+export const AVAILABLE_POINT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
+
+/* eslint-disable custom/no-hex-colors */
+export const AVAILABLE_STYLE_PRESET_MAP = {
+  'Normal Text': {
+    fontSize: '11pt',
+    color: '#000000',
+  },
+  'Title': {
+    fontSize: '26pt',
+    color: '#000000',
+  },
+  'Subtitle': {
+    fontSize: '15pt',
+    color: '#666666',
+  },
+  'Heading 1': {
+    fontSize: '20pt',
+    color: '#000000',
+  },
+  'Heading 2': {
+    fontSize: '16pt',
+    color: '#000000',
+  },
+  'Heading 3': {
+    fontSize: '14pt',
+    color: '#434343',
+  },
+  'Heading 4': {
+    fontSize: '12pt',
+    color: '#666666',
+  },
+  'Heading 5': {
+    fontSize: '11pt',
+    color: '#666666',
+  },
+};
+/* eslint-enable custom/no-hex-colors */

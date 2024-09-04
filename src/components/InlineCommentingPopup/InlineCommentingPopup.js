@@ -56,6 +56,9 @@ const InlineCommentingPopup = ({
       ref={popupRef}
       data-element={DataElements.INLINE_COMMENT_POPUP}
       style={{ ...position }}
+      onMouseMove={(e) => {
+        e.stopPropagation();
+      }}
       onMouseDown={(e) => {
         if (isMobile) {
           e.stopPropagation();

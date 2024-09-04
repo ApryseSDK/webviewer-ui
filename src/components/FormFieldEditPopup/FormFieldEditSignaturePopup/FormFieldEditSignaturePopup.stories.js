@@ -9,13 +9,19 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/FormFieldEditPopup',
   component: FormFieldEditSignaturePopup,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({ reducer: () => initialState });
@@ -29,7 +35,7 @@ export function SignatureFieldPopup() {
   const signatureFields = [
     {
       label: 'formField.formFieldPopup.fieldName',
-      onChange: () => { },
+      confirmChange: () => { },
       value: 'SignatureField1',
       required: true,
       type: 'text',
@@ -39,22 +45,22 @@ export function SignatureFieldPopup() {
   const signatureFlags = [
     {
       label: 'formField.formFieldPopup.readOnly',
-      onChange: () => { },
+      confirmChange: () => { },
       isChecked: true,
     },
     {
       label: 'formField.formFieldPopup.required',
-      onChange: () => { },
+      confirmChange: () => { },
       isChecked: true,
     }
   ];
 
   const indicator = {
     label: 'formField.formFieldPopup.documentFieldIndicator',
-    toggleIndicator: () => { },
+    confirmToggleIndicator: () => { },
     isChecked: true,
-    onChange: () => { },
-    value: 'This is an indicator'
+    confirmChange: () => { },
+    textValue: 'This is an indicator'
   };
 
   const props = {

@@ -6,6 +6,9 @@ import ViewControlsOverlay from './ViewControlsOverlay';
 export default {
   title: 'Components/ViewControlsOverlay',
   component: ViewControlsOverlay,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {

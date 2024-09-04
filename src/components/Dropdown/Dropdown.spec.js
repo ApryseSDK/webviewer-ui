@@ -22,12 +22,17 @@ describe('Dropdown component', () => {
     // click to open dropdown menu
     const dropdown = container.querySelector('.Dropdown');
     expect(dropdown).toBeInTheDocument();
+    expect(dropdown.getAttribute('aria-expanded')).toEqual('false');
     fireEvent.mouseDown(dropdown);
 
     // make sure dropdown menu is open
     dropdownItems = container.querySelector('.Dropdown__items');
     expect(dropdownItems).toBeInTheDocument();
     expect(dropdownItems).not.toHaveClass('hide');
+
+    const dropdown2 = container.querySelector('.Dropdown');
+    expect(dropdown2).toBeInTheDocument();
+    expect(dropdown2.getAttribute('aria-expanded')).toEqual('true');
 
     // click Status button and make sure active element is changed to Status
     const statusButton = queryByText(dropdownItems, 'Status');

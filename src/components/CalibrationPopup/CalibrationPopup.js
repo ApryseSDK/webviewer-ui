@@ -195,8 +195,10 @@ const CalibrationPopup = ({ annotation }) => {
 
   return (
     <div className="CalibrationPopup" data-element="calibrationPopup">
+      <label className="calibration-popup-label" htmlFor='calibration-popup-value'>{t('option.measurement.scaleModal.units')}</label>
       <div className="input-container">
         <input
+          id='calibration-popup-value'
           className={inputValueClass}
           ref={inputRef}
           type={valueInputType}

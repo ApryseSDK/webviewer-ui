@@ -6,6 +6,7 @@ import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
 import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import core from 'core';
 
 export default {
   title: 'ModularComponents/App Responsiveness',
@@ -16,6 +17,12 @@ export default {
 };
 
 const noop = () => {
+};
+
+core.getToolMode = () => {
+  return {
+    name: 'AnnotationEraserTool',
+  };
 };
 
 const MockApp = ({ initialState, width, height }) => {
@@ -47,16 +54,24 @@ const Template = (args) => {
         render: 'stylePanel',
         location: 'left',
       }],
-      activeGroupedItems: ['annotateGroupedItems'],
-      lastPickedToolForGroupedItems: {
-        annotateGroupedItems: 'AnnotationCreateTextUnderline',
+      activeGroupedItems: [
+        'annotateGroupedItems',
+        'defaultAnnotationUtilities',
+      ],
+      flyoutMap: {
+        annotateGroupedItemsFlyout: {
+          items:[]
+        }
       },
-      activeCustomRibbon: 'annotations-ribbon-item',
+      lastPickedToolForGroupedItems: {
+        annotateGroupedItems: args.activeToolName || 'AnnotationCreateTextUnderline',
+      },
+      activeCustomRibbon: args.activeCustomRibbon,
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateTextUnderline',
         group: ['annotateGroupedItems'],
       },
-      activeToolName: 'AnnotationCreateTextUnderline'
+      activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',
     },
     featureFlags: {
       customizableUI: true,
@@ -69,10 +84,12 @@ function createTemplate({
   width = '100%',
   height = '100%',
   headers = mockHeadersNormalized,
-  components = mockModularComponents
+  components = mockModularComponents,
+  activeCustomRibbon = 'annotations-ribbon-item',
+  activeToolName,
 } = {}) {
   const template = Template.bind({});
-  template.args = { headers, components, width, height };
+  template.args = { headers, components, width, height, activeCustomRibbon, activeToolName };
   template.parameters = { layout: 'fullscreen' };
   return template;
 }
@@ -82,8 +99,8 @@ export const ExtraLarge = createTemplate({ width: '1920px', height: '1080px' });
 export const Large = createTemplate({ width: '1024px', height: '768px' });
 export const Medium = createTemplate({ width: '768px', height: '1024px' });
 export const Small = createTemplate({ width: '576px', height: '800px' });
-export const ExtraSmall = createTemplate({ width: '360px', height: '667px' });
-export const TooSmall = createTemplate({ width: '200px', height: '300px' });
+export const ExtraSmall = createTemplate({ width: '360px', height: '667px', activeToolName: 'AnnotationEraserTool' });
+export const TooSmall = createTemplate({ width: '200px', height: '300px', activeToolName: 'AnnotationEraserTool' });
 
 const ExtraItemsAddedHeaders = {
   ...mockHeadersNormalized,
@@ -145,3 +162,5 @@ export const ExtraItemsAdded = createTemplate({
   components: ExtraItemsAddedComponents
 });
 
+export const RibbonItemsOverflow = createTemplate({ width: '690px' });
+export const RibbonItemsOverflowActive = createTemplate({ width: '750px', activeCustomRibbon: 'toolbarGroup-Insert' });

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
-import Selector from 'components/Selector';
+import Dropdown from 'components/Dropdown';
 import IncrementNumberInput from './IncrementNumberInput';
 import DimensionInput from 'components/DimensionInput';
-
 import { useTranslation } from 'react-i18next';
 
 import './InsertBlankPagePanel.scss';
@@ -15,11 +15,13 @@ const InsertBlankPagePanel = ({
   insertNewPageBelow,
   insertNewPageIndexes,
   numberOfBlankPagesToInsert,
+  pageNumberError,
   setInsertNewPageBelow,
   setInsertNewPageIndexes,
   setNumberOfBlankPagesToInsert,
   setInsertPageHeight,
   setInsertPageWidth,
+  setPageNumberError,
   loadedDocumentPageCount,
 }) => {
   const [presetNewPageDimensions] = useSelector((state) => [
@@ -57,18 +59,11 @@ const InsertBlankPagePanel = ({
   const [units, setUnits] = useState(Object.getOwnPropertyNames(supportedUnits)[0]);
   const [customWidth, setCustomWidth] = useState(presetNewPageDimensions[presetPageDimensions[0]].width);
   const [customHeight, setCustomHeight] = useState(presetNewPageDimensions[presetPageDimensions[0]].height);
-  const [pageNumberError, setPageNumberError] = useState('');
 
   useEffect(() => {
     setInsertPageWidth(presetNewPageDimensions[selectedPageDimensions].width * PT_TO_INCHES);
     setInsertPageHeight(presetNewPageDimensions[selectedPageDimensions].height * PT_TO_INCHES);
   }, []);
-
-  const handlePageNumberError = (pageNumber) => {
-    if (pageNumber) {
-      setPageNumberError(`${t('message.errorPageNumber')} ${loadedDocumentPageCount}`);
-    }
-  };
 
   const insertNewPagePlacementAbove = () => {
     setInsertNewPageBelow(false);
@@ -79,7 +74,11 @@ const InsertBlankPagePanel = ({
   };
 
   const handlePageNumbersChanged = (pageNumbers) => {
-    setPageNumberError(null);
+    if (pageNumbers.length > 0) {
+      setPageNumberError(null);
+    } else {
+      setPageNumberError(`${t('message.errorBlankPageNumber')}`);
+    }
     setInsertNewPageIndexes(pageNumbers);
   };
 
@@ -137,24 +136,27 @@ const InsertBlankPagePanel = ({
           />
         </div>
         <div className="subheader">{t('insertPageModal.pageLocations.header')}</div>
-        <div className="section">
+        <div className="section extra-space-section">
           <div className="input-container">
-            <p>{t('insertPageModal.pageLocations.specify')}</p>
+            <label className='specify-pages-wrapper' htmlFor='specifyPagesInput'>{t('insertPageModal.pageLocations.specify')}
+              <span className="input-sub-text">
+                {t('insertPageModal.pageLocations.total')}: {loadedDocumentPageCount}{' '}
+                {t('insertPageModal.pageLocations.pages')}
+              </span>
+            </label>
             <PageNumberInput
+              id="specifyPagesInput"
               selectedPageNumbers={insertNewPageIndexes}
               pageCount={loadedDocumentPageCount}
+              onSelectedPageNumbersChange={handlePageNumbersChanged}
               onBlurHandler={handlePageNumbersChanged}
-              onError={handlePageNumberError}
+              pageNumberError={pageNumberError}
             />
-            <p className="input-sub-text">
-              {t('insertPageModal.pageLocations.total')} {loadedDocumentPageCount}{' '}
-              {t('insertPageModal.pageLocations.pages')}
-            </p>
-            {pageNumberError && <div className="page-number-error">{pageNumberError}</div>}
           </div>
           <div className="input-container">
-            <p>{t('insertPageModal.pageLocations.amount')}</p>
+            <label htmlFor='numberOfPagesInput'>{t('insertPageModal.pageLocations.amount')}</label>
             <IncrementNumberInput
+              id="numberOfPagesInput"
               type="number"
               min="1"
               onChange={handleAmountOfPagesChanged}
@@ -164,39 +166,65 @@ const InsertBlankPagePanel = ({
           </div>
         </div>
         <div className="subheader">{t('insertPageModal.pageDimensions.header')}</div>
-        <div className="section">
+        <div className="section page-dimensions-section">
           <div className="input-container">
-            <p>{t('insertPageModal.pageDimensions.subHeader')}</p>
-            <Selector
-              className='presetSelector'
-              selectedItem={selectedPageDimensions}
-              onItemSelected={handlePageDimensionsChanged}
+            <label htmlFor="pagesPreset">{t('insertPageModal.pageDimensions.subHeader')}</label>
+            <Dropdown
+              id="pagesPreset"
+              dataElement="presetSelector"
+              currentSelectionKey={selectedPageDimensions}
+              onClickItem={handlePageDimensionsChanged}
               items={[...presetPageDimensions, CUSTOM_PAGE_DIMENSIONS]}
             />
           </div>
           <div className="input-container" style={{ visibility: openCustomDimensions ? 'visible' : 'hidden' }}>
-            <p>{t('insertPageModal.pageDimensions.units')}</p>
-            <Selector
-              className='unitSelector'
-              selectedItem={units}
-              onItemSelected={handleUnitsChanged}
+            <label htmlFor='pageDimensionsUnit'>{t('insertPageModal.pageDimensions.units')}</label>
+            <Dropdown
+              id="pageDimensionsUnit"
+              dataElement="unitSelector"
+              currentSelectionKey={units}
+              onClickItem={handleUnitsChanged}
               items={Object.keys(supportedUnits)}
             />
           </div>
         </div>
         <div className="section" style={{ display: openCustomDimensions ? 'flex' : 'none' }}>
           <div className="input-container">
-            <p>{t('formField.formFieldPopup.width')}</p>
-            <DimensionInput className='customWidthInput' initialValue={customWidth} onChange={handleBlankPageWidthChange} unit={supportedUnits[units]} />
+            <label htmlFor='pageWidthInput'>{t('formField.formFieldPopup.width')}</label>
+            <DimensionInput id='pageWidthInput'
+              className='customWidthInput'
+              initialValue={customWidth}
+              onChange={handleBlankPageWidthChange}
+              unit={supportedUnits[units]}
+            />
           </div>
           <div className="input-container">
-            <p>{t('formField.formFieldPopup.height')}</p>
-            <DimensionInput className='customHeightInput' initialValue={customHeight} onChange={handleBlankPageHeightChange} unit={supportedUnits[units]} />
+            <label htmlFor='pageHeightInput'>{t('formField.formFieldPopup.height')}</label>
+            <DimensionInput id='pageHeightInput'
+              className='customHeightInput'
+              initialValue={customHeight}
+              onChange={handleBlankPageHeightChange}
+              unit={supportedUnits[units]}
+            />
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+InsertBlankPagePanel.propTypes = {
+  insertNewPageBelow: PropTypes.bool,
+  insertNewPageIndexes: PropTypes.array,
+  numberOfBlankPagesToInsert: PropTypes.number,
+  pageNumberError: PropTypes.string,
+  setInsertNewPageBelow: PropTypes.func,
+  setInsertNewPageIndexes: PropTypes.func,
+  setNumberOfBlankPagesToInsert: PropTypes.func,
+  setInsertPageHeight: PropTypes.func,
+  setInsertPageWidth: PropTypes.func,
+  setPageNumberError: PropTypes.func,
+  loadedDocumentPageCount: PropTypes.number,
 };
 
 export default InsertBlankPagePanel;

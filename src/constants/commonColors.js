@@ -4,12 +4,22 @@ const COMMON_COLORS = {
   'white': '#FFFFFF',
   'blue1LightMode': '#E7EDF3',
   'blue1DarkDarkMode': '#192530',
+  'blue5': '#2B73AB',
+  'blue6': '#1A466B',
+  'gray0': '#FFFFFF',
+  'gray2': '#F1F3F5',
   'gray4': '#CFD4DA',
   'gray5': '#ADB5BD',
+  'gray6': '#818A92',
   'gray7': '#697077',
   'gray8': '#485056',
   'gray9': '#343A40',
   'gray10': '#21242A',
+};
+
+const CUSTOM_UI_VARS = {
+  'text-color': COMMON_COLORS['gray9'],
+  'primary-button-hover': COMMON_COLORS['blue6'],
 };
 
 const BASIC_PALETTE = [
@@ -46,5 +56,6 @@ const BASIC_PALETTE = [
 /* eslint-enable custom/no-hex-colors */
 export {
   COMMON_COLORS,
+  CUSTOM_UI_VARS,
   BASIC_PALETTE,
 };

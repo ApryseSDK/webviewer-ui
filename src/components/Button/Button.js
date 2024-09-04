@@ -32,6 +32,7 @@ const propTypes = {
   isSubmitType: PropTypes.bool,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
+  ariaControls: PropTypes.string,
   role: PropTypes.string,
   hideTooltipShortcut: PropTypes.bool,
   useI18String: PropTypes.bool,
@@ -69,6 +70,7 @@ const Button = (props) => {
     title,
     style,
     ariaLabel,
+    ariaControls,
     role,
     strokeColor,
     fillColor,
@@ -90,6 +92,7 @@ const Button = (props) => {
   }
 
   const aLabel = ariaLabel || (title ? t(title) : undefined);
+  const aControls = ariaControls || '';
 
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
@@ -132,7 +135,7 @@ const Button = (props) => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
         ...customOverrideClasses,
-        'custom-ui': isCustomUI,
+        'modular-ui': isCustomUI,
         'icon-only': isGlyph && !label,
       })}
       style={style}
@@ -144,9 +147,11 @@ const Button = (props) => {
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       aria-label={aLabel}
+      aria-controls={aControls}
       role={role}
       tabIndex={tabIndex}
       aria-keyshortcuts={ariaKeyshortcuts}
+      aria-expanded={isActive}
       type={isSubmitType ? 'submit' : 'button'}
       disabled={actuallyDisabled}
     >

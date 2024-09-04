@@ -2,10 +2,14 @@ import React from 'react';
 import SignatureModalComponent from './SignatureModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'Components/SignatureModal',
   component: SignatureModalComponent,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {
@@ -25,9 +29,10 @@ const initialState = {
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
+    genericPanels: [],
   },
   featureFlags: {
-    customizableUI: false,
+    customizableUI: true,
   },
 };
 
@@ -41,6 +46,13 @@ export const InkSignaturePanel = () => (
   </Provider>
 );
 
+InkSignaturePanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const clearButton = await canvas.findByRole('button', { name: 'Clear signature' });
+  expect(clearButton).toBeInTheDocument();
+};
+
 const inkSignatureWithInitialsStore = configureStore({
   reducer: () => ({
     viewer: {
@@ -48,7 +60,7 @@ const inkSignatureWithInitialsStore = configureStore({
       isInitialsModeEnabled: true,
     },
     featureFlags: {
-      customizableUI: false,
+      customizableUI: true,
     },
   })
 });
@@ -59,6 +71,13 @@ export const InkSignaturePanelWithInitials = () => (
   </Provider>
 );
 
+InkSignaturePanelWithInitials.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const clearButton = await canvas.findByRole('button', { name: 'Clear signature' });
+  expect(clearButton).toBeInTheDocument();
+};
+
 const drawSignatureStore = configureStore({
   reducer: () => ({
     viewer: {
@@ -68,7 +87,7 @@ const drawSignatureStore = configureStore({
       }
     },
     featureFlags: {
-      customizableUI: false,
+      customizableUI: true,
     },
   })
 });
@@ -78,6 +97,13 @@ export const TextSignaturePanel = () => (
     <SignatureModalComponent isOpen />
   </Provider>
 );
+
+TextSignaturePanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const clearButton = await canvas.findByRole('button', { name: 'Clear signature' });
+  expect(clearButton).toBeInTheDocument();
+};
 
 const drawSignatureStoreWithInitials = configureStore({
   reducer: () => ({
@@ -89,7 +115,7 @@ const drawSignatureStoreWithInitials = configureStore({
       }
     },
     featureFlags: {
-      customizableUI: false,
+      customizableUI: true,
     },
   })
 });
@@ -117,9 +143,10 @@ const imageTabState = {
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
+    genericPanels: [],
   },
   featureFlags: {
-    customizableUI: false,
+    customizableUI: true,
   },
 };
 
@@ -140,7 +167,7 @@ const imageStoreWithInitials = configureStore({
       isInitialsModeEnabled: true,
     },
     featureFlags: {
-      customizableUI: false,
+      customizableUI: true,
     },
   })
 });
@@ -170,6 +197,7 @@ const mockSavedInitials = [
 
 const savedTabsState = {
   viewer: {
+    genericPanels: [],
     customPanels: [],
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     openElements: {
@@ -185,7 +213,7 @@ const savedTabsState = {
     activeToolName: 'AnnotationCreateSignature',
   },
   featureFlags: {
-    customizableUI: false,
+    customizableUI: true,
   },
 };
 const savedTabsStateWithInitials = {

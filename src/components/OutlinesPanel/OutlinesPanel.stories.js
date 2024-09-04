@@ -1,38 +1,39 @@
 import React from 'react';
-import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
-import core from 'core';
 import OutlinesPanel from './OutlinesPanel';
+import core from 'core';
 import { getDefaultOutlines } from '../Outline/Outline.stories';
 import '../LeftPanel/LeftPanel.scss';
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import initialState from 'src/redux/initialState';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 export default {
   title: 'Components/OutlinesPanel',
   component: OutlinesPanel,
-};
-
-core.isFullPDFEnabled = () => true;
-
-const basicMockState = {
-  viewer: {
-    disabledElements: {},
-    customElementOverrides: {},
-    isOutlineEditingEnabled: true,
-    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-  },
-  document: {
-    outlines: getDefaultOutlines(),
-  },
-  featureFlags: {
+  parameters: {
     customizableUI: true,
   }
 };
+core.isFullPDFEnabled = () => true;
 
-const OutlinePanelTemplate = (mockState) => {
+const MockApp = ({ initialState, width, height }) => {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: false,
+      thunk: true,
+      immutableCheck: false,
+    })
+  });
+  setItemToFlyoutStore(store);
   return (
     <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
       <div className='left-panel-container' style={{ minWidth: '330px' }}>
-        <Provider store={createStore(mockState)}>
+        <Provider store={store}>
           <OutlinesPanel />
         </Provider>
       </div>
@@ -40,66 +41,77 @@ const OutlinePanelTemplate = (mockState) => {
   );
 };
 
-export const Editable = () => {
-  const mockState = () => {
-    return basicMockState;
+const Template = (args) => {
+  const argsX = args || {};
+  const initialStateX = argsX.initialState || {};
+  const argsViewer = initialStateX.viewer || {};
+  const argsDocument = initialStateX.document || {};
+
+  const stateWithHeaders = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      disabledElements: {},
+      customElementOverrides: {},
+      isOutlineEditingEnabled: true,
+      pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      flyoutMap: {
+      },
+      activeFlyout: 'bookmarkOutlineFlyout-0',
+      openElements: {
+        'bookmarkOutlineFlyout-0': true,
+      },
+      activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',
+      ...argsViewer,
+    },
+    document: {
+      outlines: getDefaultOutlines(),
+      ...argsDocument,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
-  return OutlinePanelTemplate(mockState);
+  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height}/>;
 };
 
-export const NonEditable = () => {
-  const mockState = () => {
-    return {
-      viewer: {
-        ...basicMockState.viewer,
-        isOutlineEditingEnabled: false,
-      },
-      document: {
-        ...basicMockState.document,
-      },
-      featureFlags: {
-        customizableUI: true,
-      },
-    };
-  };
+function createTemplate({
+  width = '100%',
+  height = '100%',
+  headers = mockHeadersNormalized,
+  components = mockModularComponents,
+  activeCustomRibbon = 'annotations-ribbon-item',
+  activeToolName,
+  initialState = {},
+} = {}) {
+  const template = Template.bind({});
+  template.args = { headers, components, width, height, activeCustomRibbon, activeToolName, initialState };
+  template.parameters = { layout: 'fullscreen' };
+  return template;
+}
 
-  return OutlinePanelTemplate(mockState);
-};
-
-export const Expanded = () => {
-  const mockState = () => {
-    return {
-      viewer: {
-        ...basicMockState.viewer,
-        autoExpandOutlines: true,
-      },
-      document: {
-        ...basicMockState.document,
-      },
-      featureFlags: {
-        customizableUI: true,
-      },
-    };
-  };
-
-  return OutlinePanelTemplate(mockState);
-};
-
-export const NoOutlines = () => {
-  const mockState = () => {
-    return {
-      viewer: {
-        ...basicMockState.viewer,
-      },
-      document: {
-        outlines: [],
-      },
-      featureFlags: {
-        customizableUI: true,
-      },
-    };
-  };
-
-  return OutlinePanelTemplate(mockState);
-};
+export const Editable = createTemplate({
+  initialState: {}
+});
+export const NonEditable = createTemplate({
+  initialState: {
+    viewer: {
+      isOutlineEditingEnabled: false,
+    },
+  }
+});
+export const Expanded = createTemplate({
+  initialState: {
+    viewer: {
+      autoExpandOutlines: true,
+    },
+  }
+});
+export const NoOutlines = createTemplate({
+  initialState: {
+    document: {
+      outlines: [],
+    },
+  }
+});

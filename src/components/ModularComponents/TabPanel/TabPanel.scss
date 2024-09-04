@@ -1,5 +1,15 @@
 @import '../../../constants/styles';
 
+.tabPanelContainer {
+  @include mobile {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // Must equal 30 for the -30 panel offset. 16 in modal wrapper
+    padding-bottom: 14px;
+  }
+}
+
 .TabPanelHeader {
   margin: 0 0 16px 0;
 
@@ -108,6 +118,24 @@
           border-top-left-radius: 0px;
         }
       }
+    }
+  }
+
+  @include mobile {
+    margin: 0px 16px;
+  }
+}
+
+.tabPanelTitleContainer {
+  display: none;
+  @include mobile {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px 16px 8px 16px;
+  
+    .tabPanelCloseButton {
+      align-self: end;
+      z-index: 3;
     }
   }
 }

@@ -31,10 +31,12 @@ import SearchPanel from 'components/SearchPanel';
 import NotesPanel from 'components/NotesPanel';
 import SignatureListPanel from 'components/SignatureListPanel';
 import RubberStampPanel from 'components/RubberStampPanel';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
 const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
+  const isMobile = isMobileSize();
   const tabPanelHeaderRef = useRef();
   const moreButtonRef = useRef();
   const FLYOUT_NAME = `${tabPanelDataElement}-flyout`;
@@ -95,7 +97,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       case panelNames.STYLE:
         return <StylePanel dataElement={dataElement}/>;
       case panelNames.REDACTION:
-        return <RedactionPanel dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList}/>;
+        return <RedactionPanel dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true}/>;
       case panelNames.SEARCH:
         return <SearchPanel dataElement={dataElement} parentDataElement={tabPanelDataElement}/>;
       case panelNames.NOTES:
@@ -199,6 +201,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   };
 
   const setOverflowFlyout = () => {
+
     const flyout = {
       dataElement: FLYOUT_NAME,
       className: 'tabPanelOverflowFlyout',
@@ -378,15 +381,22 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     return activePanel?.render;
   };
 
-  return (
-    <>
-      <Measure
-        bounds
-        innerRef={tabPanelHeaderRef}
-        onResize={({ bounds }) => {
-          setHeaderContainerWidth(bounds.width);
-        }}>
-        {({ measureRef }) => (
+  const closePanel = () => {
+    dispatch(actions.closeElement('tabPanel'));
+  };
+
+  const childElements = <>
+    <Measure
+      bounds
+      innerRef={tabPanelHeaderRef}
+      onResize={({ bounds }) => {
+        setHeaderContainerWidth(bounds.width);
+      }}>
+      {({ measureRef }) => (
+        <>
+          <div className='tabPanelTitleContainer'>
+            {isMobile ? <Button className='tabPanelCloseButton' ariaLabel={t('action.close')} img='ic_close_black_24px' dataElement="tabPanelCloseButton" title={t('action.close')} onClick={closePanel} /> : undefined}
+          </div>
           <div ref={measureRef} className='TabPanelHeader'>
             <Element className='TabPanelHeaderElements' dataElement='TabPanelHeaderElements'>
               {renderTabs()}
@@ -407,11 +417,13 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
               </div>
             </Element>
           </div>
-        )}
-      </Measure>
-      {getActivePanelRender()}
-    </>
-  );
+        </>
+      )}
+    </Measure>
+    {getActivePanelRender()}
+  </>;
+
+  return isMobile ? (<div className='tabPanelContainer'>{childElements}</div>) : childElements;
 };
 
 TabPanel.propTypes = {

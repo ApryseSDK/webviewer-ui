@@ -796,3 +796,31 @@ export const setNotesInLeftPanel = (notesInLeftPanel) => ({
   type: 'SET_NOTES_IN_LEFT_PANEL',
   payload: notesInLeftPanel
 });
+
+export const pushFocusedElement = (element) => ({
+  type: 'PUSH_FOCUSED_ELEMENT',
+  payload: element,
+});
+
+export const setFocusedElementsStack = (stack) => ({
+  type: 'SET_FOCUSED_ELEMENTS_STACK',
+  payload: stack,
+});
+
+export const popFocusedElement = () => (dispatch, getState) => {
+  const focusedElementsStack = getState().viewer.focusedElementsStack;
+
+  if (focusedElementsStack.length > 0) {
+    const poppedElement = focusedElementsStack[focusedElementsStack.length - 1];
+    const newStack = focusedElementsStack.slice(0, -1);
+    dispatch(setFocusedElementsStack(newStack));
+    return poppedElement;
+  }
+
+  return null;
+};
+
+export const setKeyboardOpen = (isKeyboardOpen) => ({
+  type: 'SET_KEYBOARD_OPEN',
+  payload: isKeyboardOpen,
+});

@@ -60,6 +60,7 @@ function Layer(props) {
                 <Choice
                   id={`${layer.id}`}
                   label={layer.name}
+                  aria-label={layer.name}
                   onChange={() => onChange(!layer.visible)}
                   checked={layer.visible}
                   disabled={layer.locked || layer.disabled}

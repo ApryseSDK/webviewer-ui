@@ -23,6 +23,9 @@ const initialState = {
     genericPanels: [],
     lastPickedToolGroup: '',
   },
+  featureFlags: {
+    customizableUI: true
+  }
 };
 const initialStateActive = {
   viewer: {

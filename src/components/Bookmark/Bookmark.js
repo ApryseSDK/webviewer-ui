@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 import classNames from 'classnames';
 import core from 'core';
 import PropTypes from 'prop-types';
-
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Button from '../Button';
 import DataElementWrapper from '../DataElementWrapper';
-import MoreOptionsContextMenuPopup from '../MoreOptionsContextMenuPopup';
 import Choice from 'components/Choice';
+import MoreOptionsContextMenuFlyout, { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import DataElements from 'constants/dataElement';
+
 import '../../constants/bookmarksOutlinesShared.scss';
 
 const propTypes = {
@@ -42,7 +46,6 @@ const Bookmark = ({
   const [isEditing, setIsEditing] = useState(false);
   const [isDefault, setIsDefault] = useState(false);
   const [bookmarkText, setBookmarkText] = useState(text);
-  const [isContextMenuOpen, setContextMenuOpen] = useState(false);
   const [clearSingleClick, setClearSingleClick] = useState(undefined);
   const inputRef = useRef();
 
@@ -96,6 +99,22 @@ const Bookmark = ({
       setIsDefault(false);
     }
   }, [isEditing]);
+
+  const handleOnClick = (val) => {
+    switch (val) {
+      case menuTypes.RENAME:
+        setIsEditing(true);
+        break;
+      case menuTypes.DELETE:
+        onRemove(pageIndex);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const flyoutSelector = `${DataElements.BOOKMARK_FLYOUT}-${'outlinePath'}`;
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
 
   return (
     <DataElementWrapper
@@ -151,34 +170,21 @@ const Bookmark = ({
               />
             }
             {!isMultiSelectionMode &&
-              <Button
+              <ToggleElementButton
                 className="bookmark-outline-more-button"
                 dataElement={`bookmark-more-button-${panelSelector}-${pageIndex}`}
                 img="icon-tool-more"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setContextMenuOpen(true);
-                }}
-                tabIndex={0 }
+                toggleElement={flyoutSelector}
+                disabled={false}
               />
             }
-            {isContextMenuOpen && (
-              <MoreOptionsContextMenuPopup
-                type={'bookmark'}
-                anchorButton={`bookmark-more-button-${panelSelector}-${pageIndex}`}
-                shouldDisplayDeleteButton={true}
-                onClosePopup={() => setContextMenuOpen(false)}
-                onRenameClick={() => {
-                  setContextMenuOpen(false);
-                  setIsEditing(true);
-                }}
-                onDeleteClick={() => {
-                  setContextMenuOpen(false);
-                  onRemove(pageIndex);
-                }}
-              />
-            )}
-
+            <MoreOptionsContextMenuFlyout
+              shouldHideDeleteButton={false}
+              currentFlyout={currentFlyout}
+              flyoutSelector={flyoutSelector}
+              type={'bookmark'}
+              handleOnClick={handleOnClick}
+            />
             <div
               className="bookmark-outline-text bookmark-text-input"
               onDoubleClick={() => setIsEditing(true)}

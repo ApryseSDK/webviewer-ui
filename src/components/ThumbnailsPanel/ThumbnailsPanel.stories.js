@@ -8,6 +8,9 @@ import { createStore } from 'src/helpers/storybookHelper';
 export default {
   title: 'Components/Thumbnails',
   component: ThumbnailsPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const myState = {

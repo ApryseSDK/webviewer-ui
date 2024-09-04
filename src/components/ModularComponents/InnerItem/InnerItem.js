@@ -5,13 +5,17 @@ import StatefulButton from '../StatefulButton';
 import GroupedItems from '../GroupedItems/GroupedItems';
 import Divider from '../Divider';
 import RibbonGroup from '../RibbonGroup';
-import ToolGroupButton from '../ToolGroupButton';
 import ToggleElementButton from '../ToggleElementButton';
 import ZoomControls from '../ZoomControls';
 import ToolButton from '../ToolButton';
 import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
 import ViewControls from '../ViewControls';
+import FontSizeDropdown from '../OfficeEditor/FontSizeDropdown';
+import FontFaceDropdown from '../OfficeEditor/FontFaceDropdown';
+import StylePresetDropdown from '../OfficeEditor/StylePresetDropdown';
+import CreateTableDropdown from '../OfficeEditor/CreateTableDropdown';
+import OfficeEditorModeDropdown from '../OfficeEditor/OfficeEditorModeDropdown';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -32,8 +36,6 @@ const InnerItem = (props) => {
       return <ToggleElementButton key={key} {...props} />;
     case ITEM_TYPE.RIBBON_GROUP:
       return <RibbonGroup key={key} {...props} />;
-    case ITEM_TYPE.TOOL_GROUP_BUTTON:
-      return <ToolGroupButton key={key} {...props} />;
     case ITEM_TYPE.ZOOM:
       return <ZoomControls {...props} />;
     case ITEM_TYPE.TOOL_BUTTON:
@@ -44,6 +46,16 @@ const InnerItem = (props) => {
       return <PresetButton key={key} {...props} />;
     case ITEM_TYPE.VIEW_CONTROLS:
       return <ViewControls key={key} {...props} />;
+    case ITEM_TYPE.FONT_SIZE_DROPDOWN:
+      return <FontSizeDropdown key={key} {...props} />;
+    case ITEM_TYPE.FONT_FACE_DROPDOWN:
+      return <FontFaceDropdown key={key} {...props} />;
+    case ITEM_TYPE.STYLE_PRESET_DROPDOWN:
+      return <StylePresetDropdown key={key} {...props} />;
+    case ITEM_TYPE.CREATE_TABLE_DROPDOWN:
+      return <CreateTableDropdown key={key} {...props} />;
+    case ITEM_TYPE.OFFICE_EDITOR_MODE_DROPDOWN:
+      return <OfficeEditorModeDropdown key={key}  {...props} />;
     default:
       console.warn(`${type} is not a valid item type.`);
       return null;

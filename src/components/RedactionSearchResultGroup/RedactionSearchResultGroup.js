@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import RedactionSearchResult from './RedactionSearchResult';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
 import { useTranslation } from 'react-i18next';
-import CollapsiblePanelGroup from 'components/CollapsiblePanelGroup';
+import CollapsibleSection from 'components/CollapsibleSection';
 import './RedactionSearchResultGroup.scss';
 
 const RedactionSearchResultGroup = (props) => {
@@ -42,35 +42,38 @@ const RedactionSearchResultGroup = (props) => {
 
   const header = () => {
     return (
-      <Choice
-        checked={allItemsChecked}
-        onChange={checkAllResults}
-        label={`${t('option.shared.page')} ${pageNumber}`}
-        className="redaction-search-results-page-number"
-      />
+      `${t('option.shared.page')} ${pageNumber}`
     );
   };
 
   const style = {
-    paddingLeft: '12px',
-    paddingRight: '12px',
-    paddingTop: '8px',
-    paddingBottom: '4px',
+    width: '100%',
   };
 
   return (
-    <CollapsiblePanelGroup header={header} role="row" style={style}>
-      <div role="list">
-        {searchResults.map((searchResult, index) => (
-          <RedactionSearchResult
-            checked={selectedSearchResultIndexes[searchResult.index]}
-            checkResult={checkResult}
-            searchResult={searchResult}
-            key={`${index}-${pageNumber}`}
-          />)
-        )}
-      </div>
-    </CollapsiblePanelGroup>
+    <div className="redaction-search-results-page-number">
+      <Choice
+        className="redaction-search-results-page-number-checkbox"
+        aria-label={`${t('option.shared.page')} ${pageNumber}`}
+        checked={allItemsChecked}
+        onChange={(event) => {
+          event.stopPropagation();
+          checkAllResults(event);
+        }}
+      />
+      <CollapsibleSection header={header} style={style} expansionDescription={`${t('option.shared.page')} ${pageNumber}`}>
+        <div role="list">
+          {searchResults.map((searchResult, index) => (
+            <RedactionSearchResult
+              checked={selectedSearchResultIndexes[searchResult.index]}
+              checkResult={checkResult}
+              searchResult={searchResult}
+              key={`${index}-${pageNumber}`}
+            />)
+          )}
+        </div>
+      </CollapsibleSection>
+    </div>
   );
 };
 

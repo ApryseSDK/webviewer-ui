@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import { Virtuoso } from 'react-virtuoso';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { mapAnnotationToRedactionType } from 'constants/redactionTypes';
+import Button from 'components/Button';
 
 import './RedactionPanel.scss';
 import RedactionPageGroup from '../RedactionPageGroup';
@@ -53,7 +54,7 @@ const RedactionPanel = (props) => {
     // Not needed for the actual app; if we set it it kills performance when there are a lot of annotations
     const testModeProps = isTestMode ? { initialItemCount: redactionPageNumbers.length } : {};
     return (
-      <div className="redaction-group-container" role="list">
+      <div className="redaction-group-container">
         <Virtuoso
           data={redactionPageNumbers}
           itemContent={(index, pageNumber) => {
@@ -89,22 +90,22 @@ const RedactionPanel = (props) => {
       </div>
       {redactionPageNumbers.length > 0 ? renderRedactionPageGroups() : noRedactionAnnotations}
       <div className="redaction-panel-controls">
-        <button
+        <Button
           disabled={redactionAnnotations.length === 0}
           className={clearAllButtonClassName}
           onClick={deleteAllRedactionAnnotations}
-          aria-label={t('redactionPanel.clearMarked')}
+          label={t('redactionPanel.clearMarked')}
         >
           {t('redactionPanel.clearMarked')}
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={redactionAnnotations.length === 0}
           className={redactAllButtonClassName}
           onClick={applyAllRedactions}
-          aria-label={t('redactionPanel.redactAllMarked')}
+          label={t('redactionPanel.redactAllMarked')}
         >
           {t('redactionPanel.redactAllMarked')}
-        </button>
+        </Button>
       </div>
     </>
   );

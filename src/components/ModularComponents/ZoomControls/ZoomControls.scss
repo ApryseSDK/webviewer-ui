@@ -36,10 +36,10 @@
       width: 32px;
       height: 32px;
       font-size: 13px;
-      
+
       button {
         @include mobile {
-          font-size : var(--font-size-default);
+          font-size: var(--font-size-default);
         }
       }
 
@@ -62,6 +62,10 @@
         min-width: 28px;
         text-align: right;
       }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
     }
   }
 
@@ -74,52 +78,10 @@
 
   &.size1 {
     background: none !important;
+
     .Button:hover,
     .Button.active {
       background-color: var(--view-header-button-active) !important;
     }
-  }
-}
-
-.Flyout .ZoomFlyoutMenu {
-  overflow-y: auto;
-  z-index: 200;
-  background-color: var(--component-background);
-  width: 170px;
-  font-size: var(--font-size-default);
-  font-family: var(--font-family);
-  border: 1px solid var(--divider);
-  border-radius: 4px;
-  text-transform: capitalize;
-  text-overflow: ellipsis;
-  padding: 6px 0;
-
-  .flyout-item-container {
-    border: none;
-    background-color: transparent;
-    margin: 2px 0;
-    display: flex;
-    align-items: center;
-    height: 24px;
-    cursor: pointer;
-    width: 100%;
-
-    .menu-container {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      align-items: center;
-      padding: 2px 19px 2px 6px;
-    }
-
-    .Icon {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  .divider {
-    width: 90%;
-    margin: 8px;
   }
 }

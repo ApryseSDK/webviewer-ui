@@ -5,8 +5,7 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
-import { FocusTrap, Choice, Input } from '@pdftron/webviewer-react-toolkit';
-import { Swipeable } from 'react-swipeable';
+import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
 import core from 'core';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
@@ -15,6 +14,7 @@ import downloadPdf from 'helpers/downloadPdf';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { workerTypes } from 'constants/types';
 import range from 'lodash/range';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './SaveModal.scss';
 
@@ -53,25 +53,25 @@ const SaveModal = () => {
   const [pageCount, setPageCount] = useState(1);
   const [errorText, setErrorText] = useState('');
 
-  useEffect(() => {
-    const keydownListener = (e) => {
-      if (e.key === 'Enter') {
-        onSave();
-      }
-    };
+  // useEffect(() => {
+  //   const keydownListener = (e) => {
+  //     if (e.key === 'Enter') {
+  //       onSave();
+  //     }
+  //   };
 
-    !saveDisabled && window.addEventListener('keydown', keydownListener);
-    return () => window.removeEventListener('keydown', keydownListener);
-  }, [
-    activeDocumentViewerKey,
-    saveDisabled,
-    includeAnnotations,
-    specifiedPages,
-    includeComments,
-    pageRange,
-    filename,
-    filetype,
-  ]);
+  //   !saveDisabled && window.addEventListener('keydown', keydownListener);
+  //   return () => window.removeEventListener('keydown', keydownListener);
+  // }, [
+  //   activeDocumentViewerKey,
+  //   saveDisabled,
+  //   includeAnnotations,
+  //   specifiedPages,
+  //   includeComments,
+  //   pageRange,
+  //   filename,
+  //   filetype,
+  // ]);
 
   useEffect(() => {
     const updateFile = async () => {
@@ -218,91 +218,88 @@ const SaveModal = () => {
   );
 
   return (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={isOpen}>
-        <div className={classNames('SaveModal', { open: isOpen, closed: !isOpen })} data-element={DataElements.SAVE_MODAL}>
-          <div className='container'>
-            <div className='header'>
-              <div className='header-text' >{t('saveModal.saveAs')}</div>
-              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title='action.close' />
-            </div>
-            <div className='modal-body'>
-              <div className='title'>{t('saveModal.general')}</div>
-              <div className='input-container'>
-                <label htmlFor='fileNameInput' className='label'>{t('saveModal.fileName')}</label>
-                <Input
-                  type='text'
-                  id='fileNameInput'
-                  data-testid="fileNameInput"
-                  onChange={onFilenameChange}
-                  value={filename}
-                  fillWidth="false"
-                  padMessageText={true}
-                  messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : ''}
-                  message={filename === '' ? 'warning' : 'default'}
-                />
-              </div>
-              <div className='input-container'>
-                <div className='label'>{t('saveModal.fileType')}</div>
-                <Dropdown
-                  items={fileTypes.map((i) => i.label)}
-                  onClickItem={onFiletypeChange}
-                  currentSelectionKey={filetype.label}
-                />
-              </div>
-              {!optionsDisabled && (<>
-                <div className='title'>{t('saveModal.pageRange')}</div>
-                <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
-                  <div className='page-range-column'>
-                    <Choice
-                      checked={pageRange === PAGE_RANGES.ALL}
-                      radio
-                      name='page-range-option'
-                      label={t('saveModal.all')}
-                      value={PAGE_RANGES.ALL}
-                    />
-                    <Choice
-                      checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
-                      radio
-                      name='page-range-option'
-                      label={t('saveModal.currentPage')}
-                      value={PAGE_RANGES.CURRENT_PAGE}
-                    />
-                  </div>
-                  <div className='page-range-column custom-page-ranges'>
-                    <Choice
-                      checked={pageRange === PAGE_RANGES.SPECIFY}
-                      radio
-                      name='page-range-option'
-                      label={customPagesLabelElement}
-                      value={PAGE_RANGES.SPECIFY}
-                    />
-                  </div>
-                </form>
-                <div className='title'>{t('saveModal.properties')}</div>
-                <div className='checkbox-container'>
-                  <Choice
-                    checked={includeAnnotations}
-                    name='include-annotation-option'
-                    label={t('saveModal.includeAnnotation')}
-                    onChange={onIncludeAnnotationsChanged}
-                  />
-                  <Choice
-                    checked={includeComments}
-                    name='include-comment-option'
-                    label={t('saveModal.includeComments')}
-                    onChange={onIncludeCommentsChanged}
-                  />
-                </div>
-              </>)}
-            </div>
-            <div className='footer'>
-              <Button disabled={saveDisabled} onClick={onSave} label={t('saveModal.save')} />
-            </div>
+    <div className={classNames('SaveModal', { open: isOpen, closed: !isOpen })} data-element={DataElements.SAVE_MODAL}>
+      <ModalWrapper
+        isOpen={isOpen}
+        title={t('saveModal.saveAs')}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        swipeToClose>
+        <div className='modal-body'>
+          <div className='title'>{t('saveModal.general')}</div>
+          <div className='input-container'>
+            <label htmlFor='fileNameInput' className='label'>{t('saveModal.fileName')}</label>
+            <Input
+              type='text'
+              id='fileNameInput'
+              data-testid="fileNameInput"
+              onChange={onFilenameChange}
+              value={filename}
+              fillWidth="false"
+              padMessageText={true}
+              messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : ''}
+              message={filename === '' ? 'warning' : 'default'}
+            />
           </div>
+          <div className='input-container'>
+            <div className='label'>{t('saveModal.fileType')}</div>
+            <Dropdown
+              items={fileTypes.map((i) => i.label)}
+              onClickItem={onFiletypeChange}
+              currentSelectionKey={filetype.label}
+            />
+          </div>
+          {!optionsDisabled && (<>
+            <div className='title'>{t('saveModal.pageRange')}</div>
+            <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
+              <div className='page-range-column'>
+                <Choice
+                  checked={pageRange === PAGE_RANGES.ALL}
+                  radio
+                  name='page-range-option'
+                  label={t('saveModal.all')}
+                  value={PAGE_RANGES.ALL}
+                />
+                <Choice
+                  checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
+                  radio
+                  name='page-range-option'
+                  label={t('saveModal.currentPage')}
+                  value={PAGE_RANGES.CURRENT_PAGE}
+                />
+              </div>
+              <div className='page-range-column custom-page-ranges'>
+                <Choice
+                  checked={pageRange === PAGE_RANGES.SPECIFY}
+                  radio
+                  name='page-range-option'
+                  label={customPagesLabelElement}
+                  value={PAGE_RANGES.SPECIFY}
+                />
+              </div>
+            </form>
+            <div className='title'>{t('saveModal.properties')}</div>
+            <div className='checkbox-container'>
+              <Choice
+                checked={includeAnnotations}
+                name='include-annotation-option'
+                label={t('saveModal.includeAnnotation')}
+                onChange={onIncludeAnnotationsChanged}
+              />
+              <Choice
+                checked={includeComments}
+                name='include-comment-option'
+                label={t('saveModal.includeComments')}
+                onChange={onIncludeCommentsChanged}
+              />
+            </div>
+          </>)}
         </div>
-      </FocusTrap>
-    </Swipeable>
+        <div className='footer'>
+          <Button disabled={saveDisabled} onClick={onSave} label={t('saveModal.save')} />
+        </div>
+      </ModalWrapper>
+    </div >
   );
 };
 

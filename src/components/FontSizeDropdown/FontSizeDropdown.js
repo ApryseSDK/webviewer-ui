@@ -279,6 +279,7 @@ const FontSizeDropdown = ({
           className={classNames('Dropdown__items', { 'hidden': !isOpen })}
           role="listbox"
           ref={dropdownDivRef}
+          aria-expanded={isOpen}
         >
           {dropdownItems}
         </div>

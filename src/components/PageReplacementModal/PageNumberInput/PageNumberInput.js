@@ -6,28 +6,36 @@ import Icon from 'components/Icon';
 import './PageNumberInput.scss';
 
 const propTypes = {
+  id: PropTypes.string,
   selectedPageNumbers: PropTypes.arrayOf(PropTypes.number),
   pageCount: PropTypes.number,
   placeholder: PropTypes.string,
   pageNumberError: PropTypes.string,
   onBlurHandler: PropTypes.func,
   onError: PropTypes.func,
+  ariaLabel: PropTypes.string,
   onSelectedPageNumbersChange: PropTypes.func,
+  customPageLabels: PropTypes.array,
+  enablePageLabels: PropTypes.bool
 };
 
 const noop = () => { };
 
 function PageNumberInput({
+  id,
   selectedPageNumbers,
   pageCount,
+  enablePageLabels = false,
+  customPageLabels = null,
   placeholder,
   pageNumberError,
   onSelectedPageNumbersChange,
+  ariaLabel,
   onError = noop,
   onBlurHandler = noop,
 }) {
   // Since we don't have page labels info we just assume page numbers as labels
-  const pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
+  let pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
   const [pageString, setPageString] = useState('');
   const [hasError, setHasError] = useState(false);
 
@@ -43,7 +51,19 @@ function PageNumberInput({
   }, [pageNumberError]);
 
   const onPagesChange = (e) => {
-    setPageString(e.target.value);
+    const inputValue = e.target.value;
+    const lastChar = inputValue[inputValue.length - 1];
+
+    if (lastChar === ',' || lastChar === '-') {
+      setPageString(inputValue);
+      return;
+    }
+
+    setPageString(inputValue);
+
+    if (enablePageLabels && customPageLabels) {
+      pageLabels = customPageLabels;
+    }
 
     const selectedPagesString = e.target.value.replace(/ /g, '');
     const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
@@ -72,6 +92,10 @@ function PageNumberInput({
   };
 
   const onBlur = (e) => {
+    if (enablePageLabels && customPageLabels) {
+      pageLabels = customPageLabels;
+    }
+
     const selectedPagesString = e.target.value.replace(/ /g, '');
     const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
     const pageNumbersString = getPageString(pageNumbersArray);
@@ -89,10 +113,11 @@ function PageNumberInput({
             'page-number-input': true,
             'page-number-input--error': hasError
           })}
-          id='PageNumberInput'
+          id={id}
           type='text'
           onChange={onPagesChange}
           onBlur={onBlur}
+          aria-label={ariaLabel}
           value={pageString}
           placeholder={placeholder}
           aria-describedby={hasError ? 'PageNumberInputError' : undefined}
@@ -101,7 +126,7 @@ function PageNumberInput({
       </div>
       {hasError && (
         <div id="PageNumberInputError" className="page-number-error">
-          {pageNumberError}
+          <p aria-live="assertive" className="no-margin">{pageNumberError}</p>
         </div>)}
     </div>
   );

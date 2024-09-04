@@ -64,14 +64,16 @@ function ZoomControls(props) {
     })} data-element={dataElement} ref={elementRef}>
       {size === 0 && <>
         <div className="ToggleZoomMenu">
-          <div tabIndex={0}
+          <div tabIndex={-1}
             className={classNames({
               ZoomContainer: true,
               active: isActive,
             })}
           >
-            <div className="ZoomText"
-              onClick={() => onClick}>
+            <div
+              className="ZoomText"
+              onClick={() => onClick}
+              tabIndex={0}>
               <input
                 type="text"
                 className="textarea"

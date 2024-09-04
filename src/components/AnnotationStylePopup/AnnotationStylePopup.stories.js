@@ -24,7 +24,7 @@ export default {
         disable: true
       }
     }
-  }
+  },
 };
 
 // Mock some state to show the style popups
@@ -103,7 +103,7 @@ distanceMeasurementAnnot['Measure'] = {
   ],
 };
 
-const noop = () => {};
+const noop = () => { };
 distanceMeasurementAnnot['IT'] = 'LineDimension';
 distanceMeasurementAnnot['DisplayUnits'] = ['in'];
 distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];

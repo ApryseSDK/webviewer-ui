@@ -7,6 +7,11 @@
   width: 230px;
   margin: 0 auto;
 
+  @include mobile {
+    width: inherit;
+    margin: 16px;
+  }
+
   .thumbnail-slider {
     width: 100%;
     height: 20px;
@@ -121,6 +126,17 @@
 
   .slider {
     width: 100%;
+
+    @include mobile {
+      margin-top: 0px;
+    }
+
+    .slider-element-container {
+      @include mobile {
+        width: auto;
+        margin-left: auto;
+      }
+    }
   }
 }
 
@@ -130,6 +146,11 @@
   overflow: hidden !important;
   display: flex;
   height: 100%;
+
+  @include mobile {
+    width: inherit;
+    margin: 0px 16px;
+  }
 
   #virtualized-thumbnails-container {
     flex: 1;

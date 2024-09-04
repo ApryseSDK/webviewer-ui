@@ -53,17 +53,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-button);
-    border: 1px solid var(--primary-button);
-    color: var(--primary-button-text);
     padding: 6px 18px;
     width: auto;
     width: fit-content;
     border-radius: 4px;
     height: 28px;
     cursor: pointer;
+    &:not(:disabled) {
+      background-color: var(--primary-button);
+      border: 1px solid var(--primary-button);
+      color: var(--primary-button-text);
+    }
 
-    &:hover {
+    &:hover:not(:disabled):not(.disabled) {
       background: var(--primary-button-hover);
       border: 1px solid var(--primary-button-hover);
     }

@@ -48,7 +48,8 @@ const keyboardShortcuts = [
   [Shortcuts.SQUIGGLY, 'option.settings.selectCreateTextSquigglyTool'],
   [Shortcuts.HIGHLIGHT, 'option.settings.selectCreateTextHighlightTool'],
   [Shortcuts.STRIKEOUT, 'option.settings.selectCreateTextStrikeoutTool'],
-  [Shortcuts.UNDERLINE, 'option.settings.selectCreateTextUnderlineTool']
+  [Shortcuts.UNDERLINE, 'option.settings.selectCreateTextUnderlineTool'],
+  [Shortcuts.CLOSE, 'option.settings.close'],
 ];
 
 const KeyboardShortcutTab = () => {

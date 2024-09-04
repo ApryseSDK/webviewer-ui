@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import FlyoutItemContainer from '../FlyoutItemContainer';
 
-function PageControlsFlyout(props) {
+const PageControlsFlyout = forwardRef((props, ref) => {
   const {
     onSubmit,
     onChange,
     input,
     totalPages,
     inputWidth,
+    onKeyDownHandler,
+    icon,
   } = props;
   const [isFocused, setIsFocused] = useState(false);
 
@@ -28,8 +31,8 @@ function PageControlsFlyout(props) {
     style.width = inputWidth - 10;
   }
 
-  return (
-    <div tabIndex={0} className="flyout-item-label" style={{ textTransform: 'none', display: 'flex', height: 25 }}>
+  const pageControlsFlyoutItem = (
+    <div className="flyout-item-label">
       <div>{'Pages: '}</div>
       <form onSubmit={onSubmit} onBlur={onBlur} onFocus={onFocus}>
         <input
@@ -37,12 +40,22 @@ function PageControlsFlyout(props) {
           value={input}
           onChange={onChange}
           style={style}
+          onKeyDown={onKeyDownHandler}
         />
       </form>
       <div>{` of ${totalPages}`}</div>
     </div>
   );
-}
+
+  return (
+    <FlyoutItemContainer {...props}
+      ref={ref}
+      additionalClass={'page-nav-display'}
+      elementDOM={pageControlsFlyoutItem}
+      icon={icon}
+    />
+  );
+});
 
 PageControlsFlyout.propTypes = {
   onSubmit: PropTypes.func,
@@ -52,6 +65,9 @@ PageControlsFlyout.propTypes = {
   input: PropTypes.string,
   totalPages: PropTypes.number,
   inputWidth: PropTypes.number,
+  onKeyDownHandler: PropTypes.func,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
+PageControlsFlyout.displayName = 'PageControlsFlyout';
 
 export default PageControlsFlyout;

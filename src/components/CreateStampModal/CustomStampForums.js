@@ -7,6 +7,7 @@ import Icon from 'components/Icon';
 import ColorPalettePicker from 'components/ColorPalettePicker/ColorPalettePicker'; // ColorPalletPicker inner import required as we are not using the redux outer container
 import Events from 'constants/events';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import './CustomStampForums.scss';
 import { getInstanceNode } from 'helpers/getRootNode';
@@ -89,6 +90,7 @@ const CustomStampForums = ({
   const inputRef = useRef();
 
   const updateCanvas = (title, subtitle, newState = state) => {
+    canvasRef.current.role = 'img';
     const parameters = {
       canvas: canvasRef.current,
       title,
@@ -259,6 +261,7 @@ const CustomStampForums = ({
     formatsList.map((format) => dateTimeFormatToString(format, dateCheckbox, timeCheckbox))
   )).filter((format) => format !== '');
 
+
   return (
     <div className="text-customstamp">
       <div className="canvas-container" ref={canvasContainerRef}>
@@ -269,29 +272,27 @@ const CustomStampForums = ({
       </div>
       <div className="scroll-container">
         <div className="stamp-input-container">
-          <div className="stamp-label"> {stampInputLabel} </div>
+          <label htmlFor="stampTextInput" className="stamp-label"> {stampInputLabel}*</label>
           <input
-            className="text-customstamp-input"
+            id="stampTextInput"
+            className={classNames('text-customstamp-input', { 'error': !stampTextInputValue })}
             ref={inputRef}
             type="text"
-            aria-label={stampInputLabel.substring(0, stampInputLabel.length - 1)}
+            aria-label={stampInputLabel}
             value={stampTextInputValue}
             onChange={handleInputChange}
           />
-          {
-            !stampTextInputValue
-            && (
-              <div className="empty-stamp-input">
-                {t('message.emptyCustomStampInput')}
-              </div>
-            )
-          }
+          {!stampTextInputValue && <Icon glyph="icon-alert" className="error-icon" role="presentation"/>}
+          <div className="empty-stamp-input" aria-live="assertive" >
+            {!stampTextInputValue && <p className="no-margin">{t('message.emptyCustomStampInput')}</p>}
+          </div>
         </div>
         <div className="font-container">
           <div className="stamp-sublabel"> {t('option.customStampModal.fontStyle')} </div>
           <div className="font-inner-container">
             <Dropdown
               items={fonts}
+              ariaLabel = {t('option.customStampModal.fontStyle')}
               onClickItem={handleFontChange}
               currentSelectionKey={state.font || fonts[0]}
               getCustomItemStyle={(item) => ({ fontFamily: item })}
@@ -407,6 +408,7 @@ const CustomStampForums = ({
           </div>
           <Dropdown
             items={dateTimeDropdownItems}
+            ariaLabel = {`${t('option.customStampModal.dateFormat')} - ${dateTime}`}
             currentSelectionKey={dateTime}
             onClickItem={onDateFormatChange}
             maxHeight={200}

@@ -1,6 +1,6 @@
 .more-options-context-menu-popup {
-  padding-top: var(--padding-small);
-  padding-bottom: var(--padding-small);
+  padding-top: var(--padding-tiny);
+  padding-bottom: var(--padding-tiny);
 
   background-color: var(--component-background);
   box-shadow: 0px 0px 3px var(--document-box-shadow);
@@ -13,7 +13,7 @@
     border-radius: 0;
 
     &:not(:first-child) {
-      margin-top: var(--padding-small);
+      margin-top: var(--padding-tiny);
     }
 
     &:hover {

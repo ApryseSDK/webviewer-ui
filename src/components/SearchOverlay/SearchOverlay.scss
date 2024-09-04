@@ -13,6 +13,12 @@
   visibility: visible !important;
   flex-grow: 0;
 
+  .search-and-replace-title {
+    @include mobile {
+      margin: 8px 0;
+    }
+  }
+
   .input-container {
     display: flex;
     position: relative;
@@ -33,6 +39,10 @@
       height: 20px;
       border: none;
       background: transparent;
+
+      @include mobile {
+        font-size: 13px;
+      }
     }
 
     input::placeholder {
@@ -82,6 +92,9 @@
       // label of toolkit choice component
       > label {
         white-space: nowrap;
+        @include mobile {
+          font-size: 13px;
+        }
       }
     }
   }
@@ -110,8 +123,11 @@
         width: -moz-fit-content;
         width: fit-content;
         border-radius: 4px;
-        height: 28px;
+        height: 32px;
         cursor: pointer;
+        @include mobile {
+          font-size: 13px;
+        }
       }
 
       .btn-replace-all {
@@ -124,12 +140,15 @@
         width: -webkit-fit-content;
         width: -moz-fit-content;
         width: fit-content;
-        height: 28px;
+        height: 32px;
         cursor: pointer;
         margin-right: 5px;
 
         &:hover:not(:disabled) {   
           color: var(--blue-6);
+        }
+        @include mobile {
+          font-size: 13px;
         }
       }
 
@@ -143,7 +162,7 @@
   }
 
   .extra-options {
-    margin-top: 5px;
+    margin-top: 8px;
     button.Button {
       display: flex;
       justify-content: center;
@@ -247,6 +266,10 @@
 
       .search-panel-input {
         padding-left: 8px;
+
+        @include mobile {
+          font-size: 13px;
+        }
       }
     }
 
@@ -258,6 +281,10 @@
           .Icon {
             color: var(--blue-6);
           }
+        }
+
+        @include mobile {
+          font-size: 13px;
         }
       }
     }

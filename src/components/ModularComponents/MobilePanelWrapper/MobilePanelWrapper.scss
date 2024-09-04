@@ -24,7 +24,7 @@
   }
 
   &.half-size {
-    max-height: 45%;
+    max-height: 50%;
   }
 
   &.small-size {
@@ -45,12 +45,11 @@
     z-index: 1;
     
     .swipe-indicator {
-      background: var(--divider);
+      background: var(--gray-6);
       border-radius: 2px;
       height: 4px;
       width: 38px;
       position: absolute;
-      top: 3px;
       margin: 10px auto;
       left: 0;
       right: 0;

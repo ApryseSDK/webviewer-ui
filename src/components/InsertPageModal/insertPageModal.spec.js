@@ -19,9 +19,8 @@ describe('InsertPageModal', () => {
 
     it('Opens custom dimension options when Custom is selected', () => {
       render(<InsertBlankPagePanel />);
-      const customOption = Array.from(document.getElementsByClassName('options')).find(
-        (option) => option.textContent === 'Custom',
-      );
+
+      const customOption =  screen.getByRole('button', { name: 'Custom' });
       expect(customOption).toBeInTheDocument();
       fireEvent.click(customOption);
 
@@ -51,9 +50,7 @@ describe('InsertPageModal', () => {
       expect(addButton).not.toBeDisabled();
 
       // click 'Letter' to make custom options go away
-      const letterOption = Array.from(document.getElementsByClassName('options')).find(
-        (option) => option.textContent === 'Letter',
-      );
+      const letterOption =  screen.getByRole('button', { name: 'Letter' });
       expect(letterOption).toBeInTheDocument();
       fireEvent.click(letterOption);
 
@@ -97,7 +94,7 @@ describe('InsertPageModal', () => {
       userEvent.clear(pageInput);
       userEvent.type(pageInput, '20');
 
-      screen.getByText('Invalid page number. Limit is 9');
+      screen.getByText('Please specify a page number');
       fireEvent.blur(pageInput);
 
       expect(pageInput.value).toEqual('');

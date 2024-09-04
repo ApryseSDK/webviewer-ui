@@ -60,6 +60,7 @@ export const Shortcuts = {
   UNDERLINE: 'underline',
   HOME: 'home',
   END: 'end',
+  CLOSE: 'close',
 };
 
 // prettier-ignore
@@ -99,6 +100,7 @@ const keyMap = {
   'richText.strikeout': 'Control+K',
   [Shortcuts.HOME]: 'Home',
   [Shortcuts.END]: 'End',
+  [Shortcuts.CLOSE]: 'X',
 };
 
 export function shortcutAria(shortcut) {
@@ -168,6 +170,7 @@ const NOOP = () => { };
  * @property {string} H Select the AnnotationCreateTextHighlight tool
  * @property {string} K Select the AnnotationCreateTextStrikeout tool
  * @property {string} U Select the AnnotationCreateTextUnderline tool
+ * @property {string} X Close the current tooltip
  */
 export const Keys = {
   CTRL_SHIFT_EQUAL: 'ctrl+shift+=',
@@ -230,6 +233,7 @@ export const Keys = {
   H: 'h',
   K: 'k',
   U: 'u',
+  X: 'x',
 };
 
 export function concatKeys(...keys) {
@@ -284,6 +288,7 @@ export const ShortcutKeys = {
   [Shortcuts.UNDERLINE]: Keys.U,
   [Shortcuts.HOME]: Keys.HOME,
   [Shortcuts.END]: Keys.END,
+  [Shortcuts.CLOSE]: Keys.X,
 };
 
 const ToolNameHotkeyMap = {
@@ -813,6 +818,12 @@ WebViewer(...)
         const pageCount = selectors.getTotalPages(getState());
         setCurrentPage(pageCount, activeDocumentViewerKey);
       }),
+      [ShortcutKeys[Shortcuts.CLOSE]]: () => {
+        if (closeToolTipFunc) {
+          closeToolTipFunc();
+          closeToolTipFunc = null;
+        }
+      },
     };
   },
   /**
@@ -867,5 +878,13 @@ WebViewer(...)
     this.off(this.getShortcutKeyMap()[shortcut]);
   }
 };
+
+let closeToolTipFunc;
+
+export const setCloseToolTipFunc = (func) => {
+  closeToolTipFunc = func;
+};
+
+export const getCloseToolTipFunc = () => closeToolTipFunc;
 
 export default Object.create(HotkeysManager);

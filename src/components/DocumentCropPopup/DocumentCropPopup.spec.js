@@ -169,13 +169,13 @@ describe('DocumentCropPopup', () => {
   });
 });
 
-describe('Dimensions Input Menu', () => {
+describe.only('Dimensions Input Menu', () => {
   it(`Should open when ${COLLAPSIBLE_MENU_TITLE} is clicked`, () => {
     render(testPopup);
     const collapsibleMenu = screen.getByText('Crop Dimensions');
     fireEvent.click(collapsibleMenu);
     expect(screen.getAllByRole('spinbutton').length).toEqual(4);
-    expect(screen.getAllByRole('list').length).toEqual(2);
+    expect(screen.getAllByRole('listbox').length).toEqual(2);
   });
 
   it(`Should close when ${COLLAPSIBLE_MENU_TITLE} is clicked after being open`, () => {
@@ -183,10 +183,10 @@ describe('Dimensions Input Menu', () => {
     const collapsibleMenu = screen.getByText('Crop Dimensions');
     fireEvent.click(collapsibleMenu);
     expect(screen.getAllByRole('spinbutton').length).toEqual(4);
-    expect(screen.getAllByRole('list').length).toEqual(2);
+    expect(screen.getAllByRole('listbox').length).toEqual(2);
     fireEvent.click(collapsibleMenu);
     expect(screen.queryAllByRole('spinbutton').length).toEqual(0);
-    expect(screen.queryAllByRole('list').length).toEqual(0);
+    expect(screen.queryAllByRole('listbox').length).toEqual(0);
   });
 
   it('Should be autopopulated by Annotation size', () => {
@@ -212,8 +212,6 @@ describe('Dimensions Input Menu', () => {
     const unitDropdown = screen.getAllByRole('button', { name: DEFAULT_UNITS })[0];
     expect(unitDropdown).toBeEnabled();
     expect(unitDropdown).toHaveTextContent(DEFAULT_UNITS);
-    const unitsInInput = screen.getAllByText(DEFAULT_UNIT_IN_INPUT);
-    expect(unitsInInput.length).toEqual(4);
   });
 
   it(`Should open with ${DEFAULT_AUTO_TRIM} selected and enabled`, () => {

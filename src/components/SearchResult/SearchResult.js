@@ -162,7 +162,7 @@ function SearchResult(props) {
       return null;
     }
     return (
-      <div className="info">{t('message.noResults')}</div>
+      <div className="info"><p aria-live="assertive" className="no-margin">{t('message.noResults')}</p></div>
     );
   }
 

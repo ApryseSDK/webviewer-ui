@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import ReplyAreaMultiSelect from 'components/Note/ReplyArea/ReplyAreaMultiSelect';
 import MultiStylePopup from 'components/NotesPanel/MultiStylePopup';
-import NoteStatePopup from 'components/NoteState/NoteStatePopup';
 import NoteContext from 'components/Note/Context';
+import NoteStateFlyout from 'components/ModularComponents/NoteStateFlyout';
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 
 import { createStateAnnotation } from 'helpers/NoteStateUtils';
 import DataElements from 'constants/dataElement';
 import PropTypes from 'prop-types';
 import actions from 'actions';
-import classNames from 'classnames';
 import core from 'core';
 import selectors from 'selectors';
 
@@ -21,7 +21,6 @@ import './MultiSelectControls.scss';
 const propTypes = {
   showMultiReply: PropTypes.bool.isRequired,
   setShowMultiReply: PropTypes.func.isRequired,
-  showMultiState: PropTypes.bool.isRequired,
   setShowMultiState: PropTypes.func.isRequired,
   showMultiStyle: PropTypes.bool.isRequired,
   setShowMultiStyle: PropTypes.func.isRequired,
@@ -49,7 +48,6 @@ const getParentAnnotations = (annotations, documentViewerKey = 1) => {
 const MultiSelectControls = ({
   showMultiReply,
   setShowMultiReply,
-  showMultiState,
   setShowMultiState,
   showMultiStyle,
   setShowMultiStyle,
@@ -60,17 +58,13 @@ const MultiSelectControls = ({
 }) => {
   const [
     modifiableMultiSelectAnnotations,
-    setModfiableMultiSelectAnnotations,
+    setModifiableMultiSelectAnnotations,
   ] = useState([]);
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [activeDocumentViewerKey, isDocumentReadOnly] = useSelector(
-    (state) => [
-      selectors.getActiveDocumentViewerKey(state),
-      selectors.isDocumentReadOnly(state),
-    ],
-    shallowEqual,
-  );
+
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
@@ -124,7 +118,7 @@ const MultiSelectControls = ({
     const _modifiableMultiSelectAnnotations = multiSelectedAnnotations.filter((multiSelectedAnnot) => {
       return core.canModify(multiSelectedAnnot, activeDocumentViewerKey);
     });
-    setModfiableMultiSelectAnnotations(_modifiableMultiSelectAnnotations);
+    setModifiableMultiSelectAnnotations(_modifiableMultiSelectAnnotations);
   }, [multiSelectedAnnotations]);
 
   const numberOfGroups = core.getNumberOfGroups(modifiableMultiSelectAnnotations, activeDocumentViewerKey);
@@ -132,7 +126,7 @@ const MultiSelectControls = ({
   const canUngroup = !canGroup && (modifiableMultiSelectAnnotations.length > 2 ||
     (modifiableMultiSelectAnnotations.length > 0 && core.getGroupAnnotations(modifiableMultiSelectAnnotations[0], activeDocumentViewerKey).length > 1));
 
-  const handleStateChange = (newValue) => {
+  const handleStateChange = useCallback((newValue) => {
     getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey).forEach((annot) => {
       const stateAnnotation = createStateAnnotation(annot, newValue, activeDocumentViewerKey);
       annot.addReply(stateAnnotation);
@@ -141,7 +135,7 @@ const MultiSelectControls = ({
       annotationManager.trigger('addReply', [stateAnnotation, annot, annotationManager.getRootAnnotation(annot)]);
     });
     setShowMultiState(false);
-  };
+  }, [multiSelectedAnnotations, activeDocumentViewerKey]);
 
   if (showMultiReply) {
     return (
@@ -169,30 +163,17 @@ const MultiSelectControls = ({
           }}
           title="action.comment"
         />
-        <Button
+        <ToggleElementButton
           dataElement={DataElements.NOTE_MULTI_STATE_BUTTON}
-          className={classNames({
-            active: showMultiState,
-          })}
+          title={t('option.notesOrder.status')}
+          img={'icon-annotation-status-none'}
+          toggleElement={DataElements.NOTE_STATE_FLYOUT}
           disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
-          img="icon-annotation-status-none"
-          onClick={() => {
-            setShowMultiState(!showMultiState);
-          }}
-          title="option.notesOrder.status"
         />
-        {showMultiState &&
-          <NoteStatePopup
-            style={{
-              position: 'relative',
-              bottom: '52px',
-            }}
-            triggerElementName="multiStateButton"
-            handleStateChange={handleStateChange}
-            onClose={() => {
-              setShowMultiState(false);
-            }}
-          />}
+        <NoteStateFlyout
+          isMultiSelectMode={true}
+          handleStateChange={handleStateChange}
+        />
         <Button
           dataElement={DataElements.NOTE_MULTI_STYLE_BUTTON}
           img="icon-menu-style-line"

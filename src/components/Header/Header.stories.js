@@ -8,10 +8,20 @@ import { configureStore } from '@reduxjs/toolkit';
 export default {
   title: 'Components/Header',
   component: Header,
+  parameters: {
+    customizableUI: true
+  }
+};
+
+const mockedState = {
+  ...initialState,
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({
-  reducer: () => initialState
+  reducer: () => mockedState
 });
 
 const BasicComponent = (props) => {

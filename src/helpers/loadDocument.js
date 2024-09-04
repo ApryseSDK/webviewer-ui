@@ -60,6 +60,7 @@ const getDefaultOptions = () => ({
   webviewerServerURL: getHashParameters('webviewerServerURL', ''),
   fallbackToClientSide: getHashParameters('fallbackToClientSide', false),
   singleServerMode: getHashParameters('singleServerMode', false),
+  webviewerServerRangeRequests: getHashParameters('wvsRange', true),
   forceClientSideInit: getHashParameters('forceClientSideInit', false),
   disableWebsockets: getHashParameters('disableWebsockets', false),
   cacheKey: getHashParameters('cacheKey', null),

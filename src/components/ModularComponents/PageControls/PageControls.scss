@@ -64,6 +64,14 @@
     border-radius: 0;
   }
 
+  .page-nav-display {
+    &:hover {
+      form input:not(:focus) {
+        color: var(--gray-0);
+      }
+    }
+  }
+
   form input:focus {
     height: 100%;
     background: var(--gray-0);
