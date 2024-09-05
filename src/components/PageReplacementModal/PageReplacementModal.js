@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
+import selectors from 'selectors';
 import core from 'core';
 import { useTranslation } from 'react-i18next';
 import FileListPanel from './FileListPanel';
@@ -9,7 +10,7 @@ import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import FileSelectedPanel from './FileSelectedPanel';
 import { exitPageReplacementWarning } from 'helpers/pageManipulationFunctions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalWrapper from '../ModalWrapper';
 import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
@@ -34,6 +35,7 @@ const PageReplacementModal = ({
   const fileInputId = 'pageReplacementFileInputId';
 
   const dispatch = useDispatch();
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useEffect(() => {
     if (isOpen && selectedTabInternal !== selectedTab) {
@@ -60,6 +62,7 @@ const PageReplacementModal = ({
     PageReplacementModal: true,
     open: isOpen,
     closed: !isOpen,
+    'modular-ui': customizableUI,
   });
 
   const srcString = source[selectedTabInternal];
@@ -154,7 +157,6 @@ const PageReplacementModal = ({
                 </Tab>
               </div>
             </div>
-            <div className="page-replacement-divider" />
             <TabPanel dataElement="customFileListPanel">
               <div className="panel-body">
                 <FileListPanel

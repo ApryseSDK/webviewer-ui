@@ -6,17 +6,14 @@
   @extend %modal;
   flex-direction: column;
 
-  .container {
+  .modal-container {
     overflow: visible;
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: auto;
     width: 480px;
     padding: 0px;
-    box-shadow: 0px 0px 3px var(--document-box-shadow);
 
     .header {
       border-bottom: 1px solid var(--gray-5);
@@ -51,6 +48,7 @@
         font-weight: var(--font-weight-bold);
         //font-size: var(--font-size-medium);
       }
+
       .input-container {
         align-items: baseline;
         display: flex;
@@ -95,24 +93,29 @@
         .Dropdown__wrapper {
           height: 32px;
           flex: 1 1 auto;
+
           .Dropdown {
             height: 100%;
             width: 100% !important;
+
             .picked-option {
-              .picked-option-text{
+              .picked-option-text {
                 width: auto;
                 flex: none;
               }
-              .arrow{
+
+              .arrow {
                 flex: none;
               }
             }
           }
-          .Dropdown__items{
+
+          .Dropdown__items {
             width: 100%;
           }
         }
       }
+
       .radio-container {
         gap: 8px;
         height: 90px;
@@ -124,15 +127,18 @@
             border-color: var(--blue-5);
           }
         }
+
         .ui__choice__input__check {
           border-color: var(--gray-7);
         }
+
         .page-number-input-container {
           &.error {
             .page-number-input {
               border: 1px solid var(--error-border-color);
             }
           }
+
           .page-number-input {
             width: 208px;
           }
@@ -140,7 +146,7 @@
           .specifyPagesChoiceLabel {
             display: flex;
             margin-bottom: 8px;
-    
+
             .specifyPagesExampleLabel {
               margin-left: 4px;
               color: var(--faded-text);
@@ -153,11 +159,12 @@
           gap: 16px;
           align-content: baseline;
 
-          &.custom-page-ranges .ui__choice{
+          &.custom-page-ranges .ui__choice {
             align-items: unset;
           }
         }
       }
+
       .checkbox-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -173,21 +180,17 @@
       button {
         border: none;
         border-radius: 4px;
-        background: var(--primary-button) !important;
+        background: var(--primary-button);
         width: 82px;
         height: 32px;
         color: var(--primary-button-text);
 
         &:disabled {
-          opacity: 0.5;
-
-          span {
-            color: var(--gray-0);
-          }
+          @extend %default-button-disabled;
         }
 
         &:hover:not(:disabled) {
-          background: var(--primary-button-hover) !important;
+          @extend %default-button-hover;
         }
       }
     }

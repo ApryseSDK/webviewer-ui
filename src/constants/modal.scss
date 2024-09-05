@@ -49,41 +49,42 @@
       cursor: pointer;
 
       &.cancel {
-        color: var(--secondary-button-text);
-        border: solid 1px var(--secondary-button-text);
+        @extend %secondary-button-selected;
+
         &:hover {
-          background-color: var(--document-background-color);
-          color: var(--secondary-button-hover);
-          border: solid 1px var(--secondary-button-hover);
+          @extend %secondary-button-hover;
+        }
+
+        &.disabled {
+          @extend %secondary-button-disabled;
         }
       }
 
       &.confirm {
         margin-left: 4px;
-        color: var(--primary-button-text);
-        font-weight: 600;
-        background: var(--primary-button);
+        @extend %default-button-selected;
 
         &:hover {
-          background: var(--primary-button-hover);
+          @extend %default-button-hover;
         }
 
         &.disabled {
-          background: var(--primary-button) !important;
-          opacity: 0.5;
+          @extend %default-button-disabled;
         }
       }
 
       &.secondary-btn-custom {
         border-radius: 4px;
-        border: 1px solid var(--primary-button);
-        color: var(--primary-button);
+        @extend %secondary-button-selected;
         padding: 2px 20px 4px;
         cursor: pointer;
-        background-color: white;
 
         &:hover {
-          color: var(--secondary-button-hover);
+          @extend %secondary-button-hover;
+        }
+
+        &.disabled {
+          @extend %secondary-button-disabled;
         }
       }
 
@@ -94,7 +95,7 @@
   }
 
   .swipe-indicator {
-    background: var(--divider);
+    background: var(--swipe-indicator-bg);
     border-radius: 2px;
     height: 4px;
     width: 38px;
@@ -107,6 +108,9 @@
 
     @include tablet-and-desktop {
       display: none;
+    }
+    @include mobile {
+      width: 32px;
     }
   }
 }

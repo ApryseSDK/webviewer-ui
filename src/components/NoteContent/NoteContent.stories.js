@@ -3,9 +3,8 @@ import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
 import { initialColors } from 'helpers/initialColorStates';
 
-import { createStore } from 'redux';
-
 import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 export default {
   title: 'Components/Note/NoteContent',
@@ -20,18 +19,24 @@ export default {
 const initialState = {
   viewer: {
     disabledElements: {},
+    openElements: {},
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
     colorMap: {
       '1': initialColors[0]
-    }
+    },
+    flyoutMap: {},
   }
 };
 function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({
+  preloadedState: initialState,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+});
 
 const context = {
   pendingEditTextMap: {},

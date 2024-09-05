@@ -1,7 +1,7 @@
 import React from 'react';
 import DataElements from 'constants/dataElement';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
-import ActionButton from 'components/ActionButton';
+import Button from 'components/Button';
 
 export const menuItems = {
   [PRESET_BUTTON_TYPES.UNDO]: {
@@ -117,7 +117,7 @@ export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen
   }
 
   return (
-    <ActionButton
+    <Button
       className={`PresetButton ${dataElement}`}
       dataElement={presetDataElement}
       img={icon}

@@ -14,14 +14,14 @@
     overflow-x: hidden;
     z-index: 200;
     background-color: var(--component-background);
-    min-width: 136px;
+    min-width: 140px;
     max-width: 328px;
     padding: 4px 0;
+    margin: 0;
     font-size: var(--font-size-default);
     font-family: var(--font-family);
     border: 1px solid var(--divider);
     border-radius: 4px;
-    text-transform: capitalize;
     text-overflow: ellipsis;
 
     .divider {
@@ -45,13 +45,22 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: center;
       width: 100%;
+      min-width: max-content;
 
       &:empty {
         display: none;
       }
 
-      .Icon,
+      &.page-nav-display {
+        .flyout-item-label {
+          text-transform: none;
+          display: flex;
+          height: 25px;
+        }
+      }
+
       .menu-icon {
         width: 24px;
         height: 24px;
@@ -63,7 +72,7 @@
         justify-self: flex-end;
         width: 16px;
         height: 16px;
-        margin-right: 8px;
+        margin-right: 0px;
         padding-top: 2px;
         display: flex;
       }
@@ -72,45 +81,62 @@
         justify-self: flex-start;
       }
 
-      .menu-container {
+      .menu-container,
+      .flyout-item {
+        @include button-reset;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
         width: 100%;
         height: 100%;
+        min-width: max-content;
+        box-sizing: border-box;
         padding: 4px 8px;
+        margin: 0 2px;
         gap: 10px;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &:not(.back-button) {
+          justify-content: space-between;
+        }
+
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
+        }
+
+        &[disabled] {
+          color: var(--gray-5);
+        }
 
         .icon-label-wrapper {
           display: flex;
           align-items: center;
         }
 
-        .icon-open-submenu {
-          margin-right: 0;
-        }
-
         .flyout-item-label {
+          text-transform: capitalize;
           justify-self: flex-start;
           font-size: var(--font-size-default);
-        }
-
-        &[disabled], .disabled {
-          color: var(--gray-5);
+          margin-right: 10px;
         }
       }
+      
+      &:hover:not(.disabled) {
+        background-color: var(--blue-6);
+      }
 
-      &:active:not([disabled]):not(.disabled),
-      &.active:not([disabled]):not(.disabled),
-      &:hover:not([disabled]):not(.disabled) {
+      &.active:not(.disabled) {
+        background-color: var(--blue-5);
+      }
+
+      &.active:not(.disabled),
+      &:hover:not(.disabled) {
         color: var(--gray-0);
 
-        .Icon, .Icon svg * {
-          color: var(--gray-0);
-        }
-
-        .hotkey-wrapper {
+        .Icon, .Icon svg *,
+        .hotkey-wrapper,
+        .flyout-item-label {
           color: var(--gray-0);
         }
 
@@ -121,14 +147,8 @@
         }
       }
 
-      &:active:not([disabled]):not(.disabled),
-      &.active:not([disabled]):not(.disabled) {
-        background-color: var(--blue-5);
-      }
-
-      &:hover:not([disabled]):not(.disabled) {
-        background-color: var(--blue-6);
-        cursor: pointer;
+      .custom-element-wrapper {
+        display: flex;
       }
 
       .ZoomItem {
@@ -149,16 +169,48 @@
         margin-right: 2px;
       }
 
-      &[disabled], &.disabled {
-        color: var(--gray-5);
+      &.disabled {
+        cursor: default;
 
-        .Icon, .Icon svg * {
+        button,
+        .Icon, .Icon svg *{
           color: var(--gray-5);
         }
 
         .hotkey-wrapper {
           color: var(--gray-5);
           pointer-events: none;
+        }
+      }
+
+      &.zoom-options {
+        .flyout-item {
+          justify-content: space-between;
+        }
+      }
+
+      button.back-button {
+        @include button-reset;
+        font-size: var(--font-size-default) !important;
+    
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
+        }
+    
+        .Icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 16px;
+        }
+
+        &:hover {
+          color: var(--gray-0);
+    
+          .Icon, .Icon svg *,
+          .hotkey-wrapper,
+          .ZoomText .label .value {
+            color: var(--gray-0);
+          }
         }
       }
     }
@@ -169,40 +221,19 @@
     }
   }
 
-  .back-button-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    cursor: pointer;
+  &.legacy-ui {
+    .flyout-item-container {
+      &:hover:not([disabled]):not(.disabled) {
+        background-color: var(--popup-button-hover);
 
-    .Icon {
-      width: 16px;
-      height: 16px;
-    }
+        .flyout-item-label {
+          color: var(--text-color);
+        }
 
-    &:active,
-    &.active,
-    &:hover {
-      color: var(--gray-0);
-
-      .Icon, .Icon svg * {
-        color: var(--gray-0);
-      }
-
-      .hotkey-wrapper {
-        color: var(--gray-0);
-      }
-
-      .ZoomText {
-        .label, .value {
-          color: var(--gray-0);
+        .Icon svg * {
+          color: var(--icon-color);
         }
       }
-    }
-
-    &:hover {
-      background-color: var(--blue-6);
     }
   }
 }

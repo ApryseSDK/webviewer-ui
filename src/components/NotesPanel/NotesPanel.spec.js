@@ -3,13 +3,11 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
-import { Basic, EmptyWithCustomIconAndMessage, EmptyWithCustomRenderCallback } from './NotesPanel.stories';
+import { Basic } from './NotesPanel.stories';
 import NotesPanelContainer from './NotesPanelContainer';
 import core from 'core';
 
 const BasicStory = withI18n(Basic);
-const EmptyCustomIconMessageStory = withI18n(EmptyWithCustomIconAndMessage);
-const EmptyCustomRenderCallbackStory = withI18n(EmptyWithCustomRenderCallback);
 
 function noop() {
   // Comment needed to suppress SonarCloud code smell.
@@ -70,18 +68,6 @@ describe('NotesPanel', () => {
     it('Basic story should not throw any errors', () => {
       expect(() => {
         render(<BasicStory />);
-      }).not.toThrow();
-    });
-
-    it('Empty panel with custom icon and message story should not throw any errors', () => {
-      expect(() => {
-        render(<EmptyCustomIconMessageStory />);
-      }).not.toThrow();
-    });
-
-    it('Empty panel with custom render callback story should not throw any errors', () => {
-      expect(() => {
-        render(<EmptyCustomRenderCallbackStory />);
       }).not.toThrow();
     });
   });

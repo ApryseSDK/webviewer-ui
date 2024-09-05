@@ -138,6 +138,8 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
 
     const annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
     annotCanvas.className = 'annotation-image';
+    annotCanvas.role = 'img';
+    annotCanvas.ariaLabel = `${t('action.page')} ${pageNumber}`;
     annotCanvas.style.maxWidth = `${thumbnailSize}px`;
     annotCanvas.style.maxHeight = `${thumbnailSize}px`;
     const ctx = annotCanvas.getContext('2d');

@@ -27,6 +27,7 @@
  * @property {string} MULTI_VIEWER_READY {@link UI#event:multiViewerReady  UI.Events.multiViewerReady }
  * @property {string} COMPARE_ANNOTATIONS_LOADED {@link UI#event:compareAnnotationsLoaded  UI.Events.compareAnnotationsLoaded }
  * @property {string} TAB_MANAGER_READY {@link UI#event:onTabManagerReady  UI.Events.onTabManagerReady }
+ * @property {string} TOOLTIP_OPENED {@link UI#event:tooltipOpened  UI.Events.tooltipOpened }
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -65,6 +66,7 @@ export default {
   'COMPARE_ANNOTATIONS_LOADED': 'compareAnnotationsLoaded',
   'TAB_MANAGER_READY': 'onTabManagerReady',
   'MODULAR_UI_IMPORTED': 'modularUIImported',
+  'TOOLTIP_OPENED': 'tooltipOpened'
 };
 
 /**
@@ -285,4 +287,9 @@ export default {
  * @name UI#modularUIImported
  * @event
  * @property {object} importedComponents The JSON object containing the imported components
+ */
+
+/** Triggered when a tooltip is opened
+ * @name UI#tooltipOpened
+ * @event
  */

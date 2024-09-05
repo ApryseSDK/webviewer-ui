@@ -76,7 +76,7 @@ describe('OutlinesPanel', () => {
 
     expect(addNewOutline).toHaveBeenCalledTimes(1);
     await waitFor(() => {
-      expect(addNewOutline).toHaveBeenCalledWith('new outline', null, undefined, 0, 0, 0);
+      expect(addNewOutline).toHaveBeenCalledWith('new outline', null, 1, 0, 0, 0);
     });
 
     addNewOutline.mockRestore();

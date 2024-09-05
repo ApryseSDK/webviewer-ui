@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './Tab.scss';
 import Button from 'components/Button';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 const propTypes = {
   tab: PropTypes.any.isRequired,
@@ -20,6 +21,7 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
   const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (tab && tab.disabled !== disabled) {
@@ -40,6 +42,7 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
             img="icon-close"
             title="action.close"
             onClick={closeTab}
+            ariaLabel={`${t('action.close')} ${name}`}
           />
           {!isActive && !isToLeftOfActive && <div className="divider"/>}
         </div>

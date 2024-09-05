@@ -267,7 +267,6 @@ import ToolButton from './ModularComponents/toolButton';
 import RibbonItem from './ModularComponents/ribbonItem';
 import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
-import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
 import PresetButton from './ModularComponents/presetButton';
@@ -309,6 +308,9 @@ import importModularComponents from './importModularComponents';
 import setScaleOverlayPosition from './setScaleOverlayPosition';
 import setPanels from './setPanels';
 import getPanels from './getPanels';
+import getActiveRibbonItem from './getActiveRibbonItem';
+import setActiveRibbonItem from './setActiveRibbonItem';
+import closeTooltip from './closeToolTip';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -379,6 +381,8 @@ export default (store) => {
     searchTextFull: searchTextFull(store),
     overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
+    getActiveRibbonItem: getActiveRibbonItem(store),
+    setActiveRibbonItem: setActiveRibbonItem(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setTimezone: setTimezone(store),
     addCustomModal: addCustomModal(store),
@@ -501,7 +505,6 @@ export default (store) => {
       ToggleElementButton,
       RibbonItem,
       RibbonGroup: RibbonGroup(store),
-      ToolGroupButton,
       Zoom,
       Flyout: Flyout(store),
       PresetButton,
@@ -649,6 +652,7 @@ export default (store) => {
     getDocumentViewer,
     enterMultiViewerMode: enterMultiViewerMode(store),
     exitMultiViewerMode: exitMultiViewerMode(store),
+    closeTooltip,
   };
   const documentViewer = core.getDocumentViewer(1);
 

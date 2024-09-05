@@ -71,3 +71,5 @@ export const createTemplate = ({ headers = {}, components = {}, flyoutMap = {}, 
   template.parameters = { layout: 'fullscreen', customizableUI: true };
   return template;
 };
+
+export const waitForTimeout = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));

@@ -5,6 +5,7 @@ import Outline from './Outline';
 import OutlineContext from './Context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import '../LeftPanel/LeftPanel.scss';
 
 const NOOP = () => { };
@@ -14,6 +15,9 @@ export default {
   component: Outline,
   includeStories: ['Basic'],
   excludeStories: ['createOutlines', 'createOutline', 'getDefaultOutlines'],
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 // Export these helpers to be used by other stories, but don't render
@@ -77,6 +81,16 @@ const reducer = () => {
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       autoExpandOutlines: true,
+      flyoutMap: {
+        'bookmarkOutlineFlyout-': {
+          dataElement: 'bookmarkOutlineFlyout-',
+          items: menuItems,
+        }
+      },
+      activeFlyout: 'bookmarkOutlineFlyout-',
+      openElements: {
+        'bookmarkOutlineFlyout-': true,
+      }
     },
     document: {
       outlines: getDefaultOutlines(),

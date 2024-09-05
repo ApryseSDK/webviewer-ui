@@ -5,6 +5,12 @@
   flex-direction: column;
   flex: 1;
   font-size: var(--font-size-default);
+
+  @include mobile {
+    margin: 16px;
+    padding: 0px;
+    overflow-y: auto;
+  }
   
   .bookmark-switch {
     -webkit-font-smoothing: antialiased;
@@ -14,13 +20,42 @@
 
   .bookmark-outline-single-container {
     margin-top: var(--padding-medium);
+
+    &:focus-within:not(.editing) {
+      background-color: var(--outline-selected);
+      outline: 1px solid var(--bookmark-outline-hover-border);
+    }
   }
 
   .msg-no-bookmark-outline {
     margin-top: var(--padding);
   }
 
+  .ui__choice__label {
+    @include mobile {
+      font-size: 13px;
+    }
+  }
+
   .ui__choice__input__switch {
     background-color: var(--gray-6) !important;
+  }
+
+  .bookmark-outline-row {
+    @include mobile {
+      overflow: auto;
+    }
+  }
+
+  .bookmark-outline-control-button, .bookmark-outline-save-button, .bookmark-outline-cancel-button {
+    @include mobile {
+      font-size: 13px;
+    }
+  }
+
+  .bookmark-outline-input, .bookmark-text-input {
+    @include mobile {
+      font-size: 13px;
+    }
   }
 }

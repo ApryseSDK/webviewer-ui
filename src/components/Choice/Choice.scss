@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.ui__choice__label {
+  font-size: 13px !important;
+}
+
 .ui__choice__input--switch {
   .ui__choice__input__switch {
     height: 14px !important;
@@ -28,6 +32,10 @@
       .ui__choice__input__toggle {
         left: 12px !important;
       }
+    }
+
+    &--focus {
+      outline: var(--focus-visible-outline);
     }
 
     .ui__choice__input__toggle {

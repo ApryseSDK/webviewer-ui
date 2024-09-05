@@ -6,8 +6,6 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import fireEvent from 'helpers/fireEvent';
-import { Swipeable } from 'react-swipeable';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
 import { mapAnnotationToKey } from 'constants/map';
@@ -19,6 +17,7 @@ import Button from 'components/Button';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Tooltip from 'components/Tooltip';
 import { COMMON_COLORS } from 'constants/commonColors';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './FilterAnnotModal.scss';
 
@@ -398,23 +397,17 @@ const FilterAnnotModal = () => {
   });
 
   return isDisabled ? null : (
-    <div className={modalClass} data-element={DataElements.FILTER_MODAL} onMouseDown={closeModal}>
-      <FocusTrap locked={isOpen} focusLastOnUnlock>
+    <div className={modalClass} data-element={DataElements.FILTER_MODAL}>
+      <ModalWrapper
+        isOpen={isOpen}
+        title={`${t('option.filterAnnotModal.filters')} (${filterCount})`}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        swipeToClose
+      >
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           {core.getAnnotationsList().length > 0 ? (
             <div className="filter-modal">
-              <Swipeable onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-                <div className="swipe-indicator" />
-                <div className="header">
-                  <div>{`${t('option.filterAnnotModal.filters')} (${filterCount})`}</div>
-                  <Button
-                    img="icon-close"
-                    onClick={closeModal}
-                    title="action.close"
-                  />
-                </div>
-              </Swipeable>
-              <div className="divider"></div>
               <div className="body">
                 <Tabs id={TABS_ID}>
                   <div className="tab-list">
@@ -496,7 +489,7 @@ const FilterAnnotModal = () => {
             </div>
           )}
         </div>
-      </FocusTrap>
+      </ModalWrapper>
     </div>
   );
 };

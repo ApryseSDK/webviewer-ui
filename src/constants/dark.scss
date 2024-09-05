@@ -122,7 +122,7 @@
 
   --checked-option: var(--blue-6);
 
-  --watermark-preview-background: var(--gray-5);
+  --file-preview-background: var(--gray-5);
 
   --tab-border-color: var(--border);
   --tab-border-color-hover: var(--border);
@@ -134,4 +134,6 @@
   --tab-footer-button-color: var(--primary-button-text);
 
   --input-switch-default-color: var(--gray-3);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
 }

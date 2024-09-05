@@ -79,6 +79,7 @@ function NotePopup(props) {
         className={notePopupButtonClass}
         onClick={togglePopup}
         img="icon-tools-more"
+        isActive={isOpen}
       />
       {isOpen && (
         <div className={optionsClass}>

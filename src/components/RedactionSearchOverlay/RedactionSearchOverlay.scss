@@ -2,13 +2,20 @@
 @import '../../constants/overlay';
 
 .RedactionSearchOverlay {
+  
+  @include mobile {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
 
   input {
     width: 100%;
     padding: 6px;
+  }
 
-    &::placeholder {
-      color: var(--placeholder-text);
+  .creatable-multi-select-label {
+    @include mobile {
+      font-size: 13px;
     }
   }
 }

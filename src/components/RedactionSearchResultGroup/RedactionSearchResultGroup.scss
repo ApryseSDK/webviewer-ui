@@ -1,10 +1,20 @@
 .redaction-search-results-page-number {
   display: flex;
-  align-items: center;
-  margin-left: 11px !important;
+  align-items: start;
+  padding: 8px 12px 4px;
 
-  label {
-    font-size: 13px;
-    color: var(--faded-text);
+  .redaction-search-results-page-number-checkbox {
+    position: absolute;
+    left: 24px;
+  }
+
+  .collapsible-page-group-header {
+    button {
+      font-size: 13px;
+      font-weight: normal;
+      color: var(--faded-text);
+      margin: 0 0 0 32px;
+      width: calc(100% - 32px);
+    }
   }
 }

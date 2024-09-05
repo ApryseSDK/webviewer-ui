@@ -34,7 +34,6 @@ const ITEM_TYPE = {
   DIVIDER: 'divider',
   TOGGLE_BUTTON: 'toggleButton',
   RIBBON_GROUP: 'ribbonGroup',
-  TOOL_GROUP_BUTTON: 'toolGroupButton',
   TOOL_BUTTON: 'toolButton',
   ZOOM: 'zoom',
   FLYOUT: 'flyout',
@@ -42,12 +41,35 @@ const ITEM_TYPE = {
   PRESET_BUTTON: 'presetButton',
   VIEW_CONTROLS: 'viewControls',
   TABS_PANEL: 'tabPanel',
+  FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
+  FONT_FACE_DROPDOWN: 'fontFaceDropdown',
+  STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
+  CREATE_TABLE_DROPDOWN: 'createTableDropdown',
+  OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
+};
+
+const FLYOUT_ITEM_TYPES = {
+  BUTTON: 'button',
+  PRESET_BUTTON: 'presetButton',
+  RIBBON_ITEM: 'ribbonItem',
+  TOOL_BUTTON: 'toolButton',
+  TOGGLE_BUTTON: 'toggleButton',
+  ZOOM_OPTIONS_BUTTON: 'zoomOptionsButton',
+  ZOOM_BUTTON: 'zoomButton',
+  PAGE_NAVIGATION_BUTTON: 'pageNavigationButton',
+  UNDO_BUTTON: 'undoButton',
+  REDO_BUTTON: 'redoButton',
+  TAB_PANEL_ITEM: 'tabPanelItem',
+  LABEL: 'label',
+  DIVIDER: 'divider',
 };
 
 const PREBUILT_FLYOUTS = [
   'ViewControlsFlyout',
   'ZoomFlyoutMenu',
   'pageNavFlyoutMenu',
+  'NoteStateFlyout',
+  'MoreOptionsContextMenuFlyout',
 ];
 
 const OVERFLOW_FLYOUTS = [
@@ -68,7 +90,6 @@ const BUTTON_TYPES = [
   ITEM_TYPE.BUTTON,
   ITEM_TYPE.STATEFUL_BUTTON,
   ITEM_TYPE.TOGGLE_BUTTON,
-  ITEM_TYPE.TOOL_GROUP_BUTTON,
 ];
 
 const OPACITY_MODES = {
@@ -104,6 +125,11 @@ const DEFAULT_STYLES = {
  * @property {string} SETTINGS {@link UI.Components.PresetButton.settingsButton}
  * @property {string} FORM_FIELD_EDIT {@link UI.Components.PresetButton.formFieldEditButton}
  * @property {string} CONTENT_EDIT {@link UI.Components.PresetButton.contentEditButton}
+ * @property {string} BOLD {@link UI.Components.PresetButton.boldButton}
+ * @property {string} ITALIC {@link UI.Components.PresetButton.italicButton}
+ * @property {string} UNDERLINE {@link UI.Components.PresetButton.underlineButton}
+ * @property {string} ORDERED_LIST {@link UI.Components.PresetButton.orderedListButton}
+ * @property {string} UNORDERED_LIST {@link UI.Components.PresetButton.unorderedListButton}
  * @example
  * const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
  */
@@ -120,6 +146,12 @@ const PRESET_BUTTON_TYPES = {
   SETTINGS: 'settingsButton',
   FORM_FIELD_EDIT: 'formFieldEditButton',
   CONTENT_EDIT: 'contentEditButton',
+  RENAME: 'renameButton',
+  BOLD: 'boldButton',
+  ITALIC: 'italicButton',
+  UNDERLINE: 'underlineButton',
+  ORDERED_LIST: 'orderedListButton',
+  UNORDERED_LIST: 'unorderedListButton',
 };
 
 const DEFAULT_GAP = 12;
@@ -139,4 +171,5 @@ export {
   DEFAULT_STYLES,
   PRESET_BUTTON_TYPES,
   BUTTON_TYPES,
+  FLYOUT_ITEM_TYPES,
 };

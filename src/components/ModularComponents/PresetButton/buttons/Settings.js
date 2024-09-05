@@ -1,42 +1,39 @@
+import React, { forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
-import { getPresetButtonDOM, menuItems } from '../../Helpers/menuItems';
+import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import DataElements from 'constants/dataElement';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
-import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-import { useTranslation } from 'react-i18next';
+import useFocusHandler from 'hooks/useFocusHandler';
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 
 /**
  * A button that opens the settings modal.
  * @name settingsButton
  * @memberof UI.Components.PresetButton
  */
-const SettingsButton = (props) => {
-  const { isFlyoutItem, iconDOMElement } = props;
-  const { label } = menuItems.settingsButton;
+const SettingsButton = forwardRef((props, ref) => {
+  const { isFlyoutItem } = props;
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const handleSettingsButtonClick = () => {
     dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
   };
 
+  const handleClickWithFocus = useFocusHandler(handleSettingsButtonClick);
+
   return (
     isFlyoutItem ?
-      innerItemToFlyoutItem({
-        isDisabled: false,
-        icon: iconDOMElement,
-        label: t(label),
-      }, handleSettingsButtonClick)
+      <FlyoutItemContainer {...props} ref={ref} onClick={handleClickWithFocus} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.SETTINGS, false, handleSettingsButtonClick)
+      getPresetButtonDOM(PRESET_BUTTON_TYPES.SETTINGS, false, handleClickWithFocus)
   );
-};
+});
 
 SettingsButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
-  iconDOMElement: PropTypes.object,
 };
+SettingsButton.displayName = 'SettingsButton';
 
 export default SettingsButton;

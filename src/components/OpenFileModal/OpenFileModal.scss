@@ -12,8 +12,7 @@
       border: none;
 
       &.disabled {
-        background: var(--disabled-button-color) !important;
-        cursor: not-allowed;
+        @extend %default-button-disabled;
 
         span {
           color: var(--tab-footer-button-color);

@@ -65,7 +65,12 @@ import Events from 'constants/events';
 import overlays from 'constants/overlays';
 import { panelNames } from 'constants/panel';
 import DataElements from 'constants/dataElement';
-import { defaultPanels } from '../../redux/modularComponents';
+import { defaultModularComponents, defaultModularHeaders, defaultPanels } from '../../redux/modularComponents';
+import {
+  defaultOfficeEditorModularComponents,
+  defaultOfficeEditorModularHeaders,
+  defaultOfficeEditorPanels,
+} from '../../redux/officeEditorModularComponents';
 
 import setLanguage from 'src/apis/setLanguage';
 import { loadDefaultFonts } from 'src/helpers/loadFont';
@@ -132,14 +137,26 @@ const App = ({ removeEventHandlers }) => {
     loadDefaultFonts();
     const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
-    if (isCustomizableUIEnabled && !isOfficeEditingEnabled) {
-      dispatch(actions.setGenericPanels(defaultPanels));
-      // set panel widths for search and notes panel to 330px for the new UI
-      // we dont want to change this for the legacy panels at this time.
-      dispatch(actions.setPanelWidth(DataElements.SEARCH_PANEL, 330));
-      dispatch(actions.setPanelWidth(DataElements.NOTES_PANEL, 330));
-      dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
+    if (!isCustomizableUIEnabled) {
+      return;
     }
+    if (isOfficeEditingEnabled) {
+      // set default UI for Office Editor
+      dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularComponents, defaultOfficeEditorModularHeaders));
+      dispatch(actions.setGenericPanels(defaultOfficeEditorPanels));
+      // set panel width for tracked changes panel to 330px for the new UI
+      dispatch(actions.setPanelWidth(DataElements.LEFT_PANEL, 330));
+    } else {
+      // set default UI for WebViewer
+      dispatch(actions.setModularHeadersAndComponents(defaultModularComponents, defaultModularHeaders));
+      dispatch(actions.setGenericPanels(defaultPanels));
+      // set panel width for notes panel to 330px for the new UI
+      dispatch(actions.setPanelWidth(DataElements.NOTES_PANEL, 330));
+    }
+    // set panel width for search panel to 330px for the new UI
+    // we dont want to change this for the legacy panels at this time.
+    dispatch(actions.setPanelWidth(DataElements.SEARCH_PANEL, 330));
+    dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
   }, []);
 
   useEffect(() => {
@@ -307,6 +324,26 @@ const App = ({ removeEventHandlers }) => {
     return () => window.removeEventListener('loaderror', onError);
   }, []);
 
+  useEffect(() => {
+    // update cursor and selection properties for Office Editor custom UI
+    if (isOfficeEditorMode && customizableUI) {
+      const onCursorPropertiesUpdated = async (cursorProperties) => {
+        dispatch(actions.setOfficeEditorCursorProperties(cursorProperties));
+      };
+      const onSelectionPropertiesUpdated = (selectionProperties) => {
+        dispatch(actions.setOfficeEditorSelectionProperties(selectionProperties));
+      };
+
+      core.getDocument().addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+      core.getDocument().addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
+
+      return () => {
+        core.getDocument().removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
+        core.getDocument().removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+      };
+    }
+  }, [isOfficeEditorMode, customizableUI]);
+
   const renderPanel = (panelName, dataElement) => {
     switch (panelName) {
       case panelNames.OUTLINE:
@@ -328,7 +365,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.STYLE:
         return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
       case panelNames.REDACTION:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true} />;
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
       case panelNames.NOTES:
@@ -355,6 +392,7 @@ const App = ({ removeEventHandlers }) => {
               display={panel.dataElement}
               dataElement={panel.dataElement}
               render={panel.render}
+              isCustomPanel={true}
             />
           )}
         </Panel>
@@ -376,7 +414,7 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsFlyout />
         <Accessibility />
         <Header />
-        {isOfficeEditorMode && (
+        {isOfficeEditorMode && !customizableUI && (
           <LazyLoadWrapper
             Component={LazyLoadComponents.OfficeEditorToolsHeader}
             dataElement={DataElements.OFFICE_EDITOR_TOOLS_HEADER}

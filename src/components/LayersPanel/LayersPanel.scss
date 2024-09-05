@@ -8,4 +8,11 @@
   > .Layer:first-child {
     margin-top: 0;
   }
+
+  @include mobile {
+    width: auto;
+    margin: 16px;
+    padding-left: 0px;
+    overflow-y: auto;
+  }
 }

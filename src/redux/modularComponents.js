@@ -147,7 +147,7 @@ const defaultModularComponents = {
     title: 'Left Panel',
     type: 'toggleButton',
     img: 'icon-header-sidebar-line',
-    toggleElement: 'customLeftPanel'
+    toggleElement: 'tabPanel'
   },
   'view-controls': {
     dataElement: 'view-controls',
@@ -910,7 +910,7 @@ const defaultPanels = [
   },
   {
     render: 'tabPanel',
-    dataElement: 'customLeftPanel',
+    dataElement: 'tabPanel',
     panelsList: [
       {
         render: 'thumbnailPanel'
@@ -964,8 +964,9 @@ const defaultFlyoutMap = {
         'label': 'action.newDocument',
         'title': 'action.newDocument',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'hidden': true,
+        'type': 'presetButton',
+        'buttonType': 'newDocumentButton'
       },
       {
         'dataElement': 'filePickerButton',
@@ -974,7 +975,8 @@ const defaultFlyoutMap = {
         'label': 'action.openFile',
         'title': 'action.openFile',
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'filePickerButton'
       },
       {
         'dataElement': 'downloadButton',
@@ -983,7 +985,8 @@ const defaultFlyoutMap = {
         'label': 'action.download',
         'title': 'action.download',
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'downloadButton'
       },
       {
         'dataElement': 'fullscreenButton',
@@ -992,7 +995,8 @@ const defaultFlyoutMap = {
         'label': 'action.enterFullscreen',
         'title': 'action.enterFullscreen',
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'fullscreenButton'
       },
       {
         'dataElement': 'saveAsButton',
@@ -1002,7 +1006,8 @@ const defaultFlyoutMap = {
         'title': 'saveModal.saveAs',
         'isActive': false,
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'saveAsButton'
       },
       {
         'dataElement': 'printButton',
@@ -1012,7 +1017,8 @@ const defaultFlyoutMap = {
         'title': 'action.print',
         'isActive': false,
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'printButton'
       },
       'divider',
       {
@@ -1023,7 +1029,8 @@ const defaultFlyoutMap = {
         'title': 'portfolio.createPDFPortfolio',
         'isActive': false,
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'createPortfolioButton'
       },
       'divider',
       {
@@ -1034,11 +1041,12 @@ const defaultFlyoutMap = {
         'title': 'option.settings.settings',
         'isActive': false,
         'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'settingsButton'
       },
       'divider',
     ]
-  }
+  },
 };
 
 export { defaultModularComponents, defaultModularHeaders, defaultPanels, defaultFlyoutMap };

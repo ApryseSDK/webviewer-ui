@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
@@ -8,16 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 
 /**
  * A button that toggles Content Edit Mode.
  * @name contentEditButton
  * @memberof UI.Components.PresetButton
  */
-const ContentEditButton = (props) => {
-  const { isFlyoutItem, iconDOMElement } = props;
-  const { label, presetDataElement, icon, title } = menuItems.contentEditButton;
-  const { t } = useTranslation();
+const ContentEditButton = forwardRef((props, ref) => {
+  const { isFlyoutItem } = props;
+  const { presetDataElement, icon, title } = menuItems.contentEditButton;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const dispatch = useDispatch();
 
@@ -35,23 +34,9 @@ const ContentEditButton = (props) => {
     contentEditManager.isInContentEditMode() ? contentEditManager.endContentEditMode() : beginContentEditMode();
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleClick();
-    }
-  };
-
   return (
     isFlyoutItem ?
-      (
-        <div className="menu-container"
-          tabIndex="0" onClick={handleClick} onKeyDown={onKeyDown}>
-          <div className="icon-label-wrapper">
-            {iconDOMElement}
-            {label && <div className="flyout-item-label">{t(label)}</div>}
-          </div>
-        </div>
-      )
+      <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} />
       : (
         <ActionButton
           className={'PresetButton contentEditButton'}
@@ -63,11 +48,11 @@ const ContentEditButton = (props) => {
         />
       )
   );
-};
+});
 
 ContentEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
-  iconDOMElement: PropTypes.object,
 };
+ContentEditButton.displayName = 'ContentEditButton';
 
 export default ContentEditButton;

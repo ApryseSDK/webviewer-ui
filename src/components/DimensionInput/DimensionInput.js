@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { isIE11 } from 'helpers/device';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import './DimensionInput.scss';
 
-const DimensionInput = ({ className, label, initialValue, onChange, unit, maxLength = 10, disabled }) => {
+const DimensionInput = ({ id, className, label, initialValue, onChange, unit, maxLength = 10, disabled }) => {
   const [value, setValue] = useState(initialValue);
 
   const handleDimensionChange = (e) => {
@@ -42,6 +43,7 @@ const DimensionInput = ({ className, label, initialValue, onChange, unit, maxLen
         {label}
         <div className="dimension-input-container">
           <input
+            id={id}
             className="dimension-input"
             type="number"
             min="0"
@@ -58,6 +60,17 @@ const DimensionInput = ({ className, label, initialValue, onChange, unit, maxLen
       </label>
     </div>
   );
+};
+
+DimensionInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  label: PropTypes.string,
+  initialValue: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  unit: PropTypes.string.isRequired,
+  maxLength: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 export default DimensionInput;

@@ -67,7 +67,7 @@ input, textarea, select {
 
   &:focus {
     outline: none;
-    border: 1px solid var(--focus-border);
+    border: 1px solid var(--outline-color);
   }
 }
 
@@ -157,4 +157,8 @@ input, textarea, select {
   clip: rect(0,0,0,0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+
+.no-margin {
+  margin: 0;
 }

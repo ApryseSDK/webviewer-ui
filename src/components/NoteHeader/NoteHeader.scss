@@ -65,7 +65,7 @@
             font-size: 10px;
 
             @include mobile {
-              font-size: 12px;
+              font-size: 10px;
             }
 
             color: var(--faded-text);
@@ -82,7 +82,6 @@
             }
 
             .num-replies {
-              opacity: 0.8;
               font-size: 10px;
               color: var(--gray-7);
 
@@ -117,6 +116,17 @@
             &.reject {
               background-color: #FFE8E8;
             }
+          }
+        }
+
+        .ToggleElementButton button {
+          width: 28px;
+          height: 28px;
+          margin: 0 8px 0 13px;
+
+          .Icon {
+            width: 20px;
+            height: 20px;
           }
         }
       }

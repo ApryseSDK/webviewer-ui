@@ -204,7 +204,7 @@ class Slider extends React.PureComponent {
     this.setState({ isEditingInputField });
   };
 
-  getInputElement = () => {
+  getInputElement = (label) => {
     const { inputFieldType, min, max, step, getDisplayValue } = this.props;
     const displayValue = getDisplayValue(this.state.localValue);
     if (this.state.isEditingInputField && inputFieldType === 'number') {
@@ -234,6 +234,7 @@ class Slider extends React.PureComponent {
         type="text"
         className="slider-input-field"
         value={getDisplayValue(this.state.localValue)}
+        aria-label={`${label} ${getDisplayValue(this.state.localValue)}`}
         onFocus={this.onInputFocus}
       />
     );
@@ -279,7 +280,7 @@ class Slider extends React.PureComponent {
           </svg>
           {!this.props.shouldHideSliderValue &&
             (withInputField ? (
-              this.getInputElement()
+              this.getInputElement(t(`option.slider.${displayProperty}`))
             ) : (
               <div className="slider-value">{getDisplayValue(this.state.localValue)}</div>
             ))}

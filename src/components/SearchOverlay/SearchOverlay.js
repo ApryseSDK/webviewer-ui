@@ -66,6 +66,12 @@ function SearchOverlay(props) {
   }, []);
 
   useEffect(() => {
+    if (numberOfResultsFound > 0) {
+      setSearchStatus('SEARCH_DONE');
+    }
+  }, [searchResults]);
+
+  useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
       // give time for the search panel to open before focusing on the input
       setTimeout(() => {
@@ -289,7 +295,7 @@ function SearchOverlay(props) {
   const showSpinner = (isSearchInProgress)
     ? <Spinner />
     : (searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults)
-      ? (<div>{numberOfResultsFound} {t('message.numResultsFound')}</div>)
+      ? (<p aria-live="assertive" className="no-margin">{numberOfResultsFound} {t('message.numResultsFound')}</p>)
       : <Spinner />;
 
 
@@ -367,9 +373,10 @@ function SearchOverlay(props) {
             {
               (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
                 <div data-element="searchAndReplace" className='replace-options'>
-                  <p>{t('option.searchPanel.replace')}</p>
+                  <p className="search-and-replace-title">{t('option.searchPanel.replace')}</p>
                   <div className='input-container'>
                     <input type={'text'}
+                      aria-label={t('option.searchPanel.replace')}
                       onChange={replaceTextInputOnChange}
                       value={replaceValue}
                     />

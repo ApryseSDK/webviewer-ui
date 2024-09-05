@@ -1,8 +1,10 @@
 import React from 'react';
+import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ScaleSelector from './ScaleSelector';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const propTypes = {
   scales: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -13,6 +15,8 @@ const propTypes = {
 
 const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale }) => {
   const [t] = useTranslation();
+
+  const onClickFocusWrapped = useFocusHandler(onAddingNewScale);
 
   return (
     <div className="scale-overlay-header">
@@ -26,7 +30,7 @@ const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale
           onAddingNewScale={onAddingNewScale}
         />
       ) : (
-        <button className="add-new-scale" onClick={onAddingNewScale} data-element="addNewScale">{t('option.measurement.scaleOverlay.addNewScale')}</button>
+        <Button className="add-new-scale" onClick={onClickFocusWrapped} dataElement="addNewScale" label={t('option.measurement.scaleOverlay.addNewScale')} />
       )}
     </div>
   );

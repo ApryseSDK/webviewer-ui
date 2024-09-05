@@ -25,7 +25,7 @@ $container-margin: 16px;
   &-input {
     outline: none;
     border-radius: $border-radius;
-    border: 1px solid var(--modal-stroke-and-border);
+    border: 1px solid var(--gray-6);
     box-shadow: none;
     padding: 5px;
   }
@@ -56,7 +56,7 @@ $container-margin: 16px;
   }
 
   .canvas-container{
-    border: 1px solid var(--modal-stroke-and-border);
+    border: 1px solid var(--gray-6);
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
@@ -96,6 +96,13 @@ $container-margin: 16px;
         &.active {
           margin-left: -4px;
           margin-right: 10px;
+          width: 28px;
+          height: 28px;
+        }
+
+        .cell {
+          width: 16px;
+          height: 16px;
         }
       }
 
@@ -105,25 +112,77 @@ $container-margin: 16px;
         height: auto;
       }
 
+      .cell-tool {
+        margin-right: 8px;
+        margin-left: -4px;
+
+        .cell-outer {
+          margin: 4px 4px;
+        }
+
+        &:hover {
+          @extend %icon-button-hover;
+        }
+
+        &.active {
+          box-shadow: inset 0 0 0 1px var(--blue-5);
+          background: var(--tools-button-active);
+
+          .Icon {
+            color: var(--blue-5);
+          }
+        }
+
+        &:disabled {
+          box-shadow: none;
+          background: transparent;
+        }
+      }
     }
   }
+
   .stamp-input-container{
     margin-top: $container-margin;
     padding: 0px;
+    position: relative;
+
     .text-customstamp-input {
+      margin-top: 8px;
+      height: 32px;
       width: 100%;
       padding: 6px;
+
+      &.error {
+        border: 1px solid var(--error-text-color);
+      }
+    }
+
+    .error-icon {
+      position: absolute;
+      right: 8px;
+      top: 28px;
+      color: var(--error-text-color);
+
+      @include mobile {
+        top: 30px;
+      }
+    }
+
+    .empty-stamp-input {
+      height: 16px;
+      margin-top: 4px;
+      color: var(--error-text-color);
     }
   }
 
   .stamp-sublabel, .stamp-label {
     font-weight: bold;
     margin-bottom: 8px;
+    text-transform: capitalize;
 
     @include mobile {
       font-size: 13px;
       height: 16px;
-
     }
   }
 
@@ -168,6 +227,7 @@ $container-margin: 16px;
     .Dropdown__wrapper{
       width: 100%;
       .Dropdown {
+        height: 32px;
         width: 100% !important;
         text-align: left;
       }
@@ -224,7 +284,7 @@ $container-margin: 16px;
   }
 
   .font-container {
-    margin-top: $container-margin;
+    margin-top: 8px;
 
     .font-inner-container {
       display: flex;
@@ -249,7 +309,8 @@ $container-margin: 16px;
     .Dropdown__wrapper{
       .Dropdown {
         margin-right: 4px;
-        width: 216px !important;
+        height: 32px;
+        width: 268px !important;
         @include mobile {
           width: 200px!important;
         }
@@ -272,25 +333,35 @@ $container-margin: 16px;
 
     .Button {
       background: none;
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       margin: 0;
 
       .Icon {
-        height: 26px;
-        width: 26px;
+        height: 24px;
+        width: 24px;
         color: var(--icon-color);
       }
 
       &:hover {
         background: var(--popup-button-hover);
+
+        .Icon {
+          .cls-1 {
+            fill: currentColor;
+          }
+        }
       }
 
       &.active {
         background: var(--popup-button-active);
 
         .Icon {
-          color: var(--blue-6);
+          color: var(--blue-5);
+
+          .cls-1 {
+            fill: currentColor;
+          }
         }
       }
     }
@@ -339,9 +410,5 @@ $container-margin: 16px;
     label {
       align-items: center;
     }
-  }
-
-  .empty-stamp-input {
-    color: var(--error-text-color);
   }
 }

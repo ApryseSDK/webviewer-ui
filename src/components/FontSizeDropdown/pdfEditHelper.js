@@ -15,7 +15,12 @@ export function keepTextEditSelectionOnInputFocus(core) {
   // When we click anywhere other than the input field itself, it should unfocus.
   document.addEventListener('mousedown', handleClick);
 
-  const currentRange = window.getSelection().getRangeAt(0);
+  const selection = window.getSelection();
+  if (selection.rangeCount === 0) {
+    return;
+  }
+
+  const currentRange = selection.getRangeAt(0);
   const isFocusOutsideTextBox = currentRange.startContainer.nodeName === 'DIV';
   // Component re-renders when we focus into the input field because it is a dropdown/input combo.
   // In that case the focus is already shifted out from text edit box and this function is executed again

@@ -63,6 +63,16 @@ describe('NotePopup', () => {
     }).not.toThrow();
   });
 
+  it('Check aria-extanded tag', () => {
+    const { container } = render(<BasicStory />);
+    const btn = container.querySelector('[data-element="notePopupButtonClass"]');
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
+    btn.click();
+
+    const btn2 = container.querySelector('[data-element="notePopupButtonClass"]');
+    expect(btn2.getAttribute('aria-expanded')).toBe('true');
+  });
+
   it('DifferentStates story should not throw error when rendering', () => {
     expect(() => {
       render(<DifferentStatesStory />);

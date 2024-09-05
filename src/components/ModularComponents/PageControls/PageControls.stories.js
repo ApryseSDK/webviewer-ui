@@ -40,7 +40,9 @@ const initialState = {
     customElementOverrides: {},
     activeGroupedItems: [],
     disabledElements: [],
-    openElements: {},
+    openElements: {
+      pageNavFlyoutMenu: true,
+    },
     customPanels: [],
     genericPanels: [],
     currentPage: 2,

@@ -4,27 +4,24 @@
 .CustomStampModal {
   @extend %modal;
 
-  .container {
-    @extend %modal-shared-container-style;
+  .modal-container {
     display: flex;
     flex-direction: column;
     width: 480px;
     padding: 0px;
     border-radius: 4px;
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
     background: var(--component-background);
-    overflow-y: auto;
+    overflow: visible;
     max-height: 100%;
 
     @include mobile {
       width: 100%;
-      position: fixed;
       border-radius: 0;
       left: 0;
       bottom: 0;
     }
 
-    .header{
+    .header {
       box-shadow: inset 0 -1px 0 var(--modal-stroke-and-border);
       margin: 0;
       display: flex;
@@ -56,6 +53,7 @@
         }
       }
     }
+
     .footer {
       display: flex;
       align-items: center;
@@ -102,12 +100,10 @@
         &:hover {
           background: var(--primary-button-hover);
         }
-      }
 
-      .stamp-create-disabled {
-        background: var(--disabled-icon);
-        &:hover {
-          background: var(--disabled-icon);
+        &:disabled {
+          background: var(--primary-button);
+          opacity: 0.5;
           cursor: default;
         }
       }

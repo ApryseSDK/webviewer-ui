@@ -16,10 +16,12 @@ const FormFieldEditPopup = ({
   flags,
   closeFormFieldEditPopup,
   isValid,
+  setIsValid,
   validationMessage,
+  setValidationMessage,
   radioButtonGroups,
   options,
-  onOptionsChange,
+  confirmFieldOptionsChange,
   annotation,
   selectedRadioGroup,
   getPageHeight,
@@ -46,6 +48,17 @@ const FormFieldEditPopup = ({
     selectedRadioGroup === '' ? null : { value: selectedRadioGroup, label: selectedRadioGroup },
   );
 
+  // In order to be draggable, each item needs a unique Id
+  // These are managed internally in this component and not exposed to the user
+  const draggableItems = options?.map((option, index) => {
+    return {
+      id: index,
+      displayValue: option.displayValue,
+      value: option.value,
+    };
+  });
+  const [fieldSelectionOptions, setFieldSelectionOptions] = useState(draggableItems ?? []);
+
   useEffect(() => {
     // When we open up the popup the async call to set the right radio group may not be finished
     // we deal with this timing issue by updating state when the prop is refreshed
@@ -58,10 +71,10 @@ const FormFieldEditPopup = ({
 
   function onSelectInputChange(field, input) {
     if (input === null) {
-      field.onChange('');
+      field.setValue('');
       setRadioButtonGroup(null);
     } else {
-      field.onChange(input.value);
+      field.setValue(input.value);
       setRadioButtonGroup({ value: input.value, label: input.value });
     }
   }
@@ -98,6 +111,13 @@ const FormFieldEditPopup = ({
     return height;
   }
 
+  const confirmIndicatorChange = () => {
+    if (indicator.isChecked) {
+      indicator.confirmTextChange(indicator.textValue || indicatorPlaceholder);
+    }
+    indicator.confirmToggleIndicator(indicator.isChecked);
+  };
+
   function onCancel() {
     if (!isValid) {
       const { value } = fields.find((field) => field.label.includes('fieldName'));
@@ -116,6 +136,33 @@ const FormFieldEditPopup = ({
     closeFormFieldEditPopup();
   }
 
+  function onConfirm() {
+    for (let i = 0; i < fields.length; i++) {
+      const isInvalidName = fields[i].label.includes('fieldName') && fields[i].value.trim() === '';
+      if (isInvalidName) {
+        // Field name is required, so if this is an empty string
+        // the field is not valid and the user should be warned
+        // As a failsafe the FormFieldCreationManager will create a unique field name if this is left blank
+        setValidationMessage('formField.formFieldPopup.invalidField.empty');
+        setIsValid(false);
+        return;
+      }
+      if (fields[i].label.includes('fieldName')) {
+        fields[i].confirmChange(fields[i].value);
+      }
+    }
+    flags.forEach((flag) => {
+      flag.confirmChange(flag.isChecked);
+    });
+
+    if (confirmFieldOptionsChange) {
+      const sanitizedOptions = fieldSelectionOptions.map((option) => ({ value: option.value, displayValue: option.displayValue }));
+      confirmFieldOptionsChange(sanitizedOptions);
+    }
+    confirmIndicatorChange();
+    closeFormFieldEditPopup(true);
+  }
+
   function renderInput(field) {
     if (field.type === 'text') {
       return renderTextInput(field);
@@ -125,11 +172,18 @@ const FormFieldEditPopup = ({
     }
   }
 
+  function handleTextChange(event, field) {
+    field.setValue(event.target.value);
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
+  }
+
   function renderTextInput(field) {
     return (
       <Input
         type="text"
-        onChange={(event) => field.onChange(event.target.value)}
+        onChange={(e) => handleTextChange(e, field)}
         value={field.value}
         fillWidth="false"
         messageText={field.required && !isValid ? t(validationMessage) : ''}
@@ -160,7 +214,12 @@ const FormFieldEditPopup = ({
     return (
       <div className="field-options-container">
         {t('formField.formFieldPopup.options')}
-        <CreatableList options={options} onOptionsUpdated={onOptionsChange} popupRef={popupRef}/>
+        <CreatableList
+          draggableItems={draggableItems}
+          popupRef={popupRef}
+          fieldSelectionOptions={fieldSelectionOptions}
+          setFieldSelectionOptions={setFieldSelectionOptions}
+        />
       </div>
     );
   }
@@ -186,8 +245,10 @@ const FormFieldEditPopup = ({
         {flags.map((flag) => (
           <Choice
             key={flag.label}
-            checked={flag.isChecked}
-            onChange={(event) => flag.onChange(event.target.checked)}
+            checked = {flag.isChecked}
+            onChange={(event) => {
+              flag.setIsChecked(event.target.checked);
+            }}
             label={t(flag.label)}
           />
         ))}
@@ -212,7 +273,7 @@ const FormFieldEditPopup = ({
         />
         <Button
           className="ok-form-field-button"
-          onClick={closeFormFieldEditPopup}
+          onClick={onConfirm}
           dataElement="formFieldOK"
           label={t('action.ok')}
           disabled={!isValid}

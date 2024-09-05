@@ -44,7 +44,9 @@ const initialState = {
     customHeadersAdditionalProperties: {},
     disabledElements: {},
     customElementOverrides: {},
-    openElements: {},
+    openElements: {
+      RibbonOverflowFlyout: true,
+    },
     customPanels: [],
     genericPanels: [],
     canUndo: {
@@ -103,6 +105,9 @@ const noIconsStore = configureStore({
       ...initialState,
       viewer: {
         ...initialState.viewer,
+        openElements: {
+          RibbonOverflowFlyoutNoIcons: true,
+        },
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
         activeCustomPanel: '',
         modularHeaders: {},

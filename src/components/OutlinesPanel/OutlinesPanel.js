@@ -378,13 +378,13 @@ const OutlinesPanel = () => {
                 <Button
                   className="multi-selection-button"
                   img="icon-menu-add"
-                  disabled={selectedOutlines.length > 0 || isAddingNewOutline}
+                  disabled={selectedOutlines.length > 0 || isAddingNewOutline || isAnyOutlineRenaming}
                   onClick={() => setAddingNewOutline(true)}
                 />
                 <Button
                   className="multi-selection-button"
                   img="icon-delete-line"
-                  disabled={selectedOutlines.length === 0}
+                  disabled={selectedOutlines.length === 0 || isAnyOutlineRenaming}
                   onClick={() => removeOutlines(selectedOutlines)}
                 />
               </>
@@ -393,7 +393,7 @@ const OutlinesPanel = () => {
                 className="bookmark-outline-control-button add-new-button"
                 img="icon-menu-add"
                 dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON}
-                disabled={isAddingNewOutline}
+                disabled={isAddingNewOutline || isAnyOutlineRenaming}
                 label={`${t('action.add')} ${t('component.outlinePanel')}`}
                 onClick={() => setAddingNewOutline(true)}
               />

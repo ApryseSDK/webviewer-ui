@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
 import classNames from 'classnames';
@@ -13,13 +13,13 @@ import getColor from 'helpers/getColor';
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
 import { shortcutAria } from 'helpers/hotkeysManager';
-import { useTranslation } from 'react-i18next';
-import Icon from 'components/Icon';
 import DataElements from 'src/constants/dataElement';
+import { getIconDOMElement } from '../Helpers/responsiveness-helper';
+import FlyoutItemContainer from '../FlyoutItemContainer';
 
 const { ToolNames } = window.Core.Tools;
 
-const ToolButton = (props) => {
+const ToolButton = forwardRef((props, ref) => {
   const {
     title,
     dataElement,
@@ -31,7 +31,8 @@ const ToolButton = (props) => {
     headerPlacement,
     toolName,
     isFlyoutItem = false,
-    groupedItem
+    groupedItem,
+    allFlyoutItems = [],
   } = props;
 
   const [
@@ -67,7 +68,6 @@ const ToolButton = (props) => {
     activeToolName === toolName;
 
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const isToolInActiveGroupedItems = groupedItem && activeGroupedItems.includes(groupedItem);
   const [isButtonActive, setIsButtonActive] = useState(isActive && (isToolInActiveGroupedItems || !groupedItem));
@@ -209,15 +209,19 @@ const ToolButton = (props) => {
   if (isFlyoutItem) {
     const shortcutKey = toolTipTitle ? toolTipTitle.slice(toolTipTitle.indexOf('.') + 1) : undefined;
     const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
-    const displayTitle = label ? t(label) : toolTipTitle ? t(toolTipTitle) : undefined;
+    const displayTitle = label || toolTipTitle;
+    const icon = getIconDOMElement({ ...toolButtonObject }, allFlyoutItems);
+    const isActive = activeToolName === toolName;
+
     return (
-      <div className="menu-container" onClick={handleClick}>
-        <div className="icon-label-wrapper">
-          <Icon glyph={icon} className="menu-icon" />
-          {displayTitle && <div className="flyout-item-label">{displayTitle}</div>}
-        </div>
-        {ariaKeyshortcuts && <span className="hotkey-wrapper">{`(${ariaKeyshortcuts})`}</span>}
-      </div>
+      <FlyoutItemContainer {...props}
+        ref={ref}
+        onClick={handleClick}
+        label={displayTitle}
+        ariaKeyshortcuts={ariaKeyshortcuts}
+        icon={icon}
+        additionalClass={isActive ? 'active' : ''}
+      />
     );
   }
 
@@ -244,7 +248,7 @@ const ToolButton = (props) => {
       strokeColor={strokeColor}
     />
   );
-};
+});
 
 ToolButton.propTypes = {
   dataElement: PropTypes.string,
@@ -254,6 +258,8 @@ ToolButton.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   groupedItem: PropTypes.string,
+  allFlyoutItems: PropTypes.array,
 };
+ToolButton.displayName = 'ToolButton';
 
 export default ToolButton;

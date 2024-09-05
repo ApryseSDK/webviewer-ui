@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import FocusTrap from 'components/FocusTrap';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';

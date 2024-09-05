@@ -16,6 +16,13 @@ const propTypes = {
 
 const MOBILE_PANEL_WRAPPER = 'MobilePanelWrapper';
 
+const minimumSizeForPanel = {
+  'notesPanel': PANEL_SIZES.HALF_SIZE,
+  'stylePanel': PANEL_SIZES.HALF_SIZE,
+  'textEditingPanel': PANEL_SIZES.HALF_SIZE,
+  'tabPanel': PANEL_SIZES.HALF_SIZE,
+};
+
 const MobilePanelWrapper = ({ children }) => {
   const isMobile = isMobileSize();
   const dispatch = useDispatch();
@@ -26,11 +33,13 @@ const MobilePanelWrapper = ({ children }) => {
     isContentOpen,
     documentContainerWidthStyle,
     mobilePanelSize,
+    isSearchAndReplaceDisabled
   ] = useSelector((state) => [
     selectors.isElementOpen(state, MOBILE_PANEL_WRAPPER),
     selectors.isElementOpen(state, contentElement),
     selectors.getDocumentContentContainerWidthStyle(state),
     selectors.getMobilePanelSize(state),
+    selectors.isElementDisabled(state, 'searchAndReplace'),
   ]);
 
   const [style, setStyle] = useState({});
@@ -43,7 +52,15 @@ const MobilePanelWrapper = ({ children }) => {
   const [wrapperRef, dimensions] = useResizeObserver();
 
   useEffect(() => {
-    const panelsStartingAtHalfSize = [panelNames.RUBBER_STAMP, panelNames.STYLE];
+    const panelsStartingAtHalfSize = [
+      panelNames.RUBBER_STAMP,
+      panelNames.STYLE,
+      panelNames.NOTES,
+      panelNames.SEARCH,
+      panelNames.TABS,
+      panelNames.TEXT_EDITING,
+      panelNames.REDACTION,
+    ];
     if (isOpen) {
       if (panelsStartingAtHalfSize.includes(contentElement)) {
         setMobilePanelSize(PANEL_SIZES.HALF_SIZE);
@@ -66,7 +83,11 @@ const MobilePanelWrapper = ({ children }) => {
   useEffect(() => {
     if (dimensions.height !== null) {
       // 16px is the padding of the mobile panel body
-      setWrapperBodyStyle({ height: dimensions.height - 16 });
+      setWrapperBodyStyle({
+        display: 'flex',
+        flexDirection: 'column',
+        height: dimensions.height - 16,
+      });
     }
   }, [dimensions]);
 
@@ -100,12 +121,20 @@ const MobilePanelWrapper = ({ children }) => {
 
   const onSwipedDown = (e) => {
     if (isAreaScrollable(e)) {
-      switch (mobilePanelSize) {
+      let currentMobilePanelSize = mobilePanelSize;
+
+      if (currentMobilePanelSize === minimumSizeForPanel[contentElement]) {
+        currentMobilePanelSize = PANEL_SIZES.SMALL_SIZE;
+      }
+
+      const isSearchPanelActiveWithSearchAndReplace = !isSearchAndReplaceDisabled && contentElement === panelNames.SEARCH;
+
+      switch (currentMobilePanelSize) {
         case PANEL_SIZES.FULL_SIZE:
           setMobilePanelSize(PANEL_SIZES.HALF_SIZE);
           break;
         case PANEL_SIZES.HALF_SIZE:
-          if (contentElement === panelNames.STYLE) {
+          if (isSearchPanelActiveWithSearchAndReplace) {
             closePanel();
           } else {
             setMobilePanelSize(PANEL_SIZES.SMALL_SIZE);

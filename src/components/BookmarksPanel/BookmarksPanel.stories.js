@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import '../LeftPanel/LeftPanel.scss';
 import initialState from 'src/redux/initialState';
 import { MockApp } from 'helpers/storybookHelper';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 
 export default {
   title: 'Components/BookmarksPanel',
@@ -35,6 +36,16 @@ export const Basic = () => {
       pageLabels: pageLabels,
       currentPage: 3,
       activeCustomRibbon: 'toolbarGroup-Annotate',
+      flyoutMap: {
+        'bookmarkFlyout-outlinePath': {
+          dataElement: 'bookmarkFlyout-outlinePath',
+          items: menuItems,
+        }
+      },
+      activeFlyout: 'bookmarkFlyout-outlinePath',
+      openElements: {
+        'bookmarkFlyout-outlinePath': true,
+      },
     },
     document: {
       bookmarks: {

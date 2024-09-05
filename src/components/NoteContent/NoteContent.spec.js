@@ -4,23 +4,12 @@ import * as reactRedux from 'react-redux';
 import { testProps, testPropsWithSkipAutoLink } from './NoteContent.stories';
 import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
-import { initialColors } from 'helpers/initialColorStates';
+import initialState from 'src/redux/initialState';
 
 const TestNoteContent = withProviders(NoteContent);
 const notSelectedProps = {
   ...testProps,
   isSelected: false,
-};
-
-const initialState = {
-  viewer: {
-    disabledElements: {},
-    customElementOverrides: {},
-    activeDocumentViewerKey: 1,
-    colorMap: {
-      '1': initialColors[0]
-    }
-  }
 };
 
 const context = {
@@ -80,7 +69,6 @@ describe('NoteContent Component', () => {
         <TestNoteContent {...testPropsWithSkipAutoLink}/>
       </NoteContext.Provider>
     );
-
     expect(container.querySelector('a')).not.toBeInTheDocument();
   });
 });

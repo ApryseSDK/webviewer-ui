@@ -102,7 +102,7 @@ describe('TabPanel', () => {
         },
         {
           'render': 'tabPanel',
-          'dataElement': 'customLeftPanel',
+          'dataElement': 'tabPanel',
           'panelsList': [
             {
               'render': 'thumbnailsPanel'
@@ -179,7 +179,7 @@ describe('TabPanel', () => {
 
   const TabPanelWithRedux = ({ initialState }) => (
     <Provider store={createStore(initialState)}>
-      <TabPanel dataElement='customLeftPanel' />
+      <TabPanel dataElement='tabPanel' />
     </Provider>
   );
 

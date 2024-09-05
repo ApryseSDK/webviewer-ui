@@ -12,6 +12,7 @@ import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
+import { workerTypes } from 'constants/types';
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -53,8 +54,8 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   useOnClickOutside(popupRef, (e) => {
     const notesPanel = getRootNode().querySelector('[data-element="notesPanel"]');
     const clickedInNotesPanel = notesPanel?.contains(e.target);
-    const notePopupState = getRootNode().querySelector('[data-element="notePopupState"]');
-    const clickedInNotePopupState = notePopupState?.contains(e.target);
+    const noteStateFlyout = getRootNode().querySelector(`[data-element="noteStateFlyout-${annotation.Id}"]`);
+    const clickedInNoteStateFlyout = noteStateFlyout?.contains(e.target);
     const datePicker = getDatePicker();
     const warningModal = getOpenedWarningModal();
     const colorPicker = getOpenedColorPicker();
@@ -63,7 +64,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up
     // for example: click on a note will call core.selectAnnotation which triggers the annotationSelected event
     // and opens this component. If we don't exclude the notes panel this handler will run and close it after
-    if (!clickedInNotesPanel && !clickedInNotePopupState && !warningModal && !colorPicker && !datePicker) {
+    if (!clickedInNotesPanel && !clickedInNoteStateFlyout && !warningModal && !colorPicker && !datePicker) {
       dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
     }
   });
@@ -146,7 +147,11 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
 
   const contextValue = {
     searchInput: '',
-    resize: () => { },
+    resize: () => {
+      if (core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR) {
+        setPosition(getPopupPosition(annotation, popupRef, activeDocumentViewerKey));
+      }
+    },
     isSelected: true,
     isContentEditable: core.canModifyContents(annotation) && !annotation.getContents(),
     pendingEditTextMap,

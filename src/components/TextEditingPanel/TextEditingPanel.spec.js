@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { TextEditingUndoRedo as TextEditUndoRedoStory } from './TextEditingPanel.stories';
 import TextEditingPanel from './TextEditingPanel';
 import core from 'core';
 
@@ -25,12 +24,6 @@ core.getContentEditManager = () => ({
 });
 
 describe('TextEditingPanel', () => {
-  it('Undo/redo story should render without errors', () => {
-    expect(() => {
-      render(<TextEditUndoRedoStory />);
-    }).not.toThrow();
-  });
-
   it('should render without undo/redo buttons', () => {
     render(<TestTextEditingPanel {...mockProps} />);
     const undoButton = screen.queryByRole('Undo', { name: 'Undo' });

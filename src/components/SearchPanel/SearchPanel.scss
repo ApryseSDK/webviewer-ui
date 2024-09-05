@@ -55,13 +55,15 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      height: 64px;
+      height: 28px;
+      margin-bottom: 8px;
 
       width: 100%;
       padding-right: 12px;
 
       .close-icon-container {
         @include button-reset;
+        z-index: 3;
         cursor: pointer;
         .close-icon {
           width: 24px;

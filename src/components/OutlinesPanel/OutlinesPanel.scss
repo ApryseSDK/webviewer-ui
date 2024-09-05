@@ -1,7 +1,18 @@
+@import '../../constants/panel';
+
 .OutlinesPanel {
+  @include mobile {
+    margin: 16px;
+    padding: 0px;
+    overflow-y: auto;
+  }
+
   .bookmark-outline-single-container {
     margin-top: 6px;
     margin-bottom: 6px;
+    &:not(.editing) {
+      height: 32px;
+    }
   }
 
   .bookmark-outline-row {
@@ -15,12 +26,11 @@
   &.modular-ui-panel {
     .bookmark-outline-single-container {
 
-      &.selected,
-      &.hover {
-        border: 1px solid var(--outline-selected-border);
+      &.selected {
+        outline: 1px solid var(--outline-selected-border);
       }
 
-      .bookmark-outline-more-button.contextMenuOpen {
+      .bookmark-outline-more-button.active {
         display: flex;
 
         .Icon {
@@ -31,11 +41,28 @@
       &.default:hover:not(.selected),
       &.default.hover:not(.selected) {
         background: none;
+        outline: 1px solid var(--secondary-button-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
+
+      .bookmark-outline-input {
+        @include mobile {
+          font-size: 13px;
+        }
       }
 
       .bookmark-outline-input:active {
         border-color: var(--focus-border)
       }
+    }
+  }
+
+  .bookmark-outline-control-button, .bookmark-outline-save-button, .bookmark-outline-cancel-button {
+    @include mobile {
+      font-size: 13px;
     }
   }
 }

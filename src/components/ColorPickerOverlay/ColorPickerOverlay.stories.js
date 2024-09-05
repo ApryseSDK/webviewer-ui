@@ -7,6 +7,9 @@ import { configureStore } from '@reduxjs/toolkit';
 export default {
   title: 'Components/ColorPickerOverlay',
   component: ColorPickerOverlay,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const store = configureStore({ reducer: () => initialState });

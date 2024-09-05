@@ -2,7 +2,6 @@
 
 .insert-uploaded-page-panel {
   @extend %modal-shared-container-style;
-  @extend %modal-shared-container-style-mobile;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -11,13 +10,20 @@
   width: 791px;
   background: var(--component-background);
 
+  @include mobile {
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    bottom: 0;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
     width: 100%;
     font-size: 16px;
     line-height: 24px;
-    color: var(--gray-8);
+    color: var(--gray-9);
     font-weight: 700;
     box-shadow: inset 0px -1px 0px var(--divider);
     padding: 20px 16px 20px 16px;
@@ -28,9 +34,7 @@
       gap: 4px;
     }
 
-
     .Button {
-
       &:hover {
         background: var(--view-header-button-hover);
         border-radius: 4px;
@@ -45,11 +49,13 @@
   }
 
   .insert-blank-page-controls {
-    padding-bottom: 16px;
+    padding-bottom: 32px;
     display: flex;
     gap: 48px;
+    height: 90px;
 
     @include mobile {
+      height: auto;
       flex-direction: column;
       gap: 20px;
 
@@ -62,7 +68,7 @@
     .insert-page-titles {
       font-size: 13px;
       font-weight: 700;
-      color: var(--gray-8);
+      color: var(--text-color);
     }
 
     .insert-page-location-options {
@@ -107,6 +113,10 @@
     box-shadow: inset 0px -1px 0px var(--divider);
     padding: 16px;
 
+    @include mobile {
+      flex: 1;
+    }
+
     .modal-body-thumbnail-container {
       height: 409px;
       width: 100%;
@@ -124,17 +134,47 @@
         align-items: center;
       }
 
-      @include mobile {
-        padding: 12px 0px 12px 12px;
+      &.modular-ui {
+        .thumb-card {
+          border: none;
+          box-shadow: inset 0 0 0 1px var(--lighter-border);
+
+          &:hover {
+            @extend %icon-button-hover;
+            background: var(--gray-1);
+          }
+        }
       }
 
-      .thumb-card {
-        @include mobile {
-          width: 101px;
+      @include mobile {
+        flex-direction: row;
+        flex: 1;
+        gap: 16px;
+        padding: 16px;
+        max-height: calc(100vh - 64px - 72px - 160px - 32px);
+
+        .thumb-card {
+          flex: 0 0 calc(50% - 8px);
+          box-sizing: border-box;
         }
 
-        @include small-mobile {
-          width: 101px;
+        .thumb-card-img {
+          height: 110px;
+          width: 83px;
+        }
+
+        .thumb-body {
+          align-items: center;
+        }
+
+        .thumb-image {
+          width: 100%;
+        }
+
+        .thumb-checkbox {
+          position: absolute;
+          top: 2px;
+          right: 2px;
         }
       }
     }
@@ -170,7 +210,6 @@
 
     .modal-btn {
       @include button-reset;
-      background: var(--primary-button);
       border-radius: 4px;
       padding: 8px 16px;
       height: 32px;
@@ -179,23 +218,27 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      color: var(--primary-button-text);
       font-weight: 400;
       cursor: pointer;
 
       @include mobile {
-        height: 40px;
+        height: 32px;
         width: 100px;
       }
 
-      &:hover {
-        background: var(--primary-button-hover);
-      }
-    }
+      &:not(:disabled):not(.disabled) {
+        background: var(--primary-button);
+        color: var(--primary-button-text);
 
-    .modal-btn.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+        &:hover {
+          background: var(--primary-button-hover);
+        }
+      }
+
+      &.disabled {
+        @extend %default-button-disabled;
+        border: none;
+      }
     }
 
     @include mobile {

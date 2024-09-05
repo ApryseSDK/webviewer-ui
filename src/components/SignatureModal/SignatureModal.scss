@@ -5,17 +5,19 @@
 .SignatureModal {
   @extend %modal;
 
-  .container {
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
+  .modal-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 480px;
     padding: 0px;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px var(--document-box-shadow);
     background: var(--component-background);
+    overflow-y: visible;
+
+    @include mobile {
+      width: 100%;
+    }
 
     &.include-initials {
       width: 664px;
@@ -36,9 +38,8 @@
       justify-content: normal;
     }
 
-    .header-container {
-      box-shadow: inset 0px -1px 0px var(--modal-stroke-and-border);
-      padding: 20px 16px 16px 16px;
+    .tabs-header-container {
+      padding: 16px 16px 0 16px;
     }
 
     .header {
@@ -51,7 +52,7 @@
       p {
         font-size: 16px;
         font-weight: 700;
-        width: 89.286%;
+        width: calc(100% - 32px);
         margin: 0;
         margin-right: 16px;
       }
@@ -62,7 +63,7 @@
         width: 32px;
 
         &:hover {
-          background: var(--view-header-button-hover);
+          background: var(--gray-2);
           border-radius: 4px;
         }
 
@@ -86,7 +87,6 @@
 
     .tab-list {
       font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
-      margin-top: 12px;
 
       .tab-options-button {
         @include button-reset;
@@ -198,6 +198,11 @@
 
         &:disabled {
           opacity: 0.5;
+          cursor: default;
+        }
+
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
         }
       }
     }
@@ -236,7 +241,7 @@
         height: 31px;
         margin: auto 0;
         position: absolute;
-        margin-top: 6px;
+        margin-top: 8px;
 
         .Dropdown {
           width: 100% !important;
@@ -247,7 +252,7 @@
         .picked-option-text {
           margin-right: -18px;
           padding-left: 2px;
-          font-size: 15px;
+          font-size: 13px;
         }
 
         .arrow {
@@ -307,6 +312,11 @@
 
     &:disabled {
       opacity: 0.5;
+    }
+
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
     }
   }
 

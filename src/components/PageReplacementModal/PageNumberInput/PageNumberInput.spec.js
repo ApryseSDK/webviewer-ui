@@ -121,4 +121,24 @@ describe('PageNumberInput component', () => {
     // Handler should be called only with valid numbers
     expect(props.onSelectedPageNumbersChange).toBeCalledWith([1, 2, 3]);
   });
+
+  it('When a user enters a page label instead of page number, the page number should be returned as well', () => {
+    const props = {
+      onSelectedPageNumbersChange: jest.fn(), // Mock fn
+      pageCount: 5,
+      selectedPageNumbers: [],
+      enablePageLabels: true,
+      customPageLabels: ['Label1', 'Label2', '3', '4', '5'],
+    };
+
+    render(<PageNumberInput {...props} />);
+
+    const input = screen.getByRole('textbox');
+
+    // We type some numbers, a mix of valid and invalid
+    userEvent.type(input, 'Label1, Label2, 3');
+    fireEvent.blur(input);
+    // Handler should be called only with valid numbers
+    expect(props.onSelectedPageNumbersChange).toBeCalledWith([1, 2, 3]);
+  });
 });

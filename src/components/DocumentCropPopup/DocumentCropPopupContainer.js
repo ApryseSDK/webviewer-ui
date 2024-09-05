@@ -10,6 +10,7 @@ import useOnCropAnnotationChangedOrSelected from '../../hooks/useOnCropAnnotatio
 import { isMobileSize } from 'helpers/getDeviceSize';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
+import MobilePopupWrapper from '../MobilePopupWrapper';
 
 function DocumentCropPopupContainer() {
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
@@ -254,9 +255,11 @@ function DocumentCropPopupContainer() {
     if (isMobile && !isInDesktopOnlyMode) {
       // disable draggable on mobile devices
       return (
-        <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
-          <DocumentCropPopup {...props} isMobile />
-        </div>
+        <MobilePopupWrapper>
+          <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
+            <DocumentCropPopup {...props} isMobile />
+          </div>
+        </MobilePopupWrapper>
       );
     }
     return (

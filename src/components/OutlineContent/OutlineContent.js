@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import core from 'core';
 import selectors from 'selectors';
 import classNames from 'classnames';
-
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Button from '../Button';
-import MoreOptionsContextMenuPopup from '../MoreOptionsContextMenuPopup';
+import MoreOptionsContextMenuFlyout, { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import OutlineContext from '../Outline/Context';
 import './OutlineContent.scss';
 import '../../constants/bookmarksOutlinesShared.scss';
+import DataElements from 'constants/dataElement';
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -20,9 +21,9 @@ const propTypes = {
   setOutlineRenaming: PropTypes.func,
   isOutlineChangingDest: PropTypes.bool,
   setOutlineChangingDest: PropTypes.func,
-  setIsHovered: PropTypes.func,
   onCancel: PropTypes.func,
   textColor: PropTypes.string,
+  isAnyOutlineRenaming: PropTypes.bool,
 };
 
 const OutlineContent = ({
@@ -33,9 +34,9 @@ const OutlineContent = ({
   setOutlineRenaming,
   isOutlineChangingDest,
   setOutlineChangingDest,
-  setIsHovered,
   onCancel,
   textColor,
+  isAnyOutlineRenaming
 }) => {
   const {
     currentDestPage,
@@ -59,7 +60,6 @@ const OutlineContent = ({
 
   const [isDefault, setIsDefault] = useState(false);
   const [outlineText, setOutlineText] = useState(text);
-  const [isContextMenuOpen, setContextMenuOpen] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const inputRef = useRef();
 
@@ -133,15 +133,31 @@ const OutlineContent = ({
     setEditingOutlines({ ...editingOutlinesClone });
   }, [isOutlineRenaming, isOutlineChangingDest]);
 
-  useEffect(() => {
-    if (!isAdding) {
-      setIsHovered(isContextMenuOpen);
-    }
-  }, [isContextMenuOpen]);
-
   const textStyle = {
     color: textColor || 'auto'
   };
+
+  const handleOnClick = (val) => {
+    switch (val) {
+      case menuTypes.RENAME:
+        setOutlineRenaming(true);
+        setIsRenaming(true);
+        break;
+      case menuTypes.SETDEST:
+        setOutlineChangingDest(true);
+        core.setToolMode(TOOL_NAME);
+        break;
+      case menuTypes.DELETE:
+        removeOutlines([outlinePath]);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const flyoutSelector = `${DataElements.BOOKMARK_OUTLINE_FLYOUT}-${outlinePath}`;
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+  const type = 'outline';
 
   return (
     <div className="bookmark-outline-label-row">
@@ -171,42 +187,25 @@ const OutlineContent = ({
             {text}
           </div>
 
-          {isOutlineEditable &&
-            <Button
-              className={classNames({
-                'bookmark-outline-more-button': true,
-                'contextMenuOpen': isContextMenuOpen
-              })}
-              dataElement={`outline-more-button-${outlinePath}`}
-              img="icon-tool-more"
-              tabIndex={-1}
-              onClick={(e) => {
-                e.stopPropagation();
-                setContextMenuOpen(true);
-              }}
-            />
-          }
-          {isContextMenuOpen &&
-            <MoreOptionsContextMenuPopup
-              type={'outline'}
-              anchorButton={`outline-more-button-${outlinePath}`}
-              shouldDisplayDeleteButton={!isMultiSelectMode}
-              onClosePopup={() => setContextMenuOpen(false)}
-              onRenameClick={() => {
-                setContextMenuOpen(false);
-                setOutlineRenaming(true);
-                setIsRenaming(true);
-              }}
-              onSetDestinationClick={() => {
-                setContextMenuOpen(false);
-                setOutlineChangingDest(true);
-                core.setToolMode(TOOL_NAME);
-              }}
-              onDeleteClick={() => {
-                setContextMenuOpen(false);
-                removeOutlines([outlinePath]);
-              }}
-            />
+          {isOutlineEditable && !isAnyOutlineRenaming &&
+            <>
+              <ToggleElementButton
+                className={classNames({
+                  'bookmark-outline-more-button': true,
+                })}
+                dataElement={`outline-more-button-${outlinePath}`}
+                img="icon-tool-more"
+                toggleElement={flyoutSelector}
+                disabled={false}
+              />
+              <MoreOptionsContextMenuFlyout
+                shouldHideDeleteButton={isMultiSelectMode}
+                currentFlyout={currentFlyout}
+                flyoutSelector={flyoutSelector}
+                type={type}
+                handleOnClick={handleOnClick}
+              />
+            </>
           }
         </>
       }
@@ -227,7 +226,7 @@ const OutlineContent = ({
           ref={inputRef}
           className="bookmark-outline-input"
           placeholder={customizableUI ? '' : t('component.outlineTitle')}
-          aria-label={t('action.name')}
+          aria-label={t('component.newOutlineTitle')}
           value={outlineText}
           onKeyDown={handleKeyDown}
           onChange={(e) => setOutlineText(e.target.value)}

@@ -56,12 +56,14 @@ describe('RedactionSearchResults component', () => {
 
     customRenderWithContext(<RedactionSearchResultsWithRedux {...props} />, providerProps);
 
-    const markForRedactionButton = screen.getByText(/Add Mark/);
-    const redactButton = screen.getByText(/Redact/);
+    const markForRedactionButton = screen.getByRole('button', { name: 'Add Mark' });
+    const redactButton = screen.getByRole('button', { name: 'Redact' });
 
     // Both buttons should be disabled if no results are selected
     expect(markForRedactionButton).toBeDisabled();
     expect(redactButton).toBeDisabled();
+    const p = document.querySelector('.no-margin');
+    expect(p.getAttribute('aria-live')).toEqual('assertive');
 
     // Select all the results from the first page
     // In total there should be 8 checkboxes, one for each result (5) and

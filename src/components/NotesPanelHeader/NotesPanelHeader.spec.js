@@ -124,5 +124,17 @@ describe('NotesPanelHeader', () => {
       expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
       screen.getByText('Comments');
     });
+
+    it('Should have Aria Label on the dropdown', () => {
+      const store = configureStore({ reducer: () => initialState });
+      render(
+        <Provider store={store}>
+          <NotesPanelHeader notes={[]} isMultiSelectEnabled={true} disableFilterAnnotation={false} setSearchInputHandler={noop}/>
+        </Provider>
+      );
+
+      const element = screen.getByText('Sort:');
+      expect(element).toBeInTheDocument();
+    });
   });
 });

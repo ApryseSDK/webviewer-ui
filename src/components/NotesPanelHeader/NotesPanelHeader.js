@@ -17,6 +17,7 @@ import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
 import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
 import Icon from '../Icon';
@@ -113,10 +114,11 @@ function NotesPanelHeader({
 
   const sortContainer = (
     <div className="sort-container" data-element={SORT_CONTAINER_ELEMENT}>
-      <div className="label">{`${t('message.sortBy')}:`}</div>
+      <div className="label">{`${t('message.sort')}:`}</div>
       <Dropdown
         dataElement="notesOrderDropdown"
         disabled={notes.length === 0 || isPreviewingTrackedChanges}
+        ariaLabel={`${t('message.sortBy')} ${sortStrategy}`}
         items={Object.keys(getSortStrategies())}
         translationPrefix="option.notesOrder"
         currentSelectionKey={sortStrategy}
@@ -127,6 +129,7 @@ function NotesPanelHeader({
     </div>
   );
 
+  const openFilterModalWithFocusTransfer = useFocusHandler(() => dispatch(actions.openElement('filterModal')));
   const placeholderText = isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder');
   const originalHeaderElement = (
     <DataElementWrapper
@@ -193,7 +196,7 @@ function NotesPanelHeader({
             })}
             disabled={disableFilterAnnotation}
             img="icon-comments-filter"
-            onClick={() => dispatch(actions.openElement('filterModal'))}
+            onClick={openFilterModalWithFocusTransfer}
             title={t('component.filter')}
           />
         </div>

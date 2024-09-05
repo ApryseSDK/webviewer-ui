@@ -65,7 +65,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
 const persistor = persistStore(store);
-
+window.store = store;
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     // eslint-disable-next-line global-require

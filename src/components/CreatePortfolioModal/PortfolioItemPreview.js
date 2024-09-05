@@ -1,12 +1,18 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import core from 'core';
 import Icon from 'components/Icon';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
+const propTypes = {
+  item: PropTypes.object,
+};
 const options = { loadAsPDF: true };
 
 const PortfolioItemPreview = ({ item }) => {
   const canvasContainer = useRef();
   const [showIcon, setShowIcon] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let document;
@@ -30,6 +36,8 @@ const PortfolioItemPreview = ({ item }) => {
             canvas.style.width = `${canvasWidth * ratio}px`;
             canvas.style.height = `${canvasHeight * ratio}px`;
           }
+          canvas.setAttribute('role', 'img');
+          canvas.setAttribute('aria-label', `${t('portfolio.portfolioPanelTitle')} ${item.name}`);
           canvasContainer.current?.appendChild(canvas);
         });
       } catch (e) {
@@ -52,5 +60,7 @@ const PortfolioItemPreview = ({ item }) => {
     </div>
   );
 };
+
+PortfolioItemPreview.propTypes = propTypes;
 
 export default memo(PortfolioItemPreview);

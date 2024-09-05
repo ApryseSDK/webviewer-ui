@@ -7,7 +7,10 @@ import hotkeysManager, { ShortcutKeys } from 'helpers/hotkeysManager';
 
 export default {
   title: 'Components/SettingsModal',
-  component: SettingsModal
+  component: SettingsModal,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const getStore = (num) => {
@@ -15,7 +18,7 @@ const getStore = (num) => {
 
   const initialState = {
     viewer: {
-      hiddenElements: {},
+      openElements: { 'settingsModal': true },
       disabledElements: {},
       customElementOverrides: {},
       tab: {},
@@ -35,7 +38,10 @@ const getStore = (num) => {
     },
     search: {
       clearSearchPanelOnClose: false
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   if (num === 1) {

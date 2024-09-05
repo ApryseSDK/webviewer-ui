@@ -1,64 +1,139 @@
 import React from 'react';
 import selectors from 'selectors';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import './ZoomText.scss';
-import { ITEM_TYPE } from 'constants/customizationVariables';
+import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import classNames from 'classnames';
-import ToolGroupButton from 'components/ModularComponents/ToolGroupButton';
-import { getIconDOMElement, getSubMenuDOMElement } from 'components/ModularComponents/Helpers/responsiveness-helper';
+import { getIconDOMElement } from 'components/ModularComponents/Helpers/responsiveness-helper';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
 import ZoomText from 'components/ModularComponents/Flyout/flyoutHelpers/ZoomText';
-import Icon from 'components/Icon';
 import PageControlsFlyout from 'components/ModularComponents/PageControls/PageControlsFlyout';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import ToolButton from 'components/ModularComponents/ToolButton';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import PropTypes from 'prop-types';
 import core from 'core';
-
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 const propTypes = {
   flyoutItem: PropTypes.oneOfType([
     // ie. 'divider'
     PropTypes.string,
     PropTypes.object
   ]),
+  onClickHandler: PropTypes.func,
+  activeFlyout: PropTypes.string,
+  type: PropTypes.string,
 };
 
-function FlyoutItem(props) {
-  const { flyoutItem } = props;
-  const [
-    modularComponent
-  ] = useSelector((state) => [
-    flyoutItem?.dataElement ? selectors.getModularComponent(state, flyoutItem.dataElement) : undefined,
-  ]);
-  const typesToConvert = [
+const FlyoutItem = React.forwardRef((props, ref) => {
+  const { flyoutItem, type, onClickHandler } = props;
+  const modularComponent = useSelector((state) => flyoutItem?.dataElement ? selectors.getModularComponent(state, flyoutItem.dataElement) : undefined);
+
+  const typesToGetExtraInfo = [
     ITEM_TYPE.PRESET_BUTTON,
     ITEM_TYPE.RIBBON_ITEM,
     ITEM_TYPE.TOOL_BUTTON,
-    ITEM_TYPE.TOOL_GROUP_BUTTON,
     ITEM_TYPE.BUTTON,
     ITEM_TYPE.STATEFUL_BUTTON,
     ITEM_TYPE.TOGGLE_BUTTON,
   ];
-  if (flyoutItem && flyoutItem.dataElement && modularComponent && typesToConvert.includes(modularComponent.type)) {
+  if (flyoutItem && flyoutItem.dataElement && modularComponent && typesToGetExtraInfo.includes(modularComponent.type)) {
     const newFlyoutItemState = {
-      ...props.flyoutItem,
+      ...flyoutItem,
       ...itemToFlyout(modularComponent, {
         useOverrideClickOnly: true,
         onClick: flyoutItem?.onClick,
         children: flyoutItem?.children,
       }),
+      type: type,
+      onClickHandler: onClickHandler,
     };
-    return <StaticItem {...props} flyoutItem={newFlyoutItemState}/>;
+    return <StaticItem {...props} flyoutItem={newFlyoutItemState} ref={ref} />;
   }
-  return <StaticItem {...props}/>;
-}
+  return <StaticItem {...props} />;
+});
 
 FlyoutItem.propTypes = propTypes;
+FlyoutItem.displayName = 'FlyoutItem';
 
 export default FlyoutItem;
+
+const StaticItem = React.forwardRef((props, ref) => {
+  const { flyoutItem, isChild, index, activeItem, items, activeFlyout, type } = props;
+  const allProps = { ...flyoutItem, ...props };
+  const { t } = useTranslation();
+  const customHeadersAdditionalProperties = useSelector(selectors.getCustomHeadersAdditionalProperties, shallowEqual);
+  const currentPage = useSelector(selectors.getCurrentPage);
+  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]));
+  const isDisabledItem = useSelector((state) => selectors.isElementDisabled(state, flyoutItem?.dataElement));
+
+  if (isDisabledItem || (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden)) {
+    return null;
+  }
+
+  const itemsToRender = isChild ? activeItem.children : items;
+  const icon = getIconDOMElement(flyoutItem, itemsToRender);
+
+  switch (type) {
+    case FLYOUT_ITEM_TYPES.LABEL: {
+      return <div className="flyout-label" key={`label-${index}`}>{t(flyoutItem)}</div>;
+    }
+    case FLYOUT_ITEM_TYPES.DIVIDER: {
+      return <div className="divider" key={`divider-${index}`} />;
+    }
+    case FLYOUT_ITEM_TYPES.RIBBON_ITEM: {
+      return <RibbonItem isFlyoutItem={true} {...allProps} ref={ref} icon={icon} />;
+    }
+    case FLYOUT_ITEM_TYPES.PRESET_BUTTON: {
+      return <PresetButton {...allProps} isFlyoutItem={true} ref={ref} icon={icon} buttonType={allProps.dataElement} />;
+    }
+    case FLYOUT_ITEM_TYPES.TOOL_BUTTON: {
+      return <ToolButton {...allProps} isFlyoutItem={true} ref={ref} allFlyoutItems={itemsToRender} />;
+    }
+    case FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_BUTTON: {
+      return <PageControlsFlyout {...allProps} currentPage={currentPage} ref={ref} icon={icon} />;
+    }
+    case FLYOUT_ITEM_TYPES.ZOOM_OPTIONS_BUTTON: {
+      return (
+        <FlyoutItemContainer {...allProps}
+          ref={ref}
+          index={index}
+          label={<ZoomText />}
+          additionalClass={'zoom-options'}
+          icon={icon}
+          isZoomOptions={true}
+          isChild={isChild}
+        />
+      );
+    }
+    default: {
+      const alabel = flyoutItem.toolbarGroup
+        ? getToolbarTranslationString(flyoutItem.toolbarGroup, customHeadersAdditionalProperties)
+        : flyoutItem.label;
+      const itemIsAPanelTab = type === FLYOUT_ITEM_TYPES.TAB_PANEL_ITEM;
+      const itemIsAZoomButton = type === FLYOUT_ITEM_TYPES.ZOOM_BUTTON;
+      const isItemActive = flyoutItem.isActive ||
+        itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement ||
+        itemIsAZoomButton && Math.ceil(core.getZoom() * 100).toString() === flyoutItem.dataElement?.split('zoom-button-')[1];
+
+      const flyoutItemClasses = classNames({
+        'disabled': flyoutItem.disabled,
+        'active': isItemActive,
+        [allProps.additionalClass]: true,
+      });
+      return (
+        <FlyoutItemContainer {...allProps}
+          ref={ref}
+          label={alabel}
+          additionalClass={flyoutItemClasses}
+          icon={icon}
+        />
+      );
+    }
+  }
+});
 
 const staticItemPropTypes = {
   flyoutItem: PropTypes.oneOfType([
@@ -71,171 +146,9 @@ const staticItemPropTypes = {
   onClickHandler: PropTypes.func,
   activeItem: PropTypes.object,
   items: PropTypes.array,
+  type: PropTypes.string,
   activeFlyout: PropTypes.string,
 };
 
-function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, items, activeFlyout }) {
-  const [
-    customHeadersAdditionalProperties,
-    currentPage,
-    activeToolGroup,
-    activeCustomPanel,
-    canUndo,
-    canRedo,
-  ] = useSelector((state) => [
-    selectors.getCustomHeadersAdditionalProperties(state),
-    selectors.getCurrentPage(state),
-    selectors.getActiveToolGroup(state),
-    selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]),
-    selectors.canUndo(state),
-    selectors.canRedo(state),
-  ]);
-
-  const { t } = useTranslation();
-
-  if (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden) {
-    return null;
-  }
-
-  const itemIsAPanelTab = !!flyoutItem.tabPanel;
-  const itemIsATool = !!flyoutItem.toolName;
-  const itemIsAToolGroup = !!flyoutItem.toolGroup;
-  const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
-  const itemIsAPresetButton = flyoutItem.type === ITEM_TYPE.PRESET_BUTTON;
-  const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
-  const itemIsAZoomButton = flyoutItem.dataElement?.includes('zoom-button-');
-  const itemIsPageNavButton = flyoutItem.dataElement === 'pageNavigationButton';
-  const itemsToRender = isChild ? activeItem.children : items;
-  const itemIsALabel = typeof flyoutItem === 'string' && flyoutItem !== ITEM_TYPE.DIVIDER;
-
-  const isUndoButton = flyoutItem.dataElement === 'undoButton';
-  const isRedoButton = flyoutItem.dataElement === 'redoButton';
-  const isUndoDisabled = isUndoButton && !canUndo;
-  const isRedoDisabled = isRedoButton && !canRedo;
-  const isDisabled = flyoutItem.disabled || isUndoDisabled || isRedoDisabled;
-
-  if (isDisabled) {
-    onClickHandler = () => {};
-  }
-
-  const getFlyoutItemWrapper = (elementDOM, additionalClass) => {
-    return (
-      <div key={flyoutItem.label} data-element={flyoutItem.dataElement}
-        onClick={onClickHandler(flyoutItem, isChild, index)}
-        className={classNames({
-          'flyout-item-container': true,
-          'disabled': isDisabled,
-          [additionalClass]: true
-        })}
-      >
-        {elementDOM}
-      </div>
-    );
-  };
-
-  if (itemIsAToolGroup) {
-    const isActiveClass = activeToolGroup === flyoutItem.toolGroup ? 'active' : '';
-    const toolGroupElement = <ToolGroupButton
-      key={flyoutItem.key}
-      {...flyoutItem}
-      onClick={onClickHandler()}
-      isFlyoutItem={true}
-      iconDOMElement={getIconDOMElement(flyoutItem, itemsToRender)}
-      subMenuDOMElement={getSubMenuDOMElement(flyoutItem, itemsToRender)}
-    />;
-    return getFlyoutItemWrapper(toolGroupElement, isActiveClass);
-  }
-  if (itemIsARibbonItem) {
-    const ribbonItemElement = <RibbonItem key={flyoutItem.label}
-      {...flyoutItem}
-      isFlyoutItem={true}
-      iconDOMElement={getIconDOMElement(flyoutItem, itemsToRender)}
-    />;
-    return getFlyoutItemWrapper(ribbonItemElement);
-  }
-  if (itemIsAPresetButton) {
-    const presetButtonElement = <PresetButton
-      buttonType={flyoutItem.dataElement}
-      isFlyoutItem={true}
-      iconDOMElement={getIconDOMElement(flyoutItem, itemsToRender)}/>;
-    return getFlyoutItemWrapper(presetButtonElement);
-  }
-  if (itemIsAZoomOptionsButton) {
-    const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
-    const zoomOptionsElement = (
-      <div className={classNames({
-        'menu-container': true,
-        'disabled': isDisabled
-      })}>
-        {
-          hasImg ? <div className="icon-label-wrapper">
-            {getIconDOMElement(flyoutItem, itemsToRender)}
-            <ZoomText/>
-          </div> : <ZoomText/>
-        }
-        {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
-      </div>
-    );
-    return getFlyoutItemWrapper(zoomOptionsElement, 'zoom-options');
-  }
-
-  if (itemIsPageNavButton) {
-    return getFlyoutItemWrapper((
-      <div className={classNames({
-        'menu-container': true,
-        'disabled': isDisabled
-      })} key={flyoutItem.label}>
-        <div className="icon-label-wrapper">
-          {getIconDOMElement(flyoutItem, itemsToRender)}
-          <PageControlsFlyout {...flyoutItem} currentPage={currentPage}/>
-        </div>
-      </div>
-    ), 'page-nav-display');
-  }
-
-  if (itemIsALabel) {
-    return <div className="flyout-label" key={`label-${index}`}>{t(flyoutItem)}</div>;
-  }
-  const alabel = flyoutItem.toolbarGroup
-    ? getToolbarTranslationString(flyoutItem.toolbarGroup, customHeadersAdditionalProperties)
-    : flyoutItem.label;
-
-  return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`}/> : (
-    <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
-      'flyout-item-container': true,
-      'disabled': isDisabled,
-      'active': flyoutItem.isActive
-        || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement
-        || itemIsATool && core.getToolMode()?.name === flyoutItem.toolName
-        || itemIsAZoomButton && Math.ceil(core.getZoom() * 100).toString() === flyoutItem.dataElement?.split('zoom-button-')[1]
-    })}
-    data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild, index)}>
-      { itemIsATool ? (
-        // We should update when we have the customizable Tool Button component
-        <ToolButton
-          className={classNames({ ZoomItem: true })}
-          role="option"
-          toolName={flyoutItem.toolName}
-          label={alabel}
-          img={flyoutItem.icon}
-          isFlyoutItem={true}
-          disabled={isDisabled}
-        />
-      ) :
-        (
-          <div className={classNames({
-            'menu-container': true,
-            'disabled': isDisabled
-          })}>
-            <div className="icon-label-wrapper">
-              {getIconDOMElement(flyoutItem, itemsToRender)}
-              {<div className="flyout-item-label">{t(alabel)}</div>}
-            </div>
-          </div>
-        )}
-      {getSubMenuDOMElement(flyoutItem, itemsToRender)}
-    </div>
-  ));
-}
-
 StaticItem.propTypes = staticItemPropTypes;
+StaticItem.displayName = 'StaticItem';

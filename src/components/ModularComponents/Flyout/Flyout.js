@@ -1,9 +1,8 @@
-import React, { useCallback, useState, useLayoutEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useState, useLayoutEffect, useRef, useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
 import './Flyout.scss';
-import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
@@ -14,43 +13,49 @@ import ZoomText from './flyoutHelpers/ZoomText';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/FlyoutItem';
 import DataElements from 'src/constants/dataElement';
+import useFocusOnClose from 'src/hooks/useFocusOnClose';
+import { getFlyoutItemType } from 'src/helpers/itemToFlyoutHelper';
+import Icon from 'src/components/Icon';
 
 const Flyout = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [
-    flyoutMap,
-    activeFlyout,
-    position,
-    toggleElement,
-    topHeadersHeight,
-    bottomHeadersHeight,
-  ] = useSelector((state) => [
-    selectors.getFlyoutMap(state),
-    selectors.getActiveFlyout(state),
-    selectors.getFlyoutPosition(state),
-    selectors.getFlyoutToggleElement(state),
-    selectors.getTopHeadersHeight(state),
-    selectors.getBottomHeadersHeight(state),
-  ]);
+
+  const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
+  const activeFlyout = useSelector(selectors.getActiveFlyout);
+  const isFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, activeFlyout), shallowEqual);
+  const position = useSelector(selectors.getFlyoutPosition, shallowEqual);
+  const toggleElement = useSelector(selectors.getFlyoutToggleElement);
+  const topHeadersHeight = useSelector(selectors.getTopHeadersHeight);
+  const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
+  const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
+
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
-  const {
-    dataElement,
-    items,
-    className
-  } = flyoutProperties;
+  const { dataElement, items, className } = flyoutProperties;
   const [activePath, setActivePath] = useState([]);
+  const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
+  const [focusableElements, setFocusableElements] = useState([]);
+
   let activeItem = null;
   for (const index of activePath) {
     activeItem = activeItem ? activeItem.children[index] : items[index];
   }
-  const flyoutRef = React.createRef();
+
+  const flyoutRef = useRef(null);
+  const flyoutItemRef = useRef(null);
   const [correctedPosition, setCorrectedPosition] = useState(position);
   const [maxHeightValue, setMaxHeightValue] = useState(window.innerHeight - horizontalHeadersUsedHeight);
 
+  const itemsToRender = items.filter((item) => !item.hidden);
+  const activeChildren = activeItem ? activeItem.children.filter((child) => !child.hidden) : [];
+
+  const getElementDOMRef = (dataElement) => {
+    return getRootNode().querySelector(`[data-element="${dataElement}"]`);
+  };
+
   useLayoutEffect(() => {
-    const tempRefElement = getRootNode().querySelector(`[data-element="${toggleElement}"]`);
+    const tempRefElement = getElementDOMRef(toggleElement);
     const correctedPosition = { x: position.x, y: position.y };
     const appRect = getRootNode().getElementById('app').getBoundingClientRect();
     const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
@@ -87,14 +92,24 @@ const Flyout = () => {
     setCorrectedPosition(correctedPosition);
   }, [activeItem, position, items]);
 
+  useEffect(() => {
+    if (flyoutRef.current) {
+      const focusableElements = flyoutRef.current.querySelectorAll('button:not([disabled]), input:not([disabled])');
+      if (focusableElements.length) {
+        focusableElements[0].focus();
+        setCurrentFocusIndex(0);
+        setFocusableElements(focusableElements);
+      }
+    }
+  }, [activePath, flyoutRef.current]);
 
-  const closeFlyout = useCallback(() => {
+  const closeFlyout = useFocusOnClose(useCallback(() => {
     dispatch(actions.closeElements([activeFlyout]));
-  }, [dispatch, activeFlyout]);
+  }, [dispatch, activeFlyout]));
 
   const onClickOutside = useCallback(
     (e) => {
-      const menuButton = getRootNode().querySelector(`[data-element="${toggleElement}"]`);
+      const menuButton = getElementDOMRef(toggleElement);
       const clickedMenuButton = menuButton?.contains(e.target);
       if (!clickedMenuButton) {
         closeFlyout();
@@ -119,22 +134,105 @@ const Flyout = () => {
       } catch (error) {
         console.error(error);
       }
+
       if (!flyoutItem.children && dataElement !== DataElements.VIEWER_CONTROLS_FLYOUT) {
         closeFlyout();
       }
     }
   };
 
+  const moveFocus = (delta) => {
+    const newFocusIndex = (currentFocusIndex + delta + focusableElements.length) % focusableElements.length;
+    const newFocusableItem = focusableElements[newFocusIndex];
+    newFocusableItem.focus();
+    setCurrentFocusIndex(newFocusIndex);
+  };
+
+  const onKeyDownHandler = (e) => {
+    if (e.shiftKey && e.key === 'Tab') {
+      e.preventDefault();
+      closeFlyout();
+    } else {
+      switch (e.code) {
+        case 'ArrowDown':
+          e.preventDefault();
+          moveFocus(1);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          moveFocus(-1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          setCurrentFocusIndex(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          setCurrentFocusIndex(itemsToRender.length - 1);
+          break;
+        case 'Escape':
+        case 'Tab':
+          e.preventDefault();
+          closeFlyout();
+          break;
+        case 'Enter':
+        case 'Space': {
+          e.preventDefault();
+          const focusedElement = focusableElements[currentFocusIndex];
+          const elementType = focusedElement.tagName.toLowerCase();
+
+          if (elementType === 'button') {
+            focusedElement.click();
+          } else if (elementType === 'input') {
+            focusedElement.parentNode.dispatchEvent(new Event('submit', { bubbles: true }));
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+  };
+
   const renderBackButton = () => {
     const isZoomOptions = activeItem.dataElement === 'zoomOptionsButton';
-    return <div className="back-button-container" onClick={() => {
-      const newActivePath = [...activePath];
-      newActivePath.pop();
-      setActivePath(newActivePath);
-    }}>
-      <Icon glyph="icon-chevron-left" />
-      {isZoomOptions ? <ZoomText /> : <div className="back-button-label">{t('action.back')}</div>}
-    </div>;
+    return (
+      <li data-element={activeItem.dataElement} className='flyout-item-container'>
+        <button
+          className="flyout-item back-button"
+          onClick={() => {
+            const newActivePath = [...activePath];
+            newActivePath.pop();
+            setActivePath(newActivePath);
+          }}
+          onKeyDown={onKeyDownHandler}
+        >
+          <Icon glyph="icon-chevron-left" />
+          {isZoomOptions ? <ZoomText /> : <span className="back-button-label">{t('action.back')}</span>}
+        </button>
+      </li>
+    );
+  };
+
+  const renderItems = (itemList, isChild = false) => {
+    return itemList.map((item, index) => {
+      const itemType = getFlyoutItemType(item);
+      return (
+        <FlyoutItem
+          ref={currentFocusIndex === index ? flyoutItemRef : null}
+          flyoutItem={item}
+          index={index}
+          key={item?.dataElement || index}
+          isChild={isChild}
+          onClickHandler={onClickHandler}
+          onKeyDownHandler={onKeyDownHandler}
+          activeItem={activeItem}
+          items={itemsToRender}
+          activeFlyout={activeFlyout}
+          type={itemType}
+        />
+      );
+    });
   };
 
   const flyoutStyles = {
@@ -143,30 +241,37 @@ const Flyout = () => {
     maxHeight: maxHeightValue
   };
 
-  return ((!activeItem && !items.length) ? null :
-    <div className="Flyout" data-element={dataElement} ref={flyoutRef} style={flyoutStyles}>
-      <div id="FlyoutContainer"
+  if (!activeItem && !itemsToRender.length) {
+    return null;
+  }
+
+  return (
+    isFlyoutOpen &&
+    <div
+      className={classNames({
+        'Flyout': true,
+        'legacy-ui': !customizableUI,
+      })}
+      data-element={dataElement}
+      ref={flyoutRef}
+      style={flyoutStyles}
+    >
+      <menu
+        id='FlyoutContainer'
         className={classNames({
-          'FlyoutContainer': true,
-          [className]: true
-        })}>
+          FlyoutContainer: true,
+          [className]: true,
+        })}
+      >
         {activeItem ? (
           <>
             {renderBackButton()}
-            {activeItem.children.map(((activeChild, index) => <FlyoutItem
-              flyoutItem={activeChild} index={index} key={activeChild?.dataElement || index}
-              isChild={true} onClickHandler={onClickHandler} activeItem={activeItem} items={items}
-              activeFlyout={activeFlyout}
-            />))}
+            {renderItems(activeChildren, true)}
           </>
-        ) :
-          items.map((flyoutItem, index) => <FlyoutItem
-            flyoutItem={flyoutItem} index={index} key={flyoutItem?.dataElement || index}
-            isChild={false} onClickHandler={onClickHandler} activeItem={activeItem} items={items}
-            activeFlyout={activeFlyout}
-          />)
-        }
-      </div>
+        ) : (
+          renderItems(itemsToRender)
+        )}
+      </menu>
     </div>
   );
 };

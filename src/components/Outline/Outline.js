@@ -74,7 +74,6 @@ const Outline = forwardRef(
     const [isSelected, setIsSelected] = useState(selectedOutlines.includes(outlinePath));
     const [isRenaming, setIsRenaming] = useState(false);
     const [isChangingDest, setChangingDest] = useState(false);
-    const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
     const [clearSingleClick, setClearSingleClick] = useState(undefined);
 
     const dispatch = useDispatch();
@@ -159,7 +158,7 @@ const Outline = forwardRef(
             'editing': isRenaming || isChangingDest,
             'default': !isRenaming && !isChangingDest,
             'selected': isActive,
-            'hover': isHovered && !isActive,
+            'hover': isActive,
           })}
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
@@ -179,6 +178,7 @@ const Outline = forwardRef(
               type="checkbox"
               className="bookmark-outline-checkbox"
               id={`outline-checkbox-${outlinePath}`}
+              aria-label={outline.getName()}
               checked={isSelected}
               onClick={(e) => e.stopPropagation()}
               onChange={(e) => {
@@ -214,8 +214,8 @@ const Outline = forwardRef(
             setOutlineRenaming={setIsRenaming}
             isOutlineChangingDest={isChangingDest}
             setOutlineChangingDest={setChangingDest}
-            setIsHovered={setHovered}
             textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
+            isAnyOutlineRenaming={isAnyOutlineRenaming}
           />
         </DataElementWrapper>
 

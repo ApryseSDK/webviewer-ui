@@ -30,6 +30,6 @@ describe('Outline', () => {
     const { container } = render(<ColoredOutline />);
 
     const outline = container.querySelector('.bookmark-outline-text');
-    expect(outline.style.color).toBe('rgb(255, 0, 0)');
+    expect(outline.style.color).toBe('rgb(213, 42, 42)');
   });
 });

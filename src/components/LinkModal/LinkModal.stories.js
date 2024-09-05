@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import LinkModal from './LinkModal';
@@ -28,7 +28,10 @@ const initialState = {
   },
   document: {
     totalPages: 1
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 const store = configureStore({
   reducer: () => initialState
@@ -49,7 +52,7 @@ export function NoURLInput() {
       <div style={{ width: 100 }}>
         <LinkModal
           rightClickedAnnotation={{}}
-          setRightClickedAnnotation={function() {}}
+          setRightClickedAnnotation={function() { }}
         />
       </div>
     </ReduxProvider>

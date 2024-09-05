@@ -37,6 +37,7 @@ describe('FontSizeDropdown component', () => {
     dropdownItems = container.querySelector('.Dropdown__items');
     expect(dropdownItems).toBeInTheDocument();
     expect(dropdownItems).not.toHaveClass('hidden');
+    expect(dropdownItems.getAttribute('aria-expanded')).toEqual('true');
   });
   it('Should call handler on value change', async () => {
     const handler = jest.fn();

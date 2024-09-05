@@ -69,7 +69,7 @@ describe('RedactionPanel', () => {
     screen.getByText('Page 1');
     screen.getByText('Page 2');
     // Only two collapse buttons as each page group has one button
-    const collapseButons = screen.getAllByLabelText('Collapse');
+    const collapseButons = screen.getAllByRole('button', { name: /Page \d/i, expanded: true });
     expect(collapseButons.length).toEqual(2);
 
     // Check that we have 3 redact items in the panel total

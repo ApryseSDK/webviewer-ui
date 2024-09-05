@@ -5,6 +5,16 @@ import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables
 import DataElements from 'constants/dataElement';
 import { getAllAssociatedGroupedItems, getFirstToolForGroupedItems } from '../actions/exposedActions';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
+import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
+
+// OE selectors
+export const {
+  isStyleButtonActive,
+  getPointSizeSelectionKey,
+  getCursorStyleToPreset,
+  getCurrentFontFace,
+  isListToggleActive,
+} = exposedOfficeEditorSelectors;
 
 // viewer
 export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
@@ -150,7 +160,16 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
+  const panelsWithMobileVersion = [
+    panelNames.SIGNATURE_LIST,
+    panelNames.RUBBER_STAMP,
+    panelNames.STYLE,
+    panelNames.NOTES,
+    panelNames.SEARCH,
+    panelNames.TEXT_EDITING,
+    panelNames.TABS,
+    panelNames.REDACTION,
+  ];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {
@@ -471,6 +490,11 @@ export const getGroupedItemsWithSelectedTool = (state, toolName) => {
   };
 
   return Object.keys(modularComponents).filter(filterGroupedItems);
+};
+
+export const getAlwaysVisibleGroupedItems = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => modularComponents[dataElement].alwaysVisible);
 };
 
 export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
@@ -944,6 +968,8 @@ export const getIsMultiViewerModeAvailable = (state) => {
 export const getMaxPasswordAttempts = (state) => {
   return state.document.maxPasswordAttempts;
 };
+
+export const isKeyboardOpen = (state) => state.viewer.isKeyboardOpen;
 
 export const canUndo = (state) => {
   return state.viewer.canUndo[state.viewer.activeDocumentViewerKey];

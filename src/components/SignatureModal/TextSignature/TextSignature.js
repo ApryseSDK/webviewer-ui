@@ -344,6 +344,7 @@ const TextSignature = ({
             <input
               className="text-signature-input"
               ref={inputRef}
+              aria-label={t('option.signatureModal.typeSignature')}
               type="text"
               value={fullSignature}
               onChange={handleFullSignatureChange}
@@ -357,6 +358,7 @@ const TextSignature = ({
             </div>
             <button
               className="footer-signature-clear"
+              aria-label={t('action.clearSignature')}
               onClick={() => {
                 setFullSiganture('');
                 inputRef.current.focus();
@@ -373,6 +375,7 @@ const TextSignature = ({
               className="text-signature-input"
               type="text"
               value={initials}
+              aria-label={t('option.signatureModal.typeInitial')}
               onChange={handleInitialsChange}
               style={{ fontFamily: selectedFontFamily || fonts, fontSize, color: fontColor.toHexString() }}
               disabled={isDisabled}
@@ -384,6 +387,7 @@ const TextSignature = ({
             </div>
             <button
               className="footer-signature-clear"
+              aria-label={t('action.clearInitial')}
               onClick={() => setInitials('')}
               disabled={isDisabled || initials.length === 0}
             >

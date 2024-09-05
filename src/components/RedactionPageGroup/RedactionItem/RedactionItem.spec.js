@@ -46,6 +46,13 @@ describe('RedactionItem', () => {
         render(<FullPageRedactionItem />);
       }).not.toThrow();
     });
+
+    it('Text Redaction item delete button should have a valid Aria Label', () => {
+      render(<TextRedactionItem />);
+
+      const element = screen.getByRole('button');
+      expect(element).toHaveAttribute('aria-label');
+    });
   });
 
   describe('component', () => {

@@ -8,21 +8,22 @@
 
   @include mobile {
     width: 100%;
+    height: 100%;
     min-width: 100%;
-    padding-top: 0px;
-
+    padding: 8px 0px 0px 0px;
     .close-container {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      height: 64px;
+      height: 32px;
 
       width: 100%;
       padding-right: 12px;
 
       .close-icon-container {
+        @include button-reset;
+        z-index: 3;
         cursor: pointer;
-
         .close-icon {
           width: 24px;
           height: 24px;
@@ -40,6 +41,14 @@
     span {
       font-weight: bold;
     }
+
+    @include mobile {
+      margin-top: 16px;
+      margin-bottom: 16px;
+      margin-left: 16px;
+      margin-right: 16px;
+      font-size: 16px;
+    }
   }
 
   .no-marked-redactions {
@@ -54,6 +63,12 @@
         width: 146px;
       }
 
+      @include mobile {
+        line-height: 15px;
+        width: 146px;
+        margin-bottom: 32px;
+      }
+
       text-align: center;
     }
 
@@ -64,6 +79,16 @@
       svg {
         width: 65px;
         height: 83px;
+      }
+
+      @include mobile {
+        width: 60px;
+        height: 60px;
+
+        svg {
+          width: 60px;
+          height: 60px;
+        }
       }
 
       * {
@@ -84,20 +109,37 @@
     justify-content: flex-end;
     padding-right: 16px;
 
-    .redact-all-marked {
+    @include mobile {
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: 0px;
+      margin-bottom: 16px;
+      padding: 16px;
+    }
+
+    .Button.redact-all-marked {
       @include button-reset;
       background-color: var(--primary-button);
       color: var(--primary-button-text);
       border-radius: 4px;
       height: 32px;
       width: 90px;
-      cursor: pointer;
+
+      &:hover:not(.disabled) {
+        background-color: var(--primary-button-hover);
+      }
 
       &.disabled {
         opacity: 0.5;
-        cursor: not-allowed;
+
+        span {
+          color: var(--primary-button-text);
+        }
       }
 
+      @include mobile {
+        font-size: 13px;
+      }
     }
 
     .clear-all-marked {
@@ -107,28 +149,50 @@
       border: none;
       height: 32px;
       width: 70px;
-      padding-right: 5px;
+      margin-right: 8px;
       cursor: pointer;
+
+      &:hover:not(.disabled) {
+        color: var(--secondary-button-hover);
+      }
 
       &.disabled {
         opacity: 0.5;
         cursor: not-allowed;
+
+        span {
+          color: var(--secondary-button-text);
+        }
+      }
+
+      @include mobile {
+        font-size: 13px;
       }
     }
 
     @include mobile {
       left: 0px;
+      margin-bottom: 16px;
     }
   }
 
   .redaction-group-container {
-    overflow-y: scroll;
     flex: 1 1 auto;
+
+    @include mobile {
+        margin-right: 4px;
+    }
+  }
+
+  button {
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
   }
 }
 
 
-.flx-Panel-container .RedactionPanel {
+.ModularPanel-container .RedactionPanel {
   height: 100%;
   padding: unset;
 

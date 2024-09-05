@@ -9,6 +9,7 @@ import Events from 'constants/events';
 import { getInstanceNode } from 'helpers/getRootNode';
 import selectors from 'selectors';
 import Button from 'components/Button';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const parseColor = (color) => {
   if (!color) {
@@ -34,7 +35,7 @@ const transparentIcon = (
     height="100%"
     className={classNames('transparent')}
   >
-    <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round"/>
+    <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 /* eslint-enable custom/no-hex-colors */
@@ -101,6 +102,8 @@ const ColorPicker = ({
     getInstanceNode().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
   }, [colors?.length, dispatch, setSelectedColor, onColorChange, getCustomColorAndRemove, type, activeToolName]);
 
+  const openColorPickerModalWithFocus = useFocusHandler(handleAddColor);
+
   const handleDelete = () => {
     const color = parseColor(selectedColor);
     const newColors = [...colors];
@@ -152,7 +155,7 @@ const ColorPicker = ({
       <div className={classNames('ColorPalette')}>
         {palette.map((color) => parseColor(color)).map((color, i) => (
           !color
-            ? <div key={i} className="dummy-cell"/>
+            ? <div key={i} className="dummy-cell" />
             : <button
               key={i}
               className="cell-container"
@@ -160,7 +163,7 @@ const ColorPicker = ({
                 setSelectedColor(color);
                 onColorChange(color);
               }}
-              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
+              aria-label={`${t('option.colorPalette.colorLabel')} ${color?.toUpperCase?.()}`}
             >
               <div
                 className={classNames({
@@ -186,9 +189,10 @@ const ColorPicker = ({
           <Button
             img="icon-header-zoom-in-line"
             title={t('action.addNewColor')}
-            onClick={handleAddColor}
+            onClick={openColorPickerModalWithFocus}
             className="control-button"
             dataElement="addCustomColor"
+            ariaLabel={`${t('action.addNewColor')} ${t('action.fromCustomColorPicker')}`}
           />
           <Button
             img="icon-delete-line"
@@ -197,6 +201,7 @@ const ColorPicker = ({
             disabled={isDeleteDisabled}
             className="control-button"
             dataElement="deleteSelectedColor"
+            ariaLabel={`${t('action.deleteColor')} ${selectedColor}`}
           />
           <Button
             img="icon-copy2"
@@ -205,11 +210,16 @@ const ColorPicker = ({
             disabled={showCopyButtonDisabled}
             className="control-button"
             dataElement="copySelectedColor"
+            ariaLabel={`${t('action.copySelectedColor')} ${selectedColor}`}
           />
         </div>
-        <button className={classNames('show-more-button control-button', {
-          hidden: shouldHideShowMoreButton,
-        })} onClick={toggleExpanded}>
+        <button
+          className={classNames('show-more-button control-button', {
+            hidden: shouldHideShowMoreButton,
+          })}
+          onClick={toggleExpanded}
+          aria-label={t(isExpanded ? t('action.showLessColors') : t('action.showMoreColors'))}
+        >
           {t(isExpanded ? 'message.showLess' : 'message.showMore')}
         </button>
       </div>

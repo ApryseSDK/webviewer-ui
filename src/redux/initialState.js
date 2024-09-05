@@ -107,7 +107,7 @@ export default {
       stylePanel: 330,
       signatureListPanel: 330,
       rubberStampPanel: 330,
-      customLeftPanel: 330
+      tabPanel: 330
     },
     mobilePanelSize: PANEL_SIZES.SMALL_SIZE,
     documentContainerWidth: null,
@@ -1746,7 +1746,11 @@ export default {
       },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
       OfficeEditorContentSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
+      MarqueeZoomTool: {
+        dataElement: 'marqueeToolButton',
+        showColor: 'never',
+        img: 'icon-header-zoom-marquee',
+      },
       AnnotationEraserTool: {
         dataElement: 'eraserToolButton',
         title: 'annotation.eraser',
@@ -2100,6 +2104,8 @@ export default {
     toolColorOverrides: {},
     defaultPrintMargins: '0',
     scaleOverlayPosition: 'top-right',
+    focusedElementsStack: [],
+    isKeyboardOpen: false,
   },
   search: {
     value: '',

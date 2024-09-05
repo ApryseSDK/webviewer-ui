@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/SnippingToolPopup',
   component: SnippingToolPopup,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {

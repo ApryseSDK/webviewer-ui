@@ -23,6 +23,7 @@
 
   --yellow-1: #FACE0080;
   --red: red;
+  --green: #006D41;
   /* stylelint-enable color-no-hex */
 
   --component-background: var(--gray-0);
@@ -81,7 +82,7 @@
 
   --divider: var(--gray-5);
   --reply-divider: var(--gray-3);
-  
+
   --side-panel-border: var(--divider);
   --border: var(--gray-5);
   --lighter-border: var(--gray-4);
@@ -115,6 +116,9 @@
   --tools-overlay-button-hover: var(--blue-1);
   --tools-overlay-button-active: var(--blue-2);
 
+  --fileAttachment-title-padding: 16px;
+  --fileAttachment-list-padding: 40px;
+
   --outline-color: var(--blue-5);
   --outline-hover: var(--gray-2);
   --outline-selected: var(--blue-1);
@@ -145,7 +149,7 @@
   --multi-tab-flyout-hover-text: var(--text-color);
   --multi-tab-toggle-button-active: var(--multi-tab-hover-border);
 
-  --watermark-preview-background: var(--gray-5);
+  --file-preview-background: var(--gray-5);
   --tab-border-color: var(--border);
   --tab-border-color-hover: var(--border);
   --tab-background-color-hover: var(--popup-button-hover);
@@ -170,4 +174,9 @@
   --colorpicker-tool-bg: none;
 
   --input-switch-default-color: var(--gray-3);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
+
+  --change-list-old-bg: #FFF2F2;
+  --change-list-new-bg: #E8FAF3;
 }

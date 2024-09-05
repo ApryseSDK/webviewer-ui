@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import MoreOptionsContextMenuFlyout, { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import DataElements from 'constants/dataElement';
+import selectors from 'selectors';
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import { Input } from '@pdftron/webviewer-react-toolkit';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
-import MoreOptionsContextMenuPopup from 'components/MoreOptionsContextMenuPopup';
 import { isOpenableFile } from 'helpers/portfolio';
 import '../../constants/bookmarksOutlinesShared.scss';
-
 import './PortfolioItemContent.scss';
 
 const propTypes = {
@@ -112,6 +114,34 @@ const PortfolioItemContent = ({
     }
   }, [isContextMenuOpen]);
 
+  const handleOnClick = (val) => {
+    switch (val) {
+      case menuTypes.OPENFILE:
+        if (isOpenableFile(extension)) {
+          setContextMenuOpen(false);
+          openPortfolioItem(portfolioItem);
+        }
+        break;
+      case menuTypes.RENAME:
+        setContextMenuOpen(false);
+        setPortfolioRenaming(true);
+        break;
+      case menuTypes.DOWNLOAD:
+        setContextMenuOpen(false);
+        downloadPortfolioItem(portfolioItem);
+        break;
+      case menuTypes.DELETE:
+        setContextMenuOpen(false);
+        removePortfolioItem(id);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const flyoutSelector = `${DataElements.BOOKMARK_OUTLINE_FLYOUT}-${id}`;
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+
   return (
     <div className="bookmark-outline-label-row">
       {isAdding &&
@@ -130,60 +160,42 @@ const PortfolioItemContent = ({
           >
             {name}
           </div>
-
-          <Button
+          <ToggleElementButton
             className="bookmark-outline-more-button"
             dataElement={`portfolio-item-more-button-${id}`}
             img="icon-tool-more"
-            tabIndex={-1}
-            onClick={(e) => {
-              e.stopPropagation(); // click on this button won't select the file/folder
-              setContextMenuOpen(true);
+            toggleElement={flyoutSelector}
+            disabled={false}
+            onToggle={(isClose) => {
+              setContextMenuOpen(isClose);
             }}
           />
-
-          {isContextMenuOpen &&
-            <MoreOptionsContextMenuPopup
-              type={'portfolio'}
-              anchorButton={`portfolio-item-more-button-${id}`}
-              onClosePopup={() => setContextMenuOpen(false)}
-              onRenameClick={() => {
-                setContextMenuOpen(false);
-                setPortfolioRenaming(true);
-              }}
-              onDownloadClick={() => {
-                setContextMenuOpen(false);
-                downloadPortfolioItem(portfolioItem);
-              }}
-              shouldDisplayDeleteButton={true}
-              onDeleteClick={() => {
-                setContextMenuOpen(false);
-                removePortfolioItem(id);
-              }}
-              onOpenClick={isOpenableFile(extension) ? () => {
-                setContextMenuOpen(false);
-                openPortfolioItem(portfolioItem);
-              } : null}
-            />
-          }
+          <MoreOptionsContextMenuFlyout
+            shouldHideDeleteButton={false}
+            currentFlyout={currentFlyout}
+            flyoutSelector={flyoutSelector}
+            type={'portfolio'}
+            handleOnClick={handleOnClick}
+          />
         </>
       }
 
       {(isAdding || isPortfolioRenaming) &&
         <>
+          <label className='portfolio-input-label' htmlFor={id}>{isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioDocumentTitle')}</label>
           <Input
+            id={id}
             type="text"
             name="outline"
             ref={inputRef}
             wrapperClassName="portfolio-input"
-            placeholder={isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioFilePlaceholder')}
-            aria-label={t('action.name')}
             value={portfolioEditName}
             onKeyDown={handleKeyDown}
             onChange={(e) => setPortfolioEditName(e.target.value)}
             fillWidth
             messageText={duplicatedMessage()}
             message={isNameDuplicated(`${portfolioEditName}.${extension}`, id) ? 'error' : 'default'}
+            aria-label={`${t('action.rename')} ${portfolioEditName}.${extension}`}
           />
 
           <div className="bookmark-outline-editing-controls">

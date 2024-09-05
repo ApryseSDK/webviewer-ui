@@ -27,6 +27,13 @@ export default function useOnFormFieldAnnotationAddedOrSelected() {
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
+      if (annotations.length !== 1) {
+        return;
+      }
+      const selectedAnnots = core.getAnnotationManager().getSelectedAnnotations();
+      if (selectedAnnots.length > 1) {
+        return;
+      }
       const annotation = annotations[0];
       if (action === 'add' && annotation.isFormFieldPlaceholder() && annotation.getCustomData('trn-editing-widget-id') === '') {
         // If for some reason we are drawing a new form field place holder before filling the name for the previous one, we will not switch

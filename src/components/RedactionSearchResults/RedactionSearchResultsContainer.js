@@ -5,6 +5,7 @@ import selectors from 'selectors';
 import applyRedactions from 'helpers/applyRedactions';
 import core from 'core';
 
+const { ToolNames } = window.Core.Tools;
 
 export const defaultRedactionStyles = {
   OverlayText: '',
@@ -19,7 +20,8 @@ export function createRedactionAnnotations(searchResults, activeToolStyles = def
     OverlayText,
     FillColor,
     Font = 'Helvetica',
-    TextColor
+    TextColor,
+    FontSize,
   } = activeToolStyles;
   const redactionAnnotations = searchResults.map((result) => {
     const redaction = new window.Core.Annotations.RedactionAnnotation();
@@ -29,6 +31,7 @@ export function createRedactionAnnotations(searchResults, activeToolStyles = def
     redaction.OverlayText = OverlayText;
     redaction.FillColor = FillColor;
     redaction.Font = Font;
+    redaction.FontSize = FontSize;
     redaction.TextColor = TextColor;
     redaction.setContents(result.result_str);
     redaction.type = result.type;
@@ -62,7 +65,9 @@ function RedactionSearchResultsContainer(props) {
   };
 
   const markSelectedResultsForRedaction = useCallback((searchResults) => {
-    const redactionStyles = activeToolName.includes('Redaction') ? activeToolStyles : defaultRedactionStyles;
+    const tool = core.getTool(ToolNames.REDACTION);
+    const alternativeDefaultStyles = (tool && tool.defaults) ? tool.defaults : defaultRedactionStyles;
+    const redactionStyles = activeToolName.includes('Redaction') ? activeToolStyles : alternativeDefaultStyles;
     const redactionAnnotations = createRedactionAnnotations(searchResults, redactionStyles);
     const annotationManager = core.getAnnotationManager();
     annotationManager.addAnnotations(redactionAnnotations);

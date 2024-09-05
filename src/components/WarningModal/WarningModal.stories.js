@@ -7,6 +7,9 @@ import DataElements from 'constants/dataElement';
 export default {
   title: 'Components/WarningModal',
   component: WarningModal,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const initialState = {
@@ -21,12 +24,19 @@ const initialState = {
       message: 'This is a warning message',
     }
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
-export const Basic = () => {
+const Basic = () => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <WarningModal />
     </Provider>
   );
 };
+
+export const DefaultWarningModal = Basic;
+export const DefaultWarningModalMobile = Basic;
+DefaultWarningModalMobile.parameters = window.storybook?.MobileParameters;

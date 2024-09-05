@@ -3,12 +3,23 @@
     margin-top: 6px;
     margin-bottom: 6px;
 
+    &:focus-within:not(.editing) {
+      background-color: var(--outline-selected);
+      outline: 1px solid var(--bookmark-outline-hover-border);
+    }
+
     .bookmark-outline-label-row {
       align-items: center;
     }
 
     .bookmark-outline-text {
-      flex-basis: calc(100% - 38px); // icon + mr + more-button width + ml = 38px
+      flex-basis: calc(100% - 42px); // icon + margin-right + more-button width + margin-left
+    }
+
+
+    .portfolio-input-label {
+      font-weight: 600;
+      padding-bottom: var(--padding-small);
     }
 
     .portfolio-input {
@@ -58,9 +69,18 @@
       margin-right: 5px;
 
       .Icon {
+        color: var(--icon-color) !important;
         width: 15px;
         height: 15px;
       }
+    }
+  }
+
+  .bookmark-outline-more-button.active {
+    display: flex;
+    box-shadow: none !important;
+    .Icon {
+      color: var(--blue-5);
     }
   }
 }

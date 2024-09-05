@@ -130,6 +130,9 @@ const DataElements = {
   EMBEDDED_JS_POPUP: 'embeddedJsPopup',
   MAIN_MENU: 'MainMenuFlyout',
   VIEWER_CONTROLS_FLYOUT: 'viewControlsFlyout',
+  NOTE_STATE_FLYOUT: 'noteStateFlyout',
+  BOOKMARK_OUTLINE_FLYOUT: 'bookmarkOutlineFlyout',
+  BOOKMARK_FLYOUT: 'bookmarkFlyout',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -262,6 +265,7 @@ const DataElements = {
   CREATE_PORTFOLIO_PRESET_BUTTON: 'createPortfolioPresetButton',
   SETTINGS_PRESET_BUTTON: 'settingsPresetButton',
   FORM_FIELD_EDIT_PRESET_BUTTON: 'formFieldEditPresetButton',
+  CONTENT_EDIT_PRESET_BUTTON: 'contentEditPresetButton',
 
   // Rubber Stamp Panel
   CREATE_RUBBER_STAMP_BUTTON: 'createRubberStampButton',
