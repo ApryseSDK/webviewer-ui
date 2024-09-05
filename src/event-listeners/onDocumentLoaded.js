@@ -139,11 +139,14 @@ export default (store, documentViewerKey) => async () => {
 
     if (isOfficeEditorMode()) {
       dispatch(actions.setIsOfficeEditorMode(true));
-      dispatch(actions.enableElements(ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR, PRIORITY_ONE));
+      dispatch(actions.enableElements(
+        ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR,
+        PRIORITY_TWO,
+      ));
       setZoomLevel(1);
       dispatch(actions.disableElements(
         ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
-        PRIORITY_ONE, // To allow customers to still disable these elements
+        PRIORITY_TWO, // To allow customers to still enable these elements with PRIORITY_THREE
       ));
       hotkeys.unbind('*', OFFICE_EDITOR_SCOPE);
       hotkeys.setScope(OFFICE_EDITOR_SCOPE);
@@ -179,11 +182,6 @@ export default (store, documentViewerKey) => async () => {
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
     } else {
-      dispatch(actions.enableElements(
-        ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
-        PRIORITY_ONE, // To allow customers to still disable these elements
-      ));
-      dispatch(actions.disableElements(ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR, PRIORITY_ONE));
       hotkeys.setScope(defaultHotkeysScope);
       dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     }
