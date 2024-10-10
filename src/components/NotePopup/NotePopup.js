@@ -25,7 +25,7 @@ const propTypes = {
   isReply: PropTypes.bool,
 };
 
-function noop() { }
+function noop() {}
 
 function NotePopup(props) {
   const {
@@ -41,7 +41,7 @@ function NotePopup(props) {
 
   const [t] = useTranslation();
   const popupRef = React.useRef();
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+  const customizableUI = useSelector(state => selectors.getFeatureFlags(state)?.customizableUI);
 
   const { popupMenuRef, location } = useOverflowContainer(isOpen, { container: '.normal-notes-container' });
 
@@ -78,18 +78,20 @@ function NotePopup(props) {
   }
 
   const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen });
-  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
+  const optionsClass = classNames('options note-popup-options', {
+    'options-reply': isReply,
+    'modular-ui': customizableUI,
+  });
   return (
     <DataElementWrapper className="NotePopup" dataElement="notePopup" ref={popupRef}>
-      <Tooltip content={t('formField.formFieldPopup.options')} hideOnClick>
-        <Button
-          dataElement="notePopupButtonClass"
-          className={notePopupButtonClass}
-          onClick={togglePopup}
-          img="icon-tools-more"
-          isActive={isOpen}
-        />
-      </Tooltip>
+      <Button
+        title={t('formField.formFieldPopup.options')}
+        dataElement="notePopupButtonClass"
+        className={notePopupButtonClass}
+        onClick={togglePopup}
+        img="icon-tools-more"
+        isActive={isOpen}
+      />
       {isOpen && (
         <div className={`${optionsClass} ${location}`} ref={popupMenuRef}>
           {isEditable && (
