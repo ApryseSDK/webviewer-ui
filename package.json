@@ -10,6 +10,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
+    "install": "pnpm install --shamefully-hoist",
     "start": "npx babel-node ./dev-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "postinstall": "cp ./node_modules/@storybook/react-dom-shim/dist/react-16.js ./node_modules/@storybook/react-dom-shim/dist/react-18.js && cp ./node_modules/@storybook/react-dom-shim/dist/react-16.mjs ./node_modules/@storybook/react-dom-shim/dist/react-18.mjs",
