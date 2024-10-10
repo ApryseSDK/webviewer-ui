@@ -81,7 +81,7 @@ function NotePopup(props) {
   const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
   return (
     <DataElementWrapper className="NotePopup" dataElement="notePopup" ref={popupRef}>
-      <Tooltip content={t('formField.formFieldPopup.options')} showOnKeyboardFocus hideOnClick>
+      <Tooltip content={t('formField.formFieldPopup.options')} hideOnClick>
         <Button
           dataElement="notePopupButtonClass"
           className={notePopupButtonClass}

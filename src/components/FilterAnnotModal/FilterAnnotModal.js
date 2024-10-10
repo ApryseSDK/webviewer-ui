@@ -478,12 +478,12 @@ const FilterAnnotModal = () => {
               <div className="settings-body">
                 <div className="settings-header">{t('option.filterAnnotModal.filterSettings')}</div>
                 <div className="settings">
-                  <Choice
+                  {/* <Choice
                     label={t('option.filterAnnotModal.includeReplies')}
                     checked={checkRepliesForAuthorFilter}
                     onChange={(e) => setCheckRepliesForAuthorFilter(e.target.checked)}
                     id="filter-annot-modal-include-replies"
-                  />
+                  /> */}
                   <Choice
                     label={t('option.filterAnnotModal.filterDocument')}
                     checked={isDocumentFilterActive}

@@ -17,7 +17,7 @@ function ShareTypeIcon(props) {
   const empty = !shareTypeColor;
   const iconRef = useRef();
   return (
-    <Tooltip ref={iconRef} translatedContent={label} showOnKeyboardFocus hideOnClick>
+    <Tooltip ref={iconRef} translatedContent={label} hideOnClick>
       <div ref={iconRef} className="share-type-icon" aria-label={label}>
         <div className="share-type-icon-inner" style={{ background: empty ? 'transparent' : shareTypeColor, border: empty ? `2px solid ${ShareTypeColors[ShareTypes.NONE]}` : undefined }} />
       </div>

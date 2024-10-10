@@ -123,7 +123,7 @@ const CustomElement = ({
   );
 
   return tooltip ? (
-    <Tooltip content={tooltip} ref={toolTipWrapperRef} showOnKeyboardFocus>
+    <Tooltip content={tooltip} ref={toolTipWrapperRef}>
       {children}
     </Tooltip>
   ) : (

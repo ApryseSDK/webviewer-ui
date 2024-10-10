@@ -215,7 +215,7 @@ export const Keys = {
   SPACE: 'space',
   ESCAPE: 'escape',
   HOME: 'home',
-  END: 'end',  
+  END: 'end',
   P: 'shift+p',
   A: 'shift+a',
   C: 'shift+c',
