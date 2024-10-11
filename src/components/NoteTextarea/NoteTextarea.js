@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useContext } from 'react';
+import React, { useLayoutEffect, useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import throttle from 'lodash/throttle';

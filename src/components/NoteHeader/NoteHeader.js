@@ -141,6 +141,8 @@ function NoteHeader(props) {
     }, 3000);
   };
 
+  console.log(isNoteStateDisabled, !isReply, !isMultiSelectMode, !isGroupMember, !isTrackedChange, showShareType);
+
   return (
     <div className={noteHeaderClass}>
       {!isReply && (
@@ -180,15 +182,19 @@ function NoteHeader(props) {
               />
             )}
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {isNoteStateDisabled &&
+
+            {/* WISEflow: Note share type menu */}
+            {!isNoteStateDisabled &&
               !isReply &&
               !isMultiSelectMode &&
               !isGroupMember &&
               !isTrackedChange &&
               showShareType && <NoteShareType annotation={annotation} />}
+
             {!isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange && (
               <NotePopup noteIndex={noteIndex} annotation={annotation} setIsEditing={setIsEditing} isReply={isReply} />
             )}
+
             {isSelected && isTrackedChange && !isMultiSelectMode && (
               <>
                 <Tooltip content={t('officeEditor.accept')}>

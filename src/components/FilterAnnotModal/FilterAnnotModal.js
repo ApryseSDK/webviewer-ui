@@ -80,24 +80,24 @@ const FilterAnnotModal = () => {
   };
 
   const filterApply = () => {
-  const newFilter = (annot, documentViewerKey = 1) => {
-    let type = true;
-    let author = true;
-    let color = true;
-    let sharetype = true;
+    const newFilter = (annot, documentViewerKey = 1) => {
+      let type = true;
+      let author = true;
+      let color = true;
+      let sharetype = true;
 
-    if (typesFilter.length > 0) {
-      const isMeasurementAnnotation = annot.IT || annot.getCustomData('trn-is-count');
-      if (isMeasurementAnnotationFilterEnabled && isMeasurementAnnotation) {
-        const measurementKey = mapAnnotationToKey(annot);
-        type = typesFilter.includes(measurementKey);
-      } else {
-        type = typesFilter.includes(getAnnotationClass(annot));
+      if (typesFilter.length > 0) {
+        const isMeasurementAnnotation = annot.IT || annot.getCustomData('trn-is-count');
+        if (isMeasurementAnnotationFilterEnabled && isMeasurementAnnotation) {
+          const measurementKey = mapAnnotationToKey(annot);
+          type = typesFilter.includes(measurementKey);
+        } else {
+          type = typesFilter.includes(getAnnotationClass(annot));
+        }
       }
-    }
 
-    if (authorFilter.length > 0) {
-      author = authorFilter.includes(core.getDisplayAuthor(annot['Author'], documentViewerKey));
+      if (authorFilter.length > 0) {
+        author = authorFilter.includes(core.getDisplayAuthor(annot['Author'], documentViewerKey));
       // if (!author && checkRepliesForAuthorFilter) {
       //   const allReplies = annot.getReplies();
       //   for (const reply of allReplies) {
@@ -109,26 +109,26 @@ const FilterAnnotModal = () => {
       //     }
       //   }
       // }
-    }
+      }
 
-    if (colorFilter.length > 0) {
-      const iconColor = getIconColor(annot);
-      if (iconColor) {
-        color = similarColorExist(colorFilter, iconColor);
-      } else {
+      if (colorFilter.length > 0) {
+        const iconColor = getIconColor(annot);
+        if (iconColor) {
+          color = similarColorExist(colorFilter, iconColor);
+        } else {
         // check for default color if no color is available
-        color = colorFilter.includes('#485056');
+          color = colorFilter.includes('#485056');
+        }
       }
-    }
 
-    if (shareTypesFilter.length > 0) {
+      if (shareTypesFilter.length > 0) {
       // CUSTOM WISEFLOW: get customData sharetype
-      if (getAnnotationShareType(annot)) {
-        sharetype = shareTypesFilter.includes(getAnnotationShareType(annot));
+        if (getAnnotationShareType(annot)) {
+          sharetype = shareTypesFilter.includes(getAnnotationShareType(annot));
+        }
       }
-    }
-    return type && author && color && sharetype;
-  };
+      return type && author && color && sharetype;
+    };
     dispatch(actions.setCustomNoteFilter(newFilter));
     dispatch(actions.setAnnotationFilters({
       authorFilter,

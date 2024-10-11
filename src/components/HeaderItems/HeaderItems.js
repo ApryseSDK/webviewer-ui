@@ -56,7 +56,7 @@ class HeaderItems extends React.PureComponent {
       const key = `${type}-${dataElement || i}`;
 
       if (dataElement === 'fullscreenButton') {
-        return <FullscreenButton />;
+        return <FullscreenButton key={i} />;
       }
 
       switch (type) {
