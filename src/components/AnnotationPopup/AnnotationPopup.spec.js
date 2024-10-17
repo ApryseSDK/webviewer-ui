@@ -13,7 +13,7 @@ describe('AnnotationPopup Component', () => {
     }).not.toThrow();
   });
 
-  it('Should have the focus trapped in the Annotation Popup component', () => {
+  it.skip('OLD: Should have the focus trapped in the Annotation Popup component', () => {
     render(<TestAnnotationPopup />);
 
     const buttons = screen.getAllByRole('button');
@@ -43,6 +43,40 @@ describe('AnnotationPopup Component', () => {
     // Press Shift+Tab to move focus back to the last button
     userEvent.tab({ shift: true });
     expect(button4).toHaveFocus();
+  });
+
+
+  it('WISEflow: Should have the focus trapped in the Annotation Popup component', () => {
+    render(<TestAnnotationPopup />);
+
+    const buttons = screen.getAllByRole('button');
+    // expect(buttons.length).toBe(4); // We've out commented the "link" button AnnotationPopup.js:409
+    expect(buttons.length).toBe(3);
+    const [button1, button2, button3] = buttons;
+
+    // Initial focus on the first button
+    button1.focus();
+    expect(button1).toHaveFocus();
+
+    // Press Tab to move focus to button 2
+    userEvent.tab();
+    expect(button2).toHaveFocus();
+
+    // Press Tab to move focus to button 3
+    userEvent.tab();
+    expect(button3).toHaveFocus();
+
+    // Press Tab to move focus to button 4
+    // userEvent.tab();
+    // expect(button4).toHaveFocus();
+
+    // Press Tab again to move focus back to the first button
+    userEvent.tab();
+    expect(button1).toHaveFocus();
+
+    // Press Shift+Tab to move focus back to the last button
+    userEvent.tab({ shift: true });
+    expect(button3).toHaveFocus();
   });
 });
 

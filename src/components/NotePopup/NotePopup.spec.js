@@ -23,10 +23,10 @@ const initialState = {
     isNotesPanelMultiSelectEnabled: true,
     disabledElements: {},
     openElements: {
-      notesPanel: true
+      notesPanel: true,
     },
     panelWidths: {
-      notesPanel: DEFAULT_NOTES_PANEL_WIDTH
+      notesPanel: DEFAULT_NOTES_PANEL_WIDTH,
     },
     sortStrategy: 'position',
     annotationFilters: {
@@ -35,26 +35,32 @@ const initialState = {
       authorFilter: [],
       colorFilter: [],
       typeFilter: [],
-      statusFilter: []
+      statusFilter: [],
     },
   },
   officeEditor: {},
   featureFlags: { customizableUI: true },
 };
 
-function createDisabledStateForDataElement(dataElement) {
+function createStateForDataElement(dataElement, opts = { disabled: true }) {
   const state = { viewer: { disabledElements: {}, customElementOverrides: {} } };
-  state.viewer.disabledElements[dataElement] = { disabled: true };
+  state.viewer.disabledElements[dataElement] = opts;
   return state;
 }
 
 const store = configureStore({ reducer: () => initialState });
+const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 
 jest.mock('core');
+const notePopupDeletedataElement = 'notePopupDelete';
 
 describe('NotePopup', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+
+    useSelectorMock.mockImplementation(function (selector) {
+      return selector({ viewer: { disabledElements: {}, customElementOverrides: {} } });
+    });
   });
 
   it('Basic story should not throw error when rendering', () => {
@@ -84,7 +90,7 @@ describe('NotePopup', () => {
       render(
         <Provider store={store}>
           <NotePopup />
-        </Provider>
+        </Provider>,
       );
     }).not.toThrow();
   });
@@ -93,7 +99,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isEditable isDeletable />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.NotePopup')).toBeInTheDocument();
   });
@@ -102,7 +108,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isEditable isDeletable isOpen />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('div.note-popup-options')).toBeInTheDocument();
   });
@@ -111,33 +117,29 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isEditable isDeletable isOpen={false} />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('div.note-popup-options')).not.toBeInTheDocument();
   });
 
   it('Should not show component if disabled', () => {
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockReturnValue(true);
     const { container } = render(
       <Provider store={store}>
         <NotePopup isEditable isDeletable />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.NotePopup')).not.toBeInTheDocument();
   });
 
   it('Should not show delete option if disable', () => {
-    const dataElement = 'notePopupDelete';
-    const state = createDisabledStateForDataElement(dataElement);
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function(selector) {
-      return selector(state);
+    useSelectorMock.mockImplementation(function (selector) {
+      return selector(createStateForDataElement(notePopupDeletedataElement, { disabled: true }));
     });
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable isDeletable />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.note-popup-options')).toBeInTheDocument();
     expect(container.querySelector('button[data-element="notePopupDelete"]')).not.toBeInTheDocument();
@@ -147,7 +149,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable isDeletable={false} />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.note-popup-options')).toBeInTheDocument();
     expect(container.querySelector('button[data-element="notePopupDelete"]')).not.toBeInTheDocument();
@@ -159,7 +161,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable isDeletable closePopup={closePopup} handleDelete={handleDelete} />
-      </Provider>
+      </Provider>,
     );
     const deleteButton = container.querySelector('button[data-element="notePopupDelete"]');
     expect(deleteButton).toBeInTheDocument();
@@ -170,15 +172,15 @@ describe('NotePopup', () => {
 
   it('Should not show edit option if disable', () => {
     const dataElement = 'notePopupEdit';
-    const state = createDisabledStateForDataElement(dataElement);
+    const state = createStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function(selector) {
+    useSelectorMock.mockImplementation(function (selector) {
       return selector(state);
     });
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable isDeletable />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.note-popup-options')).toBeInTheDocument();
     expect(container.querySelector('button[data-element="notePopupEdit"]')).not.toBeInTheDocument();
@@ -188,7 +190,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable={false} isDeletable />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.note-popup-options')).toBeInTheDocument();
     expect(container.querySelector('button[data-element="notePopupEdit"]')).not.toBeInTheDocument();
@@ -200,7 +202,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable isDeletable closePopup={closePopup} handleEdit={handleEdit} />
-      </Provider>
+      </Provider>,
     );
     const editButton = container.querySelector('button[data-element="notePopupEdit"]');
     expect(editButton).toBeInTheDocument();
@@ -215,7 +217,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup annotation={annotation} isEditable isDeletable openPopup={openPopup} isOpen={false} />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.note-popup-options')).not.toBeInTheDocument();
     const button = container.querySelector('.note-popup-toggle-trigger');
@@ -232,7 +234,7 @@ describe('NotePopup', () => {
         <Provider store={store}>
           <NotePopup annotation={annotation} isEditable isDeletable closePopup={closePopup} isOpen />
         </Provider>
-      </div>
+      </div>,
     );
     expect(container.querySelector('.note-popup-options')).toBeInTheDocument();
     const outsideElement = container.querySelector('#unit-test-outside');
@@ -244,7 +246,7 @@ describe('NotePopup', () => {
     const { container } = render(
       <Provider store={store}>
         <NotePopup isOpen isEditable={false} isDeletable={false} />
-      </Provider>
+      </Provider>,
     );
     expect(container.querySelector('.NotePopup')).not.toBeInTheDocument();
   });
@@ -254,28 +256,35 @@ describe('NotePopupContainer', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation((callback) => callback({
-      viewer: {
-        activeDocumentViewerKey: 1,
-        disabledElements: {}
-      }
-    }));
+    useSelectorMock.mockImplementation((callback) =>
+      callback({
+        viewer: {
+          activeDocumentViewerKey: 1,
+          disabledElements: {},
+        },
+      }),
+    );
   });
 
   it('Should attach updateAnnotationPermission event listener on mount', () => {
     const addEventListenerMock = jest.spyOn(core, 'addEventListener');
-    render(
-      <NotePopupContainer/>
+    render(<NotePopupContainer />);
+    expect(addEventListenerMock).toHaveBeenCalledWith(
+      'updateAnnotationPermission',
+      expect.any(Function),
+      undefined,
+      expect.any(Number),
     );
-    expect(addEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), undefined, expect.any(Number));
   });
 
   it('Should remove updateAnnotationPermission event listener on unmount', () => {
     const removeEventListenerMock = jest.spyOn(core, 'removeEventListener');
-    const { unmount } = render(
-      <NotePopupContainer />
-    );
+    const { unmount } = render(<NotePopupContainer />);
     unmount();
-    expect(removeEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), expect.any(Number));
+    expect(removeEventListenerMock).toHaveBeenCalledWith(
+      'updateAnnotationPermission',
+      expect.any(Function),
+      expect.any(Number),
+    );
   });
 });

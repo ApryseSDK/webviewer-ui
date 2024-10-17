@@ -11,7 +11,7 @@ import { customRubberStamps } from './static/assets/customStamps';
 // We add this class to the StoryBook root element to mimick how we have
 // structured our classes in the UI, where everythign is wrapped by the App class.
 // If this is not done we miss some styles, and the Stories will look a bit different.
-document.getElementById('root').className = 'App';
+document.getElementById('storybook-root').className = 'App';
 
 function noop() {
 }
@@ -403,7 +403,7 @@ window.Core = {
   isBlendModeSupported: () => true,
   FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
   getCanvasMultiplier: () => 1,
-  Scale: () => {
+  Scale: function () {
     return {
       pageScale: {
         value: 1,
@@ -595,7 +595,7 @@ const hexToRgb = (hex) => {
   } : null;
 };
 
-Core.Annotations.Color = (R = 255, G = 0, B = 0) => {
+Core.Annotations.Color = function(R = 255, G = 0, B = 0) {
   if (R[0] === '#') {
     const { r, g, b } = hexToRgb(R);
     return {

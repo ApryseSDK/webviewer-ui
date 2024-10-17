@@ -51,7 +51,7 @@ const RedactionSearchResultGroup = (props) => {
   };
 
   return (
-    <div className="redaction-search-results-page-number">
+    <div className="redaction-search-results-page-number" data-test-id="test">
       <Choice
         className="redaction-search-results-page-number-checkbox"
         aria-label={`${t('option.shared.page')} ${pageNumber}`}

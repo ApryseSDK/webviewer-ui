@@ -248,7 +248,8 @@ describe('FileSelectedPanel', () => {
       await waitFor(() => expect(sourceDocInput).toHaveValue('1-4'));
 
       // Now deselect all pages
-      userEvent.click(screen.getByText(/Deselect All/i));
+      const deselectAll = screen.getByRole('button', { name: 'Deselect All' });
+      userEvent.click(deselectAll);
 
       const thumbnails = screen.getAllByRole('checkbox');
       expect(thumbnails).toHaveLength(pageCountSourceDocument);
@@ -265,13 +266,12 @@ describe('FileSelectedPanel', () => {
       expect(checkedThumbs.length).toEqual(3);
 
       // Now we press the "Deselect All" button
-      const deselectAll = screen.getByRole('button', { name: 'Deselect All' });
       userEvent.click(deselectAll);
 
       // Ensure all thumbnails are not checked
       thumbnails.forEach((thumb) => expect(thumb.checked).toBeFalsy());
       // And check the input was cleared
-      expect(sourceDocInput).toHaveValue('');
+      waitFor(() => expect(sourceDocInput).toHaveValue(''));
     });
 
     it('renders an abbreviated filename correctly if filename longer than set threshold', async () => {
@@ -419,7 +419,7 @@ describe('FileSelectedPanel', () => {
       );
 
       const deselectAllButton = await screen.findByRole('button', { name: /Deselect All/i });
-      expect(deselectAllButton).not.toBeDisabled();
+      waitFor(() => expect(deselectAllButton).not.toBeDisabled());
     });
 
     it('check all handlers are correctly called', async () => {

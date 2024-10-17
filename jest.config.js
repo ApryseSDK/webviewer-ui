@@ -148,7 +148,7 @@ module.exports = {
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
     "<rootDir>/jest/jest.setup.js",
-    "<rootDir>/../../build/core/webviewer-core.min.js",
+    "<rootDir>/lib/core/webviewer-core.min.js",
   ],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.

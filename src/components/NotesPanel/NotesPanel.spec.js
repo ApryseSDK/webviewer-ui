@@ -82,9 +82,9 @@ describe('NotesPanel', () => {
 
       const defaultEmptyContentMessage = 'Start making annotations to leave a comment.';
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByPlaceholderText('Search annotations'); // WISEflow term change
       screen.getByText('Sort:');
-      screen.getByText('Comments');
+      screen.getByText('Annotations'); // WISEflow term change
       screen.getByText(defaultEmptyContentMessage);
     });
 
@@ -103,9 +103,9 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByPlaceholderText('Search annotations'); // WISEflow term change
       screen.getByText('Sort:');
-      screen.getByText('Comments');
+      screen.getByText('Annotations'); // WISEflow term change
       screen.getByText(message);
     });
 
@@ -127,9 +127,9 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByPlaceholderText('Search annotations'); // WISEflow term change
       screen.getByText('Sort:');
-      screen.getByText('Comments');
+      screen.getByText('Annotations'); // WISEflow term change
       screen.getByText(message);
     });
 

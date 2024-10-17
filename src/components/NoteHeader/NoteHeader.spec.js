@@ -73,4 +73,8 @@ describe('NoteHeader Component', () => {
 
     getByText(container, `#${testPropsWithAnnotationNumbering.annotation.getAssociatedNumber()} -`);
   });
+
+  // WISEflow: Test changes to the NoteHeader: Annotation reference and copy, ShareType
+
+  // TODO
 });

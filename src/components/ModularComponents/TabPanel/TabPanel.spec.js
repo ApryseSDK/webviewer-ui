@@ -172,7 +172,7 @@ describe('TabPanel', () => {
     { name: 'Layers', className: 'LayersPanel' },
     { name: 'Style', className: 'StylePanel' },
     { name: 'Search', className: 'SearchPanel' },
-    { name: 'Comments', className: 'NotesPanel' },
+    { name: 'Annotations', className: 'NotesPanel' }, // WISEflow term change
     { name: 'Signatures', className: 'SignaturePanel' },
     { name: 'Attachments', className: 'fileAttachmentPanel' },
   ];

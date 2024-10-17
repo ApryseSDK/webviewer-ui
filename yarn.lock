@@ -396,6 +396,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
+"@babel/plugin-syntax-dynamic-import@^7.8.3":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.8.3.tgz#62bf98b2da3cd21d626154fc96ee5b3cb68eacb3"
+  integrity sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.0"
+
 "@babel/plugin-syntax-export-namespace-from@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-namespace-from/-/plugin-syntax-export-namespace-from-7.8.3.tgz#028964a9ba80dbc094c915c487ad7c4e7a66465a"
@@ -6178,9 +6185,9 @@ external-editor@^3.0.3:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
-"extract-zip@git+https://github.com/lbittner-pdftron/extract-zip.git":
+"extract-zip@https://github.com/lbittner-pdftron/extract-zip.git":
   version "1.6.7"
-  resolved "git+https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
+  resolved "https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
   dependencies:
     concat-stream "1.6.2"
     debug "2.6.9"

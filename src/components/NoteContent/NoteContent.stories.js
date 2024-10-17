@@ -77,6 +77,7 @@ const mockAnnotation = {
   getRichTextStyle: () => {},
   getAttachments: () => [],
   getSkipAutoLink: () => false,
+  getPageNumber: () => 1,
 };
 
 export const testProps = {
