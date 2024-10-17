@@ -1818,7 +1818,7 @@
   resolved "https://registry.yarnpkg.com/@pdftron/webviewer-reading-mode/-/webviewer-reading-mode-1.0.8.tgz#c4b53ba141ca96227ff6c92420b1059f92d7b177"
   integrity sha512-7OVeh11Bb/cXl215eVXor7FY9vmWKgroQQlzjjSaMRHBHnbcv9pWAf6g1CCXrT+Iy9fklOaJt/kfxMtaxWhxFQ==
 
-"@pdftron/webviewer@^10.12.0":
+"@pdftron/webviewer@10.12.0":
   version "10.12.0"
   resolved "https://registry.yarnpkg.com/@pdftron/webviewer/-/webviewer-10.12.0.tgz#1043042c12f259ae095f78696fd173e955383479"
   integrity sha512-7MRnPS7ulg61AhCMQMCcauXfqiXEF4HZS4CvmQFn3DwbdjTn3jrT7KTAapz3WsWQPeZU21c7gTOr0Bvc5xFRYQ==
