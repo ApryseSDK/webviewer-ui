@@ -13,13 +13,26 @@ const propTypes = {
 
 function ShareTypeIcon(props) {
   const { shareType, label } = props;
-  const shareTypeColor = shareType ? ShareTypeColors[shareType] : undefined;
-  const empty = !shareTypeColor;
+  const { backgroundColor, borderColor } = shareType
+    ? ShareTypeColors[shareType]
+    : {
+        backgroundColor: 'transparent',
+        borderColor: '#9e9e9e',
+      };
   const iconRef = useRef();
+
   return (
     <Tooltip ref={iconRef} translatedContent={label} hideOnClick>
-      <div ref={iconRef} className="share-type-icon" aria-label={label}>
-        <div className="share-type-icon-inner" style={{ background: empty ? 'transparent' : shareTypeColor, border: empty ? `2px solid ${ShareTypeColors[ShareTypes.NONE]}` : undefined }} />
+      <div
+        ref={iconRef}
+        className="share-type-icon"
+        aria-label={label}
+        style={{
+          '--background-color': backgroundColor,
+          '--border-color': borderColor,
+        }}
+      >
+        <div className="wf-label-legend" />
       </div>
     </Tooltip>
   );

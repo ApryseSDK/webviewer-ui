@@ -6,10 +6,11 @@
   align-items: center;
   justify-content: center;
 
-  .share-type-icon-inner {
-    width: 80%;
-    height: 80%;
-    border-radius: 0.2875rem;
-    background-color: #b2b3b3; // ShareType.NONE as default.
+  .wf-label-legend {
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    border-radius: 2.5px;
+    width: 1em;
+    height: 1em;
   }
 }

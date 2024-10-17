@@ -50,7 +50,7 @@ function NoteShareType(props) {
     setIsOpen(true);
   };
 
-  const togglePopup = e => {
+  const togglePopup = (e) => {
     e.stopPropagation();
     if (isOpen) {
       onClose();
@@ -64,10 +64,7 @@ function NoteShareType(props) {
   });
 
   const handleStateChange = useCallback(
-    newValue => {
-      // CUSTOM WISEFLOW: Set custom data value called sharetype and trigger annotationChanged event
-
-      // Set share type and trigger annotationChanged "modify" event
+    (newValue) => {
       setAnnotationShareType(annotation, newValue);
       getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
       setShareType(newValue);
@@ -81,7 +78,7 @@ function NoteShareType(props) {
       className={classNames('NoteShareType', { active: isOpen })}
       dataElement="noteShareType"
       disabled={!isOwnedByCurrentUser}
-      onKeyDown={e => {
+      onKeyDown={(e) => {
         if (e.key === 'Escape') {
           onClose();
         }

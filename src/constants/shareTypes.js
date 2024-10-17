@@ -1,3 +1,4 @@
+/* eslint-disable custom/no-hex-colors */
 // CUSTOM WISEFLOW sharetype types.
 const ShareTypes = {
   ALL: 'ALL',
@@ -16,10 +17,10 @@ export const ShareTypeOrder = {
 
 // this colors are taken from flow-ui-react secondry light colors
 export const ShareTypeColors = {
-  [ShareTypes.ALL]: '#7ec171',
-  [ShareTypes.ASSESSORS]: '#b49b88',
-  [ShareTypes.PARTICIPANTS]: '#719ec1',
-  [ShareTypes.NONE]: '#b2b3b3',
+  [ShareTypes.ALL]: { backgroundColor: '#EFF8ED', borderColor: '#5AB847' },
+  [ShareTypes.ASSESSORS]: { backgroundColor: '#FEF9ED', borderColor: '#F5C20B' },
+  [ShareTypes.PARTICIPANTS]: { backgroundColor: '#EDF5F9', borderColor: '#3A9EC3' },
+  [ShareTypes.NONE]: { backgroundColor: '#E0E1E2', borderColor: '#9e9e9e' },
 };
 
 export default ShareTypes;
