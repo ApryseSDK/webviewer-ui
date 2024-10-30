@@ -2,22 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
-import Button from 'components/Button';
 import SavedSignatures from 'components/SignatureModal/SavedSignatures';
 
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
-import { Swipeable } from 'react-swipeable';
 import SignatureModes from 'constants/signatureModes';
 import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
+import ModalWrapper from 'components/ModalWrapper';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './SignatureModal.scss';
 
@@ -178,103 +176,97 @@ const SignatureModal = () => {
   });
   const isSavedTabSelected = selectedTab === 'savedSignaturePanelButton';
 
-  return isDisabled ? null : (
-    <Swipeable
-      onSwipedUp={closeModal}
-      onSwipedDown={closeModal}
-      preventDefaultTouchmoveEvent
+  if (isDisabled) {
+    return null;
+  }
+
+  return (
+    <div
+      className={modalClass}
+      data-element={DataElements.SIGNATURE_MODAL}
     >
-      <FocusTrap locked={isOpen}>
+      <ModalWrapper
+        title={t('option.signatureModal.modalName')}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        isOpen={isOpen}
+        swipeToClose
+      >
         <div
-          className={modalClass}
-          data-element={DataElements.SIGNATURE_MODAL}
+          className={classNames('container', { 'include-initials': isInitialsModeEnabled })}
+          onMouseDown={(e) => e.stopPropagation()}
         >
-          <div
-            className={classNames('container', { 'include-initials': isInitialsModeEnabled })}
-            onMouseDown={(e) => e.stopPropagation()}
-          >
-            <div className="swipe-indicator" />
-            <Tabs id="signatureModal">
-              <div className="header-container">
-                <div className="header">
-                  <p>{t('option.signatureModal.modalName')}</p>
-                  <Button
-                    className="signatureModalCloseButton"
-                    dataElement="signatureModalCloseButton"
-                    title="action.close"
-                    img="ic_close_black_24px"
-                    onClick={closeModal}
-                  />
-                </div>
-                <div className="tab-list">
-                  {!isSavedTabDisabled &&
-                    <>
-                      <Tab dataElement="savedSignaturePanelButton">
-                        <button className="tab-options-button">
-                          {t('option.type.saved')}
-                        </button>
-                      </Tab>
-                      <div className="tab-options-divider" />
-                    </>
-                  }
-                  <Tab dataElement="inkSignaturePanelButton">
-                    <button className="tab-options-button">
-                      {t('action.draw')}
-                    </button>
-                  </Tab>
-                  <div className="tab-options-divider" />
-                  <Tab dataElement="textSignaturePanelButton">
-                    <button className="tab-options-button">
-                      {t('action.type')}
-                    </button>
-                  </Tab>
-                  <div className="tab-options-divider" />
-                  <Tab dataElement="imageSignaturePanelButton">
-                    <button className="tab-options-button">
-                      {t('action.upload')}
-                    </button>
-                  </Tab>
-                </div>
+          <div className="swipe-indicator" />
+          <Tabs id="signatureModal">
+            <div className="tabs-header-container">
+              <div className="tab-list">
+                {!isSavedTabDisabled &&
+                  <>
+                    <Tab dataElement="savedSignaturePanelButton">
+                      <button className="tab-options-button">
+                        {t('option.type.saved')}
+                      </button>
+                    </Tab>
+                    <div className="tab-options-divider" />
+                  </>
+                }
+                <Tab dataElement="inkSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.draw')}
+                  </button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="textSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.type')}
+                  </button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="imageSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.upload')}
+                  </button>
+                </Tab>
               </div>
-              {!isSavedTabDisabled && <TabPanel dataElement="savedSignaturePanel">
-                <SavedSignatures {...{ selectedIndex, setSelectedIndex }} />
-              </TabPanel>}
-              <TabPanel dataElement="inkSignaturePanel">
-                <InkSignature
-                  isModalOpen={isOpen}
-                  enableCreateButton={enableCreateButton}
-                  disableCreateButton={disableCreateButton}
-                  isInitialsModeEnabled={isInitialsModeEnabled}
-                />
-              </TabPanel>
-              <TabPanel dataElement="textSignaturePanel">
-                <TextSignature
-                  isModalOpen={isOpen}
-                  enableCreateButton={enableCreateButton}
-                  disableCreateButton={disableCreateButton}
-                  isInitialsModeEnabled={isInitialsModeEnabled}
-                />
-              </TabPanel>
-              <TabPanel dataElement="imageSignaturePanel">
-                <ImageSignature
-                  isModalOpen={isOpen}
-                  enableCreateButton={enableCreateButton}
-                  disableCreateButton={disableCreateButton}
-                  isInitialsModeEnabled={isInitialsModeEnabled}
-                />
-              </TabPanel>
-              <div className="footer">
-                <button className="signature-create" onClick={isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures}
-                  disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
-                  title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>
-                  {t(isSavedTabSelected ? 'action.apply' : 'action.create')}
-                </button>
-              </div>
-            </Tabs>
-          </div>
+            </div>
+            {!isSavedTabDisabled && <TabPanel dataElement="savedSignaturePanel">
+              <SavedSignatures {...{ selectedIndex, setSelectedIndex }} />
+            </TabPanel>}
+            <TabPanel dataElement="inkSignaturePanel">
+              <InkSignature
+                isModalOpen={isOpen}
+                enableCreateButton={enableCreateButton}
+                disableCreateButton={disableCreateButton}
+                isInitialsModeEnabled={isInitialsModeEnabled}
+              />
+            </TabPanel>
+            <TabPanel dataElement="textSignaturePanel">
+              <TextSignature
+                isModalOpen={isOpen}
+                enableCreateButton={enableCreateButton}
+                disableCreateButton={disableCreateButton}
+                isInitialsModeEnabled={isInitialsModeEnabled}
+              />
+            </TabPanel>
+            <TabPanel dataElement="imageSignaturePanel">
+              <ImageSignature
+                isModalOpen={isOpen}
+                enableCreateButton={enableCreateButton}
+                disableCreateButton={disableCreateButton}
+                isInitialsModeEnabled={isInitialsModeEnabled}
+              />
+            </TabPanel>
+            <div className="footer">
+              <button className="signature-create" onClick={useFocusOnClose(isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures)}
+                disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
+                title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>
+                {t(isSavedTabSelected ? 'action.apply' : 'action.create')}
+              </button>
+            </div>
+          </Tabs>
         </div>
-      </FocusTrap>
-    </Swipeable>
+      </ModalWrapper>
+    </div>
   );
 };
 

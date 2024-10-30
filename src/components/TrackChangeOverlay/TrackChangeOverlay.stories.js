@@ -2,7 +2,7 @@ import React from 'react';
 import TrackChangeOverlay from './TrackChangeOverlay';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 
 export default {
   title: 'Components/TrackChangeOverlay',
@@ -11,8 +11,12 @@ export default {
 
 const getStore = () => {
   const initialState = {
+    activeFlyout: null,
+    featureFlags: {
+      customizableUI: false,
+    },
     officeEditor: {
-      editMode: OFFICE_EDITOR_EDIT_MODE.EDITING
+      editMode: OfficeEditorEditMode.EDITING,
     }
   };
 

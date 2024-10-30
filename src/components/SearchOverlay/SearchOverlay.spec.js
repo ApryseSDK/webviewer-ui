@@ -29,8 +29,11 @@ jest.mock('helpers/search', () => {
   };
 });
 
-jest.mock('core');
-
+jest.mock('core', () => ({
+  clearSearchResults: () => {},
+  addEventListener: () => {},
+  removeEventListener: () => {},
+}));
 
 describe('SearchOverlay', () => {
   beforeEach(() => {
@@ -88,7 +91,6 @@ describe('SearchOverlay', () => {
         expect(executeSearch).toHaveBeenCalled();
       }, 1000);
     });
-
 
     it('Should execute search when case sensitive checkbox changed', () => {
       const executeSearch = jest.fn();
@@ -179,6 +181,49 @@ describe('SearchOverlay', () => {
 
       const searchInput = container.querySelector('#SearchPanel__input');
       expect(searchInput === document.activeElement).toBe(false);
+    });
+
+    it('Should have aria-live attribute even without search results', () => {
+      const { container } = render(
+        <TestSearchOverlay
+          searchValue="xyz"
+          searchResults={[]}
+          searchStatus="SEARCH_DONE"
+          isProcessingSearchResults={false}
+          isSearchInProgress={false}
+          setSearchStatus={noop}
+          setSearchValue={noop}
+          setCaseSensitive={noop}
+          setWholeWord={noop}
+          setWildcard={noop}
+          setReplaceValue={noop}
+          executeSearch={noop}
+        />
+      );
+      const resultLabel = container.querySelector('p[aria-live]');
+      expect(resultLabel).toBeInTheDocument();
+      expect(resultLabel.textContent).toBe('0 results found');
+    });
+
+    it('Should have aria-live attribute even with search results', () => {
+      const { container } = render(
+        <TestSearchOverlay
+          searchValue="Update"
+          searchResults={[{ first: true }, { second: true }, { third: true }, { fourth: true }]}
+          searchStatus="SEARCH_DONE"
+          isProcessingSearchResults={false}
+          isSearchInProgress={false}
+          setSearchStatus={noop}
+          setSearchValue={noop}
+          setCaseSensitive={noop}
+          setWholeWord={noop}
+          setWildcard={noop}
+          setReplaceValue={noop}
+          executeSearch={noop}
+        />
+      );
+      const resultLabel = container.querySelector('p[aria-live]');
+      expect(resultLabel.textContent).toBe('4 results found');
     });
   });
 

@@ -166,6 +166,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isOfficeEditorMode: payload.isOfficeEditorMode,
       };
+    case 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED':
+      return {
+        ...state,
+        isOfficeEditorHeaderEnabled: payload.isOfficeEditorHeaderEnabled,
+      };
     case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
       return {
         ...state,
@@ -498,8 +503,6 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_ACTIVE_CUSTOM_RIBBON':
       return { ...state, activeCustomRibbon: payload.customRibbon };
-    case 'SET_OUTLINE_CONTROL_VISIBILITY':
-      return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_AUTO_EXPAND_OUTLINES':
       return { ...state, autoExpandOutlines: payload.autoExpandOutlines };
     case 'SET_ANNOTATION_NUMBERING':
@@ -1137,6 +1140,25 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
     case 'SET_NOTES_IN_LEFT_PANEL':
       return { ...state, notesInLeftPanel: payload };
+    case 'PUSH_FOCUSED_ELEMENT': {
+      return {
+        ...state,
+        focusedElementsStack: [...state.focusedElementsStack, payload],
+      };
+    }
+    case 'SET_FOCUSED_ELEMENTS_STACK': {
+      return {
+        ...state,
+        focusedElementsStack: payload,
+      };
+
+    }
+    case 'SET_KEYBOARD_OPEN': {
+      return { ...state, isKeyboardOpen: payload };
+    }
+    case 'SET_COMPARE_ANNOTATIONS_MAP': {
+      return { ...state, compareAnnotationsMap: payload };
+    }
     default:
       return state;
   }

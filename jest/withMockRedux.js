@@ -1,10 +1,8 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import React from 'react';
 
-// mock initial state.
-// UI Buttons are redux connected, and they need a state or the
-// tests will error out
 const initialState = {
   viewer: {
     activeDocumentViewerKey: 1,
@@ -15,6 +13,9 @@ const initialState = {
     },
     currentLanguage: 'en',
     openElements: {},
+    flyoutMap: {},
+    currentPage: 7,
+    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
     annotationPopup: [
       { dataElement: 'viewFileButton' },
       { dataElement: 'annotationCommentButton' },
@@ -32,11 +33,17 @@ const initialState = {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
-      { dataElement: 'annotationAlignButton'}
+      { dataElement: 'annotationAlignButton' }
     ],
+    savedSignatures: [],
+    maxSignatureCount: 10,
+    focusedElementsStack: [],
   },
   search: {
     redactionSearchPatterns: {},
+  },
+  document: {
+    totalPages: {1: 9, 2: 0},
   }
 };
 
@@ -44,7 +51,8 @@ function rootReducer(state = initialState, action) { // eslint-disable-line no-u
   return state;
 }
 
-const store = createStore(rootReducer);
+// Apply the thunk middleware
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default function withMockRedux(Component) {
   return function WithMockReduxWrapper(props) {

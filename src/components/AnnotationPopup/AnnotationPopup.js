@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import FocusTrap from 'components/FocusTrap';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
@@ -460,8 +460,8 @@ const AnnotationPopup = ({
         open: isOpen,
         closed: !isOpen,
         stylePopupOpen: isStylePopupOpen,
-        'is-vertical': isReadOnlySignature ? true : isRightClickMenu,
-        'is-horizontal': isReadOnlySignature ? false : !isRightClickMenu,
+        'is-vertical': isRightClickMenu,
+        'is-horizontal': !isRightClickMenu,
       })}
       ref={popupRef}
       data-element={DataElements.ANNOTATION_POPUP}

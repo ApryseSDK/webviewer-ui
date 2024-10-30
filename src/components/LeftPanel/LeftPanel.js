@@ -149,7 +149,7 @@ const LeftPanel = () => {
         'outlines-panel-active': activePanel === 'outlinesPanel',
         'multi-tab-active': isMultiTabActive,
         'logo-bar-enabled': isLogoBarEnabled,
-        'tracked-change-active': isOfficeEditorMode,
+        'office-editor': isOfficeEditorMode,
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}

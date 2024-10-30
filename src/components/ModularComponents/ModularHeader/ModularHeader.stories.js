@@ -17,6 +17,7 @@ import {
 import { mockModularComponents } from '../AppStories/mockAppState';
 import '../LeftHeader/LeftHeader.scss';
 import '../RightHeader/RightHeader.scss';
+import { MockDocumentContainer } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/ModularHeader',
@@ -49,14 +50,6 @@ const initialState = {
   },
 };
 
-const MockDocumentContainer = () => {
-  return (
-    <div style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      Mock Document Container
-    </div>
-  );
-};
-
 const divider = {
   type: 'divider',
   dataElement: 'divider-1',
@@ -84,7 +77,7 @@ export const TopHeader = (storyProps) => {
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <ModularHeader {...props} />
-        <MockDocumentContainer />
+        <MockDocumentContainer width='90%' height='90%' />
       </div>
     </Provider>
   );
@@ -101,7 +94,7 @@ export const LeftHeader = (storyProps) => {
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex', height: '100%' }}>
         <ModularHeader {...props} />
-        <MockDocumentContainer />
+        <MockDocumentContainer width='90%' height='90%' />
       </div>
     </Provider>
   );
@@ -118,7 +111,7 @@ export const RightHeader = (storyProps) => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex', height: '100%' }}>
-        <MockDocumentContainer />
+        <MockDocumentContainer width='90%' height='90%' />
         <ModularHeader {...props} />
       </div>
     </Provider>
@@ -136,7 +129,7 @@ export const BottomHeader = (storyProps) => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <MockDocumentContainer />
+        <MockDocumentContainer width='90%' height='90%' />
         <ModularHeader {...props} />
       </div>
     </Provider>

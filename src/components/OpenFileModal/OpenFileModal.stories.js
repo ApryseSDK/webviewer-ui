@@ -19,7 +19,10 @@ const initialState = {
     },
     customElementOverrides: {},
     tab: { openFileModal: 'urlInputPanelButton' }
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 function rootReducer(state = initialState, action) {
@@ -27,7 +30,7 @@ function rootReducer(state = initialState, action) {
 }
 
 const store = createStore(rootReducer);
-store.dispatch = () => {};
+store.dispatch = () => { };
 
 export function Basic() {
   return (

@@ -34,41 +34,52 @@
     outline: none;
     border-radius: 3px;
     min-width: 32px;
+
+    &:focus-within {
+      outline: var(--focus-visible-outline) !important;
+    }
   }
 }
 
-.pageNavFlyoutMenu {
-  .page-nav-display .flyout-item-label>* {
-    margin: auto;
+.page-nav-display {
+  &:hover {
+    form input:not(:focus) {
+      color: var(--gray-0);
+    }
   }
 
-  form input {
+  .flyout-item-label {
+    text-transform: none;
+    display: flex;
+    height: 25px;
+    align-items: baseline;
+    padding: 0 10px;
+
+    input {
+      margin: 0px 6px;
+    }
+  }
+}
+
+.page-controls-input-form {
+  input {
     font-size: 13px !important;
     width: 17px;
     font-family: Lato, sans-serif;
     cursor: pointer;
     outline: none;
-    margin: 0px 6px;
     padding: 0;
     text-align: center;
     background: transparent;
-
     min-width: 26px;
-    min-height: 22px;
-  }
-
-  form input:not(:focus) {
-    font-weight: 700;
-    border: none;
-    border-bottom: 1px solid var(--icon-color);
-    border-radius: 0;
-  }
-
-  form input:focus {
-    height: 100%;
-    background: var(--gray-0);
-    border-radius: 3px;
-    border: 1px solid var(--border);
     min-height: 26px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--icon-color);
+    border-radius: 3px;
+
+    &:focus {
+      background: var(--gray-0);
+      border: 1px solid var(--border);
+    }
   }
 }

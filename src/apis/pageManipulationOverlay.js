@@ -17,6 +17,14 @@
  */
 import actions from 'actions';
 import selectors from 'selectors';
+import { isMobile } from 'helpers/device';
+import DataElements from 'constants/dataElement';
+import {
+  getPageAdditionalControls,
+  getPageRotationControls,
+  getPageManipulationControls,
+  getPageNumbers
+} from 'helpers/pageManipulationFlyoutHelper';
 
 export default (store) => Object.create(PageManipulationOverlayAPI).initialize(store);
 
@@ -111,6 +119,15 @@ const PageManipulationOverlayAPI = {
     items.splice(index + 1, 0, ...operations);
 
     this.store.dispatch(actions.setPageManipulationOverlayItems(items));
+    const flyoutItems = [];
+    for (const item of items) {
+      flyoutItems.push(...convertItemToFlyoutList(item, this.store));
+    }
+    this.store.dispatch(actions.updateFlyout(DataElements.PAGE_MANIPULATION, {
+      dataElement: DataElements.PAGE_MANIPULATION,
+      className: DataElements.PAGE_MANIPULATION,
+      items: flyoutItems,
+    }));
 
     return this;
   },
@@ -165,6 +182,15 @@ const PageManipulationOverlayAPI = {
       operations = [];
     }
     this.store.dispatch(actions.setPageManipulationOverlayItems(operations));
+    const flyoutItems = [];
+    for (const item of operations) {
+      flyoutItems.push(...convertItemToFlyoutList(item, this.store));
+    }
+    this.store.dispatch(actions.updateFlyout(DataElements.PAGE_MANIPULATION, {
+      dataElement: DataElements.PAGE_MANIPULATION,
+      className: DataElements.PAGE_MANIPULATION,
+      items: flyoutItems,
+    }));
 
     return this;
   },
@@ -180,7 +206,8 @@ WebViewer(...)
   });
    */
   getItems() {
-    return [...selectors.getPageManipulationOverlayItems(this.store.getState())];
+    const flyout = selectors.getFlyout(this.store.getState(), DataElements.PAGE_MANIPULATION);
+    return [...convertFlyoutListToItems(flyout.items)];
   },
   _getIndexByDataElement(dataElement) {
     let index;
@@ -219,3 +246,82 @@ WebViewer(...)
     this.store.dispatch(actions.setPageManipulationOverlayOpenByRightClick(true));
   }
 };
+
+function convertItemToFlyoutList(item, store) {
+  if (item.type === 'divider') {
+    return ['divider'];
+  }
+
+  const prebuiltElements = ['pageAdditionalControls', 'pageRotationControls', 'pageManipulationControls'];
+  if (item.dataElement && prebuiltElements.includes(item.dataElement)) {
+    if (item.dataElement === 'pageAdditionalControls') {
+      return getPageAdditionalControls(store);
+    } else if (item.dataElement === 'pageRotationControls') {
+      return getPageRotationControls(store);
+    } else if (item.dataElement === 'pageManipulationControls') {
+      return getPageManipulationControls(store);
+    }
+  }
+
+  const items = [];
+  items.push(item.header);
+  for (const operation of item.operations) {
+    items.push({
+      dataElement: operation.dataElement,
+      label: operation.title,
+      title: operation.title,
+      icon: operation.img,
+      onClick: () => {
+        operation.onClick(getPageNumbers(store));
+        isMobile() && store.dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
+      },
+    });
+  }
+  return items;
+}
+
+function convertFlyoutListToItems(flyoutList) {
+  const items = [];
+  let currentSection;
+  let skipCount = 0;
+  for (const item of flyoutList) {
+    if (skipCount > 0) {
+      skipCount--;
+      continue;
+    }
+    if (item === 'divider') {
+      items.push({ type: 'divider' });
+      continue;
+    }
+
+    if (typeof item === 'string') {
+      if (item === 'option.thumbnailsControlOverlay.move') {
+        currentSection = { dataElement: 'pageAdditionalControls' };
+        skipCount = 2;
+      } else if (item === 'action.rotate') {
+        currentSection = { dataElement: 'pageRotationControls' };
+        skipCount = 2;
+      } else if (item === 'action.pageManipulation') {
+        currentSection = { dataElement: 'pageManipulationControls' };
+        skipCount = 4;
+      } else {
+        currentSection = {
+          type: 'customPageOperation',
+          header: item,
+          dataElement: item,
+          operations: [],
+        };
+      }
+      items.push(currentSection);
+    } else {
+      currentSection.operations.push({
+        title: item.title,
+        img: item.icon,
+        dataElement: item.dataElement,
+        onClick: item.onClick,
+      });
+    }
+  }
+  return items;
+}
+

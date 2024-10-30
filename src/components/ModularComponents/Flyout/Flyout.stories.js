@@ -9,6 +9,7 @@ import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables
 import { createTemplate } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
+import { fireEvent } from '@testing-library/react';
 
 export default {
   title: 'ModularComponents/Flyout',
@@ -40,9 +41,15 @@ const initialState = {
     colorMap: {},
     disabledElements: {},
     customElementOverrides: {},
-    openElements: {},
+    openElements: {
+      flyoutMenu: true,
+      noIcons: true,
+      [DataElements.MAIN_MENU]: true,
+      menuWithComponentItems: true,
+    },
     customPanels: [],
     genericPanels: [],
+    focusedElementsStack: [],
     canUndo: {
       1: false,
       2: false,
@@ -291,7 +298,7 @@ const initialState = {
               console.warn('Item 9 should not click');
             },
             icon: 'icon-close',
-            disabled: 'true',
+            disabled: true,
           }
         ],
       },
@@ -443,7 +450,7 @@ const store3 = configureStore({
 
 export const MainMenuFlyout = () => (
   <Provider store={store3}>
-    <Flyout/>
+    <Flyout />
   </Provider>
 );
 
@@ -497,4 +504,30 @@ FlyoutOpeningTest.play = async ({ canvasElement }) => {
   // Check if the disabled submenu item is not present
   const disabledSubmenuItem = await canvas.queryByText('Disabled Submenu Item');
   expect(disabledSubmenuItem).not.toBeInTheDocument();
+};
+
+FlyoutComponent.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const option1 = await canvas.findByRole('button', { name: /Item 1/i });
+  await fireEvent.focus(option1);
+  // Pressing first element on the Flyout to open its children
+  await fireEvent.keyDown(option1, { key: 'Enter', code: 'Enter' });
+  const backButton = await canvas.findByRole('button', { name: /Back/i });
+  const option11 = await canvas.findByRole('button', { name: /Item 1.1/i });
+  expect(backButton).toBeInTheDocument();
+  expect(option11).toBeInTheDocument();
+  // After opening the first child, pressing arrow down to focus the first element with children
+  await fireEvent.keyDown(backButton, { key: 'ArrowDown', code: 'ArrowDown' });
+  expect(option11).toHaveFocus();
+  await fireEvent.keyDown(option11, { key: 'Enter', code: 'Enter' });
+  const option111 = await canvas.findByRole('button', { name: /Item 1.1.1/i });
+  expect(option111).toBeInTheDocument();
+  expect(backButton).toBeInTheDocument();
+  // Returning to the beginning of the flyout tree
+  await fireEvent.keyDown(backButton, { key: 'Enter', code: 'Enter' });
+  await fireEvent.keyDown(backButton, { key: 'Enter', code: 'Enter' });
+  // Checking if the first element of the Flyout is in the page
+  expect(backButton).not.toBeInTheDocument();
+  const option1SecondRef = await canvas.findByRole('button', { name: /Item 1/i });
+  expect(option1SecondRef).toBeInTheDocument();
 };

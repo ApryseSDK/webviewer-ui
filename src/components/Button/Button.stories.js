@@ -17,12 +17,27 @@ function rootReducer(state = initialState, action) {
 const store = createStore(rootReducer);
 
 const BasicComponent = (props) => {
+
   return (
     <Provider store={store}>
-      <ButtonComponent {...props} />
+      <ButtonComponent {...props}/>
     </Provider>
   );
 };
+
+export function BasicButton(props) {
+  const [isActive, setIsActive] = React.useState(false);
+
+  const toggleButton = () => {
+    setIsActive(!isActive);
+  };
+
+  return (
+    <Provider store={store}>
+      <ButtonComponent {...props} img='icon-tool-pen-line' ariaCurrent={isActive} ariaPressed={isActive} ariaExpanded={isActive} ariaSelected={isActive} isActive={isActive} onClick={toggleButton}/>
+    </Provider>
+  );
+}
 
 export default {
   title: 'Components/Buttons',

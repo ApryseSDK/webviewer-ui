@@ -2,9 +2,25 @@
 @import '../../constants/modal';
 @import '../../constants/popup.scss';
 
-.SnippingToolPopup {
-  width: 250px;
+.SnippingPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+  top: 0;
 
+  .collapsible-page-group-header > button {
+    font-weight: bold;
+    margin: 0;
+    @include mobile {
+      padding: 16px 16px;
+    }
+  }
+
+  .SnippingToolPopup {
+    width: 250px;
+  }
+  
   .snipping-section {
     padding: 16px;
     display: flex;
@@ -44,81 +60,109 @@
     font-size: 13px;
     display: flex;
     justify-content: space-between;
-  }
 
-  .save-button {
-    color: var(--primary-button-text);
-    padding: 6px 16px;
-    background: var(--primary-button);
-    border-radius: 4px;
-    border: 0;
-    height: 32px;
-    cursor: pointer;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: auto;
+    @include mobile {
+      width: 100%;
     }
   }
 
-  .cancel-button {
-    cursor: pointer;
-    background: none;
-    border: 0;
-    color: var(--secondary-button-text);
-    padding: 6px 16px;
-    margin-right: 4px;
-    height: 32px;
-    &:hover {
-      color: var(--secondary-button-hover);
+  .Button {
+    @include mobile {
+      width: auto;
+      height: 32px;
+      font-size: 13px;
+      margin: 0;
     }
-    &:focus {
-      outline: none;
+
+    &.save-button {
+      color: var(--primary-button-text);
+      padding: 6px 16px;
+      background: var(--primary-button);
+      border-radius: 4px;
+      border: 0;
+      height: 32px;
+      width: fit-content;
+      cursor: pointer;
+
+      @include mobile {
+        min-width: 75px;
+      }
+  
+      &:hover:not(:disabled) {
+        @extend %default-button-hover;
+        background-color: var(--primary-button-hover);
+      }
+  
+      &:disabled {
+        @extend %default-button-disabled;
+        cursor: auto;
+        border: 0;
+        span {
+          color: var(--primary-button-text);
+        }
+      }
     }
-    &:disabled {
-      opacity: 0.5;
-      cursor: auto;
+  
+    &.cancel-button {
+      cursor: pointer;
+      background: none;
+      border: 0;
       color: var(--secondary-button-text);
+      padding: 6px 16px;
+      margin-right: 4px;
+      height: 32px;
+      width: fit-content;
+
+      @include mobile {
+        width: fit-content;
+        margin-left: 8px;
+      }
+  
+      &:hover {
+        @extend %secondary-button-hover;
+        background-color: transparent;
+        box-shadow: none;
+      }
+  
+      &:focus {
+        outline: none;
+      }
+  
+      &:disabled {
+        opacity: 0.5;
+        cursor: auto;
+        color: var(--secondary-button-text);
+      }
     }
   }
-}
-
-.custom-select {
-  flex-grow: 2;
-  max-width: 100%;
-  margin: 4px;
-
-  .customSelector {
-    margin-left: 0;
-    height: 28px;
-    width: 100% !important;
-
-    .customSelector__selectedItem {
+  
+  .custom-select {
+    flex-grow: 2;
+    max-width: 100%;
+  
+    .customSelector {
+      margin-left: 0;
+      width: 100% !important;
+  
+      .customSelector__selectedItem {
+        width: 100%;
+      }
+  
+      ul {
+        width: 100%;
+      }
+  
+      .customSelector__arrow {
+        height: 18px;
+        width: 18px;
+      }
+    }
+  
+    select {
+      height: 28px;
       width: 100%;
     }
-
-    ul {
-      width: 100%;
-    }
-
-    .customSelector__arrow {
-      height: 18px;
-      width: 18px;
-    }
   }
-
-  select {
-    height: 28px;
-    width: 100%;
-  }
-}
-
-.SnippingPopupContainer {
-  @extend %popup;
-  border-radius: 4px;
-  box-shadow: 0 0 3px 0 var(--document-box-shadow);
-  background: var(--component-background);
-  top: 0;
 
   @include mobile {
     width: 100%;
@@ -129,10 +173,6 @@
     top: auto;
 
     .snipping-mobile-section {
-      padding-top: 8px;
-      padding-bottom: 8px;
-      padding-left: 12px;
-      padding-right: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -142,14 +182,14 @@
     .SnippingToolPopup {
       width: 100%;
     }
-    
+
     .snipping-mobile-container {
       display: flex;
       align-items: center;
 
       .customSelector {
         width: 100%;
-      }  
+      }
 
       .Dropdown {
         height: 32px;
@@ -175,12 +215,13 @@
       .wrapper {
         z-index: 79;
       }
-    
+
       .save-button {
         margin-left: 6px;
         min-width: 75px;
       }
     }
+
     .cancel-button {
       padding: 0;
 

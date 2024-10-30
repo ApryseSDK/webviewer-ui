@@ -15,7 +15,6 @@ export default {
 const item1 = {
   dataElement: 'Ribbon Item1',
   img: 'icon-header-pan',
-  title: 'icon only',
   type: 'ribbonItem',
 };
 
@@ -44,7 +43,9 @@ const initialState = {
     customHeadersAdditionalProperties: {},
     disabledElements: {},
     customElementOverrides: {},
-    openElements: {},
+    openElements: {
+      RibbonOverflowFlyout: true,
+    },
     customPanels: [],
     genericPanels: [],
     canUndo: {
@@ -103,6 +104,9 @@ const noIconsStore = configureStore({
       ...initialState,
       viewer: {
         ...initialState.viewer,
+        openElements: {
+          RibbonOverflowFlyoutNoIcons: true,
+        },
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
         activeCustomPanel: '',
         modularHeaders: {},

@@ -145,3 +145,5 @@ export const Empty = () => {
   };
   return <MockApp initialState={stateWithEmptyLayersPanel} />;
 };
+
+Empty.parameters = { layout: 'fullscreen' };

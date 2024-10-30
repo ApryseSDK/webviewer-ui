@@ -26,6 +26,8 @@
     "ungroup": "Ungroup",
     "download": "Скачать",
     "edit": "Редактировать",
+    "collapse": "Крах",
+    "expand": "Расширять",
     "extract": "экстракт",
     "extractPage": "Извлечь страницу",
     "enterFullscreen": "Полный экран",
@@ -36,6 +38,7 @@
     "more": "Больше",
     "openFile": "Открыть документ",
     "page": "Страница",
+    "of": "из",
     "pagePrev": "Предыдущая страница",
     "pageNext": "Следующая страница",
     "pageSet": "Установить страницу",
@@ -43,6 +46,7 @@
     "proceed": "Продолжить",
     "name": "название",
     "rename": "Переименовать",
+    "remove": "Удалять",
     "ok": "OK",
     "rotate": "Повернуть",
     "rotate3D": "Повернуть",
@@ -109,6 +113,10 @@
     "moveToBottom": "Вниз",
     "movePageToTop": "Переместить страницу вверх",
     "movePageToBottom": "Переместить страницу вниз",
+    "moveUp": "Переместить вверх",
+    "moveDown": "Переместить вниз",
+    "moveLeft": "Двигаться влево",
+    "moveRight": "Двигаться вправо",
     "backToMenu": "Назад к меню",
     "redactPages": "Редактировать страницы",
     "playAudio": "Воспроизвести аудио",
@@ -121,15 +129,20 @@
     "comparePages": "Сравните страницы",
     "startComparison": "Начать сравнение",
     "showComparison": "Показать сравнение",
+    "highlightChanges": "Выделение изменений",
     "back": "Назад",
     "clearSignature": "Очистить подпись",
+    "clearInitial": "Очистить начальный",
     "readOnlySignature": "Подпись только для чтения не может быть удалена",
     "newDocument": "Новый документ",
     "sideBySideView": "Вид сбоку",
     "pageNumberInput": "Ввод номера страницы",
     "addNewColor": "Добавить новый цвет",
     "deleteColor": "Удалить выбранный цвет",
-    "copySelectedColor": "Копировать выбранный цвет"
+    "copySelectedColor": "Копировать выбранный цвет",
+    "showMoreColors": "Показать больше цветов",
+    "showLessColors": "Показать меньше цветов",
+    "fromCustomColorPicker": "из пользовательского палитры цветов"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -185,7 +198,8 @@
     "3D": "3D",
     "sound": "Звук",
     "changeView": "Сменить вид",
-    "newImage": "Новое изображение"
+    "newImage": "Новое изображение",
+    "defaultCustomStampTitle": "Индивидуальный штамп"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -220,6 +234,7 @@
     "searchPanel": "Поиск",
     "menuOverlay": "Меню",
     "notesPanel": "Заметки",
+    "indexPanel": "Индексная панель",
     "outlinePanel": "Контур",
     "outlinesPanel": "Контуры",
     "newOutlineTitle": "Новое название структуры",
@@ -234,7 +249,8 @@
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
-    "viewControlsOverlay": "Изменить вид",
+    "viewControls": "Изменить вид",
+    "pageControls": "Элементы управления страницы",
     "calibration": "калибровка",
     "zoomOverlay": "Наложение масштаба",
     "textPopup": "Текстовое всплывающее окно",
@@ -243,8 +259,10 @@
     "multiSelectButton": "Выбор из нескольких вариантов",
     "pageReplaceModalTitle": "Заменить страницу",
     "files": "Файлы",
+    "file": "Файл",
     "editText": "Редактировать текст",
     "redactionPanel": "Панель редактирования",
+    "tabLabel": "Вкладка",
     "noteGroupSection": {
       "open": "Просмотреть все аннотации",
       "close": "Закрыть все аннотации"
@@ -283,6 +301,7 @@
     "searching": "Поиск...",
     "searchCommentsPlaceholder": "Поиск комментариев",
     "searchDocumentPlaceholder": "Искать документ",
+    "searchSettingsPlaceholder": "Настройки поиска",
     "searchSuggestionsPlaceholder": "Поисковые предложения",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
@@ -296,6 +315,7 @@
     "doNotShowAgain": "Не показывай мне это больше",
     "doNotAskAgain": "Не спрашивай снова",
     "enterReplacementText": "Введите текст, который вы хотите заменить",
+    "sort": "Сортировать",
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
@@ -311,10 +331,11 @@
     "selectFile": "Выберите файл",
     "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
-    "pageNum": "Номер страницы",
+    "pageNum": "Страница",
     "viewBookmark": "Посмотреть закладку на странице",
     "error": "Ошибка",
     "errorPageNumber": "Неверный номер страницы. Лимит",
+    "errorBlankPageNumber": "Пожалуйста, укажите номер страницы",
     "errorLoadingDocument": "При чтении этого документа возникла проблема, и некоторые страницы могут не отображаться. Это указывает на то, что документ может быть поврежден. Общее количество страниц – {{totalPageCount}}, а количество отображаемых страниц – {{displayedPageCount}}.",
     "noRevisions": "Этот документ не имеет изменений."
   },
@@ -357,6 +378,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Группы панелей инструментов",
+      "flyoutLabel": "Лента",
       "toolbarGroup-View": "Посмотреть",
       "toolbarGroup-Annotate": "Пометки",
       "toolbarGroup-Shapes": "Формы",
@@ -366,7 +388,10 @@
       "toolbarGroup-EditText": "Редактировать текст",
       "toolbarGroup-FillAndSign": "Заполните и подпишите",
       "toolbarGroup-Forms": "Формы",
-      "toolbarGroup-Redact": "Редактировать"
+      "toolbarGroup-Redact": "Редактировать",
+      "toolbarGroup-oe-Home": "Дом",
+      "toolbarGroup-oe-Insert": "Вставлять",
+      "toolbarGroup-oe-Review": "Обзор"
     },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
@@ -408,7 +433,8 @@
       "noteContent": {
         "noName": "(без имени)",
         "noDate": "(без даты)"
-      }
+      },
+      "toggleMultiSelect": "Переключить множественный выбор для аннотации"
     },
     "pageTransition": {
       "continuous": "Непрерывный",
@@ -428,7 +454,6 @@
       "includeComments": "Приложить комментарии",
       "printSettings": "Параметры печати",
       "printGrayscale": "Печать оттенков серого",
-      "flatten": "Сгладить документ",
       "printCurrentDisabled": "Текущий вид доступен только при просмотре одной страницы."
     },
     "printInfo": {
@@ -474,9 +499,14 @@
       "typeInitial": "Введите инициалы*",
       "drawSignature": "Нарисовать подпись*",
       "drawInitial": "Нарисовать инициалы*",
+      "imageSignature": "Подпись изображения",
+      "imageInitial": "Инициалы изображения",
       "pickInitialsFile": "Выберите инициалы",
       "noSignatures": "В настоящее время нет сохраненных подписей.",
-      "fontStyle": "стиль шрифта"
+      "fontStyle": "стиль шрифта",
+      "textSignature": {
+        "dropdownLabel": "Семейство шрифтов"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Ваши файлы",
@@ -523,13 +553,17 @@
       "countMeasurement": "Измерение счета",
       "radius": "Радиус",
       "count": "подсчитывать",
-      "length": "Длина"
+      "length": "Длина",
+      "xAxis": "Ось X",
+      "yAxis": "Ось Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Динамическое масштабирование размера шрифта"
     },
     "measurementOption": {
-      "scale": "Масштаб"
+      "scale": "Масштаб",
+      "selectScale": "Выберите масштаб",
+      "selectScaleDropdown": "Выбрать выпадающий список масштаба"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +575,8 @@
         "paperUnits": "Бумажные блоки",
         "displayUnits": "Единицы отображения",
         "fractionUnitsTooltip": "Дробные единицы применяются только к дюймам и футам-дюймам.",
-        "incorrectSyntax": "Неправильный синтаксис"
+        "incorrectSyntax": "Неправильный синтаксис",
+        "units": "Единицы"
       },
       "scaleOverlay": {
         "addNewScale": "Добавить новый масштаб",
@@ -560,6 +595,7 @@
         "irreversible": "необратимый",
         "willDeleteMeasurement": "и удалит связанные измерения.",
         "confirmDelete": "Вы уверены, что хотите удалить эту шкалу?",
+        "thisCantBeUndone": " Это невозможно отменить.",
         "ifChangeScale": "Если вы измените масштаб для выбранного измерения или инструмента, масштаб",
         "notUsedWillDelete": " больше не будут использоваться никакими измерениями или инструментами и будут удалены. Удаление необратимо.",
         "ifToContinue": "Вы уверены, что хотите продолжить?"
@@ -661,7 +697,9 @@
       "minute": "Минута",
       "second": "Второй",
       "textColor": "Цвет текста",
-      "backgroundColor": "Фоновый цвет"
+      "backgroundColor": "Фоновый цвет",
+      "dateToolTipLabel": "Дополнительная информация о формате даты",
+      "previewCustomStamp": "Предварительный просмотр"
     },
     "pageRedactModal": {
       "addMark": "Добавить отметку",
@@ -669,8 +707,7 @@
       "current": "Текущая страница",
       "specify": "Укажите страницы",
       "odd": "Только нечетные страницы",
-      "even": "Только четные страницы",
-      "header": "Пометить страницы как отредактированные"
+      "even": "Только четные страницы"
     },
     "lineStyleOptions": {
       "title": "Стиль"
@@ -725,6 +762,7 @@
       "zoomOptions": "Параметры масштабирования",
       "zoomIn": "Увеличить",
       "zoomOut": "Уменьшить",
+      "setHeaderFocus": "Устанавливает фокус на заголовок",
       "fitScreenWidth": "Подгоните документ под ширину экрана на маленьком экране (< 640 пикселей), в противном случае подгоните его под исходный размер.",
       "print": "Распечатать",
       "bookmarkOpenPanel": "Быстро добавить страницу в закладки и открыть панель закладок",
@@ -752,15 +790,16 @@
       "selectCreateTextStrikeoutTool": "Выберите инструмент AnnotationCreateTextStrikeout.",
       "selectCreateTextUnderlineTool": "Выберите инструмент AnnotationCreateTextUnderline.",
       "editKeyboardShorcut": "Изменить сочетание клавиш",
-      "setShorcut": "Установить ярлык",
-      "pressKeyToSet": "Нажмите клавишу или клавиши, чтобы установить новый ярлык.",
-      "shortcutAlreadyExists": "Комбинация клавиш выше уже существует."
+      "setShortcut": "Установить сочетание клавиш",
+      "editShortcut": "Редактировать ярлык",
+      "shortcutAlreadyExists": "Комбинация клавиш выше уже существует.",
+      "close": "Закрыть подсказку"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Удалить страницу",
-      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено",
+      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это невозможно отменить.",
       "deleteLastPageMessage": "Вы не можете удалить все страницы в документе."
     },
     "extractPage": {
@@ -928,6 +967,10 @@
     "invalidDateTime": "Неверная дата/время: ввод должен соответствовать формату"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Список полей формы",
+      "notFields": "В этом документе нет полей формы"
+    },
     "formFieldPopup": {
       "fieldName": "Имя поля",
       "fieldValue": "Значение по умолчанию",
@@ -938,11 +981,14 @@
       "apply": "Применять",
       "cancel": "Отмена",
       "flags": "Флаги поля",
+      "fieldSize": "Размер поля",
       "options": "Параметры",
+      "properties": "Характеристики",
       "radioGroups": "Радиокнопки с одинаковым именем поля будут входить в одну группу.",
       "nameRequired": "Требуется название поля",
       "fieldIndicator": "Полевые индикаторы",
       "documentFieldIndicator": "Индикаторы полей документа",
+      "includeFieldIndicator": "Включить индикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставьте текст сюда",
         "CheckBoxFormField": "Проверять",
@@ -962,6 +1008,14 @@
         "empty": "Имя поля не может быть пустым"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "Аннотация поля подписи",
+      "CheckBoxFormField": "Аннотация к полю флажка",
+      "RadioButtonFormField": "Аннотация поля переключателя",
+      "ListBoxFormField": "Аннотация поля списка",
+      "ComboBoxFormField": "Аннотация поля поля со списком",
+      "TextFormField": "Аннотация текстового поля"
+    },
     "apply": "Применить поля",
     "type": "Тип поля",
     "types": {
@@ -970,7 +1024,8 @@
       "checkbox": "Флажок",
       "radio": "Переключатель",
       "listbox": "Окно списка",
-      "combobox": "Поле со списком"
+      "combobox": "Поле со списком",
+      "button": "Кнопка"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1159,8 @@
     "cropDimensions": "Размеры обрезки",
     "dimensionInput": {
       "unitOfMeasurement": "Единица измерения",
-      "autoTrim": "Автообрезка"
+      "autoTrim": "Автообрезка",
+      "autoTrimCustom": "Обычай"
     },
     "cropModal": {
       "applyTitle": "Применить кадрирование?",
@@ -1131,10 +1187,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
-    "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
+    "redactionSearchPlaceholder": "Редактирование с помощью клавиатуры или шаблонов",
     "redactionCounter": "Помечено для редактирования",
     "clearMarked": "Прозрачный",
     "redactAllMarked": "Редактировать все",
+    "redactionItems": "Редактирование элементов",
     "redactionItem": {
       "regionRedaction": "Редакция региона",
       "fullPageRedaction": "Полная редакция страницы",
@@ -1145,13 +1202,13 @@
     },
     "expand": "Расширять",
     "collapse": "Крах",
-    "searchResults": "Результаты поиска",
+    "searchResults": "результаты поиска",
     "search": {
       "creditCards": "Кредитная карта",
       "phoneNumbers": "Телефонные номера",
       "images": "Картинки",
       "emails": "электронные письма",
-      "pattern": "Шаблон",
+      "pattern": "Узоры",
       "start": "Начните поиск"
     }
   },
@@ -1177,6 +1234,7 @@
     "createFolder": "Создать папку",
     "portfolioPanelTitle": "PDF-портфолио",
     "portfolioNewFolder": "Новая папка",
+    "portfolioDocumentTitle": "Заголовок документа",
     "portfolioFolderPlaceholder": "Имя папки",
     "portfolioFilePlaceholder": "Имя файла",
     "folderNameAlreadyExists": "Имя папки уже существует",
@@ -1200,12 +1258,14 @@
     "rightAlign": "Выровнять по правому краю",
     "justify": "Оправдывать",
     "lineSpacing": "Расстояние между строками и абзацами",
+    "lineSpacingMenu": "Межстрочный интервал",
     "bulletList": "Маркированный список",
     "numberList": "Нумерованный список",
     "decreaseIndent": "Уменьшить отступ",
     "increaseIndent": "Увеличить отступ",
     "insertLink": "Вставить ссылку",
     "insertImage": "Вставить изображение",
+    "image": "Изображение",
     "table": "Стол",
     "insertRowAbove": "Вставить строку выше",
     "insertRowBelow": "Вставить строку ниже",
@@ -1226,10 +1286,47 @@
     "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах.",
     "previewAllChanges": "Предварительный просмотр всех изменений",
     "accept": "Принимать",
-    "reject": "Отклонять"
+    "reject": "Отклонять",
+    "pastingTitle": "Вставка недоступна",
+    "pastingMessage": "Вставка не поддерживается в вашем браузере. Вместо этого вы можете использовать сочетание клавиш",
+    "pastingWithoutFormatTitle": "Вставка без форматирования недоступна.",
+    "pastingWithoutFormatMessage": "Вставка без форматирования не поддерживается вашим браузером. Вместо этого вы можете использовать сочетание клавиш",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "Одинокий",
+      "double": "Двойной",
+      "custom": "Обычай"
+    },
+    "numberDropdown": {
+      "6": "Число латинское Roman 1",
+      "7": "Число Десятичное",
+      "8": "Число латинское Roman 2",
+      "10": "латинский римский",
+      "11": "Римско-латинское число",
+      "dropdownLabel": "Предварительные настройки нумерации"
+    },
+    "bulletDropdown": {
+      "0": "Пуля",
+      "1": "Пуля Квадрат",
+      "2": "Квадратная пуля",
+      "3": "Алмазный",
+      "4": "Проверять",
+      "5": "Стрелка",
+      "dropdownLabel": "Предустановки маркеров"
+    },
+    "fontSize": {
+      "dropdownLabel": "Размер шрифта"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Стили шрифтов"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Семейство шрифтов"
+    }
   },
   "insertPageModal": {
-    "title": "Добавить новую страницу",
+    "title": "Вставить новую страницу",
     "tabs": {
       "blank": "Пустой",
       "upload": "Загрузить"
@@ -1333,9 +1430,28 @@
       "redactionTextPlaceholder": "Вставить текстовую метку",
       "contentEdit": "Содержимое Редактировать"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Стиль стартовой линии",
+      "middleLineStyleLabel": "Стиль средней линии",
+      "endLineStyleLabel": "Стиль конечной линии"
+    },
     "addColorToCustom": "Добавить в пользовательские цвета",
-    "noToolSelected": "Этот документ не содержит слоев.",
-    "noToolStyle": "Инструмент не содержит никаких свойств стиля."
+    "noToolSelected": "Выберите инструмент, чтобы просмотреть его свойства.",
+    "noToolStyle": "Инструмент не содержит никаких свойств стиля.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Начало линии"
+      },
+      "end": {
+        "dropdownLabel": "Конец строки"
+      },
+      "middle": {
+        "dropdownLabel": "Линия Середина"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Граница"
+    }
   },
   "signatureListPanel": {
     "header": "Список подписей",
@@ -1349,5 +1465,8 @@
   "rubberStampPanel": {
     "header": "Марки",
     "standard": "Стандартные марки"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Выбор цвета"
   }
 }

@@ -8,7 +8,7 @@ import actions from 'actions';
 import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import core from 'src/core';
 import { useTranslation } from 'react-i18next';
-import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
+import ThumbnailControlsMulti from 'src/components/ThumbnailControlsMulti';
 import './DocumentControls.scss';
 
 function getPageString(selectedPageArray, pageLabels) {
@@ -78,7 +78,9 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
       // set a short timeout due to race condition caused by onBlur and
       // changing the documentControlsButton based on isThumbnailSelectingPages
       setTimeout(() => {
-        enableThumbnailSelectingPages();
+        if (pageString !== previousPageString) {
+          enableThumbnailSelectingPages();
+        }
       }, 100);
     }
   };
@@ -101,7 +103,7 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
       {shouldShowControls ? (
         <div className={'documentControls'}>
           <div className={'divider'}></div>
-          {isThumbnailSelectingPages && <LeftPanelPageTabs parentElement={parentElement} />}
+          {isThumbnailSelectingPages && <ThumbnailControlsMulti parentElement={parentElement}/>}
           {customizableUI &&
             <label className={'documentControlsLabel'} htmlFor="pageNumbersInput">
               <span>

@@ -38,8 +38,10 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
   const [worldWarningMessage, setWorldWarningMessage] = useState('');
   const [scaleValueBlurFlag, setScaleValueBlurFlag] = useState(false);
 
+  const [leftDropdownWidth, setLeftDropdownWidth] = useState(0);
   const pageValueInput = useRef(null);
   const worldValueInput = useRef(null);
+  const leftContainerRef = useRef(null);
 
   const [t] = useTranslation();
 
@@ -131,6 +133,12 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
       !isWorldValueValid && onInputValueChange(worldValueInput.current.value, false);
     }
   }, [isFractionalPrecision]);
+
+  useEffect(() => {
+    if (leftContainerRef.current) {
+      setLeftDropdownWidth((leftContainerRef.current.clientWidth - 8) / 2);
+    }
+  }, [leftContainerRef]);
 
   const isPageValueValid = !!scale[0][0];
   const isWorldValueValid = !!scale[1][0];
@@ -249,60 +257,68 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
     <div className="custom-scale-container">
       <div className="scale-ratio-input-container">
         <div className="scale-ratio-display">
-          <div>
-            <div className="unit-label">{t('insertPageModal.pageDimensions.units')}</div>
+          <div className="left-container" ref={leftContainerRef}>
+            <div className="unit-label" id="paper-units-dropdown-label">{t('option.measurement.scaleModal.paperUnits')}</div>
             <div className="input-wrapper">
-              <div className={classNames({ 'warning-alert' : !isPageValueValid })}>
+              <div className={classNames({ 'warning-alert': !isPageValueValid })}>
                 <input
                   type={isFractionalPrecision ? 'text' : 'number'}
                   min="0"
                   className={pageValueClass}
                   value={pageValueDisplay}
+                  aria-label={t('insertPageModal.pageDimensions.units')}
                   data-element="customPageScaleValue"
                   onChange={(e) => onInputValueChange(e.target.value, true)}
                   placeholder={getInputPlaceholder(true)}
                   ref={pageValueInput}
                   onBlur={onInputBlur}
                 />
-                <Icon glyph="icon-alert" className="warning-alert-icon"/>
+                <Icon glyph="icon-alert" className="warning-alert-icon" />
               </div>
               <Tooltip content={'option.measurement.scaleModal.paperUnits'}>
                 <div className="unit-input">
                   <Dropdown
+                    id="paper-units-dropdown"
+                    labelledById='paper-units-dropdown-label'
                     dataElement="customPageScaleUnit"
                     items={unitFromOptions}
                     onClickItem={(value) => onScaleUnitChange(value, true)}
                     currentSelectionKey={scale[0][1]}
+                    width={leftDropdownWidth}
                   />
                 </div>
               </Tooltip>
             </div>
           </div>
-          <div style={{ paddingTop: 24 }}>{' = '}</div>
-          <div>
-            <div className="unit-label">{t('insertPageModal.pageDimensions.units')}</div>
+          <div className="scale-ratio-equal">{' = '}</div>
+          <div className="right-container">
+            <div className="unit-label" id="display-units-dropdown-label">{t('option.measurement.scaleModal.displayUnits')}</div>
             <div className="input-wrapper">
-              <div className={classNames({ 'warning-alert' : !isWorldValueValid })}>
+              <div className={classNames({ 'warning-alert': !isWorldValueValid })}>
                 <input
                   type={(isFractionalPrecision || scale[1][1] === 'ft-in') ? 'text' : 'number'}
                   min='0'
                   className={worldValueClass}
                   value={worldValueDisplay}
+                  aria-label={t('insertPageModal.pageDimensions.units')}
                   data-element="customDisplayScaleValue"
                   onChange={(e) => onInputValueChange(e.target.value, false)}
                   placeholder={getInputPlaceholder(false)}
                   ref={worldValueInput}
                   onBlur={onInputBlur}
                 />
-                <Icon glyph="icon-alert" className="warning-alert-icon"/>
+                <Icon glyph="icon-alert" className="warning-alert-icon" />
               </div>
               <Tooltip content={'option.measurement.scaleModal.displayUnits'}>
                 <div className="unit-input">
                   <Dropdown
+                    id="display-units-dropdown"
+                    labelledById='display-units-dropdown-label'
                     items={unitToOptions}
                     dataElement="customDisplayScaleUnit"
                     onClickItem={(value) => onScaleUnitChange(value, false)}
                     currentSelectionKey={scale[1][1]}
+                    width={leftDropdownWidth}
                   />
                 </div>
               </Tooltip>
@@ -311,16 +327,16 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
 
         </div>
       </div>
-      <div className="warning-messages">
+      <div className="warning-messages" aria-live="assertive" >
         {!isPageValueValid && (
-          <div>
+          <p className="no-margin">
             {`${t('option.measurement.scaleModal.incorrectSyntax')} ${pageWarningMessage}`}
-          </div>
+          </p>
         )}
         {!isWorldValueValid && (
-          <div className="world-value-warning">
+          <p className="world-value-warning no-margin">
             {`${t('option.measurement.scaleModal.incorrectSyntax')} ${worldWarningMessage}`}
-          </div>
+          </p>
         )}
       </div>
     </div>

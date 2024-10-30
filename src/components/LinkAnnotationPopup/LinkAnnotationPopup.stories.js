@@ -8,6 +8,9 @@ const noop = () => { };
 export default {
   title: 'Components/LinkAnnotationPopup',
   component: LinkAnnotationPopup,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const initialState = {
@@ -17,6 +20,9 @@ const initialState = {
     annotationPopup: [
     ],
     activeDocumentViewerKey: 1,
+  },
+  featureFlags: {
+    customizableUI: true,
   },
 };
 

@@ -49,7 +49,7 @@ class CustomKeyboard extends Keyboard {
       ...Keyboard.DEFAULTS.bindings,
       'list autofill': undefined,
     }
-  }
+  };
 }
 
 Quill.register('modules/keyboard', CustomKeyboard, true);
@@ -146,10 +146,9 @@ const CommentTextarea = React.forwardRef(
         contentArray.pop();
         value = contentArray.map((item) => {
           const paragraph = document.createElement('p');
-          paragraph.innerText = item || '<br>';
+          paragraph.innerText = item || '\n';
           return paragraph.outerHTML;
-        }
-        ).join('');
+        }).join('');
       }
     }
 
@@ -159,12 +158,16 @@ const CommentTextarea = React.forwardRef(
         <ReactQuill
           className='comment-textarea ql-container ql-editor'
           style={{ overflowY: 'visible' }}
-          ref={ref}
+          ref={(ele) => {
+            if (ele) {
+              ele.getEditor().root.ariaLabel = `${isReply ? t('action.reply') : t('action.comment')}`;
+            }
+            return ref(ele);
+          }}
           modules={userData && userData.length > 0 ? mentionModule : {}}
           theme="snow"
           value={value}
           placeholder={`${isReply ? t('action.reply') : t('action.comment')}...`}
-          aria-label={`${isReply ? t('action.reply') : t('action.comment')}...`}
           onChange={onChange}
           onKeyDown={onKeyDown}
           formats={formats}
@@ -174,6 +177,7 @@ const CommentTextarea = React.forwardRef(
             className='add-attachment'
             dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}
             img='ic_fileattachment_24px'
+            title={`${t('action.add')} ${t('option.type.fileattachment')}`}
             onClick={addAttachment}
           />
         }

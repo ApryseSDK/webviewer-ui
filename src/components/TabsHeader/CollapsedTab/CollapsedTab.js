@@ -3,6 +3,7 @@ import './CollapsedTab.scss';
 import Button from 'components/Button';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { removeFileNameExtension } from 'helpers/TabManager';
 
 const propTypes = {
   tab: PropTypes.any.isRequired,
@@ -18,7 +19,7 @@ const propTypes = {
 const Tab = ({ tab, setActive, onDragStart, closeTab, id }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
-  const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
+  const name = removeExtension ? removeFileNameExtension(tab.options.filename, false) : tab.options.filename;
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {

@@ -27,9 +27,21 @@ export default window.isApryseWebViewerWebComponent ? (param, defaultValue = fal
 
   let val = getInstanceNode().getAttribute(correctedParam);
   if (correctedParam === 'initialDoc' && val) {
-    val = val.split(',');
     // If initialDoc is string with commas,
     // we will split it and turn it to array
+    const filesArray = val.split(',');
+    const resultFilesArray = [];
+    let currentFile = '';
+
+    for (let file of filesArray) {
+      currentFile += (currentFile ? ',' : '') + file;
+
+      if (/\.\w{2,4}$/.test(file)) {  // Check if part ends with an extension (e.g. .pdf, .docx)
+        resultFilesArray.push(currentFile);
+        currentFile = ''; // Reset for the next file
+      }
+    }
+    val = resultFilesArray;
     if (val && val.length === 1) {
       val = val[0];
     }

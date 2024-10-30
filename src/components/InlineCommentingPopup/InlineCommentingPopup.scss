@@ -119,10 +119,6 @@
     margin-top: 16px;
   }
 
-  .note-popup-options:not(.options-reply) {
-    top: 33px;
-  }
-
   .quill,
   .ql-container,
   .ql-editor {
@@ -133,7 +129,6 @@
 
   .Button {
     margin: 0;
-  
     &.add-attachment,
     &.reply-button {
       margin: 0;

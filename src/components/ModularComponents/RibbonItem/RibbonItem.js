@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, forwardRef } from 'react';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
@@ -9,14 +9,13 @@ import classNames from 'classnames';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
-
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivenessHelper';
-import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import core from 'core';
+import FlyoutItemContainer from '../FlyoutItemContainer';
 
-const RibbonItem = (props) => {
+const RibbonItem = forwardRef((props, ref) => {
   const elementRef = useRef();
   const { t, ready: tReady } = useTranslation();
   const dispatch = useDispatch();
@@ -30,25 +29,16 @@ const RibbonItem = (props) => {
     direction,
     justifyContent,
     isFlyoutItem,
-    iconDOMElement,
-    toolbarGroup
+    toolbarGroup,
+    ariaCurrent
   } = props;
 
-  const [
-    activeGroupedItems,
-    activeCustomRibbon,
-    lastPickedToolForGroupedItems,
-    isRibbonItemDisabled,
-    customHeadersAdditionalProperties,
-    allAssociatedGroupedItems,
-  ] = useSelector((state) => [
-    selectors.getActiveGroupedItems(state),
-    selectors.getActiveCustomRibbon(state),
-    selectors.getLastPickedToolForGroupedItems(state, groupedItems),
-    selectors.isElementDisabled(state, dataElement),
-    selectors.getCustomHeadersAdditionalProperties(state),
-    [...groupedItems, ...getNestedGroupedItems(state, groupedItems)],
-  ]);
+  const activeGroupedItems = useSelector((state) => selectors.getActiveGroupedItems(state));
+  const activeCustomRibbon = useSelector((state) => selectors.getActiveCustomRibbon(state));
+  const lastPickedToolForGroupedItems = useSelector((state) => selectors.getLastPickedToolForGroupedItems(state, groupedItems));
+  const isRibbonItemDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
+  const customHeadersAdditionalProperties = useSelector((state) => selectors.getCustomHeadersAdditionalProperties(state));
+  const allAssociatedGroupedItems = useSelector((state) => [...groupedItems, ...getNestedGroupedItems(state, groupedItems)], shallowEqual);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -71,7 +61,7 @@ const RibbonItem = (props) => {
     }
   }, [activeGroupedItems, activeCustomRibbon, lastPickedToolForGroupedItems]);
 
-  const onClick = () => {
+  const onClick = useCallback(() => {
     if (groupedItems.length < 1) {
       core.setToolMode(defaultTool);
     }
@@ -90,7 +80,7 @@ const RibbonItem = (props) => {
         core.getContentEditManager().endContentEditMode();
       }
     }
-  };
+  }, [activeGroupedItems]);
 
   if (isRibbonItemDisabled) {
     return null;
@@ -102,37 +92,31 @@ const RibbonItem = (props) => {
 
   return (
     isFlyoutItem ?
-      (
-        innerItemToFlyoutItem({
-          isDisabled: false,
-          icon: iconDOMElement,
-          label: translatedLabel,
-        }, onClick)
-      ) :
-      (
-        <div className={classNames({
-          'RibbonItem': true,
-          'vertical': direction === DIRECTION.COLUMN,
-          'horizontal': direction === DIRECTION.ROW,
-          'left': justifyContent !== JUSTIFY_CONTENT.END,
-          'right': justifyContent === JUSTIFY_CONTENT.END,
-        })}
+      <FlyoutItemContainer {...props} ref={ref} onClick={onClick} />
+      :
+      <div className={classNames({
+        'RibbonItem': true,
+        'vertical': direction === DIRECTION.COLUMN,
+        'horizontal': direction === DIRECTION.ROW,
+        'left': justifyContent !== JUSTIFY_CONTENT.END,
+        'right': justifyContent === JUSTIFY_CONTENT.END,
+      })}
+      >
+        <Button
+          isActive={isActive}
+          dataElement={dataElement}
+          img={img}
+          label={translatedLabel}
+          title={translatedLabel || title}
+          useI18String={false}
+          onClick={onClick}
+          disabled={disabled}
+          ariaCurrent={ariaCurrent}
         >
-          <Button
-            isActive={isActive}
-            dataElement={dataElement}
-            img={img}
-            label={translatedLabel}
-            title={translatedLabel || title}
-            useI18String={false}
-            onClick={onClick}
-            disabled={disabled}
-          >
-          </Button>
-        </div>
-      )
+        </Button>
+      </div>
   );
-};
+});
 
 RibbonItem.propTypes = {
   dataElement: PropTypes.string,
@@ -145,6 +129,9 @@ RibbonItem.propTypes = {
   justifyContent: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   iconDOMElement: PropTypes.any,
+  toolbarGroup: PropTypes.string,
+  ariaCurrent: PropTypes.string,
 };
+RibbonItem.displayName = 'RibbonItem';
 
-export default RibbonItem;
+export default React.memo(RibbonItem);

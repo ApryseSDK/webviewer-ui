@@ -1,23 +1,22 @@
+import React, { forwardRef } from 'react';
 import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getPresetButtonDOM, menuItems } from '../../Helpers/menuItems';
+import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { print } from 'helpers/print';
 import selectors from 'selectors';
 import core from 'core';
-import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-import { useTranslation } from 'react-i18next';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
+import useFocusHandler from 'hooks/useFocusHandler';
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 
 /**
  * A button that prints the document.
  * @name printButton
  * @memberof UI.Components.PresetButton
  */
-const PrintButton = (props) => {
-  const { isFlyoutItem, iconDOMElement } = props;
-  const { label } = menuItems.printButton;
+const PrintButton = forwardRef((props, ref) => {
+  const { isFlyoutItem } = props;
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const [
     useClientSidePrint,
@@ -36,17 +35,15 @@ const PrintButton = (props) => {
     shallowEqual,
   );
 
-  const handlePrintButtonClick = () => {
+  const handlePrint = () => {
     print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
   };
 
+  const handlePrintButtonClick = useFocusHandler(handlePrint);
+
   return (
     isFlyoutItem ?
-      innerItemToFlyoutItem({
-        isDisabled: false,
-        icon: iconDOMElement,
-        label: t(label),
-      }, handlePrintButtonClick)
+      <FlyoutItemContainer {...props} ref={ref} onClick={handlePrintButtonClick} />
       :
       getPresetButtonDOM(
         PRESET_BUTTON_TYPES.PRINT,
@@ -54,11 +51,11 @@ const PrintButton = (props) => {
         handlePrintButtonClick
       )
   );
-};
+});
 
 PrintButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
-  iconDOMElement: PropTypes.object,
 };
+PrintButton.displayName = 'PrintButton';
 
 export default PrintButton;

@@ -24,6 +24,7 @@
 
   --yellow-1: #FACE0080;
   --red: #D52A2A;
+  --green: #006D41;
   /* stylelint-enable color-no-hex */
 
   --component-background: var(--gray-0);
@@ -48,6 +49,7 @@
   --faded-text: var(--gray-7);
   --placeholder-text: var(--gray-7);
   --ribbon-active-color: var(--blue-5);
+  --ribbon-hover-color: var(--blue-6);
 
   --no-presets-text: var(--gray-6);
   --disabled-text: var(--gray-5);
@@ -72,6 +74,7 @@
   --primary-button-text: var(--gray-0);
   --primary-button-hover: var(--blue-6);
 
+  --secondary-button-border: var(--blue-5);
   --secondary-button-text: var(--blue-5);
   --secondary-button-hover: var(--blue-6);
 
@@ -113,6 +116,9 @@
   --tools-overlay-button-hover: var(--blue-1);
   --tools-overlay-button-active: var(--blue-2);
 
+  --fileAttachment-title-padding: 0;
+  --fileAttachment-list-padding: 24px;
+
   --outline-color: var(--blue-5);
   --outline-hover: var(--gray-2);
   --outline-selected: var(--gray-2);
@@ -120,9 +126,9 @@
 
   --preset-background: var(--gray-1);
 
-  --scale-overlay-item-hover: var(--blue-4);
+  --scale-overlay-item-hover: var(--dropdown-item-hover);
 
-  --oe-table-dropdown-highlight: var(--blue-4);
+  --oe-table-dropdown-highlight: var(--gray-5);
 
   --bookmark-outline-hover-border: var(--blue-5);
 
@@ -144,13 +150,13 @@
   --multi-tab-flyout-hover-text: var(--gray-0);
   --multi-tab-toggle-button-active: var(--blue-5);
 
-  --watermark-preview-background: var(--gray-2);
+  --file-preview-background: var(--gray-2);
 
   --tab-border-color: var(--border);
   --tab-border-color-hover: var(--blue-6);
   --tab-background-color-hover: var(--faded-component-background);
-  --tab-border-color-selected: var(--blue-5);
-  --tab-text-color-selected: var(--blue-5);
+  --tab-color-selected: var(--blue-5);
+  --tab-text-color-selected: var(--gray-0);
   --dropdown-item-hover: var(--blue-6);
   --dropdown-item-active: var(--blue-5);
   --dropdown-item-text-hover: var(--gray-0);
@@ -170,4 +176,14 @@
   --colorpicker-tool-bg: var(--tools-button-hover);
 
   --input-switch-default-color: var(--gray-6);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
+
+  --change-list-old-bg: #FFF2F2;
+  --change-list-new-bg: #E8FAF3;
+  --swipe-indicator-bg: var(--gray-6);
+
+  --slider-height: 5px;
+  --slider-thumb-size: 18px;
+  --slider-thumb-margin: -6px;
 }

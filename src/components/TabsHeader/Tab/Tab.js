@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import './Tab.scss';
 import Button from 'components/Button';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { removeFileNameExtension } from 'helpers/TabManager';
 
 const propTypes = {
   tab: PropTypes.any.isRequired,
@@ -19,7 +21,9 @@ const propTypes = {
 const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, closeTab, id, isToLeftOfActive }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
-  const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
+  const labelName = removeExtension ? removeFileNameExtension(tab.options.filename, false) : tab.options.filename;
+  const nameForId = labelName.replace(/\s+/g, '').toLowerCase();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (tab && tab.disabled !== disabled) {
@@ -27,22 +31,37 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
     }
   }, [tab]);
 
+  const tabLabel = (
+    <div className={classNames({ 'file-text': true, disabled })} >
+      <p>{labelName}</p>
+    </div>
+  );
+
   return (
-    <div className={'draggable-tab'}
+    <div className={classNames({ 'draggable-tab': true, active: isActive })}
       onDragOver={onDragOver} onDragStart={onDragStart} onDragLeave={onDragLeave} draggable id={id}
     >
-      <div className={classNames({ Tab: true, active: isActive })} onClick={setActive}>
-        <div className={classNames({ 'file-text': true, disabled })} >
-          <p>{name}</p>
-        </div>
-        <div className={'close-button-wrapper'}>
-          <Button
-            img="icon-close"
-            title="action.close"
-            onClick={closeTab}
-          />
-          {!isActive && !isToLeftOfActive && <div className="divider"/>}
-        </div>
+      <Button
+        role="tab"
+        ariaControls={`document-container-${nameForId}`}
+        ariaSelected={isActive}
+        ariaLabel={labelName}
+        tabIndex={isActive ? 0 : -1}
+        className={classNames({ Tab: true })}
+        onClick={setActive}
+        title={labelName}
+        label={tabLabel}
+        useI18String={false}
+      />
+      <div className={'close-button-wrapper'}>
+        <Button
+          img="icon-close"
+          title="action.close"
+          onClick={closeTab}
+          ariaLabel={`${t('action.close')} ${labelName}`}
+          tabIndex={-1}
+        />
+        {!isActive && !isToLeftOfActive && <div className="divider" />}
       </div>
     </div>
   );

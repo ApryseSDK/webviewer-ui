@@ -7,6 +7,8 @@ import Icon from 'components/Icon';
 import ColorPalettePicker from 'components/ColorPalettePicker/ColorPalettePicker'; // ColorPalletPicker inner import required as we are not using the redux outer container
 import Events from 'constants/events';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import core from 'core';
 
 import './CustomStampForums.scss';
 import { getInstanceNode } from 'helpers/getRootNode';
@@ -83,6 +85,40 @@ const CustomStampForums = ({
 
   const txt = updateTimestampLabel(usernameCheckbox, dateCheckbox, dateTime);
   const [timestampFormat, setTimestampFormat] = useState(txt);
+
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const tooltipRef = useRef(null);
+  const currentUser = core.getCurrentUser();
+  const currentDateTime = new Date().toLocaleString();
+
+  const handleClickOutside = (event) => {
+    if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+      setTooltipVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (tooltipVisible) {
+      document.addEventListener('click', handleClickOutside);
+    } else {
+      document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [tooltipVisible]);
+
+  const handleTooltipClick = () => {
+    setTooltipVisible(!tooltipVisible);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent default action for space key
+      handleTooltipClick();
+    }
+  };
 
   const canvasRef = useRef();
   const canvasContainerRef = useRef();
@@ -259,39 +295,42 @@ const CustomStampForums = ({
     formatsList.map((format) => dateTimeFormatToString(format, dateCheckbox, timeCheckbox))
   )).filter((format) => format !== '');
 
+
   return (
     <div className="text-customstamp">
       <div className="canvas-container" ref={canvasContainerRef}>
         <canvas
           className="custom-stamp-canvas"
           ref={canvasRef}
+          role={'img'}
+          aria-label={`${t('option.customStampModal.previewCustomStamp')} ${stampTextInputValue}, ${currentUser} ${currentDateTime}`}
         />
       </div>
       <div className="scroll-container">
         <div className="stamp-input-container">
-          <div className="stamp-label"> {stampInputLabel} </div>
+          <label htmlFor="stampTextInput" className="stamp-label"> {stampInputLabel}*</label>
           <input
-            className="text-customstamp-input"
+            id="stampTextInput"
+            className={classNames('text-customstamp-input', { 'error': !stampTextInputValue })}
             ref={inputRef}
             type="text"
-            aria-label={stampInputLabel.substring(0, stampInputLabel.length - 1)}
+            aria-label={stampInputLabel}
             value={stampTextInputValue}
             onChange={handleInputChange}
           />
-          {
-            !stampTextInputValue
-            && (
-              <div className="empty-stamp-input">
-                {t('message.emptyCustomStampInput')}
-              </div>
-            )
-          }
+          {!stampTextInputValue && <Icon glyph="icon-alert" className="error-icon" role="presentation" />}
+          <div className="empty-stamp-input" aria-live="assertive" >
+            {!stampTextInputValue && <p className="no-margin">{t('message.emptyCustomStampInput')}</p>}
+          </div>
         </div>
         <div className="font-container">
-          <div className="stamp-sublabel"> {t('option.customStampModal.fontStyle')} </div>
+          <div className="stamp-sublabel" id="custom-stamp-font-family-label"> {t('option.customStampModal.fontStyle')} </div>
           <div className="font-inner-container">
             <Dropdown
+              id='custom-stamp-font'
+              labelledById='custom-stamp-font-family-label'
               items={fonts}
+              ariaLabel={t('option.customStampModal.fontStyle')}
               onClickItem={handleFontChange}
               currentSelectionKey={state.font || fonts[0]}
               getCustomItemStyle={(item) => ({ fontFamily: item })}
@@ -303,6 +342,7 @@ const CustomStampForums = ({
               img="icon-menu-bold"
               title="option.richText.bold"
               isActive={state.bold}
+              ariaPressed={state.bold}
             />
             <Button
               dataElement="stampTextItalicButton"
@@ -310,6 +350,7 @@ const CustomStampForums = ({
               img="icon-menu-italic"
               title="option.richText.italic"
               isActive={state.italic}
+              ariaPressed={state.italic}
             />
             <Button
               dataElement="stampTextUnderlineButton"
@@ -317,6 +358,7 @@ const CustomStampForums = ({
               img="icon-menu-text-underline"
               title="option.richText.underline"
               isActive={state.underline}
+              ariaPressed={state.underline}
             />
             <Button
               dataElement="stampTextStrikeoutButton"
@@ -324,11 +366,14 @@ const CustomStampForums = ({
               img="icon-tool-text-manipulation-strikethrough"
               title="option.richText.strikeout"
               isActive={state.strikeout}
+              ariaPressed={state.strikeout}
             />
           </div>
         </div>
         <div className="color-container">
-          <div className="stamp-sublabel">{t('option.customStampModal.textColor')}</div>
+          <div id='stamp-text-color-label' className="stamp-sublabel">
+            {t('option.customStampModal.textColor')}
+          </div>
           <div className="colorpalette-container">
             <ColorPalettePicker
               getHexColor={getHexColor}
@@ -341,6 +386,8 @@ const CustomStampForums = ({
               handleOnClick={handleTextColorChange}
               openColorPicker={openColorPickerText}
               openDeleteModal={handleTextColorDelete}
+              ariaLabelledBy={'stamp-text-color-label'}
+              toolTipXOffset={-7}
               disableTitle
               enableEdit
               colorsAreHex
@@ -348,7 +395,9 @@ const CustomStampForums = ({
           </div>
         </div>
         <div className="color-container">
-          <div className="stamp-sublabel">{t('option.customStampModal.backgroundColor')}</div>
+          <div id="stamp-background-color-label" className="stamp-sublabel">
+            {t('option.customStampModal.backgroundColor')}
+          </div>
           <div className="colorpalette-container">
             <ColorPalettePicker
               getHexColor={getHexColor}
@@ -361,6 +410,8 @@ const CustomStampForums = ({
               handleOnClick={handleBackgroundColorChange}
               openColorPicker={openColorPickerBackground}
               openDeleteModal={handleBackgroundColorDelete}
+              ariaLabelledBy={'stamp-background-color-label'}
+              toolTipXOffset={-7}
               disableTitle
               enableEdit
               colorsAreHex
@@ -368,8 +419,10 @@ const CustomStampForums = ({
           </div>
         </div>
         <div className="timestamp-container">
-          <div className="stamp-sublabel"> {t('option.customStampModal.timestampText')} </div>
-          <div className="timeStamp-choice">
+          <div id="timestamp-label" className="stamp-sublabel">
+            {t('option.customStampModal.timestampText')}
+          </div>
+          <div className="timeStamp-choice" role="group" aria-labelledby="timestamp-label">
             <Choice
               id="default-username"
               checked={usernameCheckbox}
@@ -391,22 +444,44 @@ const CustomStampForums = ({
           </div>
         </div>
         {(dateCheckbox || timeCheckbox) && <div className="date-format-container">
-          <div className="stamp-sublabel">{t('option.customStampModal.dateFormat')}</div>
-          <div className="hover-icon">
-            <Icon glyph="icon-info"/>
-            <div className="date-format-description">
-              <div className="date-format-cell">M = {t('option.customStampModal.month')}</div>
-              <div className="date-format-cell">D = {t('option.customStampModal.day')}</div>
-              <div className="date-format-cell">Y = {t('option.customStampModal.year')}</div>
-              <div className="date-format-cell">H = {t('option.customStampModal.hour')} (24hr)</div>
-              <div className="date-format-cell">h = {t('option.customStampModal.hour')} (12hr)</div>
-              <div className="date-format-cell">m = {t('option.customStampModal.minute')}</div>
-              <div className="date-format-cell">s = {t('option.customStampModal.second')}</div>
-              <div className="date-format-cell">A = AM/PM</div>
-            </div>
-          </div>
+          <div className="stamp-sublabel" id="custom-stamp-date-format-label">{t('option.customStampModal.dateFormat')}</div>
+          <button
+            className="hover-icon"
+            ref={tooltipRef}
+            onClick={handleTooltipClick}
+            aria-label={`${t('option.customStampModal.dateToolTipLabel')}`}
+            type="button"
+            tabIndex="0"
+            onKeyDown={handleKeyDown}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              display: 'flex',
+              alignItems: 'flex-start', // Aligns the content to the top
+              cursor: 'pointer'
+            }}
+          >
+            <Icon glyph="icon-info" />
+            {tooltipVisible &&
+              (<div className="date-format-description">
+                <div className="date-format-cell">M = {t('option.customStampModal.month')}</div>
+                <div className="date-format-cell">D = {t('option.customStampModal.day')}</div>
+                <div className="date-format-cell">Y = {t('option.customStampModal.year')}</div>
+                <div className="date-format-cell">H = {t('option.customStampModal.hour')} (24hr)</div>
+                <div className="date-format-cell">h = {t('option.customStampModal.hour')} (12hr)</div>
+                <div className="date-format-cell">m = {t('option.customStampModal.minute')}</div>
+                <div className="date-format-cell">s = {t('option.customStampModal.second')}</div>
+                <div className="date-format-cell">A = AM/PM</div>
+              </div>
+              )
+            }
+          </button>
           <Dropdown
+            id='custom-stamp-date-format-dropdown'
+            labelledById='custom-stamp-date-format-label'
             items={dateTimeDropdownItems}
+            ariaLabel={`${t('option.customStampModal.dateFormat')} - ${dateTime}`}
             currentSelectionKey={dateTime}
             onClickItem={onDateFormatChange}
             maxHeight={200}

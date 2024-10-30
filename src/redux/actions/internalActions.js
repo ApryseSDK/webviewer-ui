@@ -23,8 +23,8 @@ export const disableElement = (dataElement, priority) => (
   dispatch,
   getState,
 ) => {
-  if (dataElement === 'leftPanel') {
-    dispatch(disableElements(['leftPanel', 'leftPanelButton'], priority));
+  if (dataElement === DataElements.LEFT_PANEL) {
+    dispatch(disableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
       disableElements(['toolStylePopup', 'annotationStylePopup'], priority),
@@ -78,8 +78,8 @@ export const enableElement = (dataElement, priority) => (
   dispatch,
   getState,
 ) => {
-  if (dataElement === 'leftPanel') {
-    dispatch(enableElements(['leftPanel', 'leftPanelButton'], priority));
+  if (dataElement === DataElements.LEFT_PANEL) {
+    dispatch(enableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
       enableElements(['toolStylePopup', 'annotationStylePopup'], priority),
@@ -770,6 +770,11 @@ export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
   payload: { isOfficeEditorMode }
 });
 
+export const setIsOfficeEditorHeaderEnabled = (isOfficeEditorHeaderEnabled) => ({
+  type: 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED',
+  payload: { isOfficeEditorHeaderEnabled }
+});
+
 export const setOfficeEditorEditMode = (editMode) => ({
   type: 'SET_OFFICE_EDITOR_EDIT_MODE',
   payload: { editMode }
@@ -795,4 +800,37 @@ export const setCustomElementSize = (dataElement, size) => ({
 export const setNotesInLeftPanel = (notesInLeftPanel) => ({
   type: 'SET_NOTES_IN_LEFT_PANEL',
   payload: notesInLeftPanel
+});
+
+export const pushFocusedElement = (element) => ({
+  type: 'PUSH_FOCUSED_ELEMENT',
+  payload: element,
+});
+
+export const setFocusedElementsStack = (stack) => ({
+  type: 'SET_FOCUSED_ELEMENTS_STACK',
+  payload: stack,
+});
+
+export const popFocusedElement = () => (dispatch, getState) => {
+  const focusedElementsStack = getState().viewer.focusedElementsStack;
+
+  if (focusedElementsStack.length > 0) {
+    const poppedElement = focusedElementsStack[focusedElementsStack.length - 1];
+    const newStack = focusedElementsStack.slice(0, -1);
+    dispatch(setFocusedElementsStack(newStack));
+    return poppedElement;
+  }
+
+  return null;
+};
+
+export const setKeyboardOpen = (isKeyboardOpen) => ({
+  type: 'SET_KEYBOARD_OPEN',
+  payload: isKeyboardOpen,
+});
+
+export const setCompareAnnotationsMap = (compareAnnotationsMap) => ({
+  type: 'SET_COMPARE_ANNOTATIONS_MAP',
+  payload: compareAnnotationsMap,
 });

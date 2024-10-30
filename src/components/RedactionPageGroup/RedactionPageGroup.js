@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RedactionItem from './RedactionItem';
-import CollapsiblePanelGroup from 'components/CollapsiblePanelGroup';
+import CollapsibleSection from 'components/CollapsibleSection';
 import { useTranslation } from 'react-i18next';
 
 import './RedactionPageGroup.scss';
@@ -15,27 +16,32 @@ const RedactionPageGroup = (props) => {
 
   const header = () => {
     return (
-      <div className="redaction-page-group-number">
-        {t('option.shared.page')} {pageNumber}
-      </div>
+      `${t('option.shared.page')} ${pageNumber}`
     );
   };
 
   return (
-    <CollapsiblePanelGroup
+    <CollapsibleSection
       className="redaction-page-group"
       header={header}
+      expansionDescription={`${t('option.shared.page')} ${pageNumber} ${t('redactionPanel.redactionItems')}`}
+      headingLevel={2}
     >
-      <div role="list" className="redaction-items">
+      <ul className="redaction-items">
         {redactionItems.map((redactionItem) => (
           <RedactionItem
             annotation={redactionItem}
             key={`${redactionItem.Id}-${pageNumber}`}
           />
         ))}
-      </div>
-    </CollapsiblePanelGroup>
+      </ul>
+    </CollapsibleSection>
   );
+};
+
+RedactionPageGroup.propTypes = {
+  pageNumber: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  redactionItems: PropTypes.array,
 };
 
 export default RedactionPageGroup;

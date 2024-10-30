@@ -6,8 +6,17 @@
   margin-bottom: 12px;
   font-size: 16px;
 
+  @include mobile {
+    margin-top: 16px;
+  }
+
   span {
     font-weight: bold;
+  }
+
+  h2 {
+    font-weight: normal;
+    font-size: 16px;
   }
 }
 
@@ -79,7 +88,7 @@
       padding-bottom: 6px;
       padding-left: 8px;
     }
-    
+
     &.modular-ui-input {
       box-sizing: border-box;
       border: 1px solid var(--border);
@@ -104,32 +113,32 @@
     }
   }
 
-    .input-button {
-      cursor: pointer;
-      background: var(--primary-button);
-      border-radius: 4px;
-      height: 100%;
-      width: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
+  .input-button {
+    cursor: pointer;
+    background: var(--primary-button);
+    border-radius: 4px;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 
-      .Icon {
-        width: 20px;
-        height: 20px;
-      }
-
-      svg {
-        color: var(--primary-button-text);
-      }
-
-      &:hover {
-        background: var(--primary-button-hover);
-      }
+    .Icon {
+      width: 20px;
+      height: 20px;
     }
+
+    svg {
+      color: var(--primary-button-text);
+    }
+
+    &:hover {
+      background: var(--primary-button-hover);
+    }
+  }
 
   .divider {
     height: 1px;
@@ -140,23 +149,7 @@
 }
 
 .modular-ui-header {
-  .sort-row .sort-container {
-    .Dropdown__wrapper {
-      .Dropdown__items {
-        .Dropdown__item {
-          &:hover {
-            @extend %custom-flyout-item-hover;
-          }
-
-          &.active {
-            @extend %custom-flyout-item-active;
-          }
-        }
-      }
-    }
-  }
-
-  .input-container.modular-ui-input .Icon{
+  .input-container.modular-ui-input .Icon {
     width: 16px;
     height: 16px;
   }

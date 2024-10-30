@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { TextEditingUndoRedo as TextEditUndoRedoStory } from './TextEditingPanel.stories';
 import TextEditingPanel from './TextEditingPanel';
 import core from 'core';
 
@@ -25,12 +24,6 @@ core.getContentEditManager = () => ({
 });
 
 describe('TextEditingPanel', () => {
-  it('Undo/redo story should render without errors', () => {
-    expect(() => {
-      render(<TextEditUndoRedoStory />);
-    }).not.toThrow();
-  });
-
   it('should render without undo/redo buttons', () => {
     render(<TestTextEditingPanel {...mockProps} />);
     const undoButton = screen.queryByRole('Undo', { name: 'Undo' });
@@ -89,6 +82,13 @@ describe('TextEditingPanel', () => {
     const redoButton = screen.getByRole('button', { name: 'Redo' });
     expect(undoButton.disabled).toBe(true);
     expect(redoButton.disabled).toBe(false);
+  });
+
+  it('Should have h2 on header', () => {
+    render(<TestTextEditingPanel {...mockProps} />);
+
+    const element = screen.getByText('Text Styles');
+    expect(element.tagName.toLocaleLowerCase()).toEqual('h2');
   });
 
   it('should fire undo handler when button is clicked', () => {

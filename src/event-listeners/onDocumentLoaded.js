@@ -1,15 +1,12 @@
 import core from 'core';
 import getHashParameters from 'helpers/getHashParameters';
-import fireEvent from 'helpers/fireEvent';
 import { getLeftPanelDataElements } from 'helpers/isDataElementPanel';
 import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
-import Events from 'constants/events';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
-import setZoomLevel from 'src/apis/setZoomLevel';
 import onLayersUpdated from './onLayersUpdated';
 import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
@@ -19,17 +16,23 @@ import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { getPortfolioFiles } from 'helpers/portfolio';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
+import { defaultModularComponents, defaultModularHeaders, defaultPanels } from '../redux/modularComponents';
 import {
-  officeEditorScope,
-  OFFICE_EDITOR_EDIT_MODE,
-  elementsToDisableInOfficeEditor,
-  elementsToEnableInOfficeEditor
+  OFFICE_EDITOR_SCOPE,
+  OfficeEditorEditMode,
+  ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
+  ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
 } from 'constants/officeEditor';
+import {
+  defaultOfficeEditorModularComponents,
+  defaultOfficeEditorModularHeaders,
+  defaultOfficeEditorPanels,
+} from '../redux/officeEditorModularComponents';
 
 let onFirstLoad = true;
 let notesInLeftPanel;
 
-const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
+const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
 
 export default (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
@@ -137,51 +140,73 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     }
 
+    const handleEditModeUpdate = (editMode) => {
+      const isCustomUIEnabled = getIsCustomUIEnabled(store);
+      dispatch(actions.setOfficeEditorEditMode(editMode));
+      if (editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW) {
+        isCustomUIEnabled ?
+          dispatch(actions.disableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
+          dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+        dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      } else {
+        isCustomUIEnabled ?
+          dispatch(actions.enableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
+          dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+        dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      }
+      if (editMode === OfficeEditorEditMode.REVIEWING || editMode === OfficeEditorEditMode.PREVIEW) {
+        dispatch(actions.openElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      } else {
+        dispatch(actions.closeElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      }
+    };
+
+    const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
     if (isOfficeEditorMode()) {
+      // isOfficeEditorMode checks to see if the file type is workerTypes.OFFICE_EDITOR
+      if (!isOfficeEditorHeaderEnabled(store)) {
+        // if isOfficeEditorHeaderEnabled wasn't already set then we need to set the UI to the default OE UI
+        dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularComponents, defaultOfficeEditorModularHeaders));
+        dispatch(actions.setGenericPanels(defaultOfficeEditorPanels));
+        dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+      }
       dispatch(actions.setIsOfficeEditorMode(true));
-      dispatch(actions.enableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
-      setZoomLevel(1);
-      dispatch(actions.disableElements(
-        elementsToDisableInOfficeEditor,
-        PRIORITY_ONE, // To allow customers to still disable these elements
+      dispatch(actions.enableElements(
+        ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR,
+        PRIORITY_TWO,
       ));
-      hotkeys.unbind('*', officeEditorScope);
-      hotkeys.setScope(officeEditorScope);
+      core.zoomTo(1,0,0);
+      dispatch(actions.disableElements(
+        ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
+        PRIORITY_TWO, // To allow customers to still enable these elements with PRIORITY_THREE
+      ));
+      hotkeys.unbind('*', OFFICE_EDITOR_SCOPE);
+      hotkeys.setScope(OFFICE_EDITOR_SCOPE);
       const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
       hotkeys(
         searchShortcutKeys,
-        officeEditorScope,
+        OFFICE_EDITOR_SCOPE,
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
-
-      const handleEditModeUpdate = (editMode) => {
-        dispatch(actions.setOfficeEditorEditMode(editMode));
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
-          dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-          dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
-        } else {
-          dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-          dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
-        }
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
-          dispatch(actions.openElement(DataElements.LEFT_PANEL));
-        } else {
-          dispatch(actions.closeElement(DataElements.LEFT_PANEL));
-        }
-      };
-      handleEditModeUpdate(OFFICE_EDITOR_EDIT_MODE.EDITING);
+      const setHeaderFocusShortcutKeys = ShortcutKeys[Shortcuts.SET_HEADER_FOCUS];
+      hotkeys(
+        setHeaderFocusShortcutKeys,
+        OFFICE_EDITOR_SCOPE,
+        hotkeysManager.keyHandlerMap[setHeaderFocusShortcutKeys],
+      );
+      handleEditModeUpdate(OfficeEditorEditMode.EDITING);
       doc.addEventListener('editModeUpdated', handleEditModeUpdate);
-      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
-    } else {
-      dispatch(actions.enableElements(
-        elementsToDisableInOfficeEditor,
-        PRIORITY_ONE, // To allow customers to still disable these elements
-      ));
-      dispatch(actions.disableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
+    } else if (isOfficeEditorHeaderEnabled(store)) {
+      // The Default UI only gets loaded if isOfficeEditorHeaderEnabled is true, to prevent overwriting the custom UI
+      dispatch(actions.setModularHeadersAndComponents(defaultModularComponents, defaultModularHeaders));
+      const panels = getIsCustomUIEnabled(store) ? defaultPanels : [];
+      dispatch(actions.setGenericPanels(panels));
+      doc.removeEventListener('editModeUpdated', handleEditModeUpdate);
       hotkeys.setScope(defaultHotkeysScope);
       dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
+      dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
     }
 
     if (core.isFullPDFEnabled()) {
@@ -261,5 +286,4 @@ export default (store, documentViewerKey) => async () => {
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom(documentViewerKey), documentViewerKey));
   dispatch(actions.setThumbnailSelectingPages(false));
-  fireEvent(Events.DOCUMENT_LOADED);
 };

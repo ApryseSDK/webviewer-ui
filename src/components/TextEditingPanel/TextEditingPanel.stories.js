@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import TextEditingPanel from './TextEditingPanel';
 import RightPanel from 'components/RightPanel';
 import initialState from 'src/redux/initialState';
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 
 const noop = () => { };
@@ -10,7 +12,7 @@ const noop = () => { };
 export default {
   title: 'Components/TextEditingPanel',
   component: TextEditingPanel,
-  includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide'],
+  includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide', 'TextEditingPanelInMobile'],
   parameters: {
     customizableUI: true,
   }
@@ -115,24 +117,25 @@ export const TextEditingUndoRedo = () => {
   );
 };
 
-
-export const LeftSide = () => {
-  const stateTextEditingPanelOnLeft = {
+const TextEditingPanelInApp = (dataElement, location) => {
+  const appMockState = {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      isInDesktopOnlyMode: true,
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
+      isInDesktopOnlyMode: false,
       genericPanels: [
         {
-          dataElement: 'panel1',
+          dataElement,
           render: 'textEditingPanel',
-          location: 'left',
+          location,
         }
       ],
       openElements: {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
-        panel1: true,
+        [dataElement]: true,
       },
       lastPickedToolForGroupedItems: {
         'annotateGroupedItems': 'AnnotationCreateFreeText'
@@ -149,5 +152,15 @@ export const LeftSide = () => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateTextEditingPanelOnLeft} />;
+  const store = createStore(appMockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp initialState={appMockState} />;
 };
+
+export const LeftSide = () => (TextEditingPanelInApp('panel1', 'left'));
+LeftSide.parameters = { layout: 'fullscreen' };
+
+export const TextEditingPanelInMobile = () => (TextEditingPanelInApp('textEditingPanel', 'right'));
+
+TextEditingPanelInMobile.parameters = window.storybook.MobileParameters;

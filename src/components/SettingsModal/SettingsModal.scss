@@ -5,8 +5,6 @@
   @extend %modal;
 
   .container {
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
 
     display: flex;
     flex-direction: column;
@@ -45,7 +43,7 @@
     .header {
       display: flex;
       flex-direction: column;
-      padding: 16px;
+      padding: 12px 16px;
       font-size: 16px;
       font-weight: bold;
       align-items: center;
@@ -69,11 +67,15 @@
 
       .settings-tabs-container {
         width: 168px;
-        background-color: var(--panel-background);
         flex-shrink: 0;
         border-right: 1px solid var(--gray-4);
 
         .settings-tabs {
+          button {
+            border: none;
+            background: none;
+            width: 100%;
+          }
           .settings-tab {
             height: 32px;
             margin-top: 4px;
@@ -93,6 +95,12 @@
               border-right: 2px var(--blue-5) solid;
               color: var(--blue-5);
               cursor: default;
+            }
+
+            &:focus-visible {
+              outline-offset: -2px;
+              outline: var(--focus-visible-outline);
+              border-radius: 4px;
             }
           }
         }

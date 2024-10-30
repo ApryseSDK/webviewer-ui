@@ -5,6 +5,21 @@ import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables
 import DataElements from 'constants/dataElement';
 import { getAllAssociatedGroupedItems, getFirstToolForGroupedItems } from '../actions/exposedActions';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
+import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
+import getHashParameters from 'helpers/getHashParameters';
+
+// OE selectors
+export const {
+  isStyleButtonActive,
+  getPointSizeSelectionKey,
+  getCursorStyleToPreset,
+  getCurrentFontFace,
+  getLineSpacing,
+  getActiveColor,
+  getActiveListType,
+  getIsOfficeEditorMode,
+  isJustificationButtonActive,
+} = exposedOfficeEditorSelectors;
 
 // viewer
 export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
@@ -137,9 +152,11 @@ export const getDocumentContentContainerWidthStyle = (state) => {
       (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
       (isComparePanelOpen ? comparePanelWidth : 0) +
       (isWatermarkPanelOpen ? watermarkPanelWidth : 0)
-    ) +
-    (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
-    (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0);
+    )
+    +
+    (customizableUI &&
+      (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
+      (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0));
 
   // Do not count headers without items
   const activeRightHeaderWidth = getActiveRightHeaderWidth(state);
@@ -150,7 +167,18 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
+  const panelsWithMobileVersion = [
+    panelNames.SIGNATURE_LIST,
+    panelNames.RUBBER_STAMP,
+    panelNames.STYLE,
+    panelNames.NOTES,
+    panelNames.SEARCH,
+    panelNames.TEXT_EDITING,
+    panelNames.TABS,
+    panelNames.REDACTION,
+    panelNames.FORM_FIELD,
+    panelNames.INDEX
+  ];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {
@@ -168,10 +196,13 @@ export const getOpenGenericPanel = (state, location) => {
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
+  const { customizableUI } = getFeatureFlags(state);
   const genericPanelOpenOnLeft = getOpenGenericPanel(state, PLACEMENT.LEFT);
-  return 0 +
-    (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
-    (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
+  if (customizableUI) {
+    return 0 + (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
+  } else {
+    return 0 + (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0);
+  }
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -297,7 +328,9 @@ export const getActiveHeaders = (state) => {
   };
 
   // if a header contains at least one active item, it is active
-  return allHeaders.filter(({ items }) => items?.length && items.some(isActiveItem));
+  return allHeaders.filter(({ items, dataElement }) => {
+    return !isElementDisabled(state, dataElement) && items?.length && items.some(isActiveItem);
+  });
 };
 
 export const getActiveTheme = (state) => state.viewer.activeTheme;
@@ -473,6 +506,11 @@ export const getGroupedItemsWithSelectedTool = (state, toolName) => {
   return Object.keys(modularComponents).filter(filterGroupedItems);
 };
 
+export const getAlwaysVisibleGroupedItems = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => modularComponents[dataElement].alwaysVisible);
+};
+
 export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
   const modularComponents = state.viewer.modularComponents;
   const groupedItems = modularComponents[customRibbonDataElement]?.groupedItems || [];
@@ -493,6 +531,14 @@ export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataEle
     return false;
   });
   return ribbonItems;
+};
+
+export const getEnabledRibbonItems = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => {
+    const { type } = modularComponents[dataElement];
+    return type === ITEM_TYPE.RIBBON_ITEM && !isElementDisabled(state, dataElement);
+  });
 };
 
 export const getModularComponentFunctions = (state) => state.viewer.modularComponentFunctions;
@@ -612,8 +658,6 @@ export const getDisabledCustomPanelTabs = (state) => state.viewer.customPanels.r
 export const isEmbedPrintSupported = (state) => !isAndroid && state.viewer.useEmbeddedPrint;
 
 export const useClientSidePrint = (state) => state.viewer.useClientSidePrint;
-
-export const isOutlineControlVisible = (state) => state.viewer.outlineControlVisibility;
 
 export const shouldAutoExpandOutlines = (state) => state.viewer.autoExpandOutlines;
 
@@ -855,8 +899,6 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
-export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
-
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
 export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state).locationProperties.inTable;
@@ -889,6 +931,8 @@ export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
 
+export const getCompareAnnotationsMap = (state) => state.viewer.compareAnnotationsMap;
+
 export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;
 
 export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;
@@ -902,7 +946,7 @@ export const isRightPanelOpen = (state) => {
     DataElements.TEXT_EDITING_PANEL,
     DataElements.WV3D_PROPERTIES_PANEL,
     DataElements.COMPARE_PANEL,
-    DataElements.WATERMARK_PANEL
+    DataElements.WATERMARK_PANEL,
   ];
 
   return rightPanelElements.some((element) => isElementOpen(state, element));
@@ -945,10 +989,20 @@ export const getMaxPasswordAttempts = (state) => {
   return state.document.maxPasswordAttempts;
 };
 
+export const isKeyboardOpen = (state) => state.viewer.isKeyboardOpen;
+
 export const canUndo = (state) => {
   return state.viewer.canUndo[state.viewer.activeDocumentViewerKey];
 };
 
 export const canRedo = (state) => {
   return state.viewer.canRedo[state.viewer.activeDocumentViewerKey];
+};
+
+export const getIsCustomUIEnabled = (state) => {
+  return getHashParameters('ui', 'default') != 'legacy' || getFeatureFlags(state).customizableUI;
+};
+
+export const getIsOfficeEditorHeaderEnabled = (state) => {
+  return state.viewer.isOfficeEditorHeaderEnabled;
 };

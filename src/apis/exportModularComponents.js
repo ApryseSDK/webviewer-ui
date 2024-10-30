@@ -40,6 +40,10 @@ export default (store) => () => {
           componentObject[key] = '';
         }
       }
+      // We should not export icons for preset buttons
+      if (componentObject?.type === ITEM_TYPE.PRESET_BUTTON) {
+        delete componentObject.icon;
+      }
     }
     return componentObject;
   };

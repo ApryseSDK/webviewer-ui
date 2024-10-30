@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { BasicHorizontal, IsReadOnlyMode } from './AnnotationPopup.stories';
 import AnnotationPopup from './AnnotationPopup';
 
@@ -10,6 +11,38 @@ describe('AnnotationPopup Component', () => {
     expect(() => {
       render(<TestAnnotationPopup />);
     }).not.toThrow();
+  });
+
+  it('Should have the focus trapped in the Annotation Popup component', () => {
+    render(<TestAnnotationPopup />);
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBe(4);
+    const [button1, button2, button3, button4] = buttons;
+
+    // Initial focus on the first button
+    button1.focus();
+    expect(button1).toHaveFocus();
+
+    // Press Tab to move focus to button 2
+    userEvent.tab();
+    expect(button2).toHaveFocus();
+
+    // Press Tab to move focus to button 3
+    userEvent.tab();
+    expect(button3).toHaveFocus();
+
+    // Press Tab to move focus to button 4
+    userEvent.tab();
+    expect(button4).toHaveFocus();
+
+    // Press Tab again to move focus back to the first button
+    userEvent.tab();
+    expect(button1).toHaveFocus();
+
+    // Press Shift+Tab to move focus back to the last button
+    userEvent.tab({ shift: true });
+    expect(button4).toHaveFocus();
   });
 });
 
@@ -71,7 +104,7 @@ describe('AnnotationPopup in read-only mode', () => {
 
   describe('should only render the "Comment Button"', () => {
     // The following properties are related to canModify in AnnotationPopupContainer
-  // showCalibrateButton, showDeleteButton, showEditStyleButton, showGroupButton
+    // showCalibrateButton, showDeleteButton, showEditStyleButton, showGroupButton
     const basicProps = {
       isOpen: true,
       isRightClickMenu: false,

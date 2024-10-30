@@ -15,7 +15,9 @@ import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import Dropdown from '../Dropdown';
 import PageNumberInput from '../PageReplacementModal/PageNumberInput';
+import useFocusHandler from 'hooks/useFocusHandler';
 import './PrintModal.scss';
+import Button from '../Button';
 
 const PrintModal = ({
   isDisabled,
@@ -26,8 +28,6 @@ const PrintModal = ({
   printQuality,
   isGrayscale,
   setIsGrayscale,
-  shouldFlatten,
-  setShouldFlatten,
   setIsCurrentView,
   isCurrentViewDisabled,
   includeAnnotations,
@@ -47,6 +47,7 @@ const PrintModal = ({
   isPrinting,
   layoutMode,
   useEmbeddedPrint,
+  pageLabels
 }) => {
   PrintModal.propTypes = {
     isDisabled: PropTypes.bool,
@@ -57,8 +58,6 @@ const PrintModal = ({
     printQuality: PropTypes.number,
     isGrayscale: PropTypes.bool,
     setIsGrayscale: PropTypes.func,
-    shouldFlatten: PropTypes.bool,
-    setShouldFlatten: PropTypes.func,
     setIsCurrentView: PropTypes.func,
     isCurrentViewDisabled: PropTypes.bool,
     includeAnnotations: PropTypes.bool,
@@ -77,7 +76,8 @@ const PrintModal = ({
     count: PropTypes.number,
     isPrinting: PropTypes.bool,
     layoutMode: PropTypes.string,
-    useEmbeddedPrint: PropTypes.bool
+    useEmbeddedPrint: PropTypes.bool,
+    pageLabels: PropTypes.array
   };
 
   const dispatch = useDispatch();
@@ -121,7 +121,7 @@ const PrintModal = ({
 
   const customPagesLabelElement = (
     <>
-      <label className="specifyPagesChoiceLabel">
+      <label htmlFor="specifyPagesInput" className="specifyPagesChoiceLabel">
         <span>{t('option.print.specifyPages')}</span>
         {isCustomPagesChecked && (
           <span className="specifyPagesExampleLabel">
@@ -132,12 +132,15 @@ const PrintModal = ({
       {isCustomPagesChecked && (
         <div className={classNames('page-number-input-container', { error: !!pageNumberError })}>
           <PageNumberInput
+            id="specifyPagesInput"
             selectedPageNumbers={specifiedPages}
             pageCount={core.getTotalPages()}
             onSelectedPageNumbersChange={handlePageNumberChange}
             onBlurHandler={setSpecifiedPages}
             onError={handlePageNumberError}
             pageNumberError={pageNumberError}
+            customPageLabels={pageLabels}
+            enablePageLabels={true}
           />
         </div>
       )}
@@ -226,6 +229,12 @@ const PrintModal = ({
   const handlePrintQualityChange = (quality) => {
     dispatch(actions.setPrintQuality(Number(quality)));
   };
+
+  const openWaterMarkModalWithFocusTransfer = useFocusHandler(() => {
+    if (!isPrinting) {
+      setWatermarkModalVisibility(true);
+    }
+  });
 
   return isDisabled ? null : (
     <>
@@ -327,16 +336,6 @@ const PrintModal = ({
                             center
                           />
                           <Choice
-                            dataElement="flattenPrintOption"
-                            id="print-flatten"
-                            name="flatten"
-                            label={t('option.print.flatten')}
-                            disabled={isPrinting}
-                            onChange={() => setShouldFlatten((prevState) => !prevState)}
-                            checked={shouldFlatten}
-                            center
-                          />
-                          <Choice
                             dataElement="commentsPrintOption"
                             ref={includeCommentsRef}
                             id="include-comments"
@@ -353,24 +352,38 @@ const PrintModal = ({
                   </>
                 )}
                 {!embedPrintValid && (
-                  <Choice
-                    dataElement="grayscalePrintOption"
-                    id="print-grayscale"
-                    name="grayscale"
-                    label={t('option.print.printGrayscale')}
-                    disabled={isPrinting}
-                    onChange={() => setIsGrayscale((prevState) => !prevState)}
-                    checked={isGrayscale}
-                    center
-                  />
+                  <>
+                    <Choice
+                      dataElement="grayscalePrintOption"
+                      id="print-grayscale"
+                      name="grayscale"
+                      label={t('option.print.printGrayscale')}
+                      disabled={isPrinting}
+                      onChange={() => setIsGrayscale((prevState) => !prevState)}
+                      checked={isGrayscale}
+                      center
+                    />
+                    <Choice
+                      dataElement="commentsPrintOption"
+                      ref={includeCommentsRef}
+                      id="include-comments"
+                      name="comments"
+                      label={t('option.print.includeComments')}
+                      onChange={() => setIncludeComments((prevState) => !prevState)}
+                      disabled={isPrinting}
+                      checked={includeComments}
+                      center
+                    />
+                  </>
                 )}
               </form>
             </div>
             {!embedPrintValid && (
               <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
-                <label className="section-label print-quality-section-label" htmlFor="printQualityOptions">{`${t('option.print.pageQuality')}:`}</label>
+                <label className="section-label print-quality-section-label" htmlFor="printQualityOptions" id="print-quality-options-label">{`${t('option.print.pageQuality')}:`}</label>
                 <Dropdown
                   id="printQualityOptions"
+                  labelledById='print-quality-options-label'
                   dataElement="printQualityOptions"
                   items={Object.keys(printQualityOptions)}
                   getDisplayValue={(item) => printQualityOptions[item]}
@@ -394,11 +407,7 @@ const PrintModal = ({
                   data-element="applyWatermark"
                   className="apply-watermark"
                   disabled={isPrinting}
-                  onClick={() => {
-                    if (!isPrinting) {
-                      setWatermarkModalVisibility(true);
-                    }
-                  }}
+                  onClick={openWaterMarkModalWithFocusTransfer}
                 >
                   {t('option.watermark.addNew')}
                 </button>
@@ -407,12 +416,11 @@ const PrintModal = ({
           </div>
           <div className="divider"></div>
           <div className="buttons">
-            <button
+            <Button
               className="button"
               onClick={createPagesAndPrint}
-            >
-              {t('action.print')}
-            </button>
+              label={t('action.print')}
+            />
           </div>
         </ModalWrapper>
       </div>

@@ -57,57 +57,79 @@ const store = configureStore({
   }
 });
 
+const item1Props = {
+  dataElement: 'Ribbon Item1',
+  img: 'icon-header-pan',
+  title: 'icon only',
+  activeCustomRibbon: 'toolbarGroup-View',
+};
+const item2Props = {
+  dataElement: 'Ribbon Item2',
+  label: 'label only',
+  activeCustomRibbon: 'toolbarGroup-Annotate',
+};
+const item3Props = {
+  dataElement: 'Ribbon Item3',
+  label: 'icon and label',
+  img: 'icon-header-pan',
+  activeCustomRibbon: 'toolbarGroup-Shapes',
+};
+const item4Props = {
+  dataElement: 'Ribbon Item1',
+  img: 'icon-header-pan',
+  title: 'icon only',
+  activeCustomRibbon: 'toolbarGroup-Insert',
+  direction: 'column',
+};
+const item5Props = {
+  dataElement: 'Ribbon Item2',
+  label: 'label only',
+  activeCustomRibbon: 'toolbarGroup-Measure',
+  direction: 'column',
+  justifyContent: 'end',
+};
+const item6Props = {
+  dataElement: 'Ribbon Item3',
+  label: 'icon and label',
+  img: 'icon-header-pan',
+  activeCustomRibbon: 'toolbarGroup-Edit',
+  direction: 'column',
+};
+
+const horizontalRibbon = () => (
+  <div style={{ display: 'flex', gap: '8px', backgroundColor: 'white' }}>
+    <RibbonItem {...item1Props} />
+    <RibbonItem {...item2Props} />
+    <RibbonItem {...item3Props} />
+  </div>
+);
+
+const verticalRibbon = () => (
+  <div style={{ margin: '22px', display: 'flex', gap: '8px', flexFlow: 'column', width: '80px', backgroundColor: 'white' }}>
+    <RibbonItem {...item4Props} />
+    <RibbonItem {...item5Props} />
+    <RibbonItem {...item6Props} />
+  </div>
+);
+
 export const RibbonItems = () => {
-  const item1Props = {
-    dataElement: 'Ribbon Item1',
-    img: 'icon-header-pan',
-    title: 'icon only',
-    activeCustomRibbon: 'toolbarGroup-View',
-  };
-  const item2Props = {
-    dataElement: 'Ribbon Item2',
-    label: 'label only',
-    activeCustomRibbon: 'toolbarGroup-Annotate',
-  };
-  const item3Props = {
-    dataElement: 'Ribbon Item3',
-    label: 'icon and label',
-    img: 'icon-header-pan',
-    activeCustomRibbon: 'toolbarGroup-Shapes',
-  };
-  const item4Props = {
-    dataElement: 'Ribbon Item1',
-    img: 'icon-header-pan',
-    title: 'icon only',
-    activeCustomRibbon: 'toolbarGroup-Insert',
-    direction: 'column',
-  };
-  const item5Props = {
-    dataElement: 'Ribbon Item2',
-    label: 'label only',
-    activeCustomRibbon: 'toolbarGroup-Measure',
-    direction: 'column',
-    justifyContent: 'end',
-  };
-  const item6Props = {
-    dataElement: 'Ribbon Item3',
-    label: 'icon and label',
-    img: 'icon-header-pan',
-    activeCustomRibbon: 'toolbarGroup-Edit',
-    direction: 'column',
-  };
   return (
     <Provider store={store}>
-      <div style={{ display: 'flex', gap: '8px', backgroundColor: 'white' }}>
-        <RibbonItem {...item1Props} />
-        <RibbonItem {...item2Props} />
-        <RibbonItem {...item3Props} />
-      </div>
-      <div style={{ margin: '22px', display: 'flex', gap: '8px', flexFlow: 'column', width: '80px', backgroundColor: 'white' }}>
-        <RibbonItem {...item4Props} />
-        <RibbonItem {...item5Props} />
-        <RibbonItem {...item6Props} />
-      </div>
+      {horizontalRibbon()}
+      {verticalRibbon()}
     </Provider>
   );
+};
+
+export const RibbonItemsWithHoverState = () => {
+  return (
+    <Provider store={store}>
+      {verticalRibbon()}
+      {horizontalRibbon()}
+    </Provider>
+  );
+};
+
+RibbonItemsWithHoverState.parameters = {
+  pseudo: { hover: true },
 };

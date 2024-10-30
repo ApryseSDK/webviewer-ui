@@ -56,7 +56,7 @@ describe('NotesPanelHeader', () => {
 
       screen.getByPlaceholderText('Search comments');
       screen.getByText('Sort:');
-      screen.getByText('Comments');
+      screen.getByText('Comments (0)');
     });
 
     it('Should not render NotesPanelHeader if disabled', () => {
@@ -70,7 +70,7 @@ describe('NotesPanelHeader', () => {
 
       expect(screen.queryByPlaceholderText('Search comments')).not.toBeInTheDocument;
       expect(screen.queryByText('Sort:')).not.toBeInTheDocument;
-      expect(screen.queryByText('Comments')).not.toBeInTheDocument;
+      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument;
     });
 
     it('Should not render search input if disabled', () => {
@@ -87,7 +87,7 @@ describe('NotesPanelHeader', () => {
 
       expect(screen.queryByPlaceholderText('Search comments')).not.toBeInTheDocument();
       screen.getByText('Sort:');
-      screen.getByText('Comments');
+      screen.getByText('Comments (0)');
     });
 
     it('Should not render comments counter if disabled', () => {
@@ -104,7 +104,7 @@ describe('NotesPanelHeader', () => {
 
       screen.getByPlaceholderText('Search comments');
       screen.getByText('Sort:');
-      expect(screen.queryByText('Comments')).not.toBeInTheDocument;
+      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument;
     });
 
     it('Should not render sorting row if disabled', () => {
@@ -122,7 +122,43 @@ describe('NotesPanelHeader', () => {
 
       screen.getByPlaceholderText('Search comments');
       expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
-      screen.getByText('Comments');
+      screen.getByText('Comments (0)');
+    });
+
+    it('Should have Aria Label on the dropdown', () => {
+      const store = configureStore({ reducer: () => initialState });
+      render(
+        <Provider store={store}>
+          <NotesPanelHeader notes={[]} isMultiSelectEnabled={true} disableFilterAnnotation={false} setSearchInputHandler={noop}/>
+        </Provider>
+      );
+
+      const element = screen.getByText('Sort:');
+      expect(element).toBeInTheDocument();
+    });
+
+    it('Should have h2 on header', () => {
+      const store = configureStore({ reducer: () => initialState });
+      render(
+        <Provider store={store}>
+          <NotesPanelHeader notes={[]} isMultiSelectEnabled={true} disableFilterAnnotation={false} setSearchInputHandler={noop}/>
+        </Provider>
+      );
+
+      const element = screen.getByText('Comments (0)');
+      expect(element.tagName.toLocaleLowerCase()).toEqual('h2');
+    });
+
+    it('Should have aria-pressed labels', () => {
+      const store = configureStore({ reducer: () => initialState });
+      render(
+        <Provider store={store}>
+          <BasicStory />
+        </Provider>
+      );
+
+      const element = screen.queryByRole('button', { name: 'Filter' });
+      expect(element.getAttribute('aria-pressed')).toBe('false');
     });
   });
 });

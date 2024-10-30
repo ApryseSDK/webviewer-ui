@@ -63,4 +63,10 @@ describe('Test for Layer', () => {
     fireEvent.click(input);
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
+
+  it('should have the appropiate aria-label', () => {
+    const { container } = render(<TestLayer layer={layer} />);
+    const input = container.querySelector('input');
+    expect(input).toHaveAttribute('aria-label', 'test Check box');
+  });
 });

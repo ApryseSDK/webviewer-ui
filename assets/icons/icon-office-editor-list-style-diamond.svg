@@ -23,5 +23,5 @@
     <path d="M13.2164 61.0856L12.6623 60.5157L12.1082 61.0856L12.6623 61.6556L13.2164 61.0856Z" fill="#485056"/>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6623 59.7098L14 61.0857L12.6623 62.4616L11.3246 61.0857L12.6623 59.7098Z" fill="#485056"/>
     <line x1="18" y1="61.0859" x2="52" y2="61.0859" stroke="#868E96" stroke-width="2"/>
-    <rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+    <rect class="office-editor-list-style-item-border" x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
 </svg>

@@ -57,6 +57,7 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     selectors.getTabManager(state),
     selectors.isReplyAttachmentPreviewEnabled(state)
   ]);
+  const [t] = useTranslation();
 
   const onClick = async (e, file) => {
     e.preventDefault();
@@ -119,13 +120,15 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
             {isEditing ? (
               <Button
                 className="attachment-button"
-                img="icon-close"
+                title={`${t('action.delete')} ${t('option.type.fileattachment')}`}
+                img='icon-close'
                 onClick={(e) => onDelete(e, file)}
               />
             ) : (
               <Button
                 className="attachment-button"
-                img="icon-download"
+                title={`${t('action.download')} ${t('option.type.fileattachment')}`}
+                img='icon-download'
                 onClick={(e) => onDownload(e, file)}
               />
             )}

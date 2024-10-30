@@ -4,10 +4,14 @@ import Panel from 'components/Panel';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import initialState from 'src/redux/initialState';
 import { createStore } from 'src/helpers/storybookHelper';
+import { userEvent, within, expect } from '@storybook/test';
 
 export default {
   title: 'Components/Thumbnails',
   component: ThumbnailsPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const myState = {
@@ -45,6 +49,37 @@ export const Thumbnails = () => {
       </Panel>
     </Provider>
   );
+};
+
+Thumbnails.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const thumbnailContainer = canvas.getByLabelText('Thumbnails');
+  await expect(thumbnailContainer).toBeInTheDocument();
+
+  const thumbnails = canvas.getAllByRole('gridcell');
+
+  thumbnails[0].focus();
+  await userEvent.keyboard('{Enter}');
+
+  const thumbnail = within(thumbnails[0]).getAllByRole('button')[0];
+  const thumbnailControls = within(thumbnail).getAllByRole('button');
+  expect(thumbnailControls).toHaveLength(3);
+
+  expect(thumbnailControls[0]).toHaveFocus();
+  expect(thumbnailControls[0]).toHaveAttribute('aria-current', 'page');
+
+  await userEvent.keyboard('{ArrowRight}');
+  expect(thumbnailControls[1]).toHaveFocus();
+  expect(thumbnailControls[1]).toHaveAttribute('aria-current', 'page');
+
+  await userEvent.keyboard('{ArrowRight}');
+  expect(thumbnailControls[2]).toHaveFocus();
+  expect(thumbnailControls[2]).toHaveAttribute('aria-current', 'page');
+
+  await userEvent.tab();
+  expect(thumbnails[1]).toHaveFocus();
+  expect(thumbnails[1]).toHaveAttribute('aria-current', 'page');
 };
 
 export const ThumbnailsMultiSelect = () => {

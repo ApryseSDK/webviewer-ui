@@ -26,22 +26,12 @@ const RubberStampPanel = () => {
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const isMobile = isMobileSize();
 
-  const [
-    standardStamps,
-    customStamps,
-    selectedStampIndex,
-    mobilePanelSize,
-    featureFlags,
-  ] = useSelector(
-    (state) => [
-      selectors.getStandardStamps(state),
-      selectors.getCustomStamps(state),
-      selectors.getSelectedStampIndex(state),
-      selectors.getMobilePanelSize(state),
-      selectors.getFeatureFlags(state),
-    ],
-    shallowEqual,
-  );
+  const standardStamps = useSelector(selectors.getStandardStamps, shallowEqual);
+  const customStamps = useSelector(selectors.getCustomStamps, shallowEqual);
+  const selectedStampIndex = useSelector(selectors.getSelectedStampIndex);
+  const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
+  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
+
   const store = useStore();
   const customizableUI = featureFlags.customizableUI;
 
@@ -88,9 +78,9 @@ const RubberStampPanel = () => {
       [mobilePanelSize]: isMobile,
       'modular-ui-panel': customizableUI,
     })}>
-      <div className='rubber-stamp-panel-header'>
+      <h1 className='rubber-stamp-panel-header'>
         {t('rubberStampPanel.header')}
-      </div>
+      </h1>
       <CreateRubberStampButton />
       <div className={
         classNames({

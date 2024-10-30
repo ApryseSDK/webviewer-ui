@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import PropTypes from 'prop-types';
 import App from 'components/App';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
@@ -17,16 +18,35 @@ export const createStore = (preloadedState) => {
   });
 };
 
-export const MockApp = ({ initialState }) => {
+export const MockApp = ({ initialState, width, height }) => {
+  const store = createStore(initialState);
+
+  setItemToFlyoutStore(store);
+
+  const divStyle = {
+    margin: 0,
+    padding: 0,
+    border: 'none',
+    background: 'none',
+    maxWidth: width,
+    maxHeight: height,
+    width: '100%',
+    height: '100%'
+  };
+
   return (
-    <Provider store={createStore(initialState)}>
-      <App removeEventHandlers={noop} />
+    <Provider store={store}>
+      <div style={divStyle}>
+        <App removeEventHandlers={noop}/>
+      </div>
     </Provider>
   );
 };
 
 MockApp.propTypes = {
   initialState: PropTypes.object.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 const BasicAppTemplate = (args) => {
@@ -44,7 +64,7 @@ const BasicAppTemplate = (args) => {
       lastPickedToolForGroupedItems: {
         annotateGroupedItems: 'AnnotationCreateTextUnderline',
       },
-      activeCustomRibbon: 'annotations-ribbon-item',
+      activeCustomRibbon: 'toolbarGroup-Annotate',
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateTextUnderline',
         group: ['annotateGroupedItems'],
@@ -62,12 +82,50 @@ const BasicAppTemplate = (args) => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateWithHeaders} />;
+  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} />;
 };
 
-export const createTemplate = ({ headers = {}, components = {}, flyoutMap = {}, isMultiTab = false }) => {
+export const createTemplate = ({ headers = {}, components = {}, flyoutMap = {}, isMultiTab = false, width = '100%', height = '100%' }) => {
   const template = BasicAppTemplate.bind({});
-  template.args = { headers, components, flyoutMap, isMultiTab };
+  template.args = { headers, components, flyoutMap, isMultiTab, width, height };
   template.parameters = { layout: 'fullscreen', customizableUI: true };
   return template;
+};
+
+export const waitForTimeout = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
+
+export const MockDocumentContainer = ({
+  width = '100%',
+  height = '100%',
+  display = 'flex',
+  justifyContent = 'center',
+  alignItems = 'center',
+  flexDirection = 'column',
+  children
+}) => {
+  return (
+    <div style={{ width: width, height: height, display: display, justifyContent: justifyContent, alignItems: alignItems, flexDirection: flexDirection }}>
+      {children}
+      Mock Document Container
+    </div>
+  );
+};
+
+MockDocumentContainer.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  display: PropTypes.string,
+  justifyContent: PropTypes.string,
+  alignItems: PropTypes.string,
+  flexDirection: PropTypes.string,
+  children: PropTypes.node,
+};
+
+export const allModes = {
+  'light': {
+    theme: 'light',
+  },
+  'dark': {
+    theme: 'dark',
+  },
 };

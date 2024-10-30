@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import { isOfficeEditorMode, shouldBeDisabledInOfficeEditor } from 'helpers/officeEditor';
 
 // Map that tracks if the element has been opened before
 const openedElementsMap = new Map();
@@ -29,7 +30,7 @@ const LazyLoadWrapper = ({
     }
   }, [isOpen]);
 
-  return (isDisabled || !(isOpen || elementWasOpened(dataElement))) ? null : (
+  return (isDisabled || !(isOpen || elementWasOpened(dataElement)) || (isOfficeEditorMode() && shouldBeDisabledInOfficeEditor(dataElement))) ? null : (
     <Suspense fallback={<></>}>
       <Component
         dataElement={dataElement}

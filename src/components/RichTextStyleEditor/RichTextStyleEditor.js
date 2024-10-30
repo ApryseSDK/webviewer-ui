@@ -9,12 +9,13 @@ import './RichTextStyleEditor.scss';
 import DataElements from 'constants/dataElement';
 import TextStylePicker from 'components/TextStylePicker';
 import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
+import { useTranslation } from 'react-i18next';
 
 const propTypes = {
   annotation: PropTypes.object,
   editor: PropTypes.object,
   style: PropTypes.shape({
-    TextColor: PropTypes.object,
+    TextColor: PropTypes.string,
     RichTextStyle: PropTypes.any,
   }),
   isFreeTextAutoSize: PropTypes.bool,
@@ -24,7 +25,7 @@ const propTypes = {
   isRedaction: PropTypes.bool,
   isRichTextEditMode: PropTypes.bool,
   setIsRichTextEditMode: PropTypes.func,
-  isTextStylePickerHidden: PropTypes.bool,
+  isWidget: PropTypes.bool,
 };
 
 const RichTextStyleEditor = ({
@@ -37,9 +38,8 @@ const RichTextStyleEditor = ({
   isRichTextEditMode,
   setIsRichTextEditMode,
   isRedaction,
-  isTextStylePickerHidden,
+  isWidget,
   activeTool,
-  textSizeSliderComponent,
 }) => {
   const [
     fonts,
@@ -58,6 +58,7 @@ const RichTextStyleEditor = ({
   const oldSelectionRef = useRef();
   const richTextEditModeRef = useRef();
   richTextEditModeRef.current = isRichTextEditMode;
+  const [t] = useTranslation();
 
   useEffect(() => {
     const handleSelectionChange = (range, oldRange) => {
@@ -285,6 +286,31 @@ const RichTextStyleEditor = ({
     propertiesRef.current.quillFontSize = format.originalSize || propertiesRef.current.FontSize;
   }
 
+  const commonProps = {
+    fonts: fonts,
+    onPropertyChange: handlePropertyChange,
+    properties: properties,
+    stateless: true,
+    isFreeText: !isRedaction,
+  };
+
+  const nonWidgetProps = {
+    onRichTextStyleChange: handleRichTextStyleChange,
+    properties: isRichTextEditMode ? propertiesRef.current : properties,
+    isFreeTextAutoSize: isFreeTextAutoSize,
+    isRichTextEditMode: isRichTextEditMode,
+    isRedaction: isRedaction,
+    onFreeTextSizeToggle: onFreeTextSizeToggle,
+  };
+
+  const widgetProps = {
+    onRichTextStyleChange: handlePropertyChange,
+    isFreeTextAutoSize: false,
+    isRichTextEditMode: false,
+    isRedaction: false,
+    isWidget: isWidget,
+  };
+
   return (
     <div className="RichTextStyleEditor"
       onMouseDown={(e) => {
@@ -293,22 +319,12 @@ const RichTextStyleEditor = ({
         }
       }}
     >
-      {!isTextStylePickerHidden && (
-        <div className="menu-items">
-          <TextStylePicker
-            fonts={fonts}
-            onPropertyChange={handlePropertyChange}
-            onRichTextStyleChange={handleRichTextStyleChange}
-            properties={isRichTextEditMode ? propertiesRef.current : properties}
-            stateless={true}
-            isFreeText={!isRedaction}
-            onFreeTextSizeToggle={onFreeTextSizeToggle}
-            isFreeTextAutoSize={isFreeTextAutoSize}
-            isRichTextEditMode={isRichTextEditMode}
-            isRedaction={isRedaction}
-          />
-        </div>
-      )}
+      <div className="menu-items">
+        <TextStylePicker
+          {...commonProps}
+          {...(isWidget ? widgetProps : nonWidgetProps)}
+        />
+      </div>
       <ColorPicker
         onColorChange={(color) => {
           handleColorChange('TextColor', new window.Core.Annotations.Color(color));
@@ -316,8 +332,8 @@ const RichTextStyleEditor = ({
         color={isRichTextEditMode ? format.color : style['TextColor']}
         activeTool={activeTool}
         type={'Text'}
+        ariaTypeLabel={t('option.stylePopup.textStyle')}
       />
-      {textSizeSliderComponent}
     </div>
   );
 };

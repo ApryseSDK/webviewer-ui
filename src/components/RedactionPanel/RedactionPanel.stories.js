@@ -8,6 +8,11 @@ import { RedactionPanelContext } from './RedactionPanelContext';
 import { defaultRedactionTypes, redactionTypeMap } from 'constants/redactionTypes';
 import Panel from 'components/Panel';
 
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { MockApp } from 'helpers/storybookHelper';
+import { default as mockAppInitialState } from 'src/redux/initialState';
+
 const noop = () => { };
 
 export default {
@@ -19,7 +24,10 @@ export default {
     'RedactionRightGenericPanel',
     'RightPanelWithRedactionItems',
     'LeftPanelWithRedactionItems',
-  ]
+  ],
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 export const RedactionContextMock = ({ children, mockContext }) => {
@@ -270,4 +278,39 @@ export function LeftPanelWithRedactionItems() {
       </Panel>
     </Provider >
   );
+}
+
+const RedactSearchPanelInApp = (location, panelSize) => {
+  const mockState = {
+    ...mockAppInitialState,
+    viewer: {
+      ...mockAppInitialState.viewer,
+      activeCustomRibbon: 'toolbarGroup-Insert',
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
+      isInDesktopOnlyMode: false,
+      genericPanels: [{
+        dataElement: 'redactionPanel',
+        render: 'redactionPanel',
+        location: location,
+      }],
+      openElements: {
+        ...initialState.viewer.openElements,
+        contextMenuPopup: false,
+        redactionPanel: true,
+      },
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+
+  const store = createStore(mockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp initialState={mockState} />;
+};
+
+export function RedactSearchPanelInMobile() {
+  return RedactSearchPanelInApp('left');
 }

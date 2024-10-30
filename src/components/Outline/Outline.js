@@ -16,8 +16,6 @@ import { isMobile, isIE } from 'helpers/device';
 import OutlineContext from './Context';
 import OutlineContent from 'src/components/OutlineContent';
 import DataElementWrapper from '../DataElementWrapper';
-import Choice from '../Choice';
-import Button from '../Button';
 
 import './Outline.scss';
 import '../../constants/bookmarksOutlinesShared.scss';
@@ -60,21 +58,17 @@ const Outline = forwardRef(
       isOutlineActive,
       setAddingNewOutline,
       isAddingNewOutline,
-      isAnyOutlineRenaming,
       isMultiSelectMode,
       shouldAutoExpandOutlines,
       isOutlineEditable,
-      selectedOutlines,
       updateOutlines,
     } = useContext(OutlineContext);
 
     const outlinePath = outlineUtils.getPath(outline);
 
     const [isExpanded, setIsExpanded] = useState(shouldAutoExpandOutlines);
-    const [isSelected, setIsSelected] = useState(selectedOutlines.includes(outlinePath));
     const [isRenaming, setIsRenaming] = useState(false);
     const [isChangingDest, setChangingDest] = useState(false);
-    const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
     const [clearSingleClick, setClearSingleClick] = useState(undefined);
 
     const dispatch = useDispatch();
@@ -111,14 +105,6 @@ const Outline = forwardRef(
       }
     }, [outlines]);
 
-    useEffect(() => {
-      setIsSelected(selectedOutlines.includes(outlinePath));
-    }, [selectedOutlines]);
-
-    const toggleOutline = useCallback(() => {
-      setIsExpanded((expand) => !expand);
-    }, []);
-
     const onSingleClick = useCallback(() => {
       core.goToOutline(outline);
 
@@ -148,7 +134,7 @@ const Outline = forwardRef(
 
     return (
       <div
-        ref={(!isAddingNewOutline && !isAnyOutlineRenaming && isMultiSelectMode && isOutlineEditable) ? elementRef : null}
+        ref={(!isAddingNewOutline && isMultiSelectMode && isOutlineEditable) ? elementRef : null}
         className="outline-drag-container"
         style={{ opacity }}
       >
@@ -159,11 +145,14 @@ const Outline = forwardRef(
             'editing': isRenaming || isChangingDest,
             'default': !isRenaming && !isChangingDest,
             'selected': isActive,
-            'hover': isHovered && !isActive,
           })}
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
+          onKeyDown={(e) => {
+            e.key === 'Enter' && onSingleClick();
+            e.stopPropagation();
+          }}
           onClick={(e) => {
+            e.stopPropagation();
             if (!isRenaming && !isChangingDest && e.detail === 1) {
               setClearSingleClick(setTimeout(onSingleClick, 300));
             }
@@ -174,39 +163,6 @@ const Outline = forwardRef(
             }
           }}
         >
-          {isMultiSelectMode &&
-            <Choice
-              type="checkbox"
-              className="bookmark-outline-checkbox"
-              id={`outline-checkbox-${outlinePath}`}
-              checked={isSelected}
-              onClick={(e) => e.stopPropagation()}
-              onChange={(e) => {
-                setIsSelected(e.target.checked);
-                setMultiSelected(outlinePath, e.target.checked);
-              }}
-            />
-          }
-
-          <div
-            className={classNames({
-              'outline-treeview-toggle': true,
-              expanded: isExpanded,
-            })}
-            style={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12, display: isRenaming ? 'none' : 'block' }}
-          >
-            {outline.getChildren().length > 0 &&
-              <Button
-                img="icon-chevron-right"
-                tabIndex={0}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleOutline();
-                }}
-              />
-            }
-          </div>
-
           <OutlineContent
             text={outline.getName()}
             outlinePath={outlinePath}
@@ -214,25 +170,20 @@ const Outline = forwardRef(
             setOutlineRenaming={setIsRenaming}
             isOutlineChangingDest={isChangingDest}
             setOutlineChangingDest={setChangingDest}
-            setIsHovered={setHovered}
             textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
-          />
+            setMultiSelected={setMultiSelected}
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
+            moveOutlineInward={moveOutlineInward}
+            moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+            moveOutlineAfterTarget={moveOutlineAfterTarget}
+          >
+            {outline.getChildren()}
+          </OutlineContent>
         </DataElementWrapper>
 
         <div className="outline-drag-line" style={{ opacity: isDraggedDownwards ? 1 : 0 }} />
 
-        {isExpanded &&
-          outline.getChildren().map((child) => (
-            <OutlineNested
-              outline={child}
-              key={outlineUtils.getOutlineId(child)}
-              setMultiSelected={setMultiSelected}
-              moveOutlineInward={moveOutlineInward}
-              moveOutlineBeforeTarget={moveOutlineBeforeTarget}
-              moveOutlineAfterTarget={moveOutlineAfterTarget}
-            />
-          ))
-        }
         {isAddingNewOutline && isActive && (
           <DataElementWrapper className="bookmark-outline-single-container editing">
             <div
@@ -350,6 +301,7 @@ const OutlineNested = DropTarget(
         default:
           break;
       }
+
       dropTargetNode.classList.remove('isNesting');
       fireEvent(Events.DROP_OUTLINE,
         {

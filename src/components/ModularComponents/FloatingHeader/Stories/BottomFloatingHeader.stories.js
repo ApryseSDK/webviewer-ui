@@ -10,7 +10,10 @@ import {
   floatCenterBottomHeader,
   floatEndBottomHeader,
   mockModularComponents,
+  floatCenterTopHeaderDynamic,
 } from '../../Helpers/mockHeaders';
+import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/FloatingHeader/BottomHeader',
@@ -20,14 +23,7 @@ export default {
   }
 };
 
-const MockDocumentContainer = () => {
-  return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      Mock Document Container
-      <img src="/assets/images/193_200x300.jpeg" />
-    </div>
-  );
-};
+const image = <img alt="Sample" src="/assets/images/193_200x300.jpeg" />;
 
 const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
   const state = {
@@ -47,7 +43,7 @@ const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
     })}>
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
-        <MockDocumentContainer />
+        <MockDocumentContainer>{image}</MockDocumentContainer>
         <BottomHeader />
       </div>
     </Provider>
@@ -77,11 +73,23 @@ FloatBottomStartHeader.args = {
 };
 
 export const FloatBottomCenterHeader = Template.bind({});
+floatCenterTopHeaderDynamic.placement = 'bottom';
 FloatBottomCenterHeader.args = {
   modularHeaders: {
     floatCenterBottomHeader,
+    floatCenterTopHeaderDynamic,
   },
 };
+
+FloatBottomCenterHeader.play = async ()  => {
+  const textInput = await document.querySelector('.opacity-mode-dynamic');
+  expect(textInput).toBeInTheDocument();
+
+  const btn = await document.querySelector('.opacity-mode-dynamic [data-element="button1"]');
+  expect(btn).toBeInTheDocument();
+  btn.focus();
+};
+
 
 export const FloatBottomEndHeader = Template.bind({});
 FloatBottomEndHeader.args = {

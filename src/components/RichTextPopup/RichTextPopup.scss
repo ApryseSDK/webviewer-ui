@@ -12,6 +12,18 @@
   padding: 6px 12px;
   align-items: flex-start;
 
+  #FontSizeDropdown.Dropdown__wrapper {
+    width: 80px;
+
+    .Dropdown {
+      width: 80px !important;
+    }
+
+    .Dropdown__items {
+      width: 80px !important;
+    }
+  }
+
   &.legacy {
     padding: 0;
     width: auto;

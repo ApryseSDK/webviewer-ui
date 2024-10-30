@@ -3,6 +3,7 @@ import { legacy_createStore as createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import OutlineContent from './OutlineContent';
 import OutlineContext from '../Outline/Context';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import '../LeftPanel/LeftPanel.scss';
 
 const NOOP = () => { };
@@ -10,6 +11,9 @@ const NOOP = () => { };
 export default {
   title: 'Components/OutlineContent',
   component: OutlineContent,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const reducer = () => {
@@ -18,6 +22,16 @@ const reducer = () => {
       disabledElements: {},
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
+      flyoutMap: {
+        'bookmarkOutlineFlyout-': {
+          dataElement: 'bookmarkOutlineFlyout-',
+          items: menuItems,
+        }
+      },
+      activeFlyout: 'bookmarkOutlineFlyout-',
+      openElements: {
+        'bookmarkOutlineFlyout-': true,
+      }
     },
     document: {
       outlines: {},
@@ -50,6 +64,8 @@ export const Basic = () => {
                 text='A test outline'
                 // isAdding={true}
                 setIsHovered={NOOP}
+                isOutlineChangingDest={true}
+                onCancel={NOOP}
               />
             </OutlineContext.Provider>
           </div>
@@ -180,9 +196,10 @@ export const ColoredOutline = () => {
               <OutlineContent
                 outlinePath='0'
                 text='A colored outline'
-                // isAdding={true}
                 setIsHovered={NOOP}
-                textColor="rgb(255, 0, 0)"
+                textColor="rgb(213, 42, 42)"
+                isOutlineChangingDest={true}
+                onCancel={NOOP}
               />
             </OutlineContext.Provider>
           </div>

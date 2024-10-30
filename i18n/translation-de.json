@@ -26,6 +26,8 @@
     "ungroup": "Gruppe aufheben",
     "download": "Download",
     "edit": "Bearbeiten",
+    "collapse": "Zusammenbruch",
+    "expand": "Expandieren",
     "extract": "Extrahieren",
     "extractPage": "Seite extrahieren",
     "enterFullscreen": "Vollbildansicht",
@@ -36,6 +38,7 @@
     "more": "Mehr",
     "openFile": "Datei öffnen",
     "page": "Seite",
+    "of": "von",
     "pagePrev": "Vorherige Seite",
     "pageNext": "Nächste Seite",
     "pageSet": "Seite einstellen",
@@ -43,6 +46,7 @@
     "proceed": "Fortfahren",
     "name": "Name",
     "rename": "Umbenennen",
+    "remove": "Entfernen",
     "ok": "OK",
     "rotate": "Drehen",
     "rotate3D": "3D Drehen",
@@ -109,6 +113,10 @@
     "moveToBottom": "Ans Ende verschieben",
     "movePageToTop": "Seite an den Anfang verschieben",
     "movePageToBottom": "Seite ans Ende verschieben",
+    "moveUp": "Nach oben bewegen",
+    "moveDown": "Nach unten bewegen",
+    "moveLeft": "Nach links bewegen",
+    "moveRight": "Nach rechts bewegen",
     "backToMenu": "Zurück zum Menü",
     "redactPages": "Seiten schwärzen",
     "playAudio": "Audio abspielen",
@@ -121,15 +129,20 @@
     "comparePages": "Seiten vergleichen",
     "startComparison": "Vergleich starten",
     "showComparison": "Vergleich anzeigen",
+    "highlightChanges": "Änderungen hervorheben",
     "back": "Zurück",
     "clearSignature": "Signatur zurücksetzen",
+    "clearInitial": "Klare Initiale",
     "readOnlySignature": "Die schreibgeschützte Signatur kann nicht gelöscht werden",
     "newDocument": "Neues Dokument",
     "sideBySideView": "Nebeneinander-Ansicht",
     "pageNumberInput": "Eingabe der Seitenzahl",
     "addNewColor": "Neue Farbe hinzufügen",
     "deleteColor": "Ausgewählte Farbe löschen",
-    "copySelectedColor": "Ausgewählte Farbe kopieren"
+    "copySelectedColor": "Ausgewählte Farbe kopieren",
+    "showMoreColors": "Weitere Farben anzeigen",
+    "showLessColors": "Weniger Farben anzeigen",
+    "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -185,7 +198,8 @@
     "3D": "3D",
     "sound": "Klang",
     "changeView": "Ansicht ändern",
-    "newImage": "Neues Bild"
+    "newImage": "Neues Bild",
+    "defaultCustomStampTitle": "Benutzerdefinierter Stempel"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -220,6 +234,7 @@
     "searchPanel": "Suche",
     "menuOverlay": "Menü",
     "notesPanel": "Notizen",
+    "indexPanel": "Indexbereich",
     "outlinePanel": "Umriss",
     "outlinesPanel": "Gliederung",
     "newOutlineTitle": "Neuer Gliederungstitel",
@@ -234,7 +249,8 @@
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
-    "viewControlsOverlay": "Anzeigeoptionen",
+    "viewControls": "Anzeigeoptionen",
+    "pageControls": "Seitensteuerelemente",
     "calibration": "Kalibrierung",
     "zoomOverlay": "Zoom-Overlay",
     "textPopup": "Text Popup",
@@ -243,8 +259,10 @@
     "multiSelectButton": "Mehrfachauswahl",
     "pageReplaceModalTitle": "Seite Ersetzen",
     "files": "Dateien",
+    "file": "Datei",
     "editText": "Text bearbeiten",
     "redactionPanel": "Redaktionsbereich",
+    "tabLabel": "Tab",
     "noteGroupSection": {
       "open": "Alle Anmerkungen anzeigen",
       "close": "Alle Anmerkungen schließen"
@@ -283,6 +301,7 @@
     "searching": "Suche...",
     "searchCommentsPlaceholder": "Kommentare suchen",
     "searchDocumentPlaceholder": "Dokument durchsuchen",
+    "searchSettingsPlaceholder": "Sucheinstellungen",
     "searchSuggestionsPlaceholder": "Suchvorschläge",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
@@ -296,6 +315,7 @@
     "doNotShowAgain": "Diese Meldung nicht mehr anzeigen",
     "doNotAskAgain": "Nicht noch einmal fragen",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
+    "sort": "Sortieren",
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unveröffentlichter Kommentar",
@@ -311,10 +331,11 @@
     "selectFile": "Datei auswählen",
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
-    "pageNum": "Seitennummer",
+    "pageNum": "Seite",
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler",
     "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
+    "errorBlankPageNumber": "Bitte geben Sie eine Seitenzahl an",
     "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}.",
     "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf."
   },
@@ -357,6 +378,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Symbolleistengruppen",
+      "flyoutLabel": "Schleife",
       "toolbarGroup-View": "Ansicht",
       "toolbarGroup-Annotate": "Kommentieren",
       "toolbarGroup-Shapes": "Formen",
@@ -366,7 +388,10 @@
       "toolbarGroup-EditText": "Text bearbeiten",
       "toolbarGroup-FillAndSign": "Füllen und unterschreiben",
       "toolbarGroup-Forms": "Formen",
-      "toolbarGroup-Redact": "Schwärzen"
+      "toolbarGroup-Redact": "Schwärzen",
+      "toolbarGroup-oe-Home": "Heim",
+      "toolbarGroup-oe-Insert": "Einfügen",
+      "toolbarGroup-oe-Review": "Rezension"
     },
     "annotationColor": {
       "StrokeColor": "Randfarbe",
@@ -408,7 +433,8 @@
       "noteContent": {
         "noName": "(kein Name)",
         "noDate": "(kein Datum)"
-      }
+      },
+      "toggleMultiSelect": "Mehrfachauswahl für Anmerkungen ein-/ausschalten"
     },
     "pageTransition": {
       "continuous": "Fortlaufend",
@@ -428,7 +454,6 @@
       "includeComments": "Kommentare einfügen",
       "printSettings": "Druckeinstellungen",
       "printGrayscale": "Graustufen drucken",
-      "flatten": "Dokument reduzieren",
       "printCurrentDisabled": "Die aktuelle Ansicht ist nur beim Anzeigen einer einzelnen Seite verfügbar."
     },
     "printInfo": {
@@ -474,9 +499,14 @@
       "typeInitial": "Typ Initialen*",
       "drawSignature": "Unterschrift zeichnen*",
       "drawInitial": "Initialen zeichnen*",
+      "imageSignature": "Bildsignatur",
+      "imageInitial": "Bildinitialen",
       "pickInitialsFile": "Wählen Sie Initialen",
       "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden.",
-      "fontStyle": "Schriftstil"
+      "fontStyle": "Schriftstil",
+      "textSignature": {
+        "dropdownLabel": "Schriftfamilie"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Ihre Dateien",
@@ -523,13 +553,17 @@
       "countMeasurement": "Zählen",
       "radius": "Radius",
       "count": "Anzahl",
-      "length": "Länge"
+      "length": "Länge",
+      "xAxis": "X-Achse",
+      "yAxis": "Y-Achse"
     },
     "freeTextOption": {
       "autoSizeFont": "Skalieren Sie die Schriftgröße dynamisch"
     },
     "measurementOption": {
-      "scale": "Maßstab"
+      "scale": "Maßstab",
+      "selectScale": "Maßstab auswählen",
+      "selectScaleDropdown": "Dropdown-Liste „Skala auswählen“"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +575,8 @@
         "paperUnits": "Papiereinheiten",
         "displayUnits": "Einheiten anzeigen",
         "fractionUnitsTooltip": "Brucheinheiten gelten nur für in und ft-in",
-        "incorrectSyntax": "Falsche Syntax"
+        "incorrectSyntax": "Falsche Syntax",
+        "units": "Einheiten"
       },
       "scaleOverlay": {
         "addNewScale": "Neuen Maßstab hinzufügen",
@@ -560,6 +595,7 @@
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "und löscht die zugehörigen Messungen.",
         "confirmDelete": "Möchten Sie diese Skala wirklich löschen?",
+        "thisCantBeUndone": "Dies kann nicht rückgängig gemacht werden.",
         "ifChangeScale": "Wenn Sie den Maßstab für die ausgewählte Messung oder das ausgewählte Werkzeug ändern, skalieren Sie",
         "notUsedWillDelete": " werden von keinen Messungen oder Werkzeugen mehr verwendet und gelöscht. Die Löschung ist irreversibel.",
         "ifToContinue": "Möchten Sie wirklich fortfahren?"
@@ -661,7 +697,9 @@
       "minute": "Minute",
       "second": "Zweite",
       "textColor": "Textfarbe",
-      "backgroundColor": "Hintergrundfarbe"
+      "backgroundColor": "Hintergrundfarbe",
+      "dateToolTipLabel": "Weitere Informationen zum Datumsformat",
+      "previewCustomStamp": "Vorschau von"
     },
     "pageRedactModal": {
       "addMark": "Markieren hinzufügen",
@@ -669,8 +707,7 @@
       "current": "Aktuelle Seite",
       "specify": "Seiten angeben",
       "odd": "Nur ungerade Seiten",
-      "even": "Nur gerade Seiten",
-      "header": "Schwärzung von Seiten markieren"
+      "even": "Nur gerade Seiten"
     },
     "lineStyleOptions": {
       "title": "Stil"
@@ -725,6 +762,7 @@
       "zoomOptions": "Zoom-Optionen",
       "zoomIn": "Hineinzoomen",
       "zoomOut": "Rauszoomen",
+      "setHeaderFocus": "Setzt den Fokus auf die Kopfzeile",
       "fitScreenWidth": "Passen Sie das Dokument bei einem kleinen Bildschirm (< 640px) an die Bildschirmbreite an, andernfalls passen Sie es an die Originalgröße an",
       "print": "Drucken",
       "bookmarkOpenPanel": "Setzen Sie schnell ein Lesezeichen für eine Seite und öffnen Sie das Lesezeichenfenster",
@@ -752,15 +790,16 @@
       "selectCreateTextStrikeoutTool": "Wählen Sie das Werkzeug AnnotationCreateTextStrikeout aus",
       "selectCreateTextUnderlineTool": "Wählen Sie das Werkzeug AnnotationCreateTextUnderline aus",
       "editKeyboardShorcut": "Tastaturkürzel bearbeiten",
-      "setShorcut": "Verknüpfung festlegen",
-      "pressKeyToSet": "Drücken Sie die Taste oder , um eine neue Verknüpfung festzulegen.",
-      "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits."
+      "setShortcut": "Tastenkombination festlegen",
+      "editShortcut": "Verknüpfung bearbeiten",
+      "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits.",
+      "close": "Tooltip schließen"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Seite löschen",
-      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
+      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden.",
       "deleteLastPageMessage": "Sie können nicht alle Seiten im Dokument löschen."
     },
     "extractPage": {
@@ -928,6 +967,10 @@
     "invalidDateTime": "Ungültiges Datum/Uhrzeit: Die Eingabe muss dem Format entsprechen"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Formularfeldliste",
+      "notFields": "Dieses Dokument enthält keine Formularfelder"
+    },
     "formFieldPopup": {
       "fieldName": "Feldname",
       "fieldValue": "Standardwert",
@@ -938,11 +981,14 @@
       "apply": "Anwenden",
       "cancel": "Stornieren",
       "flags": "Feldflaggen",
+      "fieldSize": "Feldgröße",
       "options": "Optionen",
+      "properties": "Eigenschaften",
       "radioGroups": "Optionsfelder mit demselben Feldnamen gehören zur selben Gruppierung.",
       "nameRequired": "Feldname ist erforderlich",
       "fieldIndicator": "Feldindikatoren",
       "documentFieldIndicator": "Dokumentfeldindikatoren",
+      "includeFieldIndicator": "Indikator „Feld einschließen“",
       "indicatorPlaceHolders": {
         "TextFormField": "Text hier einfügen",
         "CheckBoxFormField": "Prüfen",
@@ -962,6 +1008,14 @@
         "empty": "Feldname darf nicht leer sein"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "Signaturfeldanmerkung",
+      "CheckBoxFormField": "Anmerkung zum Kontrollkästchenfeld",
+      "RadioButtonFormField": "Anmerkung zum Optionsfeldfeld",
+      "ListBoxFormField": "Anmerkungen zu Listenfeldfeldern",
+      "ComboBoxFormField": "Kombinationsfeld-Feldanmerkung",
+      "TextFormField": "Textfeldanmerkung"
+    },
     "apply": "Felder anwenden",
     "type": "Feldtyp",
     "types": {
@@ -970,7 +1024,8 @@
       "checkbox": "Kontrollkästchen",
       "radio": "Radiobutton",
       "listbox": "Listenfeld",
-      "combobox": "Kombinationsfeld"
+      "combobox": "Kombinationsfeld",
+      "button": "Taste"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1159,8 @@
     "cropDimensions": "Zuschneidungsabmessungen",
     "dimensionInput": {
       "unitOfMeasurement": "Einheit",
-      "autoTrim": "Automatisches Trimmen"
+      "autoTrim": "Automatisches Trimmen",
+      "autoTrimCustom": "Brauch"
     },
     "cropModal": {
       "applyTitle": "Zuschneidung bestätigen",
@@ -1131,10 +1187,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
-    "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
+    "redactionSearchPlaceholder": "Schwärzen per Tastatur oder Muster",
     "redactionCounter": "Zur Schwärzung markiert",
     "clearMarked": "Markierung entfernen",
     "redactAllMarked": "Alle schwärzen",
+    "redactionItems": "Redaktionelle Elemente",
     "redactionItem": {
       "regionRedaction": "Region schwärzen",
       "fullPageRedaction": "Seite schwärzen",
@@ -1177,6 +1234,7 @@
     "createFolder": "Ordner erstellen",
     "portfolioPanelTitle": "PDF-Portfolio",
     "portfolioNewFolder": "Neuer Ordner",
+    "portfolioDocumentTitle": "Dokumenttitel",
     "portfolioFolderPlaceholder": "Ordnernamen",
     "portfolioFilePlaceholder": "Dateiname",
     "folderNameAlreadyExists": "Der Ordnername existiert bereits",
@@ -1200,12 +1258,14 @@
     "rightAlign": "Rechts ausrichten",
     "justify": "Blocksatz",
     "lineSpacing": "Zeilen- und Absatzabstand",
-    "bulletList": "Liste mit Aufzählungszeichen",
+    "lineSpacingMenu": "Zeilenabstand",
+    "bulletList": "Aufzählungsliste",
     "numberList": "Nummerierte Liste",
     "decreaseIndent": "Einzug verkleinern",
     "increaseIndent": "Einzug vergrößern",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
+    "image": "Bild",
     "table": "Tisch",
     "insertRowAbove": "Zeile darüber einfügen",
     "insertRowBelow": "Zeile darunter einfügen",
@@ -1224,10 +1284,49 @@
     "viewOnly": "Nur anschauen",
     "viewOnlyDescription": "Ohne Vorschläge anzeigen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt.",
-    "previewAllChanges": "Vorschau aller Änderungen"
+    "previewAllChanges": "Vorschau aller Änderungen",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen",
+    "pastingTitle": "Einfügen nicht verfügbar",
+    "pastingMessage": "Das Einfügen wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
+    "pastingWithoutFormatTitle": "Einfügen ohne Formatierung nicht verfügbar",
+    "pastingWithoutFormatMessage": "Das Einfügen ohne Formatierung wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "Einzel",
+      "double": "Doppelt",
+      "custom": "Brauch"
+    },
+    "numberDropdown": {
+      "6": "Zahl Latein Römisch 1",
+      "7": "Zahl Dezimal",
+      "8": "Zahl Latein Römisch 2",
+      "10": "Latein Römisch",
+      "11": "Römische Lateinische Zahl",
+      "dropdownLabel": "Nummerierungsvorgaben"
+    },
+    "bulletDropdown": {
+      "0": "Kugel",
+      "1": "Kugelquadrat",
+      "2": "Quadratische Kugel",
+      "3": "Diamant",
+      "4": "Überprüfen",
+      "5": "Pfeil",
+      "dropdownLabel": "Aufzählungszeichen-Voreinstellungen"
+    },
+    "fontSize": {
+      "dropdownLabel": "Schriftgröße"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Schriftstile"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Schriftfamilie"
+    }
   },
   "insertPageModal": {
-    "title": "Neue Seite hinzufügen",
+    "title": "Neue Seite einfügen",
     "tabs": {
       "blank": "Leer",
       "upload": "Hochladen"
@@ -1331,9 +1430,28 @@
       "redactionTextPlaceholder": "Textbeschriftung einfügen",
       "contentEdit": "Inhaltsbearbeitung"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Startlinienstil",
+      "middleLineStyleLabel": "Mittellinienstil",
+      "endLineStyleLabel": "Endlinienstil"
+    },
     "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
-    "noToolSelected": "Dieses Dokument enthält keine Ebenen.",
-    "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften."
+    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
+    "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Zeilenanfang"
+      },
+      "end": {
+        "dropdownLabel": "Zeilenende"
+      },
+      "middle": {
+        "dropdownLabel": "Linie Mitte"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Grenze"
+    }
   },
   "signatureListPanel": {
     "header": "Unterschriftenliste",
@@ -1347,5 +1465,8 @@
   "rubberStampPanel": {
     "header": "Briefmarken",
     "standard": "Standardstempel"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Farbwähler"
   }
 }

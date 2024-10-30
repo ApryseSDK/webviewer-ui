@@ -14,6 +14,8 @@ class ViewControls extends Item {
     super(props);
     this.type = ITEM_TYPE.VIEW_CONTROLS;
     this._dataElement = 'view-controls';
+    this.title = 'component.viewControls';
+    this.icon = 'icon-header-page-manipulation-line';
   }
 }
 

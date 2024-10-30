@@ -6,8 +6,9 @@ import Panel from 'components/Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import core from 'core';
-import { MockApp, createStore } from 'helpers/storybookHelper';
+import { MockApp, createStore, waitForTimeout } from 'helpers/storybookHelper';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
+import { within, userEvent, expect, waitFor } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -28,13 +29,18 @@ const basicMockState = {
       opacityContainer: true,
       richTextStyleContainer: true,
     },
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
+const mockStore = createStore(basicMockState);
+
 const StylePanelTemplate = ({ mockState = basicMockState, location = 'left' }) => (
-  <Provider store={createStore(mockState)}>
+  <Provider store={mockStore}>
     <Panel location={location} dataElement={'stylePanel'} isCustom>
-      <StylePanelContainer />
+      <StylePanelContainer dataElement="stylePanel" />
     </Panel>
   </Provider>
 );
@@ -64,7 +70,7 @@ const StylePanelInApp = (location) => {
         contextMenuPopup: false,
         stylePanel: true,
       },
-      activeCustomRibbon: 'annotations-ribbon-item',
+      activeCustomRibbon: 'toolbarGroup-Annotate',
       lastPickedToolForGroupedItems: {
         'annotateGroupedItems': 'AnnotationEdit',
       },
@@ -144,6 +150,9 @@ export const StylePanelTextTool = () => {
   useToolHook(window.Core.Tools.FreeTextCreateTool, window.Core.Tools.ToolNames.FREETEXT, setShouldRender, FreeTextDefaults);
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
+export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
+StylePanelFreeTextToolMobileVersion.parameters = window.storybook.MobileParameters;
+
 export const StylePanelFreehandTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useToolHook(window.Core.Tools.FreeHandCreateTool, window.Core.Tools.ToolNames.FREEHAND, setShouldRender);
@@ -233,6 +242,16 @@ export const StylePanelEditPageTool = () => {
   useToolHook(window.Core.Tools.CropCreateTool, window.Core.Tools.ToolNames.CROP, setShouldRender);
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
+export const StylePanelContentEditTool = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+  useToolHook(window.Core.Tools.AddParagraphTool, window.Core.Tools.ToolNames.ADD_PARAGRAPH, setShouldRender);
+  return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
+};
+export const StylePanelEraserTool = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+  useToolHook(window.Core.Tools.EraserTool, window.Core.Tools.ToolNames.ERASER, setShouldRender);
+  return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
+};
 export const StylePanelSignatureFormTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useToolHook(window.Core.Tools.SignatureFormFieldCreateTool, window.Core.Tools.ToolNames.SIG_FORM_FIELD, setShouldRender);
@@ -245,9 +264,16 @@ export const StylePanelTextFormTool = () => {
   });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
-export const StylePanelButtonFormTool = () => {
+export const StylePanelCheckboxButtonFormTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useToolHook(window.Core.Tools.CheckBoxFormFieldCreateTool, window.Core.Tools.ToolNames.CHECK_BOX_FIELD, setShouldRender);
+  return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
+};
+export const StylePanelRadioButtonFormTool = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+  useToolHook(window.Core.Tools.RadioButtonFormFieldCreateTool, window.Core.Tools.ToolNames.RADIO_FORM_FIELD, setShouldRender, {
+    FontSize: '12px',
+  });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
 export const StylePanelListBoxFormTool = () => {
@@ -257,17 +283,128 @@ export const StylePanelListBoxFormTool = () => {
   });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
-export const StylePanelContentEditTool = () => {
+export const StylePanelComboBoxFormTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
-  useToolHook(window.Core.Tools.AddParagraphTool, window.Core.Tools.ToolNames.ADD_PARAGRAPH, setShouldRender);
+  useToolHook(window.Core.Tools.ComboBoxFormFieldCreateTool, window.Core.Tools.ToolNames.COMBO_BOX_FIELD, setShouldRender, {
+    FontSize: '12px',
+  });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
 
-export const StylePanelEraserTool = () => {
+export const StylePanelTooltipOnColors = () => {
   const [shouldRender, setShouldRender] = useState(false);
-  useToolHook(window.Core.Tools.EraserTool, window.Core.Tools.ToolNames.ERASER, setShouldRender);
+  useToolHook(window.Core.Tools.RectangleCreateTool, window.Core.Tools.ToolNames.RECTANGLE, setShouldRender, {
+    StrokeStyle: 'solid',
+  });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
 
-export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
-StylePanelFreeTextToolMobileVersion.parameters = window.storybook.MobileParameters;
+StylePanelTooltipOnColors.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // Required timeout to allow useEffect to run and render the story
+  await waitForTimeout(100);
+  // eslint-disable-next-line custom/no-hex-colors
+  const button = (await canvas.findAllByLabelText('Stroke Color #E44234'))[0];
+  await userEvent.hover(button);
+  // Required timeout since tooltip shows after a delay
+  await waitForTimeout(1000);
+  await expect(await document.body.querySelector('.tooltip__content')).not.toBeNull();
+};
+
+export const toggleAllSectionsInShapeTool = StylePanelShapeTool.bind({});
+toggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Wait for the style panel to be rendered
+  await waitFor(() => {
+    expect(canvas.getByRole('button', { name: /Stroke/i, expanded: true })).toBeInTheDocument();
+  });
+
+  //Reset the sections to fit the initial state of the style panel of the selected tool
+  mockStore.dispatch({
+    type: 'CLOSE_ELEMENT',
+    payload: { dataElement: ['opacityContainer'] },
+  });
+  mockStore.dispatch({
+    type: 'CLOSE_ELEMENT',
+    payload: { dataElement: ['fillColorContainer'] },
+  });
+
+  const buttons = await canvas.getAllByText('Stroke');
+  const strokeSectionToggleButton = buttons[0];
+  await waitFor(() => {
+    // expect the stroke section is expanded initially
+    expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  await userEvent.click(strokeSectionToggleButton);
+  await waitFor(() => {
+    // expect the stroke section is expanded initially
+    expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  const FillToggleButton = await canvas.getByText('Fill');
+  await userEvent.click(FillToggleButton);
+  await waitFor(() => {
+    expect(FillToggleButton.getAttribute('aria-expanded')).toBe('true');
+  });
+  // eslint-disable-next-line custom/no-hex-colors
+  const firstColorInColorPalette = await canvas.getByLabelText('Fill Color #E44234');
+  expect(firstColorInColorPalette).toBeInTheDocument();
+
+  const OpacityToggleButton = await canvas.getByText('Opacity');
+  await userEvent.click(OpacityToggleButton);
+  await waitFor(() => {
+    expect(OpacityToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(canvas.getByRole('textbox', { name: /Opacity/i })).toBeInTheDocument();
+  });
+};
+
+export const toggleAllSectionsInFreeTextTool = StylePanelTextTool.bind({});
+toggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // Wait for the style panel to be rendered
+  await waitFor(() => {
+    expect(canvas.getByText('Text Style')).toBeInTheDocument();
+    expect(canvas.getByText('Text Style').getAttribute('aria-expanded')).toBe('true');
+  });
+
+  //Reset the sections to fit the initial state of the style panel of the selected tool
+  mockStore.dispatch({
+    type: 'CLOSE_ELEMENT',
+    payload: { dataElement: ['strokeStyleContainer'] },
+  });
+  mockStore.dispatch({
+    type: 'CLOSE_ELEMENT',
+    payload: { dataElement: ['opacityContainer'] },
+  });
+  mockStore.dispatch({
+    type: 'CLOSE_ELEMENT',
+    payload: { dataElement: ['fillColorContainer'] },
+  });
+
+  let buttons = await canvas.getAllByText('Stroke');
+  const strokeSectionToggleButton = buttons[0];
+  await userEvent.click(strokeSectionToggleButton);
+  await waitFor(async () => {
+    // expect the stroke section is expanded initially
+    buttons = await canvas.getAllByText('Stroke');
+    expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(buttons.length).toBe(2);
+  });
+
+  const FillToggleButton = await canvas.getByText('Fill');
+  await userEvent.click(FillToggleButton);
+  await waitFor(() => {
+    expect(FillToggleButton.getAttribute('aria-expanded')).toBe('true');
+    const colorPaletts = document.querySelectorAll('.ColorPalette');
+    expect(colorPaletts.length).toBe(3);
+  });
+
+  const OpacityToggleButton = await canvas.getByText('Opacity');
+  await userEvent.click(OpacityToggleButton);
+  await waitFor(() => {
+    expect(OpacityToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(canvas.getByRole('textbox', { name: /Opacity/i })).toBeInTheDocument();
+  });
+};

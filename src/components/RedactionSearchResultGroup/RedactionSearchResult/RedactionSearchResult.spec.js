@@ -97,12 +97,12 @@ describe('RedactionSearchResult', () => {
     it('when a user clicks on the result item it calls the correct handler', () => {
       const props = {
         type: redactionTypeMap['EMAIL'],
-        resultStr: 'paul.atreides@dune.com',
+        ambientStr: 'paul.atreides@dune.com',
         onClickResult: jest.fn()
       };
 
       render(<RedactionSearchResult {...props} />);
-      const searchResult = screen.getByText(props.resultStr);
+      const searchResult = screen.getByRole('button', { name: props.resultStr });
       userEvent.click(searchResult);
       expect(props.onClickResult).toBeCalled();
     });

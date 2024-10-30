@@ -8,8 +8,9 @@ import selectors from 'selectors';
 import { isMobileDevice } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 import CustomElement from '../CustomElement';
-import FormFieldPlaceHolderOverlay from './FormFieldPlaceHolderOverlay';
+import FormFieldWidgetOverlay from './FormFieldWidgetOverlay';
 import './AnnotationContentOverlay.scss';
+import getRootNode from 'src/helpers/getRootNode';
 
 const MAX_CHARACTERS = 100;
 
@@ -59,6 +60,14 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
         top = 0;
       }
 
+      if (window.isApryseWebViewerWebComponent) {
+        const host = getRootNode()?.host;
+        if (host) {
+          left -= host.offsetLeft;
+          top -= host.offsetTop;
+        }
+      }
+
       return { left, top };
     };
 
@@ -70,9 +79,7 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
   }, [annotation, clientXY]);
 
   const numberOfReplies = annotation?.getReplies().length;
-
   const preRenderedElements = isUsingCustomHandler && annotation ? customHandler(annotation) : null;
-
   const customRender = useCallback(() => preRenderedElements, [preRenderedElements]);
 
   const renderContents = () => (
@@ -116,9 +123,9 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     return null;
   }
 
-  if (annotation.isFormFieldPlaceholder() && isOverlayOpen) {
+  if (isOverlayOpen && annotation instanceof window.Core.Annotations.WidgetAnnotation) {
     return (
-      <FormFieldPlaceHolderOverlay
+      <FormFieldWidgetOverlay
         annotation={annotation}
         overlayPosition={overlayPosition}
         overlayRef={overlayRef}

@@ -35,6 +35,7 @@ import getRootNode from 'helpers/getRootNode';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 import './index.scss';
+import importModularComponents from 'src/apis/importModularComponents';
 
 if (window.isApryseWebViewerWebComponent) {
   if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
@@ -53,11 +54,11 @@ let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
 if (process.env.NODE_ENV === 'development') {
   const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
   if (!isSpamDisabled) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
+    // eslint-disable-next-line global-require
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger({ collapsed: true }));
   }
-  // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
+  // eslint-disable-next-line global-require
   const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
   composeEnhancer = composeWithDevTools({});
 }
@@ -65,7 +66,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
 const persistor = persistStore(store);
-
+window.store = store;
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     // eslint-disable-next-line global-require
@@ -211,7 +212,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
-        }, window.sampleL);
+        });
       });
     }
 
@@ -221,7 +222,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
-        }, window.sampleL);
+        });
       });
     }
 
@@ -230,7 +231,7 @@ if (window.CanvasRenderingContext2D) {
         workerLoadingProgress: (percent) => {
           store.dispatch(actions.setLoadingProgress(percent));
         },
-      }, window.sampleL);
+      });
     }
 
     if (workersToLoad.includes(LEGACY_OFFICE)) {
@@ -239,7 +240,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
-        }, window.sampleL);
+        });
       });
     }
 
@@ -248,7 +249,7 @@ if (window.CanvasRenderingContext2D) {
     }
   };
 
-  fullAPIReady.then(() => loadConfig()).then(() => {
+  fullAPIReady.then(() => loadConfig()).then(async () => {
     if (preloadWorker) {
       initTransports();
     }
@@ -263,6 +264,18 @@ if (window.CanvasRenderingContext2D) {
       tool?.enableViewStateSaving();
     }
 
+    const uiConfigPath = getHashParameters('uiConfig', '');
+    if (uiConfigPath) {
+      try {
+        const uiConfigRequest = await fetch(uiConfigPath);
+        const uiConfig = await uiConfigRequest.json();
+        await importModularComponents(store)(uiConfig);
+      } catch (e) {
+        console.error(`Failed to load uiConfiguration from: ${uiConfigPath}`);
+        console.error(e);
+      }
+    }
+
     setupLoadAnnotationsFromServer(store);
 
     ReactDOM.render(
@@ -270,7 +283,7 @@ if (window.CanvasRenderingContext2D) {
         <PersistGate loading={null} persistor={persistor}>
           <I18nextProvider i18n={i18next}>
             <DndProvider backend={HTML5Backend}>
-              <App removeEventHandlers={removeEventHandlers} />
+              <App removeEventHandlers={removeEventHandlers}/>
             </DndProvider>
           </I18nextProvider>
         </PersistGate>

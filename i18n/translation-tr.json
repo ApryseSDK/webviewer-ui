@@ -26,6 +26,8 @@
     "ungroup": "Grubu çöz",
     "download": "İndirmek",
     "edit": "Düzenlemek",
+    "collapse": "Yıkılmak",
+    "expand": "Genişletmek",
     "extract": "Çıkarmak",
     "extractPage": "Sayfayı Çıkart",
     "enterFullscreen": "Tam ekran",
@@ -36,6 +38,7 @@
     "more": "Daha",
     "openFile": "Açık dosya",
     "page": "Sayfa",
+    "of": "ile ilgili",
     "pagePrev": "Önceki sayfa",
     "pageNext": "Sonraki Sayfa",
     "pageSet": "Sayfa ayarla",
@@ -43,6 +46,7 @@
     "proceed": "İlerlemek",
     "name": "İsim",
     "rename": "Yeniden isimlendirmek",
+    "remove": "Kaldırmak",
     "ok": "Tamam",
     "rotate": "Sayfa yönlendirmesi",
     "rotate3D": "Döndür",
@@ -109,6 +113,10 @@
     "moveToBottom": "Aşağıya taşı",
     "movePageToTop": "Sayfayı En Üste Taşı",
     "movePageToBottom": "Sayfayı Alta Taşı",
+    "moveUp": "Yukarı taşı",
+    "moveDown": "Aşağı taşı",
+    "moveLeft": "Sola Hareket Et",
+    "moveRight": "Sağa Hareket Et",
     "backToMenu": "Menüye dön",
     "redactPages": "Sayfaları yeniden düzenleyin",
     "playAudio": "ses çal",
@@ -121,15 +129,20 @@
     "comparePages": "Sayfaları karşılaştır",
     "startComparison": "Karşılaştırmayı Başlat",
     "showComparison": "Karşılaştırmayı Göster",
+    "highlightChanges": "Değişiklikleri Vurgula",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
+    "clearInitial": "Temiz başlangıç",
     "readOnlySignature": "Salt okunur imza silinemez",
     "newDocument": "Yeni belge",
     "sideBySideView": "Yan Yana Görünüm",
     "pageNumberInput": "Sayfa numarası girişi",
     "addNewColor": "Yeni Renk Ekle",
     "deleteColor": "Seçilen Rengi Sil",
-    "copySelectedColor": "Seçilen Rengi Kopyala"
+    "copySelectedColor": "Seçilen Rengi Kopyala",
+    "showMoreColors": "Daha Fazla Renk Göster",
+    "showLessColors": "Daha Az Renk Göster",
+    "fromCustomColorPicker": "Özel Renk Seçici'den"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -185,7 +198,8 @@
     "3D": "3 boyutlu",
     "sound": "Ses",
     "changeView": "Görünümü değiştir",
-    "newImage": "Yeni görüntü"
+    "newImage": "Yeni görüntü",
+    "defaultCustomStampTitle": "Özel Damga"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
@@ -220,6 +234,7 @@
     "searchPanel": "Arama",
     "menuOverlay": "Menü",
     "notesPanel": "Yorumlar",
+    "indexPanel": "Dizin Paneli",
     "outlinePanel": "anahat",
     "outlinesPanel": "Anahatlar",
     "newOutlineTitle": "Yeni Taslak Başlığı",
@@ -234,7 +249,8 @@
     "thumbnailsPanel": "küçük resimler",
     "toolsButton": "Araçlar",
     "redaction": "yazı",
-    "viewControlsOverlay": "Kontrolleri Görüntüle",
+    "viewControls": "Kontrolleri Görüntüle",
+    "pageControls": "Sayfa Kontrolleri",
     "calibration": "kalibrasyon",
     "zoomOverlay": "Yakınlaştırma Yerleşimi",
     "textPopup": "Metin Açılır Penceresi",
@@ -243,8 +259,10 @@
     "multiSelectButton": "Çoklu seçim",
     "pageReplaceModalTitle": "Sayfayı Değiştir",
     "files": "Dosyalar",
+    "file": "Dosya",
     "editText": "Metni düzenle",
     "redactionPanel": "Redaksiyon Paneli",
+    "tabLabel": "Sekme",
     "noteGroupSection": {
       "open": "Tüm Ek Açıklamaları Görüntüle",
       "close": "Tüm Ek Açıklamaları Kapat"
@@ -283,6 +301,7 @@
     "searching": "Aranıyor...",
     "searchCommentsPlaceholder": "Yorum ara",
     "searchDocumentPlaceholder": "Belge ara",
+    "searchSettingsPlaceholder": "Arama ayarları",
     "searchSuggestionsPlaceholder": "Önerileri ara",
     "signHere": "Burayı imzalayın",
     "insertTextHere": "Buraya metin ekleyin",
@@ -296,6 +315,7 @@
     "doNotShowAgain": "Bunu bir daha bana gösterme",
     "doNotAskAgain": "Tekrar sorma",
     "enterReplacementText": "Değiştirmek istediğiniz metni girin",
+    "sort": "Düzenlemek",
     "sortBy": "Çeşit",
     "emptyCustomStampInput": "Damga metni boş olamaz",
     "unpostedComment": "Yayınlanmamış Yorum",
@@ -311,10 +331,11 @@
     "selectFile": "Dosya Seç",
     "selectPageToReplace": "Belgede değiştirmek istediğiniz sayfaları seçin.",
     "embeddedFiles": "Gömülü Dosyalar",
-    "pageNum": "Sayfa numarası",
+    "pageNum": "Sayfa",
     "viewBookmark": "Sayfadaki Yer İşaretini Görüntüle",
     "error": "Hata",
     "errorPageNumber": "Geçersiz sayfa numarası. Sınır (şimdiki değeri)",
+    "errorBlankPageNumber": "Lütfen bir sayfa numarası belirtin",
     "errorLoadingDocument": "Bu belge okunurken bir sorun oluştu ve bazı sayfalar görüntülenemeyebilir. Bu, belgenin bozuk olabileceğini gösterir. Toplam sayfa sayısı {{totalPageCount}} ve görüntülenen sayfa sayısı {{displayedPageCount}}.",
     "noRevisions": "Bu belgenin revizyonu yoktur."
   },
@@ -357,6 +378,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Araç Çubuğu Grupları",
+      "flyoutLabel": "Kurdele",
       "toolbarGroup-View": "Görünüm",
       "toolbarGroup-Annotate": "açıklama ekle",
       "toolbarGroup-Shapes": "şekiller",
@@ -366,7 +388,10 @@
       "toolbarGroup-EditText": "Metni düzenle",
       "toolbarGroup-FillAndSign": "Doldur ve İmzala",
       "toolbarGroup-Forms": "Formlar",
-      "toolbarGroup-Redact": "Yazıya dökmek"
+      "toolbarGroup-Redact": "Yazıya dökmek",
+      "toolbarGroup-oe-Home": "Ev",
+      "toolbarGroup-oe-Insert": "Sokmak",
+      "toolbarGroup-oe-Review": "Gözden geçirmek"
     },
     "annotationColor": {
       "StrokeColor": "Felç",
@@ -408,7 +433,8 @@
       "noteContent": {
         "noName": "(isimsiz)",
         "noDate": "(tarih yok)"
-      }
+      },
+      "toggleMultiSelect": "Ek Açıklama için Çoklu Seçimi Değiştir"
     },
     "pageTransition": {
       "continuous": "Sürekli Sayfa",
@@ -428,7 +454,6 @@
       "includeComments": "Yorumları dahil et",
       "printSettings": "Yazdırma Ayarları",
       "printGrayscale": "Gri Tonlamalı Yazdır",
-      "flatten": "Belgeyi düzleştir",
       "printCurrentDisabled": "Geçerli görünüm yalnızca tek bir sayfa görüntülenirken kullanılabilir."
     },
     "printInfo": {
@@ -474,9 +499,14 @@
       "typeInitial": "Baş Harfleri yazın*",
       "drawSignature": "İmza Çek*",
       "drawInitial": "Baş Harflerini Çiz*",
+      "imageSignature": "Resim İmzası",
+      "imageInitial": "Görüntünün Baş Harfleri",
       "pickInitialsFile": "Baş Harfleri Seçin",
       "noSignatures": "Şu anda kayıtlı imza yok.",
-      "fontStyle": "yazı stili"
+      "fontStyle": "yazı stili",
+      "textSignature": {
+        "dropdownLabel": "Yazı Tipi Ailesi"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Dosyalarınız",
@@ -523,13 +553,17 @@
       "countMeasurement": "sayım ölçümü",
       "radius": "yarıçap",
       "count": "Saymak",
-      "length": "Uzunluk"
+      "length": "Uzunluk",
+      "xAxis": "X Ekseni",
+      "yAxis": "Y Ekseni"
     },
     "freeTextOption": {
       "autoSizeFont": "Yazı tipi boyutunu dinamik olarak ölçeklendirin"
     },
     "measurementOption": {
-      "scale": "Ölçek"
+      "scale": "Ölçek",
+      "selectScale": "Ölçeği Seçin",
+      "selectScaleDropdown": "Ölçek Açılır Menüsünü Seçin"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +575,8 @@
         "paperUnits": "Kağıt Birimleri",
         "displayUnits": "Görüntüleme birimleri",
         "fractionUnitsTooltip": "Kesir birimleri yalnızca içeri ve ft-in için geçerlidir",
-        "incorrectSyntax": "Yanlış sözdizimi"
+        "incorrectSyntax": "Yanlış sözdizimi",
+        "units": "Birimler"
       },
       "scaleOverlay": {
         "addNewScale": "Yeni Ölçek Ekle",
@@ -560,6 +595,7 @@
         "irreversible": "geri döndürülemez",
         "willDeleteMeasurement": "ve ilişkili ölçümleri siler.",
         "confirmDelete": "Bu ölçeği silmek istediğinizden emin misiniz?",
+        "thisCantBeUndone": " Bu geri alınamaz.",
         "ifChangeScale": "Seçilen ölçüm veya araç için ölçeği değiştirirseniz, ölçek",
         "notUsedWillDelete": " artık herhangi bir ölçüm veya araç tarafından kullanılmayacak ve silinecektir. Silme işlemi geri döndürülemez.",
         "ifToContinue": "Devam etmek istediğinizden emin misiniz?"
@@ -661,7 +697,9 @@
       "minute": "Dakika",
       "second": "İkinci",
       "textColor": "Metin rengi",
-      "backgroundColor": "Arka plan rengi"
+      "backgroundColor": "Arka plan rengi",
+      "dateToolTipLabel": "Tarih biçimi hakkında daha fazla bilgi",
+      "previewCustomStamp": "Önizleme"
     },
     "pageRedactModal": {
       "addMark": "İşaret Ekle",
@@ -669,8 +707,7 @@
       "current": "Geçerli sayfa",
       "specify": "Sayfaları Belirtin",
       "odd": "Sadece tek sayfalar",
-      "even": "Yalnızca Çift Sayfalar",
-      "header": "Sayfa Redaksiyonunu İşaretle"
+      "even": "Yalnızca Çift Sayfalar"
     },
     "lineStyleOptions": {
       "title": "stil"
@@ -725,6 +762,7 @@
       "zoomOptions": "Yakınlaştırma Seçenekleri",
       "zoomIn": "Yakınlaştır",
       "zoomOut": "Uzaklaştır",
+      "setHeaderFocus": "Odaklanmayı başlığa ayarlar",
       "fitScreenWidth": "Belgeyi küçük bir ekranda (< 640 piksel) ekran genişliğine sığdırın, aksi halde orijinal boyutuna sığdırın",
       "print": "Yazdır",
       "bookmarkOpenPanel": "Bir sayfaya hızlıca yer işareti koyun ve yer işareti panelini açın",
@@ -752,15 +790,16 @@
       "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout aracını seçin",
       "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline aracını seçin",
       "editKeyboardShorcut": "Klavye Kısayolunu Düzenle",
-      "setShorcut": "Kısayol Ayarla",
-      "pressKeyToSet": "Yeni kısayol ayarlamak için tuşuna veya tuşlarına basın.",
-      "shortcutAlreadyExists": "Yukarıdaki klavye kısayolu zaten var."
+      "setShortcut": "Kısayol Ayarla",
+      "editShortcut": "Kısayolu Düzenle",
+      "shortcutAlreadyExists": "Yukarıdaki klavye kısayolu zaten var.",
+      "close": "İpucunu kapat"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Sayfayı Sil",
-      "deleteMessage": "Seçili sayfayı/sayfaları silmek istediğinizden emin misiniz? Bu geri alınamaz",
+      "deleteMessage": "Seçili sayfaları silmek istediğinizden emin misiniz? Bu geri alınamaz.",
       "deleteLastPageMessage": "Belgedeki tüm sayfaları silemezsiniz."
     },
     "extractPage": {
@@ -928,6 +967,10 @@
     "invalidDateTime": "Geçersiz Tarih/Saat: Giriş, formatla eşleşmelidir"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Form Alanı Listesi",
+      "notFields": "Bu belgede form alanı yok"
+    },
     "formFieldPopup": {
       "fieldName": "Alan adı",
       "fieldValue": "Varsayılan değer",
@@ -938,11 +981,14 @@
       "apply": "Uygulamak",
       "cancel": "İptal",
       "flags": "Alan Bayrakları",
+      "fieldSize": "Alan boyutu",
       "options": "Seçenekler",
+      "properties": "Özellikler",
       "radioGroups": "Aynı Alan Adına sahip radyo düğmeleri aynı gruplamaya ait olacaktır.",
       "nameRequired": "Alan adı gerekli",
       "fieldIndicator": "Alan Göstergeleri",
       "documentFieldIndicator": "Belge Alanı Göstergeleri",
+      "includeFieldIndicator": "Alan Göstergesini Ekle",
       "indicatorPlaceHolders": {
         "TextFormField": "Buraya Metin Ekle",
         "CheckBoxFormField": "Kontrol",
@@ -962,6 +1008,14 @@
         "empty": "Alan Adı boş olamaz"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "İmza Alanı Açıklaması",
+      "CheckBoxFormField": "Onay Kutusu Alanı Açıklaması",
+      "RadioButtonFormField": "Radyo Düğmesi Alanı Açıklaması",
+      "ListBoxFormField": "Liste Kutusu Alanı Açıklaması",
+      "ComboBoxFormField": "Açılan Kutu Alanı Açıklaması",
+      "TextFormField": "Metin Alanı Açıklaması"
+    },
     "apply": "Alanları Uygula",
     "type": "Alan türü",
     "types": {
@@ -970,7 +1024,8 @@
       "checkbox": "onay kutusu",
       "radio": "Radyo düğmesi",
       "listbox": "Liste kutusu",
-      "combobox": "Açılan kutu"
+      "combobox": "Açılan kutu",
+      "button": "Düğme"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1159,8 @@
     "cropDimensions": "Kırpma Boyutları",
     "dimensionInput": {
       "unitOfMeasurement": "Birim",
-      "autoTrim": "Otomatik kırp"
+      "autoTrim": "Otomatik kırp",
+      "autoTrimCustom": "Gelenek"
     },
     "cropModal": {
       "applyTitle": "Kırpma uygulansın mı?",
@@ -1131,10 +1187,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Metni, bölgeleri, sayfaları işaretleyerek veya arama yaparak redaksiyona başlayın.",
-    "redactionSearchPlaceholder": "Anahtar kelime araması veya kalıplara göre ekleyin",
+    "redactionSearchPlaceholder": "Klavyeye veya desenlere göre düzenleme",
     "redactionCounter": "Redaksiyon için işaretlendi",
     "clearMarked": "Temizlemek",
     "redactAllMarked": "Tümünü Düzelt",
+    "redactionItems": "Düzenleme Öğeleri",
     "redactionItem": {
       "regionRedaction": "Bölge redaksiyonu",
       "fullPageRedaction": "Tam sayfa redaksiyonu",
@@ -1151,7 +1208,7 @@
       "phoneNumbers": "Telefon numaraları",
       "images": "Görüntüler",
       "emails": "e-postalar",
-      "pattern": "Desen",
+      "pattern": "Desenler",
       "start": "Aramanızı yapmaya başlayın"
     }
   },
@@ -1177,6 +1234,7 @@
     "createFolder": "Klasör oluşturun",
     "portfolioPanelTitle": "PDF Portföyü",
     "portfolioNewFolder": "Yeni dosya",
+    "portfolioDocumentTitle": "Belge başlığı",
     "portfolioFolderPlaceholder": "Klasör adı",
     "portfolioFilePlaceholder": "Dosya adı",
     "folderNameAlreadyExists": "Klasör adı zaten var",
@@ -1200,12 +1258,14 @@
     "rightAlign": "sağa hizala",
     "justify": "Savunmak",
     "lineSpacing": "Satır ve paragraf aralığı",
-    "bulletList": "Maddeli liste",
-    "numberList": "Numaralı liste",
+    "lineSpacingMenu": "Satır Aralığı",
+    "bulletList": "Madde işaretli liste",
+    "numberList": "Numaralandırılmış liste",
     "decreaseIndent": "Girintiyi azalt",
     "increaseIndent": "Girintiyi artır",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
+    "image": "Resim",
     "table": "Masa",
     "insertRowAbove": "Yukarıya Satır Ekle",
     "insertRowBelow": "Aşağıya Satır Ekle",
@@ -1226,7 +1286,44 @@
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez.",
     "previewAllChanges": "Tüm değişiklikleri önizleyin",
     "accept": "Kabul etmek",
-    "reject": "Reddetmek"
+    "reject": "Reddetmek",
+    "pastingTitle": "Yapıştırma kullanılamıyor",
+    "pastingMessage": "Tarayıcınızda yapıştırma desteklenmiyor. Bunun yerine bir klavye kısayolu kullanabilirsiniz",
+    "pastingWithoutFormatTitle": "Biçimlendirme olmadan yapıştırma mümkün değil",
+    "pastingWithoutFormatMessage": "Tarayıcınızda biçimlendirme olmadan yapıştırma desteklenmiyor. Bunun yerine bir klavye kısayolu kullanabilirsiniz",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "Bekar",
+      "double": "Çift",
+      "custom": "Gelenek"
+    },
+    "numberDropdown": {
+      "6": "Sayı Latin Roma 1",
+      "7": "Sayı Ondalık",
+      "8": "Sayı Latin Roma 2",
+      "10": "Latince Roma",
+      "11": "Roma Latin Rakamı",
+      "dropdownLabel": "Numaralandırma Ön Ayarları"
+    },
+    "bulletDropdown": {
+      "0": "Mermi",
+      "1": "Mermi karesi",
+      "2": "Kare Mermi",
+      "3": "Elmas",
+      "4": "Kontrol etmek",
+      "5": "Ok",
+      "dropdownLabel": "Mermi Ön Ayarları"
+    },
+    "fontSize": {
+      "dropdownLabel": "Yazı Tipi Boyutu"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Yazı Stilleri"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Yazı Tipi Ailesi"
+    }
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",
@@ -1280,7 +1377,7 @@
     "save": "Belgeyi Kaydet",
     "comparePanel": {
       "Find": "Belgede bul",
-      "changesList": "Değişiklik Listesi",
+      "changesList": "Değişim Listesi",
       "change": "Değiştirmek",
       "old": "Eskimiş",
       "new": "Yeni",
@@ -1333,9 +1430,28 @@
       "redactionTextPlaceholder": "Metin etiketi ekle",
       "contentEdit": "İçerik Düzenleme"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Başlangıç Çizgisi Stili",
+      "middleLineStyleLabel": "Orta Çizgi Stili",
+      "endLineStyleLabel": "Son Satır Stili"
+    },
     "addColorToCustom": "Özel renklere ekle",
-    "noToolSelected": "Bu belge herhangi bir katman içermiyor.",
-    "noToolStyle": "Araç herhangi bir stil özelliği içermiyor."
+    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
+    "noToolStyle": "Araç herhangi bir stil özelliği içermiyor.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Satır Başlangıcı"
+      },
+      "end": {
+        "dropdownLabel": "Satır Sonu"
+      },
+      "middle": {
+        "dropdownLabel": "Ortadaki çizgi"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Sınır"
+    }
   },
   "signatureListPanel": {
     "header": "İmza Listesi",
@@ -1349,5 +1465,8 @@
   "rubberStampPanel": {
     "header": "Pullar",
     "standard": "Standart Pullar"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Renk Seçici"
   }
 }

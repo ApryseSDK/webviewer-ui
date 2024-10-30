@@ -56,10 +56,6 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
     return () => core.removeEventListener('zoomUpdated', onZoomUpdated);
   }, [size]);
 
-  const onClickHandler = () => {
-    dispatch(actions.toggleElement('zoom-containerFlyout'));
-  };
-
   // This is necessary because the button triggering the flyout menu is not the element we want to set as the trigger for positioning it
   const setFlyoutTriggerRef = () => {
     const dataElement = elementRef.current.getAttribute('data-element');
@@ -102,7 +98,6 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
       isZoomFlyoutMenuActive={isZoomFlyoutMenuActive}
       dataElement={dataElement}
       isActive={isActive}
-      onClick={onClickHandler}
       setFlyoutTriggerRef={setFlyoutTriggerRef} />
   );
 };

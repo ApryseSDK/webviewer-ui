@@ -11,6 +11,9 @@ import DataElements from 'constants/dataElement';
 
 import './ScaleOverlay.scss';
 
+import MobilePopupWrapper from '../MobilePopupWrapper';
+import { isMobileSize } from 'helpers/getDeviceSize';
+
 const Scale = window.Core.Scale;
 
 const measurementDataElements = [
@@ -193,7 +196,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
 
   const confirmScaleToDelete = (scaleToDelete, createAndApplyScale) => {
     const message = (
-      <div>
+      <div className='customMessage'>
         <p>
           <span>
             {t('option.measurement.deleteScaleModal.ifChangeScale')}
@@ -238,25 +241,11 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     dispatch(actions.setIsAddingNewScale(true));
   }, []);
 
-  return !isDisabled && (
-    <Draggable
-      position={position}
-      bounds={containerBounds()}
-      onDrag={syncDraggablePosition}
-      onStop={syncDraggablePosition}
-      cancel={'.scale-overlay-selector, .add-new-scale'}
-    >
-      <div
-        className={classNames({
-          Overlay: true,
-          ScaleOverlay: true,
-          open: isOpen,
-          closed: !isOpen,
-        })}
-        data-element={DataElements.SCALE_OVERLAY_CONTAINER}
-        style={style}
-        ref={containerRef}
-      >
+  const isMobile = isMobileSize();
+
+  if (isMobile) {
+    return !isDisabled && (
+      <MobilePopupWrapper>
         <ScaleOverlay
           annotations={annotations}
           selectedTool={selectedTool}
@@ -267,10 +256,46 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
           onApplyCalibration={onApplyCalibration}
           onAddingNewScale={onAddingNewScale}
           forceUpdate={forceUpdate}
+          tabIndex={0}
         />
-      </div>
-    </Draggable>
-  );
+      </MobilePopupWrapper>
+    );
+  } else {
+    return !isDisabled && (
+      <Draggable
+        position={position}
+        bounds={containerBounds()}
+        onDrag={syncDraggablePosition}
+        onStop={syncDraggablePosition}
+        cancel={'.scale-overlay-selector, .add-new-scale'}
+      >
+        <div
+          className={classNames({
+            Overlay: true,
+            ScaleOverlay: true,
+            open: isOpen,
+            closed: !isOpen,
+          })}
+          data-element={DataElements.SCALE_OVERLAY_CONTAINER}
+          style={style}
+          ref={containerRef}
+        >
+          <ScaleOverlay
+            annotations={annotations}
+            selectedTool={selectedTool}
+            updateIsCalibration={updateIsCalibration}
+            enableOrDisableToolElements={enableOrDisableToolElements}
+            onScaleSelected={onScaleSelected}
+            onCancelCalibrationMode={onCancelCalibrationMode}
+            onApplyCalibration={onApplyCalibration}
+            onAddingNewScale={onAddingNewScale}
+            forceUpdate={forceUpdate}
+            tabIndex={0}
+          />
+        </div>
+      </Draggable>
+    );
+  }
 };
 
 export default ScaleOverlayContainer;

@@ -8,6 +8,7 @@ import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
+import { MockDocumentContainer } from 'helpers/storybookHelper';
 
 const leftChevron = {
   onClick: () => { },
@@ -40,11 +41,15 @@ const initialState = {
     customElementOverrides: {},
     activeGroupedItems: [],
     disabledElements: [],
-    openElements: {},
+    openElements: {
+      pageControlsFlyout: true,
+    },
     customPanels: [],
     genericPanels: [],
+    activeDocumentViewerKey: 1,
     currentPage: 2,
-    activeFlyout: 'pageNavFlyoutMenu',
+    totalPages: 9,
+    activeFlyout: 'pageControlsFlyout',
     activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
     fixedGroupedItems: ['grouped-item-ABC'],
@@ -66,22 +71,13 @@ const initialState = {
       2: false,
     },
     flyoutMap: {
-      'pageNavFlyoutMenu': {
-        dataElement: 'pageNavFlyoutMenu',
+      'pageControlsFlyout': {
+        dataElement: 'pageControlsFlyout',
         items: [
           {
-            dataElement: 'pageNavigationButton',
-            currentPage: 1,
-            totalPages: 9,
-            input: 2,
-            label: 'pageNavigationButton',
-            inputWidth: 30,
-            onClick: () => { },
-            onChange: () => { },
-            onSubmit: () => { },
-            onBlur: () => { },
-            onFocus: () => { },
-
+            dataElement: 'pageNavigationInput',
+            label: 'pageNavigationInput',
+            onKeyDownHandler: () => { },
           },
           leftChevron,
           rightChevron
@@ -143,16 +139,8 @@ export const Basic = (storyProps) => {
   return (
     <Provider store={store}>
       <ModularHeader {...headerProps} />
-      <MockDocumentContainer />
+      <MockDocumentContainer width='90%' height='90%' />
     </Provider>
-  );
-};
-
-const MockDocumentContainer = () => {
-  return (
-    <div style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      Mock Document Container
-    </div>
   );
 };
 
@@ -177,7 +165,7 @@ export const PageControlsInHeader = (storyProps) => {
 
   return (
     <Provider store={store}>
-      <MockDocumentContainer />
+      <MockDocumentContainer width='90%' height='90%' />
       <ModularHeader {...props} />
     </Provider>
   );

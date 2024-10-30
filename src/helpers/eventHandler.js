@@ -1,6 +1,7 @@
 import * as eventListeners from 'src/event-listeners';
 import hotkeysManager from 'helpers/hotkeysManager';
 import core from 'core';
+import Events from 'constants/events';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -38,7 +39,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, documentViewerKey);
-  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch, hotkeysManager);
+  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch, store, hotkeysManager);
   const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store, hotkeysManager);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch, documentViewerKey);
   const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
@@ -50,6 +51,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onContentBoxEditEnded = eventListeners.onContentBoxEditEnded(hotkeysManager);
   const onContentEditDocumentDigitalSigned = eventListeners.onContentEditDocumentDigitalSigned(dispatch);
   const onContentEditPasswordRequired = eventListeners.onContentEditPasswordRequired(dispatch, store);
+  const onCompareAnnotationsLoaded = eventListeners.onCompareAnnotationsLoaded(dispatch, store);
 
   return {
     addEventHandlers: () => {
@@ -75,6 +77,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('fitModeUpdated', onFitModeUpdated, undefined, documentViewerKey);
         core.addEventListener('pageNumberUpdated', onPageNumberUpdated, undefined, documentViewerKey);
         core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, undefined, documentViewerKey);
+        core.addEventListener(Events.COMPARE_ANNOTATIONS_LOADED, onCompareAnnotationsLoaded, undefined, documentViewerKey);
         core.getTool('AnnotationCreateSticky', documentViewerKey).addEventListener('annotationAdded', onStickyAnnotationAdded);
         core.getTool('AnnotationCreateSticky2', documentViewerKey).addEventListener('annotationAdded', onStickyAnnotationAdded);
         core.getTool('AnnotationCreateSticky3', documentViewerKey).addEventListener('annotationAdded', onStickyAnnotationAdded);
@@ -134,6 +137,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('fitModeUpdated', onFitModeUpdated, documentViewerKey);
         core.removeEventListener('pageNumberUpdated', onPageNumberUpdated, documentViewerKey);
         core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, documentViewerKey);
+        core.removeEventListener(Events.COMPARE_ANNOTATIONS_LOADED, onCompareAnnotationsLoaded, documentViewerKey);
         core.getTool('AnnotationCreateSticky', documentViewerKey).removeEventListener('annotationAdded', onStickyAnnotationAdded);
         core.getTool('AnnotationCreateSticky2', documentViewerKey).removeEventListener('annotationAdded', onStickyAnnotationAdded);
         core.getTool('AnnotationCreateSticky3', documentViewerKey).removeEventListener('annotationAdded', onStickyAnnotationAdded);

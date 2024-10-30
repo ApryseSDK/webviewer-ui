@@ -1,44 +1,31 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 
 /**
  * A button that performs the undo action.
  * @name undoButton
  * @memberof UI.Components.PresetButton
  */
-const UndoButton = (props) => {
-  const { isFlyoutItem, iconDOMElement } = props;
-  const { label, presetDataElement, icon, title } = menuItems.undoButton;
+const UndoButton = forwardRef((props, ref) => {
+  const { isFlyoutItem } = props;
+  const { presetDataElement, icon, title } = menuItems.undoButton;
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
-  const { t } = useTranslation();
+  const canUndo = useSelector((state) => selectors.canUndo(state, activeDocumentViewerKey));
+  const disabled = !canUndo;
 
   const handleClick = () => {
     core.undo(activeDocumentViewerKey);
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleClick();
-    }
-  };
-
   return (
     isFlyoutItem ?
-      (
-        <div className="menu-container"
-          tabIndex="0" onClick={handleClick} onKeyDown={onKeyDown}>
-          <div className="icon-label-wrapper">
-            {iconDOMElement}
-            {label && <div className="flyout-item-label">{t(label)}</div>}
-          </div>
-        </div>
-      )
+      <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} disabled={disabled} />
       : (
         <ActionButton
           className={'PresetButton undo-button'}
@@ -51,11 +38,11 @@ const UndoButton = (props) => {
         />
       )
   );
-};
+});
 
 UndoButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
-  iconDOMElement: PropTypes.object,
 };
+UndoButton.displayName = 'UndoButton';
 
 export default UndoButton;

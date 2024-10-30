@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
@@ -17,7 +17,6 @@ import selectors from 'selectors';
 import actions from 'actions';
 import Events from 'constants/events';
 import DataElements from 'constants/dataElement';
-import { circleRadius } from 'constants/slider';
 import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
@@ -50,7 +49,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     totalPagesFromSecondaryDocumentViewer,
     activeDocumentViewerKey,
     isRightClickEnabled,
-    featureFlags,
+    featureFlags
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, 'leftPanel'),
@@ -68,7 +67,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       selectors.getTotalPages(state, 2),
       selectors.getActiveDocumentViewerKey(state),
       selectors.openingPageManipulationOverlayByRightClickEnabled(state),
-      selectors.getFeatureFlags(state),
+      selectors.getFeatureFlags(state)
     ],
     shallowEqual,
   );
@@ -88,6 +87,10 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const [isDraggingToPreviousPage, setDraggingToPreviousPage] = useState(false);
   const [numberOfColumns, setNumberOfColumns] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const thumbnailContainerRefs = useRef([]);
+  const thumbnailRefs = useRef([]);
+  const focusedThumbnailRef = useRef(null);
 
   const [thumbnailSize, setThumbnailSize] = useState(150);
   const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
@@ -102,6 +105,112 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   // a function that first checks for the pageNumber in this map
   // before calling drawAnnotations on a page.
   let activeThumbRenders = {};
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (focusedThumbnailRef.current && !focusedThumbnailRef.current.contains(event.target)) {
+        removeOutline(focusedThumbnailRef.current);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleKeyDown = useCallback((e, currentIndex, columnCount) => {
+    e.stopPropagation();
+    let newIndex;
+    const arrowActions = {
+      ArrowLeft: () => handleArrowKey(e, currentIndex, -1),
+      ArrowRight: () => handleArrowKey(e, currentIndex, 1),
+      ArrowUp: () => handleArrowKey(e, currentIndex, -columnCount),
+      ArrowDown: () => handleArrowKey(e, currentIndex, columnCount),
+    };
+    const keyActions = {
+      Enter: () => handleEnterKey(e, currentIndex),
+      Tab: () => handleTabOutKey(currentIndex),
+    };
+
+    if (arrowActions[e.key]) {
+      newIndex = arrowActions[e.key]();
+    }
+    if (keyActions[e.key]) {
+      keyActions[e.key]();
+    }
+
+    if (newIndex !== undefined && newIndex !== currentIndex) {
+      setFocusedIndex(newIndex);
+      selectElement(thumbnailContainerRefs.current[newIndex]);
+      deselectElement(thumbnailContainerRefs.current[currentIndex]);
+    }
+  }, [thumbnailRefs, thumbnailContainerRefs]);
+
+  const selectElement = (element) => {
+    element.tabIndex = 0;
+    element.ariaCurrent = 'page';
+    element.style.outline = 'var(--focus-visible-outline)';
+    element.focus();
+    focusedThumbnailRef.current = element;
+  };
+
+  const deselectElement = (element) => {
+    element.tabIndex = -1;
+    element.ariaCurrent = undefined;
+    removeOutline(element);
+  };
+
+  const removeOutline = (element) => {
+    element.style.outline = 'none';
+  };
+
+  const handleTabOutKey = (index) => {
+    removeOutline(thumbnailContainerRefs.current[index]);
+  };
+
+  const handleArrowKey = (e, currentIndex, direction) => {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0 || newIndex >= pageCount) {
+      return currentIndex;
+    }
+    return newIndex;
+  };
+
+  const handleEnterKey = (e, index) => {
+    e.preventDefault();
+    selectElement(thumbnailContainerRefs.current[index]);
+    core.setCurrentPage(index + 1);
+    thumbnailRefs.current[index].focusInput();
+  };
+
+  const handleThumbnailKeyDown = useCallback((e, index) => {
+    e.stopPropagation();
+    const keyActions = {
+      Tab: () => handleTabKey(e, index),
+      Escape: () => handleEscapeKey(e, index)
+    };
+    if (keyActions[e.key]) {
+      keyActions[e.key]?.();
+    }
+  }, [thumbnailContainerRefs]);
+
+  const handleEscapeKey = (e, index) => {
+    e.preventDefault();
+    selectElement(thumbnailContainerRefs.current[index]);
+  };
+
+  const handleTabKey = (e, index) => {
+    let direction = e.shiftKey ? -1 : 1;
+    let newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= pageCount) {
+      newIndex = index;
+    }
+    setFocusedIndex(newIndex);
+    selectElement(thumbnailContainerRefs.current[newIndex]);
+    if (newIndex !== index) {
+      deselectElement(thumbnailContainerRefs.current[index]);
+    }
+  };
 
   const getThumbnailSize = (pageWidth, pageHeight) => {
     let width;
@@ -138,6 +247,8 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
 
     const annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
     annotCanvas.className = 'annotation-image';
+    annotCanvas.role = 'img';
+    annotCanvas.ariaLabel = `${t('action.page')} ${pageNumber}`;
     annotCanvas.style.maxWidth = `${thumbnailSize}px`;
     annotCanvas.style.maxHeight = `${thumbnailSize}px`;
     const ctx = annotCanvas.getContext('2d');
@@ -469,8 +580,8 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       return;
     }
 
-    dispatch(actions.setPageManipulationOverlayAlternativePosition({ left: event.pageX, right: 'auto', top: event.pageY }));
-    dispatch(actions.openElements([DataElements.PAGE_MANIPULATION_OVERLAY]));
+    dispatch(actions.setFlyoutPosition({ x: event.pageX, y: event.pageY }));
+    dispatch(actions.openElements([DataElements.PAGE_MANIPULATION]));
   };
 
   const getPendingThumbIndex = (pageIndex) => pendingThumbs.current.findIndex((thumbStatus) => thumbStatus.pageIndex === pageIndex);
@@ -491,13 +602,18 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     thumbs.current[pageIndex] = null;
   };
 
+  const handleFocus = (e, index) => {
+    if (thumbnailContainerRefs.current && thumbnailContainerRefs.current.includes(e.target)) {
+      selectElement(thumbnailContainerRefs.current[index]);
+    }
+  };
+
   const renderThumbnails = ({ index, key, style }) => {
     const className = classNames({
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
     const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly);
-
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
@@ -508,8 +624,20 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
           return thumbIndex < pageCount ? (
             <React.Fragment key={thumbIndex}>
               {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
-              <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer" onContextMenu={(e) => isRightClickEnabled && onRightClick(e, thumbIndex)}>
+              <td
+                ref={(el) => (thumbnailContainerRefs.current[thumbIndex] = el)}
+                key={thumbIndex}
+                role="gridcell"
+                tabIndex={focusedIndex === thumbIndex ? 0 : -1}
+                aria-current={focusedIndex === thumbIndex ? 'page' : undefined}
+                onDragEnd={onDragEnd}
+                className="cellThumbContainer"
+                onKeyDown={(e) => handleKeyDown(e, thumbIndex, numberOfColumns)}
+                onContextMenu={(e) => isRightClickEnabled && onRightClick(e, thumbIndex)}
+                onFocus={(e) => handleFocus(e, thumbIndex)}
+              >
                 <Thumbnail
+                  ref={(el) => (thumbnailRefs.current[thumbIndex] = el)}
                   isDraggable={allowDragAndDrop}
                   isSelected={selectedPageIndexes.includes(thumbIndex)}
                   index={thumbIndex}
@@ -524,8 +652,9 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                   shouldShowControls={allowPageOperationsUI}
                   thumbnailSize={thumbnailSize}
                   panelSelector={panelSelector}
+                  parentKeyListener={(e) => handleThumbnailKeyDown(e, thumbIndex)}
                 />
-              </div>
+              </td>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
             </React.Fragment>
           ) : null;
@@ -549,13 +678,13 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const thumbnailAutoScrollAreaStyle = {
     'height': `${hoverAreaHeight}px`,
   };
-  const lineStart = circleRadius;
 
   const onSliderChange = (property, value) => {
     let zoomValue = Number(value) * ZOOM_RANGE_MAX;
     if (zoomValue < 100) {
       zoomValue = 100;
     }
+
     setThumbnailSize(zoomValue);
     updateNumberOfColumns();
   };
@@ -580,23 +709,13 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
             dataElement={'thumbnailsSizeSlider'}
             property={'zoom'}
             displayProperty={'zoom'}
-            min={Number(ZOOM_RANGE_MIN)}
-            max={Number(ZOOM_RANGE_MAX)}
-            value={thumbnailSize}
+            min={0}
+            max={1}
+            step={0.01}
+            value={thumbnailSize/1000}
             getDisplayValue={() => thumbnailSize}
-            customCircleRadius={8}
-            customLineStrokeWidth={4}
-            getCirclePosition={(lineLength, zoom) => {
-              if (zoom > 1) {
-                zoom /= 1000;
-              }
-              return zoom * lineLength + lineStart;
-            }
-            }
-            convertRelativeCirclePositionToValue={(circlePosition) => circlePosition}
             onSliderChange={onSliderChange}
             onStyleChange={onSliderChange}
-            step={Number(ZOOM_RANGE_STEP)}
             shouldHideSliderTitle={true}
             shouldHideSliderValue={true}
           />
@@ -652,11 +771,11 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                 rowRenderer={renderThumbnails}
                 overscanRowCount={3}
                 className={'thumbnailsList'}
-                style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
                 role='grid'
                 aria-label={t('component.thumbnailsPanel')}
+                tabIndex={-1}
               />
               {isDragging ?
                 <div className="thumbnailAutoScrollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''

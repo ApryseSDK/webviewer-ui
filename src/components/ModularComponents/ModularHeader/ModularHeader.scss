@@ -10,4 +10,10 @@
   background: var(--gray-0);
   z-index: $headers-z-index;
   touch-action: none;
+  outline: 2px solid transparent;
+
+  &:has(:focus-visible) {
+    outline-color: var(--focus-visible-outline) !important;
+    outline-offset: -2px;
+  }
 }

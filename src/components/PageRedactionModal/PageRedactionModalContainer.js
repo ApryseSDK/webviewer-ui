@@ -6,6 +6,7 @@ import actions from 'actions';
 import core from 'core';
 import { createPageRedactions, redactPages } from 'helpers/pageManipulationFunctions';
 import PageRedactionModal from 'components/PageRedactionModal/PageRedactionModal';
+import { useTranslation } from 'react-i18next';
 
 import './PageRedactionModal.scss';
 
@@ -37,8 +38,8 @@ const PageRedactionModalContainer = () => {
   }, [isOpen, dispatch]);
 
   const closeModal = () => dispatch(actions.closeElement(DataElements.PAGE_REDACT_MODAL));
-
   const getRedactionStyles = () => (activeToolName?.includes('AnnotationCreateRedaction') ? activeToolStyles : {});
+  const { t } = useTranslation();
 
   const onRedact = (pageNumbers) => {
     redactPages(pageNumbers, getRedactionStyles());
@@ -84,7 +85,10 @@ const PageRedactionModalContainer = () => {
           zoom,
           pageRotation: 0,
           drawComplete: (canvas) => {
-            callCount === renderCanvasesCount.current && canvasContainer.current?.appendChild(canvas);
+            if (callCount === renderCanvasesCount.current && canvasContainer.current?.appendChild(canvas)) {
+              canvas.setAttribute('role', 'img');
+              canvas.setAttribute('aria-label', `${t('action.page')} ${pageNumber}`);
+            }
           },
           allowUseOfOptimizedThumbnail: true
         });

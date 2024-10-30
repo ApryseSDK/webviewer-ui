@@ -9,4 +9,5 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
+  z-index: 90; // Must be increased when displaying in flyout container
 }

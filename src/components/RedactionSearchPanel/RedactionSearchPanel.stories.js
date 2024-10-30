@@ -54,7 +54,10 @@ export default {
     'SearchInProgress',
     'SearchInProgressWithIncomingResults',
     'SearchCompleteWithResults',
-    'SearchCompleteNoResults']
+    'SearchCompleteNoResults'],
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const mockContext = {

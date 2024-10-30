@@ -11,3 +11,10 @@
   color: var(--faded-text);
   margin-top: var(--padding-small);
 }
+
+.bookmark-outline-label-row {
+  .ToggleElementButton .Button {
+    padding: 0px;
+    min-width: 16px;
+  }
+}

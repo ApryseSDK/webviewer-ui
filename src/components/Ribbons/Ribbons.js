@@ -11,38 +11,19 @@ import Measure from 'react-measure';
 import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
 import DataElements from 'constants/dataElement';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+import useOnDocumentFileNameEdit from 'hooks/useOnDocumentFileNameEdit';
 
 import './Ribbons.scss';
 
 const FileName = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [extension, setExtension] = useState('');
-  const [fileNameWithoutExtension, setFileNameWithoutExtension] = useState('');
-
-  const onClicked = () => {
-    const name = core.getDocument()?.getFilename();
-    const nameArray = name?.split('.');
-    const extension = `.${nameArray[nameArray.length - 1]}`;
-    setFileNameWithoutExtension(name.slice(0, -extension.length) || name);
-    setExtension(extension);
-    setIsEditing(true);
-  };
-
-  const finishEditing = () => {
-    if (fileNameWithoutExtension) {
-      core.getDocument()?.setFilename(`${fileNameWithoutExtension}${extension}`);
-    }
-    setIsEditing(false);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      finishEditing();
-    }
-    if (e.key === 'Escape') {
-      setIsEditing(false);
-    }
-  };
+  const {
+    isEditing,
+    fileNameWithoutExtension,
+    setFileNameWithoutExtension,
+    startEditing: onClicked,
+    finishEditing,
+    handleKeyDown,
+  } = useOnDocumentFileNameEdit();
 
   return (
     <DataElementWrapper dataElement={DataElements.OFFICE_EDITOR_FILE_NAME}>
@@ -221,6 +202,7 @@ const Ribbons = () => {
             })}
           >
             <Dropdown
+              id="ribbonsDropdown"
               dataElement="ribbonsDropdown"
               items={filteredToolBarGroup}
               getTranslationLabel={getToolbarTranslationString}

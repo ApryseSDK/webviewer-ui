@@ -17,6 +17,7 @@ export const UNSUPPORTED_PANELS = [panelNames.REDACTION, panelNames.TEXT_EDITING
 
 /**
  * @typedef {Object} TabPanelItemProperties
+ * @memberOf UI.Components
  * @property {string} [dataElement] Unique dataElement name for the panel.
  * @property {string} [icon] Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
  *   {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
@@ -26,6 +27,7 @@ export const UNSUPPORTED_PANELS = [panelNames.REDACTION, panelNames.TEXT_EDITING
 
 /**
  * @typedef {Object} TabPanelProperties
+ * @memberOf UI.Components
  * @property {string} dataElement Unique dataElement name for the tab panel.
  * @property {Array<TabPanelItemProperties>} panelsList The list of panels to be displayed in the tab panel.
  * @property {string} [location] The location of the panel. It can be either 'left' or 'right'
@@ -39,7 +41,7 @@ export const UNSUPPORTED_PANELS = [panelNames.REDACTION, panelNames.TEXT_EDITING
  * @param {TabPanelProperties} options An object that contains the properties of the tab panel.
  * @example
 const tabPanel = new UI.Components.TabPanel({
-    dataElement: 'customLeftPanel',
+    dataElement: 'tabPanel',
     panelsList: [
       {
         render: UI.Panels.THUMBNAIL

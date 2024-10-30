@@ -5,6 +5,7 @@ import FontSizeDropdown from 'components/FontSizeDropdown';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
+import parseFontSize from 'helpers/parseFontSize';
 import i18next from 'i18next';
 
 const TextStylePicker = ({
@@ -22,10 +23,10 @@ const TextStylePicker = ({
   isFreeTextAutoSize,
   isRichTextEditMode,
   isDisabled = false,
+  isWidget = false,
 }) => {
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
-  const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
     if (isContentEditing || isRedaction) {
@@ -55,7 +56,9 @@ const TextStylePicker = ({
    * @returns {string}
    */
   const getFontSize = (properties) => {
-    const defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    let defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    defaultFontSize = typeof defaultFontSize === 'number' ? `${defaultFontSize}pt` : defaultFontSize;
+
     if (isRichTextEditMode) {
       return properties.quillFontSize;
     }
@@ -133,9 +136,8 @@ const TextStylePicker = ({
     onPropertyChange('TextVerticalAlign', yAlign);
   };
 
-  const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
-
   const [error, setError] = useState('');
+  const fontSizeProps = parseFontSize(fontSize);
   const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || undefined;
 
   const defaultConfig = {
@@ -224,142 +226,182 @@ const TextStylePicker = ({
     },
   };
 
+  const renderFontSizeDropdown = () => {
+    return (
+      <FontSizeDropdown
+        fontSize={fontSizePropsToUpdate}
+        key={fontSizePropsToUpdate}
+        fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
+        onFontSizeChange={changeFontSize}
+        onError={setError}
+        applyOnlyOnBlur={isContentEditing}
+        disabled={isFreeTextAutoSize || isDisabled}
+        displayEmpty={isRichTextEditMode && !properties?.quillFontSize || fontSizePropsToUpdate === undefined}
+        disableFocusing={true}
+      />);
+  };
+
+  const renderWidgetTextStyle = () => {
+    return (
+      <div className={`container-fluid ${error && 'error'}`}>
+        <div className="container-dropdown">
+          {renderFontSizeDropdown()}
+        </div>
+        {error && <div className="error-text">{error}</div>}
+      </div>);
+  };
+
+  const renderDefaultTextStyle = () => {
+    return (
+      <>
+        <div className={`container-fluid ${error && 'error'}`}>
+          <div className="container-dropdown">
+            <Dropdown
+              id="free-text-font-family-dropdown"
+              translationPrefix='officeEditor.fontFamily'
+              showLabelInList
+              className={'border-color'}
+              items={supportedFonts}
+              onClickItem={changeFont}
+              currentSelectionKey={defaultQuillFont}
+              getCustomItemStyle={(item) => ({ fontFamily: item })}
+              maxHeight={200}
+              placeholder={isContentEditing ? 'Font' : undefined}
+              disableFocusing={true}
+              disabled={isDisabled}
+            />
+            {renderFontSizeDropdown()}
+          </div>
+          {error && <div className="error-text">{error}</div>}
+        </div>
+        <div className="icon-grid">
+          {!isRedaction && (
+            <div className="row rich-text-format">
+              <Button
+                dataElement={currentConfig.bold.dataElement}
+                onClick={currentConfig.bold.onClick}
+                img="icon-menu-bold"
+                title="option.richText.bold"
+                isActive={currentConfig.bold.isActive}
+                disabled={isDisabled}
+                ariaPressed={currentConfig.bold.isActive}
+              />
+              <Button
+                dataElement={currentConfig.italic.dataElement}
+                onClick={currentConfig.italic.onClick}
+                img="icon-menu-italic"
+                title="option.richText.italic"
+                isActive={currentConfig.italic.isActive}
+                disabled={isDisabled}
+                ariaPressed={currentConfig.italic.isActive}
+              />
+              <Button
+                dataElement={currentConfig.underline.dataElement}
+                onClick={currentConfig.underline.onClick}
+                img="icon-menu-text-underline"
+                title="option.richText.underline"
+                isActive={currentConfig.underline.isActive}
+                disabled={isDisabled}
+                ariaPressed={currentConfig.underline.isActive}
+              />
+              <Button
+                dataElement={currentConfig.strikeout.dataElement}
+                onClick={currentConfig.strikeout.onClick}
+                img="icon-tool-text-manipulation-strikethrough"
+                title="option.richText.strikeout"
+                isActive={currentConfig.strikeout.isActive}
+                disabled={isDisabled}
+                ariaPressed={currentConfig.strikeout.isActive}
+              />
+            </div>
+          )}
+          <div className={`row text-horizontal-alignment ${isRedaction ? 'isRedaction' : ''}`}>
+            <Button
+              dataElement={currentConfig.leftAlign.dataElement}
+              onClick={() => changeXAlign(currentConfig.leftAlign.alignValue)}
+              img="icon-menu-align-left"
+              title="option.richText.alignLeft"
+              isActive={currentConfig.leftAlign.isActive}
+              disabled={isDisabled}
+              ariaCurrent={currentConfig.leftAlign.isActive}
+            />
+            <Button
+              dataElement={currentConfig.centerAlign.dataElement}
+              onClick={() => changeXAlign(currentConfig.centerAlign.alignValue)}
+              img="icon-menu-align-centre"
+              title="option.richText.alignCenter"
+              isActive={currentConfig.centerAlign.isActive}
+              disabled={isDisabled}
+              ariaCurrent={currentConfig.centerAlign.isActive}
+            />
+            <Button
+              dataElement={currentConfig.rightAlign.dataElement}
+              onClick={() => changeXAlign(currentConfig.rightAlign.alignValue)}
+              img="icon-menu-align-right"
+              title="option.richText.alignRight"
+              isActive={currentConfig.rightAlign.isActive}
+              disabled={isDisabled}
+              ariaCurrent={currentConfig.rightAlign.isActive}
+            />
+            {!isRedaction && !isContentEditing && (
+              <Button
+                dataElement="freeTextJustifyCenterButton"
+                onClick={() => changeXAlign('justify')}
+                img="icon-text-justify-center"
+                title="option.richText.justifyCenter"
+                isActive={textAlign === 'justify'}
+                disabled={isDisabled}
+                ariaCurrent={textAlign === 'justify'}
+              />
+            )}
+          </div>
+          {!isRedaction && !isContentEditing && (
+            <div className="row text-vertical-alignment">
+              <Button
+                onClick={() => changeYAlign('top')}
+                img="icon-arrow-to-top"
+                title="option.richText.alignTop"
+                isActive={textVerticalAlign === 'top'}
+                disabled={isFreeTextAutoSize}
+                ariaCurrent={textVerticalAlign === 'top'}
+              />
+              <Button
+                onClick={() => changeYAlign('center')}
+                img="icon-arrow-to-middle"
+                title="option.richText.alignMiddle"
+                isActive={textVerticalAlign === 'center'}
+                disabled={isFreeTextAutoSize}
+                ariaCurrent={textVerticalAlign === 'center'}
+              />
+              <Button
+                onClick={() => changeYAlign('bottom')}
+                img="icon-arrow-to-bottom"
+                title="option.richText.alignBottom"
+                isActive={textVerticalAlign === 'bottom'}
+                disabled={isFreeTextAutoSize}
+                ariaCurrent={textVerticalAlign === 'bottom'}
+              />
+            </div>
+          )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">
+            <Choice
+              id="free-text-autosize-font-button"
+              label={i18next?.t('option.freeTextOption.autoSizeFont')}
+              aria-label={i18next.t('option.freeTextOption.autoSizeFont')}
+              checked={isFreeTextAutoSize}
+              onChange={onFreeTextSizeToggle}
+              aria-pressed={isFreeTextAutoSize}
+            />
+          </div>)}
+        </div>
+      </>
+    );
+  };
+
   const currentConfig = isContentEditing ? contentEditConfig : defaultConfig;
 
   return (
     <>
-      <div className={`container-fluid ${error && 'error'}`}>
-        <div className="container-dropdown">
-          <Dropdown
-            className={'border-color'}
-            items={supportedFonts}
-            onClickItem={changeFont}
-            currentSelectionKey={defaultQuillFont}
-            getCustomItemStyle={(item) => ({ fontFamily: item })}
-            maxHeight={200}
-            placeholder={isContentEditing ? 'Font' : undefined}
-            disableFocusing={true}
-            disabled={isDisabled}
-          />
-          <FontSizeDropdown
-            fontSize={fontSizePropsToUpdate}
-            key={fontSizePropsToUpdate}
-            fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
-            onFontSizeChange={changeFontSize}
-            onError={setError}
-            applyOnlyOnBlur={isContentEditing}
-            disabled={isFreeTextAutoSize || isDisabled}
-            displayEmpty={isRichTextEditMode && !properties?.quillFontSize || fontSizePropsToUpdate === undefined}
-          />
-        </div>
-        {error && <div className="error-text">{error}</div>}
-      </div>
-      <div className="icon-grid">
-        {!isRedaction && (
-          <div className="row rich-text-format">
-            <Button
-              dataElement={currentConfig.bold.dataElement}
-              onClick={currentConfig.bold.onClick}
-              img="icon-menu-bold"
-              title="option.richText.bold"
-              isActive={currentConfig.bold.isActive}
-              disabled={isDisabled}
-            />
-            <Button
-              dataElement={currentConfig.italic.dataElement}
-              onClick={currentConfig.italic.onClick}
-              img="icon-menu-italic"
-              title="option.richText.italic"
-              isActive={currentConfig.italic.isActive}
-              disabled={isDisabled}
-            />
-            <Button
-              dataElement={currentConfig.underline.dataElement}
-              onClick={currentConfig.underline.onClick}
-              img="icon-menu-text-underline"
-              title="option.richText.underline"
-              isActive={currentConfig.underline.isActive}
-              disabled={isDisabled}
-            />
-            <Button
-              dataElement={currentConfig.strikeout.dataElement}
-              onClick={currentConfig.strikeout.onClick}
-              img="icon-tool-text-manipulation-strikethrough"
-              title="option.richText.strikeout"
-              isActive={currentConfig.strikeout.isActive}
-              disabled={isDisabled}
-            />
-          </div>
-        )}
-        <div className={`row text-horizontal-alignment ${isRedaction ? 'isRedaction' : ''}`}>
-          <Button
-            dataElement={currentConfig.leftAlign.dataElement}
-            onClick={() => changeXAlign(currentConfig.leftAlign.alignValue)}
-            img="icon-menu-align-left"
-            title="option.richText.alignLeft"
-            isActive={currentConfig.leftAlign.isActive}
-            disabled={isDisabled}
-          />
-          <Button
-            dataElement={currentConfig.centerAlign.dataElement}
-            onClick={() => changeXAlign(currentConfig.centerAlign.alignValue)}
-            img="icon-menu-align-centre"
-            title="option.richText.alignCenter"
-            isActive={currentConfig.centerAlign.isActive}
-            disabled={isDisabled}
-          />
-          <Button
-            dataElement={currentConfig.rightAlign.dataElement}
-            onClick={() => changeXAlign(currentConfig.rightAlign.alignValue)}
-            img="icon-menu-align-right"
-            title="option.richText.alignRight"
-            isActive={currentConfig.rightAlign.isActive}
-            disabled={isDisabled}
-          />
-          {!isRedaction && !isContentEditing && (
-            <Button
-              dataElement="freeTextJustifyCenterButton"
-              onClick={() => changeXAlign('justify')}
-              img="icon-text-justify-center"
-              title="option.richText.justifyCenter"
-              isActive={textAlign === 'justify'}
-              disabled={isDisabled}
-            />
-          )}
-        </div>
-        {!isRedaction && !isContentEditing && (
-          <div className="row text-vertical-alignment">
-            <Button
-              onClick={() => changeYAlign('top')}
-              img="icon-arrow-to-top"
-              title="option.richText.alignTop"
-              isActive={textVerticalAlign === 'top'}
-              disabled={isFreeTextAutoSize}
-            />
-            <Button
-              onClick={() => changeYAlign('center')}
-              img="icon-arrow-to-middle"
-              title="option.richText.alignMiddle"
-              isActive={textVerticalAlign === 'center'}
-              disabled={isFreeTextAutoSize}
-            />
-            <Button
-              onClick={() => changeYAlign('bottom')}
-              img="icon-arrow-to-bottom"
-              title="option.richText.alignBottom"
-              isActive={textVerticalAlign === 'bottom'}
-              disabled={isFreeTextAutoSize}
-            />
-          </div>
-        )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">
-          <Choice
-            label={i18next.t('option.freeTextOption.autoSizeFont')}
-            checked={isFreeTextAutoSize}
-            onChange={onFreeTextSizeToggle}
-            aria-label={freeTextAutoSizeDataElement}
-          />
-        </div>)}
-      </div>
+      {!isWidget ? renderDefaultTextStyle() : renderWidgetTextStyle()}
     </>
   );
 };
@@ -376,6 +418,7 @@ TextStylePicker.propTypes = {
   onFreeTextSizeToggle: PropTypes.func,
   isRichTextEditMode: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isWidget: PropTypes.bool,
 };
 
 export default TextStylePicker;

@@ -8,7 +8,7 @@
  * @property {Object} flyouts The map of flyouts to be used in the UI.
  * @property {string} flyouts.dataElement A unique string that identifies the flyout.
  * @property {Array<string>} flyouts.items An array of strings that represent the items in the flyout. Each string should be the dataElement of a component in the modularComponents map.
- * @param {object} functionMap A map of functions to be used in the components. The keys should match the function names used in the components. The values should be the actual functions to be called.
+ * @param {object} [functionMap] A map of functions to be used in the components. The keys should match the function names used in the components. The values should be the actual functions to be called.
  * @example
  * WebViewer(...)
  .then(function (instance) {
@@ -176,6 +176,7 @@ const validateJSONStructure = (jsonData, functionMap) => {
 export default (store) => async (components, functions = {}) => {
   store.dispatch(actions.resetModularUIState());
   const componentsToValidate = cloneDeep(components);
+  checkTypes([componentsToValidate, functions], [TYPES.OBJECT({}), TYPES.OBJECT({})], 'UI.importModularComponents');
   validateJSONStructure(componentsToValidate, functions);
   const headersMap = componentsToValidate.modularHeaders || {};
   const componentMap = componentsToValidate.modularComponents || {};

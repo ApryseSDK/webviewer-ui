@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import LineStyleOptions from './LineStyleOptions';
 import { Basic } from './LineStyleOptions.stories';
 
 const BasicLineStyleOptionsStory = withI18n(Basic);
 const TestLineStyleOptions = withProviders(LineStyleOptions);
 
-function noop() {}
+function noop() { }
 
 describe('LineStyleOptions', () => {
   describe('Component', () => {
@@ -22,14 +22,14 @@ describe('LineStyleOptions', () => {
       const lineStyleKey = 'None';
       const properties = { StartLineStyle: lineStyleKey, EndLineStyle: lineStyleKey };
 
-      const { container } = render(
+      render(
         <TestLineStyleOptions
           properties={properties}
           onLineStyleChange={noop}
         />
       );
 
-      const dropdowns = container.querySelectorAll('button.Dropdown');
+      const dropdowns = screen.getAllByRole('combobox');
       expect(dropdowns.length).toBe(3);
     });
 
@@ -37,18 +37,27 @@ describe('LineStyleOptions', () => {
       const onLineStyleChangeMock = jest.fn();
       const properties = { StartLineStyle: 'None', EndLineStyle: 'None' };
 
-      const { container } = render(
+      render(
         <TestLineStyleOptions
           properties={properties}
           onLineStyleChange={onLineStyleChangeMock}
         />
       );
 
-      const dropdownContainer = container.querySelector('[data-element="startLineStyleDropdown"]');
-      const dropdownButton = dropdownContainer.querySelector('button.Dropdown');
-      const openArrowOption = dropdownContainer.querySelector('button[data-element="dropdown-item-ClosedArrow"]');
-      fireEvent.click(dropdownButton);
+      //First we assert the start line style dropdown is the default
+      const dropdowns = screen.getAllByRole('combobox', { description: 'None' });
+      const startDropDownCombobox = dropdowns[0];
+      expect(startDropDownCombobox).toBeInTheDocument();
+      expect(startDropDownCombobox).toHaveAttribute('aria-describedby', 'startLineStyleDropdown-None');
+
+      // We get the first one for the Start of the line
+      const openArrowOption = screen.getAllByRole('option', { name: 'ClosedArrow' })[0];
       fireEvent.click(openArrowOption);
+
+      // There should now be one combo box with the new value of ClosedArrow
+      expect(startDropDownCombobox).toHaveAttribute('aria-describedby', 'startLineStyleDropdown-ClosedArrow');
+
+
       expect(onLineStyleChangeMock).toBeCalled();
     });
   });

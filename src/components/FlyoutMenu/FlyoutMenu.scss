@@ -111,5 +111,9 @@
         fill: var(--icon-color);
       }
    } 
+
+   &.mobile {
+    z-index: 101;
+   }
   }
 }

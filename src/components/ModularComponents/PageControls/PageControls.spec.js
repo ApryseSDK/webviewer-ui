@@ -9,28 +9,28 @@ const PageControlWithRedux = withProviders(PageControls);
 const props = {
   dataElement: 'page-controls-container',
   size: 0,
-  leftChevron: {
-    dataElement: 'leftChevronBtn',
+  previousPageButton: {
+    dataElement: 'previousPageButton',
     title: 'action.pagePrev',
     label: null,
     img: 'icon-chevron-up',
-    type: 'customButton',
+    type: 'pageNavigationButton',
     disabled: false,
     ariaLabel: 'action.pagePrev',
     onClick: jest.fn(),
   },
-  rightChevron: {
-    dataElement: 'rightChevronBtn',
+  nextPageButton: {
+    dataElement: 'nextPageButton',
     title: 'action.pageNext',
     label: null,
     img: 'icon-chevron-right',
-    type: 'customButton',
+    type: 'pageNavigationButton',
     disabled: false,
     ariaLabel: 'action.pageNext',
     onClick: jest.fn(),
   },
   input: '7',
-  totalPages: 11,
+  totalPages: 9,
   onChange: jest.fn(),
 };
 
@@ -61,7 +61,7 @@ describe('Page Controls Container component', () => {
     expect(rightBtn).toBeInTheDocument();
     fireEvent.click(leftBtn);
     fireEvent.click(rightBtn);
-    expect(props.leftChevron.onClick).toHaveBeenCalledTimes(1);
-    expect(props.rightChevron.onClick).toHaveBeenCalledTimes(1);
+    expect(props.previousPageButton.onClick).toHaveBeenCalledTimes(1);
+    expect(props.nextPageButton.onClick).toHaveBeenCalledTimes(1);
   });
 });

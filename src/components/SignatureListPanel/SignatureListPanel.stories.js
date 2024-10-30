@@ -19,7 +19,7 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      activeCustomRibbon: 'insert-ribbon-item',
+      activeCustomRibbon: 'toolbarGroup-Insert',
       modularHeaders: mockHeadersNormalized,
       modularComponents: mockModularComponents,
       isInDesktopOnlyMode: false,

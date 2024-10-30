@@ -9,9 +9,11 @@ $container-margin: 16px;
   margin: 0px 0px;
   display: flex;
   flex-direction: column;
+
   @include mobile {
     width: 100%;
     padding: 4px 8px;
+
     .scroll-container {
       width: 100%;
       max-height: 50%;
@@ -25,10 +27,11 @@ $container-margin: 16px;
   &-input {
     outline: none;
     border-radius: $border-radius;
-    border: 1px solid var(--modal-stroke-and-border);
+    border: 1px solid var(--gray-6);
     box-shadow: none;
     padding: 5px;
   }
+
   .txt-uppercase {
     text-transform: uppercase;
   }
@@ -55,8 +58,8 @@ $container-margin: 16px;
     min-width: 100%;
   }
 
-  .canvas-container{
-    border: 1px solid var(--modal-stroke-and-border);
+  .canvas-container {
+    border: 1px solid var(--gray-6);
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
@@ -70,15 +73,17 @@ $container-margin: 16px;
     @include mobile {
       padding: 12px 0.5px;
     }
+
     .custom-stamp-canvas {
       box-sizing: border-box;
+
       @media (max-width: 430px) {
         transform: scale(0.8);
       }
     }
   }
 
-  .color-container{
+  .color-container {
     margin-top: $container-margin;
     width: 100%;
 
@@ -87,15 +92,24 @@ $container-margin: 16px;
       flex-wrap: wrap;
       width: 100%;
       gap: 4px;
+
       @include mobile {
         padding: 4px;
       }
 
       .cell-outer {
         margin-right: 16px;
+
         &.active {
           margin-left: -4px;
           margin-right: 10px;
+          width: 28px;
+          height: 28px;
+        }
+
+        .cell {
+          width: 16px;
+          height: 16px;
         }
       }
 
@@ -105,32 +119,86 @@ $container-margin: 16px;
         height: auto;
       }
 
-    }
-  }
-  .stamp-input-container{
-    margin-top: $container-margin;
-    padding: 0px;
-    .text-customstamp-input {
-      width: 100%;
-      padding: 6px;
+      .cell-tool {
+        margin-right: 8px;
+        margin-left: -4px;
+
+        .cell-outer {
+          margin: 4px 4px;
+        }
+
+        &:hover {
+          @extend %icon-button-hover;
+        }
+
+        &.active {
+          box-shadow: inset 0 0 0 1px var(--blue-5);
+          background: var(--tools-button-active);
+
+          .Icon {
+            color: var(--blue-5);
+          }
+        }
+
+        &:disabled {
+          box-shadow: none;
+          background: transparent;
+        }
+      }
     }
   }
 
-  .stamp-sublabel, .stamp-label {
+  .stamp-input-container {
+    margin-top: $container-margin;
+    padding: 0px;
+    position: relative;
+
+    .text-customstamp-input {
+      margin-top: 8px;
+      height: 32px;
+      width: 100%;
+      padding: 6px;
+
+      &.error {
+        border: 1px solid var(--error-text-color);
+      }
+    }
+
+    .error-icon {
+      position: absolute;
+      right: 8px;
+      top: 28px;
+      color: var(--error-text-color);
+
+      @include mobile {
+        top: 30px;
+      }
+    }
+
+    .empty-stamp-input {
+      height: 16px;
+      margin-top: 4px;
+      color: var(--error-text-color);
+    }
+  }
+
+  .stamp-sublabel,
+  .stamp-label {
     font-weight: bold;
     margin-bottom: 8px;
+    text-transform: capitalize;
 
     @include mobile {
       font-size: 13px;
       height: 16px;
-
     }
   }
 
-  .timestamp-container{
+  .timestamp-container {
     margin-top: $container-margin;
     padding: 0px;
-    .timeStamp-choice{
+
+    .timeStamp-choice {
       height: 16px;
       display: grid;
       width: 100%;
@@ -143,13 +211,16 @@ $container-margin: 16px;
         font-size: 13px;
 
       }
+
       // hack for IE11
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      @media all and (-ms-high-contrast: none),
+      (-ms-high-contrast: active) {
         .ui__choice {
-          display:-ms-inline-flexbox;
+          display: -ms-inline-flexbox;
           width: 33.33%;
         }
-     }
+      }
+
       .ui__choice {
         margin: 0;
         line-height: 1;
@@ -165,9 +236,12 @@ $container-margin: 16px;
     margin-top: $container-margin;
     display: flex;
     flex-wrap: wrap;
-    .Dropdown__wrapper{
+
+    .Dropdown__wrapper {
       width: 100%;
+
       .Dropdown {
+        height: 32px;
         width: 100% !important;
         text-align: left;
       }
@@ -175,14 +249,17 @@ $container-margin: 16px;
       .arrow {
         flex: unset;
       }
+
       .Dropdown__items {
         @include mobile {
           max-height: 200px;
         }
+
         z-index: 101;
         top: auto;
         left: 0;
         right: auto;
+        width: 100% !important;
       }
     }
 
@@ -194,11 +271,11 @@ $container-margin: 16px;
 
       margin-left: 2px;
       position: relative;
+
       .date-format-description {
         display: flex;
         flex-direction: column;
         text-align: left;
-        visibility: hidden;
         position: absolute;
         background-color: black;
         border-radius: 5px;
@@ -216,19 +293,17 @@ $container-margin: 16px;
         .Icon {
           color: var(--blue-6)
         }
-        .date-format-description {
-          visibility: visible;
-        }
       }
     }
   }
 
   .font-container {
-    margin-top: $container-margin;
+    margin-top: 8px;
 
     .font-inner-container {
       display: flex;
       gap: 12px;
+
       @include mobile {
         gap: 6px;
       }
@@ -246,51 +321,68 @@ $container-margin: 16px;
       }
     }
 
-    .Dropdown__wrapper{
+    .Dropdown__wrapper {
       .Dropdown {
         margin-right: 4px;
-        width: 216px !important;
+        height: 32px;
+        width: 268px !important;
+
         @include mobile {
-          width: 200px!important;
+          width: 200px !important;
         }
+
         text-align: left;
       }
 
       .arrow {
         flex: unset;
       }
+
       .Dropdown__items {
-        @include mobile{
+        @include mobile {
           bottom: auto;
           height: 200px;
+          width: 200px !important;
         }
+
         top: auto;
         left: 0;
         right: auto;
+        width: 268px !important;
       }
     }
 
     .Button {
       background: none;
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       margin: 0;
 
       .Icon {
-        height: 26px;
-        width: 26px;
+        height: 24px;
+        width: 24px;
         color: var(--icon-color);
       }
 
       &:hover {
         background: var(--popup-button-hover);
+
+        .Icon {
+          .cls-1 {
+            fill: currentColor;
+          }
+        }
       }
 
       &.active {
         background: var(--popup-button-active);
 
         .Icon {
-          color: var(--blue-6);
+          color: var(--blue-5);
+
+          .cls-1 {
+            fill: currentColor;
+          }
         }
       }
     }
@@ -305,7 +397,7 @@ $container-margin: 16px;
     input {
       display: none;
 
-      & + label:before {
+      &+label:before {
         cursor: pointer;
         content: '';
         margin: 1px 10px 0px 0px;
@@ -317,12 +409,12 @@ $container-margin: 16px;
         border: 1px solid #979797;
       }
 
-      &:checked + label:before {
+      &:checked+label:before {
         background: $pdftron-blue;
         border: 1px solid transparent;
       }
 
-      &:checked + label:after {
+      &:checked+label:after {
         content: '';
         position: absolute;
         left: 4px;
@@ -339,9 +431,5 @@ $container-margin: 16px;
     label {
       align-items: center;
     }
-  }
-
-  .empty-stamp-input {
-    color: var(--error-text-color);
   }
 }

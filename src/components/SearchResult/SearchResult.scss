@@ -7,6 +7,10 @@
   width: calc(100% - 4px);
   text-align: left;
 
+  @include mobile {
+    font-size: 13px;
+  }
+
   cursor: pointer;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--box-shadow);
@@ -31,11 +35,15 @@
       background-color: var(--faded-component-background);
       box-shadow: none;
     }
-  
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
+
     .search-value {
       font-weight: 700;
       color: var(--blue-5);
       background: none;
     }
-  } 
+  }
 }

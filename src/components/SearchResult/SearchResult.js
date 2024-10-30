@@ -67,6 +67,7 @@ function SearchResultListItem(props) {
           onSearchResultClick(currentResultIndex, result, activeDocumentViewerKey);
         }
       }}
+      aria-current={currentResultIndex === activeResultIndex}
     >
       {textBeforeSearchValue}
       <span className='search-value'>
@@ -162,7 +163,7 @@ function SearchResult(props) {
       return null;
     }
     return (
-      <div className="info">{t('message.noResults')}</div>
+      <div className="info"><p className="no-margin">{t('message.noResults')}</p></div>
     );
   }
 

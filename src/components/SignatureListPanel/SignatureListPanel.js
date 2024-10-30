@@ -169,9 +169,9 @@ const SignatureListPanel = ({ panelSize }) => {
         [panelSize]: true,
       })
     }>
-      <div className='signature-list-panel-header'>
+      <h2 className='signature-list-panel-header'>
         {t('signatureListPanel.header')}
-      </div>
+      </h2>
       <SignatureAddButton isDisabled={savedSignaturesAndInitials.length >= maxSignaturesCount} />
       <Divider />
       <SavedSignatures

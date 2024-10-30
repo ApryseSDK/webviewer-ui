@@ -4,6 +4,7 @@ import Icon from 'components/Icon';
 import './RedactionSearchResult.scss';
 import classNames from 'classnames';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import PropTypes from 'prop-types';
 
 // Alternatively wrap this in useCallback and declare inside component
 const displayRedactionSearchResult = (props) => {
@@ -30,15 +31,23 @@ const RedactionSearchResult = (props) => {
     onClickResult,
     isActive,
     icon,
+    ambientStr
   } = props;
 
   const displayResult = displayRedactionSearchResult(props);
   const searchResultClassname = classNames('redaction-search-result', { active: isActive });
 
   return (
-    <div className={searchResultClassname} role="listitem" onClick={onClickResult}>
+    <li className={searchResultClassname}>
+      <button
+        className='redaction-search-result-button'
+        onClick={onClickResult}
+        aria-label={ambientStr}
+        aria-current={isActive}
+      ></button>
       <div style={{ paddingRight: '14px' }}>
         <Choice
+          aria-label={`${ambientStr}`}
           checked={isChecked}
           onChange={onChange}
         />
@@ -49,8 +58,17 @@ const RedactionSearchResult = (props) => {
       <div className="redaction-search-result-info">
         {displayResult}
       </div>
-    </div >
+    </li>
   );
+};
+
+RedactionSearchResult.propTypes = {
+  isChecked: PropTypes.bool,
+  onChange: PropTypes.func,
+  onClickResult: PropTypes.func,
+  isActive: PropTypes.bool,
+  icon: PropTypes.string,
+  ambientStr: PropTypes.string,
 };
 
 export default React.memo(RedactionSearchResult);

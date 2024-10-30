@@ -123,13 +123,14 @@ function ViewControlsOverlay() {
     <FlyoutMenu
       menu={DataElements.VIEW_CONTROLS_OVERLAY}
       trigger={DataElements.VIEW_CONTROLS_OVERLAY_BUTTON}
-      ariaLabel={t('component.viewControlsOverlay')}
+      ariaLabel={t('component.viewControls')}
     >
       {isPageTransitionEnabled && (
         <>
           <DataElementWrapper
             dataElement="pageTransitionHeader"
             className="type"
+            ariaLabel={t('option.displayMode.pageTransition')}
           >
             {t('option.displayMode.pageTransition')}
           </DataElementWrapper>
@@ -187,6 +188,7 @@ function ViewControlsOverlay() {
           <DataElementWrapper
             dataElement="rotateHeader"
             className="type"
+            ariaLabel={t('action.rotate')}
           >
             {t('action.rotate')}
           </DataElementWrapper>
@@ -213,6 +215,7 @@ function ViewControlsOverlay() {
           <DataElementWrapper
             dataElement="layoutHeader"
             className="type"
+            ariaLabel={t('option.displayMode.layout')}
           >
             {t('option.displayMode.layout')}
           </DataElementWrapper>

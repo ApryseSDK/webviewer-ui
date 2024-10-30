@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import useOnClickOutside from 'hooks/useOnClickOutside';
-import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
-
+import DataElements from 'src/constants/dataElement';
+import actions from 'actions';
 import './NotePopup.scss';
-import Button from '../Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
+
+const createFlyoutItem = (option, icon, dataElement) => ({
+  icon,
+  label: `action.${option.toLowerCase()}`,
+  title: `action.${option.toLowerCase()}`,
+  option,
+  dataElement,
+});
+
+export const notePopupFlyoutItems = [
+  createFlyoutItem('Edit', '', 'notePopupEdit'),
+  createFlyoutItem('Delete', '', 'notePopupDelete'),
+];
 
 const propTypes = {
   handleEdit: PropTypes.func,
   handleDelete: PropTypes.func,
-  closePopup: PropTypes.func,
-  openPopup: PropTypes.func,
   isEditable: PropTypes.bool,
   isDeletable: PropTypes.bool,
-  isOpen: PropTypes.bool,
+  noteId: PropTypes.string,
 };
 
 function noop() { }
@@ -26,87 +36,98 @@ function NotePopup(props) {
   const {
     handleEdit = noop,
     handleDelete = noop,
-    closePopup = noop,
-    openPopup = noop,
     isEditable,
     isDeletable,
-    isOpen,
     isReply,
+    noteId,
   } = props;
 
-  const [t] = useTranslation();
-  const popupRef = React.useRef();
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+  const flyoutSelector = `${DataElements.NOTE_POPUP_FLYOUT}-${noteId}`;
+  const [t] = useTranslation();
 
-  useOnClickOutside(popupRef, () => {
-    closePopup();
-  });
-
-  const togglePopup = (e) => {
-    e.stopPropagation();
-    if (isOpen) {
-      closePopup();
-    } else {
-      openPopup();
+  const handleClick = (selection) => {
+    if (selection === 'Edit') {
+      handleEdit();
+    } else if (selection === 'Delete') {
+      handleDelete();
     }
   };
-
-  function onEditButtonClick(e) {
-    e.stopPropagation();
-    closePopup();
-    handleEdit();
-  }
-
-  function onDeleteButtonClick() {
-    closePopup();
-    handleDelete();
-  }
 
   if (!isEditable && !isDeletable) {
     return null;
   }
 
-  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen });
-  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
+  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger');
+  const optionsClass = classNames('NotePopup options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
   return (
-    <DataElementWrapper
-      className="NotePopup"
-      dataElement="notePopup"
-      ref={popupRef}
-    >
-      <Button
-        dataElement="notePopupButtonClass"
+    <div className={optionsClass}>
+      <ToggleElementButton
+        dataElement={`notePopup-${noteId}`}
         className={notePopupButtonClass}
-        onClick={togglePopup}
         img="icon-tools-more"
+        title={t('formField.formFieldPopup.options')}
+        toggleElement={flyoutSelector}
+        disabled={false}
       />
-      {isOpen && (
-        <div className={optionsClass}>
-          {isEditable && (
-            <DataElementWrapper
-              type="button"
-              className="option note-popup-option"
-              dataElement="notePopupEdit"
-              onClick={onEditButtonClick}
-            >
-              {t('action.edit')}
-            </DataElementWrapper>
-          )}
-          {isDeletable && (
-            <DataElementWrapper
-              type="button"
-              className="option note-popup-option"
-              dataElement="notePopupDelete"
-              onClick={onDeleteButtonClick}
-            >
-              {t('action.delete')}
-            </DataElementWrapper>
-          )}
-        </div>
-      )}
-    </DataElementWrapper>
+      <NotePopupFlyout
+        flyoutSelector={flyoutSelector}
+        handleClick={handleClick}
+        isEditable={isEditable}
+        isDeletable={isDeletable}
+      />
+    </div>
   );
 }
+
+
+const NotePopupFlyout = ({
+  flyoutSelector,
+  handleClick,
+  isEditable,
+  isDeletable,
+}) => {
+  const dispatch = useDispatch();
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+  const [t] = useTranslation();
+
+  useLayoutEffect(() => {
+    let items = notePopupFlyoutItems;
+    if (!isEditable) {
+      items = items.filter((item) => item.option !== 'Edit');
+    } else if (!isDeletable) {
+      items = items.filter((item) => item.option !== 'Delete');
+    }
+
+    const notePopupFlyout = {
+      dataElement: flyoutSelector,
+      className: 'NotePopupFlyout',
+      items: items.map((item) => {
+        return {
+          ...item,
+          label: t(item.label),
+          title: t(item.title),
+          onClick: () => handleClick(item.option),
+        };
+      }),
+    };
+
+    if (!currentFlyout) {
+      dispatch(actions.addFlyout(notePopupFlyout));
+    } else {
+      dispatch(actions.updateFlyout(notePopupFlyout.dataElement, notePopupFlyout));
+    }
+  }, [isEditable, isDeletable]);
+
+  return null;
+};
+
+NotePopupFlyout.propTypes = {
+  flyoutSelector: PropTypes.string,
+  handleClick: PropTypes.func,
+  isEditable: PropTypes.bool,
+  isDeletable: PropTypes.bool,
+};
 
 NotePopup.propTypes = propTypes;
 

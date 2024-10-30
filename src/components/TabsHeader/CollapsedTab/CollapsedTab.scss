@@ -23,7 +23,7 @@
   cursor: pointer;
 
   .file-text {
-    max-width: 140px;
+    max-width: calc(100% - 30px);
     padding-left: 8px;
     display: flex;
     align-items: center;
@@ -34,7 +34,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-transform: capitalize;
     }
 
     &.disabled {

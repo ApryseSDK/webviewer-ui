@@ -21,7 +21,7 @@ const propTypes = {
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.node]),
   title: PropTypes.string,
   color: PropTypes.string,
   dataElement: PropTypes.string,
@@ -32,10 +32,12 @@ const propTypes = {
   isSubmitType: PropTypes.bool,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
+  ariaControls: PropTypes.string,
   role: PropTypes.string,
   hideTooltipShortcut: PropTypes.bool,
   useI18String: PropTypes.bool,
   shouldPassActiveDocumentViewerKeyToOnClickHandler: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 const Button = (props) => {
@@ -69,6 +71,12 @@ const Button = (props) => {
     title,
     style,
     ariaLabel,
+    ariaLabelledby,
+    ariaControls,
+    ariaCurrent,
+    ariaPressed,
+    ariaExpanded,
+    ariaSelected,
     role,
     strokeColor,
     fillColor,
@@ -90,6 +98,7 @@ const Button = (props) => {
   }
 
   const aLabel = ariaLabel || (title ? t(title) : undefined);
+  const aControls = ariaControls || '';
 
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
@@ -132,7 +141,7 @@ const Button = (props) => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
         ...customOverrideClasses,
-        'custom-ui': isCustomUI,
+        'modular-ui': isCustomUI,
         'icon-only': isGlyph && !label,
       })}
       style={style}
@@ -144,11 +153,18 @@ const Button = (props) => {
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       aria-label={aLabel}
+      aria-labelledby={ariaLabelledby}
+      aria-controls={aControls}
       role={role}
       tabIndex={tabIndex}
-      aria-keyshortcuts={ariaKeyshortcuts}
       type={isSubmitType ? 'submit' : 'button'}
       disabled={actuallyDisabled}
+      aria-disabled={actuallyDisabled}
+      aria-keyshortcuts={ariaKeyshortcuts}
+      aria-pressed={ariaPressed}
+      aria-expanded={ariaExpanded}
+      aria-selected={ariaSelected}
+      aria-current={ariaCurrent}
     >
       {isGlyph && (
         <Icon
@@ -166,6 +182,7 @@ const Button = (props) => {
           <span>{t(label)}</span> :
           <span>{label}</span>)
       }
+      {props.children}
     </button>
   );
 

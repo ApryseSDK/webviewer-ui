@@ -28,19 +28,7 @@ const store = configureStore({
 
 const BasicComponent = (props) => {
   return (
-    <I18nextProvider i18n={i18n.cloneInstance({ lng: 'ja', fallbackLng: 'ja' })}>
-      <Provider store={store}>
-        <div style={ { width: '220px', padding: '12px 12px' } }>
-          <TextStylePicker {...props}/>
-        </div>
-      </Provider>
-    </I18nextProvider>
-  );
-};
-
-const DisabledFontSelectorComponent = (props) => {
-  return (
-    <I18nextProvider i18n={i18n.cloneInstance({ lng: 'ja', fallbackLng: 'ja' })}>
+    <I18nextProvider i18n={i18n.cloneInstance({ lng: 'en', fallbackLng: 'en' })}>
       <Provider store={store}>
         <div style={ { width: '220px', padding: '12px 12px' } }>
           <TextStylePicker {...props}/>
@@ -59,7 +47,7 @@ TextStylePickerSection.args = {
   onPropertyChange: noop
 };
 
-export const TextStylePickerFreeTextDisabled = DisabledFontSelectorComponent.bind({});
+export const TextStylePickerFreeTextDisabled = BasicComponent.bind({});
 TextStylePickerFreeTextDisabled.args = {
   properties: {
     FontSize: '128'
@@ -70,7 +58,7 @@ TextStylePickerFreeTextDisabled.args = {
   onPropertyChange: noop
 };
 
-export const TextStylePickerFreeTextEnabled = DisabledFontSelectorComponent.bind({});
+export const TextStylePickerFreeTextEnabled = BasicComponent.bind({});
 TextStylePickerFreeTextEnabled.args = {
   properties: {
     FontSize: '128'
@@ -79,4 +67,38 @@ TextStylePickerFreeTextEnabled.args = {
   isFreeTextAutoSize: false,
   isRedaction: false,
   onPropertyChange: noop
+};
+
+export const WidgetLayoutEnabled = BasicComponent.bind({});
+WidgetLayoutEnabled.args = {
+  properties: {
+    FontSize: '32'
+  },
+  isFreeText: false,
+  isFreeTextAutoSize: false,
+  isRedaction: false,
+  onPropertyChange: noop,
+  isWidget: true
+};
+
+export const RedactionLayoutEnabled = BasicComponent.bind({});
+RedactionLayoutEnabled.args = {
+  properties: {
+    FontSize: '32'
+  },
+  isFreeText: false,
+  isFreeTextAutoSize: false,
+  isRedaction: true,
+  onPropertyChange: noop,
+};
+
+export const ContentEditLayoutEnabled = BasicComponent.bind({});
+ContentEditLayoutEnabled.args = {
+  properties: {
+    FontSize: '32'
+  },
+  isFreeText: false,
+  isFreeTextAutoSize: false,
+  isContentEditing: true,
+  onPropertyChange: noop,
 };

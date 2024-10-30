@@ -12,8 +12,6 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
 import { COMMON_COLORS } from 'constants/commonColors';
 
-const fonts = [];
-
 const conversionMap = {
   Font: 'fontName',
   FontSize: 'fontSize',
@@ -39,6 +37,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
   // selection modes used are 'FreeText' and 'ContentBox'
   const [selectionMode, setSelectionMode] = useState(null);
+  const [fonts, setFonts] = useState([]);
 
   const annotationRef = useRef(null);
   const contentEditorRef = useRef(null);
@@ -47,14 +46,13 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const [format, setFormat] = useState({});
   const DEFAULT_COLOR = new window.Core.Annotations.Color(COMMON_COLORS['black']);
 
-  useDidUpdate(() => {
-    const supportedFonts = window.Core.ContentEdit.getContentEditingFonts();
+  useDidUpdate(async () => {
+    const supportedFonts = await window.Core.ContentEdit.getContentEditingFonts();
 
-    supportedFonts.then((res) => res.forEach((font) => {
-      if (!fonts.includes(font)) {
-        fonts.push(font);
-      }
-    }));
+    setFonts((prevFonts) => [
+      ...prevFonts,
+      ...supportedFonts.filter((font) => !prevFonts.includes(font))
+    ]);
   }, [selectionMode]);
 
   useEffect(() => {
@@ -70,12 +68,14 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         };
 
         if (!fonts.includes(fontObject.Font)) {
-          fonts.push(fontObject.Font);
+          setFonts([...fonts, fontObject.Font]);
+        }
+        // We do this to prevent spamming the handleColorChange with same color, but we need a better approach.
+        if (!fonts.includes(fontObject.Font)) {
+          handleColorChange(null, color);
         }
 
         setTextEditProperties(fontObject);
-        handleColorChange(null, color);
-
         // remove the fontName attribute so that we don't override the fontName when we set the text attributes
         delete attribute.fontName;
         window.Core.ContentEdit.setTextAttributes(attribute);
@@ -85,7 +85,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     };
     core.addEventListener('contentEditSelectionChange', handleSelectionChange);
     return () => core.removeEventListener('contentEditSelectionChange', handleSelectionChange);
-  }, []);
+  }, [fonts]);
 
   /**
    * @ignore
@@ -142,9 +142,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   useEffect(() => {
     const handleContentEditModeStart = () => {
       dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel', 'wv3dPropertiesPanel']));
-      if (!isMobile) {
-        dispatch(actions.openElement(dataElement));
-      }
     };
 
     const handleContentEditModeEnd = () => {
@@ -159,6 +156,18 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     };
   }, []);
 
+  async function setContentEditPanelProperties(annotation) {
+    setSelectedContentBox(annotation);
+    const textAttributes = await getTextEditPropertiesFromContentEditPlaceHolder(annotation);
+    setFormat(textAttributes);
+    setTextEditProperties(textAttributes);
+    setSelectionMode('ContentBox');
+    annotationRef.current = null;
+    if (!isDisabled && !isOpen) {
+      dispatch(actions.toggleElement(dataElement));
+    }
+  }
+
   useEffect(() => {
     const handleAnnotationSelected = async (annotations, action) => {
       if (!core.getContentEditManager().isInContentEditMode()) {
@@ -170,9 +179,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         annotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeText &&
         (annotation.getContentEditAnnotationId() || annotation.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH);
       if (action === 'selected') {
-        if (!isInDesktopOnlyMode && isMobile) {
-          return;
-        }
         if (isFreeText) {
           annotationRef.current = annotation;
           setSelectionMode('FreeText');
@@ -180,16 +186,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
             dispatch(actions.toggleElement(dataElement));
           }
         } else if (annotation.isContentEditPlaceholder()) {
-          setSelectedContentBox(annotation);
-
-          const textAttributes = await getTextEditPropertiesFromContentEditPlaceHolder(annotation);
-          setFormat(textAttributes);
-          setTextEditProperties(textAttributes);
-          setSelectionMode('ContentBox');
-          annotationRef.current = null;
-          if (!isDisabled && !isOpen) {
-            dispatch(actions.toggleElement(dataElement));
-          }
+          setContentEditPanelProperties(annotation);
         }
       } else if (action === 'deselected') {
         if (selectedContentBox !== undefined) {
@@ -210,14 +207,14 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   useEffect(() => {
     const onResize = () => {
       if (core.getContentEditManager().isInContentEditMode()) {
-        if (isMobile) {
-          dispatch(actions.closeElement(dataElement));
-        } else {
-          dispatch(actions.openElement(dataElement));
-        }
+        dispatch(actions.openElement(dataElement));
       }
     };
     window.addEventListener('resize', onResize);
+    const annotation = core.getSelectedAnnotations()[0];
+    if (annotation?.isContentEditPlaceholder()) {
+      setContentEditPanelProperties(annotation);
+    }
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
@@ -350,7 +347,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       const color = new window.Core.Annotations.Color(fontColors[0].fontColor);
 
       if (!fonts.includes(fontName)) {
-        fonts.push(fontName);
+        setFonts([...fonts, fontName]);
       }
 
       return {

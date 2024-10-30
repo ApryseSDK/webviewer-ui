@@ -105,6 +105,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
           <Button
             img="icon-post-reply"
             className={'reply-button'}
+            title={'action.submit'}
             isSubmitType={true}
           />
         </div>

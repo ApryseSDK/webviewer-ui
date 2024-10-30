@@ -19,12 +19,19 @@ export const JUSTIFICATION_OPTIONS = {
   Both: 'both'
 };
 
+export const STYLE_TOGGLE_OPTIONS = {
+  Bold: 'bold',
+  Italic: 'italic',
+  Underline: 'underline',
+};
+
 export const LIST_OPTIONS = {
   Ordered: 'ordered',
   Unordered: 'unordered',
 };
 
 export const DEFAULT_POINT_SIZE = 11;
+export const DEFAULT_COLOR = new window.Core.Annotations.Color(0, 0, 0, 1);
 
 const OfficeEditorListStylePresets = window.Core.Document.OfficeEditorListStylePresets;
 export const OFFICE_BULLET_OPTIONS = [
@@ -46,31 +53,65 @@ export const OFFICE_NUMBER_OPTIONS = [
 
 export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
 
-export const OFFICE_EDITOR_EDIT_MODE = {
-  EDITING: 'editing',
-  REVIEWING: 'reviewing',
-  VIEW_ONLY: 'viewOnly',
-  PREVIEW: 'preview'
-};
+export const OfficeEditorEditMode = window.Core.Document.OfficeEditorEditMode;
 
-export const officeEditorScope = 'office-editor';
+export const OFFICE_EDITOR_SCOPE = 'office-editor';
 
-export const elementsToDisableInOfficeEditor = [
+export const ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR = [
   'toggleNotesButton',
   'toolsHeader',
   'viewControlsButton',
   'textPopup',
   'marqueeToolButton',
-  'outlinesPanelButton',
-  'outlinesPanel',
-  'leftPanelButton',
-  'annotationPopup',
+  DataElements.OUTLINE_PANEL_BUTTON,
+  DataElements.OUTLINE_PANEL,
+  DataElements.LEFT_PANEL_BUTTON,
+  DataElements.ANNOTATION_POPUP,
   DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
   DataElements.ANNOTATION_NOTE_CONNECTOR_LINE,
   DataElements.ANNOTATION_CONTENT_OVERLAY,
 ];
 
-export const elementsToEnableInOfficeEditor = [
+export const ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR = [
   DataElements.OFFICE_EDITOR_TOOLS_HEADER,
   DataElements.INLINE_COMMENT_POPUP
 ];
+
+export const AVAILABLE_POINT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
+
+/* eslint-disable custom/no-hex-colors */
+export const AVAILABLE_STYLE_PRESET_MAP = {
+  'Normal Text': {
+    fontSize: '11pt',
+    color: '#000000',
+  },
+  'Title': {
+    fontSize: '26pt',
+    color: '#000000',
+  },
+  'Subtitle': {
+    fontSize: '15pt',
+    color: '#666666',
+  },
+  'Heading 1': {
+    fontSize: '20pt',
+    color: '#000000',
+  },
+  'Heading 2': {
+    fontSize: '16pt',
+    color: '#000000',
+  },
+  'Heading 3': {
+    fontSize: '14pt',
+    color: '#434343',
+  },
+  'Heading 4': {
+    fontSize: '12pt',
+    color: '#666666',
+  },
+  'Heading 5': {
+    fontSize: '11pt',
+    color: '#666666',
+  },
+};
+/* eslint-enable custom/no-hex-colors */

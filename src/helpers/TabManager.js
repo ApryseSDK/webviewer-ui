@@ -86,6 +86,20 @@ export function prepareMultiTab(initialDoc, store) {
   }, 300);
 }
 
+export function removeFileNameExtension(filename, shouldRemoveSpace = true) {
+  if (!filename) {
+    return;
+  }
+  const lastDotIndex = filename.lastIndexOf('.');
+  if (lastDotIndex !== -1) {
+    filename = filename.substring(0, lastDotIndex);
+  }
+  if (shouldRemoveSpace) {
+    return filename.replace(/\s+/g, '').toLowerCase();
+  }
+  return filename;
+}
+
 export default class TabManager {
   db;
   store;
@@ -199,7 +213,7 @@ export default class TabManager {
     currentViewerState.activeToolName = viewerState.activeToolName;
 
     return currentViewerState;
-  }
+  };
 
   showDeleteWarning(tabToDelete) {
     const title = 'warning.closeFile.title';

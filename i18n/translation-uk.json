@@ -26,6 +26,8 @@
     "ungroup": "Розгрупувати",
     "download": "Завантажити",
     "edit": "Редагувати",
+    "collapse": "Згорнути",
+    "expand": "Розгорнути",
     "extract": "Екстракт",
     "extractPage": "Витягти сторінку",
     "enterFullscreen": "Повноекранний",
@@ -36,6 +38,7 @@
     "more": "Більше",
     "openFile": "Відкрити файл",
     "page": "Сторінка",
+    "of": "з",
     "pagePrev": "Попередня сторінка",
     "pageNext": "Наступна сторінка",
     "pageSet": "Встановити сторінку",
@@ -43,6 +46,7 @@
     "proceed": "Продовжуйте",
     "name": "Ім'я",
     "rename": "Перейменувати",
+    "remove": "видалити",
     "ok": "гаразд",
     "rotate": "Орієнтація сторінки",
     "rotate3D": "Поворот",
@@ -109,6 +113,10 @@
     "moveToBottom": "Переміститися вниз",
     "movePageToTop": "Перемістити сторінку вгору",
     "movePageToBottom": "Перемістити сторінку вниз",
+    "moveUp": "Перемістити вгору",
+    "moveDown": "Перемістити вниз",
+    "moveLeft": "Рух ліворуч",
+    "moveRight": "Рух праворуч",
     "backToMenu": "Назад до меню",
     "redactPages": "Редагувати сторінки",
     "playAudio": "Відтворити аудіо",
@@ -121,15 +129,20 @@
     "comparePages": "Порівняти сторінки",
     "startComparison": "Почати порівняння",
     "showComparison": "Показати порівняння",
+    "highlightChanges": "Виділіть Зміни",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
+    "clearInitial": "Чистий ініціал",
     "readOnlySignature": "Підпис лише для читання не можна видалити",
     "newDocument": "Новий документ",
     "sideBySideView": "Пліч-о-пліч",
     "pageNumberInput": "Введення номера сторінки",
     "addNewColor": "Додати новий колір",
     "deleteColor": "Видалити вибраний колір",
-    "copySelectedColor": "Копіювати вибраний колір"
+    "copySelectedColor": "Копіювати вибраний колір",
+    "showMoreColors": "Показати більше кольорів",
+    "showLessColors": "Показати менше кольорів",
+    "fromCustomColorPicker": "із спеціальної палітри кольорів"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -185,7 +198,8 @@
     "3D": "3D",
     "sound": "Звук",
     "changeView": "Змінити вигляд",
-    "newImage": "Нове зображення"
+    "newImage": "Нове зображення",
+    "defaultCustomStampTitle": "Спеціальний штамп"
   },
   "rubberStamp": {
     "Approved": "Затверджено",
@@ -220,6 +234,7 @@
     "searchPanel": "Пошук",
     "menuOverlay": "Меню",
     "notesPanel": "Коментарі",
+    "indexPanel": "Індексна панель",
     "outlinePanel": "Контур",
     "outlinesPanel": "Обриси",
     "newOutlineTitle": "Нова назва структури",
@@ -234,7 +249,8 @@
     "thumbnailsPanel": "Ескізи",
     "toolsButton": "Інструменти",
     "redaction": "Письмо",
-    "viewControlsOverlay": "Елементи керування переглядом",
+    "viewControls": "Елементи керування переглядом",
+    "pageControls": "Елементи керування сторінкою",
     "calibration": "Калібрування",
     "zoomOverlay": "Накладання масштабу",
     "textPopup": "Текстове спливаюче вікно",
@@ -243,8 +259,10 @@
     "multiSelectButton": "Multi Select",
     "pageReplaceModalTitle": "Замінити сторінку",
     "files": "Файли",
+    "file": "Файл",
     "editText": "Редагувати текст",
     "redactionPanel": "Панель редагування",
+    "tabLabel": "вкладка",
     "noteGroupSection": {
       "open": "Переглянути всі анотації",
       "close": "Закрити всі анотації"
@@ -283,6 +301,7 @@
     "searching": "Пошук...",
     "searchCommentsPlaceholder": "Шукати коментарі",
     "searchDocumentPlaceholder": "Пошук документа",
+    "searchSettingsPlaceholder": "Налаштування пошуку",
     "searchSuggestionsPlaceholder": "Пошукові пропозиції",
     "signHere": "Підпишіть тут",
     "insertTextHere": "Вставте сюди текст",
@@ -296,6 +315,7 @@
     "doNotShowAgain": "Не показуйте мені цього більше",
     "doNotAskAgain": "Не запитуй знову",
     "enterReplacementText": "Введіть текст, який потрібно замінити",
+    "sort": "Сортувати",
     "sortBy": "Сортувати",
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
     "unpostedComment": "Неопублікований коментар",
@@ -311,10 +331,11 @@
     "selectFile": "Виберіть файл",
     "selectPageToReplace": "Виберіть сторінки в документі, якими потрібно замінити.",
     "embeddedFiles": "Вбудовані файли",
-    "pageNum": "Номер сторінки",
+    "pageNum": "Сторінка",
     "viewBookmark": "Переглянути закладку на сторінці",
     "error": "Помилка",
     "errorPageNumber": "Недійсний номер сторінки. Обмеження є",
+    "errorBlankPageNumber": "Будь ласка, вкажіть номер сторінки",
     "errorLoadingDocument": "Під час читання цього документа виникла проблема, тому деякі сторінки можуть не відображатися. Це означає, що документ може бути пошкоджено. Загальна кількість сторінок становить {{totalPageCount}}, а кількість сторінок, які відображаються, — {{displayedPageCount}}.",
     "noRevisions": "Цей документ не має змін."
   },
@@ -357,6 +378,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Групи панелі інструментів",
+      "flyoutLabel": "Стрічка",
       "toolbarGroup-View": "Переглянути",
       "toolbarGroup-Annotate": "Анотувати",
       "toolbarGroup-Shapes": "фігури",
@@ -366,7 +388,10 @@
       "toolbarGroup-EditText": "Редагувати текст",
       "toolbarGroup-FillAndSign": "Заповніть і підпишіть",
       "toolbarGroup-Forms": "Форми",
-      "toolbarGroup-Redact": "Редагувати"
+      "toolbarGroup-Redact": "Редагувати",
+      "toolbarGroup-oe-Home": "додому",
+      "toolbarGroup-oe-Insert": "Вставка",
+      "toolbarGroup-oe-Review": "огляд"
     },
     "annotationColor": {
       "StrokeColor": "Інсульт",
@@ -408,7 +433,8 @@
       "noteContent": {
         "noName": "(без імені)",
         "noDate": "(без дати)"
-      }
+      },
+      "toggleMultiSelect": "Увімкнути Multi Select для анотації"
     },
     "pageTransition": {
       "continuous": "Безперервна сторінка",
@@ -428,7 +454,6 @@
       "includeComments": "Включіть коментарі",
       "printSettings": "Налаштування друку",
       "printGrayscale": "Друк у градаціях сірого",
-      "flatten": "Звести документ",
       "printCurrentDisabled": "Поточний перегляд доступний лише під час перегляду однієї сторінки."
     },
     "printInfo": {
@@ -474,9 +499,14 @@
       "typeInitial": "Введіть ініціали*",
       "drawSignature": "Намалювати підпис*",
       "drawInitial": "Намалювати ініціали*",
+      "imageSignature": "Підпис зображення",
+      "imageInitial": "Ініціали зображення",
       "pickInitialsFile": "Виберіть Ініціали",
       "noSignatures": "Наразі немає збережених підписів.",
-      "fontStyle": "стиль шрифту"
+      "fontStyle": "стиль шрифту",
+      "textSignature": {
+        "dropdownLabel": "Сімейство шрифтів"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Ваші файли",
@@ -523,13 +553,17 @@
       "countMeasurement": "Вимірювання підрахунку",
       "radius": "Радіус",
       "count": "Рахувати",
-      "length": "Довжина"
+      "length": "Довжина",
+      "xAxis": "Вісь X",
+      "yAxis": "Вісь Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Динамічне масштабування розміру шрифту"
     },
     "measurementOption": {
-      "scale": "Масштаб"
+      "scale": "Масштаб",
+      "selectScale": "Виберіть масштаб",
+      "selectScaleDropdown": "Виберіть спадне меню масштабу"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +575,8 @@
         "paperUnits": "Паперові одиниці",
         "displayUnits": "Блоки відображення",
         "fractionUnitsTooltip": "Одиниці частки застосовуються лише до in та ft-in",
-        "incorrectSyntax": "Неправильний синтаксис"
+        "incorrectSyntax": "Неправильний синтаксис",
+        "units": "одиниці"
       },
       "scaleOverlay": {
         "addNewScale": "Додати новий масштаб",
@@ -560,6 +595,7 @@
         "irreversible": "незворотні",
         "willDeleteMeasurement": "і видалить пов’язані вимірювання.",
         "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?",
+        "thisCantBeUndone": " Цю дію не можна скасувати.",
         "ifChangeScale": "Якщо ви змінюєте масштаб для вибраного вимірювання або інструменту, масштабуйте",
         "notUsedWillDelete": " більше не використовуватимуться для вимірювань чи інструментів і будуть видалені. Видалення незворотне.",
         "ifToContinue": "Ви впевнені, що бажаєте продовжити?"
@@ -661,7 +697,9 @@
       "minute": "Хвилина",
       "second": "Друге",
       "textColor": "Колір тексту",
-      "backgroundColor": "Колір фону"
+      "backgroundColor": "Колір фону",
+      "dateToolTipLabel": "Докладніше про формат дати",
+      "previewCustomStamp": "Попередній перегляд"
     },
     "pageRedactModal": {
       "addMark": "Додайте позначку",
@@ -669,8 +707,7 @@
       "current": "Поточна сторінка",
       "specify": "Вкажіть сторінки",
       "odd": "Тільки непарні сторінки",
-      "even": "Лише парні сторінки",
-      "header": "Позначте Редагування сторінок"
+      "even": "Лише парні сторінки"
     },
     "lineStyleOptions": {
       "title": "Стиль"
@@ -725,6 +762,7 @@
       "zoomOptions": "Параметри масштабування",
       "zoomIn": "Приближувати",
       "zoomOut": "Зменшення",
+      "setHeaderFocus": "Встановлює фокус на заголовок",
       "fitScreenWidth": "Підігніть документ до ширини екрана на маленькому екрані (< 640 пікселів), інакше підігніть його до оригінального розміру",
       "print": "Роздрукувати",
       "bookmarkOpenPanel": "Швидко додайте сторінку в закладки та відкрийте панель закладок",
@@ -752,15 +790,16 @@
       "selectCreateTextStrikeoutTool": "Виберіть інструмент AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Виберіть інструмент AnnotationCreateTextUnderline",
       "editKeyboardShorcut": "Редагувати комбінацію клавіш",
-      "setShorcut": "Встановити ярлик",
-      "pressKeyToSet": "Натисніть клавішу або клавіші, щоб встановити новий ярлик.",
-      "shortcutAlreadyExists": "Комбінація клавіш вище вже існує."
+      "setShortcut": "Встановити ярлик",
+      "editShortcut": "Редагувати ярлик",
+      "shortcutAlreadyExists": "Комбінація клавіш вище вже існує.",
+      "close": "Закрити підказку"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Видалити сторінку",
-      "deleteMessage": "Ви впевнені, що хочете видалити вибрані сторінки? Це не можна скасувати",
+      "deleteMessage": "Ви впевнені, що бажаєте видалити вибрані сторінки? Цю дію не можна скасувати.",
       "deleteLastPageMessage": "Ви не можете видалити всі сторінки в документі."
     },
     "extractPage": {
@@ -928,6 +967,10 @@
     "invalidDateTime": "Недійсна дата/час: введені дані мають відповідати формату"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Список полів форми",
+      "notFields": "Цей документ не має полів форми"
+    },
     "formFieldPopup": {
       "fieldName": "Ім'я поля",
       "fieldValue": "Значення за замовчуванням",
@@ -938,11 +981,14 @@
       "apply": "Застосувати",
       "cancel": "Скасувати",
       "flags": "Прапори поля",
+      "fieldSize": "Розмір поля",
       "options": "Параметри",
+      "properties": "Властивості",
       "radioGroups": "Перемикач з однаковою назвою поля належатиме до тієї ж групи.",
       "nameRequired": "Ім’я поля обов’язкове",
       "fieldIndicator": "Індикатори полів",
       "documentFieldIndicator": "Індикатори полів документа",
+      "includeFieldIndicator": "Включити індикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставте текст тут",
         "CheckBoxFormField": "Перевірте",
@@ -962,6 +1008,14 @@
         "empty": "Ім’я поля не може бути порожнім"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "Анотація до поля підпису",
+      "CheckBoxFormField": "Анотація поля прапорця",
+      "RadioButtonFormField": "Анотація поля радіокнопки",
+      "ListBoxFormField": "Анотація до поля списку",
+      "ComboBoxFormField": "Анотація поля зі списком",
+      "TextFormField": "Анотація текстового поля"
+    },
     "apply": "Застосувати поля",
     "type": "Тип поля",
     "types": {
@@ -970,7 +1024,8 @@
       "checkbox": "Прапорець",
       "radio": "Радіо-кнопка",
       "listbox": "Поле зі списком",
-      "combobox": "Комбінований ящик"
+      "combobox": "Комбінований ящик",
+      "button": "Кнопка"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1159,8 @@
     "cropDimensions": "Розміри урожаю",
     "dimensionInput": {
       "unitOfMeasurement": "одиниця",
-      "autoTrim": "Автотримування"
+      "autoTrim": "Автотримування",
+      "autoTrimCustom": "Custom"
     },
     "cropModal": {
       "applyTitle": "Застосовувати культуру?",
@@ -1131,10 +1187,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Почніть редагувати, позначивши текст, регіони, сторінки або здійснивши пошук.",
-    "redactionSearchPlaceholder": "Додайте за допомогою пошуку за ключовими словами або шаблонів",
+    "redactionSearchPlaceholder": "Редагувати за допомогою клавіатури або шаблонів",
     "redactionCounter": "Позначено для редагування",
     "clearMarked": "Ясно",
     "redactAllMarked": "Редагувати все",
+    "redactionItems": "Елементи редакції",
     "redactionItem": {
       "regionRedaction": "Регіональна редакція",
       "fullPageRedaction": "Повна редакція сторінки",
@@ -1151,7 +1208,7 @@
       "phoneNumbers": "Номери телефонів",
       "images": "Зображення",
       "emails": "Електронні листи",
-      "pattern": "Візерунок",
+      "pattern": "Візерунки",
       "start": "Почніть пошук"
     }
   },
@@ -1177,6 +1234,7 @@
     "createFolder": "Створити папку",
     "portfolioPanelTitle": "PDF-портфоліо",
     "portfolioNewFolder": "Нова папка",
+    "portfolioDocumentTitle": "Назва документа",
     "portfolioFolderPlaceholder": "Назва папки",
     "portfolioFilePlaceholder": "Ім'я файлу",
     "folderNameAlreadyExists": "Назва папки вже існує",
@@ -1200,12 +1258,14 @@
     "rightAlign": "Вирівняти по правому краю",
     "justify": "Обґрунтуйте",
     "lineSpacing": "Міжрядковий і абзацний інтервали",
+    "lineSpacingMenu": "Міжрядковий інтервал",
     "bulletList": "Маркірований список",
     "numberList": "Нумерований список",
     "decreaseIndent": "Зменшити відступ",
     "increaseIndent": "Збільшити відступ",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
+    "image": "Зображення",
     "table": "Таблиця",
     "insertRowAbove": "Вставити рядок вище",
     "insertRowBelow": "Вставити рядок нижче",
@@ -1226,10 +1286,47 @@
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях.",
     "previewAllChanges": "Переглянути всі зміни",
     "accept": "прийняти",
-    "reject": "Відхиляти"
+    "reject": "Відхиляти",
+    "pastingTitle": "Вклеювання недоступне",
+    "pastingMessage": "Вставлення не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
+    "pastingWithoutFormatTitle": "Вставлення без форматування недоступне",
+    "pastingWithoutFormatMessage": "Вставлення без форматування не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "неодружений",
+      "double": "Двомісний",
+      "custom": "Custom"
+    },
+    "numberDropdown": {
+      "6": "Цифра латинська римська 1",
+      "7": "Число десяткове",
+      "8": "Цифра латинська римська 2",
+      "10": "латинська римська",
+      "11": "Римська латинська цифра",
+      "dropdownLabel": "Попередні налаштування нумерації"
+    },
+    "bulletDropdown": {
+      "0": "Куля",
+      "1": "Площа куль",
+      "2": "Квадратна куля",
+      "3": "діамант",
+      "4": "Перевірте",
+      "5": "Стрілка",
+      "dropdownLabel": "Попередні налаштування маркерів"
+    },
+    "fontSize": {
+      "dropdownLabel": "Розмір шрифту"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Стилі шрифтів"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Сімейство шрифтів"
+    }
   },
   "insertPageModal": {
-    "title": "Додати нову сторінку",
+    "title": "Вставити нову сторінку",
     "tabs": {
       "blank": "Пустий",
       "upload": "Завантажити"
@@ -1280,7 +1377,7 @@
     "save": "Зберегти документ",
     "comparePanel": {
       "Find": "Знайти в документі",
-      "changesList": "Список змін",
+      "changesList": "Перелік змін",
       "change": "Зміна",
       "old": "Старий",
       "new": "новий",
@@ -1333,9 +1430,28 @@
       "redactionTextPlaceholder": "Вставити текстову мітку",
       "contentEdit": "Редагування вмісту"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Початковий стиль лінії",
+      "middleLineStyleLabel": "Стиль середньої лінії",
+      "endLineStyleLabel": "Стиль кінцевої лінії"
+    },
     "addColorToCustom": "Додати до власних кольорів",
-    "noToolSelected": "Цей документ не містить шарів.",
-    "noToolStyle": "Інструмент не містить властивостей стилізації."
+    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
+    "noToolStyle": "Інструмент не містить властивостей стилізації.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Початок лінії"
+      },
+      "end": {
+        "dropdownLabel": "Кінець рядка"
+      },
+      "middle": {
+        "dropdownLabel": "Середня лінія"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Кордон"
+    }
   },
   "signatureListPanel": {
     "header": "Підписний лист",
@@ -1349,5 +1465,8 @@
   "rubberStampPanel": {
     "header": "Марки",
     "standard": "Стандартні штампи"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Палітра кольорів"
   }
 }

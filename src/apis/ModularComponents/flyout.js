@@ -7,12 +7,6 @@ export const flyoutItemBase = {
   onClick: TYPES.FUNCTION,
   icon: TYPES.OPTIONAL(TYPES.STRING),
 };
-flyoutItemBase.children = TYPES.OPTIONAL(TYPES.ARRAY(
-  TYPES.MULTI_TYPE(
-    TYPES.OBJECT(flyoutItemBase),
-    TYPES.STRING // For dividers
-  )
-));
 export const flyoutItemType = TYPES.MULTI_TYPE(
   TYPES.OBJECT({ type: TYPES.ONE_OF(Object.values(ITEM_TYPE)) }),
   TYPES.OBJECT(flyoutItemBase),
@@ -22,6 +16,7 @@ export const flyoutItemType = TYPES.MULTI_TYPE(
 /**
  * Represents an item in a flyout with optional submenu.
  * @typedef {Object} FlyoutItem
+ * @memberof UI.Components
  * @property {string} [dataElement] - A unique string that identifies the flyout item.
  * @property {string} [label] - The label of the flyout item.
  * @property {Function} [onClick] - A function that is called when the item is clicked.
@@ -78,6 +73,17 @@ export class Flyout {
       dataElement: TYPES.STRING,
       items: TYPES.ARRAY(flyoutItemType),
     })], 'Flyout Constructor');
+    // Validate nested children iteratively rather than recursively to ensure call stack is not exceeded
+    const itemsToCheckForChildren = [...options.items];
+    while (itemsToCheckForChildren.length) {
+      const item = itemsToCheckForChildren.pop();
+      if (item.children) {
+        for (let child of item.children) {
+          checkTypes([child], [flyoutItemType], `Flyout Constructor for following child flyout: ${child}`);
+          itemsToCheckForChildren.push(child);
+        }
+      }
+    }
     const { dataElement } = options;
     this.properties = options;
     this.dataElement = dataElement;
