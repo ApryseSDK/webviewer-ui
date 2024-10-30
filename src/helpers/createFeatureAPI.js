@@ -31,14 +31,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
       ],
       fn: () => {
-        const state = store.getState();
-        const isCustomizableUI = state.featureFlags.customizableUI;
-        if (!isCustomizableUI) {
-          if (enable) {
-            store.dispatch(actions.enableRibbons());
-          } else {
-            store.dispatch(actions.setReadOnlyRibbons());
-          }
+        if (enable) {
+          store.dispatch(actions.enableRibbons());
+        } else {
+          store.dispatch(actions.setReadOnlyRibbons());
         }
       },
     },
@@ -338,16 +334,11 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
           store.dispatch(actions.setTabs([]));
           store.dispatch(actions.setActiveTab(0));
         }
-        console.warn('Feature.MultiViewerMode is deprecated and will be removed in the next major release. Please use UI.enterMultiViewerMode and UI.exitMultiViewerMode instead.');
-        store.dispatch(actions.setIsMultiViewerMode(enable));
-      }
-    },
-    [Feature.SideBySideView]: {
-      fn: () => {
         store.dispatch(actions.setIsMultiViewerModeAvailable(enable));
       }
     },
     [Feature.ComparePages]: {
+      dataElements: ['comparePanelToggle'],
       fn: () => {
         store.dispatch(actions.setComparePagesButtonEnabled(enable));
       }

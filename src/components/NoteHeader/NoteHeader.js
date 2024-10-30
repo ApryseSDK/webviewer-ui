@@ -6,7 +6,7 @@ import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import Choice from 'components/Choice';
-import Tooltip from 'components/Tooltip';
+import Button from 'components/Button';
 
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getColor from 'helpers/getColor';
@@ -86,6 +86,8 @@ function NoteHeader(props) {
     date = dateCreated;
   }
 
+  const noteDateAndTime = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
+
   const numberOfReplies = annotation.getReplies().length;
   let color = annotation[iconColor]?.toHexString?.();
 
@@ -132,7 +134,7 @@ function NoteHeader(props) {
             </div>
             <div className="date-and-num-replies">
               <div className="date-and-time">
-                {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+                {noteDateAndTime}
                 {isGroupMember && ` (Page ${annotation.PageNumber})`}
               </div>
               {numberOfReplies > 0 && !isSelected &&
@@ -146,6 +148,7 @@ function NoteHeader(props) {
             {isMultiSelectMode && !isGroupMember && !isReply &&
               <Choice
                 id={`note-multi-select-toggle_${annotation.Id}`}
+                aria-label={`${renderAuthorName(annotation)} ${t('option.notesPanel.toggleMultiSelect')}`}
                 checked={isMultiSelected}
                 onClick={(e) => {
                   e.preventDefault();
@@ -154,7 +157,10 @@ function NoteHeader(props) {
                 }}
               />
             }
-            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
+            <NoteUnpostedCommentIndicator
+              annotationId={annotation.Id}
+              ariaLabel={`Unposted Comment, ${renderAuthorName(annotation)}, ${noteDateAndTime}`}
+            />
             {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange &&
               <NoteState
                 annotation={annotation}
@@ -171,22 +177,20 @@ function NoteHeader(props) {
             }
             {isSelected && isTrackedChange && !isMultiSelectMode &&
               <>
-                <Tooltip content={t('officeEditor.accept')}>
-                  <div
-                    className="tracked-change-icon-wrapper accept"
-                    onClick={() => acceptTrackedChange(annotation)}
-                  >
-                    <Icon className="tracked-change-icon" glyph="icon-menu-checkmark" />
-                  </div>
-                </Tooltip>
-                <Tooltip content={t('officeEditor.reject')}>
-                  <div
-                    className="tracked-change-icon-wrapper reject"
-                    onClick={() => rejectTrackedChange(annotation)}
-                  >
-                    <Icon className="tracked-change-icon" glyph="icon-close" />
-                  </div>
-                </Tooltip>
+                <Button
+                  title={t('officeEditor.accept')}
+                  img={'icon-menu-checkmark'}
+                  className="tracked-change-icon-wrapper accept"
+                  onClick={() => acceptTrackedChange(annotation)}
+                  iconClassName="tracked-change-icon"
+                />
+                <Button
+                  title={t('officeEditor.reject')}
+                  img={'icon-close'}
+                  className="tracked-change-icon-wrapper reject"
+                  onClick={() => rejectTrackedChange(annotation)}
+                  iconClassName="tracked-change-icon"
+                />
               </>
             }
           </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Icon from 'components/Icon';
 import classNames from 'classnames';
 import SignatureModes from 'constants/signatureModes';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { PANEL_SIZES } from 'constants/panel';
 import PropTypes from 'prop-types';
+import Button from 'components/Button';
 
 const SignatureRowContent = React.memo(({
   index,
@@ -97,18 +97,18 @@ const SavedSignatures = (props) => {
                   signatureMode={signatureMode}
                 />
                 {!isDeleteDisabled && (
-                  <button
+                  <Button
                     className="icon-button"
-                    data-element="defaultSignatureDeleteButton"
+                    img="icon-delete-line"
+                    ariaLabel={t('action.delete')}
+                    dataElement="defaultSignatureDeleteButton"
                     onMouseOver={() => setHoveredIndexToDelete(savedSignatureIndex)}
                     onMouseLeave={() => setHoveredIndexToDelete(null)}
                     onClick={() => {
                       deleteHandler(savedSignatureIndex);
                       setHoveredIndexToDelete(null);
                     }}
-                  >
-                    <Icon glyph="icon-delete-line" />
-                  </button>
+                  />
                 )}
               </div>);
             }

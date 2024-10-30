@@ -1,8 +1,7 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import FontSizeDropdown from 'components/FontSizeDropdown';
-import { DEBOUNCE_TIME } from './FontSizeDropdown';
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 const noop = () => { };
 
@@ -10,61 +9,60 @@ jest.mock('core', () => ({
   getContentEditManager: () => ({
     isInContentEditMode: () => false,
   }),
+  getDocumentViewer: () => ({}),
+  getScrollViewElement: () => ({
+    getBoundingClientRect: () => ({}),
+  }),
 }));
 
 describe('FontSizeDropdown component', () => {
   it('Should select items and input correctly', () => {
-    const { container } = render(<FontSizeDropdown onFontSizeChange={noop} />);
+    const mockOnFontSizeChange = jest.fn();
+    render(<FontSizeDropdown onFontSizeChange={mockOnFontSizeChange} />);
 
     // make sure dropdown items are hidden
-    let dropdownItems = container.querySelector('.Dropdown__items');
-    expect(dropdownItems).toBeInTheDocument();
-    expect(dropdownItems).toHaveClass('hidden');
+    const listBox = screen.getByRole('listbox');
+    expect(listBox).toHaveClass('hide');
 
-    // Make sure input value converts on focus
-    const input = container.querySelector('input');
-    expect(input).toBeInTheDocument();
-    expect(input.value).toBe('12pt');
-    input.focus();
+    // When we click on the combobox it creates an input, which is also a combobox
+    const comboBox = screen.getByRole('combobox');
+    expect(comboBox).toHaveTextContent('12');
+    userEvent.click(comboBox);
+
+
+    //The input should have the same value as the combobox
+    const input = screen.getAllByRole('combobox')[1];
     expect(input.value).toBe('12');
 
-    // click to open dropdown menu
-    const iconButton = container.querySelector('.icon-button');
-    expect(iconButton).toBeInTheDocument();
-    fireEvent.click(iconButton);
+    // We should have 150 options and the listbox is now visible
+    expect(listBox).not.toHaveClass('hide');
+    const options = screen.getAllByRole('option');
+    expect(options.length).toEqual(150);
+    // Type in the input field 30
+    userEvent.type(input, '30');
+    userEvent.type(input, '{enter}');
 
-    // make sure dropdown menu is open
-    dropdownItems = container.querySelector('.Dropdown__items');
-    expect(dropdownItems).toBeInTheDocument();
-    expect(dropdownItems).not.toHaveClass('hidden');
-  });
-  it('Should call handler on value change', async () => {
-    const handler = jest.fn();
-    const { container } = render(<FontSizeDropdown onFontSizeChange={handler} />);
-    // click to open dropdown menu
-    const iconButton = container.querySelector('.icon-button');
-    fireEvent.click(iconButton);
-    const dropdownItems = container.querySelector('.Dropdown__items');
-    fireEvent.click(dropdownItems.childNodes[0]);
-    expect(handler).toHaveBeenCalledTimes(1);
+    // and our mock got called with 30pt as a string
+    expect(mockOnFontSizeChange).toHaveBeenCalledWith('30pt');
   });
   it('Should render the correct amount of items', () => {
     const items = 5;
-    const { container } = render(<FontSizeDropdown onFontSizeChange={noop} maxFontSize={items} incrementMap={{ 0: 1 }} />);
+    render(<FontSizeDropdown onFontSizeChange={noop} maxFontSize={items} incrementMap={{ 0: 1 }} />);
 
-    const iconButton = container.querySelector('.icon-button');
-    fireEvent.click(iconButton);
+    const comboBox = screen.getByRole('combobox');
+    userEvent.click(comboBox);
 
-    const dropdownItems = container.querySelector('.Dropdown__items');
-    expect(dropdownItems.childNodes.length).toBe(items);
+    const options = screen.getAllByRole('option');
+    expect(options.length).toEqual(items);
+
   });
   it('Should account for increment map correctly', () => {
-    const { container } = render(<FontSizeDropdown onFontSizeChange={noop} fontSize={1} maxFontSize={200} incrementMap={{ 0: 1, 10: 10, 100: 100 }} />);
+    render(<FontSizeDropdown onFontSizeChange={noop} fontSize={1} maxFontSize={200} incrementMap={{ 0: 1, 10: 10, 100: 100 }} />);
 
-    const iconButton = container.querySelector('.icon-button');
-    fireEvent.click(iconButton);
+    const comboBox = screen.getByRole('combobox');
+    userEvent.click(comboBox);
 
-    const dropdownItems = container.querySelector('.Dropdown__items');
-    expect(dropdownItems.childNodes.length).toBe(20);
+    const options = screen.getAllByRole('option');
+    expect(options.length).toEqual(20);
   });
 });

@@ -1,6 +1,7 @@
 /**
  * Item options
  * @typedef {Object} ItemProperties
+ * @memberof UI.Components
  * @property {string} [dataElement] The data element of the item.
  * @property {string} [title] The tooltip of the item.
  * @property {boolean} [disabled] Whether the item is disabled or not.

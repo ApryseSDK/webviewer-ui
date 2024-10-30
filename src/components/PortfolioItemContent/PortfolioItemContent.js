@@ -1,53 +1,63 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import DataElements from 'constants/dataElement';
+import selectors from 'selectors';
 import { Input } from '@pdftron/webviewer-react-toolkit';
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
-import MoreOptionsContextMenuPopup from 'components/MoreOptionsContextMenuPopup';
 import { isOpenableFile } from 'helpers/portfolio';
 import '../../constants/bookmarksOutlinesShared.scss';
-
 import './PortfolioItemContent.scss';
+import PanelListItem from '../PanelListItem/PanelListItem';
+import classNames from 'classnames';
 
 const propTypes = {
   portfolioItem: PropTypes.object.isRequired,
-  isAdding: PropTypes.bool,
   isPortfolioRenaming: PropTypes.bool,
   setPortfolioRenaming: PropTypes.func,
-  setIsHovered: PropTypes.func,
+  movePortfolio: PropTypes.func,
 };
 
 const PortfolioItemContent = ({
   portfolioItem,
-  isAdding,
   isPortfolioRenaming,
   setPortfolioRenaming,
-  setIsHovered,
+  movePortfolio
 }) => {
   const {
-    setAddingNewFolder,
-    addNewFolder,
     refreshPortfolio,
     renamePortfolioItem,
     removePortfolioItem,
     openPortfolioItem,
     downloadPortfolioItem,
     isNameDuplicated,
+    setActivePortfolioItem,
   } = useContext(PortfolioContext);
 
-  const { name, nameWithoutExtension, extension, id, isFolder } = portfolioItem;
+  const { name, nameWithoutExtension, extension, id } = portfolioItem;
 
   const [t] = useTranslation();
   const inputRef = useRef();
   const [isDefault, setIsDefault] = useState(false);
   const [portfolioEditName, setPortfolioEditName] = useState(nameWithoutExtension);
-  const [isContextMenuOpen, setContextMenuOpen] = useState(false);
+
+  const onDoubleClick = useCallback(() => {
+    // If the item is in renaming-mode, double-clicking on it won't do anything
+    if (isPortfolioRenaming) {
+      return;
+    }
+
+    openPortfolioItem(portfolioItem);
+    setActivePortfolioItem(portfolioItem.id);
+
+  }, [isPortfolioRenaming, portfolioItem, openPortfolioItem, setActivePortfolioItem]);
+
 
   const getIcon = () => {
-    return isFolder ? 'icon-folder' : 'icon-header-page-manipulation-page-layout-single-page-line';
+    return 'icon-header-page-manipulation-page-layout-single-page-line';
   };
 
   const isRenameButtonDisabled = () => {
@@ -57,9 +67,6 @@ const PortfolioItemContent = ({
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.stopPropagation();
-      if (isAdding) {
-        onAddFolder();
-      }
       if (isPortfolioRenaming && !isRenameButtonDisabled()) {
         onRenamePortfolioItem();
       }
@@ -67,10 +74,6 @@ const PortfolioItemContent = ({
     if (e.key === 'Escape') {
       onCancelPortfolio();
     }
-  };
-
-  const onAddFolder = () => {
-    addNewFolder(portfolioEditName.trim() === '' ? '' : portfolioEditName);
   };
 
   const onRenamePortfolioItem = () => {
@@ -83,9 +86,6 @@ const PortfolioItemContent = ({
       setPortfolioRenaming(false);
       setPortfolioEditName(nameWithoutExtension);
     }
-    if (isAdding) {
-      setAddingNewFolder(false);
-    }
     refreshPortfolio();
   };
 
@@ -93,97 +93,86 @@ const PortfolioItemContent = ({
     if (!isNameDuplicated(`${portfolioEditName}.${extension}`, id)) {
       return '';
     }
-    return isFolder ? t('portfolio.folderNameAlreadyExists') : t('portfolio.fileNameAlreadyExists');
+    return t('portfolio.fileNameAlreadyExists');
   };
 
   useEffect(() => {
     // when in adding or renaming mode, input is automatically focused
-    if (isAdding || isPortfolioRenaming) {
+    if (isPortfolioRenaming) {
       inputRef.current.focus();
       inputRef.current.select();
     }
 
-    setIsDefault(!isAdding && !isPortfolioRenaming);
-  }, [isAdding, isPortfolioRenaming]);
+    setIsDefault(!isPortfolioRenaming);
+  }, [isPortfolioRenaming]);
 
-  useEffect(() => {
-    if (!isAdding) {
-      setIsHovered(isContextMenuOpen);
+  const handleOnClick = (val) => {
+    switch (val) {
+      case menuTypes.MOVE_UP:
+        movePortfolio(id, val);
+        break;
+      case menuTypes.MOVE_DOWN:
+        movePortfolio(id, val);
+        break;
+      case menuTypes.OPENFILE:
+        if (isOpenableFile(extension)) {
+          openPortfolioItem(portfolioItem);
+        }
+        break;
+      case menuTypes.RENAME:
+        setPortfolioRenaming(true);
+        break;
+      case menuTypes.DOWNLOAD:
+        downloadPortfolioItem(portfolioItem);
+        break;
+      case menuTypes.DELETE:
+        removePortfolioItem(id);
+        break;
+      default:
+        break;
     }
-  }, [isContextMenuOpen]);
+  };
+
+  const flyoutSelector = `${DataElements.BOOKMARK_OUTLINE_FLYOUT}-${id}`;
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+
+  const contextMenuMoreButtonOptions = {
+    moreOptionsDataElement: `portfolio-item-more-button-${id}`,
+    flyoutToggleElement: flyoutSelector,
+  };
+
+  const contentMenuFlyoutOptions = {
+    shouldHideDeleteButton: false,
+    currentFlyout,
+    flyoutSelector,
+    type: 'portfolio',
+    handleOnClick,
+  };
 
   return (
-    <div className="bookmark-outline-label-row">
-      {isAdding &&
-        <div className="bookmark-outline-label">
-          {t('portfolio.portfolioNewFolder')}
-        </div>
-      }
-
+    <div className='bookmark-outline-single-container'>
       {isDefault &&
-        <>
-          <span className="portfolio-item-icon">
-            <Icon glyph={getIcon()} color={'inherit'} />
-          </span>
-          <div
-            className="bookmark-outline-text outline-text"
-          >
-            {name}
-          </div>
-
-          <Button
-            className="bookmark-outline-more-button"
-            dataElement={`portfolio-item-more-button-${id}`}
-            img="icon-tool-more"
-            tabIndex={-1}
-            onClick={(e) => {
-              e.stopPropagation(); // click on this button won't select the file/folder
-              setContextMenuOpen(true);
-            }}
-          />
-
-          {isContextMenuOpen &&
-            <MoreOptionsContextMenuPopup
-              type={'portfolio'}
-              anchorButton={`portfolio-item-more-button-${id}`}
-              onClosePopup={() => setContextMenuOpen(false)}
-              onRenameClick={() => {
-                setContextMenuOpen(false);
-                setPortfolioRenaming(true);
-              }}
-              onDownloadClick={() => {
-                setContextMenuOpen(false);
-                downloadPortfolioItem(portfolioItem);
-              }}
-              shouldDisplayDeleteButton={true}
-              onDeleteClick={() => {
-                setContextMenuOpen(false);
-                removePortfolioItem(id);
-              }}
-              onOpenClick={isOpenableFile(extension) ? () => {
-                setContextMenuOpen(false);
-                openPortfolioItem(portfolioItem);
-              } : null}
-            />
-          }
-        </>
+         <PanelListItem iconGlyph={getIcon()} labelHeader={name} enableMoreOptionsContextMenuFlyout={true} onDoubleClick={onDoubleClick} contextMenuMoreButtonOptions={contextMenuMoreButtonOptions} contentMenuFlyoutOptions={contentMenuFlyoutOptions}/>
       }
-
-      {(isAdding || isPortfolioRenaming) &&
-        <>
+      {isPortfolioRenaming &&
+        <div className={classNames({
+          'bookmark-outline-label-row': true,
+          'editing': isPortfolioRenaming,
+        })}>
+          <label className='portfolio-input-label' htmlFor={id}>{t('portfolio.portfolioDocumentTitle')}</label>
           <Input
+            id={id}
             type="text"
             name="outline"
             ref={inputRef}
             wrapperClassName="portfolio-input"
-            placeholder={isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioFilePlaceholder')}
-            aria-label={t('action.name')}
             value={portfolioEditName}
             onKeyDown={handleKeyDown}
             onChange={(e) => setPortfolioEditName(e.target.value)}
             fillWidth
             messageText={duplicatedMessage()}
-            message={isNameDuplicated(`${portfolioEditName}.${extension}`, id) ? 'error' : 'default'}
+            message={isNameDuplicated(`${portfolioEditName}.${extension}`, id) ? 'warning' : 'default'}
+            aria-label={`${t('action.rename')} ${portfolioEditName}.${extension}`}
           />
 
           <div className="bookmark-outline-editing-controls">
@@ -192,14 +181,6 @@ const PortfolioItemContent = ({
               label={t('action.cancel')}
               onClick={onCancelPortfolio}
             />
-            {isAdding &&
-              <Button
-                className="bookmark-outline-save-button"
-                label={t('action.add')}
-                isSubmitType={true}
-                onClick={onAddFolder}
-              />
-            }
             {isPortfolioRenaming &&
               <Button
                 className="bookmark-outline-save-button"
@@ -210,7 +191,7 @@ const PortfolioItemContent = ({
               />
             }
           </div>
-        </>
+        </div>
       }
     </div>
   );

@@ -41,7 +41,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: var(--padding-tiny);
+  padding: var(--padding-tiny);
   border-bottom: 1px solid var(--divider);
 
   .header-title {
@@ -64,13 +64,16 @@
   flex-flow: row nowrap;
   align-items: flex-start;
   border-radius: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
 
   &.default {
-    padding: var(--padding-small) var(--padding-tiny);
+    padding: var(--padding-tiny);
     border: 1px solid transparent;
 
     &.hover,
-    &:hover, &:focus-within {
+    &:hover,
+    &:focus-within {
       cursor: pointer;
 
       .bookmark-outline-more-button {
@@ -79,28 +82,26 @@
       }
     }
 
-    &:hover {
-      border: 1px solid var(--secondary-button-hover);
-    }
-
-    &.hover,
-    &.selected {
-      background-color: var(--popup-button-active);
-    }
-
     &:focus-within {
-      border: 1px solid var(--bookmark-outline-hover-border);
-      background-color: var(--outline-selected);
+      border-color: transparent;
     }
 
     .bookmark-outline-label-row {
       overflow: hidden;
+    }
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline) !important;
     }
   }
 
   &.editing {
     background-color: var(--faded-component-background);
     padding: var(--padding-medium) 20px;
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline) !important;
+    }
   }
 
 
@@ -115,8 +116,8 @@
   .bookmark-outline-checkbox {
     flex-grow: 0;
     flex-shrink: 0;
-    margin-top: 1px;
-    margin-bottom: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
     margin-right: var(--padding-small);
   }
 
@@ -141,7 +142,9 @@
   .bookmark-outline-input {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: calc(100% - (16px + 4px)); // more-button width + margin-left
+    flex-basis: calc(100% - (16px + 6px)); // more-button width + margin-left
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
 
   .bookmark-text-input {
@@ -169,23 +172,24 @@
     flex-shrink: 0;
     width: 16px;
     height: 16px;
-    margin-left: var(--padding-tiny);
-    margin-right: 0;
+    margin: 2px 2px 2px var(--padding-tiny);
 
     .Icon {
       width: 14px;
       height: 14px;
     }
 
-    &.icon-only:hover {
+    &.icon-only:hover:not(:disabled):not(.disabled) {
       box-shadow: none;
-      border: solid 1px var(--hover-border);
+      outline: solid 1px var(--hover-border);
     }
 
     &:focus-within {
       &.icon-only {
         border: none;
+        box-shadow: none;
       }
+
       .Icon {
         color: var(--focus-border);
       }
@@ -193,6 +197,7 @@
   }
 
   .bookmark-outline-editing-controls {
+    padding: 2px;
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -238,7 +243,7 @@
 }
 
 .bookmark-outline-footer {
-  border-top: 1.5px solid var(--border);
+  border-top: 1.5px solid var(--gray-4);
   padding-top: var(--padding-medium);
   padding-bottom: var(--padding-medium);
   display: flex;
@@ -282,10 +287,11 @@
       background-color: transparent;
     }
 
-    &:disabled, &.disabled {
+    &:disabled,
+    &.disabled {
       &:hover {
         box-shadow: none;
       }
-    }  
+    }
   }
 }

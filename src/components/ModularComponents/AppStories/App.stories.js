@@ -1,17 +1,27 @@
 import App from 'components/App';
-import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
+import { mockHeadersNormalized, mockModularComponents, mockLeftHeader } from './mockAppState';
 import { userEvent, within, expect } from '@storybook/test';
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, allModes } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/App',
   component: App,
-  includeStories: ['DefaultUI', 'ActiveGroupHeaderTest', 'MultiTab', 'HeaderButtonsWithLabelsAndIcons'],
+  includeStories: ['DefaultUI', 'ActiveGroupHeaderTest', 'MultiTab', 'HeaderButtonsWithLabelsAndIcons', 'HeaderKeyboardNavigationTest', 'VerticalHeaderKeyboardNavigationTest'],
   excludeStories: ['CreateTemplate'],
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 export const DefaultUI = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
-
+DefaultUI.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme': allModes['light'],
+      'Dark theme': allModes['dark'],
+    }
+  },
+};
 export const ActiveGroupHeaderTest = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
 ActiveGroupHeaderTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -21,7 +31,14 @@ ActiveGroupHeaderTest.play = async ({ canvasElement }) => {
   const viewRibbon = await canvas.findByLabelText('View');
   await userEvent.click(viewRibbon);
   // the underline button should not be visible anymore as the header is hidden
+  expect(viewRibbon.classList.contains('active')).toBe(true);
   expect(await canvas.queryByRole('button', { name: 'Underline' })).toBeNull();
+};
+
+ActiveGroupHeaderTest.parameters = {
+  test: {
+    dangerouslyIgnoreUnhandledErrors: true,
+  },
 };
 
 const customHeaders = {
@@ -42,7 +59,7 @@ const labelAndIconButton = {
   'type': 'customButton',
   'label': 'Export',
   'img': 'icon-save',
-  'onClick': () => {},
+  'onClick': () => { },
 };
 
 const labelButton = {
@@ -66,3 +83,190 @@ export const MultiTab = createTemplate({
   components: mockModularComponents,
   isMultiTab: true
 });
+
+MultiTab.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await userEvent.tab();
+  const selectedtabButton = await canvas.findByRole('tab', { name: /Selected Document/i });
+  await expect(selectedtabButton).toHaveFocus();
+
+  // Tab to the default top header
+  await userEvent.tab();
+  const menuButton = await canvas.findByRole('button', { name: /Menu/i });
+  await expect(menuButton).toHaveFocus();
+
+  // Shift tabbing should focus the Multi Tab header in the 'Selected Document' tab button
+  await userEvent.tab({ shift: true });
+  await expect(selectedtabButton).toHaveFocus();
+
+  // Using the arrow keys to focus on the Title B File Tab.
+  await userEvent.keyboard('{ArrowLeft}');
+  await userEvent.keyboard('{ArrowLeft}');
+  const titleBButton = await canvas.findByRole('tab', { name: /Title B/i });
+  await expect(titleBButton).toHaveFocus();
+
+  // Using the arrow keys to navigate to the last button in the header, passing through the first element.
+  for (let i = 0; i < 3; i++) {
+    await userEvent.keyboard('{ArrowLeft}');
+  }
+
+  const openFileButton = await canvas.findByRole('button', { name: /Open File/i });
+  await expect(openFileButton).toHaveFocus();
+
+  // Going back from the last element to the first, using the arrow keys
+  await userEvent.keyboard('{ArrowRight}');
+  const titleAButton = await canvas.findByRole('tab', { name: /Title A/i });
+  await expect(titleAButton).toHaveFocus();
+};
+
+MultiTab.parameters = {
+  layout: 'fullscreen',
+  customizableUI: true,
+};
+
+export const HeaderKeyboardNavigationTest = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
+
+HeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const defaultTopHeader = await canvas.findByRole('toolbar', { name: 'default-top-header' });
+  const ariaOrientation = await defaultTopHeader.getAttribute('aria-orientation');
+  await expect(ariaOrientation).toBe('horizontal');
+
+  // Tab to the default top header
+  await userEvent.tab();
+  const menuButton = await canvas.findByRole('button', { name: 'Menu' });
+  await expect(menuButton).toHaveFocus();
+
+  // Arrow over to the Annotate ribbon item
+  for (let i = 0; i < 10; i++) {
+    await userEvent.keyboard('{ArrowRight}');
+  }
+
+  const annotateItem = await canvas.findByRole('button', { name: 'Annotate' });
+  await expect(annotateItem).toHaveFocus();
+
+  // Open the Annotate toolbar group
+  await userEvent.keyboard('{Enter}');
+  await expect(annotateItem).toHaveFocus();
+
+  const toolbarHeader = await canvas.findByRole('toolbar', { name: 'tools-header' });
+  await expect(toolbarHeader).toBeVisible();
+
+  const rectangleButton = await canvas.findByRole('button', { name: 'Rectangle' });
+  await expect(rectangleButton).toBeVisible();
+
+  // Annotate ribbon item should still be focused
+  await expect(annotateItem).toHaveFocus();
+
+  // Tab to the toolbar header
+  await userEvent.tab();
+
+  // Arrow over to the Rectangle tool button
+  for (let i = 0; i < 2; i++) {
+    await userEvent.keyboard('{ArrowRight}');
+  }
+  await expect(rectangleButton).toHaveFocus();
+
+  // Shift tabbing should focus the Annotate ribbon item again
+  await userEvent.tab({ shift: true });
+  await expect(annotateItem).toHaveFocus();
+
+  // Pressing Home should focus the first item in the header, in this case, the Menu button
+  await userEvent.keyboard('{Home}');
+  await expect(menuButton).toHaveFocus();
+
+  // Pressing End should focus the last item in the header, in this case, the Comments button
+  await userEvent.keyboard('{End}');
+  const commentsButton = await canvas.findByRole('button', { name: 'Comments' });
+  await expect(commentsButton).toHaveFocus();
+
+  // Pressing Arrow Right should focus the first item in the header again
+  await userEvent.keyboard('{ArrowRight}');
+  await expect(menuButton).toHaveFocus();
+
+  // Pressing Arrow Left should focus the last item in the header again
+  await userEvent.keyboard('{ArrowLeft}');
+  await expect(commentsButton).toHaveFocus();
+};
+
+HeaderKeyboardNavigationTest.parameters = {
+  test: {
+    dangerouslyIgnoreUnhandledErrors: true,
+  },
+};
+
+export const VerticalHeaderKeyboardNavigationTest = createTemplate({
+  headers: mockLeftHeader.modularHeaders,
+  components: mockLeftHeader.modularComponents,
+});
+
+VerticalHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Ensure the default left header is set up correctly with vertical orientation
+  const defaultLeftHeader = await canvas.findByRole('toolbar', { name: 'default-left-header' });
+  const ariaOrientation = await defaultLeftHeader.getAttribute('aria-orientation');
+  expect(ariaOrientation).toBe('vertical');
+
+  // Focus on the Print button in the left header
+  for (let i = 0; i < 2; i++) {
+    await userEvent.tab();
+  }
+  const printButton = await canvas.findByRole('button', { name: 'Print' });
+  await expect(printButton).toHaveFocus();
+
+  // Arrow down to the Annotate ribbon item
+  for (let i = 0; i < 2; i++) {
+    await userEvent.keyboard('{ArrowDown}');
+  }
+
+  const annotateItem = await canvas.findByRole('button', { name: 'Annotate' });
+  await expect(annotateItem).toHaveFocus();
+
+  // Open the Annotate toolbar group
+  await userEvent.keyboard('{Enter}');
+  await expect(annotateItem).toHaveFocus();
+
+  const underlineButton = await canvas.findByRole('button', { name: 'Underline' });
+  await expect(underlineButton).toBeVisible();
+
+  // Annotate ribbon item should still be focused
+  await expect(annotateItem).toHaveFocus();
+
+  // Shift+Tab to focus on the toolbar header (tools-header)
+  await userEvent.tab({ shift: true });
+
+  // Arrow over to the Underline tool button
+  await userEvent.keyboard('{ArrowRight}');
+  await expect(underlineButton).toHaveFocus();
+
+  // Tab to move focus back to the left header
+  await userEvent.tab();
+  // Annotate ribbon item should still be focused
+  await expect(annotateItem).toHaveFocus();
+
+  // Press Home to focus the first item in the header (Print button)
+  await userEvent.keyboard('{Home}');
+  await expect(printButton).toHaveFocus();
+
+  // Press End to focus the last item in the header (Shapes button)
+  await userEvent.keyboard('{End}');
+  const shapesButton = await canvas.findByRole('button', { name: 'Shapes' });
+  await expect(shapesButton).toHaveFocus();
+
+  // Press Arrow Down to focus the first item in the header again
+  await userEvent.keyboard('{ArrowDown}');
+  await expect(printButton).toHaveFocus();
+
+  // Press Arrow Up to focus the last item in the header again
+  await userEvent.keyboard('{ArrowUp}');
+  await expect(shapesButton).toHaveFocus();
+};
+
+VerticalHeaderKeyboardNavigationTest.parameters = {
+  test: {
+    dangerouslyIgnoreUnhandledErrors: true,
+  },
+};

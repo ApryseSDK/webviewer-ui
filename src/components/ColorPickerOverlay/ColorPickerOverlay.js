@@ -4,11 +4,11 @@ import { createPortal } from 'react-dom';
 import selectors from 'selectors';
 import DataElementWrapper from 'components/DataElementWrapper';
 import ColorPalette from 'components/ColorPalette';
-import ColorPalettePicker from 'components/ColorPalettePicker';
 import actions from 'actions';
-
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+
+import DataElement from 'constants/dataElement';
 import classNames from 'classnames';
 import getRootNode from 'helpers/getRootNode';
 
@@ -30,9 +30,10 @@ const ColorPickerOverlay = ({
   const dispatch = useDispatch();
 
   const onClickOutside = (e) => {
-    const menuButton = document.querySelector('[data-element="textColorButton"]');
-    const clickedMenuButton = menuButton?.contains(e.target);
-    if (!clickedMenuButton) {
+    const headerButton = getRootNode().querySelector(`[data-element="${DataElement.OFFICE_EDITOR_TEXT_COLOR_BUTTON}"]`);
+    const flyoutButton = getRootNode().querySelector(`[data-element="${DataElement.OFFICE_EDITOR_COLOR_PICKER}"]`);
+    const clickedButton = headerButton?.contains(e.target) || flyoutButton?.contains(e.target);
+    if (!clickedButton) {
       dispatch(actions.closeElements(['colorPickerOverlay']));
     }
   };
@@ -68,11 +69,6 @@ const ColorPickerOverlay = ({
         property='TextColor'
         onStyleChange={onStyleChange}
         useMobileMinMaxWidth
-      />
-      <ColorPalettePicker
-        color={color}
-        onStyleChange={onStyleChange}
-        enableEdit
       />
     </DataElementWrapper>,
     getRootNode().getElementById(portalElementId),

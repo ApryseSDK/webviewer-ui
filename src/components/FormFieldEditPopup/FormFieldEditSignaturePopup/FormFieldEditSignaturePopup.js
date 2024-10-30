@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
-import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
+import PropTypes from 'prop-types';
+import FieldFlags from '../FieldFlags';
 import FormFieldPopupDimensionsInput from '../FormFieldPopupDimensionsInput';
 import FormFieldEditPopupIndicator from '../FormFieldEditPopupIndicator';
 import SignatureOptionsDropdown from './SignatureOptionsDropdown';
 import HorizontalDivider from 'components/HorizontalDivider';
+import TextInput from 'components/TextInput';
 
 import '../FormFieldEditPopup.scss';
+
+const propTypes = {
+  fields: PropTypes.array,
+  flags: PropTypes.array,
+  closeFormFieldEditPopup: PropTypes.func,
+  isValid: PropTypes.bool,
+  validationMessage: PropTypes.string,
+  annotation: PropTypes.object,
+  getPageHeight: PropTypes.func,
+  getPageWidth: PropTypes.func,
+  redrawAnnotation: PropTypes.func,
+  onSignatureOptionChange: PropTypes.func,
+  getSignatureOptionHandler: PropTypes.func,
+  indicator: PropTypes.object,
+};
 
 const FormFieldEditSignaturePopup = ({
   fields,
@@ -23,7 +40,6 @@ const FormFieldEditSignaturePopup = ({
   onSignatureOptionChange,
   getSignatureOptionHandler,
   indicator,
-  onCancelEmptyFieldName,
 }) => {
   const { t } = useTranslation();
   const className = classNames({
@@ -34,10 +50,7 @@ const FormFieldEditSignaturePopup = ({
   const [width, setWidth] = useState((annotation.Width).toFixed(0));
   const [height, setHeight] = useState((annotation.Height).toFixed(0));
 
-  const [initialWidth] = useState((annotation.Width).toFixed(0));
-  const [initialHeight] = useState((annotation.Height).toFixed(0));
   const [indicatorPlaceholder, setIndicatorPlaceholder] = useState(t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${getSignatureOptionHandler(annotation)}`));
-
 
   function onWidthChange(width) {
     const validatedWidth = validateWidth(width);
@@ -71,34 +84,17 @@ const FormFieldEditSignaturePopup = ({
     return height;
   }
 
-  function onCancel() {
-    if (!isValid) {
-      const { value } = fields.find((field) => field.label.includes('fieldName'));
-      if (value.trim() === '') {
-        onCancelEmptyFieldName(annotation);
-        return;
-      }
-    }
-
-    if (width !== initialWidth || height !== initialHeight) {
-      annotation.setWidth(initialWidth);
-      annotation.setHeight(initialHeight);
-    }
-
-    redrawAnnotation(annotation);
-    closeFormFieldEditPopup();
-  }
-
   function renderTextInput(field) {
+    const hasError = field.required && !isValid;
     return (
-      <Input
-        type="text"
-        onChange={(event) => field.onChange(event.target.value)}
+      <TextInput
+        label={`${field.label}-input`}
         value={field.value}
-        fillWidth="false"
-        messageText={field.required && !isValid ? t(validationMessage) : ''}
-        message={field.required && !isValid ? 'warning' : 'default'}
-        autoFocus={field.focus}
+        onChange={field.onChange}
+        validationMessage={validationMessage}
+        hasError={hasError}
+        ariaDescribedBy={hasError ? 'FormFieldInputError' : undefined}
+        ariaLabelledBy={field.label}
       />
     );
   }
@@ -115,24 +111,15 @@ const FormFieldEditSignaturePopup = ({
       <div className="fields-container">
         {fields.map((field) => (
           <div className="field-input" key={field.label}>
-            <label>
-              {t(field.label)}{field.required ? '*' : ''}:
-            </label>
+            <span id={field.label}>
+              {t(field.label)}
+              {field.required ? '*' : ''}:
+            </span>
             {renderTextInput(field)}
           </div>
         ))}
       </div>
-      <div className="field-flags-container">
-        <span className="field-flags-title">{t('formField.formFieldPopup.flags')}</span>
-        {flags.map((flag) => (
-          <Choice
-            key={flag.label}
-            checked={flag.isChecked}
-            onChange={(event) => flag.onChange(event.target.checked)}
-            label={t(flag.label)}
-          />
-        ))}
-      </div>
+      <FieldFlags flags={flags} />
       <FormFieldPopupDimensionsInput
         width={width}
         height={height}
@@ -146,21 +133,17 @@ const FormFieldEditSignaturePopup = ({
       />
       <div className="form-buttons-container">
         <Button
-          className="cancel-form-field-button"
-          onClick={onCancel}
-          dataElement="formFieldCancel"
-          label={t('formField.formFieldPopup.cancel')}
-        />
-        <Button
           className="ok-form-field-button"
           onClick={closeFormFieldEditPopup}
           dataElement="formFieldOK"
-          label={t('action.ok')}
+          label={t('action.close')}
           disabled={!isValid}
         />
       </div>
     </div>
   );
 };
+
+FormFieldEditSignaturePopup.propTypes = propTypes;
 
 export default FormFieldEditSignaturePopup;

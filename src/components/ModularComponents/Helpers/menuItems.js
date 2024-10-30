@@ -1,7 +1,7 @@
 import React from 'react';
 import DataElements from 'constants/dataElement';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
-import ActionButton from 'components/ActionButton';
+import Button from 'components/Button';
 
 export const menuItems = {
   [PRESET_BUTTON_TYPES.UNDO]: {
@@ -105,9 +105,110 @@ export const menuItems = {
     title: 'action.enterFullscreen',
     hidden: false,
   },
+  [PRESET_BUTTON_TYPES.BOLD]: {
+    dataElement: 'boldButton',
+    presetDataElement: DataElements.BOLD_PRESET_BUTTON,
+    icon: 'icon-text-bold',
+    label: 'officeEditor.bold',
+    title: 'officeEditor.bold',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.ITALIC]: {
+    dataElement: 'italicButton',
+    presetDataElement: DataElements.ITALIC_PRESET_BUTTON,
+    icon: 'icon-text-italic',
+    label: 'officeEditor.italic',
+    title: 'officeEditor.italic',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.UNDERLINE]: {
+    dataElement: 'underlineButton',
+    presetDataElement: DataElements.UNDERLINE_PRESET_BUTTON,
+    icon: 'icon-text-underline',
+    label: 'officeEditor.underline',
+    title: 'officeEditor.underline',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.INCREASE_INDENT]: {
+    dataElement: 'increaseIndentButton',
+    presetDataElement: DataElements.INCREASE_INDENT_PRESET_BUTTON,
+    icon: 'ic-indent-increase',
+    label: 'officeEditor.increaseIndent',
+    title: 'officeEditor.increaseIndent',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.DECREASE_INDENT]: {
+    dataElement: 'decreaseIndentButton',
+    presetDataElement: DataElements.DECREASE_INDENT_PRESET_BUTTON,
+    icon: 'ic-indent-decrease',
+    label: 'officeEditor.decreaseIndent',
+    title: 'officeEditor.decreaseIndent',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.JUSTIFY_LEFT]: {
+    dataElement: 'justifyLeftButton',
+    presetDataElement: DataElements.JUSTIFY_LEFT_PRESET_BUTTON,
+    icon: 'icon-menu-left-align',
+    label: 'officeEditor.leftAlign',
+    title: 'officeEditor.leftAlign',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.JUSTIFY_CENTER]: {
+    dataElement: 'justifyCenterButton',
+    presetDataElement: DataElements.JUSTIFY_CENTER_PRESET_BUTTON,
+    icon: 'icon-menu-center-align',
+    label: 'officeEditor.centerAlign',
+    title: 'officeEditor.centerAlign',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.JUSTIFY_RIGHT]: {
+    dataElement: 'justifyRightButton',
+    presetDataElement: DataElements.JUSTIFY_RIGHT_PRESET_BUTTON,
+    icon: 'icon-menu-right-align',
+    label: 'officeEditor.rightAlign',
+    title: 'officeEditor.rightAlign',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.JUSTIFY_BOTH]: {
+    dataElement: 'justifyBothButton',
+    presetDataElement: DataElements.JUSTIFY_BOTH_PRESET_BUTTON,
+    icon: 'icon-menu-both-align',
+    label: 'officeEditor.justify',
+    title: 'officeEditor.justify',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.INSERT_IMAGE]: {
+    dataElement: PRESET_BUTTON_TYPES.INSERT_IMAGE,
+    presetDataElement: DataElements.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE,
+    icon: 'icon-tool-image-line',
+    label: 'officeEditor.image',
+    title: 'officeEditor.insertImage',
+  },
+  [PRESET_BUTTON_TYPES.PAGE_BREAK]: {
+    dataElement: PRESET_BUTTON_TYPES.PAGE_BREAK,
+    presetDataElement: DataElements.OFFICE_EDITOR_PAGE_BREAK,
+    icon: 'icon-office-editor-page-break',
+    label: 'officeEditor.pageBreak',
+    title: 'officeEditor.pageBreak',
+  },
+  [PRESET_BUTTON_TYPES.OE_COLOR_PICKER]: {
+    dataElement: DataElements.OFFICE_EDITOR_COLOR_PICKER,
+    presetDataElement: DataElements.OFFICE_EDITOR_COLOR_PICKER_PRESET_BUTTON,
+    icon: 'icon-office-editor-circle',
+    label: 'officeEditor.textColor',
+    title: 'officeEditor.textColor',
+    hidden: false,
+  },
+  [PRESET_BUTTON_TYPES.COMPARE]: {
+    dataElement: 'comparePanelToggle',
+    presetDataElement: 'comparePanelToggle',
+    title: 'action.comparePages',
+    label: 'action.comparePages',
+    icon: 'icon-header-compare',
+  },
 };
 
-export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen) => {
+export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen = undefined, isActive = false) => {
   const { dataElement, presetDataElement } = menuItems[buttonType];
   let { icon, title } = menuItems[buttonType];
 
@@ -117,13 +218,14 @@ export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen
   }
 
   return (
-    <ActionButton
+    <Button
       className={`PresetButton ${dataElement}`}
       dataElement={presetDataElement}
       img={icon}
       title={title}
       onClick={onClick}
       disabled={isDisabled}
+      isActive={isActive}
     />
   );
 };

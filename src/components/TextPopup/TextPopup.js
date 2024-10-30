@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import FocusTrap from 'components/FocusTrap';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 

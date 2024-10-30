@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import * as getRootNodeModule from '../../../src/helpers/getRootNode';
 
 import triggerEvent from 'helpers/fireEvent';
 import ResizeBar from './ResizeBar';
@@ -11,6 +12,18 @@ jest.mock('helpers/fireEvent', () => {
 });
 
 describe('ResizeBar', () => {
+  beforeEach(() => {
+    jest.spyOn(getRootNodeModule, 'getInstanceNode').mockReturnValue(window);
+    window.getBoundingClientRect = jest.fn(() => ({
+      left: 0,
+      right: 1024,
+    }));
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('Dragging the resize bar should trigger the panelResized event', () => {
     const width = 200;
     const dataElement = 'resizeBar';

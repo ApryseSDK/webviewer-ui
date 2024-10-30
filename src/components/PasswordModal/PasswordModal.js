@@ -7,12 +7,11 @@ import actions from 'actions';
 import selectors from 'selectors';
 import ModalWrapper from '../ModalWrapper';
 import { escapePressListener } from 'helpers/accessibility';
-import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 
 import './PasswordModal.scss';
 
-let checkPassword = () => {};
+let checkPassword = () => { };
 export const setCheckPasswordFunction = (fn) => {
   checkPassword = fn;
 };
@@ -26,11 +25,10 @@ export const setCancelPasswordCheckCallback = (fn) => {
 };
 
 const PasswordModal = () => {
-  const [isOpen, attempt, isMultiTab, maxAttempts] = useSelector(
+  const [isOpen, attempt, maxAttempts] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.PASSWORD_MODAL),
       selectors.getPasswordAttempts(state),
-      selectors.getIsMultiTab(state),
       selectors.getMaxPasswordAttempts(state)
     ],
     shallowEqual,
@@ -156,13 +154,6 @@ const PasswordModal = () => {
     );
   };
 
-
-  let tabsPadding = 0;
-  if (isMultiTab) {
-    // Add tabsheader padding
-    tabsPadding += getRootNode().getElementsByClassName('TabsHeader')[0]?.getBoundingClientRect().bottom;
-  }
-
   return (
     <div
       className={classNames({
@@ -172,7 +163,6 @@ const PasswordModal = () => {
         closed: !isOpen,
       })}
       data-element={DataElements.PASSWORD_MODAL}
-      style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
     >
       {renderContent()}
     </div>

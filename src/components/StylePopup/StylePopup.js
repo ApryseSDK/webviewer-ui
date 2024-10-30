@@ -13,8 +13,7 @@ import TextStylePicker from 'components/TextStylePicker';
 import LabelTextEditor from 'components/LabelTextEditor';
 import LineStyleOptions from 'components/LineStyleOptions';
 import Choice from 'components/Choice/Choice';
-
-import { circleRadius } from 'constants/slider';
+import { strokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
 import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
@@ -108,7 +107,6 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       onSliderChange,
-      isFreeText,
       isMeasure = false,
       // TODO: Actually disable these elements
       isOpacitySliderDisabled,
@@ -116,17 +114,15 @@ class StylePopup extends React.PureComponent {
       isFontSizeSliderDisabled,
       currentStyleTab,
     } = this.props;
-    const lineStart = circleRadius;
+
     const sliderProps = {};
     if (!isOpacitySliderDisabled) {
       sliderProps.Opacity = {
         property: 'Opacity',
         displayProperty: 'opacity',
-        value: Opacity,
-        getDisplayValue: (Opacity) => `${Math.round(Opacity * 100)}%`,
+        value: Opacity * 100,
+        getDisplayValue: (Opacity) => `${Math.round(Opacity)}%`,
         dataElement: DataElements.OPACITY_SLIDER,
-        getCirclePosition: (lineLength, Opacity) => Opacity * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: (circlePosition) => circlePosition,
         withInputField: true,
         inputFieldType: 'number',
         min: 0,
@@ -136,44 +132,19 @@ class StylePopup extends React.PureComponent {
       };
     }
     if (!isStrokeThicknessSliderDisabled) {
+
       sliderProps.StrokeThickness = {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
-        getDisplayValue: (strokeThickness) => {
-          const placeOfDecimal =
-            Math.floor(strokeThickness) !== strokeThickness ? strokeThickness.toString().split('.')[1].length || 0 : 0;
-          if (StrokeThickness === 0 || (StrokeThickness >= 1 && (placeOfDecimal > 2 || placeOfDecimal === 0))) {
-            return `${Math.round(strokeThickness)}pt`;
-          }
-          return `${parseFloat(strokeThickness).toFixed(2)}pt`;
-        },
+        getDisplayValue: getStrokeDisplayValue,
         dataElement: DataElements.STROKE_THICKNESS_SLIDER,
-        getCirclePosition: (lineLength, strokeThickness) => (strokeThickness / 20) * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: (circlePosition) => {
-          if (circlePosition >= 1 / 20) {
-            return Math.round(circlePosition * 20);
-          }
-          if (circlePosition >= 0.75 / 20 && circlePosition < 1 / 20) {
-            return 0.75;
-          }
-          if (circlePosition >= 0.5 / 20 && circlePosition < 0.75 / 20) {
-            return 0.5;
-          }
-          if (circlePosition >= 0.25 / 20 && circlePosition < 0.5 / 20) {
-            return 0.25;
-          }
-          if (circlePosition >= 0.08 / 20 && circlePosition < 0.25 / 20) {
-            return 0.1;
-          }
-          return isFreeText ? 0 : 0.1;
-        },
         withInputField: true,
         inputFieldType: 'number',
-        min: isFreeText ? 0 : 0.1,
-        max: 20,
+        min: 0,
+        max: 23,
         step: 1,
-        getLocalValue: (strokeThickness) => parseFloat(strokeThickness).toFixed(2),
+        steps: strokeSliderSteps,
       };
     }
     if (!isFontSizeSliderDisabled) {
@@ -183,8 +154,6 @@ class StylePopup extends React.PureComponent {
         value: FontSize,
         getDisplayValue: (FontSize) => `${Math.round(parseInt(FontSize, 10))}pt`,
         dataElement: DataElements.FONT_SIZE_SLIDER,
-        getCirclePosition: (lineLength, FontSize) => ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: (circlePosition) => `${circlePosition * 40 + 5}pt`,
         min: 5,
         max: 45,
         step: 1,

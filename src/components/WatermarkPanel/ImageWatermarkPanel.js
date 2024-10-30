@@ -27,7 +27,7 @@ const ImageWatermarkPanel = () => {
         reader.readAsDataURL(file);
         reader.onload = async () => {
           for (let page = 1; page <= pageCount; page++) {
-            const { width, height } = document?.getPageInfo(page);
+            const { width, height } = document?.getPageInfo ? document.getPageInfo(page) : {};
             const imageWatermark = new window.Core.Annotations.StampAnnotation({
               PageNumber: page,
               X: width / 2,

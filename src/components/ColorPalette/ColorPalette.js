@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Tooltip from 'components/Tooltip';
 import { withTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import { BASIC_PALETTE } from 'constants/commonColors';
@@ -17,7 +18,7 @@ class ColorPalette extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     overridePalette: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     colorMapKey: PropTypes.string
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -33,7 +34,7 @@ class ColorPalette extends React.PureComponent {
       const color = new window.Core.Annotations.Color(bg);
       onStyleChange(property, color);
     }
-  }
+  };
 
   render() {
     const {
@@ -81,35 +82,40 @@ class ColorPalette extends React.PureComponent {
         })}
         style={style}
       >
-        {palette.map((bg) => bg?.toLowerCase()).map((bg, i) => (
-          !bg
-            ? <div key={i} className="dummy-cell" />
-            : <button
-              key={i}
-              className="cell-container"
-              onClick={() => {
-                this.setColor(bg === 'transparency' ? null : bg);
-              }}
-              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
-            >
-              <div
-                className={classNames({
-                  'cell-outer': true,
-                  active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
-                })}
-              >
-                <div
-                  className={classNames({
-                    cell: true,
-                    border: true,
-                  })}
-                  style={{ backgroundColor: bg }}
+        {palette.map((bg) => bg?.toLowerCase()).map((bg, i) => {
+          const isSelected = color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency');
+          return (
+            !bg
+              ? <div key={`color-${i}`} className="dummy-cell" />
+              : <Tooltip content={`${t('option.colorPalette.colorLabel')} ${bg.toUpperCase()}`} key={`color-${i}`}>
+                <button
+                  className="cell-container"
+                  onClick={() => {
+                    this.setColor(bg === 'transparency' ? null : bg);
+                  }}
+                  aria-current={isSelected}
+                  aria-label={`${t('option.colorPalette.colorLabel')} ${bg.toUpperCase()}`}
                 >
-                  {bg === 'transparency' && transparentIcon}
-                </div>
-              </div>
-            </button>
-        ))}
+                  <div
+                    className={classNames({
+                      'cell-outer': true,
+                      active: isSelected,
+                    })}
+                  >
+                    <div
+                      className={classNames({
+                        cell: true,
+                        border: true,
+                      })}
+                      style={{ backgroundColor: bg }}
+                    >
+                      {bg === 'transparency' && transparentIcon}
+                    </div>
+                  </div>
+                </button>
+              </Tooltip>
+          );
+        })}
       </div>
     );
   }

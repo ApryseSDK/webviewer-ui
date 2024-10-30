@@ -390,6 +390,30 @@ export default {
   ComboBoxFormFieldCreateTool4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  CheckBoxFormFieldCreateTool: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  CheckBoxFormFieldCreateTool2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  CheckBoxFormFieldCreateTool3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  CheckBoxFormFieldCreateTool4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  RadioButtonFormFieldCreateTool: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  RadioButtonFormFieldCreateTool2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  RadioButtonFormFieldCreateTool3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  RadioButtonFormFieldCreateTool4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateRedaction: {
     StrokeColor: { R: 255, G: 0, B: 0, A: 1 }
   },

@@ -1,14 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
-import Icon from 'components/Icon';
 import { useTranslation } from 'react-i18next';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
-import Dropdown from 'components/Dropdown';
 import actions from 'actions';
 import { useDispatch } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
 import './SnippingToolPopup.scss';
+import Button from 'components/Button';
+import MobilePopupWrapper from '../MobilePopupWrapper';
+import SnippingSection from './SnippingSection';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const SnippingToolPopup = ({
   snippingMode,
@@ -22,28 +23,18 @@ const SnippingToolPopup = ({
 }) => {
   const { t } = useTranslation();
 
-  const snippingNames = {
-    'CLIPBOARD': t('snippingPopUp.clipboard'),
-    'DOWNLOAD': t('snippingPopUp.download'),
-    'CROP_AND_REMOVE': t('snippingPopUp.cropAndRemove'),
-  };
-
   const className = classNames({
     Popup: true,
     SnippingToolPopup: true,
     mobile: isMobile,
   });
 
-  const handleButtonPressed = (button) => {
-    switch (button) {
-      case 'apply':
-        shouldShowApplySnippingWarning && snippingMode === 'CROP_AND_REMOVE' ? openSnippingConfirmationWarning() : applySnipping();
-        break;
-      case 'cancel':
-        isSnipping ? openSnippingCancellationWarning() : closeSnippingPopup();
-        break;
-    }
-  };
+  const applyPressed = useFocusHandler((e) => {
+    shouldShowApplySnippingWarning && snippingMode === 'CROP_AND_REMOVE' ? openSnippingConfirmationWarning() : applySnipping(e);
+  });
+  const cancelPressed = useFocusHandler((e) => {
+    isSnipping ? openSnippingCancellationWarning() : closeSnippingPopup(e);
+  });
 
   const dispatch = useDispatch();
 
@@ -53,8 +44,8 @@ const SnippingToolPopup = ({
     const confirmationWarning = {
       message,
       title,
-      onConfirm: () => {
-        applySnipping();
+      onConfirm: (e) => {
+        applySnipping(e);
       },
     };
     dispatch(actions.showWarningMessage(confirmationWarning));
@@ -66,88 +57,50 @@ const SnippingToolPopup = ({
     const cancellationWarning = {
       message,
       title,
-      onConfirm: () => {
-        closeSnippingPopup();
+      onConfirm: (e) => {
+        closeSnippingPopup(e);
       },
     };
     dispatch(actions.showWarningMessage(cancellationWarning));
   };
 
-  if (isMobile && !isInDesktopOnlyMode) {
-    return (
-      <div className={className} data-element={DataElements.SNIPPING_TOOL_POPUP}>
-        <div className="snipping-mobile-section">
-          <div className="snipping-mobile-container">
-            <div className="custom-select snipping-selector">
-              <Dropdown
-                items={Object.values(snippingNames)}
-                onClickItem={(e) => onSnippingModeChange(Object.keys(snippingNames).find((key) => snippingNames[key] === e))}
-                currentSelectionKey={snippingNames[snippingMode]}
-              />
-            </div>
-            <button
-              className="save-button"
-              data-element="snippingApplyButton"
-              onClick={() => handleButtonPressed('apply')}
-              disabled={!isSnipping}
-            >
-              {t('action.apply')}
-            </button>
-          </div>
-          <button
+  const popupContent = (
+    <>
+      <SnippingSection
+        isMobile={isMobile}
+        isInDesktopOnlyMode={isInDesktopOnlyMode}
+        snippingMode={snippingMode}
+        onSnippingModeChange={onSnippingModeChange} />
+      <div className="snipping-mobile-section">
+        <div className="buttons">
+          <Button
             className="cancel-button"
-            data-element="snippingCancelButton"
-            onClick={() => handleButtonPressed('cancel')}
-          >
-            <Icon glyph="icon-close" />
-          </button>
+            dataElement="snippingCancelButton"
+            onClick={cancelPressed}
+            label={t('action.cancel')} />
+          <Button
+            className="save-button"
+            dataElement="snippingApplyButton"
+            onClick={applyPressed}
+            disabled={!isSnipping}
+            label={t('action.apply')}
+          />
         </div>
       </div>
+    </>
+  );
+
+  if (isMobile && !isInDesktopOnlyMode) {
+    return (
+      <MobilePopupWrapper>
+        { popupContent }
+      </MobilePopupWrapper>
     );
   }
+
   return (
     <div className={className} data-element={DataElements.SNIPPING_TOOL_POPUP}>
-      <div className="snipping-section">
-        <span className="menu-title">{t('snippingPopUp.title')}</span>
-        <Choice
-          label={t('snippingPopUp.clipboard')}
-          name="CLIPBOARD"
-          data-element="copyToClipboardRadioButton"
-          onChange={() => onSnippingModeChange('CLIPBOARD')}
-          checked={snippingMode === 'CLIPBOARD'}
-          radio
-        />
-        <Choice
-          label={t('snippingPopUp.download')}
-          name="DOWNLOAD"
-          data-element="downloadSnippingRadioButton"
-          onChange={() => onSnippingModeChange('DOWNLOAD')}
-          checked={snippingMode === 'DOWNLOAD'}
-          radio
-        />
-        <Choice
-          label={t('snippingPopUp.cropAndRemove')}
-          name="CROP_AND_REMOVE"
-          data-element="cropAndRemoveRadioButton"
-          onChange={() => onSnippingModeChange('CROP_AND_REMOVE')}
-          checked={snippingMode === 'CROP_AND_REMOVE'}
-          radio
-        />
-      </div>
-      <div className="divider" />
-      <div className="buttons">
-        <button className="cancel-button" data-element="snippingCancelButton" onClick={() => handleButtonPressed('cancel')}>
-          {t('action.cancel')}
-        </button>
-        <button
-          className="save-button"
-          data-element="snippingApplyButton"
-          onClick={() => handleButtonPressed('apply')}
-          disabled={!isSnipping}
-        >
-          {t('action.apply')}
-        </button>
-      </div>
+      { popupContent}
     </div>
   );
 };

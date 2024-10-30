@@ -13,8 +13,9 @@ const InsertPageModalContainer = () => {
 
 
   if (!isDisabled && isOpen) {
-    const loadedDocumentPageCount = core.getTotalPages();
-    return (<InsertPageModal loadedDocumentPageCount={loadedDocumentPageCount} />);
+    const document = core.getDocumentViewer().getDocument();
+    const loadedDocumentPageCount = document ? core.getTotalPages() : null;
+    return <InsertPageModal loadedDocumentPageCount={loadedDocumentPageCount} />;
   }
   return null;
 };

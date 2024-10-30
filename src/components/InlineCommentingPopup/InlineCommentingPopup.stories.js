@@ -23,6 +23,8 @@ export const initialState = {
     customPanels: [],
     unreadAnnotationIdSet: new Set(),
     colorMap: [{ colorMapKey: () => BASIC_PALETTE[0] }],
+    flyoutMap: {},
+    focusedElementsStack: [],
   },
   officeEditor: {},
   featureFlags: {
@@ -44,7 +46,6 @@ export const context = {
 
 const mockAnnotation = {
   Author: 'Mikel Landa',
-  isFormFieldPlaceholder: () => false,
   getReplies: () => [],
   getStatus: () => '',
   isReply: () => false,

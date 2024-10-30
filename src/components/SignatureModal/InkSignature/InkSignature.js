@@ -219,7 +219,12 @@ const InkSignature = ({
                   <div className="signature-prompt">
                     {t('option.signatureModal.drawSignature')}
                   </div>
-                  <button className="footer-signature-clear" onClick={clearFullSignatureCanvas} disabled={!fullSignatureDrawn}>
+                  <button
+                    className="footer-signature-clear"
+                    onClick={clearFullSignatureCanvas}
+                    disabled={!fullSignatureDrawn}
+                    aria-label={t('action.clearSignature')}
+                  >
                     {t('action.clear')}
                   </button>
                 </div>
@@ -236,7 +241,12 @@ const InkSignature = ({
                   <div className="signature-prompt">
                     {t('option.signatureModal.drawInitial')}
                   </div>
-                  <button className="footer-signature-clear" onClick={clearInitialsCanvas} disabled={!initialsDrawn}>
+                  <button
+                    className="footer-signature-clear"
+                    onClick={clearInitialsCanvas}
+                    disabled={!initialsDrawn}
+                    aria-label={t('action.clearInitial')}
+                  >
                     {t('action.clear')}
                   </button>
                 </div>
@@ -245,6 +255,7 @@ const InkSignature = ({
             <div className="colorpalette-clear-container">
               <div className="signature-style-options">
                 <Dropdown
+                  id="ink-signature-font-dropdown"
                   disabled={true}
                   placeholder={'Text Styles'}
                 />

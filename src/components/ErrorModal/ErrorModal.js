@@ -7,19 +7,17 @@ import selectors from 'selectors';
 import Button from 'components/Button';
 import { escapePressListener } from 'helpers/accessibility';
 import ModalWrapper from '../ModalWrapper';
-import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 
 import './ErrorModal.scss';
 
 const ErrorModal = () => {
-  const [message, title, isDisabled, isOpen, isMultiTab] = useSelector(
+  const [message, title, isDisabled, isOpen] = useSelector(
     (state) => [
       selectors.getErrorMessage(state),
       selectors.getErrorTitle(state),
       selectors.isElementDisabled(state, DataElements.ERROR_MODAL),
       selectors.isElementOpen(state, DataElements.ERROR_MODAL),
-      selectors.getIsMultiTab(state),
     ],
     shallowEqual
   );
@@ -50,12 +48,6 @@ const ErrorModal = () => {
 
   const shouldTranslate = message.startsWith('message.');
 
-  let tabsPadding = 0;
-  if (isMultiTab) {
-    // Add tabsheader padding
-    tabsPadding += getRootNode().getElementsByClassName('TabsHeader')[0]?.getBoundingClientRect().bottom;
-  }
-
   const closeErrorModal = () => {
     dispatch(actions.closeElement(DataElements.ERROR_MODAL));
     if (isTrialError(message)) {
@@ -77,14 +69,13 @@ const ErrorModal = () => {
         open: isOpen,
         closed: !isOpen,
       })}
-      style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
       data-element={DataElements.ERROR_MODAL}
     >
       <ModalWrapper isOpen={isOpen} title={title || 'message.error'}
         closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={closeErrorModal}
       >
-        <div className="modal-content error-modal-content" aria-hidden="true">
+        <div className="modal-content error-modal-content">
           <p>{shouldTranslate ? t(message) : message}</p>
         </div>
         <div className="modal-footer footer">

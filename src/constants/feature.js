@@ -75,7 +75,6 @@ export default {
   ChangeView: 'ChangeView',
   ContentEdit: 'ContentEdit',
   MultiViewerMode: 'MultiViewerMode',
-  SideBySideView: 'SideBySideView',
   Initials: 'Initials',
   SavedSignaturesTab: 'SavedSignaturesTab',
   WatermarkPanel: 'WatermarkPanel',

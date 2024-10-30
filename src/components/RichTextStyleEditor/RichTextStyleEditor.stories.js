@@ -56,34 +56,7 @@ const state = {
   }
 };
 
-const noop = () => {};
-
-const store = configureStore({
-  reducer: () => state
-});
-
-const BasicComponent = (props) => {
-  return (
-    <Provider store={store}>
-      <Panel dataElement="panel" location="left">
-        <div className="StylePicker">
-          <RichTextStyleEditor {...props} />
-        </div>
-      </Panel>
-    </Provider>
-  );
-};
-
-export const Basic = BasicComponent.bind({
-  annotation: '',
-  editor: {},
-  style: {},
-  isFreeTextAutoSize: false,
-  onFreeTextSizeToggle: () => {},
-  onPropertyChange: () => {},
-  onRichTextStyleChange: () => {},
-});
-Basic.args = {
+const baseProps = {
   currentStyleTab: 'StrokeColor',
   isInFormBuilderAndNotFreeText: true,
   style: {
@@ -106,7 +79,6 @@ Basic.args = {
   properties: {
     'StrokeStyle': 'solid',
   },
-  isRedaction: false,
   fonts: ['Helvetica', 'Times New Roman', 'Arimo'],
   isSnapModeEnabled: false,
   onSliderChange: noop,
@@ -116,4 +88,58 @@ Basic.args = {
   onPropertyChange: noop,
   onRichTextStyleChange: noop,
   onLineStyleChange: noop,
+};
+
+const baseObject = {
+  annotation: '',
+  editor: {},
+  style: {},
+  isFreeTextAutoSize: false,
+  onFreeTextSizeToggle: () => {},
+  onPropertyChange: () => {},
+  onRichTextStyleChange: () => {},
+};
+
+const noop = () => {};
+
+const store = configureStore({
+  reducer: () => state
+});
+
+const BasicComponent = (props) => {
+  return (
+    <Provider store={store}>
+      <Panel dataElement="panel" location="left">
+        <div className="StylePicker">
+          <RichTextStyleEditor {...props} />
+        </div>
+      </Panel>
+    </Provider>
+  );
+};
+
+export const Basic = BasicComponent.bind({
+  ...baseObject
+});
+Basic.args = {
+  ...baseProps,
+  isRedaction: false,
+};
+
+export const WidgetLayout = BasicComponent.bind({
+  ...baseObject
+});
+WidgetLayout.args = {
+  ...baseProps,
+  isWidget: true,
+  isRedaction: false,
+};
+
+export const RedactionLayout = BasicComponent.bind({
+  ...baseObject
+});
+RedactionLayout.args = {
+  ...baseProps,
+  isRedaction: true,
+  isContentEditing: false,
 };

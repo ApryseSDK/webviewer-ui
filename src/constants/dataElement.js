@@ -24,13 +24,16 @@ const DataElements = {
   STYLE_POPUP_LABEL_TEXT_CONTAINER: 'stylePopupLabelTextContainer',
   REDACTION_PANEL: 'redactionPanel',
   REDACTION_PANEL_TOGGLE: 'redactionPanelToggle',
+  REDACT_ALL_MARKED_BUTTON: 'redactAllMarkedButton',
   WV3D_PROPERTIES_PANEL: 'wv3dPropertiesPanel',
   WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
   LEFT_PANEL: 'leftPanel',
-  OUTLINE_PANEL: 'outlinesPanel',
+  LEFT_PANEL_BUTTON: 'leftPanelButton',
   STROKE_STYLE_CONTAINER: 'strokeStyleContainer',
   FILL_COLOR_CONTAINER: 'fillColorContainer',
   OPACITY_CONTAINER: 'opacityContainer',
+  OUTLINE_PANEL: 'outlinesPanel',
+  OUTLINE_PANEL_BUTTON: 'outlinesPanelButton',
   OUTLINE_MULTI_SELECT: 'outlineMultiSelect',
   OUTLINE_CONTROLS: 'outlineControls',
   OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
@@ -45,7 +48,9 @@ const DataElements = {
   BOOKMARK_ADD_NEW_BUTTON_CONTAINER: 'addNewBookmarkButtonContainer',
   BOOKMARK_ADD_NEW_BUTTON: 'addNewBookmarkButton',
   NOTES_PANEL: 'notesPanel',
+  INDEX_PANEL: 'indexPanel',
   FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
+  FORM_FIELD_PANEL: 'formFieldPanel',
   WATERMARK_PANEL: 'watermarkPanel',
   WATERMARK_PANEL_TOGGLE: 'watermarkPanelToggle',
   WATERMARK_PANEL_IMAGE_TAB: 'watermarkPanelImageTab',
@@ -129,7 +134,15 @@ const DataElements = {
   LINK_URI: 'linkUri',
   EMBEDDED_JS_POPUP: 'embeddedJsPopup',
   MAIN_MENU: 'MainMenuFlyout',
-  VIEWER_CONTROLS_FLYOUT: 'viewControlsFlyout',
+  VIEW_CONTROLS_FLYOUT: 'viewControlsFlyout',
+  PAGE_CONTROLS_FLYOUT: 'pageControlsFlyout',
+  NOTE_STATE_FLYOUT: 'noteStateFlyout',
+  NOTE_POPUP_FLYOUT: 'notePopupFlyout',
+  BOOKMARK_OUTLINE_FLYOUT: 'bookmarkOutlineFlyout',
+  BOOKMARK_FLYOUT: 'bookmarkFlyout',
+  LINE_SPACING_FLYOUT: 'lineSpacingFlyout',
+  PAGE_MANIPULATION: 'pageManipulationFlyout',
+  PAGE_MANIPULATION_FLYOUT_MULTI_SELECT: 'pageManipulationFlyoutMultiSelect',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -178,6 +191,7 @@ const DataElements = {
 
   // Signature Modal
   SAVED_SIGNATURES_TAB: 'signatureModalSavedSignaturesTab',
+  SIGNATURE_ADD_BUTTON: 'signatureAddButton',
 
   // Notes panel - multi select
   NOTE_MULTI_SELECT_MODE_BUTTON: 'multiSelectModeButton',
@@ -201,6 +215,7 @@ const DataElements = {
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE: 'officeEditorToolsHeaderInsertImage',
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE: 'officeEditorToolsHeaderInsertTable',
+  OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE_BUTTON: 'officeEditorToolsHeaderInsertTableButton',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
   OFFICE_EDITOR_CUT: 'officeEditorCut',
   OFFICE_EDITOR_COPY: 'officeEditorCopy',
@@ -215,6 +230,9 @@ const DataElements = {
   OFFICE_EDITOR_DELETE_COLUMN: 'officeEditorDeleteColumn',
   OFFICE_EDITOR_DELETE_TABLE: 'officeEditorDeleteTable',
   OFFICE_EDITOR_PAGE_BREAK: 'officeEditorPageBreak',
+  OFFICE_EDITOR_COLOR_PICKER: 'officeEditorColorPicker',
+  OFFICE_EDITOR_TEXT_COLOR_BUTTON: 'textColorButton',
+  OFFICE_EDITOR_REVIEW_PANEL: 'officeEditorReviewPanel',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
@@ -251,8 +269,8 @@ const DataElements = {
   SETTINGS_BUTTON: 'settingsButton',
 
   // Preset Buttons
-  UNDO_PRESET_BUTTON: 'undoPresetButton',
-  REDO_PRESET_BUTTON: 'redoPresetButton',
+  UNDO_PRESET_BUTTON: 'undoButton',
+  REDO_PRESET_BUTTON: 'redoButton',
   NEW_DOCUMENT_PRESET_BUTTON: 'newDocumentPresetButton',
   FILE_PICKER_PRESET_BUTTON: 'filePickerPresetButton',
   DOWNLOAD_PRESET_BUTTON: 'downloadPresetButton',
@@ -262,9 +280,24 @@ const DataElements = {
   CREATE_PORTFOLIO_PRESET_BUTTON: 'createPortfolioPresetButton',
   SETTINGS_PRESET_BUTTON: 'settingsPresetButton',
   FORM_FIELD_EDIT_PRESET_BUTTON: 'formFieldEditPresetButton',
+  CONTENT_EDIT_PRESET_BUTTON: 'contentEditPresetButton',
+  BOLD_PRESET_BUTTON: 'boldPresetButton',
+  ITALIC_PRESET_BUTTON: 'italicPresetButton',
+  UNDERLINE_PRESET_BUTTON: 'underlinePresetButton',
+  INCREASE_INDENT_PRESET_BUTTON: 'increaseIndentPresetButton',
+  DECREASE_INDENT_PRESET_BUTTON: 'decreaseIndentPresetButton',
+  JUSTIFY_LEFT_PRESET_BUTTON: 'justifyLeftPresetButton',
+  JUSTIFY_CENTER_PRESET_BUTTON: 'justifyCenterPresetButton',
+  JUSTIFY_RIGHT_PRESET_BUTTON: 'justifyRightPresetButton',
+  JUSTIFY_BOTH_PRESET_BUTTON: 'justifyBothPresetButton',
+  OFFICE_EDITOR_COLOR_PICKER_PRESET_BUTTON: 'officeEditorColorPickerPresetButton',
 
   // Rubber Stamp Panel
+  CREATE_RUBBER_STAMP_BUTTON_WRAP: 'createRubberStampButtonWrap',
   CREATE_RUBBER_STAMP_BUTTON: 'createRubberStampButton',
+
+  PREVIOUS_PAGE_BUTTON: 'previousPageButton',
+  NEXT_PAGE_BUTTON: 'nextPageButton',
 };
 
 DataElements.TOOLBAR_GROUPS = [

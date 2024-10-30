@@ -33,6 +33,9 @@ $popup-icon-width: 18px;
 
     &:hover {
       background: var(--popup-button-hover);
+      &:disabled {
+        background: none;
+      }
     }
 
     .Icon {

@@ -14,7 +14,6 @@ function ZoomControls(props) {
     isZoomFlyoutMenuActive,
     dataElement,
     isActive,
-    onClick,
     setFlyoutTriggerRef,
     elementRef,
     size,
@@ -64,14 +63,13 @@ function ZoomControls(props) {
     })} data-element={dataElement} ref={elementRef}>
       {size === 0 && <>
         <div className="ToggleZoomMenu">
-          <div tabIndex={0}
+          <div tabIndex={-1}
             className={classNames({
               ZoomContainer: true,
               active: isActive,
             })}
           >
-            <div className="ZoomText"
-              onClick={() => onClick}>
+            <div className="ZoomText">
               <input
                 type="text"
                 className="textarea"
@@ -135,7 +133,6 @@ ZoomControls.propTypes = {
   isZoomFlyoutMenuActive: PropTypes.bool.isRequired,
   dataElement: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
-  onClick: PropTypes.func,
   setFlyoutTriggerRef: PropTypes.func,
   elementRef: PropTypes.object,
   size: PropTypes.number,

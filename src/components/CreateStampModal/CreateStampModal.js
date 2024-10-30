@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -9,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import CustomStampForums from './CustomStampForums';
 import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
+import ModalWrapper from 'components/ModalWrapper';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './CreateStampModal.scss';
 
@@ -35,9 +36,9 @@ const CustomStampModal = () => {
     }
   }, [isOpen]);
 
-  const closeModal = () => {
+  const closeModal = useFocusOnClose(() => {
     dispatch(actions.closeElement(DataElements.CUSTOM_STAMP_MODAL));
-  };
+  });
 
   const openColorPicker = () => {
     dispatch(actions.openElement('ColorPickerModal'));
@@ -84,23 +85,27 @@ const CustomStampModal = () => {
     dispatch(actions.setSelectedStampIndex(standardStampCount + customStampCount - 1));
   };
 
+  const onCreateCustomStampClick = useFocusOnClose(() => {
+    if (emptyInput) {
+      return;
+    }
+    createCustomStamp();
+  });
+
   return (
     isOpen ?
       <div
         className={modalClass}
         data-element={DataElements.CUSTOM_STAMP_MODAL}
       >
-        <FocusTrap locked={isOpen}>
+        <ModalWrapper
+          title={t('option.customStampModal.modalName')}
+          closeHandler={closeModal}
+          onCloseClick={closeModal}
+          isOpen={isOpen}
+          swipeToClose
+        >
           <div className="container" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="header">
-              <p>{t('option.customStampModal.modalName')}</p>
-              <Button
-                dataElement="customStampModalCloseButton"
-                title="action.close"
-                img="ic_close_black_24px"
-                onClick={closeModal}
-              />
-            </div>
             <CustomStampForums
               openDeleteModal={openDeleteModal}
               getCustomColorAndRemove={getCustomColorAndRemove}
@@ -116,26 +121,16 @@ const CustomStampModal = () => {
               userName={userName}
             />
             <div className="footer">
-              <div
-                className={
-                  emptyInput
-                    ? 'stamp-create stamp-create-disabled'
-                    : 'stamp-create'
-                }
-                onClick={
-                  () => {
-                    if (emptyInput) {
-                      return;
-                    }
-                    createCustomStamp();
-                  }
-                }
-              >
-                {t('action.create')}
-              </div>
+              <Button
+                label={t('action.create')}
+                title={t('action.create')}
+                onClick={onCreateCustomStampClick}
+                disabled={emptyInput}
+                className="stamp-create"
+              />
             </div>
           </div>
-        </FocusTrap>
+        </ModalWrapper>
       </div>
       :
       null

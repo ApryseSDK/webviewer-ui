@@ -12,7 +12,7 @@ $padding-inner: 16px;
     display: flex;
     position: relative;
     box-sizing: border-box;
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray-6);
     border-radius: 4px;
     height: 28px;
     align-items: center;
@@ -20,6 +20,15 @@ $padding-inner: 16px;
     color: var(--text-color);
     padding: 6px 2px 6px 6px;
     background: var(--gray-0);
+
+    &:focus-within {
+      border: 1px solid var(--blue-5);
+    }
+
+    .Icon {
+      width: 16px;
+      height: 16px;
+    }
 
     input {
       width: 100%;
@@ -37,7 +46,7 @@ $padding-inner: 16px;
       font-size: var(--font-size-medium);
       font-family: var(--font-family);
       font-weight: var(--font-weight-bold);
-      color: var(--gray-8);
+      color: var(--gray-9);
       span {
         color: var(--gray-7)
       }
@@ -57,6 +66,13 @@ $padding-inner: 16px;
         font-family: var(--font-family);
         color: var(--gray-7);
       }
+    }
+
+    .highlightSwitch {
+      font-size: var(--font-size-medium);
+      font-weight: normal;
+      padding-top: 16px;
+      padding-left: $padding-inner;
     }
   }
 }

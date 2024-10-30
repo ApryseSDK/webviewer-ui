@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
 import DataElements from 'constants/dataElement';
 import Choice from 'components/Choice';
+import TextButton from '../TextButton';
 
 import core from 'core';
 import actions from 'actions';
@@ -103,17 +104,16 @@ const BookmarksPanel = ({ panelSelector }) => {
           {t('component.bookmarksPanel')}
         </div>
         {!isMultiSelectionMode &&
-          <Button
-            className="bookmark-outline-control-button"
+          <TextButton
             dataElement={DataElements.BOOKMARK_MULTI_SELECT}
             label={t('action.edit')}
             disabled={isAddingNewBookmark || pageIndexes.length === 0}
             onClick={() => setMultiSelectionMode(true)}
+            ariaLabel={`${t('action.edit')} ${t('component.bookmarksPanel')}`}
           />
         }
         {isMultiSelectionMode &&
-          <Button
-            className="bookmark-outline-control-button"
+          <TextButton
             dataElement={DataElements.BOOKMARK_MULTI_SELECT}
             label={t('option.bookmarkOutlineControls.done')}
             disabled={isAddingNewBookmark}
@@ -121,6 +121,7 @@ const BookmarksPanel = ({ panelSelector }) => {
               setMultiSelectionMode(false);
               setSelectingBookmarks([]);
             }}
+            ariaLabel={`${t('option.bookmarkOutlineControls.done')} ${t('action.edit')}`}
           />
         }
       </div>
@@ -195,22 +196,24 @@ const BookmarksPanel = ({ panelSelector }) => {
               img="icon-menu-add"
               disabled={selectingBookmarks.length > 0 || !!bookmarks[currentPageIndex] || isAddingNewBookmark}
               onClick={() => setAddingNewBookmark(true)}
+              ariaLabel={`${t('action.add')} ${t('component.bookmarkPanel')}`}
             />
             <Button
               className="multi-selection-button"
               img="icon-delete-line"
               disabled={selectingBookmarks.length === 0}
               onClick={() => onRemoveBookmarks(selectingBookmarks)}
+              ariaLabel={`${t('action.delete')} ${t('component.bookmarkPanel')}`}
             />
           </>
           :
-          <Button
-            className="bookmark-outline-control-button add-new-button"
+          <TextButton
             img="icon-menu-add"
             dataElement={DataElements.BOOKMARK_ADD_NEW_BUTTON}
             label={`${t('action.add')} ${t('component.bookmarkPanel')}`}
             disabled={isAddingNewBookmark || !!bookmarks[currentPageIndex]}
             onClick={() => setAddingNewBookmark(true)}
+            ariaLabel={`${t('action.add')} ${t('component.bookmarkPanel')}`}
           />
         }
       </DataElementWrapper>

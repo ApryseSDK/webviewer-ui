@@ -35,6 +35,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
       <div className="LayoutTitle">{t('option.lineStyleOptions.title')}</div>
       <div className="StyleContainer">
         <Dropdown
+          id="startLineStyleDropdown"
           dataElement="startLineStyleDropdown"
           images={defaultStartLineStyles}
           width={lineEndingDropdownWidth}
@@ -43,6 +44,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
         />
 
         <Dropdown
+          id="middleLineStyleDropdown"
           dataElement="middleLineStyleDropdown"
           images={middleLineStyles}
           width={lineEndingDropdownWidth}
@@ -51,6 +53,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
         />
 
         <Dropdown
+          id="endLineStyleDropdown"
           dataElement="endLineStyleDropdown"
           images={defaultEndLineStyles}
           width={lineEndingDropdownWidth}

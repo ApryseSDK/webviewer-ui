@@ -1,14 +1,23 @@
+@import '../../constants/styles';
+
 .PortfolioPanel {
   .bookmark-outline-single-container {
-    margin-top: 6px;
-    margin-bottom: 6px;
-
     .bookmark-outline-label-row {
       align-items: center;
+
+      &.editing {
+        background-color: var(--faded-component-background);
+        padding: var(--padding-medium) 20px;
+    
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
+        }
+      }
     }
 
-    .bookmark-outline-text {
-      flex-basis: calc(100% - 38px); // icon + mr + more-button width + ml = 38px
+    .portfolio-input-label {
+      font-weight: 600;
+      padding-bottom: var(--padding-small);
     }
 
     .portfolio-input {
@@ -17,15 +26,15 @@
       .ui__input {
         border-color: var(--border);
 
-        &.ui__input--message-error {
+        &.ui__input--message-warning {
           border-color: var(--error-border-color);
 
           &.ui__input--focused {
             box-shadow: none;
           }
 
-          .ui__input__icon {
-            display: none;
+          .ui__input__icon svg{
+            fill: var(--error-border-color);
           }
         }
 
@@ -51,15 +60,6 @@
         color: var(--error-text-color);
         margin-top: var(--padding-small);
         font-size: inherit;
-      }
-    }
-
-    .portfolio-item-icon {
-      margin-right: 5px;
-
-      .Icon {
-        width: 15px;
-        height: 15px;
       }
     }
   }

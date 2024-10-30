@@ -54,6 +54,10 @@
           border-color: var(--blue-6);
           color: var(--blue-6);
         }
+
+        &:focus-visible {
+          outline: var(--focus-visible-outline);
+        }
       }
 
       .Icon {

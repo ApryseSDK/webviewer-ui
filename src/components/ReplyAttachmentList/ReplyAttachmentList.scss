@@ -4,12 +4,10 @@
   cursor: default;
 
   .reply-attachment {
-    display: flex;
-    flex-direction: column;
     background-color: var(--gray-1);
     border-radius: 4px;
     cursor: pointer;
-    overflow: hidden;
+    pointer-events: auto;
 
     &:not(:last-child) {
       margin-bottom: 8px;

@@ -16,6 +16,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import FocusStackManager from 'helpers/focusStackManager';
 
 export const Shortcuts = {
   ROTATE_CLOCKWISE: 'rotateClockwise',
@@ -32,6 +33,7 @@ export const Shortcuts = {
   ZOOM_OUT: 'zoomOut',
   NUMPAD_ZOOM_IN: 'numpadZoomIn',
   NUMPAD_ZOOM_OUT: 'numpadZoomOut',
+  SET_HEADER_FOCUS: 'setHeaderFocus',
   FIT_SCREEN_WIDTH: 'fitScreenWidth',
   PRINT: 'print',
   BOOKMARK: 'bookmark',
@@ -60,6 +62,7 @@ export const Shortcuts = {
   UNDERLINE: 'underline',
   HOME: 'home',
   END: 'end',
+  CLOSE: 'close',
 };
 
 // prettier-ignore
@@ -75,6 +78,7 @@ const keyMap = {
   [Shortcuts.ZOOM_OUT]: 'Control+-',
   [Shortcuts.NUMPAD_ZOOM_IN]: 'Control+Num_Add',
   [Shortcuts.NUMPAD_ZOOM_OUT]: 'Control+Num_Subract',
+  [Shortcuts.SET_HEADER_FOCUS]: 'Control+Alt+Shift+M',
   [Shortcuts.SELECT]: 'Escape',
   [Shortcuts.PAN]: 'P',
   [Shortcuts.ARROW]: 'A',
@@ -99,6 +103,7 @@ const keyMap = {
   'richText.strikeout': 'Control+K',
   [Shortcuts.HOME]: 'Home',
   [Shortcuts.END]: 'End',
+  [Shortcuts.CLOSE]: 'X',
 };
 
 export function shortcutAria(shortcut) {
@@ -131,6 +136,8 @@ const NOOP = () => { };
  * @property {string} COMMAND_Z Undo an annotation change
  * @property {string} CTRL_Y Redo an annotation change
  * @property {string} COMMAND_SHIFT_Z Redo an annotation change
+ * @property {string} CTRL_ALT_SHIFT_M Sets focus to the first header element
+ * @property {string} COMMAND_ALT_SHIFT_M Sets focus to the first header element
  * @property {string} CTRL_O Open the file picker
  * @property {string} COMMAND_O Open the file picker
  * @property {string} CTRL_F Open the search overlay
@@ -168,6 +175,7 @@ const NOOP = () => { };
  * @property {string} H Select the AnnotationCreateTextHighlight tool
  * @property {string} K Select the AnnotationCreateTextStrikeout tool
  * @property {string} U Select the AnnotationCreateTextUnderline tool
+ * @property {string} X Close the current tooltip
  */
 export const Keys = {
   CTRL_SHIFT_EQUAL: 'ctrl+shift+=',
@@ -178,6 +186,8 @@ export const Keys = {
   COMMAND_SHIFT_NUM_ADD: 'command+shift+num_add',
   CTRL_SHIFT_NUM_SUBTRACT: 'ctrl+shift+num_subtract',
   COMMAND_SHIFT_NUM_SUBTRACT: 'command+shift+num_subtract',
+  CTRL_ALT_SHIFT_M: 'ctrl+alt+shift+m',
+  COMMAND_ALT_SHIFT_M: 'command+alt+shift+m',
   CTRL_C: 'ctrl+c',
   COMMAND_C: 'command+c',
   CTRL_V: 'ctrl+v',
@@ -230,6 +240,7 @@ export const Keys = {
   H: 'h',
   K: 'k',
   U: 'u',
+  X: 'x',
 };
 
 export function concatKeys(...keys) {
@@ -256,6 +267,7 @@ export const ShortcutKeys = {
   [Shortcuts.ZOOM_OUT]: concatKeys(Keys.CTRL_MINUS, Keys.COMMAND_MINUS),
   [Shortcuts.NUMPAD_ZOOM_IN]: concatKeys(Keys.CTRL_NUM_ADD, Keys.COMMAND_NUM_ADD),
   [Shortcuts.NUMPAD_ZOOM_OUT]: concatKeys(Keys.CTRL_NUM_SUBTRACT, Keys.COMMAND_NUM_SUBTRACT),
+  [Shortcuts.SET_HEADER_FOCUS]: concatKeys(Keys.CTRL_ALT_SHIFT_M, Keys.COMMAND_ALT_SHIFT_M),
   [Shortcuts.FIT_SCREEN_WIDTH]: concatKeys(Keys.CTRL_0, Keys.COMMAND_0),
   [Shortcuts.PRINT]: concatKeys(Keys.CTRL_P, Keys.COMMAND_P),
   [Shortcuts.BOOKMARK]: concatKeys(Keys.CTRL_B, Keys.COMMAND_B),
@@ -284,6 +296,7 @@ export const ShortcutKeys = {
   [Shortcuts.UNDERLINE]: Keys.U,
   [Shortcuts.HOME]: Keys.HOME,
   [Shortcuts.END]: Keys.END,
+  [Shortcuts.CLOSE]: Keys.X,
 };
 
 const ToolNameHotkeyMap = {
@@ -366,12 +379,13 @@ WebViewer(...)
   });
    */
   on(key, handler) {
-    if (key && typeof key === 'string') {
-      key = key.toLocaleLowerCase();
-    }
     const isToolName = !!core.getToolModeMap()[key];
     if (isToolName) {
       key = ToolNameHotkeyMap[key];
+    }
+
+    if (key && typeof key === 'string') {
+      key = key.toLocaleLowerCase();
     }
 
     if (!handler) {
@@ -386,7 +400,8 @@ WebViewer(...)
         // when using the web component version of webviewer.
         // the escape key is special, it can be triggered with the wrong target if for example we
         // add a signature from the modal and then choose to not apply it, so we whitelist it
-        const isEscape = e.key === 'Escape';
+        // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
+        const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
         const calledFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
         if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent || isEscape) {
           if (e.type === 'keyup') {
@@ -483,6 +498,14 @@ WebViewer(...)
     const store = this.store;
     const { dispatch, getState } = store;
     const { ToolNames } = window.Core.Tools;
+
+    function setActiveGroupedItemInModularUI(toolName) {
+      const state = getState();
+      const isModularUI = selectors.getFeatureFlags(state)?.customizableUI;
+      if (isModularUI) {
+        dispatch(actions.setActiveGroupedItemWithTool(toolName));
+      }
+    }
 
     return {
       [ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]: (e) => {
@@ -597,6 +620,17 @@ WebViewer(...)
         const isMultiViewerMode = selectors.isMultiViewerMode(state);
         zoomOut(isMultiViewerMode, activeDocumentViewerKey);
       },
+      [ShortcutKeys[Shortcuts.SET_HEADER_FOCUS]]: (e) => {
+        e.preventDefault();
+        const state = getState();
+        const isModularUI = selectors.getFeatureFlags(state)?.customizableUI;
+        const activeHeaders = selectors.getActiveHeaders(state);
+        const firstHeaderDataElement = isModularUI ?
+          activeHeaders[0]?.dataElement : // first modular UI header data element
+          'header'; // legacy header data element
+        const firstHeaderElement = getRootNode().querySelector(`[data-element="${firstHeaderDataElement}"]`);
+        firstHeaderElement?.focus();
+      },
       [ShortcutKeys[Shortcuts.FIT_SCREEN_WIDTH]]: (e) => {
         e.preventDefault();
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
@@ -696,6 +730,14 @@ WebViewer(...)
       },
       [ShortcutKeys[Shortcuts.SELECT]]: (e) => {
         e.preventDefault();
+
+        const stack = FocusStackManager.getStack();
+        // If there is FocusStackManager stack and it keyboard
+        // interaction, we will block closing elements.
+        if (stack.length) {
+          return;
+        }
+
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 
         dispatch(
@@ -719,41 +761,51 @@ WebViewer(...)
         setToolModeAndGroup(store, ToolNames.PAN);
       }),
       [ShortcutKeys[Shortcuts.ARROW]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ARROW);
         setToolModeAndGroup(store, ToolNames.ARROW);
       }),
       [ShortcutKeys[Shortcuts.CALLOUT]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, ToolNames.CALLOUT);
-      }),
-      [ShortcutKeys[Shortcuts.ERASER]]: this.createToolHotkeyHandler(() => {
         const state = getState();
         const isCustomizableUI = state.featureFlags.customizableUI;
         if (isCustomizableUI) {
-          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.ERASER));
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.CALLOUT));
         }
+        setToolModeAndGroup(store, ToolNames.CALLOUT);
+      }),
+      [ShortcutKeys[Shortcuts.ERASER]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ERASER);
         setToolModeAndGroup(store, ToolNames.ERASER);
       }),
       [ShortcutKeys[Shortcuts.FREEHAND]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.FREEHAND);
         setToolModeAndGroup(store, ToolNames.FREEHAND);
       }),
       [ShortcutKeys[Shortcuts.IMAGE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STAMP);
         setToolModeAndGroup(store, ToolNames.STAMP);
       }),
       [ShortcutKeys[Shortcuts.LINE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.LINE);
         setToolModeAndGroup(store, ToolNames.LINE);
       }),
       [ShortcutKeys[Shortcuts.STICKY_NOTE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STICKY);
         setToolModeAndGroup(store, ToolNames.STICKY);
       }),
       [ShortcutKeys[Shortcuts.ELLIPSE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ELLIPSE);
         setToolModeAndGroup(store, ToolNames.ELLIPSE);
       }),
       [ShortcutKeys[Shortcuts.RECTANGLE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.RECTANGLE);
         setToolModeAndGroup(store, ToolNames.RECTANGLE);
       }),
       [ShortcutKeys[Shortcuts.RUBBER_STAMP]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.RUBBER_STAMP);
         setToolModeAndGroup(store, ToolNames.RUBBER_STAMP);
       }),
       [ShortcutKeys[Shortcuts.FREETEXT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.FREETEXT);
         setToolModeAndGroup(store, ToolNames.FREETEXT);
       }),
       [ShortcutKeys[Shortcuts.SIGNATURE]]: this.createToolHotkeyHandler(() => {
@@ -761,6 +813,7 @@ WebViewer(...)
         const isCustomizableUI = state.featureFlags.customizableUI;
         if (isCustomizableUI) {
           dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.SIGNATURE));
           setToolModeAndGroup(store, ToolNames.SIGNATURE);
           return;
         }
@@ -771,6 +824,7 @@ WebViewer(...)
         sigModalButton?.click();
       }),
       [ShortcutKeys[Shortcuts.SQUIGGLY]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.SQUIGGLY);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation);
         } else {
@@ -778,6 +832,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.HIGHLIGHT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.HIGHLIGHT);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation);
         } else {
@@ -785,6 +840,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.STRIKEOUT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STRIKEOUT);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation);
         } else {
@@ -792,6 +848,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.UNDERLINE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.UNDERLINE);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation);
         } else {
@@ -813,6 +870,12 @@ WebViewer(...)
         const pageCount = selectors.getTotalPages(getState());
         setCurrentPage(pageCount, activeDocumentViewerKey);
       }),
+      [ShortcutKeys[Shortcuts.CLOSE]]: () => {
+        if (closeToolTipFunc) {
+          closeToolTipFunc();
+          closeToolTipFunc = null;
+        }
+      },
     };
   },
   /**
@@ -846,7 +909,9 @@ WebViewer(...)
     const { dispatch } = this.store;
     const shortcutKeyMap = { ...this.getShortcutKeyMap() };
     this.off(shortcutKeyMap[shortcut]);
-    this.on(key, this.keyHandlerMap[ShortcutKeys[shortcut]]);
+    if (!core.getAnnotationManager().isReadOnlyModeEnabled()) {
+      this.on(key, this.keyHandlerMap[ShortcutKeys[shortcut]]);
+    }
     shortcutKeyMap[shortcut] = key;
     dispatch(actions.setShortcutKeyMap(shortcutKeyMap));
   },
@@ -867,5 +932,13 @@ WebViewer(...)
     this.off(this.getShortcutKeyMap()[shortcut]);
   }
 };
+
+let closeToolTipFunc;
+
+export const setCloseToolTipFunc = (func) => {
+  closeToolTipFunc = func;
+};
+
+export const getCloseToolTipFunc = () => closeToolTipFunc;
 
 export default Object.create(HotkeysManager);

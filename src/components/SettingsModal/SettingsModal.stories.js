@@ -4,10 +4,14 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import hotkeysManager, { ShortcutKeys } from 'helpers/hotkeysManager';
+import { userEvent, within, expect } from '@storybook/test';
 
 export default {
   title: 'Components/SettingsModal',
-  component: SettingsModal
+  component: SettingsModal,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const getStore = (num) => {
@@ -15,7 +19,7 @@ const getStore = (num) => {
 
   const initialState = {
     viewer: {
-      hiddenElements: {},
+      openElements: { 'settingsModal': true },
       disabledElements: {},
       customElementOverrides: {},
       tab: {},
@@ -35,7 +39,10 @@ const getStore = (num) => {
     },
     search: {
       clearSearchPanelOnClose: false
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   if (num === 1) {
@@ -102,3 +109,60 @@ export function GeneralDisabled() {
     </Provider>
   );
 }
+
+export function TabbingTest() {
+  const store = getStore(1);
+  hotkeysManager.initialize(store);
+  return (
+    <Provider store={getStore(1)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+TabbingTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const searchInput = canvas.getByLabelText('Search settings');
+  await userEvent.tab();
+  await expect(searchInput).toHaveFocus();
+
+  await userEvent.tab();
+  const generalButton = await canvas.findByRole('button', { name: /General/i });
+  await expect(generalButton).toHaveFocus();
+
+  await userEvent.tab();
+  const keyboardButton = await canvas.findByRole('button', { name: /Keyboard Shortcut/i });
+  await expect(keyboardButton).toHaveFocus();
+
+  // Simulate pressing 'Enter' on the keyboardButton
+  await userEvent.keyboard('{Enter}');
+  await expect(keyboardButton).toHaveClass('selected');
+  await expect(keyboardButton).toHaveAttribute('aria-selected', 'true');
+  await expect(keyboardButton).toHaveAttribute('aria-current', 'page');
+
+  await userEvent.tab();
+  const advancedButton = await canvas.findByRole('button', { name: /Advanced Setting/i });
+  await expect(advancedButton).toHaveFocus();
+
+  await userEvent.tab();
+  const rotateClockwiseEditButton = canvasElement.querySelector('[data-element="edit-button-rotateClockwise"]');
+  await expect(rotateClockwiseEditButton).toHaveFocus();
+
+  // Simulate pressing 'Enter' on the rotateClockwiseEditButton
+  await userEvent.keyboard('{Enter}');
+
+  // Ensure the EditKeyboardShortcutModal is open
+  const editKeyboardShortcutModal = canvasElement.querySelector('.Modal.EditKeyboardShortcutModal.open');
+  await expect(editKeyboardShortcutModal).toBeInTheDocument();
+
+  // Scope the search to the EditKeyboardShortcutModal and look for the Close button
+  const editKeyboardShortcutModalWithin = within(editKeyboardShortcutModal);
+  const closeModalButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Close/i });
+
+  // Ensure the Close button inside the EditKeyboardShortcutModal is focused
+  await expect(closeModalButton).toHaveFocus();
+
+  await userEvent.tab();
+  const editShortcutButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Edit Shortcut/i });
+  await expect(editShortcutButton).toHaveFocus();
+};

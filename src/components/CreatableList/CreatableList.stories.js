@@ -24,7 +24,7 @@ function rootReducer(state = initialState, action) {
 
 const store = createStore(rootReducer);
 
-const options = [
+const listOptions = [
   {
     'displayValue': '',
     'value': '',
@@ -61,8 +61,8 @@ const onOptionsUpdated = (options) => {
 };
 
 const props = {
-  options,
-  onOptionsUpdated
+  options: listOptions,
+  onOptionsUpdated,
 };
 
 export function Basic() {

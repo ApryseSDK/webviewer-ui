@@ -66,6 +66,12 @@ function SearchOverlay(props) {
   }, []);
 
   useEffect(() => {
+    if (numberOfResultsFound > 0) {
+      setSearchStatus('SEARCH_DONE');
+    }
+  }, [searchResults]);
+
+  useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
       // give time for the search panel to open before focusing on the input
       setTimeout(() => {
@@ -286,12 +292,8 @@ function SearchOverlay(props) {
   }
   const numberOfResultsFound = searchResults ? searchResults.length : 0;
 
-  const showSpinner = (isSearchInProgress)
-    ? <Spinner />
-    : (searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults)
-      ? (<div>{numberOfResultsFound} {t('message.numResultsFound')}</div>)
-      : <Spinner />;
-
+  const isSearchDoneAndNotProcessingResults = searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults;
+  const showSpinner = (!isSearchDoneAndNotProcessingResults || isSearchInProgress) ? <Spinner /> : null;
 
   const searchOptionsComponents = (<div className="options">
     <Choice
@@ -367,9 +369,10 @@ function SearchOverlay(props) {
             {
               (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
                 <div data-element="searchAndReplace" className='replace-options'>
-                  <p>{t('option.searchPanel.replace')}</p>
+                  <p className="search-and-replace-title">{t('option.searchPanel.replace')}</p>
                   <div className='input-container'>
                     <input type={'text'}
+                      aria-label={t('option.searchPanel.replace')}
                       onChange={replaceTextInputOnChange}
                       value={replaceValue}
                     />
@@ -389,6 +392,7 @@ function SearchOverlay(props) {
       <div className="divider" />
       <div className="footer">
         {searchStatus === 'SEARCH_NOT_INITIATED' || '' ? null : showSpinner}
+        <p className="no-margin" aria-live="assertive">{isSearchDoneAndNotProcessingResults && !isSearchInProgress ? `${numberOfResultsFound} ${t('message.numResultsFound')}` : undefined}</p>
         {numberOfResultsFound > 0 && (
           <div className="buttons">
             <button className="button" onClick={previousButtonOnClick} aria-label={t('action.prevResult')}>

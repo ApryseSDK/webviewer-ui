@@ -2,10 +2,13 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Panel from './Panel';
-
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 export default {
   title: 'Components/Panel',
   component: Panel,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 function noop() {
@@ -14,7 +17,7 @@ function noop() {
 
 const DEFAULT_NOTES_PANEL_WIDTH = 293;
 
-const initialState = {
+const mockInitialState = {
   viewer: {
     customElementOverrides: {},
     disabledElements: {
@@ -32,8 +35,8 @@ const initialState = {
 };
 
 export function Basic() {
-  initialState.viewer.panelCustomEmptyPanel = undefined;
-  const store = configureStore({ reducer: () => initialState });
+  mockInitialState.viewer.panelCustomEmptyPanel = undefined;
+  const store = configureStore({ reducer: () => mockInitialState });
   return (
     <Provider store={store}>
       <Panel dataElement="panel" location="left">
@@ -44,9 +47,9 @@ export function Basic() {
 }
 
 export function PanelOnRightSide() {
-  initialState.viewer.panelCustomEmptyPanel = undefined;
-  initialState.viewer.openElements.panel2 = true;
-  const store = configureStore({ reducer: () => initialState });
+  mockInitialState.viewer.panelCustomEmptyPanel = undefined;
+  mockInitialState.viewer.openElements.panel2 = true;
+  const store = configureStore({ reducer: () => mockInitialState });
   return (
     <Provider store={store}>
       <Panel dataElement="panel2" location="right">
@@ -55,13 +58,12 @@ export function PanelOnRightSide() {
     </Provider>
   );
 }
-
 // Should not be cutoff
 export function PanelWithHeaders() {
   const state = {
-    ...initialState,
+    ...mockInitialState,
     viewer: {
-      ...initialState.viewer,
+      ...mockInitialState.viewer,
       panelCustomEmptyPanel: undefined,
       openElements: {
         panel: true,
@@ -73,6 +75,13 @@ export function PanelWithHeaders() {
       modularHeadersHeight: {
         top: 49,
       },
+      activeGroupedItems: [
+        'annotateGroupedItems',
+        'annotateToolsGroupedItems',
+        'defaultAnnotationUtilities'
+      ],
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
       floatingContainersDimensions: {},
     },
     featureFlags: {
@@ -83,7 +92,7 @@ export function PanelWithHeaders() {
   return (
     <Provider store={store}>
       <div>
-        <div style={{ width: '100%', height: '33px', backgroundColor: 'black' }}>SIZE OF MULTI-TAB HEADER</div>
+        <div style={{ width: '100%', height: '36px', backgroundColor: 'black' }}>SIZE OF MULTI-TAB HEADER</div>
         <div style={{ width: '100%', height: '49px', backgroundColor: 'darkgray' }}>SIZE OF TOP HEADER</div>
         <div style={{ width: '100%', height: '49px', backgroundColor: 'black' }}>SIZE OF TOOLS HEADER</div>
         <Panel dataElement="panel" location="right">

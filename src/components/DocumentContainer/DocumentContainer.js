@@ -16,6 +16,7 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getStep } from 'helpers/zoom';
+import { removeFileNameExtension } from 'helpers/TabManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
@@ -304,6 +305,8 @@ class DocumentContainer extends React.PureComponent {
       document: true,
       hidden: this.props.isReaderMode,
     });
+    const document = core.getDocument();
+    const fileName = document ? removeFileNameExtension(document.filename) : '';
     const showPageNav = totalPages > 1;
 
     const { customizableUI } = featureFlags;
@@ -319,6 +322,9 @@ class DocumentContainer extends React.PureComponent {
     return (
       <div
         style={style}
+        id={`document-container-${fileName}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${fileName}`}
         className={classNames({
           'document-content-container': true,
           'closed': isMultiTabEmptyPageOpen,

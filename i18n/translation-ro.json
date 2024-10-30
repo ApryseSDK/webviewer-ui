@@ -26,6 +26,8 @@
     "ungroup": "Degrupați",
     "download": "Descarca",
     "edit": "Editați | ×",
+    "collapse": "Colaps",
+    "expand": "Extinde",
     "extract": "Extrage",
     "extractPage": "Extrage pagina",
     "enterFullscreen": "Ecran complet",
@@ -36,6 +38,7 @@
     "more": "Mai mult",
     "openFile": "Deschide fișierul",
     "page": "Pagină",
+    "of": "de",
     "pagePrev": "Pagina anterioară",
     "pageNext": "Pagina următoare",
     "pageSet": "Setați pagina",
@@ -43,6 +46,7 @@
     "proceed": "Continua",
     "name": "Nume",
     "rename": "Redenumiți",
+    "remove": "Elimina",
     "ok": "O.K",
     "rotate": "Orientarea paginii",
     "rotate3D": "Roti",
@@ -109,8 +113,12 @@
     "moveToBottom": "Mutați în jos",
     "movePageToTop": "Mutați pagina în sus",
     "movePageToBottom": "Mutați pagina în jos",
+    "moveUp": "Mută în sus",
+    "moveDown": "Mută în jos",
+    "moveLeft": "Mutați la stânga",
+    "moveRight": "Mută-te la dreapta",
     "backToMenu": "Inapoi la meniu",
-    "redactPages": "Redact pagini",
+    "redactPages": "Redact Pagini",
     "playAudio": "Redați audio",
     "pauseAudio": "Întrerupeți sunetul",
     "selectAll": "Selectează tot",
@@ -121,15 +129,20 @@
     "comparePages": "Comparați paginile",
     "startComparison": "Începeți comparația",
     "showComparison": "Arată comparația",
+    "highlightChanges": "Evidențiați Modificări",
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
+    "clearInitial": "Inițială clară",
     "readOnlySignature": "Semnătura numai pentru citire nu poate fi ștearsă",
     "newDocument": "Document nou",
     "sideBySideView": "Vedere alăturată",
     "pageNumberInput": "Introducerea numărului paginii",
     "addNewColor": "Adăugați o nouă culoare",
     "deleteColor": "Ștergeți culoarea selectată",
-    "copySelectedColor": "Copiați culoarea selectată"
+    "copySelectedColor": "Copiați culoarea selectată",
+    "showMoreColors": "Afișează mai multe culori",
+    "showLessColors": "Afișați mai puține culori",
+    "fromCustomColorPicker": "din Custom Color Picker"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -185,7 +198,8 @@
     "3D": "3D",
     "sound": "Sunet",
     "changeView": "Schimbă privirea",
-    "newImage": "Imagine noua"
+    "newImage": "Imagine noua",
+    "defaultCustomStampTitle": "Ștampila personalizată"
   },
   "rubberStamp": {
     "Approved": "Aprobat",
@@ -220,6 +234,7 @@
     "searchPanel": "Căutare",
     "menuOverlay": "Meniul",
     "notesPanel": "Comentarii",
+    "indexPanel": "Panoul index",
     "outlinePanel": "Contur",
     "outlinesPanel": "Contururi",
     "newOutlineTitle": "Noul titlu de schiță",
@@ -234,7 +249,8 @@
     "thumbnailsPanel": "Miniaturi",
     "toolsButton": "Instrumente",
     "redaction": "Redactare",
-    "viewControlsOverlay": "Vizualizare comenzi",
+    "viewControls": "Vizualizare comenzi",
+    "pageControls": "Controale paginii",
     "calibration": "Calibrare",
     "zoomOverlay": "Suprapunere zoom",
     "textPopup": "Popup text",
@@ -243,8 +259,10 @@
     "multiSelectButton": "Selectare multipla",
     "pageReplaceModalTitle": "Înlocuiește pagina",
     "files": "Fișiere",
+    "file": "Fişier",
     "editText": "Editează textul",
     "redactionPanel": "Panoul de redactare",
+    "tabLabel": "Tab",
     "noteGroupSection": {
       "open": "Vedeți toate adnotările",
       "close": "Închideți toate adnotările"
@@ -283,6 +301,7 @@
     "searching": "In cautarea...",
     "searchCommentsPlaceholder": "Căutați comentarii",
     "searchDocumentPlaceholder": "Căutați documentul",
+    "searchSettingsPlaceholder": "Setări de căutare",
     "searchSuggestionsPlaceholder": "Căutați sugestii",
     "signHere": "Înregistrează aici",
     "insertTextHere": "Introduceți text aici",
@@ -296,6 +315,7 @@
     "doNotShowAgain": "Nu-mi mai arăta asta",
     "doNotAskAgain": "Nu cere din nou",
     "enterReplacementText": "Introduceți textul pe care doriți să îl înlocuiți",
+    "sort": "Sorta",
     "sortBy": "Fel",
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
     "unpostedComment": "Comentariu nepostat",
@@ -311,10 +331,11 @@
     "selectFile": "Selectați fișierul",
     "selectPageToReplace": "Selectați paginile din document cu care doriți să le înlocuiți.",
     "embeddedFiles": "Fișiere încorporate",
-    "pageNum": "Numărul paginii",
+    "pageNum": "Pagină",
     "viewBookmark": "Vizualizați marcajul pe pagină",
     "error": "Eroare",
     "errorPageNumber": "Număr de pagină nevalid. Limita este",
+    "errorBlankPageNumber": "Vă rugăm să specificați un număr de pagină",
     "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}.",
     "noRevisions": "Acest document nu are revizuiri."
   },
@@ -357,6 +378,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Grupuri din bara de instrumente",
+      "flyoutLabel": "Panglică",
       "toolbarGroup-View": "Vedere",
       "toolbarGroup-Annotate": "Adnota",
       "toolbarGroup-Shapes": "Forme",
@@ -366,7 +388,10 @@
       "toolbarGroup-EditText": "Editează textul",
       "toolbarGroup-FillAndSign": "Completați și semnați",
       "toolbarGroup-Forms": "Forme",
-      "toolbarGroup-Redact": "Redacta"
+      "toolbarGroup-Redact": "Redacta",
+      "toolbarGroup-oe-Home": "Acasă",
+      "toolbarGroup-oe-Insert": "Introduce",
+      "toolbarGroup-oe-Review": "Revizuire"
     },
     "annotationColor": {
       "StrokeColor": "Accident vascular cerebral",
@@ -408,7 +433,8 @@
       "noteContent": {
         "noName": "(fara nume)",
         "noDate": "(fără dată)"
-      }
+      },
+      "toggleMultiSelect": "Comutați selecția multiplă pentru adnotare"
     },
     "pageTransition": {
       "continuous": "Pagina continuă",
@@ -428,7 +454,6 @@
       "includeComments": "Includeți comentarii",
       "printSettings": "Setări de imprimare",
       "printGrayscale": "Imprimare în tonuri de gri",
-      "flatten": "Aplatizați documentul",
       "printCurrentDisabled": "Vizualizarea curentă este disponibilă numai când vizualizați o singură pagină."
     },
     "printInfo": {
@@ -474,9 +499,14 @@
       "typeInitial": "Inițiale tip*",
       "drawSignature": "Semnătura extragerii*",
       "drawInitial": "Desenați inițiale*",
+      "imageSignature": "Semnătura imaginii",
+      "imageInitial": "Inițialele imaginii",
       "pickInitialsFile": "Alegeți Inițiale",
       "noSignatures": "În prezent, nu există semnături salvate.",
-      "fontStyle": "stilul fontului"
+      "fontStyle": "stilul fontului",
+      "textSignature": {
+        "dropdownLabel": "Familia de fonturi"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Fișierele dvs",
@@ -523,13 +553,17 @@
       "countMeasurement": "Măsurarea numărului",
       "radius": "Rază",
       "count": "Numara",
-      "length": "Lungime"
+      "length": "Lungime",
+      "xAxis": "Axa X",
+      "yAxis": "Axa Y"
     },
     "freeTextOption": {
       "autoSizeFont": "Scalați dimensiunea fontului în mod dinamic"
     },
     "measurementOption": {
-      "scale": "Scară"
+      "scale": "Scară",
+      "selectScale": "Selectați Scala",
+      "selectScaleDropdown": "Selectați Scale Dropdown"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +575,8 @@
         "paperUnits": "Unitati de hartie",
         "displayUnits": "Unități de afișare",
         "fractionUnitsTooltip": "Unitățile de fracție se aplică numai pentru in și ft-in",
-        "incorrectSyntax": "Sintaxă incorectă"
+        "incorrectSyntax": "Sintaxă incorectă",
+        "units": "Unități"
       },
       "scaleOverlay": {
         "addNewScale": "Adăugați o scară nouă",
@@ -560,6 +595,7 @@
         "irreversible": "ireversibil",
         "willDeleteMeasurement": "și va șterge măsurătorile asociate.",
         "confirmDelete": "Sigur doriți să ștergeți această scală?",
+        "thisCantBeUndone": " Acest lucru nu poate fi anulat.",
         "ifChangeScale": "Dacă schimbați scara pentru măsurarea sau instrumentul selectat, scalați",
         "notUsedWillDelete": " nu vor mai fi folosite de nicio măsurătoare sau instrumente și vor fi șterse. Ștergerea este ireversibilă.",
         "ifToContinue": "Sunteți sigur că doriți să continuați?"
@@ -661,7 +697,9 @@
       "minute": "Minut",
       "second": "Al doilea",
       "textColor": "Culoarea textului",
-      "backgroundColor": "Culoare de fundal"
+      "backgroundColor": "Culoare de fundal",
+      "dateToolTipLabel": "Mai multe informații despre formatul datei",
+      "previewCustomStamp": "Previzualizare a"
     },
     "pageRedactModal": {
       "addMark": "Adăugați Mark",
@@ -669,8 +707,7 @@
       "current": "Pagina curenta",
       "specify": "Specificați Pagini",
       "odd": "Numai pagini impare",
-      "even": "Doar paginile pare",
-      "header": "Marcați redactarea paginilor"
+      "even": "Doar paginile pare"
     },
     "lineStyleOptions": {
       "title": "Stil"
@@ -725,6 +762,7 @@
       "zoomOptions": "Opțiuni de zoom",
       "zoomIn": "A mari",
       "zoomOut": "A micsora",
+      "setHeaderFocus": "Setează focalizarea pe antet",
       "fitScreenWidth": "Potriviți documentul la lățimea ecranului într-un ecran mic (< 640 px), altfel potriviți-l la dimensiunea inițială",
       "print": "Imprimare",
       "bookmarkOpenPanel": "Marcați rapid o pagină și deschideți panoul de marcaje",
@@ -752,15 +790,16 @@
       "selectCreateTextStrikeoutTool": "Selectați instrumentul AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Selectați instrumentul AnnotationCreateTextUnderline",
       "editKeyboardShorcut": "Editați comanda rapidă de la tastatură",
-      "setShorcut": "Setează Shortcut",
-      "pressKeyToSet": "Apăsați tasta sau tastele pentru a seta o nouă comandă rapidă.",
-      "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja."
+      "setShortcut": "Setați comanda rapidă",
+      "editShortcut": "Editați comanda rapidă",
+      "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja.",
+      "close": "Închideți tooltip"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Șterge pagina",
-      "deleteMessage": "Sigur doriți să ștergeți paginile selectate? Acest lucru nu poate fi anulat",
+      "deleteMessage": "Sigur doriți să ștergeți paginile selectate? Acest lucru nu poate fi anulat.",
       "deleteLastPageMessage": "Nu puteți șterge toate paginile din document."
     },
     "extractPage": {
@@ -928,6 +967,10 @@
     "invalidDateTime": "Data/Ora nevalide: intrarea trebuie să corespundă formatului"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Lista câmpurilor de formular",
+      "notFields": "Acest document nu are câmpuri de formular"
+    },
     "formFieldPopup": {
       "fieldName": "Numele domeniului",
       "fieldValue": "Valoare implicită",
@@ -938,11 +981,14 @@
       "apply": "aplica",
       "cancel": "Anulare",
       "flags": "Steaguri de câmp",
+      "fieldSize": "Dimensiunea campului",
       "options": "Opțiuni",
+      "properties": "Proprietăți",
       "radioGroups": "Butoanele radio cu același nume de câmp vor aparține aceleiași grupări.",
       "nameRequired": "Numele câmpului este obligatoriu",
       "fieldIndicator": "Indicatori de câmp",
       "documentFieldIndicator": "Indicatori de câmp de document",
+      "includeFieldIndicator": "Includeți indicatorul de câmp",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserați text aici",
         "CheckBoxFormField": "Verifica",
@@ -962,6 +1008,14 @@
         "empty": "Numele câmpului nu poate fi gol"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "Adnotare câmp de semnătură",
+      "CheckBoxFormField": "Caseta de selectare Adnotare câmp",
+      "RadioButtonFormField": "Adnotare câmp cu butonul radio",
+      "ListBoxFormField": "Adnotare câmp List Box",
+      "ComboBoxFormField": "Adnotare câmp pentru casetă combinată",
+      "TextFormField": "Adnotare câmp text"
+    },
     "apply": "Aplicați câmpuri",
     "type": "Tip câmp",
     "types": {
@@ -970,7 +1024,8 @@
       "checkbox": "Caseta de bifat",
       "radio": "Buton de radio",
       "listbox": "Caseta cu listă",
-      "combobox": "Caseta combinată"
+      "combobox": "Caseta combinată",
+      "button": "Buton"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1159,8 @@
     "cropDimensions": "Dimensiuni de decupare",
     "dimensionInput": {
       "unitOfMeasurement": "Unitate",
-      "autoTrim": "Presetări"
+      "autoTrim": "Presetări",
+      "autoTrimCustom": "Personalizat"
     },
     "cropModal": {
       "applyTitle": "Aplicați decuparea?",
@@ -1131,10 +1187,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Începeți să redactați prin marcarea textului, regiunilor, paginilor sau efectuând o căutare.",
-    "redactionSearchPlaceholder": "Adăugați prin căutare de cuvinte cheie sau modele",
+    "redactionSearchPlaceholder": "Redactați după tastatură sau modele",
     "redactionCounter": "Marcat pentru redactare",
     "clearMarked": "clar",
     "redactAllMarked": "Redact All",
+    "redactionItems": "Articole de redactare",
     "redactionItem": {
       "regionRedaction": "Redactarea regiunii",
       "fullPageRedaction": "Redactare pe întreaga pagină",
@@ -1145,13 +1202,13 @@
     },
     "expand": "Extinde",
     "collapse": "Colaps",
-    "searchResults": "Rezultatele cautarii",
+    "searchResults": "rezultatele cautarii",
     "search": {
       "creditCards": "Card de credit",
       "phoneNumbers": "Numere de telefon",
       "images": "Imagini",
       "emails": "E-mailuri",
-      "pattern": "Model",
+      "pattern": "Modele",
       "start": "Începeți să căutați"
     }
   },
@@ -1177,6 +1234,7 @@
     "createFolder": "Creeaza dosar",
     "portfolioPanelTitle": "Portofoliu PDF",
     "portfolioNewFolder": "Dosar nou",
+    "portfolioDocumentTitle": "Titlul documentului",
     "portfolioFolderPlaceholder": "Numele fisierului",
     "portfolioFilePlaceholder": "Nume de fișier",
     "folderNameAlreadyExists": "Numele dosarului există deja",
@@ -1200,12 +1258,14 @@
     "rightAlign": "Aliniați la dreapta",
     "justify": "Justifica",
     "lineSpacing": "Spațiere între rânduri și paragrafe",
-    "bulletList": "Listă cu puncte",
+    "lineSpacingMenu": "Spațiere între linii",
+    "bulletList": "Lista cu marcatori",
     "numberList": "Lista numerotata",
     "decreaseIndent": "Reduceți indentarea",
     "increaseIndent": "Mareste indent-ul",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
+    "image": "Imagine",
     "table": "Masa",
     "insertRowAbove": "Inserați rândul de deasupra",
     "insertRowBelow": "Inserați rândul de mai jos",
@@ -1226,10 +1286,47 @@
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile.",
     "previewAllChanges": "Previzualizează toate modificările",
     "accept": "Accept",
-    "reject": "Respinge"
+    "reject": "Respinge",
+    "pastingTitle": "Lipirea nu este disponibilă",
+    "pastingMessage": "Lipirea nu este acceptată în browserul dvs. În schimb, puteți utiliza o comandă rapidă de la tastatură",
+    "pastingWithoutFormatTitle": "Lipirea fără formatare nu este disponibilă",
+    "pastingWithoutFormatMessage": "Lipirea fără formatare nu este acceptată în browserul dvs. În schimb, puteți utiliza o comandă rapidă de la tastatură",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "Singur",
+      "double": "Dubla",
+      "custom": "Personalizat"
+    },
+    "numberDropdown": {
+      "6": "Numărul latin roman 1",
+      "7": "Număr zecimal",
+      "8": "Numărul latin roman 2",
+      "10": "latină romană",
+      "11": "Numărul latin roman",
+      "dropdownLabel": "Presetări de numerotare"
+    },
+    "bulletDropdown": {
+      "0": "Glonţ",
+      "1": "Bullet Square",
+      "2": "Glonț pătrat",
+      "3": "Diamant",
+      "4": "Verifica",
+      "5": "Săgeată",
+      "dropdownLabel": "Bullet Presets"
+    },
+    "fontSize": {
+      "dropdownLabel": "Dimensiunea fontului"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Stiluri de font"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Familia de fonturi"
+    }
   },
   "insertPageModal": {
-    "title": "Adăugați o pagină nouă",
+    "title": "Inserați o pagină nouă",
     "tabs": {
       "blank": "Gol",
       "upload": "Încărcați"
@@ -1280,7 +1377,7 @@
     "save": "Salvați documentul",
     "comparePanel": {
       "Find": "Găsiți în document",
-      "changesList": "Listă de modificări",
+      "changesList": "Lista de schimb",
       "change": "Schimbare",
       "old": "Vechi",
       "new": "Nou",
@@ -1333,9 +1430,28 @@
       "redactionTextPlaceholder": "Introduceți eticheta text",
       "contentEdit": "Editare conținut"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Stilul liniei de pornire",
+      "middleLineStyleLabel": "Stil de linie de mijloc",
+      "endLineStyleLabel": "Stil de linie finală"
+    },
     "addColorToCustom": "Adaugă la culori personalizate",
-    "noToolSelected": "Acest document nu conține niciun strat.",
-    "noToolStyle": "Instrumentul nu conține nicio proprietate de stil."
+    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
+    "noToolStyle": "Instrumentul nu conține nicio proprietate de stil.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Început de linie"
+      },
+      "end": {
+        "dropdownLabel": "Sfârșitul liniei"
+      },
+      "middle": {
+        "dropdownLabel": "Linia de mijloc"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Frontieră"
+    }
   },
   "signatureListPanel": {
     "header": "Lista de semnături",
@@ -1349,5 +1465,8 @@
   "rubberStampPanel": {
     "header": "Timbre",
     "standard": "Timbre standard"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Selector de culoare"
   }
 }

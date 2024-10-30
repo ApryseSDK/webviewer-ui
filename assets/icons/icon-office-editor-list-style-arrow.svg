@@ -11,5 +11,5 @@
 <path d="M14.7333 60.6233L11.4 58.0519C11.2352 57.9248 11 58.0457 11 58.2576V63.4005C11 63.6124 11.2352 63.7333 11.4 63.6062L14.7333 61.0348C14.8667 60.9319 14.8667 60.7262 14.7333 60.6233Z" fill="#485056"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M11 61.8576H7V59.8005H11V61.8576Z" fill="#485056"/>
 <line x1="18.8334" y1="60.8291" x2="52" y2="60.8291" stroke="#868E96" stroke-width="2"/>
-<rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+<rect class="office-editor-list-style-item-border" x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
 </svg>

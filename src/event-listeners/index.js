@@ -42,6 +42,7 @@ import onContentBoxEditEnded from './onContentBoxEditEnded';
 import onContentBoxEditStarted from './onContentBoxEditStarted';
 import onContentEditDocumentDigitalSigned from './onContentEditDocumentDigitalSigned';
 import onContentEditPasswordRequired from './onContentEditPasswordRequired';
+import onCompareAnnotationsLoaded from './onCompareAnnotationsLoaded';
 
 export {
   onSignatureSaved,
@@ -88,4 +89,5 @@ export {
   onContentBoxEditEnded,
   onContentEditDocumentDigitalSigned,
   onContentEditPasswordRequired,
+  onCompareAnnotationsLoaded,
 };

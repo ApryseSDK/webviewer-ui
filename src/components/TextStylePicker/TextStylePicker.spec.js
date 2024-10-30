@@ -10,6 +10,10 @@ jest.mock('core', () => ({
   getContentEditManager: () => ({
     isInContentEditMode: () => false,
   }),
+  getDocumentViewer: () => ({}),
+  getScrollViewElement: () => ({
+    getBoundingClientRect: () => ({}),
+  }),
 }));
 
 // mock initial state.
@@ -45,15 +49,27 @@ describe('TextStylePicker Component', () => {
   });
 
   it('should render a warning if you enter an invalid font size', async () => {
+    const mockOnPropertyChange = jest.fn();
     const props = {
-      onPropertyChange: noop
+      onPropertyChange: mockOnPropertyChange
     };
     render(<TextStylePickerWithRedux {...props} />);
-    const fontSizeInput = screen.getByRole('textbox');
-    userEvent.type(fontSizeInput, '12345');
+    const comboBox = screen.getByRole('combobox', { name: 'Font Size' });
+    expect(comboBox).toHaveTextContent('12');
+    userEvent.click(comboBox);
+    // Now we input an invalid value in the input combobox
+    const fontSizeInput = screen.getAllByRole('combobox')[2];
+    // It should have the same value as the combobox
+    expect(fontSizeInput).toHaveValue('12');
+    // Select all the text and input a big number
+    userEvent.clear(fontSizeInput);
+    userEvent.type(fontSizeInput, '9999999');
+    userEvent.type(fontSizeInput, '{enter}');
+
     // Assert that a warning exists
     await new Promise((r) => setTimeout(r, DEBOUNCE_TIME + 5));
-    expect(screen.getByText('Font size must be in the following range: 1 - 512')).toBeInTheDocument();
+    // Since we input an invalid value we got back to the default
+    expect(comboBox).toHaveTextContent('12');
   });
   it('should disable vertical alignment when isFreeTextAutoSize is true', () => {
     const props = {
@@ -64,5 +80,18 @@ describe('TextStylePicker Component', () => {
     expect(screen.getByLabelText('Align bottom')).toBeDisabled();
     expect(screen.getByLabelText('Align top')).toBeDisabled();
     expect(screen.getByLabelText('Align middle')).toBeDisabled();
+  });
+  it('should only render the dropdown when isWidget is true', () => {
+    const props = {
+      onPropertyChange: noop,
+      isWidget: true
+    };
+    render(<TextStylePickerWithRedux {...props} />);
+    const dropdown = screen.getAllByRole('listbox');
+    const inputs = screen.getAllByRole('combobox');
+    expect(dropdown).toHaveLength(1);
+    expect(dropdown[0]).toBeInTheDocument();
+    expect(inputs).toHaveLength(1);
+    expect(inputs[0]).toBeInTheDocument();
   });
 });

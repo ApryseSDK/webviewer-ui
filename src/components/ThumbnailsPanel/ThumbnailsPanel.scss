@@ -6,6 +6,12 @@
   margin: 0 8px 16px 16px;
   width: 230px;
   margin: 0 auto;
+  height: 40px;
+
+  @include mobile {
+    width: inherit;
+    margin: 16px;
+  }
 
   .thumbnail-slider {
     width: 100%;
@@ -16,95 +22,40 @@
     border: 0px 0px transparent;
   }
 
-  input[type=range] {
+  input[type="range"] {
     -webkit-appearance: none;
-    margin: 10px 0;
-    width: 100%;
-  }
-  input[type=range]:focus {
-    outline: none;
-    box-shadow: 0 0 5px var(--focus-border);
-  }
-  input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
+    appearance: none;
+    cursor: pointer;
+    accent-color: green;
+
+    /* New additions */
     height: 3px;
-    cursor: pointer;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px var(--gray-12);
-    background: var(--slider-filled);
-    border-radius: 5px;
-    border: 0px solid var(--gray-12);
+    background: #2980b9;
   }
-  input[type=range]::-webkit-slider-thumb {
-    box-shadow: 0px 0px 1px var(--gray-12);
-    border: 0px solid var(--gray-12);
-    height: 15px;
-    width: 15px;
-    border-radius: 50px;
-    background: var(--slider-filled);
-    cursor: pointer;
+
+  /***** Chrome, Safari, Opera, and Edge Chromium *****/
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 5px;
+    border-radius: 6px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
     -webkit-appearance: none;
-    margin-top: -5px;
-  }
-  input[type=range]:focus::-webkit-slider-runnable-track {
-    background: var(--slider-filled);
-  }
-  input[type=range]::-moz-range-track {
-    width: 100%;
-    height: 3px;
-    cursor: pointer;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px var(--gray-12);
-    background: var(--slider-filled);
-    border-radius: 5px;
-    border: 0px solid var(--gray-12);
-  }
-  input[type=range]::-moz-range-thumb {
-    box-shadow: 0px 0px 1px var(--gray-12);
-    border: 0px solid var(--gray-12);
-    height: 15px;
-    width: 15px;
-    border-radius: 50px;
-    background: var(--slider-filled);
-    cursor: pointer;
-  }
-  input[type=range]::-ms-track {
-    padding: 5px 0px 0px 0px;
-    width: 100%;
-    height: 3px;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-    cursor: pointer;
-    border-width: 6px 0;
-    animate: 0.2s;
-  }
-  input[type=range]::-ms-fill-lower {
-    background: var(--slider-filled);
-    border: 0px solid var(--gray-12);
-    border-radius: 10px;
-    box-shadow: 0px 0px 0px var(--gray-12);
-  }
-  input[type=range]::-ms-fill-upper {
-    background: var(--slider-filled);
-    border: 0px solid var(--gray-12);
-    border-radius: 10px;
-    box-shadow: 0px 0px 0px var(--gray-12);
-  }
-  input[type=range]::-ms-thumb {
-    box-shadow: 0px 0px 1px var(--gray-12);
-    border: 0px solid var(--gray-12);
-    height: 15px;
-    width: 15px;
+    appearance: none;
+    /* creating a custom design */
+    height: 14px;
+    width: 14px;
+    background-color: var(--slider-filled);
     border-radius: 50%;
-    background: var(--slider-filled);
-    cursor: pointer;
+    border: 2px solid var(--slider-filled);
+    margin-top: -4px;
   }
-  input[type=range]:focus::-ms-fill-lower {
-    background: var(--slider-filled);
-  }
-  input[type=range]:focus::-ms-fill-upper {
-    background: var(--slider-filled);
+
+  /******** Firefox ********/
+  input[type="range"]::-moz-range-track {
+    height: 5px;
+    border-radius: 4px;
   }
 
   Button {
@@ -112,7 +63,7 @@
     height: 15px;
     margin: 2.5px;
     padding-top: 6px;
-    
+
     &:hover {
       background: var(--view-header-button-hover);
       border-radius: 4px;
@@ -121,6 +72,17 @@
 
   .slider {
     width: 100%;
+
+    @include mobile {
+      margin-top: 0px;
+    }
+
+    .slider-element-container {
+      @include mobile {
+        width: auto;
+        margin-left: auto;
+      }
+    }
   }
 }
 
@@ -130,6 +92,11 @@
   overflow: hidden !important;
   display: flex;
   height: 100%;
+
+  @include mobile {
+    width: inherit;
+    margin: 0px 16px;
+  }
 
   #virtualized-thumbnails-container {
     flex: 1;
@@ -171,6 +138,10 @@
       margin-bottom: 30px;
     }
   }
+}
+
+.cellThumbContainer {
+  border-radius: 4px;
 }
 
 .thumbnailAutoScrollArea{

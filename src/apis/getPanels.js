@@ -1,7 +1,7 @@
 /**
  * Returns a list of panels that are currently in the UI
  * @method UI.getPanels
- * @return {Array<UI.Components.Panel>} Array of Panel objects
+ * @return {Array<UI.Components.Panel | UI.Components.TabPanel>} Array of Panel objects
  * @example
  WebViewer(...)
  .then(function(instance) {

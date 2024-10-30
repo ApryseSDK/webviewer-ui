@@ -59,7 +59,6 @@ export const getCurrentFreeSpace = (headerDirection, element, isChild = false) =
 
 const SIZE_CHANGE_TYPES = { GROW: 'grow', SHRINK: 'shrink' };
 const lastSizedElementMap = {};
-const elementToPreventLoop = {};
 
 // To be used in the unit tests
 export const resetLastSizedElementMap = () => {
@@ -85,10 +84,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
       }
     }
     if (hasToShrink || hasToGrow) {
-      if (lastSizedElement.getElement() === elementToPreventLoop[parentDataElement]?.getElement()) {
-        elementToPreventLoop[parentDataElement] = null;
-        return null;
-      }
       return () => {
         const newSizeChangeEntry = {
           type: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
@@ -98,7 +93,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
           }
         };
         lastSizedElementMap[parentDataElement] = newSizeChangeEntry;
-        elementToPreventLoop[parentDataElement] = newSizeChangeEntry;
         lastSizedElement.reverse();
       };
     }
@@ -112,10 +106,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
     }
     const sizeDifference = getGrowSizeIncrease(sizeManager[itemToGrow.dataElement], parentDataElement, isVertical, items, parentDomElement);
     if (sizeDifference > freeSpace) {
-      return null;
-    }
-    if (elementToPreventLoop[parentDataElement]?.type === SIZE_CHANGE_TYPES.SHRINK && lastSizedElementMap[parentDataElement].getElement() === elementToPreventLoop[parentDataElement]?.getElement()) {
-      elementToPreventLoop[parentDataElement] = null;
       return null;
     }
     return () => {
@@ -165,7 +155,7 @@ const findItemToShrink = (items, groupedItems) => {
   while (searchIndex < items.length) {
     const rawItem = items[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canShrink) {
+    if (item?.canShrink) {
       return rawItem;
     }
     searchIndex++;
@@ -174,7 +164,7 @@ const findItemToShrink = (items, groupedItems) => {
   while (searchIndex < groupedItems.length) {
     const rawItem = groupedItems[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canShrink) {
+    if (item?.canShrink) {
       return rawItem;
     }
     searchIndex++;
@@ -186,7 +176,7 @@ const findItemToGrow = (items, groupedItems) => {
   while (searchIndex >= 0) {
     const rawItem = groupedItems[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canGrow) {
+    if (item?.canGrow) {
       return rawItem;
     }
     searchIndex--;
@@ -195,7 +185,7 @@ const findItemToGrow = (items, groupedItems) => {
   while (searchIndex >= 0) {
     const rawItem = items[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canGrow) {
+    if (item?.canGrow) {
       return rawItem;
     }
     searchIndex--;

@@ -19,7 +19,7 @@ const store = configureStore({
 export const Empty = () => {
   return (
     <Provider store={store}>
-      <ComparePanel/>
+      <ComparePanel currentWidth={330} totalChanges={0} />
     </Provider>
   );
 };
@@ -115,7 +115,7 @@ const mockItemCount = 6;
 export const Populated = () => {
   return (
     <Provider store={store}>
-      <ComparePanel initialChangeListData={mockItems} initialTotalChanges={mockItemCount}/>
+      <ComparePanel filteredListData={mockItems} totalChanges={mockItemCount} currentWidth={330} />
     </Provider>
   );
 };

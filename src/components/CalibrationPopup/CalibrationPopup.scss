@@ -5,18 +5,22 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 12px;
+  padding: var(--padding-medium);
 
   width: 220px;
-  height: 84px;
 
   background: var(--gray-0);
 
   box-shadow: 0px 0px 3px var(--gray-7);
   border-radius: 4px;
 
+  .calibration-popup-label {
+    font-weight: bold;
+    margin-bottom: var(--padding-medium);
+  }
+
   .pop-switch {
-    margin-top: 12px;
+    margin-top: var(--padding-medium);
 
     &.ui__choice--disabled .ui__choice__label {
       color: var(--gray-5);
@@ -28,7 +32,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    width: 196px;
+    gap: var(--padding-small);
     height: 32px;
 
     .input-field {
@@ -49,6 +53,7 @@
 
         .Dropdown {
           height: 100%;
+          width: 100% !important;
           text-align: left;
         }
 

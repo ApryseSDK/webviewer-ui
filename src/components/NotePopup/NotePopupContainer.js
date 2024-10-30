@@ -1,8 +1,6 @@
 import React from 'react';
 import core from 'core';
 import NotePopup from './NotePopup';
-import Tooltip from 'components/Tooltip';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
@@ -16,8 +14,6 @@ function NotePopupContainer(props) {
 
   const [canModify, setCanModify] = React.useState(core.canModify(annotation));
   const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [t] = useTranslation();
 
   React.useEffect(() => {
     function onUpdateAnnotationPermission() {
@@ -43,29 +39,20 @@ function NotePopupContainer(props) {
     core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()], undefined, activeDocumentViewerKey);
   }, [annotation]);
 
-  const openPopup = () => setIsOpen(true);
-  const closePopup = () => setIsOpen(false);
-
   const isEditable = canModifyContents;
   const isDeletable = canModify && !annotation?.NoDelete;
+  const noteId = (annotation) ? annotation.Id : '';
 
   const passProps = {
     handleEdit,
     handleDelete,
     isEditable,
     isDeletable,
-    isOpen,
-    closePopup,
-    openPopup,
+    noteId,
   };
 
-  // We wrap the element in a div so the tooltip works properly
   return (
-    <Tooltip content={t('formField.formFieldPopup.options')}>
-      <div>
-        <NotePopup {...props} {...passProps} />
-      </div>
-    </Tooltip>
+    <NotePopup {...props} {...passProps} />
   );
 }
 

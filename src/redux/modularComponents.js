@@ -7,6 +7,8 @@
  * webViewerInstance.UI.Components.someAPI()
  */
 import DataElements from 'constants/dataElement';
+import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
+import { panelNames } from 'constants/panel';
 
 const defaultModularHeaders = {
   'default-top-header': {
@@ -26,8 +28,9 @@ const defaultModularHeaders = {
     items: [
       'groupedLeftHeaderButtons',
       'default-ribbon-group',
+      'comparePanelToggle',
       'searchPanelToggle',
-      'notesPanelToggle'
+      'notesPanelToggle',
     ]
   },
   'tools-header': {
@@ -85,12 +88,19 @@ const defaultModularHeaders = {
   }
 };
 const defaultModularComponents = {
+  comparePanelToggle: {
+    dataElement: 'comparePanelToggle',
+    title: 'action.comparePages',
+    label: 'action.comparePages',
+    icon: 'icon-header-compare',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.COMPARE,
+  },
   filePickerButton: {
     dataElement: 'filePickerButton',
     title: 'action.openFile',
     label: 'action.openFile',
     icon: 'icon-header-file-picker-line',
-    hidden: true,
     type: 'presetButton',
   },
   downloadButton: {
@@ -98,7 +108,6 @@ const defaultModularComponents = {
     title: 'action.download',
     label: 'action.download',
     icon: 'icon-download',
-    hidden: false,
     type: 'presetButton',
   },
   saveAsButton: {
@@ -107,7 +116,6 @@ const defaultModularComponents = {
     isActive: false,
     label: 'saveModal.saveAs',
     icon: 'icon-save',
-    hidden: false,
     type: 'presetButton',
   },
   printButton: {
@@ -116,7 +124,6 @@ const defaultModularComponents = {
     isActive: false,
     label: 'action.print',
     icon: 'icon-header-print-line',
-    hidden: false,
     type: 'presetButton',
   },
   undefined: {},
@@ -126,7 +133,6 @@ const defaultModularComponents = {
     isActive: false,
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
-    hidden: false,
     type: 'presetButton',
   },
   settingsButton: {
@@ -135,23 +141,24 @@ const defaultModularComponents = {
     isActive: false,
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
-    hidden: false,
     type: 'presetButton',
   },
   'divider-0.1': {
     dataElement: 'divider-0.1',
     type: 'divider'
   },
-  'left-panel-toggle': {
-    dataElement: 'left-panel-toggle',
+  'leftPanelButton': {
+    dataElement: DataElements.LEFT_PANEL_BUTTON,
     title: 'Left Panel',
     type: 'toggleButton',
     img: 'icon-header-sidebar-line',
-    toggleElement: 'customLeftPanel'
+    toggleElement: 'tabPanel'
   },
   'view-controls': {
     dataElement: 'view-controls',
-    type: 'viewControls'
+    type: 'viewControls',
+    title: 'component.viewControls',
+    icon: 'icon-header-page-manipulation-line'
   },
   'divider-0.3': {
     dataElement: 'divider-0.3',
@@ -175,8 +182,8 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AnnotationEdit'
   },
-  'menu-toggle-button': {
-    dataElement: 'menu-toggle-button',
+  'menuButton': {
+    dataElement: DataElements.MENU_OVERLAY_BUTTON,
     img: 'ic-hamburger-menu',
     title: 'component.menuOverlay',
     toggleElement: 'MainMenuFlyout',
@@ -185,9 +192,9 @@ const defaultModularComponents = {
   groupedLeftHeaderButtons: {
     dataElement: 'groupedLeftHeaderButtons',
     items: [
-      'menu-toggle-button',
+      'menuButton',
       'divider-0.1',
-      'left-panel-toggle',
+      'leftPanelButton',
       'view-controls',
       'divider-0.3',
       'zoom-container',
@@ -400,6 +407,13 @@ const defaultModularComponents = {
     img: 'icon-style-panel-toggle',
     toggleElement: 'stylePanel'
   },
+  indexPanelListToggle: {
+    dataElement: 'indexPanelListToggle',
+    title: 'component.indexPanel',
+    type: 'toggleButton',
+    img: 'icon-index-panel-list',
+    toggleElement: 'indexPanel'
+  },
   'divider-0.5': {
     dataElement: 'divider-0.5',
     type: 'divider'
@@ -606,7 +620,8 @@ const defaultModularComponents = {
     dataElement: 'redactionPanelToggle',
     type: 'toggleButton',
     img: 'icon-redact-panel',
-    toggleElement: 'redactionPanel'
+    toggleElement: 'redactionPanel',
+    title: 'component.redactionPanel'
   },
   redactionGroupedItems: {
     dataElement: 'redactionGroupedItems',
@@ -839,7 +854,8 @@ const defaultModularComponents = {
     items: [
       'formsToolsGroupedItems',
       'divider-0.8',
-      'stylePanelToggle'
+      'stylePanelToggle',
+      'indexPanelListToggle'
     ],
     type: 'groupedItems',
     grow: 0,
@@ -849,10 +865,17 @@ const defaultModularComponents = {
   },
   'page-controls-container': {
     dataElement: 'page-controls-container',
-    type: 'pageControls'
+    type: 'pageControls',
+    title: 'component.pageControls',
+    icon: 'icon-page-controls'
   }
 };
 const defaultPanels = [
+  {
+    dataElement: 'comparePanel',
+    render: panelNames.CHANGE_LIST,
+    location: 'right',
+  },
   {
     dataElement: 'stylePanel',
     render: 'stylePanel',
@@ -872,6 +895,16 @@ const defaultPanels = [
     dataElement: 'bookmarkPanel',
     render: 'bookmarksPanel',
     location: 'left'
+  },
+  {
+    dataElement: DataElements.FORM_FIELD_PANEL,
+    render: 'formFieldPanel',
+    location: 'right'
+  },
+  {
+    dataElement: DataElements.INDEX_PANEL,
+    render: 'indexPanel',
+    location: 'right'
   },
   {
     dataElement: 'layersPanel',
@@ -910,7 +943,7 @@ const defaultPanels = [
   },
   {
     render: 'tabPanel',
-    dataElement: 'customLeftPanel',
+    dataElement: 'tabPanel',
     panelsList: [
       {
         render: 'thumbnailPanel'
@@ -964,8 +997,8 @@ const defaultFlyoutMap = {
         'label': 'action.newDocument',
         'title': 'action.newDocument',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'newDocumentButton'
       },
       {
         'dataElement': 'filePickerButton',
@@ -973,8 +1006,8 @@ const defaultFlyoutMap = {
         'icon': 'icon-header-file-picker-line',
         'label': 'action.openFile',
         'title': 'action.openFile',
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'filePickerButton'
       },
       {
         'dataElement': 'downloadButton',
@@ -982,8 +1015,8 @@ const defaultFlyoutMap = {
         'icon': 'icon-download',
         'label': 'action.download',
         'title': 'action.download',
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'downloadButton'
       },
       {
         'dataElement': 'fullscreenButton',
@@ -991,8 +1024,8 @@ const defaultFlyoutMap = {
         'icon': 'icon-header-full-screen',
         'label': 'action.enterFullscreen',
         'title': 'action.enterFullscreen',
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'fullscreenButton'
       },
       {
         'dataElement': 'saveAsButton',
@@ -1001,8 +1034,8 @@ const defaultFlyoutMap = {
         'label': 'saveModal.saveAs',
         'title': 'saveModal.saveAs',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'saveAsButton'
       },
       {
         'dataElement': 'printButton',
@@ -1011,19 +1044,19 @@ const defaultFlyoutMap = {
         'label': 'action.print',
         'title': 'action.print',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'printButton'
       },
       'divider',
       {
-        'dataElement': 'createPortfolioButton',
+        'dataElement': DataElements.CREATE_PORTFOLIO_BUTTON,
         'presetDataElement': 'createPortfolioPresetButton',
         'icon': 'icon-pdf-portfolio',
         'label': 'portfolio.createPDFPortfolio',
         'title': 'portfolio.createPDFPortfolio',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'createPortfolioButton'
       },
       'divider',
       {
@@ -1033,12 +1066,12 @@ const defaultFlyoutMap = {
         'label': 'option.settings.settings',
         'title': 'option.settings.settings',
         'isActive': false,
-        'hidden': false,
-        'type': 'presetButton'
+        'type': 'presetButton',
+        'buttonType': 'settingsButton'
       },
       'divider',
     ]
-  }
+  },
 };
 
 export { defaultModularComponents, defaultModularHeaders, defaultPanels, defaultFlyoutMap };

@@ -62,7 +62,7 @@ const TextEditingPanel = ({
   const textStylesSection = (
     <div className="text-editing-panel-section">
       <div className="top-panel text-editing-panel-menu-items">
-        <span className="text-editing-panel-heading" >{i18next.t('stylePanel.headings.textStyles')}</span>
+        <h2 className="text-editing-panel-heading" >{i18next.t('stylePanel.headings.textStyles')}</h2>
         <div className={`text-editing-panel-text-style-picker ${contentSelectMode ? '' : 'inactive'}`}>
           <TextStylePicker
             fonts={fonts}
@@ -93,7 +93,7 @@ const TextEditingPanel = ({
 
   const colorPaletteSection = textPanelSectionWrapper(
     <div className="color-palette-section">
-      <span className="text-editing-panel-heading">{i18next.t('stylePanel.headings.currentColor')}</span>
+      <h2 className="text-editing-panel-heading">{i18next.t('stylePanel.headings.currentColor')}</h2>
       <div className="text-editing-row">
         <ColorPalette
           colorMapKey="freeText"
@@ -112,7 +112,7 @@ const TextEditingPanel = ({
         />
       </div>
       <div className="custom-colors-section">
-        <span className="text-editing-panel-heading">{i18next.t('stylePanel.headings.customColors')}</span>
+        <h2 className="text-editing-panel-heading">{i18next.t('stylePanel.headings.customColors')}</h2>
         <div className="text-editing-row custom-colors-pallete">
           <ColorPalettePicker
             color={rgbColor}

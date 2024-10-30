@@ -4,13 +4,16 @@ import DimensionInput from './DimensionInput';
 export default {
   title: 'Components/DimensionInput',
   component: DimensionInput,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 export function Basic() {
   const props = {
     label: 'label',
     initialValue: 3.22,
-    onChange: () => {},
+    onChange: () => { },
     unit: 'cm',
     maxLength: 5,
     disabled: false

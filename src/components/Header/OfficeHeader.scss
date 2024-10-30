@@ -78,6 +78,7 @@
 
     .Dropdown__items {
       overflow: hidden;
+      width: auto !important;
 
       $button-height: 74px;
       $button-width: 60px;

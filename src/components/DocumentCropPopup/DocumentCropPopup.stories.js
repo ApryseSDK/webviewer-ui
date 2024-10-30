@@ -7,6 +7,9 @@ import DimensionsInput from './DimensionsInput';
 export default {
   title: 'Components/DocumentCropPopup',
   component: DocumentCropPopup,
+  parameters: {
+    customizableUI: true
+  }
 };
 
 const initialState = {
@@ -87,7 +90,7 @@ const mockCropDimensions = {
   }
 };
 
-const noop = () => {};
+const noop = () => { };
 
 const popupProps = {
   cropAnnotation: createMockAnnotation(),
@@ -152,9 +155,29 @@ export function Basic() {
 export function Dimensions() {
   return (
     <Provider store={store}>
-      <div className="DocumentCropPopup" style={{ maxWidth: '226px' }}>
-        <DimensionsInput {...inputProps} />
+      <div className="DocumentCropPopupContainer">
+        <div className="DocumentCropPopup">
+          <div className="document-crop-section">
+            <DimensionsInput {...inputProps} />
+          </div>
+        </div>
       </div>
     </Provider>
   );
 }
+
+export function DocumentCropPopupMobile() {
+  const mobileProps = {
+    pageNumberError: false,
+  };
+
+  return (
+    <Provider store={store}>
+      <div className="DocumentCropPopupContainer">
+        <DocumentCropPopup {...popupProps} isMobile={true} isInDesktopOnlyMode={false} {...mobileProps} />
+      </div>
+    </Provider>
+  );
+}
+
+DocumentCropPopupMobile.parameters = window.storybook?.MobileParameters;

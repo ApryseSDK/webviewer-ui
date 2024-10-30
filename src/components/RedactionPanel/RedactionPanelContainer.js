@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import RedactionPanel from './RedactionPanel';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
@@ -34,7 +35,7 @@ export const RedactionPanelContainer = (props) => {
 
   const isMobile = isMobileSize();
 
-  const { redactionAnnotationsList } = props;
+  const { redactionAnnotationsList, isCustomPanel, dataElement } = props;
 
   const redactionTypesDictionary = useMemo(() => {
     const storedRedactionTypes = Object.keys(redactionSearchPatterns).reduce((map, key) => {
@@ -56,9 +57,7 @@ export const RedactionPanelContainer = (props) => {
   const dispatch = useDispatch();
   const applyAllRedactions = () => {
     const originalApplyRedactions = () => {
-      const callOnRedactionCompleted = props.isCustomPanel
-        ? closeRedactionPanel : () => { };
-
+      const callOnRedactionCompleted = isCustomPanel ? closeRedactionPanel : () => {};
       dispatch(applyRedactions(redactionAnnotationsList, callOnRedactionCompleted));
     };
     if (customApplyRedactionsHandler) {
@@ -67,22 +66,27 @@ export const RedactionPanelContainer = (props) => {
       originalApplyRedactions();
     }
   };
+
   const closeRedactionPanel = () => {
-    const tempDataElement = props.isCustomPanel ? props.dataElement : 'redactionPanel';
+    const tempDataElement = isCustomPanel ? dataElement : 'redactionPanel';
     dispatch(actions.closeElement(tempDataElement));
   };
 
   const renderMobileCloseButton = () => {
     return (
-      <div className="close-container">
-        <div className="close-icon-container" onClick={closeRedactionPanel}>
-          <Icon glyph="ic_close_black_24px" className="close-icon" />
+      !isCustomPanel && (
+        <div className="close-container">
+          <div className="close-icon-container" onClick={closeRedactionPanel}>
+            <Icon glyph="ic_close_black_24px" className="close-icon" />
+          </div>
         </div>
-      </div>
+      )
     );
   };
 
-  const style = props.isCustomPanel || !isInDesktopOnlyMode && isMobile ? {} : { width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px` };
+  const style = isCustomPanel || (!isInDesktopOnlyMode && isMobile)
+    ? {}
+    : { width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px` };
 
   const { isRedactionSearchActive } = useContext(RedactionPanelContext);
 
@@ -97,14 +101,14 @@ export const RedactionPanelContainer = (props) => {
     };
   }, [isOpen]);
 
-  if (isDisabled || (!isOpen && renderNull && !props.isCustomPanel)) {
+  if (isDisabled || (!isOpen && renderNull && !isCustomPanel)) {
     return null;
   }
 
-  const dataElement = props.isCustomPanel ? props.dataElement : 'redactionPanel';
+  const dataElementToUse = isCustomPanel ? dataElement : 'redactionPanel';
 
   return (
-    <DataElementWrapper dataElement={dataElement} className="Panel RedactionPanel" style={style}>
+    <DataElementWrapper dataElement={dataElementToUse} className="Panel RedactionPanel" style={style}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <RedactionSearchPanel />
       {!isRedactionSearchActive && (
@@ -117,6 +121,17 @@ export const RedactionPanelContainer = (props) => {
       )}
     </DataElementWrapper>
   );
+};
+
+RedactionPanelContainer.propTypes = {
+  redactionAnnotationsList: PropTypes.array,
+  isCustomPanel: PropTypes.bool,
+  dataElement: PropTypes.string,
+};
+
+RedactionPanelContainer.defaultProps = {
+  isCustomPanel: false,
+  dataElement: '',
 };
 
 const RedactionPanelContainerWithProvider = (props) => {

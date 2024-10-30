@@ -15,6 +15,7 @@ import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getParentGroupedItems } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -231,14 +232,12 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
           tool: firstTool,
           group: allAssociatedGroupedItems
         }));
-        dispatch(setGroupedItems(allAssociatedGroupedItems));
         return true;
       }
       return false;
     });
-  } else {
-    dispatch(setGroupedItems(allAssociatedGroupedItems));
   }
+  dispatch(setGroupedItems(allAssociatedGroupedItems));
 };
 
 export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch, getState) => {
@@ -269,10 +268,13 @@ export const setFixedGroupedItems = (groupedItems) => (dispatch) => {
   });
 };
 
-export const setActiveCustomRibbon = (customRibbon) => ({
-  type: 'SET_ACTIVE_CUSTOM_RIBBON',
-  payload: { customRibbon }
-});
+export const setActiveCustomRibbon = (customRibbon) => (dispatch) => {
+  fireEvent(Events.TOOLBAR_GROUP_CHANGED, customRibbon);
+  dispatch({
+    type: 'SET_ACTIVE_CUSTOM_RIBBON',
+    payload: { customRibbon }
+  });
+};
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
@@ -307,7 +309,9 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     });
     core.setToolMode(defaultTool);
   } else {
-    dispatch(openElements(['toolsHeader']));
+    if (!isOfficeEditorMode()) {
+      dispatch(openElements(['toolsHeader']));
+    }
     const state = getState();
     const lastPickedToolGroup =
       toolGroup || state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
@@ -385,10 +389,6 @@ export const setSelectedStampIndex = (index) => ({
 export const setLastSelectedStampIndex = (index) => ({
   type: 'SET_LAST_SELECTED_STAMP_INDEX',
   payload: { index },
-});
-export const setOutlineControlVisibility = (outlineControlVisibility) => ({
-  type: 'SET_OUTLINE_CONTROL_VISIBILITY',
-  payload: { outlineControlVisibility },
 });
 export const setSelectedDisplayedSignatureIndex = (index) => ({
   type: 'SET_SELECTED_DISPLAYED_SIGNATURE_INDEX',
@@ -823,10 +823,7 @@ export const setBottomFloatingContainerHeight = (height) => ({
   type: 'SET_BOTTOM_FLOATING_CONTAINER_HEIGHT',
   payload: height
 });
-export const setActiveHeaderGroup = (headerGroup) => ({
-  type: 'SET_ACTIVE_HEADER_GROUP',
-  payload: { headerGroup },
-});
+
 export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
   const state = getState();
 

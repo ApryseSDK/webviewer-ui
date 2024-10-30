@@ -112,7 +112,7 @@ const AnnotationPopupContainer = ({
   );
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [position, setPosition] = useState({ left: -99999, top: -99999 });
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -246,7 +246,6 @@ const AnnotationPopupContainer = ({
     && focusedAnnotation.ToolName !== ToolNames.CROP
     && !includesFormFieldAnnotation
     && !focusedAnnotation.isContentEditPlaceholder()
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
   );
 
@@ -295,8 +294,6 @@ const AnnotationPopupContainer = ({
 
   const toolsWithNoStyling = [
     ToolNames.CROP,
-    ToolNames.RADIO_FORM_FIELD,
-    ToolNames.CHECK_BOX_FIELD,
     ToolNames.VIDEO_REDACTION,
     ToolNames.VIDEO_AND_AUDIO_REDACTION,
     ToolNames.AUDIO_REDACTION,
@@ -310,8 +307,8 @@ const AnnotationPopupContainer = ({
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
     && !(focusedAnnotation instanceof Annotations.Model3DAnnotation)
     && !focusedAnnotation.isContentEditPlaceholder()
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
+    && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation)
   );
 
   const hideSnapModeCheckbox = focusedAnnotation instanceof Annotations.EllipseAnnotation || !core.isFullPDFEnabled();
@@ -368,14 +365,22 @@ const AnnotationPopupContainer = ({
   /* FORM FIELD */
   const formFieldCreationManager = core.getFormFieldCreationManager(activeDocumentViewerKey);
   const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
-  const showFormFieldButton = includesFormFieldAnnotation && isInFormFieldCreationMode;
+  const showFormFieldButton = includesFormFieldAnnotation
+    && isInFormFieldCreationMode
+    && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation);
 
   const onOpenFormField = () => {
     closePopup();
     // We disable it while the form field popup is open to prevent having both open
     // at the same time. We re-enable it when the form field popup is closed.
-    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    if (customizableUI) {
+      dispatch(actions.disableElement(PRIORITY_THREE));
+      dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
+    } else {
+      dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    }
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
+    dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
   };
 
   /* DELETE ANNOTATION */
@@ -424,7 +429,6 @@ const AnnotationPopupContainer = ({
     && !focusedAnnotation.isContentEditPlaceholder()
     // TODO(Adam): Update this once SoundAnnotation tool is created.
     && !(focusedAnnotation instanceof Annotations.SoundAnnotation)
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
   );
 

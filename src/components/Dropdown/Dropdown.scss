@@ -3,6 +3,10 @@
 .Dropdown {
   &__wrapper {
     position: relative;
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
   }
 
   @include button-reset;
@@ -20,6 +24,10 @@
   background: var(--component-background);
 
   cursor: pointer;
+
+  @include mobile {
+    height: 32px;
+  }
 
   .arrow {
     width: 12px;
@@ -48,16 +56,30 @@
     }
   }
 
-  &:disabled {
+  &.text-left {
+    .picked-option {
+      text-align: left;
+    }
+  }
+
+  &.disabled {
     background: none;
     border: 1px solid var(--gray-4);
     color: var(--disabled-icon);
     pointer-events: none;
   }
+
+  &:focus {
+    outline: var(--focus-visible-outline) !important;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-visible-outline) !important;
+  }
 }
 
 .Dropdown__items {
-  z-index: 1; // Needed to not trigger mouse events underneath the dropdown
+  z-index: 81; // Needed to not trigger mouse events underneath the dropdown
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -80,27 +102,54 @@
   &.dropdown-items-with-custom-display {
     right: inherit;
   }
+
+  &.dropdown-items-with-label {
+    .Dropdown__item {
+      padding-left: 20px;
+    }
+  }
+}
+
+.Dropdown__label {
+  font-weight: bold;
+  min-height: 28px;
+  padding-left: 8px;
+  align-items: center;
+  display: flex;
+  border-radius: 0px;
+  padding-right: 32px;
 }
 
 .Dropdown__item {
   @include button-reset;
   height: 28px;
   padding-left: 8px;
-  padding-right: 4px;
   align-items: center;
   display: flex;
   border-radius: 0px;
   padding-right: 32px;
+  line-height: 28px;
+  cursor: pointer;
 
-  &.active, &:hover {
+  &.selected,
+  &:hover {
     color: var(--dropdown-item-active-text);
-    .Icon, .Icon svg * {
+
+    .Icon,
+    .Icon svg * {
       color: var(--dropdown-item-active-icon);
     }
   }
-  &.active {
+
+  &.selected {
     background-color: var(--dropdown-item-active);
   }
+
+  &.active {
+    outline-offset: -2px;
+    outline: var(--focus-visible-outline) !important;
+  }
+
   &:hover {
     background-color: var(--dropdown-item-hover);
   }
@@ -112,7 +161,7 @@
 
   &:last-child {
     border-bottom-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
 }
 

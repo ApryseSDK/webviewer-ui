@@ -1,9 +1,10 @@
 import React from 'react';
 import actions from 'actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getRootNode from 'helpers/getRootNode';
 import core from 'core';
 import DataElements from 'constants/dataElement';
+import selectors from 'selectors';
 
 import '../FilePickerHandler/FilePickerHandler.scss';
 
@@ -21,6 +22,7 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
 
 const FilePickerHandler = () => {
   const dispatch = useDispatch();
+  const activeFlyout = useSelector(selectors.getActiveFlyout);
 
   const openDocument = async (e) => {
     const file = e.target.files[0];
@@ -30,8 +32,10 @@ const FilePickerHandler = () => {
         const base64 = await toBase64(file);
         await core.getOfficeEditor().insertImageAtCursor(base64);
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+        dispatch(actions.closeElement(activeFlyout));
       } catch (error) {
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+        dispatch(actions.closeElement(activeFlyout));
         dispatch(actions.showWarningMessage({
           title: 'Error',
           message: error,

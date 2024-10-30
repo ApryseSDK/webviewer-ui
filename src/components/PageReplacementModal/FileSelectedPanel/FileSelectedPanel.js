@@ -27,16 +27,29 @@ const FileSelectedPanel = React.forwardRef((
   const [t] = useTranslation();
 
   const [currentDocSelectedPageNumbers, setCurrentDocSelectedPageNumbers] = useState(pageIndicesToReplace.map((index) => index + 1));
+  const [sourceDocSelectedPageNumbers, setSourceDocSelectedPageNumbers] = useState([]);
   const [selectedThumbnails, setSelectedThumbnails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [sourceDocumentName, setSourceDocumentName] = useState(null);
   const [currentDocumentName, setCurrentDocumentName] = useState(null);
   const [sourceDocumentPageCount, setSourceDocumentPageCount] = useState(0);
   const [pageNumberError, setPageNumberError] = useState('');
+  const [sourceDocPagesNumberError, setSourceDocPagesNumberError] = useState('');
 
   const isTablet = isTabletSize();
 
   const isMobile = isMobileSize();
+
+  const getPageNumbersFromSelectedThumbnails = () => {
+    const selectedPageNumbers = [];
+
+    for (const pageNumber in selectedThumbnails) {
+      if (selectedThumbnails[pageNumber]) {
+        selectedPageNumbers.push(parseInt(pageNumber));
+      }
+    }
+    return selectedPageNumbers;
+  };
 
   useEffect(() => {
     if (sourceDocument) {
@@ -48,6 +61,10 @@ const FileSelectedPanel = React.forwardRef((
       setSelectedThumbnails(selectedPages);
     }
   }, [sourceDocument]);
+
+  useEffect(() => {
+    setSourceDocSelectedPageNumbers(getPageNumbersFromSelectedThumbnails());
+  }, [selectedThumbnails]);
 
   useEffect(() => {
     function getTruncatedName(documentName) {
@@ -83,17 +100,6 @@ const FileSelectedPanel = React.forwardRef((
     setSelectedThumbnails({});
   };
 
-  const getPageNumbersFromSelectedThumbnails = () => {
-    const selectedPageNumbers = [];
-
-    for (const pageNumber in selectedThumbnails) {
-      if (selectedThumbnails[pageNumber]) {
-        selectedPageNumbers.push(parseInt(pageNumber));
-      }
-    }
-    return selectedPageNumbers;
-  };
-
   const onThumbnailSelected = (pageNumber) => {
     if (selectedThumbnails[pageNumber] === undefined) {
       selectedThumbnails[pageNumber] = true;
@@ -104,7 +110,7 @@ const FileSelectedPanel = React.forwardRef((
   };
 
   const isReplaceButtonDisabled = () => {
-    if (currentDocSelectedPageNumbers.length < 1 || pageNumberError) {
+    if (currentDocSelectedPageNumbers.length < 1 || pageNumberError || sourceDocPagesNumberError) {
       return true;
     }
     for (const pageIndex in selectedThumbnails) {
@@ -116,18 +122,37 @@ const FileSelectedPanel = React.forwardRef((
   };
 
   const onSourceDocumentNumberInputChange = (selectedPageNumbers) => {
+    if (selectedPageNumbers.length > 0) {
+      setSourceDocPagesNumberError('');
+    }
     const selectedPagesMap = selectedPageNumbers.reduce((map, pageNumber) => ({ ...map, [pageNumber]: true }), {});
     setSelectedThumbnails({ ...selectedPagesMap });
   };
 
   const handlePageNumbersChanged = (pageNumbers) => {
-    setPageNumberError(null);
-    setCurrentDocSelectedPageNumbers(pageNumbers);
+    if (pageNumbers.length > 0) {
+      setPageNumberError('');
+      setCurrentDocSelectedPageNumbers(pageNumbers);
+    }
   };
 
   const handlePageNumberError = (pageNumber) => {
     if (pageNumber) {
       setPageNumberError(`${t('message.errorPageNumber')} ${loadedDocumentPageCount}`);
+    }
+  };
+
+  const handleSourcePageNumbersChanged = (pageNumbers) => {
+    if (pageNumbers.length > 0) {
+      setSourceDocSelectedPageNumbers(pageNumbers);
+      onSourceDocumentNumberInputChange(pageNumbers);
+    } else {
+      getPageNumbersFromSelectedThumbnails();
+    }
+  };
+  const handleSourceDocPagesNumberError = (pageNumber) => {
+    if (pageNumber) {
+      setSourceDocPagesNumberError(`${t('message.errorPageNumber')} ${sourceDocumentPageCount}`);
     }
   };
 
@@ -148,26 +173,28 @@ const FileSelectedPanel = React.forwardRef((
         backButtonDataElement={'insertFromFileBackButton'}
         onBackClick={clearLoadedFile}
       >
-        <div className="swipe-indicator" />
-        <div className="page-replacement-divider" />
         <div className="modal-body">
           <div className="replace-page-input-container">
-            <div className="replace-page-input">{t('option.pageReplacementModal.pageReplaceInputLabel')}</div>
+            <div className="page-replacement-text">{t('option.pageReplacementModal.pageReplaceInputLabel')}:</div>
             <div className="replace-page-input-current-doc-containers">
               <PageNumberInput
                 selectedPageNumbers={currentDocSelectedPageNumbers}
                 pageCount={loadedDocumentPageCount}
-                onBlurHandler={handlePageNumbersChanged}
+                onSelectedPageNumbersChange={handlePageNumbersChanged}
+                onBlurHandler={setCurrentDocSelectedPageNumbers}
                 onError={handlePageNumberError}
+                pageNumberError={pageNumberError}
               />
-              {pageNumberError && <div className="page-number-error">{pageNumberError}</div>}
             </div>
             <div className="replace-page-input"><span className="page-replace-doc-name">{currentDocumentName}</span></div>
-            <span className="page-replacement-text">{t('option.pageReplacementModal.pageReplaceInputFromSource')}</span>
+            <div className="page-replacement-text">{t('option.pageReplacementModal.pageReplaceInputFromSource')}:</div>
             <PageNumberInput
-              selectedPageNumbers={getPageNumbersFromSelectedThumbnails()}
+              selectedPageNumbers={sourceDocSelectedPageNumbers}
               pageCount={sourceDocumentPageCount}
+              onSelectedPageNumbersChange={handleSourcePageNumbersChanged}
               onBlurHandler={onSourceDocumentNumberInputChange}
+              onError={handleSourceDocPagesNumberError}
+              pageNumberError={sourceDocPagesNumberError}
             />
             <div className="replace-page-input"><span className="page-replace-doc-name">{sourceDocumentName}</span></div>
           </div>

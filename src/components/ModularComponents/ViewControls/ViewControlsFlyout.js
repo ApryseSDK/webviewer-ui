@@ -12,29 +12,17 @@ import DataElements from 'constants/dataElement';
 const ViewControlsFlyout = () => {
   const store = useStore();
   const dispatch = useDispatch();
-  const [
-    totalPages,
-    displayMode,
-    isDisabled,
-    isReaderMode,
-    isMultiViewerMode,
-    isFullScreen,
-    activeDocumentViewerKey,
-    isMultiTab,
-    isMultiViewerModeAvailable,
-    currentFlyout
-  ] = useSelector((state) => [
-    selectors.getTotalPages(state),
-    selectors.getDisplayMode(state),
-    selectors.isElementDisabled(state, DataElements.VIEWER_CONTROLS_FLYOUT),
-    selectors.isReaderMode(state),
-    selectors.isMultiViewerMode(state),
-    selectors.isFullScreen(state),
-    selectors.getActiveDocumentViewerKey(state),
-    selectors.getIsMultiTab(state),
-    selectors.getIsMultiViewerModeAvailable(state),
-    selectors.getFlyout(state, DataElements.VIEWER_CONTROLS_FLYOUT)
-  ]);
+
+  const totalPages = useSelector(selectors.getTotalPages);
+  const displayMode = useSelector(selectors.getDisplayMode);
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.VIEW_CONTROLS_FLYOUT));
+  const isReaderMode = useSelector(selectors.isReaderMode);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
+  const isFullScreen = useSelector(selectors.isFullScreen);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const isMultiTab = useSelector((state) => selectors.getIsMultiTab(state));
+  const isMultiViewerModeAvailable = useSelector(selectors.getIsMultiViewerModeAvailable);
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, DataElements.VIEW_CONTROLS_FLYOUT));
 
   const totalPageThreshold = 1000;
   let isPageTransitionEnabled = totalPages < totalPageThreshold;
@@ -74,7 +62,7 @@ const ViewControlsFlyout = () => {
       return;
     }
     enterReaderMode(store);
-    dispatch(actions.closeElement(DataElements.VIEWER_CONTROLS_FLYOUT));
+    dispatch(actions.closeElement(DataElements.VIEW_CONTROLS_FLYOUT));
   };
 
   let pageTransition;
@@ -206,7 +194,7 @@ const ViewControlsFlyout = () => {
 
   useLayoutEffect(() => {
     const viewControlsFlyout = {
-      dataElement: DataElements.VIEWER_CONTROLS_FLYOUT,
+      dataElement: DataElements.VIEW_CONTROLS_FLYOUT,
       className: 'ViewControlsFlyout',
       items: getViewControlsFlyoutItems()
     };

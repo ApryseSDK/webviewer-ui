@@ -109,6 +109,21 @@ function SearchPanelContainer(props) {
     [isMobile, isOpen, shouldClearSearchPanelOnClose, isInDesktopOnlyMode],
   );
 
+  React.useEffect(() => {
+    return () => {
+      if (!isInDesktopOnlyMode && isMobile) {
+        // for mobile we want to keep results in panel as search panel is on top of the content
+        // and user will need to close the panel to view the content.
+        return;
+      }
+
+      if (shouldClearSearchPanelOnClose) {
+        core.clearSearchResults();
+        clearSearchInputValue();
+      }
+    };
+  }, [isMobile, shouldClearSearchPanelOnClose, isInDesktopOnlyMode]);
+
   if (dataElement !== DataElements.SEARCH_PANEL) {
     // Adjust width for custom panels
     currentWidth -= 16; // padding

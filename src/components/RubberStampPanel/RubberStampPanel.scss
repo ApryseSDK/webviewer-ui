@@ -28,21 +28,23 @@
     overflow: auto;
     padding: 0px 4px;
 
-    .rubber-stamps-list-header {
-      font-size: 14px;
-      font-weight: 700;
-      margin: 16px 0px;
+    .collapsible-page-group-header {
+      button {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 16px 0px;
+      }
     }
 
     .rubber-stamps-list {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      padding-top: 2px;
       padding-bottom: 16px;
 
       .rubber-stamp {
         @include button-reset;
-        // min-width: 221px;
         height: 48px;
         padding: 0px 8px;
         border: solid 1px var(--border);
@@ -51,7 +53,6 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        // margin-right: 8px;
         background-color: var(--gray-0);
         flex-grow: 1;
 
@@ -69,10 +70,6 @@
           background: var(--gray-2);
         }
       }
-    }
-
-    .collapsible-page-group-header {
-      align-items: center;
     }
   }
 
@@ -105,7 +102,7 @@
       margin: 0 16px 16px 16px;
     }
 
-    [data-element="createRubberStampButton"] {
+    [data-element="createRubberStampButtonWrap"] {
       padding: 0 16px;
 
       .CreateRubberStampButton {
@@ -114,6 +111,7 @@
     }
 
     &.small-size {
+
       .CreateRubberStampButton,
       .Divider,
       .collapsible-page-group-header,
@@ -133,15 +131,16 @@
       }
 
       .rubber-stamps-list {
-          .rubber-stamp,
-          .icon-button {
-            &:hover {
-              background-color: var(--gray-0);
-            }
 
-            &.active {
-              background: var(--tools-overlay-button-active);
-            }
+        .rubber-stamp,
+        .icon-button {
+          &:hover {
+            background-color: var(--gray-0);
+          }
+
+          &.active {
+            background: var(--tools-overlay-button-active);
+          }
         }
       }
 
@@ -152,8 +151,12 @@
   }
 
   &.modular-ui-panel {
-    .rubber-stamps-list .rubber-stamp{
+    .rubber-stamps-list .rubber-stamp {
       border-color: var(--lighter-border);
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
+      }
     }
   }
 }

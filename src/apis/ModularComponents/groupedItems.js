@@ -138,7 +138,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
     }
     // If the component is not yet in redux we return the property that we have in the class
     return this[`_${property}`];
-  }
+  };
 
   get gap() {
     return this.getGroupedItemProperty('gap');

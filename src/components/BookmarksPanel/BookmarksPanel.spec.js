@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor, screen } from '@testing-library/react';
 import { Basic } from './BookmarksPanel.stories';
 
 const BasicBookmarksPanel = withProviders(Basic);
@@ -20,7 +20,7 @@ describe('BookmarksPanel', () => {
   it('Clicks the Add Bookmark button should show an input element', async () => {
     const { container } = render(<BasicBookmarksPanel />);
     const addNewBookmarkButton = container.querySelector('[data-element="addNewBookmarkButton"]');
-    expect(addNewBookmarkButton.className).toContain('add-new-button');
+    expect(addNewBookmarkButton.className).toContain('Button TextButton modular-ui');
 
     let textInput = container.querySelector('.bookmark-outline-input');
     expect(textInput).toBeNull();
@@ -32,7 +32,6 @@ describe('BookmarksPanel', () => {
   it('In multi-select mode, add button is enabled when no bookmark is selected and delete button is enabled when at least one bookmark is selected', async () => {
     const { container } = render(<BasicBookmarksPanel />);
     const multiSelectButton = container.querySelector('[data-element="bookmarkMultiSelect"]');
-    expect(multiSelectButton.className).toContain('bookmark-outline-control-button');
     await multiSelectButton.click();
 
     const addNewContainer = container.querySelector('[data-element="addNewBookmarkButtonContainer"]');
@@ -41,10 +40,9 @@ describe('BookmarksPanel', () => {
     expect(addNewButton).not.toBeDisabled();
     expect(deleteButton).toBeDisabled();
 
-    const checkboxContainer = container.querySelector('.bookmark-outline-checkbox');
-    const checkboxInput = checkboxContainer.querySelector('input[type="checkbox"]');
-    await checkboxInput.click();
-    expect(checkboxContainer.className).toContain('ui__choice--checked');
+    const checkboxContainer = screen.getByRole('checkbox', { name: /Select Page 2 - Bookmark Title/i });
+    await checkboxContainer.click();
+    expect(checkboxContainer).toBeChecked();
     expect(addNewButton).toBeDisabled();
     expect(deleteButton).not.toBeDisabled();
   });

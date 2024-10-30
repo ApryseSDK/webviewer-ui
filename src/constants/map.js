@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from './officeEditor';
 
 export const annotationMapKeys = {
@@ -52,6 +51,7 @@ export const annotationMapKeys = {
   RADIO_BUTTON_FORM_FIELD: 'radioButtonFormField',
   LIST_BOX_FORM_FIELD: 'listBoxFormField',
   COMBO_BOX_FORM_FIELD: 'comboBoxFormField',
+  PUSH_BUTTON_FORM_FIELD: 'pushButtonFormField',
   ARC: 'arc',
   CHANGE_VIEW: 'changeView',
   TRACKED_CHANGE: 'trackedChange',
@@ -73,8 +73,8 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['AnnotationCreateSignature'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeHandAnnotation &&
-      annotation.Subject === i18next.t('annotation.signature'),
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation &&
+      annotation.Subject === 'Widget',
   },
   [annotationMapKeys.FREE_HAND]: {
     icon: 'icon-tool-pen-line',
@@ -456,8 +456,7 @@ const map = {
       'AnnotationCreateRectangle3',
       'AnnotationCreateRectangle4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === '',
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation,
   },
   [annotationMapKeys.ELLIPSE]: {
     icon: 'icon-tool-shape-oval',
@@ -685,8 +684,7 @@ const map = {
       'TextFormFieldCreateTool3',
       'TextFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'TextFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextWidgetAnnotation
   },
   [annotationMapKeys.SIGNATURE_FORM_FIELD]: {
     icon: 'icon-form-field-signature',
@@ -700,28 +698,35 @@ const map = {
       'SignatureFormFieldCreateTool3',
       'SignatureFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'SignatureFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation
   },
   [annotationMapKeys.CHECK_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-checkbox',
     iconColor: 'StrokeColor',
-    validStyleTabs: ['StrokeColor'],
+    validStyleTabs: ['StrokeColor', 'FillColor'],
     currentStyleTab: 'StrokeColor',
-    styleTabs: ['StrokeColor'],
-    toolNames: ['CheckBoxFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'CheckBoxFormField'
+    styleTabs: ['StrokeColor', 'FillColor'],
+    toolNames: [
+      'CheckBoxFormFieldCreateTool',
+      'CheckBoxFormFieldCreateTool2',
+      'CheckBoxFormFieldCreateTool3',
+      'CheckBoxFormFieldCreateTool4',
+    ],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.CheckButtonWidgetAnnotation
   },
   [annotationMapKeys.RADIO_BUTTON_FORM_FIELD]: {
     icon: 'icon-form-field-radiobutton',
     iconColor: 'StrokeColor',
-    validStyleTabs: ['StrokeColor'],
+    validStyleTabs: ['StrokeColor', 'FillColor'],
     currentStyleTab: 'StrokeColor',
-    styleTabs: ['StrokeColor'],
-    toolNames: ['RadioButtonFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'RadioButtonFormField'
+    styleTabs: ['StrokeColor', 'FillColor'],
+    toolNames: [
+      'RadioButtonFormFieldCreateTool',
+      'RadioButtonFormFieldCreateTool2',
+      'RadioButtonFormFieldCreateTool3',
+      'RadioButtonFormFieldCreateTool4',
+    ],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RadioButtonWidgetAnnotation
   },
   [annotationMapKeys.LIST_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-listbox',
@@ -735,8 +740,7 @@ const map = {
       'ListBoxFormFieldCreateTool3',
       'ListBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'ListBoxFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ListWidgetAnnotation
   },
   [annotationMapKeys.COMBO_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-combobox',
@@ -750,8 +754,16 @@ const map = {
       'ComboBoxFormFieldCreateTool3',
       'ComboBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'ComboBoxFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ChoiceWidgetAnnotation
+  },
+  [annotationMapKeys.PUSH_BUTTON_FORM_FIELD]: {
+    icon: 'icon-form-field-button',
+    iconColor: null,
+    validStyleTabs: [],
+    currentStyleTab: null,
+    styleTabs: [],
+    toolNames: [],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PushButtonWidgetAnnotation
   },
   [annotationMapKeys.TRACKED_CHANGE]: {
     icon: 'ic-edit-page',
@@ -769,7 +781,7 @@ export const mapToolNameToKey = (toolName) => Object.keys(map).find((key) => map
 
 export const mapAnnotationToKey = (annotation) => Object.keys(map).find((key) => {
   const { annotationCheck } = map[key];
-  return annotationCheck && annotationCheck(annotation);
+  return annotationCheck?.(annotation);
 });
 
 export const mapAnnotationToToolName = (annotation) => map[mapAnnotationToKey(annotation)].toolNames[0];
@@ -789,7 +801,7 @@ export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
   const { toolName, buttonImage, toolObject } = tool;
   const key = toolName;
   const styleTabs = ['TextColor', 'StrokeColor', 'FillColor'].filter(
-    (property) => toolObject.defaults && toolObject.defaults[property],
+    (property) => toolObject?.defaults?.[property],
   );
 
   map[key] = {

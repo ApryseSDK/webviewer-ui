@@ -5,10 +5,10 @@ import { DndProvider } from 'react-dnd';
 import { isMobileDevice } from 'helpers/device';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TouchBackEnd from 'react-dnd-touch-backend';
-import OutlineControls from '../OutlineControls';
 import Outline from 'components/Outline';
 import OutlineContext from 'components/Outline/Context';
 import Button from 'components/Button';
+import TextButton from '../TextButton';
 import OutlineContent from 'components/OutlineContent';
 import DataElementWrapper from 'components/DataElementWrapper';
 
@@ -28,7 +28,6 @@ const OutlinesPanel = () => {
   const [
     isDisabled,
     outlines,
-    outlineControlVisibility,
     outlineEditingEnabled,
     shouldAutoExpandOutlines,
     currentPage,
@@ -38,7 +37,6 @@ const OutlinesPanel = () => {
     (state) => [
       selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL),
       selectors.getOutlines(state),
-      selectors.isOutlineControlVisible(state),
       selectors.getOutlineEditingEnabled(state),
       selectors.shouldAutoExpandOutlines(state),
       selectors.getCurrentPage(state),
@@ -279,20 +277,21 @@ const OutlinesPanel = () => {
       data-element={DataElements.OUTLINE_PANEL} ref={panelRef}
     >
       <div className="bookmark-outline-panel-header">
-        <div className="header-title">
+        <h2 className="header-title">
           {t('component.outlinesPanel')}
-        </div>
+        </h2>
         {isOutlineEditable &&
           (isMultiSelectMode ?
-            <Button
+            <TextButton
               className="bookmark-outline-control-button"
               dataElement={DataElements.OUTLINE_MULTI_SELECT}
               label={t('option.bookmarkOutlineControls.done')}
               disabled={isAddingNewOutline}
               onClick={() => setMultiSelectMode(false)}
+              ariaLabel={`${t('option.bookmarkOutlineControls.done')} ${t('action.edit')}`}
             />
             :
-            <Button
+            <TextButton
               className="bookmark-outline-control-button"
               dataElement={DataElements.OUTLINE_MULTI_SELECT}
               label={t('option.bookmarkOutlineControls.edit')}
@@ -301,6 +300,7 @@ const OutlinesPanel = () => {
                 setMultiSelectMode(true);
                 setSelectedOutlines([]);
               }}
+              ariaLabel={`${t('action.edit')} ${t('component.outlinesPanel')}`}
             />
           )
         }
@@ -328,7 +328,6 @@ const OutlinesPanel = () => {
           removeOutlines,
         }}
       >
-        {outlineControlVisibility && <OutlineControls />}
         <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
           <OutlinesDragLayer />
 
@@ -378,24 +377,26 @@ const OutlinesPanel = () => {
                 <Button
                   className="multi-selection-button"
                   img="icon-menu-add"
-                  disabled={selectedOutlines.length > 0 || isAddingNewOutline}
+                  ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
+                  disabled={selectedOutlines.length > 0 || isAddingNewOutline || isAnyOutlineRenaming}
                   onClick={() => setAddingNewOutline(true)}
                 />
                 <Button
                   className="multi-selection-button"
                   img="icon-delete-line"
-                  disabled={selectedOutlines.length === 0}
+                  disabled={selectedOutlines.length === 0 || isAnyOutlineRenaming}
                   onClick={() => removeOutlines(selectedOutlines)}
                 />
               </>
               :
-              <Button
+              <TextButton
                 className="bookmark-outline-control-button add-new-button"
                 img="icon-menu-add"
                 dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON}
-                disabled={isAddingNewOutline}
+                disabled={isAddingNewOutline || isAnyOutlineRenaming}
                 label={`${t('action.add')} ${t('component.outlinePanel')}`}
                 onClick={() => setAddingNewOutline(true)}
+                ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
               />
             }
           </DataElementWrapper>

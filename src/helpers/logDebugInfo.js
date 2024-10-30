@@ -5,7 +5,7 @@ import packageConfig from '../../package.json';
 export default () => {
   // log UI and Core versions and warn/error if necessary
   const coreVersion = window.Core.getVersion();
-  const coreBuild = window.Core.getBuild();
+  const coreBuild = atob(window.Core.getBuild());
   const uiVersion = packageConfig.version;
   const webViewerJSVersion = getHashParameters('webViewerJSVersion', null);
   const wvServer = !!getHashParameters('webviewerServerURL', null);
