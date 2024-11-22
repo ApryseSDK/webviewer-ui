@@ -13,7 +13,7 @@
     "start": "npx babel-node ./dev-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "cp-webviewer-core": "rm -rf ./lib && mkdir -p ./lib && cp -r ./node_modules/@pdftron/webviewer/public/core ./lib",
-    "devinstall": "test -n \"$NOYARNPOSTINSTALL\" || cp ./node_modules/@storybook/react-dom-shim/dist/react-16.js ./node_modules/@storybook/react-dom-shim/dist/react-18.js && cp ./node_modules/@storybook/react-dom-shim/dist/react-16.mjs ./node_modules/@storybook/react-dom-shim/dist/react-18.mjs",
+    "postinstall": "./scripts/postinstall.sh",
     "lint": "eslint ./src --fix --ext .js,.jsx,.ts,.tsx",
     "lint:ci": "eslint ./src --quiet --ext .js,.jsx,.ts,.tsx",
     "clean": "rimraf build",
