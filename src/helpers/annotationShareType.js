@@ -25,4 +25,14 @@ const setAnnotationShareType = (annot, shareType) => {
   return annot;
 };
 
-export { getAnnotationShareType, setAnnotationShareType };
+/**
+ * Get share permissions
+ * @returns {string[]} sharingPermissions
+ */
+
+const getSharePermissions = () => {
+  const { sharingPermissions } = getWiseflowCustomValues();
+  return sharingPermissions;
+};
+
+export { getAnnotationShareType, setAnnotationShareType, getSharePermissions };

@@ -1,0 +1,2 @@
+cp ./node_modules/@storybook/react-dom-shim/dist/react-16.js ./node_modules/@storybook/react-dom-shim/dist/react-18.js
+cp ./node_modules/@storybook/react-dom-shim/dist/react-16.mjs ./node_modules/@storybook/react-dom-shim/dist/react-18.mjs

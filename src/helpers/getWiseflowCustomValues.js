@@ -12,13 +12,15 @@ import ShareTypes from 'src/constants/shareTypes';
  * @returns {WiseflowCustomValues}
  * @returns {string} defaultShareType (default: ShareTypes.NONE)
  * @returns {boolean} showShareType (default: true)
+ * @returns {string[]} sharingPermissions (default: [])
  */
 const getWiseflowCustomValues = () => {
   return {
     // Defaults
     defaultShareType: ShareTypes.NONE,
     showShareType: true,
-    ...JSON.parse(getCustomData())
+    sharingPermissions: ['NONE', 'PARTICIPANTS', 'ASSESSORS', 'ALL'],
+    ...JSON.parse(getCustomData()),
   };
 };
 
