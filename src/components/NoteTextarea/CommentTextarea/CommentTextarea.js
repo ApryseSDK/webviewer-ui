@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill-new';
 import 'quill-mention';
 import mentionsManager from 'helpers/MentionsManager';
 import Button from 'components/Button';
