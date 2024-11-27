@@ -2,10 +2,13 @@ import core from 'core';
 
 export async function toggleAnnotationsVisibility(layers) {
   const layerMap = getLayerMapping(layers);
-  const pdfNetAnnotations = await getPDFNetAnnotations(await core.getDocument().getPDFDoc());
-  pdfNetAnnotations.forEach((pdfNetAnnotation) => {
-    toggleAnnotationVisibility(pdfNetAnnotation, layerMap);
-  });
+  const doc = await core.getDocument();
+  if (doc && doc.getPDFDoc) {
+    const pdfNetAnnotations = await getPDFNetAnnotations(doc.getPDFDoc());
+    pdfNetAnnotations.forEach((pdfNetAnnotation) => {
+      toggleAnnotationVisibility(pdfNetAnnotation, layerMap);
+    });
+  }
 }
 
 /**

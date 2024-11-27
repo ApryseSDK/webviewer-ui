@@ -62,4 +62,9 @@ describe('Button component', () => {
 
     expect(button).toHaveAttribute('aria-expanded', 'true');
   });
+
+  it('can render text even when it has a colon', () => {
+    render(<ButtonWithProviders label={'The time is 4:20pm'}/>);
+    screen.getByText('The time is 4:20pm');
+  });
 });

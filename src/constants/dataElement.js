@@ -70,6 +70,7 @@ const DataElements = {
   RICH_TEXT_STYLE_CONTAINER: 'richTextStyleContainer',
   CALIBRATION_POPUP_BUTTON: 'calibratePopupButton',
   CALIBRATION_MODAL: 'calibrationModal',
+  PAGE_NAV_FLOATING_HEADER: 'page-nav-floating-header',
 
   NotesPanel: {
     DefaultHeader: {
@@ -230,7 +231,8 @@ const DataElements = {
   OFFICE_EDITOR_DELETE_COLUMN: 'officeEditorDeleteColumn',
   OFFICE_EDITOR_DELETE_TABLE: 'officeEditorDeleteTable',
   OFFICE_EDITOR_PAGE_BREAK: 'officeEditorPageBreak',
-  OFFICE_EDITOR_COLOR_PICKER: 'officeEditorColorPicker',
+  OFFICE_EDITOR_FLYOUT_COLOR_PICKER: 'officeEditorColorPicker',
+  OFFICE_EDITOR_COLOR_PICKER_OVERLAY: 'officeEditorColorPickerOverlay',
   OFFICE_EDITOR_TEXT_COLOR_BUTTON: 'textColorButton',
   OFFICE_EDITOR_REVIEW_PANEL: 'officeEditorReviewPanel',
 

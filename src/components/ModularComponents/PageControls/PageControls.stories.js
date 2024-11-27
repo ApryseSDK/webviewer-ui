@@ -50,7 +50,7 @@ const initialState = {
     currentPage: 2,
     totalPages: 9,
     activeFlyout: 'pageControlsFlyout',
-    activeCustomPanel: '',
+    activeTabInPanel: {},
     flyoutPosition: { x: 0, y: 0 },
     fixedGroupedItems: ['grouped-item-ABC'],
     pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],

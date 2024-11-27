@@ -73,7 +73,7 @@ const StaticItem = React.forwardRef((props, ref) => {
   const allProps = { ...flyoutItem, ...props };
   const { t } = useTranslation();
   const customHeadersAdditionalProperties = useSelector(selectors.getCustomHeadersAdditionalProperties, shallowEqual);
-  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]));
+  const getActiveTabInPanel = useSelector((state) => selectors.getActiveTabInPanel(state, activeFlyout.split('-flyout')[0]));
   const isDisabledItem = useSelector((state) => selectors.isElementDisabled(state, flyoutItem?.dataElement));
   const currentLineSpacing = useSelector(selectors.getLineSpacing);
 
@@ -173,7 +173,7 @@ const StaticItem = React.forwardRef((props, ref) => {
       const itemIsAPanelTab = type === FLYOUT_ITEM_TYPES.TAB_PANEL_ITEM;
       const itemIsAZoomButton = type === FLYOUT_ITEM_TYPES.ZOOM_BUTTON;
       const isItemActive = flyoutItem.isActive ||
-        itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement ||
+        itemIsAPanelTab && getActiveTabInPanel === flyoutItem.dataElement ||
         itemIsAZoomButton && Math.ceil(core.getZoom() * 100).toString() === flyoutItem.dataElement?.split('zoom-button-')[1];
 
       const flyoutItemClasses = classNames({

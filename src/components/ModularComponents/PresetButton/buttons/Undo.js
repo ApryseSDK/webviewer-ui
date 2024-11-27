@@ -17,9 +17,13 @@ const UndoButton = forwardRef((props, ref) => {
   const { presetDataElement, icon, title } = menuItems.undoButton;
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canUndo = useSelector((state) => selectors.canUndo(state, activeDocumentViewerKey));
-  const disabled = !canUndo;
+  const isOfficeEditorMode = useSelector((state) => selectors.getIsOfficeEditorMode(state));
+  const disabled = !canUndo && !isOfficeEditorMode;
 
   const handleClick = () => {
+    if (isOfficeEditorMode) {
+      return core.getOfficeEditor().undo();
+    }
     core.undo(activeDocumentViewerKey);
   };
 
@@ -34,7 +38,7 @@ const UndoButton = forwardRef((props, ref) => {
           img={icon}
           onClick={handleClick}
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
-          isNotClickableSelector={(state) => !state.viewer.canUndo[state.viewer.activeDocumentViewerKey]}
+          disabled={disabled}
         />
       )
   );

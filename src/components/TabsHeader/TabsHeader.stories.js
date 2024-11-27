@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
-import { createStore } from 'helpers/storybookHelper';
+import { createStore, createTemplate } from 'helpers/storybookHelper';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { defaultPanels } from 'src/redux/modularComponents';
 import initialState from 'src/redux/initialState';
@@ -93,4 +93,19 @@ export const MultiTabWithMarginOffset = () => {
       </div>
     </Provider>
   );
+};
+
+export const MultiTabWithNameHandler = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents, isMultiTab: true });
+
+MultiTabWithNameHandler.play = async () => {
+  const instance = window.instance;
+
+  instance.UI.TabManager.setTabNameHandler((originalName) => {
+    return originalName.toUpperCase();
+  });
+};
+
+MultiTabWithNameHandler.parameters = {
+  layout: 'fullscreen',
+  customizableUI: true,
 };
