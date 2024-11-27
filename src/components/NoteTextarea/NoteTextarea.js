@@ -68,6 +68,9 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   };
 
   const handleChange = (content, delta, source, editor) => {
+    // Removes Non-breaking Space and replaces with regular space
+    content = content.replace(/&nbsp;/g, ' ');
+
     if (textareaRef.current) {
       /* For the React Quill editor, the text won't ever be empty, at least a '\n'
        * will be there, so it is necessary to trim the value to check if it is empty

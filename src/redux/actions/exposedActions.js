@@ -6,16 +6,16 @@ import { disableElements, enableElements, setActiveFlyout } from 'actions/intern
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getGenericPanels, getGroupedItemsWithSelectedTool, getOpenGenericPanel } from 'selectors/exposedSelectors';
+import { getFirstToolForGroupedItems, getGenericPanels, getGroupedItemsWithSelectedTool, getOpenGenericPanel, getEnabledRibbonItems } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
-import { ITEM_TYPE } from 'constants/customizationVariables';
+import { OPACITY_LEVELS } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
-import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getParentGroupedItems } from 'helpers/modularUIHelpers';
+import { getAllAssociatedGroupedItems, assignToolToGroups } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
-import { isOfficeEditorMode } from 'src/helpers/officeEditor';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -144,12 +144,29 @@ export const setCustomStamps = (t) => async (dispatch) => {
   });
 };
 
+const stashEnabledRibbons = (ribbonItems) => (
+  {
+    type: 'STASH_ENABLED_RIBBONS',
+    payload: { ribbonItems }
+  }
+);
+
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
+  // Set default toolbar group to View
   dispatch(setToolbarGroup('toolbarGroup-View'));
   const state = getState();
-  const toolbarGroupsToDisable = Object.keys(state.viewer.headers).filter(
-    (key) => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View',
-  );
+  const featureFlags = selectors.getFeatureFlags(state);
+  const { customizableUI } = featureFlags;
+  let toolbarGroupsToDisable;
+  if (customizableUI) {
+    // we must remember these toolbar groups to re-enable them when we exit read-only mode
+    toolbarGroupsToDisable = getEnabledRibbonItems(state).filter((item) => item !== 'toolbarGroup-View');
+    dispatch(stashEnabledRibbons(toolbarGroupsToDisable));
+  } else {
+    toolbarGroupsToDisable = Object.keys(state.viewer.headers).filter(
+      (key) => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View',
+    );
+  }
 
   disableElements(toolbarGroupsToDisable, PRIORITY_TWO)(dispatch, getState);
 };
@@ -165,10 +182,14 @@ export const enableRibbons = () => (dispatch, getState) => {
 
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
   const toolbarGroup = isInFormFieldCreationMode ? DataElements.FORMS_TOOLBAR_GROUP : state.viewer.toolbarGroup;
+  let toolbarGroupsToEnable;
   if (!customizableUI) {
     dispatch(setToolbarGroup(toolbarGroup || DataElements.ANNOTATE_TOOLBAR_GROUP));
+    toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter((key) => key.includes('toolbarGroup-'));
+  } else {
+    // re-enable the stashed ribbons
+    toolbarGroupsToEnable = state.viewer.enabledRibbonsStash;
   }
-  const toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter((key) => key.includes('toolbarGroup-'));
 
   enableElements(toolbarGroupsToEnable, PRIORITY_TWO)(dispatch, getState);
 };
@@ -183,35 +204,10 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   return dataElements.every((dataElement) => isElementDisabled(state, dataElement));
 };
 
-export const getFirstToolForGroupedItems = (state, group) => {
-  const modularComponents = state.viewer.modularComponents;
-  const allItems = getBasicItemsFromGroupedItems(state, group);
-  let firstTool = '';
-
-  allItems?.find((item) => {
-    const { type, toolName, dataElement } = modularComponents[item];
-    if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
-      firstTool = toolName;
-      return toolName;
-    }
-    return false;
-  });
-  return firstTool;
-};
-
 export const setLastPickedToolAndGroup = (toolAndGroup) => ({
   type: 'SET_LAST_PICKED_TOOL_AND_GROUP',
   payload: { tool: toolAndGroup.tool, group: toolAndGroup.group },
 });
-
-export const getAllAssociatedGroupedItems = (state, groupedItems) => {
-  const arrayOfGroupedItems = Array.isArray(groupedItems) ? groupedItems : [groupedItems];
-  const parentGroupedItems = getParentGroupedItems(state, groupedItems);
-  const nestedGroupedItems = getNestedGroupedItems(state, groupedItems);
-  const allAssociatedGroupedItems = Array.from(new Set([...arrayOfGroupedItems, ...parentGroupedItems, ...nestedGroupedItems]));
-
-  return allAssociatedGroupedItems;
-};
 
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   if (!groupedItems.length) {
@@ -240,6 +236,48 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   dispatch(setGroupedItems(allAssociatedGroupedItems));
 };
 
+export const setAppStateAfterToolModeChanged = (toolName, stateObject) => (dispatch, getState) => {
+  const state = getState();
+  let { activeCustomRibbon, activeGroupedItems, lastPickedToolAndGroup, lastPickedToolForGroupedItems } = stateObject;
+  const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
+  const activeGroupedItemsContainsTool = activeGroupedItems.filter((item) => groupedItemsWithTool.includes(item));
+
+  if (!activeGroupedItems.length || (!activeGroupedItemsContainsTool.length && toolName !== defaultTool)) {
+    // If no active grouped items have the selected tool, we set the first one as active
+    if (!activeGroupedItemsContainsTool.length && groupedItemsWithTool.length > 0) {
+      let firstGroupedItem = '';
+      let associatedRibbonItem = '';
+      for (const groupedItems of groupedItemsWithTool) {
+        firstGroupedItem = groupedItems;
+        associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, groupedItems);
+        if (associatedRibbonItem) {
+          break;
+        }
+      }
+      // We just set the active custom ribbon if there is an associated ribbon item.
+      if (associatedRibbonItem) {
+        activeCustomRibbon = associatedRibbonItem;
+      }
+
+      const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, firstGroupedItem);
+      activeGroupedItems = allAssociatedGroupedItems;
+      lastPickedToolForGroupedItems = assignToolToGroups(toolName, activeGroupedItems);
+      lastPickedToolAndGroup = { tool: toolName, group: activeGroupedItems };
+    } else if (activeGroupedItemsContainsTool.length) {
+      lastPickedToolForGroupedItems = assignToolToGroups(toolName, activeGroupedItemsContainsTool);
+    }
+  }
+
+  dispatch({
+    type: 'SET_APP_STATE_AFTER_TOOL_MODE_CHANGED',
+    payload: {
+      activeCustomRibbon: activeCustomRibbon,
+      activeGroupedItems: activeGroupedItems,
+      lastPickedToolAndGroup: lastPickedToolAndGroup,
+      lastPickedToolForGroupedItems: lastPickedToolForGroupedItems,
+    }
+  });
+};
 export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch, getState) => {
   const state = getState();
   const groupedItemsWithTool = getGroupedItemsWithSelectedTool(state, toolName);
@@ -348,40 +386,6 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
   fireEvent(Events.TOOLBAR_GROUP_CHANGED, toolbarGroup);
 };
 
-export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) => {
-  const state = getState();
-  const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
-  const activeGroupedItems = selectors.getActiveGroupedItems(state);
-  const activeGroupedItemsContainsTool = activeGroupedItems.filter((item) => groupedItemsWithTool.includes(item));
-
-  // If no active grouped items have the selected tool, we set the first one as active
-  if (!activeGroupedItemsContainsTool.length && groupedItemsWithTool.length > 0) {
-    let firstGroupedItem = '';
-    let associatedRibbonItem = '';
-    for (const groupedItems of groupedItemsWithTool) {
-      firstGroupedItem = groupedItems;
-      associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, groupedItems);
-      if (associatedRibbonItem) {
-        break;
-      }
-    }
-    // We just set the active custom ribbon if there is an associated ribbon item.
-    if (associatedRibbonItem) {
-      dispatch(setActiveCustomRibbon(associatedRibbonItem));
-    }
-    const parentGroupedItems = getParentGroupedItems(state, firstGroupedItem);
-    const nestedGroupedItems = getNestedGroupedItems(state, parentGroupedItems);
-    const allAssociatedGroupedItems = Array.from(new Set([firstGroupedItem, ...parentGroupedItems, ...nestedGroupedItems]));
-
-    dispatch(setActiveGroupedItems(allAssociatedGroupedItems));
-  } else if (activeGroupedItemsContainsTool.length) {
-    // For all grouped items that contain the selected tool, we set the last picked tool
-    for (const groupedItem of activeGroupedItemsContainsTool) {
-      dispatch(setLastPickedToolForGroupedItems(groupedItem, toolName));
-    }
-  }
-};
-
 export const setSelectedStampIndex = (index) => ({
   type: 'SET_SELECTED_STAMP_INDEX',
   payload: { index },
@@ -488,6 +492,8 @@ export const setHeaderMaxWidth = (dataElement, maxWidth) => updateHeaderProperty
 export const setHeaderMaxHeight = (dataElement, maxHeight) => updateHeaderProperty(dataElement, 'maxHeight', maxHeight);
 
 export const setHeaderStyle = (dataElement, style) => updateHeaderProperty(dataElement, 'style', style);
+
+export const setOpacityOfItem = (dataElement, value) => updateHeaderProperty(dataElement, 'opacity', value);
 
 const updateHeaderProperty = (dataElement, property, value) => ({
   type: 'UPDATE_MODULAR_HEADER',
@@ -858,6 +864,11 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
   }
 };
 
+export const setActiveHeaderGroup = (headerGroup) => ({
+  type: 'SET_ACTIVE_HEADER_GROUP',
+  payload: { headerGroup },
+});
+
 export const setTimezone = (timezone) => ({
   type: 'SET_TIMEZONE',
   payload: { timezone },
@@ -1054,15 +1065,21 @@ export const setCommentThreadExpansion = (enableCommentThreadExpansion) => ({
   payload: { enableCommentThreadExpansion },
 });
 
-export const enableFadePageNavigationComponent = () => ({
-  type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
-  payload: { fadePageNavigationComponent: true },
-});
+export const enableFadePageNavigationComponent = () => (dispatch) => {
+  dispatch(setOpacityOfItem(DataElements.PAGE_NAV_FLOATING_HEADER, OPACITY_LEVELS.NONE));
+  return dispatch({
+    type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
+    payload: { fadePageNavigationComponent: true },
+  });
+};
 
-export const disableFadePageNavigationComponent = () => ({
-  type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
-  payload: { fadePageNavigationComponent: false },
-});
+export const disableFadePageNavigationComponent = () => (dispatch) => {
+  dispatch(setOpacityOfItem(DataElements.PAGE_NAV_FLOATING_HEADER, OPACITY_LEVELS.FULL));
+  return dispatch({
+    type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
+    payload: { fadePageNavigationComponent: false },
+  });
+};
 
 export const enablePageDeletionConfirmationModal = () => ({
   type: 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP',

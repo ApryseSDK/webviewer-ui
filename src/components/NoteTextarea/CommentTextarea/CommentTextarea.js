@@ -56,23 +56,12 @@ Quill.register('modules/keyboard', CustomKeyboard, true);
 
 // Overriding clipboard module to fix cursor issue after pasting text
 const Clipboard = Quill.import('modules/clipboard');
-const Delta = Quill.import('delta');
 const { quillShadowDOMWorkaround } = window.Core;
 
 class QuillPasteExtra extends Clipboard {
   constructor(quill, options) {
     quillShadowDOMWorkaround(quill);
     super(quill, options);
-    this.keepSelection = options.keepSelection;
-  }
-  onPaste() {
-    const range = this.quill.getSelection();
-    const delta = new Delta().retain(range.index).delete(range.length);
-    if (this.keepSelection) {
-      this.quill.setSelection(range.index, delta.length(), Quill.sources.SILENT);
-    } else {
-      this.quill.setSelection(range.index + delta.length(), Quill.sources.SILENT);
-    }
   }
 }
 Quill.register('modules/clipboard', QuillPasteExtra, true);

@@ -11,7 +11,7 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivenessHelper';
-import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
+import { getNestedGroupedItems, assignToolToGroups } from 'helpers/modularUIHelpers';
 import core from 'core';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 
@@ -33,12 +33,13 @@ const RibbonItem = forwardRef((props, ref) => {
     ariaCurrent
   } = props;
 
-  const activeGroupedItems = useSelector((state) => selectors.getActiveGroupedItems(state));
-  const activeCustomRibbon = useSelector((state) => selectors.getActiveCustomRibbon(state));
+  const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
+  const activeCustomRibbon = useSelector(selectors.getActiveCustomRibbon);
   const lastPickedToolForGroupedItems = useSelector((state) => selectors.getLastPickedToolForGroupedItems(state, groupedItems));
   const isRibbonItemDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const customHeadersAdditionalProperties = useSelector((state) => selectors.getCustomHeadersAdditionalProperties(state));
   const allAssociatedGroupedItems = useSelector((state) => [...groupedItems, ...getNestedGroupedItems(state, groupedItems)], shallowEqual);
+  const firstRibbonItemTool = useSelector((state) => selectors.getFirstToolForGroupedItems(state, allAssociatedGroupedItems));
 
   const [isActive, setIsActive] = useState(false);
 
@@ -54,7 +55,7 @@ const RibbonItem = forwardRef((props, ref) => {
 
   useEffect(() => {
     const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => allAssociatedGroupedItems.includes(item));
-    if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
+    if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !allAssociatedGroupedItems?.length)) {
       setIsActive(true);
     } else {
       setIsActive(false);
@@ -66,21 +67,23 @@ const RibbonItem = forwardRef((props, ref) => {
       core.setToolMode(defaultTool);
     }
     if (!isActive) {
-      dispatch(actions.setActiveGroupedItems(allAssociatedGroupedItems));
-      dispatch(actions.setActiveCustomRibbon(dataElement));
-      dispatch(actions.setLastPickedToolAndGroup({
-        tool: lastPickedToolForGroupedItems,
-        group: allAssociatedGroupedItems
+      const ribbonItemTool = lastPickedToolForGroupedItems === defaultTool ? firstRibbonItemTool : lastPickedToolForGroupedItems;
+      dispatch(actions.setAppStateAfterToolModeChanged(ribbonItemTool, {
+        activeCustomRibbon: dataElement,
+        activeGroupedItems: allAssociatedGroupedItems,
+        lastPickedToolAndGroup: { tool: ribbonItemTool, group: allAssociatedGroupedItems },
+        lastPickedToolForGroupedItems: assignToolToGroups(ribbonItemTool, allAssociatedGroupedItems),
       }));
+
       setIsActive(true);
-      core.setToolMode(lastPickedToolForGroupedItems);
+      core.setToolMode(ribbonItemTool);
 
       if (groupedItems.length < 1) {
         core.getFormFieldCreationManager().endFormFieldCreationMode();
         core.getContentEditManager().endContentEditMode();
       }
     }
-  }, [activeGroupedItems]);
+  }, [activeGroupedItems, activeCustomRibbon]);
 
   if (isRibbonItemDisabled) {
     return null;

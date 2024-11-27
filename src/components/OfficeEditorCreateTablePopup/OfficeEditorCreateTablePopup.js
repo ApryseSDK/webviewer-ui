@@ -49,28 +49,20 @@ const OfficeEditorCreateTablePopup = ({ isOpen, onClose }) => {
       case 'ArrowRight':
         event.preventDefault();
         event.stopPropagation();
-        setTimeout(() => {
-          moveFocus(rowIndex, colIndex, 1, 0);
-        });
+        moveFocus(rowIndex, colIndex, 1, 0);
         break;
       case 'ArrowLeft':
         event.preventDefault();
         event.stopPropagation();
-        setTimeout(() => {
-          moveFocus(rowIndex, colIndex, -1, 0);
-        });
+        moveFocus(rowIndex, colIndex, -1, 0);
         break;
       case 'ArrowDown':
         event.preventDefault();
-        setTimeout(() => {
-          moveFocus(rowIndex, colIndex, 0, 1);
-        });
+        moveFocus(rowIndex, colIndex, 0, 1);
         break;
       case 'ArrowUp':
         event.preventDefault();
-        setTimeout(() => {
-          moveFocus(rowIndex, colIndex, 0, -1);
-        });
+        moveFocus(rowIndex, colIndex, 0, -1);
         break;
       case 'Enter':
         event.preventDefault();

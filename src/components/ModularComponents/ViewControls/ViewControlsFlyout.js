@@ -109,7 +109,7 @@ const ViewControlsFlyout = () => {
       dataElement: 'rotateClockwiseButton'
     };
     const rotateCounterClockwiseButton = {
-      icon: 'icon-header-page-manipulation-page-rotation-clockwise-line',
+      icon: 'icon-header-page-manipulation-page-rotation-counterclockwise-line',
       label: 'action.rotateCounterClockwise',
       title: 'action.rotateCounterClockwise',
       onClick: () => core.rotateCounterClockwise(activeDocumentViewerKey),

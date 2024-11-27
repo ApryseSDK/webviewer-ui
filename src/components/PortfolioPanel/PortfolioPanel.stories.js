@@ -32,7 +32,10 @@ const mockInitialState = {
     },
     panelWidths: { panel: 300 },
     activeGroupedItems: ['insertGroupedItems'],
-    activeCustomPanel: 'portfolioPanel',
+    activeTabInPanel: {
+      'tabPanel': 'portfolioPanel',
+    }
+    ,
   },
   featureFlags: {
     customizableUI: true,
