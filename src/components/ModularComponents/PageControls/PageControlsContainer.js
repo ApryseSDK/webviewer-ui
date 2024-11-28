@@ -8,7 +8,7 @@ import PageControls from './PageControls';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { FLYOUT_ITEM_TYPES, ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
+import { FLYOUT_ITEM_TYPES, ITEM_TYPE, PLACEMENT, OPACITY_LEVELS } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 
 const PageControlsContainer = ({ dataElement = 'page-controls-container', headerPlacement, headerDirection }) => {
@@ -17,6 +17,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   const totalPages = useSelector(selectors.getTotalPages);
   const currentPage = useSelector(selectors.getCurrentPage);
+  const shouldFadePageNavigationComponent = useSelector(selectors.shouldFadePageNavigationComponent);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -69,6 +70,9 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
   }, [size, totalPages, currentPage]);
 
   useEffect(() => {
+    if (!shouldFadePageNavigationComponent) {
+      dispatch(actions.setOpacityOfItem(DataElements.PAGE_NAV_FLOATING_HEADER, OPACITY_LEVELS.FULL));
+    }
     dispatch(actions.disableElement('pageNavOverlay'));
   }, []);
 

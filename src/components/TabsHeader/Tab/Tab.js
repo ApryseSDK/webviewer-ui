@@ -16,14 +16,17 @@ const propTypes = {
   onDragOver: PropTypes.func,
   onDragLeave: PropTypes.func,
   id: PropTypes.string,
+  tabNameHandler: PropTypes.func,
 };
 
-const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, closeTab, id, isToLeftOfActive }) => {
+const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, closeTab, id, isToLeftOfActive, tabNameHandler }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
+  const fileName = tabNameHandler ? tabNameHandler(tab.options.filename) : tab.options.filename;
   const removeExtension = true;
-  const labelName = removeExtension ? removeFileNameExtension(tab.options.filename, false) : tab.options.filename;
-  const nameForId = labelName.replace(/\s+/g, '').toLowerCase();
+  const labelName = removeExtension ? removeFileNameExtension(fileName, false) : fileName;
+  const nameForId = labelName?.replace(/\s+/g, '').toLowerCase();
   const { t } = useTranslation();
+  const untitledLabelName = labelName?.includes('untitled') ? t('message.untitled') + labelName.replace('untitled', '') : undefined;
 
   useEffect(() => {
     if (tab && tab.disabled !== disabled) {
@@ -33,7 +36,7 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
 
   const tabLabel = (
     <div className={classNames({ 'file-text': true, disabled })} >
-      <p>{labelName}</p>
+      <p>{untitledLabelName || labelName}</p>
     </div>
   );
 
@@ -49,7 +52,7 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
         tabIndex={isActive ? 0 : -1}
         className={classNames({ Tab: true })}
         onClick={setActive}
-        title={labelName}
+        title={untitledLabelName || labelName}
         label={tabLabel}
         useI18String={false}
       />

@@ -7,6 +7,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
+import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 const noop = () => { };
 
@@ -22,6 +23,7 @@ export const MockApp = ({ initialState, width, height }) => {
   const store = createStore(initialState);
 
   setItemToFlyoutStore(store);
+  defineWebViewerInstanceUIAPIs(store);
 
   const divStyle = {
     margin: 0,

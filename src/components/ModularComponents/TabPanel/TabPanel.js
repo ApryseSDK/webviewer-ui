@@ -13,12 +13,10 @@ import ToggleElementButton from 'components/ModularComponents/ToggleElementButto
 import RedactionPanel from 'components/RedactionPanel';
 import { panelNames, panelData } from 'constants/panel';
 import DataElements from 'constants/dataElement';
-import core from 'core';
-import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
 import { getPanelToRender, createCustomElement } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
-const TabPanel = ({ dataElement: tabPanelDataElement }) => {
+const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const moreButtonDefaultIcon = 'icon-tools-more';
@@ -39,17 +37,12 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const [isShrinkingPanel, setIsShrinkingPanel] = useState(false);
 
   const genericPanels = useSelector(selectors.getGenericPanels);
-  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, tabPanelDataElement));
+  const selectedTab = useSelector((state) => selectors.getActiveTabInPanel(state, tabPanelDataElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
-  const bookmarks = useSelector(selectors.getBookmarks);
-  const isBookmarkIconShortcutVisible = useSelector(selectors.isBookmarkIconShortcutVisible);
-  const isBookmarkPanelEnabled = useSelector((state) => !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL));
   const isPortfolioPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL));
   const isSignaturePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SIGNATURE_PANEL));
 
-  const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
   const panelsList = genericPanels.find((panel) => panel.dataElement === tabPanelDataElement).panelsList;
-
   const renderPanel = (panelName, dataElement) => {
     if (panelName === panelNames.REDACTION) {
       return (
@@ -135,7 +128,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   };
 
   const handleMoreButtonIcon = () => {
-    if (activeCustomPanel && !visiblePanelTabs.includes(activeCustomPanel)) {
+    if (selectedTab && !visiblePanelTabs.includes(selectedTab)) {
       setMoreButtonIcon('icon-tools-more-active');
     } else {
       setMoreButtonIcon(moreButtonDefaultIcon);
@@ -153,7 +146,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
         const flyoutItem = {
           ...panelsObject[item],
           onClick: () => {
-            dispatch(actions.setActiveCustomPanel(item, tabPanelDataElement));
+            dispatch(actions.setActiveTabInPanel(item, tabPanelDataElement));
             dispatch(actions.closeElements([FLYOUT_NAME]));
           },
           sortIndex: panelsObject[item].sortIndex,
@@ -270,19 +263,19 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     setPanelsObject(getPanelsObjectToRender());
     // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
     setOverflowItems([]);
-  }, [isPortfolioPanelDisabled, isSignaturePanelDisabled]);
+  }, [isPortfolioPanelDisabled, isSignaturePanelDisabled, redactionAnnotationsList]);
 
   useEffect(() => {
-    if (!activeCustomPanel) {
+    if (!selectedTab) {
       const firstPanel = Object.keys(panelsObject)[0];
-      dispatch(actions.setActiveCustomPanel(firstPanel, tabPanelDataElement));
+      dispatch(actions.setActiveTabInPanel(firstPanel, tabPanelDataElement));
     }
     setVisiblePanelTabs(Object.keys(panelsObject));
   }, [panelsObject]);
 
   useEffect(() => {
     handleMoreButtonIcon();
-  }, [activeCustomPanel]);
+  }, [selectedTab]);
 
   useEffect(() => {
     if (headerContainerPrevWidth !== headerContainerWidth) {
@@ -304,31 +297,11 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     headerContainerWidth,
   ]);
 
-  useEffect(() => {
-    if (isBookmarkPanelEnabled) {
-      core.setBookmarkShortcutToggleOnFunction((pageIndex) => {
-        dispatch(actions.addBookmark(pageIndex, t('message.untitled')));
-      });
-      core.setBookmarkShortcutToggleOffFunction((pageIndex) => {
-        dispatch(actions.removeBookmark(pageIndex));
-      });
-      core.setUserBookmarks(Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10)));
-    }
-  }, [isBookmarkPanelEnabled, bookmarks]);
-
-  useEffect(() => {
-    if (isBookmarkPanelEnabled && isBookmarkIconShortcutVisible) {
-      core.setBookmarkIconShortcutVisibility(true);
-    } else {
-      core.setBookmarkIconShortcutVisibility(false);
-    }
-  }, [isBookmarkPanelEnabled, isBookmarkIconShortcutVisible]);
-
   const renderTabs = () => {
     if (visiblePanelTabs?.length) {
       return visiblePanelTabs.map((tab, index) => {
         const panelInfo = panelsObject[tab];
-        const isActive = tab === activeCustomPanel;
+        const isActive = tab === selectedTab;
         return (
           <Button
             className={classNames({
@@ -341,7 +314,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
             isActive={isActive}
             dataElement={`${tab}-${tabPanelDataElement}`}
             img={panelInfo.icon}
-            onClick={() => dispatch(actions.setActiveCustomPanel(tab, tabPanelDataElement))}
+            onClick={() => dispatch(actions.setActiveTabInPanel(tab, tabPanelDataElement))}
             title={panelInfo.title}
             label={panelInfo.label}
             ariaCurrent={isActive}
@@ -352,7 +325,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   };
 
   const getActivePanelRender = () => {
-    const activePanel = panelsObject[activeCustomPanel];
+    const activePanel = panelsObject[selectedTab];
     return activePanel?.render;
   };
 
@@ -403,6 +376,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
 TabPanel.propTypes = {
   dataElement: PropTypes.string.isRequired,
+  redactionAnnotationsList: PropTypes.array,
 };
 
 export default TabPanel;

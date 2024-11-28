@@ -52,6 +52,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onContentEditDocumentDigitalSigned = eventListeners.onContentEditDocumentDigitalSigned(dispatch);
   const onContentEditPasswordRequired = eventListeners.onContentEditPasswordRequired(dispatch, store);
   const onCompareAnnotationsLoaded = eventListeners.onCompareAnnotationsLoaded(dispatch, store);
+  const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch);
 
   return {
     addEventHandlers: () => {
@@ -107,6 +108,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.addEventListener('pageComplete', onPageComplete, undefined, documentViewerKey);
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.addEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
+      core.addEventListener('userBookmarksChanged', onUserBookmarksChanged);
       core.getTool('AnnotationCreateStamp', documentViewerKey).addEventListener('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSignature', documentViewerKey).addEventListener('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature', documentViewerKey).addEventListener('annotationAdded', onSignatureAnnotationAdded);
@@ -166,6 +168,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.removeEventListener('pageComplete', onPageComplete, documentViewerKey);
       core.removeEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable, documentViewerKey);
       core.removeEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable, documentViewerKey);
+      core.removeEventListener('userBookmarksChanged', onUserBookmarksChanged, documentViewerKey);
       core.getTool('AnnotationCreateStamp', documentViewerKey).removeEventListener('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSignature', documentViewerKey).removeEventListener('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature', documentViewerKey).removeEventListener('annotationAdded', onSignatureAnnotationAdded);

@@ -17,9 +17,13 @@ const RedoButton = forwardRef((props, ref) => {
   const { icon, title } = menuItems.redoButton;
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canRedo = useSelector((state) => selectors.canRedo(state, activeDocumentViewerKey));
-  const disabled = !canRedo;
+  const isOfficeEditorMode = useSelector((state) => selectors.getIsOfficeEditorMode(state));
+  const disabled = !canRedo && !isOfficeEditorMode;
 
   const handleClick = () => {
+    if (isOfficeEditorMode) {
+      return core.getOfficeEditor().redo();
+    }
     core.redo(activeDocumentViewerKey);
   };
 
@@ -34,7 +38,7 @@ const RedoButton = forwardRef((props, ref) => {
           img={icon}
           onClick={handleClick}
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
-          isNotClickableSelector={(state) => !state.viewer.canRedo[state.viewer.activeDocumentViewerKey]}
+          disabled={disabled}
         />
       )
   );

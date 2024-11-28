@@ -216,6 +216,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeTab: payload.activeTab,
       };
+    case 'SET_TAB_NAME_HANDLER':
+      return {
+        ...state,
+        tabNameHandler: payload.tabNameHandler,
+      };
     case 'SET_TABS':
       return {
         ...state,
@@ -488,6 +493,19 @@ export default (initialState) => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
+    case 'SET_APP_STATE_AFTER_TOOL_MODE_CHANGED': {
+      const { activeCustomRibbon, activeGroupedItems, lastPickedToolAndGroup, lastPickedToolForGroupedItems } = payload;
+      return {
+        ...state,
+        activeCustomRibbon: activeCustomRibbon ?? state.activeCustomRibbon,
+        activeGroupedItems: activeGroupedItems?? state.activeGroupedItems,
+        lastPickedToolAndGroup: lastPickedToolAndGroup,
+        lastPickedToolForGroupedItems: {
+          ...state.lastPickedToolForGroupedItems,
+          ...lastPickedToolForGroupedItems
+        }
+      };
+    }
     case 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS':
       return {
         ...state,
@@ -677,11 +695,11 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_COLOR_MAP':
       return { ...state, colorMap: payload.colorMap };
     case 'SET_WARNING_MESSAGE':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'ENABLE_DELETE_TAB_WARNING':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'DISABLE_DELETE_TAB_WARNING':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'SET_ERROR_MESSAGE':
       return { ...state, errorMessage: payload.message, errorTitle: payload.title };
     case 'SET_CUSTOM_NOTE_FILTER':
@@ -885,11 +903,11 @@ export default (initialState) => (state = initialState, action) => {
         genericPanels: defaultPanels,
       };
     }
-    case 'SET_ACTIVE_CUSTOM_PANEL':
+    case 'SET_ACTIVE_TAB_IN_PANEL':
       return {
         ...state,
-        activeCustomPanel: {
-          ...state.activeCustomPanel,
+        activeTabInPanel: {
+          ...state.activeTabInPanel,
           [payload.wrapperPanel]: payload.tabPanel
         },
       };
@@ -1158,6 +1176,9 @@ export default (initialState) => (state = initialState, action) => {
     }
     case 'SET_COMPARE_ANNOTATIONS_MAP': {
       return { ...state, compareAnnotationsMap: payload };
+    }
+    case 'STASH_ENABLED_RIBBONS': {
+      return { ...state, enabledRibbonsStash: [...payload.ribbonItems] };
     }
     default:
       return state;

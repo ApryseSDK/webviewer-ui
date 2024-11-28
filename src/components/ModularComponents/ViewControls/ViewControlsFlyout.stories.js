@@ -92,7 +92,7 @@ const initialState = {
     customPanels: [],
     genericPanels: [],
     activeFlyout: 'viewControlsFlyout',
-    activeCustomPanel: '',
+    activeTabInPanel: {},
     flyoutPosition: { x: 0, y: 0 },
     modularHeadersHeight: {
       topHeaders: 40,

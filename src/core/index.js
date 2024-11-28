@@ -124,7 +124,10 @@ import createDocument from './createDocument';
 import getContentEditManager from './getContentEditManager';
 import getTool from './getTool';
 import { getDocumentViewer, setDocumentViewer, getDocumentViewers, deleteDocumentViewer } from './documentViewers';
+import getUserBookmarks from './getUserBookmarks';
 import setUserBookmarks from './setUserBookmarks';
+import addUserBookmark from './addUserBookmark';
+import removeUserBookmark from './removeUserBookmark';
 import setBookmarkIconShortcutVisibility from './setBookmarkIconShortcutVisibility';
 import setBookmarkShortcutToggleOnFunction from './setBookmarkShortcutToggleOnFunction';
 import setBookmarkShortcutToggleOffFunction from './setBookmarkShortcutToggleOffFunction';
@@ -272,7 +275,10 @@ export default {
   syncNamespaces,
   createDocument,
   getContentEditManager,
+  getUserBookmarks,
   setUserBookmarks,
+  addUserBookmark,
+  removeUserBookmark,
   setBookmarkIconShortcutVisibility,
   setBookmarkShortcutToggleOnFunction,
   setBookmarkShortcutToggleOffFunction,

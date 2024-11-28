@@ -118,11 +118,16 @@ const ContextMenuPopup = ({
       let offsetTop = 0;
 
       if (window.isApryseWebViewerWebComponent) {
-        const node = getRootNode();
-        if (node) {
-          const host = node.host;
-          offsetLeft = host.offsetLeft;
-          offsetTop = host.offsetTop;
+        const host = getRootNode()?.host;
+        const hostBoundingRect = host?.getBoundingClientRect();
+
+        if (hostBoundingRect) {
+          offsetLeft = hostBoundingRect.left;
+          offsetTop = hostBoundingRect.top;
+
+          // Include host scroll offsets
+          offsetLeft += host.scrollLeft;
+          offsetTop += host.scrollTop;
         }
       }
 

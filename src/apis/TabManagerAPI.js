@@ -77,6 +77,7 @@ const TabManagerAPI = {
    * @param {boolean} [options.officeOptions.formatOptions.applyPageBreaksToSheet] If true will split Excel worksheets into pages so that the output resembles print output.
    * @param {boolean} [options.officeOptions.formatOptions.displayChangeTracking] If true will display office change tracking markup present in the document (i.e, red strikethrough of deleted content and underlining of new content). Otherwise displays the resolved document content, with no markup. Defaults to true.
    * @param {boolean} [officeOptions.formatOptions.displayHiddenText] If true will display hidden text in document. Otherwise hidden text will not be shown. Defaults to false.
+   * @param {number} [officeOptions.formatOptions.displayComments] If set to 1, it will display comment annotations in the document. Otherwise, comment annotations will not be shown. Defaults to 0 - no comments.
    * @param {number} [options.officeOptions.formatOptions.excelDefaultCellBorderWidth] Cell border width for table cells that would normally be drawn with no border. In units of points. Can be used to achieve a similar effect to the "show gridlines" display option within Microsoft Excel.
    * @param {number} [options.officeOptions.formatOptions.excelMaxAllowedCellCount] An exception will be thrown if the number of cells in an Excel document is above the value. Used for early termination of resource intensive documents. Setting this value to 250000 will allow the vast majority of Excel documents to convert without issue, while keeping RAM usage to a reasonable level. By default there is no limit to the number of allowed cells.
    * @param {string} [options.officeOptions.formatOptions.locale] Sets the value for Locale in the options object ISO 639-1 code of the current system locale. For example: 'en-US', 'ar-SA', 'de-DE', etc.
@@ -149,5 +150,26 @@ const TabManagerAPI = {
    */
   disableDeleteTabWarning() {
     this.store.dispatch(actions.disableDeleteTabWarning());
+  },
+
+  /**
+   * Sets a custom handler function for processing tab names.
+   * This handler can be used to display formatted tab names as needed.
+   * @method UI.TabManager.setTabNameHandler
+   * @param {Function} tabNameHandler - A function that processes the original tab name and returns the processed name.
+   * @example
+   * WebViewer(...).then(function(instance) {
+   *   const { UI } = instance
+   *   UI.enableFeatures(['MultiTab']);
+   *   UI.addEventListener(UI.Events.TAB_MANAGER_READY, () => {
+   *     instance.UI.TabManager.setTabNameHandler((originalName) => {
+   *       const [updatedName] = originalName.replace(/\+/g, '%20').split('/').slice(-1);
+   *       return decodeURIComponent(updatedName);
+   *     });
+   *   });
+   * });
+   */
+  setTabNameHandler(tabNameHandler) {
+    this.store.dispatch(actions.setTabNameHandler(tabNameHandler));
   },
 };

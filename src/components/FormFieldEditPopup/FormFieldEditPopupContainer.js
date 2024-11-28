@@ -173,6 +173,18 @@ function FormFieldEditPopupContainer({ annotation }) {
     setIsValid(validatedResponse.isValid);
     mapValidationResponseToTranslation(validatedResponse);
     setFieldName(name);
+    updateFlagsForRadioAnnotation(annotation);
+  }, [annotation]);
+
+  const updateFlagsForRadioAnnotation = useCallback((annotation) => {
+    if (annotation && annotation instanceof Annotations.RadioButtonWidgetAnnotation) {
+      const currentFlags = annotation.getField().flags;
+      const { READ_ONLY, REQUIRED } = Annotations.WidgetFlags;
+      const isReadOnly = currentFlags.get(READ_ONLY);
+      const isRequired = currentFlags.get(REQUIRED);
+      setReadOnly(isReadOnly || false);
+      setIsRequired(isRequired || false);
+    }
   }, [annotation]);
 
   const mapValidationResponseToTranslation = (validationResponse) => {

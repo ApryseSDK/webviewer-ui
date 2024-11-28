@@ -2,6 +2,7 @@ import React from 'react';
 import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
+import { userEvent, within, waitFor, expect } from '@storybook/test';
 
 export default {
   title: 'Components/LayersPanel',
@@ -58,6 +59,7 @@ export function Basic() {
         tool: 'AnnotationCreateTextHighlight',
         group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
       },
+      fadePageNavigationComponent: true,
     },
     document: {
       ...initialState.document,
@@ -72,10 +74,49 @@ export function Basic() {
 
 Basic.parameters = { layout: 'fullscreen' };
 
+
+Basic.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const menuButton = await canvas.queryByRole('button', { name: 'Menu' });
+  expect(menuButton).toBeInTheDocument();
+  await userEvent.click(menuButton);
+
+  await waitFor(() => {
+    const btn = canvas.queryByRole('button', { name: 'Settings' });
+    expect(btn).toBeInTheDocument();
+  });
+  const settingsButton = await canvas.queryByRole('button', { name: 'Settings' });
+  expect(settingsButton).toBeInTheDocument();
+  await userEvent.click(settingsButton);
+
+  await waitFor(() => {
+    const btn = canvas.queryByRole('button', { name: 'Advanced Setting' });
+    expect(btn).toBeInTheDocument();
+  });
+
+  const settingsAdvancedButton = await canvas.queryByRole('button', { name: 'Advanced Setting' });
+  expect(settingsAdvancedButton).toBeInTheDocument();
+  await userEvent.click(settingsAdvancedButton);
+
+  const input = await canvas.queryByRole('checkbox', { name: 'Disable Fade Page Navigation Component' });
+  expect(input).toBeInTheDocument();
+  await userEvent.click(input);
+
+  const closeBtn = await canvas.queryByRole('button', { name: 'Close' });
+  expect(closeBtn).toBeInTheDocument();
+  await userEvent.click(closeBtn);
+
+  const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
+  expect(pageNav).toBeInTheDocument();
+  expect(pageNav).toBeVisible();
+};
+
 export const RightSide = () => {
   const stateWithLayersPanelOnRight = {
     ...initialState,
     viewer: {
+      fadePageNavigationComponent: true,
       ...initialState.viewer,
       genericPanels: [
         {
@@ -134,6 +175,7 @@ export const Empty = () => {
         'layersPanel': { disabled: false, priority: 3 },
       },
       activeCustomRibbon: 'toolbarGroup-View',
+      fadePageNavigationComponent: false,
     },
     document: {
       ...initialState.document,

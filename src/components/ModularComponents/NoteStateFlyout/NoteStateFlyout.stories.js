@@ -37,7 +37,7 @@ function createReduxWrapper(dataElement, disabled) {
       modularHeadersHeight: {},
       flyoutPosition: { x: 0, y: 0 },
       modularComponents: {},
-      activeCustomPanel: ''
+      activeTabInPanel: {},
     },
     featureFlags: {
       customizableUI: true

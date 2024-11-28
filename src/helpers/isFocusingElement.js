@@ -6,12 +6,12 @@ export default () => {
   const isEditingFreetext = freetextAnnots.some((annot) => annot.getEditor()?.hasFocus());
   const { activeElement } = getRootNode();
 
-  return (
+  return (activeElement && (
     activeElement instanceof window.HTMLInputElement ||
     activeElement instanceof window.HTMLTextAreaElement ||
     activeElement.className.includes('ql-editor') ||
     isEditingFreetext ||
     (activeElement?.tagName?.toLowerCase() === 'input' && activeElement?.getAttribute('type') === 'text') ||
     activeElement?.tagName?.toLowerCase() === 'textarea'
-  );
+  ));
 };

@@ -6,18 +6,8 @@ import DataElements from 'src/constants/dataElement';
 
 export default (store, toolName) => {
   const { dispatch, getState } = store;
-  const state = getState();
   const toolGroup =
     selectors.getToolButtonObject(getState(), toolName)?.group || '';
-
-  const isCustomizableUI = state.featureFlags.customizableUI;
-  if (isCustomizableUI) {
-    const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
-    dispatch(actions.setLastPickedToolAndGroup({ tool: toolName, group: groupedItemsWithTool }));
-    dispatch(actions.setLastPickedToolForGroupedItems(groupedItemsWithTool, toolName));
-    core.setToolMode(toolName);
-    return;
-  }
 
   if (toolGroup) {
     dispatch(actions.openElement(DataElements.TOOLS_OVERLAY));
