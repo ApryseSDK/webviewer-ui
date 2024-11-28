@@ -72,7 +72,7 @@ const getDefaultOptions = () => ({
 const transformPasswordOption = (password, dispatch) => {
   // a boolean that is used to prevent infinite loop when wrong password is passed as an argument
   let passwordChecked = false;
-  let attempt = 0;
+  let attempt;
 
   return (checkPassword) => {
     dispatch(actions.setPasswordAttempts(attempt++));
@@ -84,8 +84,9 @@ const transformPasswordOption = (password, dispatch) => {
     if (!passwordChecked && typeof password === 'string') {
       checkPassword(password);
       passwordChecked = true;
+      attempt = 0;
     } else {
-      if (passwordChecked) {
+      if (passwordChecked && attempt !== 1) {
         console.error(
           'Wrong password has been passed as an argument. WebViewer will open password modal.',
         );

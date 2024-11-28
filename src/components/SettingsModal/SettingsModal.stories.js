@@ -134,7 +134,7 @@ TabbingTest.play = async ({ canvasElement }) => {
   const keyboardButton = await canvas.findByRole('button', { name: /Keyboard Shortcut/i });
   await expect(keyboardButton).toHaveFocus();
 
-  // Simulate pressing 'Enter' on the keyboardButton
+  // Simulate pressing 'Enter' on the keyboard button
   await userEvent.keyboard('{Enter}');
   await expect(keyboardButton).toHaveClass('selected');
   await expect(keyboardButton).toHaveAttribute('aria-selected', 'true');

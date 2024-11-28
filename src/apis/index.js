@@ -272,6 +272,7 @@ import setActiveRibbonItem from './setActiveRibbonItem';
 import closeTooltip from './closeToolTip';
 import startTextComparison from './startTextComparison';
 import stopTextComparison from './stopTextComparison';
+import setActiveTabInPanel from './setActiveTabInPanel';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -350,9 +351,9 @@ export default (store) => {
     setCustomNoteFilter: setCustomNoteFilter(store),
     setInlineCommentFilter: setInlineCommentFilter(store),
     setCustomPanel: setCustomPanel(store),
-    exportBookmarks: exportBookmarks(store),
+    exportBookmarks,
     extractPagesWithAnnotations,
-    importBookmarks: importBookmarks(store),
+    importBookmarks,
     setEmbeddedJSPopupStyle: setEmbeddedJSPopupStyle(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
@@ -399,6 +400,7 @@ export default (store) => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
+    setActiveTabInPanel: setActiveTabInPanel(store),
 
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
 

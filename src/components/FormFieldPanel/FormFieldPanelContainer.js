@@ -210,6 +210,19 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       ...previousFieldProperties,
       name,
     }));
+    updateFlagsForRadioAnnotation();
+  }, [annotation]);
+
+  const updateFlagsForRadioAnnotation = useCallback(() => {
+    if (annotation && annotation instanceof Annotations.RadioButtonWidgetAnnotation) {
+      const currentFlags = annotation.getField().flags;
+      const { READ_ONLY, REQUIRED } = Annotations.WidgetFlags;
+      setFieldFlags((flags) => ({
+        ...flags,
+        ReadOnly: currentFlags.get(READ_ONLY) || false,
+        Required: currentFlags.get(REQUIRED) || false,
+      }));
+    }
   }, [annotation]);
 
   const handleFlagChange = useCallback((value, flagName) => {

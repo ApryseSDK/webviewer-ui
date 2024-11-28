@@ -60,8 +60,8 @@ const defaultModularHeaders = {
       'formsGroupedItems'
     ]
   },
-  'page-nav-floating-header': {
-    dataElement: 'page-nav-floating-header',
+  [DataElements.PAGE_NAV_FLOATING_HEADER]: {
+    dataElement: DataElements.PAGE_NAV_FLOATING_HEADER,
     placement: 'bottom',
     grow: 0,
     gap: 12,
@@ -629,6 +629,8 @@ const defaultModularComponents = {
       'redactionToolButton',
       'pageRedactionToggleButton',
       'redactionPanelToggle',
+      'divider-0.4',
+      'stylePanelToggle',
       'defaultAnnotationUtilities'
     ],
     type: 'groupedItems',
@@ -882,17 +884,17 @@ const defaultPanels = [
     location: 'left'
   },
   {
-    dataElement: 'thumbnailPanel',
+    dataElement: 'thumbnailsPanel',
     render: 'thumbnailsPanel',
     location: 'left'
   },
   {
-    dataElement: 'outlinePanel',
+    dataElement: 'outlinesPanel',
     render: 'outlinesPanel',
     location: 'left'
   },
   {
-    dataElement: 'bookmarkPanel',
+    dataElement: 'bookmarksPanel',
     render: 'bookmarksPanel',
     location: 'left'
   },
@@ -946,13 +948,13 @@ const defaultPanels = [
     dataElement: 'tabPanel',
     panelsList: [
       {
-        render: 'thumbnailPanel'
+        render: 'thumbnailsPanel'
       },
       {
-        render: 'outlinePanel'
+        render: 'outlinesPanel'
       },
       {
-        render: 'bookmarkPanel'
+        render: 'bookmarksPanel'
       },
       {
         render: 'layersPanel'

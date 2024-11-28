@@ -171,7 +171,7 @@ const Flyout = () => {
       const isModalToggle = PRESET_BUTTONS_MODAL_TOGGLES.includes(flyoutItem.dataElement);
       const shouldCloseFlyoutCases = dataElement !== DataElements.VIEW_CONTROLS_FLYOUT &&
         flyoutItem.type !== ITEM_TYPE.PAGE_NAVIGATION_BUTTON &&
-        flyoutItem.dataElement !==  DataElements.OFFICE_EDITOR_COLOR_PICKER;
+        flyoutItem.dataElement !== DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER;
 
       if (!flyoutItem.children && shouldCloseFlyoutCases) {
         // keep open if keyboard event and modal toggle so we can transfer focus back and forth

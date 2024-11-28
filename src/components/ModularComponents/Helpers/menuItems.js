@@ -192,7 +192,7 @@ export const menuItems = {
     title: 'officeEditor.pageBreak',
   },
   [PRESET_BUTTON_TYPES.OE_COLOR_PICKER]: {
-    dataElement: DataElements.OFFICE_EDITOR_COLOR_PICKER,
+    dataElement: DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER,
     presetDataElement: DataElements.OFFICE_EDITOR_COLOR_PICKER_PRESET_BUTTON,
     icon: 'icon-office-editor-circle',
     label: 'officeEditor.textColor',

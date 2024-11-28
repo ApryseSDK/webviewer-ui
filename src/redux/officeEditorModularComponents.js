@@ -52,8 +52,8 @@ const defaultOfficeEditorModularHeaders = {
       // 'officeEditorReviewGroupedItems'
     ]
   },
-  'page-nav-floating-header': {
-    dataElement: 'page-nav-floating-header',
+  [DataElements.PAGE_NAV_FLOATING_HEADER]: {
+    dataElement: DataElements.PAGE_NAV_FLOATING_HEADER,
     placement: 'bottom',
     grow: 0,
     gap: 12,
@@ -92,6 +92,10 @@ const defaultOfficeEditorModularComponents = {
   fontFaceDropdown: {
     dataElement: 'fontFaceDropdown',
     type: 'fontFaceDropdown',
+  },
+  stylePresetDropdown: {
+    dataElement: 'stylePresetDropdown',
+    type: 'stylePresetDropdown',
   },
   increaseIndentButton: {
     dataElement: 'increaseIndentButton',
@@ -175,9 +179,19 @@ const defaultOfficeEditorModularComponents = {
     buttonType: 'justifyBothButton'
   },
   officeEditorColorPicker: {
-    dataElement: DataElements.OFFICE_EDITOR_COLOR_PICKER,
+    dataElement: DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER,
     type: 'presetButton',
-    buttonType: DataElements.OFFICE_EDITOR_COLOR_PICKER,
+    buttonType: DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER,
+  },
+  undoButton: {
+    dataElement: 'undoButton',
+    type: 'presetButton',
+    buttonType: 'undoButton'
+  },
+  redoButton: {
+    dataElement: 'redoButton',
+    type: 'presetButton',
+    buttonType: 'redoButton'
   },
   undefined: {},
   'divider-0.1': {
@@ -225,6 +239,10 @@ const defaultOfficeEditorModularComponents = {
   },
   'divider-0.8': {
     dataElement: 'divider-0.8',
+    type: 'divider'
+  },
+  'divider-0.9': {
+    dataElement: 'divider-0.9',
     type: 'divider'
   },
   'menuButton': {
@@ -338,6 +356,9 @@ const defaultOfficeEditorModularComponents = {
       'divider-0.7',
       'decreaseIndentButton',
       'increaseIndentButton',
+      'divider-0.8',
+      'undoButton',
+      'redoButton',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -360,7 +381,7 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'officeEditorInsertToolsGroupedItems',
     items: [
       ITEM_TYPE.OFFICE_EDITOR_PAGE_BREAK_BUTTON,
-      'divider-0.8',
+      'divider-0.9',
       'createTableDropdown',
       ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON,
     ],

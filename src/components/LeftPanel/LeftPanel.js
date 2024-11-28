@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import PortfolioPanel from 'components/PortfolioPanel';
@@ -41,9 +40,6 @@ const LeftPanel = () => {
     currentWidth,
     notesInLeftPanel,
     isInDesktopOnlyMode,
-    bookmarks,
-    isBookmarkPanelEnabled,
-    isBookmarkIconShortcutVisible,
     isMultiTabActive,
     isLogoBarEnabled,
     featureFlags,
@@ -64,9 +60,6 @@ const LeftPanel = () => {
       selectors.getLeftPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isInDesktopOnlyMode(state),
-      selectors.getBookmarks(state),
-      !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
-      selectors.isBookmarkIconShortcutVisible(state),
       selectors.getIsMultiTab(state),
       !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
       selectors.getFeatureFlags(state),
@@ -80,7 +73,6 @@ const LeftPanel = () => {
 
   const minWidth = 264;
   const dispatch = useDispatch();
-  const [t] = useTranslation();
 
   const onDrop = (e) => {
     // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
@@ -100,26 +92,6 @@ const LeftPanel = () => {
   }
 
   const isVisible = !(!isOpen || isDisabled);
-
-  useEffect(() => {
-    if (isBookmarkPanelEnabled) {
-      core.setBookmarkShortcutToggleOnFunction((pageIndex) => {
-        dispatch(actions.addBookmark(pageIndex, t('message.untitled')));
-      });
-      core.setBookmarkShortcutToggleOffFunction((pageIndex) => {
-        dispatch(actions.removeBookmark(pageIndex));
-      });
-      core.setUserBookmarks(Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10)));
-    }
-  }, [isBookmarkPanelEnabled, bookmarks]);
-
-  useEffect(() => {
-    if (isBookmarkPanelEnabled && isBookmarkIconShortcutVisible) {
-      core.setBookmarkIconShortcutVisibility(true);
-    } else {
-      core.setBookmarkIconShortcutVisibility(false);
-    }
-  }, [isBookmarkPanelEnabled, isBookmarkIconShortcutVisible]);
 
   // TODO: For whoever is refactoring the LeftPanel to make it generic, review if this is the best approach
   // Once we move to the new UI we can remove the legacy stuff

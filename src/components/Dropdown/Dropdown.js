@@ -674,9 +674,9 @@ function Dropdown({
   labelledById = showLabelInList ? `${id}-dropdown-label` : labelledById;
   let activeDescendantId = 'id-no-result';
   if (activeIndex >= 0) {
-    if (images.length > 0) {
+    if (images.length > 0 && images[activeIndex]) {
       activeDescendantId = `${id}-${getKey(images[activeIndex])}`;
-    } else if (filteredItems.length > 0) {
+    } else if (filteredItems.length > 0 && filteredItems[activeIndex]) {
       activeDescendantId = `${id}-${getKey(filteredItems[activeIndex])}`;
     }
   }
@@ -728,26 +728,28 @@ function Dropdown({
         id={`${id}-dropdown`}
         style={listBoxStyle}
       >
-        {showLabelInList && <div className="Dropdown__label" id={labelledById}>{t(`${translationPrefix}.dropdownLabel`)}</div>}
-        {children ? React.cloneElement(children, { onClose }) :
-          dropdownItems.length > 0 ?
-            (columns > 1 ?
-              displayDropdownAsList(dropdownItems, columns) :
-              dropdownItems
-            ) :
-            <>
-              <div
-                role="option"
-                id='id-no-result'
-                aria-disabled="true"
-                aria-selected="true"
-                className={classNames('Dropdown__item', 'selected', 'active')}
-                data-testid="sig-no-result"
-              >
-                {t('message.noResults')}
-              </div>
-            </>
-        }
+        <div role="group" aria-labelledby={labelledById}>
+          {showLabelInList && <div className="Dropdown__label" id={labelledById}>{t(`${translationPrefix}.dropdownLabel`)}</div>}
+          {children ? React.cloneElement(children, { onClose }) :
+            dropdownItems.length > 0 ?
+              (columns > 1 ?
+                displayDropdownAsList(dropdownItems, columns) :
+                dropdownItems
+              ) :
+              <>
+                <div
+                  role="option"
+                  id='id-no-result'
+                  aria-disabled="true"
+                  aria-selected="true"
+                  className={classNames('Dropdown__item', 'selected', 'active')}
+                  data-testid="sig-no-result"
+                >
+                  {t('message.noResults')}
+                </div>
+              </>
+          }
+        </div>
       </div>
       <div aria-live="polite" style={{ position: 'absolute', left: '-9999px' }}>
         {noMatchMessage}

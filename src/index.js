@@ -278,6 +278,12 @@ if (window.CanvasRenderingContext2D) {
 
     setupLoadAnnotationsFromServer(store);
 
+    // nsSeparator is the colon. We do not currently use this we had a customer request to remove the colon from the namespace
+    // as it broke their labels
+    i18next.init({
+      nsSeparator: false,
+    });
+
     ReactDOM.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

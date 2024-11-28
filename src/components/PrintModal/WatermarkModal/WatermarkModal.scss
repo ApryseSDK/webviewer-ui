@@ -30,6 +30,7 @@
     border-radius: 0px 0px 4px 4px;
     box-shadow: 0 0 3px 0 var(--box-shadow);
     align-items: center;
+    z-index: 85;
 
     @include ie11 {
       margin-top: 0;

@@ -1,12 +1,11 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { getEmbeddedFileData } from 'helpers/getFileAttachments';
 import { isAndroid, isIOS } from 'helpers/device';
-import fireEvent from 'helpers/fireEvent';
-import Events from 'constants/events';
 import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
-import { setToolbarGroup } from './exposedActions';
+import { setToolbarGroup, openElement } from './exposedActions';
+import { panelNames } from 'constants/panel';
 
 // viewer
 /**
@@ -229,15 +228,48 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
   });
 };
 
-export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getState) => {
-  const currentActivePanel = selectors.getActiveCustomPanel(getState(), wrapperPanel);
+export const setActiveTabInPanel = (tabPanel, wrapperPanel) => (dispatch, getState) => {
+  const currentActivePanel = selectors.getActiveTabInPanel(getState(), wrapperPanel);
   if (currentActivePanel === tabPanel) {
     return;
   }
-  dispath({
-    type: 'SET_ACTIVE_CUSTOM_PANEL',
+  const state = getState();
+  const targetPanel = selectors.getGenericPanels(state).find((panel) => panel.dataElement === wrapperPanel);
+  if (!targetPanel) {
+    console.warn(`TabPanel with dataElement ${wrapperPanel} does not exist.`);
+    return;
+  }
+
+  const containsTab = targetPanel.panelsList.some((panel) => panel.render === tabPanel);
+  if (!containsTab) {
+    console.warn(`Panel with dataElement ${tabPanel} does not exist inside ${wrapperPanel}. The tab panel contains the following panels:\n${targetPanel.panelsList.map((panel) => panel.render).join(',\n')}`);
+    return;
+  }
+
+  dispatch({
+    type: 'SET_ACTIVE_TAB_IN_PANEL',
     payload: { wrapperPanel, tabPanel },
   });
+};
+
+export const openRedactionPanel = () => (dispatch, getState) => {
+  const state = getState();
+  const featureFlags = selectors.getFeatureFlags(state);
+  const { customizableUI } = featureFlags;
+
+  if (customizableUI) {
+    // is the panel inside a tab panel or a standalone panel?
+    const tabPanels = selectors.getGenericPanels(state).filter((panel) => panel.dataElement === panelNames.TABS);
+    const tabPanelWithRedaction = tabPanels.find((panel) => panel.panelsList.some((panel) => panel.render === panelNames.REDACTION));
+    if (tabPanelWithRedaction) {
+      dispatch(setActiveTabInPanel(panelNames.REDACTION, tabPanelWithRedaction.dataElement));
+      dispatch(openElement(tabPanelWithRedaction.dataElement));
+    } else {
+      dispatch(openElement(panelNames.REDACTION));
+    }
+  } else {
+    dispatch(openElement(panelNames.REDACTION));
+  }
 };
 
 export const setSelectedScale = (selectedScale) => ({
@@ -402,6 +434,10 @@ export const setActiveTab = (activeTab) => ({
   type: 'SET_ACTIVE_TAB',
   payload: { activeTab },
 });
+export const setTabNameHandler = (tabNameHandler) => ({
+  type: 'SET_TAB_NAME_HANDLER',
+  payload: { tabNameHandler },
+});
 export const setFonts = (fonts = []) => ({
   type: 'SET_FONTS',
   payload: { fonts },
@@ -528,31 +564,6 @@ export const setBookmarks = (bookmarks) => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
-  dispatch({
-    type: 'ADD_BOOKMARK',
-    payload: { pageIndex, text },
-  });
-
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
-export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
-  dispatch({
-    type: 'EDIT_BOOKMARK',
-    payload: { pageIndex, text },
-  });
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
-export const removeBookmark = (pageIndex) => (dispatch, getState) => {
-  dispatch({
-    type: 'REMOVE_BOOKMARK',
-    payload: { pageIndex },
-  });
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
 export const setBookmarkIconShortcutVisibility = (bookmarkIconShortcutVisibility) => ({
   type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
   payload: { bookmarkIconShortcutVisibility },

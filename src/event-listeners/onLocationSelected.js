@@ -46,8 +46,7 @@ export default (store, documentViewerKey) => async (_, widget) => {
       } else if ((savedInitials.length === 0 && requiresInitials) || isToolsOverlayDisabled) {
         store.dispatch(actions.openElement('signatureModal'));
       } else if (widget && isCustomizableUI) {
-        // We set the active ribbon to the one that has the signature tool
-        store.dispatch(actions.setActiveGroupedItemWithTool(ToolNames.SIGNATURE));
+        core.setToolMode(ToolNames.SIGNATURE);
         const isSignatureListPanelOpen = selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL);
         // If the active ribbon doesnt have the signature tool, we must switch to one that does
         if (!isSignatureListPanelOpen) {

@@ -158,6 +158,7 @@ const AdvancedTab = () => {
                     <div>{item.description}</div>
                   </div>
                   <Choice
+                    aria-label={item.label}
                     isSwitch
                     checked={(typeof item.isChecked === 'function') ? item.isChecked() : item.isChecked}
                     onChange={(e) => {
