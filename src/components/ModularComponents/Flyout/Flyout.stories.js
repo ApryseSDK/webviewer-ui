@@ -402,7 +402,7 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'flyoutMenu',
-    activeTabInPanel: {},
+    activeCustomPanel: '',
     modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,

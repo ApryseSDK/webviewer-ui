@@ -13,7 +13,7 @@ export default {
 };
 
 initialState.viewer.openElements[DataElement.OFFICE_EDITOR_TOOLS_HEADER] = true;
-initialState.viewer.openElements[DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY] = false;
+initialState.viewer.openElements.colorPickerOverlay = false;
 const store = configureStore({ reducer: () => initialState });
 
 const BasicComponent = ({ children }) => {

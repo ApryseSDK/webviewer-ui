@@ -8,13 +8,11 @@ const CreatableMultiSelect = ({ id, label, ...rest }) => {
   return (
     <ReactSelectWebComponentProvider>
       <label htmlFor={id} className="creatable-multi-select-label">{label}</label>
-      <div onTouchEndCapture={(e) => e.stopPropagation()}>
-        <CreatableSelect
-          isMulti
-          {...rest}
-          inputId={id}
-        />
-      </div>
+      <CreatableSelect
+        isMulti
+        {...rest}
+        inputId={id}
+      />
     </ReactSelectWebComponentProvider>
   );
 };

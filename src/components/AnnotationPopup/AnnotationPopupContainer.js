@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { saveAs } from 'file-saver';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -466,10 +465,10 @@ const AnnotationPopupContainer = ({
   /* DOWNLOAD FILE ATTACHMENT */
   const showFileDownloadButton = focusedAnnotation instanceof Annotations.FileAttachmentAnnotation;
 
-  const downloadFileAttachment = async (annot) => {
+  const downloadFileAttachment = (annot) => {
     // no need to check that annot is of type file annot as the check is done in the JSX
-    const { fileData, fileName } = await annot.getFullFileMetadata();
-    saveAs(fileData, fileName);
+    // trigger the annotationDoubleClicked event so that it will download the file
+    annotManager.trigger('annotationDoubleClicked', annot);
   };
 
   /* AUDIO ANNOTATION */

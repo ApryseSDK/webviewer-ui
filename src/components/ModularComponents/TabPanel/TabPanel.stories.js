@@ -148,9 +148,7 @@ const mockState = {
       },
     ],
     lastPickedToolGroup: '',
-    activeTabInPanel: {
-      'tabPanel': 'thumbnailsPanel',
-    },
+    activeCustomPanel: 'thumbnailsPanel',
     flyoutMap: {},
     customPanels: []
   },
@@ -210,7 +208,7 @@ const initialStateThumbnailsOnly = {
     lastPickedToolGroup: '',
     flyoutMap: {},
     customPanels: [],
-    activeTabInPanel: {
+    activeCustomPanel: {
       'tabPanelIconsAndLabels': 'icon-label1',
     },
     selectedThumbnailPageIndexes: [],
@@ -325,8 +323,8 @@ const TabPanelInApp = (location, activePanel, panelWidth) => {
       openElements: {
         tabPanel: true,
       },
-      activeTabInPanel: {
-        ...initialState.viewer.activeTabInPanel,
+      activeCustomPanel: {
+        ...initialState.viewer.activeCustomPanel,
         'tabPanel': activePanel,
       },
       panelWidths: {

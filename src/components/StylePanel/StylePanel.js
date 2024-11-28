@@ -270,16 +270,6 @@ const StylePanel = () => {
     };
   }, []);
 
-  const setAnnotationType = (annotation) => {
-    setIsEllipse(annotation instanceof Annotations.EllipseAnnotation);
-    setIsFreeText(annotation instanceof Annotations.FreeTextAnnotation);
-    setIsRedaction(annotation instanceof Annotations.RedactionAnnotation);
-    setIsFreeHand(annotation instanceof Annotations.FreeHandAnnotation);
-    setIsArc(annotation instanceof Annotations.ArcAnnotation);
-    setIsStamp(annotation instanceof Annotations.StampAnnotation);
-    setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(annotation.ToolName)).hasLineEndings);
-  };
-
   useEffect(() => {
     if (isPanelOpen) {
       const selectedAnnotations = core.getSelectedAnnotations();
@@ -290,10 +280,9 @@ const StylePanel = () => {
       }
       if (selectedAnnotations.length === 1) {
         setShowStyles(true);
-        const annotation = selectedAnnotations[0];
-        updateStylePanelProps(annotation);
-        setAnnotationType(annotation);
-        getPanelTitleOnAnnotationSelected(annotation);
+        const annot = selectedAnnotations[0];
+        updateStylePanelProps(annot);
+        getPanelTitleOnAnnotationSelected(annot);
       } else if (selectedAnnotations.length > 1) {
         setShowStyles(true);
         setPanelTitle(`${t('stylePanel.headings.annotations')} (${selectedAnnotations.length})`);

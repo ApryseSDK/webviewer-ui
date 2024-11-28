@@ -35,29 +35,42 @@ const ToolButton = forwardRef((props, ref) => {
     allFlyoutItems = [],
   } = props;
 
-  // use this so that state gets updated when active tool styles change
-  // eslint-disable-next-line no-unused-vars
-  const activeToolStyles = useSelector((state) => selectors.getActiveToolStyles(state), shallowEqual);
-  const activeToolName = useSelector(selectors.getActiveToolName);
-  const iconColorKey = useSelector((state) => selectors.getIconColor(state, mapToolNameToKey(toolName)));
-  const toolButtonObject = useSelector((state) => selectors.getToolButtonObject(state, toolName), shallowEqual);
-  const activeGroupedItems = useSelector(selectors.getActiveGroupedItems, shallowEqual);
-  const lastPickedToolAndGroup = useSelector(selectors.getLastPickedToolAndGroup, shallowEqual);
-  const isSignatureListPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL));
-  const isRubberStampPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL));
-  const customOverrides = useSelector(
-    (state) => selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
-    shallowEqual
+  const [
+    activeToolName,
+    iconColorKey,
+    toolButtonObject,
+    customOverrides,
+    // use this so that state gets updated when active tool styles change
+    activeToolStyles, // eslint-disable-line no-unused-vars
+    activeGroupedItems,
+    lastPickedToolForGroupedItems,
+    lastPickedToolAndGroup,
+    isSignatureListPanelOpen,
+    isRubberStampPanelOpen,
+  ] = useSelector(
+    (state) => [
+      selectors.getActiveToolName(state),
+      selectors.getIconColor(state, mapToolNameToKey(toolName)),
+      selectors.getToolButtonObject(state, toolName),
+      selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+      selectors.getActiveToolStyles(state),
+      selectors.getActiveGroupedItems(state),
+      selectors.getLastPickedToolForGroupedItems(state, groupedItem),
+      selectors.getLastPickedToolAndGroup(state),
+      selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL),
+      selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL),
+    ],
+    shallowEqual,
   );
-  const lastPickedToolForGroupedItems = useSelector(
-    (state) => selectors.getLastPickedToolForGroupedItems(state, groupedItem),
-    shallowEqual
-  );
+
+  const isActive = (toolName === ToolNames.SIGNATURE && isSignatureListPanelOpen) ||
+    (toolName === ToolNames.RUBBER_STAMP && isRubberStampPanelOpen) ||
+    activeToolName === toolName;
 
   const dispatch = useDispatch();
 
   const isToolInActiveGroupedItems = groupedItem && activeGroupedItems.includes(groupedItem);
-  const [isButtonActive, setIsButtonActive] = useState(activeToolName === toolName && (isToolInActiveGroupedItems || !groupedItem));
+  const [isButtonActive, setIsButtonActive] = useState(isActive && (isToolInActiveGroupedItems || !groupedItem));
 
   const isToolWithPanelAssociatedActive = (toolName, activeTool) => {
     const isDefaultToolActive = activeTool === defaultTool;
@@ -103,10 +116,11 @@ const ToolButton = forwardRef((props, ref) => {
   }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
 
   useEffect(() => {
-    const isLastPickedTool = lastPickedToolAndGroup?.tool === toolName;
     const noActiveGroupedItems = !activeGroupedItems?.length;
-    const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && toolName === activeToolName;
-    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup?.group?.includes(groupedItem) && isLastPickedTool;
+    const isLastPickedGroupUndefined = lastPickedToolAndGroup?.group?.every((group) => group === undefined);
+    const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && isLastPickedGroupUndefined && toolName === lastPickedToolAndGroup.tool;
+    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup?.group?.includes(groupedItem) &&
+      (toolName === lastPickedToolAndGroup?.tool);
     const isDefaultToolActive = activeToolName === defaultTool && toolName === defaultTool;
 
     if ((toolName === ToolNames.EDIT && noActiveGroupedItems) ||
@@ -115,8 +129,7 @@ const ToolButton = forwardRef((props, ref) => {
       isDefaultToolActive
     ) {
       setIsButtonActive(true);
-      const isUpdatingCursorIfTextSelect = lastPickedToolAndGroup?.tool === ToolNames.TEXT_SELECT && activeToolName === ToolNames.EDIT;
-      if (isLastPickedTool && toolName !== activeToolName && !isUpdatingCursorIfTextSelect) {
+      if (lastPickedToolAndGroup?.tool !== activeToolName) {
         core.setToolMode(toolName);
         checkIfNeedsToOpenAPanel(toolName);
       }
@@ -124,6 +137,14 @@ const ToolButton = forwardRef((props, ref) => {
       setIsButtonActive(false);
     }
   }, [activeGroupedItems, lastPickedToolForGroupedItems, lastPickedToolAndGroup]);
+
+  const setToolMode = (toolName) => {
+    dispatch(actions.setLastPickedToolAndGroup({
+      tool: toolName,
+      group: activeGroupedItems
+    }));
+    core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
+  };
 
   const handleClick = () => {
     if (groupedItem) {
@@ -134,19 +155,31 @@ const ToolButton = forwardRef((props, ref) => {
       dispatch(actions.setActiveGroupedItems(groupedItemsArray));
     }
 
-    if (isButtonActive) {
-      setIsButtonActive(false);
+    if (toolName !== ToolNames.EDIT) {
+      if (isButtonActive) {
+        dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, ''));
+        setIsButtonActive(false);
 
-      if (toolName === ToolNames.SIGNATURE) {
-        dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
-      } else if (toolName === ToolNames.RUBBER_STAMP) {
-        dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
+        if (toolName === ToolNames.SIGNATURE) {
+          dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
+        } else if (toolName === ToolNames.RUBBER_STAMP) {
+          dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
+        }
+
+        setToolMode(defaultTool);
+      } else {
+        checkIfNeedsToOpenAPanel(toolName);
+        setToolMode(toolName);
       }
-
-      core.setToolMode(defaultTool);
     } else {
-      checkIfNeedsToOpenAPanel(toolName);
-      core.setToolMode(toolName);
+      if (!isButtonActive) {
+        activeGroupedItems.forEach((group) => {
+          if (group !== groupedItem) {
+            dispatch(actions.setLastPickedToolForGroupedItems(group, ''));
+          }
+        });
+        setToolMode(defaultTool);
+      }
     }
   };
 

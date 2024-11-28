@@ -388,23 +388,8 @@ WebViewer(...)
       key = key.toLocaleLowerCase();
     }
 
-    const getDefaultKeyHandler = (key) => {
-      let defaultKeyHandler;
-      const isComposedShortcut = key?.includes('+');
-      if (isComposedShortcut) {
-        const correspondShortcut = Object.keys(this.keyHandlerMap).find((shortcut) => shortcut?.includes(key));
-        if (correspondShortcut) {
-          defaultKeyHandler = this.keyHandlerMap[correspondShortcut];
-        }
-      } else {
-        defaultKeyHandler = this.keyHandlerMap[key];
-      }
-
-      return defaultKeyHandler;
-    };
-
     if (!handler) {
-      handler = getDefaultKeyHandler(key);
+      handler = this.keyHandlerMap[key];
     }
 
     function enableHotkey(_key, _handler) {
@@ -417,8 +402,7 @@ WebViewer(...)
         // add a signature from the modal and then choose to not apply it, so we whitelist it
         // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
         const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
-        const shadowRoot = e.currentTarget.activeElement?.shadowRoot || e.currentTarget.querySelector('apryse-webviewer')?.shadowRoot;
-        const calledFromCurrentViewer = shadowRoot === getRootNode();
+        const calledFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
         if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent || isEscape) {
           if (e.type === 'keyup') {
             keyup(e);
@@ -514,6 +498,14 @@ WebViewer(...)
     const store = this.store;
     const { dispatch, getState } = store;
     const { ToolNames } = window.Core.Tools;
+
+    function setActiveGroupedItemInModularUI(toolName) {
+      const state = getState();
+      const isModularUI = selectors.getFeatureFlags(state)?.customizableUI;
+      if (isModularUI) {
+        dispatch(actions.setActiveGroupedItemWithTool(toolName));
+      }
+    }
 
     return {
       [ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]: (e) => {
@@ -665,11 +657,11 @@ WebViewer(...)
           dispatch(actions.openElement(DataElements.LEFT_PANEL));
           dispatch(actions.setActiveLeftPanel(DataElements.BOOKMARK_PANEL));
 
-          const bookmarks = core.getUserBookmarks();
+          const bookmarks = selectors.getBookmarks(getState());
           const currentPageIndex = core.getCurrentPage() - 1;
           // only add bookmark if page is not already bookmarked
           if (!bookmarks[currentPageIndex]) {
-            core.addUserBookmark(currentPageIndex, i18next.t('message.untitled'));
+            dispatch(actions.addBookmark(currentPageIndex, i18next.t('message.untitled')));
           }
         }
       },
@@ -769,42 +761,59 @@ WebViewer(...)
         setToolModeAndGroup(store, ToolNames.PAN);
       }),
       [ShortcutKeys[Shortcuts.ARROW]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ARROW);
         setToolModeAndGroup(store, ToolNames.ARROW);
       }),
       [ShortcutKeys[Shortcuts.CALLOUT]]: this.createToolHotkeyHandler(() => {
+        const state = getState();
+        const isCustomizableUI = state.featureFlags.customizableUI;
+        if (isCustomizableUI) {
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.CALLOUT));
+        }
         setToolModeAndGroup(store, ToolNames.CALLOUT);
       }),
       [ShortcutKeys[Shortcuts.ERASER]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ERASER);
         setToolModeAndGroup(store, ToolNames.ERASER);
       }),
       [ShortcutKeys[Shortcuts.FREEHAND]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.FREEHAND);
         setToolModeAndGroup(store, ToolNames.FREEHAND);
       }),
       [ShortcutKeys[Shortcuts.IMAGE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STAMP);
         setToolModeAndGroup(store, ToolNames.STAMP);
       }),
       [ShortcutKeys[Shortcuts.LINE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.LINE);
         setToolModeAndGroup(store, ToolNames.LINE);
       }),
       [ShortcutKeys[Shortcuts.STICKY_NOTE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STICKY);
         setToolModeAndGroup(store, ToolNames.STICKY);
       }),
       [ShortcutKeys[Shortcuts.ELLIPSE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.ELLIPSE);
         setToolModeAndGroup(store, ToolNames.ELLIPSE);
       }),
       [ShortcutKeys[Shortcuts.RECTANGLE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.RECTANGLE);
         setToolModeAndGroup(store, ToolNames.RECTANGLE);
       }),
       [ShortcutKeys[Shortcuts.RUBBER_STAMP]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.RUBBER_STAMP);
         setToolModeAndGroup(store, ToolNames.RUBBER_STAMP);
       }),
       [ShortcutKeys[Shortcuts.FREETEXT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.FREETEXT);
         setToolModeAndGroup(store, ToolNames.FREETEXT);
       }),
       [ShortcutKeys[Shortcuts.SIGNATURE]]: this.createToolHotkeyHandler(() => {
         const state = getState();
         const isCustomizableUI = state.featureFlags.customizableUI;
         if (isCustomizableUI) {
+          dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.SIGNATURE));
           setToolModeAndGroup(store, ToolNames.SIGNATURE);
           return;
         }
@@ -815,6 +824,7 @@ WebViewer(...)
         sigModalButton?.click();
       }),
       [ShortcutKeys[Shortcuts.SQUIGGLY]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.SQUIGGLY);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation);
         } else {
@@ -822,6 +832,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.HIGHLIGHT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.HIGHLIGHT);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation);
         } else {
@@ -829,6 +840,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.STRIKEOUT]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.STRIKEOUT);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation);
         } else {
@@ -836,6 +848,7 @@ WebViewer(...)
         }
       }),
       [ShortcutKeys[Shortcuts.UNDERLINE]]: this.createToolHotkeyHandler(() => {
+        setActiveGroupedItemInModularUI(ToolNames.UNDERLINE);
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation);
         } else {

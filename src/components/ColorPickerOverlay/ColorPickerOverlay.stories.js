@@ -24,7 +24,7 @@ const BasicComponent = ({ children }) => {
 };
 
 export function Basic() {
-  store.getState().viewer.openElements.officeEditorColorPickerOverlay = true;
+  store.getState().viewer.openElements.colorPickerOverlay = true;
   return (
     <BasicComponent>
       <ColorPickerOverlay onStyleChange={() => { }} portalElementId={'storybook-root'} />

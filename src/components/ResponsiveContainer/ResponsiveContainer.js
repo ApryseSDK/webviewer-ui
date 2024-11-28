@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { getCurrentFreeSpace, findItemToResize } from 'helpers/responsivenessHelper';
 import PropTypes from 'prop-types';
 
@@ -17,23 +17,50 @@ const ResponsiveContainer = ({
   items,
   parent,
 }) => {
+  const lastCheckedFreeSpaceRef = useRef(null);
+  const isResizingRef = useRef(false);
+  const defaultLoopCounterState = { counter: 0, space: null };
+  const loopingCounterRef = useRef(defaultLoopCounterState);
+
   const resizeResponsively = () => {
+    if (isResizingRef.current) {
+      return;
+    }
+    isResizingRef.current = true;
     requestAnimationFrame(() => {
       let freeSpace;
-      try {
-        const propertyToCheck = headerDirection === 'column' ? 'height' : 'width';
-        const newSize = elementRef.current.getBoundingClientRect()[propertyToCheck];
-        if (newSize <= 0) {
-          return;
+      while (typeof freeSpace === 'undefined' || freeSpace !== lastCheckedFreeSpaceRef.current) {
+        try {
+          const propertyToCheck = headerDirection === 'column' ? 'height' : 'width';
+          const newSize = elementRef.current.getBoundingClientRect()[propertyToCheck];
+          if (newSize <= 0) {
+            break;
+          }
+          freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
+          const itemToResizeFunc = findItemToResize(items, freeSpace, headerDirection, parent, elementRef.current);
+          if (itemToResizeFunc) {
+            // Prevent more than 3 loops with the same free space
+            if (loopingCounterRef.current.counter === 3) {
+              loopingCounterRef.current = defaultLoopCounterState;
+              break;
+            }
+            if (freeSpace && freeSpace === loopingCounterRef.current.space) {
+              loopingCounterRef.current.counter++;
+            } else {
+              loopingCounterRef.current = { counter: 1, space: freeSpace };
+            }
+            lastCheckedFreeSpaceRef.current = null;
+            itemToResizeFunc();
+          } else {
+            lastCheckedFreeSpaceRef.current = freeSpace;
+            loopingCounterRef.current = defaultLoopCounterState;
+          }
+        } catch (e) {
+          console.error(e);
+          break;
         }
-        freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
-        const itemToResizeFunc = findItemToResize(items, freeSpace, headerDirection, parent, elementRef.current);
-        if (itemToResizeFunc) {
-          itemToResizeFunc();
-        }
-      } catch (e) {
-        console.error(e);
       }
+      isResizingRef.current = false;
     });
   };
 

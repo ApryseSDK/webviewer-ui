@@ -101,6 +101,5 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     contentEditDocumentDigitallySigned: contentEditManager,
     contentEditPasswordRequired: contentEditManager,
     createAnnotationWithNoScale: measurementManager,
-    userBookmarksChanged: documentViewer,
   };
 };

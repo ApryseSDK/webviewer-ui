@@ -51,7 +51,7 @@ const initialState = {
     modularHeadersHeight: {},
     flyoutPosition: { x: 0, y: 0 },
     modularComponents: {},
-    activeTabInPanel: {},
+    activeCustomPanel: ''
   },
   featureFlags: {
     customizableUI: true

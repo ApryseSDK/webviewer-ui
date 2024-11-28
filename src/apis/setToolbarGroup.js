@@ -14,11 +14,5 @@ WebViewer(...)
  */
 
 export default (store) => (group, pickTool = true) => {
-  const state = store.getState();
-  const isCustomizableUI = state.featureFlags.customizableUI;
-  if (isCustomizableUI) {
-    store.dispatch(actions.setActiveCustomRibbon(group));
-    return;
-  }
   store.dispatch(actions.setToolbarGroup(group, pickTool));
 };

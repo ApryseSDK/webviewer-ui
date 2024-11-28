@@ -367,7 +367,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.INDEX:
         return <LazyLoadWrapper Component={LazyLoadComponents.IndexPanel} dataElement={dataElement} />;
       case panelNames.TABS:
-        return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} />;
       case panelNames.SIGNATURE_LIST:
         return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} />;
       case panelNames.RUBBER_STAMP:
@@ -428,6 +428,7 @@ const App = ({ removeEventHandlers }) => {
             dataElement={DataElements.LEFT_PANEL}
           />}
           {(customizableUI || !isOfficeEditorMode) && panels}
+          {!isMultiViewerMode && <DocumentContainer />}
           {window?.ResizeObserver && <MultiViewer />}
           <RightHeader />
           {!customizableUI && <RightPanel dataElement={DataElements.SEARCH_PANEL} onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
@@ -462,15 +463,14 @@ const App = ({ removeEventHandlers }) => {
             dataElement="textEditingPanel"
             onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}
           >
-            <TextEditingPanel />
+            <TextEditingPanel/>
           </RightPanel>}
           {!customizableUI && <MultiViewerWrapper>
             <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
-              <ComparePanel />
+              <ComparePanel/>
             </RightPanel>
           </MultiViewerWrapper>}
           <BottomHeader />
-          {!isMultiViewerMode && <DocumentContainer />}
         </div>
         <LazyLoadWrapper
           Component={LazyLoadComponents.ViewControlsOverlay}

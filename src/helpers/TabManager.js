@@ -100,28 +100,6 @@ export function removeFileNameExtension(filename, shouldRemoveSpace = true) {
   return filename;
 }
 
-async function writeToDB(db, arrBuff, tabId) {
-  const tx = db.transaction('files', 'readwrite');
-  const store = tx.objectStore('files');
-  store.put(arrBuff, tabId);
-  await tx.commit();
-}
-
-export function getNextNumberForUntitledDocument(tabs) {
-  const untitledTabs = tabs.filter((tab) => tab.options.filename.includes('untitled-'));
-  if (untitledTabs.length === 0) {
-    return 1;
-  }
-
-  const untitledNumbers = untitledTabs.map((tab) => {
-    const filename = tab.options.filename;
-    const untitledNumber = filename.match(/\d+/);
-    return untitledNumber ? parseInt(untitledNumber[0]) : 0;
-  });
-  const nextUntitledNumber = Math.max(...untitledNumbers) + 1;
-  return nextUntitledNumber;
-}
-
 export default class TabManager {
   db;
   store;
@@ -166,32 +144,6 @@ export default class TabManager {
 
     this.store.dispatch(actions.setTabs(tabs));
     this.prepareTabEventListeners();
-
-    core.addEventListener('documentLoaded', async () => {
-      const state = this.store.getState();
-      const { tabs, activeTab } = state.viewer;
-      const { dispatch } = store;
-      const currentTab = tabs.find((tab) => tab.id === activeTab);
-      const documentType = await core.getDocument().getType();
-
-      if (documentType === workerTypes.PDF || documentType === workerTypes.OFFICE) {
-        await writeToDB(this.db, await core.getDocument().getFileData(), currentTab.id);
-        const nextUntitledDocumentNumber = getNextNumberForUntitledDocument(tabs);
-        currentTab.options['filename'] = core.getDocument().getFilename() || `untitled-${nextUntitledDocumentNumber}`;
-        const refreshedTab = new Tab(
-          activeTab,
-          core.getDocument(),
-          currentTab.tabManager,
-          currentTab.options,
-          currentTab.useDB,
-        );
-        refreshedTab.saveData.docInDB = true;
-        const indexOfTabToBeReplaced = tabs.findIndex((tab) => tab.id === currentTab.id);
-        tabs[indexOfTabToBeReplaced] = refreshedTab;
-        const newTabs = [...tabs];
-        dispatch(actions.setTabs(newTabs));
-      }
-    });
   }
 
   prepareTabEventListeners() {
@@ -485,8 +437,7 @@ export class Tab {
       return console.error('Cant preload tab with useDB = false');
     }
     const file = await fetch(this.src);
-    this.saveData.docInDB = true;
-    await writeToDB(db, await file.arrayBuffer(), this.id);
+    await this.writeToDB(db, await file.arrayBuffer());
   }
 
   async load(dispatch, db, viewerState) {
@@ -534,8 +485,7 @@ export class Tab {
       flags: window.Core.SaveOptions.LINEARIZED,
       finishedWithDocument: true,
     });
-    this.saveData.docInDB = true;
-    await writeToDB(db, data, this.id);
+    await this.writeToDB(db, data);
   }
 
   async saveAnnotData() {
@@ -632,6 +582,14 @@ export class Tab {
     };
     core.addEventListener('documentLoaded', updateAnnotations, { once: true });
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
+  }
+
+  async writeToDB(db, arrBuff) {
+    const tx = db.transaction('files', 'readwrite');
+    const store = tx.objectStore('files');
+    store.put(arrBuff, this.id);
+    this.saveData.docInDB = true;
+    await tx.commit();
   }
 
   async delete(db) {

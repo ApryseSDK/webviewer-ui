@@ -394,11 +394,11 @@ const OfficeEditorToolsHeader = () => {
                   <div className="divider" />
                   <ToggleElementButton
                     onClick={() => setShowMoreTools(false)}
-                    dataElement={DataElement.OFFICE_EDITOR_TEXT_COLOR_BUTTON}
+                    dataElement='textColorButton'
                     title='officeEditor.textColor'
                     ariaLabel={ariaLabel}
                     img='icon-office-editor-circle'
-                    element={DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
+                    element='colorPickerOverlay'
                     color={wvFontColor.toString()}
                     iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
                   />
@@ -411,7 +411,7 @@ const OfficeEditorToolsHeader = () => {
                         a: 255,
                       };
                       core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
-                      dispatch(actions.closeElements([DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY]));
+                      dispatch(actions.closeElements(['colorPickerOverlay']));
                     }}
                     color={wvFontColor}
                   />

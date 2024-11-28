@@ -51,7 +51,7 @@ const initialState = {
       topHeaders: 49
     },
     modularComponents: {},
-    activeTabInPanel: {},
+    activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
   },
   officeEditor: {},

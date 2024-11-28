@@ -64,7 +64,6 @@ export default {
     tabs: [],
     activeTab: 0,
     isMultiTab: false,
-    tabNameHandler: null,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
     toolbarGroup: DataElements.ANNOTATE_TOOLBAR_GROUP,
@@ -78,7 +77,6 @@ export default {
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
       'comparePanelToggle': { disabled: true, priority: 2 },
     },
-    enabledRibbonsStash: [],
     selectedScale: initialScale,
     isAddingNewScale: false,
     calibrationInfo: {
@@ -219,8 +217,7 @@ export default {
           dataElement: 'moreButton',
           title: 'action.more',
           img: 'icon-tools-more',
-          onClick: (dispatch) => {
-            dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
+          onClick: () => {
             core.setToolMode(defaultTool);
           },
           hidden: ['mobile', 'tablet', 'desktop'],
@@ -247,8 +244,7 @@ export default {
           dataElement: 'defaultHeaderButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
-          onClick: (dispatch) => {
-            dispatch(actions.setActiveHeaderGroup('default'));
+          onClick: () => {
             core.setToolMode(defaultTool);
           },
         },
@@ -1985,7 +1981,7 @@ export default {
         ? JSON.parse(window.localStorage.getItem(`${instanceId}-customColors`))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
-    activeTabInPanel: {},
+    activeCustomPanel: '',
     activeToolGroup: '',
     notePopupId: '',
     isNoteEditing: false,

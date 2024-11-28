@@ -13,10 +13,12 @@ import ToggleElementButton from 'components/ModularComponents/ToggleElementButto
 import RedactionPanel from 'components/RedactionPanel';
 import { panelNames, panelData } from 'constants/panel';
 import DataElements from 'constants/dataElement';
+import core from 'core';
+import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
 import { getPanelToRender, createCustomElement } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
-const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }) => {
+const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const moreButtonDefaultIcon = 'icon-tools-more';
@@ -37,12 +39,17 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   const [isShrinkingPanel, setIsShrinkingPanel] = useState(false);
 
   const genericPanels = useSelector(selectors.getGenericPanels);
-  const selectedTab = useSelector((state) => selectors.getActiveTabInPanel(state, tabPanelDataElement));
+  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, tabPanelDataElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
+  const bookmarks = useSelector(selectors.getBookmarks);
+  const isBookmarkIconShortcutVisible = useSelector(selectors.isBookmarkIconShortcutVisible);
+  const isBookmarkPanelEnabled = useSelector((state) => !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL));
   const isPortfolioPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL));
   const isSignaturePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SIGNATURE_PANEL));
 
+  const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
   const panelsList = genericPanels.find((panel) => panel.dataElement === tabPanelDataElement).panelsList;
+
   const renderPanel = (panelName, dataElement) => {
     if (panelName === panelNames.REDACTION) {
       return (
@@ -128,7 +135,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
 
   const handleMoreButtonIcon = () => {
-    if (selectedTab && !visiblePanelTabs.includes(selectedTab)) {
+    if (activeCustomPanel && !visiblePanelTabs.includes(activeCustomPanel)) {
       setMoreButtonIcon('icon-tools-more-active');
     } else {
       setMoreButtonIcon(moreButtonDefaultIcon);
@@ -146,7 +153,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
         const flyoutItem = {
           ...panelsObject[item],
           onClick: () => {
-            dispatch(actions.setActiveTabInPanel(item, tabPanelDataElement));
+            dispatch(actions.setActiveCustomPanel(item, tabPanelDataElement));
             dispatch(actions.closeElements([FLYOUT_NAME]));
           },
           sortIndex: panelsObject[item].sortIndex,
@@ -263,19 +270,19 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     setPanelsObject(getPanelsObjectToRender());
     // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
     setOverflowItems([]);
-  }, [isPortfolioPanelDisabled, isSignaturePanelDisabled, redactionAnnotationsList]);
+  }, [isPortfolioPanelDisabled, isSignaturePanelDisabled]);
 
   useEffect(() => {
-    if (!selectedTab) {
+    if (!activeCustomPanel) {
       const firstPanel = Object.keys(panelsObject)[0];
-      dispatch(actions.setActiveTabInPanel(firstPanel, tabPanelDataElement));
+      dispatch(actions.setActiveCustomPanel(firstPanel, tabPanelDataElement));
     }
     setVisiblePanelTabs(Object.keys(panelsObject));
   }, [panelsObject]);
 
   useEffect(() => {
     handleMoreButtonIcon();
-  }, [selectedTab]);
+  }, [activeCustomPanel]);
 
   useEffect(() => {
     if (headerContainerPrevWidth !== headerContainerWidth) {
@@ -297,11 +304,31 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     headerContainerWidth,
   ]);
 
+  useEffect(() => {
+    if (isBookmarkPanelEnabled) {
+      core.setBookmarkShortcutToggleOnFunction((pageIndex) => {
+        dispatch(actions.addBookmark(pageIndex, t('message.untitled')));
+      });
+      core.setBookmarkShortcutToggleOffFunction((pageIndex) => {
+        dispatch(actions.removeBookmark(pageIndex));
+      });
+      core.setUserBookmarks(Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10)));
+    }
+  }, [isBookmarkPanelEnabled, bookmarks]);
+
+  useEffect(() => {
+    if (isBookmarkPanelEnabled && isBookmarkIconShortcutVisible) {
+      core.setBookmarkIconShortcutVisibility(true);
+    } else {
+      core.setBookmarkIconShortcutVisibility(false);
+    }
+  }, [isBookmarkPanelEnabled, isBookmarkIconShortcutVisible]);
+
   const renderTabs = () => {
     if (visiblePanelTabs?.length) {
       return visiblePanelTabs.map((tab, index) => {
         const panelInfo = panelsObject[tab];
-        const isActive = tab === selectedTab;
+        const isActive = tab === activeCustomPanel;
         return (
           <Button
             className={classNames({
@@ -314,7 +341,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
             isActive={isActive}
             dataElement={`${tab}-${tabPanelDataElement}`}
             img={panelInfo.icon}
-            onClick={() => dispatch(actions.setActiveTabInPanel(tab, tabPanelDataElement))}
+            onClick={() => dispatch(actions.setActiveCustomPanel(tab, tabPanelDataElement))}
             title={panelInfo.title}
             label={panelInfo.label}
             ariaCurrent={isActive}
@@ -325,7 +352,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
 
   const getActivePanelRender = () => {
-    const activePanel = panelsObject[selectedTab];
+    const activePanel = panelsObject[activeCustomPanel];
     return activePanel?.render;
   };
 
@@ -376,7 +403,6 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
 
 TabPanel.propTypes = {
   dataElement: PropTypes.string.isRequired,
-  redactionAnnotationsList: PropTypes.array,
 };
 
 export default TabPanel;

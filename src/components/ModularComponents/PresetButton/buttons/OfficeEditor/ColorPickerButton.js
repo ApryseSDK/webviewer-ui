@@ -43,12 +43,12 @@ const ColorPickerButton = forwardRef((props, ref) => {
   );
 
   const handleClick = () => {
-    dispatch(actions.toggleElement(DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY));
+    dispatch(actions.toggleElement('colorPickerOverlay'));
   };
 
   useEffect(() => {
     return () => {
-      dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY));
+      dispatch(actions.closeElement('colorPickerOverlay'));
     };
   }, []);
 
@@ -67,9 +67,9 @@ const ColorPickerButton = forwardRef((props, ref) => {
             title={title}
             ariaLabel={ariaLabel}
             img={icon}
-            element={DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
+            element='colorPickerOverlay'
             color={activeColor.toString()}
-            toggleElement={DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
+            toggleElement='colorPickerOverlay'
             iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
           />
         )}
@@ -82,7 +82,7 @@ const ColorPickerButton = forwardRef((props, ref) => {
             a: 255,
           };
           core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
-          dispatch(actions.closeElements([DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY, 'officeEditorHomeToolsGroupedItemsFlyout']));
+          dispatch(actions.closeElements(['colorPickerOverlay', 'officeEditorHomeToolsGroupedItemsFlyout']));
         }}
         color={activeColor}
       />

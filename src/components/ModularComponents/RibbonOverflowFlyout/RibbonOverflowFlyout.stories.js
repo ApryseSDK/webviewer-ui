@@ -70,7 +70,7 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'RibbonOverflowFlyout',
-    activeTabInPanel: {},
+    activeCustomPanel: '',
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
@@ -108,7 +108,7 @@ const noIconsStore = configureStore({
           RibbonOverflowFlyoutNoIcons: true,
         },
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
-        activeTabInPanel: {},
+        activeCustomPanel: '',
         modularHeaders: {},
         modularHeadersHeight: {
           topHeaders: 40,

@@ -11,7 +11,6 @@ import ToggleElementButton from '../ToggleElementButton';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
-import { assignToolToGroups } from 'helpers/modularUIHelpers';
 import Icon from 'components/Icon';
 
 import './RibbonGroup.scss';
@@ -141,10 +140,10 @@ const RibbonGroup = (props) => {
   }, [items, enabledRibbonItems]);
 
   useEffect(() => {
-    dispatch(actions.setAppStateAfterToolModeChanged(lastPickedToolForGroupedItems, {
-      activeGroupedItems: groupedItemsOfActiveCustomRibbon,
-      lastPickedToolAndGroup: { tool: lastPickedToolForGroupedItems, group: groupedItemsOfActiveCustomRibbon },
-      lastPickedToolForGroupedItems: assignToolToGroups(lastPickedToolForGroupedItems, groupedItemsOfActiveCustomRibbon)
+    dispatch(actions.setActiveGroupedItems(groupedItemsOfActiveCustomRibbon));
+    dispatch(actions.setLastPickedToolAndGroup({
+      tool: lastPickedToolForGroupedItems,
+      group: groupedItemsOfActiveCustomRibbon,
     }));
   }, [activeCustomRibbon]);
 

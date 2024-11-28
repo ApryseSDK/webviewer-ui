@@ -44,7 +44,6 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
         aria-disabled={disabled}
         onKeyDown={onKeyDownHandler}
         data-element={dataElement}
-        aria-label={finalLabel}
       >
         <div className="icon-label-wrapper">
           {icon}

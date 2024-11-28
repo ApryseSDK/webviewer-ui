@@ -72,13 +72,13 @@ describe('StylePicker', () => {
   it('line style dropdowns has aria label', () => {
     customRenderWithContext();
 
-    const startLineStyleDropdown = screen.getByRole('combobox', { name: 'Line Start' });
+    const startLineStyleDropdown = screen.getByLabelText('Line Start');
     expect(startLineStyleDropdown).toHaveClass('Dropdown StylePicker-StartLineStyleDropdown', { exact: true });
 
-    const middleLineStyleDropdown = screen.getByRole('combobox', { name: 'Line Middle' });
+    const middleLineStyleDropdown = screen.getByLabelText('Line Middle');
     expect(middleLineStyleDropdown).toHaveClass('Dropdown StylePicker-StrokeLineStyleDropdown', { exact: true });
 
-    const endLineStyleDropdown = screen.getByRole('combobox', { name: 'Line End' });
+    const endLineStyleDropdown = screen.getByLabelText('Line End');
     expect(endLineStyleDropdown).toHaveClass('Dropdown StylePicker-EndLineStyleDropdown', { exact: true });
   });
 

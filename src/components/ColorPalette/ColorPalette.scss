@@ -28,9 +28,7 @@
   }
 
   .cell-container {
-    padding: 0;
-    border: none;
-    background-color: transparent;
+    @include button-reset;
     flex: 1 0 14%; // fallback for ie11, grid not available
 
     cursor: pointer;

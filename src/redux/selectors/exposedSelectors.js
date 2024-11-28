@@ -3,7 +3,8 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getAllAssociatedGroupedItems } from 'helpers/modularUIHelpers';
+import { getAllAssociatedGroupedItems, getFirstToolForGroupedItems } from '../actions/exposedActions';
+import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
 import getHashParameters from 'helpers/getHashParameters';
 
@@ -52,7 +53,7 @@ export const getGenericPanels = (state, location) => {
   }
   return state.viewer.genericPanels;
 };
-export const getActiveTabInPanel = (state, wrapperPanel) => state.viewer.activeTabInPanel[wrapperPanel];
+export const getActiveCustomPanel = (state, wrapperPanel) => state.viewer.activeCustomPanel[wrapperPanel];
 export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
 export const shouldShowApplySnippingWarning = (state) => state.viewer.shouldShowApplySnippingWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
@@ -64,7 +65,6 @@ export const getTabs = (state) => state.viewer.tabs;
 export const getActiveTab = (state) => state.viewer.activeTab;
 export const getIsMultiTab = (state) => state.viewer.isMultiTab;
 export const getTabManager = (state) => state.viewer.TabManager;
-export const getTabNameHandler = (state) => state.viewer.tabNameHandler;
 export const getIsHighContrastMode = (state) => state.viewer.highContrastMode;
 export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = (state) => state.viewer.standardStamps;
@@ -276,22 +276,6 @@ export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 export const getActiveGroupedItems = (state) => state.viewer.activeGroupedItems;
 
 export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
-
-export const getFirstToolForGroupedItems = (state, group) => {
-  const modularComponents = state.viewer.modularComponents;
-  const allItems = getBasicItemsFromGroupedItems(state, group);
-  let firstTool = '';
-
-  allItems?.find((item) => {
-    const { type, toolName, dataElement } = modularComponents[item];
-    if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
-      firstTool = toolName;
-      return toolName;
-    }
-    return false;
-  });
-  return firstTool;
-};
 
 export const getLastPickedToolForGroupedItems = (state, group) => {
   const getLastPickedTool = (group) => {

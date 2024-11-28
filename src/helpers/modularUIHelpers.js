@@ -42,15 +42,6 @@ export const getParentGroupedItems = (state, groupedItems) => {
   return parentGroupedItems;
 };
 
-export const getAllAssociatedGroupedItems = (state, groupedItems) => {
-  const arrayOfGroupedItems = Array.isArray(groupedItems) ? groupedItems : [groupedItems];
-  const parentGroupedItems = getParentGroupedItems(state, groupedItems);
-  const nestedGroupedItems = getNestedGroupedItems(state, groupedItems);
-  const allAssociatedGroupedItems = Array.from(new Set([...arrayOfGroupedItems, ...parentGroupedItems, ...nestedGroupedItems]));
-
-  return allAssociatedGroupedItems;
-};
-
 export const getBasicItemsFromGroupedItems = (state, groupedItems) => {
   const basicItemTypes = [ITEM_TYPE.BUTTON,
     ITEM_TYPE.STATEFUL_BUTTON,
@@ -82,11 +73,4 @@ export const getBasicItemsFromGroupedItems = (state, groupedItems) => {
   }
 
   return basicItems;
-};
-
-export const assignToolToGroups = (toolName, groups) => {
-  return groups.reduce((result, group) => {
-    result[group] = toolName;
-    return result;
-  }, {});
 };

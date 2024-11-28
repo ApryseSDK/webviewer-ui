@@ -1,9 +1,7 @@
-import core from 'core';
-
 /**
- * Returns a dictionary with page numbers as keys and the bookmark text as the values
+ * Returns a dictionary with page indices as keys and the bookmark text as the values
  * @method UI.exportBookmarks
- * @return {Object} A dictionary with page numbers as keys and the bookmark text as the values. ex: {"1":"Bookmark 1","3":"Bookmark 2"}
+ * @return {Object} A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -16,6 +14,9 @@ WebViewer(...)
     });
   });
  */
-export default () => {
-  return core.getUserBookmarks();
+
+import selectors from 'selectors';
+
+export default (store) => () => {
+  return selectors.getBookmarks(store.getState());
 };

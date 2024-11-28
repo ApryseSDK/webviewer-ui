@@ -43,7 +43,6 @@ import onContentBoxEditStarted from './onContentBoxEditStarted';
 import onContentEditDocumentDigitalSigned from './onContentEditDocumentDigitalSigned';
 import onContentEditPasswordRequired from './onContentEditPasswordRequired';
 import onCompareAnnotationsLoaded from './onCompareAnnotationsLoaded';
-import onUserBookmarksChanged from './onUserBookmarksChanged';
 
 export {
   onSignatureSaved,
@@ -91,5 +90,4 @@ export {
   onContentEditDocumentDigitalSigned,
   onContentEditPasswordRequired,
   onCompareAnnotationsLoaded,
-  onUserBookmarksChanged,
 };

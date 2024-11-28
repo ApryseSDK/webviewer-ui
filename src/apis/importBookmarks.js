@@ -1,9 +1,7 @@
-import core from 'core';
-
 /**
  * Imports user bookmarks
  * @method UI.importBookmarks
- * @param {object} bookmarks A dictionary with page numbers as keys and the bookmark text as the values. ex: {"1":"Bookmark 1","3":"Bookmark 2"}. Behaviour is undefined otherwise.
+ * @param {object} bookmarks A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}. Behaviour is undefined otherwise.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -21,6 +19,9 @@ WebViewer(...)
     });
   });
  */
-export default (bookmarks) => {
-  core.setUserBookmarks(bookmarks);
+
+import actions from 'actions';
+
+export default (store) => (bookmarks) => {
+  store.dispatch(actions.setBookmarks(bookmarks));
 };

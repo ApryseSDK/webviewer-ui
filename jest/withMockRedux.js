@@ -1,9 +1,9 @@
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
 
-
-const defaultState = {
+const initialState = {
   viewer: {
     activeDocumentViewerKey: 1,
     disabledElements: {},
@@ -38,34 +38,26 @@ const defaultState = {
     savedSignatures: [],
     maxSignatureCount: 10,
     focusedElementsStack: [],
-    annotationContentOverlayHandler: null,
   },
   search: {
     redactionSearchPatterns: {},
   },
   document: {
-    totalPages: { 1: 9, 2: 0 },
+    totalPages: {1: 9, 2: 0},
   }
 };
 
-export default function withMockRedux(Component, mockInitialState ={ viewer: {}, search: {}, document: {} }) {
-  const initialState = {
-    viewer: {
-      ...defaultState.viewer,
-      ...mockInitialState.viewer,
-    },
-    search: {
-      ...defaultState.search,
-      ...mockInitialState.search,
-    },
-    document: {
-      ...defaultState.document,
-      ...mockInitialState.document,
-    },
-  };
+function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
+  return state;
+}
+
+// Apply the thunk middleware
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+export default function withMockRedux(Component) {
   return function WithMockReduxWrapper(props) {
     return (
-      <Provider store={configureStore({ reducer: () => initialState })}>
+      <Provider store={store}>
         <Component {...props} />
       </Provider>
     );

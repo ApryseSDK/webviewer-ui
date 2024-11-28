@@ -31,7 +31,6 @@ const TabsHeader = () => {
   const hoveredTab = useRef();
   const tabsHeaderRef = useRef();
 
-  const tabNameHandler = useSelector(selectors.getTabNameHandler);
   const isMultiTab = useSelector(selectors.getIsMultiTab);
   const tabManager = useSelector(selectors.getTabManager);
   const currTabs = useSelector(selectors.getTabs, shallowEqual);
@@ -259,7 +258,6 @@ const TabsHeader = () => {
           tab={tab}
           isToLeftOfActive={index === activeIndex - 1}
           ariaCurrent={isActive ? 'page' : undefined}
-          tabNameHandler={tabNameHandler}
         />;
       }
       return <CollapsedTab

@@ -53,17 +53,17 @@ const BookmarksPanel = ({ panelSelector }) => {
     }
   }, [isDisabled, isBookmarkIconShortcutVisible]);
 
-  const pageIndices = Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10));
+  const pageIndexes = Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10));
 
   useEffect(() => {
     // if bookmark is deleted from the shortcut, should also remove from selectingBookmarks
     selectingBookmarks.forEach((index) => {
-      if (!pageIndices.includes(index)) {
+      if (!pageIndexes.includes(index)) {
         setSelectingBookmarks(selectingBookmarks.filter((bm) => bm !== index));
       }
     });
 
-    const shouldResetMultiSelectMode = pageIndices.length === 0;
+    const shouldResetMultiSelectMode = pageIndexes.length === 0;
     if (shouldResetMultiSelectMode) {
       setMultiSelectionMode(false);
     }
@@ -76,7 +76,7 @@ const BookmarksPanel = ({ panelSelector }) => {
       message,
       title,
       onConfirm: () => {
-        pageIndexes.forEach((pageIndex) => core.removeUserBookmark(Number(pageIndex)));
+        pageIndexes.forEach((pageIndex) => dispatch(actions.removeBookmark(pageIndex)));
         setSelectingBookmarks([]);
       },
       confirmBtnText: t('action.delete'),
@@ -107,7 +107,7 @@ const BookmarksPanel = ({ panelSelector }) => {
           <TextButton
             dataElement={DataElements.BOOKMARK_MULTI_SELECT}
             label={t('action.edit')}
-            disabled={isAddingNewBookmark || pageIndices.length === 0}
+            disabled={isAddingNewBookmark || pageIndexes.length === 0}
             onClick={() => setMultiSelectionMode(true)}
             ariaLabel={`${t('action.edit')} ${t('component.bookmarksPanel')}`}
           />
@@ -137,7 +137,7 @@ const BookmarksPanel = ({ panelSelector }) => {
         onChange={(e) => dispatch(actions.setBookmarkIconShortcutVisibility(e.target.checked))}
       />
 
-      {!isAddingNewBookmark && pageIndices.length === 0 && (
+      {!isAddingNewBookmark && pageIndexes.length === 0 && (
         <div className="msg msg-no-bookmark-outline">{t('message.noBookmarks')}</div>
       )}
 
@@ -149,7 +149,7 @@ const BookmarksPanel = ({ panelSelector }) => {
             text={bookmarks[currentPageIndex] ?? ''}
             pageIndex={currentPageIndex}
             onSave={(newText) => {
-              core.addUserBookmark(currentPageIndex, newText);
+              dispatch(actions.addBookmark(currentPageIndex, newText));
               setAddingNewBookmark(false);
             }}
             onCancel={() => setAddingNewBookmark(false)}
@@ -157,7 +157,7 @@ const BookmarksPanel = ({ panelSelector }) => {
           />
         }
 
-        {pageIndices.map((pageIndex) => (
+        {pageIndexes.map((pageIndex) => (
           <Bookmark
             key={pageIndex}
             panelSelector={panelSelector}
@@ -166,13 +166,7 @@ const BookmarksPanel = ({ panelSelector }) => {
             defaultLabel={`${t('component.bookmarkPage')} ${pageLabels[pageIndex]}`}
             text={bookmarks[pageIndex]}
             pageIndex={pageIndex}
-            onSave={(newText) => {
-              const updatedBookmarks = {
-                ...core.getUserBookmarks(),
-                [pageIndex]: newText,
-              };
-              core.setUserBookmarks(updatedBookmarks);
-            }}
+            onSave={(newText) => dispatch(actions.editBookmark(pageIndex, newText))}
             onRemove={(index) => onRemoveBookmarks([index])}
             setSelected={(index, val) => {
               // need to stringify the index because using 0 instead of '0' makes the val check fail
