@@ -32,12 +32,23 @@
 import actions from 'actions';
 import setPanels from './setPanels';
 import { ITEM_TYPE, PREBUILT_FLYOUTS } from 'constants/customizationVariables';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 import { panelNames } from 'constants/panel';
 import cloneDeep from 'lodash/cloneDeep';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 
 const { checkTypes, TYPES } = window.Core;
+const disabledElements = [];
+const enabledElements = new Set();
+
+const isElementDisabled = (element) => {
+  if (element.disabled) {
+    disabledElements.push(element.dataElement);
+  } else {
+    enabledElements.add(element.dataElement);
+  }
+};
 
 const validateComponents = (components, functionMap) => {
   const normalizedComponent = TYPES.OBJECT({
@@ -51,6 +62,7 @@ const validateComponents = (components, functionMap) => {
         components[key].dataElement = components[key]._dataElement;
       }
       checkTypes([components[key]], [normalizedComponent], 'UI.importModularComponents.validateComponents');
+      isElementDisabled(components[key]);
       const COMPONENT_FUNCTION_KEYS = ['onClick', 'mount', 'unmount'];
       Object.keys(components[key]).forEach((prop) => {
         if (COMPONENT_FUNCTION_KEYS.includes(prop) && (!components[key][prop] || !functionMap[components[key][prop]])) {
@@ -79,6 +91,7 @@ const validateHeaders = (headers, components) => {
   headerKeys.forEach((key) => {
     try {
       checkTypes([headers[key]], [normalizedHeader], 'UI.importModularComponents.validateHeaders');
+      isElementDisabled(headers[key]);
       if (headers[key].items?.length > 0) {
         headers[key].items.forEach((item) => {
           if (!components[item]) {
@@ -102,6 +115,7 @@ const validatePanels = (panels) => {
   panelKeys.forEach((key) => {
     try {
       checkTypes([panels[key]], [normalizedPanel], 'UI.importModularComponents.validatePanels');
+      isElementDisabled(panels[key]);
     } catch (error) {
       throw new Error(`Import has been aborted.\nInvalid panel found: ${key} - ${error.message}`);
     }
@@ -124,6 +138,7 @@ const validateFlyoutItems = (items, components, key) => {
       throw new Error(`Invalid item found in flyout: ${key} - ${item} not found in components`);
     }
     checkTypes([components[item]], [flyoutItemType], `UI.importModularComponents.validateFlyouts - ${JSON.stringify(components[item])}`);
+    isElementDisabled(components[item]);
 
     // Recursively validate children if they exist
     if (components[item].children && Array.isArray(components[item].children)) {
@@ -142,6 +157,8 @@ const validateFlyouts = (flyouts, components) => {
   flyoutKeys.forEach((key) => {
     try {
       checkTypes([flyouts[key]], [normalizedFlyout], 'UI.importModularComponents.validateFlyouts');
+      isElementDisabled(flyouts[key]);
+
       if (flyouts[key].items?.length > 0) {
         validateFlyoutItems(flyouts[key].items, components, key);
       }
@@ -173,6 +190,22 @@ const validateJSONStructure = (jsonData, functionMap) => {
   }
 };
 
+const handleDisabledAndEnabledElements = (store) => {
+  const disabledElementsRedux = store.getState().viewer.disabledElements;
+  const elementsToEnable = [];
+
+  Object.keys(disabledElementsRedux).forEach((key) => {
+    if (disabledElementsRedux[key].disabled && enabledElements.has(key)) {
+      elementsToEnable.push(key);
+    }
+  });
+
+  store.dispatch(actions.enableElements(elementsToEnable, PRIORITY_THREE));
+  store.dispatch(actions.disableElements(disabledElements));
+  disabledElements.length = 0;
+  enabledElements.length = 0;
+};
+
 export default (store) => async (components, functions = {}) => {
   store.dispatch(actions.resetModularUIState());
   const componentsToValidate = cloneDeep(components);
@@ -186,6 +219,7 @@ export default (store) => async (components, functions = {}) => {
   const panelList = Object.values(panels).map((panel) => panel);
 
   store.dispatch(actions.setModularComponentFunctions(functions));
+  handleDisabledAndEnabledElements(store);
 
   const getFunctionFromFunctionMap = (functionString) => {
     const storedModularComponentFunctions = store.getState().viewer.modularComponentFunctions;
