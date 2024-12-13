@@ -6,9 +6,6 @@ import { configureStore } from '@reduxjs/toolkit';
 export default {
   title: 'Components/FilterAnnotModal',
   component: FilterAnnotModal,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

@@ -38,6 +38,9 @@ const instanceId = getInstanceID();
 
 export default {
   viewer: {
+    isInEditorMode: false,
+    shouldShowGarbageDropZone: false,
+    recentDeletedItems: [],
     initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,

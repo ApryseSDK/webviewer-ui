@@ -28,9 +28,6 @@ export default {
       control: { type: 'select' },
     },
   },
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

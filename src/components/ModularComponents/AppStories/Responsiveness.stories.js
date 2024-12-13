@@ -8,9 +8,6 @@ import { MockApp } from 'src/helpers/storybookHelper';
 export default {
   title: 'ModularComponents/App Responsiveness',
   component: App,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 core.getToolMode = () => {
@@ -19,7 +16,7 @@ core.getToolMode = () => {
   };
 };
 
-const Template = (args) => {
+const Template = (args, context) => {
   const stateWithHeaders = {
     ...initialState,
     viewer: {
@@ -61,6 +58,7 @@ const Template = (args) => {
         group: ['annotateGroupedItems'],
       },
       activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,

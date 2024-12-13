@@ -14,9 +14,7 @@ import { expect } from '@storybook/test';
 export default {
   title: 'ModularComponents/TabPanel',
   component: TabPanel,
-  parameters: {
-    customizableUI: true,
-  },
+  layout: 'fullscreen',
 };
 
 const mockState = {
@@ -262,7 +260,7 @@ export const TabPanelWithThumbnailPanelMaxWidth = () => (
   </Provider>
 );
 
-const TabPanelInApp = (location, activePanel, panelWidth) => {
+const TabPanelInApp = (context, location, activePanel, panelWidth) => {
   const appMockState = {
     ...initialState,
     viewer: {
@@ -333,6 +331,7 @@ const TabPanelInApp = (location, activePanel, panelWidth) => {
         ...initialState.viewer.panelWidths,
         tabPanel: panelWidth || 330,
       },
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -344,19 +343,19 @@ const TabPanelInApp = (location, activePanel, panelWidth) => {
   return <MockApp initialState={appMockState} />;
 } ;
 
-export const TabPanelInApplication = () => (TabPanelInApp('left', 'thumbnailsPanel', 400));
+export const TabPanelInApplication = (args, context) => (TabPanelInApp(context, 'left', 'thumbnailsPanel', 400));
 
-export const TabPanelWithThumbnailsInMobile = () => (TabPanelInApp('left', 'thumbnailsPanel'));
+export const TabPanelWithThumbnailsInMobile = (args, context) => (TabPanelInApp(context, 'left', 'thumbnailsPanel'));
 
-export const TabPanelWithOutlinesInMobile = () => (TabPanelInApp('left', 'outlinesPanel'));
+export const TabPanelWithOutlinesInMobile = (args, context) => (TabPanelInApp(context, 'left', 'outlinesPanel'));
 
-export const TabPanelWithBookmarksInMobile = () => (TabPanelInApp('left', 'bookmarksPanel'));
+export const TabPanelWithBookmarksInMobile = (args, context) => (TabPanelInApp(context, 'left', 'bookmarksPanel'));
 
-export const TabPanelWithLayersInMobile = () => (TabPanelInApp('left', 'layersPanel'));
+export const TabPanelWithLayersInMobile = (args, context) => (TabPanelInApp(context, 'left', 'layersPanel'));
 
-export const TabPanelWithSignatureInMobile = () => (TabPanelInApp('left', 'signaturePanel'));
+export const TabPanelWithSignatureInMobile = (args, context) => (TabPanelInApp(context, 'left', 'signaturePanel'));
 
-export const TabPanelWithFileAttachmentInMobile = () => (TabPanelInApp('left', 'fileAttachmentPanel'));
+export const TabPanelWithFileAttachmentInMobile = (args, context) => (TabPanelInApp(context, 'left', 'fileAttachmentPanel'));
 
 TabPanelWithThumbnailsInMobile.parameters = window.storybook.MobileParameters;
 TabPanelWithOutlinesInMobile.parameters = window.storybook.MobileParameters;

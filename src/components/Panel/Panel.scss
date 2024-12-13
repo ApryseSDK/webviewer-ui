@@ -10,6 +10,11 @@
   transition: transform .3s ease-in-out;
   max-width: calc(100% - 16px);
 
+  &.editor-mode {
+    border: 2px dashed #c7c7c7;
+    border-radius: 5px;
+  }
+
   h1 {
     margin: 0;
   }

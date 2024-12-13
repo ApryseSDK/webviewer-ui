@@ -9,9 +9,6 @@ import Icon from 'components/Icon';
 export default {
   title: 'ModularComponents/FlexDropdown',
   component: FlexDropdown,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const store = configureStore({

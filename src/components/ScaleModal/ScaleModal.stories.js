@@ -8,9 +8,6 @@ import { getMeasurementScalePreset, initialScale } from 'constants/measurementSc
 export default {
   title: 'Components/ScaleModal',
   component: ScaleModal,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 core.getScales = () => [];

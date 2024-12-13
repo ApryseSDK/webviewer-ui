@@ -123,6 +123,10 @@ const getActiveColor = (state) => {
 
 const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
 
+const isNonPrintingCharactersEnabled = () => {
+  return core.getDocument() && core.getDocument().getOfficeEditor().getIsNonPrintingCharactersEnabled();
+};
+
 export {
   isStyleButtonActive,
   getPointSizeSelectionKey,
@@ -133,4 +137,5 @@ export {
   getActiveListType,
   getIsOfficeEditorMode,
   isJustificationButtonActive,
+  isNonPrintingCharactersEnabled,
 };

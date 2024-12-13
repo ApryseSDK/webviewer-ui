@@ -131,6 +131,7 @@ function ThumbnailControlsMultiContainer({ parentElement }) {
         toggleElement={DataElements.PAGE_MANIPULATION_FLYOUT_MULTI_SELECT}
         title="action.more"
         img="icon-tool-more"
+        isMoreButton={true}
       />
       <div className="indicator"/>
     </div>}

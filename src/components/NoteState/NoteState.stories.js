@@ -12,9 +12,6 @@ import { noteStateFlyoutItems } from '../ModularComponents/NoteStateFlyout/NoteS
 export default {
   title: 'Components/NotesPanel/NoteState',
   component: NoteState,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 function getAnnotationWithStatus(status) {

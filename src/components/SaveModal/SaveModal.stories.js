@@ -7,9 +7,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/SaveModal',
   component: SaveModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 const getStore = () => {
   const initialState = {

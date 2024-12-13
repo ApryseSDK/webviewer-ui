@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
@@ -10,6 +10,11 @@ import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
 import core from 'core';
+import {
+  SortableContext,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
+import DraggableContainer from '../DraggableContainer';
 
 const GroupedItems = (props) => {
   const {
@@ -21,6 +26,8 @@ const GroupedItems = (props) => {
     grow = 0,
     alwaysVisible = false,
     style,
+    groupedItem,
+    headerId,
   } = props;
   const dispatch = useDispatch();
   const [itemsGap, setItemsGap] = useState(gap);
@@ -131,39 +138,62 @@ const GroupedItems = (props) => {
     setItemsGap(gap);
   }, [gap]);
 
+  const sortedDataElements = useMemo(
+    () => validItems.map((item) => item.dataElement),
+    [validItems]
+  );
+
+  const parentContainer = groupedItem || headerId;
+
   if (validItems && validItems.length) {
     return (
-      <div className={'GroupedItems'}
+      <DraggableContainer
         ref={elementRef}
-        data-element={dataElement}
-        style={{
-          gap: `${itemsGap}px`,
-          flexDirection: headerDirection,
-          justifyContent: justifyContent,
-          flexGrow: grow,
-          ...style,
-        }}>
-        {
-          validItems.map((item, index) => {
-            const hasToShrink = size > 0;
-            const indexesToExclude = validItems.length - size;
-            const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
-            const shouldExcludeIndex = index >= indexesToExclude || isLastIndexAndDivider;
-            if (hasToShrink && shouldExcludeIndex) {
-              return null;
+        dataElement={dataElement}
+        type='groupedItems'
+        livesInHeader={headerId !== undefined}
+        parentContainer={parentContainer}
+        numberOfItems={validItems.length}
+      >
+        <SortableContext
+          items={sortedDataElements}
+          strategy={rectSortingStrategy}
+        >
+          <div className={'GroupedItems'}
+            ref={elementRef}
+            data-element={dataElement}
+            style={{
+              gap: `${itemsGap}px`,
+              flexDirection: headerDirection,
+              justifyContent: justifyContent,
+              flexGrow: grow,
+              ...style,
+            }}>
+            {
+              validItems.map((item, index) => {
+                const hasToShrink = size > 0;
+                const indexesToExclude = validItems.length - size;
+                const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
+                const shouldExcludeIndex = index >= indexesToExclude || isLastIndexAndDivider;
+                if (hasToShrink && shouldExcludeIndex) {
+                  return null;
+                }
+                const itemProps = item.props || item;
+                return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection} groupedItem={dataElement} />;
+              })
             }
-            const itemProps = item.props || item;
-            return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection} groupedItem={dataElement} />;
-          })
-        }
-        {size > 0 &&
-          <ToggleElementButton
-            dataElement={`${flyoutDataElement}Toggle`}
-            toggleElement={flyoutDataElement}
-            title="action.more"
-            img={moreButtonIcon} />
-        }
-      </div>);
+            {size > 0 &&
+            <ToggleElementButton
+              dataElement={`${flyoutDataElement}Toggle`}
+              toggleElement={flyoutDataElement}
+              title="action.more"
+              isMoreButton={true}
+              img={moreButtonIcon} />
+            }
+          </div>
+        </SortableContext>
+      </DraggableContainer>
+    );
   }
   return null;
 };

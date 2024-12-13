@@ -7,8 +7,9 @@ import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
 import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
+import DraggableContainer from '../DraggableContainer';
 
-const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection }) => {
+const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, groupedItem, isInEditorPanel }) => {
   const flyoutElement = `${dataElement}Flyout`;
   const [zoomValue, setZoomValue] = useState('100');
   const dispatch = useDispatch();
@@ -85,20 +86,29 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   }, [size]);
 
   return (
-    <ZoomControls
-      size={size}
-      elementRef={elementRef}
-      getZoom={core.getZoom}
-      setZoomHandler={setZoomValue}
-      zoomValue={zoomValue}
-      zoomTo={zoomTo}
-      getCurrentZoom={getCurrentZoom}
-      onZoomInClicked={onZoomInClicked}
-      onZoomOutClicked={onZoomOutClicked}
-      isZoomFlyoutMenuActive={isZoomFlyoutMenuActive}
+    <DraggableContainer
+      ref={elementRef}
       dataElement={dataElement}
-      isActive={isActive}
-      setFlyoutTriggerRef={setFlyoutTriggerRef} />
+      type='toolButton'
+      parentContainer={groupedItem}
+      isInEditorPanel={isInEditorPanel}
+    >
+      <ZoomControls
+        size={size}
+        elementRef={elementRef}
+        getZoom={core.getZoom}
+        setZoomHandler={setZoomValue}
+        zoomValue={zoomValue}
+        zoomTo={zoomTo}
+        getCurrentZoom={getCurrentZoom}
+        onZoomInClicked={onZoomInClicked}
+        onZoomOutClicked={onZoomOutClicked}
+        isZoomFlyoutMenuActive={isZoomFlyoutMenuActive}
+        dataElement={dataElement}
+        isActive={isActive}
+        setFlyoutTriggerRef={setFlyoutTriggerRef} />
+    </DraggableContainer>
+
   );
 };
 

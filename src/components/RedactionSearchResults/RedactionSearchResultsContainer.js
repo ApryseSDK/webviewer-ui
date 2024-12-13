@@ -22,6 +22,7 @@ export function createRedactionAnnotations(searchResults, activeToolStyles = def
     Font = 'Helvetica',
     TextColor,
     FontSize,
+    TextAlign,
   } = activeToolStyles;
   const redactionAnnotations = searchResults.map((result) => {
     const redaction = new window.Core.Annotations.RedactionAnnotation();
@@ -32,7 +33,11 @@ export function createRedactionAnnotations(searchResults, activeToolStyles = def
     redaction.FillColor = FillColor;
     redaction.Font = Font;
     redaction.FontSize = FontSize;
+    if (window.Core.Annotations.Utilities.calculateAutoFontSize) {
+      redaction.FontSize = window.Core.Annotations.Utilities.calculateAutoFontSize(redaction);
+    }
     redaction.TextColor = TextColor;
+    redaction.TextAlign = TextAlign;
     redaction.setContents(result.result_str);
     redaction.type = result.type;
     redaction.Author = core.getCurrentUser();

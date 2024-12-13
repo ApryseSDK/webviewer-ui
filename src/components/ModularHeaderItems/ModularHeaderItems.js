@@ -81,7 +81,7 @@ const ModularHeaderItems = (props) => {
     itemProps = { headerPlacement: placement, justifyContent: justifyContent, ...itemProps };
     const { type, dataElement } = itemProps;
     const key = `${type}-${dataElement || index}-wrapper-${index}`;
-    return <InnerItem key={key} {...itemProps} headerDirection={headerDirection} />;
+    return <InnerItem key={key} {...itemProps} headerDirection={headerDirection} headerId={headerId} />;
   });
 
   return (
@@ -102,6 +102,7 @@ const ModularHeaderItems = (props) => {
           dataElement={`${flyoutDataElement}Toggle`}
           toggleElement={flyoutDataElement}
           title="action.more"
+          isMoreButton={true}
           img="icon-double-chevron-down" />
       }
     </div>

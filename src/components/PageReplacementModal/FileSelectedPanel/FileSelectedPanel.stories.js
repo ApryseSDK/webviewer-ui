@@ -6,9 +6,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/PageReplacementModal/FileSelectedPanel',
   component: FileSelectedPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 function noop() { }

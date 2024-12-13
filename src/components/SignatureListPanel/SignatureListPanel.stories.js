@@ -9,12 +9,9 @@ import { MockApp, createStore } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/SignatureListPanel',
   component: SignatureListPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
-const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
+const SignatureListPanelInApp = (context, location, signatures = [], initials = []) => {
   const mockState = {
     ...initialState,
     viewer: {
@@ -50,6 +47,7 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
         group: ['insertGroupedItems', 'insertToolsGroupedItems'],
       },
       activeToolName: 'AnnotationCreateSignature',
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -62,14 +60,14 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
   return <MockApp initialState={mockState} />;
 };
 
-export const EmptySignatureListPanelInAppLeft = () => SignatureListPanelInApp('left');
-export const EmptySignatureListPanelInAppRight = () => SignatureListPanelInApp('right');
-export const EmptySignatureListPanelInMobile = () => SignatureListPanelInApp('right');
-export const SignatureListPanelWithSignaturesInAppLeft = () => SignatureListPanelInApp('left', mockSavedSignatures);
-export const SignatureListPanelWithSignaturesInAppRight = () => SignatureListPanelInApp('right', mockSavedSignatures);
-export const SignatureListPanelWithSignaturesAndInitials = () => SignatureListPanelInApp('left', mockSavedSignatures, mockSavedInitials);
-export const SignatureListPanelWithSignaturesAndInitialsInAppRight = () => SignatureListPanelInApp('right', mockSavedSignatures, mockSavedInitials);
-export const SignatureListPanelInMobile = () => SignatureListPanelInApp('right', mockSavedSignatures, mockSavedInitials);
+export const EmptySignatureListPanelInAppLeft = (args, context) => SignatureListPanelInApp(context, 'left');
+export const EmptySignatureListPanelInAppRight = (args, context) => SignatureListPanelInApp(context, 'right');
+export const EmptySignatureListPanelInMobile = (args, context) => SignatureListPanelInApp(context, 'right');
+export const SignatureListPanelWithSignaturesInAppLeft = (args, context) => SignatureListPanelInApp(context, 'left', mockSavedSignatures);
+export const SignatureListPanelWithSignaturesInAppRight = (args, context) => SignatureListPanelInApp(context, 'right', mockSavedSignatures);
+export const SignatureListPanelWithSignaturesAndInitials = (args, context) => SignatureListPanelInApp(context, 'left', mockSavedSignatures, mockSavedInitials);
+export const SignatureListPanelWithSignaturesAndInitialsInAppRight = (args, context) => SignatureListPanelInApp(context, 'right', mockSavedSignatures, mockSavedInitials);
+export const SignatureListPanelInMobile = (args, context) => SignatureListPanelInApp(context, 'right', mockSavedSignatures, mockSavedInitials);
 
 
 EmptySignatureListPanelInAppLeft.parameters = {

@@ -17,9 +17,6 @@ import { MockDocumentContainer } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/FloatingHeader/LeftHeader',
   component: LeftHeader,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {

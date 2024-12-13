@@ -1,25 +1,15 @@
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 import { within, expect } from '@storybook/test';
-import { createTemplate, allModes } from 'helpers/storybookHelper';
+import { createTemplate } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/App/Panels',
   component: App,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 export const SetActiveTabInPanel = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
-SetActiveTabInPanel.parameters = {
-  chromatic: {
-    modes: {
-      'Light theme': allModes['light'],
-      'Dark theme': allModes['dark'],
-    }
-  },
-};
+
 SetActiveTabInPanel.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // We open the tab panel programatically

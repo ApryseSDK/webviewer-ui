@@ -44,10 +44,7 @@ const ChangeListItem = (props) => {
     }
   }, [syncViewer]);
 
-  let isSelected = false;
-  if (props.selectedAnnotationId && props.old.Id === props.selectedAnnotationId) {
-    isSelected = true;
-  }
+  let isSelected = props.selectedAnnotationId && props.old?.Id === props.selectedAnnotationId;
 
   return (
     <div className={classNames('ChangeListItem', { 'selected': isSelected })} onClick={onClickItem}>

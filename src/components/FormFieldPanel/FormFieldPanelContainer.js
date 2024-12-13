@@ -111,15 +111,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   }, [toolButtonObject, t]);
 
   useEffect(() => {
-    const radioButtons = core.getAnnotationsList().filter((annotation) => {
-      return annotation instanceof Annotations.RadioButtonWidgetAnnotation;
-    });
-    const radioGroups = radioButtons.map((radioButton) => radioButton.getField().name);
-    const dedupedRadioGroups = [...(new Set([...radioGroups]))];
-    setFieldProperties((previousFieldProperties) => ({
-      ...previousFieldProperties,
-      radioButtonGroups: dedupedRadioGroups,
-    }));
+    updateRadioGroupsForRadioAnnotation();
 
     const onFormFieldCreationModeStarted = () => {
       setFieldProperties((fieldProperties) => ({
@@ -160,6 +152,26 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     } else {
       setFieldOptions(options);
     }
+  };
+
+  const updateRadioGroupsForRadioAnnotation = () => {
+    const radioButtons = core.getAnnotationsList().filter((annotation) => {
+      return annotation instanceof Annotations.RadioButtonWidgetAnnotation;
+    });
+    const radioGroups = radioButtons.map((radioButton) => radioButton.getField().name);
+    const dedupedRadioGroups = [...(new Set([...radioGroups]))];
+    setFieldProperties((previousFieldProperties) => ({
+      ...previousFieldProperties,
+      radioButtonGroups: dedupedRadioGroups,
+    }));
+  };
+
+  const handleRadioFieldNameChange = (name) => {
+    updateRadioGroupsForRadioAnnotation();
+    setFieldProperties((previousFieldProperties) => ({
+      ...previousFieldProperties,
+      name,
+    }));
   };
 
   useEffect(() => {
@@ -401,13 +413,13 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
         fields={panelFields}
         flags={panelFlags}
         validationMessage={validationMessage}
-        radioButtonGroups={fieldProperties.radioButtonGroups}
+        fieldProperties={fieldProperties}
+        onRadioFieldNameChange={handleRadioFieldNameChange}
         onFieldOptionsChange={onFieldOptionsChange}
         fieldOptions={fieldOptions}
         onToolOptionsChange={onToolOptionsChange}
         toolOptions={toolOptions}
         annotation={annotation}
-        selectedRadioGroup={fieldProperties.name}
         redrawAnnotation={redrawAnnotation}
         onWidthChange={onWidthChange}
         onHeightChange={onHeightChange}

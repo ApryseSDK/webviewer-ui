@@ -5,8 +5,6 @@ import selectors from 'selectors';
 import actions from 'actions';
 import Icon from 'components/Icon';
 import { getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
-import { getLineSpacingFlyoutItems, getListTypeFlyoutItems } from 'helpers/officeEditor';
-import { OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS } from 'constants/officeEditor';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import DataElements from 'constants/dataElement';
 
@@ -84,27 +82,6 @@ export const itemToFlyout = (item, {
       flyoutItem.children = getZoomFlyoutItems(zoomOptionsList, store.dispatch, 1);
       break;
     }
-    case ITEM_TYPE.LINE_SPACING_BUTTON: {
-      flyoutItem.icon = 'icon-office-editor-line-spacing';
-      flyoutItem.label = 'officeEditor.lineSpacingMenu';
-      flyoutItem.className = 'LineSpacingButton';
-      flyoutItem.children = getLineSpacingFlyoutItems();
-      break;
-    }
-    case ITEM_TYPE.ORDERED_LIST: {
-      flyoutItem.icon = 'icon-office-editor-number-list';
-      flyoutItem.label = 'officeEditor.numberList';
-      flyoutItem.className = 'listTypeToggleFlyoutMenu';
-      flyoutItem.children = getListTypeFlyoutItems('number', OFFICE_NUMBER_OPTIONS);
-      break;
-    }
-    case ITEM_TYPE.UNORDERED_LIST: {
-      flyoutItem.icon = 'icon-office-editor-bullet-list';
-      flyoutItem.label = 'officeEditor.bulletList';
-      flyoutItem.className = 'listTypeToggleFlyoutMenu';
-      flyoutItem.children = getListTypeFlyoutItems('bullet', OFFICE_BULLET_OPTIONS);
-      break;
-    }
     case ITEM_TYPE.RIBBON_GROUP:
       flyoutItem.className = 'FlyoutRibbonGroup';
       flyoutItem.label = 'option.toolbarGroup.flyoutLabel';
@@ -180,7 +157,7 @@ export const getFlyoutItemType = (flyoutItem) => {
   } else if (flyoutItem.dataElement?.includes('zoom-button-')) {
     return FLYOUT_ITEM_TYPES.ZOOM_BUTTON;
   } else if (flyoutItem.dataElement?.includes('line-spacing-button-')) {
-    return FLYOUT_ITEM_TYPES.LINE_HEIGHT_BUTTON;
+    return FLYOUT_ITEM_TYPES.LINE_SPACING_OPTIONS_BUTTON;
   } else if (flyoutItem.dataElement === FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT) {
     return FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT;
   } else if (flyoutItem.dataElement?.includes('office-editor-list-type-')) {

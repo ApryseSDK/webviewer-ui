@@ -13,9 +13,6 @@ export default {
   title: 'Components/TextEditingPanel',
   component: TextEditingPanel,
   includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide', 'TextEditingPanelInMobile'],
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const textEditingPanelInitialState = {
@@ -117,7 +114,7 @@ export const TextEditingUndoRedo = () => {
   );
 };
 
-const TextEditingPanelInApp = (dataElement, location) => {
+const TextEditingPanelInApp = (context, dataElement, location) => {
   const appMockState = {
     ...initialState,
     viewer: {
@@ -146,7 +143,8 @@ const TextEditingPanelInApp = (dataElement, location) => {
         tool: 'AnnotationCreateFreeText',
         group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
       },
-      activeToolName: 'AnnotationCreateFreeText'
+      activeToolName: 'AnnotationCreateFreeText',
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -158,9 +156,9 @@ const TextEditingPanelInApp = (dataElement, location) => {
   return <MockApp initialState={appMockState} />;
 };
 
-export const LeftSide = () => (TextEditingPanelInApp('panel1', 'left'));
+export const LeftSide = (args, context) => TextEditingPanelInApp(context, 'panel1', 'left');
 LeftSide.parameters = { layout: 'fullscreen' };
 
-export const TextEditingPanelInMobile = () => (TextEditingPanelInApp('textEditingPanel', 'right'));
+export const TextEditingPanelInMobile = (args, context) => TextEditingPanelInApp(context, 'textEditingPanel', 'right');
 
 TextEditingPanelInMobile.parameters = window.storybook.MobileParameters;

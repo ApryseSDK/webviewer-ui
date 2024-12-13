@@ -17,9 +17,6 @@ import { MockDocumentContainer } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/FloatingHeader/TopHeader',
   component: TopHeader,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const MockAppWrapperWithTopheader = ({ modularHeaders }) => {

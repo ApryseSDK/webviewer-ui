@@ -6,9 +6,6 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 export default {
   title: 'Components/Panel',
   component: Panel,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 function noop() {

@@ -32,7 +32,12 @@ const FontStyleToggleButton = forwardRef((props, ref) => {
 
   return (
     isFlyoutItem ?
-      <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} />
+      <FlyoutItemContainer
+        {...props}
+        ref={ref}
+        onClick={handleClick}
+        additionalClass={isActive ? 'active' : ''}
+      />
       : (
         <ActionButton
           key={styleType}

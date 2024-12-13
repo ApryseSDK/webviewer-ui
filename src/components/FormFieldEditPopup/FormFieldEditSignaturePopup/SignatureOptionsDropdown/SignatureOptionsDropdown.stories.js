@@ -9,9 +9,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/FormFieldEditPanel',
   component: SignatureOptionsDropdown,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const initialState = {

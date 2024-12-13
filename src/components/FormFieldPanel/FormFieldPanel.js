@@ -22,22 +22,19 @@ const FormFieldPanel = ({
   closeFormFieldEditPanel,
   isValid,
   validationMessage,
-  radioButtonGroups,
   toolOptions,
   onToolOptionsChange,
   fieldOptions,
   onFieldOptionsChange,
   annotation,
-  selectedRadioGroup,
   onWidthChange,
   onHeightChange,
   indicator,
   shouldShowOptions = false,
+  fieldProperties,
+  onRadioFieldNameChange,
 }) => {
   const { t } = useTranslation();
-  const [radioButtonGroup, setRadioButtonGroup] = useState(() =>
-    selectedRadioGroup ? { value: selectedRadioGroup, label: selectedRadioGroup } : null
-  );
 
   const getIndicatorPlaceholderFromAnnotation = useCallback((annotation) => {
     const isSignatureAnnotation = annotation.getField().getFieldType() === 'SignatureFormField';
@@ -73,20 +70,10 @@ const FormFieldPanel = ({
     setIndicatorPlaceholder(getIndicatorPlaceholder());
   }, [panelTitle, getIndicatorPlaceholder]);
 
-  useEffect(() => {
-    if (selectedRadioGroup !== '') {
-      setRadioButtonGroup({ value: selectedRadioGroup, label: selectedRadioGroup });
-    } else {
-      setRadioButtonGroup(null);
-    }
-  }, [selectedRadioGroup]);
-
   const onSelectInputChange = useCallback((field, input) => {
-    const newGroup = input ? { value: input.value, label: input.value } : null;
-    setRadioButtonGroup(newGroup);
     field.onChange(input?.value || '');
+    onRadioFieldNameChange(input?.value || '');
   }, []);
-
   const renderTextInput = (field) => {
     const { required, label, onChange, value } = field;
     const hasError = required && !isValid;
@@ -107,22 +94,25 @@ const FormFieldPanel = ({
       </div>
     );
   };
-  const renderSelectInput = (field) => (
-    <div className="field-select-input">
-      <label>
-        {t(field.label)}{field.required ? '*' : ''}:
-      </label>
-      <CreatableDropdown
-        textPlaceholder={t('formField.formFieldPopup.fieldName')}
-        options={radioButtonGroups.map((group) => ({ value: group, label: group }))}
-        onChange={(inputValue) => onSelectInputChange(field, inputValue)}
-        value={radioButtonGroup}
-        isValid={isValid}
-        messageText={t(validationMessage)}
-      />
-      <div className="radio-group-label">{t('formField.formFieldPopup.radioGroups')}</div>
-    </div>
-  );
+  const renderSelectInput = (field) => {
+    const value = { value: fieldProperties.name, label: fieldProperties.name };
+    return (
+      <div className="field-select-input">
+        <label>
+          {t(field.label)}{field.required ? '*' : ''}:
+        </label>
+        <CreatableDropdown
+          textPlaceholder={t('formField.formFieldPopup.fieldName')}
+          options={fieldProperties.radioButtonGroups.map((group) => ({ value: group, label: group }))}
+          onChange={(inputValue) => onSelectInputChange(field, inputValue)}
+          value={value}
+          isValid={isValid}
+          messageText={t(validationMessage)}
+        />
+        <div className="radio-group-label">{t('formField.formFieldPopup.radioGroups')}</div>
+      </div>
+    );
+  };
 
   const renderSignatureOption = (field) => {
     const onOptionChange = (option) => {
@@ -264,17 +254,17 @@ FormFieldPanel.propTypes = {
   closeFormFieldEditPanel: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
   validationMessage: PropTypes.string,
-  radioButtonGroups: PropTypes.array,
   toolOptions: PropTypes.array,
   onToolOptionsChange: PropTypes.func,
   fieldOptions: PropTypes.array,
   onFieldOptionsChange: PropTypes.func,
   annotation: PropTypes.object,
-  selectedRadioGroup: PropTypes.string,
   indicator: PropTypes.object.isRequired,
   onWidthChange: PropTypes.func.isRequired,
   onHeightChange: PropTypes.func.isRequired,
   shouldShowOptions: PropTypes.bool,
+  fieldProperties: PropTypes.object,
+  onRadioFieldNameChange: PropTypes.func,
 };
 
 export default FormFieldPanel;

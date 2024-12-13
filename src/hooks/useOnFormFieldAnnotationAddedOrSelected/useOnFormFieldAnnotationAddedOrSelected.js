@@ -64,10 +64,12 @@ export default function useOnFormFieldAnnotationAddedOrSelected() {
       if (isRightClickAnnotationPopupEnabled) {
         return;
       }
-      const isWidgetAnnotation = annotations[0] instanceof Annotations.WidgetAnnotation;
+      const isWidgetAnnotation = annotations.length && annotations[0] instanceof Annotations.WidgetAnnotation;
 
-      if (action === 'selected' && annotations.length && isWidgetAnnotation) {
+      if (action === 'selected' && isWidgetAnnotation) {
         setCurrentlyEditingFormAnnotation(annotations[0]);
+      } else if (action === 'deselected' && isWidgetAnnotation) {
+        setCurrentlyEditingFormAnnotation(null);
       }
     };
 

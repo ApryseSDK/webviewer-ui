@@ -8,6 +8,9 @@ import Wv3dPropertiesPanel from './Wv3dPropertiesPanel';
 export default {
   title: 'Components/Wv3dPropertiesPanel',
   component: Wv3dPropertiesPanel,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const baseSchema = {

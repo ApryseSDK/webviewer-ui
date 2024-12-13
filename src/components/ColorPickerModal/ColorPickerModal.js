@@ -7,6 +7,25 @@ import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import './ColorPickerModal.scss';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import getRootNode from 'helpers/getRootNode';
+import { EditableInput } from 'react-color/es/components/common';
+
+
+// This workaround resolves the issue where the 'Hex' input in the 'react-color'
+// library is not editable within WebComponent environments
+EditableInput.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+  if (this.props.value !== this.state.value && (prevProps.value !== this.props.value || prevState.value !== this.state.value)) {
+    let activeElementExt = document.activeElement;
+    if (getRootNode()) {
+      activeElementExt = getRootNode().activeElement;
+    }
+    if (this.input === activeElementExt) {
+      this.setState({ blurValue: String(this.props.value).toUpperCase() });
+    } else {
+      this.setState({ value: String(this.props.value).toUpperCase(), blurValue: !this.state.blurValue && String(this.props.value).toUpperCase() });
+    }
+  }
+};
 
 const ColorPickerModal = ({ isDisabled, isOpen, color, closeModal, handleChangeSave, handleChangeCancel }) => {
   const [t] = useTranslation();

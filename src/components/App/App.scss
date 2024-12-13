@@ -162,3 +162,20 @@ input, textarea, select {
 .no-margin {
   margin: 0;
 }
+
+.drag-drop-target {
+  cursor: grab;
+  position: relative;
+}
+
+.drag-drop-target::after {
+  z-index: 1;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 205, 50, 0.1);
+  border: 1px dashed rgba(50, 205, 50, 0.5);
+}

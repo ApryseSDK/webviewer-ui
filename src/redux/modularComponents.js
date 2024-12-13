@@ -96,6 +96,13 @@ const defaultModularComponents = {
     type: ITEM_TYPE.PRESET_BUTTON,
     buttonType: PRESET_BUTTON_TYPES.COMPARE,
   },
+  editorModeButton: {
+    dataElement: 'editorModeButton',
+    title: 'Drag and Drop',
+    icon: 'icon-header-compare',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.EDITOR_MODE,
+  },
   filePickerButton: {
     dataElement: 'filePickerButton',
     title: 'action.openFile',
@@ -192,6 +199,7 @@ const defaultModularComponents = {
   groupedLeftHeaderButtons: {
     dataElement: 'groupedLeftHeaderButtons',
     items: [
+      'editorModeButton',
       'menuButton',
       'divider-0.1',
       'leftPanelButton',
@@ -461,13 +469,13 @@ const defaultModularComponents = {
       'markReplaceTextToolButton',
       'stickyToolButton',
       'calloutToolButton',
+      'divider-0.4',
     ],
     type: 'groupedItems',
     justifyContent: 'center',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
   },
   annotateGroupedItems: {
     dataElement: 'annotateGroupedItems',
@@ -891,6 +899,11 @@ const defaultPanels = [
   {
     dataElement: 'outlinesPanel',
     render: 'outlinesPanel',
+    location: 'left'
+  },
+  {
+    dataElement: 'editorPanel',
+    render: 'editorPanel',
     location: 'left'
   },
   {

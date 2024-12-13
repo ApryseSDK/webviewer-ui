@@ -12,14 +12,11 @@ import {
   floatEndRightHeader,
   mockModularComponents,
 } from '../../Helpers/mockHeaders';
-import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { MockDocumentContainer , createTemplate } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/FloatingHeader/RightHeader',
   component: RightHeader,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
@@ -52,16 +49,14 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
 const Template = (args) => <MockAppWrapperWithRightHeader {...args} />;
 Template.parameters = { chromatic: { disableSnapshot: true } };
 
-export const RightHeaderWithDefaultAndFloaties = Template.bind({});
-RightHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: {
-    defaultRightHeader,
-    secondFloatStartRightHeader,
-    floatStartRightHeader,
-    floatCenterRightHeader,
-    floatEndRightHeader,
-  },
+const modularHeadersWithRightHeader = {
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
 };
+export const RightHeaderWithDefaultAndFloaties = createTemplate({ headers: modularHeadersWithRightHeader, components: mockModularComponents });
 
 export const FloatRightStartHeader = Template.bind({});
 FloatRightStartHeader.args = {

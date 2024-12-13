@@ -10,9 +10,6 @@ export default {
   title: 'Components/InlineCommentPopup',
   component: InlineCommentingPopup,
   includeStories: ['Basic', 'Mobile'],
-  parameters: {
-    customizableUI: true
-  }
 };
 
 export const initialState = {

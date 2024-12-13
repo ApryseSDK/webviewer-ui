@@ -12,9 +12,6 @@ import { widgets } from './helper';
 export default {
   title: 'ModularComponents/IndexPanel',
   component: IndexPanelContainer,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const mockState = {

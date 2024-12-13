@@ -84,6 +84,7 @@ function ZoomControls(props) {
               <span>%</span>
             </div>
             <ToggleElementButton
+              isDraggable={false}
               dataElement="zoom-toggle-button"
               className="zoomToggleButton"
               title={t('option.settings.zoomOptions')}

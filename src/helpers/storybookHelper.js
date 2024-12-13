@@ -51,7 +51,7 @@ MockApp.propTypes = {
   height: PropTypes.string,
 };
 
-const BasicAppTemplate = (args) => {
+const BasicAppTemplate = (args, context) => {
   const isMultiTab = args?.isMultiTab || false;
   const stateWithHeaders = {
     ...initialState,
@@ -79,6 +79,7 @@ const BasicAppTemplate = (args) => {
         { id: 3, src: 'file3.pptx', options: { filename: 'Selected Document.pptx' }, },
       ] : [],
       activeTab: 3,
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -90,7 +91,7 @@ const BasicAppTemplate = (args) => {
 export const createTemplate = ({ headers = {}, components = {}, flyoutMap = {}, isMultiTab = false, width = '100%', height = '100%' }) => {
   const template = BasicAppTemplate.bind({});
   template.args = { headers, components, flyoutMap, isMultiTab, width, height };
-  template.parameters = { layout: 'fullscreen', customizableUI: true };
+  template.parameters = { layout: 'fullscreen' };
   return template;
 };
 
@@ -121,13 +122,4 @@ MockDocumentContainer.propTypes = {
   alignItems: PropTypes.string,
   flexDirection: PropTypes.string,
   children: PropTypes.node,
-};
-
-export const allModes = {
-  'light': {
-    theme: 'light',
-  },
-  'dark': {
-    theme: 'dark',
-  },
 };

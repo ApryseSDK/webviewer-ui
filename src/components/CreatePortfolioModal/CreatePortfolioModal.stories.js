@@ -7,9 +7,6 @@ import DataElements from 'constants/dataElement';
 export default {
   title: 'Components/CreatePortfolioModal',
   component: CreatePortfolioModal,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const getStore = () => {

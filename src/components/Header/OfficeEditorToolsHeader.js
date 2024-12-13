@@ -3,6 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import Measure from 'react-measure';
+import PropTypes from 'prop-types';
 import core from 'core';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
@@ -104,7 +105,7 @@ const JustificationOptions = ({ justification }) => {
   );
 };
 
-const ListOptions = ({ listType }) => {
+const ListOptions = ({ listType, enableNonPrintingCharacters }) => {
   const bulletListObjects = OFFICE_BULLET_OPTIONS.map((options) => ({
     className: 'officeEditor-list-style-icon',
     key: options.enum,
@@ -175,8 +176,23 @@ const ListOptions = ({ listType }) => {
           await core.getOfficeEditor().increaseIndent();
         }}
       />
+      <ActionButton
+        onClick={async () => {
+          const doc = core.getDocument();
+          await doc.getOfficeEditor().toggleNonPrintingCharacters();
+        }}
+        dataElement={'officeEditorToggleNonPrintingCharactersButton'}
+        title={'officeEditor.nonPrintingCharacters'}
+        isActive={enableNonPrintingCharacters}
+        img={'icon-office-editor-toggle-non-printing-characters'}
+      />
     </>
   );
+};
+
+ListOptions.propTypes = {
+  listType: PropTypes.string,
+  enableNonPrintingCharacters: PropTypes.bool,
 };
 
 const OfficeEditorToolsHeader = () => {
@@ -189,6 +205,7 @@ const OfficeEditorToolsHeader = () => {
     availableFontFaces,
     activeTheme,
     cssFontValues,
+    enableNonPrintingCharacters
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
@@ -198,6 +215,7 @@ const OfficeEditorToolsHeader = () => {
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
       selectors.getCSSFontValues(state),
+      selectors.isNonPrintingCharactersEnabled(state),
     ],
     shallowEqual
   );
@@ -487,7 +505,7 @@ const OfficeEditorToolsHeader = () => {
                   {(visibleGroupCount === 6) && (
                     <>
                       <div className="divider" />
-                      <ListOptions listType={listType} />
+                      <ListOptions listType={listType} enableNonPrintingCharacters={enableNonPrintingCharacters} />
                     </>
                   )}
                   {(visibleGroupCount < 6) && (
@@ -524,7 +542,7 @@ const OfficeEditorToolsHeader = () => {
                                 </>
                               )}
                               {(visibleGroupCount < 6) && (
-                                <ListOptions listType={listType} />
+                                <ListOptions listType={listType} enableNonPrintingCharacters={enableNonPrintingCharacters}/>
                               )}
                             </div>
                           </div>

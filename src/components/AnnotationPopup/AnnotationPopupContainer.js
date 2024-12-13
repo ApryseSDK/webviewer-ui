@@ -113,7 +113,8 @@ const AnnotationPopupContainer = ({
   );
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [position, setPosition] = useState({ left: -99999, top: -99999 });
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [isVisible, setIsVisible] = useState(false);
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -170,6 +171,12 @@ const AnnotationPopupContainer = ({
     }
   }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
 
+  const handleVisibility = debounce(() => {
+    if (AnnotationPopupContainer) {
+      setIsVisible(isFocusedAnnotationSelected);
+    }
+  }, sixtyFramesPerSecondIncrement * 2, { 'trailing': true, 'leading': false });
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
 
@@ -182,6 +189,8 @@ const AnnotationPopupContainer = ({
   useLayoutEffect(() => {
     if (focusedAnnotation || isStylePopupOpen || isDatePickerMount) {
       handleResize();
+      setIsVisible(false);
+      handleVisibility();
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
   }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
@@ -497,6 +506,7 @@ const AnnotationPopupContainer = ({
       isLinkModalOpen={isLinkModalOpen}
       isWarningModalOpen={isWarningModalOpen}
       isContextMenuPopupOpen={isContextMenuPopupOpen}
+      isVisible={isVisible}
 
       popupRef={popupRef}
       position={position}

@@ -11,9 +11,6 @@ export default {
   title: 'Components/Bookmark',
   component: Bookmark,
   includeStories: ['Basic', 'Adding'],
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const initialState = {

@@ -6,9 +6,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/PageThumbnailsGrid',
   component: PageThumbnailsGrid,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 function noop() { }

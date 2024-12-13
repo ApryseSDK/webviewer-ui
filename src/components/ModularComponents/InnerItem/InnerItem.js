@@ -21,11 +21,16 @@ import OfficeEditorModeDropdown from '../OfficeEditor/OfficeEditorModeDropdown';
 import LineSpacingToggleButton from '../OfficeEditor/LineSpacing';
 import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertImageButton';
 import OfficeEditorPageBreakButton from '../OfficeEditor/OfficeEditorPageBreakButton';
+
 import ListToggleButton from '../OfficeEditor/ListToggleButton';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import RibbonItem from '../RibbonItem';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
   const key = `${type}-${dataElement}-${headerPlacement}`;
+  const isInEditorMode = useSelector(selectors.isInEditorMode);
 
   switch (type) {
     case ITEM_TYPE.BUTTON:
@@ -35,6 +40,9 @@ const InnerItem = (props) => {
     case ITEM_TYPE.GROUPED_ITEMS:
       return <GroupedItems key={key} {...props} headerDirection={headerDirection} />;
     case ITEM_TYPE.RIBBON_ITEM:
+      if (isInEditorMode) {
+        return <RibbonItem key={key} {...props} />;
+      }
       console.warn(`${ITEM_TYPE.RIBBON_ITEM} needs to be added to a ${ITEM_TYPE.RIBBON_GROUP}`);
     case ITEM_TYPE.DIVIDER:
       return <Divider headerDirection={headerDirection} {...props} />;

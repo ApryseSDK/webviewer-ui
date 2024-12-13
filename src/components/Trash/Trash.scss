@@ -1,0 +1,14 @@
+.Trash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 50%;
+  margin-left: -25px;
+  bottom: 20px;
+  width: 300px;
+  height: 60px;
+  border-radius: 5px;
+  border: 1px solid;
+  z-index: 100;
+}

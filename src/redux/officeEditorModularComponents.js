@@ -107,6 +107,11 @@ const defaultOfficeEditorModularComponents = {
     type: 'presetButton',
     buttonType: 'decreaseIndentButton',
   },
+  toggleNonPrintingCharactersButton: {
+    dataElement: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+    type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+  },
   officeEditorPageBreakButton: {
     dataElement: PRESET_BUTTON_TYPES.PAGE_BREAK,
     type: ITEM_TYPE.PRESET_BUTTON,
@@ -356,6 +361,7 @@ const defaultOfficeEditorModularComponents = {
       'divider-0.7',
       'decreaseIndentButton',
       'increaseIndentButton',
+      'toggleNonPrintingCharactersButton',
       'divider-0.8',
       'undoButton',
       'redoButton',

@@ -13,9 +13,6 @@ import { within, userEvent, expect, waitFor } from '@storybook/test';
 export default {
   title: 'ModularComponents/StylePanel',
   component: StylePanelContainer,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const basicMockState = {
@@ -52,7 +49,7 @@ const EmptyStylePanel = (location) => {
 export const EmptyStylePanelOnTheLeft = () => EmptyStylePanel('left');
 export const EmptyStylePanelOnTheRight = () => EmptyStylePanel('right');
 
-const StylePanelInApp = (location) => {
+const StylePanelInApp = (context, location) => {
   const mockState = {
     ...initialState,
     viewer: {
@@ -79,6 +76,7 @@ const StylePanelInApp = (location) => {
         group: ['annotateGroupedItems'],
       },
       activeGroupedItems: ['annotateGroupedItems'],
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -90,9 +88,9 @@ const StylePanelInApp = (location) => {
   return <MockApp initialState={mockState} />;
 };
 
-export const StylePanelInAppLeft = () => StylePanelInApp('left');
-export const StylePanelInAppRight = () => StylePanelInApp('right');
-export const StylePanelInAppMobileVersion = () => StylePanelInApp();
+export const StylePanelInAppLeft = (args, context) => StylePanelInApp(context, 'left');
+export const StylePanelInAppRight = (args, context) => StylePanelInApp(context, 'right');
+export const StylePanelInAppMobileVersion = (args, context) => StylePanelInApp(context);
 
 StylePanelInAppLeft.parameters = {
   layout: 'fullscreen',
@@ -291,13 +289,7 @@ export const StylePanelComboBoxFormTool = () => {
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
 
-export const StylePanelTooltipOnColors = () => {
-  const [shouldRender, setShouldRender] = useState(false);
-  useToolHook(window.Core.Tools.RectangleCreateTool, window.Core.Tools.ToolNames.RECTANGLE, setShouldRender, {
-    StrokeStyle: 'solid',
-  });
-  return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
-};
+export const StylePanelTooltipOnColors = StylePanelShapeTool.bind({});
 
 StylePanelTooltipOnColors.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

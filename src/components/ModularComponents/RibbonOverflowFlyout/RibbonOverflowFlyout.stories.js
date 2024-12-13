@@ -7,9 +7,6 @@ import Flyout from '../Flyout/Flyout';
 export default {
   title: 'ModularComponents/RibbonGroup',
   component: RibbonOverflowFlyout,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const item1 = {

@@ -32,9 +32,6 @@ import { MockApp } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/FloatingHeader/App',
   component: App,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const Template = (args) => {

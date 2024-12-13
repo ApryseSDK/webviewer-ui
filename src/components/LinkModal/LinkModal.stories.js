@@ -7,9 +7,6 @@ import core from 'core';
 export default {
   title: 'Components/LinkModal',
   component: LinkModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const initialState = {

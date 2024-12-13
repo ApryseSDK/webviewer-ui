@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useLayoutEffect, useRef, useEffect, isValidElement } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -264,6 +264,10 @@ const Flyout = () => {
 
   const renderItems = (itemList, isChild = false) => {
     return itemList.map((item, index) => {
+      if (isValidElement(item)) {
+        return item;
+      }
+
       const itemType = item.type ?? getFlyoutItemType(item);
       return (
         <FlyoutItem

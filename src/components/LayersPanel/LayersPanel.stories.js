@@ -7,9 +7,6 @@ import { userEvent, within, waitFor, expect } from '@storybook/test';
 export default {
   title: 'Components/LayersPanel',
   component: LayersPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const layers = [
@@ -27,7 +24,7 @@ const layers = [
   }
 ];
 
-export function Basic() {
+export function Basic(args, context) {
   const stateWithLayersPanel = {
     ...initialState,
     viewer: {
@@ -60,6 +57,7 @@ export function Basic() {
         group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
       },
       fadePageNavigationComponent: true,
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -112,7 +110,7 @@ Basic.play = async ({ canvasElement }) => {
   expect(pageNav).toBeVisible();
 };
 
-export const RightSide = () => {
+export const RightSide = (args, context) => {
   const stateWithLayersPanelOnRight = {
     ...initialState,
     viewer: {
@@ -139,6 +137,7 @@ export const RightSide = () => {
         tool: 'AnnotationEdit',
         group: ['groupedLeftPanelItems'],
       },
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -153,7 +152,7 @@ export const RightSide = () => {
 
 RightSide.parameters = { layout: 'fullscreen' };
 
-export const Empty = () => {
+export const Empty = (args, context) => {
   const stateWithEmptyLayersPanel = {
     ...initialState,
     viewer: {
@@ -176,6 +175,7 @@ export const Empty = () => {
       },
       activeCustomRibbon: 'toolbarGroup-View',
       fadePageNavigationComponent: false,
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,

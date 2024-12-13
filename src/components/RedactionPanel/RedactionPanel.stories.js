@@ -25,9 +25,6 @@ export default {
     'RightPanelWithRedactionItems',
     'LeftPanelWithRedactionItems',
   ],
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 export const RedactionContextMock = ({ children, mockContext }) => {

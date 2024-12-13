@@ -28,6 +28,7 @@ const propTypes = {
   isLinkModalOpen: PropTypes.bool,
   isWarningModalOpen: PropTypes.bool,
   isContextMenuPopupOpen: PropTypes.bool,
+  isVisible: PropTypes.bool,
 
   focusedAnnotation: PropTypes.object,
   multipleAnnotationsSelected: PropTypes.bool,
@@ -103,6 +104,7 @@ const AnnotationPopup = ({
   isLinkModalOpen,
   isWarningModalOpen,
   isContextMenuPopupOpen,
+  isVisible,
 
   focusedAnnotation,
   popupRef,
@@ -465,7 +467,7 @@ const AnnotationPopup = ({
       })}
       ref={popupRef}
       data-element={DataElements.ANNOTATION_POPUP}
-      style={{ ...position }}
+      style={{ ...position, visibility: isVisible || isVisible === undefined ? 'visible' : 'hidden' }}
     >
       {renderPopup()}
     </div>

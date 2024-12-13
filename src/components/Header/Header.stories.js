@@ -7,9 +7,6 @@ import { configureStore } from '@reduxjs/toolkit';
 export default {
   title: 'Components/Header',
   component: Header,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const mockedState = {

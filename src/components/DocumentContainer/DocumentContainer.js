@@ -24,6 +24,7 @@ import ReaderModeViewer from 'components/ReaderModeViewer';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
 import useOnCountMeasurementAnnotationSelected from 'hooks/useOnCountMeasurementAnnotationSelected';
+import i18next from 'i18next';
 
 import './DocumentContainer.scss';
 import DataElements from 'src/constants/dataElement';
@@ -334,15 +335,16 @@ class DocumentContainer extends React.PureComponent {
         <Measure onResize={this.handleResize}>
           {({ measureRef }) => (
             <div className="measurement-container" ref={measureRef}>
-              <div
+              <main
                 className={documentContainerClassName}
                 ref={this.container}
                 data-element="documentContainer"
                 onScroll={this.handleScroll}
+                aria-label={i18next.t('accessibility.landmarks.documentContent')}
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
-              </div>
+              </main>
               {this.props.isReaderMode && <ReaderModeViewer />}
               <LazyLoadWrapper
                 Component={LazyLoadComponents.ScaleOverlayContainer}

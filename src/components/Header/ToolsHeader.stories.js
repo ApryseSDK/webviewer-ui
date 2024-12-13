@@ -9,6 +9,9 @@ import featureFlagsReducer from 'src/redux/reducers/featureFlagsReducer';
 export default {
   title: 'Components/Header/ToolsHeader',
   component: ToolsHeaderComponent,
+  parameters: {
+    legacyUI: true
+  }
 };
 
 const store = createStore(combineReducers({

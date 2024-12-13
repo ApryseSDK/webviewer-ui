@@ -11,6 +11,7 @@ import ResizeBar from 'components/ResizeBar';
 import { isIE } from 'helpers/device';
 import MobilePanelWrapper from '../ModularComponents/MobilePanelWrapper';
 import PropTypes from 'prop-types';
+import { useDraggable } from '@dnd-kit/core';
 
 const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
@@ -44,7 +45,19 @@ const DesktopPanel = ({ children }) => {
     ],
     shallowEqual,
   );
+  const isInEditorMode = useSelector((state) => selectors.isInEditorMode(state));
+
   const dispatch = useDispatch();
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+  } = useDraggable({
+    id: dataElement,
+    data: { type: 'panel', location: location },
+  });
+
 
   let style = {};
   if (currentWidth && (isInDesktopOnlyMode || !isMobile)) {
@@ -86,8 +99,12 @@ const DesktopPanel = ({ children }) => {
         'logo-bar-enabled': isLogoBarEnabled,
         'modular-ui-panel': customizableUI,
         'multi-tab-active': isMultiTabActive,
+        'editor-mode': isInEditorMode && dataElement !== 'editorPanel',
       })}
       data-element={dataElement}
+      ref={setNodeRef}
+      {...(isInEditorMode && dataElement !== 'editorPanel' ? attributes : {})}
+      {...(isInEditorMode && dataElement !== 'editorPanel' ? listeners : {})}
     >
       {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}

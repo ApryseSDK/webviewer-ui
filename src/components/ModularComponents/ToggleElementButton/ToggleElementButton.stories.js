@@ -8,9 +8,6 @@ import PropTypes from 'prop-types';
 export default {
   title: 'ModularComponents/ToggleElementButton',
   component: ToggleElementButton,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

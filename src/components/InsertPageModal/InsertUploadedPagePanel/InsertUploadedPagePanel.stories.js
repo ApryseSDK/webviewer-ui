@@ -8,9 +8,6 @@ import '../InsertPageModal.scss';
 export default {
   title: 'Components/InsertPageModal/InsertUploadedPagePanel',
   component: InsertUploadedPagePanel,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 function noop() { }

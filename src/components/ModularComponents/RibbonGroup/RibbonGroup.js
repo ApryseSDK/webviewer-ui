@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import RibbonItem from '../RibbonItem';
 import classNames from 'classnames';
@@ -13,7 +13,10 @@ import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import { assignToolToGroups } from 'helpers/modularUIHelpers';
 import Icon from 'components/Icon';
-
+import {
+  SortableContext,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
 import './RibbonGroup.scss';
 
 const DEFAULT_DROPDOWN_HEIGHT = 72;
@@ -160,7 +163,7 @@ const RibbonGroup = (props) => {
       itemProps.justifyContent = justifyContent;
       const isActive = item.toolbarGroup === activeCustomRibbon;
       itemProps.ariaCurrent = isActive ? 'location' : undefined;
-      return <RibbonItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} />;
+      return <RibbonItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} parentContainer={dataElement} />;
     }).filter((item) => !!item);
   }, [ribbonItems, activeCustomRibbon]);
 
@@ -195,68 +198,79 @@ const RibbonGroup = (props) => {
   const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === activeCustomRibbon);
   const lastIndex = ribbonItems.length - 1;
 
+  const sortedDataElements = useMemo(
+    () => items.map((item) => item.dataElement),
+    [items]
+  );
+
   if (!isRibbonGroupDisabled && ribbonItems && ribbonItems.length) {
     return (
-      <div ref={elementRef} className={'RibbonGroupContainer'} data-element={dataElement}
-        style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
-        <div
-          className={classNames({
-            'RibbonGroup': true,
-            'hidden': size >= MIN_SIZE,
-          })}
-          style={{
-            gap: `${itemsGap}px`,
-            flexDirection: headerDirection,
-          }}
-        >
-          {renderRibbonItems()}
+      <SortableContext
+        items={sortedDataElements}
+        strategy={rectSortingStrategy}
+      >
+        <div ref={elementRef} className={'RibbonGroupContainer'} data-element={dataElement}
+          style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
           <div
             className={classNames({
-              'RibbonGroup__moreButton': true,
-              'hidden': size === 0,
+              'RibbonGroup': true,
+              'hidden': size >= MIN_SIZE,
+            })}
+            style={{
+              gap: `${itemsGap}px`,
+              flexDirection: headerDirection,
+            }}
+          >
+            {renderRibbonItems()}
+            <div
+              className={classNames({
+                'RibbonGroup__moreButton': true,
+                'hidden': size === 0,
+              })}
+            >
+              <ToggleElementButton
+                dataElement="moreRibbonsButton"
+                toggleElement={FLYOUT_NAME}
+                title="action.more"
+                img={activeIndex > lastIndex - size ? 'icon-tools-more-active' : 'icon-tools-more'}
+                className={classNames({
+                  'hasActive': activeIndex > lastIndex - size
+                })}
+                isMoreButton={true}
+              />
+            </div>
+          </div>
+          <div
+            className={classNames({
+              'RibbonGroup__dropdown': true,
+              'hidden': size !== MIN_SIZE,
             })}
           >
-            <ToggleElementButton
-              dataElement="moreRibbonsButton"
-              toggleElement={FLYOUT_NAME}
-              title="action.more"
-              img={activeIndex > lastIndex - size ? 'icon-tools-more-active' : 'icon-tools-more'}
-              className={classNames({
-                'hasActive': activeIndex > lastIndex - size
-              })}
+            <FlexDropdown
+              id={`${dataElement}Dropdown`}
+              dataElement={`${dataElement}Dropdown`}
+              width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
+              height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
+              direction={headerDirection}
+              placement={headerPlacement}
+              items={ribbonItems}
+              currentSelectionKey={activeCustomRibbon}
+              onClickItem={(customRibbon) => {
+                setActiveCustomRibbon(customRibbon);
+              }}
+              getDisplayValue={(item) => {
+                const index = ribbonItems.findIndex((el) => el.label === item);
+                return ribbonItems[index]?.toolbarGroup;
+              }}
+              getKey={(item) => item?.toolbarGroup}
+              getTranslationLabel={(key) => getToolbarTranslationString(key, customHeadersAdditionalProperties)}
+              arrowDirection={getArrowDirection()}
+              renderItem={renderDropdownItem}
+              renderSelectedItem={renderDropdownItem}
             />
           </div>
         </div>
-        <div
-          className={classNames({
-            'RibbonGroup__dropdown': true,
-            'hidden': size !== MIN_SIZE,
-          })}
-        >
-          <FlexDropdown
-            id={`${dataElement}Dropdown`}
-            dataElement={`${dataElement}Dropdown`}
-            width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
-            height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
-            direction={headerDirection}
-            placement={headerPlacement}
-            items={ribbonItems}
-            currentSelectionKey={activeCustomRibbon}
-            onClickItem={(customRibbon) => {
-              setActiveCustomRibbon(customRibbon);
-            }}
-            getDisplayValue={(item) => {
-              const index = ribbonItems.findIndex((el) => el.label === item);
-              return ribbonItems[index]?.toolbarGroup;
-            }}
-            getKey={(item) => item?.toolbarGroup}
-            getTranslationLabel={(key) => getToolbarTranslationString(key, customHeadersAdditionalProperties)}
-            arrowDirection={getArrowDirection()}
-            renderItem={renderDropdownItem}
-            renderSelectedItem={renderDropdownItem}
-          />
-        </div>
-      </div>
+      </SortableContext>
     );
   }
 

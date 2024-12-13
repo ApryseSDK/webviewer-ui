@@ -8,7 +8,7 @@ import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 import { getFirstToolForGroupedItems, getGenericPanels, getGroupedItemsWithSelectedTool, getOpenGenericPanel, getEnabledRibbonItems } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
-import { OPACITY_LEVELS } from 'constants/customizationVariables';
+import { OPACITY_LEVELS, PLACEMENT } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
@@ -16,6 +16,21 @@ import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 import { getAllAssociatedGroupedItems, assignToolToGroups } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+
+export const setIsInEditorMode = (isInEditorMode) => ({
+  type: 'SET_IS_IN_EDITOR_MODE_MODE',
+  payload: { isInEditorMode },
+});
+
+export const setRecentDeletedItems = (recentDeletedItems) => ({
+  type: 'SET_RECENT_DELETED_ITEMS',
+  payload: { recentDeletedItems },
+});
+
+export const setShouldShowGarbageDropZone = (shouldShowGarbageDropZone) => ({
+  type: 'SET_SHOULD_SHOW_GARBAGE_DROP_ZONE',
+  payload: { shouldShowGarbageDropZone },
+});
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -610,13 +625,21 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
 
+  const isInEditorMode = state.viewer.isInEditorMode;
+
   if (isElementDisabled || isElementClosed) {
     return;
   }
 
+  const leftPanels = state.viewer.genericPanels.filter((item) => item.location === PLACEMENT.LEFT).map((item) => item.dataElement);
+  const isALeftPanel = leftPanels.includes(dataElement);
+
   if (isDataElementLeftPanel(dataElement, state) && state.viewer.openElements['leftPanel']) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
     fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: false });
+  } else if (isALeftPanel && isInEditorMode && dataElement !== 'editorPanel') {
+    dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
+    dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'editorPanel' } });
   } else {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
     fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: false });
@@ -625,6 +648,10 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
       dispatch({
         type: 'SET_ACTIVE_FLYOUT',
         payload: { dataElement: null }
+      });
+      dispatch({
+        type: 'SET_FLYOUT_TOGGLE_ELEMENT',
+        payload: { toggleElement: null },
       });
     }
     if (dataElement === DataElements.PAGE_MANIPULATION_OVERLAY) {
@@ -1217,4 +1244,99 @@ export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, 
     type: 'SET_COLORS',
     payload: type === 'text' ? { textColors: colors } : { colors },
   });
+};
+
+
+// Drag and drop goodies
+
+export const reorganizeInHeader = ({ dataElement, dragIndex, overIndex, headerDataElement }) => (dispatch, getState) => {
+  const modularHeaders = getState().viewer.modularHeaders;
+  const targetHeader = modularHeaders[headerDataElement];
+  const { items } = targetHeader;
+  if (items.indexOf(dataElement) === -1) {
+    console.log('dataElement not found in items');
+  } else {
+    const itemsCopy = [...items];
+    const [removed] = itemsCopy.splice(dragIndex, 1);
+    itemsCopy.splice(overIndex, 0, removed);
+    dispatch(updateHeaderProperty(headerDataElement, 'items', itemsCopy));
+  }
+};
+
+export const reorganizeGroupedItems = ({ dataElement, dragIndex, overIndex, groupedItem }) => (dispatch, getState) => {
+  const existingComponentsMap = getState().viewer.modularComponents;
+  const targetGroupedItemsContainer = existingComponentsMap[groupedItem];
+  const { items } = targetGroupedItemsContainer;
+  console.log('items', items);
+  console.log('dataElement', dataElement);
+  console.log('dragIndex', dragIndex);
+  console.log('overIndex', overIndex);
+  if (items.indexOf(dataElement) === -1) {
+    console.log('dataElement not found in items');
+  } else {
+    const itemsCopy = [...items];
+    const [removed] = itemsCopy.splice(dragIndex, 1);
+    itemsCopy.splice(overIndex, 0, removed);
+    dispatch(setModularComponentProperty('items', itemsCopy, groupedItem));
+  }
+};
+
+export const moveItemBetweenGroupedItems = ({ sourceGroupedItem, targetGroupedItem, itemDataElement }) => (dispatch, getState) => {
+  console.log('sourceGroupedItem', sourceGroupedItem);
+  console.log('targetGroupedItem', targetGroupedItem);
+  console.log('itemDataElement', itemDataElement);
+  if (!targetGroupedItem) {
+    return;
+  }
+
+  // move one item to the other grouped item
+  const state = getState();
+  const existingComponentsMap = state.viewer.modularComponents;
+  const sourceGroupedItemsContainer = existingComponentsMap[sourceGroupedItem];
+  const targetGroupedItemsContainer = existingComponentsMap[targetGroupedItem];
+  const sourceItems = sourceGroupedItemsContainer.items;
+  const targetItems = targetGroupedItemsContainer.items;
+  const sourceItemsCopy = [...sourceItems];
+  const targetItemsCopy = [...targetItems];
+  const itemIndex = sourceItemsCopy.indexOf(itemDataElement);
+  if (itemIndex === -1) {
+    console.log('item not found in source items');
+  } else {
+    sourceItemsCopy.splice(itemIndex, 1);
+    targetItemsCopy.push(itemDataElement);
+    dispatch(setModularComponentProperty('items', sourceItemsCopy, sourceGroupedItem));
+    dispatch(setModularComponentProperty('items', targetItemsCopy, targetGroupedItem));
+  }
+};
+
+export const movePanel = ({ panelDataElement, newLocation }) => (
+  {
+    type: 'MOVE_PANEL',
+    payload: { panelDataElement, newLocation }
+  }
+);
+
+const addToolToModularComponents = (dataElement, toolButton) => ({
+  type: 'ADD_TOOL_TO_MODULAR_COMPONENTS',
+  payload: { dataElement, toolButton }
+});
+export const addToolToContainer = ({ toolName, containerDataElement }) => (dispatch, getState) => {
+  const state = getState();
+  const existingComponentsMap = state.viewer.modularComponents;
+  const container = existingComponentsMap[containerDataElement];
+  const { items } = container;
+  const itemsCopy = [...items];
+
+  // Create a new toolButton from the toolname plus a unique id
+  const newDataElement = `${toolName}-${uuidv4()}`;
+  const newToolButton = {
+    dataElement: newDataElement,
+    toolName,
+    type: 'toolButton',
+  };
+  dispatch(addToolToModularComponents(newDataElement, newToolButton));
+  // Now add it to the items of the container
+  itemsCopy.push(newDataElement);
+  dispatch(setModularComponentProperty('items', itemsCopy, containerDataElement));
+
 };

@@ -25,6 +25,9 @@ export default {
       }
     }
   },
+  parameters: {
+    legacyUI: true,
+  },
 };
 
 // Mock some state to show the style popups

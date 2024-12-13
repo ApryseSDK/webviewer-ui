@@ -134,4 +134,26 @@ describe('ComparePanel component', () => {
     const editChanges = screen.getAllByText(/Text Content - edit/i);
     expect(editChanges).toHaveLength(4);
   });
+  it('Should render correctly when there is no old annotation', () => {
+    const mockItems = {
+      '2': [
+        {
+          'new': {
+            'Id': 'fe9079d4-e139-44c1-afbc-48de7483efae'
+          },
+          'newText': 'into',
+          'newCount': 4,
+          'type': 'Text Content - insert'
+        }
+      ]
+    };
+    const mockItemCount = 1;
+    render(<ComparePanelWithRedux filteredListData={mockItems} totalChanges={mockItemCount} />);
+    screen.getByRole('textbox', { name: 'Find in document' });
+    screen.getByRole('checkbox', { name: 'Highlight Changes' });
+    const changeListTitle = screen.getByText(/Change List/i);
+    expect(changeListTitle).toBeInTheDocument();
+    const insertChanges = screen.getAllByText(/Text Content - insert/i);
+    expect(insertChanges).toHaveLength(1);
+  });
 });

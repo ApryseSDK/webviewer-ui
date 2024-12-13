@@ -27,9 +27,6 @@ const CollapsibleSectionWithRedux = (props) => {
 export default {
   title: 'Components/CollapsibleSection',
   component: CollapsibleSection,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const HeaderComponent = () => {

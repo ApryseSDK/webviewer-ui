@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "Apryse Software Inc.",
-  "version": "11.1.0",
+  "version": "11.2.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -21,6 +21,8 @@
     "lint:styles": "stylelint '**/*.scss'"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.2.0",
+    "@dnd-kit/sortable": "^9.0.0",
     "@pdftron/webviewer-react-toolkit": "^0.7.11",
     "autolinker": "^3.11.1",
     "blob-stream": "^0.1.3",
@@ -35,7 +37,7 @@
     "i18next-http-backend": "^1.0.16",
     "quill-mention": "^4.1.0",
     "react": "^17.0.0",
-    "react-color": "^2.18.1",
+    "react-color": "^2.19.3",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^17.0.0",

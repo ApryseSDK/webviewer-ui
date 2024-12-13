@@ -14,6 +14,7 @@ import sizeManager from 'helpers/responsivenessHelper';
 import { getNestedGroupedItems, assignToolToGroups } from 'helpers/modularUIHelpers';
 import core from 'core';
 import FlyoutItemContainer from '../FlyoutItemContainer';
+import DraggableContainer from '../DraggableContainer';
 
 const RibbonItem = forwardRef((props, ref) => {
   const elementRef = useRef();
@@ -30,7 +31,9 @@ const RibbonItem = forwardRef((props, ref) => {
     justifyContent,
     isFlyoutItem,
     toolbarGroup,
-    ariaCurrent
+    ariaCurrent,
+    parentContainer,
+    isInEditorPanel
   } = props;
 
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
@@ -97,27 +100,35 @@ const RibbonItem = forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={onClick} />
       :
-      <div className={classNames({
-        'RibbonItem': true,
-        'vertical': direction === DIRECTION.COLUMN,
-        'horizontal': direction === DIRECTION.ROW,
-        'left': justifyContent !== JUSTIFY_CONTENT.END,
-        'right': justifyContent === JUSTIFY_CONTENT.END,
-      })}
+      <DraggableContainer
+        ref={ref}
+        dataElement={dataElement}
+        type='ribbonItem'
+        parentContainer={parentContainer}
+        isInEditorPanel={isInEditorPanel}
       >
-        <Button
-          isActive={isActive}
-          dataElement={dataElement}
-          img={img}
-          label={translatedLabel}
-          title={translatedLabel || title}
-          useI18String={false}
-          onClick={onClick}
-          disabled={disabled}
-          ariaCurrent={ariaCurrent}
+        <div className={classNames({
+          'RibbonItem': true,
+          'vertical': direction === DIRECTION.COLUMN,
+          'horizontal': direction === DIRECTION.ROW,
+          'left': justifyContent !== JUSTIFY_CONTENT.END,
+          'right': justifyContent === JUSTIFY_CONTENT.END,
+        })}
         >
-        </Button>
-      </div>
+          <Button
+            isActive={isActive}
+            dataElement={dataElement}
+            img={img}
+            label={translatedLabel}
+            title={translatedLabel || title}
+            useI18String={false}
+            onClick={onClick}
+            disabled={disabled}
+            ariaCurrent={ariaCurrent}
+          >
+          </Button>
+        </div>
+      </DraggableContainer>
   );
 });
 

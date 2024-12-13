@@ -18,9 +18,13 @@ export const {
   getActiveListType,
   getIsOfficeEditorMode,
   isJustificationButtonActive,
+  isNonPrintingCharactersEnabled,
 } = exposedOfficeEditorSelectors;
 
 // viewer
+export const isInEditorMode = (state) => state.viewer.isInEditorMode;
+export const shouldShowGarbageDropZone = (state) => state.viewer.shouldShowGarbageDropZone;
+export const getRecentDeletedItems = (state) => state.viewer.recentDeletedItems;
 export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
 export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;

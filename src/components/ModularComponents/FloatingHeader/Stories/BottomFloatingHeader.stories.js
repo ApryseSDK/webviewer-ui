@@ -18,9 +18,6 @@ import { expect } from '@storybook/test';
 export default {
   title: 'ModularComponents/FloatingHeader/BottomHeader',
   component: BottomHeader,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const image = <img alt="Sample" src="/assets/images/193_200x300.jpeg" />;

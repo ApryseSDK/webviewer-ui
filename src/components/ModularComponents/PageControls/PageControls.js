@@ -50,6 +50,7 @@ function PageControls(props) {
           img={'icon-tools-more'}
           toggleElement={DataElements.PAGE_CONTROLS_FLYOUT}
           onFlyoutToggled={onFlyoutToggle}
+          isMoreButton={true}
         />
       }
       <span className="visually-hidden">

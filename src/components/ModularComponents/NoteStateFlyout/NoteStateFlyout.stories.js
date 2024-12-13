@@ -12,9 +12,6 @@ import { uiWithFlyout } from '../storyModularUIConfigs';
 export default {
   title: 'ModularComponents/NoteStateFlyout',
   component: NoteStateFlyout,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 function createReduxWrapper(dataElement, disabled) {

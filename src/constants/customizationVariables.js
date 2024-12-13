@@ -52,6 +52,7 @@ const ITEM_TYPE = {
   OFFICE_EDITOR_INSERT_IMAGE_BUTTON: 'officeEditorInsertImageButton',
   OFFICE_EDITOR_PAGE_BREAK_BUTTON: 'officeEditorPageBreakButton',
   OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
+  OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON: 'officeEditorToggleNonPrintingCharactersButton',
   LINE_SPACING_BUTTON: 'lineSpacingButton',
   ORDERED_LIST: 'orderedListButton',
   UNORDERED_LIST: 'unorderedListButton',
@@ -71,7 +72,7 @@ const FLYOUT_ITEM_TYPES = {
   TAB_PANEL_ITEM: 'tabPanelItem',
   LABEL: 'label',
   DIVIDER: 'divider',
-  LINE_HEIGHT_BUTTON: 'lineHeightButton',
+  LINE_SPACING_OPTIONS_BUTTON: 'lineHeightButton',
   LIST_TYPE_BUTTON: 'listTypeButton',
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
   FONT_FACE_DROPDOWN: 'fontFaceDropdown',
@@ -155,6 +156,7 @@ const DEFAULT_STYLES = {
  * @property {string} OE_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorColorPicker}
  * @property {string} INSERT_IMAGE {@link UI.Components.PresetButton.insertImageButton}
  * @property {string} PAGE_BREAK {@link UI.Components.PresetButton.pageBreakButton}
+ * @property {string} OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON {@link UI.Components.PresetButton.officeEditorToggleNonPrintingCharactersButton}
  * @example
  * const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
  */
@@ -182,9 +184,11 @@ const PRESET_BUTTON_TYPES = {
   JUSTIFY_RIGHT: 'justifyRightButton',
   JUSTIFY_BOTH: 'justifyBothButton',
   OE_COLOR_PICKER: 'officeEditorColorPicker',
+  OE_TOGGLE_NON_PRINTING_CHARACTERS: 'officeEditorToggleNonPrintingCharactersButton',
   INSERT_IMAGE: 'insertImageButton',
   COMPARE: 'compareButton',
   PAGE_BREAK: 'pageBreakButton',
+  EDITOR_MODE: 'editorModeButton',
 };
 
 const PRESET_BUTTONS_MODAL_TOGGLES = [

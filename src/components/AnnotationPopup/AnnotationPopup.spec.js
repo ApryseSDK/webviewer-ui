@@ -55,6 +55,7 @@ describe('AnnotationPopup in read-only mode', () => {
   const fileAttachmentProps = {
     isOpen: true,
     isRightClickMenu: false,
+    isVisible: true,
     focusedAnnotation: mockFileAttachmentAnnotation,
     position: { top: 0, left: 0 },
     showCommentButton: true,
@@ -79,6 +80,7 @@ describe('AnnotationPopup in read-only mode', () => {
     const fileAttachmentProps = {
       isOpen: true,
       isRightClickMenu: false,
+      isVisible: true,
       focusedAnnotation: mockFileAttachmentAnnotation,
       position: { top: 0, left: 0 },
       showCommentButton: true,
@@ -108,6 +110,7 @@ describe('AnnotationPopup in read-only mode', () => {
     const basicProps = {
       isOpen: true,
       isRightClickMenu: false,
+      isVisible: true,
       position: { top: 0, left: 0 },
       showCommentButton: true,
       onCommentAnnotation: () => console.log('Comment'),

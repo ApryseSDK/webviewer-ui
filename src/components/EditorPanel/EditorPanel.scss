@@ -1,0 +1,53 @@
+.EditorPanel {
+  .PanelSection {
+    &:not(:last-child) {
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+  .panel-section-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    grid-gap: 5px;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+
+    &.recent-deleted-section {
+      .empty-deleted-items {
+        width: 100%;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: start;
+      }
+    }
+
+    .recent-deleted-wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: left;
+      gap: 5px; 
+      flex-wrap: wrap;
+
+      .recent-deleted-item-name {
+        margin: 4px 0;
+      }
+    }
+
+    .DraggableContainer.panel-item {
+      border: dashed 1px var(--gray-4);
+      display: flex;
+      align-items: center;
+      z-index: 200;
+      position: relative;
+      padding: 4px;
+    }
+  }
+
+  .CollapsibleSection .collapsible-page-group-header button {
+    height: 40px;
+    font-size: 16px;
+  }
+}

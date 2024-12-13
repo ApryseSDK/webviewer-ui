@@ -52,6 +52,9 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onContentEditDocumentDigitalSigned = eventListeners.onContentEditDocumentDigitalSigned(dispatch);
   const onContentEditPasswordRequired = eventListeners.onContentEditPasswordRequired(dispatch, store);
   const onCompareAnnotationsLoaded = eventListeners.onCompareAnnotationsLoaded(dispatch, store);
+  const onAccessibleReadingOrderModeStarted = eventListeners.onAccessibleReadingOrderModeStarted(dispatch);
+  const onAccessibleReadingOrderModeReady = eventListeners.onAccessibleReadingOrderModeReady(dispatch, store);
+  const onAccessibleReadingOrderModeEnded = eventListeners.onAccessibleReadingOrderModeEnded(dispatch, store);
   const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch);
 
   return {
@@ -68,6 +71,9 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('contentEditPasswordRequired', onContentEditPasswordRequired);
         core.addEventListener('toolUpdated', onToolUpdated, undefined, documentViewerKey);
         core.addEventListener('toolModeUpdated', onToolModeUpdated, undefined, documentViewerKey);
+        core.addEventListener('accessibleReadingOrderModeStarted', onAccessibleReadingOrderModeStarted);
+        core.addEventListener('accessibleReadingOrderModeReady', onAccessibleReadingOrderModeReady);
+        core.addEventListener('accessibleReadingOrderModeEnded', onAccessibleReadingOrderModeEnded);
         document.addEventListener('fullscreenchange', onFullScreenChange);
         document.addEventListener('mozfullscreenchange', onFullScreenChange);
         document.addEventListener('webkitfullscreenchange', onFullScreenChange);

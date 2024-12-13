@@ -13,9 +13,6 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 export default {
   title: 'Components/OutlinesPanel',
   component: OutlinesPanel,
-  parameters: {
-    customizableUI: true,
-  }
 };
 core.isFullPDFEnabled = () => true;
 

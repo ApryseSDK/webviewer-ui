@@ -7,12 +7,9 @@ import { MockApp, createStore } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/RubberStampPanel',
   component: RubberStampPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
-const RubberStampPanelInApp = (location,) => {
+const RubberStampPanelInApp = (context, location) => {
   const mockState = {
     ...initialState,
     viewer: {
@@ -37,7 +34,8 @@ const RubberStampPanelInApp = (location,) => {
         tool: 'AnnotationCreateRubberStamp',
         group: ['insertGroupedItems', 'insertToolsGroupedItems'],
       },
-      activeToolName: 'AnnotationCreateRubberStamp'
+      activeToolName: 'AnnotationCreateRubberStamp',
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -49,9 +47,9 @@ const RubberStampPanelInApp = (location,) => {
   return <MockApp initialState={mockState} />;
 };
 
-export const RubberStampPanelInleft = () => RubberStampPanelInApp('left');
-export const RubberStampPanelInRight = () => RubberStampPanelInApp('right');
-export const RubberStampPanelInMobile = () => RubberStampPanelInApp();
+export const RubberStampPanelInleft = (args, context) => RubberStampPanelInApp(context, 'left');
+export const RubberStampPanelInRight = (args, context) => RubberStampPanelInApp(context, 'right');
+export const RubberStampPanelInMobile = (args, context) => RubberStampPanelInApp(context, );
 
 RubberStampPanelInleft.parameters = {
   layout: 'fullscreen',

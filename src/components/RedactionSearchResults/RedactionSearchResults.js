@@ -191,6 +191,7 @@ function RedactionSearchResults(props) {
         <Button
           disabled={selectedIndexes.length === 0}
           label={t('action.addMark')}
+          ariaLabel={t('action.addMark')}
           className={markAllForRedactionButtonClass}
           onClick={onMarkAllForRedaction}
         />

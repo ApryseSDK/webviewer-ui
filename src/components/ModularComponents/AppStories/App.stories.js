@@ -1,27 +1,64 @@
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents, mockLeftHeader } from './mockAppState';
 import { userEvent, within, expect } from '@storybook/test';
-import { createTemplate, allModes } from 'helpers/storybookHelper';
+import { defaultModularComponents, defaultModularHeaders } from 'src/redux/modularComponents';
+import { createTemplate } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/App',
   component: App,
-  includeStories: ['DefaultUI', 'ActiveGroupHeaderTest', 'MultiTab', 'HeaderButtonsWithLabelsAndIcons', 'HeaderKeyboardNavigationTest', 'VerticalHeaderKeyboardNavigationTest'],
-  excludeStories: ['CreateTemplate'],
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 export const DefaultUI = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
-DefaultUI.parameters = {
-  chromatic: {
-    modes: {
-      'Light theme': allModes['light'],
-      'Dark theme': allModes['dark'],
-    }
-  },
+
+const headersWithLeftHeader = {
+  ...defaultModularHeaders,
+  'tools-header': {
+    ...defaultModularHeaders['tools-header'],
+    placement: 'left'
+  }
 };
+
+export const LeftHeader = createTemplate({ headers: headersWithLeftHeader, components: defaultModularComponents });
+LeftHeader.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  expect(canvas.getByRole('navigation', { name: 'Top Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('navigation', { name: 'Left Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
+};
+
+const headersWithRightHeader = {
+  ...defaultModularHeaders,
+  'tools-header': {
+    ...defaultModularHeaders['tools-header'],
+    placement: 'right'
+  }
+};
+
+export const RightHeader = createTemplate({ headers: headersWithRightHeader, components: defaultModularComponents });
+RightHeader.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  expect(canvas.getByRole('navigation', { name: 'Top Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('navigation', { name: 'Right Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
+};
+
+const headersWithBottomHeader = {
+  ...defaultModularHeaders,
+  'tools-header': {
+    ...defaultModularHeaders['tools-header'],
+    placement: 'bottom'
+  }
+};
+
+export const BottomHeader = createTemplate({ headers: headersWithBottomHeader, components: defaultModularComponents });
+BottomHeader.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  expect(canvas.getByRole('navigation', { name: 'Top Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('navigation', { name: 'Bottom Header' })).toBeInTheDocument();
+  expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
+};
+
 export const ActiveGroupHeaderTest = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
 ActiveGroupHeaderTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

@@ -11,9 +11,6 @@ import { uiWithFlyout } from '../storyModularUIConfigs';
 export default {
   title: 'ModularComponents/ViewControlsFlyout',
   component: ViewControlsFlyout,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const continuousPageTransitionButton = {

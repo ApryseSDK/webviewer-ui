@@ -129,16 +129,14 @@ const CommentTextarea = React.forwardRef(
 
     // Convert text with newline ("\n") to <p>...</p> format so
     // that editor handles multiline text correctly
-    if (value) {
+    const containsNewlines = value && value.split('\n').length > 1;
+    if (containsNewlines) {
       const contentArray = value.split('\n');
-      if (contentArray.length && contentArray[contentArray.length - 1] === '') {
-        contentArray.pop();
-        value = contentArray.map((item) => {
-          const paragraph = document.createElement('p');
-          paragraph.innerText = item || '\n';
-          return paragraph.outerHTML;
-        }).join('');
-      }
+      value = contentArray.map((item) => {
+        const paragraph = document.createElement('p');
+        paragraph.innerText = item || '\n';
+        return paragraph.outerHTML;
+      }).join('');
     }
 
     // onBlur and onFocus have to be outside in the div because of quill bug

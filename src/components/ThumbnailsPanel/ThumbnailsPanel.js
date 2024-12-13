@@ -469,6 +469,14 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     setGlobalIndex(scrollToRowHelper(globalIndex, -1, 200));
   };
 
+  const getContextElementId = () => {
+    if (window.isApryseWebViewerWebComponent) {
+      return getRootNode().host.id;
+    } else {
+      return window.frameElement.id;
+    }
+  };
+
   const onDragStart = (e, index) => {
     setGlobalIndex(index);
     setIsDragging(true);
@@ -486,7 +494,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     if (isThumbnailMergingEnabled && isMultipleViewerMerging) {
       e.dataTransfer.dropEffect = 'move';
       e.dataTransfer.effectAllowed = 'all';
-      e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
+      e.dataTransfer.setData(dataTransferWebViewerFrameKey, getContextElementId());
       extractPagesToMerge(pagesToMove);
     }
 
@@ -507,11 +515,11 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
     }
     const mergingDocument =
-      (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) || files.length;
+      (externalPageWebViewerFrameId && getContextElementId() !== externalPageWebViewerFrameId) || files.length;
     const currentPageIndex = currentPage - 1;
 
     if (isThumbnailMergingEnabled && mergingDocument) {
-      if (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) {
+      if (externalPageWebViewerFrameId && getContextElementId() !== externalPageWebViewerFrameId) {
         dispatch(mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo));
       } else if (files.length) {
         Array.from(files).forEach((file) => {

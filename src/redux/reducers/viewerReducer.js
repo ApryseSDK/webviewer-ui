@@ -1180,6 +1180,46 @@ export default (initialState) => (state = initialState, action) => {
     case 'STASH_ENABLED_RIBBONS': {
       return { ...state, enabledRibbonsStash: [...payload.ribbonItems] };
     }
+    case 'SET_IS_IN_EDITOR_MODE_MODE': {
+      return { ...state, isInEditorMode: payload.isInEditorMode };
+    }
+    case 'SET_RECENT_DELETED_ITEMS': {
+      return { ...state, recentDeletedItems: payload.recentDeletedItems };
+    }
+    case 'MOVE_PANEL': {
+      const { panelDataElement, newLocation } = payload;
+
+      const existingPanel = state.genericPanels.find((panel) => panel.dataElement === panelDataElement);
+      if (!existingPanel) {
+        return state;
+      }
+
+      const newPanel = {
+        ...existingPanel,
+        location: newLocation,
+      };
+
+      const updatedPanels = state.genericPanels.filter((panel) => panel.dataElement !== panelDataElement);
+      return {
+        ...state,
+        genericPanels: [
+          ...updatedPanels,
+          newPanel
+        ]
+      };
+    }
+    case 'ADD_TOOL_TO_MODULAR_COMPONENTS': {
+      const { dataElement, toolButton } = payload;
+      const newModularComponents = { ...state.modularComponents };
+
+      return {
+        ...state,
+        modularComponents: {
+          ...newModularComponents,
+          [dataElement]: toolButton,
+        }
+      };
+    }
     default:
       return state;
   }

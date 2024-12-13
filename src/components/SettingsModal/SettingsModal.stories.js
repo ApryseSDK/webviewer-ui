@@ -9,9 +9,6 @@ import { userEvent, within, expect } from '@storybook/test';
 export default {
   title: 'Components/SettingsModal',
   component: SettingsModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const getStore = (num) => {

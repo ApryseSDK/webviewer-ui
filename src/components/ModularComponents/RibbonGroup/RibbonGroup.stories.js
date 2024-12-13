@@ -8,9 +8,6 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 export default {
   title: 'ModularComponents/RibbonGroup',
   component: RibbonGroup,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

@@ -60,6 +60,7 @@ import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isMobileDevice } from 'helpers/device';
+import { enableActiveDraggingCSS, disableActiveDraggingCSS } from 'helpers/dragAndDropHelper';
 
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
@@ -84,6 +85,34 @@ import useTabFocus from 'hooks/useTabFocus';
 import useCloseOnWindowResize from 'hooks/useCloseOnWindowResize';
 import PageManipulationFlyout from 'components/ModularComponents/PageManipulationFlyout';
 
+// DND Kit
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCorners,
+  rectIntersection,
+  closestCenter,
+  DragOverlay,
+} from '@dnd-kit/core';
+
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
+
+
+import debounce from 'lodash/debounce';
+import Trash from '../Trash';
+import PanelDropzone from 'components/PanelDropzone';
+import PanelDragOverlay from 'components/PanelDragOverlay';
+import ToolsDragOverlay from '../ToolsDragOverlay';
+import GroupedItemsDragOverlay from '../ModularComponents/GroupedItemsDragOverlay';
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
@@ -376,6 +405,8 @@ const App = ({ removeEventHandlers }) => {
         return <LazyLoadWrapper Component={LazyLoadComponents.PortfolioPanel} dataElement={dataElement} />;
       case panelNames.FORM_FIELD:
         return <LazyLoadWrapper Component={LazyLoadComponents.FormFieldPanel} dataElement={dataElement} annotation={widgetAnnotationAddedOrSelected} />;
+      case panelNames.EDITOR_PANEL:
+        return <LazyLoadWrapper Component={LazyLoadComponents.EditorPanel} dataElement={dataElement} />;
     }
   };
 
@@ -398,8 +429,139 @@ const App = ({ removeEventHandlers }) => {
     );
   });
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+  const onDragEnd = (event) => {
+    const { active, over } = event;
+    const activeParent = active.data.current?.parentContainer;
+    const overParent = over?.data.current?.parentContainer;
+    const isPanel = active.data.current?.type === 'panel';
+    const isBaseToolButton = active.data.current?.type === 'baseToolButton';
+
+    // IF we are in the same parent we need to re-sort then
+    if (activeParent === overParent && !isPanel && !isBaseToolButton) {
+      const dragIndex = active.data.current?.sortable.index;
+      const overIndex = over.data.current?.sortable.index;
+      const livesInHeader = active.data.current?.livesInHeader;
+      if (livesInHeader) {
+        // sort inside a header - the daddy of all sortable containers
+        dispatch(actions.reorganizeInHeader({
+          dataElement: active.id,
+          dragIndex: dragIndex,
+          overIndex: overIndex,
+          headerDataElement: activeParent,
+        }));
+      } else {
+        // it lives in a grouped item so we sort within it
+        dispatch(actions.reorganizeGroupedItems({
+          dataElement: active.id,
+          dragIndex: dragIndex,
+          overIndex: overIndex,
+          groupedItem: activeParent,
+        }));
+      }
+    }
+
+    // if we are dragging a panel we need to move it to the new parent
+    const panelLocation = active.data.current?.location;
+    const draggedOverPanelDropzone = over?.data.current?.type === 'panel-dropzone';
+    const panelDestination = over?.data.current?.location;
+    if (isPanel && draggedOverPanelDropzone && panelLocation !== panelDestination) {
+      const panelDataElement = active.id;
+      dispatch(actions.movePanel({ panelDataElement, newLocation: panelDestination }));
+      // also close the panel so it's not confusing
+      dispatch(actions.closeElements([panelDataElement]));
+    }
+
+    // If we are dragging a new tool over a container that accepts it we add it
+    if (isBaseToolButton && overParent) {
+      const toolName = active.data.current?.toolName;
+      dispatch(actions.addToolToContainer({ toolName, containerDataElement: overParent }));
+    }
+
+    disableActiveDraggingCSS(active);
+
+
+  };
+
+  const debouncedMoveItemBetweenGroupedItems = debounce((sourceGroupedItem, targetGroupedItem, itemDataElement) => {
+    dispatch(actions.moveItemBetweenGroupedItems({ sourceGroupedItem, targetGroupedItem, itemDataElement, }));
+  }, 10);
+
+  const [dragType, setDragType] = React.useState(null);
+  const [dragDataElement, setDragDataElement] = React.useState(null);
+  const [activeDragElement, setActiveDragElement] = React.useState(null);
+
+  const onDragOver = (event) => {
+    const state = store.getState();
+    const { active, over } = event;
+    const activeType = active.data.current?.type;
+    const overType = over?.data.current?.type;
+    const activeParent = active.data.current?.parentContainer;
+    const overParent = over?.data.current?.parentContainer;
+    console.log('dragOver', { active, over });
+
+    if (over?.id === 'garbage-drop-zone') {
+      dispatch(actions.disableElement(active.id));
+      const recentDeletedItems = [...state.viewer.recentDeletedItems, active.id];
+      dispatch(actions.setRecentDeletedItems(recentDeletedItems));
+    }
+
+    if (activeType === 'ribbonItem' && overType !== 'ribbonItem') {
+      console.log('Ribbon items cannot be dragged into grouped items');
+      return;
+    }
+
+    if (activeType !== 'ribbonItem' && overType === 'ribbonItem') {
+      console.log('Non-ribbom items cannot be dragged into ribbon groups');
+      return;
+    }
+
+    if (activeParent !== overParent && activeType !== 'panel' && active.id !== overParent) {
+      console.log(`Dragging item ${active.id} into ${overParent}`);
+
+      if (!activeParent || !overParent) {
+        console.warn('UNDEFINED PARENT FOUND.');
+        return;
+      }
+
+      debouncedMoveItemBetweenGroupedItems(activeParent, overParent, active.id);
+    }
+  };
+
+  const onDragStart = (event) => {
+    const { active } = event;
+    enableActiveDraggingCSS(active);
+    const dragType = event.active.data.current?.type;
+    setDragType(dragType);
+    setDragDataElement(event.active.id);
+    setActiveDragElement(event.active);
+  };
+
+  const renderOverlay = () => {
+    if (dragType === 'panel') {
+      return <DragOverlay><PanelDragOverlay dataElement={dragDataElement}/></DragOverlay>;
+    } else if (dragType === 'baseToolButton') {
+      const toolName = activeDragElement.data.current?.toolName;
+      return <DragOverlay><ToolsDragOverlay toolName={toolName}/></DragOverlay>;
+    } else if (dragType === 'groupedItems') {
+      const items = activeDragElement.data.current?.numberOfItems;
+      return <DragOverlay><GroupedItemsDragOverlay numberOfItems={items}></GroupedItemsDragOverlay></DragOverlay>;
+    }
+    return null;
+  };
+
   return (
-    <>
+    <DndContext
+      sensors={sensors}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      collisionDetection={rectIntersection}>
       <div
         className={classNames({
           'App': true,
@@ -428,8 +590,10 @@ const App = ({ removeEventHandlers }) => {
             dataElement={DataElements.LEFT_PANEL}
           />}
           {(customizableUI || !isOfficeEditorMode) && panels}
+          <PanelDropzone location='left'/>
+          <PanelDropzone location='right'/>
+
           {window?.ResizeObserver && <MultiViewer />}
-          <RightHeader />
           {!customizableUI && <RightPanel dataElement={DataElements.SEARCH_PANEL} onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <LazyLoadWrapper
               Component={LazyLoadComponents.SearchPanel}
@@ -469,8 +633,10 @@ const App = ({ removeEventHandlers }) => {
               <ComparePanel />
             </RightPanel>
           </MultiViewerWrapper>}
+          <RightHeader />
           <BottomHeader />
           {!isMultiViewerMode && <DocumentContainer />}
+          {/* <Trash /> */}
         </div>
         <LazyLoadWrapper
           Component={LazyLoadComponents.ViewControlsOverlay}
@@ -622,7 +788,8 @@ const App = ({ removeEventHandlers }) => {
       <FilePickerHandler />
       <CopyTextHandler />
       <FontHandler />
-    </>
+      {renderOverlay()}
+    </DndContext>
   );
 };
 

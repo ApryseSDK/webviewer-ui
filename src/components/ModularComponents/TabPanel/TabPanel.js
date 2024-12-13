@@ -361,6 +361,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
                   toggleElement={FLYOUT_NAME}
                   title="action.more"
                   img={moreButtonIcon}
+                  isMoreButton={true}
                 />
               </div>
             </Element>

@@ -13,9 +13,6 @@ import { MockApp, createStore } from 'helpers/storybookHelper';
 export default {
   title: 'Components/NotesPanel/NotesPanel',
   component: NotesPanel,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 function noop() {
@@ -160,7 +157,7 @@ export function EmptyWithCustomRenderCallback() {
   );
 }
 
-const NotesPanelInApp = (location, panelSize) => {
+const NotesPanelInApp = (context, location, panelSize) => {
   const mockState = {
     ...mockAppState,
     viewer: {
@@ -178,7 +175,8 @@ const NotesPanelInApp = (location, panelSize) => {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
         notesPanel: true,
-      }
+      },
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -194,6 +192,6 @@ const NotesPanelInApp = (location, panelSize) => {
   return <MockApp initialState={mockState} />;
 };
 
-export const NotesPanelInMobile = () => NotesPanelInApp('right');
+export const NotesPanelInMobile = (args, context) => NotesPanelInApp(context, 'right');
 
 NotesPanelInMobile.parameters = window.storybook?.MobileParameters;

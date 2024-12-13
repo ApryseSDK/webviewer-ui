@@ -48,8 +48,8 @@ export default {
   title: 'Components/PanelListItemComponent',
   component: PanelListItem,
   parameters: {
-    customizableUI: true,
-  },
+    legacyUI: true,
+  }
 };
 
 const bookmarkProps = {

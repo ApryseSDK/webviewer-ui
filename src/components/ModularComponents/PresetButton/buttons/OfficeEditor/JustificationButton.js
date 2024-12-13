@@ -35,7 +35,12 @@ const JustificationButton = forwardRef((props, ref) => {
 
   return (
     isFlyoutItem ?
-      <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} />
+      <FlyoutItemContainer
+        {...props}
+        ref={ref}
+        onClick={handleClick}
+        additionalClass={isActive ? 'active' : ''}
+      />
       : (
         <ActionButton
           ariaCurrent={isActive}

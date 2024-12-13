@@ -14,9 +14,6 @@ import { fireEvent } from '@testing-library/react';
 export default {
   title: 'ModularComponents/Flyout',
   component: Flyout,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

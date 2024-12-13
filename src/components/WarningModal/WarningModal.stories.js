@@ -7,9 +7,6 @@ import DataElements from 'constants/dataElement';
 export default {
   title: 'Components/WarningModal',
   component: WarningModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const initialState = {

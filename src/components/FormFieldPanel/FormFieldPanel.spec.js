@@ -60,7 +60,12 @@ describe('FormFieldPanel', () => {
           redrawAnnotation={noop}
           getPageHeight={noop}
           getPageWidth={noop}
-          radioButtonGroups={[]}
+          fieldProperties={{
+            name: 'fieldName',
+            value: 'fieldValue',
+            radioButtonGroups: ['fieldName', 'fieldName2'],
+          }}
+          onRadioFieldNameChange={noop}
           indicator={indicator}
         />,
       );
@@ -123,7 +128,12 @@ describe('FormFieldPanel', () => {
           getPageWidth={noop}
           indicator={indicator}
           validationMessage={'Field Name already exists'}
-          radioButtonGroups={[]}
+          fieldProperties={{
+            name: 'fieldName',
+            value: 'fieldValue',
+            radioButtonGroups: ['fieldName', 'fieldName2'],
+          }}
+          onRadioFieldNameChange={noop}
         />,
       );
       getByText(container, 'Field Name already exists');

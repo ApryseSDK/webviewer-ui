@@ -11,9 +11,6 @@ const NOOP = () => { };
 export default {
   title: 'Components/OutlineContent',
   component: OutlineContent,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const reducer = () => {

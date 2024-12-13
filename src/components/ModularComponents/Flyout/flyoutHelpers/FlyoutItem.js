@@ -6,6 +6,8 @@ import './ZoomText.scss';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import classNames from 'classnames';
 import { itemToFlyout, getIconDOMElement } from 'helpers/itemToFlyoutHelper';
+import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS } from 'constants/officeEditor';
+import { getListTypeFlyoutItems, getLineSpacingFlyoutItems } from 'helpers/officeEditor';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
 import ZoomText from 'components/ModularComponents/Flyout/flyoutHelpers/ZoomText';
@@ -76,6 +78,7 @@ const StaticItem = React.forwardRef((props, ref) => {
   const getActiveTabInPanel = useSelector((state) => selectors.getActiveTabInPanel(state, activeFlyout.split('-flyout')[0]));
   const isDisabledItem = useSelector((state) => selectors.isElementDisabled(state, flyoutItem?.dataElement));
   const currentLineSpacing = useSelector(selectors.getLineSpacing);
+  const activeListType = useSelector((state) => selectors.getActiveListType(state));
 
   if (isDisabledItem || (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden)) {
     return null;
@@ -124,6 +127,38 @@ const StaticItem = React.forwardRef((props, ref) => {
         />
       );
     }
+    case ITEM_TYPE.ORDERED_LIST: {
+      const isActive = LIST_OPTIONS.Ordered === activeListType;
+      flyoutItem.icon = 'icon-office-editor-number-list';
+      flyoutItem.label = 'officeEditor.numberList';
+      flyoutItem.className = 'listTypeToggleFlyoutMenu';
+      flyoutItem.children = getListTypeFlyoutItems('number', OFFICE_NUMBER_OPTIONS);
+      flyoutItem.additionalClass = isActive ? 'active' : '';
+      return (
+        <FlyoutItemContainer {...allProps}
+          ref={ref}
+          label={t(flyoutItem.label)}
+          additionalClass= {isActive ? 'active' : ''}
+          icon={icon}
+        />
+      );
+    }
+    case ITEM_TYPE.UNORDERED_LIST: {
+      const isActive = LIST_OPTIONS.Unordered === activeListType;
+      flyoutItem.icon = 'icon-office-editor-bullet-list';
+      flyoutItem.label = 'officeEditor.bulletList';
+      flyoutItem.className = 'listTypeToggleFlyoutMenu';
+      flyoutItem.children = getListTypeFlyoutItems('bullet', OFFICE_BULLET_OPTIONS);
+      flyoutItem.additionalClass = isActive ? 'active' : '';
+      return (
+        <FlyoutItemContainer {...allProps}
+          ref={ref}
+          label={t(flyoutItem.label)}
+          additionalClass= {isActive ? 'active' : ''}
+          icon={icon}
+        />
+      );
+    }
     case FLYOUT_ITEM_TYPES.LIST_TYPE_BUTTON: {
       return (
         <FlyoutItemContainer {...allProps}
@@ -153,7 +188,20 @@ const StaticItem = React.forwardRef((props, ref) => {
       const dropdownElement = <OfficeEditorModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`office-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
-    case FLYOUT_ITEM_TYPES.LINE_HEIGHT_BUTTON: {
+    case ITEM_TYPE.LINE_SPACING_BUTTON: {
+      flyoutItem.icon = 'icon-office-editor-line-spacing';
+      flyoutItem.label = 'officeEditor.lineSpacingMenu';
+      flyoutItem.className = 'LineSpacingButton';
+      flyoutItem.children = getLineSpacingFlyoutItems();
+      return (
+        <FlyoutItemContainer {...allProps}
+          ref={ref}
+          label={t(flyoutItem.label)}
+          icon={icon}
+        />
+      );
+    }
+    case FLYOUT_ITEM_TYPES.LINE_SPACING_OPTIONS_BUTTON: {
       return (
         <FlyoutItemContainer {...allProps}
           ref={ref}

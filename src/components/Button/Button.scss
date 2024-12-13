@@ -12,6 +12,8 @@
   width: 32px;
   height: 32px;
   color: var(--text-color);
+  // Prevents inset box-shadows from leaving artifacts by forcing GPU acceleration
+  transform: translate3d(0,0,0);
 
   img {
     height: 24px;

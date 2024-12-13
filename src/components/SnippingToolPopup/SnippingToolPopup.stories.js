@@ -9,9 +9,6 @@ import { createStore } from 'redux';
 export default {
   title: 'Components/SnippingToolPopup',
   component: SnippingToolPopup,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const basicInitialState = {
@@ -54,7 +51,7 @@ export function Basic() {
   );
 }
 
-export function BasicMobile() {
+export function BasicMobile(args, context) {
   const mockState = {
     ...initialState,
     viewer: {
@@ -65,6 +62,7 @@ export function BasicMobile() {
       },
       isInDesktopOnlyMode: false,
       isMobile: true,
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,

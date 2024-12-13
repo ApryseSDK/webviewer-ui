@@ -42,6 +42,7 @@ const DataElementWrapper = React.forwardRef(({ type = 'div', children, dataEleme
       </button>
     );
   }
+
   return (
     <div ref={ref} data-element={dataElement} {...props}>
       {children}

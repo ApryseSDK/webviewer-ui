@@ -10,9 +10,6 @@ const NOOP = () => { };
 export default {
   title: 'Components/PrintModal',
   component: PrintModal,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

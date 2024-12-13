@@ -10,9 +10,6 @@ import initialState from 'src/redux/initialState';
 export default {
   title: 'ModularComponents/MultiTab',
   component: App,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const noop = () => { };

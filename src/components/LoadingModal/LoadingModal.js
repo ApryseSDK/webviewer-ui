@@ -1,55 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import getClassName from 'helpers/getClassName';
+import React, { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
+import classNames from 'classnames';
 import DataElements from 'constants/dataElement';
 
 import './LoadingModal.scss';
 
-class LoadingModal extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-  };
+const LoadingModal = () => {
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.LOADING_MODAL), shallowEqual);
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.LOADING_MODAL), shallowEqual);
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(actions.closeElements([
         DataElements.SIGNATURE_MODAL,
         DataElements.PRINT_MODAL,
         DataElements.ERROR_MODAL,
-      ]);
+      ]));
     }
+  }, [isOpen]);
+
+  if (isDisabled) {
+    return null;
   }
 
-  render() {
-    if (this.props.isDisabled) {
-      return null;
-    }
-
-    const className = getClassName('Modal LoadingModal', this.props);
-
-    return (
-      <div className={className} data-element={DataElements.LOADING_MODAL}>
-        <div className="container">
-          <div className="inner-wrapper"></div>
-        </div>
+  return (
+    <div
+      className={classNames({
+        'Modal': true,
+        'LoadingModal': true,
+        'open': isOpen,
+      })}
+      data-element={DataElements.LOADING_MODAL}
+    >
+      <div className="container">
+        <div className="inner-wrapper"></div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => ({
-  isDisabled: selectors.isElementDisabled(state, DataElements.LOADING_MODAL),
-  isOpen: selectors.isElementOpen(state, DataElements.LOADING_MODAL),
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements,
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadingModal);
+export default LoadingModal;

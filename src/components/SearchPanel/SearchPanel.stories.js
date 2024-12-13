@@ -11,9 +11,6 @@ import { default as mockAppInitialState } from 'src/redux/initialState';
 export default {
   title: 'ModularComponents/SearchPanel',
   component: SearchPanelContainer,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {
@@ -61,7 +58,7 @@ export function SearchPanelRight() {
   );
 }
 
-const SearchPanelInApp = (location, panelSize) => {
+const SearchPanelInApp = (context, location, panelSize) => {
   const mockState = {
     ...mockAppInitialState,
     viewer: {
@@ -80,6 +77,7 @@ const SearchPanelInApp = (location, panelSize) => {
         contextMenuPopup: false,
         searchPanel: true,
       },
+      activeTheme: context.globals.theme,
     },
     featureFlags: {
       customizableUI: true,
@@ -92,8 +90,8 @@ const SearchPanelInApp = (location, panelSize) => {
   return <MockApp initialState={mockState} />;
 };
 
-export function SearchPanelInMobile() {
-  return SearchPanelInApp('left');
+export function SearchPanelInMobile(args, context) {
+  return SearchPanelInApp(context, 'left');
 }
 
 SearchPanelInMobile.parameters = window.storybook.MobileParameters;

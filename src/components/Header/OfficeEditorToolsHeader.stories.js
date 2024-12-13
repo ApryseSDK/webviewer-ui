@@ -6,6 +6,7 @@ import DataElement from 'constants/dataElement';
 import OfficeEditorToolsHeader from './OfficeEditorToolsHeader';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
+import { allModes } from '../../../.storybook/modes';
 
 export default {
   title: 'Components/OfficeEditorToolsHeader',
@@ -14,17 +15,22 @@ export default {
 
 initialState.viewer.openElements[DataElement.OFFICE_EDITOR_TOOLS_HEADER] = true;
 initialState.viewer.openElements[DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY] = false;
+
 const store = configureStore({ reducer: () => initialState });
 
+const mockOfficeEditor = {
+  isTextSelected: () => false,
+  isCursorInTable: () => false,
+  getIsNonPrintingCharactersEnabled: () => false,
+};
+
 const BasicComponent = ({ children }) => {
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => false,
-    isCursorInTable: () => false
-  });
+  core.getOfficeEditor = () => mockOfficeEditor;
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
     addEventListener: () => { },
     removeEventListener: () => { },
+    getOfficeEditor: () => mockOfficeEditor,
   });
 
   return (
@@ -42,9 +48,7 @@ export function Basic() {
   );
 }
 Basic.parameters = {
-  chromatic: {
-    viewports: [1400]
-  }
+  mode: allModes.viewport1400
 };
 
 export function Overflow() {
@@ -66,7 +70,7 @@ export function Overflow() {
 }
 Overflow.parameters = {
   chromatic: {
-    viewports: [850],
+    mode: allModes.viewport850,
     delay: 3000
   }
 };

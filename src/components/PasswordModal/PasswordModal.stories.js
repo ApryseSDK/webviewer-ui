@@ -6,9 +6,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/PasswordModal',
   component: PasswordModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const initialState = {

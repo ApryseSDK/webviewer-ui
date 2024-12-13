@@ -8,9 +8,6 @@ import { useTranslation } from 'react-i18next';
 export default {
   title: 'Components/ColorPalettePicker',
   component: ColorPalettePicker,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 const color = { R: 100, G: 0, B: 0, A: 1 };

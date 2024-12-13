@@ -8,11 +8,12 @@ import Button from 'components/Button';
 import useFocusHandler from 'hooks/useFocusHandler';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import classNames from 'classnames';
+import DraggableContainer from '../DraggableContainer';
 
 const ToggleElementButton = (props) => {
   const buttonRef = useRef();
   const isMobile = isMobileSize();
-  const { dataElement, title, disabled, img, label, toggleElement, setFlyoutTriggerRef = null, onToggle, className } = props;
+  const { dataElement, title, disabled, img, label, toggleElement, setFlyoutTriggerRef = null, onToggle, className, groupedItem, isDraggable = true, headerId, isMoreButton = false } = props;
 
   const isActive = useSelector((state) => selectors.isElementOpen(state, toggleElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
@@ -55,28 +56,49 @@ const ToggleElementButton = (props) => {
     return null;
   }
 
+  const renderButton = () => {
+    return (
+      <div className={classNames({
+        'ToggleElementButton': true,
+        'legacy-ui': !customizableUI,
+        'is-mobile': isMobile,
+      })} ref={buttonRef}>
+        <Button
+          isActive={isElementActive}
+          dataElement={dataElement}
+          img={img}
+          label={label}
+          title={title}
+          onClick={onClickFocusWrapped}
+          disabled={isElementDisabled}
+          className={className}
+          ariaPressed={isElementActive}
+          ariaExpanded={isElementActive}
+          isMoreButton={isMoreButton}
+          {...props}
+        >
+          {props.children}
+        </Button>
+      </div>
+    );
+  };
+
+  if (!isDraggable) {
+    return renderButton();
+  }
+
+  const parentContainer = groupedItem || headerId;
+
   return (
-    <div className={classNames({
-      'ToggleElementButton': true,
-      'legacy-ui': !customizableUI,
-      'is-mobile': isMobile,
-    })} ref={buttonRef}>
-      <Button
-        isActive={isElementActive}
-        dataElement={dataElement}
-        img={img}
-        label={label}
-        title={title}
-        onClick={onClickFocusWrapped}
-        disabled={isElementDisabled}
-        className={className}
-        ariaPressed={isElementActive}
-        ariaExpanded={isElementActive}
-        {...props}
-      >
-        {props.children}
-      </Button>
-    </div>
+    <DraggableContainer
+      ref={buttonRef}
+      dataElement={dataElement}
+      type='toggleButton'
+      livesInHeader={headerId !== undefined}
+      isMoreButton={isMoreButton}
+      parentContainer={parentContainer}>
+      {renderButton()}
+    </DraggableContainer>
   );
 };
 

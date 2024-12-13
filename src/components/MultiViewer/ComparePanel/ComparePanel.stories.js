@@ -7,9 +7,6 @@ import rootReducer from 'reducers/rootReducer';
 export default {
   title: 'ModularComponents/ComparePanel',
   component: ComparePanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const store = configureStore({

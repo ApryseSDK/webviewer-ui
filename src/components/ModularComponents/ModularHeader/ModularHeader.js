@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { JUSTIFY_CONTENT, PLACEMENT, DEFAULT_GAP } from 'constants/customizationVariables';
@@ -10,7 +10,10 @@ import selectors from 'selectors';
 import getRootNode from 'helpers/getRootNode';
 import findFocusableElements from 'helpers/findFocusableElements';
 import { elementsHaveChanged } from 'helpers/keyboardNavigationHelper';
-
+import {
+  SortableContext,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
 const ModularHeader = React.forwardRef((props, ref) => {
   const {
     dataElement,
@@ -225,37 +228,46 @@ const ModularHeader = React.forwardRef((props, ref) => {
     return null;
   }
 
+  const itemsDataElements = useMemo(
+    () => items.map((item) => item.dataElement),
+    [items]);
+
   return (
-    <DataElementWrapper
-      className={classNames({
-        'ModularHeader': true,
-        'closed': isClosed,
-        'TopHeader': placement === PLACEMENT.TOP,
-        'BottomHeader': placement === PLACEMENT.BOTTOM,
-        'LeftHeader': placement === PLACEMENT.LEFT,
-        'RightHeader': placement === PLACEMENT.RIGHT,
-        'stroke': stroke,
-      }, `${position}`)}
-      data-element={dataElement}
-      style={style}
-      key={key}
-      ref={headerRef}
-      role="toolbar"
-      aria-label={dataElement}
-      aria-orientation={isHorizontal ? 'horizontal' : 'vertical'}
-      tabIndex={-1}
-      onKeyDown={handleKeyDown}
+    <SortableContext
+      items={itemsDataElements}
+      strategy={rectSortingStrategy}
     >
-      <ModularHeaderItems
-        className={classNames({ 'closed': isClosed })}
-        items={originalItems}
-        headerId={dataElement}
-        gap={gap}
-        placement={placement}
-        justifyContent={justifyContent}
-        parentRef={headerRef}
-      />
-    </DataElementWrapper>
+      <DataElementWrapper
+        className={classNames({
+          'ModularHeader': true,
+          'closed': isClosed,
+          'TopHeader': placement === PLACEMENT.TOP,
+          'BottomHeader': placement === PLACEMENT.BOTTOM,
+          'LeftHeader': placement === PLACEMENT.LEFT,
+          'RightHeader': placement === PLACEMENT.RIGHT,
+          'stroke': stroke,
+        }, `${position}`)}
+        data-element={dataElement}
+        style={style}
+        key={key}
+        ref={headerRef}
+        role="toolbar"
+        aria-label={dataElement}
+        aria-orientation={isHorizontal ? 'horizontal' : 'vertical'}
+        tabIndex={-1}
+        onKeyDown={handleKeyDown}
+      >
+        <ModularHeaderItems
+          className={classNames({ 'closed': isClosed })}
+          items={originalItems}
+          headerId={dataElement}
+          gap={gap}
+          placement={placement}
+          justifyContent={justifyContent}
+          parentRef={headerRef}
+        />
+      </DataElementWrapper>
+    </SortableContext>
   );
 });
 

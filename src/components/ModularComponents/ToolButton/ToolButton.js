@@ -16,6 +16,7 @@ import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
+import DraggableContainer from '../DraggableContainer';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -33,6 +34,7 @@ const ToolButton = forwardRef((props, ref) => {
     isFlyoutItem = false,
     groupedItem,
     allFlyoutItems = [],
+    isInEditorPanel
   } = props;
 
   // use this so that state gets updated when active tool styles change
@@ -193,28 +195,36 @@ const ToolButton = forwardRef((props, ref) => {
   }
 
   return (
-    <Button
-      className={classNames({
-        'ToolButton': true,
-        'Button': true,
-        [className]: className,
-        'confirm-button': preset === 'confirm',
-        'cancel-button': preset === 'cancel',
-        'button-with-label': label,
-      })}
-      img={icon}
-      label={label}
-      title={toolTipTitle}
+    <DraggableContainer
+      ref={ref}
       dataElement={dataElement}
-      onClick={handleClick}
-      disabled={disabled}
-      forceTooltipPosition={forceTooltipPosition}
-      isActive={isButtonActive}
-      color={color}
-      fillColor={fillColor}
-      strokeColor={strokeColor}
-      ariaCurrent={isButtonActive}
-    />
+      type='toolButton'
+      parentContainer={groupedItem}
+      isInEditorPanel={isInEditorPanel}
+    >
+      <Button
+        className={classNames({
+          'ToolButton': true,
+          'Button': true,
+          [className]: className,
+          'confirm-button': preset === 'confirm',
+          'cancel-button': preset === 'cancel',
+          'button-with-label': label,
+        })}
+        img={icon}
+        label={label}
+        title={toolTipTitle}
+        dataElement={dataElement}
+        onClick={handleClick}
+        disabled={disabled}
+        forceTooltipPosition={forceTooltipPosition}
+        isActive={isButtonActive}
+        color={color}
+        fillColor={fillColor}
+        strokeColor={strokeColor}
+        ariaCurrent={isButtonActive}
+      />
+    </DraggableContainer>
   );
 });
 

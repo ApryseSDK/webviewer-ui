@@ -25,7 +25,7 @@ const LineSpacingFlyout = () => {
     const lineSpacingFlyout = {
       dataElement: 'lineSpacingFlyout',
       className: 'LineSpacingFlyout',
-      items: lineSpacingFlyoutItems, // FLYOUT_ITEM_TYPES.LINE_HEIGHT_BUTTON is handled in FlyoutItem.js
+      items: lineSpacingFlyoutItems, // FLYOUT_ITEM_TYPES.LINE_SPACING_OPTIONS_BUTTON is handled in FlyoutItem.js
     };
 
     if (!currentFlyout) {

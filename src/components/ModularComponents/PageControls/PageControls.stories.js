@@ -93,9 +93,6 @@ const initialState = {
 export default {
   title: 'ModularComponents/PageControl Container',
   component: PageControlsContainer,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const store = configureStore({

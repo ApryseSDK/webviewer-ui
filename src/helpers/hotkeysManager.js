@@ -417,7 +417,7 @@ WebViewer(...)
         // add a signature from the modal and then choose to not apply it, so we whitelist it
         // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
         const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
-        const shadowRoot = e.currentTarget.activeElement?.shadowRoot || e.currentTarget.querySelector('apryse-webviewer')?.shadowRoot;
+        const shadowRoot = e.currentTarget.activeElement?.shadowRoot;
         const calledFromCurrentViewer = shadowRoot === getRootNode();
         if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent || isEscape) {
           if (e.type === 'keyup') {

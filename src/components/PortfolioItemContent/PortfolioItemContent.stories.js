@@ -11,9 +11,6 @@ const NOOP = () => { };
 export default {
   title: 'Components/PortfolioItemContent',
   component: PortfolioItemContent,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const reducer = () => {

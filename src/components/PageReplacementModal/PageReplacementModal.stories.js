@@ -6,9 +6,6 @@ import { Provider } from 'react-redux';
 export default {
   title: 'Components/PageReplacementModal',
   component: PageReplacementModal,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

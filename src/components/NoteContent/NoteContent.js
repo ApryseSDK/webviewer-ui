@@ -553,6 +553,11 @@ const ContentArea = ({
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
     setAnnotationRichTextStyle(editor, annotation);
 
+    const hasTrailingNewlineToRemove = textAreaValue.length > 1 && textAreaValue[textAreaValue.length - 1] === '\n';
+    if (hasTrailingNewlineToRemove) {
+      textAreaValue = textAreaValue.slice(0, textAreaValue.length - 1);
+    }
+
     const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
     if (skipAutoLink) {
       annotation.disableSkipAutoLink();

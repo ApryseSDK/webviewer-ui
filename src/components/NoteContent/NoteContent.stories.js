@@ -11,9 +11,6 @@ export default {
   component: NoteContent,
   includeStories: ['Basic', 'BasicWithSkipAutoLink'],
   excludeStories: ['testProps', 'testPropsWithSkipAutoLink'],
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

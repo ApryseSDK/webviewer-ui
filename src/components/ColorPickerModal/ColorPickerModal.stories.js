@@ -9,9 +9,6 @@ const store = configureStore({ reducer: () => initialState });
 export default {
   title: 'Components/ColorPickerModal',
   component: ColorPickerModal,
-  parameters: {
-    customizableUI: true
-  }
 };
 
 export function Basic() {

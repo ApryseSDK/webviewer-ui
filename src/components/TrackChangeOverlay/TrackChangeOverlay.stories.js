@@ -6,7 +6,10 @@ import { OfficeEditorEditMode } from 'constants/officeEditor';
 
 export default {
   title: 'Components/TrackChangeOverlay',
-  component: TrackChangeOverlay
+  component: TrackChangeOverlay,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const getStore = () => {

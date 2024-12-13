@@ -10,9 +10,6 @@ import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMen
 export default {
   title: 'Components/BookmarksPanel',
   component: BookmarksPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const pageLabels = [
@@ -105,7 +102,7 @@ export const NoBookmarks = () => {
 // Custom panels
 const DEFAULT_NOTES_PANEL_WIDTH = 293;
 
-export const CustomBasic = () => {
+export const CustomBasic = (args, context) => {
   const stateWithBookmarksPanel = {
     ...initialState,
     viewer: {
@@ -142,6 +139,7 @@ export const CustomBasic = () => {
         group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
       },
       activeToolName: 'AnnotationCreateTextHighlight',
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -160,7 +158,7 @@ export const CustomBasic = () => {
 
 CustomBasic.parameters = { layout: 'fullscreen', customizableUI: true };
 
-export const CustomBasicNoBookmarks = () => {
+export const CustomBasicNoBookmarks = (args, context) => {
   const stateWithBookmarksPanelEmpty = {
     ...initialState,
     viewer: {
@@ -190,6 +188,7 @@ export const CustomBasicNoBookmarks = () => {
         tool: 'AnnotationEdit',
         group: ['groupedLeftPanelItems'],
       },
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -205,7 +204,7 @@ export const CustomBasicNoBookmarks = () => {
 
 CustomBasicNoBookmarks.parameters = { layout: 'fullscreen', customizableUI: true };
 
-export const CustomRightSide = () => {
+export const CustomRightSide = (args, context) => {
   const stateWithBookmarksPanelOnRight = {
     ...initialState,
     viewer: {
@@ -237,6 +236,7 @@ export const CustomRightSide = () => {
         tool: 'AnnotationEdit',
         group: ['groupedLeftPanelItems'],
       },
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -255,7 +255,7 @@ export const CustomRightSide = () => {
 
 CustomRightSide.parameters = { layout: 'fullscreen', customizableUI: true };
 
-export const CustomRightSideNoBookmarks = () => {
+export const CustomRightSideNoBookmarks = (args, context) => {
   const stateWithBookmarksPanelOnRightEmpty = {
     ...initialState,
     viewer: {
@@ -282,7 +282,8 @@ export const CustomRightSideNoBookmarks = () => {
       pageLabels: pageLabels,
       currentPage: 3,
       activeCustomRibbon: 'toolbarGroup-View',
-      activeToolName: 'AnnotationCreateTextHighlight'
+      activeToolName: 'AnnotationCreateTextHighlight',
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,

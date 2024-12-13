@@ -1,0 +1,326 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.PanelDropzone {
+  z-index: 50;
+  display: flex;
+  position: fixed;
+  overflow: hidden;
+  transition: transform .3s ease-in-out;
+  max-width: calc(100% - 16px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // height: 100%;
+  width: 200px;
+  border: 2px dashed #c7c7c7;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  color: #c7c7c7;
+  cursor: pointer;
+  transition: all 0.3s;
+  pointer-events: auto;
+
+  &.is-over {
+    background-color: darkgreen;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  @include mobile {
+    max-width: 100%;
+  }
+
+  @include panel-height-fix;
+
+  @include tablet {
+    border-right: 1px solid var(--side-panel-border);
+  }
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 95;
+  }
+
+  .ModularPanel-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow-y: auto;
+
+    &.searchPanel {
+      padding: 0px;
+      overflow-x: hidden;
+
+      .SearchPanel {
+        padding: 16px 16px 0px 16px;
+
+        .SearchOverlay {
+          padding-right: 16px;
+        }
+
+        .results .ReactVirtualized__List {
+          padding-right: 16px;
+        }
+      }
+    }
+
+    &.notesPanel {
+      padding: 0px;
+
+      .notes-panel-container {
+        position: static;
+        height: 100%;
+
+        .NotesPanel {
+          width: 100%;
+
+          [data-element=notesPanelHeader] {
+            padding-right: 16px;
+          }
+
+          .virtualized-notes-container,
+          .normal-notes-container {
+            padding-right: 16px;
+          }
+        }
+      }
+    }
+
+    &.formFieldPanel {
+      padding: 0px;
+
+      .FormFieldPanel {
+        width: 100%;
+      }
+    }
+
+    &.textEditingPanel {
+      padding: 0px;
+      overflow-y: unset;
+
+      .text-editing-panel-heading {
+        font-size: 14px;
+      }
+    }
+
+    &.comparePanel {
+      padding: 0px;
+      overflow-y: unset;
+    }
+
+    .PortfolioPanel {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .documentControls {
+      margin-top: 16px;
+      border-top: 1.5px solid var(--border);
+
+      .divider {
+        display: none;
+      }
+    }
+
+    .documentControlsInput {
+
+      input,
+      .documentControlsButton {
+        height: 32px;
+      }
+    }
+
+    .documentControlsInput,
+    .bookmark-outline-footer {
+      padding: 12px 0 20px 0;
+    }
+
+    ////////////////////////////////
+
+    @include mobile {
+      padding-top: 0px;
+      width: 100%;
+      min-width: 100%;
+
+      .close-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 64px;
+        min-height: 64px;
+        width: 100%;
+        padding-right: 5px;
+        top: 0;
+
+        .close-icon-container {
+          cursor: pointer;
+
+          .close-icon {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  &.right {
+    right: 0;
+  }
+
+  &.left {
+    left: 0;
+  }
+
+  &:not(:has(.resize-bar)) {
+    &.right {
+      border-left: 1px solid var(--side-panel-border);
+    }
+
+    &.left {
+      border-right: 1px solid var(--side-panel-border);
+    }
+  }
+
+  &.closed {
+    display: none;
+  }
+
+  &.right.closed {
+    transform: translateX(100%);
+    left: auto;
+  }
+
+  &.left.closed {
+    transform: translateX(-100%);
+  }
+
+  // Specific styles for a variety of modular UI panels
+  &.modular-ui-panel {
+
+    @include tablet-and-desktop {
+      &.tools-header-open {
+        height: calc(100% - 96px); // minus the height of both headers;
+
+        &.logo-bar-enabled {
+          height: calc(100% - 66px - $logo-bar-height);
+        }
+      }
+    }
+
+    background-color: var(--gray-0);
+
+    .resize-bar {
+      border-color: var(--lighter-border);
+    }
+
+    button.Dropdown {
+      border-color: var(--border);
+
+      &:disabled {
+        border-color: var(--lighter-border);
+
+        .Icon {
+          color: var(--lighter-border);
+        }
+      }
+    }
+
+    .bookmark-outline-footer {
+      border-top: 1px solid var(--lighter-border);
+    }
+
+    .msg.msg-no-bookmark-outline {
+      color: var(--gray-7)
+    }
+
+    &.ModularPanel {
+      .ModularPanel-container {
+        .documentControls {
+          border-color: var(--lighter-border);
+
+          .documentControlsButton button,
+          .PageControlContainer button {
+            &:hover {
+              @extend %icon-button-hover;
+            }
+          }
+
+          .PageControlContainer {
+            margin-top: 16px;
+          }
+        }
+
+        .thumbnail-slider-container {
+          width: 100%;
+          margin-bottom: 16px;
+
+          .slider-element-container {
+            margin: 0;
+          }
+
+          Button {
+            width: 24px;
+            height: 24px;
+            padding: 4px;
+            margin: 4px;
+
+            .Icon {
+              width: 16px;
+              height: auto;
+            }
+
+            &:hover:not(.active) {
+              @extend %icon-button-hover;
+            }
+          }
+        }
+      }
+
+      .Thumbnail.selected .container canvas {
+        background-color: rgba(43, 115, 171, 0.1);
+      }
+
+      .Thumbnail.active {
+        .container .page-image {
+          border: 1px solid var(--focus-border);
+        }
+
+        .thumbnailControls-overlay.modular-ui {
+          padding-left: 2px;
+
+          .Button {
+            &:hover:not(.active) {
+              @extend %icon-button-hover;
+            }
+
+            &.active {
+              @extend %icon-button-active;
+            }
+          }
+        }
+      }
+    }
+
+    .OutlinesPanel,
+    .BookmarksPanel {
+      padding: 0;
+
+      .bookmark-outline-footer .multi-selection-button {
+        &:hover:not(.disabled) {
+          @extend %icon-button-hover;
+        }
+      }
+    }
+  }
+}

@@ -6,9 +6,6 @@ import OpenFileModal from './OpenFileModal';
 export default {
   title: 'Components/OpenFileModal',
   component: OpenFileModal,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

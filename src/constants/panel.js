@@ -42,6 +42,7 @@ export const panelNames = {
   RUBBER_STAMP: 'rubberStampPanel',
   PORTFOLIO: 'portfolioPanel',
   FORM_FIELD: 'formFieldPanel',
+  EDITOR_PANEL: 'editorPanel',
 };
 
 export const panelData = {

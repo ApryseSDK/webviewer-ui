@@ -288,6 +288,7 @@ const DataElements = {
   UNDERLINE_PRESET_BUTTON: 'underlinePresetButton',
   INCREASE_INDENT_PRESET_BUTTON: 'increaseIndentPresetButton',
   DECREASE_INDENT_PRESET_BUTTON: 'decreaseIndentPresetButton',
+  OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON: 'officeEditorToggleNonPrintingCharactersButton',
   JUSTIFY_LEFT_PRESET_BUTTON: 'justifyLeftPresetButton',
   JUSTIFY_CENTER_PRESET_BUTTON: 'justifyCenterPresetButton',
   JUSTIFY_RIGHT_PRESET_BUTTON: 'justifyRightPresetButton',

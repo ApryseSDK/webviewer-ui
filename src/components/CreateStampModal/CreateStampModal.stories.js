@@ -9,9 +9,6 @@ import { userEvent, expect } from '@storybook/test';
 export default {
   title: 'Components/CreateStampModal',
   component: CreateStampModal,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

@@ -8,7 +8,7 @@ export default {
   title: 'Components/AudioPlaybackPopup',
   component: AudioPlaybackPopup,
   parameters: {
-    customizableUI: true
+    legacyUI: true,
   }
 };
 

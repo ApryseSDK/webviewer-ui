@@ -145,6 +145,15 @@ export const menuItems = {
     title: 'officeEditor.decreaseIndent',
     hidden: false,
   },
+  [PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS]: {
+    dataElement: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+    presetDataElement: DataElements.OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON,
+    icon: 'icon-office-editor-toggle-non-printing-characters',
+    label: 'officeEditor.nonPrintingCharacters',
+    title: 'officeEditor.nonPrintingCharacters',
+    hidden: false,
+  },
+
   [PRESET_BUTTON_TYPES.JUSTIFY_LEFT]: {
     dataElement: 'justifyLeftButton',
     presetDataElement: DataElements.JUSTIFY_LEFT_PRESET_BUTTON,
@@ -206,15 +215,26 @@ export const menuItems = {
     label: 'action.comparePages',
     icon: 'icon-header-compare',
   },
+  [PRESET_BUTTON_TYPES.EDITOR_MODE]: {
+    dataElement: 'editorModeButton',
+    presetDataElement: 'editorModeButton',
+    title: 'Turn Editor Mode on',
+    label: 'Turn Editor Mode on',
+    icon: 'icon-header-page-manipulation-page-rotation-clockwise-line',
+  },
 };
 
-export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen = undefined, isActive = false) => {
+export const getPresetButtonDOM = (buttonType, isDisabled, onClick, isFullScreen = undefined, isActive = false, isInEditorMode = undefined) => {
   const { dataElement, presetDataElement } = menuItems[buttonType];
   let { icon, title } = menuItems[buttonType];
 
   if (buttonType === PRESET_BUTTON_TYPES.FULLSCREEN) {
     icon = isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen';
     title = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
+  }
+  if (buttonType === PRESET_BUTTON_TYPES.EDITOR_MODE) {
+    icon = 'icon-edit-ui-mode';
+    title = isInEditorMode ? 'Turn Editor Mode off' : 'Turn Editor Mode on';
   }
 
   return (

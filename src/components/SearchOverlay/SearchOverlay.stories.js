@@ -8,9 +8,6 @@ import core from 'core';
 export default {
   title: 'Components/SearchOverlay',
   component: SearchOverlay,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {
