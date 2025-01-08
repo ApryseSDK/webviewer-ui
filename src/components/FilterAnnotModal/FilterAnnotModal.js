@@ -6,8 +6,6 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import fireEvent from 'helpers/fireEvent';
-import { Swipeable } from 'react-swipeable';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
 import { mapAnnotationToKey } from 'constants/map';
@@ -19,6 +17,7 @@ import Button from 'components/Button';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Tooltip from 'components/Tooltip';
 import { COMMON_COLORS } from 'constants/commonColors';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './FilterAnnotModal.scss';
 
@@ -210,12 +209,15 @@ const FilterAnnotModal = () => {
       if (displayAuthor && displayAuthor !== '') {
         authorsToBeAdded.add(displayAuthor);
       }
-      // We don't show it in the filter for WidgetAnnotation or StickyAnnotation or LinkAnnotation from the comments
-      if (
-        annot instanceof window.Core.Annotations.WidgetAnnotation ||
+
+      const isInFormBuilderMode = core.getAnnotationManager().getFormFieldCreationManager().isInFormFieldCreationMode();
+      const ignoreFilter = (
+        (!isInFormBuilderMode && annot instanceof window.Core.Annotations.WidgetAnnotation) ||
         (annot instanceof window.Core.Annotations.StickyAnnotation && annot.isReply()) ||
         annot instanceof window.Core.Annotations.Link
-      ) {
+      );
+
+      if (ignoreFilter) {
         return;
       }
 
@@ -290,6 +292,7 @@ const FilterAnnotModal = () => {
             <Choice
               type="checkbox"
               key={index}
+              aria-label={`${val} ${t('formField.types.checkbox')}`}
               label={<Tooltip content={val}><div>{val}</div></Tooltip>}
               checked={authorFilter.includes(val)}
               id={val}
@@ -340,24 +343,22 @@ const FilterAnnotModal = () => {
         {[...colors].map((val, index) => {
           return (
             <div className="colorSelect" key={`color${index}`}>
-              <Choice
-                type="checkbox"
-                checked={colorFilter.includes(val)}
-                id={val}
-                onChange={(e) => {
-                  if (colorFilter.indexOf(e.target.getAttribute('id')) === -1) {
-                    setColorFilter([...colorFilter, e.target.getAttribute('id')]);
-                  } else {
-                    setColorFilter(colorFilter.filter((color) => color !== e.target.getAttribute('id')));
-                  }
-                }}
-              />
-              <div
-                className="colorCell"
-                style={{
-                  background: getHexToRgbaString(val),
-                }}
-              ></div>
+              <Tooltip content={`${t('option.colorPalette.colorLabel')} ${val?.toUpperCase?.()}`} hideOnClick={false}>
+                <Choice
+                  type="checkbox"
+                  checked={colorFilter.includes(val)}
+                  aria-label={`${t('option.colorPalette.colorLabel')} ${val?.toUpperCase()} ${t('formField.types.checkbox')}`}
+                  id={val}
+                  onChange={(e) => {
+                    if (colorFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                      setColorFilter([...colorFilter, e.target.getAttribute('id')]);
+                    } else {
+                      setColorFilter(colorFilter.filter((color) => color !== e.target.getAttribute('id')));
+                    }
+                  }}
+                />
+              </Tooltip>
+              <div className="colorCell" style={{ background: getHexToRgbaString(val) }}></div>
             </div>
           );
         })}
@@ -374,6 +375,7 @@ const FilterAnnotModal = () => {
               type="checkbox"
               key={index}
               checked={statusFilter.includes(val)}
+              aria-label={`${val} ${t('formField.types.checkbox')}`}
               label={t(`option.state.${val.toLocaleLowerCase()}`)}
               id={val}
               onChange={(e) => {
@@ -398,23 +400,17 @@ const FilterAnnotModal = () => {
   });
 
   return isDisabled ? null : (
-    <div className={modalClass} data-element={DataElements.FILTER_MODAL} onMouseDown={closeModal}>
-      <FocusTrap locked={isOpen} focusLastOnUnlock>
+    <div className={modalClass} data-element={DataElements.FILTER_MODAL}>
+      <ModalWrapper
+        isOpen={isOpen}
+        title={`${t('option.filterAnnotModal.filters')} (${filterCount})`}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        swipeToClose
+      >
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           {core.getAnnotationsList().length > 0 ? (
             <div className="filter-modal">
-              <Swipeable onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-                <div className="swipe-indicator" />
-                <div className="header">
-                  <div>{`${t('option.filterAnnotModal.filters')} (${filterCount})`}</div>
-                  <Button
-                    img="icon-close"
-                    onClick={closeModal}
-                    title="action.close"
-                  />
-                </div>
-              </Swipeable>
-              <div className="divider"></div>
               <div className="body">
                 <Tabs id={TABS_ID}>
                   <div className="tab-list">
@@ -465,9 +461,9 @@ const FilterAnnotModal = () => {
                 </Tabs>
               </div>
               <div className="divider"></div>
-              <div className="settings-body">
-                <div className="settings-header">{t('option.filterAnnotModal.filterSettings')}</div>
-                <div className="settings">
+              <fieldset className="settings-body">
+                <legend id="filter-settings" className="settings-header">{t('option.filterAnnotModal.filterSettings')}</legend>
+                <div className="settings" role="group" aria-labelledby='filter-settings'>
                   <Choice
                     label={t('option.filterAnnotModal.includeReplies')}
                     checked={checkRepliesForAuthorFilter}
@@ -481,7 +477,7 @@ const FilterAnnotModal = () => {
                     id="filter-annot-modal-filter-document"
                   />
                 </div>
-              </div>
+              </fieldset>
               <div className="divider"></div>
               <div className="footer">
                 <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clearAll')}
@@ -496,7 +492,7 @@ const FilterAnnotModal = () => {
             </div>
           )}
         </div>
-      </FocusTrap>
+      </ModalWrapper>
     </div>
   );
 };

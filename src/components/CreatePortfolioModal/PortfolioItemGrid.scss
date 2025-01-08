@@ -1,6 +1,5 @@
 .portfolio-items {
   height: 100%;
-  max-height: 446px;
   overflow-y: auto;
   margin: 16px;
   padding: 16px;
@@ -11,10 +10,10 @@
 
   .portfolio-item {
     width: 130px;
-    height: 182px;
-    padding: 12px 24px;
-    background-color: var(--gray-1);
-    border: 1px solid var(--tools-overlay-button-hover);
+    height: 185px;
+    padding: 12px 24px 8px;
+    background-color: var(--component-background);
+    border: 1px solid var(--lighter-border);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,22 +39,22 @@
 
     .portfolio-item-name {
       margin: 8px 0;
-      height: 12px;
-      font-size: 10px;
+      height: 15px;
+      font-size: 13px;
       max-width: 90px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      color: var(--gray-8);
+      color: var(--gray-9);
     }
 
     .Button {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
 
       .Icon {
-        width: 16px;
-        height: 16px;
+        width: 28px;
+        height: 28px;
       }
     }
   }

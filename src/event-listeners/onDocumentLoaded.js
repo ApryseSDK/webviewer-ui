@@ -1,15 +1,12 @@
 import core from 'core';
 import getHashParameters from 'helpers/getHashParameters';
-import fireEvent from 'helpers/fireEvent';
 import { getLeftPanelDataElements } from 'helpers/isDataElementPanel';
 import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
-import Events from 'constants/events';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
-import setZoomLevel from 'src/apis/setZoomLevel';
 import onLayersUpdated from './onLayersUpdated';
 import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
@@ -17,19 +14,22 @@ import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'he
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
+import { panelNames } from 'constants/panel';
 import { getPortfolioFiles } from 'helpers/portfolio';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
+import { defaultPanels } from '../redux/modularComponents';
 import {
-  officeEditorScope,
-  OFFICE_EDITOR_EDIT_MODE,
-  elementsToDisableInOfficeEditor,
-  elementsToEnableInOfficeEditor
+  OFFICE_EDITOR_SCOPE,
+  OfficeEditorEditMode,
+  ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
+  ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
 } from 'constants/officeEditor';
+import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 
 let onFirstLoad = true;
 let notesInLeftPanel;
 
-const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
+const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
 
 export default (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
@@ -86,13 +86,25 @@ export default (store, documentViewerKey) => async () => {
 
     const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel) => {
       const state = getState();
-      const activeLeftPanel = selectors.getActiveLeftPanel(state);
+      const { customizableUI } = state.featureFlags;
+      let activeLeftPanel;
+
+      if (customizableUI) {
+        activeLeftPanel = selectors.getActiveTabInPanel(state, panelNames.TABS);
+      } else {
+        activeLeftPanel = selectors.getActiveLeftPanel(state);
+      }
+
       if (activeLeftPanel === currentActivePanel) {
         // set the active left panel to another one that's not disabled so that users don't see a blank left panel
         const nextActivePanel = getLeftPanelDataElements(state).find(
           (dataElement) => !selectors.isElementDisabled(state, dataElement),
         );
-        dispatch(actions.setActiveLeftPanel(nextActivePanel));
+        if (customizableUI) {
+          dispatch(actions.setActiveTabInPanel(nextActivePanel, panelNames.TABS));
+        } else {
+          dispatch(actions.setActiveLeftPanel(nextActivePanel));
+        }
       }
     };
 
@@ -137,51 +149,79 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     }
 
+    const handleEditModeUpdate = (editMode) => {
+      const isCustomUIEnabled = getIsCustomUIEnabled(store);
+      dispatch(actions.setOfficeEditorEditMode(editMode));
+      if (editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW) {
+        isCustomUIEnabled ?
+          dispatch(actions.disableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
+          dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+        dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      } else {
+        isCustomUIEnabled ?
+          dispatch(actions.enableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
+          dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+        dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      }
+      if (editMode === OfficeEditorEditMode.REVIEWING || editMode === OfficeEditorEditMode.PREVIEW) {
+        dispatch(actions.openElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      } else {
+        dispatch(actions.closeElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      }
+    };
+
+    const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
     if (isOfficeEditorMode()) {
+      // isOfficeEditorMode checks to see if the file type is workerTypes.OFFICE_EDITOR
+      if (!isOfficeEditorHeaderEnabled(store)) {
+      // Since we are switching to Office Editor mode, we need to stash the current UI state in case we return to default viewing mode
+        dispatch(actions.stashComponents(VIEWER_CONFIGURATIONS.DEFAULT));
+        // if isOfficeEditorHeaderEnabled wasn't already set then we need to set the UI to the default OE UI
+        // If the UI for the docx editor was previously customised, we restore that stash
+        // if no stash is found the default is set
+        dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
+        dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+      }
       dispatch(actions.setIsOfficeEditorMode(true));
-      dispatch(actions.enableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
-      setZoomLevel(1);
-      dispatch(actions.disableElements(
-        elementsToDisableInOfficeEditor,
-        PRIORITY_ONE, // To allow customers to still disable these elements
+      dispatch(actions.enableElements(
+        ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR,
+        PRIORITY_TWO,
       ));
-      hotkeys.unbind('*', officeEditorScope);
-      hotkeys.setScope(officeEditorScope);
+      dispatch(actions.disableElements(
+        ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
+        PRIORITY_TWO, // To allow customers to still enable these elements with PRIORITY_THREE
+      ));
+      hotkeys.unbind('*', OFFICE_EDITOR_SCOPE);
+      hotkeys.setScope(OFFICE_EDITOR_SCOPE);
       const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
       hotkeys(
         searchShortcutKeys,
-        officeEditorScope,
+        OFFICE_EDITOR_SCOPE,
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
-
-      const handleEditModeUpdate = (editMode) => {
-        dispatch(actions.setOfficeEditorEditMode(editMode));
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
-          dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-          dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
-        } else {
-          dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-          dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
-        }
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
-          dispatch(actions.openElement(DataElements.LEFT_PANEL));
-        } else {
-          dispatch(actions.closeElement(DataElements.LEFT_PANEL));
-        }
-      };
-      handleEditModeUpdate(OFFICE_EDITOR_EDIT_MODE.EDITING);
+      const setHeaderFocusShortcutKeys = ShortcutKeys[Shortcuts.SET_HEADER_FOCUS];
+      hotkeys(
+        setHeaderFocusShortcutKeys,
+        OFFICE_EDITOR_SCOPE,
+        hotkeysManager.keyHandlerMap[setHeaderFocusShortcutKeys],
+      );
+      handleEditModeUpdate(OfficeEditorEditMode.EDITING);
       doc.addEventListener('editModeUpdated', handleEditModeUpdate);
-      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
+      // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
+      core.zoomTo(1,0,0);
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
-    } else {
-      dispatch(actions.enableElements(
-        elementsToDisableInOfficeEditor,
-        PRIORITY_ONE, // To allow customers to still disable these elements
-      ));
-      dispatch(actions.disableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
+    } else if (isOfficeEditorHeaderEnabled(store)) {
+      // Since we are leaving office editor we can stash the current UI state
+      dispatch(actions.stashComponents(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
+      // The Default UI only gets loaded if isOfficeEditorHeaderEnabled is true, to prevent overwriting the custom UI
+      dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DEFAULT));
+      const panels = getIsCustomUIEnabled(store) ? defaultPanels : [];
+      dispatch(actions.setGenericPanels(panels));
+      doc.removeEventListener('editModeUpdated', handleEditModeUpdate);
       hotkeys.setScope(defaultHotkeysScope);
       dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
+      dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
     }
 
     if (core.isFullPDFEnabled()) {
@@ -261,5 +301,4 @@ export default (store, documentViewerKey) => async () => {
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom(documentViewerKey), documentViewerKey));
   dispatch(actions.setThumbnailSelectingPages(false));
-  fireEvent(Events.DOCUMENT_LOADED);
 };

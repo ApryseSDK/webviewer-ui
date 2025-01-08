@@ -116,7 +116,7 @@ class ToolStylePopup extends React.PureComponent {
     };
 
     setToolStyles(activeToolName, 'RichTextStyle', richTextStyle);
-  }
+  };
 
   handleLineStyleChange = (section, value) => {
     const { activeToolName } = this.props;
@@ -132,7 +132,7 @@ class ToolStylePopup extends React.PureComponent {
   handleAutoSize = () => {
     const { activeToolName, activeToolStyle } = this.props;
     setToolStyles(activeToolName, 'isAutoSizeFont', !activeToolStyle.isAutoSizeFont);
-  }
+  };
 
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle } = this.props;

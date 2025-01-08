@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DataElements from 'constants/dataElement';
-import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
-import { Swipeable } from 'react-swipeable';
 import PropTypes from 'prop-types';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
+import ModalWrapper from 'components/ModalWrapper';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './PageRedactionModal.scss';
 
@@ -46,6 +45,8 @@ const PageRedactionModal = ({
 
   const [selectionType, setSelectionType] = useState(SelectionTypes.CURRENT);
   const [pages, setPages] = useState();
+  const [pageNumberError, setPageNumberError] = useState('');
+
   useEffect(() => {
     setPages(selectedPages);
   }, [selectedPages]);
@@ -72,6 +73,8 @@ const PageRedactionModal = ({
 
   const onMark = () => markPages(getSelectedPages());
   const onRedact = () => redactPages(getSelectedPages());
+  const onRedactWithFocusTransfer = useFocusOnClose(onRedact);
+  const onMarktWithFocusTransfer = useFocusOnClose(onMark);
 
   const canvasContainer = useRef();
   useEffect(() => {
@@ -98,89 +101,125 @@ const PageRedactionModal = ({
   const onSelectionChange = (e) => {
     if (!e.target.classList.contains('page-number-input')) {
       setSelectionType(e.target.value);
+      setPageNumberError('');
     }
   };
-  const onPagesChanged = (pages) => setPages(pages);
+  const onPagesChanged = (pageNumbers) => {
+    if (pageNumbers.length > 0) {
+      setPageNumberError('');
+      setPages(pageNumbers);
+    }
+  };
+
+  const handlePageNumberError = (pageNumber) => {
+    if (pageNumber) {
+      setPageNumberError(`${t('message.errorPageNumber')} ${pageLabels.length}`);
+    }
+  };
+
+  const specifyPagesLabelElement = (
+    <>
+      <label className="specifyPagesChoiceLabel">
+        <span>{t('option.pageRedactModal.specify')}</span>
+        {selectionType === 'specify' && (
+          <span className="specifyPagesExampleLabel">
+            - {t('option.thumbnailPanel.multiSelectPagesExample')}
+          </span>
+        )}
+      </label>
+      {selectionType === 'specify' && (
+        <div className={classNames('page-number-input-container', { error: !!pageNumberError })}>
+          <PageNumberInput
+            selectedPageNumbers={pages}
+            pageCount={pageLabels.length}
+            ariaLabel={t('option.pageRedactModal.specify')}
+            onSelectedPageNumbersChange={onPagesChanged}
+            onBlurHandler={setPages}
+            onError={handlePageNumberError}
+            pageNumberError={pageNumberError}
+          />
+        </div>
+      )}
+    </>
+  );
 
   return (
-    <Swipeable onSwipedUp={onSwipe} onSwipedDown={onSwipe} preventDefaultTouchmoveEvent focus>
-      <FocusTrap locked={isOpen}>
-        <div
-          className={classNames({
-            Modal: true,
-            PageRedactionModal: true,
-            open: isOpen,
-            closed: !isOpen,
-          })}
-          data-element={DataElements.PAGE_REDACT_MODAL}
-        >
-          <div className="container">
-            <div className="swipe-indicator" />
-            <div className="header">
-              <div className="header-text">{t('option.pageRedactModal.header')}</div>
-              <Button onClick={closeModal} img="icon-close" />
-            </div>
-            <div className="body">
-              <div className="canvas-container" ref={canvasContainer} />
-              <form className="selection-options" onChange={onSelectionChange} onSubmit={(e) => e.preventDefault()}>
+    <div
+      className={classNames({
+        Modal: true,
+        PageRedactionModal: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
+      data-element={DataElements.PAGE_REDACT_MODAL}
+    >
+      <ModalWrapper
+        title="action.redactPages"
+        isOpen={isOpen}
+        onCloseClick={closeModal}
+        closeHandler={closeModal}
+        onSwipedDown={onSwipe}
+        onSwipedUp={onSwipe}
+        swipeToClose
+      >
+        <div className="body">
+          <div className="canvas-container" ref={canvasContainer} />
+          <form className="selection-options" role="group" aria-labelledby={t('option.pageRedactModal.pageSelection')} onChange={onSelectionChange} onSubmit={(e) => e.preventDefault()}>
+            <fieldset>
+              <legend>
                 <strong>{t('option.pageRedactModal.pageSelection')}</strong>
-                <Choice
-                  checked={selectionType === SelectionTypes.CURRENT}
-                  radio
-                  name="page-redaction-option"
-                  label={t('option.pageRedactModal.current')}
-                  value={SelectionTypes.CURRENT}
-                />
-                <Choice
-                  checked={selectionType === SelectionTypes.SPECIFY}
-                  radio
-                  name="page-redaction-option"
-                  label={t('option.pageRedactModal.specify')}
-                  value={SelectionTypes.SPECIFY}
-                />
-                {selectionType === 'specify' && (
-                  <PageNumberInput
-                    selectedPageNumbers={pages}
-                    pageCount={pageLabels.length}
-                    onBlurHandler={onPagesChanged}
-                    placeHolder={pageNumberPlaceholder}
-                  />
-                )}
-                <Choice
-                  checked={selectionType === SelectionTypes.ODD}
-                  radio
-                  name="page-redaction-option"
-                  label={t('option.pageRedactModal.odd')}
-                  value={SelectionTypes.ODD}
-                />
-                <Choice
-                  checked={selectionType === SelectionTypes.EVEN}
-                  radio
-                  name="page-redaction-option"
-                  label={t('option.pageRedactModal.even')}
-                  value={SelectionTypes.EVEN}
-                  disabled={evenDisabled}
-                />
-              </form>
-            </div>
-            <div className="footer">
-              <Button
-                className="cancel modal-button"
-                dataElement="modalRedactButton"
-                label="annotation.redact"
-                onClick={onRedact}
+              </legend>
+              <Choice
+                checked={selectionType === SelectionTypes.CURRENT}
+                radio
+                name="page-redaction-option"
+                label={t('option.pageRedactModal.current')}
+                value={SelectionTypes.CURRENT}
               />
-              <Button
-                className="confirm modal-button"
-                dataElement="modalMarkRedactButton"
-                label="option.pageRedactModal.addMark"
-                onClick={onMark}
+              <Choice
+                checked={selectionType === SelectionTypes.SPECIFY}
+                radio
+                name="page-redaction-option"
+                className="specify-pages-choice"
+                label={specifyPagesLabelElement}
+                value={SelectionTypes.SPECIFY}
               />
-            </div>
-          </div>
+              <Choice
+                checked={selectionType === SelectionTypes.ODD}
+                radio
+                name="page-redaction-option"
+                label={t('option.pageRedactModal.odd')}
+                value={SelectionTypes.ODD}
+              />
+              <Choice
+                checked={selectionType === SelectionTypes.EVEN}
+                radio
+                name="page-redaction-option"
+                label={t('option.pageRedactModal.even')}
+                value={SelectionTypes.EVEN}
+                disabled={evenDisabled}
+              />
+            </fieldset>
+          </form>
         </div>
-      </FocusTrap>
-    </Swipeable>
+        <div className="footer">
+          <Button
+            className="cancel modal-button secondary-button"
+            dataElement="modalRedactButton"
+            label="annotation.redact"
+            disabled={pageNumberError}
+            onClick={onRedactWithFocusTransfer}
+          />
+          <Button
+            className="confirm modal-button"
+            dataElement="modalMarkRedactButton"
+            label="option.pageRedactModal.addMark"
+            disabled={pageNumberError}
+            onClick={onMarktWithFocusTransfer}
+          />
+        </div>
+      </ModalWrapper>
+    </div>
   );
 };
 

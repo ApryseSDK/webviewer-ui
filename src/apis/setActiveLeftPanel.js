@@ -12,7 +12,16 @@ WebViewer(...)
  */
 
 import actions from 'actions';
+import { panelNames } from 'constants/panel';
 
 export default (store) => (headerGroup) => {
-  store.dispatch(actions.setActiveLeftPanel(headerGroup));
+  const state = store.getState();
+  const featureFlags = state.featureFlags;
+  const { customizableUI } = featureFlags;
+
+  if (customizableUI) {
+    store.dispatch(actions.setActiveTabInPanel(headerGroup, panelNames.TABS));
+  } else {
+    store.dispatch(actions.setActiveLeftPanel(headerGroup));
+  }
 };

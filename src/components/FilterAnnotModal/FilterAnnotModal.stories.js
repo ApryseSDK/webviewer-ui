@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 export default {
   title: 'Components/FilterAnnotModal',
-  component: FilterAnnotModal
+  component: FilterAnnotModal,
 };
 
 const initialState = {
@@ -32,7 +32,10 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 export function UserPanel() {
@@ -46,7 +49,10 @@ export function UserPanel() {
       tab: {
         filterAnnotModal: 'annotationUserFilterPanelButton'
       }
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   return (
@@ -66,7 +72,10 @@ export function ColorPanel() {
       ...initialState.viewer,
       tab: {
         filterAnnotModal: 'annotationColorFilterPanelButton'
-      }
+      },
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
     }
   };
 
@@ -88,6 +97,9 @@ export function TypePanel() {
       tab: {
         filterAnnotModal: 'annotationTypeFilterPanelButton'
       }
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
     }
   };
 
@@ -110,6 +122,9 @@ export function MeasurementAnnotationsFilterEnabled() {
         filterAnnotModal: 'annotationTypeFilterPanelButton'
       },
       isMeasurementAnnotationFilterEnabled: true,
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
     }
   };
 
@@ -136,6 +151,9 @@ export function DocumentFilterActive() {
         ...initialState.viewer.annotationFilters,
         isDocumentFilterActive: true,
       }
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
     }
   };
 

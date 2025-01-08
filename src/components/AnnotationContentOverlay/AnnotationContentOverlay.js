@@ -8,8 +8,9 @@ import selectors from 'selectors';
 import { isMobileDevice } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 import CustomElement from '../CustomElement';
-import FormFieldPlaceHolderOverlay from './FormFieldPlaceHolderOverlay';
+import FormFieldWidgetOverlay from './FormFieldWidgetOverlay';
 import './AnnotationContentOverlay.scss';
+import getRootNode from 'src/helpers/getRootNode';
 
 const MAX_CHARACTERS = 100;
 
@@ -32,8 +33,8 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
 
   const [t] = useTranslation();
   const [overlayPosition, setOverlayPosition] = useState({
-    left: 0,
-    top: 0,
+    left: -99999,
+    top: -99999,
   });
 
   const isUsingCustomHandler = customHandler !== null;
@@ -43,36 +44,47 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
   // so that the underlying annotation will always be hovered
   const gap = 20;
 
+  const fitWindowSize = useCallback((clientX, clientY, left, top) => {
+    const overlayRect = overlayRef.current.getBoundingClientRect();
+
+    if (left + overlayRect.width > window.innerWidth) {
+      left = clientX - overlayRect.width - gap;
+    }
+
+    if (top + overlayRect.height > window.innerHeight) {
+      top = clientY - overlayRect.height - gap;
+    }
+
+    if (top <= 0) {
+      top = 0;
+    }
+
+    if (window.isApryseWebViewerWebComponent) {
+      const host = getRootNode()?.host;
+      const hostBoundingRect = host?.getBoundingClientRect();
+      if (hostBoundingRect) {
+        left -= hostBoundingRect.left;
+        top -= hostBoundingRect.top;
+
+        // Include host scroll offsets
+        left += host.scrollLeft;
+        top += host.scrollTop;
+      }
+    }
+
+    return { left, top };
+  }, []);
+
   useEffect(() => {
-    const fitWindowSize = (clientX, clientY, left, top) => {
-      const overlayRect = overlayRef.current.getBoundingClientRect();
-
-      if (left + overlayRect.width > window.innerWidth) {
-        left = clientX - overlayRect.width - gap;
-      }
-
-      if (top + overlayRect.height > window.innerHeight) {
-        top = clientY - overlayRect.height - gap;
-      }
-
-      if (top <= 0) {
-        top = 0;
-      }
-
-      return { left, top };
-    };
-
     if (overlayRef.current && annotation) {
       const { clientX, clientY } = clientXY;
       const { left, top } = fitWindowSize(clientX, clientY, clientX + gap, clientY + gap);
       setOverlayPosition({ left, top });
     }
-  }, [annotation, clientXY]);
+  }, [annotation, clientXY, fitWindowSize]);
 
   const numberOfReplies = annotation?.getReplies().length;
-
   const preRenderedElements = isUsingCustomHandler && annotation ? customHandler(annotation) : null;
-
   const customRender = useCallback(() => preRenderedElements, [preRenderedElements]);
 
   const renderContents = () => (
@@ -116,9 +128,11 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     return null;
   }
 
-  if (annotation.isFormFieldPlaceholder() && isOverlayOpen) {
+  const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
+
+  if (isOverlayOpen && isInFormFieldCreationMode && annotation instanceof window.Core.Annotations.WidgetAnnotation) {
     return (
-      <FormFieldPlaceHolderOverlay
+      <FormFieldWidgetOverlay
         annotation={annotation}
         overlayPosition={overlayPosition}
         overlayRef={overlayRef}

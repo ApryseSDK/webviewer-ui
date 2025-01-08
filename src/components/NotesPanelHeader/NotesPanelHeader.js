@@ -16,7 +16,8 @@ import CustomElement from 'components/CustomElement';
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
 import Icon from '../Icon';
@@ -90,7 +91,7 @@ function NotesPanelHeader({
 
   // on oe preview mode, disable and clear the search input
   useEffect(() => {
-    if (isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
+    if (isOfficeEditorMode && officeEditorEditMode === OfficeEditorEditMode.PREVIEW) {
       setIsPreviewingTrackedChanges(true);
       setSearchInputHandler('');
       setSearchInput('');
@@ -113,10 +114,13 @@ function NotesPanelHeader({
 
   const sortContainer = (
     <div className="sort-container" data-element={SORT_CONTAINER_ELEMENT}>
-      <div className="label">{`${t('message.sortBy')}:`}</div>
+      <div className="label" id="notesSortLabel">{`${t('message.sort')}:`}</div>
       <Dropdown
+        id="notesOrderDropdown"
+        labelledById='notesSortLabel'
         dataElement="notesOrderDropdown"
         disabled={notes.length === 0 || isPreviewingTrackedChanges}
+        ariaLabel={`${t('message.sortBy')} ${sortStrategy}`}
         items={Object.keys(getSortStrategies())}
         translationPrefix="option.notesOrder"
         currentSelectionKey={sortStrategy}
@@ -127,6 +131,7 @@ function NotesPanelHeader({
     </div>
   );
 
+  const openFilterModalWithFocusTransfer = useFocusHandler(() => dispatch(actions.openElement('filterModal')));
   const placeholderText = isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder');
   const originalHeaderElement = (
     <DataElementWrapper
@@ -160,7 +165,7 @@ function NotesPanelHeader({
         className="comments-counter"
         dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
       >
-        <span className='main-comment'>{isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
+        <h2 className='main-comment'>{isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel')} {`(${notes.length})`}</h2>
       </DataElementWrapper>
 
       <DataElementWrapper
@@ -184,6 +189,7 @@ function NotesPanelHeader({
                 toggleMultiSelectMode();
               }}
               title={t('component.multiSelectButton')}
+              ariaPressed={isMultiSelectMode}
             />
           )}
           <Button
@@ -193,8 +199,9 @@ function NotesPanelHeader({
             })}
             disabled={disableFilterAnnotation}
             img="icon-comments-filter"
-            onClick={() => dispatch(actions.openElement('filterModal'))}
+            onClick={openFilterModalWithFocusTransfer}
             title={t('component.filter')}
+            ariaPressed={filterEnabled}
           />
         </div>
       </DataElementWrapper>

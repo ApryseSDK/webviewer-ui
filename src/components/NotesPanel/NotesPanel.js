@@ -9,7 +9,7 @@ import Note from 'components/Note';
 import Icon from 'components/Icon';
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
-import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
+import MultiSelectControls from 'components/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 import Choice from 'components/Choice';
@@ -17,7 +17,7 @@ import Choice from 'components/Choice';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import { getSortStrategies } from 'constants/sortStrategies';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -44,42 +44,23 @@ const NotesPanel = ({
   isLeftSide,
   parentDataElement,
 }) => {
-  const [
-    sortStrategy,
-    isOpen,
-    isDisabled,
-    pageLabels,
-    customNoteFilter,
-    currentNotesPanelWidth,
-    notesInLeftPanel,
-    isDocumentReadOnly,
-    showAnnotationNumbering,
-    enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode,
-    customEmptyPanel,
-    isNotesPanelMultiSelectEnabled,
-    activeDocumentViewerKey,
-    isOfficeEditorMode,
-  ] = useSelector(
-    (state) => [
-      selectors.getSortStrategy(state),
-      selectors.isElementOpen(state, DataElements.NOTES_PANEL),
-      selectors.isElementDisabled(state, DataElements.NOTES_PANEL),
-      selectors.getPageLabels(state),
-      selectors.getCustomNoteFilter(state),
-      parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state),
-      selectors.getNotesInLeftPanel(state),
-      selectors.isDocumentReadOnly(state),
-      selectors.isAnnotationNumberingEnabled(state),
-      selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.getNotesPanelCustomEmptyPanel(state),
-      selectors.getIsNotesPanelMultiSelectEnabled(state),
-      selectors.getActiveDocumentViewerKey(state),
-      selectors.getIsOfficeEditorMode(state),
-    ],
-    shallowEqual,
-  );
+
+  const sortStrategy = useSelector(selectors.getSortStrategy);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NOTES_PANEL));
+  const pageLabels = useSelector(selectors.getPageLabels, shallowEqual);
+  const customNoteFilter = useSelector(selectors.getCustomNoteFilter, shallowEqual);
+  const currentNotesPanelWidth = useSelector((state) => parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state), shallowEqual);
+  const notesInLeftPanel = useSelector(selectors.getNotesInLeftPanel);
+  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
+  const showAnnotationNumbering = useSelector(selectors.isAnnotationNumberingEnabled);
+  const enableNotesPanelVirtualizedList = useSelector(selectors.getEnableNotesPanelVirtualizedList);
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const customEmptyPanel = useSelector(selectors.getNotesPanelCustomEmptyPanel, shallowEqual);
+  const isNotesPanelMultiSelectEnabled = useSelector(selectors.getIsNotesPanelMultiSelectEnabled);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
+  const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -353,9 +334,18 @@ const NotesPanel = ({
       <div>
         <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">{t('message.noResults')}</div>
+      <p className="msg no-margin">{t('message.noResults')}</p>
     </div>
   );
+
+  const ariaLiveResultsContainer = () => {
+    const message = isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel');
+    return (
+      <p aria-live="assertive" style={{ position: 'absolute', left: '-9999px' }}>
+        {notesToRender.length > 0 ? `${message} ${notesToRender.length}` : t('message.noResults')}
+      </p>
+    );
+  };
 
   const NoAnnotationsGlyph = customEmptyPanel?.icon ?
     customEmptyPanel.icon :
@@ -414,7 +404,12 @@ const NotesPanel = ({
   const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel || isCustomPanel);
 
   return !showNotePanel ? null : (
-    <div className="notes-panel-container">
+    <div
+      className={classNames({
+        'notes-panel-container': true,
+        'office-editor': isOfficeEditorMode,
+      })}
+    >
       <div
         className={classNames({
           Panel: true,
@@ -481,8 +476,9 @@ const NotesPanel = ({
               <div className="divider" />
               <Choice
                 isSwitch
+                checked={officeEditorEditMode === OfficeEditorEditMode.PREVIEW}
                 label={t('officeEditor.previewAllChanges')}
-                onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OFFICE_EDITOR_EDIT_MODE.PREVIEW : OFFICE_EDITOR_EDIT_MODE.REVIEWING)}
+                onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OfficeEditorEditMode.PREVIEW : OfficeEditorEditMode.REVIEWING)}
               />
             </div>
           )}
@@ -503,6 +499,7 @@ const NotesPanel = ({
         />
       )}
       <ReplyAttachmentPicker annotationId={curAnnotId} addAttachments={addAttachments} />
+      {ariaLiveResultsContainer()}
     </div>
   );
 };

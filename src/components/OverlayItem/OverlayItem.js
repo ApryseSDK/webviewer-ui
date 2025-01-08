@@ -10,7 +10,7 @@ class OverlayItem extends React.PureComponent {
     buttonName: PropTypes.string,
     role: PropTypes.string,
     selected: PropTypes.bool
-  }
+  };
 
   render() {
     const { buttonName, role, selected } = this.props;

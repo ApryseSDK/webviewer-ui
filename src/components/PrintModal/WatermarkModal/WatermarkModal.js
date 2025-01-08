@@ -1,6 +1,5 @@
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
-import { circleRadius } from 'constants/slider';
 import core from 'core';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,10 +13,16 @@ import ModalWrapper from '../../ModalWrapper';
 import DataElementWrapper from 'src/components/DataElementWrapper';
 import Dropdown from 'src/components/Dropdown';
 
+import { isMobile } from 'helpers/device';
+
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
 const DEFAULT_FONT_SIZE = 48;
+
+const DROPDOWN_WIDTH = 314;
+const DROPDOWN_MOBILE_WIDTH = 160;
+const DROPDOWN_WIDTH_LONG = 328;
 
 const WATERMARK_LOCATIONS = {
   CENTER: 'center',
@@ -130,7 +135,7 @@ class WatermarkModal extends React.PureComponent {
 
   addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
-
+    const { t } = this.props;
     core.setWatermark(watermarkOptions);
 
     const pageHeight = core.getPageHeight(this.props.pageIndexToView + 1);
@@ -140,17 +145,21 @@ class WatermarkModal extends React.PureComponent {
     const desiredZoomForHeight = DESIRED_HEIGHT / pageHeight;
 
     const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
+    const pageNumber = this.props.pageIndexToView + 1;
 
     core.getDocument().loadCanvas({
-      pageNumber: this.props.pageIndexToView + 1,
+      pageNumber: pageNumber,
       zoom: desiredZoom,
       drawComplete: (canvas) => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {
           this.canvasContainerRef.current.removeChild(nodes[0]);
         }
-        canvas.style.border = '1px solid black';
+        canvas.style.border = this.canvasContainerRef.current.style.border;
         canvas.style.height = this.canvasContainerRef.current.style.height;
+        canvas.style.backgroundColor = this.canvasContainerRef.current.style.backgroundColor;
+        canvas.setAttribute('role', 'img');
+        canvas.setAttribute('aria-label', `${t('action.page')} ${pageNumber}`);
         this.canvasContainerRef.current.appendChild(canvas);
       },
     });
@@ -247,11 +256,6 @@ class WatermarkModal extends React.PureComponent {
         this.props.formSubmitted(watermarkOptions);
       },
     );
-  };
-
-  getCirclePosn = (lineLength, opacity) => {
-    const lineStart = circleRadius;
-    return opacity * lineLength + lineStart;
   };
 
   setColorPaletteVisibility = (visible) => {
@@ -398,7 +402,8 @@ class WatermarkModal extends React.PureComponent {
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
     const hexColor = formInfo[FORM_FIELD_KEYS.color].toHexString();
-
+    const dropdownHalfWidth = isMobile() ? DROPDOWN_MOBILE_WIDTH : DROPDOWN_WIDTH;
+    const dropdownFullWidth = isMobile() ? DROPDOWN_WIDTH_LONG : DROPDOWN_WIDTH;
     return (
       <DataElementWrapper
         className={'Modal Watermark'}
@@ -423,15 +428,16 @@ class WatermarkModal extends React.PureComponent {
             <div className="watermark-settings">
               <form id="form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-field">
-                  <label className="section-label print-quality-section-label" htmlFor="location">{t('option.watermark.location')}</label>
+                  <label className="section-label print-quality-section-label" htmlFor="location" id="watermark-location-dropdown-label">{t('option.watermark.location')}</label>
                   <Dropdown
                     id="location"
+                    labelledById='watermark-location-dropdown-label'
                     dataElement="watermarkLocation"
                     items={Object.keys(WATERMARK_LOCATIONS)}
                     getTranslationLabel={(key) => t(`option.watermark.locations.${WATERMARK_LOCATIONS[key]}`)}
                     currentSelectionKey={currLocation}
                     onClickItem={this.onLocationChanged}
-                    width={314}
+                    width={dropdownFullWidth}
                   />
                   <div className="separator divider"></div>
                 </div>
@@ -450,31 +456,35 @@ class WatermarkModal extends React.PureComponent {
                     type="text"
                   />
                 </div>
-                <div className="form-field">
-                  <label htmlFor="fonts">{t('option.watermark.font')}</label>
-                  <Dropdown
-                    id="fonts"
-                    dataElement="watermarkFont"
-                    items={FONTS}
-                    currentSelectionKey={formInfo[FORM_FIELD_KEYS.font]}
-                    onClickItem={(key) => this.handleInputChange(
-                      FORM_FIELD_KEYS.font,
-                      key
-                    )}
-                    width={314}
-                  />
-                </div>
-                <div className="form-field">
-                  <label htmlFor="fontSize">{t('option.watermark.size')}</label>
-                  <FontSizeDropdown
-                    fontSize={formInfo[FORM_FIELD_KEYS.fontSize]}
-                    key="fontSize"
-                    fontUnit="pt"
-                    onFontSizeChange={(val) => this.handleInputChange(FORM_FIELD_KEYS.fontSize, Number.parseInt(val))}
-                    maxFontSize={1600}
-                    initialFontValue={1}
-                    initialMaxFontValue={512}
-                  />
+                <div className="font-form-fields">
+                  <div className="form-font-type">
+                    <label htmlFor="fonts" id="watermark-font-dropdown-label">{t('option.watermark.font')}</label>
+                    <Dropdown
+                      id="fonts"
+                      labelledById='watermark-font-dropdown-label'
+                      dataElement="watermarkFont"
+                      items={FONTS}
+                      currentSelectionKey={formInfo[FORM_FIELD_KEYS.font]}
+                      onClickItem={(key) => this.handleInputChange(
+                        FORM_FIELD_KEYS.font,
+                        key
+                      )}
+                      width={dropdownHalfWidth}
+                    />
+                  </div>
+                  <div className="form-font-size">
+                    <label htmlFor="fontSize">{t('option.watermark.size')}</label>
+                    <FontSizeDropdown
+                      fontSize={formInfo[FORM_FIELD_KEYS.fontSize]}
+                      key="fontSize"
+                      fontUnit="pt"
+                      onFontSizeChange={(val) => this.handleInputChange(FORM_FIELD_KEYS.fontSize, Number.parseInt(val))}
+                      maxFontSize={1600}
+                      initialFontValue={1}
+                      initialMaxFontValue={512}
+                      width={dropdownHalfWidth}
+                    />
+                  </div>
                 </div>
                 <div className="form-field opacity-slider" id="opacitySlider">
                   <Slider
@@ -484,12 +494,8 @@ class WatermarkModal extends React.PureComponent {
                     min={0}
                     max={100}
                     step={1}
-                    customCircleRadius={8}
-                    customLineStrokeWidth={4}
-                    value={formInfo[FORM_FIELD_KEYS.opacity] / 100}
-                    getDisplayValue={(opacity) => `${Math.round(opacity * 100)}%`}
-                    getCirclePosition={this.getCirclePosn}
-                    convertRelativeCirclePositionToValue={(circlePosn) => circlePosn}
+                    value={formInfo[FORM_FIELD_KEYS.opacity]}
+                    getDisplayValue={(opacity) => `${Math.round(opacity)}%`}
                     withInputField={isCustomizableUI}
                     inputFieldType={'number'}
                     onSliderChange={() => { }}

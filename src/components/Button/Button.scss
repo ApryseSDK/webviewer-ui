@@ -12,6 +12,8 @@
   width: 32px;
   height: 32px;
   color: var(--text-color);
+  // Prevents inset box-shadows from leaving artifacts by forcing GPU acceleration
+  transform: translate3d(0,0,0);
 
   img {
     height: 24px;
@@ -25,7 +27,8 @@
     }
 
     // hack for pan tool and annot select tool
-    &[data-element="panToolButton"],&[data-element="selectToolButton"] {
+    &[data-element="panToolButton"],
+    &[data-element="selectToolButton"] {
       background: var(--view-header-button-active);
     }
   }
@@ -36,25 +39,35 @@
     }
   }
 
-  &.disabled {
-    background: none!important;
+  &.disabled,
+  &:disabled {
+    background: none;
     cursor: default;
-    
+
     .Icon {
-      color: var(--disabled-icon) !important;
+      color: var(--disabled-icon);
     }
+
     span {
       color: var(--disabled-icon);
     }
   }
 
-  &.custom-ui {
+  &.modular-ui {
+
+    &.button-text-icon,
     &.icon-only {
       &:hover:not(:disabled):not(.disabled) {
         @extend %icon-button-hover;
-
       }
-      
+
+      &:hover:not(:disabled):not(.disabled):not(.active) {
+        @include mobile {
+          box-shadow: none;
+          background-color: transparent;
+        }
+      }
+
       &.active {
         box-shadow: inset 0 0 0 1px var(--blue-5);
         background: var(--tools-button-active);
@@ -63,6 +76,60 @@
           color: var(--blue-5);
         }
       }
+
+      &[disabled],
+      &.disabled {
+        cursor: not-allowed;
+        &:hover {
+          box-shadow: none;
+        }
+      }
+    }
+
+    &.button-text-icon {
+      width: auto;
+      gap: var(--padding-small);
+      padding: 0 var(--padding-small);
+      text-wrap: nowrap;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-visible-outline) !important;
+    z-index: 2;
+  }
+}
+
+// For office editor headers: dropdowns styled to resemble buttons
+.dropdown-text-icon {
+
+  &.open,
+  &:hover {
+    .display-button {
+      @extend %icon-button-hover;
+      border-radius: 4px;
+    }
+  }
+
+  .display-button {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-small);
+    padding: 0 var(--padding-small);
+    cursor: pointer;
+
+    .Button {
+      width: auto;
+      gap: var(--padding-small);
+    }
+
+    .Icon.arrow {
+      width: 12px;
+      height: 12px;
     }
   }
 }

@@ -93,6 +93,7 @@ const ScaleOverlay = ({
   }, [annotations, selectedTool, scales]);
 
   const totalScales = Object.keys(scales).map((scale) => new Scale(scale));
+  const canModifyMeasurement = annotations.length === 1 ? core.canModify(annotations[0]) : false;
 
   return isCalibration ? (
     <CalibrationOverlay
@@ -114,6 +115,7 @@ const ScaleOverlay = ({
           annotation={annotations.length > 1 ? null : annotations[0] || null}
           selectedTool={selectedTool}
           isOpen
+          canModify={canModifyMeasurement}
         />
       )}
     </>

@@ -7,6 +7,9 @@ import { RAW_AUDIO_RECORDED_PIANO } from './test-audio/recordedPiano';
 export default {
   title: 'Components/AudioPlaybackPopup',
   component: AudioPlaybackPopup,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const initialState = {
@@ -14,7 +17,10 @@ const initialState = {
     disabledElements: {},
     openElements: { audioPlaybackPopup: true },
     customElementOverrides: {}
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 function rootReducer(state = initialState, action) {

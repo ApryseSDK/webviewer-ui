@@ -2,13 +2,11 @@ import React from 'react';
 import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
+import { userEvent, within, waitFor, expect } from '@storybook/test';
 
 export default {
   title: 'Components/LayersPanel',
   component: LayersPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const layers = [
@@ -26,7 +24,7 @@ const layers = [
   }
 ];
 
-export function Basic() {
+export function Basic(args, context) {
   const stateWithLayersPanel = {
     ...initialState,
     viewer: {
@@ -58,6 +56,8 @@ export function Basic() {
         tool: 'AnnotationCreateTextHighlight',
         group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
       },
+      fadePageNavigationComponent: true,
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -72,10 +72,49 @@ export function Basic() {
 
 Basic.parameters = { layout: 'fullscreen' };
 
-export const RightSide = () => {
+
+Basic.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const menuButton = await canvas.queryByRole('button', { name: 'Menu' });
+  expect(menuButton).toBeInTheDocument();
+  await userEvent.click(menuButton);
+
+  await waitFor(() => {
+    const btn = canvas.queryByRole('button', { name: 'Settings' });
+    expect(btn).toBeInTheDocument();
+  });
+  const settingsButton = await canvas.queryByRole('button', { name: 'Settings' });
+  expect(settingsButton).toBeInTheDocument();
+  await userEvent.click(settingsButton);
+
+  await waitFor(() => {
+    const btn = canvas.queryByRole('button', { name: 'Advanced Setting' });
+    expect(btn).toBeInTheDocument();
+  });
+
+  const settingsAdvancedButton = await canvas.queryByRole('button', { name: 'Advanced Setting' });
+  expect(settingsAdvancedButton).toBeInTheDocument();
+  await userEvent.click(settingsAdvancedButton);
+
+  const input = await canvas.queryByRole('checkbox', { name: 'Disable Fade Page Navigation Component' });
+  expect(input).toBeInTheDocument();
+  await userEvent.click(input);
+
+  const closeBtn = await canvas.queryByRole('button', { name: 'Close' });
+  expect(closeBtn).toBeInTheDocument();
+  await userEvent.click(closeBtn);
+
+  const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
+  expect(pageNav).toBeInTheDocument();
+  expect(pageNav).toBeVisible();
+};
+
+export const RightSide = (args, context) => {
   const stateWithLayersPanelOnRight = {
     ...initialState,
     viewer: {
+      fadePageNavigationComponent: true,
       ...initialState.viewer,
       genericPanels: [
         {
@@ -98,6 +137,7 @@ export const RightSide = () => {
         tool: 'AnnotationEdit',
         group: ['groupedLeftPanelItems'],
       },
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -112,7 +152,7 @@ export const RightSide = () => {
 
 RightSide.parameters = { layout: 'fullscreen' };
 
-export const Empty = () => {
+export const Empty = (args, context) => {
   const stateWithEmptyLayersPanel = {
     ...initialState,
     viewer: {
@@ -134,6 +174,8 @@ export const Empty = () => {
         'layersPanel': { disabled: false, priority: 3 },
       },
       activeCustomRibbon: 'toolbarGroup-View',
+      fadePageNavigationComponent: false,
+      activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
@@ -145,3 +187,5 @@ export const Empty = () => {
   };
   return <MockApp initialState={stateWithEmptyLayersPanel} />;
 };
+
+Empty.parameters = { layout: 'fullscreen' };

@@ -195,8 +195,10 @@ const CalibrationPopup = ({ annotation }) => {
 
   return (
     <div className="CalibrationPopup" data-element="calibrationPopup">
+      <label className="calibration-popup-label" id='calibration-popup-label' htmlFor='calibration-popup-value'>{t('option.measurement.scaleModal.units')}</label>
       <div className="input-container">
         <input
+          id='calibration-popup-value'
           className={inputValueClass}
           ref={inputRef}
           type={valueInputType}
@@ -209,10 +211,12 @@ const CalibrationPopup = ({ annotation }) => {
         <Tooltip content={'option.measurement.scaleModal.displayUnits'}>
           <div className="input-field">
             <Dropdown
+              id="calibration-popup-units"
               dataElement="calibrationUnits"
               items={unitToOptions}
               currentSelectionKey={unitTo}
               onClickItem={setUnitTo}
+              labelledById='calibration-popup-label'
             />
           </div>
         </Tooltip>

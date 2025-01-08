@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
 import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import FocusTrap from 'components/FocusTrap';
 import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -12,7 +12,7 @@ import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
-import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox } from 'helpers/device';
+import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
@@ -77,6 +77,7 @@ const ContextMenuPopup = ({
     shallowEqual,
   );
 
+  const [t] = useTranslation();
   const dispatch = useDispatch();
   // this is hacky, hopefully we can remove this when tool group button is restructured
   const store = useStore();
@@ -117,11 +118,16 @@ const ContextMenuPopup = ({
       let offsetTop = 0;
 
       if (window.isApryseWebViewerWebComponent) {
-        const node = getRootNode();
-        if (node) {
-          const host = node.host;
-          offsetLeft = host.offsetLeft;
-          offsetTop = host.offsetTop;
+        const host = getRootNode()?.host;
+        const hostBoundingRect = host?.getBoundingClientRect();
+
+        if (hostBoundingRect) {
+          offsetLeft = hostBoundingRect.left;
+          offsetTop = hostBoundingRect.top;
+
+          // Include host scroll offsets
+          offsetLeft += host.scrollLeft;
+          offsetTop += host.scrollTop;
         }
       }
 
@@ -146,6 +152,40 @@ const ContextMenuPopup = ({
       setPosition({ left, top });
     }
   }, [clickPosition, isMultiViewerMode, activeDocumentViewerKey]);
+
+  const modifierKey = isMac ? '⌘ Command' : 'Ctrl';
+  const modifierKeyShort = isMac ? '⌘Cmd' : 'Ctrl';
+
+  const handlePaste = (withFormatting = true) => {
+    if (!isFirefox) {
+      core.getOfficeEditor().pasteText(withFormatting);
+      return;
+    }
+
+    const title = withFormatting ? t('officeEditor.pastingTitle') : t('officeEditor.pastingWithoutFormatTitle');
+    const message = withFormatting ? t('officeEditor.pastingMessage') : t('officeEditor.pastingWithoutFormatMessage');
+    const keyboardShortcut = withFormatting ? `${modifierKey} + V` : `${modifierKey} + Shift + V`;
+    const confirmBtnText = t('action.close');
+
+    const warning = {
+      message: `${message}:\n\n${keyboardShortcut}`,
+      title,
+      confirmBtnText,
+      onConfirm: () => {
+        // setTimeout needed because the focus can not be set immediately after closing the warning modal
+        setTimeout(() => {
+          core.getViewerElement().focus();
+        });
+      },
+      onCancel: () => {
+        setTimeout(() => {
+          core.getViewerElement().focus();
+        });
+      },
+    };
+    dispatch(actions.showWarningMessage(warning));
+
+  };
 
   if (isDisabled) {
     return null;
@@ -174,7 +214,7 @@ const ContextMenuPopup = ({
                 img="icon-cut"
                 dataElement={DataElements.OFFICE_EDITOR_CUT}
                 onClick={() => core.getOfficeEditor().cutSelectedText()}
-                shortcut="Ctrl+X"
+                shortcut={`${modifierKeyShort}+X`}
                 disabled={!core.getOfficeEditor().isTextSelected()}
               />
               <OfficeActionItem
@@ -182,27 +222,23 @@ const ContextMenuPopup = ({
                 img="icon-copy"
                 dataElement={DataElements.OFFICE_EDITOR_COPY}
                 onClick={() => core.getOfficeEditor().copySelectedText()}
-                shortcut="Ctrl+C"
+                shortcut={`${modifierKeyShort}+C`}
                 disabled={!core.getOfficeEditor().isTextSelected()}
               />
-              {!isFirefox && (
-                <>
-                  <OfficeActionItem
-                    title="action.paste"
-                    img="icon-paste"
-                    dataElement={DataElements.OFFICE_EDITOR_PASTE}
-                    onClick={() => core.getOfficeEditor().pasteText()}
-                    shortcut="Ctrl+V"
-                  />
-                  <OfficeActionItem
-                    title="action.pasteWithoutFormatting"
-                    img="icon-paste-without-formatting"
-                    dataElement={DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING}
-                    onClick={() => core.getOfficeEditor().pasteText(false)}
-                    shortcut="Ctrl+Shift+V"
-                  />
-                </>
-              )}
+              <OfficeActionItem
+                title="action.paste"
+                img="icon-paste"
+                dataElement={DataElements.OFFICE_EDITOR_PASTE}
+                onClick={() => handlePaste()}
+                shortcut={`${modifierKeyShort}+V`}
+              />
+              <OfficeActionItem
+                title="action.pasteWithoutFormatting"
+                img="icon-paste-without-formatting"
+                dataElement={DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING}
+                onClick={() => handlePaste(false)}
+                shortcut={`${modifierKeyShort}+Shift+V`}
+              />
               {!isCursorInTable && (
                 <OfficeActionItem
                   title="action.delete"

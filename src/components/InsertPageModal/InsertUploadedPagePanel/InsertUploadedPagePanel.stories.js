@@ -16,7 +16,10 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({
@@ -36,7 +39,7 @@ const fileLoadingProps = {
   clearLoadedFile: noop,
 };
 
-export const FileLoading = () => (
+const FileLoading = () => (
   <Provider store={store}>
     <div className="Modal InsertPageModal open">
       <InsertUploadedPagePanel {...fileLoadingProps} />
@@ -51,7 +54,7 @@ const mockDocument = {
   cancelLoadThumbnail: noop,
 };
 
-export const FileLoaded = () => {
+const FileLoaded = () => {
   const [selectedThumbnails, setSelectedThumbnails] = useState({});
   const onThumbnailSelected = (pageNumber) => {
     if (selectedThumbnails[pageNumber] === undefined) {
@@ -81,3 +84,10 @@ export const FileLoaded = () => {
     </Provider >
   );
 };
+
+export const FileLoadingDesktop = () => <FileLoading />;
+export const FileLoadedDesktop = () => <FileLoaded />;
+export const FileLoadingMobile = () => <FileLoading />;
+export const FileLoadedMobile = () => <FileLoaded />;
+FileLoadingMobile.parameters = window.storybook?.MobileParameters;
+FileLoadedMobile.parameters = window.storybook?.MobileParameters;

@@ -31,6 +31,9 @@ const FloatingHeaderContainer = React.forwardRef((props, ref) => {
     </FloatSection>
   );
 
+  if (!floatingHeaders.length) {
+    return null;
+  }
   return (
     <div
       className={classNames('FloatingHeaderContainer', placement, { 'vertical': !isHorizontalHeader })}
@@ -83,7 +86,7 @@ function computeFloatContainerStyle(params) {
     styles.transform = `translate(${leftOffset}px, 0px)`;
   }
   if (placement === PLACEMENT.RIGHT) {
-    styles.transform = 'translate(-48px, 0px)';
+    styles.right = `${rightHeaderWidth}px`;
   }
   if (isHorizontalHeader && (panelsWidth || verticalHeaderWidth)) {
     styles.width = `calc(100% - ${panelsWidth + verticalHeaderWidth}px)`;

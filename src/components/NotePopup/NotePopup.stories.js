@@ -1,9 +1,10 @@
 import i18next from 'i18next';
 import React from 'react';
-import NotePopup from './NotePopup';
+import NotePopup, { notePopupFlyoutItems } from './NotePopup';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import Flyout from '../ModularComponents/Flyout';
 
 export default {
   title: 'Components/NotesPanel/NotePopup',
@@ -11,6 +12,7 @@ export default {
 };
 
 function noop() { }
+
 function handleEdit() {
   console.log('Would handle Edit');
 }
@@ -27,20 +29,31 @@ function close() {
   console.log('Would close the popup');
 }
 
-const store = configureStore({ reducer: () => initialState });
+const state = {
+  ...initialState,
+  viewer: {
+    ...initialState.viewer,
+    flyoutMap: {
+      'notePopupFlyout-foo': {
+        dataElement: 'notePopupFlyout-foo',
+        items: notePopupFlyoutItems,
+      }
+    },
+    activeFlyout: 'notePopupFlyout-foo',
+    openElements: {
+      'notePopupFlyout-foo': true,
+    },
+    flyoutToggleElement: 'notePopup-foo',
+    flyoutPosition: { x: 50, y: 150 },
+  }
+};
+
+const store = configureStore({
+  reducer: () => state,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+});
 
 export function Basic() {
-  const [isOpen, setOpen] = React.useState(false);
-  function closePopup() {
-    console.log('Closing the popup');
-    setOpen(false);
-  }
-
-  function openPopup() {
-    console.log('Opening the popup');
-    setOpen(true);
-  }
-
   const annotation = {};
   const style = {
     width: 200,
@@ -52,12 +65,9 @@ export function Basic() {
           annotation={annotation}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
-          closePopup={closePopup}
-          openPopup={openPopup}
-          isOpen={isOpen}
-          isDisable={false}
           isEditable
           isDeletable
+          noteId={'foo'}
         />
       </div>
     </Provider>
@@ -84,9 +94,6 @@ export function DifferentLanguages() {
           <NotePopup
             annotation={annotation}
             handleEdit={noop}
-            closePopup={close}
-            openPopup={open}
-            isDisable={false}
             isEditable
             isDeletable
           />
@@ -95,13 +102,10 @@ export function DifferentLanguages() {
           <NotePopup
             annotation={annotation}
             handleEdit={noop}
-            closePopup={noop}
-            openPopup={noop}
-            isOpen
-            isDisable={false}
             isEditable
             isDeletable
           />
+          <Flyout />
         </div>
       </div>
     </Provider>
@@ -129,9 +133,6 @@ export function DifferentStates() {
           <NotePopup
             annotation={annotation}
             handleEdit={noop}
-            closePopup={close}
-            openPopup={open}
-            isDisable={false}
             isEditable
             isDeletable
           />
@@ -140,13 +141,10 @@ export function DifferentStates() {
           <NotePopup
             annotation={annotation}
             handleEdit={noop}
-            closePopup={noop}
-            openPopup={noop}
-            isOpen
-            isDisable={false}
             isEditable
             isDeletable
           />
+          <Flyout />
         </div>
       </div>
     </Provider>

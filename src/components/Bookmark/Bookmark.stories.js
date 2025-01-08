@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import Bookmark from './Bookmark';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import '../LeftPanel/LeftPanel.scss';
 
 const NOOP = () => { };
@@ -29,13 +30,26 @@ const initialState = {
       '10',
     ],
     currentPage: 3,
+    flyoutMap: {
+      'bookmarkFlyout-outlinePath': {
+        dataElement: 'bookmarkFlyout-outlinePath',
+        items: menuItems,
+      }
+    },
+    activeFlyout: 'bookmarkFlyout-outlinePath',
+    openElements: {
+      'bookmarkFlyout-outlinePath': true,
+    }
   },
   document: {
     bookmarks: {
       0: 'B1',
       1: 'B2',
     }
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 export const Basic = () => {

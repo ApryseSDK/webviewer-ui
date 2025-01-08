@@ -4,24 +4,41 @@ import { useLayoutEffect } from 'react';
 const sizeManager = {};
 export default sizeManager;
 
-export const useSizeStore = (dataElement, size, elementRef, headerDirection) => {
+export const ResizingPromises = {};
+const lastStoredSizes = {};
+
+export const useSizeStore = ({ dataElement, size, elementRef, headerDirection, shouldDelay = false }) => {
+  if (lastStoredSizes[dataElement] !== size) {
+    lastStoredSizes[dataElement] = size;
+    const promiseCapability = {};
+    promiseCapability.promise = new Promise((resolve, reject) => {
+      promiseCapability.resolve = resolve;
+      promiseCapability.reject = reject;
+    });
+    ResizingPromises[dataElement] = promiseCapability;
+  }
   useLayoutEffect(() => {
-    if (elementRef.current) {
-      const isVertical = headerDirection === DIRECTION.COLUMN;
-      const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current, true);
-      if (!sizeManager[dataElement]) {
-        sizeManager[dataElement] = {};
+    const storeWidth = () => {
+      if (elementRef.current) {
+        const isVertical = headerDirection === DIRECTION.COLUMN;
+        const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current, true);
+        if (!sizeManager[dataElement]) {
+          sizeManager[dataElement] = {};
+        }
+        const boundingRect = elementRef.current.getBoundingClientRect();
+        sizeManager[dataElement].sizeToWidth = {
+          ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
+          [size]: boundingRect.width - (isVertical ? 0 : freeSpace),
+        };
+        sizeManager[dataElement].sizeToHeight = {
+          ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
+          [size]: boundingRect.height - (isVertical ? freeSpace : 0)
+        };
+        ResizingPromises[dataElement].resolve();
       }
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: elementRef.current.clientWidth - (isVertical ? 0 : freeSpace),
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: elementRef.current.clientHeight - (isVertical ? freeSpace : 0)
-      };
-    }
-  }, [size, elementRef.current]);
+    };
+    shouldDelay ? setTimeout(storeWidth, 50) : storeWidth();
+  }, [size, elementRef]);
 };
 
 const cssNonNumberValues = ['auto', 'inherit', 'initial', 'unset', 'normal', 'revert', 'revert-layer', 'none'];
@@ -59,7 +76,6 @@ export const getCurrentFreeSpace = (headerDirection, element, isChild = false) =
 
 const SIZE_CHANGE_TYPES = { GROW: 'grow', SHRINK: 'shrink' };
 const lastSizedElementMap = {};
-const elementToPreventLoop = {};
 
 // To be used in the unit tests
 export const resetLastSizedElementMap = () => {
@@ -85,10 +101,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
       }
     }
     if (hasToShrink || hasToGrow) {
-      if (lastSizedElement.getElement() === elementToPreventLoop[parentDataElement]?.getElement()) {
-        elementToPreventLoop[parentDataElement] = null;
-        return null;
-      }
       return () => {
         const newSizeChangeEntry = {
           type: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
@@ -98,7 +110,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
           }
         };
         lastSizedElementMap[parentDataElement] = newSizeChangeEntry;
-        elementToPreventLoop[parentDataElement] = newSizeChangeEntry;
         lastSizedElement.reverse();
       };
     }
@@ -112,10 +123,6 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
     }
     const sizeDifference = getGrowSizeIncrease(sizeManager[itemToGrow.dataElement], parentDataElement, isVertical, items, parentDomElement);
     if (sizeDifference > freeSpace) {
-      return null;
-    }
-    if (elementToPreventLoop[parentDataElement]?.type === SIZE_CHANGE_TYPES.SHRINK && lastSizedElementMap[parentDataElement].getElement() === elementToPreventLoop[parentDataElement]?.getElement()) {
-      elementToPreventLoop[parentDataElement] = null;
       return null;
     }
     return () => {
@@ -165,7 +172,7 @@ const findItemToShrink = (items, groupedItems) => {
   while (searchIndex < items.length) {
     const rawItem = items[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canShrink) {
+    if (item?.canShrink) {
       return rawItem;
     }
     searchIndex++;
@@ -174,7 +181,7 @@ const findItemToShrink = (items, groupedItems) => {
   while (searchIndex < groupedItems.length) {
     const rawItem = groupedItems[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canShrink) {
+    if (item?.canShrink) {
       return rawItem;
     }
     searchIndex++;
@@ -186,7 +193,7 @@ const findItemToGrow = (items, groupedItems) => {
   while (searchIndex >= 0) {
     const rawItem = groupedItems[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canGrow) {
+    if (item?.canGrow) {
       return rawItem;
     }
     searchIndex--;
@@ -195,7 +202,7 @@ const findItemToGrow = (items, groupedItems) => {
   while (searchIndex >= 0) {
     const rawItem = items[searchIndex];
     const item = sizeManager[rawItem.dataElement];
-    if (item && item.canGrow) {
+    if (item?.canGrow) {
       return rawItem;
     }
     searchIndex--;
@@ -209,7 +216,10 @@ const getGrowSizeIncrease = (element, parentDataElement, isVertical, items, pare
       return 0;
     }
     const sizeToGet = isVertical ? 'sizeToHeight' : 'sizeToWidth';
-    const itemToBeAddedIndex = items.length - currentSize;
+    let itemToBeAddedIndex = items.length - currentSize;
+    if (itemToBeAddedIndex < 0) {
+      itemToBeAddedIndex = 0;
+    }
     let itemToBeAdded = items[itemToBeAddedIndex];
     let itemsCount = 1;
     if (itemToBeAdded.type === ITEM_TYPE.DIVIDER) {

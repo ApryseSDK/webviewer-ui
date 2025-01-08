@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useRef } from 'react';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import Icon from 'components/Icon';
 import './Selector.scss';
 
@@ -14,19 +15,37 @@ const propTypes = {
 };
 
 const Selector = ({ className, items = [], selectedItem = '', onItemSelected, placeHolder, selectedItemStyle }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen((prevValue) => !prevValue);
+  };
+
+  const selectorRef = useRef(null);
+
+  useOnClickOutside(selectorRef, () => {
+    setIsOpen(false);
+  });
+
   return (
-    <div className={classNames({
-      customSelector: true,
-      [className]: !!className,
-    })}>
-      <button className="customSelector__selectedItem" style={selectedItemStyle}>
+    <div
+      ref={selectorRef}
+      className={classNames({
+        customSelector: true,
+        [className]: !!className,
+      })}
+    >
+      <button className="customSelector__selectedItem" style={selectedItemStyle} onClick={toggleDropdown}>
         {!selectedItem && placeHolder ? placeHolder : selectedItem}
         <Icon className="down-arrow" glyph={'icon-chevron-down'} />
       </button>
-      <ul>
+      <ul className={classNames({
+        open: isOpen,
+      })}>
         <li>
-          <div style={selectedItemStyle}>{!selectedItem && placeHolder ? placeHolder : selectedItem}</div>
-          <Icon className="up-arrow" glyph={'icon-chevron-up'} />
+          <button className="customSelector__selectedItem" onClick={toggleDropdown}>
+            <div style={selectedItemStyle}>{!selectedItem && placeHolder ? placeHolder : selectedItem}</div>
+            <Icon className="up-arrow" glyph={'icon-chevron-up'} />
+          </button>
         </li>
         {items.map((value, i) => (
           <li key={value + i}>
@@ -35,7 +54,10 @@ const Selector = ({ className, items = [], selectedItem = '', onItemSelected, pl
                 options: true,
                 optionSelected: selectedItem === value,
               })}
-              onMouseDown={() => onItemSelected(value)}
+              onClick={() => {
+                setIsOpen(false);
+                onItemSelected(value);
+              }}
             >
               {value}
             </button>

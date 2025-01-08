@@ -7,7 +7,7 @@ const ViewControlsToggleButton = () => {
       <ToggleElementButton
         dataElement="view-controls-toggle-button"
         className="viewControlsToggleButton"
-        title="component.viewControlsOverlay"
+        title="component.viewControls"
         disabled={false}
         img="icon-header-page-manipulation-line"
         toggleElement="viewControlsFlyout"

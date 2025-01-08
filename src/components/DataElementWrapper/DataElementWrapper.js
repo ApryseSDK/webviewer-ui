@@ -7,7 +7,9 @@ const propTypes = {
   id: PropTypes.string,
   children: PropTypes.node,
   dataElement: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  /** Accessibility */
+  ariaLabel: PropTypes.string,
 };
 
 /*
@@ -27,7 +29,7 @@ function useIsDisabledWithDefaultValue(selector, defaultValue = false) {
   return defaultValue;
 }
 
-const DataElementWrapper = React.forwardRef(({ type = 'div', children, dataElement, ...props }, ref) => {
+const DataElementWrapper = React.forwardRef(({ type = 'div', children, dataElement, ariaLabel, ...props }, ref) => {
   const isDisabled = useIsDisabledWithDefaultValue((state) => selectors.isElementDisabled(state, dataElement));
   if (isDisabled) {
     return null;
@@ -35,11 +37,12 @@ const DataElementWrapper = React.forwardRef(({ type = 'div', children, dataEleme
 
   if (type === 'button') {
     return (
-      <button ref={ref} data-element={dataElement} {...props}>
+      <button ref={ref} data-element={dataElement} aria-label={ariaLabel} {...props}>
         {children}
       </button>
     );
   }
+
   return (
     <div ref={ref} data-element={dataElement} {...props}>
       {children}

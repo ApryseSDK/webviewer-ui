@@ -1,12 +1,11 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { getEmbeddedFileData } from 'helpers/getFileAttachments';
 import { isAndroid, isIOS } from 'helpers/device';
-import fireEvent from 'helpers/fireEvent';
-import Events from 'constants/events';
 import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
-import { setToolbarGroup } from './exposedActions';
+import { setToolbarGroup, openElement } from './exposedActions';
+import { panelNames } from 'constants/panel';
 
 // viewer
 /**
@@ -23,8 +22,8 @@ export const disableElement = (dataElement, priority) => (
   dispatch,
   getState,
 ) => {
-  if (dataElement === 'leftPanel') {
-    dispatch(disableElements(['leftPanel', 'leftPanelButton'], priority));
+  if (dataElement === DataElements.LEFT_PANEL) {
+    dispatch(disableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
       disableElements(['toolStylePopup', 'annotationStylePopup'], priority),
@@ -78,8 +77,8 @@ export const enableElement = (dataElement, priority) => (
   dispatch,
   getState,
 ) => {
-  if (dataElement === 'leftPanel') {
-    dispatch(enableElements(['leftPanel', 'leftPanelButton'], priority));
+  if (dataElement === DataElements.LEFT_PANEL) {
+    dispatch(enableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
       enableElements(['toolStylePopup', 'annotationStylePopup'], priority),
@@ -229,15 +228,48 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
   });
 };
 
-export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getState) => {
-  const currentActivePanel = selectors.getActiveCustomPanel(getState(), wrapperPanel);
+export const setActiveTabInPanel = (tabPanel, wrapperPanel) => (dispatch, getState) => {
+  const currentActivePanel = selectors.getActiveTabInPanel(getState(), wrapperPanel);
   if (currentActivePanel === tabPanel) {
     return;
   }
-  dispath({
-    type: 'SET_ACTIVE_CUSTOM_PANEL',
+  const state = getState();
+  const targetPanel = selectors.getGenericPanels(state).find((panel) => panel.dataElement === wrapperPanel);
+  if (!targetPanel) {
+    console.warn(`TabPanel with dataElement ${wrapperPanel} does not exist.`);
+    return;
+  }
+
+  const containsTab = targetPanel.panelsList.some((panel) => panel.render === tabPanel);
+  if (!containsTab) {
+    console.warn(`Panel with dataElement ${tabPanel} does not exist inside ${wrapperPanel}. The tab panel contains the following panels:\n${targetPanel.panelsList.map((panel) => panel.render).join(',\n')}`);
+    return;
+  }
+
+  dispatch({
+    type: 'SET_ACTIVE_TAB_IN_PANEL',
     payload: { wrapperPanel, tabPanel },
   });
+};
+
+export const openRedactionPanel = () => (dispatch, getState) => {
+  const state = getState();
+  const featureFlags = selectors.getFeatureFlags(state);
+  const { customizableUI } = featureFlags;
+
+  if (customizableUI) {
+    // is the panel inside a tab panel or a standalone panel?
+    const tabPanels = selectors.getGenericPanels(state).filter((panel) => panel.dataElement === panelNames.TABS);
+    const tabPanelWithRedaction = tabPanels.find((panel) => panel.panelsList.some((panel) => panel.render === panelNames.REDACTION));
+    if (tabPanelWithRedaction) {
+      dispatch(setActiveTabInPanel(panelNames.REDACTION, tabPanelWithRedaction.dataElement));
+      dispatch(openElement(tabPanelWithRedaction.dataElement));
+    } else {
+      dispatch(openElement(panelNames.REDACTION));
+    }
+  } else {
+    dispatch(openElement(panelNames.REDACTION));
+  }
 };
 
 export const setSelectedScale = (selectedScale) => ({
@@ -402,6 +434,10 @@ export const setActiveTab = (activeTab) => ({
   type: 'SET_ACTIVE_TAB',
   payload: { activeTab },
 });
+export const setTabNameHandler = (tabNameHandler) => ({
+  type: 'SET_TAB_NAME_HANDLER',
+  payload: { tabNameHandler },
+});
 export const setFonts = (fonts = []) => ({
   type: 'SET_FONTS',
   payload: { fonts },
@@ -528,31 +564,6 @@ export const setBookmarks = (bookmarks) => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
-  dispatch({
-    type: 'ADD_BOOKMARK',
-    payload: { pageIndex, text },
-  });
-
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
-export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
-  dispatch({
-    type: 'EDIT_BOOKMARK',
-    payload: { pageIndex, text },
-  });
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
-export const removeBookmark = (pageIndex) => (dispatch, getState) => {
-  dispatch({
-    type: 'REMOVE_BOOKMARK',
-    payload: { pageIndex },
-  });
-  const bookmarks = selectors.getBookmarks(getState());
-  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
-};
 export const setBookmarkIconShortcutVisibility = (bookmarkIconShortcutVisibility) => ({
   type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
   payload: { bookmarkIconShortcutVisibility },
@@ -695,6 +706,11 @@ export const setContentWorkersAsLoaded = () => ({
   payload: { contentEditWorkersLoaded: true },
 });
 
+export const setIsContentEditingEnabled = (isContentEditingEnabled) => ({
+  type: 'SET_CONTENT_EDITING_ENABLED',
+  payload: { isContentEditingEnabled },
+});
+
 export const setCurrentContentBeingEdited = ({ content, annotation }) => ({
   type: 'SET_CURRENT_CONTENT_BEING_EDITED',
   payload: { content, annotation },
@@ -770,9 +786,19 @@ export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
   payload: { isOfficeEditorMode }
 });
 
+export const setIsOfficeEditorHeaderEnabled = (isOfficeEditorHeaderEnabled) => ({
+  type: 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED',
+  payload: { isOfficeEditorHeaderEnabled }
+});
+
 export const setOfficeEditorEditMode = (editMode) => ({
   type: 'SET_OFFICE_EDITOR_EDIT_MODE',
   payload: { editMode }
+});
+
+export const setIsSheetEditorMode = (isSheetEditorMode) => ({
+  type: 'SET_IS_SHEET_EDITOR_MODE',
+  payload: { isSheetEditorMode }
 });
 
 export const growCustomElement = (dataElement) => (dispatch, getState) => {
@@ -795,4 +821,47 @@ export const setCustomElementSize = (dataElement, size) => ({
 export const setNotesInLeftPanel = (notesInLeftPanel) => ({
   type: 'SET_NOTES_IN_LEFT_PANEL',
   payload: notesInLeftPanel
+});
+
+export const pushFocusedElement = (element) => ({
+  type: 'PUSH_FOCUSED_ELEMENT',
+  payload: element,
+});
+
+export const setFocusedElementsStack = (stack) => ({
+  type: 'SET_FOCUSED_ELEMENTS_STACK',
+  payload: stack,
+});
+
+export const popFocusedElement = () => (dispatch, getState) => {
+  const focusedElementsStack = getState().viewer.focusedElementsStack;
+
+  if (focusedElementsStack.length > 0) {
+    const poppedElement = focusedElementsStack[focusedElementsStack.length - 1];
+    const newStack = focusedElementsStack.slice(0, -1);
+    dispatch(setFocusedElementsStack(newStack));
+    return poppedElement;
+  }
+
+  return null;
+};
+
+export const setKeyboardOpen = (isKeyboardOpen) => ({
+  type: 'SET_KEYBOARD_OPEN',
+  payload: isKeyboardOpen,
+});
+
+export const setCompareAnnotationsMap = (compareAnnotationsMap) => ({
+  type: 'SET_COMPARE_ANNOTATIONS_MAP',
+  payload: compareAnnotationsMap,
+});
+
+export const stashComponents = (UIMode) => ({
+  type: 'STASH_COMPONENTS',
+  payload: { UIMode },
+});
+
+export const restoreComponents = (UIMode) => ({
+  type: 'RESTORE_COMPONENTS',
+  payload: { UIMode },
 });

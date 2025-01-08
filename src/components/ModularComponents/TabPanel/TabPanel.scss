@@ -1,5 +1,15 @@
 @import '../../../constants/styles';
 
+.tabPanelContainer {
+  @include mobile {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // Must equal 30 for the -30 panel offset. 16 in modal wrapper
+    padding-bottom: 14px;
+  }
+}
+
 .TabPanelHeader {
   margin: 0 0 16px 0;
 
@@ -37,17 +47,19 @@
         box-shadow: none;
       }
 
-      &.active {
-        border: 1px solid var(--blue-5);
-        background: var(--popup-button-active);
+      &.active,
+      &:hover.active {
+        border: 1px solid var(--tab-color-selected);
+        background: var(--tab-color-selected) !important;
         z-index: 1;
         box-shadow: none;
+        cursor: default;
 
         .Icon,
         .Icon svg path:not([class="no-fill"]),
         &[aria-label="Layers"] .Icon svg path {
-          color: var(--view-header-icon-active-fill);
-          fill: var(--view-header-icon-active-fill);
+          color: var(--tab-text-color-selected);
+          fill: var(--tab-text-color-selected);
         }
       }
 
@@ -108,6 +120,24 @@
           border-top-left-radius: 0px;
         }
       }
+    }
+  }
+
+  @include mobile {
+    margin: 0px 16px;
+  }
+}
+
+.tabPanelTitleContainer {
+  display: none;
+  @include mobile {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px 16px 8px 16px;
+  
+    .tabPanelCloseButton {
+      align-self: end;
+      z-index: 3;
     }
   }
 }

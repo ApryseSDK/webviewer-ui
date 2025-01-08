@@ -5,11 +5,11 @@
   width: fit-content;
   min-width: 32px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     @extend %icon-button-hover;
   }
 
-  &:active {
+  &:active:not(:disabled) {
     @extend %icon-button-active;
     cursor: default;
 
@@ -17,40 +17,40 @@
       fill: var(--view-header-icon-active-fill)
     }
   }
-}
 
-.confirm-button {
-  background-color: var(--primary-button);
-  border: 1px solid var(--primary-button);
-  color: var(--primary-button-text);
-  padding: 7px 14px;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 5px;
-  height: 30px;
-  cursor: pointer;
+  &.confirm-button {
+    background-color: var(--primary-button);
+    border: 1px solid var(--primary-button);
+    color: var(--primary-button-text);
+    padding: 7px 14px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 5px;
+    height: 30px;
+    cursor: pointer;
 
-  &:hover {
-    background: var(--primary-button-hover) !important;
-    border: 1px solid var(--primary-button-hover) !important;
-    border-radius: 5px !important;
+    &:hover {
+      background: var(--primary-button-hover) !important;
+      border: 1px solid var(--primary-button-hover) !important;
+      border-radius: 5px !important;
+    }
   }
-}
 
-.cancel-button {
-  color: var(--secondary-button-text);
-  background-color: transparent;
-  padding: 7px 14px;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 5px;
-  height: 30px;
-  cursor: pointer;
+  &.cancel-button {
+    color: var(--secondary-button-text);
+    background-color: transparent;
+    padding: 7px 14px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 5px;
+    height: 30px;
+    cursor: pointer;
 
-  &:hover {
-    color: var(--secondary-button-hover);
-    background: transparent;
+    &:hover {
+      color: var(--secondary-button-hover);
+      background: transparent;
+    }
   }
 }

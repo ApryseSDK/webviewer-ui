@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, fireEvent, getByText, getByDisplayValue, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormFieldEditPopup from './FormFieldEditPopup';
@@ -10,7 +10,7 @@ const TestFormFieldEditPopup = withProviders(FormFieldEditPopup);
 
 function noop() { }
 
-const inputFields = [
+export const inputFields = [
   {
     label: 'formField.formFieldPopup.fieldName',
     onChange: noop,
@@ -27,7 +27,7 @@ const inputFields = [
   },
 ];
 
-const selectField = [
+export const selectField = [
   {
     label: 'formField.formFieldPopup.fieldName',
     onChange: noop,
@@ -38,7 +38,7 @@ const selectField = [
   },
 ];
 
-const sampleFlags = [
+export const sampleFlags = [
   {
     label: 'formField.formFieldPopup.readOnly',
     onChange: noop,
@@ -51,9 +51,9 @@ const sampleFlags = [
   },
 ];
 
-const INDICATOR_TEXT = 'This is an indicator';
+export const INDICATOR_TEXT = 'This is an indicator';
 
-const indicator = {
+export const indicator = {
   label: 'formField.formFieldPopup.documentFieldIndicator',
   toggleIndicator: noop,
   isChecked: true,
@@ -61,15 +61,7 @@ const indicator = {
   value: INDICATOR_TEXT,
 };
 
-const emptyIndicator = {
-  label: 'formField.formFieldPopup.documentFieldIndicator',
-  toggleIndicator: noop,
-  isChecked: false,
-  onChange: noop,
-  value: null,
-};
-
-const createMockAnnotation = () => {
+export const createMockAnnotation = () => {
   let width = 100;
   let height = 100;
 
@@ -94,7 +86,11 @@ const createMockAnnotation = () => {
         'trn-form-field-indicator-text': 'Sign Here',
       };
     },
-    getFormFieldPlaceholderType: noop,
+    getField: () => {
+      return {
+        getFieldType: () => 'TextFormField',
+      };
+    },
   };
 };
 
@@ -122,8 +118,7 @@ describe('FormFieldEditPopup', () => {
           indicator={indicator}
         />,
       );
-      // add an extra text input field for indicator text
-      expect(container.querySelectorAll('.ui__input__input')).toHaveLength(inputFields.length + 1);
+      expect(container.querySelectorAll('.text-input')).toHaveLength(inputFields.length);
     });
 
     it('When a select input is passed as a field, it renders correctly as a radio button group select', () => {
@@ -202,7 +197,9 @@ describe('FormFieldEditPopup', () => {
         />,
       );
 
-      expect(container.querySelector('.ui__input--message-warning')).toBeInTheDocument();
+      expect(container.querySelector('.text-input-error')).toBeInTheDocument();
+      const p = document.querySelector('.no-margin');
+      expect(p.getAttribute('aria-live')).toEqual('assertive');
     });
 
     it('Should render select with warning message if passed', () => {
@@ -314,72 +311,6 @@ describe('FormFieldEditPopup', () => {
         const pageHeight = getPageHeight();
         expect(heightInput).toHaveValue(pageHeight);
       });
-
-      it('if entered a height but then I click cancel, it resets to original height', () => {
-        const dummyAnnotation = createMockAnnotation();
-        const initialHeight = dummyAnnotation.Height;
-        const { container } = render(
-          <TestFormFieldEditPopup
-            fields={inputFields}
-            flags={sampleFlags}
-            closeFormFieldEditPopup={noop}
-            isOpen
-            isValid
-            annotation={dummyAnnotation}
-            redrawAnnotation={noop}
-            getPageHeight={getPageHeight}
-            getPageWidth={getPageWidth}
-            indicator={indicator}
-          />,
-        );
-
-        // Enter new height, ensure annotation is updated
-        const heightInput = container.querySelector('#form-field-height');
-        userEvent.clear(heightInput);
-        userEvent.type(heightInput, '150');
-        expect(heightInput).toHaveValue(150);
-        expect(dummyAnnotation.Height).toEqual(150);
-
-        // Now cancel, so height should revert to original values
-        const cancelButton = container.querySelector('.cancel-form-field-button');
-        expect(cancelButton).toBeInTheDocument();
-        fireEvent.click(cancelButton);
-
-        expect(dummyAnnotation.Height).toEqual(initialHeight);
-      });
-
-      it('if entered a width but then I click cancel, it resets to original width', () => {
-        const dummyAnnotation = createMockAnnotation();
-        const initialWidth = dummyAnnotation.Width;
-        const { container } = render(
-          <TestFormFieldEditPopup
-            fields={inputFields}
-            flags={sampleFlags}
-            closeFormFieldEditPopup={noop}
-            isOpen
-            isValid
-            annotation={dummyAnnotation}
-            redrawAnnotation={noop}
-            getPageHeight={getPageHeight}
-            getPageWidth={getPageWidth}
-            indicator={indicator}
-          />,
-        );
-
-        // Now enter a width, ensure annotation is updated
-        const widthInput = container.querySelector('#form-field-width');
-        userEvent.clear(widthInput);
-        userEvent.type(widthInput, '200');
-        expect(widthInput).toHaveValue(200);
-        expect(dummyAnnotation.Width).toEqual(200);
-
-        // Now cancel, so width  should revert to original values
-        const cancelButton = container.querySelector('.cancel-form-field-button');
-        expect(cancelButton).toBeInTheDocument();
-        fireEvent.click(cancelButton);
-
-        expect(dummyAnnotation.Width).toEqual(initialWidth);
-      });
     });
 
     it('opens with correct indicator text', () => {
@@ -401,48 +332,58 @@ describe('FormFieldEditPopup', () => {
       expect(indicatorText).toBeInTheDocument();
     });
 
-    it('if I click cancel and the field name is empty, it should call the cancel callback function', () => {
-      const dummyAnnotation = createMockAnnotation();
-      const mockCancelEmptyFieldName = jest.fn();
-
-      const mockInputFieldWithEmptyName = [
-        {
-          label: 'formField.formFieldPopup.fieldName',
-          onChange: noop,
-          value: '', // This means the name is empty/blank
-          required: true,
-          type: 'text',
-          message: 'formField.formFieldPopup.nameRequired',
-        },
-        {
-          label: 'formField.formFieldPopup.fieldValue',
-          onChange: noop,
-          value: 'fieldValue',
-          type: 'text',
-        },
-      ];
-
-      render(
+    it('should have accessible form field and input elements', () => {
+      const newIndicator = {
+        ...indicator,
+        isChecked: false,
+      };
+      const { container } = render(
         <TestFormFieldEditPopup
-          fields={mockInputFieldWithEmptyName}
+          fields={inputFields}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
           isOpen
-          isValid={false}
-          annotation={dummyAnnotation}
+          isValid
+          annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
           getPageWidth={noop}
-          indicator={indicator}
-          onCancelEmptyFieldName={mockCancelEmptyFieldName}
+          indicator={newIndicator}
         />,
       );
+      const input = container.querySelector('#indicator-input');
+      expect(input.getAttribute('aria-disabled')).toEqual('true');
 
-      const cancelButton = screen.getByText('Cancel');
-      expect(cancelButton).toBeInTheDocument();
-      fireEvent.click(cancelButton);
+      const checkbox = container.querySelector('#field-indicator');
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox.getAttribute('aria-checked')).toEqual('false');
+    });
 
-      expect(mockCancelEmptyFieldName).toHaveBeenCalled();
+    it('should have accessible for flag group', () => {
+      const newIndicator = {
+        ...indicator,
+        isChecked: false,
+      };
+      render(
+        <TestFormFieldEditPopup
+          fields={inputFields}
+          flags={sampleFlags}
+          closeFormFieldEditPopup={noop}
+          isOpen
+          isValid
+          annotation={createMockAnnotation()}
+          redrawAnnotation={noop}
+          getPageHeight={noop}
+          getPageWidth={noop}
+          indicator={newIndicator}
+        />,
+      );
+      const titleElement = screen.getByRole('heading', { name: 'Field Flags' });
+      expect(titleElement).toHaveClass('field-flags-title');
+      expect(titleElement).toHaveAttribute('id', 'field-flags-group');
+      expect(titleElement.tagName).toBe('H2');
+
+      screen.getByRole('group', { name: 'Field Flags' });
     });
   });
 });

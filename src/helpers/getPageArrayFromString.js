@@ -21,10 +21,10 @@ export default (customInput, pageLabels, totalPages = core.getTotalPages(), onEr
     const isRangeOfPages = range.length === 2;
 
     if (isSinglePage) {
-      const page = getPageNumber(range[0], pageLabels, onError);
+      const page = getPageNumber(range[0], pageLabels, totalPages, onError);
       pagesToPrint.push(page);
     } else if (isRangeOfPages) {
-      addRangeOfPagesTo(pagesToPrint, range, pageLabels, onError);
+      addRangeOfPagesTo(pagesToPrint, range, pageLabels, totalPages, onError);
     }
   });
 
@@ -37,15 +37,15 @@ export default (customInput, pageLabels, totalPages = core.getTotalPages(), onEr
     .sort((a, b) => a - b);
 };
 
-const addRangeOfPagesTo = (pagesToPrint, range, pageLabels, onError) => {
-  const start = getPageNumber(range[0], pageLabels, onError);
+const addRangeOfPagesTo = (pagesToPrint, range, pageLabels, totalPages, onError) => {
+  const start = getPageNumber(range[0], pageLabels, totalPages, onError);
   let end;
 
   if (range[1] === '') {
     // range like 4- means page 4 to the end of the document
     end = core.getTotalPages();
   } else {
-    end = getPageNumber(range[1], pageLabels, onError);
+    end = getPageNumber(range[1], pageLabels, totalPages, onError);
   }
 
   for (let i = start; i <= end; i++) {
@@ -53,9 +53,14 @@ const addRangeOfPagesTo = (pagesToPrint, range, pageLabels, onError) => {
   }
 };
 
-const getPageNumber = (character, pageLabels, onError) => {
-  const pageIndex = pageLabels.indexOf(character);
+const getPageNumber = (character, pageLabels, totalPages, onError) => {
+  const pageIndex = pageLabels?.indexOf(character);
+
   let pageNumber;
+
+  if (pageIndex === -1 && !isNaN(character) && +character > 0 && +character <= totalPages) {
+    return +character;
+  }
 
   if (pageIndex === -1) {
     onError && onError(character);

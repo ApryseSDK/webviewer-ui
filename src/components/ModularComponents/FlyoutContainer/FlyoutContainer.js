@@ -11,9 +11,9 @@ const FlyoutContainer = () => {
   ]);
 
   return (
-    <div className="FlyoutContainer">
+    <>
       {activeFlyout && flyoutMap[activeFlyout] && <Flyout/>}
-    </div>
+    </>
   );
 };
 

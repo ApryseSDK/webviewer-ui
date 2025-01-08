@@ -7,7 +7,7 @@ import Feature from 'constants/feature';
 import actions from 'actions';
 import selectors from 'selectors';
 
-const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
+const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
 
 export default (store) => {
   const { dispatch, getState } = store;

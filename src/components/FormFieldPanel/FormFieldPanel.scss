@@ -1,0 +1,422 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.FormFieldPanel {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  overflow: auto;
+  background-color: var(--panel-background);
+  gap: 16px;
+
+  @include mobile {
+    padding: var(--padding);
+    padding-top: 0;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 28px;
+
+      .close-icon-container {
+        @include button-reset;
+        z-index: 3;
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    .form-field-content-container {
+      padding: var(--padding-medium);
+      padding-top: 0;  
+    }
+  }
+
+  input {
+    height: 32px;
+    border-color: var(--gray-6);
+  }
+
+  .ui__input {
+    border-color: var(--gray-6);
+
+    &.ui__input--focused {
+      box-shadow: none;
+      border-color: var(--blue-5);
+    }
+  }
+
+  .ui__input__input {
+    height: 32px;
+  }
+
+  .form-field-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-grow: 1;
+    padding: var(--padding-medium);
+
+    .field-title {
+      display: flex;
+      height: 32px;
+      align-items: center;
+      gap: 16px;
+      align-self: stretch;
+      color: #343A40;
+  
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+
+     .signature-options-container {
+      display: grid;
+      grid-template-rows: auto auto;
+      grid-template-areas: 
+        "label"
+        "dropdown";
+      row-gap: 8px;
+    
+      label {
+        grid-area: label;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+
+
+      [class*="css"][class*="-container"] {
+        height: 32px;
+        [class*="-control"] {
+          border-color: var(--gray-6);
+  
+          [class*="-ValueContainer"] {
+            padding-top: 0px;
+            padding-bottom: 0px;
+          }
+  
+          [class*="-IndicatorsContainer"] {
+            height: 32px
+          }
+        }
+      }
+      
+      [class*="css"][class*="-menu"] {
+        [class*="-option"] {
+          &:hover {
+            background-color: var(--blue-5);
+            color: var(--gray-0);
+          }
+
+          &:active {
+            background-color: var(--blue-6);
+            color: var(--gray-0);
+          }
+        }
+      }
+    }
+
+    .arrow {
+      width: 12px;
+      height: 16px;
+      margin-top: 2px;
+    }
+
+    .form-field-panel-header {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  
+    .fields-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  
+    .radio-group-label {
+      grid-area: group-message;
+      font-size: 10px;
+      width: 240px;
+      line-height: 12px;
+      color: var(--gray-7);
+    }
+
+    .field-input {
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .field-text-input {
+        cursor: default;
+        width: 100%;
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "label"
+          "input";
+        row-gap: 8px;
+      }
+
+      [class*="css"][class*="-container"] {
+        [class*="-control"] {
+          border-color: var(--gray-6);
+  
+          [class*="-ValueContainer"] {
+            padding-top: 0px;
+            padding-bottom: 0px;
+          }
+  
+          [class*="-IndicatorsContainer"] {
+            height: 32px
+          }
+        }
+      }
+
+      [class*="css"][class*="-menu"] {
+        [class*="-option"] {
+          &:hover {
+            background-color: var(--blue-5);
+            color: var(--gray-0);
+          }
+
+          &:active {
+            background-color: var(--blue-6);
+            color: var(--gray-0);
+          }
+        }
+      }
+  
+      .field-select-input {
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "label"
+          "dropdown"
+          "group-message";
+        row-gap: 8px;
+
+        input {
+          height: 24px;
+        }
+
+        [class*="css"][class*="-container"] {
+          height: 32px;
+          [class*="-control"] {
+            box-sizing: content-box;
+            border-color: var(--gray-6);
+            height: 100%;
+            [class*="-ValueContainer"] {
+              padding-top: 0px;
+              padding-bottom: 0px;
+              height: 100%;
+              overflow: visible;
+            }
+    
+            [class*="-IndicatorsContainer"] {
+              height: 32px
+            }
+          }
+        }
+      }
+     
+  
+      label {
+        padding-right: 10px;
+        grid-area: label;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+    }
+
+    .divider-container {
+      margin-left: -4px;
+      margin-right: -4px;
+      padding: 0px;
+    }
+  
+    .ui__choice__input__check {
+      width: 16px;
+      height: 16px;
+    }
+  
+  }
+
+  .properties-container {
+    display: flex;
+    flex-direction: column;
+
+    .form-field-checkbox {
+      height: 32px;
+    }
+  }
+
+  .property-title {
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+
+  .form-buttons-container {
+    border-top: 1.5px solid var(--gray-4);
+    padding-top: var(--padding-medium);
+    padding-bottom: var(--padding-medium);
+    padding-right: var(--padding);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .ok-form-field-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-button);
+    border: 1px solid var(--primary-button);
+    color: var(--primary-button-text);
+    padding: 8px 16px;
+    width: fit-content;
+    border-radius: 4px;
+    height: 32px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--primary-button-hover);
+      border: 1px solid var(--primary-button-hover);
+    }
+  }
+
+  .form-field-indicator-container {
+    .field-indicator {
+      padding-left: calc(var(--padding-small) + 16px);
+      margin-bottom: 5px;
+    }
+  }
+
+  .form-dimension {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  
+    .form-dimension-title {
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+    }
+  
+    .form-dimension-input-container {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+  
+      .form-dimension-input {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        gap: 8px;
+  
+        span {
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 15.6px;
+        }
+  
+        input {
+          width: 100%;
+          box-sizing: border-box;
+          border-color: var(--gray-6);
+  
+          /* Remove spin buttons */
+          /* Chrome, Safari, Edge, Opera */
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+  
+          /* Firefox */
+          [type="number"] {
+            -moz-appearance: textfield;
+          }
+
+          &:focus {
+            border: 1px solid var(--blue-5);
+          }
+        }
+      }
+    }
+  }  
+
+  .field-options-container {
+    width: 100%;
+  
+    .option-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px; 
+    }
+  
+    .creatable-list {
+      margin-top: 8px;
+      gap: 8px;
+    }
+  
+    input {
+      flex: 1;
+      margin-right: 8px;
+
+      &:focus {
+        border: 1px solid var(--blue-5);
+      }
+    }
+  
+    .Button.add-item-button {
+      width: 90px;
+      margin-left: 0;
+      justify-content: flex-start;
+
+     &.custom-ui {
+        color: var(--blue-5);
+        &:hover {
+          color: var(--blue-6);
+          .Icon {
+            svg {
+              line {
+                stroke: var(--blue-6);
+              }
+            }
+          }
+        }
+        .Icon {
+          svg {
+            line {
+              stroke: var(--blue-5);
+            }
+          }
+        }
+      }
+  
+      @include mobile {
+        width: 110px;
+      }
+    }
+  }
+}
+
+
+

@@ -46,6 +46,13 @@ describe('RedactionItem', () => {
         render(<FullPageRedactionItem />);
       }).not.toThrow();
     });
+
+    it('Text Redaction item delete button should have a valid Aria Label', () => {
+      render(<TextRedactionItem />);
+
+      const element = screen.getByRole('button', { name: /Delete/ });
+      expect(element).toHaveAttribute('aria-label');
+    });
   });
 
   describe('component', () => {
@@ -151,7 +158,7 @@ describe('RedactionItem', () => {
       };
 
       render(<RedactionItemWithRedux {...regionRedactionItemProps} />);
-      const redactionItem = screen.getByText('Region redaction');
+      const redactionItem = screen.getByRole('button', { name: /Select/ });
       userEvent.click(redactionItem);
       expect(mockOnRedactionItemSelection).toHaveBeenCalled();
     });
@@ -173,7 +180,7 @@ describe('RedactionItem', () => {
       };
 
       render(<RedactionItemWithRedux {...regionRedactionItemProps} />);
-      const deleteButton = screen.getByRole('button');
+      const deleteButton = screen.getByRole('button', { name: /Delete/ });
       userEvent.click(deleteButton);
       expect(mockOnRedactionItemDelete).toHaveBeenCalled();
     });

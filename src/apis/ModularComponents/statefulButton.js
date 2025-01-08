@@ -10,7 +10,7 @@ const { checkTypes, TYPES } = window.Core;
  * @class UI.Components.StatefulButton
  * @extends UI.Components.Item
  * @param {Object} properties An object that contains the properties of the StatefulButton.
- * @param {Object} [properties.states] An object that contains the states of the button.
+ * @param {Object.<string, Object.<'img' | 'title' | 'onClick', string | function>>} [properties.states] An object that contains the states of the button.
  * @param {string} [properties.initialState] The initial state of the button.
  * @param {function} [properties.mount] The function that is called when the button is mounted.
  * @param {function} [properties.unmount] The function that is called when the button is unmounted.
@@ -43,7 +43,7 @@ class StatefulButton extends Item {
   constructor(props) {
     checkTypes([props], [TYPES.OBJECT({
       initialState: TYPES.STRING,
-      mount: TYPES.FUNCTION,
+      mount: TYPES.OPTIONAL(TYPES.FUNCTION),
       states: TYPES.OBJECT({}),
       dataElement: TYPES.OPTIONAL(TYPES.STRING),
       unmount: TYPES.OPTIONAL(TYPES.FUNCTION),
@@ -57,7 +57,7 @@ class StatefulButton extends Item {
     this.initialState = initialState;
     this.mount = mount;
     this.unmount = unmount;
-    this._dataElement = dataElement;
+    this.dataElement = dataElement;
     this.title = title;
     this.hidden = hidden;
     this.states = states;

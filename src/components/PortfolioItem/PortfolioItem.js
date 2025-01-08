@@ -1,54 +1,34 @@
-import React, { forwardRef, useCallback, useContext, useImperativeHandle, useRef, useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
+import { ItemTypes, DropLocation } from 'constants/dnd';
 
-import Button from 'components/Button';
-import DataElementWrapper from 'components/DataElementWrapper';
-import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
 import PortfolioItemContent from 'components/PortfolioItemContent';
-import { hasChildren } from 'helpers/portfolio';
 
 import './PortfolioItem.scss';
 
 const propTypes = {
   portfolioItem: PropTypes.object.isRequired,
-  movePortfolioInward: PropTypes.func,
-  movePortfolioBeforeTarget: PropTypes.func,
-  movePortfolioAfterTarget: PropTypes.func,
   connectDragSource: PropTypes.func,
   connectDragPreview: PropTypes.func,
   connectDropTarget: PropTypes.func,
   isDragging: PropTypes.bool,
   isDraggedUpwards: PropTypes.bool,
   isDraggedDownwards: PropTypes.bool,
+  movePortfolio: PropTypes.func,
 };
 
 const PortfolioItem = forwardRef(({
   portfolioItem,
-  movePortfolioInward,
-  movePortfolioBeforeTarget,
-  movePortfolioAfterTarget,
   connectDragSource,
   connectDragPreview,
   connectDropTarget,
   isDragging,
   isDraggedUpwards,
   isDraggedDownwards,
+  movePortfolio
 }, ref) => {
-  const {
-    setActivePortfolioItem,
-    isPortfolioItemActive,
-    isAddingNewFolder,
-    setAddingNewFolder,
-    openPortfolioItem,
-  } = useContext(PortfolioContext);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isRenaming, setIsRenaming] = useState(false);
-  const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
-  const isActive = isPortfolioItemActive(portfolioItem);
 
   const elementRef = useRef(null);
   connectDragSource(elementRef);
@@ -58,84 +38,22 @@ const PortfolioItem = forwardRef(({
   useImperativeHandle(ref, () => ({
     getNode: () => elementRef.current,
   }));
-
-  const togglePortfolioItem = useCallback(() => {
-    setIsExpanded((expand) => !expand);
-  }, []);
-
-  const onDoubleClick = useCallback(() => {
-    // If the item is in renaming-mode, double-clicking on it won't do anything
-    if (isRenaming) {
-      return;
-    }
-
-    openPortfolioItem(portfolioItem);
-    setActivePortfolioItem(portfolioItem.id);
-
-    // If the panel is in add-folder-mode, reset it when double-clicking on other items
-    if (isAddingNewFolder) {
-      setAddingNewFolder(false);
-    }
-  }, [isRenaming, portfolioItem, openPortfolioItem, setActivePortfolioItem, isAddingNewFolder, setAddingNewFolder]);
+  const [isRenaming, setIsRenaming] = useState(false);
 
   return (
     <div
-      ref={(!isAddingNewFolder) ? elementRef : null}
+      ref={elementRef}
       className="outline-drag-container"
       style={{ opacity }}
     >
       <div className="outline-drag-line" style={{ opacity: isDraggedUpwards ? 1 : 0 }} />
-      <DataElementWrapper
-        className={classNames({
-          'bookmark-outline-single-container': true,
-          'editing': isRenaming,
-          'default': !isRenaming,
-          'selected': isActive,
-          'hover': isHovered && !isActive,
-        })}
-        tabIndex={0}
-        onDoubleClick={onDoubleClick}
-      >
-        <div
-          className={classNames({
-            'outline-treeview-toggle': true,
-            expanded: isExpanded,
-          })}
-          style={{ marginLeft: portfolioItem.getNestedLevel() * 12 }}
-        >
-          {hasChildren(portfolioItem) &&
-            <Button
-              img="icon-chevron-right"
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePortfolioItem();
-              }}
-            />
-          }
-        </div>
-
-        <PortfolioItemContent
-          portfolioItem={portfolioItem}
-          isPortfolioRenaming={isRenaming}
-          setPortfolioRenaming={setIsRenaming}
-          setIsHovered={setHovered}
-        />
-      </DataElementWrapper>
-
+      <PortfolioItemContent
+        movePortfolio={movePortfolio}
+        portfolioItem={portfolioItem}
+        isPortfolioRenaming={isRenaming}
+        setPortfolioRenaming={setIsRenaming}
+      />
       <div className="outline-drag-line" style={{ opacity: isDraggedDownwards ? 1 : 0 }} />
-
-      {isExpanded &&
-        portfolioItem?.children.map((child) => (
-          <PortfolioItemNested
-            portfolioItem={child}
-            key={child.id}
-            movePortfolioInward={movePortfolioInward}
-            movePortfolioBeforeTarget={movePortfolioBeforeTarget}
-            movePortfolioAfterTarget={movePortfolioAfterTarget}
-          />
-        ))
-      }
     </div>
   );
 });
@@ -185,17 +103,6 @@ const PortfolioItemNested = DropTarget(
       const clientOffset = dropTargetMonitor.getClientOffset();
       const dropTargetClientY = clientOffset.y;
       switch (true) {
-        case dropPortfolioItem.isFolder && dropTargetClientY <= dropTargetVerticalMiddlePoint + BUFFER_ROOM && dropTargetClientY >= dropTargetVerticalMiddlePoint - BUFFER_ROOM:
-          dragObject.dropLocation = DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT;
-          if (dropTargetMonitor.isOver({ shallow: true })) {
-            dropTargetNode.classList.add('isNesting');
-          }
-          setTimeout(() => {
-            if (dragObject?.dropTargetNode !== dropTargetNode) {
-              dropTargetNode.classList.remove('isNesting');
-            }
-          }, 100);
-          break;
         case dropTargetClientY > dropTargetVerticalMiddlePoint:
           dragObject.dropLocation = DropLocation.BELOW_TARGET;
           dropTargetNode.classList.remove('isNesting');

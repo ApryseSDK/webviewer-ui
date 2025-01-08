@@ -65,7 +65,7 @@
             font-size: 10px;
 
             @include mobile {
-              font-size: 12px;
+              font-size: 10px;
             }
 
             color: var(--faded-text);
@@ -82,7 +82,6 @@
             }
 
             .num-replies {
-              opacity: 0.8;
               font-size: 10px;
               color: var(--gray-7);
 
@@ -99,9 +98,11 @@
         flex: 1;
         justify-content: flex-end;
 
+        > * {
+          pointer-events: auto;
+        }
+
         .tracked-change-icon-wrapper {
-          cursor: pointer;
-          border-radius: 4px;
 
           .tracked-change-icon {
             margin: 2px;
@@ -119,12 +120,34 @@
             }
           }
         }
+
+        .ToggleElementButton button {
+          width: 28px;
+          height: 28px;
+          margin: 0 8px 0 13px;
+
+          .Icon {
+            width: 20px;
+            height: 20px;
+          }
+        }
       }
     }
   }
 
   .author-name {
     font-weight: bold;
+  }
+
+  .note-popup-toggle-trigger {
+    padding: 0px;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    min-width: 28px !important;
+    .Icon {
+      width: 24px !important;
+      height: 24px !important;
+    }
   }
 }
 

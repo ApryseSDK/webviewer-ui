@@ -9,7 +9,7 @@ import { defaultStrokeStyles, cloudyStrokeStyle } from 'constants/strokeStyleIco
 const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
 function StyleOption(props) {
-  const lineEndingDropdownWidth = 60;
+  const lineEndingDropdownWidth = 80;
   const { onLineStyleChange, properties, isEllipse } = props;
   if (!properties || !properties.hasOwnProperty('StrokeStyle')) {
     // if there is no StrokeStyle property, there is no point rendering <Dropdown>
@@ -29,7 +29,7 @@ function StyleOption(props) {
         <label className="styles-title" htmlFor="styleOptions">{t('option.styleOption.style')}</label>
         <Dropdown
           dataElement="borderStylePicker"
-          images={ (isEllipse) ? defaultStrokeStyles : withCloudyStyle }
+          images={(isEllipse) ? defaultStrokeStyles : withCloudyStyle}
           width={lineEndingDropdownWidth}
           onClickItem={onClickMiddleLineStyle}
           currentSelectionKey={selectedMiddleLineStyle}

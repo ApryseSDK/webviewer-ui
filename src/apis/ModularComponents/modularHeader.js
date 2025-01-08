@@ -6,6 +6,7 @@ const { checkTypes, TYPES } = window.Core;
 
 /**
    * @typedef {Object} ContainerProperties
+   * @memberof UI.Components
    * @property {string} [label] The label of the container.
    * @property {string} [dataElement] The data element of the container.
    * @property {'top' | 'bottom' | 'left' | 'right'} [placement] A string that determines the placement of the header.
@@ -208,7 +209,7 @@ export class ModularHeader {
     }
 
     return style;
-  }
+  };
 
   getDimensionTotal() {
     const { paddingTop, paddingBottom, borderWidth } = this.dimension;
@@ -245,8 +246,9 @@ export class ModularHeader {
   }
 
   /**
-   * @typedef {('modularHeader' | 'customButton' | 'statefulButton' | 'groupedItems' | 'ribbonItem' | 'divider' | 'toggleButton' | 'ribbonGroup' | 'toolButton' | 'zoom' | 'flyout' | 'pageControls' | 'presetButton' | 'viewControls' | 'menu' | 'tabPanel')} ItemType
    * Description of allowable item types.
+   * @typedef {('modularHeader' | 'customButton' | 'statefulButton' | 'groupedItems' | 'ribbonItem' | 'divider' | 'toggleButton' | 'ribbonGroup' | 'toolButton' | 'zoom' | 'flyout' | 'pageControls' | 'presetButton' | 'viewControls' | 'menu' | 'tabPanel')} ItemType
+   * @memberof UI.Components
    */
 
   /**

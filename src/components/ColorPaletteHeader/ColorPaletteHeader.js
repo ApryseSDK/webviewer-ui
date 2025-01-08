@@ -22,13 +22,13 @@ class ColorPaletteHeader extends React.PureComponent {
     isTextColorPaletteDisabled: PropTypes.bool,
     isFillColorPaletteDisabled: PropTypes.bool,
     isBorderColorPaletteDisabled: PropTypes.bool,
-  }
+  };
 
   setActivePalette = (newPalette) => {
     const { setActivePalette, colorMapKey } = this.props;
 
     setActivePalette(colorMapKey, newPalette);
-  }
+  };
 
   render() {
     const {

@@ -10,7 +10,7 @@ export function Basic() {
   const props = {
     label: 'label',
     initialValue: 3.22,
-    onChange: () => {},
+    onChange: () => { },
     unit: 'cm',
     maxLength: 5,
     disabled: false

@@ -1,5 +1,5 @@
 <svg width="60" height="74" viewBox="0 0 60 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+<rect class="office-editor-list-style-item-border" x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
 <line x1="18" y1="11.3428" x2="52" y2="11.3428" stroke="#868E96" stroke-width="2"/>
 <line x1="18" y1="60.7139" x2="52" y2="60.7139" stroke="#868E96" stroke-width="2"/>
 <line x1="28" y1="23.6855" x2="52" y2="23.6855" stroke="#868E96" stroke-width="2"/>

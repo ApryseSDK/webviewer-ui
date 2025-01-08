@@ -1,23 +1,24 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import Button from 'components/Button';
+import ModalWrapper from 'components/ModalWrapper';
 
 import {
   renderPermissionStatus,
   Spinner,
 } from 'components/SignaturePanel';
 import SignatureIcon from 'components/SignaturePanel/SignatureIcon';
-import useOnClickOutside from 'hooks/useOnClickOutside';
 
 import actions from 'actions';
 
 import './SignatureValidationModal.scss';
+import useFocusOnClose from 'src/hooks/useFocusOnClose';
 
 const SignatureValidationModal = () => {
-  const containerRef = useRef();
   const [translate] = useTranslation();
 
   const [isOpen, verificationResult] = useSelector(
@@ -32,12 +33,9 @@ const SignatureValidationModal = () => {
   );
 
   const dispatch = useDispatch();
-
-  const closeModal = () => {
+  const closeModal = useFocusOnClose(() => {
     dispatch(actions.closeElements([DataElements.SIGNATURE_VALIDATION_MODAL]));
-  };
-
-  useOnClickOutside(containerRef, closeModal);
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -104,7 +102,7 @@ const SignatureValidationModal = () => {
   } = VerificationResult;
   const { TimeMode } = VerificationOptions;
 
-  const renderHeader = () => {
+  const renderSignatureSummary = () => {
     let status;
     switch (badgeIcon) {
       case 'digital_signature_valid':
@@ -120,21 +118,14 @@ const SignatureValidationModal = () => {
         status = translate('digitalSignatureModal.unknown');
     }
 
-    const typeCapitalized = isCertification
-      ? translate('digitalSignatureModal.Certification')
-      : translate('digitalSignatureModal.Signature');
-
     const type = isCertification
       ? translate('digitalSignatureModal.certification')
       : translate('digitalSignatureModal.signature');
 
     return (
       <div>
-        <div className="validation-header">
-          {translate('digitalSignatureModal.title', { type: typeCapitalized })}
-        </div>
         <div className="summary-box">
-          <SignatureIcon badge={badgeIcon} size="medium"/>
+          <SignatureIcon badge={badgeIcon} size="medium" />
           <div>
             {
               translate(
@@ -159,6 +150,14 @@ const SignatureValidationModal = () => {
         </div>
       </div>
     );
+  };
+
+  const renderHeaderTitle = () => {
+    const typeCapitalized = isCertification
+      ? translate('digitalSignatureModal.Certification')
+      : translate('digitalSignatureModal.Signature');
+
+    return translate('digitalSignatureModal.title', { type: typeCapitalized });
   };
 
   /**
@@ -469,12 +468,11 @@ const SignatureValidationModal = () => {
           </div>
         </div>
         <div className="modal-footer">
-          <button
+          <Button
             className="close-modal-button"
             onClick={closeModal}
-          >
-            OK
-          </button>
+            label={translate('action.close')}
+          />
         </div>
       </>
     );
@@ -490,10 +488,18 @@ const SignatureValidationModal = () => {
       })}
       data-element={DataElements.SIGNATURE_VALIDATION_MODAL}
     >
-      <div className="container" ref={containerRef}>
-        {renderHeader()}
-        {renderModalBody()}
-      </div>
+      <ModalWrapper
+        title={renderHeaderTitle()}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        isOpen={isOpen}
+        swipeToClose
+      >
+        <div className="container">
+          {renderSignatureSummary()}
+          {renderModalBody()}
+        </div>
+      </ModalWrapper>
     </div>
   );
 };

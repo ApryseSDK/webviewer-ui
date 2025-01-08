@@ -137,8 +137,6 @@ class ToolsOverlay extends React.PureComponent {
       'stampTools',
       'cropTools',
       'fileAttachmentTools',
-      'radioButtonFieldTools',
-      'checkBoxFieldTools',
       'contentEditTools',
       'addParagraphTools',
       'calibrationTools',

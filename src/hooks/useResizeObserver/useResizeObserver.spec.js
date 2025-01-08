@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import useResizeObserver from './useResizeObserver';
 
@@ -11,11 +11,11 @@ global.ResizeObserver = class ResizeObserver {
   observe() {
     this.callback([{ borderBoxSize: [{ inlineSize: 100, blockSize: 200 }] }]);
   }
-  unobserve() { }
+  disconnect() { }
 };
 
 describe('useResizeObserver', () => {
-  it('returns correct dimensions after observing', () => {
+  it('returns correct dimensions after observing', async () => {
     let dimensions;
     function DummyComponent() {
       const [ref, size] = useResizeObserver();
@@ -27,6 +27,8 @@ describe('useResizeObserver', () => {
       render(<DummyComponent />);
     });
 
-    expect(dimensions).toEqual({ width: 100, height: 200 });
+    await waitFor(() => {
+      expect(dimensions).toEqual({ width: 100, height: 200 });
+    });
   });
 });

@@ -16,6 +16,13 @@ export default (annotation, popup) => {
   const scrollContainer = core.getScrollViewElement();
   const padding = 2 * parseFloat(annotation.StrokeThickness) * core.getZoom();
   const cBox = editorContainer.getBoundingClientRect();
+  let shadowTop = 0;
+  let shadowLeft = 0;
+  if (window.isApryseWebViewerWebComponent) {
+    const shadowRect = getRootNode().host?.getBoundingClientRect();
+    shadowTop = shadowRect.top;
+    shadowLeft = shadowRect.left;
+  }
   const cInfo = {
     topLeft: {
       x: cBox.left + scrollContainer.scrollLeft - padding,
@@ -28,7 +35,7 @@ export default (annotation, popup) => {
   };
   const pBox = popup.current.getBoundingClientRect();
   return {
-    left: calcPopupLeft(cInfo, pBox),
-    top: calcPopupTop(cInfo, pBox)
+    left: calcPopupLeft(cInfo, pBox) - shadowLeft,
+    top: calcPopupTop(cInfo, pBox) - shadowTop,
   };
 };

@@ -7,9 +7,6 @@ import SignaturePanelComponent from './SignaturePanel';
 export default {
   title: 'ModularComponents/SignaturePanel',
   component: SignaturePanelComponent,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {

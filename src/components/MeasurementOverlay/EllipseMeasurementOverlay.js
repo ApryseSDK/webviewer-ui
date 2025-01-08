@@ -54,16 +54,17 @@ const propTypes = {
     return null;
   },
   isOpen: PropTypes.bool.isRequired,
+  canModify: PropTypes.bool,
 };
 
-function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool }) {
+function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool, canModify }) {
   const { t } = useTranslation();
 
   const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
   const area = annotation?.getMeasurementTextWithScaleAndUnits?.() || 0;
   const data = {
     precision: !annotation ? selectedTool?.defaults?.Precision : annotation.Precision,
-    unit: getFormattedUnit((annotation?.Scale || selectedTool?.defaults?.Scale)[1][1]),
+    unit: getFormattedUnit((annotation?.Scale || selectedTool?.defaults?.Scale)?.[1][1]),
     area,
   };
 
@@ -218,40 +219,38 @@ function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool }) {
     <div className="measurement__detail-container">
       <div className="measurement__detail-item">
         <div className="measurement_list">{t('option.shared.precision')}:</div>
-        {precisionFractions[data.precision] || data.precision}
+        <div className='measurement'>
+          {precisionFractions[data.precision] || data.precision}
+        </div>
       </div>
       <div className="measurement__detail-item">
         <div className="measurement_list">{t('option.measurementOverlay.area')}:</div>
-        <div className="distance-show">{data.area}</div>
+        <div className='measurement'>
+          {data.area}
+        </div>
       </div>
       <div className="measurement__detail-item">
         <div className="measurement_list">{t('option.measurementOverlay.radius')}:</div>
-        {annotation ? (
-          <>
-            <input
-              autoFocus={!isMobileDevice}
-              className="scale-input"
-              type="number"
-              min="0"
-              disabled={isReadOnly}
-              value={radius}
-              onChange={(event) => {
-                onChangeRadiusLength(event);
-                selectAnnotation();
-              }}
-              onBlur={(event) => validateDiameter(event)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  onChangeRadiusLength(event);
-                  deselectAnnot();
-                }
-              }}
-            />
-            {data.unit}
-          </>
-        ) : (
-          <div>0</div>
-        )}
+        <input
+          autoFocus={!isMobileDevice}
+          className="scale-input"
+          type="number"
+          min="0"
+          disabled={isReadOnly || !annotation || !canModify}
+          value={radius}
+          onChange={(event) => {
+            onChangeRadiusLength(event);
+            selectAnnotation();
+          }}
+          onBlur={(event) => validateDiameter(event)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onChangeRadiusLength(event);
+              deselectAnnot();
+            }
+          }}
+        />
+        {data.unit}
       </div>
     </div>
   );

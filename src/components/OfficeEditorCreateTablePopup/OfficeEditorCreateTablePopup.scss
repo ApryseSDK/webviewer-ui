@@ -4,7 +4,8 @@
   height: 150px;
   cursor: pointer;
 
-  table, td {
+  table,
+  td {
     border: 1px solid var(--gray-8);
     border-collapse: collapse;
   }
@@ -12,15 +13,19 @@
   td {
     width: 12px;
     height: 12px;
+    padding: 0;
 
-    &.selected-cell {
+    &.highlighted-cell {
       background-color: var(--oe-table-dropdown-highlight);
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 
   .create-table-rows-columns {
-    display: block;
     text-align: center;
-    margin: 10px auto;
+    margin: 10px 0;
   }
 }

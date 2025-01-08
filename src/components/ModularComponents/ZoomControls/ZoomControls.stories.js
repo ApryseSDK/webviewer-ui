@@ -11,9 +11,6 @@ import initialState from 'src/redux/initialState';
 export default {
   title: 'ModularComponents/ZoomControls',
   component: ZoomControlsContainer,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const store = configureStore({
@@ -42,24 +39,27 @@ export const SmallSize = () => {
   );
 };
 
-const stateWithFlyoutOpen = {
-  ...initialState,
-  viewer: {
-    ...initialState.viewer,
-    activeFlyout: 'zoom-containerFlyout',
-    flyoutToggleElement: 'zoom-container',
-    openElements: {
-      ...initialState.viewer.openElements,
-      'zoom-containerFlyout': true,
+const getStateWithFlyoutOpen = (context) => {
+  return {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      activeFlyout: 'zoom-containerFlyout',
+      flyoutToggleElement: 'zoom-container',
+      openElements: {
+        ...initialState.viewer.openElements,
+        'zoom-containerFlyout': true,
+      },
+      activeTheme: context.globals.theme,
     },
-  },
-  featureFlags: {
-    customizableUI: true,
-  },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
 };
 
-export const OpenWithMockApp = () => {
-  return <MockApp initialState={stateWithFlyoutOpen} />;
+export const OpenWithMockApp = (args, context) => {
+  return <MockApp initialState={getStateWithFlyoutOpen(context)} />;
 };
 
 OpenWithMockApp.parameters = {

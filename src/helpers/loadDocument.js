@@ -4,12 +4,8 @@ import { fireError } from 'helpers/fireEvent';
 import getHashParameters from 'helpers/getHashParameters';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
-import FeatureFlags from 'constants/featureFlags';
-
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
-  const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
-
   core.closeDocument(documentViewerKey);
   options = { ...getDefaultOptions(), ...options };
 
@@ -32,10 +28,6 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
-
-  if (options.enableOfficeEditing && isCustomizableUIEnabled) {
-    dispatch(actions.disableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
-  }
 
   if (options.enableOfficeEditing && !src) {
     core.loadBlankOfficeEditorDocument(options);
@@ -60,6 +52,7 @@ const getDefaultOptions = () => ({
   webviewerServerURL: getHashParameters('webviewerServerURL', ''),
   fallbackToClientSide: getHashParameters('fallbackToClientSide', false),
   singleServerMode: getHashParameters('singleServerMode', false),
+  webviewerServerRangeRequests: getHashParameters('wvsRange', true),
   forceClientSideInit: getHashParameters('forceClientSideInit', false),
   disableWebsockets: getHashParameters('disableWebsockets', false),
   cacheKey: getHashParameters('cacheKey', null),
@@ -79,7 +72,7 @@ const getDefaultOptions = () => ({
 const transformPasswordOption = (password, dispatch) => {
   // a boolean that is used to prevent infinite loop when wrong password is passed as an argument
   let passwordChecked = false;
-  let attempt = 0;
+  let attempt;
 
   return (checkPassword) => {
     dispatch(actions.setPasswordAttempts(attempt++));
@@ -91,8 +84,9 @@ const transformPasswordOption = (password, dispatch) => {
     if (!passwordChecked && typeof password === 'string') {
       checkPassword(password);
       passwordChecked = true;
+      attempt = 0;
     } else {
-      if (passwordChecked) {
+      if (passwordChecked && attempt !== 1) {
         console.error(
           'Wrong password has been passed as an argument. WebViewer will open password modal.',
         );

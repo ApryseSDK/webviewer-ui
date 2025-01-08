@@ -55,4 +55,11 @@ export const getInstanceNode = () => {
   return rootNode ? rootNode.host : getRootNode().host;
 };
 
+export const getWebViewerRect = () => {
+  if (!window.isApryseWebViewerWebComponent) {
+    return window.document.documentElement.getBoundingClientRect();
+  }
+  return getInstanceNode().getBoundingClientRect();
+};
+
 export default getRootNode;

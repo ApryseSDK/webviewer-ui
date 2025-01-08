@@ -2,7 +2,6 @@
  * Contains string enums for WebViewer UI events.
  * @name UI.Events
  * @property {string} ANNOTATION_FILTER_CHANGED {@link UI#event:annotationFilterChanged UI.Events.annotationFilterChanged}
- * @property {string} DOCUMENT_LOADED {@link UI#event:documentLoaded UI.Events.documentLoaded}
  * @property {string} DOCUMENT_MERGED {@link UI#event:documentMerged UI.Events.documentMerged}
  * @property {string} FILE_DOWNLOADED {@link UI#event:fileDownloaded UI.Events.fileDownloaded}
  * @property {string} LOAD_ERROR {@link UI#event:loaderror UI.Events.loaderror}
@@ -27,6 +26,7 @@
  * @property {string} MULTI_VIEWER_READY {@link UI#event:multiViewerReady  UI.Events.multiViewerReady }
  * @property {string} COMPARE_ANNOTATIONS_LOADED {@link UI#event:compareAnnotationsLoaded  UI.Events.compareAnnotationsLoaded }
  * @property {string} TAB_MANAGER_READY {@link UI#event:onTabManagerReady  UI.Events.onTabManagerReady }
+ * @property {string} TOOLTIP_OPENED {@link UI#event:tooltipOpened  UI.Events.tooltipOpened }
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -39,7 +39,6 @@
 
 export default {
   'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
-  'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
   'LOAD_ERROR': 'loaderror',
@@ -65,6 +64,7 @@ export default {
   'COMPARE_ANNOTATIONS_LOADED': 'compareAnnotationsLoaded',
   'TAB_MANAGER_READY': 'onTabManagerReady',
   'MODULAR_UI_IMPORTED': 'modularUIImported',
+  'TOOLTIP_OPENED': 'tooltipOpened'
 };
 
 /**
@@ -78,12 +78,6 @@ export default {
  * @property {string[]} colors Color filter
  * @property {string[]} statuses Status filter
  */
-
-/**
-* Triggered when a new document has been loaded.
-* @name UI#documentLoaded
-* @event
-*/
 
 /**
 * Triggered when a new document has been merged into the thumbnails panel.
@@ -285,4 +279,9 @@ export default {
  * @name UI#modularUIImported
  * @event
  * @property {object} importedComponents The JSON object containing the imported components
+ */
+
+/** Triggered when a tooltip is opened
+ * @name UI#tooltipOpened
+ * @event
  */

@@ -1,9 +1,20 @@
 import React from 'react';
 import Choice from '../Choice/Choice';
 import './ThumbnailCard.scss';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  onChange: PropTypes.func,
+  checked: PropTypes.bool,
+  index: PropTypes.number,
+  thumbnail: PropTypes.object,
+};
 
 const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
   let img = null;
+  const { t } = useTranslation();
+  const altText = `${t('component.thumbnailsPanel')} ${thumbnail.pageNumber} `;
 
   if (thumbnail) {
     let src;
@@ -15,7 +26,7 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
       src = thumbnail.toDataURL();
     }
 
-    img = <img className="thumb-card-img" alt="img_name" src={src} />;
+    img = <img className="thumb-card-img" alt={altText} src={src} />;
   }
 
   return (
@@ -26,6 +37,7 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
         </div>
         <Choice
           id={`custom-checkbox-${index}`}
+          className="thumb-checkbox"
           name={`thumb${index}`}
           checked={checked}
         />
@@ -34,5 +46,7 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
     </div>
   );
 };
+
+ThumbnailCard.propTypes = propTypes;
 
 export default ThumbnailCard;
