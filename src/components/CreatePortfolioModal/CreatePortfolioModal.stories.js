@@ -6,7 +6,7 @@ import DataElements from 'constants/dataElement';
 
 export default {
   title: 'Components/CreatePortfolioModal',
-  component: CreatePortfolioModal
+  component: CreatePortfolioModal,
 };
 
 const getStore = () => {
@@ -16,7 +16,10 @@ const getStore = () => {
       disabledElements: {},
       tab: { [DataElements.CREATE_PORTFOLIO_MODAL]: DataElements.PORTFOLIO_UPLOAD_FILES_TAB },
       customElementOverrides: {},
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   function rootReducer(state = initialState, action) {

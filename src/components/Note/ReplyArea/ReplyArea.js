@@ -156,11 +156,6 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     unread: isUnread,
   });
 
-  const replyButtonClass = classNames({
-    'reply-button': true,
-    disabled: !pendingReplyMap[annotation.Id]
-  });
-
   const handleNoteTextareaChange = (value) => {
     setPendingReply(value, annotation.Id);
     onPendingReplyChange && onPendingReplyChange();
@@ -209,7 +204,9 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         <div className="reply-button-container">
           <Button
             img="icon-post-reply"
-            className={replyButtonClass}
+            className='reply-button'
+            title={'action.submit'}
+            disabled={!pendingReplyMap[annotation.Id]}
             onClick={postReply}
             isSubmitType
           />

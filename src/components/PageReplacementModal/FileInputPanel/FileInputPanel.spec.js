@@ -15,5 +15,15 @@ describe('FileInputPanel', () => {
 
       screen.getByRole('textbox');
     });
+    it('Should render component correctly and show accessible dropdown with label', () => {
+      render(<TestFileInputPanel
+        defaultValue={''}
+        onFileSelect={noop}
+        setExtension={noop}
+      />);
+
+      // Having the name set means it is accessible to screen readers
+      screen.getByRole('combobox', { name: 'File Extension' });
+    });
   });
 });

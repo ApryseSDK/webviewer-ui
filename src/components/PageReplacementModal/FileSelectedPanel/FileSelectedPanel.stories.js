@@ -14,6 +14,9 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
+  },
+  featureFlags: {
+    customizableUI: true,
   }
 };
 
@@ -36,7 +39,7 @@ const props = {
   documentInViewer: mockDocument,
 };
 
-export const ProcessingFile = () => (
+const ProcessingFile = () => (
   <Provider store={store}>
     <div className="Modal PageReplacementModal open">
       <FileSelectedPanel
@@ -47,7 +50,7 @@ export const ProcessingFile = () => (
 );
 
 // This story is solely for the purposes of a unit test
-export const FileSelected = () => {
+const FileSelected = () => {
   return (
     <Provider store={store}>
       <div className="Modal PageReplacementModal open">
@@ -59,3 +62,11 @@ export const FileSelected = () => {
     </Provider>
   );
 };
+
+export const ProcessingFileDesktop = () => <ProcessingFile />;
+export const ProcessingFileMobile = () => <ProcessingFile />;
+ProcessingFileMobile.parameters = window.storybook?.MobileParameters;
+
+export const FileSelectedDesktop = () => <FileSelected />;
+export const FileSelectedMobile = () => <FileSelected />;
+FileSelectedMobile.parameters = window.storybook?.MobileParameters;

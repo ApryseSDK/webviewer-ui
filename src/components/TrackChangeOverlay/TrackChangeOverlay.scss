@@ -1,7 +1,11 @@
+@import '../../constants/officeEditor.scss';
+
 .track-change-overlay {
+
   .Dropdown__item-TrackChange {
     display: flex;
     flex-direction: column;
+    line-height: normal;
 
     .Dropdown__item-mode {
       font-weight: 700;
@@ -11,6 +15,18 @@
     .Dropdown__item-description {
       font-size: 10px;
       margin-top: 4px;
+    }
+
+    .Dropdown__item {
+      line-height: normal;
+    }
+  }
+
+  &.modular-ui.flyout-item {
+    width: 100%;
+
+    & > .Dropdown__wrapper {
+      @include oe-modular-ui-dropdown;
     }
   }
 }

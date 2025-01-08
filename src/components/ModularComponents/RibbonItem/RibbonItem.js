@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, forwardRef } from 'react';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,14 +9,12 @@ import classNames from 'classnames';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
-
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivenessHelper';
-import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import core from 'core';
+import FlyoutItemContainer from '../FlyoutItemContainer';
 
-const RibbonItem = (props) => {
+const RibbonItem = forwardRef((props, ref) => {
   const elementRef = useRef();
   const { t, ready: tReady } = useTranslation();
   const dispatch = useDispatch();
@@ -30,25 +28,16 @@ const RibbonItem = (props) => {
     direction,
     justifyContent,
     isFlyoutItem,
-    iconDOMElement,
-    toolbarGroup
+    toolbarGroup,
+    ariaCurrent
   } = props;
 
-  const [
-    activeGroupedItems,
-    activeCustomRibbon,
-    lastPickedToolForGroupedItems,
-    isRibbonItemDisabled,
-    customHeadersAdditionalProperties,
-    allAssociatedGroupedItems,
-  ] = useSelector((state) => [
-    selectors.getActiveGroupedItems(state),
-    selectors.getActiveCustomRibbon(state),
-    selectors.getLastPickedToolForGroupedItems(state, groupedItems),
-    selectors.isElementDisabled(state, dataElement),
-    selectors.getCustomHeadersAdditionalProperties(state),
-    [...groupedItems, ...getNestedGroupedItems(state, groupedItems)],
-  ]);
+  const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
+  const activeCustomRibbon = useSelector(selectors.getActiveCustomRibbon);
+  const lastActiveToolForRibbon = useSelector((state) => selectors.getLastActiveToolForRibbon(state, dataElement));
+  const isRibbonItemDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
+  const customHeadersAdditionalProperties = useSelector((state) => selectors.getCustomHeadersAdditionalProperties(state));
+  const firstRibbonItemTool = useSelector((state) => selectors.getFirstToolForRibbon(state, dataElement));
 
   const [isActive, setIsActive] = useState(false);
 
@@ -63,34 +52,44 @@ const RibbonItem = (props) => {
   }, []);
 
   useEffect(() => {
-    const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => allAssociatedGroupedItems.includes(item));
-    if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
+    if (activeCustomRibbon === dataElement) {
+      setIsActive(true);
+      const ribbonItemTool = lastActiveToolForRibbon === undefined ? firstRibbonItemTool : lastActiveToolForRibbon;
+      core.setToolMode(ribbonItemTool);
+    } else {
+      setIsActive(false);
+    }
+
+  }, [activeCustomRibbon, lastActiveToolForRibbon]);
+
+  useEffect(() => {
+    if (activeCustomRibbon === dataElement) {
+      dispatch(actions.setActiveGroupedItems(groupedItems));
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [activeGroupedItems, activeCustomRibbon, lastPickedToolForGroupedItems]);
+  }, [activeCustomRibbon, groupedItems]);
 
-  const onClick = () => {
+  const onClick = useCallback(() => {
     if (groupedItems.length < 1) {
       core.setToolMode(defaultTool);
     }
     if (!isActive) {
-      dispatch(actions.setActiveGroupedItems(allAssociatedGroupedItems));
+      const ribbonItemTool = lastActiveToolForRibbon === undefined ? firstRibbonItemTool : lastActiveToolForRibbon;
+      dispatch(actions.setActiveGroupedItems(groupedItems));
       dispatch(actions.setActiveCustomRibbon(dataElement));
-      dispatch(actions.setLastPickedToolAndGroup({
-        tool: lastPickedToolForGroupedItems,
-        group: allAssociatedGroupedItems
-      }));
+
       setIsActive(true);
-      core.setToolMode(lastPickedToolForGroupedItems);
+
+      core.setToolMode(ribbonItemTool);
 
       if (groupedItems.length < 1) {
         core.getFormFieldCreationManager().endFormFieldCreationMode();
         core.getContentEditManager().endContentEditMode();
       }
     }
-  };
+  }, [activeGroupedItems, activeCustomRibbon, isActive]);
 
   if (isRibbonItemDisabled) {
     return null;
@@ -102,37 +101,37 @@ const RibbonItem = (props) => {
 
   return (
     isFlyoutItem ?
-      (
-        innerItemToFlyoutItem({
-          isDisabled: false,
-          icon: iconDOMElement,
-          label: translatedLabel,
-        }, onClick)
-      ) :
-      (
-        <div className={classNames({
-          'RibbonItem': true,
-          'vertical': direction === DIRECTION.COLUMN,
-          'horizontal': direction === DIRECTION.ROW,
-          'left': justifyContent !== JUSTIFY_CONTENT.END,
-          'right': justifyContent === JUSTIFY_CONTENT.END,
-        })}
+      <FlyoutItemContainer
+        {...props}
+        ref={ref}
+        onClick={onClick}
+        label={translatedLabel}
+        title={translatedLabel || title}
+      />
+      :
+      <div className={classNames({
+        'RibbonItem': true,
+        'vertical': direction === DIRECTION.COLUMN,
+        'horizontal': direction === DIRECTION.ROW,
+        'left': justifyContent !== JUSTIFY_CONTENT.END,
+        'right': justifyContent === JUSTIFY_CONTENT.END,
+      })}
+      >
+        <Button
+          isActive={isActive}
+          dataElement={dataElement}
+          img={img}
+          label={translatedLabel}
+          title={translatedLabel || title}
+          useI18String={false}
+          onClick={onClick}
+          disabled={disabled}
+          ariaCurrent={ariaCurrent}
         >
-          <Button
-            isActive={isActive}
-            dataElement={dataElement}
-            img={img}
-            label={translatedLabel}
-            title={translatedLabel || title}
-            useI18String={false}
-            onClick={onClick}
-            disabled={disabled}
-          >
-          </Button>
-        </div>
-      )
+        </Button>
+      </div>
   );
-};
+});
 
 RibbonItem.propTypes = {
   dataElement: PropTypes.string,
@@ -145,6 +144,9 @@ RibbonItem.propTypes = {
   justifyContent: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   iconDOMElement: PropTypes.any,
+  toolbarGroup: PropTypes.string,
+  ariaCurrent: PropTypes.string,
 };
+RibbonItem.displayName = 'RibbonItem';
 
-export default RibbonItem;
+export default React.memo(RibbonItem);

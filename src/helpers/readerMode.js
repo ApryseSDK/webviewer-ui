@@ -11,7 +11,7 @@ const features = [Feature.Download, Feature.Print, Feature.Search, Feature.Notes
 const dataElements = [
   'panToolButton',
   'selectToolButton',
-  'outlinesPanelButton',
+  DataElements.OUTLINE_PANEL_BUTTON,
   'bookmarksPanelButton',
   'signaturePanelButton',
   'toolbarGroup-Shapes',

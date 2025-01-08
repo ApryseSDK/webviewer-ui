@@ -7,6 +7,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const SignatureAddButton = ({ isDisabled }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const SignatureAddButton = ({ isDisabled }) => {
     }
   };
 
+  const openSignatureModalWithFocus = useFocusHandler(openSignatureModal);
+
   const isInitialsModeEnabled = useSelector((state) => selectors.getIsInitialsModeEnabled(state));
   const buttonLabel = isInitialsModeEnabled ? 'signatureListPanel.newSignatureAndInitial' : 'signatureListPanel.newSignature';
 
@@ -29,7 +32,8 @@ const SignatureAddButton = ({ isDisabled }) => {
         { disabled: isDisabled },
       )}
       label={t(buttonLabel)}
-      onClick={openSignatureModal} />
+      dataElement={DataElements.SIGNATURE_ADD_BUTTON}
+      onClick={openSignatureModalWithFocus} />
   );
 };
 

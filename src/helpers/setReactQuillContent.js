@@ -30,10 +30,10 @@ const setReactQuillContent = (annotation, editor) => {
 
 const getAttributtes = (element) => {
   const attr = {};
-  if (element['font-weight']) {
+  if (element['font-weight'] && element['font-weight'] !== 'normal') {
     attr['bold'] = true;
   }
-  if (element['font-style']) {
+  if (element['font-style'] && element['font-style'] !== 'normal') {
     attr['italic'] = true;
   }
   if (element['color']) {

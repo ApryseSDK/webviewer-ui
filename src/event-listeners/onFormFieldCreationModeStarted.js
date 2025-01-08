@@ -1,4 +1,6 @@
 import actions from 'actions';
+import DataElements from 'src/constants/dataElement';
+import selectors from 'selectors';
 
 const formBuilderDefaultDisabledKeys = {
   ROTATE_CLOCKWISE: 'rotateClockwise',
@@ -34,12 +36,28 @@ const formBuilderDefaultDisabledKeys = {
   UNDERLINE: 'underline',
 };
 
-export default (dispatch, hotkeysManager) => () => {
+const isPanelOpenOnIndexPanelSide = (state) => {
+  const panels = selectors.getGenericPanels(state);
+  const indexPanelLocation = panels.find((panel) => panel.dataElement === DataElements.INDEX_PANEL)?.location;
+  if (!indexPanelLocation) {
+    return false;
+  }
+  const panelsOnIndexPanelSide = panels.filter((panel) => panel.location === indexPanelLocation);
+  return panelsOnIndexPanelSide.find((panel) => selectors.isElementOpen(state, panel.dataElement));
+};
+
+export default (dispatch, store, hotkeysManager) => async () => {
   dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: true }));
   dispatch(actions.setCustomElementOverrides('saveAsButton', { disabled: true }));
   dispatch(actions.setCustomElementOverrides('printButton', { disabled: true }));
   dispatch(actions.setCustomElementOverrides('filePickerButton', { disabled: true }));
   dispatch(actions.disableElement('textPopup', 1));
+  const isPanelOpen = isPanelOpenOnIndexPanelSide(store.getState());
+  await dispatch(actions.enableElement(DataElements.INDEX_PANEL));
+  if (!isPanelOpen) {
+    dispatch(actions.openElement(DataElements.INDEX_PANEL));
+  }
+
   for (const shortcutKey in formBuilderDefaultDisabledKeys) {
     // There could be keys that already disabled by the user. When we exit from form builder we don't want to enable them.
     if (hotkeysManager.isActive(formBuilderDefaultDisabledKeys[shortcutKey])) {

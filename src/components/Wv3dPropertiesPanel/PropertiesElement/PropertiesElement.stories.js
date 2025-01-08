@@ -9,6 +9,9 @@ import PropertiesElement from './PropertiesElement';
 export default {
   title: 'Components/Wv3dPropertiesPanel/PropertiesElement/PropertiesElement',
   component: PropertiesElement,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const baseSchema = {

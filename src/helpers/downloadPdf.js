@@ -16,9 +16,27 @@ import { isOfficeEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 
+let isDownloaded = false;
+let previousWatermarkSettings = { };
+let previousFileName = '';
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
   let doc = core.getDocument(documentViewerKey);
+  if (previousFileName !== doc?.getFilename()) {
+    previousFileName = doc?.getFilename();
+    isDownloaded = false;
+  }
+
+  const documentViewer = core.getDocumentViewer();
+  previousWatermarkSettings = await documentViewer.getWatermark();
+  if (isDownloaded) {
+    documentViewer.setWatermark();
+  } else {
+    isDownloaded = true;
+    doc.enableWatermarkApplied();
+  }
+
+
   const {
     filename = doc?.getFilename() || 'document',
     includeAnnotations = true,
@@ -51,6 +69,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (includeComments || convertToPDF) {
       doc.unloadResources();
     }
+
+    documentViewer.setWatermark(previousWatermarkSettings);
   };
 
   // We currently don't convert to pdf, png, etc. for office editor.
@@ -333,7 +353,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             const colorProperty = colorMap[key] && colorMap[key].iconColor;
             const color = annotation[colorProperty || 'StrokeColor'].toString();
             const iconKey = getDataWithKey(key).icon;
-            // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
+            // eslint-disable-next-line global-require,import/no-dynamic-require
             const icon = require(`../../assets/icons/${iconKey}.svg`);
             const blob = new Blob([icon], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);

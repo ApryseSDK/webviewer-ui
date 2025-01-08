@@ -36,6 +36,9 @@ const initialState = {
       },
     },
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({
@@ -55,7 +58,10 @@ const insertUploadedPageStore = configureStore({
       tab: {
         insertPageModal: 'insertUploadedPagePanelButton',
       }
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   })
 });
 
@@ -64,3 +70,18 @@ export const InsertUploadedPagePanel = () => (
     <InsertPageModalComponent isOpen />
   </Provider>
 );
+
+export const InsertBlankPageModalInMobile = () => (
+  <Provider store={store}>
+    <InsertPageModalComponent isOpen />
+  </Provider>
+);
+
+export const InsertUploadedPageModalInMobile = () => (
+  <Provider store={insertUploadedPageStore}>
+    <InsertPageModalComponent isOpen loadedDocumentPageCount={9} />
+  </Provider>
+);
+
+InsertBlankPageModalInMobile.parameters = window.storybook?.MobileParameters;
+InsertUploadedPageModalInMobile.parameters = window.storybook?.MobileParameters;

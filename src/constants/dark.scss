@@ -122,16 +122,18 @@
 
   --checked-option: var(--blue-6);
 
-  --watermark-preview-background: var(--gray-5);
+  --file-preview-background: var(--gray-5);
 
   --tab-border-color: var(--border);
   --tab-border-color-hover: var(--border);
   --tab-background-color-hover: var(--popup-button-hover);
-  --tab-border-color-selected: var(--border);
+  --tab-color-selected: var(--border);
   --tab-text-color-selected: var(--text-color);
 
   --disabled-button-color: rgba(173, 181, 189, 0.5);
   --tab-footer-button-color: var(--primary-button-text);
 
   --input-switch-default-color: var(--gray-3);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
 }

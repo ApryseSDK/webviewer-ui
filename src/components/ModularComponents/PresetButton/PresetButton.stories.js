@@ -8,9 +8,6 @@ import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 export default {
   title: 'ModularComponents/PresetButton',
   component: PresetButton,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 initialState.viewer.activeDocumentViewerKey = 1;

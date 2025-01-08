@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Button from 'components/Button';
+import selectors from 'selectors';
 
 import './InsertUploadedPagePanel.scss';
 import PageThumbnailsGrid from 'components/PageThumbnailsGrid';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
+import { useSelector } from 'react-redux';
 
 const InsertUploadedPagePanel = React.forwardRef(({
   sourceDocument,
@@ -23,6 +25,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
   const [pageNumberToInsertAt, setPageNumberToInsertAt] = useState([insertNewPageIndexes[0]]);
   const [insertAbove, setInsertAbove] = useState(true);
   const [pageNumberError, setPageNumberError] = useState('');
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useEffect(() => {
     const pageCount = sourceDocument.getPageCount();
@@ -54,11 +57,10 @@ const InsertUploadedPagePanel = React.forwardRef(({
   };
 
   const pageInputBlurHandler = (pageNumbers) => {
-    setPageNumberError(null);
-    // If undefined it means user entered an invalid number
-    // Use an array to force a re-render of the input component
-    const pageNumber = pageNumbers[0] ? [pageNumbers[0]] : [];
-    setPageNumberToInsertAt(pageNumber);
+    if (pageNumbers.length > 0) {
+      setPageNumberError(null);
+      setPageNumberToInsertAt(pageNumbers);
+    }
   };
 
   const deselectAllThumbnails = () => {
@@ -96,7 +98,6 @@ const InsertUploadedPagePanel = React.forwardRef(({
 
   return (
     <div className="insert-uploaded-page-panel" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
-      <div className="swipe-indicator" />
       <div className="header">
         <div className='left-header'>
           <Button
@@ -125,15 +126,17 @@ const InsertUploadedPagePanel = React.forwardRef(({
               {t('insertPageModal.page')}:
               <PageNumberInput
                 selectedPageNumbers={pageNumberToInsertAt}
-                onBlurHandler={pageInputBlurHandler}
                 pageCount={loadedDocumentPageCount}
-                onError={handlePageNumberError} />
-              {pageNumberError && <div className="page-number-error">{pageNumberError}</div>}
+                onSelectedPageNumbersChange={pageInputBlurHandler}
+                onBlurHandler={setPageNumberToInsertAt}
+                onError={handlePageNumberError}
+                pageNumberError={pageNumberError}
+              />
             </div>
           </div>
 
         </div>
-        <div className={classNames('modal-body-thumbnail-container', { isLoading })}>
+        <div className={classNames('modal-body-thumbnail-container', { isLoading, 'modular-ui': customizableUI })}>
           <PageThumbnailsGrid
             document={sourceDocument}
             onThumbnailSelected={onThumbnailSelected}
@@ -149,7 +152,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
           className="modal-btn"
           onClick={insertPagesHandler}
           label={t('insertPageModal.button')}
-          disabled={getSelectedPages().length === 0 || isLoading || pageNumberToInsertAt.length === 0}
+          disabled={getSelectedPages().length === 0 || isLoading || pageNumberToInsertAt.length === 0 || pageNumberError}
         />
       </div>
     </div>

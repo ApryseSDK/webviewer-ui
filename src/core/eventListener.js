@@ -26,6 +26,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
   const editBoxManager = annotManager.getEditBoxManager();
   const formFieldCreationManager = annotManager.getFormFieldCreationManager();
   const measurementManager = documentViewer.getMeasurementManager();
+  const accessibleReadingOrderManager = documentViewer.getAccessibleReadingOrderManager();
 
   return {
     cursorPropertiesUpdated: documentViewer,
@@ -101,5 +102,9 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     contentEditDocumentDigitallySigned: contentEditManager,
     contentEditPasswordRequired: contentEditManager,
     createAnnotationWithNoScale: measurementManager,
+    accessibleReadingOrderModeStarted: accessibleReadingOrderManager,
+    accessibleReadingOrderModeReady: accessibleReadingOrderManager,
+    accessibleReadingOrderModeEnded: accessibleReadingOrderManager,
+    userBookmarksChanged: documentViewer,
   };
 };

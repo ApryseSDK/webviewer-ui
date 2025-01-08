@@ -3,6 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import Measure from 'react-measure';
+import PropTypes from 'prop-types';
 import core from 'core';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
@@ -22,75 +23,27 @@ import {
   OFFICE_BULLET_OPTIONS,
   OFFICE_NUMBER_OPTIONS,
   FONT_SIZE,
+  AVAILABLE_STYLE_PRESET_MAP,
+  AVAILABLE_POINT_SIZES,
 } from 'constants/officeEditor';
-import { rgbaToHex } from 'helpers/color';
 import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
+import { calculateLineSpacing, convertCursorToStylePreset, convertCoreColorToWebViewerColor } from 'helpers/officeEditor';
 
 import './Header.scss';
 import './OfficeHeader.scss';
 import '../HeaderItems/HeaderItems.scss';
-import { COMMON_COLORS } from 'constants/commonColors';
 
-/* eslint-disable custom/no-hex-colors */
-const availableStylePresetMap = {
-  'Normal Text': {
-    fontSize: '11pt',
-    color: '#000000',
-  },
-  'Title': {
-    fontSize: '26pt',
-    color: '#000000',
-  },
-  'Subtitle': {
-    fontSize: '15pt',
-    color: '#666666',
-  },
-  'Heading 1': {
-    fontSize: '20pt',
-    color: '#000000',
-  },
-  'Heading 2': {
-    fontSize: '16pt',
-    color: '#000000',
-  },
-  'Heading 3': {
-    fontSize: '14pt',
-    color: '#434343',
-  },
-  'Heading 4': {
-    fontSize: '12pt',
-    color: '#666666',
-  },
-  'Heading 5': {
-    fontSize: '11pt',
-    color: '#666666',
-  },
-};
-/* eslint-enable custom/no-hex-colors */
-const availablePointSizes = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
 const moreButtonWidth = 77;
 const officeEditorToggleableStyles = window.Core.Document.OfficeEditorToggleableStyles;
-
-const convertCoreColorToWebViewerColor = (color) => {
-  if (!color) {
-    return new window.Core.Annotations.Color(0, 0, 0, 1);
-  }
-
-  return new window.Core.Annotations.Color(
-    color.r,
-    color.g,
-    color.b,
-    1,
-  );
-};
 
 const TextStyles = ({ activeStates }) => {
   return Object.values(officeEditorToggleableStyles).map((style) => (
     <ActionButton
       key={style}
       isActive={activeStates[style]}
+      ariaPressed={activeStates[style]}
       onClick={() => {
         core.getOfficeEditor().updateSelectionAndCursorStyle({ [style]: true });
       }}
@@ -119,7 +72,7 @@ const JustificationOptions = ({ justification }) => {
         isActive={justification === JUSTIFICATION_OPTIONS.Center}
         dataElement='office-editor-center-align'
         title='officeEditor.centerAlign'
-        img='icon-menu-centre-align'
+        img='icon-menu-center-align'
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'center'
@@ -169,7 +122,7 @@ const ListOptions = ({ listType }) => {
     <>
       <ActionButton
         isActive={listType === LIST_OPTIONS.Unordered}
-        dataElement='office-editor-bullet-list'
+        dataElement='unorderedListDropButton'
         title='officeEditor.bulletList'
         img='icon-office-editor-bullet-list'
         className='list-style-button'
@@ -178,6 +131,7 @@ const ListOptions = ({ listType }) => {
         }}
       />
       <Dropdown
+        id='office-editor-bullet-list-dropdown'
         dataElement='office-editor-bullet-list-dropdown'
         images={bulletListObjects}
         columns={3}
@@ -190,13 +144,14 @@ const ListOptions = ({ listType }) => {
         isActive={listType === LIST_OPTIONS.Ordered}
         dataElement='office-editor-number-list'
         title='officeEditor.numberList'
-        img='icon-office-number-list'
+        img='icon-office-editor-number-list'
         className='list-style-button'
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Ordered);
         }}
       />
       <Dropdown
+        id='office-editor-number-list-dropdown'
         dataElement='office-editor-number-list-dropdown'
         images={numberListOptions}
         columns={3}
@@ -206,7 +161,7 @@ const ListOptions = ({ listType }) => {
         className='list-style-dropdown'
       />
       <ActionButton
-        dataElement='office-editor-decrease-indent'
+        dataElement='decreaseIndentButton'
         title='officeEditor.decreaseIndent'
         img='ic-indent-decrease'
         onClick={async () => {
@@ -214,15 +169,30 @@ const ListOptions = ({ listType }) => {
         }}
       />
       <ActionButton
-        dataElement='office-editor-increase-indent'
+        dataElement='increaseIndentButton'
         title='officeEditor.increaseIndent'
         img='ic-indent-increase'
         onClick={async () => {
           await core.getOfficeEditor().increaseIndent();
         }}
       />
+      {/* <ActionButton
+        onClick={async () => {
+          const doc = core.getDocument();
+          await doc.getOfficeEditor().toggleNonPrintingCharacters();
+        }}
+        dataElement={'officeEditorToggleNonPrintingCharactersButton'}
+        title={'officeEditor.nonPrintingCharacters'}
+        isActive={enableNonPrintingCharacters}
+        img={'icon-office-editor-toggle-non-printing-characters'}
+      /> */}
     </>
   );
+};
+
+ListOptions.propTypes = {
+  listType: PropTypes.string,
+  enableNonPrintingCharacters: PropTypes.bool,
 };
 
 const OfficeEditorToolsHeader = () => {
@@ -235,6 +205,7 @@ const OfficeEditorToolsHeader = () => {
     availableFontFaces,
     activeTheme,
     cssFontValues,
+    enableNonPrintingCharacters
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
@@ -244,6 +215,7 @@ const OfficeEditorToolsHeader = () => {
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
       selectors.getCSSFontValues(state),
+      selectors.isNonPrintingCharactersEnabled(state),
     ],
     shallowEqual
   );
@@ -302,35 +274,6 @@ const OfficeEditorToolsHeader = () => {
     }
   }, [containerWidth, initialHeaderWidth]);
 
-  const calculateLineSpacing = (lineHeightMultiplier, lineHeight, fontSize) => {
-    // if lineHeight is provided, it takes precedence, because the rule sets the line height in points (either exact or at least)
-    const lineSpacing = lineHeight ? lineHeight / fontSize : lineHeightMultiplier;
-
-    // Sometimes we get floating points so we locate the closest line spacing option
-    const roundedLineSpacing = Object.values(LINE_SPACING_OPTIONS).reduce((a, b) => {
-      const aDiff = Math.abs(a - lineSpacing);
-      const bDiff = Math.abs(b - lineSpacing);
-
-      if (aDiff === bDiff) {
-        return a < b ? a : b;
-      }
-      return bDiff < aDiff ? b : a;
-    });
-
-    switch (roundedLineSpacing) {
-      case 1:
-        return 'Single';
-      case 1.15:
-        return '1.15';
-      case 1.5:
-        return '1.5';
-      case 2:
-        return 'Double';
-      default:
-        return 'Single';
-    }
-  };
-
   const isTextSelected = core.getOfficeEditor().isTextSelected();
   const properties = isTextSelected ? selectionProperties : cursorProperties;
   const isBold = properties.bold;
@@ -350,32 +293,7 @@ const OfficeEditorToolsHeader = () => {
   const isLightMode = activeTheme === Theme.LIGHT;
   const wvFontColor = convertCoreColorToWebViewerColor(properties.color);
   const useColorIconBorder = isLightMode ? wvFontColor.toString() === 'rgba(255,255,255,1)' : wvFontColor.toString() === 'rgba(0,0,0,1)';
-
-  const convertCursorToStylePreset = (cursorProperties) => {
-    const {
-      pointSize,
-      color: currentColor
-    } = cursorProperties || {};
-
-    const defaultStylePreset = 'Normal Text';
-    if (!pointSize || !currentColor) {
-      return defaultStylePreset;
-    }
-
-    const fontSize = `${pointSize}pt`;
-    let color = COMMON_COLORS['black'];
-    if (color) {
-      color = rgbaToHex(
-        currentColor.r,
-        currentColor.g,
-        currentColor.b
-      ).slice(0, -2);
-    }
-
-    return Object.keys(availableStylePresetMap).find(
-      (style) => availableStylePresetMap[style].fontSize === fontSize && availableStylePresetMap[style].color === color
-    ) || defaultStylePreset;
-  };
+  const ariaLabel = wvFontColor?.toHexString?.();
 
   return isOpen ? (
     <DataElementWrapper
@@ -405,12 +323,13 @@ const OfficeEditorToolsHeader = () => {
                   ref={measureRef}
                 >
                   <Dropdown
-                    items={Object.keys(availableStylePresetMap)}
+                    id='office-editor-text-format'
+                    items={Object.keys(AVAILABLE_STYLE_PRESET_MAP)}
                     // TODO: This shouldn't be closing more tools popup
                     // It shouldn't know about the existence of it.
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={async (item) => {
-                      const stylePreset = availableStylePresetMap[item];
+                      const stylePreset = AVAILABLE_STYLE_PRESET_MAP[item];
                       const fontPointSize = parseInt(stylePreset.fontSize, 10);
                       const fontColor = new window.Core.Annotations.Color(stylePreset.color);
                       const parsedFontColor = {
@@ -431,17 +350,20 @@ const OfficeEditorToolsHeader = () => {
                       await core.getOfficeEditor().updateParagraphStylePresets(newTextStyle);
                       await core.getOfficeEditor().setMainCursorStyle(newTextStyle);
                     }}
-                    getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
+                    getCustomItemStyle={(item) => ({ ...AVAILABLE_STYLE_PRESET_MAP[item], padding: '20px 10px', color: 'var(--gray-8)' })}
                     applyCustomStyleToButton={false}
                     currentSelectionKey={convertCursorToStylePreset(properties)}
                     width={160}
                     dataElement="office-editor-text-format"
                   />
                   <Dropdown
+                    id='office-editor-font'
                     items={availableFontFaces}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
-                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      if (typeof fontFace === 'string') {
+                        core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
+                      }
                     }}
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}
@@ -452,7 +374,8 @@ const OfficeEditorToolsHeader = () => {
                     hasInput
                   />
                   <Dropdown
-                    items={availablePointSizes}
+                    id='office-editor-font-size'
+                    items={AVAILABLE_POINT_SIZES}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(pointSize) => {
                       let fontPointSize = parseInt(pointSize, 10);
@@ -489,10 +412,11 @@ const OfficeEditorToolsHeader = () => {
                   <div className="divider" />
                   <ToggleElementButton
                     onClick={() => setShowMoreTools(false)}
-                    dataElement='textColorButton'
+                    dataElement={DataElement.OFFICE_EDITOR_TEXT_COLOR_BUTTON}
                     title='officeEditor.textColor'
+                    ariaLabel={ariaLabel}
                     img='icon-office-editor-circle'
-                    element='colorPickerOverlay'
+                    element={DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
                     color={wvFontColor.toString()}
                     iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
                   />
@@ -505,7 +429,7 @@ const OfficeEditorToolsHeader = () => {
                         a: 255,
                       };
                       core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
-                      dispatch(actions.closeElements(['colorPickerOverlay']));
+                      dispatch(actions.closeElements([DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY]));
                     }}
                     color={wvFontColor}
                   />
@@ -517,14 +441,12 @@ const OfficeEditorToolsHeader = () => {
                   )}
                   <div className="divider" />
                   <Dropdown
+                    id='office-editor-line-spacing'
                     items={Object.keys(LINE_SPACING_OPTIONS)}
                     onClickItem={(lineSpacingOption) => {
                       const lineSpacing = LINE_SPACING_OPTIONS[lineSpacingOption];
                       core.getOfficeEditor().updateParagraphStyle({
                         'lineHeightMultiplier': lineSpacing
-                      });
-                      core.getOfficeEditor().setMainCursorStyle({
-                        lineHeight,
                       });
                     }}
                     currentSelectionKey={lineHeight}
@@ -551,7 +473,9 @@ const OfficeEditorToolsHeader = () => {
                     }}
                   />
                   <Dropdown
+                    id='office-editor-insert-table'
                     dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
+                    width={136}
                     className="insert-table-dropdown"
                     displayButton={(isOpen) => (
                       <>
@@ -581,7 +505,7 @@ const OfficeEditorToolsHeader = () => {
                   {(visibleGroupCount === 6) && (
                     <>
                       <div className="divider" />
-                      <ListOptions listType={listType} />
+                      <ListOptions listType={listType} enableNonPrintingCharacters={enableNonPrintingCharacters} />
                     </>
                   )}
                   {(visibleGroupCount < 6) && (
@@ -618,7 +542,7 @@ const OfficeEditorToolsHeader = () => {
                                 </>
                               )}
                               {(visibleGroupCount < 6) && (
-                                <ListOptions listType={listType} />
+                                <ListOptions listType={listType} enableNonPrintingCharacters={enableNonPrintingCharacters}/>
                               )}
                             </div>
                           </div>

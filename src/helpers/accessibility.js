@@ -1,4 +1,5 @@
 import getRootNode from 'helpers/getRootNode';
+import core from 'core';
 
 export function isKeyboardNav() {
   return document.documentElement.getAttribute('data-tabbing') === 'true';
@@ -42,4 +43,9 @@ export function createAnnouncement(onClickAnnouncement) {
       parent.removeChild(getRootNode().getElementById(id));
     }, 1000);
   }
+}
+
+export function shouldEndAccessibleReadingOrderMode() {
+  const accessibleReadingOrderManager = core.getDocumentViewer()?.getAccessibleReadingOrderManager();
+  accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
 }

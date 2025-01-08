@@ -41,9 +41,6 @@ export const getAnnotationClass = (annotation) => {
   if (annotation instanceof window.Core.Annotations.RedactionAnnotation) {
     return 'redact';
   }
-  if (annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation) {
-    return 'signature';
-  }
   if (annotation instanceof window.Core.Annotations.StampAnnotation) {
     return 'stamp';
   }
@@ -64,6 +61,27 @@ export const getAnnotationClass = (annotation) => {
   }
   if (annotation instanceof window.Core.Annotations.Model3DAnnotation) {
     return '3D';
+  }
+  if (annotation instanceof window.Core.Annotations.TextWidgetAnnotation) {
+    return 'textField';
+  }
+  if (annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation) {
+    return 'signatureFormField';
+  }
+  if (annotation instanceof window.Core.Annotations.CheckButtonWidgetAnnotation) {
+    return 'checkBoxFormField';
+  }
+  if (annotation instanceof window.Core.Annotations.RadioButtonWidgetAnnotation) {
+    return 'radioButtonFormField';
+  }
+  if (annotation instanceof window.Core.Annotations.ListWidgetAnnotation) {
+    return 'listBoxFormField';
+  }
+  if (annotation instanceof window.Core.Annotations.ChoiceWidgetAnnotation) {
+    return 'comboBoxFormField';
+  }
+  if (annotation instanceof window.Core.Annotations.PushButtonWidgetAnnotation) {
+    return 'pushButtonFormField';
   }
 
   return 'other';

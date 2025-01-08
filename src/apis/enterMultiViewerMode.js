@@ -10,8 +10,11 @@ WebViewer(...)
 
 import actions from 'actions';
 import selectors from 'selectors';
+import { shouldEndAccessibleReadingOrderMode } from 'helpers/accessibility';
 
 export default (store) => () => {
+  shouldEndAccessibleReadingOrderMode();
+
   if (selectors.getIsMultiTab(store.getState())) {
     console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiTab');
     store.dispatch(actions.setMultiTab(false));
@@ -19,5 +22,6 @@ export default (store) => () => {
     store.dispatch(actions.setTabs([]));
     store.dispatch(actions.setActiveTab(0));
   }
+
   store.dispatch(actions.setIsMultiViewerMode(true));
 };

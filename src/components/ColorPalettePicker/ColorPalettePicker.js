@@ -1,10 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Icon from 'components/Icon';
+import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 import './ColorPalettePicker.scss';
 import '../ColorPalette/ColorPalette.scss';
+
+
+const propTypes = {
+  color: PropTypes.any,
+  toolTipXOffset: PropTypes.number,
+};
 
 const ColorPalettePicker = ({
   color,
@@ -18,8 +27,11 @@ const ColorPalettePicker = ({
   enableEdit,
   disableTitle = false,
   colorsAreHex = false,
+  ariaLabelledBy,
+  toolTipXOffset = 0,
 }) => {
   const [t] = useTranslation();
+  const addCustomColorRef = useRef(null);
 
   useEffect(() => {
     const isNotInCustomColors = !customColors.includes(colorsAreHex ? color : getHexColor(color));
@@ -30,11 +42,21 @@ const ColorPalettePicker = ({
     }
   }, [color]);
 
-  const handleAddColor = () => {
+  const handleAddColor = useFocusHandler(() => {
     if (openColorPicker) {
       openColorPicker(true);
     }
-  };
+  });
+
+  const handleOpenDeleteModal = useFocusHandler(() => {
+    if (openDeleteModal) {
+      openDeleteModal(() => {
+        // After deleting, focus is transfered to plus sign icon
+        addCustomColorRef.current.focus();
+      });
+    }
+  });
+
 
   return (
     <div className="color-picker-container">
@@ -42,42 +64,47 @@ const ColorPalettePicker = ({
         {!disableTitle && <div className="colorPickerController">
           <span>{t('annotation.custom')}</span>
         </div>}
-        <div className="colorPickerColors ColorPalette">
+        <div className="colorPickerColors ColorPalette" role="group" aria-labelledby={ariaLabelledBy}>
           {customColors.map((bg, i) => (
-            <button
-              key={bg}
-              title={t('option.colorPalettePicker.selectColor')}
-              className="cell-container"
-              onClick={() => handleColorOnClick(bg)}
-              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
-            >
-              <div
-                className={classNames({
-                  'cell-outer': true,
-                  active: colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
-                      color?.toHexString?.()?.toLowerCase() === bg.toLowerCase(),
-                })}
+            <Tooltip content={`${t('option.colorPalette.colorLabel')} ${bg?.toUpperCase?.()}`} xOffset={toolTipXOffset} key={`color-${i}`}>
+              <button
+                className="cell-container cell-color"
+                onClick={() => handleColorOnClick(bg)}
+                aria-label={`${t('option.colorPalette.colorLabel')} ${bg?.toUpperCase?.()}`}
+                aria-current={colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
+                  color?.toHexString?.()?.toLowerCase() === bg.toLowerCase()}
               >
                 <div
                   className={classNames({
-                    cell: true,
-                    border: true,
+                    'cell-outer': true,
+                    active: colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
+                      color?.toHexString?.()?.toLowerCase() === bg.toLowerCase(),
                   })}
-                  style={{ backgroundColor: bg }}
                 >
-                  {bg === 'transparency' && undefined}
+                  <div
+                    className={classNames({
+                      cell: true,
+                      border: true,
+                    })}
+                    style={{ backgroundColor: bg }}
+                  >
+                    {bg === 'transparency' && undefined}
+                  </div>
                 </div>
-              </div>
-            </button>
+              </button>
+            </Tooltip>
           ),
           )}
           {enableEdit && (
             <button
+              data-element="addCustomColor"
               className="cell-container cell-tool"
               title={t('option.colorPalettePicker.addColor')}
+              onClick={handleAddColor}
+              ref={addCustomColorRef}
             >
               <div className="cell-outer">
-                <div className="cellIcon" id="addCustomColor" onClick={handleAddColor}>
+                <div className="cellIcon" id="addCustomColor">
                   <Icon glyph="icon-header-zoom-in-line" />
                 </div>
               </div>
@@ -88,8 +115,9 @@ const ColorPalettePicker = ({
               className="cell-container cell-tool"
               id="removeCustomColor"
               disabled={!colorToBeDeleted}
-              onClick={openDeleteModal}
+              onClick={handleOpenDeleteModal}
               title={t('warning.colorPalettePicker.deleteTitle')}
+              data-element="removeCustomColor"
             >
               <div className="cell-outer">
                 <div className="cellIcon">
@@ -103,5 +131,7 @@ const ColorPalettePicker = ({
     </div>
   );
 };
+
+ColorPalettePicker.propTypes = propTypes;
 
 export default ColorPalettePicker;

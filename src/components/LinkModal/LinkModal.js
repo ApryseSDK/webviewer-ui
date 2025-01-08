@@ -8,8 +8,9 @@ import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
-import { Swipeable } from 'react-swipeable';
 import DataElements from 'constants/dataElement';
+import ModalWrapper from 'components/ModalWrapper';
+import DataElementWrapper from 'components/DataElementWrapper';
 
 import './LinkModal.scss';
 
@@ -234,24 +235,16 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
   });
 
   return isDisabled ? null : (
-    <Swipeable
-      onSwipedUp={closeModal}
-      onSwipedDown={closeModal}
-      preventDefaultTouchmoveEvent
-    >
-      <div
-        className={modalClass}
-        data-element={DataElements.LINK_MODAL}
-        onMouseDown={closeModal}
-      >
+    <DataElementWrapper dataElement={DataElements.LINK_MODAL} className={modalClass}>
+      <ModalWrapper
+        title={t('link.insertLinkOrPage')}
+        isOpen={isOpen}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        swipeToClose>
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
-          <div className="swipe-indicator" />
           <Tabs id="linkModal">
-            <div className="header-container">
-              <div className="header">
-                <p>{t('link.insertLinkOrPage')}</p>
-                <Button img="icon-close" onClick={closeModal} title="action.close" />
-              </div>
+            <div className="tabs-header-container">
               <div className="tab-list">
                 <Tab dataElement="URLPanelButton" >
                   <button className="tab-options-button">{t('link.url')}</button>
@@ -262,7 +255,6 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
                 </Tab>
               </div>
             </div>
-            <div className="divider"></div>
             <TabPanel dataElement="URLPanel">
               <div className="panel-body">
                 <div className="add-url-link">
@@ -327,8 +319,8 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
             }
           </div>
         </div>
-      </div>
-    </Swipeable>
+      </ModalWrapper>
+    </DataElementWrapper>
   );
 };
 

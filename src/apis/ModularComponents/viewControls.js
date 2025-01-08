@@ -1,5 +1,6 @@
 import Item from './item';
 import { ITEM_TYPE } from 'constants/customizationVariables';
+
 /**
  * Creates a new instance of ViewControls. A prebuilt feature that allows users to change the Page Transition, Orientation, and Layout of the document.
  * @name ViewControls
@@ -13,7 +14,9 @@ class ViewControls extends Item {
   constructor(props = {}) {
     super(props);
     this.type = ITEM_TYPE.VIEW_CONTROLS;
-    this._dataElement = 'view-controls';
+    this.dataElement = 'view-controls';
+    this.title = 'component.viewControls';
+    this.icon = 'icon-header-page-manipulation-line';
   }
 }
 

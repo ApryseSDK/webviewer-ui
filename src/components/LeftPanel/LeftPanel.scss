@@ -35,13 +35,9 @@
     transform: translateX(-100%);
   }
 
-  &.tracked-change-active {
+  &.office-editor {
     .left-panel-container {
       padding: 0;
-
-      .notes-panel-container {
-        height: 100%;
-      }
     }
   }
 

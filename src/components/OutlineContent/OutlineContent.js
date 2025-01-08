@@ -1,41 +1,57 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import core from 'core';
 import selectors from 'selectors';
-import classNames from 'classnames';
-
 import Button from '../Button';
-import MoreOptionsContextMenuPopup from '../MoreOptionsContextMenuPopup';
+import TextButton from '../TextButton';
+import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import OutlineContext from '../Outline/Context';
 import './OutlineContent.scss';
 import '../../constants/bookmarksOutlinesShared.scss';
+import DataElements from 'constants/dataElement';
+import PanelListItem from '../PanelListItem';
+import outlineUtils from 'helpers/OutlineUtils';
+
+const Outline = lazy(() => import('../Outline'));
 
 const propTypes = {
   text: PropTypes.string.isRequired,
   outlinePath: PropTypes.string,
   isAdding: PropTypes.bool,
+  isExpanded: PropTypes.bool,
+  setIsExpanded: PropTypes.func,
   isOutlineRenaming: PropTypes.bool,
   setOutlineRenaming: PropTypes.func,
   isOutlineChangingDest: PropTypes.bool,
   setOutlineChangingDest: PropTypes.func,
-  setIsHovered: PropTypes.func,
   onCancel: PropTypes.func,
   textColor: PropTypes.string,
+  children: PropTypes.array,
+  setMultiSelected: PropTypes.func,
+  moveOutlineInward: PropTypes.func,
+  moveOutlineBeforeTarget: PropTypes.func,
+  moveOutlineAfterTarget: PropTypes.func,
 };
 
 const OutlineContent = ({
   text,
   outlinePath,
   isAdding,
+  isExpanded,
+  setIsExpanded,
   isOutlineRenaming,
   setOutlineRenaming,
   isOutlineChangingDest,
   setOutlineChangingDest,
-  setIsHovered,
   onCancel,
   textColor,
+  children,
+  setMultiSelected,
+  moveOutlineInward,
+  moveOutlineBeforeTarget,
+  moveOutlineAfterTarget
 }) => {
   const {
     currentDestPage,
@@ -47,6 +63,7 @@ const OutlineContent = ({
     addNewOutline,
     renameOutline,
     updateOutlineDest,
+    selectedOutlines,
     updateOutlines,
     removeOutlines,
   } = useContext(OutlineContext);
@@ -59,7 +76,6 @@ const OutlineContent = ({
 
   const [isDefault, setIsDefault] = useState(false);
   const [outlineText, setOutlineText] = useState(text);
-  const [isContextMenuOpen, setContextMenuOpen] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const inputRef = useRef();
 
@@ -77,6 +93,8 @@ const OutlineContent = ({
       onCancelOutline();
     }
   };
+
+  const isSelected = selectedOutlines?.includes(outlinePath) || false;
 
   const onAddOutline = () => {
     addNewOutline(outlineText.trim() === '' ? '' : outlineText);
@@ -133,14 +151,93 @@ const OutlineContent = ({
     setEditingOutlines({ ...editingOutlinesClone });
   }, [isOutlineRenaming, isOutlineChangingDest]);
 
-  useEffect(() => {
-    if (!isAdding) {
-      setIsHovered(isContextMenuOpen);
-    }
-  }, [isContextMenuOpen]);
-
   const textStyle = {
     color: textColor || 'auto'
+  };
+
+  const handleOnClick = async (val) => {
+    switch (val) {
+      case menuTypes.RENAME:
+        setOutlineRenaming(true);
+        setIsRenaming(true);
+        break;
+      case menuTypes.SETDEST:
+        setOutlineChangingDest(true);
+        core.setToolMode(TOOL_NAME);
+        break;
+      case menuTypes.DELETE:
+        removeOutlines([outlinePath]);
+        break;
+      case menuTypes.MOVE_UP: {
+        await outlineUtils.moveOutlineUp(outlinePath);
+        updateOutlines();
+        break;
+      }
+      case menuTypes.MOVE_DOWN: {
+        await outlineUtils.moveOutlineDown(outlinePath);
+        updateOutlines();
+        break;
+      }
+      case menuTypes.MOVE_LEFT: {
+        await outlineUtils.moveOutlineOutward(outlinePath);
+        updateOutlines();
+        break;
+      }
+      case menuTypes.MOVE_RIGHT: {
+        await outlineUtils.moveOutlineInward(outlinePath);
+        updateOutlines();
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
+  const flyoutSelector = `${DataElements.BOOKMARK_OUTLINE_FLYOUT}-${outlinePath}`;
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+  const type = 'outline';
+
+  const contentMenuFlyoutOptions = {
+    shouldHideDeleteButton: false,
+    currentFlyout: currentFlyout,
+    flyoutSelector: flyoutSelector,
+    type: type,
+    handleOnClick: handleOnClick
+  };
+
+  const contextMenuMoreButtonOptions = {
+    flyoutToggleElement: `bookmarkOutlineFlyout-${outlinePath}`,
+    moreOptionsDataElement: `outline-more-button-${outlinePath}`,
+  };
+
+  const checkboxOptions = {
+    id:`outline-checkbox-${outlinePath}`,
+    checked: isSelected,
+    onChange: (e) => {
+      setMultiSelected(outlinePath, e.target.checked);
+    },
+    ariaLabel: text,
+    disabled: !isMultiSelectMode
+  };
+
+  const onDoubleClick = () => {
+    if (isOutlineEditable) {
+      setOutlineRenaming(true);
+      setIsRenaming(true);
+    }
+  };
+
+  const renderContent = (outline) => {
+    return (
+      <Outline
+        key={outlineUtils.getOutlineId(outline)}
+        outline={outline}
+        setMultiSelected={setMultiSelected}
+        moveOutlineInward={moveOutlineInward}
+        moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+        moveOutlineAfterTarget={moveOutlineAfterTarget}
+      />
+    );
   };
 
   return (
@@ -157,58 +254,22 @@ const OutlineContent = ({
       }
 
       {isDefault &&
-        <>
-          <div
-            className="bookmark-outline-text outline-text"
-            onDoubleClick={() => {
-              if (isOutlineEditable) {
-                setOutlineRenaming(true);
-                setIsRenaming(true);
-              }
-            }}
-            style={textStyle}
-          >
-            {text}
-          </div>
-
-          {isOutlineEditable &&
-            <Button
-              className={classNames({
-                'bookmark-outline-more-button': true,
-                'contextMenuOpen': isContextMenuOpen
-              })}
-              dataElement={`outline-more-button-${outlinePath}`}
-              img="icon-tool-more"
-              tabIndex={-1}
-              onClick={(e) => {
-                e.stopPropagation();
-                setContextMenuOpen(true);
-              }}
-            />
-          }
-          {isContextMenuOpen &&
-            <MoreOptionsContextMenuPopup
-              type={'outline'}
-              anchorButton={`outline-more-button-${outlinePath}`}
-              shouldDisplayDeleteButton={!isMultiSelectMode}
-              onClosePopup={() => setContextMenuOpen(false)}
-              onRenameClick={() => {
-                setContextMenuOpen(false);
-                setOutlineRenaming(true);
-                setIsRenaming(true);
-              }}
-              onSetDestinationClick={() => {
-                setContextMenuOpen(false);
-                setOutlineChangingDest(true);
-                core.setToolMode(TOOL_NAME);
-              }}
-              onDeleteClick={() => {
-                setContextMenuOpen(false);
-                removeOutlines([outlinePath]);
-              }}
-            />
-          }
-        </>
+        <PanelListItem
+          key={outlinePath}
+          labelHeader={text}
+          textColor={textColor}
+          enableMoreOptionsContextMenuFlyout={true}
+          onDoubleClick={onDoubleClick}
+          checkboxOptions={checkboxOptions}
+          contentMenuFlyoutOptions={contentMenuFlyoutOptions}
+          contextMenuMoreButtonOptions={contextMenuMoreButtonOptions}
+          expanded={isExpanded}
+          setIsExpandedHandler={setIsExpanded}
+        >
+          {children.map((outline) => {
+            return renderContent(outline);
+          })}
+        </PanelListItem>
       }
 
       {isOutlineChangingDest &&
@@ -227,7 +288,7 @@ const OutlineContent = ({
           ref={inputRef}
           className="bookmark-outline-input"
           placeholder={customizableUI ? '' : t('component.outlineTitle')}
-          aria-label={t('action.name')}
+          aria-label={t('component.newOutlineTitle')}
           value={outlineText}
           onKeyDown={handleKeyDown}
           onChange={(e) => setOutlineText(e.target.value)}
@@ -243,9 +304,10 @@ const OutlineContent = ({
 
       {(isAdding || isOutlineRenaming || isOutlineChangingDest) &&
         <div className="bookmark-outline-editing-controls">
-          <Button
+          <TextButton
             className="bookmark-outline-cancel-button"
             label={t('action.cancel')}
+            ariaLabel={`${t('action.cancel')} ${t('component.outlineTitle')}`}
             onClick={onCancelOutline}
           />
           {isAdding &&

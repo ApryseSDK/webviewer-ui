@@ -23,14 +23,14 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { getInstanceID } from 'helpers/getRootNode';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
-import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap } from './modularComponents';
+import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels } from './modularComponents';
 import { PANEL_SIZES } from 'constants/panel';
 
 const { ToolNames } = window.Core.Tools;
@@ -46,6 +46,7 @@ export default {
     syncViewer: null,
     isCompareStarted: false,
     isComparisonOverlayEnabled: true,
+    compareAnnotationsMap: {},
     activeDocumentViewerKey: 1,
     zoomLevels: {
       1: 1,
@@ -63,6 +64,7 @@ export default {
     tabs: [],
     activeTab: 0,
     isMultiTab: false,
+    tabNameHandler: null,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
     toolbarGroup: DataElements.ANNOTATE_TOOLBAR_GROUP,
@@ -74,7 +76,9 @@ export default {
       [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
+      'comparePanelToggle': { disabled: true, priority: 2 },
     },
+    enabledRibbonsStash: [],
     selectedScale: initialScale,
     isAddingNewScale: false,
     calibrationInfo: {
@@ -99,6 +103,7 @@ export default {
       leftPanel: 264,
       searchPanel: 293,
       notesPanel: 293,
+      indexPanel: 293,
       redactionPanel: 330,
       textEditingPanel: 330,
       wv3dPropertiesPanel: 307,
@@ -107,7 +112,10 @@ export default {
       stylePanel: 330,
       signatureListPanel: 330,
       rubberStampPanel: 330,
-      customLeftPanel: 330
+      customLeftPanel: 330,
+      formFieldPanel: 307,
+      tabPanel: 330,
+      officeEditorReviewPanel: 330,
     },
     mobilePanelSize: PANEL_SIZES.SMALL_SIZE,
     documentContainerWidth: null,
@@ -119,17 +127,18 @@ export default {
       tool: 'AnnotationEdit',
       group: [],
     },
+    lastActiveToolForRibbon: {},
     highContrastMode: getHashParameters('highContrastMode', false),
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
     autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
-    outlineControlVisibility: false,
     autoExpandOutlines: getHashParameters('autoExpandOutlines', false),
     isAnnotationNumberingEnabled: getHashParameters('enableAnnotationNumbering', false),
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
     contentEditWorkersLoaded: false,
+    isContentEditingEnabled: false,
     currentContentBeingEdited: null,
     pageManipulationOverlayAlternativePosition: null,
     pageManipulationOverlayOpenByRightClick: true,
@@ -150,7 +159,7 @@ export default {
           type: 'toggleElementButton',
           img: 'icon-header-sidebar-line',
           element: 'leftPanel',
-          dataElement: 'leftPanelButton',
+          dataElement: DataElements.LEFT_PANEL_BUTTON,
           title: 'component.leftPanel',
         },
         {
@@ -158,7 +167,7 @@ export default {
           img: 'icon-header-page-manipulation-line',
           element: DataElements.VIEW_CONTROLS_OVERLAY,
           dataElement: DataElements.VIEW_CONTROLS_OVERLAY_BUTTON,
-          title: 'component.viewControlsOverlay',
+          title: 'component.viewControls',
         },
         {
           type: 'divider',
@@ -710,14 +719,14 @@ export default {
           toolGroup: 'checkBoxFieldTools',
           dataElement: 'checkBoxFieldToolGroupButton',
           title: 'annotation.checkBoxFormField',
-          showColor: 'never',
+          showColor: 'always',
         },
         {
           type: 'toolGroupButton',
           toolGroup: 'radioButtonFieldTools',
           dataElement: 'radioButtonFieldToolGroupButton',
           title: 'annotation.radioButtonFormField',
-          showColor: 'never',
+          showColor: 'always',
         },
         {
           type: 'toolGroupButton',
@@ -1746,7 +1755,11 @@ export default {
       },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
       OfficeEditorContentSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
+      MarqueeZoomTool: {
+        dataElement: 'marqueeToolButton',
+        showColor: 'never',
+        img: 'icon-header-zoom-marquee',
+      },
       AnnotationEraserTool: {
         dataElement: 'eraserToolButton',
         title: 'annotation.eraser',
@@ -1814,14 +1827,14 @@ export default {
         title: 'annotation.checkBoxFormField',
         img: 'icon-form-field-checkbox',
         group: 'checkBoxFieldTools',
-        showColor: 'never',
+        showColor: 'always',
       },
       RadioButtonFormFieldCreateTool: {
         dataElement: 'radioButtonFieldCreateToolButton',
         title: 'annotation.radioButtonFormField',
         img: 'icon-form-field-radiobutton',
         group: 'radioButtonFieldTools',
-        showColor: 'never',
+        showColor: 'always',
       },
       ListBoxFormFieldCreateTool: {
         dataElement: 'listBoxFieldCreateToolButton',
@@ -1879,6 +1892,48 @@ export default {
         group: 'comboBoxFieldTools',
         showColor: 'always',
       },
+      CheckBoxFormFieldCreateTool2: {
+        dataElement: 'checkBoxFieldToolGroupButton2',
+        title: 'annotation.checkBoxFormField',
+        img: 'icon-form-field-checkbox',
+        group: 'checkBoxFieldTools',
+        showColor: 'always',
+      },
+      CheckBoxFormFieldCreateTool3: {
+        dataElement: 'checkBoxFieldToolGroupButton3',
+        title: 'annotation.checkBoxFormField',
+        img: 'icon-form-field-checkbox',
+        group: 'checkBoxFieldTools',
+        showColor: 'always',
+      },
+      CheckBoxFormFieldCreateTool4: {
+        dataElement: 'checkBoxFieldToolGroupButton4',
+        title: 'annotation.checkBoxFormField',
+        img: 'icon-form-field-checkbox',
+        group: 'checkBoxFieldTools',
+        showColor: 'always',
+      },
+      RadioButtonFormFieldCreateTool2: {
+        dataElement: 'radioButtonFieldCreateToolButton2',
+        title: 'annotation.radioButtonFormField',
+        img: 'icon-form-field-radiobutton',
+        group: 'radioButtonFieldTools',
+        showColor: 'always',
+      },
+      RadioButtonFormFieldCreateTool3: {
+        dataElement: 'radioButtonFieldCreateToolButton3',
+        title: 'annotation.radioButtonFormField',
+        img: 'icon-form-field-radiobutton',
+        group: 'radioButtonFieldTools',
+        showColor: 'always',
+      },
+      RadioButtonFormFieldCreateTool4: {
+        dataElement: 'radioButtonFieldCreateToolButton4',
+        title: 'annotation.radioButtonFormField',
+        img: 'icon-form-field-radiobutton',
+        group: 'radioButtonFieldTools',
+        showColor: 'always',
+      },
       AnnotationCreateChangeViewTool: {
         dataElement: 'changeViewCreateToolButton',
         title: 'annotation.changeView',
@@ -1932,7 +1987,7 @@ export default {
         ? JSON.parse(window.localStorage.getItem(`${instanceId}-customColors`))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
-    activeCustomPanel: '',
+    activeTabInPanel: {},
     activeToolGroup: '',
     notePopupId: '',
     isNoteEditing: false,
@@ -1962,7 +2017,7 @@ export default {
     isReadOnly: getHashParameters('readonly', false),
     customModals: [],
     customPanels: [],
-    genericPanels: [],
+    genericPanels: defaultPanels,
     useEmbeddedPrint: false,
     useClientSidePrint: false,
     pageLabels: [],
@@ -1979,6 +2034,7 @@ export default {
     },
     zoomList: defaultZoomList,
     isAccessibleMode: getHashParameters('accessibleMode', false),
+    disabledFeaturesInAccessibleReadingMode: {},
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
@@ -2065,6 +2121,7 @@ export default {
     savedSignatureTabEnabled: false,
     replyAttachmentHandler: null,
     customSettings: [],
+    modularComponentStash: {},
     modularHeaders: defaultModularHeaders,
     modularComponents: defaultModularComponents,
     modularComponentFunctions: {},
@@ -2095,11 +2152,15 @@ export default {
     isShowComparisonButtonEnabled: false,
     isMultiViewerModeAvailable: false,
     isOfficeEditorMode: false,
+    isOfficeEditorHeaderEnabled: false,
+    isSheetEditorMode: false,
     colors: initialColors,
     textColors: initialTextColors,
     toolColorOverrides: {},
     defaultPrintMargins: '0',
     scaleOverlayPosition: 'top-right',
+    focusedElementsStack: [],
+    isKeyboardOpen: false,
   },
   search: {
     value: '',
@@ -2193,7 +2254,7 @@ export default {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OFFICE_EDITOR_EDIT_MODE.EDITING
+    editMode: OfficeEditorEditMode.EDITING
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',

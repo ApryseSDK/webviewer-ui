@@ -1,6 +1,6 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 const TestThumbnail = withProviders(Thumbnail);
 
@@ -16,10 +16,11 @@ describe('Thumbnail', () => {
       }).not.toThrow();
     });
 
-    it('Should render document controls if enabled', () => {
+    it('Should render document controls if enabled and role', () => {
       const { container } = render(<TestThumbnail />);
       // Verify that container div is in the document to draw thumb canvas
       expect(container.querySelector('.container')).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
     it('Should render document controls if enabled', () => {

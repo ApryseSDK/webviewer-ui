@@ -6,21 +6,15 @@
   z-index: 101; // Set to 1 higher than modal z-index so it can be shown on top of other modals
 
   .container {
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
     display: flex;
     width: 480px;
     flex-direction: column;
     align-items: flex-start;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     background: var(--component-background);
 
     @include mobile {
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
+      width: 100%;
     }
   }
 
@@ -30,15 +24,15 @@
   }
 
   .header {
+    display: flex;
+    align-items: center;
     position: relative;
     width: 100%;
-    padding: 6px;
+    padding: 16px;
 
     .header-text {
-      h2 {
-        margin: 0;
-        padding: 10px;
-        font-size: 18px;
+      span {
+        font-size: 16px;
         font-weight: bold;
       }
     }
@@ -52,6 +46,7 @@
         height: 22px;
         width: 22px;
         color: var(--icon-color);
+
         @include mobile {
           height: 28px;
           width: 28px;
@@ -66,10 +61,21 @@
   }
 
   .body {
-    font-size: 14px;
+    font-size: 13px;
     padding: 16px;
+
     @include mobile {
-      padding: 16px 8px;
+      padding: 16px 32px 16px 16px;
+    }
+
+    .customMessage {
+      p:first-child {
+        margin-top: 0;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
     }
 
     .footer {
@@ -78,21 +84,46 @@
   }
 
   .footer {
-    padding: 0 8px 8px 8px;
+    padding: 16px;
+    margin-top: 0;
 
     .ui__choice--center {
       flex: auto;
       align-self: center;
     }
+
+    .modal-button {
+      height: 32px;
+      margin: 0;
+
+      @include mobile {
+        @include button-reset;
+        background: var(--primary-button);
+        border-radius: 4px;
+        height: 32px;
+        width: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: var(--primary-button-text);
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      &.second-option-button {
+        @extend %secondary-button-selected;
+
+        &:hover {
+          @extend %secondary-button-hover;
+        }
+      }
+    }
   }
 
   .divider {
-    @include mobile {
-      display: none;
-    }
-    height: 0.5px;
+    height: 1px;
     width: 100%;
     background: var(--divider);
   }
 }
-

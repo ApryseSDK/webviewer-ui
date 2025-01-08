@@ -7,14 +7,12 @@ import { getMeasurementScalePreset, initialScale } from 'constants/measurementSc
 
 export default {
   title: 'Components/ScaleModal',
-  component: ScaleModal
+  component: ScaleModal,
 };
 
 core.getScales = () => [];
 core.getScalePrecision = () => 0.1;
 core.getViewerElement = () => {};
-
-window.Core.Scale.getFormattedValue = () => '';
 
 const getStore = () => {
   const initialState = {

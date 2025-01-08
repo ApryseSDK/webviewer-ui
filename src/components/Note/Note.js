@@ -18,7 +18,7 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 
 import './Note.scss';
 
@@ -120,7 +120,7 @@ const Note = ({
 
   useEffect(() => {
     if (noteTransformFunction) {
-      const notesPanelElement = getRootNode().getElementsByClassName('NotesPanel')[0];
+      const notesPanelElement = getRootNode().querySelectorAll('.NotesPanel')[0];
       ids.current.forEach((id) => {
         const child = notesPanelElement.querySelector(`[data-webviewer-custom-element=${id}]`);
         if (child) {
@@ -164,11 +164,15 @@ const Note = ({
     }
   }, [isDocumentReadOnly, isContentEditable, setIsEditing]);
 
-  const handleNoteClick = (e) => {
+  const handleNoteClick = async (e) => {
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
     e && e.stopPropagation();
 
+    if (isMultiSelectMode) {
+      handleMultiSelect(!isMultiSelected);
+      return;
+    }
     if (unreadAnnotationIdSet.has(annotation.Id)) {
       dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: annotation.Id }));
     }
@@ -180,12 +184,17 @@ const Note = ({
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE)), 300);
     }
-    if (isInNotesPanel && !(isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW)) {
+    if (isInNotesPanel && !(isOfficeEditorMode && officeEditorEditMode === OfficeEditorEditMode.PREVIEW)) {
       core.selectAnnotation(annotation, documentViewerKey);
       setCurAnnotId(annotation.Id);
       core.jumpToAnnotation(annotation, documentViewerKey);
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
+      }
+      if (isOfficeEditorMode) {
+        const trackedChangeId = annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
+        await core.getOfficeEditor().moveCursorToTrackedChange(trackedChangeId);
+        core.getOfficeEditor().freezeMainCursor();
       }
     }
   };
@@ -197,7 +206,7 @@ const Note = ({
     expanded: isSelected,
     'is-multi-selected': isMultiSelected,
     unread: unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies,
-    'disabled': isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW,
+    'disabled': isOfficeEditorMode && officeEditorEditMode === OfficeEditorEditMode.PREVIEW,
   });
 
   const repliesClass = classNames({
@@ -225,15 +234,6 @@ const Note = ({
   }, [isMultiSelectMode]);
 
   const showReplyArea = !Object.values(isEditingMap).some((val) => val);
-
-  const handleNoteKeydown = (e) => {
-    // Click if enter or space is pressed and is current target.
-    const isNote = e.target === e.currentTarget;
-    if (isNote && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault(); // Stop from being entered in field
-      handleNoteClick();
-    }
-  };
 
   const handleReplyClicked = (reply) => {
     // set clicked reply as read
@@ -264,26 +264,23 @@ const Note = ({
 
   const groupAnnotations = core.getGroupAnnotations(annotation, documentViewerKey);
   const isGroup = groupAnnotations.length > 1;
-  let isCaretAnnotation = false;
-  isCaretAnnotation = groupAnnotations.some((annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation);
-  if (isCaretAnnotation) {
-    isMultiSelectMode = false;
-    isMultiSelected = false;
-  }
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
 
   return (
     <div
-      role="button"
-      tabIndex={0}
       ref={containerRef}
       className={noteClass}
-      onClick={handleNoteClick}
-      onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
     >
+      <Button
+        className='note-button'
+        onClick={(e) => handleNoteClick(e)}
+        ariaLabelledby={`note_${annotation.Id}`}
+        ariaCurrent={isSelected}
+        dataElement="expandNoteButton"
+      />
       <NoteContent
         noteIndex={0}
         annotation={annotation}

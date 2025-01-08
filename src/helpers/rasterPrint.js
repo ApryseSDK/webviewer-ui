@@ -10,6 +10,7 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { getGrayscaleDarknessFactor } from './printGrayscaleDarknessFactor';
 import { getCurrentViewRect, doesCurrentViewContainEntirePage } from './printCurrentViewHelper';
 import { getSortStrategies } from 'constants/sortStrategies';
+import { hideRequiredWidgetStyling, showRequiredWidgetStyling } from './widgetPrintHelpers';
 
 let pendingCanvases = [];
 let colorMap;
@@ -205,6 +206,7 @@ const drawAnnotationsOnCanvas = async (canvas, pageNumber, isGrayscale) => {
   }
 
   const widgetContainer = createWidgetContainer(pageNumber - 1);
+  const requiredWidgets = hideRequiredWidgetStyling(widgetAnnotations);
   await core.drawAnnotations(pageNumber, canvas, true, widgetContainer);
   adjustListBoxForPrint(widgetContainer);
   document.body.appendChild(widgetContainer);
@@ -218,6 +220,7 @@ const drawAnnotationsOnCanvas = async (canvas, pageNumber, isGrayscale) => {
     logging: false
   });
 
+  showRequiredWidgetStyling(requiredWidgets);
   document.body.removeChild(widgetContainer);
 };
 

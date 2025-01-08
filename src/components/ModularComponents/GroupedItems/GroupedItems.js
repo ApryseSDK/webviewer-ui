@@ -30,25 +30,46 @@ const GroupedItems = (props) => {
     return itemValidTypes.includes(itemType);
   });
 
-  const [
-    lastPickedToolForGroupedItems,
-    activeGroupedItems,
-  ] = useSelector((state) => [
-    selectors.getLastPickedToolForGroupedItems(state, dataElement),
-  ]);
-
   const flyoutDataElement = `${dataElement}Flyout`;
+  const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
+  const alwaysVisibleGroupedItems = useSelector(selectors.getAlwaysVisibleGroupedItems);
+  const flyoutItems = useSelector((state) => selectors.getFlyoutMap(state)[flyoutDataElement]?.items);
+
+  const moreButtonDefaultIcon = 'icon-tools-more';
+  const [moreButtonIcon, setMoreButtonIcon] = useState(moreButtonDefaultIcon);
+
+  const findActiveToolInFlyout = (flyoutItems) => {
+    const activeTool = core.getToolMode();
+    if (!flyoutItems) {
+      return;
+    }
+
+    for (const item of flyoutItems) {
+      if (item.toolName && item.toolName === activeTool?.name) {
+        return item;
+      }
+      if (item.children) {
+        const found = findActiveToolInFlyout(item.children);
+        if (found) {
+          return found;
+        }
+      }
+    }
+  };
+
+  const handleMoreButtonIcon = () => {
+    const isActiveToolInFlyout = findActiveToolInFlyout(flyoutItems);
+    const isGroupedItemsActive = activeGroupedItems?.includes(dataElement) || alwaysVisibleGroupedItems?.includes(dataElement);
+    if (size > 0 && isActiveToolInFlyout && isGroupedItemsActive) {
+      setMoreButtonIcon('icon-tools-more-active');
+    } else {
+      setMoreButtonIcon(moreButtonDefaultIcon);
+    }
+  };
 
   useEffect(() => {
     if (alwaysVisible) {
       dispatch(actions.setFixedGroupedItems(dataElement));
-    }
-    if (!lastPickedToolForGroupedItems && activeGroupedItems?.includes(dataElement)) {
-      const firstToolButton = validItems?.find((item) => item.type === ITEM_TYPE.TOOL_BUTTON);
-      if (firstToolButton) {
-        dispatch(actions.setLastPickedToolForGroupedItems(dataElement, firstToolButton.toolName));
-        core.setToolMode(firstToolButton.toolName);
-      }
     }
   }, []);
 
@@ -69,8 +90,10 @@ const GroupedItems = (props) => {
       },
       size: size,
     };
+    handleMoreButtonIcon();
   }, [size, items]);
-  useSizeStore(dataElement, size, elementRef, headerDirection);
+
+  useSizeStore({ dataElement, size, elementRef, headerDirection });
 
   useEffect(() => {
     const flyout = {
@@ -130,7 +153,7 @@ const GroupedItems = (props) => {
             dataElement={`${flyoutDataElement}Toggle`}
             toggleElement={flyoutDataElement}
             title="action.more"
-            img="icon-tools-more"/>
+            img={moreButtonIcon} />
         }
       </div>);
   }

@@ -39,7 +39,12 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => (dispat
       reject();
     }
 
-    const extractedDataPromise = otherWebViewerIframe.contentWindow.extractedDataPromise;
+    let contentWindow = otherWebViewerIframe.contentWindow;
+    if (window.isApryseWebViewerWebComponent) {
+      contentWindow = window;
+    }
+
+    const extractedDataPromise = contentWindow.extractedDataPromise;
     if (!extractedDataPromise) {
       console.warn('Could not retrieve data from other instance of WebViewer');
       reject();
@@ -48,7 +53,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => (dispat
     dispatch(actions.openElement(DataElements.LOADING_MODAL));
     extractedDataPromise.then((docToMerge) => {
       dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
-        fireEvent(Events.DOCUMENT_MERGED, { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
+        fireEvent(Events.DOCUMENT_MERGED, { filename, pages: contentWindow.pagesExtracted });
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
         resolve({ filename, pages });
       });

@@ -104,6 +104,9 @@
   &.opacity-mode-dynamic:hover {
     opacity: 1;
   }
+  &.opacity-mode-dynamic:focus-within {
+    opacity: 1;
+  }
 }
 
 .FloatingHeader.stroke {

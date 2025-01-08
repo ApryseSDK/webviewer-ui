@@ -49,7 +49,6 @@ const initialState = {
 
 const mockAnnotation = {
   Author: 'Mikel Landa',
-  isFormFieldPlaceholder: () => false,
   getReplies: () => [],
   getStatus: () => '',
   isReply: () => false,

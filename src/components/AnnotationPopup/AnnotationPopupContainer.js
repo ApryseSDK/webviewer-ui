@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import { saveAs } from 'file-saver';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -113,6 +114,7 @@ const AnnotationPopupContainer = ({
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [isVisible, setIsVisible] = useState(false);
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -169,6 +171,12 @@ const AnnotationPopupContainer = ({
     }
   }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
 
+  const handleVisibility = debounce(() => {
+    if (AnnotationPopupContainer) {
+      setIsVisible(isFocusedAnnotationSelected);
+    }
+  }, sixtyFramesPerSecondIncrement * 2, { 'trailing': true, 'leading': false });
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
 
@@ -181,6 +189,8 @@ const AnnotationPopupContainer = ({
   useLayoutEffect(() => {
     if (focusedAnnotation || isStylePopupOpen || isDatePickerMount) {
       handleResize();
+      setIsVisible(false);
+      handleVisibility();
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
   }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
@@ -246,7 +256,6 @@ const AnnotationPopupContainer = ({
     && focusedAnnotation.ToolName !== ToolNames.CROP
     && !includesFormFieldAnnotation
     && !focusedAnnotation.isContentEditPlaceholder()
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
   );
 
@@ -295,8 +304,6 @@ const AnnotationPopupContainer = ({
 
   const toolsWithNoStyling = [
     ToolNames.CROP,
-    ToolNames.RADIO_FORM_FIELD,
-    ToolNames.CHECK_BOX_FIELD,
     ToolNames.VIDEO_REDACTION,
     ToolNames.VIDEO_AND_AUDIO_REDACTION,
     ToolNames.AUDIO_REDACTION,
@@ -310,8 +317,8 @@ const AnnotationPopupContainer = ({
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
     && !(focusedAnnotation instanceof Annotations.Model3DAnnotation)
     && !focusedAnnotation.isContentEditPlaceholder()
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
+    && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation)
   );
 
   const hideSnapModeCheckbox = focusedAnnotation instanceof Annotations.EllipseAnnotation || !core.isFullPDFEnabled();
@@ -368,14 +375,22 @@ const AnnotationPopupContainer = ({
   /* FORM FIELD */
   const formFieldCreationManager = core.getFormFieldCreationManager(activeDocumentViewerKey);
   const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
-  const showFormFieldButton = includesFormFieldAnnotation && isInFormFieldCreationMode;
+  const showFormFieldButton = includesFormFieldAnnotation
+    && isInFormFieldCreationMode
+    && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation);
 
   const onOpenFormField = () => {
     closePopup();
     // We disable it while the form field popup is open to prevent having both open
     // at the same time. We re-enable it when the form field popup is closed.
-    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    if (customizableUI) {
+      dispatch(actions.disableElement(PRIORITY_THREE));
+      dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
+    } else {
+      dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    }
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
+    dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
   };
 
   /* DELETE ANNOTATION */
@@ -424,7 +439,6 @@ const AnnotationPopupContainer = ({
     && !focusedAnnotation.isContentEditPlaceholder()
     // TODO(Adam): Update this once SoundAnnotation tool is created.
     && !(focusedAnnotation instanceof Annotations.SoundAnnotation)
-    && !focusedAnnotation.isUncommittedContentEditPlaceholder()
     && !isAppearanceSignature
   );
 
@@ -461,10 +475,10 @@ const AnnotationPopupContainer = ({
   /* DOWNLOAD FILE ATTACHMENT */
   const showFileDownloadButton = focusedAnnotation instanceof Annotations.FileAttachmentAnnotation;
 
-  const downloadFileAttachment = (annot) => {
+  const downloadFileAttachment = async (annot) => {
     // no need to check that annot is of type file annot as the check is done in the JSX
-    // trigger the annotationDoubleClicked event so that it will download the file
-    annotManager.trigger('annotationDoubleClicked', annot);
+    const { fileData, fileName } = await annot.getFullFileMetadata();
+    saveAs(fileData, fileName);
   };
 
   /* AUDIO ANNOTATION */
@@ -492,6 +506,7 @@ const AnnotationPopupContainer = ({
       isLinkModalOpen={isLinkModalOpen}
       isWarningModalOpen={isWarningModalOpen}
       isContextMenuPopupOpen={isContextMenuPopupOpen}
+      isVisible={isVisible}
 
       popupRef={popupRef}
       position={position}

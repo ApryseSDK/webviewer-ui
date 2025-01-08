@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
+import  { getInstanceNode } from 'helpers/getRootNode';
+
 
 function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
+  const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
+  const innerWidth = isApryseWebViewerWebComponent ? getInstanceNode().clientWidth : window.innerWidth;
+  const innerHeight = isApryseWebViewerWebComponent ? getInstanceNode().clientHeight : window.innerHeight;
+
   return {
-    width,
-    height
+    width: innerWidth,
+    height: innerHeight
   };
 }
 

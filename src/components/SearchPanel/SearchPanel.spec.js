@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import SearchPanelWithOutI18n from './SearchPanel';
 import SearchPanelContainerWithOutI18n from './SearchPanelContainer';
 import useMedia from 'hooks/useMedia';
@@ -27,7 +27,7 @@ jest.mock('components/SearchResult', () => {
     return (
       <div>
         <span>SearchResultMock</span>
-        <button className="mock-active-result" onClick={onClickResult}>mock active result</button>
+        <button className="mock-active-result" onClick={onClickResult} aria-current={true}>mock active result</button>
       </div>
     );
   };
@@ -50,7 +50,7 @@ describe('SearchPanel', () => {
     jest.restoreAllMocks();
   });
 
-  it('Should not throw error if now props given', () => {
+  it('Should not throw error if no props given', () => {
     expect(() => {
       render(<SearchPanel />);
     }).not.toThrow();
@@ -141,6 +141,17 @@ describe('SearchPanel', () => {
     fireEvent.click(activeResultButton);
     expect(setActiveResultMock).toBeCalled();
     expect(closeSearchPanelMock).not.toBeCalled();
+  });
+
+  it('Should have aria-current on search result', () => {
+    render(
+      <SearchPanel
+        isOpen
+      />
+    );
+
+    const activeResultButton = screen.queryByRole('button');
+    expect(activeResultButton).toHaveAttribute('aria-current');
   });
 
   it('Should close search panel when result is clicked using mobile device', () => {

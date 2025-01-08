@@ -72,8 +72,8 @@ describe('FlyoutPosition', () => {
           boundingRect: { left: 600, right: 640, top: 60, bottom: 100, width: 40, height: 40 },
           closestId: 'TopHeader',
           // In this case, the reference element is on the right side of the container,
-          // so the X should be the same as the right of the reference element - the width of the flyout
-          expectedX: 440,
+          // so the X should be the same as the right of the reference element - the width of the flyout - the left offset
+          expectedX: 90,
           // the Y should be the same as the top of the reference element - container top + the height of the reference element + the default offset
           expectedY: 56,
         }
@@ -96,8 +96,8 @@ describe('FlyoutPosition', () => {
           boundingRect: { left: 600, right: 640, top: 410, bottom: 450, width: 40, height: 40 },
           closestId: 'BottomHeader',
           // In this case, the reference element is on the right side of the container,
-          // so the X should be the same as the right of the reference element - the width of the flyout
-          expectedX: 440,
+          // so the X should be the same as the right of the reference element - the width of the flyout - the left offset
+          expectedX: 90,
           // the Y should be the same as the top of the reference element - container top - the height of the flyout - the default offset
           expectedY: 154,
         }
@@ -148,6 +148,29 @@ describe('FlyoutPosition', () => {
           expectedY: 200,
         }
       ],
+    },
+    {
+      describeLabel: 'should return the correct position of the flyout when the toggle button is not on a header',
+      tests: [
+        {
+          itLabel: 'Scenario 1',
+          boundingRect: { left: 710, right: 750, top: 60, bottom: 100, width: 40, height: 40 },
+          closestId: null,
+          // In this case, the X should be the same as the left of the reference element - container left - left offset
+          expectedX: 200,
+          // the Y should be the same as the top of the reference element - container top + the height of the reference element + the default offset
+          expectedY: 56
+        },
+        {
+          itLabel: 'Scenario 2',
+          boundingRect: { left: 710, right: 750, top: 360, bottom: 400, width: 40, height: 40 },
+          closestId: null,
+          // In this case, the X should be the same as the left of the reference element - container left - left offset
+          expectedX: 200,
+          // the Y should be bottom of the reference element - the height of the flyout
+          expectedY: 200,
+        }
+      ]
     }
   ];
 

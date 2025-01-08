@@ -6,6 +6,7 @@ import selectors from 'selectors';
 import Events from 'constants/events';
 
 import './ResizeBar.scss';
+import { getWebViewerRect } from 'src/helpers/getRootNode';
 
 const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
@@ -20,7 +21,21 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
     // Maybe throttle is necessary because other components listening to the width would re-render too often?
     const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current) {
-        const newWidth = Math.max(minWidth, Math.min(window.innerWidth, leftDirection ? window.innerWidth - clientX : clientX));
+        const windowRect = getWebViewerRect();
+
+        let newWidth;
+
+        if (leftDirection) {
+          // Resizing from the right
+          const elementOffset = windowRect.right;
+          newWidth = Math.max(minWidth, Math.min(window.innerWidth, elementOffset - clientX));
+        } else {
+          // Resizing from the left
+          const elementOffset = windowRect.left;
+          newWidth = Math.max(minWidth, Math.min(window.innerWidth, clientX - elementOffset));
+        }
+
+        // Call the onResize and dispatch events with the new width
         onResize(newWidth);
         fireEvent(Events.PANEL_RESIZED, { element: dataElement, width: newWidth });
       }

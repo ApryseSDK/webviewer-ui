@@ -59,7 +59,9 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
     return (
       <div className="measurement__detail-item">
         <div className="measurement_list">{keyDisplayNameMap[key]}:</div>
-        {contents}
+        <div className="measurement">
+          {contents}
+        </div>
       </div>
     );
   };
@@ -68,7 +70,10 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
     if (!annotation) {
       return (
         <div className="measurement__detail-item">
-          <div className="measurement_list">{t('option.measurementOverlay.angle')}:</div> 0&deg;
+          <div className="measurement_list">{t('option.measurementOverlay.angle')}:</div>
+          <div className="measurement">
+            0&deg;
+          </div>
         </div>
       );
     }
@@ -102,7 +107,9 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
       angle !== undefined && (
         <div className="measurement__detail-item">
           <div className="measurement_list">{t('option.measurementOverlay.angle')}:</div>
-          {angle}&deg;
+          <div className="measurement">
+            {angle}&deg;
+          </div>
         </div>
       )
     );
@@ -112,7 +119,10 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
     const length = annotation?.Length || 0;
     return (
       <div className="measurement__detail-item">
-        <div className="measurement_list">{t('option.measurementOverlay.length')}</div> {length}
+        <div className="measurement_list">{t('option.measurementOverlay.length')}</div>
+        <div className="measurement">
+          {length}
+        </div>
       </div>
     );
   };
@@ -121,7 +131,10 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
     const radius = annotation?.Radius || 0;
     return (
       <div className="measurement__detail-item">
-        <div className="measurement_list">{t('option.measurementOverlay.radius')}</div> {radius}
+        <div className="measurement_list">{t('option.measurementOverlay.radius')}</div>
+        <div className="measurement">
+          {radius}
+        </div>
       </div>
     );
   };
@@ -136,7 +149,9 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
       <div className="measurement__detail-container">
         <div className="measurement__detail-item">
           <div className="measurement_list">{t('option.shared.precision')}:</div>
-          {precisionFractions[precision] || precision}
+          <div className="measurement">
+            {precisionFractions[precision] || precision}
+          </div>
         </div>
         {key === 'distanceMeasurement' && (
           <LineMeasurementInput annotation={annotation} isOpen={isOpen} selectedTool={selectedTool} />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import Slider from './Slider';
 
@@ -59,7 +60,25 @@ const mockPropsStroke = {
   min: 0,
   max: 20,
   step: 0.01,
-  getLocalValue: jest.fn().mockReturnValue(2.05),
+  getLocalValue: (value) => value,
+};
+
+const mockAccessibleProperties = {
+  property: mockPropertyStroke,
+  value: 2.05,
+  displayProperty: 'thickness',
+  getDisplayValue: (value) => value,
+  dataElement: 'strokeThicknessSlider',
+  getCirclePosition: jest.fn(),
+  convertRelativeCirclePositionToValue: jest.fn(),
+  onStyleChange: jest.fn(),
+  onSliderChange: jest.fn(),
+  withInputField: true,
+  inputFieldType: 'number',
+  min: 0,
+  max: 20,
+  step: 0.01,
+  getLocalValue: (value) => value,
 };
 
 const mockPropertyOpacity = 'Opacity';
@@ -107,58 +126,17 @@ describe('Slider', () => {
     render(<TestSlider {...mockPropsOpacity} />);
   });
 
-  describe('adjusting the slider', () => {
-    let container;
-    let svg;
-    beforeEach(() => {
-      jest.clearAllMocks();
+  it('ensuring the slider is accessible', () => {
+    render(<TestSlider {...mockAccessibleProperties} />);
+    const textBox = screen.getByRole('textbox');
+    expect(textBox).toHaveValue('2.05');
+    screen.getByRole('textbox', { name: /Stroke/i });
+    userEvent.clear(textBox);
+    userEvent.type(textBox, '4');
+    expect(screen.getByRole('textbox')).toHaveValue('4');
 
-      container = render(<TestSlider {...mockProps} />).container;
-      svg = container.querySelector('svg');
-
-      fireEvent(
-        svg,
-        getMouseEvent('mousedown', {
-          pageX: 250,
-        }),
-      );
-    });
-
-    it('calls onSliderChange on mousedown', () => {
-      expect(mockProps.onStyleChange).not.toHaveBeenCalled();
-      expect(mockProps.onSliderChange).toHaveBeenCalled();
-      expect(container.querySelector('.slider-value').textContent).toBe('1');
-    });
-
-    it('calls onSliderChange on mousemove', () => {
-      jest.clearAllMocks();
-
-      fireEvent(
-        svg,
-        getMouseEvent('mousemove', {
-          pageX: 260,
-        }),
-      );
-
-      expect(mockProps.onStyleChange).not.toHaveBeenCalled();
-      expect(mockProps.onSliderChange).toHaveBeenCalled();
-      expect(container.querySelector('.slider-value').textContent).toBe('1');
-    });
-
-    it('calls onStyleChange on mouseup', () => {
-      jest.clearAllMocks();
-
-      fireEvent(
-        svg,
-        getMouseEvent('mouseup', {
-          pageX: 250,
-        }),
-      );
-
-      expect(mockProps.onStyleChange).toHaveBeenCalledWith(mockProperty, 1);
-      expect(mockProps.onSliderChange).not.toHaveBeenCalled();
-      expect(container.querySelector('.slider-value').textContent).toBe('1');
-    });
+    screen.getByRole('slider', { name: /Stroke/i });
+    expect(screen.getByRole('slider', { name: /Stroke/i })).toHaveValue('4');
   });
 
   describe('adjusting the stroke slider', () => {
@@ -168,7 +146,7 @@ describe('Slider', () => {
       jest.clearAllMocks();
 
       container = render(<TestSlider {...mockPropsStroke} />).container;
-      svg = container.querySelector('svg');
+      svg = container.querySelector('input');
 
       fireEvent(
         svg,
@@ -181,7 +159,7 @@ describe('Slider', () => {
     it('changes to local value and editable input on input focus', () => {
       container.querySelector('.slider-input-field').focus();
       const editableInput = container.querySelector('.slider-input-field');
-      expect(container.querySelector('.slider-input-field').value).toBe('2');
+      expect(container.querySelector('.slider-input-field').value).toBe('2.05');
       editableInput.value = 2.07;
       expect(container.querySelector('.slider-input-field').value).toBe('2.07');
       editableInput.blur();
@@ -218,7 +196,7 @@ describe('Slider', () => {
       jest.clearAllMocks();
 
       container = render(<TestSlider {...mockPropsOpacity} />).container;
-      svg = container.querySelector('svg');
+      svg = container.querySelector('input');
 
       fireEvent(
         svg,

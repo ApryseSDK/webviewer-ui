@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import ColorPalettePicker from './ColorPalettePicker';
 import { Basic } from './ColorPalettePicker.stories';
 
 // wrap story component with i18n provider, so component can use useTranslation()
 const BasicColorPalettePickerStory = withI18n(Basic);
-// wrap base component with i81n provider and mock redux
+// wrap base component with i18n provider and mock redux
 const TestColorPalettePicker = withProviders(ColorPalettePicker);
 
 function noop() {}
@@ -31,6 +31,18 @@ describe('ColorPalettePicker', () => {
     );
     // Verify that ColorPalettePicker related classes are in the document
     expect(container.querySelector('.colorPickerController')).toBeInTheDocument();
+  });
+
+  it('Should render proper label', () => {
+    const idTest = 'color-picker-container';
+    render(
+      <>
+        <span id={idTest}>test</span>
+        <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} ariaLabelledBy={idTest} disableTitle/>
+      </>
+    );
+    const container = screen.getByRole('group', { name: 'test' });
+    expect(container).toHaveAttribute('aria-labelledby', 'color-picker-container');
   });
 
   it('Test add color button works', () => {
@@ -100,5 +112,12 @@ describe('ColorPalettePicker', () => {
     expect(removeButton).not.toBeInTheDocument();
     const addButton = container.querySelector('#addCustomColor');
     expect(addButton).not.toBeInTheDocument();
+  });
+
+  it('Component should have a Color Aria Label', () => {
+    render(<TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} customColors={customColors}/>);
+    const element = screen.getByLabelText(`Color ${customColors[0]}`);
+
+    expect(element).toBeInTheDocument();
   });
 });

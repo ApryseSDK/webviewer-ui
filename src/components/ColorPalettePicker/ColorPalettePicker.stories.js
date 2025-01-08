@@ -1,4 +1,7 @@
 import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import initialState from 'src/redux/initialState';
 import ColorPalettePicker from './ColorPalettePicker';
 import { useTranslation } from 'react-i18next';
 
@@ -13,18 +16,18 @@ const customColors = ['#000000', '#ff1111', '#ffffff'];
 
 export function Basic() {
   const [t] = useTranslation();
-  function noop() {}
+  function noop() { }
   const props = {
     t,
     color,
     customColors,
     getHexColor: noop,
     findCustomColorsIndex: noop,
-    setColorToBeDeleted: noop,
+    setColorToBeDeleted: noop
   };
   return (
-    <div>
+    <Provider store={configureStore({ reducer: () => initialState })}>
       <ColorPalettePicker {...props} />
-    </div>
+    </Provider>
   );
 }

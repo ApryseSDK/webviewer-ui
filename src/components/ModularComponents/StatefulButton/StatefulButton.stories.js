@@ -27,9 +27,6 @@ const BasicComponent = (props) => {
 export default {
   title: 'ModularComponents/StatefulButton',
   component: StatefulButtonComponent,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 

@@ -13,6 +13,16 @@ import { ITEM_TYPE, PREBUILT_FLYOUTS, OVERFLOW_FLYOUTS } from 'constants/customi
 export default (store) => () => {
   const state = store.getState();
   const { checkTypes } = window.Core;
+  const disabledElements = Object.keys(state.viewer.disabledElements)
+    .filter((element) => state.viewer.disabledElements[element].disabled)
+    .map((element) => element);
+
+  const shouldAddDisabledFlag = (componentObject) => {
+    const dataElement = componentObject.dataElement;
+    if (disabledElements.includes(dataElement)) {
+      componentObject['disabled'] = true;
+    }
+  };
 
   const validateComponents = (componentObject) => {
     for (const key in componentObject) {
@@ -40,7 +50,12 @@ export default (store) => () => {
           componentObject[key] = '';
         }
       }
+      // We should not export icons for preset buttons
+      if (componentObject?.type === ITEM_TYPE.PRESET_BUTTON) {
+        delete componentObject.icon;
+      }
     }
+    shouldAddDisabledFlag(componentObject);
     return componentObject;
   };
 
@@ -56,6 +71,7 @@ export default (store) => () => {
           return true;
         });
       }
+      shouldAddDisabledFlag(header);
     }
     return modularHeaders;
   };
@@ -70,6 +86,7 @@ export default (store) => () => {
 
     panelsArray.forEach((panel) => {
       checkTypes([panel], [PANEL_TYPE], 'UI.exportModularComponents');
+      shouldAddDisabledFlag(panel);
       panelsMap[panel.dataElement] = panel;
     });
 
@@ -85,6 +102,7 @@ export default (store) => () => {
         continue;
       }
       const items = processItems(flyout.items, key);
+      shouldAddDisabledFlag(flyout);
       normalizedFlyouts[key] = { ...flyout, items };
     }
     return normalizedFlyouts;

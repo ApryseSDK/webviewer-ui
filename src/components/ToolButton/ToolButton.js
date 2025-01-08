@@ -108,6 +108,7 @@ const ToolButton = ({
       color={color}
       fillColor={fillColor}
       strokeColor={strokeColor}
+      ariaCurrent={isActive}
       {...restProps}
       {...restObjectData}
     />

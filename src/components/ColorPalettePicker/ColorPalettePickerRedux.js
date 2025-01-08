@@ -18,7 +18,7 @@ function ColorPickerModalRedux(props) {
   const customColors = useSelector(selectors.getCustomColors);
 
   useEffect(() => {
-    if (activeCustomColor && color && (modifyColorMode || getHexColor(activeCustomColor) === getHexColor(color))) {
+    if (activeCustomColor && color && (modifyColorMode || getHexColor(activeCustomColor) !== getHexColor(color))) {
       handleColorChange(activeCustomColor);
     }
   }, [activeCustomColor, modifyColorMode]);
@@ -42,7 +42,7 @@ function ColorPickerModalRedux(props) {
     dispatch(actions.openElement('ColorPickerModal'));
   };
 
-  const openDeleteModal = async () => {
+  const openDeleteModal = async (onConfirm) => {
     const message = t('warning.colorPicker.deleteMessage');
     const title = t('warning.colorPicker.deleteTitle');
     const confirmBtnText = t('action.ok');
@@ -52,6 +52,9 @@ function ColorPickerModalRedux(props) {
       title,
       confirmBtnText,
       onConfirm: async () => {
+        if (onConfirm) {
+          onConfirm();
+        }
         handleDeleteColor();
       },
     };

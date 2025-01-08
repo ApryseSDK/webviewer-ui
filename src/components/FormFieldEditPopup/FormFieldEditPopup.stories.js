@@ -4,7 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { Provider } from 'react-redux';
 
-
 export default {
   title: 'Components/FormFieldEditPopup',
   component: FormFieldEditPopup,
@@ -14,7 +13,7 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
-  }
+  },
 };
 
 const store = configureStore({ reducer: () => initialState });
@@ -22,15 +21,17 @@ const store = configureStore({ reducer: () => initialState });
 const fields = [
   {
     label: 'formField.formFieldPopup.fieldName',
-    onChange: () => { },
+    confirmChange: () => { },
     value: 'Name',
+    setValue: () => { },
     required: true,
     type: 'text',
   },
   {
     label: 'formField.formFieldPopup.fieldValue',
-    onChange: () => { },
+    confirmChange: () => { },
     value: 'Miguelito',
+    setValue: () => { },
     type: 'text',
   }
 ];
@@ -38,18 +39,21 @@ const fields = [
 const flags = [
   {
     label: 'formField.formFieldPopup.readOnly',
-    onChange: () => { },
+    confirmChange: () => { },
     isChecked: true,
+    setIsChecked: () => { },
   },
   {
     label: 'formField.formFieldPopup.multiLine',
-    onChange: () => { },
+    confirmChange: () => { },
     isChecked: false,
+    setIsChecked: () => { },
   },
   {
     label: 'formField.formFieldPopup.required',
-    onChange: () => { },
+    confirmChange: () => { },
     isChecked: true,
+    setIsChecked: () => { },
   }
 ];
 
@@ -57,15 +61,19 @@ const annotation = {
   Width: 100,
   Height: 100,
   getCustomData: () => { },
-  getFormFieldPlaceholderType: () => { },
+  getField: () => {
+    return {
+      getFieldType: () => 'TextFormField',
+    };
+  }
 };
 
 const indicator = {
   label: 'formField.formFieldPopup.documentFieldIndicator',
-  toggleIndicator: () => { },
+  confirmToggleIndicator: () => { },
   isChecked: true,
-  onChange: () => { },
-  value: 'This is an indicator'
+  confirmTextChange: () => { },
+  textValue: 'This is an indicator'
 };
 
 

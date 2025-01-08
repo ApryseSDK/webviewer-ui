@@ -76,7 +76,8 @@ describe('RedactionSearchResultGroup', () => {
         setSelectedSearchResultIndexes,
       };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
-      const checkBox = screen.getByLabelText('Page 1');
+      const checkBox = screen.getByRole('checkbox', { name: 'Page 1' });
+
       expect(checkBox).toBeChecked();
     });
 
@@ -98,7 +99,8 @@ describe('RedactionSearchResultGroup', () => {
         setSelectedSearchResultIndexes,
       };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
-      const checkBox = screen.getByLabelText('Page 1');
+
+      const checkBox = screen.getByRole('checkbox', { name: 'Page 1' });
       expect(checkBox).not.toBeChecked();
     });
 

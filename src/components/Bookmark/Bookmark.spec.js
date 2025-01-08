@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Basic } from './Bookmark.stories';
 
 const BasicOutline = withProviders(Basic);
@@ -13,11 +13,11 @@ describe('Outline', () => {
 
   it('Double clicking on the title should show a renaming input', () => {
     const { container } = render(<BasicOutline />);
-    const bookmarkElements = container.querySelector('.bookmark-outline-text');
+    const bookmarkElements = screen.getByRole('button', { name: 'Page 1' });
+
     let textInput = container.querySelector('.bookmark-outline-input');
     expect(textInput).toBeNull();
 
-    expect(bookmarkElements.className).toContain('bookmark-text-input');
     fireEvent.doubleClick(bookmarkElements);
     textInput = container.querySelector('.bookmark-outline-input');
     expect(textInput).not.toBeNull();

@@ -18,6 +18,9 @@ const initialState = {
     ],
     activeDocumentViewerKey: 1,
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 function rootReducer(state = initialState, action) {

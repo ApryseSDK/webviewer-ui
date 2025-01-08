@@ -1,7 +1,8 @@
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
-import { ITEM_TYPE } from 'constants/customizationVariables';
+import { ITEM_TYPE, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import { defaultPanels } from '../modularComponents';
+import { defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents, defaultOfficeEditorPanels } from '../officeEditorModularComponents';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -166,6 +167,16 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isOfficeEditorMode: payload.isOfficeEditorMode,
       };
+    case 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED':
+      return {
+        ...state,
+        isOfficeEditorHeaderEnabled: payload.isOfficeEditorHeaderEnabled,
+      };
+    case 'SET_IS_SHEET_EDITOR_MODE':
+      return {
+        ...state,
+        isSheetEditorMode: payload.isSheetEditorMode,
+      };
     case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
       return {
         ...state,
@@ -210,6 +221,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         activeTab: payload.activeTab,
+      };
+    case 'SET_TAB_NAME_HANDLER':
+      return {
+        ...state,
+        tabNameHandler: payload.tabNameHandler,
       };
     case 'SET_TABS':
       return {
@@ -491,6 +507,14 @@ export default (initialState) => (state = initialState, action) => {
           [payload.groupedItem]: payload.toolName,
         }
       };
+    case 'SET_LAST_ACTIVE_TOOL_FOR_RIBBON':
+      return {
+        ...state,
+        lastActiveToolForRibbon: {
+          ...state.lastActiveToolForRibbon,
+          [payload.ribbon]: payload.toolName,
+        }
+      };
     case 'SET_LAST_PICKED_TOOL_AND_GROUP':
       return {
         ...state,
@@ -498,8 +522,6 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_ACTIVE_CUSTOM_RIBBON':
       return { ...state, activeCustomRibbon: payload.customRibbon };
-    case 'SET_OUTLINE_CONTROL_VISIBILITY':
-      return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_AUTO_EXPAND_OUTLINES':
       return { ...state, autoExpandOutlines: payload.autoExpandOutlines };
     case 'SET_ANNOTATION_NUMBERING':
@@ -674,11 +696,11 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_COLOR_MAP':
       return { ...state, colorMap: payload.colorMap };
     case 'SET_WARNING_MESSAGE':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'ENABLE_DELETE_TAB_WARNING':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'DISABLE_DELETE_TAB_WARNING':
-      return { ...state, warning: payload };
+      return { ...state, warning: { ...state.warning, ...payload } };
     case 'SET_ERROR_MESSAGE':
       return { ...state, errorMessage: payload.message, errorTitle: payload.title };
     case 'SET_CUSTOM_NOTE_FILTER':
@@ -873,6 +895,8 @@ export default (initialState) => (state = initialState, action) => {
         modularComponents: initialState.modularComponents,
         modularComponentFunctions: initialState.modularComponentFunctions,
         activeCustomRibbon: initialState.activeCustomRibbon,
+        activeGroupedItems: initialState.activeGroupedItems,
+        lastActiveToolForRibbon: initialState.lastActiveToolForRibbon,
         activeFlyout: initialState.activeFlyout,
         flyoutToggleElement: initialState.flyoutToggleElement,
         openElements: initialState.openElements,
@@ -882,11 +906,11 @@ export default (initialState) => (state = initialState, action) => {
         genericPanels: defaultPanels,
       };
     }
-    case 'SET_ACTIVE_CUSTOM_PANEL':
+    case 'SET_ACTIVE_TAB_IN_PANEL':
       return {
         ...state,
-        activeCustomPanel: {
-          ...state.activeCustomPanel,
+        activeTabInPanel: {
+          ...state.activeTabInPanel,
           [payload.wrapperPanel]: payload.tabPanel
         },
       };
@@ -976,6 +1000,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, hideContentEditWarning: payload.hideWarning };
     case 'SET_CONTENT_EDIT_WORKERS_LOADED':
       return { ...state, contentEditWorkersLoaded: payload.contentEditWorkersLoaded };
+    case 'SET_CONTENT_EDITING_ENABLED':
+      return { ...state, isContentEditingEnabled: payload.isContentEditingEnabled };
     case 'SET_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,
@@ -1137,6 +1163,83 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
     case 'SET_NOTES_IN_LEFT_PANEL':
       return { ...state, notesInLeftPanel: payload };
+    case 'PUSH_FOCUSED_ELEMENT': {
+      return {
+        ...state,
+        focusedElementsStack: [...state.focusedElementsStack, payload],
+      };
+    }
+    case 'SET_FOCUSED_ELEMENTS_STACK': {
+      return {
+        ...state,
+        focusedElementsStack: payload,
+      };
+
+    }
+    case 'SET_KEYBOARD_OPEN': {
+      return { ...state, isKeyboardOpen: payload };
+    }
+    case 'SET_COMPARE_ANNOTATIONS_MAP': {
+      return { ...state, compareAnnotationsMap: payload };
+    }
+    case 'STASH_ENABLED_RIBBONS': {
+      return { ...state, enabledRibbonsStash: [...payload.ribbonItems] };
+    }
+    case 'STASH_COMPONENTS': {
+      const { UIMode } = payload;
+      const modularHeaders = { ...state.modularHeaders };
+      const modularComponents = { ...state.modularComponents };
+      const panels = [...state.genericPanels];
+      const updatedModularComponentStash = {
+        ...state.modularComponentStash,
+        [UIMode]: {
+          modularHeaders,
+          modularComponents,
+          panels,
+        }
+      };
+      return { ...state, modularComponentStash: updatedModularComponentStash };
+    }
+    case 'RESTORE_COMPONENTS': {
+      const { UIMode } = payload;
+      const modularComponentStash = { ...state.modularComponentStash };
+
+      if (!modularComponentStash[UIMode]) {
+        // If no stash is found we reset to the default components for that viewer mode
+        if (UIMode === VIEWER_CONFIGURATIONS.DEFAULT) {
+          return {
+            ...state,
+            modularHeaders: { ...initialState.modularHeaders },
+            modularComponents: { ...initialState.modularComponents },
+            genericPanels: [...initialState.genericPanels],
+          };
+        } else if (UIMode === VIEWER_CONFIGURATIONS.DOCX_EDITOR) {
+          return {
+            ...state,
+            modularHeaders: { ...defaultOfficeEditorModularHeaders },
+            modularComponents: { ...defaultOfficeEditorModularComponents },
+            genericPanels: [...defaultOfficeEditorPanels],
+          };
+        }
+      }
+
+      const { modularHeaders, modularComponents, panels } = modularComponentStash[UIMode];
+      // Delete the stash after restoring
+      const updatedModularComponentStash = Object.keys(modularComponentStash).reduce((result, key) => {
+        if (key !== UIMode) {
+          result[key] = modularComponentStash[key];
+        }
+        return result;
+      }, {});
+
+      return {
+        ...state,
+        modularComponentStash: updatedModularComponentStash,
+        modularHeaders: { ...modularHeaders },
+        modularComponents: { ...modularComponents },
+        genericPanels: [...panels],
+      };
+    }
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import './ChangeListItem.scss';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
+import classNames from 'classnames';
 import core from 'core';
 import selectors from 'selectors/index';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ const propTypes = {
   type: PropTypes.string,
   old: PropTypes.object,
   new: PropTypes.object,
+  selectedAnnotationId: PropTypes.string
 };
 
 const ChangeListItem = (props) => {
@@ -42,8 +44,10 @@ const ChangeListItem = (props) => {
     }
   }, [syncViewer]);
 
+  let isSelected = props.selectedAnnotationId && props.old?.Id === props.selectedAnnotationId;
+
   return (
-    <div className="ChangeListItem" onClick={onClickItem}>
+    <div className={classNames('ChangeListItem', { 'selected': isSelected })} onClick={onClickItem}>
       <div className="icon-change">
         <Icon glyph="icon-compare-change" />
       </div>

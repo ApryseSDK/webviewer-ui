@@ -7,17 +7,11 @@ import DataElements from 'src/constants/dataElement';
 export default (store, toolName) => {
   const { dispatch, getState } = store;
   const state = getState();
-  const toolGroup =
-    selectors.getToolButtonObject(getState(), toolName)?.group || '';
+  const featureFlags = state.featureFlags;
+  const { customizableUI } = featureFlags;
 
-  const isCustomizableUI = state.featureFlags.customizableUI;
-  if (isCustomizableUI) {
-    const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
-    dispatch(actions.setLastPickedToolAndGroup({ tool: toolName, group: groupedItemsWithTool }));
-    dispatch(actions.setLastPickedToolForGroupedItems(groupedItemsWithTool, toolName));
-    core.setToolMode(toolName);
-    return;
-  }
+  const toolGroup =
+    selectors.getToolButtonObject(state, toolName)?.group || '';
 
   if (toolGroup) {
     dispatch(actions.openElement(DataElements.TOOLS_OVERLAY));
@@ -32,6 +26,14 @@ export default (store, toolName) => {
   }
 
   dispatch(actions.closeElement(DataElements.TOOL_STYLE_POPUP));
-  core.setToolMode(toolName);
   dispatch(actions.setActiveToolGroup(toolGroup));
+  if (customizableUI) {
+    // We can also set the active ribbon here if the tool is associated with a ribbon
+    const ribbonAssociatedWithTool = selectors.getRibbonAssociatedWithTool(state, toolName);
+    if (ribbonAssociatedWithTool) {
+      store.dispatch(actions.setActiveCustomRibbon(ribbonAssociatedWithTool));
+    }
+  }
+  core.setToolMode(toolName);
+
 };

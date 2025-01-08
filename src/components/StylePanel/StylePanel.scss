@@ -10,6 +10,7 @@
   .style-panel-header {
     font-size: 16px;
     font-weight: bold;
+    margin-top: 0px;
     margin-bottom: 16px;
   }
 
@@ -28,7 +29,7 @@
 
     .msg {
       padding-top: 24px;
-      font-size: 14px;
+      font-size: 13px;
 
       @include tablet-and-desktop {
         line-height: 15px;

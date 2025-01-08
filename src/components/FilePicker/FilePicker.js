@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './FilePicker.scss';
 
@@ -28,10 +29,10 @@ const FilePicker = ({
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = useFocusOnClose((e) => {
     const files = e.target.files;
     files.length > 0 && onChange(Array.from(files));
-  };
+  });
 
   const handleDragEnter = (e) => {
     e.preventDefault();

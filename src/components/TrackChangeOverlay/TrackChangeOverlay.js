@@ -1,36 +1,52 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import actions from 'actions';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
 import core from 'core';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 
 import './TrackChangeOverlay.scss';
 
+const propTypes = {
+  isFlyoutItem: PropTypes.bool,
+  activeFlyout: PropTypes.string,
+  onKeyDownHandler: PropTypes.func,
+};
+
 const items = [
   {
-    key: OFFICE_EDITOR_EDIT_MODE.EDITING,
+    key: OfficeEditorEditMode.EDITING,
     description: 'editingDescription',
   },
   {
-    key: OFFICE_EDITOR_EDIT_MODE.REVIEWING,
+    key: OfficeEditorEditMode.REVIEWING,
     description: 'reviewingDescription',
   },
   {
-    key: OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY,
+    key: OfficeEditorEditMode.VIEW_ONLY,
     description: 'viewOnlyDescription',
   }
 ];
 const translationPrefix = 'officeEditor.';
 
-const TrackChangeOverlay = () => {
+const TrackChangeOverlay = ({
+  isFlyoutItem = false,
+  onKeyDownHandler = null,
+  activeFlyout = null,
+}) => {
   const [t] = useTranslation();
+  const dispatch = useDispatch();
   const [
     editMode,
+    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getOfficeEditorEditMode(state),
+      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -44,22 +60,37 @@ const TrackChangeOverlay = () => {
 
   const onClickItem = (mode) => {
     core.getOfficeEditor().setEditMode(mode);
+
+    if (isFlyoutItem && activeFlyout) {
+      dispatch(actions.closeElement(activeFlyout));
+    }
   };
 
   return (
-    <div className="track-change-overlay">
+    <div className={classNames({
+      'track-change-overlay': true,
+      'modular-ui': customizableUI,
+      'flyout-item': isFlyoutItem,
+    })}>
       <Dropdown
+        id='track-change-overlay'
         items={items}
+        width={144}
         getCustomItemStyle={() => ({ width: '144px', height: '48px' })}
         applyCustomStyleToButton={false}
-        currentSelectionKey={(editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) ? OFFICE_EDITOR_EDIT_MODE.REVIEWING : editMode}
+        currentSelectionKey={(editMode === OfficeEditorEditMode.PREVIEW) ? OfficeEditorEditMode.REVIEWING : editMode}
         onClickItem={onClickItem}
         getDisplayValue={(item) => t(`${translationPrefix}${item.key}`)}
         getKey={(item) => item.key}
         renderItem={renderDropdownItem}
+        className="text-left"
+        isFlyoutItem={isFlyoutItem}
+        onKeyDownHandler={onKeyDownHandler}
       />
     </div>
   );
 };
+
+TrackChangeOverlay.propTypes = propTypes;
 
 export default TrackChangeOverlay;

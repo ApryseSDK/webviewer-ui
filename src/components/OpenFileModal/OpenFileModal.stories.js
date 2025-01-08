@@ -6,9 +6,6 @@ import OpenFileModal from './OpenFileModal';
 export default {
   title: 'Components/OpenFileModal',
   component: OpenFileModal,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {
@@ -19,7 +16,10 @@ const initialState = {
     },
     customElementOverrides: {},
     tab: { openFileModal: 'urlInputPanelButton' }
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 function rootReducer(state = initialState, action) {
@@ -27,7 +27,7 @@ function rootReducer(state = initialState, action) {
 }
 
 const store = createStore(rootReducer);
-store.dispatch = () => {};
+store.dispatch = () => { };
 
 export function Basic() {
   return (

@@ -1,10 +1,14 @@
 import CustomStampForums from 'components/CreateStampModal/CustomStampForums';
-import { render, fireEvent } from '@testing-library/react';
+import CreateStampModal from 'components/CreateStampModal/CreateStampModal';
+import { render, fireEvent, screen } from '@testing-library/react';
 import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 const ModalBodyWithI18n = withProviders(CustomStampForums);
 
-const noop = () => {};
+const noop = () => { };
 
 const props = {
   dateTimeFormats: [
@@ -50,24 +54,68 @@ const props = {
   userName: 'Guest',
 };
 
-describe('Custom Stamp Modal Body Tests: <CustomStampForums />', () => {
+const initialState = {
+  user: {
+    name: 'Guest',
+  },
+  viewer: {
+    activeDocumentViewerKey: 1,
+    disabledElements: {},
+    customElementOverrides: {},
+    openElements: {
+      customStampModal: true
+    },
+  },
+  stampTool: {
+    drawCustomStamp: noop,
+  },
+};
+
+function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
+  return state;
+}
+
+// Apply the thunk middleware
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+function withMockRedux(Component) {
+  return function WithMockReduxWrapper(props) {
+    return (
+      <Provider store={store}>
+        <Component {...props} />
+      </Provider>
+    );
+  };
+}
+
+const ModalCustomStamp = withMockRedux(CreateStampModal);
+const mockCustomStampTool = {
+  drawCustomStamp: () => 0
+};
+
+jest.mock('core', () => ({
+  getToolsFromAllDocumentViewers: () => [
+    mockCustomStampTool
+  ],
+  deselectAllAnnotations: noop,
+  getCurrentUser: () => 'Guest'
+}));
+
+describe('Custom Stamp Modal Body Tests', () => {
   it('should render correctly', () => {
-    const { container } = render(<ModalBodyWithI18n {...props}/>);
+    render(<ModalBodyWithI18n {...props} />);
+    // Correctly adds a alt text to the image
+    screen.getByRole('img', { name: /Preview of Draft, Guest/ });
 
-    // Should contain canvas div and scrollable div
-    expect(container.querySelector('.canvas-container')).toBeTruthy();
-    const scrollableDiv = container.querySelector('.scroll-container');
-    expect(scrollableDiv).toBeTruthy();
-
-    // Scrollable div should contain 6 children
-    expect(scrollableDiv.children.length).toBe(6);
-
-    // should have two dropdowns, 1 input, 3 checkboxes, and 4 buttons
-    expect(container.querySelectorAll('.Dropdown').length).toBe(2);
-    expect(container.querySelectorAll('input[type="text"]').length).toBe(1);
-    expect(container.querySelectorAll('input[type="checkbox"]').length).toBe(3);
-    expect(container.querySelectorAll('.Button').length).toBe(4);
+    // should have two dropdowns, 1 input, 3 checkboxes
+    const dropdowns = screen.getAllByRole('combobox');
+    expect(dropdowns.length).toBe(2);
+    const textInput = screen.getAllByRole('textbox');
+    expect(textInput.length).toBe(1);
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(checkboxes.length).toBe(3);
   });
+
   it('Should change state and call draw canvas', () => {
     const setStateMock = jest.fn();
     const stampToolMock = {
@@ -93,5 +141,16 @@ describe('Custom Stamp Modal Body Tests: <CustomStampForums />', () => {
     }
     expect(setStateMock).toHaveBeenCalledTimes(expectedCalls);
     expect(stampToolMock.drawCustomStamp).toHaveBeenCalledTimes(expectedCalls);
+  });
+  it('should render correctly and create button has a role', async () => {
+    render(<ModalCustomStamp />);
+    const button = screen.getByRole('button', { name: 'Create' });
+    expect(button).toBeInTheDocument();
+  });
+  it('Date Format should have a role and name', async () => {
+    render(<ModalBodyWithI18n {...props} />);
+    const input = screen.getByRole('button', { name: 'More info about date format' });
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute('aria-label', 'More info about date format');
   });
 });

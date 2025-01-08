@@ -9,6 +9,7 @@ import { Shortcuts } from 'helpers/hotkeysManager';
 import { isMac } from 'helpers/device';
 import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
 import { SearchWrapper } from './SearchWrapper';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 import './KeyboardShortcutTab.scss';
 
@@ -23,6 +24,7 @@ const keyboardShortcuts = [
   [Shortcuts.SEARCH, 'option.settings.openSearch'],
   [Shortcuts.ZOOM_IN, 'option.settings.zoomIn'],
   [Shortcuts.ZOOM_OUT, 'option.settings.zoomOut'],
+  [Shortcuts.SET_HEADER_FOCUS, 'option.settings.setHeaderFocus'],
   [Shortcuts.FIT_SCREEN_WIDTH, 'option.settings.fitScreenWidth'],
   [Shortcuts.PRINT, 'option.settings.print'],
   [Shortcuts.BOOKMARK, 'option.settings.bookmarkOpenPanel'],
@@ -48,7 +50,8 @@ const keyboardShortcuts = [
   [Shortcuts.SQUIGGLY, 'option.settings.selectCreateTextSquigglyTool'],
   [Shortcuts.HIGHLIGHT, 'option.settings.selectCreateTextHighlightTool'],
   [Shortcuts.STRIKEOUT, 'option.settings.selectCreateTextStrikeoutTool'],
-  [Shortcuts.UNDERLINE, 'option.settings.selectCreateTextUnderlineTool']
+  [Shortcuts.UNDERLINE, 'option.settings.selectCreateTextUnderlineTool'],
+  [Shortcuts.CLOSE, 'option.settings.close'],
 ];
 
 const KeyboardShortcutTab = () => {
@@ -60,6 +63,9 @@ const KeyboardShortcutTab = () => {
   const [currentShortcut, setCurrentShortcut] = useState(undefined);
 
   const getCommandStrings = (command) => {
+    if (!command) {
+      return [];
+    }
     command = command.toUpperCase();
     if (command.includes(', COMMAND')) {
       const commands = command.split(', ');
@@ -77,6 +83,11 @@ const KeyboardShortcutTab = () => {
     setCurrentShortcut(undefined);
     dispatch(actions.setIsElementHidden(DataElements.SETTINGS_MODAL, false));
   };
+
+  const focusHandler = useFocusHandler((e) => {
+    const shortcut = e.currentTarget.getAttribute('data-element').replace('edit-button-', '');
+    editShortcut(shortcut);
+  });
 
   return (
     <>
@@ -101,9 +112,11 @@ const KeyboardShortcutTab = () => {
                 {t(description)}
               </div>
               <Button
+                dataElement={`edit-button-${command}`}
                 img="icon-edit-form-field"
                 title={t('action.edit')}
-                onClick={() => editShortcut(command)}
+                ariaLabel={`${t(description)} ${t('action.edit')}`}
+                onClick={focusHandler}
               />
             </div>
           </SearchWrapper>

@@ -49,30 +49,19 @@ class CustomKeyboard extends Keyboard {
       ...Keyboard.DEFAULTS.bindings,
       'list autofill': undefined,
     }
-  }
+  };
 }
 
 Quill.register('modules/keyboard', CustomKeyboard, true);
 
 // Overriding clipboard module to fix cursor issue after pasting text
 const Clipboard = Quill.import('modules/clipboard');
-const Delta = Quill.import('delta');
 const { quillShadowDOMWorkaround } = window.Core;
 
 class QuillPasteExtra extends Clipboard {
   constructor(quill, options) {
     quillShadowDOMWorkaround(quill);
     super(quill, options);
-    this.keepSelection = options.keepSelection;
-  }
-  onPaste() {
-    const range = this.quill.getSelection();
-    const delta = new Delta().retain(range.index).delete(range.length);
-    if (this.keepSelection) {
-      this.quill.setSelection(range.index, delta.length(), Quill.sources.SILENT);
-    } else {
-      this.quill.setSelection(range.index + delta.length(), Quill.sources.SILENT);
-    }
   }
 }
 Quill.register('modules/clipboard', QuillPasteExtra, true);
@@ -140,17 +129,14 @@ const CommentTextarea = React.forwardRef(
 
     // Convert text with newline ("\n") to <p>...</p> format so
     // that editor handles multiline text correctly
-    if (value) {
+    const containsNewlines = value && value.split('\n').length > 1;
+    if (containsNewlines) {
       const contentArray = value.split('\n');
-      if (contentArray.length && contentArray[contentArray.length - 1] === '') {
-        contentArray.pop();
-        value = contentArray.map((item) => {
-          const paragraph = document.createElement('p');
-          paragraph.innerText = item || '<br>';
-          return paragraph.outerHTML;
-        }
-        ).join('');
-      }
+      value = contentArray.map((item) => {
+        const paragraph = document.createElement('p');
+        paragraph.innerText = item || '\n';
+        return paragraph.outerHTML;
+      }).join('');
     }
 
     // onBlur and onFocus have to be outside in the div because of quill bug
@@ -159,12 +145,16 @@ const CommentTextarea = React.forwardRef(
         <ReactQuill
           className='comment-textarea ql-container ql-editor'
           style={{ overflowY: 'visible' }}
-          ref={ref}
+          ref={(ele) => {
+            if (ele) {
+              ele.getEditor().root.ariaLabel = `${isReply ? t('action.reply') : t('action.comment')}`;
+            }
+            return ref(ele);
+          }}
           modules={userData && userData.length > 0 ? mentionModule : {}}
           theme="snow"
           value={value}
           placeholder={`${isReply ? t('action.reply') : t('action.comment')}...`}
-          aria-label={`${isReply ? t('action.reply') : t('action.comment')}...`}
           onChange={onChange}
           onKeyDown={onKeyDown}
           formats={formats}
@@ -174,6 +164,7 @@ const CommentTextarea = React.forwardRef(
             className='add-attachment'
             dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}
             img='ic_fileattachment_24px'
+            title={`${t('action.add')} ${t('option.type.fileattachment')}`}
             onClick={addAttachment}
           />
         }

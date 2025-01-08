@@ -67,6 +67,10 @@ const AnnotationStylePopup = (props) => {
         adjustFreeTextBoundingBox(annotation);
       }
       annotationManager.redrawAnnotation(annotation);
+
+      if (annotation instanceof window.Core.Annotations.WidgetAnnotation) {
+        annotation.refresh();
+      }
     });
   };
 

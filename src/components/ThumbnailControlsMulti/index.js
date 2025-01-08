@@ -1,0 +1,3 @@
+import ThumbnailControlsMultiContainer from './ThumbnailControlsMultiContainer';
+
+export default ThumbnailControlsMultiContainer;

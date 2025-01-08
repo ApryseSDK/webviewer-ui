@@ -21,19 +21,44 @@ const getActualFileName = (filename) => {
 const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinner) => {
   filename = getActualFileName(filename);
   const fileExtension = filename.split('.').pop().toUpperCase();
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      onClickCallback();
+    }
+  };
+
   if (showFileIdProcessSpinner === key) {
     return (
-      <li onClick={onClickCallback} key={key}>
-        <div className='embedSpinner'>{`[${fileExtension}] ${filename}`}<Spinner height={15} width={15}/></div>
+      <li key={key}>
+        <button
+          className='embedSpinner'
+          onClick={onClickCallback}
+          onKeyDown={handleKeyDown}
+          style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+          type="button"
+        >
+          {`[${fileExtension}] ${filename}`}<Spinner height={15} width={15}/>
+        </button>
       </li>
     );
   }
   return (
-    <li onClick={onClickCallback} key={key}>
-      {`[${fileExtension}] ${filename}`}
+    <li key={key}>
+      <button
+        className='embedSpinner'
+        onClick={onClickCallback}
+        onKeyDown={handleKeyDown}
+        style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+        type="button"
+      >
+        {`[${fileExtension}] ${filename}`}
+      </button>
     </li>
   );
 };
+
+
 
 const initialFilesDefault = { embeddedFiles: [], fileAttachmentAnnotations: [] };
 
@@ -92,7 +117,7 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
   return (
     <div className="fileAttachmentPanel">
       <div className="section">
-        {fileAttachments.embeddedFiles.length ? <p className="title">{t('message.embeddedFiles')}</p> : null}
+        {fileAttachments.embeddedFiles.length ? <h2 className="title">{t('message.embeddedFiles')}</h2> : null}
         <ul className="downloadable">
           {fileAttachments.embeddedFiles.map((file, idx) => renderAttachment(
             getActualFileName(file.filename),
@@ -114,9 +139,9 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
       {Object.entries(fileAttachments.fileAttachmentAnnotations).map(([pageNumber, fileAttachmentAnnotsPerPage]) => {
         return (
           <div key={pageNumber} className="section">
-            <p className="title">
-              {t('message.pageNum')}: {pageNumber}
-            </p>
+            <h2 className="title">
+              {t('message.pageNum')} {pageNumber}
+            </h2>
             <ul className="downloadable">
               {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(
                 getActualFileName(fileAttachmentAnnot.filename),

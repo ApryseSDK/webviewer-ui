@@ -1,0 +1,32 @@
+// office editor flyout dropdown
+@mixin oe-modular-ui-dropdown {
+  min-width: 200px; // expands the flyout container to display dropdown item content
+  width: 100%;
+  padding: 4px 8px;
+
+  & > .Dropdown {
+    width: 100% !important;
+
+    .Dropdown__input {
+      width: 150px !important;
+    }
+  }
+
+  .Dropdown__items {
+    z-index: 90;
+    top: 38px !important; // align the dropdown to the bottom of the parent container with padding
+    right: 8px; // align the dropdown to the right of the parent container
+    max-width: calc(100% - 16px);
+    overflow-y: auto;
+
+    .Dropdown__item {
+      flex-shrink: 0;
+    }
+  }
+
+  .Dropdown__input {
+    width: 100px !important;
+    display: inline;
+    box-sizing:border-box;
+  }
+}

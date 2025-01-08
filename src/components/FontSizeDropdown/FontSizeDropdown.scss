@@ -17,6 +17,10 @@
     border: 1px solid var(--gray-4);
   }
 
+  @include mobile {
+    height: 32px;
+  }
+
   input {
     width: 25px;
     border: 0;
@@ -25,13 +29,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
     &:focus {
       border: 1px solid var(--blue-5);
     }
 
-
     &.error {
       border-color: var(--error-border-color);
+    }
+
+    @include mobile {
+      font-size: 13px;
     }
   }
 
@@ -55,6 +63,10 @@
     flex: inherit;
     height: 16px;
     width: 16px;
+    
+    @include mobile {
+      margin-right: 4px;
+    }
 
     .Icon {
       height: 100%;

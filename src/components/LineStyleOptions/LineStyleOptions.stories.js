@@ -8,7 +8,7 @@ export default {
   component: LineStyleOptions,
 };
 
-function noop() {}
+function noop() { }
 
 export function Basic() {
   const properties = {

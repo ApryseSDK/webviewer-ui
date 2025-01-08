@@ -1,11 +1,9 @@
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
 
-// mock initial state.
-// UI Buttons are redux connected, and they need a state or the
-// tests will error out
-const initialState = {
+
+const defaultState = {
   viewer: {
     activeDocumentViewerKey: 1,
     disabledElements: {},
@@ -15,6 +13,9 @@ const initialState = {
     },
     currentLanguage: 'en',
     openElements: {},
+    flyoutMap: {},
+    currentPage: 7,
+    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
     annotationPopup: [
       { dataElement: 'viewFileButton' },
       { dataElement: 'annotationCommentButton' },
@@ -32,24 +33,39 @@ const initialState = {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
-      { dataElement: 'annotationAlignButton'}
+      { dataElement: 'annotationAlignButton' }
     ],
+    savedSignatures: [],
+    maxSignatureCount: 10,
+    focusedElementsStack: [],
+    annotationContentOverlayHandler: null,
   },
   search: {
     redactionSearchPatterns: {},
+  },
+  document: {
+    totalPages: { 1: 9, 2: 0 },
   }
 };
 
-function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
-  return state;
-}
-
-const store = createStore(rootReducer);
-
-export default function withMockRedux(Component) {
+export default function withMockRedux(Component, mockInitialState ={ viewer: {}, search: {}, document: {} }) {
+  const initialState = {
+    viewer: {
+      ...defaultState.viewer,
+      ...mockInitialState.viewer,
+    },
+    search: {
+      ...defaultState.search,
+      ...mockInitialState.search,
+    },
+    document: {
+      ...defaultState.document,
+      ...mockInitialState.document,
+    },
+  };
   return function WithMockReduxWrapper(props) {
     return (
-      <Provider store={store}>
+      <Provider store={configureStore({ reducer: () => initialState })}>
         <Component {...props} />
       </Provider>
     );

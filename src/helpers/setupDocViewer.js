@@ -99,6 +99,12 @@ const addToolsToDocViewer = (docViewer) => {
   toolModeMap.ComboBoxFormFieldCreateTool2 = new window.Core.Tools.ComboBoxFormFieldCreateTool(docViewer, ToolNames.COMBO_BOX_FIELD2);
   toolModeMap.ComboBoxFormFieldCreateTool3 = new window.Core.Tools.ComboBoxFormFieldCreateTool(docViewer, ToolNames.COMBO_BOX_FIELD3);
   toolModeMap.ComboBoxFormFieldCreateTool4 = new window.Core.Tools.ComboBoxFormFieldCreateTool(docViewer, ToolNames.COMBO_BOX_FIELD4);
+  toolModeMap.CheckBoxFormFieldCreateTool2 = new window.Core.Tools.CheckBoxFormFieldCreateTool(docViewer, ToolNames.CHECK_BOX_FIELD2);
+  toolModeMap.CheckBoxFormFieldCreateTool3 = new window.Core.Tools.CheckBoxFormFieldCreateTool(docViewer, ToolNames.CHECK_BOX_FIELD3);
+  toolModeMap.CheckBoxFormFieldCreateTool4 = new window.Core.Tools.CheckBoxFormFieldCreateTool(docViewer, ToolNames.CHECK_BOX_FIELD4);
+  toolModeMap.RadioButtonFormFieldCreateTool2 = new window.Core.Tools.RadioButtonFormFieldCreateTool(docViewer, ToolNames.RADIO_FORM_FIELD2);
+  toolModeMap.RadioButtonFormFieldCreateTool3 = new window.Core.Tools.RadioButtonFormFieldCreateTool(docViewer, ToolNames.RADIO_FORM_FIELD3);
+  toolModeMap.RadioButtonFormFieldCreateTool4 = new window.Core.Tools.RadioButtonFormFieldCreateTool(docViewer, ToolNames.RADIO_FORM_FIELD4);
   toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement2 = new window.Core.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT2);
   toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement3 = new window.Core.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT3);
   toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement4 = new window.Core.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT4);

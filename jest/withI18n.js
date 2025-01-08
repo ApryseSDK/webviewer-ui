@@ -1,6 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
-import { I18nextProvider, initReactI18next } from "react-i18next";
+import { I18nextProvider, initReactI18next } from 'react-i18next';
 import getAvailableLanguages from '../src/apis/getAvailableLanguages';
 
 i18next.languages = getAvailableLanguages();
@@ -15,10 +15,11 @@ const resources = i18next.languages.reduce((accumulator, language,) => {
 
 const options = {
   fallbackLng: 'en',
+  nsSeparator: false,
   react: {
     useSuspense: false,
   },
-  resources
+  resources,
 };
 i18next
   .use(initReactI18next)

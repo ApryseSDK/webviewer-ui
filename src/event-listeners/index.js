@@ -42,6 +42,11 @@ import onContentBoxEditEnded from './onContentBoxEditEnded';
 import onContentBoxEditStarted from './onContentBoxEditStarted';
 import onContentEditDocumentDigitalSigned from './onContentEditDocumentDigitalSigned';
 import onContentEditPasswordRequired from './onContentEditPasswordRequired';
+import onCompareAnnotationsLoaded from './onCompareAnnotationsLoaded';
+import onAccessibleReadingOrderModeStarted from './onAccessibleReadingOrderModeStarted';
+import onAccessibleReadingOrderModeReady from './onAccessibleReadingOrderModeReady';
+import onAccessibleReadingOrderModeEnded from './onAccessibleReadingOrderModeEnded';
+import onUserBookmarksChanged from './onUserBookmarksChanged';
 
 export {
   onSignatureSaved,
@@ -88,4 +93,9 @@ export {
   onContentBoxEditEnded,
   onContentEditDocumentDigitalSigned,
   onContentEditPasswordRequired,
+  onCompareAnnotationsLoaded,
+  onAccessibleReadingOrderModeStarted,
+  onAccessibleReadingOrderModeReady,
+  onAccessibleReadingOrderModeEnded,
+  onUserBookmarksChanged,
 };

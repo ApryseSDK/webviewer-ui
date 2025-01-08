@@ -1,4 +1,5 @@
 .PageNumberInput {
+  cursor: default;
   
   .input-wrapper{
     position: relative;
@@ -15,10 +16,11 @@
   .page-number-input {
     padding: 6px !important;
     width: 108px;
+    height: 32px;
     
     &.page-number-input--error {
       padding-right: 30px; /* Adjust padding to make space for the error icon */
-      border-color: var(--error-border-color);
+      border-color: var(--error-border-color) !important;
     }
   }
   
@@ -29,9 +31,11 @@
       border-color: var(--error-text-color);
     }
   }
-  
+
   .page-number-error {
     color: var(--error-text-color);
     margin-top: 8px;
+    position: absolute;
+    width: 100%;
   }
 }

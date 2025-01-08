@@ -4,7 +4,7 @@ import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT, DIRECTION, ITEM_TYPE } from 'constants/customizationVariables';
 import ResponsiveContainer from 'components/ResponsiveContainer';
 import { useSelector, useDispatch } from 'react-redux';
-import sizeManager from 'helpers/responsivenessHelper';
+import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -15,6 +15,7 @@ const ModularHeaderItems = (props) => {
   const { placement, gap, items, justifyContent, className = '', maxWidth, maxHeight, headerId } = props;
   const [itemsGap, setItemsGap] = useState(gap);
   const elementRef = useRef();
+  const headerDirection = [PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(placement) ? DIRECTION.COLUMN : DIRECTION.ROW;
 
   useEffect(() => {
     setItemsGap(gap);
@@ -37,7 +38,6 @@ const ModularHeaderItems = (props) => {
       size: size,
     };
   }, [size, items]);
-
   useEffect(() => {
     const flyout = {
       dataElement: flyoutDataElement,
@@ -61,8 +61,7 @@ const ModularHeaderItems = (props) => {
 
     dispatch(actions.updateFlyout(flyoutDataElement, flyout));
   }, [size, items.length]);
-
-  const headerDirection = [PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(placement) ? DIRECTION.COLUMN : DIRECTION.ROW;
+  useSizeStore({ elementRef, dataElement: headerId, size, headerDirection, shouldDelay: true });
 
   const headerItems = items?.map((item, index) => {
     const hasToShrink = size > 0;

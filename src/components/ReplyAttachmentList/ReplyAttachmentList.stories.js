@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/ReplyAttachmentList',
-  component: ReplyAttachmentList
+  component: ReplyAttachmentList,
 };
 
 const initialState = {

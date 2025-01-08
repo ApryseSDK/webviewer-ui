@@ -6,6 +6,7 @@ import core from 'core';
 import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 import getAngleInRadians from 'helpers/getAngleInRadians';
+import getFormattedUnit from 'helpers/getFormattedUnit';
 
 const unitMap = {
   'in\"': 'in',
@@ -26,8 +27,6 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool }) {
   const factor = annotation?.Measure.axis[0].factor;
   const unit = annotation?.DisplayUnits[0] || selectedTool?.Measure?.unit;
   const [length, setLength] = useState((annotation?.getLineLength() * factor || 0).toFixed(2));
-  const [toggleDistanceInput, setDistanceInputToggle] = useState(false);
-  const [toggleAngleInput, setAngleToggle] = useState(false);
 
   useEffect(() => {
     if (!annotation) {
@@ -116,14 +115,14 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool }) {
     return (
       <>
         <div className="measurement__detail-item">
-          <div className="measurement_list">X:</div>
-          <div>
+          <div className="measurement_list">{t('option.measurementOverlay.xAxis')}:</div>
+          <div className='measurement'>
             {deltaX}
           </div>
         </div>
         <div className="measurement__detail-item">
-          <div className="measurement_list">Y:</div>
-          <div>
+          <div className="measurement_list">{t('option.measurementOverlay.yAxis')}:</div>
+          <div className='measurement'>
             {deltaY}
           </div>
         </div>
@@ -209,69 +208,51 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool }) {
         <div className="measurement_list">
           {t('option.measurementOverlay.distance')}:
         </div>
-        {(!annotation || !toggleDistanceInput) ? (
-          <div onClick={() => setDistanceInputToggle(true)} className="distance-show">
-            {annotation?.getMeasurementTextWithScaleAndUnits?.() || 0}
-          </div>
-        ) : (
-          <>
-            <input
-              className="scale-input"
-              type="number"
-              min="0"
-              disabled={isReadOnly}
-              value={length}
-              autoFocus={!isMobileDevice}
-              onChange={(event) => {
-                onInputChanged(event);
-                selectAnnotation();
-              }}
-              onBlur={(event) => {
-                validateLineLength(event);
-                setDistanceInputToggle(false);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  onInputChanged(event);
-                  deselectAnnotation();
-                }
-              }}
-            />
-            {unit}
-          </>
-        )}
+        <input
+          className="scale-input"
+          type="number"
+          min="0"
+          disabled={isReadOnly || !annotation}
+          value={!annotation ? 0 : length}
+          autoFocus={!isMobileDevice}
+          onChange={(event) => {
+            onInputChanged(event);
+            selectAnnotation();
+          }}
+          onBlur={(event) => {
+            validateLineLength(event);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onInputChanged(event);
+              deselectAnnotation();
+            }
+          }}
+        />
+        {getFormattedUnit(unit)}
       </div>
       <div className="measurement__detail-item">
         <div className="measurement_list">{t('option.measurementOverlay.angle')}:</div>
-        {(!annotation || !toggleAngleInput) ? (
-          <div onClick={() => setAngleToggle(true)} className="distance-show">
-            {angle}&deg;
-          </div>
-        ) : (
-          <>
-            <input
-              className="scale-input"
-              type="number"
-              min="0"
-              max="360"
-              disabled={isReadOnly}
-              value={angle}
-              autoFocus={!isMobileDevice}
-              onChange={(event) => {
-                onAngleChange(event);
-                selectAnnotation();
-              }}
-              onBlur={() => setAngleToggle(false)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  onAngleChange(event);
-                  deselectAnnotation();
-                }
-              }}
-            />
+        <input
+          className="scale-input"
+          type="number"
+          min="0"
+          max="360"
+          disabled={isReadOnly || !annotation}
+          value={angle}
+          autoFocus={!isMobileDevice}
+          onChange={(event) => {
+            onAngleChange(event);
+            selectAnnotation();
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onAngleChange(event);
+              deselectAnnotation();
+            }
+          }}
+        />
             &deg;
-          </>
-        )}
       </div>
       {renderDeltas()}
     </>

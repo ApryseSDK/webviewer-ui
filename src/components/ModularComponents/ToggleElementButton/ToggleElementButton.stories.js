@@ -2,13 +2,12 @@ import React from 'react';
 import ToggleElementButton from './ToggleElementButton';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { panelData } from 'src/constants/panel';
+import PropTypes from 'prop-types';
 
 export default {
   title: 'ModularComponents/ToggleElementButton',
   component: ToggleElementButton,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const initialState = {
@@ -23,6 +22,9 @@ const initialState = {
     genericPanels: [],
     lastPickedToolGroup: '',
   },
+  featureFlags: {
+    customizableUI: true
+  }
 };
 const initialStateActive = {
   viewer: {
@@ -59,4 +61,24 @@ export const ToggleElementButtonWithLabelOnHoverState = () => (
 
 ToggleElementButtonWithLabelOnHoverState.parameters = {
   pseudo: { hover: true },
+};
+
+const togglePanelButtons = Object.keys(panelData).map((panel) => ({
+  img: panelData[panel].icon,
+  toggleElement: 'signatureModal',
+  dateElement: 'toggleButton',
+}));
+
+export const TogglePanelButtons = () => (
+  <Provider store={store}>
+    {togglePanelButtons.map((props) => (
+      <div key={props.dataElement}>
+        <ToggleElementButton {...props} />
+      </div>
+    ))}
+  </Provider>
+);
+
+TogglePanelButtons.propTypes = {
+  dataElement: PropTypes.string,
 };

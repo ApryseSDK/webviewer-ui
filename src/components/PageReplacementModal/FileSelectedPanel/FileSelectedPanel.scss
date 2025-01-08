@@ -38,11 +38,17 @@
     margin-top: 8px;
     font-size: 13px;
     color: var(--color-message-error);
-    width: 100px;
   }
 
   .page-replacement-text {
-    padding-right: 8px;
+    padding: 0 8px;
+
+    @include mobile {
+      padding: 0px;
+      display: flex;
+      justify-content: center; /* optional */
+      align-items: center;
+    }
   }
 
   .modal-body {
@@ -52,31 +58,60 @@
       @include tablet {
         width: 132px;
       }
-
-      @include mobile {
-        width: 101px;
-      }
-
-      @include small-mobile {
-        width: 101px;
-      }
     }
 
     .modal-body-container {
+      display: flex;
+
       &.isLoading {
-        display: flex;
         justify-content: center;
         align-items: center;
       }
 
       @include mobile {
-        padding: 12px 0px 12px 12px;
+        padding: 18px;
+        height: calc(100vh - 120px - 72px - 72px - 32px);
+        
+        .thumb-card {
+          flex: 0 0 calc(50% - 10px);
+          box-sizing: border-box;
+          
+        }
+
+        .thumb-card-img {
+          height: 110px;
+          width: 83px;
+        }
+
+        .thumb-body {
+          align-items: center;
+        }
+
+        .thumb-image {
+          width: 100%;
+          padding-right: 0px;
+        }
+
+        .ui__choice__input {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+        }
+
+        .ui__choice {
+          margin: 0px;
+        }
       }
+    }
+
+    @include mobile {
+      height: 100%;
     }
   }
 
   .replace-page-input-container {
-    margin-bottom: 16px;
+    height: 60px;
+    margin-bottom: 8px;
     display: flex;
     align-items: baseline;
   
@@ -93,8 +128,16 @@
     }
   
     @include mobile {
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 16px;
+      row-gap: 24px;
+      margin-bottom: 32px;
+      height: 88px;
+
+      .page-number-error {
+        margin-top: 4px;
+      }
     }
   }
   
@@ -110,10 +153,30 @@
         word-break: break-all;
       }
     }
+
+    @include mobile {
+      display: flex;
+      justify-content: left; /* optional */
+      align-items: center;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
   }
   
   .page-replace-doc-name {
     font-weight: bold;
+  }
+
+  .header-container {
+    @include mobile {
+      height: 72px;
+    }
+  }
+
+  .deselect-thumbnails {
+    @include mobile {
+      font-size: 13px;
+    }
   }
 }
 

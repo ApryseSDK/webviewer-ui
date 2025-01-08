@@ -31,6 +31,7 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import { COMMON_COLORS } from 'constants/commonColors';
+import Button from 'components/Button';
 
 import './NoteContent.scss';
 
@@ -63,32 +64,17 @@ const NoteContent = ({
   handleMultiSelect,
   isGroupMember,
 }) => {
-  const [
-    noteDateFormat,
-    iconColor,
-    isNoteStateDisabled,
-    language,
-    notesShowLastUpdatedDate,
-    canCollapseTextPreview,
-    canCollapseReplyPreview,
-    activeTheme,
-    timezone,
-    customizableUI,
-  ] = useSelector(
-    (state) => [
-      selectors.getNoteDateFormat(state),
-      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.isElementDisabled(state, 'notePopupState'),
-      selectors.getCurrentLanguage(state),
-      selectors.notesShowLastUpdatedDate(state),
-      selectors.isNotesPanelTextCollapsingEnabled(state),
-      selectors.isNotesPanelRepliesCollapsingEnabled(state),
-      selectors.getActiveTheme(state),
-      selectors.getTimezone(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
-    ],
-    shallowEqual,
-  );
+
+  const noteDateFormat = useSelector((state) => selectors.getNoteDateFormat(state));
+  const iconColor = useSelector((state) => selectors.getIconColor(state, mapAnnotationToKey(annotation), shallowEqual));
+  const isNoteStateDisabled = useSelector((state) => selectors.isElementDisabled(state, 'noteStateFlyout'));
+  const language = useSelector((state) => selectors.getCurrentLanguage(state));
+  const notesShowLastUpdatedDate = useSelector((state) => selectors.notesShowLastUpdatedDate(state));
+  const canCollapseTextPreview = useSelector((state) => selectors.isNotesPanelTextCollapsingEnabled(state));
+  const canCollapseReplyPreview = useSelector((state) => selectors.isNotesPanelRepliesCollapsingEnabled(state));
+  const activeTheme = useSelector((state) => selectors.getActiveTheme(state));
+  const timezone = useSelector((state) => selectors.getTimezone(state));
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   const {
     isSelected,
@@ -567,6 +553,11 @@ const ContentArea = ({
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
     setAnnotationRichTextStyle(editor, annotation);
 
+    const hasTrailingNewlineToRemove = textAreaValue.length > 1 && textAreaValue[textAreaValue.length - 1] === '\n';
+    if (hasTrailingNewlineToRemove) {
+      textAreaValue = textAreaValue.slice(0, textAreaValue.length - 1);
+    }
+
     const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
     if (skipAutoLink) {
       annotation.disableSkipAutoLink();
@@ -646,8 +637,9 @@ const ContentArea = ({
         onFocus={onFocus}
       />
       <div className="edit-buttons">
-        <button
+        <Button
           className="cancel-button"
+          label={t('action.cancel')}
           onClick={(e) => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
@@ -655,19 +647,16 @@ const ContentArea = ({
             onTextAreaValueChange(undefined, annotation.Id);
             clearAttachments(annotation.Id);
           }}
-        >
-          {t('action.cancel')}
-        </button>
-        <button
+        />
+        <Button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
           disabled={!textAreaValue}
+          label={t('action.save')}
           onClick={(e) => {
             e.stopPropagation();
             setContents(e);
           }}
-        >
-          {t('action.save')}
-        </button>
+        />
       </div>
     </div>
   );

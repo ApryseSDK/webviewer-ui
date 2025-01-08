@@ -1,4 +1,4 @@
-.TabsHeader{
+.TabsHeader {
   display: flex;
   width: 100%;
   justify-content: flex-start;
@@ -7,6 +7,11 @@
   overflow-y: hidden;
   overflow-x: hidden;
   height: var(--multi-tab-header-height);
+
+  &:has(:focus-visible) {
+    outline: var(--focus-visible-outline) !important;
+    outline-offset: -2px;
+  }
 
   .add-button {
     width: 100%;
@@ -24,7 +29,6 @@
       &:hover {
         background-color: var(--view-header-button-hover);
       }
-
     }
 
     &.add-button-with-label .Button {
@@ -57,5 +61,16 @@
         border: 1px solid var(--multi-tab-hover-border);
       }
     }
+
+    &:has(:focus-visible) {
+      .Button {
+        outline-offset: -3px;
+        border-radius: 8px;
+      }
+    }
   }
+}
+
+.TabsListFlyout {
+  padding: 0 4px !important;
 }

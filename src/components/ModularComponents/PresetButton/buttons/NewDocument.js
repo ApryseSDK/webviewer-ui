@@ -1,23 +1,21 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import loadDocument from 'helpers/loadDocument';
-import { getPresetButtonDOM, menuItems } from '../../Helpers/menuItems';
-import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-import { useTranslation } from 'react-i18next';
+import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
+import FlyoutItemContainer from '../../FlyoutItemContainer';
 
 /**
  * A button that creates a new document.
  * @name newDocumentButton
  * @memberof UI.Components.PresetButton
  */
-const NewDocumentButton = (props) => {
-  const { isFlyoutItem, iconDOMElement } = props;
-  const { label } = menuItems.newDocumentButton;
+const NewDocumentButton = React.forwardRef((props, ref) => {
+  const { isFlyoutItem } = props;
   const isDisabled = !isOfficeEditorMode();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   if (isDisabled) {
     if (isFlyoutItem) {
@@ -35,19 +33,15 @@ const NewDocumentButton = (props) => {
 
   return (
     isFlyoutItem ?
-      innerItemToFlyoutItem({
-        isDisabled,
-        icon: iconDOMElement,
-        label: t(label),
-      }, handleNewDocumentClick)
+      <FlyoutItemContainer {...props} ref={ref} onClick={handleNewDocumentClick} />
       :
       getPresetButtonDOM(PRESET_BUTTON_TYPES.NEW_DOCUMENT, isDisabled, handleNewDocumentClick)
   );
-};
+});
 
 NewDocumentButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
-  iconDOMElement: PropTypes.object,
 };
+NewDocumentButton.displayName = 'NewDocumentButton';
 
 export default NewDocumentButton;

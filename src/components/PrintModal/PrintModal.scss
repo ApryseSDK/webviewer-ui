@@ -12,6 +12,7 @@
 
   .modal-container {
     width: 480px;
+    overflow: hidden;
 
     .settings {
       display: flex;
@@ -203,10 +204,8 @@
         align-items: baseline;
         height: 80px;
 
-        &.specify-pages-choice {
-          .ui__choice__input {
-            top: 3px;
-          }
+        .ui__choice__input {
+          top: 3px;
         }
       }
     }

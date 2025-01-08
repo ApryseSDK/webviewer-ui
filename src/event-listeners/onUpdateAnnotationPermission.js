@@ -6,6 +6,7 @@ import disableTools from 'src/apis/disableTools';
 import disableFeatures from 'src/apis/disableFeatures';
 import enableFeatures from 'src/apis/enableFeatures';
 import Feature from 'constants/feature';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 
 export default (store) => () => {
   const { dispatch } = store;
@@ -18,7 +19,9 @@ export default (store) => () => {
     dispatch(actions.setActiveToolGroup(''));
   } else {
     enableTools(store)();
-    enableFeatures(store)([Feature.Annotating]);
+    if (!isOfficeEditorMode()) {
+      enableFeatures(store)([Feature.Annotating]);
+    }
   }
 
   dispatch(actions.setReadOnly(core.getIsReadOnly()));

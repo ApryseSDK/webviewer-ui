@@ -7,7 +7,7 @@
     height: 32px;
     padding: 5px;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @extend %icon-button-hover;
     }
 
@@ -16,7 +16,31 @@
       cursor: default;
 
       .Icon {
-        color: var(--view-header-icon-active-fill)
+        color: var(--view-header-icon-active-fill);
+
+        svg path {
+          fill: var(--view-header-icon-active-fill);
+        }
+      }
+    }
+  }
+
+  &.legacy-ui {
+    .Button {
+      &:hover:not(:disabled) {
+        border: none;
+        box-shadow: none;
+        background-color: var(--blue-1);
+      }
+    }
+  }
+
+  &.is-mobile {
+    .Button.modular-ui.icon-only {
+      &:hover:not(:disabled):not(.active) {
+        background-color: initial;
+        color: initial;
+        box-shadow: none;
       }
     }
   }

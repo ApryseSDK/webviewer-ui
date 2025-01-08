@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Editable } from './OutlinesPanel.stories';
 import outlineUtils from '../../helpers/OutlineUtils';
@@ -22,6 +22,7 @@ jest.mock('core', () => ({
       getViewerCoordinates: () => ({ x: 0, y: 0 }),
       getPageRotation: () => 0,
     }),
+    getAccessibleReadingOrderManager: NOOP,
   }),
 }));
 
@@ -57,26 +58,23 @@ describe('OutlinesPanel', () => {
   });
 
   it('Clicks the Add Outline button should show an input element and add an outline', async () => {
-    const { container } = render(<BasicOutlinesPanel />);
+    render(<BasicOutlinesPanel />);
 
     const addNewOutline = jest.spyOn(outlineUtils, 'addNewOutline');
     addNewOutline.mockImplementation(() => { });
 
-    let textInput = container.querySelector('.bookmark-outline-input');
-    expect(textInput).toBeNull();
+    const addItemButton = screen.getByRole('button', { name : 'Add Outlines' });
+    expect(addItemButton).toBeInTheDocument();
+    addItemButton.click();
 
-    const addItemButton = container.querySelector('.add-new-button');
-    expect(addItemButton.className).toContain('Button');
-    fireEvent.click(addItemButton);
-
-    textInput = container.querySelector('.bookmark-outline-input');
+    const textInput = screen.getByRole('textbox', { name: 'New Outline Title' });
     expect(textInput).not.toBeNull();
     fireEvent.change(textInput, { target: { value: 'new outline' } });
     fireEvent.keyDown(textInput, { key: 'Enter', code: 'Enter' });
 
     expect(addNewOutline).toHaveBeenCalledTimes(1);
     await waitFor(() => {
-      expect(addNewOutline).toHaveBeenCalledWith('new outline', null, undefined, 0, 0, 0);
+      expect(addNewOutline).toHaveBeenCalledWith('new outline', null, 1, 0, 0, 0);
     });
 
     addNewOutline.mockRestore();
@@ -85,7 +83,7 @@ describe('OutlinesPanel', () => {
   it('In multi-select mode, add button is enabled when no outline is selected and delete button is enabled when at least one outline is selected', async () => {
     const { container } = render(<BasicOutlinesPanel />);
     const multiSelectButton = container.querySelector('[data-element="outlineMultiSelect"]');
-    expect(multiSelectButton.className).toContain('bookmark-outline-control-button');
+    expect(multiSelectButton.className).toContain('Button TextButton modular-ui');
     await multiSelectButton.click();
 
     const addNewContainer = container.querySelector('[data-element="addNewOutlineButtonContainer"]');
@@ -94,11 +92,23 @@ describe('OutlinesPanel', () => {
     expect(addNewButton).not.toBeDisabled();
     expect(deleteButton).toBeDisabled();
 
-    const checkboxContainer = container.querySelector('.bookmark-outline-checkbox');
-    const checkboxInput = checkboxContainer.querySelector('input[type="checkbox"]');
-    await checkboxInput.click();
-    expect(checkboxContainer.className).toContain('ui__choice--checked');
+    screen.getByRole('checkbox', { name : 'Introduction' }).click();
+
+    expect(screen.getByRole('checkbox', { name : 'Introduction' })).toBeChecked();
     expect(addNewButton).toBeDisabled();
     expect(deleteButton).not.toBeDisabled();
+  });
+
+  it('In multi-select mode, Add Outline button should have aria label', async () => {
+    render(<BasicOutlinesPanel />);
+    const multiSelectButton = screen.getByRole('button' , { name: 'Edit Outlines' });
+    userEvent.click(multiSelectButton);
+    screen.getByRole('button', { name: 'Add Outlines' });
+  });
+
+  it('Should have h2 element for title', async () => {
+    render(<BasicOutlinesPanel />);
+    const title = screen.getByRole('heading', { name: 'Outlines' });
+    expect(title).toHaveClass('header-title');
   });
 });

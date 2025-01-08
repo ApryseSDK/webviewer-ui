@@ -36,9 +36,7 @@ const canRotateLoadedDocument = () => {
 const rotatePages = (pageNumbers, counterClockwise) => {
   if (canRotateLoadedDocument()) {
     const rotation = counterClockwise ? window.Core.PageRotation.E_270 : window.Core.PageRotation.E_90;
-    pageNumbers.forEach((index) => {
-      core.rotatePages([index], rotation);
-    });
+    core.rotatePages(pageNumbers, rotation);
   } else {
     const docViewer = core.getDocumentViewer();
     const currentRotations = docViewer.getPageRotations();

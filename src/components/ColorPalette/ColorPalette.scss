@@ -1,11 +1,13 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  display: flex;  // fallback for ie11, grid not available
+  display: flex; // fallback for ie11, grid not available
   flex-wrap: wrap; // fallback for ie11, grid not available
+
   @include ie11 {
     width: 196px; // hack for ie11. Have to define width for flex basis to work.
   }
+
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
@@ -19,13 +21,16 @@
   @include mobile {
     max-width: 450px;
     width: auto;
+
     @include ie11 {
       width: 308px; // hack for ie11. Have to define width for flex basis to work.
     }
   }
 
   .cell-container {
-    @include button-reset;
+    padding: 0;
+    border: none;
+    background-color: transparent;
     flex: 1 0 14%; // fallback for ie11, grid not available
 
     cursor: pointer;
@@ -34,10 +39,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
 
     @include mobile {
-      width: 44px;
-      height: 44px;
+      width: 28px;
+      height: 28px;
     }
 
     .cell-outer {
@@ -50,9 +56,9 @@
         align-items: center;
         justify-content: center;
 
-        @include mobile  {
-          width: 36px;
-          height: 36px;
+        @include mobile {
+          width: 28px;
+          height: 28px;
         }
       }
 
@@ -66,15 +72,15 @@
           border-radius: 10000000px;
         }
 
-        &.border{
+        &.border {
           border: 1px solid var(--white-color-palette-border);
-        }
-
-        @include mobile  {
-          width: 24px;
-          height: 24px;
         }
       }
     }
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
+
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import core from 'core';
 
 import HeaderItems from 'components/HeaderItems';
 import TabsHeader from 'components/TabsHeader';
@@ -20,8 +21,9 @@ class Header extends React.PureComponent {
     isToolsHeaderOpen: PropTypes.bool,
     isMultiTab: PropTypes.bool,
     isOfficeEditorMode: PropTypes.bool,
+    isOfficeEditorHeaderEnabled: PropTypes.bool,
     currentToolbarGroup: PropTypes.string,
-  }
+  };
 
   render() {
     const {
@@ -34,9 +36,14 @@ class Header extends React.PureComponent {
       isToolGroupReorderingEnabled,
       isInDesktopOnlyMode,
       isOfficeEditorMode,
+      isOfficeEditorHeaderEnabled,
     } = this.props;
 
     if (isDisabled || !isOpen) {
+      return null;
+    }
+
+    if (isOfficeEditorHeaderEnabled && core.getDocument() === null) {
       return null;
     }
 
@@ -74,6 +81,7 @@ const mapStateToProps = (state) => ({
   isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
   isOfficeEditorMode: selectors.getIsOfficeEditorMode(state),
+  isOfficeEditorHeaderEnabled: selectors.getIsOfficeEditorHeaderEnabled(state),
 });
 
 export default connect(mapStateToProps)(Header);

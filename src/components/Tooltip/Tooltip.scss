@@ -2,7 +2,7 @@
 
 %tooltip {
   position: absolute;
-  z-index: $modal-z-index + 10; // should be higher than Modals
+  z-index: $modal-z-index + 20; // should be higher than Modals
   background: #222;
   font-size: 12px; // intended
   padding: 6px 8px;

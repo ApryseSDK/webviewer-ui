@@ -1,0 +1,23 @@
+.TextButton {
+  color: var(--secondary-button-text);
+  width: fit-content;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  .Icon {
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    color: var(--secondary-button-text);
+    height: 14px;
+    width: 14px;
+  }
+}
+
+.TextButton:hover {
+  box-shadow: inset 0 0 0 1px var(--blue-6);
+  color: var(--blue-6);
+  background-color: var(--faded-component-background);
+}

@@ -5,16 +5,13 @@ import selectors from 'selectors';
 import classNames from 'classnames';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
-import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import { Swipeable } from 'react-swipeable';
 import GeneralTab from './GeneralTab';
 import KeyboardShortcutTab from './KeyboardShortcutTab';
 import AdvancedTab from './AdvancedTab';
 import { SearchContext } from './SearchWrapper';
 import Icon from 'components/Icon';
-
+import ModalWrapper from 'components/ModalWrapper';
 import './SettingsModal.scss';
 
 const TABS_ID = DataElements.SETTINGS_MODAL;
@@ -22,14 +19,14 @@ const TABS_ID = DataElements.SETTINGS_MODAL;
 const SettingsModal = () => {
   const [
     isDisabled,
-    isHidden,
+    isOpen,
     selectedTab,
     isGeneralTabDisabled,
     isKeyboardTabDisabled,
     isAdvancedTabDisabled
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SETTINGS_MODAL),
-    selectors.isElementHidden(state, DataElements.SETTINGS_MODAL),
+    selectors.isElementOpen(state, DataElements.SETTINGS_MODAL),
     selectors.getSelectedTab(state, TABS_ID),
     selectors.isElementDisabled(state, DataElements.SETTINGS_GENERAL_BUTTON),
     selectors.isElementDisabled(state, DataElements.SETTINGS_KEYBOARD_BUTTON),
@@ -63,11 +60,6 @@ const SettingsModal = () => {
     }
   }, [isGeneralTabDisabled, isKeyboardTabDisabled, isAdvancedTabDisabled]);
 
-  const className = classNames('Modal', 'SettingsModal', {
-    open: !isHidden,
-    closed: isHidden
-  });
-
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.SETTINGS_MODAL));
   };
@@ -78,33 +70,35 @@ const SettingsModal = () => {
     }
   };
 
-  return isDisabled ? null : (
-    <SearchContext.Provider value={searchTerm}>
-      <FocusTrap locked={!isHidden}>
-        <div className={className} data-element={DataElements.SettingsModal} onClick={closeModal}>
-          <div className="container" onClick={(e) => e.stopPropagation()}>
-            <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-              <div className="swipe-indicator" />
-              <div className="header">
-                <div className="title">
-                  <div>{t('option.settings.settings')}</div>
-                  <Button
-                    img="icon-close"
-                    onClick={closeModal}
-                    title="action.close"
-                  />
-                </div>
-                <div className="settings-search-input">
-                  <Icon glyph="icon-header-search" />
-                  <input
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
+  if (isDisabled) {
+    return null;
+  }
 
+  const className = classNames('Modal', 'SettingsModal', 'open');
+
+  return (
+    <SearchContext.Provider value={searchTerm}>
+      <div className={className} data-element={DataElements.SettingsModal}>
+        <ModalWrapper
+          title={t('option.settings.settings')}
+          closeHandler={closeModal}
+          onCloseClick={closeModal}
+          isOpen={isOpen}
+          swipeToClose
+        >
+          <div className="container">
+            <div className="swipe-indicator" />
+            <div className="header">
+              <div className="settings-search-input">
+                <Icon glyph="icon-header-search" />
+                <input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  aria-label={t('message.searchSettingsPlaceholder')}
+                />
               </div>
-            </Swipeable>
-            <div className="divider"></div>
+            </div>
+            <div className="divider" />
             <div className="body">
               <div className="settings-tabs-container">
                 <div className="settings-tabs">
@@ -114,10 +108,13 @@ const SettingsModal = () => {
                     });
                     return (
                       <DataElementWrapper
+                        type="button"
                         className={className}
                         dataElement={tab}
                         onClick={() => handleTabClicked(tab)}
                         key={tab}
+                        aria-selected={tab === selectedTab}
+                        aria-current={tab === selectedTab ? 'page' : null}
                       >
                         {title}
                       </DataElementWrapper>
@@ -138,8 +135,8 @@ const SettingsModal = () => {
               </div>
             </div>
           </div>
-        </div>
-      </FocusTrap>
+        </ModalWrapper>
+      </div>
     </SearchContext.Provider>
   );
 };

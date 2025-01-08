@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -11,6 +11,7 @@ import { workerTypes } from 'constants/types';
 import core from 'src/core';
 import DataElements from 'constants/dataElement';
 import { useTranslation } from 'react-i18next';
+import findFocusableElements from 'helpers/findFocusableElements';
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -27,6 +28,8 @@ const ThumbnailControls = ({ index }) => {
     selectors.getSelectedThumbnailPageIndexes(state),
   ]);
   const dispatch = useDispatch();
+  const buttonsRef = useRef([]);
+  const buttonContainerRef = useRef(null);
 
   const [
     currentPage,
@@ -112,6 +115,15 @@ const ThumbnailControls = ({ index }) => {
       : null;
   });
 
+  useEffect(() => {
+    buttonsRef.current = findFocusableElements(buttonContainerRef.current);
+    if (buttonsRef.current.length > 0) {
+      buttonsRef.current.forEach((element) => {
+        element.tabIndex = -1;
+      });
+    }
+  }, [buttonsRef.current, buttons]);
+
   if (isElementDisabled) {
     return null;
   } if (isXod || isOffice || document?.isWebViewerServerDocument()) {
@@ -141,6 +153,7 @@ const ThumbnailControls = ({ index }) => {
       'modular-ui': customizableUI,
     })}
     data-element={dataElementName}
+    ref={buttonContainerRef}
     >
       {buttons}
       {

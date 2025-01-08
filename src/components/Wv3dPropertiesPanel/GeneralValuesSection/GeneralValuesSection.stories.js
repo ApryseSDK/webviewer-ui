@@ -9,6 +9,9 @@ import '../../Panel/Panel.scss';
 export default {
   title: 'Components/Wv3dPropertiesPanel/GeneralValuesSection/GeneralValuesSection',
   component: GeneralValuesSection,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const initialState = {

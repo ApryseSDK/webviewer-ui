@@ -1,15 +1,33 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import CreatableListItem from './CreatableListItem';
 
 import './CreatableList.scss';
+
+const propTypes = {
+  options: PropTypes.object,
+  onOptionsUpdated: PropTypes.func,
+  popupRef: PropTypes.object
+};
 
 const CreatableListContainer = ({
   options,
   onOptionsUpdated,
   popupRef,
 }) => {
+
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    isInitialized.current = false;
+  }, [onOptionsUpdated]);
+
+  useEffect(() => {
+    setItems(draggableItems);
+  }, [options]);
+
   const { t } = useTranslation();
 
   // In order to be draggable, each item needs a unique Id
@@ -26,15 +44,23 @@ const CreatableListContainer = ({
   const containerRef = useRef();
 
   useEffect(() => {
-    const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
-    onOptionsUpdated(sanitizedOptions);
+    // Skip calling onOptionsUpdated on the initial prop-driven update
+    if (isInitialized.current) {
+      const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
+      onOptionsUpdated(sanitizedOptions);
+    } else {
+      // Mark the component as initialized after render / rerender
+      isInitialized.current = true;
+    }
   }, [items, onOptionsUpdated]);
 
   const onAddItem = useCallback(() => {
     const id = nextId;
     setNextId(nextId + 1);
     setItems([...items, { id, value: '', displayValue: '' }]);
-    validatePopupHeight();
+    if (popupRef) {
+      validatePopupHeight();
+    }
   }, [nextId, items]);
 
   const handleDeleteItem = (id) => () => {
@@ -121,5 +147,7 @@ const CreatableListContainer = ({
     </div>
   );
 };
+
+CreatableListContainer.propTypes = propTypes;
 
 export default CreatableListContainer;

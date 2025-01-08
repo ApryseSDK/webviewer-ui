@@ -40,6 +40,8 @@ export const Tab = ({ children, dataElement }) => {
       children.props.onClick?.();
       dispatch(actions.setSelectedTab(id, dataElement));
     },
+    'aria-selected': isSelected,
+    'aria-current': (isSelected && 'page') || null,
   };
 
   // need to do this because the children may be wrapped by React.memo

@@ -6,6 +6,9 @@ import Model3DModal from './Model3DModal';
 export default {
   title: 'Components/Model3DModal',
   component: Model3DModal,
+  parameters: {
+    legacyUI: true
+  }
 };
 
 export function Basic() {

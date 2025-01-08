@@ -189,10 +189,9 @@ export const printPages = (pages) => {
 
   printHandler.appendChild(fragment);
 
-  if (isSafari && !(isChromeOniOS || isFirefoxOniOS)) {
-    // Print for Safari browser. Makes Safari 11 consistently work.
-    document.execCommand('print');
-  } else {
+  const isNativeSafariBrowser = isSafari && !(isChromeOniOS || isFirefoxOniOS);
+
+  if (!isNativeSafariBrowser) {
     // It looks like both Chrome and Firefox (on iOS) use the top window as target for window.print instead of the frame where it was triggered,
     // so we need to teleport the print handler div to the top parent and inject some CSS to make it print nicely.
     // This can be removed when Chrome and Firefox for iOS respect the origin frame as the actual target for window.print
@@ -209,17 +208,19 @@ export const printPages = (pages) => {
         node.appendChild(style);
       }
     }
-    if (printHandler.children.length === 1) {
-      printHandler.parentElement.setAttribute('style', 'height: 99.99%;');
-    } else {
-      printHandler.parentElement.setAttribute('style', 'height: 100%;');
-    }
 
-    printDocument();
+    if (!window.isApryseWebViewerWebComponent) {
+      if (printHandler.children.length === 1) {
+        printHandler.parentElement.setAttribute('style', 'height: 99.99%;');
+      } else {
+        printHandler.parentElement.setAttribute('style', 'height: 100%;');
+      }
+    }
   }
+  printDocument(isNativeSafariBrowser);
 };
 
-const printDocument = () => {
+const printDocument = (isNativeSafariBrowser) => {
   const doc = core.getDocument();
   const tempTitle = window.parent.document.title;
 
@@ -247,7 +248,12 @@ const printDocument = () => {
 
   window.addEventListener('beforeprint', onBeforePrint, { once: true });
   window.addEventListener('afterprint', onAfterPrint, { once: true });
-  window.print();
+  if (isNativeSafariBrowser) {
+    // Print for Safari browser. Makes Safari 11 consistently work.
+    document.execCommand('print');
+  } else {
+    window.print();
+  }
 };
 
 export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {

@@ -6,9 +6,8 @@ import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import { Swipeable } from 'react-swipeable';
 import { getInstanceNode } from 'helpers/getRootNode';
+import ModalWrapper from 'components/ModalWrapper';
 
 import core from 'core';
 
@@ -20,7 +19,7 @@ import FilePickerPanel from '../PageReplacementModal/FilePickerPanel';
 
 import './InsertPageModal.scss';
 
-const options = { loadAsPDF: true, l: window.sampleL /* license key here */ };
+const options = { loadAsPDF: true };
 
 const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const [selectedPageIndexes, currentPage, selectedTab] = useSelector((state) => [
@@ -35,6 +34,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const [numberOfBlankPagesToInsert, setNumberOfBlankPagesToInsert] = useState(1);
   const [insertPageHeight, setInsertPageHeight] = useState(0);
   const [insertPageWidth, setInsertPageWidth] = useState(0);
+  const [pageNumberError, setPageNumberError] = useState('');
 
   useEffect(() => {
     const pageNumbers = selectedPageIndexes.length > 0 ? selectedPageIndexes.map((i) => i + 1) : [currentPage];
@@ -104,22 +104,19 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
       insertNewPageBelow,
       insertNewPageIndexes,
       numberOfBlankPagesToInsert,
+      pageNumberError,
       setInsertNewPageBelow,
       setInsertNewPageIndexes,
       setNumberOfBlankPagesToInsert,
       setInsertPageHeight,
       setInsertPageWidth,
+      setPageNumberError,
       loadedDocumentPageCount,
     };
     return (
       <div className="container tabs" onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
-        <div className="swipe-indicator" />
         <Tabs className="insert-page-tabs" id={DataElements.INSERT_PAGE_MODAL}>
-          <div className="header-container">
-            <div className="header">
-              <p>{t('insertPageModal.title')}</p>
-              <Button className="insertPageModalCloseButton" img="icon-close" onClick={closeModal} title="action.close" />
-            </div>
+          <div className="tabs-header-container">
             <div className="tab-list">
               <Tab dataElement={DataElements.INSERT_BLANK_PAGE_TAB}>
                 <button className="tab-options-button">{t('insertPageModal.tabs.blank')}</button>
@@ -130,7 +127,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
               </Tab>
             </div>
           </div>
-          <div className="divider"></div>
           <TabPanel dataElement={DataElements.INSERT_BLANK_PAGE_PANEL}>
             <InsertBlankPagePanel {...insertBlankPageProps} />
           </TabPanel>
@@ -147,20 +143,24 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
             className="insertPageModalConfirmButton"
             label="insertPageModal.button"
             onClick={apply}
-            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0} />
+            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0 || pageNumberError} />
         </div>
       </div>
     );
   };
 
   return (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className="Modal open InsertPageModal" data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
-        <FocusTrap locked={true}>
-          {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
-        </FocusTrap>
-      </div>
-    </Swipeable>
+    <div className="Modal open InsertPageModal" data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
+      <ModalWrapper
+        title={selectedDoc ? null : t('insertPageModal.title')}
+        isOpen={true}
+        closeHandler={closeModal}
+        onCloseClick={closeModal}
+        swipeToClose
+      >
+        {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
+      </ModalWrapper>
+    </div>
   );
 };
 

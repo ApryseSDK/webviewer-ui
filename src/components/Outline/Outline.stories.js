@@ -1,11 +1,13 @@
 import React from 'react';
-import { legacy_createStore as createStore } from 'redux';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import Outline from './Outline';
 import OutlineContext from './Context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import '../LeftPanel/LeftPanel.scss';
+import thunk from 'redux-thunk';
 
 const NOOP = () => { };
 
@@ -77,6 +79,16 @@ const reducer = () => {
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       autoExpandOutlines: true,
+      flyoutMap: {
+        'bookmarkOutlineFlyout-': {
+          dataElement: 'bookmarkOutlineFlyout-',
+          items: menuItems,
+        }
+      },
+      activeFlyout: 'bookmarkOutlineFlyout-',
+      openElements: {
+        'bookmarkOutlineFlyout-': true,
+      }
     },
     document: {
       outlines: getDefaultOutlines(),
@@ -104,7 +116,7 @@ const outline = createOutline({
 
 export const Basic = () => {
   return (
-    <ReduxProvider store={createStore(reducer)}>
+    <ReduxProvider store={createStore(reducer, applyMiddleware(thunk))}>
       <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <OutlineContext.Provider

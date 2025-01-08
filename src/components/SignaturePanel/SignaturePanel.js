@@ -81,14 +81,12 @@ const SignaturePanel = () => {
   };
 
   const removeMatchingWidget = (annotation) => {
-    const annot = annotation;
-    const widgetFieldName = annot.getCustomData('trn-form-field-name');
-    const isRectanglePlaceholder = annotation instanceof window.Core.Annotations.RectangleAnnotation && widgetFieldName;
-    if (isRectanglePlaceholder) {
+    const isWidget = annotation instanceof window.Core.Annotations.WidgetAnnotation;
+    if (isWidget) {
       const annotationManager = core.getAnnotationManager();
       const annotationList = annotationManager.getAnnotationsList();
-      const widgetToDelete = annotationList.filter((annotation) => {
-        return annotation.getCustomData('trn-editing-rectangle-id') === annot.Id;
+      const widgetToDelete = annotationList.filter((annotationToFilter) => {
+        return annotationToFilter.getCustomData('trn-editing-rectangle-id') === annotation.Id;
       });
       annotationManager.deleteAnnotations(widgetToDelete);
     }
