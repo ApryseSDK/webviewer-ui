@@ -1,6 +1,7 @@
 import { fitToWidth, fitToPage, zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import actions from 'actions';
 import core from 'core';
+import { FLYOUT_ITEM_TYPES } from 'src/constants/customizationVariables';
 
 const noop = () => {
 };
@@ -16,22 +17,22 @@ export const getZoomFlyoutItems = (zoomOptionsList, dispatch, size = 0, onZoomCh
     icon: 'icon-header-zoom-fit-to-width',
     label: 'action.fitToWidth',
     title: 'action.fitToWidth',
+    dataElement: 'fitToWidthButton',
     onClick: () => {
       fitToWidth();
       dispatch(actions.closeElement('zoom-containerFlyout'));
     },
-    className: 'fitToWidthButton',
   };
   const fitToPageButton = {
     icon: 'icon-header-zoom-fit-to-page',
     label: 'action.fitToPage',
     title: 'action.fitToPage',
+    dataElement: 'fitToPageButton',
     onClick: () => {
       fitToPage();
       dispatch(actions.closeElement('zoom-containerFlyout'));
     },
     type: 'customButton',
-    className: 'fitToPageButton'
   };
   const marqueeButton = {
     dataElement: 'zoom-button-marquee-zoom',
@@ -74,7 +75,7 @@ export const getZoomFlyoutItems = (zoomOptionsList, dispatch, size = 0, onZoomCh
     zoomItems.push(marqueeButton);
   } else if (size === 1) {
     const zoomOptionsItem = {
-      dataElement: 'zoomOptionsButton',
+      dataElement: FLYOUT_ITEM_TYPES.ZOOM_OPTIONS_BUTTON,
       children: zoomOptionsList.map((zoomValue) => {
         return {
           label: `${zoomValue * 100}%`,

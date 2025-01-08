@@ -1,6 +1,7 @@
 /**
  * Item options
  * @typedef {Object} ItemProperties
+ * @memberof UI.Components
  * @property {string} [dataElement] The data element of the item.
  * @property {string} [title] The tooltip of the item.
  * @property {boolean} [disabled] Whether the item is disabled or not.
@@ -20,16 +21,10 @@ class Item {
       throw new Error('Abstract class "Item" cannot be instantiated directly.');
     }
     const { dataElement, title, disabled, type } = options;
-    this._dataElement = dataElement;
+    this.dataElement = dataElement;
     this.title = title;
     this.disabled = disabled;
     this.type = type;
-  }
-  get dataElement() {
-    return this._dataElement;
-  }
-  set dataElement(val) {
-    console.warn(`Modular Item's "${this._dataElement}" dataElement property cannot be changed to "${val}"`);
   }
 }
 

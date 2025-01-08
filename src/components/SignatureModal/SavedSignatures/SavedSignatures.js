@@ -77,13 +77,13 @@ const SavedSignatures = ({ selectedIndex, setSelectedIndex }) => {
           onClick={() => setSelectedIndex(index)}
         >
           <div className="inputContainer">
-            <input type='radio' onChange={() => setSelectedIndex(index)} checked={index === selectedIndex}/>
+            <input type='radio' onChange={() => setSelectedIndex(index)} checked={index === selectedIndex} />
             <div className="contentContainer">
               <div className="imgContainer">
-                <img alt={t('option.toolsOverlay.signatureAltText')} src={displayedSignatures[index].imgSrc}/>
+                <img alt={t('option.toolsOverlay.signatureAltText')} src={displayedSignatures[index].imgSrc} />
               </div>
               {displayedIntials?.[index] && <div className="imgContainer">
-                <img alt={t('option.toolsOverlay.signatureAltText')} src={displayedIntials[index].imgSrc}/>
+                <img alt={t('option.toolsOverlay.signatureAltText')} src={displayedIntials[index].imgSrc} />
               </div>}
               {!isSignatureDeleteButtonDisabled && (
                 <button

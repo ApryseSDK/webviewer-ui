@@ -6,19 +6,40 @@
   display: block;
   font-size: var(--font-size-default);
 
+  @include mobile {
+    margin: 16px;
+    width: auto;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
   .section{
-    margin-bottom: 10px;
-    p.title{
-      margin-left:16px;
+    margin-bottom: 8px;
+    h2.title{
+      font-weight: 700;
+	    font-size: 13px;
+      padding-left: var(--fileAttachment-title-padding);
+      margin: 12px 0;
     }
     ul.downloadable{
+      padding-left: var(--fileAttachment-list-padding);
       &>li{
-        cursor: pointer;
-        color: var(--secondary-button-text);
         width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
-        white-space: nowrap;text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 4px 0;
+      }
+      &>li>button{
+        cursor: pointer;
+        color: var(--secondary-button-text);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 4px 0;
+        &:hover{
+          color: var(--secondary-button-hover);
+        }
       }
       .embedSpinner{
         display: flex;

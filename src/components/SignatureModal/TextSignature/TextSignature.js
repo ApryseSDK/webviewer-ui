@@ -312,6 +312,7 @@ const TextSignature = ({
     if (fullSignature === '' && (isInitialsModeEnabledAndEmpty || !isInitialsModeEnabled)) {
       return (
         <Dropdown
+          id='text-signature-font-dropdown'
           disabled={true}
           placeholder={t('option.signatureModal.fontStyle')}
         />
@@ -319,9 +320,12 @@ const TextSignature = ({
     }
     return (
       <Dropdown
+        id="text-signature-font-dropdown"
         items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
         getCustomItemStyle={(item) => ({ fontFamily: item.font })}
         getKey={(item) => item.font}
+        translationPrefix='option.signatureModal.textSignature'
+        showLabelInList
         getDisplayValue={(item) => {
           return item.value || item.font;
         }}
@@ -344,6 +348,7 @@ const TextSignature = ({
             <input
               className="text-signature-input"
               ref={inputRef}
+              aria-label={t('option.signatureModal.typeSignature')}
               type="text"
               value={fullSignature}
               onChange={handleFullSignatureChange}
@@ -357,6 +362,7 @@ const TextSignature = ({
             </div>
             <button
               className="footer-signature-clear"
+              aria-label={t('action.clearSignature')}
               onClick={() => {
                 setFullSiganture('');
                 inputRef.current.focus();
@@ -373,6 +379,7 @@ const TextSignature = ({
               className="text-signature-input"
               type="text"
               value={initials}
+              aria-label={t('option.signatureModal.typeInitial')}
               onChange={handleInitialsChange}
               style={{ fontFamily: selectedFontFamily || fonts, fontSize, color: fontColor.toHexString() }}
               disabled={isDisabled}
@@ -384,6 +391,7 @@ const TextSignature = ({
             </div>
             <button
               className="footer-signature-clear"
+              aria-label={t('action.clearInitial')}
               onClick={() => setInitials('')}
               disabled={isDisabled || initials.length === 0}
             >

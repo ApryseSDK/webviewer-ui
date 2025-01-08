@@ -49,6 +49,9 @@
     .note-popup-option {
       @include button-reset;
       align-items: flex-start;
+      @include mobile {
+        font-size: 13px;
+      }
     }
 
     &.options-reply {
@@ -101,5 +104,14 @@
         height: 28px;
       }
     }
+  }
+}
+
+.NotePopupFlyout {
+  min-width: unset!important;
+  max-width: unset!important;
+  .flyout-item-container {
+    height: unset!important;
+    margin: unset!important;
   }
 }

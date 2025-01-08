@@ -1,0 +1,59 @@
+@import '../../constants/styles';
+
+.documentControlsContainer {
+  @include mobile {
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+  }
+
+  .PageControlContainer {
+    display: flex;
+    background-color: var(--gray-2);
+    justify-content: center;
+    align-content: center;
+    border-radius: 4px;
+
+    .dropdown-menu {
+      position: relative;
+
+      .indicator {
+        position: absolute;
+        bottom: 1px;
+        right: 1px;
+
+
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+
+        border-top: 4px solid #c4c4c4;
+        transform: rotateY(0deg) rotate(315deg);
+      }
+    }
+
+    button {
+      .Icon {
+        height: 21px;
+        width: 21px;
+        color: var(--icon-color);
+      }
+    }
+
+    .button-hover {
+      &:hover {
+        background: var(--view-header-button-hover);
+        border-radius: 4px;
+      }
+    }
+
+    .divider {
+      height: 20px;
+      width: 1px;
+      background: var(--divider);
+      margin: 6px;
+      display: block !important;
+    }
+  }
+}

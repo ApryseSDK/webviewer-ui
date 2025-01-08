@@ -7,9 +7,6 @@ import Panel from 'components/Panel';
 export default {
   title: 'ModularComponents/FileAttachmentPanel',
   component: FileAttachmentPanelComponent,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 const initialState = {

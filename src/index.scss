@@ -47,10 +47,10 @@
   --color-message-info: #2980b9;
   --color-message-success: #27ae60;
   --color-message-warning: #e67e22;
-  --color-message-error: #e74c3c;
+  --color-message-error: var(--red);
   --color-background-canvas: #eee;
   /* stylelint-enable color-no-hex */
-  
+
   --color-message-info-focus-shadow: rgba(41, 128, 185, 0.4);
   --color-message-success-focus-shadow: rgba(39, 174, 96, 0.4);
   --color-message-warning-focus-shadow: rgba(230, 126, 34, 0.4);
@@ -58,7 +58,6 @@
   --color-focus-shadow: rgba(20, 110, 170, 0.4);
   --color-overlay-canvas: rgba(0, 0, 0, 0.4);
   --font-size-tiny: 9px;
-  --font-size-small: 11px;
   --font-size-default: 13px;
   --font-size-medium: 16px;
   --font-size-large: 18px;
@@ -82,7 +81,9 @@
   --z-index-dragging: 200;
   --z-index-overlay: 300;
   --font-family: Lato, Tahoma, sans-serif;
-  --focus-transition: box-shadow 0.1s cubic-bezier(0.4, 1, 0.75, 0.9)
+  --focus-transition: box-shadow 0.1s cubic-bezier(0.4, 1, 0.75, 0.9);
+
+  transform: scale(1);
 }
 
 /* Overriding theme from webviewer-react-toolkit. */
@@ -96,6 +97,7 @@ html[data-theme='dark'] {
   --color-blue-gray-3: var(--border);
   // Choice checked
   --color-blue-gray-5: var(--primary-button);
+  --font-size-small: 10px;
 }
 
 /* Overriding style for Storybook when in mobile mode. */

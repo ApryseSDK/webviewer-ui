@@ -24,7 +24,10 @@ export default {
         disable: true
       }
     }
-  }
+  },
+  parameters: {
+    legacyUI: true,
+  },
 };
 
 // Mock some state to show the style popups
@@ -103,7 +106,7 @@ distanceMeasurementAnnot['Measure'] = {
   ],
 };
 
-const noop = () => {};
+const noop = () => { };
 distanceMeasurementAnnot['IT'] = 'LineDimension';
 distanceMeasurementAnnot['DisplayUnits'] = ['in'];
 distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];
@@ -150,17 +153,16 @@ FreeText.args = {
   isFreeText: true,
 };
 
-const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
-widgetPlaceHolderAnnot.isFormFieldPlaceholder = () => true;
-widgetPlaceHolderAnnot.getCustomData = () => 'TextFormField';
+const dummyField = new window.Core.Annotations.Forms.Field('MyTextField', { type: 'Tx', value: 'Value' });
+const widgetAnnotation = new window.Core.Annotations.WidgetAnnotation(dummyField, {});
 
-export const WidgetPlaceHolder = BasicTemplate.bind({});
-WidgetPlaceHolder.args = {
-  annotations: [widgetPlaceHolderAnnot],
-  style: getAnnotationStyles(widgetPlaceHolderAnnot),
+export const WidgetAnnotation = BasicTemplate.bind({});
+WidgetAnnotation.args = {
+  annotations: [widgetAnnotation],
+  style: getAnnotationStyles(widgetAnnotation),
   closeElement: () => { },
   properties: {
     StrokeStyle: 'solid'
   },
-  colorMapKey: mapAnnotationToKey(widgetPlaceHolderAnnot),
+  colorMapKey: mapAnnotationToKey(widgetAnnotation),
 };

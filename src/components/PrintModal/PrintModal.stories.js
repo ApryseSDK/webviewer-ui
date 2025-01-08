@@ -74,9 +74,9 @@ export const PrintModal = () => (
 // Testing if we show an error when the user types a page number that is greater than the total number of pages
 PrintModal.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const customPagesButton = await canvas.findByLabelText('Specify Pages');
+  const customPagesButton = await canvas.getByLabelText('Specify Pages');
   await userEvent.click(customPagesButton);
-  const customPagesInput = await document.getElementById('PageNumberInput');
+  const customPagesInput = await document.getElementById('specifyPagesInput');
   expect(customPagesInput).toBeInTheDocument();
   await userEvent.click(customPagesInput);
   await userEvent.type(customPagesInput, '11', { delay: 100 });

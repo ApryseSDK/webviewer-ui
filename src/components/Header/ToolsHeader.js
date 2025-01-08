@@ -1,4 +1,5 @@
 import React from 'react';
+import core from 'core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from 'actions';
@@ -15,14 +16,20 @@ class ToolsHeader extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isHeaderDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    currentToolbarGroup: PropTypes.string,
     activeHeaderItems: PropTypes.array.isRequired,
     isToolGroupReorderingEnabled: PropTypes.bool,
-    isInDesktopOnlyMode: PropTypes.bool
-  }
+    isInDesktopOnlyMode: PropTypes.bool,
+    isOfficeEditorHeaderEnabled: PropTypes.bool,
+  };
 
   render() {
-    const { isDisabled, isHeaderDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
+    const { isDisabled, isHeaderDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode, isOfficeEditorHeaderEnabled } = this.props;
     const isVisible = !(isDisabled || isHeaderDisabled) && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
+
+    if (isOfficeEditorHeaderEnabled && core.getDocument() === null) {
+      return null;
+    }
 
     return (
       <div
@@ -53,7 +60,8 @@ const mapStateToProps = (state) => ({
   isSignatureOverlayOpen: selectors.isElementOpen(state, 'signatureOverlay'),
   isSignatureOverlayDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
   isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
-  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
+  isOfficeEditorHeaderEnabled: selectors.getIsOfficeEditorHeaderEnabled(state),
 });
 
 const mapDispatchToProps = {

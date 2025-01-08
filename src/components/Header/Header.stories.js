@@ -4,14 +4,20 @@ import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-
 export default {
   title: 'Components/Header',
   component: Header,
 };
 
+const mockedState = {
+  ...initialState,
+  featureFlags: {
+    customizableUI: true,
+  },
+};
+
 const store = configureStore({
-  reducer: () => initialState
+  reducer: () => mockedState
 });
 
 const BasicComponent = (props) => {
@@ -21,7 +27,6 @@ const BasicComponent = (props) => {
     </Provider>
   );
 };
-
 
 export const DefaultHeader = BasicComponent.bind({});
 DefaultHeader.args = {

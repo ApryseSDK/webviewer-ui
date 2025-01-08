@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
+import PropTypes from 'prop-types';
 
-const NoteUnpostedCommentIndicator = ({ annotationId, pendingEditTextMap, pendingReplyMap, pendingAttachmentMap }) => {
+const propTypes = {
+  annotationId: PropTypes.string,
+  ariaLabel: PropTypes.string,
+  pendingEditTextMap: PropTypes.object,
+  pendingReplyMap: PropTypes.object,
+  pendingAttachmentMap: PropTypes.object,
+};
+
+const NoteUnpostedCommentIndicator = ({ annotationId, ariaLabel, pendingEditTextMap, pendingReplyMap, pendingAttachmentMap }) => {
   const { t } = useTranslation();
   const [hasUnpostedComment, setHasUnpostedComment] = useState(false);
   const [hasUnpostedReply, setHasUnpostedReply] = useState(false);
@@ -20,12 +29,14 @@ const NoteUnpostedCommentIndicator = ({ annotationId, pendingEditTextMap, pendin
       <div data-element="unpostedCommentIndicator">
         <Tooltip content={t('message.unpostedComment')}>
           <div>
-            <Icon className="type-icon" glyph={'icon-unposted-comment'} />
+            <Icon className="type-icon" glyph={'icon-unposted-comment'} ariaLabel={ariaLabel}/>
           </div>
         </Tooltip>
       </div> :
       null
   );
 };
+
+NoteUnpostedCommentIndicator.propTypes = propTypes;
 
 export default NoteUnpostedCommentIndicator;

@@ -1,0 +1,203 @@
+.index-drag-container {
+  .index-panel-single-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-radius: 4px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding: var(--padding-small) var(--padding-tiny);
+    min-height: 32px;
+
+    .index-panel_content-container {
+      display: flex;
+      flex-flow: row nowrap;
+      flex-grow: 1;
+      flex-shrink: 1;
+      align-items: center;
+
+      .ui__input__messageText {
+        margin-left: 8px;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: var(--red);
+      }
+
+      .ui__input--message-warning {
+        border-color: var(--red);
+      }
+    }
+
+    .index-panel-label-row {
+      flex-grow: 1;
+      flex-shrink: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      padding-left: var(--padding-large)
+    }
+
+    .index-panel-label {
+      font-weight: 600;
+      flex: 1 0 100%;
+      margin-bottom: var(--padding-small);
+    }
+
+    .type-icon-container {
+      padding-right: 13px;
+      align-self: start;
+      height: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .index-panel-more-button {
+      display: none;
+      flex-grow: 0;
+      flex-shrink: 0;
+      width: auto;
+      height: auto;
+      margin-left: var(--padding-tiny);
+      margin-right: 0;
+
+      .Icon {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    &.default {
+      padding: var(--padding-small) 0;
+      border: 1px solid transparent;
+
+      &.hover,
+      &:hover {
+        cursor: pointer;
+
+        .index-panel-more-button {
+          display: flex;
+        }
+      }
+
+      &:hover {
+        border: 1px solid var(--blue-6);
+      }
+
+      &.hover,
+      &.selected {
+        background-color: var(--popup-button-active);
+      }
+      
+      &.selected {
+        border: 1px solid var(--blue-5);
+      }
+    }
+
+    &.editing {
+      padding: var(--padding-medium) 20px var(--padding-medium) 0px;
+      background-color: var(--outline-selected);
+    }
+
+    .index-panel-checkbox {
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-top: 1px;
+      margin-bottom: 0;
+      margin-right: var(--padding-small);
+    }
+
+    .index-panel-text {
+      background-color: inherit;
+      border: none;
+      text-align: left;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: table;
+
+      span {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+
+    .index-panel-text,
+    .index-panel-input {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: calc(100% - 18px); // more-button width + margin-left = 18px
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .index-panel-outline-input {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: calc(100% - 18px); // more-button width + margin-left = 18px
+
+      color: var(--text-color);
+      width: calc(100% - var(--padding-large));
+      padding: var(--padding-small);
+
+      &:focus {
+        border-color: var(--outline-color);
+      }
+
+      &::placeholder {
+        color: var(--placeholder-text);
+      }
+    }
+
+    .index-panel-editing-controls {
+      flex-basis: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: var(--padding-medium);
+    }
+
+    .index-panel-cancel-button,
+    .index-panel-save-button {
+      width: auto;
+      padding: 6px var(--padding);
+    }
+
+    .index-panel-cancel-button {
+      color: var(--secondary-button-text);
+
+      &:hover {
+        color: var(--secondary-button-hover);
+      }
+    }
+
+    .index-panel-save-button {
+      color: var(--primary-button-text);
+      background-color: var(--primary-button);
+      margin-left: var(--padding-tiny);
+      border-radius: 4px;
+
+      &:hover {
+        background-color: var(--primary-button-hover);
+      }
+
+      &:disabled,
+      &.disabled {
+        cursor: not-allowed;
+        background-color: var(--blue-5) !important;
+        opacity: .5;
+
+        span {
+          color: var(--gray-0);
+        }
+      }
+    }
+
+  }
+}

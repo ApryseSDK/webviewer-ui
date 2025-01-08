@@ -10,22 +10,24 @@ import useOnCropAnnotationChangedOrSelected from '../../hooks/useOnCropAnnotatio
 import { isMobileSize } from 'helpers/getDeviceSize';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
+import MobilePopupWrapper from '../MobilePopupWrapper';
+
+export function focusActiveIcon(e) {
+  if (e && e.nativeEvent.pointerType === '') {
+    const activeToolBtn = getRootNode().querySelector('.active.ToolButton');
+    activeToolBtn.focus();
+  }
+}
 
 function DocumentCropPopupContainer() {
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
-  const [
-    isOpen,
-    isInDesktopOnlyMode,
-    shouldShowApplyCropWarning,
-    presetCropDimensions,
-  ] = useSelector((state) => [
-    selectors.getActiveToolName(state) === window.Core.Tools.ToolNames['CROP'] &&
-    selectors.isElementOpen(state, DataElements.DOCUMENT_CROP_POPUP),
-    selectors.isInDesktopOnlyMode(state),
-    selectors.shouldShowApplyCropWarning(state),
-    selectors.getPresetCropDimensions(state),
-  ]);
+  const activeToolName = useSelector(selectors.getActiveToolName);
+  const isDocumentCropPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.DOCUMENT_CROP_POPUP));
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const shouldShowApplyCropWarning = useSelector(selectors.shouldShowApplyCropWarning);
+  const presetCropDimensions = useSelector(selectors.getPresetCropDimensions);
 
+  const isOpen = activeToolName === window.Core.Tools.ToolNames['CROP'] && isDocumentCropPopupOpen;
   const dispatch = useDispatch();
   const [isCropping, setIsCropping] = useState(cropCreateTool.getIsCropping());
 
@@ -60,7 +62,7 @@ function DocumentCropPopupContainer() {
       cropCreateTool.removeEventListener('cropModeChanged', handleCropModeChange);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
     };
-  });
+  }, []);
 
   const disableHeader = () => {
     const header = getRootNode().querySelector('[data-element=header]');
@@ -171,8 +173,9 @@ function DocumentCropPopupContainer() {
     core.setToolMode(window.Core.Tools.ToolNames.CROP);
   };
 
-  const closeDocumentCropPopup = useCallback(() => {
+  const closeDocumentCropPopup = useCallback((e) => {
     closeAndReset();
+    focusActiveIcon(e);
   }, []);
 
   // disable/enable the 'apply' button when cropping
@@ -180,10 +183,11 @@ function DocumentCropPopupContainer() {
     setIsCropping(cropCreateTool.getIsCropping());
   }, [cropAnnotation]);
 
-  const applyCrop = () => {
+  const applyCrop = (e) => {
     cropCreateTool.applyCrop();
     cropCreateTool.reset();
     reenableHeader();
+    focusActiveIcon(e);
   };
 
   const getPageHeight = useCallback((pageNumber) => {
@@ -254,9 +258,11 @@ function DocumentCropPopupContainer() {
     if (isMobile && !isInDesktopOnlyMode) {
       // disable draggable on mobile devices
       return (
-        <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
-          <DocumentCropPopup {...props} isMobile />
-        </div>
+        <MobilePopupWrapper>
+          <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
+            <DocumentCropPopup {...props} isMobile />
+          </div>
+        </MobilePopupWrapper>
       );
     }
     return (

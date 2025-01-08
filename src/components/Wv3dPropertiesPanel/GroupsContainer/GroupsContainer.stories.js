@@ -9,6 +9,9 @@ import '../../Panel/Panel.scss';
 export default {
   title: 'Components/Wv3dPropertiesPanel/GroupsContainer/GroupsContainer',
   component: GroupsContainer,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const initialState = {

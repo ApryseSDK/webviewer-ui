@@ -10,7 +10,20 @@ WebViewer(...)
  */
 
 import core from 'core';
+import actions from 'actions';
+import selectors from 'selectors';
+export default (store) => (toolName) => {
+  const state = store.getState();
+  const featureFlags = state.featureFlags;
+  const { customizableUI } = featureFlags;
 
-export default (toolName) => {
+  if (customizableUI) {
+    // We can also set the active ribbon here if the tool is associated with a ribbon
+    const ribbonAssociatedWithTool = selectors.getRibbonAssociatedWithTool(state, toolName);
+    if (ribbonAssociatedWithTool) {
+      store.dispatch(actions.setActiveCustomRibbon(ribbonAssociatedWithTool));
+    }
+
+  }
   core.setToolMode(toolName);
 };

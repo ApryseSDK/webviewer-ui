@@ -18,6 +18,9 @@ const initialState = {
     ],
     activeDocumentViewerKey: 1,
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 export const Basic = () => {

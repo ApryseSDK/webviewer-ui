@@ -4,6 +4,7 @@ import { Panel } from 'src/apis/getPanels';
 
 /**
  * @typedef {Object} PanelProperties
+ * @memberof UI
  * @property {string} dataElement The data-element for panel.
  * @property {string} location Location of the panel in UI, left or right.
  * @property {string | UI.renderCustomPanel} render Either the name of a predefined panel to render or a function that returns a panel element.

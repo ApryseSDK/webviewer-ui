@@ -1,5 +1,18 @@
 @import '../../constants/styles.scss';
 
+// These are for the legacy popup. 
+.Popup.StylePopup #FontSizeDropdown.Dropdown__wrapper {
+  width: 80px;
+
+  .Dropdown {
+    width: 80px !important;
+  }
+
+  .Dropdown__items {
+    width: 80px !important;
+  }
+}
+
 .container-fluid {
   width: 100%;
   display: flex;
@@ -16,8 +29,10 @@
   .Dropdown {
     padding: 3px 4px;
     text-align: left;
+
     @include mobile {
       width: 100% !important;
+      font-size: 13px;
     }
 
     .Icon {
@@ -28,8 +43,13 @@
   }
 
   .FontSizeDropdown {
-    width: 100px;
+
+    @include mobile {
+      width: 100%;
+      padding: 0;
+    }
   }
+
   .container-dropdown {
     display: flex;
     flex-direction: row;
@@ -45,13 +65,16 @@
 
 .icon-grid {
   position: static;
+
   @include mobile {
     .row {
       display: flex;
     }
+
     .rich-text-format {
       float: left;
     }
+
     .text-horizontal-alignment {
       float: right;
 
@@ -59,16 +82,20 @@
         float: left;
       }
     }
+
     .text-vertical-alignment {
       float: left;
     }
   }
+
   @include tablet-and-desktop {
     display: grid;
+
     .row {
       display: flex;
     }
   }
+
   .row {
     gap: 8px;
     padding-top: 8px;
@@ -81,10 +108,20 @@
       height: 34px !important;
       margin: 0 !important;
 
+      @include mobile {
+        width: 32px !important;
+        height: 32px !important;
+      }
+
       .Icon {
         height: 26px !important;
         width: 26px !important;
         color: var(--icon-color);
+
+        &:disabled,
+        &.disabled {
+          color: var(--disabled-icon);
+        }
       }
 
       &.active {

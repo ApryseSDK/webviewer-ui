@@ -26,6 +26,8 @@
     "ungroup": "Ungroup",
     "download": "Download bestand",
     "edit": "Titel aanpassen",
+    "collapse": "Instorten",
+    "expand": "Uitbreiden",
     "extract": "Extract",
     "extractPage": "Pagina uitpakken",
     "enterFullscreen": "Document in volledig scherm",
@@ -35,7 +37,9 @@
     "fitToWidth": "Vensterbreedte",
     "more": "Meer",
     "openFile": "Open bestand",
+    "showMoreFiles": "Meer bestanden weergeven",
     "page": "Bladzijde",
+    "of": "van",
     "pagePrev": "Vorige pagina",
     "pageNext": "Volgende bladzijde",
     "pageSet": "Kies pagina",
@@ -43,6 +47,7 @@
     "proceed": "Doorgaan",
     "name": "Naam",
     "rename": "Hernoemen",
+    "remove": "Verwijderen",
     "ok": "OK",
     "rotate": "Roteren",
     "rotate3D": "Draaien",
@@ -109,6 +114,10 @@
     "moveToBottom": "Naar beneden verplaatsen",
     "movePageToTop": "Pagina naar boven verplaatsen",
     "movePageToBottom": "Pagina naar beneden verplaatsen",
+    "moveUp": "Naar boven verplaatsen",
+    "moveDown": "Naar beneden verplaatsen",
+    "moveLeft": "Naar links bewegen",
+    "moveRight": "Ga naar rechts",
     "backToMenu": "Terug naar menu",
     "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
@@ -121,15 +130,21 @@
     "comparePages": "Vergelijk pagina's",
     "startComparison": "Vergelijking starten",
     "showComparison": "Toon vergelijking",
+    "highlightChanges": "Wijzigingen markeren",
     "back": "Rug",
     "clearSignature": "Duidelijke handtekening",
+    "clearInitial": "Duidelijke beginletter",
     "readOnlySignature": "Alleen-lezen handtekening kan niet worden verwijderd",
     "newDocument": "Nieuw document",
     "sideBySideView": "Zij aan zij weergave",
     "pageNumberInput": "Invoer van paginanummer",
     "addNewColor": "Nieuwe kleur toevoegen",
     "deleteColor": "Geselecteerde kleur verwijderen",
-    "copySelectedColor": "Kopieer geselecteerde kleur"
+    "copySelectedColor": "Kopieer geselecteerde kleur",
+    "showMoreColors": "Meer kleuren weergeven",
+    "showLessColors": "Minder kleuren weergeven",
+    "fromCustomColorPicker": "van Aangepaste kleurenkiezer",
+    "newSheetDocument": "Nieuw spreadsheet"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -185,7 +200,8 @@
     "3D": "3D",
     "sound": "Geluid",
     "changeView": "Verander perspectief",
-    "newImage": "Nieuw beeld"
+    "newImage": "Nieuw beeld",
+    "defaultCustomStampTitle": "Aangepaste stempel"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -220,6 +236,7 @@
     "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
     "notesPanel": "Notities",
+    "indexPanel": "Indexpaneel",
     "outlinePanel": "Overzicht",
     "outlinesPanel": "Hoofdlijnen",
     "newOutlineTitle": "Nieuwe overzichtstitel",
@@ -234,7 +251,8 @@
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
     "redaction": "Redacteren",
-    "viewControlsOverlay": "Scherm opties",
+    "viewControls": "Scherm opties",
+    "pageControls": "Paginabesturingen",
     "calibration": "ijking",
     "zoomOverlay": "Zoom-overlay",
     "textPopup": "Tekstpop-up",
@@ -243,14 +261,17 @@
     "multiSelectButton": "Multi-Select",
     "pageReplaceModalTitle": "Pagina vervangen",
     "files": "Bestanden",
+    "file": "Bestand",
     "editText": "Tekst bewerken",
     "redactionPanel": "Redactiepaneel",
+    "tabLabel": "Tab",
     "noteGroupSection": {
       "open": "Bekijk alle annotaties",
       "close": "Sluit alle annotaties"
     },
     "comparePanel": "Vergelijk Paneel",
-    "watermarkPanel": "Watermerkpaneel"
+    "watermarkPanel": "Watermerkpaneel",
+    "mainMenu": "Hoofdmenu"
   },
   "message": {
     "showMore": "Laat meer zien",
@@ -283,6 +304,7 @@
     "searching": "Zoeken...",
     "searchCommentsPlaceholder": "Zoek opmerkingen",
     "searchDocumentPlaceholder": "Document zoeken",
+    "searchSettingsPlaceholder": "Zoekinstellingen",
     "searchSuggestionsPlaceholder": "Zoeksuggesties",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
@@ -296,6 +318,7 @@
     "doNotShowAgain": "laat mij dit niet meer zien",
     "doNotAskAgain": "Niet nogmaals vragen",
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
+    "sort": "Soort",
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
     "unpostedComment": "Niet-geplaatste reactie",
@@ -311,10 +334,11 @@
     "selectFile": "Selecteer bestand",
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
-    "pageNum": "Paginanummer",
+    "pageNum": "Bladzijde",
     "viewBookmark": "Bekijk bladwijzer op pagina",
     "error": "Fout",
     "errorPageNumber": "Ongeldig paginanummer. Limiet is",
+    "errorBlankPageNumber": "Geef een paginanummer op",
     "errorLoadingDocument": "Er is een probleem opgetreden bij het lezen van dit document en sommige pagina's worden mogelijk niet weergegeven. Dit geeft aan dat het document mogelijk beschadigd is. Het totale aantal pagina's is {{totalPageCount}} en het aantal weergegeven pagina's is {{displayedPageCount}}.",
     "noRevisions": "Dit document heeft geen herzieningen."
   },
@@ -357,6 +381,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Werkbalkgroepen",
+      "flyoutLabel": "Lintje",
       "toolbarGroup-View": "Bekijken",
       "toolbarGroup-Annotate": "Annoteren",
       "toolbarGroup-Shapes": "Vormen",
@@ -366,7 +391,10 @@
       "toolbarGroup-EditText": "Tekst bewerken",
       "toolbarGroup-FillAndSign": "Invullen en ondertekenen",
       "toolbarGroup-Forms": "Formulieren",
-      "toolbarGroup-Redact": "Redigeren"
+      "toolbarGroup-Redact": "Redigeren",
+      "toolbarGroup-oe-Home": "Thuis",
+      "toolbarGroup-oe-Insert": "Invoegen",
+      "toolbarGroup-oe-Review": "Beoordeling"
     },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
@@ -408,7 +436,8 @@
       "noteContent": {
         "noName": "(geen naam)",
         "noDate": "(geen datum)"
-      }
+      },
+      "toggleMultiSelect": "Schakel Multi selecteren voor annotatie in"
     },
     "pageTransition": {
       "continuous": "Doorlopend",
@@ -428,7 +457,6 @@
       "includeComments": "Inclusief commentaar",
       "printSettings": "Afdrukinstellingen",
       "printGrayscale": "Grijstinten afdrukken",
-      "flatten": "Document plat maken",
       "printCurrentDisabled": "De huidige weergave is alleen beschikbaar als u één pagina bekijkt."
     },
     "printInfo": {
@@ -474,9 +502,14 @@
       "typeInitial": "Typ initialen*",
       "drawSignature": "Handtekening tekenen*",
       "drawInitial": "Initialen tekenen*",
+      "imageSignature": "Afbeelding handtekening",
+      "imageInitial": "Afbeelding Initialen",
       "pickInitialsFile": "Kies initialen",
       "noSignatures": "Er zijn momenteel geen opgeslagen handtekeningen.",
-      "fontStyle": "lettertype"
+      "fontStyle": "lettertype",
+      "textSignature": {
+        "dropdownLabel": "Lettertypefamilie"
+      }
     },
     "pageReplacementModal": {
       "yourFiles": "Uw bestanden",
@@ -523,13 +556,17 @@
       "countMeasurement": "Tel meting",
       "radius": "Straal",
       "count": "Tel",
-      "length": "Lengte"
+      "length": "Lengte",
+      "xAxis": "X-as",
+      "yAxis": "Y-as"
     },
     "freeTextOption": {
       "autoSizeFont": "Schaal de lettergrootte dynamisch"
     },
     "measurementOption": {
-      "scale": "Schaal"
+      "scale": "Schaal",
+      "selectScale": "Selecteer schaal",
+      "selectScaleDropdown": "Selecteer Schaal Dropdown"
     },
     "measurement": {
       "scaleModal": {
@@ -541,7 +578,8 @@
         "paperUnits": "Papieren eenheden",
         "displayUnits": "Weergave-eenheden",
         "fractionUnitsTooltip": "Breukeenheden zijn alleen van toepassing op in en ft-in",
-        "incorrectSyntax": "Onjuiste syntaxis"
+        "incorrectSyntax": "Onjuiste syntaxis",
+        "units": "Eenheden"
       },
       "scaleOverlay": {
         "addNewScale": "Nieuwe schaal toevoegen",
@@ -560,6 +598,7 @@
         "irreversible": "onomkeerbaar",
         "willDeleteMeasurement": "en zal de bijbehorende metingen verwijderen.",
         "confirmDelete": "Weet u zeker dat u deze weegschaal wilt verwijderen?",
+        "thisCantBeUndone": " Dit kan niet ongedaan worden gemaakt.",
         "ifChangeScale": "Als u de schaal voor de geselecteerde meting of tool wijzigt, schaalt u",
         "notUsedWillDelete": " wordt niet langer gebruikt door metingen of gereedschappen en wordt verwijderd. Verwijdering is onomkeerbaar.",
         "ifToContinue": "Weet je zeker dat je wilt doorgaan?"
@@ -661,7 +700,9 @@
       "minute": "Minuut",
       "second": "Seconde",
       "textColor": "Tekst kleur",
-      "backgroundColor": "Achtergrond kleur"
+      "backgroundColor": "Achtergrond kleur",
+      "dateToolTipLabel": "Meer informatie over datumnotatie",
+      "previewCustomStamp": "Voorvertoning van"
     },
     "pageRedactModal": {
       "addMark": "Markering toevoegen",
@@ -669,8 +710,7 @@
       "current": "Huidige pagina",
       "specify": "Specificeer pagina's",
       "odd": "Alleen oneven pagina's",
-      "even": "Alleen even pagina's",
-      "header": "Redactie van pagina's markeren"
+      "even": "Alleen even pagina's"
     },
     "lineStyleOptions": {
       "title": "Stijl"
@@ -725,6 +765,7 @@
       "zoomOptions": "Zoomopties",
       "zoomIn": "In zoomen",
       "zoomOut": "Uitzoomen",
+      "setHeaderFocus": "Stelt de focus in op de header",
       "fitScreenWidth": "Pas het document aan de schermbreedte aan in een klein scherm (< 640px), pas het anders aan aan de oorspronkelijke grootte",
       "print": "Afdrukken",
       "bookmarkOpenPanel": "Maak snel een bladwijzer voor een pagina en open het bladwijzerpaneel",
@@ -752,15 +793,16 @@
       "selectCreateTextStrikeoutTool": "Selecteer de tool AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Selecteer het hulpmiddel AnnotationCreateTextUnderline",
       "editKeyboardShorcut": "Sneltoets bewerken",
-      "setShorcut": "Snelkoppeling instellen",
-      "pressKeyToSet": "Druk op de toets of toetsen om een nieuwe snelkoppeling in te stellen.",
-      "shortcutAlreadyExists": "De sneltoets hierboven bestaat al."
+      "setShortcut": "Snelkoppeling instellen",
+      "editShortcut": "Snelkoppeling bewerken",
+      "shortcutAlreadyExists": "De sneltoets hierboven bestaat al.",
+      "close": "Knopinfo sluiten"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Pagina verwijderen",
-      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina('s) wilt verwijderen? Dit kan niet ongedaan worden gemaakt.",
       "deleteLastPageMessage": "U kunt niet alle pagina's in het document verwijderen."
     },
     "extractPage": {
@@ -928,6 +970,10 @@
     "invalidDateTime": "Ongeldige datum/tijd: invoer moet overeenkomen met formaat"
   },
   "formField": {
+    "indexPanel": {
+      "formFieldList": "Lijst met formuliervelden",
+      "notFields": "Dit document heeft geen formuliervelden"
+    },
     "formFieldPopup": {
       "fieldName": "Veldnaam",
       "fieldValue": "Standaardwaarde",
@@ -938,11 +984,14 @@
       "apply": "Van toepassing zijn",
       "cancel": "annuleren",
       "flags": "Veldvlaggen",
+      "fieldSize": "Veld grootte",
       "options": "Opties",
+      "properties": "Eigenschappen",
       "radioGroups": "Keuzerondjes met dezelfde veldnaam horen in dezelfde groep.",
       "nameRequired": "Veldnaam is verplicht",
       "fieldIndicator": "Veldindicatoren",
       "documentFieldIndicator": "Indicatoren documentvelden",
+      "includeFieldIndicator": "Inclusief veldindicator",
       "indicatorPlaceHolders": {
         "TextFormField": "Tekst hier invoegen",
         "CheckBoxFormField": "Controleren",
@@ -962,6 +1011,14 @@
         "empty": "Veldnaam mag niet leeg zijn"
       }
     },
+    "formFieldPanel": {
+      "SignatureFormField": "Handtekeningveldannotatie",
+      "CheckBoxFormField": "Selectievakje Veldannotatie",
+      "RadioButtonFormField": "Annotatie van keuzerondjeveld",
+      "ListBoxFormField": "Keuzelijstveldannotatie",
+      "ComboBoxFormField": "Veldannotatie met invoervak",
+      "TextFormField": "Annotatie van tekstvelden"
+    },
     "apply": "Velden toepassen",
     "type": "Veld soort",
     "types": {
@@ -970,7 +1027,8 @@
       "checkbox": "Selectievakje",
       "radio": "Radio knop",
       "listbox": "Keuzelijst",
-      "combobox": "Combobox"
+      "combobox": "Combobox",
+      "button": "Knop"
     }
   },
   "alignmentPopup": {
@@ -1104,7 +1162,8 @@
     "cropDimensions": "Afmetingen bijsnijden",
     "dimensionInput": {
       "unitOfMeasurement": "Eenheid",
-      "autoTrim": "Automatisch trimmen"
+      "autoTrim": "Automatisch trimmen",
+      "autoTrimCustom": "Aangepast"
     },
     "cropModal": {
       "applyTitle": "Bijsnijden toepassen?",
@@ -1131,10 +1190,11 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
-    "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
+    "redactionSearchPlaceholder": "Redigeren via toetsenbord of patronen",
     "redactionCounter": "Gemarkeerd voor redactie",
     "clearMarked": "Duidelijk",
     "redactAllMarked": "Alles redigeren",
+    "redactionItems": "Redactie-items",
     "redactionItem": {
       "regionRedaction": "Regio redactie",
       "fullPageRedaction": "Volledige pagina redactie",
@@ -1151,7 +1211,7 @@
       "phoneNumbers": "Telefoonnummers",
       "images": "Afbeeldingen",
       "emails": "E-mails",
-      "pattern": "Patroon",
+      "pattern": "Patronen",
       "start": "Begin met zoeken"
     }
   },
@@ -1177,6 +1237,7 @@
     "createFolder": "Map aanmaken",
     "portfolioPanelTitle": "PDF-portfolio",
     "portfolioNewFolder": "Nieuwe map",
+    "portfolioDocumentTitle": "Document titel",
     "portfolioFolderPlaceholder": "Naam van de map",
     "portfolioFilePlaceholder": "Bestandsnaam",
     "folderNameAlreadyExists": "Mapnaam bestaat al",
@@ -1200,12 +1261,15 @@
     "rightAlign": "Rechts uitlijnen",
     "justify": "Verantwoorden",
     "lineSpacing": "Regel- en alinea-afstand",
-    "bulletList": "Lijst met opsommingstekens",
+    "lineSpacingMenu": "Regelafstand",
+    "bulletList": "Opsommingstekenlijst",
     "numberList": "Genummerde lijst",
     "decreaseIndent": "Inspringing verkleinen",
     "increaseIndent": "Inspringing vergroten",
+    "nonPrintingCharacters": "Niet-afdrukbare tekens",
     "insertLink": "Koppeling invoegen",
     "insertImage": "Voeg afbeelding in",
+    "image": "Afbeelding",
     "table": "Tafel",
     "insertRowAbove": "Rij erboven invoegen",
     "insertRowBelow": "Rij hieronder invoegen",
@@ -1226,10 +1290,47 @@
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten.",
     "previewAllChanges": "Bekijk een voorbeeld van alle wijzigingen",
     "accept": "Aanvaarden",
-    "reject": "Afwijzen"
+    "reject": "Afwijzen",
+    "pastingTitle": "Plakken niet beschikbaar",
+    "pastingMessage": "Plakken wordt niet ondersteund in uw browser. In plaats daarvan kunt u een sneltoets gebruiken",
+    "pastingWithoutFormatTitle": "Plakken zonder opmaak is niet beschikbaar",
+    "pastingWithoutFormatMessage": "Plakken zonder opmaak wordt niet ondersteund in uw browser. In plaats daarvan kunt u een sneltoets gebruiken",
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "Enkel",
+      "double": "Dubbele",
+      "custom": "Aangepast"
+    },
+    "numberDropdown": {
+      "6": "Nummer Latijns Romeins 1",
+      "7": "Getal Decimaal",
+      "8": "Nummer Latijns Romeins 2",
+      "10": "Latijns Romeins",
+      "11": "Romeins Latijns getal",
+      "dropdownLabel": "Nummering Presets"
+    },
+    "bulletDropdown": {
+      "0": "Kogel",
+      "1": "Kogel Vierkant",
+      "2": "Vierkante kogel",
+      "3": "Diamant",
+      "4": "Rekening",
+      "5": "Pijl",
+      "dropdownLabel": "Bullet-voorinstellingen"
+    },
+    "fontSize": {
+      "dropdownLabel": "Lettergrootte"
+    },
+    "fontStyles": {
+      "dropdownLabel": "Lettertypestijlen"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Lettertypefamilie"
+    }
   },
   "insertPageModal": {
-    "title": "Nieuwe pagina toevoegen",
+    "title": "Nieuwe pagina invoegen",
     "tabs": {
       "blank": "Blanco",
       "upload": "Uploaden"
@@ -1280,7 +1381,7 @@
     "save": "Document opslaan",
     "comparePanel": {
       "Find": "Zoek in document",
-      "changesList": "Lijst met wijzigingen",
+      "changesList": "Aanpassingslijst",
       "change": "Wijziging",
       "old": "Oud",
       "new": "Nieuw",
@@ -1333,9 +1434,28 @@
       "redactionTextPlaceholder": "Tekstlabel invoegen",
       "contentEdit": "Inhoud bewerken"
     },
+    "lineStyles": {
+      "startLineStyleLabel": "Startlijnstijl",
+      "middleLineStyleLabel": "Middenlijnstijl",
+      "endLineStyleLabel": "Eindregel Stijl"
+    },
     "addColorToCustom": "Voeg toe aan aangepaste kleuren",
-    "noToolSelected": "Dit document bevat geen lagen.",
-    "noToolStyle": "Tool bevat geen stijleigenschappen."
+    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken",
+    "noToolStyle": "Tool bevat geen stijleigenschappen.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "Lijn start"
+      },
+      "end": {
+        "dropdownLabel": "Lijn einde"
+      },
+      "middle": {
+        "dropdownLabel": "Lijn Midden"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "Grens"
+    }
   },
   "signatureListPanel": {
     "header": "Handtekeningenlijst",
@@ -1349,5 +1469,17 @@
   "rubberStampPanel": {
     "header": "Stempels",
     "standard": "Standaard postzegels"
+  },
+  "colorPickerModal": {
+    "modalTitle": "Kleurenkiezer"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Bovenste koptekst",
+      "leftHeader": "Linker koptekst",
+      "rightHeader": "Rechter koptekst",
+      "bottomHeader": "Onderste koptekst",
+      "documentContent": "Documentinhoud"
+    }
   }
 }

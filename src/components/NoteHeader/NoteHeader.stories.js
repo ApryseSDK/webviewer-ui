@@ -1,7 +1,7 @@
 import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
 import NoteHeader from 'components/NoteHeader';
 import NoteContext from '../Note/Context';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { initialColors } from 'helpers/initialColorStates';
 
@@ -17,13 +17,19 @@ const initialState = {
     disabledElements: {},
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
+    openElements: {},
+    flyoutMap: {},
   }
 };
 function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({
+  preloadedState: initialState,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+});
 
 const context = {
   pendingEditTextMap: {},

@@ -194,7 +194,7 @@ const ImageSignature = ({
     );
   };
 
-  const renderFullSignatureImage = () => (<img src={fullSignatureImage} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
+  const renderFullSignatureImage = () => (<img src={fullSignatureImage} alt={t('option.signatureModal.imageSignature')} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
 
   const renderFullSignaturePicker = () => (
     <div
@@ -215,12 +215,12 @@ const ImageSignature = ({
           onChange={handleFullSignatureFileChange}
           disabled={!(isModalOpen && isTabPanelSelected)}
         />
-        <div
+        <button
           onClick={() => fullSignatureInputRef.current.click()}
           className="pick-image-button"
         >
           {t('option.signatureModal.pickImage')}
-        </div>
+        </button>
       </div>
       {fullSignatureErrorMessage && (
         <div className="image-signature-error">{fullSignatureErrorMessage}</div>
@@ -228,7 +228,7 @@ const ImageSignature = ({
     </div>
   );
 
-  const renderInitialsImage = () => (<img src={initialsImage} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
+  const renderInitialsImage = () => (<img src={initialsImage} alt={t('option.signatureModal.imageInitial')} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
 
   const renderInitialsPicker = () => (
     <div
@@ -249,12 +249,12 @@ const ImageSignature = ({
           onChange={handleInitialsFileChange}
           disabled={!(isModalOpen && isTabPanelSelected)}
         />
-        <div
+        <button
           onClick={() => initialsInputRef.current.click()}
           className="pick-image-button"
         >
           {t('option.signatureModal.pickInitialsFile')}
-        </div>
+        </button>
       </div>
       {initialsErrorMessage && (
         <div className="image-signature-error">{initialsErrorMessage}</div>

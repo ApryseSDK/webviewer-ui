@@ -17,12 +17,3 @@
     }
   }
 }
-
-button[data-element="signatureFieldButton"],
-button[data-element="checkboxFieldButton"],
-button[data-element="radioFieldButton"]
-{
-  .Icon {
-    color: var(--gray-9) !important;
-  }
-}

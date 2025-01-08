@@ -7,10 +7,27 @@
   display: flex;
   flex-direction: column;
 
-  .center {
+  @include mobile {
+    width: auto;
+    margin: 16px;
     flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .center {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .signature-widget-info {
+    .title {
+      .arrow { 
+        @include mobile {
+          min-width: auto;
+          padding: 3px;
+        }
+      }
+    }
   }
 }

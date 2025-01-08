@@ -5,13 +5,14 @@ import { Provider } from 'react-redux';
 import NotesPanel from './NotesPanelContainer';
 import RightPanel from '../RightPanel';
 import Panel from 'components/Panel';
+import { default as mockAppState } from 'src/redux/initialState';
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 export default {
   title: 'Components/NotesPanel/NotesPanel',
   component: NotesPanel,
-  parameters: {
-    customizableUI: true,
-  }
 };
 
 function noop() {
@@ -155,3 +156,42 @@ export function EmptyWithCustomRenderCallback() {
     </Provider>
   );
 }
+
+const NotesPanelInApp = (context, location, panelSize) => {
+  const mockState = {
+    ...mockAppState,
+    viewer: {
+      ...mockAppState.viewer,
+      activeCustomRibbon: 'toolbarGroup-Insert',
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
+      isInDesktopOnlyMode: false,
+      genericPanels: [{
+        dataElement: 'notesPanel',
+        render: 'notesPanel',
+        location: location,
+      }],
+      openElements: {
+        ...initialState.viewer.openElements,
+        contextMenuPopup: false,
+        notesPanel: true,
+      },
+      activeTheme: context.globals.theme,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  if (panelSize) {
+    mockState.viewer.mobilePanelSize = panelSize;
+  }
+
+  const store = createStore(mockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp initialState={mockState} />;
+};
+
+export const NotesPanelInMobile = (args, context) => NotesPanelInApp(context, 'right');
+
+NotesPanelInMobile.parameters = window.storybook?.MobileParameters;

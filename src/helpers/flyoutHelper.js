@@ -19,7 +19,7 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   } else if (parentHeader?.classList.contains('RightHeader')) {
     flyoutX -= (targetElement.clientWidth + defaultOffset);
   } else if (availableSpaceLeft >= availableSpaceRight) {
-    flyoutX = referenceButtonRect.right - targetElement.clientWidth;
+    flyoutX = referenceButtonRect.right - targetElement.clientWidth - appRect.left;
   }
 
   // Calculate the available space above and below the reference element within the container

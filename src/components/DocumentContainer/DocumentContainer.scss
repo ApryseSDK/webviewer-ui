@@ -78,6 +78,22 @@
           cursor: pointer;
         }
       }
+
+      .a11y-reader-content {
+        margin: 0;
+        pointer-events: none;
+        color: transparent;
+        z-index: 40;
+
+        overflow: hidden;
+        word-break: break-all;
+      }
+
+      link {
+        &.a11y-reader-content {
+          display: block !important;
+        }
+      }
     }
 
     textarea.freetext {

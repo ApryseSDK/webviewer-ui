@@ -24,7 +24,7 @@ const CreatableDropdown = ({
       return {
         ...provided,
         minHeight: '28px',
-        height: '28px',
+        height: '36px',
         backgroundColor: 'var(--component-background)',
         borderColor: state.selectProps.isValid ? 'hsl(0, 0%, 80%)' : 'hsl(28, 80%, 52%)',
         boxShadow: null,
@@ -47,11 +47,6 @@ const CreatableDropdown = ({
       '&:hover': {
         backgroundColor: 'var(--popup-button-hover)',
       }
-    }),
-    input: (provided) => ({
-      ...provided,
-      backgroundColor: 'var(--component-background)',
-      color: 'var(--text-color)',
     }),
     indicatorsContainer: (provided) => ({
       ...provided,

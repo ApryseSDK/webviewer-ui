@@ -16,6 +16,10 @@
     padding-bottom: 16px;
     padding-top: 8px;
 
+    @include mobile {
+      padding-bottom: 0px;
+    }
+
     &.customizableUI {
       padding: 8px 0px;
     }
@@ -31,6 +35,10 @@
       padding-bottom: 4px;
       padding-left: 8px;
       padding-right: 8px;
+
+      @include mobile {
+        font-size: 13px;
+      }
 
       &:focus {
         outline: none;
@@ -70,6 +78,11 @@
   // This label only appears in the Modular UI
   .documentControlsLabel {
     margin-top: 16px;
+
+    @include mobile {
+      margin-top: 8px;
+      font-size: 13px;
+    }
 
     .multiSelectExampleLabel {
       color: var(--faded-text);

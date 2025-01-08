@@ -1,6 +1,10 @@
 @import '../../constants/panel';
 
 .notes-panel-container {
+  &.office-editor {
+    height: 100%;
+  }
+
   z-index: 65;
 
   @include mobile {
@@ -8,17 +12,15 @@
   }
 
   display: flex;
-  display: flex;
   flex-direction: row;
   position: relative;
-  overflow: hidden;
+  overflow-y: visible;
 
   @include tablet {
     border-left: 1px solid var(--side-panel-border);
   }
 
   @include mobile {
-    position: fixed;
     top: 0;
     right: 0;
     height: 100%;
@@ -39,8 +41,9 @@
       justify-content: flex-end;
 
       @include mobile {
-        height: 64px;
-        padding-right: 12px;
+        height: 28px;
+        padding-right: 16px;
+        margin-bottom: 8px;
       }
 
       .close-icon-container {
@@ -90,6 +93,10 @@
       width: 100%;
       min-width: 100%;
       padding-top: 0px;
+
+      .normal-notes-container {
+        padding-bottom: 16px;
+      }
     }
 
     .no-annotations {

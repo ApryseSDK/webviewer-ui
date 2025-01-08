@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Basic, Renaming, ColoredOutline } from './OutlineContent.stories';
 
 const BasicOutline = withProviders(Basic);
@@ -27,9 +27,9 @@ describe('Outline', () => {
   });
 
   it('should set font color if textColor is passed to OutlineContent', () => {
-    const { container } = render(<ColoredOutline />);
+    render(<ColoredOutline />);
 
-    const outline = container.querySelector('.bookmark-outline-text');
-    expect(outline.style.color).toBe('rgb(255, 0, 0)');
+    const outline = screen.getByText('A colored outline');
+    expect(outline.style.color).toBe('rgb(213, 42, 42)');
   });
 });

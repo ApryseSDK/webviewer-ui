@@ -78,13 +78,13 @@ describe('RedactionPageGroup', () => {
     let renderedRedactionItems = screen.getAllByRole('listitem');
     expect(renderedRedactionItems.length).toEqual(redactionItems.length);
 
-    const collapseButton = screen.getByLabelText('Collapse');
-    userEvent.click(collapseButton);
+    const collapsibleButton = screen.getByRole('button', { name: 'Page 1 Redaction Items' });
+
+    userEvent.click(collapsibleButton);
 
     expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
 
-    const expandButton = screen.getByLabelText('Expand');
-    userEvent.click(expandButton);
+    userEvent.click(collapsibleButton);
 
     renderedRedactionItems = screen.getAllByRole('listitem');
     expect(renderedRedactionItems.length).toEqual(redactionItems.length);

@@ -1,46 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import selectors from 'selectors';
 import CustomButton from '../CustomButton';
 import ToggleElementButton from '../ToggleElementButton';
-import { isMobileSize } from 'helpers/getDeviceSize';
 import { DIRECTION } from 'constants/customizationVariables';
 import { useTranslation } from 'react-i18next';
 import './PageControls.scss';
+import DataElements from 'src/constants/dataElement';
+import PageControlsInput from './PageControlsInput';
 
 function PageControls(props) {
   const {
     size,
     dataElement,
     onFlyoutToggle,
-    leftChevron,
-    rightChevron,
-    currentPage,
-    totalPages,
+    previousPageButton,
+    nextPageButton,
     elementRef,
     headerDirection,
-    onBlur,
-    onFocus,
-    onClick,
-    onChange,
-    onSubmit,
-    isFocused,
-    input,
-    inputRef,
-    allowPageNavigation,
   } = props;
 
+  const totalPages = useSelector(selectors.getTotalPages);
+  const currentPage = useSelector(selectors.getCurrentPage);
   const { t } = useTranslation();
-  const isMobile = isMobileSize();
-  let inputWidth = 0;
-  if (input) {
-    inputWidth = 26 + input.length * (isMobile ? 10 : 7);
-  }
-
-  const style = { width: inputWidth };
-  if (headerDirection === DIRECTION.COLUMN) {
-    style.minHeight = 32;
-  }
 
   return (
     <div className="PageControlsWrapper"
@@ -48,34 +32,14 @@ function PageControls(props) {
       style={{ flexDirection: headerDirection }}
       ref={elementRef}>
       {size === 0 && <>
-        <CustomButton {...leftChevron} />
-        <form
-          onClick={onClick}
-          onKeyDown={onClick}
-          onSubmit={onSubmit}
-          onBlur={onBlur}
-          onMouseOver={onBlur}
-          onFocus={onFocus}>
-          <input
-            aria-label={t('action.pageNumberInput')}
-            ref={inputRef}
-            className={classNames({
-              unfocused: !isFocused,
-            })}
-            type="text"
-            value={input}
-            onChange={onChange}
-            disabled={!allowPageNavigation}
-            style={style}
-          />
-        </form>
-
+        <CustomButton {...previousPageButton} />
+        <PageControlsInput />
         <div className={classNames({
           'total-page': true,
           'paddingTop': headerDirection === DIRECTION.COLUMN,
           'paddingLeft': headerDirection === DIRECTION.ROW,
         })}>{totalPages}</div>
-        <CustomButton {...rightChevron} />
+        <CustomButton {...nextPageButton} />
       </>}
       {size === 1 &&
         <ToggleElementButton
@@ -84,7 +48,7 @@ function PageControls(props) {
           title={t('action.more')}
           disabled={false}
           img={'icon-tools-more'}
-          toggleElement="pageNavFlyoutMenu"
+          toggleElement={DataElements.PAGE_CONTROLS_FLYOUT}
           onFlyoutToggled={onFlyoutToggle}
         />
       }
@@ -99,21 +63,10 @@ PageControls.propTypes = {
   size: PropTypes.number,
   dataElement: PropTypes.string.isRequired,
   onFlyoutToggle: PropTypes.func,
-  leftChevron: PropTypes.object,
-  rightChevron: PropTypes.object,
-  currentPage: PropTypes.number,
-  totalPages: PropTypes.number,
+  previousPageButton: PropTypes.object,
+  nextPageButton: PropTypes.object,
   elementRef: PropTypes.any,
   headerDirection: PropTypes.string,
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
-  onClick: PropTypes.func,
-  onChange: PropTypes.func,
-  onSubmit: PropTypes.func,
-  isFocused: PropTypes.bool,
-  input: PropTypes.string,
-  inputRef: PropTypes.any,
-  allowPageNavigation: PropTypes.bool,
 };
 
 export default PageControls;

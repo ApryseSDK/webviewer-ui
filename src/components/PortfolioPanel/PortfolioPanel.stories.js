@@ -9,9 +9,6 @@ import initialState from 'src/redux/initialState';
 export default {
   title: 'ModularComponents/PortfolioPanel',
   component: PortfolioPanel,
-  parameters: {
-    customizableUI: true,
-  },
 };
 
 const mockInitialState = {
@@ -32,7 +29,10 @@ const mockInitialState = {
     },
     panelWidths: { panel: 300 },
     activeGroupedItems: ['insertGroupedItems'],
-    activeCustomPanel: 'portfolioPanel',
+    activeTabInPanel: {
+      'tabPanel': 'portfolioPanel',
+    }
+    ,
   },
   featureFlags: {
     customizableUI: true,

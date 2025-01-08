@@ -22,6 +22,7 @@ import core from 'core';
 
 import '../../constants/bookmarksOutlinesShared.scss';
 import './PortfolioPanel.scss';
+import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 
 const PortfolioPanel = () => {
   const [
@@ -162,6 +163,24 @@ const PortfolioPanel = () => {
     }
   };
 
+  const movePortfolio = async (fileId, direction) => {
+    const portfolioFiles = await getPortfolioFiles();
+    const fromIndex = portfolioFiles.findIndex((file) => file.id === fileId);
+    const outOfBound = (fromIndex === 0 && direction === menuTypes.MOVE_UP)
+      || (fromIndex === portfolioFiles.length -1 && direction === menuTypes.MOVE_DOWN);
+    if (outOfBound) {
+      return;
+    }
+    const moveToIndex = direction === menuTypes.MOVE_UP ? fromIndex - 1 : fromIndex + 1;
+    portfolioFiles.splice(moveToIndex, 0, portfolioFiles.splice(fromIndex, 1)[0]);
+    for (const [index, file] of portfolioFiles.entries()) {
+      if (file.order !== index) {
+        await reorderPortfolioFile(file.id, index);
+      }
+    }
+    await refreshPortfolio();
+  };
+
   const movePortfolioBeforeTarget = useCallback(async (dragItemId, dropItemId) => {
     await moveFileInArray(portfolioFiles, dragItemId, dropItemId, MoveDirection.ABOVE_TARGET);
     refreshPortfolio();
@@ -178,9 +197,9 @@ const PortfolioPanel = () => {
       dataElement={DataElements.PORTFOLIO_PANEL}
     >
       <div className="bookmark-outline-panel-header">
-        <div className="header-title">
+        <h2 className="header-title">
           {t('portfolio.portfolioPanelTitle')}
-        </div>
+        </h2>
 
         <div className="portfolio-panel-control">
           <Button
@@ -224,7 +243,7 @@ const PortfolioPanel = () => {
         <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
           <PortfolioDragLayer />
 
-          <div className="bookmark-outline-row">
+          <div className='portfolio-panel-list'>
             {portfolioFiles.map((item) => (
               <PortfolioItem
                 key={item.id}
@@ -232,6 +251,7 @@ const PortfolioPanel = () => {
                 movePortfolioInward={movePortfolioInward}
                 movePortfolioBeforeTarget={movePortfolioBeforeTarget}
                 movePortfolioAfterTarget={movePortfolioAfterTarget}
+                movePortfolio={movePortfolio}
               />
             ))}
 

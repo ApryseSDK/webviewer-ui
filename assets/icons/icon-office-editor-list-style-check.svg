@@ -9,5 +9,5 @@
 <line x1="38" y1="49" x2="52" y2="49" stroke="#868E96" stroke-width="2"/>
 <path d="M7.5 60.5571L9.32075 62.4299C9.41892 62.5309 9.58108 62.5309 9.67925 62.4299L13.5 58.5" stroke="#485056" stroke-linecap="round"/>
 <line x1="18" y1="60.5029" x2="52" y2="60.5029" stroke="#868E96" stroke-width="2"/>
-<rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+<rect class="office-editor-list-style-item-border" x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
 </svg>

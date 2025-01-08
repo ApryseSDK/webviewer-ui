@@ -3,7 +3,7 @@ import selectors from 'selectors';
 import core from 'core';
 
 export default (dispatch, store) => () => {
-  dispatch(actions.enableElements(['thumbnailControl', 'documentControl']));
+  dispatch(actions.setIsContentEditingEnabled(false));
   const featureFlags = selectors.getFeatureFlags(store.getState());
   const { customizableUI } = featureFlags;
 

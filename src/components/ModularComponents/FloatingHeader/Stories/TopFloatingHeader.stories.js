@@ -12,25 +12,15 @@ import {
   floatEndHeader,
   mockModularComponents,
 } from '../../Helpers/mockHeaders';
+import { MockDocumentContainer } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/FloatingHeader/TopHeader',
   component: TopHeader,
-  parameters: {
-    customizableUI: true,
-  }
-};
-
-const MockDocumentContainer = () => {
-  return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <img src="/assets/images/193_200x300.jpeg" />
-      Mock Document Container
-    </div>
-  );
 };
 
 const MockAppWrapperWithTopheader = ({ modularHeaders }) => {
+  const image = <img alt="Sample" src="/assets/images/193_200x300.jpeg" />;
   const state = {
     ...initialState,
     viewer: {
@@ -51,7 +41,7 @@ const MockAppWrapperWithTopheader = ({ modularHeaders }) => {
     <Provider store={store}>
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
         <TopHeader />
-        <MockDocumentContainer />
+        <MockDocumentContainer>{image}</MockDocumentContainer>
       </div>
     </Provider>
   );

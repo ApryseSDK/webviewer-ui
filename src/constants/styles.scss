@@ -76,12 +76,14 @@ $light-gray: #e7ebee;
   }
 }
 
+
 :host {
   display: inline-block;
   container-type: inline-size;
   width: 100%;
   height: 100%;
   overflow: hidden;
+
 }
 
 @mixin webComponent {
@@ -353,6 +355,11 @@ $light-gray: #e7ebee;
   @include tablet-and-desktop {
     height: calc(100% - 37px); // minus the height of the top header;
 
+    &.ModularPanel {
+      height: calc(100% - 49px); // minus the height of the top header - in modular UI we change the height of the top header
+    }
+
+
     &.logo-bar-enabled {
       height: calc(100% - 37px - $logo-bar-height);
     }
@@ -360,16 +367,33 @@ $light-gray: #e7ebee;
     &.tools-header-open {
       height: calc(100% - 76px); // minus the height of both headers;
 
+      &.ModularPanel {
+        height: calc(100% - 98px); // minus the height of the top header - in modular UI we change the height of the top header
+      }
+
       &.logo-bar-enabled {
         height: calc(100% - 76px - $logo-bar-height);
       }
     }
 
     &.multi-tab-active {
-      height: calc(100% - 115px); // minus the height of both headers and of the tabs;
+
+      height: calc(100% - 70px);
+
+      &.ModularPanel {
+        height: calc(100% - 85px); // minus the height of the top header - in modular UI we change the height of the top header
+      }
 
       &.logo-bar-enabled {
         height: calc(100% - 115px - $logo-bar-height);
+      }
+
+      &.tools-header-open {
+        height: calc(100% - 110px); // minus the height of both headers and tabs;
+
+        &.ModularPanel {
+          height: calc(100% - 134px); // minus the height of the top header - in modular UI we change the height of the top header
+        }
       }
     }
 
@@ -381,7 +405,7 @@ $light-gray: #e7ebee;
       }
 
       &.multi-tab-active {
-        height: calc(100% - 140px); // minus the height of both headers and of the tabs;
+        height: calc(100% - 36px); // minus the height of both headers and of the tabs;
 
         &.logo-bar-enabled {
           height: calc(100% - 140px - $logo-bar-height);
@@ -413,13 +437,6 @@ $light-gray: #e7ebee;
   display: none;
 }
 
-%custom-button-hover {
-  border: none;
-  // This is a way to add the border without changing the size of the button
-  box-shadow: inset 0 0 0 1px var(--blue-6);
-  background: var(--faded-component-background);
-}
-
 %custom-flyout-item-hover {
   cursor: pointer;
   background: var(--primary-button-hover);
@@ -433,21 +450,25 @@ $light-gray: #e7ebee;
 }
 
 %default-button-hover {
-  background-color: var(--blue-6);
-  border-color: var(--blue-6);
+  background: var(--primary-button-hover);
+  border-color: var(--primary-button-hover);
   color: var(--gray-0);
 }
 
 %default-button-selected {
-  background-color: var(--blue-5);
-  border-color: var(--blue-5);
-  color: var(--gray-0);
+  background: var(--primary-button);
+  border-color: var(--primary-button);
+  color: var(--primary-button-text);
 }
 
 %default-button-disabled {
-  background-color: var(--disabled-button-color) !important;
-  border: 1px solid var(--disabled-button-color);
-  color: var(--gray-0);
+  cursor: default;
+  background: var(--disabled-button-color);
+  color: var(--primary-button-text);
+  
+  span {
+    color: var(--primary-button-text);
+  }
 }
 
 %secondary-button-hover {
@@ -460,39 +481,59 @@ $light-gray: #e7ebee;
 %secondary-button-selected {
   border: none;
   // This is a way to add the border without changing the size of the button
-  box-shadow: inset 0 0 0 1px var(--blue-5);
-  color: var(--blue-5);
+  box-shadow: inset 0 0 0 1px var(--primary-button);
+  color: var(--primary-button);
 }
 
 %secondary-button-disabled {
+  cursor: default;
   border: none;
   // This is a way to add the border without changing the size of the button
   box-shadow: inset 0 0 0 1px rgba(43, 115, 171, 0.50);
   color: rgba(43, 115, 171, 0.50);
+
+  span {
+    color: rgba(43, 115, 171, 0.50);
+  }
 }
 
 %tertiary-button-hover {
   border: none;
+  background: none;
   color: var(--blue-6);
+
+  .Icon {
+    color: var(--blue-6);
+  }
 }
 
 %tertiary-button-selected {
   border: none;
+  background: none;
   color: var(--blue-5);
+
+  .Icon {
+    color: var(--blue-5);
+  }
 }
 
 %tertiary-button-disabled {
+  cursor: default;
   border: none;
   color: rgba(43, 115, 171, 0.50);
+
+  .Icon {
+    color: rgba(43, 115, 171, 0.50);
+  }
 }
 
 %icon-button-hover {
+  cursor: pointer;
   border: none;
   // This is a way to add the border without changing the size of the button
   box-shadow: inset 0 0 0 1px var(--blue-6);
   color: var(--blue-6);
   background-color: var(--faded-component-background);
-  cursor: pointer;
 }
 
 %icon-button-active {
@@ -508,6 +549,24 @@ $light-gray: #e7ebee;
 }
 
 %icon-button-disabled {
+  cursor: default;
   border: none;
   color: var(--gray-5)
+}
+
+%swipe-indicator {
+  background: var(--swipe-indicator-bg);
+  border-radius: 2px;
+  height: 4px;
+  width: 38px;
+  position: absolute;
+  top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  @include tablet-and-desktop {
+    display: none;
+  }
 }

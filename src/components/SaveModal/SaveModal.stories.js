@@ -1,3 +1,4 @@
+
 import React from 'react';
 import SaveModal from './SaveModal';
 import { createStore } from 'redux';
@@ -5,7 +6,7 @@ import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/SaveModal',
-  component: SaveModal
+  component: SaveModal,
 };
 const getStore = () => {
   const initialState = {
@@ -13,7 +14,10 @@ const getStore = () => {
       openElements: { saveModal: true },
       disabledElements: {},
       customElementOverrides: {},
-    }
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   function rootReducer(state = initialState, action) {

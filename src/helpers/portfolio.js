@@ -164,6 +164,10 @@ const addCollection = async (pdfDoc, defaultFile = '') => {
 };
 
 export const createPortfolio = async (files) => {
+  const documentViewer = core.getDocumentViewer();
+  const accessibleReadingOrderManager = documentViewer?.getAccessibleReadingOrderManager();
+  accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
+
   const PDFNet = window.Core.PDFNet;
   await PDFNet.initialize();
 

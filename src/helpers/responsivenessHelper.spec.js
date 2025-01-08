@@ -8,9 +8,13 @@ import sizeManager, {
 } from './responsivenessHelper';
 import { renderHook } from '@testing-library/react-hooks';
 
+const noop = () => {
+};
+
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useLayoutEffect: jest.fn(),
+  useEffect: noop,
 }));
 
 jest.spyOn(React, 'useLayoutEffect');
@@ -66,12 +70,12 @@ describe('Responsiveness Helper', () => {
         current: createHTMLElement('div', 150, 32)
       };
 
-      renderHook(() => useSizeStore(dataElement, size, elementRef, headerDirection));
-      useSizeStore(dataElement, size, elementRef, headerDirection);
+      renderHook(() => useSizeStore({ dataElement, size, elementRef, headerDirection }));
+      useSizeStore({ dataElement, size, elementRef, headerDirection });
       React.useLayoutEffect.mock.calls[0][0]();
 
-      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 0 });
-      expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 0 });
+      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 150 });
+      expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 32 });
     });
 
     test('Stores the size of an element with children in the sizeManager object with a horizontal header', () => {
@@ -90,12 +94,12 @@ describe('Responsiveness Helper', () => {
         current: modularHeaderGroupedItemsDOM
       };
 
-      renderHook(() => useSizeStore(dataElement, size, elementRef, headerDirection));
-      useSizeStore(dataElement, size, elementRef, headerDirection);
+      renderHook(() => useSizeStore({ dataElement, size, elementRef, headerDirection }));
+      useSizeStore({ dataElement, size, elementRef, headerDirection });
       React.useLayoutEffect.mock.calls[0][0]();
 
-      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 0 });
-      expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 0 });
+      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 150 });
+      expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 32 });
     });
   });
 

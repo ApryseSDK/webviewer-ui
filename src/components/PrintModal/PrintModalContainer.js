@@ -10,6 +10,7 @@ import { printPages } from 'helpers/print';
 import { creatingPages } from 'helpers/rasterPrint';
 import { printPDF, createPages, iosWindowOpen, convertToGrayscaleDocument } from 'helpers/embeddedPrint';
 import PrintModal from './PrintModal';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './PrintModal.scss';
 
@@ -30,7 +31,7 @@ const PrintModalContainer = () => {
     language,
     watermarkModalOptions,
     timezone,
-    useEmbeddedPrint
+    useEmbeddedPrint,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.PRINT_MODAL),
@@ -39,7 +40,7 @@ const PrintModalContainer = () => {
       selectors.getCurrentPage(state),
       selectors.getPrintQuality(state),
       selectors.getDefaultPrintOptions(state),
-      selectors.getPageLabels(state),
+      selectors.getPageLabels(state, 'pageLabels'),
       selectors.getSortStrategy(state),
       selectors.getColorMap(state),
       selectors.getDisplayMode(state),
@@ -60,7 +61,6 @@ const PrintModalContainer = () => {
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
   const [pagesToPrint, setPagesToPrint] = useState([]);
   const [isGrayscale, setIsGrayscale] = useState(false);
-  const [shouldFlatten, setShouldFlatten] = useState(false);
   const [isWatermarkModalVisible, setIsWatermarkModalVisible] = useState(false);
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
@@ -128,7 +128,7 @@ const PrintModalContainer = () => {
     }
     const document = core.getDocument();
     const annotManager = core.getAnnotationManager();
-    const printingOptions = { isCurrentView, includeAnnotations, shouldFlatten, includeComments };
+    const printingOptions = { isCurrentView, includeAnnotations, includeComments };
     let pdf = await createPages(
       document,
       annotManager,
@@ -186,7 +186,7 @@ const PrintModalContainer = () => {
     Promise.all(createPages)
       .then((pages) => {
         printPages(pages);
-        closePrintModal();
+        closePrintModalAfterPrint();
       })
       .catch((e) => {
         console.error(e);
@@ -194,10 +194,13 @@ const PrintModalContainer = () => {
       });
   };
 
+
   const closePrintModal = () => {
     setCount(-1);
     dispatch(actions.closeElement(DataElements.PRINT_MODAL));
   };
+
+  const closePrintModalAfterPrint = useFocusOnClose(closePrintModal);
 
   return (
     <PrintModal
@@ -210,8 +213,6 @@ const PrintModalContainer = () => {
       isGrayscale={isGrayscale}
       setIsGrayscale={setIsGrayscale}
       setIsCurrentView={setIsCurrentView}
-      shouldFlatten={shouldFlatten}
-      setShouldFlatten={setShouldFlatten}
       isCurrentViewDisabled={isCurrentViewDisabled}
       checkCurrentView={checkCurrentView}
       includeAnnotations={includeAnnotations}

@@ -1,17 +1,15 @@
-.signature-widget-info {
-  --widget-header-indent: 49px;
+.signature-widget-info {  --widget-header-indent: 49px;
   --widget-body-indent: 22px;
-  --arrow-width: 22px;
-  padding: 0 4px;
+  --arrow-width: 12px;
+  padding: 4px;
 
   display: flex;
   flex-direction: column;
   font-size: 13px;
   margin-bottom: 10px;
-  // Ensures alignment with the Left Panel Header
   margin-left: 5px;
 
-  p + p {
+  p+p {
     margin: 0px;
     margin-top: 1em;
   }
@@ -30,7 +28,11 @@
   }
 
   .signatureProperties {
-    &:hover, &:focus {
+    padding: 0;
+    margin: 0px;
+
+    &:hover,
+    &:focus {
       color: var(--blue-5);
     }
   }
@@ -40,6 +42,16 @@
     outline: none;
     border: 0;
     background-color: transparent;
+    white-space: nowrap;
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   box-sizing: border-box;
@@ -53,20 +65,30 @@
   -webkit-border-radius: var(--border-radius-amount);
   border-radius: var(--border-radius-amount);
 
-  &:hover {
-    border-color: var(--blue-6);
+  .panel-list-text-container {
+    height: 100%;
+
+    .panel-list-label-header {
+      .Button {
+        span {
+          text-align: left;
+          overflow: visible;
+          white-space: normal;
+          text-overflow: inherit;
+        }
+      }
+    }
   }
 
-  &:active, &:focus-within {
-    background: var(--outline-hover);
-    border-color: var(--blue-5);
-  }
-
-  .collapsible {
-    outline: none;
+  .panel-list-icon-container {
+    .Icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .title {
+    padding-left: 4px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -79,9 +101,11 @@
     border: 0;
     background-color: transparent;
 
-    div + *, button + * {
+    div+*,
+    button+* {
       margin-left: 2px;
     }
+
 
     .arrow {
       min-width: var(--arrow-width);
@@ -90,6 +114,9 @@
       background-color: transparent;
       border: none;
       padding: 0;
+      display: flex;
+      justify-content: center; /* Horizontally centers the item */
+      align-items: center;
 
       &.expanded {
         transform: rotate(90deg);
@@ -97,7 +124,7 @@
 
       .Icon {
         width: var(--arrow-width);
-        height: 22px;
+        height: var(--arrow-width);
       }
 
       &.hidden {
@@ -111,25 +138,35 @@
           color: var(--blue-6);
         }
       }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
+      }
     }
 
     .signature-icon {
       margin-right: 5px;
     }
+
+    &:focus-visible {
+      outline: var(--focus-visible-outline);
+    }
   }
 
   .header {
-    margin-left: var(--widget-header-indent);
+    margin-left: 32px;
 
-    .body {
-      margin-left: var(--widget-body-indent);
+    ul {
+      padding-left: 24px;
     }
 
-    .body > div:first-child > p:first-child, .body > p:first-child  {
+
+    .body>div:first-child>p:first-child,
+    .body>p:first-child {
       margin-top: 0.5em;
     }
 
-    .body > div:last-child {
+    .body>div:last-child {
       margin-bottom: 0.5em;
     }
   }
@@ -139,18 +176,31 @@
      * Minus the width off-set created by the arrow, ensuring that the headers
      * align
      */
-    margin-left: calc(var(--widget-header-indent) - var(--arrow-width));
+    margin-left: 0px;
 
-    .body {
+    ul {
       /**
        * Re-add the width offset created by the arrow, ensuring the content of
        * the bodies align
        */
-      margin-left: calc(var(--widget-body-indent) + var(--arrow-width));
+      margin-left: var(--arrow-width);
+      li {
+        margin-left: 18px
+      }
     }
   }
 
-  .signatureDetails, .verificationDetails {
+  .panel-list-label-header {
+    Button {
+      font-weight: bold; 
+      font-size: 13px;
+    }
+  }
+
+
+  .signatureDetails,
+  .verificationDetails {
+    cursor: default;
     padding: 0;
     background-color: transparent;
     border: none;

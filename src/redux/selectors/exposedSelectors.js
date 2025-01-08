@@ -3,8 +3,23 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import { getAllAssociatedGroupedItems, getFirstToolForGroupedItems } from '../actions/exposedActions';
-import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
+import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getAllAssociatedGroupedItems } from 'helpers/modularUIHelpers';
+import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
+import getHashParameters from 'helpers/getHashParameters';
+
+// OE selectors
+export const {
+  isStyleButtonActive,
+  getPointSizeSelectionKey,
+  getCursorStyleToPreset,
+  getCurrentFontFace,
+  getLineSpacing,
+  getActiveColor,
+  getActiveListType,
+  getIsOfficeEditorMode,
+  isJustificationButtonActive,
+  isNonPrintingCharactersEnabled,
+} = exposedOfficeEditorSelectors;
 
 // viewer
 export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
@@ -38,7 +53,7 @@ export const getGenericPanels = (state, location) => {
   }
   return state.viewer.genericPanels;
 };
-export const getActiveCustomPanel = (state, wrapperPanel) => state.viewer.activeCustomPanel[wrapperPanel];
+export const getActiveTabInPanel = (state, wrapperPanel) => state.viewer.activeTabInPanel[wrapperPanel];
 export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
 export const shouldShowApplySnippingWarning = (state) => state.viewer.shouldShowApplySnippingWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
@@ -50,6 +65,7 @@ export const getTabs = (state) => state.viewer.tabs;
 export const getActiveTab = (state) => state.viewer.activeTab;
 export const getIsMultiTab = (state) => state.viewer.isMultiTab;
 export const getTabManager = (state) => state.viewer.TabManager;
+export const getTabNameHandler = (state) => state.viewer.tabNameHandler;
 export const getIsHighContrastMode = (state) => state.viewer.highContrastMode;
 export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = (state) => state.viewer.standardStamps;
@@ -137,9 +153,11 @@ export const getDocumentContentContainerWidthStyle = (state) => {
       (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
       (isComparePanelOpen ? comparePanelWidth : 0) +
       (isWatermarkPanelOpen ? watermarkPanelWidth : 0)
-    ) +
-    (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
-    (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0);
+    )
+    +
+    (customizableUI &&
+      (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
+      (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0));
 
   // Do not count headers without items
   const activeRightHeaderWidth = getActiveRightHeaderWidth(state);
@@ -150,7 +168,18 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
+  const panelsWithMobileVersion = [
+    panelNames.SIGNATURE_LIST,
+    panelNames.RUBBER_STAMP,
+    panelNames.STYLE,
+    panelNames.NOTES,
+    panelNames.SEARCH,
+    panelNames.TEXT_EDITING,
+    panelNames.TABS,
+    panelNames.REDACTION,
+    panelNames.FORM_FIELD,
+    panelNames.INDEX
+  ];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {
@@ -168,10 +197,13 @@ export const getOpenGenericPanel = (state, location) => {
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
+  const { customizableUI } = getFeatureFlags(state);
   const genericPanelOpenOnLeft = getOpenGenericPanel(state, PLACEMENT.LEFT);
-  return 0 +
-    (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
-    (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
+  if (customizableUI) {
+    return 0 + (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
+  } else {
+    return 0 + (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0);
+  }
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -246,6 +278,84 @@ export const getActiveGroupedItems = (state) => state.viewer.activeGroupedItems;
 
 export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
 
+export const getToolsAssociatedWithRibbon = (state, ribbonItemDataElement) => {
+  const ribbonItem = state.viewer.modularComponents[ribbonItemDataElement];
+  if (!ribbonItem) {
+    return [];
+  }
+
+  const { groupedItems } = ribbonItem;
+  const tools = [];
+
+  const findToolsRecursively = (groupedItem) => {
+    const { items } = state.viewer.modularComponents[groupedItem] || {};
+    if (!items) {
+      return;
+    }
+
+    items.forEach((item) => {
+      const itemData = state.viewer.modularComponents[item];
+      if (!itemData) {
+        return;
+      }
+
+      if (itemData.type === ITEM_TYPE.TOOL_BUTTON) {
+        tools.push(itemData.toolName);
+      } else if (itemData.type === ITEM_TYPE.GROUPED_ITEMS) {
+        findToolsRecursively(item);
+      }
+    });
+  };
+
+  groupedItems.forEach((groupedItem) => {
+    findToolsRecursively(groupedItem);
+  });
+
+  return tools;
+};
+
+export const getRibbonAssociatedWithTool = (state, toolName) => {
+  const modularComponents = state.viewer.modularComponents;
+
+  const ribbonItems = Object.values(modularComponents)
+    .filter((component) => component.type === ITEM_TYPE.RIBBON_ITEM)
+    .map((ribbonItem) => ribbonItem.dataElement);
+
+  for (const ribbonItemDataElement of ribbonItems) {
+    const tools = getToolsAssociatedWithRibbon(state, ribbonItemDataElement);
+    if (tools.includes(toolName)) {
+      return ribbonItemDataElement;
+    }
+  }
+
+  return null;
+};
+
+export const getLastActiveToolForRibbon = (state, ribbonDataElement) => {
+  return state.viewer.lastActiveToolForRibbon[ribbonDataElement];
+};
+
+export const getFirstToolForRibbon = (state, ribbonDataElement) => {
+  const toolsAssociatedWithRibbon = getToolsAssociatedWithRibbon(state, ribbonDataElement);
+  return toolsAssociatedWithRibbon[0];
+};
+
+export const getFirstToolForGroupedItems = (state, group) => {
+  const modularComponents = state.viewer.modularComponents;
+  const allItems = getBasicItemsFromGroupedItems(state, group);
+  let firstTool = '';
+
+  allItems?.find((item) => {
+    const { type, toolName, dataElement } = modularComponents[item];
+    if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
+      firstTool = toolName;
+      return toolName;
+    }
+    return false;
+  });
+  return firstTool;
+};
+
 export const getLastPickedToolForGroupedItems = (state, group) => {
   const getLastPickedTool = (group) => {
     const lastPickedTool = state.viewer.lastPickedToolForGroupedItems[group];
@@ -297,7 +407,9 @@ export const getActiveHeaders = (state) => {
   };
 
   // if a header contains at least one active item, it is active
-  return allHeaders.filter(({ items }) => items?.length && items.some(isActiveItem));
+  return allHeaders.filter(({ items, dataElement }) => {
+    return !isElementDisabled(state, dataElement) && items?.length && items.some(isActiveItem);
+  });
 };
 
 export const getActiveTheme = (state) => state.viewer.activeTheme;
@@ -473,6 +585,11 @@ export const getGroupedItemsWithSelectedTool = (state, toolName) => {
   return Object.keys(modularComponents).filter(filterGroupedItems);
 };
 
+export const getAlwaysVisibleGroupedItems = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => modularComponents[dataElement].alwaysVisible);
+};
+
 export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
   const modularComponents = state.viewer.modularComponents;
   const groupedItems = modularComponents[customRibbonDataElement]?.groupedItems || [];
@@ -493,6 +610,14 @@ export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataEle
     return false;
   });
   return ribbonItems;
+};
+
+export const getEnabledRibbonItems = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => {
+    const { type } = modularComponents[dataElement];
+    return type === ITEM_TYPE.RIBBON_ITEM && !isElementDisabled(state, dataElement);
+  });
 };
 
 export const getModularComponentFunctions = (state) => state.viewer.modularComponentFunctions;
@@ -613,8 +738,6 @@ export const isEmbedPrintSupported = (state) => !isAndroid && state.viewer.useEm
 
 export const useClientSidePrint = (state) => state.viewer.useClientSidePrint;
 
-export const isOutlineControlVisible = (state) => state.viewer.outlineControlVisibility;
-
 export const shouldAutoExpandOutlines = (state) => state.viewer.autoExpandOutlines;
 
 export const isAnnotationNumberingEnabled = (state) => {
@@ -726,6 +849,10 @@ export const getShowDeleteTabWarning = (state) => state.viewer.warning?.showDele
 
 export const isAccessibleMode = (state) => state.viewer.isAccessibleMode;
 
+export const getDisabledFeaturesInAccessibleReadingMode = (state) => state.viewer.disabledFeaturesInAccessibleReadingMode;
+
+export const isAccessibleReadingModeEnabled = (state) => state.viewer.isAccessibleReadingModeEnabled;
+
 export const getWarningTemplateStrings = (state) => state.viewer.warning?.templateStrings || {};
 
 export const getWarningModalClass = (state) => state.viewer.warning?.modalClass || '';
@@ -814,6 +941,8 @@ export const areContentEditWorkersLoaded = (state) => state.viewer.contentEditWo
 
 export const getCurrentContentBeingEdited = (state) => state.viewer.currentContentBeingEdited;
 
+export const isContentEditingEnabled = (state) => state.viewer.isContentEditingEnabled;
+
 export const getFeatureFlags = (state) => state.featureFlags;
 
 export const isRightClickAnnotationPopupEnabled = (state) => state.viewer.enableRightClickAnnotationPopup;
@@ -855,8 +984,6 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
-export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
-
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
 export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state).locationProperties.inTable;
@@ -889,6 +1016,8 @@ export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
 
+export const getCompareAnnotationsMap = (state) => state.viewer.compareAnnotationsMap;
+
 export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;
 
 export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;
@@ -902,7 +1031,7 @@ export const isRightPanelOpen = (state) => {
     DataElements.TEXT_EDITING_PANEL,
     DataElements.WV3D_PROPERTIES_PANEL,
     DataElements.COMPARE_PANEL,
-    DataElements.WATERMARK_PANEL
+    DataElements.WATERMARK_PANEL,
   ];
 
   return rightPanelElements.some((element) => isElementOpen(state, element));
@@ -945,10 +1074,24 @@ export const getMaxPasswordAttempts = (state) => {
   return state.document.maxPasswordAttempts;
 };
 
+export const isKeyboardOpen = (state) => state.viewer.isKeyboardOpen;
+
 export const canUndo = (state) => {
   return state.viewer.canUndo[state.viewer.activeDocumentViewerKey];
 };
 
 export const canRedo = (state) => {
   return state.viewer.canRedo[state.viewer.activeDocumentViewerKey];
+};
+
+export const getIsCustomUIEnabled = (state) => {
+  return getHashParameters('ui', 'default') != 'legacy' || getFeatureFlags(state).customizableUI;
+};
+
+export const getIsOfficeEditorHeaderEnabled = (state) => {
+  return state.viewer.isOfficeEditorHeaderEnabled;
+};
+
+export const isSheetEditorMode = (state) => {
+  return state.viewer.isSheetEditorMode;
 };

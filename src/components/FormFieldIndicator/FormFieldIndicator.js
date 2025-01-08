@@ -1,5 +1,6 @@
 import React from 'react';
 import { getAnnotationPosition } from 'helpers/getPopupPosition';
+import core from 'core';
 
 import './FormFieldIndicator.scss';
 
@@ -49,8 +50,8 @@ const FormFieldIndicator = ({ annotation, parameters }) => {
       }
       break;
   }
-
-  const isPlaceholder = annotation.isFormFieldPlaceholder();
+  const formFieldCreationManager = core.getFormFieldCreationManager();
+  const isInFormBuilderMode = formFieldCreationManager.isInFormFieldCreationMode();
   const isPageVisible = visiblePages.includes(annotation.PageNumber);
   const indicatorText = annotation.getCustomData('trn-form-field-indicator-text');
 
@@ -60,7 +61,7 @@ const FormFieldIndicator = ({ annotation, parameters }) => {
       style={{
         top: yOffset,
         left: xOffset,
-        opacity: isPlaceholder ? 0.5 : 1,
+        opacity: isInFormBuilderMode ? 0.5 : 1,
         visibility: isPageVisible ? 'visible' : 'hidden',
       }}
     >

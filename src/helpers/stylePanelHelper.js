@@ -4,13 +4,10 @@ const Tools = window.Core.Tools;
 
 export const shouldHideStylePanelOptions = (toolName) => {
   const toolsNoStylePanelOptions = [
-    Tools.CheckBoxFormFieldCreateTool,
-    Tools.RadioButtonFormFieldCreateTool,
     Tools.AddParagraphTool,
     Tools.AddImageContentTool,
     Tools.CropCreateTool,
     Tools.SnippingCreateTool,
-    Tools.SignatureFormFieldCreateTool,
   ];
 
   return toolsNoStylePanelOptions.some((tool) => core.getTool(toolName) instanceof tool);
@@ -27,6 +24,12 @@ export const hasFillColorAndCollapsablePanelSections = (toolName) => {
     Tools.FreeTextCreateTool,
     Tools.CalloutCreateTool,
     Tools.RedactionCreateTool,
+    // ... form builder
+    Tools.TextFormFieldCreateTool,
+    Tools.RadioButtonFormFieldCreateTool,
+    Tools.CheckBoxFormFieldCreateTool,
+    Tools.ListBoxFormFieldCreateTool,
+    Tools.ComboBoxFormFieldCreateTool
   ];
 
   return toolsWithCollapsedStylePanels.some((tool) => core.getTool(toolName) instanceof tool);
@@ -34,7 +37,6 @@ export const hasFillColorAndCollapsablePanelSections = (toolName) => {
 
 export const shouldHideFillColorAndCollapsablePanelSections = (toolName) => {
   const toolsWithHiddenFillColorSections = [
-    Tools.SignatureFormFieldCreateTool,
     Tools.RubberStampCreateTool,
     Tools.StampCreateTool,
     Tools.EraserTool,
@@ -88,6 +90,8 @@ export const shouldHideOpacitySlider = (toolName) => {
     Tools.ListBoxFormFieldCreateTool,
     Tools.ComboBoxFormFieldCreateTool,
     Tools.SignatureFormFieldCreateTool,
+    Tools.CheckBoxFormFieldCreateTool,
+    Tools.RadioButtonFormFieldCreateTool
   ];
   return toolsWithHiddenOpacitySlider.some((tool) => core.getTool(toolName) instanceof tool);
 };
@@ -142,7 +146,7 @@ export const stylePanelSectionTitles = (toolName, section) => {
   return toolTitles[toolName] && toolTitles[toolName][section];
 };
 
-export const shouldHideTextStylePicker = (toolName) => {
+export const shouldRenderWidgetLayout = (toolName) => {
   const { ToolNames } = window.Core.Tools;
   const toolsWithHiddenTextStylePicker = [
     ToolNames.TEXT_FORM_FIELD,
@@ -150,4 +154,12 @@ export const shouldHideTextStylePicker = (toolName) => {
     ToolNames.COMBO_BOX_FIELD,
   ];
   return toolsWithHiddenTextStylePicker.includes(toolName);
+};
+
+export const isInstanceOfAny = (annotation, types) => {
+  return types.some((type) => annotation instanceof type);
+};
+
+export const shouldShowNoStyles = (annotations, filteredTypes) => {
+  return annotations.length === 1 && isInstanceOfAny(annotations[0], filteredTypes);
 };

@@ -60,9 +60,9 @@ function NoteTextPreview(props) {
   }, [text, previewElementWidth]);
 
   return (
-    <div className={noteTextPreviewClass} ref={ref} style={style}>
+    <div className={noteTextPreviewClass} ref={ref} style={style} aria-live="polite">
       {beforeContent()}
-      {renderRichText && richTextStyle ? renderRichText(textToDisplay, richTextStyle, 0) : textToDisplay} {showPrompt && <a className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</a>}
+      {renderRichText && richTextStyle ? renderRichText(textToDisplay, richTextStyle, 0) : textToDisplay} {showPrompt && <button className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</button>}
     </div>
   );
 }

@@ -26,7 +26,7 @@
 
   .ink-signature-canvas {
     height: 144px;
-    border-bottom: 1px solid var(--modal-stroke-and-border);
+    border-bottom: 1px solid var(--gray-6);
 
     @include small-browser-height {
       height: 116px;

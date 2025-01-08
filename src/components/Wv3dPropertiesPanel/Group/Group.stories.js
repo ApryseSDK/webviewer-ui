@@ -9,6 +9,9 @@ import '../../Panel/Panel.scss';
 export default {
   title: 'Components/Wv3dPropertiesPanel/Group/Group',
   component: Group,
+  parameters: {
+    legacyUI: true,
+  }
 };
 
 const initialState = {

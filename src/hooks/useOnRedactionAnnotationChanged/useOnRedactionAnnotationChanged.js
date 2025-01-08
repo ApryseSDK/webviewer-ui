@@ -5,7 +5,7 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import core from 'core';
-
+import DataElements from 'constants/dataElement';
 export default function useOnRedactionAnnotationChanged() {
   const [redactionAnnotationsList, setRedactionAnnotationsList] = useState([]);
   const dispatch = useDispatch();
@@ -17,15 +17,8 @@ export default function useOnRedactionAnnotationChanged() {
     false,
   );
 
-  const [
-    isNotesPanelOpen,
-    isSearchPanelOpen,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementOpen(state, 'notesPanel'),
-      selectors.isElementOpen(state, 'searchPanel'),
-    ]
-  );
+  const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
+  const isSearchPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SEARCH_PANEL));
 
   useEffect(() => {
     const setRedactionAnnotations = () => {
@@ -45,7 +38,7 @@ export default function useOnRedactionAnnotationChanged() {
         const isSearchPanelClosed = !isSearchPanelOpen;
 
         if (isNotesPanelClosed && isSearchPanelClosed) {
-          dispatch(actions.openElement('redactionPanel'));
+          dispatch(actions.openRedactionPanel());
         }
       }
     };

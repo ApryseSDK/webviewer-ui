@@ -15,10 +15,17 @@ const initialState = {
     disabledElements: {
       unpostedCommentIndicator: { disabled: false },
     },
+    openElements: {},
+    flyoutMap: {},
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
   }
 };
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => jest.fn(),
+}));
 
 describe('NoteHeader Component', () => {
   beforeEach(() => {

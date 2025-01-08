@@ -3,6 +3,7 @@ import DataElementWrapper from '../DataElementWrapper';
 import RedactionSearchMultiSelect from './RedactionSearchMultiSelect';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import './RedactionSearchOverlay.scss';
+import { useTranslation } from 'react-i18next';
 
 const buildSearchOptions = (searchTerms) => {
   const options = {
@@ -38,6 +39,12 @@ const RedactionSearchOverlay = (props) => {
     activeTheme,
     redactionSearchOptions,
   } = props;
+  const [t] = useTranslation();
+
+  const translatedOptions = redactionSearchOptions.map((option) => ({
+    ...option,
+    label: t(option.label),
+  }));
 
   const handleChange = (updatedSearchTerms) => {
     setSearchTerms(updatedSearchTerms);
@@ -71,7 +78,7 @@ const RedactionSearchOverlay = (props) => {
         onCreateOption={handleCreate}
         onChange={handleChange}
         activeTheme={activeTheme}
-        redactionSearchOptions={redactionSearchOptions}
+        redactionSearchOptions={translatedOptions}
       />
 
     </DataElementWrapper>

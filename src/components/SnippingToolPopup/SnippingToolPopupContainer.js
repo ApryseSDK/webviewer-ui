@@ -10,6 +10,7 @@ import useOnSnippingAnnotationChangedOrSelected from '../../hooks/useOnSnippingA
 import { isMobileSize } from 'helpers/getDeviceSize';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
+import { focusActiveIcon } from 'components/DocumentCropPopup/DocumentCropPopupContainer';
 
 function SnippingToolPopupContainer() {
   const snippingToolName = window.Core.Tools.ToolNames['SNIPPING'];
@@ -145,8 +146,9 @@ function SnippingToolPopupContainer() {
     core.setToolMode(window.Core.Tools.ToolNames.SNIPPING);
   };
 
-  const closeSnippingPopup = useCallback(() => {
+  const closeSnippingPopup = useCallback((e) => {
     closeAndReset();
+    focusActiveIcon(e);
   }, []);
 
   // disable/enable the 'apply' button when snipping
@@ -154,10 +156,11 @@ function SnippingToolPopupContainer() {
     setIsSnipping(snippingCreateTool.getIsSnipping());
   }, [snippingAnnotation]);
 
-  const applySnipping = async () => {
+  const applySnipping = async (e) => {
     await snippingCreateTool.applySnipping();
     snippingCreateTool.reset();
     reenableHeader();
+    focusActiveIcon(e);
   };
 
   const props = {

@@ -1,0 +1,12 @@
+.input-file-name {
+  max-width: 150px;
+}
+
+.button-file-name {
+  display: block; // needed in order to show ellipsis
+  width: 150px;
+  text-align: left;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

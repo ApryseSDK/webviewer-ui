@@ -3,16 +3,21 @@ import TabPanel from './TabPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { panelMinWidth } from 'constants/panel';
+import initialState from 'src/redux/initialState';
+import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { MockApp, createStore } from 'helpers/storybookHelper';
+import { waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/TabPanel',
   component: TabPanel,
-  parameters: {
-    customizableUI: true,
-  },
+  layout: 'fullscreen',
 };
 
-const initialState = {
+const mockState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
@@ -141,19 +146,22 @@ const initialState = {
       },
     ],
     lastPickedToolGroup: '',
-    activeCustomPanel: 'thumbnailsPanel',
+    activeTabInPanel: {
+      'tabPanel': 'thumbnailsPanel',
+    },
     flyoutMap: {},
     customPanels: []
   },
   document: {
     bookmarks: [],
+    portfolio: [{ id: 1, name: 'Portfolio Item 1' }],
   },
   featureFlags: {
     customizableUI: true,
   },
 };
 
-const store = configureStore({ reducer: () => initialState });
+const store = configureStore({ reducer: () => mockState });
 
 const tabPanelTemplate = (dataElement, width) => {
   return (
@@ -170,7 +178,6 @@ export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly'
 export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
 
 export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
-
 
 const initialStateThumbnailsOnly = {
   viewer: {
@@ -202,7 +209,7 @@ const initialStateThumbnailsOnly = {
     lastPickedToolGroup: '',
     flyoutMap: {},
     customPanels: [],
-    activeCustomPanel: {
+    activeTabInPanel: {
       'tabPanelIconsAndLabels': 'icon-label1',
     },
     selectedThumbnailPageIndexes: [],
@@ -254,3 +261,135 @@ export const TabPanelWithThumbnailPanelMaxWidth = () => (
   </Provider>
 );
 
+const TabPanelInApp = (context, location, activePanel, panelWidth) => {
+  const appMockState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      ...mockState.viewer,
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
+      isInDesktopOnlyMode: false,
+      genericPanels: [
+        {
+          render: 'tabPanel',
+          dataElement: 'tabPanel',
+          panelsList: [
+            {
+              'render': 'thumbnailsPanel'
+            },
+            {
+              'render': 'outlinesPanel'
+            },
+            {
+              'render': 'bookmarksPanel'
+            },
+            {
+              'render': 'layersPanel'
+            },
+            {
+              'render': 'signaturePanel',
+            },
+            {
+              'render': 'fileAttachmentPanel',
+            }
+          ],
+          location,
+        },
+        {
+          render: 'thumbnailsPanel',
+          dataElement: 'thumbnailsPanel',
+        },
+        {
+          render: 'bookmarksPanel',
+          dataElement: 'bookmarksPanel',
+        },
+        {
+          render: 'outlinesPanel',
+          dataElement: 'outlinesPanel',
+        },
+        {
+          render: 'layersPanel',
+          dataElement: 'layersPanel',
+        },
+        {
+          render: 'signaturePanel',
+          dataElement: 'signaturePanel',
+        },
+        {
+          render: 'fileAttachmentPanel',
+          dataElement: 'fileAttachmentPanel',
+        },
+      ],
+      openElements: {
+        tabPanel: true,
+      },
+      activeTabInPanel: {
+        ...initialState.viewer.activeTabInPanel,
+        'tabPanel': activePanel,
+      },
+      panelWidths: {
+        ...initialState.viewer.panelWidths,
+        tabPanel: panelWidth || 330,
+      },
+      activeTheme: context.globals.theme,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  const store = createStore(appMockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp initialState={appMockState} />;
+} ;
+
+export const TabPanelInApplication = (args, context) => (TabPanelInApp(context, 'left', 'thumbnailsPanel', 400));
+
+export const TabPanelWithThumbnailsInMobile = (args, context) => (TabPanelInApp(context, 'left', 'thumbnailsPanel'));
+
+export const TabPanelWithOutlinesInMobile = (args, context) => (TabPanelInApp(context, 'left', 'outlinesPanel'));
+
+export const TabPanelWithBookmarksInMobile = (args, context) => (TabPanelInApp(context, 'left', 'bookmarksPanel'));
+
+export const TabPanelWithLayersInMobile = (args, context) => (TabPanelInApp(context, 'left', 'layersPanel'));
+
+export const TabPanelWithSignatureInMobile = (args, context) => (TabPanelInApp(context, 'left', 'signaturePanel'));
+
+export const TabPanelWithFileAttachmentInMobile = (args, context) => (TabPanelInApp(context, 'left', 'fileAttachmentPanel'));
+
+TabPanelWithThumbnailsInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithOutlinesInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithBookmarksInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithLayersInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithSignatureInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithFileAttachmentInMobile.parameters = window.storybook.MobileParameters;
+
+const panelsToCheck = [
+  { name: 'Thumbnails', className: 'ThumbnailsPanel' },
+  { name: 'Outlines', className: 'OutlinesPanel' },
+  { name: 'Bookmarks', className: 'BookmarksPanel' },
+  { name: 'Layers', className: 'LayersPanel' },
+  { name: 'Signatures', className: 'SignaturePanel' },
+  { name: 'Attachments', className: 'fileAttachmentPanel' },
+];
+
+TabPanelInApplication.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // Wait for the first tab to be rendered before proceeding
+  await waitFor(() => {
+    const tabButton = canvas.getByRole('button', { name: /Thumbnails/i });
+    expect(tabButton).toBeInTheDocument();
+  });
+
+  // should correctly renders all the tabs, should render each panel when clicked
+  // and each tab should have the correct aria-current attribute when it is active
+  for (const panel of panelsToCheck) {
+    const tabButton = await canvas.getByRole('button', { name: panel.name });
+    await expect(tabButton).toBeInTheDocument();
+    await userEvent.click(tabButton);
+    const panelElement = canvasElement.querySelector(`.${panel.className}`);
+    await expect(panelElement).toBeInTheDocument();
+    await expect(tabButton).toHaveAttribute('aria-current', 'true');
+  }
+};

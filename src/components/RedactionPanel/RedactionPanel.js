@@ -5,9 +5,12 @@ import Icon from 'components/Icon';
 import { Virtuoso } from 'react-virtuoso';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { mapAnnotationToRedactionType } from 'constants/redactionTypes';
+import Button from 'components/Button';
 
 import './RedactionPanel.scss';
 import RedactionPageGroup from '../RedactionPageGroup';
+import DataElements from 'src/constants/dataElement';
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const RedactionPanel = (props) => {
   const {
@@ -53,7 +56,7 @@ const RedactionPanel = (props) => {
     // Not needed for the actual app; if we set it it kills performance when there are a lot of annotations
     const testModeProps = isTestMode ? { initialItemCount: redactionPageNumbers.length } : {};
     return (
-      <div className="redaction-group-container" role="list">
+      <div className="redaction-group-container">
         <Virtuoso
           data={redactionPageNumbers}
           itemContent={(index, pageNumber) => {
@@ -82,29 +85,30 @@ const RedactionPanel = (props) => {
   const redactAllButtonClassName = classNames('redact-all-marked', { disabled: redactionAnnotations.length === 0 });
   const clearAllButtonClassName = classNames('clear-all-marked', { disabled: redactionAnnotations.length === 0 });
 
+  const applyAllRedactionsWithFocusHandler = useFocusHandler(applyAllRedactions);
   return (
     <>
-      <div className="marked-redaction-counter">
-        <span>{t('redactionPanel.redactionCounter')}</span> {`(${redactionAnnotations.length})`}
-      </div>
+      <h2 className="marked-redaction-counter">
+        {t('redactionPanel.redactionCounter')}
+        <span>
+          {` (${redactionAnnotations.length})`}
+        </span>
+      </h2>
       {redactionPageNumbers.length > 0 ? renderRedactionPageGroups() : noRedactionAnnotations}
       <div className="redaction-panel-controls">
-        <button
+        <Button
           disabled={redactionAnnotations.length === 0}
           className={clearAllButtonClassName}
           onClick={deleteAllRedactionAnnotations}
-          aria-label={t('redactionPanel.clearMarked')}
-        >
-          {t('redactionPanel.clearMarked')}
-        </button>
-        <button
+          label={t('redactionPanel.clearMarked')}
+        />
+        <Button
           disabled={redactionAnnotations.length === 0}
           className={redactAllButtonClassName}
-          onClick={applyAllRedactions}
-          aria-label={t('redactionPanel.redactAllMarked')}
-        >
-          {t('redactionPanel.redactAllMarked')}
-        </button>
+          onClick={applyAllRedactionsWithFocusHandler}
+          dataElement={DataElements.REDACT_ALL_MARKED_BUTTON}
+          label={t('redactionPanel.redactAllMarked')}
+        />
       </div>
     </>
   );

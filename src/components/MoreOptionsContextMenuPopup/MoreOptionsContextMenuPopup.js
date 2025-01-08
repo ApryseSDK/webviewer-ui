@@ -13,7 +13,7 @@ import Button from '../Button';
 import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
-  type: PropTypes.oneOf(['bookmark', 'outline', 'portfolio']).isRequired,
+  type: PropTypes.oneOf(['bookmark', 'outline', 'portfolio', 'indexPanel']).isRequired,
   anchorButton: PropTypes.string.isRequired,
   shouldDisplayDeleteButton: PropTypes.bool,
   onClosePopup: PropTypes.func.isRequired,
@@ -91,6 +91,19 @@ const MoreOptionsContextMenuPopup = ({
             img="icon-portfolio-file"
             label={t('portfolio.openFile')}
             ariaLabel={t('portfolio.openFile')}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenClick();
+            }}
+          />
+        }
+        {type === 'indexPanel' &&
+          <Button
+            className='option-button'
+            dataElement={`${type}EditButton`}
+            img='icon-edit-form-field'
+            label={t('action.edit')}
+            ariaLabel={t('action.edit')}
             onClick={(e) => {
               e.stopPropagation();
               onOpenClick();

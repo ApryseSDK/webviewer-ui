@@ -1,52 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useImperativeHandle, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import selectors from 'selectors';
 import useDidUpdate from 'hooks/useDidUpdate';
 import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
 import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import './Thumbnail.scss';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
 import getRootNode from 'helpers/getRootNode';
+import findFocusableElements from 'helpers/findFocusableElements';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
 
-const Thumbnail = ({
-  index,
-  isSelected,
-  updateAnnotations,
-  shiftKeyThumbnailPivotIndex,
-  onFinishLoading,
-  onLoad,
-  onRemove = () => { },
-  onDragStart,
-  onDragOver,
-  isDraggable,
-  shouldShowControls,
-  thumbnailSize,
-  currentPage,
-  pageLabels = [],
-  selectedPageIndexes,
-  isThumbnailMultiselectEnabled,
-  isReaderModeOrReadOnly,
-  dispatch,
-  actions,
-  isMobile,
-  canLoad,
-  onCancel,
-  isThumbnailSelectingPages,
-  thumbnailSelectionMode,
-  activeDocumentViewerKey,
-  panelSelector
-}) => {
+const Thumbnail = React.forwardRef((props, ref) => {
+  const {
+    index,
+    isSelected,
+    updateAnnotations,
+    shiftKeyThumbnailPivotIndex,
+    onFinishLoading,
+    onLoad,
+    onRemove = () => { },
+    onDragStart,
+    onDragOver,
+    isDraggable,
+    shouldShowControls,
+    thumbnailSize,
+    currentPage,
+    pageLabels = [],
+    selectedPageIndexes,
+    isThumbnailMultiselectEnabled,
+    isReaderModeOrReadOnly,
+    dispatch,
+    actions,
+    isMobile,
+    canLoad,
+    onCancel,
+    isThumbnailSelectingPages,
+    thumbnailSelectionMode,
+    activeDocumentViewerKey,
+    panelSelector,
+    parentKeyListener
+  } = props;
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
-
+  const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
+  const thumbContainerRef = useRef(null);
+  const buttonRefs = useRef([]);
+  const buttonMultiSelectRefs = useRef([]);
   const [dimensions, setDimensions] = useState({ width: thumbSize, height: thumbSize });
+  const { t } = useTranslation();
   // To ensure checkmark loads after thumbnail
   const [loaded, setLoaded] = useState(false);
 
+  const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
+
   let loadTimeout = null;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (thumbContainerRef.current && !thumbContainerRef.current.contains(event.target)) {
+        preventDefaultTab();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const loadThumbnailAsync = () => {
     loadTimeout = setTimeout(() => {
@@ -231,9 +256,104 @@ const Thumbnail = ({
   } else if ((rotation === 1 || rotation === 3) && dimensions.width < dimensions.height) {
     checkboxRotateClass = 'rotated';
   }
+  useImperativeHandle(ref, () => ({
+    focusInput: () => {
+      if (isThumbnailSelectingPages && loaded) {
+        selectElement(buttonMultiSelectRefs.current[0]);
+        setCurrentFocusIndex(0);
+      } else if (buttonRefs.current) {
+        setTimeout(() => {
+          selectElement(buttonRefs.current[0]);
+          setCurrentFocusIndex(0);
+        }, 0);
+      }
+    }
+  }));
+
+  const selectElement = (element) => {
+    if (element) {
+      element.ariaCurrent = 'page';
+      element.focus();
+    }
+  };
+
+  const deselectElement = (element) => {
+    if (element) {
+      element.ariaCurrent = undefined;
+    }
+  };
+
+  const handleEnterGrid = (e) => {
+    e.preventDefault();
+    preventDefaultTab();
+  };
+
+  const preventDefaultTab = () => {
+    buttonRefs.current.forEach((elem) => {
+      deselectElement(elem);
+    });
+  };
+
+  const handleKeyDown = useCallback((e) => {
+    e.stopPropagation();
+    parentKeyListener(e);
+    const leaveFocusActions = {
+      Tab: () => handleEnterGrid(e),
+      Escape: () => handleEnterGrid(e)
+    };
+    if (leaveFocusActions[e.key]) {
+      leaveFocusActions[e.key]?.();
+    }
+    const keyboardActions = {
+      ArrowUp: () => handleArrowKey(e, -1),
+      ArrowDown: () => handleArrowKey(e, 1),
+      ArrowLeft: () => handleArrowKey(e, -1),
+      ArrowRight: () => handleArrowKey(e, 1),
+    };
+    if (keyboardActions[e.key] && !isMultiselectEnabled) {
+      keyboardActions[e.key]();
+    }
+  }, [buttonRefs.current, currentFocusIndex]);
+
+  const handleArrowKey = (e, direction) => {
+    e.preventDefault();
+    if (buttonRefs.current.length === 0) {
+      return;
+    }
+
+    setCurrentFocusIndex((prevIndex) => {
+      let newFocusIndex = prevIndex + direction;
+      if (newFocusIndex < 0) {
+        newFocusIndex = buttonRefs.current.length - 1;
+      } else if (newFocusIndex >= buttonRefs.current.length) {
+        newFocusIndex = 0;
+      }
+      updateTabIndexes(buttonRefs.current[newFocusIndex]);
+      return newFocusIndex;
+    });
+  };
+
+  const updateTabIndexes = (focusedElement) => {
+    buttonRefs.current.forEach((elem) => {
+      elem === focusedElement ? selectElement(elem) : deselectElement(elem);
+    });
+  };
+  useEffect(() => {
+    if (thumbContainerRef.current) {
+      buttonRefs.current = findFocusableElements(thumbContainerRef.current);
+    }
+  }, [shouldShowControls, isActive, loaded]);
+
+  useEffect(() => {
+    if (thumbContainerRef.current) {
+      buttonMultiSelectRefs.current = findFocusableElements(thumbContainerRef.current);
+    }
+  }, [isThumbnailSelectingPages, loaded]);
+
+  const isMultiselectEnabled = isThumbnailSelectingPages && loaded;
 
   return (
-    <div
+    <button
       className={classNames({
         Thumbnail: true,
         active: isActive,
@@ -241,26 +361,72 @@ const Thumbnail = ({
       })}
       onDragOver={(e) => onDragOver(e, index)}
       id="Thumbnail-container"
+      ref={thumbContainerRef}
+      onKeyDown={(e) => handleKeyDown(e)}
+      onClick={handleClick}
+      style={{
+        width: thumbSize,
+        cursor: 'pointer',
+        background: 'none',
+        border: 'none'
+      }}
+      tabIndex={-1}
     >
       <div
         className="container"
         style={{
-          width: thumbSize,
           height: thumbSize,
+          width: thumbSize,
         }}
         onDragStart={(e) => onDragStart(e, index)}
         draggable={isDraggable}
-        onClick={handleClick}
+        tabIndex={-1}
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
         {isThumbnailSelectingPages && loaded && (
-          <Choice className={`checkbox ${checkboxRotateClass}`} checked={selectedPageIndexes.includes(index)} />
+          <Choice
+            className={`checkbox ${checkboxRotateClass}`}
+            checked={selectedPageIndexes.includes(index)}
+            aria-label={`${t('action.page')} ${pageLabel} ${t('formField.types.checkbox')}`}
+            tabIndex={-1}
+          />
         )}
       </div>
       <div className="page-label">{pageLabel}</div>
-      {!isThumbnailSelectingPages && isActive && shouldShowControls && <ThumbnailControls index={index} />}
-    </div>
+      {!isThumbnailSelectingPages && isActive && shouldShowControls && !isContentEditingEnabled && <ThumbnailControls index={index} />}
+    </button>
   );
+});
+
+Thumbnail.displayName = 'Thumbnail';
+Thumbnail.propTypes = {
+  index: PropTypes.number,
+  isSelected: PropTypes.bool,
+  updateAnnotations: PropTypes.func,
+  shiftKeyThumbnailPivotIndex: PropTypes.number,
+  onFinishLoading: PropTypes.func,
+  onLoad: PropTypes.func,
+  onRemove: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDragOver: PropTypes.func,
+  isDraggable: PropTypes.bool,
+  shouldShowControls: PropTypes.bool,
+  thumbnailSize: PropTypes.number,
+  currentPage: PropTypes.number,
+  pageLabels: PropTypes.array,
+  selectedPageIndexes: PropTypes.array,
+  isThumbnailMultiselectEnabled: PropTypes.bool,
+  isReaderModeOrReadOnly: PropTypes.bool,
+  dispatch: PropTypes.func,
+  actions: PropTypes.object,
+  isMobile: PropTypes.func,
+  canLoad: PropTypes.bool,
+  onCancel: PropTypes.func,
+  isThumbnailSelectingPages: PropTypes.bool,
+  thumbnailSelectionMode: PropTypes.string,
+  activeDocumentViewerKey: PropTypes.number,
+  panelSelector: PropTypes.string,
+  parentKeyListener: PropTypes.func,
 };
 
 export default Thumbnail;

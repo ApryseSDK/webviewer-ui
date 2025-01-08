@@ -5,6 +5,9 @@ import { components } from 'react-select';
 export default {
   title: 'Components/CreatableMultiSelect',
   component: CreatableMultiSelect,
+  parameters: {
+    legacyUI: true
+  }
 };
 
 const colourOptions = [

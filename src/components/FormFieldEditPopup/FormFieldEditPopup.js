@@ -2,14 +2,33 @@ import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
-import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
 import CreatableDropdown from '../CreatableDropdown';
+import FieldFlags from './FieldFlags';
 import FormFieldPopupDimensionsInput from './FormFieldPopupDimensionsInput';
 import HorizontalDivider from '../HorizontalDivider';
+import PropTypes from 'prop-types';
+import TextInput from '../TextInput';
 
 import './FormFieldEditPopup.scss';
 import CreatableList from '../CreatableList';
 import FormFieldEditPopupIndicator from './FormFieldEditPopupIndicator';
+
+const propTypes = {
+  fields: PropTypes.array.isRequired,
+  flags: PropTypes.array.isRequired,
+  closeFormFieldEditPopup: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  validationMessage: PropTypes.string.isRequired,
+  radioButtonGroups: PropTypes.array,
+  options: PropTypes.array,
+  onOptionsChange: PropTypes.func,
+  annotation: PropTypes.object.isRequired,
+  selectedRadioGroup: PropTypes.string,
+  getPageHeight: PropTypes.func.isRequired,
+  getPageWidth: PropTypes.func.isRequired,
+  redrawAnnotation: PropTypes.func.isRequired,
+  indicator: PropTypes.object.isRequired,
+};
 
 const FormFieldEditPopup = ({
   fields,
@@ -26,7 +45,6 @@ const FormFieldEditPopup = ({
   getPageWidth,
   redrawAnnotation,
   indicator,
-  onCancelEmptyFieldName,
 }) => {
   const { t } = useTranslation();
   const className = classNames({
@@ -37,8 +55,6 @@ const FormFieldEditPopup = ({
   const [width, setWidth] = useState(annotation.Width.toFixed(0));
   const [height, setHeight] = useState(annotation.Height.toFixed(0));
 
-  const [initialWidth] = useState(annotation.Width.toFixed(0));
-  const [initialHeight] = useState(annotation.Height.toFixed(0));
   const popupRef = useRef(null);
 
   // If no radio group is yet set, set this as null as the select input will then show the correct prompt
@@ -98,24 +114,6 @@ const FormFieldEditPopup = ({
     return height;
   }
 
-  function onCancel() {
-    if (!isValid) {
-      const { value } = fields.find((field) => field.label.includes('fieldName'));
-      if (value.trim() === '') {
-        onCancelEmptyFieldName(annotation);
-        return;
-      }
-    }
-
-    if (width !== initialWidth || height !== initialHeight) {
-      annotation.setWidth(initialWidth);
-      annotation.setHeight(initialHeight);
-    }
-
-    redrawAnnotation(annotation);
-    closeFormFieldEditPopup();
-  }
-
   function renderInput(field) {
     if (field.type === 'text') {
       return renderTextInput(field);
@@ -126,15 +124,16 @@ const FormFieldEditPopup = ({
   }
 
   function renderTextInput(field) {
+    const hasError = field.required && !isValid;
     return (
-      <Input
-        type="text"
-        onChange={(event) => field.onChange(event.target.value)}
+      <TextInput
+        label={`${field.label}-input`}
         value={field.value}
-        fillWidth="false"
-        messageText={field.required && !isValid ? t(validationMessage) : ''}
-        message={field.required && !isValid ? 'warning' : 'default'}
-        autoFocus={field.focus}
+        onChange={field.onChange}
+        validationMessage={validationMessage}
+        hasError={hasError}
+        ariaDescribedBy={hasError ? 'FormFieldInputError' : undefined}
+        ariaLabelledBy={field.label}
       />
     );
   }
@@ -165,33 +164,23 @@ const FormFieldEditPopup = ({
     );
   }
 
-  const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getFormFieldPlaceholderType()}`);
+  const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getField().getFieldType()}`);
 
   return (
     <div className={className} ref={popupRef}>
       <div className="fields-container">
         {fields.map((field) => (
           <div className="field-input" key={field.label}>
-            <label>
+            <span id={field.label}>
               {t(field.label)}
               {field.required ? '*' : ''}:
-            </label>
+            </span>
             {renderInput(field)}
           </div>
         ))}
       </div>
       {options && renderListOptions()}
-      <div className="field-flags-container">
-        <span className="field-flags-title">{t('formField.formFieldPopup.flags')}</span>
-        {flags.map((flag) => (
-          <Choice
-            key={flag.label}
-            checked={flag.isChecked}
-            onChange={(event) => flag.onChange(event.target.checked)}
-            label={t(flag.label)}
-          />
-        ))}
-      </div>
+      <FieldFlags flags={flags} />
       <FormFieldPopupDimensionsInput
         width={width}
         height={height}
@@ -205,21 +194,17 @@ const FormFieldEditPopup = ({
       />
       <div className="form-buttons-container">
         <Button
-          className="cancel-form-field-button"
-          onClick={onCancel}
-          dataElement="formFieldCancel"
-          label={t('formField.formFieldPopup.cancel')}
-        />
-        <Button
           className="ok-form-field-button"
           onClick={closeFormFieldEditPopup}
           dataElement="formFieldOK"
-          label={t('action.ok')}
+          label={t('action.close')}
           disabled={!isValid}
         />
       </div>
     </div>
   );
 };
+
+FormFieldEditPopup.propTypes = propTypes;
 
 export default FormFieldEditPopup;

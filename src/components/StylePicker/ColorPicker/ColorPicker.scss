@@ -4,9 +4,11 @@
   .ColorPalette {
     display: flex; // fallback for ie11, grid not available
     flex-wrap: wrap; // fallback for ie11, grid not available
+
     @include ie11 {
       width: 196px; // hack for ie11. Have to define width for flex basis to work.
     }
+
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     row-gap: 8px;
@@ -22,6 +24,7 @@
     @include mobile {
       max-width: 450px;
       width: auto;
+
       @include ie11 {
         width: 308px; // hack for ie11. Have to define width for flex basis to work.
       }
@@ -129,8 +132,10 @@
         display: none;
       }
 
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
+      }
     }
 
   }
 }
-

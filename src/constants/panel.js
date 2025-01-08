@@ -20,6 +20,7 @@ export const RESIZE_BAR_WIDTH = 14;
  * @property {string} SIGNATURE_LIST - Represents the SIGNATURE_LIST panel.
  * @property {string} RUBBER_STAMP - Represents the RUBBER_STAMP panel.
  * @property {string} PORTFOLIO - Represents the PORTFOLIO panel.
+ * @property {string} FORM_FIELD - Represents the FORM_FIELD panel.
  */
 
 export const panelNames = {
@@ -35,10 +36,12 @@ export const panelNames = {
   REDACTION: 'redactionPanel',
   SEARCH: 'searchPanel',
   NOTES: 'notesPanel',
+  INDEX: 'indexPanel',
   TABS: 'tabPanel',
   SIGNATURE_LIST: 'signatureListPanel',
   RUBBER_STAMP: 'rubberStampPanel',
   PORTFOLIO: 'portfolioPanel',
+  FORM_FIELD: 'formFieldPanel',
 };
 
 export const panelData = {

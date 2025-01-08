@@ -10,7 +10,7 @@ const propTypes = {
 
 const ListSeparator = (function(props) {
   const content = props.renderContent ? props.renderContent() : props.children;
-  return <div className="ListSeparator">{content}</div>;
+  return <h4 className="ListSeparator">{content}</h4>;
 });
 
 ListSeparator.propTypes = propTypes;

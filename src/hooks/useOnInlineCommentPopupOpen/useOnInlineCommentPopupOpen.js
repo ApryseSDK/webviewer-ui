@@ -64,8 +64,7 @@ export default function useOnInlineCommentPopupOpen() {
         (action === 'selected')
         && annotations.length
         && !isFreeTextAnnotationAdded
-        && (selectedAnnotationTool !== ToolNames.CROP)
-        && !isOfficeEditorMode;
+        && (selectedAnnotationTool !== ToolNames.CROP);
       if (shouldSetCommentingAnnotation) {
         setAnnotation(annotations[0]);
       }
@@ -82,7 +81,7 @@ export default function useOnInlineCommentPopupOpen() {
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected, activeDocumentViewerKey);
     };
-  }, [annotation, isFreeTextAnnotationAdded, activeDocumentViewerKey, isOfficeEditorMode]);
+  }, [annotation, isFreeTextAnnotationAdded, activeDocumentViewerKey]);
 
   useEffect(() => {
     setFreeTextAnnotationAdded(false);
@@ -92,7 +91,7 @@ export default function useOnInlineCommentPopupOpen() {
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
       const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
-      if (annotation || isOfficeEditorMode) {
+      if (annotation) {
         if (!annotUnderMouse) {
           closeAndReset();
           return;
@@ -118,7 +117,7 @@ export default function useOnInlineCommentPopupOpen() {
       core.removeEventListener('mouseLeftUp', onMouseLeftUp, activeDocumentViewerKey);
       core.removeEventListener('annotationChanged', onAnnotationChanged, activeDocumentViewerKey);
     };
-  }, [annotation, activeDocumentViewerKey, isOfficeEditorMode]);
+  }, [annotation, activeDocumentViewerKey]);
 
   useEffect(() => {
     if (!isNotesPanelOpenOrActive && annotation && inlineCommentFilter(annotation)) {

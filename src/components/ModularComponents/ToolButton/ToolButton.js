@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import '../../Button/Button.scss';
-import './ToolButton.scss';
+import React, { forwardRef, useEffect, useState } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import core from 'core';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
 import { mapToolNameToKey } from 'constants/map';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import defaultTool from 'constants/defaultTool';
 import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';
-import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import { shortcutAria } from 'helpers/hotkeysManager';
-import { useTranslation } from 'react-i18next';
-import Icon from 'components/Icon';
-import DataElements from 'src/constants/dataElement';
+import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
+import DataElements from 'constants/dataElement';
+import FlyoutItemContainer from '../FlyoutItemContainer';
+import '../../Button/Button.scss';
+import './ToolButton.scss';
 
 const { ToolNames } = window.Core.Tools;
 
-const ToolButton = (props) => {
+const ToolButton = forwardRef((props, ref) => {
   const {
     title,
     dataElement,
@@ -31,46 +31,36 @@ const ToolButton = (props) => {
     headerPlacement,
     toolName,
     isFlyoutItem = false,
-    groupedItem
+    groupedItem,
+    allFlyoutItems = [],
   } = props;
 
-  const [
-    activeToolName,
-    iconColorKey,
-    toolButtonObject,
-    customOverrides,
-    // use this so that state gets updated when active tool styles change
-    activeToolStyles, // eslint-disable-line no-unused-vars
-    activeGroupedItems,
-    lastPickedToolForGroupedItems,
-    lastPickedToolAndGroup,
-    isSignatureListPanelOpen,
-    isRubberStampPanelOpen,
-  ] = useSelector(
-    (state) => [
-      selectors.getActiveToolName(state),
-      selectors.getIconColor(state, mapToolNameToKey(toolName)),
-      selectors.getToolButtonObject(state, toolName),
-      selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
-      selectors.getActiveToolStyles(state),
-      selectors.getActiveGroupedItems(state),
-      selectors.getLastPickedToolForGroupedItems(state, groupedItem),
-      selectors.getLastPickedToolAndGroup(state),
-      selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL),
-      selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL),
-    ],
-    shallowEqual,
+  // use this so that state gets updated when active tool styles change
+  // eslint-disable-next-line no-unused-vars
+  const activeToolStyles = useSelector((state) => selectors.getActiveToolStyles(state), shallowEqual);
+  const activeToolName = useSelector(selectors.getActiveToolName);
+  const iconColorKey = useSelector((state) => selectors.getIconColor(state, mapToolNameToKey(toolName)));
+  const toolButtonObject = useSelector((state) => selectors.getToolButtonObject(state, toolName), shallowEqual);
+  const activeGroupedItems = useSelector(selectors.getActiveGroupedItems, shallowEqual);
+  const lastPickedToolAndGroup = useSelector(selectors.getLastPickedToolAndGroup, shallowEqual);
+  const isSignatureListPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL));
+  const isRubberStampPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL));
+  const customOverrides = useSelector(
+    (state) => selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+    shallowEqual
   );
 
-  const isActive = (toolName === ToolNames.SIGNATURE && isSignatureListPanelOpen) ||
-    (toolName === ToolNames.RUBBER_STAMP && isRubberStampPanelOpen) ||
-    activeToolName === toolName;
-
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
-  const isToolInActiveGroupedItems = groupedItem && activeGroupedItems.includes(groupedItem);
-  const [isButtonActive, setIsButtonActive] = useState(isActive && (isToolInActiveGroupedItems || !groupedItem));
+  const [isButtonActive, setIsButtonActive] = useState(activeToolName === toolName);
+
+  useEffect(() => {
+    if (toolName === activeToolName) {
+      setIsButtonActive(true);
+    } else {
+      setIsButtonActive(false);
+    }
+  }, [activeToolName]);
 
   const isToolWithPanelAssociatedActive = (toolName, activeTool) => {
     const isDefaultToolActive = activeTool === defaultTool;
@@ -115,36 +105,6 @@ const ToolButton = (props) => {
     };
   }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
 
-  useEffect(() => {
-    const noActiveGroupedItems = !activeGroupedItems?.length;
-    const isLastPickedGroupUndefined = lastPickedToolAndGroup?.group?.every((group) => group === undefined);
-    const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && isLastPickedGroupUndefined && toolName === lastPickedToolAndGroup.tool;
-    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup?.group?.includes(groupedItem) &&
-      (toolName === lastPickedToolAndGroup?.tool);
-    const isDefaultToolActive = activeToolName === defaultTool && toolName === defaultTool;
-
-    if ((toolName === ToolNames.EDIT && noActiveGroupedItems) ||
-      toolDoesNotBelongToAGroupAndIsActive ||
-      toolBelongsToAGroupAndIsActive ||
-      isDefaultToolActive
-    ) {
-      setIsButtonActive(true);
-      if (lastPickedToolAndGroup?.tool !== activeToolName) {
-        core.setToolMode(toolName);
-        checkIfNeedsToOpenAPanel(toolName);
-      }
-    } else {
-      setIsButtonActive(false);
-    }
-  }, [activeGroupedItems, lastPickedToolForGroupedItems, lastPickedToolAndGroup]);
-
-  const setToolMode = (toolName) => {
-    dispatch(actions.setLastPickedToolAndGroup({
-      tool: toolName,
-      group: activeGroupedItems
-    }));
-    core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
-  };
 
   const handleClick = () => {
     if (groupedItem) {
@@ -155,31 +115,19 @@ const ToolButton = (props) => {
       dispatch(actions.setActiveGroupedItems(groupedItemsArray));
     }
 
-    if (toolName !== ToolNames.EDIT) {
-      if (isButtonActive) {
-        dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, ''));
-        setIsButtonActive(false);
+    if (isButtonActive) {
+      setIsButtonActive(false);
 
-        if (toolName === ToolNames.SIGNATURE) {
-          dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
-        } else if (toolName === ToolNames.RUBBER_STAMP) {
-          dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
-        }
-
-        setToolMode(defaultTool);
-      } else {
-        checkIfNeedsToOpenAPanel(toolName);
-        setToolMode(toolName);
+      if (toolName === ToolNames.SIGNATURE) {
+        dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
+      } else if (toolName === ToolNames.RUBBER_STAMP) {
+        dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
       }
+
+      core.setToolMode(defaultTool);
     } else {
-      if (!isButtonActive) {
-        activeGroupedItems.forEach((group) => {
-          if (group !== groupedItem) {
-            dispatch(actions.setLastPickedToolForGroupedItems(group, ''));
-          }
-        });
-        setToolMode(defaultTool);
-      }
+      checkIfNeedsToOpenAPanel(toolName);
+      core.setToolMode(toolName);
     }
   };
 
@@ -209,15 +157,19 @@ const ToolButton = (props) => {
   if (isFlyoutItem) {
     const shortcutKey = toolTipTitle ? toolTipTitle.slice(toolTipTitle.indexOf('.') + 1) : undefined;
     const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
-    const displayTitle = label ? t(label) : toolTipTitle ? t(toolTipTitle) : undefined;
+    const displayTitle = label || toolTipTitle;
+    const icon = getIconDOMElement({ ...toolButtonObject }, allFlyoutItems);
+    const isActive = activeToolName === toolName;
+
     return (
-      <div className="menu-container" onClick={handleClick}>
-        <div className="icon-label-wrapper">
-          <Icon glyph={icon} className="menu-icon" />
-          {displayTitle && <div className="flyout-item-label">{displayTitle}</div>}
-        </div>
-        {ariaKeyshortcuts && <span className="hotkey-wrapper">{`(${ariaKeyshortcuts})`}</span>}
-      </div>
+      <FlyoutItemContainer {...props}
+        ref={ref}
+        onClick={handleClick}
+        label={displayTitle}
+        ariaKeyshortcuts={ariaKeyshortcuts}
+        icon={icon}
+        additionalClass={isActive ? 'active' : ''}
+      />
     );
   }
 
@@ -242,9 +194,10 @@ const ToolButton = (props) => {
       color={color}
       fillColor={fillColor}
       strokeColor={strokeColor}
+      ariaCurrent={isButtonActive}
     />
   );
-};
+});
 
 ToolButton.propTypes = {
   dataElement: PropTypes.string,
@@ -254,6 +207,8 @@ ToolButton.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   groupedItem: PropTypes.string,
+  allFlyoutItems: PropTypes.array,
 };
+ToolButton.displayName = 'ToolButton';
 
 export default ToolButton;

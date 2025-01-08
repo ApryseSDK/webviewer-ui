@@ -28,6 +28,20 @@ const ProgressModal = () => {
           DataElements.LOADING_MODAL,
           DataElements.ERROR_MODAL,
           DataElements.PASSWORD_MODAL,
+          DataElements.SAVE_MODAL,
+          DataElements.OPEN_FILE_MODAL,
+          DataElements.WARNING_MODAL,
+          DataElements.COLOR_PICKER_MODAL,
+          DataElements.SCALE_MODAL,
+          DataElements.SETTINGS_MODAL,
+          DataElements.CREATE_PORTFOLIO_MODAL,
+          DataElements.CUSTOM_STAMP_MODAL,
+          DataElements.INSERT_PAGE_MODAL,
+          DataElements.PAGE_REPLACEMENT_MODAL,
+          DataElements.PAGE_REDACT_MODAL,
+          DataElements.SIGNATURE_VALIDATION_MODAL,
+          DataElements.FILTER_MODAL,
+          DataElements.LINK_MODAL
         ]),
       );
     }

@@ -15,14 +15,79 @@ const initialState = {
   }
 };
 
-const mockSelectedTool = {
-  name: 'EllipseMeasurementCreateTool',
-  defaults: {
-    Scale: [[2, 'in'], [5, 'in']]
+const toolDefaults = {
+  Scale: [[2, 'in'], [5, 'in']]
+};
+
+const mockSelectedTool = (tool) => {
+  switch (tool) {
+    case 'DistanceMeasurementCreateTool':
+      return {
+        name: 'DistanceMeasurementCreateTool',
+        defaults: toolDefaults
+      };
+    case 'EllipseMeasurementCreateTool':
+      return {
+        name: 'EllipseMeasurementCreateTool',
+        defaults: toolDefaults
+      };
+    default:
+      return null;
   }
 };
 
 function noop() {}
+
+const defaultSettings = [{
+  'factor': 1,
+  'unit': 'in',
+  'decimalSymbol': '.',
+  'thousandsSymbol': ',',
+  'display': 'D',
+  'precision': 100,
+  'unitPrefix': '',
+  'unitSuffix': '',
+  'unitPosition': 'S',
+}];
+
+export function DistanceScaleOverlay() {
+  const distanceMeasurementAnnot = new window.Core.Annotations.LineAnnotation();
+  distanceMeasurementAnnot['Measure'] = {
+    'scale': '1 in = 1 in',
+    'axis': defaultSettings,
+    'distance': defaultSettings,
+    'area': defaultSettings,
+  };
+  distanceMeasurementAnnot['IT'] = 'LineDimension';
+  distanceMeasurementAnnot['DisplayUnits'] = ['in'];
+  distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];
+  distanceMeasurementAnnot['Precision'] = 0.01;
+
+  distanceMeasurementAnnot['getAngle'] = () => 0;
+  distanceMeasurementAnnot['Color'] = new window.Core.Annotations.Color(255, 0, 0);
+  distanceMeasurementAnnot.getMeasurementTextWithScaleAndUnits = () => '1"';
+  distanceMeasurementAnnot.getLineLength = () => 100;
+  distanceMeasurementAnnot.Start = {
+    'x': 100,
+    'y': 100
+  };
+  distanceMeasurementAnnot.End = {
+    'x': 200,
+    'y': 200
+  } ;
+
+  return (
+    <ReduxProvider store={configureStore({ reducer: () => initialState })}>
+      <div className={'Overlay ScaleOverlay open'}>
+        <MeasurementDetail
+          isOpen={true}
+          annotation={distanceMeasurementAnnot}
+          selectedTool={mockSelectedTool('DistanceMeasurementCreateTool')}
+        />
+      </div>
+    </ReduxProvider>
+  );
+}
 
 export function EllipseScaleOverlay() {
   const mockEllipseAnnotation = new window.Core.Annotations.EllipseAnnotation();
@@ -89,7 +154,7 @@ export function EllipseScaleOverlay() {
         <MeasurementDetail
           isOpen={true}
           annotation={mockEllipseAnnotation}
-          selectedTool={mockSelectedTool}
+          selectedTool={mockSelectedTool('EllipseMeasurementCreateTool')}
         />
       </div>
     </ReduxProvider>

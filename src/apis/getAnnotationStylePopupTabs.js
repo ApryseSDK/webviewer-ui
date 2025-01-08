@@ -1,10 +1,12 @@
 import { getMap } from '../constants/map';
 /**
  * @typedef {string} StyleTab The style tab in the annotation style popup window. See {@link UI.AnnotationStylePopupTabs} for valid style tabs.
+ * @memberof UI
  */
 
 /**
  * @typedef {object} AnnotationStyleTabConfiguration
+ * @memberof UI
  * @property {string[]} styleTabs Indicates the available style tabs in the annotation style popup window. See {@link UI.AnnotationStylePopupTabs}.
  * @property {string} currentStyleTab The current tab in the annotation style popup window.
  */

@@ -12,25 +12,15 @@ import {
   floatEndRightHeader,
   mockModularComponents,
 } from '../../Helpers/mockHeaders';
+import { MockDocumentContainer , createTemplate } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/FloatingHeader/RightHeader',
   component: RightHeader,
-  parameters: {
-    customizableUI: true,
-  }
-};
-
-const MockDocumentContainer = () => {
-  return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      Mock Document Container
-      <img src="/assets/images/193_200x300.jpeg" />
-    </div>
-  );
 };
 
 const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
+  const image = <img alt="Sample" src="/assets/images/193_200x300.jpeg" />;
   const state = {
     ...initialState,
     viewer: {
@@ -49,7 +39,7 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
     })}>
       <div className="content" style={{ overflow: 'inherit' }}>
-        <MockDocumentContainer />
+        <MockDocumentContainer>{image}</MockDocumentContainer>
         <RightHeader />
       </div>
     </Provider>
@@ -59,16 +49,14 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
 const Template = (args) => <MockAppWrapperWithRightHeader {...args} />;
 Template.parameters = { chromatic: { disableSnapshot: true } };
 
-export const RightHeaderWithDefaultAndFloaties = Template.bind({});
-RightHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: {
-    defaultRightHeader,
-    secondFloatStartRightHeader,
-    floatStartRightHeader,
-    floatCenterRightHeader,
-    floatEndRightHeader,
-  },
+const modularHeadersWithRightHeader = {
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
 };
+export const RightHeaderWithDefaultAndFloaties = createTemplate({ headers: modularHeadersWithRightHeader, components: mockModularComponents });
 
 export const FloatRightStartHeader = Template.bind({});
 FloatRightStartHeader.args = {

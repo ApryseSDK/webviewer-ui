@@ -4,6 +4,7 @@ import selectors from 'selectors';
 import { parse } from 'helpers/cssVariablesParser';
 
 import modularUILightModeString from '!!raw-loader!../constants/lightWCAG.scss';
+import modularUIDarkModeString from '!!raw-loader!../constants/darkWCAG.scss';
 import lightModeString from '!!raw-loader!../constants/light.scss';
 import highContastLightModeString from '!!raw-loader!../constants/highContrastLight.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
@@ -26,6 +27,7 @@ WebViewer(...)
 export default (store) => {
   let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
+  let previousIsCustomizableUI = false; // default
 
   store.subscribe(() => {
     const state = store.getState();
@@ -33,9 +35,10 @@ export default (store) => {
     const isHighContrastMode = selectors.getIsHighContrastMode(state);
     const isCustomizableUI = state.featureFlags.customizableUI;
 
-    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || isCustomizableUI) {
+    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || previousIsCustomizableUI !== isCustomizableUI) {
       previousActiveTheme = activeTheme;
       previousIsHighContrastMode = isHighContrastMode;
+      previousIsCustomizableUI = isCustomizableUI;
       updateColors(activeTheme, isHighContrastMode, isCustomizableUI);
     }
   });
@@ -58,11 +61,12 @@ const setVariables = (themeVarString = '') => {
 };
 
 const updateColors = (activeTheme, isHighContrastMode, isCustomizableUI) => {
+  const isThemeLight = activeTheme === Theme.LIGHT;
   if (isCustomizableUI) {
-    setVariables(modularUILightModeString);
-  } else if (activeTheme === Theme.LIGHT) {
-    setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
-  } else if (activeTheme === Theme.DARK) {
-    setVariables(isHighContrastMode ? highContrastDarkModeString : darkModeString);
+    setVariables(isThemeLight ? modularUILightModeString : modularUIDarkModeString);
+  } else if (isHighContrastMode) {
+    setVariables( isThemeLight ? highContastLightModeString : highContrastDarkModeString);
+  } else {
+    setVariables(isThemeLight ? lightModeString : darkModeString);
   }
 };

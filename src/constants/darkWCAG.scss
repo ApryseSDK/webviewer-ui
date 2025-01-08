@@ -1,0 +1,189 @@
+:root {
+  /* stylelint-disable color-no-hex */
+  --blue-1: #192530;
+  --blue-2: #1B2B3A;
+  --blue-3: #334250;
+  --blue-4: #334758;
+  --blue-5: #72A9DA;
+  --blue-6: #3183C8;
+
+  --gray-0: #000000;
+  --gray-1: #16181C;
+  --gray-2: #21242A;
+  --gray-3: #343A40;
+  --gray-4: #485056;
+  --gray-5: #868E96;
+  --gray-6: #ADB5BD;
+  --gray-7: #CFD4DA;
+  --gray-8: #DEE2E6;
+  --gray-9: #E7EBEE;
+  --gray-10: #F1F3F5;
+  --gray-11: #F8F9FA;
+  --gray-12: #FFFFFF;
+  --gray-13: #FFFFFF;
+
+  --yellow-1: #FACE0080;
+  --red: #D52A2A;
+  --green: #006D41;
+  /* stylelint-enable color-no-hex */
+
+  --component-background: var(--gray-0);
+  --mobile-presets-background: var(--gray-1);
+  --faded-component-background: var(--gray-2);
+  --toggle-zoom-overlay-background: var(--gray-2);
+  --ribbons-background: var(--gray-3);
+  --document-background-color: var(--gray-2);
+
+  --error-text-color: var(--red);
+  --error-border-color: var(--red);
+
+  --panel-background: var(--gray-0);
+
+  --slider-filled: var(--gray-9);
+  --slider-background: var(--gray-6);
+  --badge-fill: var(--gray-8);
+  --badge-text-color: var(--gray-0);
+  --view-header-icon-active-fill: var(--blue-5);
+
+  --text-color: var(--gray-9);
+  --faded-text: var(--gray-7);
+  --placeholder-text: var(--gray-7);
+  --ribbon-active-color: var(--blue-5);
+  --ribbon-hover-color: var(--blue-6);
+
+  --no-presets-text: var(--gray-6);
+  --disabled-text: var(--gray-5);
+  --disabled-icon: var(--gray-5);
+
+  --scroll-chevron-color: var(--gray-6);
+  --icon-color: var(--gray-6);
+  --selected-icon-color: var(--gray-8);
+
+  --view-header-button-hover: var(--gray-2);
+  --view-header-button-active: var(--gray-2);
+
+  --popup-button-hover: var(--gray-2);
+  --popup-button-active: var(--gray-2);
+
+  --dropdown-item-hover: var(--blue-6);
+  --dropdown-item-active: var(--blue-5);
+  --dropdown-item-active-text: var(--gray-0);
+  --dropdown-item-active-icon: var(--gray-0);
+
+  --primary-button: var(--blue-5);
+  --primary-button-text: var(--gray-0);
+  --primary-button-hover: var(--blue-6);
+
+  --secondary-button-border: var(--blue-5);
+  --secondary-button-text: var(--blue-5);
+  --secondary-button-hover: var(--blue-6);
+
+  --box-shadow: var(--gray-6);
+  --document-box-shadow: var(--gray-7);
+
+  --divider: var(--gray-4);
+  --reply-divider: var(--gray-3);
+  --side-panel-border: var(--divider);
+  --border: var(--gray-6);
+  --lighter-border: var(--gray-4);
+  --focus-border: var(--blue-5);
+  --hover-border: var(--blue-6);
+  --color-palette-border: var(--blue-5);
+
+  --image-signature-drop-background: var(--blue-1);
+  --image-signature-drop-border: var(--blue-5);
+  --file-picker-drop-background: var(--blue-1);
+  --file-picker-drop-border: var(--blue-5);
+  --signature-draw-background: var(--gray-2);
+  --modal-stroke-and-border: var(--gray-4);
+  --modal-negative-space: rgba(0, 0, 0, 0.3);
+  --spinner-negative-space: rgba(0, 0, 0, 0.3);
+
+  --white-color-palette-border: var(--border);
+
+  --list-separator-color: var(--gray-7);
+  --scrollbar-color: var(--gray-6);
+  --note-box-shadow: var(--gray-7);
+  --note-box-shadow-expanded: rgba(134, 142, 150, 0.24);
+
+  --tools-header-background: var(--gray-2);
+  --view-header-background: var(--gray-1);
+  --tools-overlay-background: var(--gray-0);
+
+  --tools-button-hover: var(--gray-2);
+  --tools-button-active: var(--gray-2);
+
+  --tools-overlay-button-hover: var(--blue-1);
+  --tools-overlay-button-active: var(--blue-2);
+
+  --fileAttachment-title-padding: 0;
+  --fileAttachment-list-padding: 24px;
+
+  --outline-color: var(--blue-5);
+  --outline-hover: var(--gray-2);
+  --outline-selected: var(--gray-2);
+  --outline-selected-border: var(--blue-5);
+
+  --preset-background: var(--gray-1);
+
+  --scale-overlay-item-hover: var(--dropdown-item-hover);
+
+  --oe-table-dropdown-highlight: var(--gray-5);
+
+  --bookmark-outline-hover-border: var(--blue-5);
+
+  --checked-option: var(--blue-5);
+
+  --multi-tab-header-background: var(--tool-header-background);
+  --multi-tab-active-tab-background: var(--gray-0);
+  --multi-tab-divider: var(--gray-6);
+  --multi-tab-hover-border: var(--blue-6);
+  --multi-tab-border: 1px solid var(--gray-6);
+  --multi-tab-text-color: var(--gray-9);
+  --multi-tab-active-text-color: var(--gray-9);
+  --multi-tab-add-button-padding: 8px;
+  --multi-tab-border-radius: 4px;
+  --multi-tab-divider-height: 22px;
+  --multi-tab-header-height: 36px;
+  --multi-tab-divider-top: 8px;
+  --multi-tab-flyout-hover: var(--blue-6);
+  --multi-tab-flyout-hover-text: var(--gray-0);
+  --multi-tab-toggle-button-active: var(--blue-5);
+
+  --file-preview-background: var(--gray-2);
+
+  --tab-border-color: var(--border);
+  --tab-border-color-hover: var(--blue-6);
+  --tab-background-color-hover: var(--faded-component-background);
+  --tab-color-selected: var(--blue-5);
+  --tab-text-color-selected: var(--gray-0);
+  --dropdown-item-hover: var(--blue-6);
+  --dropdown-item-active: var(--blue-5);
+  --dropdown-item-text-hover: var(--gray-0);
+
+  --disabled-button-color: rgba(43, 115, 171, 0.5);
+  --tab-footer-button-color: var(--gray-0);
+  --x-button-hover-color: var(--gray-2);
+
+  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, .7));
+  --style-icon-color: var(--icon-color);
+  --cell-border-size: 30px;
+  --cell-outer-border-size: 30px;
+  --button-icon-color-active: var(--blue-5);
+  --slider-svg-hieght: 25px;
+  --slider-input-focus: var(--blue-5);
+  --colorpicker-tool-shadow: inset 0 0 0 1px var(--blue-6);
+  --colorpicker-tool-bg: var(--tools-button-hover);
+
+  --input-switch-default-color: var(--gray-6);
+
+  --focus-visible-outline: 2px solid var(--gray-10);
+
+  --change-list-old-bg: #FFF2F2;
+  --change-list-new-bg: #E8FAF3;
+  --swipe-indicator-bg: var(--gray-7);
+
+  --slider-height: 5px;
+  --slider-thumb-size: 18px;
+  --slider-thumb-margin: -6px;
+}

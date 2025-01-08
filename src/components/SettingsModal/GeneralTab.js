@@ -49,8 +49,10 @@ const GeneralTab = () => {
           className="setting-section"
           dataElement={DataElements.SETTINGS_LANGUAGE_SECTION}
         >
-          <div className="setting-label"><label>{t('option.settings.language')}</label></div>
+          <div className="setting-label"><label id="language-dropdown-label">{t('option.settings.language')}</label></div>
           <Dropdown
+            id="language-dropdown"
+            labelledById='language-dropdown-label'
             dataElement={DataElements.SETTINGS_LANGUAGE_DROPDOWN}
             items={Languages}
             currentSelectionKey={currentLanguage}

@@ -1,3 +1,3 @@
-import ComparePanel from './ComparePanel';
+import ComparePanelContainer from './ComparePanelContainer';
 
-export default ComparePanel;
+export default ComparePanelContainer;

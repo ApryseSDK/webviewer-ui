@@ -5,34 +5,36 @@
 .CreatePortfolioModal {
   @extend %modal;
 
-  .container {
-    @extend %modal-shared-container-style;
-    @extend %modal-shared-container-style-mobile;
+  .content-container {
     @extend %tab-list;
     @extend %tab-panel;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 737px;
-    height: 584px;
+    width: 786px;
+    height: 604px;
     padding: 0px;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px var(--document-box-shadow);
+    overflow-y: visible;
     background: var(--component-background);
+
+    @include mobile {
+      width: 100%;
+    }
 
     .header {
       display: flex;
       justify-content: space-between;
       margin: 16px;
-      margin-bottom: 10px;
       font-size: 16px;
       font-weight: bold;
       align-items: center;
       height: 24px;
 
       .Button {
-        height: 24px;
+        height: 32px;
+        width: 32px;
       }
     }
 
@@ -42,29 +44,10 @@
       background: var(--divider);
     }
 
-    .tab-list {
-      font-size: 13px;
-      margin: 0 16px 16px 16px;
-      width: calc(100% - 32px);
-
-      .tab-options-button {
-        @include button-reset;
-      }
-    }
-
-    .tab-panels {
+    .file-picker-container {
+      width: 100%;
       height: 100%;
       padding: 16px;
-
-      .tab-panel {
-        height: 100%;
-
-        .file-picker-body .modal-btn-file {
-          height: 36px;
-          display: flex;
-          align-items: center;
-        }
-      }
     }
 
     .footer {
@@ -75,70 +58,16 @@
       width: 100%;
       margin: 0;
 
-      .Button {
-        @include button-reset;
-        background: var(--primary-button);
-        border-radius: 4px;
-        padding: 0 8px;
-        height: 32px;
-        min-width: 72px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        color: var(--primary-button-text);
-        cursor: pointer;
-
-        @include mobile {
-          font-size: 13px;
-        }
-
-        &:enabled:hover {
-          background: var(--primary-button-hover);
-        }
-
-        &:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-      }
-
-      .create-portfolio {
-        @include button-reset;
-        background: var(--primary-button);
-        border-radius: 4px;
-        padding: 0 8px;
-        height: 32px;
-        min-width: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        color: var(--primary-button-text);
-        cursor: pointer;
-
-        @include mobile {
-          font-size: 13px;
-        }
-
-        &:enabled:hover {
-          background: var(--primary-button-hover);
-        }
-
-        &:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-      }
-
       .add-item-option {
         visibility: hidden;
         display: flex;
         align-items: center;
-        margin-left: 16px;
-        color: var(--secondary-button-text);
         position: relative;
-        cursor: pointer;
+        @extend %tertiary-button-selected;
+
+        &:hover {
+          @extend %tertiary-button-hover;
+        }
 
         &.show-popup {
           color: var(--secondary-button-hover);
@@ -156,31 +85,6 @@
           color: var(--secondary-button-text);
         }
 
-        .add-item-option-text {
-          margin-left: 4px;
-        }
-
-        .Button {
-          background-color: transparent;
-          padding-left: 0;
-          min-width: 0px;
-          width: 50px;
-
-          &:hover {
-            background-color: transparent;
-          }
-
-          &.active {
-            background-color: transparent;
-          }
-
-          .Icon {
-            width: 12px;
-            height: 12px;
-            color: var(--secondary-button-text);
-          }
-        }
-
         .add-item-trigger {
           width: 1px;
           height: 1px;
@@ -190,13 +94,29 @@
           top: 30px;
         }
       }
+
+      .create-portfolio {
+        @extend %default-button-selected;
+        min-width: 72px;
+
+        @include mobile {
+          font-size: 13px;
+        }
+
+        &:enabled:hover {
+          background: var(--primary-button-hover);
+        }
+
+        &:disabled {
+          @extend %default-button-disabled;
+        }
+      }
     }
+
     @include tab-border-defaults;
   }
 
-  &.is-editing .container {
-    height: 604px;
-    width: 786px;
+  &.is-editing .content-container {
 
     .header {
       margin-bottom: 20px;
@@ -205,6 +125,14 @@
     .footer {
       .add-item-option {
         visibility: visible;
+        min-width: 115px;
+        padding: 8px 16px;
+
+        .Icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 4px;
+        }
       }
     }
   }

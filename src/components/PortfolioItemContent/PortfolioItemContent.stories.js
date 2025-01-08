@@ -3,6 +3,7 @@ import { legacy_createStore as createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import PortfolioItemContent from './PortfolioItemContent';
 import PortfolioContext from '../PortfolioPanel/PortfolioContext';
+import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 import '../LeftPanel/LeftPanel.scss';
 
 const NOOP = () => { };
@@ -17,6 +18,16 @@ const reducer = () => {
     viewer: {
       disabledElements: {},
       customElementOverrides: {},
+      flyoutMap: {
+        'bookmarkOutlineFlyout-0': {
+          dataElement: 'bookmarkOutlineFlyout-0',
+          items: menuItems,
+        }
+      },
+      activeFlyout: 'bookmarkOutlineFlyout-0',
+      openElements: {
+        'bookmarkOutlineFlyout-0': true,
+      },
     },
   };
 };
@@ -82,6 +93,7 @@ export const Folder = () => {
               <PortfolioItemContent
                 portfolioItem={portfolioItemFolder}
                 setIsHovered={NOOP}
+                isAdding={false}
               />
             </PortfolioContext.Provider>
           </div>
@@ -126,7 +138,6 @@ export const Renaming = () => {
                 portfolioItem={portfolioItem}
                 isPortfolioRenaming={true}
                 setPortfolioRenaming={NOOP}
-                setIsHovered={NOOP}
               />
             </PortfolioContext.Provider>
           </div>
