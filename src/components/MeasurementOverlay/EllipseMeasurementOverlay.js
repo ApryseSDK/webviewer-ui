@@ -54,10 +54,9 @@ const propTypes = {
     return null;
   },
   isOpen: PropTypes.bool.isRequired,
-  canModify: PropTypes.bool,
 };
 
-function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool, canModify }) {
+function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool }) {
   const { t } = useTranslation();
 
   const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
@@ -236,7 +235,7 @@ function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool, canModify
           className="scale-input"
           type="number"
           min="0"
-          disabled={isReadOnly || !annotation || !canModify}
+          disabled={isReadOnly || !annotation}
           value={radius}
           onChange={(event) => {
             onChangeRadiusLength(event);

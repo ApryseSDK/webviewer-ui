@@ -16,10 +16,9 @@ const propTypes = {
   annotation: PropTypes.object,
   isOpen: PropTypes.bool.isRequired,
   selectedTool: PropTypes.object,
-  canModify: PropTypes.bool,
 };
 
-const MeasurementDetail = ({ annotation, isOpen, selectedTool, canModify }) => {
+const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
   const { t } = useTranslation();
 
   const data = useMemo(() => {
@@ -143,7 +142,7 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool, canModify }) => {
   const renderDetails = () => {
     const { key, precision } = data;
     if (key === 'ellipseMeasurement') {
-      return <EllipseMeasurementOverlay annotation={annotation} selectedTool={selectedTool} isOpen={isOpen} canModify={canModify} />;
+      return <EllipseMeasurementOverlay annotation={annotation} selectedTool={selectedTool} isOpen={isOpen} />;
     }
 
     return (
@@ -155,7 +154,7 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool, canModify }) => {
           </div>
         </div>
         {key === 'distanceMeasurement' && (
-          <LineMeasurementInput annotation={annotation} isOpen={isOpen} selectedTool={selectedTool} canModify={canModify} />
+          <LineMeasurementInput annotation={annotation} isOpen={isOpen} selectedTool={selectedTool} />
         )}
         {[
           'rectangularAreaMeasurement',

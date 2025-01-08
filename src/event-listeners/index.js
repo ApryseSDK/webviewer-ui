@@ -46,7 +46,6 @@ import onCompareAnnotationsLoaded from './onCompareAnnotationsLoaded';
 import onAccessibleReadingOrderModeStarted from './onAccessibleReadingOrderModeStarted';
 import onAccessibleReadingOrderModeReady from './onAccessibleReadingOrderModeReady';
 import onAccessibleReadingOrderModeEnded from './onAccessibleReadingOrderModeEnded';
-import onAccessibleReadingOrderModeNoStructure from './onAccessibleReadingOrderModeNoStructure';
 import onUserBookmarksChanged from './onUserBookmarksChanged';
 
 export {
@@ -98,6 +97,5 @@ export {
   onAccessibleReadingOrderModeStarted,
   onAccessibleReadingOrderModeReady,
   onAccessibleReadingOrderModeEnded,
-  onAccessibleReadingOrderModeNoStructure,
   onUserBookmarksChanged,
 };

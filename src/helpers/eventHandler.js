@@ -55,7 +55,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onAccessibleReadingOrderModeStarted = eventListeners.onAccessibleReadingOrderModeStarted(dispatch, store);
   const onAccessibleReadingOrderModeReady = eventListeners.onAccessibleReadingOrderModeReady(dispatch, store);
   const onAccessibleReadingOrderModeEnded = eventListeners.onAccessibleReadingOrderModeEnded(dispatch, store);
-  const onAccessibleReadingOrderModeNoStructure = eventListeners.onAccessibleReadingOrderModeNoStructure(dispatch, store);
   const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch);
 
   return {
@@ -75,7 +74,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('accessibleReadingOrderModeStarted', onAccessibleReadingOrderModeStarted);
         core.addEventListener('accessibleReadingOrderModeReady', onAccessibleReadingOrderModeReady);
         core.addEventListener('accessibleReadingOrderModeEnded', onAccessibleReadingOrderModeEnded);
-        core.addEventListener('accessibleReadingOrderModeNoStructure', onAccessibleReadingOrderModeNoStructure);
         document.addEventListener('fullscreenchange', onFullScreenChange);
         document.addEventListener('mozfullscreenchange', onFullScreenChange);
         document.addEventListener('webkitfullscreenchange', onFullScreenChange);

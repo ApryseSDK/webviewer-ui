@@ -10,8 +10,6 @@ import { createTemplate } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { fireEvent } from '@testing-library/react';
-import createItemsForBookmarkOutlineFlyout from 'src/helpers/createItemsForBookmarkOutlineFlyout';
-import { menuItems as MenuItemsForBookmarkOutlines, menuTypes } from 'src/components/MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
 
 export default {
   title: 'ModularComponents/Flyout',
@@ -45,7 +43,6 @@ const initialState = {
       noIcons: true,
       [DataElements.MAIN_MENU]: true,
       menuWithComponentItems: true,
-      bookmarkOutlineFlyout: true,
     },
     customPanels: [],
     genericPanels: [],
@@ -385,10 +382,6 @@ const initialState = {
           { dataElement: 'annotationEditToolButton', toolName: 'AnnotationEdit', className: 'FlyoutToolButton' },
         ],
       },
-      'bookmarkOutlineFlyout': {
-        dataElement: 'bookmarkOutlineFlyout',
-        items: createItemsForBookmarkOutlineFlyout(MenuItemsForBookmarkOutlines, 'portfolio', false, () => {}, menuTypes),
-      },
     },
     modularComponents: {
       panToolButton: {
@@ -534,21 +527,4 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   expect(backButton).not.toBeInTheDocument();
   const option1SecondRef = await canvas.findByRole('button', { name: /Item 1/i });
   expect(option1SecondRef).toBeInTheDocument();
-};
-
-const portfolioFlyoutStore = configureStore({
-  reducer: () => {
-    return {
-      ...initialState,
-      viewer: { ...initialState.viewer, activeFlyout: 'bookmarkOutlineFlyout' }
-    };
-  }
-});
-
-export const PortfolioFlyout = () => {
-  return (
-    <Provider store={portfolioFlyoutStore}>
-      <Flyout />
-    </Provider>
-  );
 };

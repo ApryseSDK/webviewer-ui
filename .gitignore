@@ -16,3 +16,4 @@ keys
 test/cypress/screenshotsFolder
 test/cypress/snapshots/**/__diff_output__/*
 .idea
+storybook-static

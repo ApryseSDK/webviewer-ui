@@ -105,7 +105,6 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     accessibleReadingOrderModeStarted: accessibleReadingOrderManager,
     accessibleReadingOrderModeReady: accessibleReadingOrderManager,
     accessibleReadingOrderModeEnded: accessibleReadingOrderManager,
-    accessibleReadingOrderModeNoStructure: accessibleReadingOrderManager,
     userBookmarksChanged: documentViewer,
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ScaleSelector from './ScaleSelector';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -15,32 +15,11 @@ const scales = [
     '_pageScale': { 'value': 1, 'unit': 'mm' },
     '_worldScale': { 'value': 10, 'unit': 'mm' },
     'pageScale': { 'value': 1, 'unit': 'mm' },
-    'worldScale': { 'value': 10, 'unit': 'mm' },
-    toString: () => '1 mm = 10 mm'
-  },
-  {
-    '_pageScale': { 'value': 1, 'unit': 'in' },
-    '_worldScale': { 'value': 50, 'unit': 'in' },
-    'pageScale': { 'value': 1, 'unit': 'in' },
-    'worldScale': { 'value': 50, 'unit': 'in' },
-    toString: () => '1 in = 50 in'
-  },
-  {
-    '_pageScale': { 'value': 1, 'unit': 'cm' },
-    '_worldScale': { 'value': 25, 'unit': 'cm' },
-    'pageScale': { 'value': 1, 'unit': 'cm' },
-    'worldScale': { 'value': 25, 'unit': 'cm' },
-    toString: () => '1 cm = 25 cm'
+    'worldScale': { 'value': 10, 'unit': 'mm' }
   }
 ];
 
-const coreScales = {
-  '1 mm = 10 mm': [new window.Core.Annotations.ArcAnnotation()], // ArcAnnotation and generic annotation are mocked as same type.
-  '1 in = 50 in': [new window.Core.Annotations.ArcAnnotation()],
-  '1 cm = 25 cm': [new window.Core.Annotations.ArcAnnotation()],
-};
-
-let presetScales = ['1 mm = 10 mm'];
+const selectedScales = ['1 mm = 10 mm'];
 
 const initialState = {
   viewer: {
@@ -50,10 +29,7 @@ const initialState = {
 };
 
 export function Basic() {
-  const [selectedScales, setSelectedScales] = useState(presetScales);
-  core.getScalePrecision = () => 0.1;
-  core.getScales = () => coreScales;
-  core.canModify = () => true;
+  core.getScalePrecision = () => true;
   return (
     <ReduxProvider store={configureStore({ reducer: () => initialState })}>
       <div className='ScaleOverlay'>
@@ -61,9 +37,7 @@ export function Basic() {
           <ScaleSelector
             scales={scales}
             selectedScales={selectedScales}
-            onScaleSelected={(currentScale, selectedScale) => {
-              setSelectedScales([selectedScale]);
-            }}
+            onScaleSelected={() => { }}
             onAddingNewScale={() => { }}
           />
         </div>
@@ -72,25 +46,4 @@ export function Basic() {
   );
 }
 
-export function NotModifiable() {
-  const [selectedScales, setSelectedScales] = useState(presetScales);
-  core.getScalePrecision = () => 0.1;
-  core.canModify = () => false;
-  core.getScales = () => coreScales;
-  return (
-    <ReduxProvider store={configureStore({ reducer: () => initialState })}>
-      <div className='ScaleOverlay'>
-        <div className='scale-overlay-header'>
-          <ScaleSelector
-            scales={scales}
-            selectedScales={selectedScales}
-            onScaleSelected={(currentScale, selectedScale) => {
-              setSelectedScales([selectedScale]);
-            }}
-            onAddingNewScale={() => { }}
-          />
-        </div>
-      </div>
-    </ReduxProvider>
-  );
-}
+

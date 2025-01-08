@@ -2,7 +2,6 @@ import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
-import createItemsForBookmarkOutlineFlyout from 'src/helpers/createItemsForBookmarkOutlineFlyout';
 
 const createFlyoutItem = (option, icon, label) => ({
   icon,
@@ -51,7 +50,36 @@ const MoreOptionsContextMenuFlyout = ({
     const bookmarkOutlineFlyout = {
       dataElement: flyoutSelector,
       className: 'MoreOptionsContextMenuFlyout',
-      items: createItemsForBookmarkOutlineFlyout(menuItems, type, shouldHideDeleteButton, handleOnClick, menuTypes),
+      items: menuItems.map((item) => {
+        const { option } = item;
+        let hidden = false;
+        if (option === menuTypes.DELETE) {
+          hidden = shouldHideDeleteButton;
+        }
+        if ([menuTypes.DOWNLOAD, menuTypes.OPENFILE].includes(option)) {
+          hidden = type !== 'portfolio';
+        }
+        if (option === menuTypes.SETDEST) {
+          hidden = type !== 'outline';
+        }
+        if (option === menuTypes.OPENFORMFIELDPANEL) {
+          hidden = ['portfolio', 'bookmark'].includes(type);
+        }
+        if ([menuTypes.MOVE_UP, menuTypes.MOVE_DOWN].includes(option)) {
+          hidden = !['portfolio'].includes(type);
+        }
+
+        if ([menuTypes.MOVE_LEFT, menuTypes.MOVE_RIGHT, menuTypes.MOVE_UP, menuTypes.MOVE_DOWN].includes(option)) {
+          hidden = type !== 'outline';
+        }
+
+        return {
+          ...item,
+          hidden,
+          dataElement: `${type}${item.dataElement}`,
+          onClick: () => handleOnClick(item.option),
+        };
+      }),
     };
     async function runDispatch() {
       if (!currentFlyout) {

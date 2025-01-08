@@ -17,12 +17,11 @@ LineMeasurementInput.propTypes = {
   annotation: PropTypes.object,
   isOpen: PropTypes.bool.isRequired,
   selectedTool: PropTypes.object,
-  canModify: PropTypes.bool,
 };
 
 const Scale = window.Core.Scale;
 
-function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
+function LineMeasurementInput({ annotation, isOpen, selectedTool }) {
   const [t] = useTranslation();
   const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
   const factor = annotation?.Measure.axis[0].factor;
@@ -213,7 +212,7 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
           className="scale-input"
           type="number"
           min="0"
-          disabled={isReadOnly || !annotation || !canModify}
+          disabled={isReadOnly || !annotation}
           value={!annotation ? 0 : length}
           autoFocus={!isMobileDevice}
           onChange={(event) => {
@@ -239,7 +238,7 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
           type="number"
           min="0"
           max="360"
-          disabled={isReadOnly || !annotation || !canModify}
+          disabled={isReadOnly || !annotation}
           value={angle}
           autoFocus={!isMobileDevice}
           onChange={(event) => {

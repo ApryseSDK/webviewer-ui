@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PropTypes from 'prop-types';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,8 +15,7 @@ const propTypes = {
   scales: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedScales: PropTypes.arrayOf(PropTypes.string).isRequired,
   onScaleSelected: PropTypes.func.isRequired,
-  onAddingNewScale: PropTypes.func.isRequired,
-  ariaLabelledBy: PropTypes.string,
+  onAddingNewScale: PropTypes.func.isRequired
 };
 
 const Scale = window.Core.Scale;
@@ -25,63 +24,32 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [scalesInfo, setScalesInfo] = useState([]);
-
-  useEffect(() => {
-    if (!scales || scales.length === 0) {
-      setScalesInfo([]);
-      return;
-    }
-
-    const scalesInfo = getScalesInfo(scales);
-    setScalesInfo(scalesInfo);
-  }, [scales]);
-
   const isMultipleScalesMode = useSelector((state) => selectors.getIsMultipleScalesMode(state));
+
   const isMultipleScales = selectedScales.length > 1;
 
-  const getScalesInfo = (scales) => {
-    const scalesInfo = [];
-    const coreScales = core.getScales();
-
-    scales.forEach((scale) => {
-      const scaleData = coreScales[scale.toString()];
-      const measurements = [];
-      const relatedPages = new Set();
-      let canDelete = true;
-
-      scaleData.forEach((measurementItem) => {
-        const isAnnotation = measurementItem instanceof window.Core.Annotations.Annotation;
-        if (!isAnnotation) {
-          return;
-        }
-
+  const getScaleInfo = (deleteScale) => {
+    const scales = core.getScales();
+    const measurements = [];
+    const relatedPages = new Set();
+    scales[deleteScale.toString()].forEach((measurementItem) => {
+      if (measurementItem instanceof window.Core.Annotations.Annotation) {
         relatedPages.add(measurementItem['PageNumber']);
         measurements.push(measurementItem);
-
-        // If any associated measurement cannot be deleted then we won't allow this scale to be deleted.
-        if (!core.canModify(measurementItem)) {
-          canDelete = false;
-        }
-      });
-
-      scalesInfo.push({
-        scale: scale,
-        title: scale.toString(),
-        measurementsNum: measurements.length,
-        pages: [...relatedPages],
-        canDelete
-      });
+      }
     });
-
-    return scalesInfo;
+    return {
+      measurementsNum: measurements.length,
+      pages: [...relatedPages]
+    };
   };
 
-  const openScaleDeletionModal = (scaleInfo) => {
-    if (!scaleInfo) {
+  const openScaleDeletionModal = (scale) => {
+    if (!scale) {
       return;
     }
-
+    const deleteScale = new Scale(scale);
+    const scaleInfo = getScaleInfo(deleteScale);
     const hasAssociatedMeasurements = !!scaleInfo.pages.length;
     const message = hasAssociatedMeasurements ? (
       <div className='customMessage'>
@@ -113,14 +81,14 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
         </p>
       </div>
     );
-    const title = `${t('option.measurement.deleteScaleModal.deleteScale')} ${scaleInfo.title}`;
+    const title = `${t('option.measurement.deleteScaleModal.deleteScale')} ${deleteScale.toString()}`;
     const confirmBtnText = t('action.confirm');
 
     const warning = {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => core.deleteScale(scaleInfo.scale)
+      onConfirm: () => core.deleteScale(deleteScale)
     };
     dispatch(actions.showWarningMessage(warning));
   };
@@ -170,13 +138,11 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
       onKeyDown={handleKeyDown}
       onClick={toggleDropdown}
     >
-      {/* Cleanup this <div> to a <select> https://apryse.atlassian.net/browse/WVR-7613 */}
       <div
         data-testid='scale-selector'
         className="scale-overlay-selection"
         aria-expanded={isDropDownOpen}
         aria-labelledby={ariaLabelledBy}
-        aria-controls="scale-overlay-dropdown"
         role="combobox"
         tabIndex={0}
       >
@@ -190,7 +156,7 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
         </div>
       </div>
       {isDropDownOpen && (
-        <ul id="scale-overlay-dropdown" className={classNames('scale-overlay-list')} >
+        <ul className={classNames('scale-overlay-list')} >
           <li>
             <div className="scale-overlay-name">{title}</div>
             <div className="scale-overlay-arrow">
@@ -201,24 +167,24 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
               </button>
             </div>
           </li>
-          {scalesInfo.map((scaleInfo) => (
-            <li key={scaleInfo.title} className={classNames({
+          {scales.map((value) => (
+            <li key={value.toString()} className={classNames({
               'className="scale-overlay-item': true,
-              'option-selected': selectedScales.includes(scaleInfo.title)
+              'option-selected': selectedScales.includes(value.toString())
             })}>
               <button
                 className={classNames({
                   options: true,
                 })}
-                onClick={() => onScaleSelected(selectedScales, scaleInfo.title)}
+                onClick={() => onScaleSelected(selectedScales, value.toString())}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    onScaleSelected(selectedScales, scaleInfo.title);
+                    onScaleSelected(selectedScales, value.toString());
                   }
                 }}
               >
-                {renderScale(scaleInfo.scale)}
+                {renderScale(value)}
               </button>
               <button
                 className="delete"
@@ -226,16 +192,16 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  openScaleDeletionModal(scaleInfo);
+                  openScaleDeletionModal(value.toString());
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    openScaleDeletionModal(scaleInfo);
+                    openScaleDeletionModal(value.toString());
                   }
                 }}
-                disabled={scalesInfo.length <= 1 || !scaleInfo.canDelete}
-                aria-label={`${t('action.delete')} ${scaleInfo.title}`}
+                disabled={scales.length <= 1}
+                aria-label={`${t('action.delete')} ${value.toString()}`}
               >
                 <Icon glyph="icon-delete-line" />
               </button>
