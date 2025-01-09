@@ -16,13 +16,12 @@ import { useState, useRef, useLayoutEffect, useMemo } from 'react';
  * }}
  */
 const useOverflowContainer = (isOpen, options) => {
-
   const { defaultLocation, padding, offset, container } = {
     defaultLocation: 'bottom',
     padding: 5,
     offset: 10,
     container: 'body',
-    ...options
+    ...options,
   };
 
   const [location, setLocation] = useState(defaultLocation);
@@ -43,15 +42,12 @@ const useOverflowContainer = (isOpen, options) => {
       const popupRect = popupMenuEle.getBoundingClientRect();
       const containerRect = containerEle.getBoundingClientRect();
 
-      let overflow = undefined;
-
       if (popupRect.left < containerRect.left) {
-        overflow = Math.floor(containerRect.left - popupRect.left) + offset;
+        setTransform('');
       } else if (popupRect.right > containerRect.right) {
-        overflow = -Math.ceil(popupRect.right - containerRect.right) - offset;
+        const overflow = -Math.ceil(popupRect.right - containerRect.right) - offset;
+        setTransform(`translateX(${overflow}px`);
       }
-
-      if (!transform && overflow) setTransform(`translateX(${overflow}px)`);
 
       const shouldRelocateTop = location === 'bottom' && popupRect.bottom > containerRect.bottom;
       if (shouldRelocateTop) {
