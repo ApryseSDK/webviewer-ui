@@ -37,17 +37,17 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
       }}
     >
       <div className="note-share-type-popup" onClick={preventAutoClose}>
-        {/* Assessors */}
-        {sharePermissions.includes('ASSESSORS') && (
+        {/* None */}
+        {sharePermissions.includes('NONE') && (
           <DataElementWrapper
             tabbable
-            dataElement="notePopupStateAssessor"
+            dataElement="notePopupStateAssessors"
             type="button"
-            className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.ASSESSORS })}
-            onClick={() => onSelect(ShareTypes.ASSESSORS)}
+            className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.NONE })}
+            onClick={() => onSelect(ShareTypes.NONE)}
           >
-            <ShareTypeIcon shareType={ShareTypes.ASSESSORS} />
-            {t('option.state.assessors')}
+            <ShareTypeIcon shareType={ShareTypes.NONE} />
+            {t('option.state.none')}
           </DataElementWrapper>
         )}
 
@@ -65,6 +65,20 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
           </DataElementWrapper>
         )}
 
+        {/* Assessors */}
+        {sharePermissions.includes('ASSESSORS') && (
+          <DataElementWrapper
+            tabbable
+            dataElement="notePopupStateAssessor"
+            type="button"
+            className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.ASSESSORS })}
+            onClick={() => onSelect(ShareTypes.ASSESSORS)}
+          >
+            <ShareTypeIcon shareType={ShareTypes.ASSESSORS} />
+            {t('option.state.assessors')}
+          </DataElementWrapper>
+        )}
+
         {/* All */}
         {sharePermissions.includes('ALL') && (
           <DataElementWrapper
@@ -76,20 +90,6 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
           >
             <ShareTypeIcon shareType={ShareTypes.ALL} />
             {t('option.state.all')}
-          </DataElementWrapper>
-        )}
-
-        {/* None */}
-        {sharePermissions.includes('NONE') && (
-          <DataElementWrapper
-            tabbable
-            dataElement="notePopupStateAssessors"
-            type="button"
-            className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.NONE })}
-            onClick={() => onSelect(ShareTypes.NONE)}
-          >
-            <ShareTypeIcon shareType={ShareTypes.NONE} />
-            {t('option.state.none')}
           </DataElementWrapper>
         )}
       </div>

@@ -6021,9 +6021,9 @@ external-editor@^3.0.3:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
-"extract-zip@git+https://github.com/lbittner-pdftron/extract-zip.git":
+"extract-zip@https://github.com/lbittner-pdftron/extract-zip.git":
   version "1.6.7"
-  resolved "git+https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
+  resolved "https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
   dependencies:
     concat-stream "1.6.2"
     debug "2.6.9"
