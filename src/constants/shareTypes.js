@@ -17,10 +17,10 @@ export const ShareTypeOrder = {
 
 // this colors are taken from flow-ui-react secondry light colors
 export const ShareTypeColors = {
-  [ShareTypes.ALL]: { backgroundColor: '#EFF8ED', borderColor: '#5AB847' },
-  [ShareTypes.ASSESSORS]: { backgroundColor: '#FEF9ED', borderColor: '#F5C20B' },
-  [ShareTypes.PARTICIPANTS]: { backgroundColor: '#EDF5F9', borderColor: '#3A9EC3' },
-  [ShareTypes.NONE]: { backgroundColor: '#E0E1E2', borderColor: '#9e9e9e' },
+  [ShareTypes.NONE]: { backgroundColor: '#BDBDBE', borderColor: '#242425' },
+  [ShareTypes.PARTICIPANTS]: { backgroundColor: '#EDF5F9', borderColor: '#2D6987' },
+  [ShareTypes.ASSESSORS]: { backgroundColor: '#FEF9ED', borderColor: '#AF7F0A' },
+  [ShareTypes.ALL]: { backgroundColor: '#EFF8ED', borderColor: '#408132' },
 };
 
 export default ShareTypes;
