@@ -27,25 +27,24 @@ const useOverflowContainer = (isOpen, options) => {
   const [location, setLocation] = useState(defaultLocation);
   const popupMenuRef = useRef();
   const topBottomCalc = useMemo(() => `calc(100% + ${padding ?? 5}px)`, [padding]);
-  const containerEle = useMemo(() => document.querySelector(container), [container]);
+  const containerEle =
+    document.querySelector(container) === null ? document.querySelector('body') : document.querySelector(container);
   const [top, setTop] = useState(defaultLocation === 'bottom' ? topBottomCalc : undefined);
   const [bottom, setBottom] = useState(defaultLocation === 'top' ? topBottomCalc : undefined);
   const [transform, setTransform] = useState(undefined);
 
   useLayoutEffect(() => {
     const popupMenuEle = popupMenuRef.current;
-
     const _isOpen = isOpen !== undefined ? isOpen : true;
+    const popupRect = popupMenuEle.getBoundingClientRect();
+
+    setTransform('');
 
     if (_isOpen && popupMenuEle && containerEle) {
-      const popupRect = popupMenuEle.getBoundingClientRect();
       const containerRect = containerEle.getBoundingClientRect();
 
-      setTransform('');
-
-      const translateX = popupRect.width;
       if (popupRect.left + popupRect.width > containerRect.right) {
-        setTransform(`translateX(-${translateX - offset}px)`);
+        setTransform(`translateX(-${popupRect.width - offset}px)`);
       }
 
       const shouldRelocateTop = location === 'bottom' && popupRect.bottom > containerRect.bottom;
@@ -63,6 +62,7 @@ const useOverflowContainer = (isOpen, options) => {
       }
     }
     if (containerEle === null) {
+      setTransform(`translateX(-${popupRect.width - offset}px)`);
       console.log(`Element "${container}" not found`);
     }
   }, [isOpen, popupMenuRef, location, container]);
