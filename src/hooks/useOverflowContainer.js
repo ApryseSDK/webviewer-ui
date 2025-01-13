@@ -35,6 +35,8 @@ const useOverflowContainer = (isOpen, options) => {
 
   useLayoutEffect(() => {
     const popupMenuEle = popupMenuRef.current;
+    if (!popupMenuEle) return;
+
     const _isOpen = isOpen !== undefined ? isOpen : true;
     const popupRect = popupMenuEle.getBoundingClientRect();
 
