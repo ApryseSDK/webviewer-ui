@@ -16,42 +16,38 @@ import { useState, useRef, useLayoutEffect, useMemo } from 'react';
  * }}
  */
 const useOverflowContainer = (isOpen, options) => {
-
   const { defaultLocation, padding, offset, container } = {
     defaultLocation: 'bottom',
     padding: 5,
     offset: 10,
     container: 'body',
-    ...options
+    ...options,
   };
 
   const [location, setLocation] = useState(defaultLocation);
   const popupMenuRef = useRef();
   const topBottomCalc = useMemo(() => `calc(100% + ${padding ?? 5}px)`, [padding]);
-  const containerEle = useMemo(() => document.querySelector(container), [container]);
-
+  const containerEle =
+    document.querySelector(container) === null ? document.querySelector('body') : document.querySelector(container);
   const [top, setTop] = useState(defaultLocation === 'bottom' ? topBottomCalc : undefined);
   const [bottom, setBottom] = useState(defaultLocation === 'top' ? topBottomCalc : undefined);
   const [transform, setTransform] = useState(undefined);
 
   useLayoutEffect(() => {
     const popupMenuEle = popupMenuRef.current;
+    if (!popupMenuEle) return;
 
     const _isOpen = isOpen !== undefined ? isOpen : true;
+    const popupRect = popupMenuEle.getBoundingClientRect();
+
+    setTransform('');
 
     if (_isOpen && popupMenuEle && containerEle) {
-      const popupRect = popupMenuEle.getBoundingClientRect();
       const containerRect = containerEle.getBoundingClientRect();
 
-      let overflow = undefined;
-
-      if (popupRect.left < containerRect.left) {
-        overflow = Math.floor(containerRect.left - popupRect.left) + offset;
-      } else if (popupRect.right > containerRect.right) {
-        overflow = -Math.ceil(popupRect.right - containerRect.right) - offset;
+      if (popupRect.left + popupRect.width > containerRect.right) {
+        setTransform(`translateX(-${popupRect.width - offset}px)`);
       }
-
-      if (!transform && overflow) setTransform(`translateX(${overflow}px)`);
 
       const shouldRelocateTop = location === 'bottom' && popupRect.bottom > containerRect.bottom;
       if (shouldRelocateTop) {
@@ -66,6 +62,10 @@ const useOverflowContainer = (isOpen, options) => {
         setTop(topBottomCalc);
         setBottom(undefined);
       }
+    }
+    if (containerEle === null) {
+      setTransform(`translateX(-${popupRect.width - offset}px)`);
+      console.log(`Element "${container}" not found`);
     }
   }, [isOpen, popupMenuRef, location, container]);
 
