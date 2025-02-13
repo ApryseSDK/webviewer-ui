@@ -99,8 +99,8 @@ const ColorPicker = ({
             onColorChange(color);
           }
         }
+        getInstanceNode().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
       }
-      getInstanceNode().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     };
     getInstanceNode().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
   }, [colors?.length, dispatch, setSelectedColor, onColorChange, getCustomColorAndRemove, type, activeToolName]);
