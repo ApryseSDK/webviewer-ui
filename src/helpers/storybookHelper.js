@@ -9,7 +9,7 @@ import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 import { availableFontFaces, cssFontValues } from 'src/constants/officeEditorFonts';
-import { DEFAULT_POINT_SIZE, EditingStreamType, OfficeEditorEditMode } from 'src/constants/officeEditor';
+import { DEFAULT_POINT_SIZE } from 'src/constants/officeEditor';
 
 const noop = () => { };
 
@@ -133,7 +133,7 @@ MockDocumentContainer.propTypes = {
   children: PropTypes.node,
 };
 
-// This is the initial state of the Modular UI OfficeEditor store
+// This is the initial state of the Modualar UI OfficeEditor store
 export const OEModularUIMockState = {
   officeEditor: {
     cursorProperties: {
@@ -162,8 +162,7 @@ export const OEModularUIMockState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING,
-    stream: EditingStreamType.BODY,
+    editMode: 'editing',
   },
   viewer: {
     isOfficeEditorMode: true,
@@ -174,15 +173,4 @@ export const OEModularUIMockState = {
   featureFlags: {
     customizableUI: true,
   }
-};
-
-export const oePartialState = {
-  officeEditor: {
-    cursorProperties: {
-      locationProperties: {
-        inTable: false,
-      },
-    },
-    stream: EditingStreamType.BODY,
-  },
 };

@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import getRootNode from 'src/helpers/getRootNode';
 import HeaderFooterControlsBar from './HeaderFooterControlsBar';
 import PropTypes from 'prop-types';
-import core from 'core';
 
 import './HeaderFooterControlsOverlay.scss';
 
@@ -20,13 +19,10 @@ const HeaderFooterControlsOverlay = ({ visiblePages, isHeaderControlsActive, isF
     if (!pageSection) {
       return null;
     }
-    const headerPageType = core.getOfficeEditor().getHeaderPageType(pageNumber);
-    const footerPageType = core.getOfficeEditor().getFooterPageType(pageNumber);
-
     return createPortal(
       <div key={pageNumber} className='HeaderFooterControlsOverlay'>
-        <HeaderFooterControlsBar type='header' pageNumber={pageNumber} isActive={isHeaderControlsActive} layoutType={headerPageType} />
-        <HeaderFooterControlsBar type='footer' pageNumber={pageNumber} isActive={isFooterControlsActive} layoutType={footerPageType} />
+        <HeaderFooterControlsBar type='header' pageNumber={pageNumber} isActive={isHeaderControlsActive} />
+        <HeaderFooterControlsBar type='footer' pageNumber={pageNumber} isActive={isFooterControlsActive} />
       </div>,
       pageSection
     );

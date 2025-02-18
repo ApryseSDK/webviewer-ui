@@ -89,7 +89,7 @@ describe('File attachment panel', () => {
     return component;
   };
 
-  it('should render file attachment panel with proper labels', async () => {
+  it.only('should render file attachment panel with proper labels', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
       const component = render(

@@ -7,7 +7,9 @@ export async function toggleAnnotationsVisibility(layers) {
   if (doc && doc.getPDFDoc) {
     const pdfDoc = await doc.getPDFDoc();
     const pdfNetAnnotations = await getPDFNetAnnotations(pdfDoc);
-    await Promise.all(pdfNetAnnotations.map((pdfNetAnnotation) => toggleAnnotationVisibility(pdfNetAnnotation, layerMap)));
+    pdfNetAnnotations.forEach((pdfNetAnnotation) => {
+      toggleAnnotationVisibility(pdfNetAnnotation, layerMap);
+    });
   }
 }
 
@@ -43,7 +45,6 @@ async function toggleAnnotationVisibility(pdfNetAnnotation, layerMap) {
 async function handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent) {
   const annotationManager = core.getAnnotationManager();
   const annotation = await findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManager);
-
   if (annotation) {
     annotation.Hidden = !layerMap[optionalContent.id].visible;
     return;
@@ -99,21 +100,11 @@ async function handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layer) {
 async function findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManager) {
   const annotSDF = await pdfNetAnnotation.getSDFObj();
   const isNMKeyValid = await annotSDF.findObj('NM');
-
-  const pageIndex = await (await pdfNetAnnotation.getPage()).getIndex();
-
   if (isNMKeyValid) {
     const NMInfoDict = await annotSDF.get('NM');
     const NMInfoObject = await NMInfoDict.value();
     const idString = await NMInfoObject.getAsPDFText();
-
-    const webViewerAnnotationsOnSamePage = annotationManager.getAnnotationsList().filter((annot) => annot.PageNumber === pageIndex);
-    const targetWebViewerAnnotation = webViewerAnnotationsOnSamePage.find((annot) => annot.Id === idString);
-
-    if (!targetWebViewerAnnotation) {
-      console.warn('Could not find matching WebViewer annotation for the provided PDFNet annotation.');
-    }
-    return targetWebViewerAnnotation;
+    return annotationManager.getAnnotationById(idString);
   }
 
   return null;
@@ -162,10 +153,8 @@ async function getPDFNetAnnotations(pdfDoc) {
   for (itr; (await itr.hasNext()); (await itr.next())) {
     const page = await itr.current();
     const numAnnots = await page.getNumAnnots();
-
     for (let i = 0; i < numAnnots; ++i) {
       const annot = await page.getAnnot(i);
-
       if (!(await annot.isValid())) {
         continue;
       }

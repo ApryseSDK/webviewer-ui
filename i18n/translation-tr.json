@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Bölüm sonu ekle ve bir sonraki sayfadan başla",
     "sectionBreakContinuous": "Bölüm Sonu - Sürekli",
     "sectionBreakContinuousDescription": "Bölüm sonu ekle ve aynı sayfada devam et",
-    "header": {
-      "0": "Başlık",
-      "1": "İlk Sayfa Başlığı",
-      "2": "Çift Sayfa Başlığı",
-      "3": "Tek Sayfa Başlığı"
-    },
-    "footer": {
-      "0": "Altbilgi",
-      "1": "İlk Sayfa Alt Bilgisi",
-      "2": "Çift Sayfa Alt Bilgisi",
-      "3": "Tek Sayfa Alt Bilgisi"
-    },
+    "header": "Başlık",
+    "footer": "Altbilgi",
     "options": "Seçenekler",
     "pageOptions": "Sayfa Seçenekleri",
     "removeHeader": "Başlığı Kaldır",

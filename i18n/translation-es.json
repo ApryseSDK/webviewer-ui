@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Insertar salto de sección y comenzar en la página siguiente",
     "sectionBreakContinuous": "Salto de sección - Continuo",
     "sectionBreakContinuousDescription": "Insertar salto de sección y continuar en la misma página",
-    "header": {
-      "0": "Encabezamiento",
-      "1": "Encabezado de la primera página",
-      "2": "Encabezado de página par",
-      "3": "Encabezado de página extraño"
-    },
-    "footer": {
-      "0": "Pie de página",
-      "1": "Pie de página de la primera página",
-      "2": "Pie de página uniforme",
-      "3": "Pie de página impar"
-    },
+    "header": "Encabezamiento",
+    "footer": "Pie de página",
     "options": "Opciones",
     "pageOptions": "Opciones de página",
     "removeHeader": "Quitar encabezado",

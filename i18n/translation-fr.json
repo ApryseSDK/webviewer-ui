@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Insérer un saut de section et commencer à la page suivante",
     "sectionBreakContinuous": "Saut de section - Continu",
     "sectionBreakContinuousDescription": "Insérer un saut de section et continuer sur la même page",
-    "header": {
-      "0": "En-tête",
-      "1": "En-tête de la première page",
-      "2": "En-tête de page uniforme",
-      "3": "En-tête de page impaire"
-    },
-    "footer": {
-      "0": "Pied de page",
-      "1": "Pied de page de la première page",
-      "2": "Pied de page pair",
-      "3": "Pied de page de page impaire"
-    },
+    "header": "En-tête",
+    "footer": "Pied de page",
     "options": "Options",
     "pageOptions": "Options de page",
     "removeHeader": "Supprimer l'en-tête",

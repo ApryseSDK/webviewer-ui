@@ -6,7 +6,7 @@ import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 
-import { createTemplate, oePartialState } from 'helpers/storybookHelper';
+import { createTemplate } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { fireEvent } from '@testing-library/react';
@@ -19,7 +19,6 @@ export default {
 };
 
 const initialState = {
-  ...oePartialState,
   viewer: {
     toolButtonObjects: {
       AnnotationEdit: {

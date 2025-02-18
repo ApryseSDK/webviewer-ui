@@ -124,21 +124,7 @@ export const PAGE_SECTION_BREAK_OPTIONS = [
     key: 'pageBreak',
     label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreak`,
     description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreakDescription`,
-    icon: 'icon-office-editor-page-break-split',
+    icon: 'icon-header-page-manipulation-page-layout-double-page-line',
     onClick: () => core.getOfficeEditor().insertPageBreak(),
-  },
-  {
-    key: 'sectionBreakNextPage',
-    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPage`,
-    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPageDescription`,
-    icon: 'icon-office-editor-page-break',
-    onClick: () => core.getOfficeEditor().insertSectionBreakNextPage(),
-  },
-  {
-    key: 'sectionBreakContinuous',
-    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuous`,
-    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuousDescription`,
-    icon: 'icon-page-manipulation-extract',
-    onClick: () => core.getOfficeEditor().insertSectionBreakContinuous(),
   },
 ];

@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Inserir quebra de seção e começar na próxima página",
     "sectionBreakContinuous": "Quebra de Seção - Contínua",
     "sectionBreakContinuousDescription": "Insira uma quebra de seção e continue na mesma página",
-    "header": {
-      "0": "Cabeçalho",
-      "1": "Cabeçalho da primeira página",
-      "2": "Cabeçalho de página par",
-      "3": "Cabeçalho de página ímpar"
-    },
-    "footer": {
-      "0": "Rodapé",
-      "1": "Rodapé da primeira página",
-      "2": "Rodapé de página par",
-      "3": "Rodapé de página ímpar"
-    },
+    "header": "Cabeçalho",
+    "footer": "Rodapé",
     "options": "Opções",
     "pageOptions": "Opções de página",
     "removeHeader": "Remover Cabeçalho",

@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Masukkan pemisah bagian dan mulai di halaman berikutnya",
     "sectionBreakContinuous": "Pemisah Bagian - Berkelanjutan",
     "sectionBreakContinuousDescription": "Masukkan pemisah bagian dan lanjutkan pada halaman yang sama",
-    "header": {
-      "0": "Judul",
-      "1": "Header Halaman Pertama",
-      "2": "Header Halaman Genap",
-      "3": "Header Halaman Ganjil"
-    },
-    "footer": {
-      "0": "Catatan kaki",
-      "1": "Catatan Kaki Halaman Pertama",
-      "2": "Bahkan Footer Halaman",
-      "3": "Footer Halaman Ganjil"
-    },
+    "header": "Judul",
+    "footer": "Catatan kaki",
     "options": "Pilihan",
     "pageOptions": "Opsi Halaman",
     "removeHeader": "Hapus Header",

@@ -171,7 +171,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   }
 
   useEffect(() => {
-    const handleAnnotationSelected = (annotations, action) => {
+    const handleAnnotationSelected = async (annotations, action) => {
       if (!core.getContentEditManager().isInContentEditMode()) {
         return;
       }

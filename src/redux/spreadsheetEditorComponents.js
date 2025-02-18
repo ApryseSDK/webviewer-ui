@@ -156,6 +156,7 @@ const defaultSpreadsheetEditorComponents = {
       'cellCopyButton',
       'cellPasteButton',
       'divider-0.2',
+      'divider-0.2.1',
 
       'boldButton',
       'italicButton',
@@ -354,7 +355,7 @@ const adjustmentButtons = CELL_ADJUSTMENT_BUTTONS.map((item) => {
   };
 });
 
-const formatButtons = CELL_FORMAT_BUTTONS.map((item) => {
+const formatBUttons = CELL_FORMAT_BUTTONS.map((item) => {
   if (item === 'divider') {
     return 'divider';
   }
@@ -362,7 +363,7 @@ const formatButtons = CELL_FORMAT_BUTTONS.map((item) => {
     dataElement: `format${item.label}`,
     type: 'presetButton',
     buttonType: `format${item.label}`,
-    secondaryLabel: item.desc,
+    description: item.desc,
   };
 });
 
@@ -461,7 +462,7 @@ const defaultSpreadsheetFlyoutMap = {
         'type': 'label',
         'label': 'sheetEditor.cellFormat',
       },
-      ...formatButtons,
+      ...formatBUttons,
     ]
   }
 };

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import actions from 'actions';
 import { PAGE_SECTION_BREAK_OPTIONS } from 'helpers/officeEditor';
-import { OFFICE_EDITOR_TRANSLATION_PREFIX, EditingStreamType } from 'constants/officeEditor';
+import { OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 import DataElements from 'constants/dataElement';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
@@ -49,10 +49,7 @@ const PageSectionBreakDropdown = (props) => {
   const dispatch = useDispatch();
 
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
-  const isCursorInTable = useSelector(selectors.isCursorInTable);
-  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
-
-  const isDropdownDisabled = isCursorInTable || activeStream !== EditingStreamType.BODY;
+  const isCursorInTable = useSelector((state) => selectors.isCursorInTable(state));
 
   const renderDropdownItem = (item) => (
     <>
@@ -61,7 +58,6 @@ const PageSectionBreakDropdown = (props) => {
         <div className='Dropdown__item-label'>{t(item.label)}</div>
         <div className='Dropdown__item-description'>{t(item.description)}</div>
       </div>
-      {item.key === 'pageBreak' && <div className='Divider'></div>}
     </>
   );
 
@@ -75,7 +71,6 @@ const PageSectionBreakDropdown = (props) => {
     if (item.key === 'pageBreak') {
       styles = {
         ...styles,
-        marginBottom: '9px',
         position: 'relative',
       };
     }
@@ -83,11 +78,11 @@ const PageSectionBreakDropdown = (props) => {
   };
 
   const onClickItem = async (itemKey) => {
-    if (isDropdownDisabled) {
+    if (isCursorInTable) {
       return;
     }
     const item = PAGE_SECTION_BREAK_OPTIONS.find((item) => item.key === itemKey);
-    await item?.onClick();
+    await item.onClick();
 
     if (isFlyoutItem && activeFlyout) {
       dispatch(actions.closeElement(activeFlyout));
@@ -104,7 +99,7 @@ const PageSectionBreakDropdown = (props) => {
         'flyout-item': isFlyoutItem,
         'modular-ui': customizableUI,
       })}
-      width={'auto'}
+      width={350}
       isFlyoutItem={isFlyoutItem}
       items={PAGE_SECTION_BREAK_OPTIONS}
       getKey={(item) => item.key}
@@ -113,8 +108,8 @@ const PageSectionBreakDropdown = (props) => {
       onKeyDownHandler={onKeyDownHandler}
       getCustomItemStyle={getCustomItemStyle}
       applyCustomStyleToButton={false}
-      disabled={isDropdownDisabled}
-      displayButton={(isOpen) => renderToggleButton(isOpen, isDropdownDisabled)}
+      disabled={isCursorInTable}
+      displayButton={(isOpen) => renderToggleButton(isOpen, isCursorInTable)}
     />
   );
 };

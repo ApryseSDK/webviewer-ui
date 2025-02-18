@@ -6,7 +6,6 @@ import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import { defaultSpreadsheetFlyoutMap } from '../../../redux/spreadsheetEditorComponents';
-import { oePartialState } from 'helpers/storybookHelper';
 
 export default {
   title: 'SpreadsheetEditor/Flyouts',
@@ -14,7 +13,6 @@ export default {
 };
 
 const createInitialState = (activeFlyout, openElement) => ({
-  ...oePartialState,
   viewer: {
     disabledElements: {},
     customElementOverrides: {},

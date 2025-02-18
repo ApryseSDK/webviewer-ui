@@ -934,8 +934,6 @@ export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state)
 
 export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
 
-export const getOfficeEditorActiveStream = (state) => state.officeEditor.stream;
-
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;

@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Masukkan pemisah bahagian dan mulakan pada halaman seterusnya",
     "sectionBreakContinuous": "Pecah Bahagian - Berterusan",
     "sectionBreakContinuousDescription": "Masukkan pemisah bahagian dan teruskan pada halaman yang sama ",
-    "header": {
-      "0": "Pengepala",
-      "1": "Pengepala Halaman Pertama",
-      "2": "Pengepala Halaman Genap",
-      "3": "Pengepala Halaman Ganjil"
-    },
-    "footer": {
-      "0": "Pengaki",
-      "1": "Pengaki Halaman Pertama",
-      "2": "Pengaki Halaman Genap",
-      "3": "Pengaki Halaman Ganjil"
-    },
+    "header": "Pengepala",
+    "footer": "Pengaki",
     "options": "Pilihan",
     "pageOptions": "Pilihan Halaman",
     "removeHeader": "Alih Keluar Pengepala",

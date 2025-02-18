@@ -796,11 +796,6 @@ export const setOfficeEditorEditMode = (editMode) => ({
   payload: { editMode }
 });
 
-export const setOfficeEditorActiveStream = (stream) => ({
-  type: 'SET_OFFICE_EDITOR_ACTIVE_STREAM',
-  payload: { stream }
-});
-
 export const enableSpreadsheetEditorMode = () => ({
   type: 'ENABLE_SPREADSHEET_EDITOR_MODE',
 });

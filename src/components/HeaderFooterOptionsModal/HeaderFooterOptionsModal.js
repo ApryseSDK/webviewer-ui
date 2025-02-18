@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -8,24 +8,23 @@ import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
-import PropTypes from 'prop-types';
-import { OfficeEditorHeaderFooterLayouts } from 'constants/officeEditor';
 
 import './HeaderFooterOptionsModal.scss';
 
-const propTypes = {
-  headerToTop: PropTypes.string,
-  footerToBottom: PropTypes.string,
-  layout: PropTypes.string,
-  onHeaderToTopChange: PropTypes.func,
-  onFooterToBottomChange: PropTypes.func,
-  onLayoutChange: PropTypes.func,
-  onSave: PropTypes.func,
+const LAYOUTS = {
+  NONE: 'none',
+  FIRST: 'first',
+  EVEN_ODD: 'even_odd',
+  FIRST_EVEN_ODD: 'first_even_odd',
 };
 
-const HeaderFooterOptionsModal = ({ headerToTop, footerToBottom, layout, onHeaderToTopChange, onFooterToBottomChange, onLayoutChange, onSave }) => {
+const HeaderFooterOptionsModal = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
+
+  const [headerFromTop, setHeaderFromTop] = useState('0');
+  const [footerFromBottom, setFooterFromBottom] = useState('0');
+  const [layout, setLayout] = useState(LAYOUTS.NONE);
 
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.HEADER_FOOTER_OPTIONS_MODAL));
 
@@ -34,6 +33,32 @@ const HeaderFooterOptionsModal = ({ headerToTop, footerToBottom, layout, onHeade
   };
 
   const preventDefault = (e) => e.preventDefault();
+
+  const validateInput = (input) => {
+    if (!input || input < 0) {
+      return 0;
+    }
+    const validatedInput = input.replace(/^0+/, '');
+    return validatedInput;
+  };
+
+  const onHeaderFromTopChange = (e) => {
+    const val = validateInput(e.target.value);
+    setHeaderFromTop(val);
+  };
+
+  const onFooterFromBottomChange = (e) => {
+    const val = validateInput(e.target.value);
+    setFooterFromBottom(val);
+  };
+
+  const onLayoutChange = (e) => {
+    setLayout(e.target.value);
+  };
+
+  const onSave = () => {
+    closeModal();
+  };
 
   const modalClass = classNames({
     'HeaderFooterOptionsModal': true
@@ -51,25 +76,25 @@ const HeaderFooterOptionsModal = ({ headerToTop, footerToBottom, layout, onHeade
         <div className='modal-body'>
           <div className='title'>{t('officeEditor.headerFooterOptionsModal.margins')}</div>
           <div className='input-container'>
-            <label htmlFor='headerToTopInput' className='label'>{t('officeEditor.headerFooterOptionsModal.headerFromTop')}</label>
+            <label htmlFor='headerFromTopInput' className='label'>{t('officeEditor.headerFooterOptionsModal.headerFromTop')}</label>
             <Input
               type='number'
-              id='headerToTopInput'
-              data-testid="headerToTopInput"
-              onChange={onHeaderToTopChange}
-              value={headerToTop}
+              id='headerFromTopInput'
+              data-testid="headerFromTopInput"
+              onChange={onHeaderFromTopChange}
+              value={headerFromTop}
               min='0'
               step='any'
             />
           </div>
           <div className='input-container'>
-            <label htmlFor='footerToBottomInput' className='label'>{t('officeEditor.headerFooterOptionsModal.footerFromBottom')}</label>
+            <label htmlFor='footerFromBottomInput' className='label'>{t('officeEditor.headerFooterOptionsModal.footerFromBottom')}</label>
             <Input
               type='number'
-              id='footerToBottomInput'
-              data-testid="footerToBottomInput"
-              onChange={onFooterToBottomChange}
-              value={footerToBottom}
+              id='footerFromBottomInput'
+              data-testid="footerFromBottomInput"
+              onChange={onFooterFromBottomChange}
+              value={footerFromBottom}
               min='0'
               step='any'
             />
@@ -77,32 +102,32 @@ const HeaderFooterOptionsModal = ({ headerToTop, footerToBottom, layout, onHeade
           <div className='title'>{t('officeEditor.headerFooterOptionsModal.layouts.layout')}</div>
           <form className='radio-container' onChange={onLayoutChange} onSubmit={preventDefault}>
             <Choice
-              checked={layout === OfficeEditorHeaderFooterLayouts.NO_SELECTION}
+              checked={layout === LAYOUTS.NONE}
               radio
               name='layout-option'
               label={t('officeEditor.headerFooterOptionsModal.layouts.noSelection')}
-              value={OfficeEditorHeaderFooterLayouts.NO_SELECTION}
+              value={LAYOUTS.NONE}
             />
             <Choice
-              checked={layout === OfficeEditorHeaderFooterLayouts.DIFFERENT_FIRST_PAGE}
+              checked={layout === LAYOUTS.FIRST}
               radio
               name='layout-option'
               label={t('officeEditor.headerFooterOptionsModal.layouts.differentFirstPage')}
-              value={OfficeEditorHeaderFooterLayouts.DIFFERENT_FIRST_PAGE}
+              value={LAYOUTS.FIRST}
             />
             <Choice
-              checked={layout === OfficeEditorHeaderFooterLayouts.DIFFERENT_EVEN_ODD_PAGES}
+              checked={layout === LAYOUTS.EVEN_ODD}
               radio
               name='layout-option'
               label={t('officeEditor.headerFooterOptionsModal.layouts.differentEvenOddPages')}
-              value={OfficeEditorHeaderFooterLayouts.DIFFERENT_EVEN_ODD_PAGES}
+              value={LAYOUTS.EVEN_ODD}
             />
             <Choice
-              checked={layout === OfficeEditorHeaderFooterLayouts.DIFFERENT_FIRST_AND_EVEN_ODD_PAGES}
+              checked={layout === LAYOUTS.FIRST_EVEN_ODD}
               radio
               name='layout-option'
               label={t('officeEditor.headerFooterOptionsModal.layouts.differentFirstEvenOddPages')}
-              value={OfficeEditorHeaderFooterLayouts.DIFFERENT_FIRST_AND_EVEN_ODD_PAGES}
+              value={LAYOUTS.FIRST_EVEN_ODD}
             />
           </form>
         </div>
@@ -113,7 +138,5 @@ const HeaderFooterOptionsModal = ({ headerToTop, footerToBottom, layout, onHeade
     </div>
   );
 };
-
-HeaderFooterOptionsModal.propTypes = propTypes;
 
 export default HeaderFooterOptionsModal;

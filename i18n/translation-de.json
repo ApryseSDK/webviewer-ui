@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Abschnittsumbruch einfügen und auf der nächsten Seite beginnen",
     "sectionBreakContinuous": "Abschnittsumbruch - Fortlaufend",
     "sectionBreakContinuousDescription": "Abschnittsumbruch einfügen und auf derselben Seite fortfahren",
-    "header": {
-      "0": "Kopfbereich",
-      "1": "Kopfzeile der ersten Seite",
-      "2": "Gerader Seitenkopf",
-      "3": "Kopfzeile für ungerade Seiten"
-    },
-    "footer": {
-      "0": "Fußzeile",
-      "1": "Fußzeile der ersten Seite",
-      "2": "Gerader Seitenfuß",
-      "3": "Fußzeile für ungerade Seiten"
-    },
+    "header": "Kopfbereich",
+    "footer": "Fußzeile",
     "options": "Optionen",
     "pageOptions": "Seitenoptionen",
     "removeHeader": "Kopfzeile entfernen",

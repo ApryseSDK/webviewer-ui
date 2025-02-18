@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Chèn ngắt phần và bắt đầu ở trang tiếp theo",
     "sectionBreakContinuous": "Ngắt phần - Liên tục",
     "sectionBreakContinuousDescription": "Chèn ngắt phần và tiếp tục trên cùng một trang",
-    "header": {
-      "0": "Tiêu đề",
-      "1": "Tiêu đề trang đầu tiên",
-      "2": "Tiêu đề trang chẵn",
-      "3": "Tiêu đề trang lẻ"
-    },
-    "footer": {
-      "0": "Chân trang",
-      "1": "Trang đầu tiên Chân trang",
-      "2": "Ngay cả chân trang",
-      "3": "Chân trang lẻ"
-    },
+    "header": "Tiêu đề",
+    "footer": "Chân trang",
     "options": "Tùy chọn",
     "pageOptions": "Tùy chọn trang",
     "removeHeader": "Xóa Tiêu đề",

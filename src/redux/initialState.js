@@ -23,7 +23,7 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -2252,8 +2252,7 @@ export default {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING,
-    stream: EditingStreamType.BODY,
+    editMode: OfficeEditorEditMode.EDITING
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',

@@ -23,17 +23,12 @@ function LayersPanelRedux(props) {
   useEffect(() => {
     const documentViewer = core.getDocumentViewer();
     const doc = core.getDocument();
-
     if (doc) {
       doc.setLayersArray(layers);
       if (core.isFullPDFEnabled()) {
         toggleAnnotationsVisibility(layers).then(() => {
           documentViewer.refreshAll();
           documentViewer.updateView();
-
-          documentViewer.getAnnotationManager().drawAnnotationsFromList(
-            documentViewer.getAnnotationManager().getAnnotationsList()
-          );
         });
       } else {
         documentViewer.refreshAll();

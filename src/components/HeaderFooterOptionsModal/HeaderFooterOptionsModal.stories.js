@@ -22,7 +22,7 @@ const store = configureStore({ reducer: () => initialState });
 export function Basic() {
   return (
     <Provider store={store}>
-      <HeaderFooterOptionsModal headerToTop='1.27' footerToBottom='1.27' layout='no_selection' />
+      <HeaderFooterOptionsModal />
     </Provider>
   );
 }

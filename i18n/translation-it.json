@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Inserisci interruzione di sezione e inizia nella pagina successiva",
     "sectionBreakContinuous": "Interruzione di sezione - Continua",
     "sectionBreakContinuousDescription": "Inserisci interruzione di sezione e continua sulla stessa pagina",
-    "header": {
-      "0": "Intestazione",
-      "1": "Intestazione della prima pagina",
-      "2": "Intestazione di pagina pari",
-      "3": "Intestazione di pagina dispari"
-    },
-    "footer": {
-      "0": "Piè di pagina",
-      "1": "Piè di pagina della prima pagina",
-      "2": "Piè di pagina pari",
-      "3": "Piè di pagina delle pagine dispari"
-    },
+    "header": "Intestazione",
+    "footer": "Piè di pagina",
     "options": "Opzioni",
     "pageOptions": "Opzioni pagina",
     "removeHeader": "Rimuovi intestazione",

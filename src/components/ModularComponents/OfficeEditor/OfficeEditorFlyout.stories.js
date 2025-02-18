@@ -8,7 +8,7 @@ import { expect } from '@storybook/test';
 
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
-import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 
 export default {
@@ -157,8 +157,7 @@ const initialState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING,
-    stream: EditingStreamType.BODY,
+    editMode: OfficeEditorEditMode.EDITING
   },
   viewer: {
     isOfficeEditorMode: true,

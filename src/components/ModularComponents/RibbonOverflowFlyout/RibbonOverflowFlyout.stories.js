@@ -5,7 +5,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import Flyout from '../Flyout/Flyout';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
-import { oePartialState } from 'src/helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/RibbonGroup',
@@ -61,7 +60,6 @@ const translatedItem2 = {
 };
 
 const initialState = {
-  ...oePartialState,
   viewer: {
     modularComponents: {},
     customHeadersAdditionalProperties: {},

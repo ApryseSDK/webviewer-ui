@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Infoga avsnittsbrytning och börja på nästa sida",
     "sectionBreakContinuous": "Sektionsavbrott - Kontinuerlig",
     "sectionBreakContinuousDescription": "Infoga avsnittsbrytning och fortsätt på samma sida ",
-    "header": {
-      "0": "Rubrik",
-      "1": "Första sidans rubrik",
-      "2": "Jämn sidhuvud",
-      "3": "Udda sidhuvud"
-    },
-    "footer": {
-      "0": "Sidfot",
-      "1": "Första sidans sidfot",
-      "2": "Sidfot på jämn sida",
-      "3": "Sidfot på udda sida"
-    },
+    "header": "Rubrik",
+    "footer": "Sidfot",
     "options": "Alternativ",
     "pageOptions": "Sidalternativ",
     "removeHeader": "Ta bort rubriken",

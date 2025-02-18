@@ -31,11 +31,6 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         editMode: payload.editMode,
       };
-    case 'SET_OFFICE_EDITOR_ACTIVE_STREAM':
-      return {
-        ...state,
-        stream: payload.stream,
-      };
     default:
       return state;
   }

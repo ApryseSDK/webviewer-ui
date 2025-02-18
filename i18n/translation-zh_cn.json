@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "插入分节符并从下一页开始",
     "sectionBreakContinuous": "分节符 - 连续",
     "sectionBreakContinuousDescription": "插入分节符并在同一页继续",
-    "header": {
-      "0": "标头",
-      "1": "首页页眉",
-      "2": "偶数页页眉",
-      "3": "奇数页页眉"
-    },
-    "footer": {
-      "0": "页脚",
-      "1": "首页页脚",
-      "2": "偶数页页脚",
-      "3": "奇数页页脚"
-    },
+    "header": "标头",
+    "footer": "页脚",
     "options": "选项",
     "pageOptions": "页面选项",
     "removeHeader": "移除标题",

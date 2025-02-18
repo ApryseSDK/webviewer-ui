@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "섹션 나누기를 삽입하고 다음 페이지에서 시작하세요",
     "sectionBreakContinuous": "섹션 나누기 - 연속",
     "sectionBreakContinuousDescription": "섹션 나누기를 삽입하고 같은 페이지에서 계속합니다.",
-    "header": {
-      "0": "헤더",
-      "1": "첫 번째 페이지 헤더",
-      "2": "짝수 페이지 헤더",
-      "3": "이상한 페이지 헤더"
-    },
-    "footer": {
-      "0": "보행인",
-      "1": "첫 페이지 바닥글",
-      "2": "짝수 페이지 바닥글",
-      "3": "홀수 페이지 바닥글"
-    },
+    "header": "헤더",
+    "footer": "보행인",
     "options": "옵션",
     "pageOptions": "페이지 옵션",
     "removeHeader": "헤더 제거",

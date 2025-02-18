@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Sectie-einde invoegen en op de volgende pagina beginnen",
     "sectionBreakContinuous": "Sectie-einde - Doorlopend",
     "sectionBreakContinuousDescription": "Sectie-einde invoegen en doorgaan op dezelfde pagina",
-    "header": {
-      "0": "Koptekst",
-      "1": "Koptekst eerste pagina",
-      "2": "Even paginakoptekst",
-      "3": "Oneven paginakoptekst"
-    },
-    "footer": {
-      "0": "Voettekst",
-      "1": "Voettekst eerste pagina",
-      "2": "Voettekst op even pagina's",
-      "3": "Voettekst vreemde pagina"
-    },
+    "header": "Koptekst",
+    "footer": "Voettekst",
     "options": "Opties",
     "pageOptions": "Pagina-opties",
     "removeHeader": "Koptekst verwijderen",

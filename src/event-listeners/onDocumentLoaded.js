@@ -21,7 +21,6 @@ import { defaultPanels } from '../redux/modularComponents';
 import {
   OFFICE_EDITOR_SCOPE,
   OfficeEditorEditMode,
-  EditingStreamType,
   ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
   ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
 } from 'constants/officeEditor';
@@ -253,7 +252,6 @@ export const updatePortfolioAndLayers = (store) => async () => {
 export const configureOfficeEditor = (store) => () => {
   const { getState, dispatch } = store;
   const doc = core.getDocument();
-  const contentSelectTool = core.getTool('OfficeEditorContentSelect');
   const handleEditModeUpdate = (editMode) => {
     const isCustomUIEnabled = getIsCustomUIEnabled(store);
     dispatch(actions.setOfficeEditorEditMode(editMode));
@@ -273,10 +271,6 @@ export const configureOfficeEditor = (store) => () => {
     } else {
       dispatch(actions.closeElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
     }
-  };
-
-  const handleActiveStreamChanged = (stream) => {
-    dispatch(actions.setOfficeEditorActiveStream(stream));
   };
 
   const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
@@ -317,8 +311,6 @@ export const configureOfficeEditor = (store) => () => {
     );
     handleEditModeUpdate(OfficeEditorEditMode.EDITING);
     doc.addEventListener('editModeUpdated', handleEditModeUpdate);
-    handleActiveStreamChanged(EditingStreamType.BODY);
-    contentSelectTool.addEventListener('activeStreamChanged', handleActiveStreamChanged);
     // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
     core.zoomTo(1, 0, 0);
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
@@ -331,7 +323,6 @@ export const configureOfficeEditor = (store) => () => {
     const panels = getIsCustomUIEnabled(store) ? defaultPanels : [];
     dispatch(actions.setGenericPanels(panels));
     doc.removeEventListener('editModeUpdated', handleEditModeUpdate);
-    contentSelectTool.removeEventListener('activeStreamChanged', handleActiveStreamChanged);
     hotkeys.setScope(defaultHotkeysScope);
     dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));

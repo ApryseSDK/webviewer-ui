@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Wstaw podział sekcji i zacznij na następnej stronie",
     "sectionBreakContinuous": "Podział sekcji - ciągły",
     "sectionBreakContinuousDescription": "Wstaw podział sekcji i kontynuuj na tej samej stronie",
-    "header": {
-      "0": "Chodnikowiec",
-      "1": "Nagłówek pierwszej strony",
-      "2": "Nagłówek strony parzystej",
-      "3": "Nagłówek strony nieparzystej"
-    },
-    "footer": {
-      "0": "Stopka",
-      "1": "Stopka pierwszej strony",
-      "2": "Stopka strony parzystej",
-      "3": "Stopka strony nieparzystej"
-    },
+    "header": "Chodnikowiec",
+    "footer": "Stopka",
     "options": "Opcje",
     "pageOptions": "Opcje strony",
     "removeHeader": "Usuń nagłówek",

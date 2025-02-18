@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Insert section break and start on next page",
     "sectionBreakContinuous": "Section Break - Continuous",
     "sectionBreakContinuousDescription": "Insert section break and continue on the same page ",
-    "header": {
-      "0": "Header",
-      "1": "First Page Header",
-      "2": "Even Page Header",
-      "3": "Odd Page Header"
-    },
-    "footer": {
-      "0": "Footer",
-      "1": "First Page Footer",
-      "2": "Even Page Footer",
-      "3": "Odd Page Footer"
-    },
+    "header": "Header",
+    "footer": "Footer",
     "options": "Options",
     "pageOptions": "Page Options",
     "removeHeader": "Remove Header",

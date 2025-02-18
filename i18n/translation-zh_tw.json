@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "插入分節符號並從下一頁開始",
     "sectionBreakContinuous": "分節符號 - 連續",
     "sectionBreakContinuousDescription": "插入分節符號並在同一頁上繼續 ",
-    "header": {
-      "0": "標頭",
-      "1": "首頁頁眉",
-      "2": "偶數頁頁眉",
-      "3": "奇數頁頁眉"
-    },
-    "footer": {
-      "0": "頁尾",
-      "1": "首頁頁腳",
-      "2": "偶數頁頁腳",
-      "3": "奇數頁頁腳"
-    },
+    "header": "標頭",
+    "footer": "頁尾",
     "options": "選項",
     "pageOptions": "頁面選項",
     "removeHeader": "刪除標題",

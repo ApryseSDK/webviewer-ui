@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Introduceți pauză de secțiune și începeți pe pagina următoare",
     "sectionBreakContinuous": "Pauza de sectiune - Continuu",
     "sectionBreakContinuousDescription": "Introduceți pauză de secțiune și continuați pe aceeași pagină ",
-    "header": {
-      "0": "Antet",
-      "1": "Antet prima pagină",
-      "2": "Chiar și antetul paginii",
-      "3": "Antet de pagină impară"
-    },
-    "footer": {
-      "0": "Subsol",
-      "1": "Subsolul primei pagini",
-      "2": "Subsolul paginii chiar",
-      "3": "Subsolul paginii impare"
-    },
+    "header": "Antet",
+    "footer": "Subsol",
     "options": "Opțiuni",
     "pageOptions": "Opțiuni de pagină",
     "removeHeader": "Eliminați antetul",

@@ -134,10 +134,6 @@ export const createEmbeddedPrintPages = async (document, annotManager, pagesToPr
   if (printingOptions?.isCurrentView) {
     result = await cropDocumentToCurrentView(result);
     pagesArray = getPageArray(result.getPageCount());
-
-    // Flatten the cropped document so that annotations are clipped by the cropbox
-    const buf = await result.getFileData({ xfdfString: xfdf, flatten: true });
-    result = await window.Core.createDocument(buf, { extension: 'pdf' });
   }
 
   if (watermarkModalOptions) {

@@ -53,7 +53,6 @@ import useOnAnnotationCreateSignatureToolMode from 'hooks/useOnAnnotationCreateS
 import useOnAnnotationCreateRubberStampToolMode from 'hooks/useOnAnnotationCreateRubberStampToolMode';
 import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
 import useOnHeaderFooterUpdate from 'src/hooks/useOnHeaderFooterUpdate';
-import useOnHeaderFooterOptionsModalOpen from 'src/hooks/useOnHeaderFooterOptionsModalOpen';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
@@ -648,10 +647,7 @@ const App = ({ removeEventHandlers }) => {
               Component={LazyLoadComponents.HeaderFooterControlsOverlay}
               dataElement={DataElements.HEADER_FOOTER_CONTROLS_OVERLAY}
               onOpenHook={useOnHeaderFooterUpdate}/>
-            <LazyLoadWrapper
-              Component={LazyLoadComponents.HeaderFooterOptionsModal}
-              dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
-              onOpenHook={useOnHeaderFooterOptionsModalOpen}/>
+            <LazyLoadWrapper Component={LazyLoadComponents.HeaderFooterOptionsModal} dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}/>
           </>
         )}
       </div>

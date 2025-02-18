@@ -12,6 +12,7 @@ export default {
 const initialState = OEModularUIMockState;
 
 export const Basic = () => {
+  initialState.officeEditor.cursorProperties.locationProperties.inTable = false;
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex' }}>
@@ -21,19 +22,8 @@ export const Basic = () => {
   );
 };
 
-export const DisabledInTable = () => {
+export const Disabled = () => {
   initialState.officeEditor.cursorProperties.locationProperties.inTable = true;
-  return (
-    <Provider store={configureStore({ reducer: () => initialState })}>
-      <div style={{ display: 'flex' }}>
-        <PageSectionBreakDropdown />
-      </div>
-    </Provider>
-  );
-};
-
-export const DisabledInHeader = () => {
-  initialState.officeEditor.stream = 'header';
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <div style={{ display: 'flex' }}>

@@ -1314,18 +1314,8 @@
     "sectionBreakNextPageDescription": "Szúrja be a szakasztörést, és kezdje a következő oldalon",
     "sectionBreakContinuous": "Szakasz szünet - Folyamatos",
     "sectionBreakContinuousDescription": "Szúrja be a szakasztörést, és folytassa ugyanazon az oldalon ",
-    "header": {
-      "0": "Fejléc",
-      "1": "Első oldal fejléce",
-      "2": "Páros oldalfejléc",
-      "3": "Páratlan oldal fejléce"
-    },
-    "footer": {
-      "0": "Lábléc",
-      "1": "Első oldal lábléce",
-      "2": "Még az oldalláb is",
-      "3": "Páratlan oldal lábléce"
-    },
+    "header": "Fejléc",
+    "footer": "Lábléc",
     "options": "Opciók",
     "pageOptions": "Oldalbeállítások",
     "removeHeader": "Fejléc eltávolítása",
