@@ -5,12 +5,11 @@ import actions from 'actions';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { workerTypes } from 'constants/types';
-
 import core from 'core';
 
-import { creatingPages } from 'helpers/rasterPrint';
+import { createRasterizedPrintPages } from 'helpers/rasterPrint';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
+import { processEmbeddedPrintOptions, canEmbedPrint, embeddedPrintNoneSupportedOptions, printEmbeddedPDF } from 'helpers/embeddedPrint';
 
 import getRootNode from './getRootNode';
 
@@ -255,6 +254,19 @@ const printDocument = (isNativeSafariBrowser) => {
     window.print();
   }
 };
+const pagesToPrintPageArray = (pagesToPrint) => {
+  const pageCount = core.getTotalPages();
+  return pagesToPrint ?? Array.from({ length: pageCount }, (_, i) => (i + 1));
+};
+
+const serverPrint = (bbURLPromise) => {
+  const printPage = window.open('', '_blank');
+  // eslint-disable-next-line no-unsanitized/method
+  printPage.document.write(i18n.t('message.preparingToPrint'));
+  bbURLPromise.then((result) => {
+    printPage.location.href = result.url;
+  });
+};
 
 export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
   const {
@@ -268,37 +280,30 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
     isPrintCurrentView,
     printedNoteDateFormat: dateFormat,
     isGrayscale = false,
-    timezone
+    timezone,
+    pagesToPrint,
   } = options;
-  let { pagesToPrint } = options;
 
-  if (!core.getDocument()) {
+  const document = core.getDocument();
+  const annotManager = core.getAnnotationManager();
+
+  if (!document) {
     return;
   }
 
-  const documentType = core.getDocument().getType();
+  if (!printWithoutModal) {
+    dispatch(actions.openElements(['printModal']));
+    return;
+  }
+  const pageArray = isPrintCurrentView ? [core.getDocumentViewer().getCurrentPage()] : pagesToPrintPageArray(pagesToPrint);
+  options.pagesToPrint = pageArray;
   const bbURLPromise = core.getPrintablePDF();
-
   if (!isGrayscale && bbURLPromise && !useClientSidePrint) {
-    const printPage = window.open('', '_blank');
-    // eslint-disable-next-line no-unsanitized/method
-    printPage.document.write(i18n.t('message.preparingToPrint'));
-    bbURLPromise.then((result) => {
-      printPage.location.href = result.url;
-    });
-  } else if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
-    dispatch(actions.openElement('printModal'));
+    serverPrint(bbURLPromise);
+  } else if (canEmbedPrint(isEmbedPrintSupported)) {
+    embeddedPrintNoneSupportedOptions(options);
+    printEmbeddedPDF(await processEmbeddedPrintOptions(options, document, annotManager));
   } else if (includeAnnotations || includeComments || printWithoutModal) {
-    if (!pagesToPrint) {
-      pagesToPrint = [];
-      for (let i = 1; i <= core.getTotalPages(); i++) {
-        pagesToPrint.push(i);
-      }
-    }
-    if (isPrintCurrentView) {
-      pagesToPrint = [core.getDocumentViewer().getCurrentPage()];
-    }
-
     const printOptions = {
       includeComments,
       includeAnnotations,
@@ -313,8 +318,8 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
       createCanvases: false,
       isGrayscale
     };
-    const createPages = creatingPages(
-      pagesToPrint,
+    const createPages = createRasterizedPrintPages(
+      pageArray,
       printOptions,
       onProgress,
     );
@@ -325,7 +330,5 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
       .catch((e) => {
         console.error(e);
       });
-  } else {
-    dispatch(actions.openElement('printModal'));
   }
 };

@@ -91,6 +91,7 @@ class TabPanel {
     this.dataElement = dataElement;
     this.panelsList = filteredPanelList;
     this.location = location || 'left';
+    this.type = ITEM_TYPE.TABS_PANEL;
   }
 }
 

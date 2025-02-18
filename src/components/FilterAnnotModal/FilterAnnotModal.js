@@ -24,14 +24,17 @@ import './FilterAnnotModal.scss';
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters, isMeasurementAnnotationFilterEnabled] = useSelector((state) => [
+  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters,
+    isMeasurementAnnotationFilterEnabled, customNoteFilter] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),
     selectors.isElementOpen(state, DataElements.FILTER_MODAL),
     selectors.getColorMap(state),
     selectors.getSelectedTab(state, TABS_ID),
     selectors.getAnnotationFilters(state),
     selectors.getIsMeasurementAnnotationFilterEnabled(state),
+    selectors.getCustomNoteFilter(state),
   ]);
+
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
@@ -118,7 +121,7 @@ const FilterAnnotModal = () => {
       }
       return type && author && color && status;
     };
-    dispatch(actions.setCustomNoteFilter(newFilter));
+    dispatch(actions.setInternalNoteFilter(newFilter));
     dispatch(actions.setAnnotationFilters({
       isDocumentFilterActive,
       includeReplies: checkRepliesForAuthorFilter,
@@ -196,7 +199,15 @@ const FilterAnnotModal = () => {
   }, []);
 
   useEffect(() => {
-    const annotLists = core.getDocumentViewers().map((documentViewer) => documentViewer.getAnnotationManager().getAnnotationsList());
+    let annotLists = core.getDocumentViewers().map((documentViewer) => documentViewer.getAnnotationManager().getAnnotationsList());
+
+    if (customNoteFilter) {
+      const filteredList = (annotLists[0]) ? annotLists[0].filter(customNoteFilter): [];
+      annotLists[0] = filteredList;
+      const filteredList2 = (annotLists[1]) ? annotLists[1].filter(customNoteFilter) : [];
+      annotLists[1] = filteredList2;
+    }
+
     const annots = [].concat(...annotLists).filter((annot) => !annot.Hidden);
     // set is a great way to remove any duplicate additions and ensure the unique items are present
     // the only gotcha that it should not be used by state since not always it will trigger a rerender

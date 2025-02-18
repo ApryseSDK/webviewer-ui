@@ -23,8 +23,8 @@ function getCurrentViewRect(pageNumber) {
     const instanceRect = getInstanceNode().getBoundingClientRect();
     innerWidth = instanceRect.width;
     innerHeight = instanceRect.height;
-    containerScrollLeft = instanceRect.x + containerElement.scrollLeft;
-    documentElementOffsetLeft = instanceRect.x + documentElement.offsetLeft;
+    containerScrollLeft = containerElement.scrollLeft;
+    documentElementOffsetLeft = documentElement.offsetLeft;
   }
 
   const coordinates = [];

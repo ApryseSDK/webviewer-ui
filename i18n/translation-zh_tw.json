@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "添加段落",
     "add": "添加",
+    "addSheet": "新增工作表",
     "apply": "套用",
     "applyAll": "全部套用",
     "calendar": "日曆",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "附件",
-    "leftPanel": "面板",
+    "leftPanel": "左側面板",
     "toolsHeader": "工具類",
     "searchOverlay": "搜尋",
     "searchPanel": "搜索",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "安全警告",
       "message": "該文檔正在嘗試連接到：\n\n{{- uri}}\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "編輯警告",
+      "message": "該工作表名稱已存在。請輸入另一個名稱。"
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "編輯警告",
+      "message": "該工作表名稱不能為空。"
+    },
+    "sheetTabDeleteMessage": {
+      "title": "編輯警告",
+      "message": "您確定要刪除此工作表嗎？"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "添加：",
     "editing": "編輯",
     "editingDescription": "編輯文檔",
-    "pageBreak": "分頁符",
     "reviewing": "審閱",
     "reviewingDescription": "提供建議",
     "viewOnly": "只讀",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "您的瀏覽器不支援貼上。相反，您可以使用鍵盤快捷鍵",
     "pastingWithoutFormatTitle": "不含格式貼上不可用",
     "pastingWithoutFormatMessage": "您的瀏覽器不支援不含格式的貼上。相反，您可以使用鍵盤快捷鍵",
+    "breaks": "休息時間",
+    "pageBreak": "分頁符",
+    "pageBreakDescription": "結束頁面並從新頁面開始",
+    "sectionBreakNextPage": "分節符 - 下一頁",
+    "sectionBreakNextPageDescription": "插入分節符號並從下一頁開始",
+    "sectionBreakContinuous": "分節符號 - 連續",
+    "sectionBreakContinuousDescription": "插入分節符號並在同一頁上繼續 ",
+    "header": {
+      "0": "標頭",
+      "1": "首頁頁眉",
+      "2": "偶數頁頁眉",
+      "3": "奇數頁頁眉"
+    },
+    "footer": {
+      "0": "頁尾",
+      "1": "首頁頁腳",
+      "2": "偶數頁頁腳",
+      "3": "奇數頁頁腳"
+    },
+    "options": "選項",
+    "pageOptions": "頁面選項",
+    "removeHeader": "刪除標題",
+    "removeFooter": "刪除頁腳",
+    "headerFooterOptionsModal": {
+      "title": "頁首和頁尾格式",
+      "margins": "邊距",
+      "headerFromTop": "標題從頂部",
+      "footerFromBottom": "頁腳從底部開始",
+      "layouts": {
+        "layout": "佈局",
+        "noSelection": "無選擇",
+        "differentFirstPage": "不同的首頁",
+        "differentEvenOddPages": "不同的偶數頁和奇數頁",
+        "differentFirstEvenOddPages": "不同的首頁、偶數頁和奇數頁"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "字體家族"
     }
+  },
+  "sheetEditor": {
+    "editing": "編輯",
+    "viewOnly": "觀看",
+    "editingDescription": "編輯文檔",
+    "viewOnlyDescription": "僅供查看",
+    "bold": "大膽的",
+    "italic": "斜體",
+    "underline": "強調",
+    "strikethrough": "刪除線",
+    "cellBorderStyle": "邊框樣式",
+    "merge": "合併",
+    "unmerge": "取消合併",
+    "cellFormat": "單元格格式",
+    "automatic": "自動的",
+    "plainText": "純文字",
+    "increaseDecimal": "增加小數點",
+    "decreaseDecimal": "減少小數",
+    "number": "數位",
+    "percent": "百分比",
+    "accounting": "會計",
+    "financial": "金融的",
+    "currency": "貨幣",
+    "currencyRounded": "貨幣四捨五入",
+    "calendar": "日期",
+    "clockHour": "時間",
+    "calendarTime": "日期時間",
+    "formatAsCurrency": "格式為貨幣",
+    "formatAsPercent": "格式為百分比",
+    "formatAsDecDecimal": "減少小數點",
+    "formatAsIncDecimal": "增加小數點",
+    "fontColor": "字體顏色",
+    "cellBackgroundColor": "單元格背景顏色",
+    "textAlignment": "文字對齊",
+    "alignLeft": "左對齊",
+    "alignCenter": "居中對齊",
+    "alignRight": "右對齊",
+    "alignTop": "頂部對齊",
+    "alignMiddle": "中間對齊",
+    "alignBottom": "對齊底部",
+    "cellAdjustment": "細胞調整",
+    "insertColLeft": "向左插入列",
+    "columnInsertLeft": "向左插入列",
+    "columnInsertRight": "向右插入列",
+    "rowInsertTop": "在上方插入行",
+    "rowInsertBottom": "在下面插入行",
+    "columnInsertShiftDown": "插入單元格並向下移動",
+    "columnInsertShiftRight": "插入單元格並右移",
+    "columnDelete": "刪除列",
+    "rowDelete": "刪除行",
+    "columnDeleteShiftUp": "刪除單元格並上移",
+    "columnDeleteShiftLeft": "刪除單元格並左移"
   },
   "insertPageModal": {
     "title": "插入新頁面",
@@ -1480,6 +1580,24 @@
       "rightHeader": "右標題",
       "bottomHeader": "底部標題",
       "documentContent": "文件內容"
-    }
+    },
+    "label": "無障礙",
+    "accessibilityMode": "無障礙模式",
+    "skipTo": "跳至",
+    "document": "文件",
+    "notes": "筆記"
+  },
+  "formulaBar": {
+    "label": "方程式吧",
+    "range": "範圍",
+    "formulas": "公式",
+    "sumif": "範圍內的條件總和",
+    "sumsq": "傳回範圍的平方和",
+    "sum": "將某個範圍內的所有數字相加",
+    "asinh": "傳回數字的反雙曲正弦值",
+    "acos": "傳回數字的反餘弦（以弧度為單位）",
+    "cosh": "傳回數字的雙曲餘弦",
+    "iseven": "檢查數字是否為偶數",
+    "isodd": "檢查數字是否為奇數"
   }
 }

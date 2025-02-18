@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import ViewControlsFlyout from './ViewControlsFlyout';
 import Flyout from '../Flyout';
 
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 
@@ -78,6 +78,7 @@ const toggleCompareModeButton = {
 const divider = 'divider';
 
 const initialState = {
+  ...oePartialState,
   viewer: {
     modularComponents: {},
     activeDocumentViewerKey: 1,

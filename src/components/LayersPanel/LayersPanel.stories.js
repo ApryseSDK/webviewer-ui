@@ -3,6 +3,7 @@ import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import { userEvent, within, waitFor, expect } from '@storybook/test';
+import core from 'core';
 
 export default {
   title: 'Components/LayersPanel',
@@ -25,6 +26,13 @@ const layers = [
 ];
 
 export function Basic(args, context) {
+  const documentViewer = core.getDocumentViewer();
+  const annotationManager = documentViewer.getAnnotationManager();
+  annotationManager.drawAnnotationsFromList = () => {};
+  documentViewer.getAnnotationManager = () => annotationManager;
+
+  core.getDocumentViewer = () => documentViewer;
+
   const stateWithLayersPanel = {
     ...initialState,
     viewer: {
@@ -45,17 +53,9 @@ export function Basic(args, context) {
         ...initialState.viewer.disabledElements,
         'layersPanel': { disabled: false, priority: 3 },
       },
-      lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
-        'annotateToolsGroupedItems': 'AnnotationCreateTextHighlight',
-      },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
       activeToolName: 'AnnotationCreateTextHighlight',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateTextHighlight',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
-      },
       fadePageNavigationComponent: true,
       activeTheme: context.globals.theme,
     },
@@ -133,10 +133,6 @@ export const RightSide = (args, context) => {
         'layersPanel': { disabled: false, priority: 3 },
       },
       activeCustomRibbon: 'toolbarGroup-View',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationEdit',
-        group: ['groupedLeftPanelItems'],
-      },
       activeTheme: context.globals.theme,
     },
     document: {

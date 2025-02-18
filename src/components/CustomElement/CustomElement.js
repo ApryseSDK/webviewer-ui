@@ -16,6 +16,7 @@ const propTypes = {
   renderArguments: PropTypes.array,
   mediaQueryClassName: PropTypes.string,
   title: PropTypes.string,
+  style: PropTypes.object,
 };
 
 const CustomElement = ({
@@ -26,6 +27,7 @@ const CustomElement = ({
   renderArguments,
   mediaQueryClassName,
   title,
+  style,
 }) => {
   const [reactComponent, setReactComponent] = useState(null);
   const wrapperRef = useRef();
@@ -81,7 +83,7 @@ const CustomElement = ({
       })}
       ref={wrapperRef}
       data-element={dataElement}
-      style={{ display }}
+      style={{ display, ...style }}
     >
       {reactComponent}
     </div>

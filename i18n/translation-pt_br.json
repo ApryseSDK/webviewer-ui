@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Adicionar parágrafo",
     "add": "Adicionar",
+    "addSheet": "Adicionar planilha",
     "apply": "Aplicar",
     "applyAll": "Aplicar todos",
     "calendar": "Calendário",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Anexos",
-    "leftPanel": "Painel",
+    "leftPanel": "Painel esquerdo",
     "toolsHeader": "Ferramentas",
     "searchOverlay": "Procurar",
     "searchPanel": "Procurar",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Aviso de segurança",
       "message": "Este documento está tentando se conectar a:\n\n{{- uri}}\n\n Se você confia neste documento, clique em Confirmar para abri-lo."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Aviso de edição",
+      "message": "Este nome de planilha já existe. Por favor, insira outro nome."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Aviso de edição",
+      "message": "Este nome de planilha não pode estar vazio."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Aviso de edição",
+      "message": "Tem certeza de que deseja excluir esta planilha?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Adicionado:",
     "editing": "Edição",
     "editingDescription": "Editar documento",
-    "pageBreak": "Quebra de página",
     "reviewing": "Revendo",
     "reviewingDescription": "Dar sugestões",
     "viewOnly": "Ver somente",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Colar não é compatível com seu navegador. Em vez disso, você pode usar um atalho de teclado",
     "pastingWithoutFormatTitle": "Colar sem formatação não disponível",
     "pastingWithoutFormatMessage": "Colar sem formatação não é compatível com seu navegador. Em vez disso, você pode usar um atalho de teclado",
+    "breaks": "Pausas",
+    "pageBreak": "Quebra de página",
+    "pageBreakDescription": "Fim da página e início de uma nova página",
+    "sectionBreakNextPage": "Quebra de Seção - Próxima Página",
+    "sectionBreakNextPageDescription": "Inserir quebra de seção e começar na próxima página",
+    "sectionBreakContinuous": "Quebra de Seção - Contínua",
+    "sectionBreakContinuousDescription": "Insira uma quebra de seção e continue na mesma página",
+    "header": {
+      "0": "Cabeçalho",
+      "1": "Cabeçalho da primeira página",
+      "2": "Cabeçalho de página par",
+      "3": "Cabeçalho de página ímpar"
+    },
+    "footer": {
+      "0": "Rodapé",
+      "1": "Rodapé da primeira página",
+      "2": "Rodapé de página par",
+      "3": "Rodapé de página ímpar"
+    },
+    "options": "Opções",
+    "pageOptions": "Opções de página",
+    "removeHeader": "Remover Cabeçalho",
+    "removeFooter": "Remover rodapé",
+    "headerFooterOptionsModal": {
+      "title": "Formato de cabeçalho e rodapé",
+      "margins": "Margens",
+      "headerFromTop": "Cabeçalho do topo",
+      "footerFromBottom": "Rodapé de baixo",
+      "layouts": {
+        "layout": "Disposição",
+        "noSelection": "Nenhuma seleção",
+        "differentFirstPage": "Primeira página diferente",
+        "differentEvenOddPages": "Diferentes páginas pares e ímpares",
+        "differentFirstEvenOddPages": "Primeiras páginas diferentes, pares e ímpares"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Família de fontes"
     }
+  },
+  "sheetEditor": {
+    "editing": "Edição",
+    "viewOnly": "Visualização",
+    "editingDescription": "Editar documento",
+    "viewOnlyDescription": "Somente visualização",
+    "bold": "Audacioso",
+    "italic": "itálico",
+    "underline": "Sublinhado",
+    "strikethrough": "Tachado",
+    "cellBorderStyle": "Estilo de Borda",
+    "merge": "Mesclar",
+    "unmerge": "Desfazer mesclagem",
+    "cellFormat": "Formato de célula",
+    "automatic": "Automático",
+    "plainText": "Texto simples",
+    "increaseDecimal": "Aumentar decimal",
+    "decreaseDecimal": "Diminuir decimal",
+    "number": "Número",
+    "percent": "Por cento",
+    "accounting": "Contabilidade",
+    "financial": "Financeiro",
+    "currency": "Moeda",
+    "currencyRounded": "Moeda arredondada",
+    "calendar": "Data",
+    "clockHour": "Tempo",
+    "calendarTime": "Data e hora",
+    "formatAsCurrency": "Formatar como moeda",
+    "formatAsPercent": "Formato como porcentagem",
+    "formatAsDecDecimal": "Diminuir ponto decimal",
+    "formatAsIncDecimal": "Aumentar ponto decimal",
+    "fontColor": "Cor da fonte",
+    "cellBackgroundColor": "Cor de fundo da célula",
+    "textAlignment": "Alinhamento de texto",
+    "alignLeft": "Alinhar à esquerda",
+    "alignCenter": "Alinhar centro",
+    "alignRight": "Alinhar à direita",
+    "alignTop": "Alinhar topo",
+    "alignMiddle": "Alinhar no meio",
+    "alignBottom": "Alinhar a parte inferior",
+    "cellAdjustment": "Ajuste de célula",
+    "insertColLeft": "Inserir coluna à esquerda",
+    "columnInsertLeft": "Inserir coluna à esquerda",
+    "columnInsertRight": "Inserir coluna à direita",
+    "rowInsertTop": "Inserir linha acima",
+    "rowInsertBottom": "Inserir linha abaixo",
+    "columnInsertShiftDown": "Inserir células e deslocar para baixo",
+    "columnInsertShiftRight": "Inserir células e deslocar para a direita",
+    "columnDelete": "Excluir coluna",
+    "rowDelete": "Excluir linha",
+    "columnDeleteShiftUp": "Excluir células e deslocar para cima",
+    "columnDeleteShiftLeft": "Excluir células e deslocar para a esquerda"
   },
   "insertPageModal": {
     "title": "Inserir nova página",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Cabeçalho direito",
       "bottomHeader": "Cabeçalho inferior",
       "documentContent": "Conteúdo do documento"
-    }
+    },
+    "label": "Acessibilidade",
+    "accessibilityMode": "Modo de acessibilidade",
+    "skipTo": "Pular para",
+    "document": "Documento",
+    "notes": "Notas"
+  },
+  "formulaBar": {
+    "label": "Barra de Fórmula",
+    "range": "Faixa",
+    "formulas": "Fórmulas",
+    "sumif": "Uma soma condicional em um intervalo",
+    "sumsq": "Retorna a soma dos quadrados de um intervalo",
+    "sum": "Adiciona todos os números em um intervalo",
+    "asinh": "Retorna o seno hiperbólico inverso de um número",
+    "acos": "Retorna o arco cosseno de um número, em radianos",
+    "cosh": "Retorna o cosseno hiperbólico de um número",
+    "iseven": "Verifica se um número é par",
+    "isodd": "Verifica se um número é ímpar"
   }
 }

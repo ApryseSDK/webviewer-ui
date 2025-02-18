@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
 import core from 'core';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
@@ -11,18 +11,13 @@ import { STYLE_TOGGLE_OPTIONS } from 'src/constants/officeEditor';
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 const FontStyleToggleButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, styleType } = props;
-  const [
-    isActive,
-  ] = useSelector(
-    (state) => [
-      selectors.isStyleButtonActive(state, styleType),
-    ],
-    shallowEqual,
-  );
+  const { isFlyoutItem, styleType, style, className } = props;
+  const isActive = useSelector((state) => selectors.isStyleButtonActive(state, styleType));
 
   const { dataElement, icon, title } = menuItems[`${styleType}Button`];
 
@@ -47,6 +42,8 @@ const FontStyleToggleButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isActive}
+          style={style}
+          className={className}
         />
       )
   );

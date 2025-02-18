@@ -27,6 +27,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
   const formFieldCreationManager = annotManager.getFormFieldCreationManager();
   const measurementManager = documentViewer.getMeasurementManager();
   const accessibleReadingOrderManager = documentViewer.getAccessibleReadingOrderManager();
+  const spreadsheetEditorManager = documentViewer.getSpreadsheetEditorManager();
 
   return {
     cursorPropertiesUpdated: documentViewer,
@@ -68,6 +69,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     zoomUpdated: documentViewer,
     pageNumberUpdated: documentViewer,
     pagesUpdated: documentViewer,
+    visiblePagesChanged: documentViewer,
     'fitModeUpdated.fitbutton': documentViewer,
     [Events.COMPARE_ANNOTATIONS_LOADED]: documentViewer,
     historyChanged: historyManager,
@@ -107,5 +109,6 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     accessibleReadingOrderModeEnded: accessibleReadingOrderManager,
     accessibleReadingOrderModeNoStructure: accessibleReadingOrderManager,
     userBookmarksChanged: documentViewer,
+    selectionChanged: spreadsheetEditorManager,
   };
 };

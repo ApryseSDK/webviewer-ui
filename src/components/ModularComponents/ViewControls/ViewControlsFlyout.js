@@ -1,6 +1,6 @@
 import displayModeObjects from 'constants/displayModeObjects';
 import core from 'core';
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useSelector, useStore, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
@@ -8,6 +8,7 @@ import actions from 'actions';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import { isIE11, isIOS, isIOSFullScreenSupported } from 'helpers/device';
 import DataElements from 'constants/dataElement';
+import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 
 const ViewControlsFlyout = () => {
   const store = useStore();
@@ -23,6 +24,8 @@ const ViewControlsFlyout = () => {
   const isMultiTab = useSelector((state) => selectors.getIsMultiTab(state));
   const isMultiViewerModeAvailable = useSelector(selectors.getIsMultiViewerModeAvailable);
   const currentFlyout = useSelector((state) => selectors.getFlyout(state, DataElements.VIEW_CONTROLS_FLYOUT));
+  const isAccessibleMode = useSelector(selectors.isAccessibleMode);
+  const shouldAddA11yContentToDOM = useSelector(selectors.shouldAddA11yContentToDOM);
 
   const totalPageThreshold = 1000;
   let isPageTransitionEnabled = totalPages < totalPageThreshold;
@@ -189,6 +192,22 @@ const ViewControlsFlyout = () => {
       viewControlsFlyoutItems.push(fullScreenButton);
     }
 
+    if (isAccessibleMode) {
+      const accessibilityLabel = 'accessibility.label';
+      const toggleAccessibilityModeButton = {
+        icon: 'icon-accessibility-mode',
+        label: 'accessibility.accessibilityMode',
+        title: 'accessibility.accessibilityMode',
+        onClick: () => {
+          dispatch(actions.setShouldAddA11yContentToDOM(!shouldAddA11yContentToDOM));
+        },
+        dataElement: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+        isActive: shouldAddA11yContentToDOM
+      };
+      const accessibilityElements = [divider, accessibilityLabel, toggleAccessibilityModeButton];
+      viewControlsFlyoutItems = [...viewControlsFlyoutItems, ...accessibilityElements];
+    }
+
     return viewControlsFlyoutItems;
   };
 
@@ -204,7 +223,16 @@ const ViewControlsFlyout = () => {
     } else {
       dispatch(actions.updateFlyout(viewControlsFlyout.dataElement, viewControlsFlyout));
     }
-  }, [isFullScreen, isMultiViewerModeAvailable, isMultiViewerMode, displayMode, isReaderMode]);
+  }, [isFullScreen, isMultiViewerModeAvailable, isMultiViewerMode, displayMode, isReaderMode, shouldAddA11yContentToDOM]);
+
+  useEffect(() => {
+    const accessibleReadingOrderManager = documentViewer.getAccessibleReadingOrderManager();
+    if (shouldAddA11yContentToDOM) {
+      accessibleReadingOrderManager?.startAccessibleReadingOrderMode();
+    } else {
+      accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
+    }
+  }, [shouldAddA11yContentToDOM]);
 
   if (isDisabled) {
     return;

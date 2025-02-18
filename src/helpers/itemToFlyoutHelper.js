@@ -18,8 +18,9 @@ export const itemToFlyout = (item, {
   children = undefined,
   useOverrideClickOnly = false,
   extraProps = {},
+  skipCheck = false,
 } = {}) => {
-  const itemProps = item.props || item;
+  const itemProps = item.properties || item.props || item;
   const {
     type,
     label,
@@ -32,13 +33,16 @@ export const itemToFlyout = (item, {
   } = itemProps;
 
   const isDisabledItem = itemProps?.dataElement && store && selectors.isElementDisabled(store.getState(), dataElement);
-  if (!itemProps || !type || !Object.values(ITEM_TYPE).includes(type) || isDisabledItem) {
+  if (!skipCheck && (!itemProps || !type || !Object.values(ITEM_TYPE).includes(type) || isDisabledItem)) {
     return null;
   }
 
   if (type === ITEM_TYPE.DIVIDER) {
     return 'divider';
   }
+
+  cleanObject(extraProps);
+  cleanObject(itemProps);
 
   const flyoutItem = {
     label: label || title || (dataElement ? dataElementToLabel(dataElement) : ''),
@@ -53,6 +57,12 @@ export const itemToFlyout = (item, {
   };
 
   switch (type) {
+    case ITEM_TYPE.STATEFUL_BUTTON:
+      return itemProps;
+    case ITEM_TYPE.FLYOUT:
+      delete flyoutItem.items;
+      flyoutItem.children = itemProps.items;
+      break;
     case ITEM_TYPE.BUTTON:
       flyoutItem.className = 'FlyoutButton';
       break;
@@ -79,7 +89,7 @@ export const itemToFlyout = (item, {
       const zoomOptionsList = selectors.getZoomList(store.getState());
       flyoutItem.className = 'ZoomFlyoutMenu';
       flyoutItem.icon = 'icon-magnifying-glass';
-      flyoutItem.children = getZoomFlyoutItems(zoomOptionsList, store.dispatch, 1);
+      flyoutItem.children = getZoomFlyoutItems({ zoomOptionsList, dispatch: store.dispatch, size: 1 });
       break;
     }
     case ITEM_TYPE.RIBBON_GROUP:
@@ -88,6 +98,7 @@ export const itemToFlyout = (item, {
       flyoutItem.children = items;
       break;
     case ITEM_TYPE.GROUPED_ITEMS:
+    case ITEM_TYPE.MODULAR_HEADER:
       flyoutItem.className = 'FlyoutGroupedItems';
       flyoutItem.children = items.map((item) => itemToFlyout(item));
       break;
@@ -98,7 +109,11 @@ export const itemToFlyout = (item, {
       flyoutItem.label = label;
       break;
     case ITEM_TYPE.PRESET_BUTTON: {
-      const { label, dataElement, icon } = menuItems[itemProps.buttonType || itemProps.dataElement];
+      let menuItem = menuItems[itemProps.buttonType];
+      if (!menuItem) {
+        menuItem = menuItems[itemProps.dataElement];
+      }
+      const { label, dataElement, icon } = menuItem;
       flyoutItem.label = label;
       flyoutItem.dataElement = dataElement;
       flyoutItem.icon = icon;
@@ -205,4 +220,12 @@ export const getIconDOMElement = (currentItem, allItems) => {
     return <img className="menu-icon" alt="Flyout item icon" src={iconElement} />;
   }
   return <div className="menu-icon"></div>;
+};
+
+const cleanObject = (object) => {
+  for (const key in object) {
+    if (object[key] === undefined || object[key] === null) {
+      delete object[key];
+    }
+  }
 };

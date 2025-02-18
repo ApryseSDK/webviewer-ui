@@ -13,7 +13,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const NewDocumentButton = React.forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, className, style } = props;
   const isDisabled = !isOfficeEditorMode();
   const dispatch = useDispatch();
 
@@ -35,12 +35,20 @@ const NewDocumentButton = React.forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={handleNewDocumentClick} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.NEW_DOCUMENT, isDisabled, handleNewDocumentClick)
+      getPresetButtonDOM({
+        buttonType: PRESET_BUTTON_TYPES.NEW_DOCUMENT,
+        isDisabled,
+        onClick: handleNewDocumentClick,
+        className,
+        style
+      })
   );
 });
 
 NewDocumentButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object
 };
 NewDocumentButton.displayName = 'NewDocumentButton';
 

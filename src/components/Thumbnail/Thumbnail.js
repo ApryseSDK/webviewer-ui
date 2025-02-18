@@ -360,7 +360,7 @@ const Thumbnail = React.forwardRef((props, ref) => {
         selected: isSelected && isThumbnailSelectingPages,
       })}
       onDragOver={(e) => onDragOver(e, index)}
-      id="Thumbnail-container"
+      id={`Thumbnail-container-${index}`}
       ref={thumbContainerRef}
       onKeyDown={(e) => handleKeyDown(e)}
       onClick={handleClick}

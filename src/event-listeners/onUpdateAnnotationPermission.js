@@ -17,6 +17,7 @@ export default (store) => () => {
     disableFeatures(store)([Feature.Annotating]);
     core.setToolMode(defaultTool);
     dispatch(actions.setActiveToolGroup(''));
+    dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
   } else {
     enableTools(store)();
     if (!isOfficeEditorMode()) {

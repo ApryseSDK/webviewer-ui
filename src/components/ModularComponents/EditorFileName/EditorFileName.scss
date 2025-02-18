@@ -1,0 +1,18 @@
+.input-file-name {
+  width: 150px;
+  height: 32px;
+}
+
+.button-file-name {
+  display: block; // needed in order to show ellipsis
+  width: 150px;
+  text-align: left;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 3px;
+
+  &:hover:not(:disabled) {
+    box-shadow: inset 0 0 0 1px var(--gray-9);
+  }
+}

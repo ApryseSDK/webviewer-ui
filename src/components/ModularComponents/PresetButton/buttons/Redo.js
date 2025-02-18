@@ -6,6 +6,7 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import classNames from 'classnames';
 
 /**
  * A button that performs the redo action.
@@ -13,7 +14,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const RedoButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, dataElement } = props;
+  const { isFlyoutItem, dataElement, style, className } = props;
   const { icon, title } = menuItems.redoButton;
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canRedo = useSelector((state) => selectors.canRedo(state, activeDocumentViewerKey));
@@ -32,13 +33,18 @@ const RedoButton = forwardRef((props, ref) => {
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} disabled={disabled} />
       : (
         <ActionButton
-          className={'PresetButton redo-button'}
+          className={classNames({
+            PresetButton: true,
+            'redo-button': true,
+            [className]: true,
+          })}
           dataElement={dataElement}
           title={title}
           img={icon}
           onClick={handleClick}
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
           disabled={disabled}
+          style={style}
         />
       )
   );
@@ -47,6 +53,8 @@ const RedoButton = forwardRef((props, ref) => {
 RedoButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 RedoButton.displayName = 'RedoButton';
 

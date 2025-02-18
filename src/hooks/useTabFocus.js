@@ -44,7 +44,9 @@ export default function useTabFocus() {
         } else {
           nextElement = getNextFocusableElement(activeElement, 1);
         }
-        const visiblePages = core.getDocumentViewer().getDisplayModeManager().getVisiblePages();
+        const documentViewer = core.getDocumentViewer();
+        const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
+        const visiblePages = displayMode.getVisiblePages();
         const currentPageContainers = visiblePages.map((page) => getRootNode().querySelector(`#pageContainer${page}`));
         const isActiveElementInContainers = currentPageContainers.some((container) => container.contains(document.activeElement));
         // get the correct page if the last selected element was outside of the visible page containers or if the active element is the document

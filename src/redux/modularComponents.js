@@ -428,6 +428,11 @@ const defaultModularComponents = {
     type: 'presetButton',
     buttonType: 'redoButton'
   },
+  toggleAccessibilityModeButton: {
+    dataElement: DataElements.TOGGLE_ACCESSIBILITY_MODE_PRESET_BUTTON,
+    type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+  },
   eraserToolButton: {
     dataElement: 'eraserToolButton',
     type: 'toolButton',

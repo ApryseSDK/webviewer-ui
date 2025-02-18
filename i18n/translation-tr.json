@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Paragraf Ekle",
     "add": "Ekle",
+    "addSheet": "Sayfa Ekle",
     "apply": "Uygulamak",
     "applyAll": "Tümünü uygula",
     "calendar": "Takvim",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "ekler",
-    "leftPanel": "Panel",
+    "leftPanel": "Sol Panel",
     "toolsHeader": "Araçlar",
     "searchOverlay": "Arama",
     "searchPanel": "Arama",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Güvenlik uyarısı",
       "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Düzenleme Uyarısı",
+      "message": "Bu sayfa adı zaten var. Lütfen başka bir ad girin."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Düzenleme Uyarısı",
+      "message": "Bu sayfa adı boş olamaz."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Düzenleme Uyarısı",
+      "message": "Bu sayfayı silmek istediğinizden emin misiniz?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Katma:",
     "editing": "Düzenleme",
     "editingDescription": "Dokümanı düzenle",
-    "pageBreak": "Sayfa sonu",
     "reviewing": "İnceleniyor",
     "reviewingDescription": "Öneride bulunun",
     "viewOnly": "Sadece Görüntüle",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Tarayıcınızda yapıştırma desteklenmiyor. Bunun yerine bir klavye kısayolu kullanabilirsiniz",
     "pastingWithoutFormatTitle": "Biçimlendirme olmadan yapıştırma mümkün değil",
     "pastingWithoutFormatMessage": "Tarayıcınızda biçimlendirme olmadan yapıştırma desteklenmiyor. Bunun yerine bir klavye kısayolu kullanabilirsiniz",
+    "breaks": "Molalar",
+    "pageBreak": "Sayfa sonu",
+    "pageBreakDescription": "Sayfayı bitir ve yeni sayfada başla",
+    "sectionBreakNextPage": "Bölüm Sonu - Sonraki Sayfa",
+    "sectionBreakNextPageDescription": "Bölüm sonu ekle ve bir sonraki sayfadan başla",
+    "sectionBreakContinuous": "Bölüm Sonu - Sürekli",
+    "sectionBreakContinuousDescription": "Bölüm sonu ekle ve aynı sayfada devam et",
+    "header": {
+      "0": "Başlık",
+      "1": "İlk Sayfa Başlığı",
+      "2": "Çift Sayfa Başlığı",
+      "3": "Tek Sayfa Başlığı"
+    },
+    "footer": {
+      "0": "Altbilgi",
+      "1": "İlk Sayfa Alt Bilgisi",
+      "2": "Çift Sayfa Alt Bilgisi",
+      "3": "Tek Sayfa Alt Bilgisi"
+    },
+    "options": "Seçenekler",
+    "pageOptions": "Sayfa Seçenekleri",
+    "removeHeader": "Başlığı Kaldır",
+    "removeFooter": "Altbilgiyi Kaldır",
+    "headerFooterOptionsModal": {
+      "title": "Üstbilgi ve altbilgi biçimi",
+      "margins": "Marjlar",
+      "headerFromTop": "Üstten Başlık",
+      "footerFromBottom": "Alt Bilgi Alttan",
+      "layouts": {
+        "layout": "Düzen",
+        "noSelection": "Seçim Yok",
+        "differentFirstPage": "Farklı İlk Sayfa",
+        "differentEvenOddPages": "Farklı Çift ve Tek Sayfalar",
+        "differentFirstEvenOddPages": "Farklı İlk, Çift ve Tek Sayfalar"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Yazı Tipi Ailesi"
     }
+  },
+  "sheetEditor": {
+    "editing": "Düzenleme",
+    "viewOnly": "Görüntüleme",
+    "editingDescription": "Belgeyi düzenle",
+    "viewOnlyDescription": "Sadece görüntüle",
+    "bold": "Gözü pek",
+    "italic": "İtalik",
+    "underline": "Altı çizili",
+    "strikethrough": "Üstü çizili",
+    "cellBorderStyle": "Sınır Stili",
+    "merge": "Birleştir",
+    "unmerge": "Birleştirmeyi kaldır",
+    "cellFormat": "Hücre Biçimi",
+    "automatic": "Otomatik",
+    "plainText": "Düz metin",
+    "increaseDecimal": "Ondalık sayıyı artır",
+    "decreaseDecimal": "Ondalık sayıyı azalt",
+    "number": "Sayı",
+    "percent": "Yüzde",
+    "accounting": "Muhasebe",
+    "financial": "Finansal",
+    "currency": "Para birimi",
+    "currencyRounded": "Yuvarlatılmış para birimi",
+    "calendar": "Tarih",
+    "clockHour": "Zaman",
+    "calendarTime": "Tarih Saat",
+    "formatAsCurrency": "Para birimi olarak biçimlendir",
+    "formatAsPercent": "Yüzde olarak biçimlendir",
+    "formatAsDecDecimal": "Ondalık noktayı azalt",
+    "formatAsIncDecimal": "Ondalık noktayı artır",
+    "fontColor": "Yazı Tipi Rengi",
+    "cellBackgroundColor": "Hücre Arkaplan Rengi",
+    "textAlignment": "Metin Hizalaması",
+    "alignLeft": "Sola hizala",
+    "alignCenter": "Ortaya hizala",
+    "alignRight": "Sağa hizala",
+    "alignTop": "Üst hizala",
+    "alignMiddle": "Ortaya hizala",
+    "alignBottom": "Alt tarafı hizala",
+    "cellAdjustment": "Hücre Ayarlaması",
+    "insertColLeft": "Sol sütun ekle",
+    "columnInsertLeft": "Sol sütun ekle",
+    "columnInsertRight": "Sağa sütun ekle",
+    "rowInsertTop": "Yukarıya satır ekle",
+    "rowInsertBottom": "Aşağıya satır ekle",
+    "columnInsertShiftDown": "Hücreleri ekle ve aşağı kaydır",
+    "columnInsertShiftRight": "Hücreleri ekle ve sağa kaydır",
+    "columnDelete": "Sütunu sil",
+    "rowDelete": "Satırı sil",
+    "columnDeleteShiftUp": "Hücreleri sil ve yukarı kaydır",
+    "columnDeleteShiftLeft": "Hücreleri sil ve sola kaydır"
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Sağ Başlık",
       "bottomHeader": "Alt Başlık",
       "documentContent": "Belge İçeriği"
-    }
+    },
+    "label": "Erişilebilirlik",
+    "accessibilityMode": "Erişilebilirlik Modu",
+    "skipTo": "Atla",
+    "document": "Belge",
+    "notes": "Notlar"
+  },
+  "formulaBar": {
+    "label": "Formül Çubuğu",
+    "range": "Menzil",
+    "formulas": "Formüller",
+    "sumif": "Bir aralıktaki koşullu toplam",
+    "sumsq": "Bir aralığın karelerinin toplamını döndürür",
+    "sum": "Bir aralıktaki tüm sayıları toplar",
+    "asinh": "Bir sayının ters hiperbolik sinüsünü döndürür",
+    "acos": "Bir sayının ark kosinüsünü radyan cinsinden döndürür",
+    "cosh": "Bir sayının hiperbolik kosinüsünü döndürür",
+    "iseven": "Bir sayının çift olup olmadığını kontrol eder",
+    "isodd": "Bir sayının tek olup olmadığını kontrol eder"
   }
 }

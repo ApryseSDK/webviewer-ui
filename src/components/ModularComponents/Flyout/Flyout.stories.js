@@ -6,7 +6,7 @@ import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { fireEvent } from '@testing-library/react';
@@ -19,10 +19,8 @@ export default {
 };
 
 const initialState = {
+  ...oePartialState,
   viewer: {
-    lastPickedToolForGroupedItems: {
-      undefined: '',
-    },
     toolButtonObjects: {
       AnnotationEdit: {
         'dataElement': 'selectToolButton',
@@ -387,7 +385,7 @@ const initialState = {
       },
       'bookmarkOutlineFlyout': {
         dataElement: 'bookmarkOutlineFlyout',
-        items: createItemsForBookmarkOutlineFlyout(MenuItemsForBookmarkOutlines, 'portfolio', false, () => {}, menuTypes),
+        items: createItemsForBookmarkOutlineFlyout(MenuItemsForBookmarkOutlines, 'portfolio', false, () => { }, menuTypes),
       },
     },
     modularComponents: {
@@ -418,6 +416,7 @@ const initialState = {
     customizableUI: true,
   }
 };
+
 const store = configureStore({
   reducer: () => initialState
 });
@@ -479,7 +478,7 @@ export const FlyoutOpeningTest = createTemplate({ headers: uiWithFlyout.modularH
 FlyoutOpeningTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // Click the toggle button to open the flyout
-  const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'Flyout Toggle' });
+  const flyoutToggle = await canvas.findByRole('button', { 'name': 'Flyout Toggle' });
   await userEvent.click(flyoutToggle);
   // Check if the flyout is open
   const flyoutItem = await canvas.findByText('Custom Flyout Item');
@@ -508,6 +507,33 @@ FlyoutOpeningTest.play = async ({ canvasElement }) => {
   // Check if the disabled submenu item is not present
   const disabledSubmenuItem = await canvas.queryByText('Disabled Submenu Item');
   expect(disabledSubmenuItem).not.toBeInTheDocument();
+};
+
+export const FlyoutClosingTest = createTemplate(
+  {
+    headers: uiWithFlyout.modularHeaders,
+    components: uiWithFlyout.modularComponents,
+    flyoutMap: uiWithFlyout.flyouts,
+  }
+);
+
+FlyoutClosingTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const flyoutToggle = await canvas.findByRole(
+    'button',
+    { 'name': 'Flyout Toggle' },
+  );
+
+  await userEvent.click(flyoutToggle);
+
+  const flyoutItem = await canvas.findByText('Custom Flyout Item');
+  expect(flyoutItem).toBeInTheDocument();
+
+  const headerToolBar = await canvas.findByRole('toolbar');
+  await userEvent.click(headerToolBar);
+
+  expect(flyoutItem).not.toBeInTheDocument();
 };
 
 FlyoutComponent.play = async ({ canvasElement }) => {

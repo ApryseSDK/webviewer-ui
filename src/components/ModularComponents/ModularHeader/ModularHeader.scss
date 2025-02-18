@@ -16,4 +16,8 @@
     outline-color: var(--focus-visible-outline) !important;
     outline-offset: -2px;
   }
+
+  &:has(.tab-body.input-mode) {
+    outline-color: transparent !important;
+  }
 }

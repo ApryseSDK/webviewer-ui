@@ -14,7 +14,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const SettingsButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, className, style } = props;
   const dispatch = useDispatch();
 
   const handleSettingsButtonClick = () => {
@@ -27,12 +27,19 @@ const SettingsButton = forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClickWithFocus} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.SETTINGS, false, handleClickWithFocus)
+      getPresetButtonDOM({
+        buttonType: PRESET_BUTTON_TYPES.SETTINGS,
+        onClick: handleClickWithFocus,
+        className,
+        style,
+      })
   );
 });
 
 SettingsButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 SettingsButton.displayName = 'SettingsButton';
 

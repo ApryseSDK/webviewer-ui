@@ -30,9 +30,6 @@ const initialState = {
   },
   viewer: {
     isOfficeEditorMode: true,
-    lastPickedToolForGroupedItems: {
-      undefined: '',
-    },
     toolButtonObjects: {},
     colorMap: {},
     disabledElements: {},

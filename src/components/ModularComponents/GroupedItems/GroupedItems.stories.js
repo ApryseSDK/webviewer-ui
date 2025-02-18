@@ -20,7 +20,6 @@ const initialState = {
     openElements: {},
     customPanels: [],
     flyoutMap: {},
-    lastPickedToolForGroupedItems: {},
     modularComponents: {
       ...mockModularComponents,
       button1,

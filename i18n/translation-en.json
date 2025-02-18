@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Add Paragraph",
     "add": "Add",
+    "addSheet": "Add Sheet",
     "apply": "Apply",
     "applyAll": "Apply all",
     "calendar": "Calendar",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Attachments",
-    "leftPanel": "Panel",
+    "leftPanel": "Left Panel",
     "toolsHeader": "Tools",
     "searchOverlay": "Search",
     "searchPanel": "Search",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Security Warning",
       "message": "This document is trying to connect to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to open it."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Edit Warning",
+      "message": "This name already exists. Please enter another name."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Edit Warning",
+      "message": "The sheet name cannot be empty."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Edit Warning",
+      "message": "Are you sure you want to delete this sheet?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Added: ",
     "editing": "Editing",
     "editingDescription": "Edit document",
-    "pageBreak": "Page Break",
     "reviewing": "Reviewing",
     "reviewingDescription": "Make suggestions",
     "viewOnly": "Viewing",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Pasting is not supported in your browser. Instead, you can use a keyboard shortcut",
     "pastingWithoutFormatTitle": "Pasting without formatting not available",
     "pastingWithoutFormatMessage": "Pasting without formatting is not supported in your browser. Instead, you can use a keyboard shortcut",
+    "breaks": "Breaks",
+    "pageBreak": "Page Break",
+    "pageBreakDescription": "End page and start on new page",
+    "sectionBreakNextPage": "Section Break - Next Page",
+    "sectionBreakNextPageDescription": "Insert section break and start on next page",
+    "sectionBreakContinuous": "Section Break - Continuous",
+    "sectionBreakContinuousDescription": "Insert section break and continue on the same page ",
+    "header": {
+      "0": "Header",
+      "1": "First Page Header",
+      "2": "Even Page Header",
+      "3": "Odd Page Header"
+    },
+    "footer": {
+      "0": "Footer",
+      "1": "First Page Footer",
+      "2": "Even Page Footer",
+      "3": "Odd Page Footer"
+    },
+    "options": "Options",
+    "pageOptions": "Page Options",
+    "removeHeader": "Remove Header",
+    "removeFooter": "Remove Footer",
+    "headerFooterOptionsModal": {
+      "title": "Header & footer format",
+      "margins": "Margins",
+      "headerFromTop": "Header from Top",
+      "footerFromBottom": "Footer from Bottom",
+      "layouts": {
+        "layout": "Layout",
+        "noSelection": "No Selection",
+        "differentFirstPage": "Different First Page",
+        "differentEvenOddPages": "Different Even & Odd Pages",
+        "differentFirstEvenOddPages": "Different First, Even, and Odd Pages"
+      }
+    },
     "lineSpacingOptions": {
       "single": "Single",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Font Family"
     }
+  },
+  "sheetEditor": {
+    "editing": "Editing",
+    "viewOnly": "Viewing",
+    "editingDescription": "Edit document",
+    "viewOnlyDescription": "View only",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "cellBorderStyle": "Border Style",
+    "merge": "Merge",
+    "unmerge": "Unmerge",
+    "cellFormat": "Cell Format",
+    "automatic": "Automatic",
+    "plainText": "Plain text",
+    "increaseDecimal": "Increase decimal",
+    "decreaseDecimal": "Decrease decimal",
+    "number": "Number",
+    "percent": "Percent",
+    "accounting": "Accounting",
+    "financial": "Financial",
+    "currency": "Currency",
+    "currencyRounded": "Currency rounded",
+    "calendar": "Date",
+    "clockHour": "Time",
+    "calendarTime": "Date Time",
+    "formatAsCurrency": "Format as currency",
+    "formatAsPercent": "Format as percent",
+    "formatAsDecDecimal": "Decrease decimal point",
+    "formatAsIncDecimal": "Increase decimal point",
+    "fontColor": "Font Color",
+    "cellBackgroundColor": "Cell Background Color",
+    "textAlignment": "Text Alignment",
+    "alignLeft": "Align left",
+    "alignCenter": "Align center",
+    "alignRight": "Align right",
+    "alignTop": "Align top",
+    "alignMiddle": "Align middle",
+    "alignBottom": "Align bottom",
+    "cellAdjustment": "Cell Adjustment",
+    "insertColLeft": "Insert column left",
+    "columnInsertLeft": "Insert column left",
+    "columnInsertRight": "Insert column right",
+    "rowInsertTop": "Insert row above",
+    "rowInsertBottom": "Insert row below",
+    "columnInsertShiftDown": "Insert cells and shift down",
+    "columnInsertShiftRight": "Insert cells and shift right",
+    "columnDelete": "Delete column",
+    "rowDelete": "Delete row",
+    "columnDeleteShiftUp": "Delete cells and shift up",
+    "columnDeleteShiftLeft": "Delete cells and shift left"
   },
   "insertPageModal": {
     "title": "Insert New Page",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Right Header",
       "bottomHeader": "Bottom Header",
       "documentContent": "Document Content"
-    }
+    },
+    "label": "Accessibility",
+    "accessibilityMode": "Accessibility Mode",
+    "skipTo": "Skip to",
+    "document": "Document",
+    "notes": "Notes"
+  },
+  "formulaBar": {
+    "label": "Formula Bar",
+    "range": "Range",
+    "formulas": "Formulas",
+    "sumif": "A conditional sum across a range",
+    "sumsq": "Returns the sum of the squares of a range",
+    "sum": "Adds all the numbers in a range",
+    "asinh": "Returns the inverse hyperbolic sine of a number",
+    "acos": "Returns the arccosine of a number, in radians",
+    "cosh": "Returns the hyperbolic cosine of a number",
+    "iseven": "Checks if a number is even",
+    "isodd": "Checks if a number is odd"
   }
 }

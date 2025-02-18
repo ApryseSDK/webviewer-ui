@@ -26,14 +26,7 @@ const textEditingPanelInitialState = {
     panelWidths: {
       textEditingPanel: 330,
     },
-    lastPickedToolForGroupedItems: {
-      'annotateGroupedItems': 'AnnotationCreateFreeText'
-    },
     activeGroupedItems: ['annotateGroupedItems'],
-    lastPickedToolAndGroup: {
-      tool: 'AnnotationCreateFreeText',
-      group: ['annotateGroupedItems'],
-    },
   },
   featureFlags: {
     customizableUI: false,
@@ -134,15 +127,8 @@ const TextEditingPanelInApp = (context, dataElement, location) => {
         contextMenuPopup: false,
         [dataElement]: true,
       },
-      lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationCreateFreeText'
-      },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateFreeText',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
-      },
       activeToolName: 'AnnotationCreateFreeText',
       activeTheme: context.globals.theme,
     },

@@ -16,7 +16,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
  * @memberof UI.Components.PresetButton
  */
 const NewPortfolioButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, className, style } = props;
   const dispatch = useDispatch();
 
   const isCreatePortfolioButtonEnabled = !useSelector((state) => selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_BUTTON)) && core.isFullPDFEnabled();
@@ -36,12 +36,20 @@ const NewPortfolioButton = forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={handleCreatePortfolioButtonClick} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.CREATE_PORTFOLIO, !isCreatePortfolioButtonEnabled, handleCreatePortfolioButtonClick)
+      getPresetButtonDOM({
+        buttonType: PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
+        isDisabled: !isCreatePortfolioButtonEnabled,
+        onClick: handleCreatePortfolioButtonClick,
+        className,
+        style,
+      })
   );
 });
 
 NewPortfolioButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 NewPortfolioButton.displayName = 'NewPortfolioButton';
 

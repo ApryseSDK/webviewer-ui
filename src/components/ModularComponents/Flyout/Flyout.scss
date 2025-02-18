@@ -33,8 +33,8 @@
       // Hide duplicate dividers, or dividers that are the first or last child
       &:last-child,
       &:first-child,
-      & + .flyout-item-container:empty + .divider,
-      & + .divider {
+      &+.flyout-item-container:empty+.divider,
+      &+.divider {
         display: none;
       }
     }
@@ -62,7 +62,6 @@
         height: 24px;
         margin-right: 8px;
         display: flex;
-        align-items: center;
         justify-content: center;
       }
 
@@ -136,16 +135,22 @@
       &:hover:not(.disabled) {
         color: var(--gray-0);
 
-        .Icon, .Icon svg * {
+        .Icon,
+        .Icon svg * {
           color: var(--gray-0);
+          fill: var(--gray-0);
         }
+
         .hotkey-wrapper,
-        .flyout-item-label {
+        .flyout-item-label,
+        .secondary-label {
           color: var(--gray-0);
         }
 
         .ZoomText {
-          .label, .value {
+
+          .label,
+          .value {
             color: var(--gray-0);
           }
         }
@@ -177,7 +182,8 @@
         cursor: default;
 
         button,
-        .Icon, .Icon svg *{
+        .Icon,
+        .Icon svg * {
           color: var(--gray-5);
         }
 
@@ -210,7 +216,8 @@
         &:hover {
           color: var(--gray-0);
 
-          .Icon, .Icon svg *,
+          .Icon,
+          .Icon svg *,
           .hotkey-wrapper,
           .ZoomText .label .value {
             color: var(--gray-0);
@@ -230,7 +237,8 @@
       &:hover:not([disabled]):not(.disabled) {
         background-color: var(--popup-button-hover);
 
-        .flyout-item-label {
+        .flyout-item-label,
+        .secondary-label {
           color: var(--text-color);
         }
 

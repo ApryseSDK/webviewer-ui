@@ -15,7 +15,7 @@ import { workerTypes } from 'constants/types';
  * @memberof UI.Components.CompareButton
  */
 const CompareButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, className, style } = props;
   const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.COMPARE_PANEL));
   const [doc1TypeValid, setDoc1TypeValid] = useState(false);
   const [doc2TypeValid, setDoc2TypeValid] = useState(false);
@@ -54,12 +54,14 @@ const CompareButton = forwardRef((props, ref) => {
 
   const isDisabled = !doc1TypeValid || !doc2TypeValid;
 
-  if (isDisabled) {
-    if (isFlyoutItem) {
-      return null;
+  useEffect(() => {
+    if (isDisabled) {
+      if (isFlyoutItem) {
+        return null;
+      }
+      console.warn('The compare preset button can only be used when 2 PDF documents are loaded on both sides');
     }
-    console.warn('The compare preset button can only be used when 2 PDF documents are loaded on both sides');
-  }
+  }, [isDisabled]);
 
   const handleClick = () => {
     const isOpening = !isPanelOpen;
@@ -75,12 +77,21 @@ const CompareButton = forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} isActive={isPanelOpen} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.COMPARE, isDisabled, handleClick, undefined, isPanelOpen)
+      getPresetButtonDOM({
+        isDisabled,
+        buttonType: PRESET_BUTTON_TYPES.COMPARE,
+        onClick: handleClick,
+        isActive: isPanelOpen,
+        className,
+        style,
+      })
   );
 });
 
 CompareButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 CompareButton.displayName = 'CompareButton';
 

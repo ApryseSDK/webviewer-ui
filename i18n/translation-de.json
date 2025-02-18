@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Absatz hinzufügen",
     "add": "Hinzufügen",
+    "addSheet": "Blatt hinzufügen",
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
     "calendar": "Kalender",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Anhänge",
-    "leftPanel": "Linke Leiste",
+    "leftPanel": "Linkes Feld",
     "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
     "searchPanel": "Suche",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Sicherheitswarnung",
       "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Warnung bearbeiten",
+      "message": "Dieser Blattname ist bereits vorhanden. Bitte geben Sie einen anderen Namen ein."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Warnung bearbeiten",
+      "message": "Dieser Blattname darf nicht leer sein."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Warnung bearbeiten",
+      "message": "Möchten Sie dieses Blatt wirklich löschen?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Hinzugefügt: ",
     "editing": "Bearbeitung",
     "editingDescription": "Dokument bearbeiten",
-    "pageBreak": "Seitenumbruch",
     "reviewing": "Überprüfung",
     "reviewingDescription": "Vorschläge machen",
     "viewOnly": "Nur anschauen",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Das Einfügen wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
     "pastingWithoutFormatTitle": "Einfügen ohne Formatierung nicht verfügbar",
     "pastingWithoutFormatMessage": "Das Einfügen ohne Formatierung wird in Ihrem Browser nicht unterstützt. Stattdessen können Sie eine Tastenkombination verwenden",
+    "breaks": "Pausen",
+    "pageBreak": "Seitenumbruch",
+    "pageBreakDescription": "Seite beenden und auf neuer Seite beginnen",
+    "sectionBreakNextPage": "Abschnittsumbruch – Nächste Seite",
+    "sectionBreakNextPageDescription": "Abschnittsumbruch einfügen und auf der nächsten Seite beginnen",
+    "sectionBreakContinuous": "Abschnittsumbruch - Fortlaufend",
+    "sectionBreakContinuousDescription": "Abschnittsumbruch einfügen und auf derselben Seite fortfahren",
+    "header": {
+      "0": "Kopfbereich",
+      "1": "Kopfzeile der ersten Seite",
+      "2": "Gerader Seitenkopf",
+      "3": "Kopfzeile für ungerade Seiten"
+    },
+    "footer": {
+      "0": "Fußzeile",
+      "1": "Fußzeile der ersten Seite",
+      "2": "Gerader Seitenfuß",
+      "3": "Fußzeile für ungerade Seiten"
+    },
+    "options": "Optionen",
+    "pageOptions": "Seitenoptionen",
+    "removeHeader": "Kopfzeile entfernen",
+    "removeFooter": "Fußzeile entfernen",
+    "headerFooterOptionsModal": {
+      "title": "Kopf- und Fußzeilenformat",
+      "margins": "Ränder",
+      "headerFromTop": "Kopfzeile von oben",
+      "footerFromBottom": "Fußzeile von unten",
+      "layouts": {
+        "layout": "Layout",
+        "noSelection": "Keine Auswahl",
+        "differentFirstPage": "Andere erste Seite",
+        "differentEvenOddPages": "Unterschiedliche gerade und ungerade Seiten",
+        "differentFirstEvenOddPages": "Unterschiedliche erste, gerade und ungerade Seiten"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Schriftfamilie"
     }
+  },
+  "sheetEditor": {
+    "editing": "Bearbeitung",
+    "viewOnly": "Besichtigung",
+    "editingDescription": "Dokument bearbeiten",
+    "viewOnlyDescription": "Nur anzeigen",
+    "bold": "Deutlich",
+    "italic": "Kursiv",
+    "underline": "Unterstreichen",
+    "strikethrough": "Durchgestrichen",
+    "cellBorderStyle": "Rahmenstil",
+    "merge": "Verschmelzen",
+    "unmerge": "Zusammenführung aufheben",
+    "cellFormat": "Zellenformat",
+    "automatic": "Automatisch",
+    "plainText": "Plain text",
+    "increaseDecimal": "Dezimalstellen erhöhen",
+    "decreaseDecimal": "Dezimalstellen verringern",
+    "number": "Nummer",
+    "percent": "Prozent",
+    "accounting": "Buchhaltung",
+    "financial": "Finanziell",
+    "currency": "Währung",
+    "currencyRounded": "Währung gerundet",
+    "calendar": "Datum",
+    "clockHour": "Zeit",
+    "calendarTime": "Datum Uhrzeit",
+    "formatAsCurrency": "Als Währung formatieren",
+    "formatAsPercent": "Als Prozent formatieren",
+    "formatAsDecDecimal": "Dezimalpunkt verringern",
+    "formatAsIncDecimal": "Dezimalpunkt erhöhen",
+    "fontColor": "Schriftfarbe",
+    "cellBackgroundColor": "Zellen-Hintergrundfarbe",
+    "textAlignment": "Textausrichtung",
+    "alignLeft": "Linksbündig",
+    "alignCenter": "Zentriert ausrichten",
+    "alignRight": "Rechtsbündig",
+    "alignTop": "Oben ausrichten",
+    "alignMiddle": "Mitte ausrichten",
+    "alignBottom": "Unten ausrichten",
+    "cellAdjustment": "Zellenanpassung",
+    "insertColLeft": "Spalte links einfügen",
+    "columnInsertLeft": "Spalte links einfügen",
+    "columnInsertRight": "Spalte rechts einfügen",
+    "rowInsertTop": "Zeile darüber einfügen",
+    "rowInsertBottom": "Zeile darunter einfügen",
+    "columnInsertShiftDown": "Zellen einfügen und nach unten verschieben",
+    "columnInsertShiftRight": "Zellen einfügen und nach rechts verschieben",
+    "columnDelete": "Spalte löschen",
+    "rowDelete": "Zeile löschen",
+    "columnDeleteShiftUp": "Zellen löschen und nach oben verschieben",
+    "columnDeleteShiftLeft": "Zellen löschen und nach links verschieben"
   },
   "insertPageModal": {
     "title": "Neue Seite einfügen",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Rechte Kopfzeile",
       "bottomHeader": "Untere Kopfzeile",
       "documentContent": "Dokumentinhalt"
-    }
+    },
+    "label": "Zugänglichkeit",
+    "accessibilityMode": "Zugänglichkeitsmodus",
+    "skipTo": "Springen zu",
+    "document": "Dokumentieren",
+    "notes": "Hinweise"
+  },
+  "formulaBar": {
+    "label": "Formelleiste",
+    "range": "Reichweite",
+    "formulas": "Formeln",
+    "sumif": "Eine bedingte Summe über einen Bereich",
+    "sumsq": "Gibt die Summe der Quadrate eines Bereichs zurück",
+    "sum": "Addiert alle Zahlen in einem Bereich",
+    "asinh": "Gibt den inversen hyperbolischen Sinus einer Zahl zurück",
+    "acos": "Gibt den Arkuskosinus einer Zahl im Bogenmaß zurück.",
+    "cosh": "Gibt den hyperbolischen Kosinus einer Zahl zurück",
+    "iseven": "Überprüft, ob eine Zahl gerade ist",
+    "isodd": "Überprüft, ob eine Zahl ungerade ist"
   }
 }

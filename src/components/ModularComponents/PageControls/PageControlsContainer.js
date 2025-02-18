@@ -6,14 +6,12 @@ import actions from 'actions';
 import sizeManager from 'helpers/responsivenessHelper';
 import PageControls from './PageControls';
 import useDidUpdate from 'hooks/useDidUpdate';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE, PLACEMENT, OPACITY_LEVELS } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 
-const PageControlsContainer = ({ dataElement = 'page-controls-container', headerPlacement, headerDirection }) => {
-
-  const currentFlyout = useSelector((state) => selectors.getFlyout(state, DataElements.PAGE_CONTROLS_FLYOUT), shallowEqual);
+const PageControlsContainer = ({ dataElement = 'page-controls-container', headerPlacement, headerDirection, className }) => {
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   const totalPages = useSelector(selectors.getTotalPages);
   const currentPage = useSelector(selectors.getCurrentPage);
@@ -57,15 +55,14 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
       items: [{
         dataElement: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
         totalPages,
+        type: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
       }, previousPageButton, nextPageButton]
     };
 
-    if (!currentFlyout && size === 1) {
-      dispatch(actions.addFlyout(pageControlsFlyout));
-    } else if (size === 1) {
-      dispatch(actions.updateFlyout(pageControlsFlyout.dataElement, pageControlsFlyout));
-    } else if (currentFlyout && size === 0) {
-      dispatch(actions.removeFlyout(pageControlsFlyout.dataElement));
+    dispatch(actions.updateFlyout(pageControlsFlyout.dataElement, pageControlsFlyout));
+
+    if (size === 0) {
+      dispatch(actions.closeElement(pageControlsFlyout.dataElement));
     }
   }, [size, totalPages, currentPage]);
 
@@ -129,6 +126,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
       nextPageButton={nextPageButton}
       dataElement={dataElement}
       onFlyoutToggle={onFlyoutToggle}
+      className={className}
     />
   );
 };
@@ -137,6 +135,7 @@ PageControlsContainer.propTypes = {
   dataElement: PropTypes.string.isRequired,
   headerPlacement: PropTypes.string,
   headerDirection: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default PageControlsContainer;

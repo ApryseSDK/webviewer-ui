@@ -7,18 +7,19 @@ import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
 import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
+import PropTypes from 'prop-types';
 
-const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection }) => {
+const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className }) => {
   const flyoutElement = `${dataElement}Flyout`;
   const [zoomValue, setZoomValue] = useState('100');
   const dispatch = useDispatch();
   const elementRef = useRef();
-  const [isActive, isZoomFlyoutMenuActive] = useSelector((state) => [
-    selectors.isElementOpen(state, dataElement),
-    selectors.isElementOpen(state, flyoutElement),
-  ]);
 
+  const isActive = useSelector((state) => selectors.isElementOpen(state, dataElement));
+  const isZoomFlyoutMenuActive = useSelector((state) => selectors.isElementOpen(state, flyoutElement));
+  const isSpreadsheetEditorMode = useSelector((state) => selectors.isSpreadsheetEditorModeEnabled(state));
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
+
   useEffect(() => {
     sizeManager[dataElement] = {
       ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
@@ -33,7 +34,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
       size: size,
     };
   }, [size]);
-  useSizeStore({ dataElement, size, elementRef, headerDirection });
+  useSizeStore({ dataElement, elementRef, headerDirection });
 
   useEffect(() => {
     const onDocumentLoaded = () => setZoomValue(Math.ceil(core.getZoom() * 100).toString());
@@ -69,7 +70,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   const {
     onZoomInClicked,
     onZoomOutClicked,
-  } = getZoomHandlers(zoomOptionsList, dispatch, size, setZoomValue);
+  } = getZoomHandlers(dispatch, size, setZoomValue);
 
   const getCurrentZoom = () => {
     return Math.ceil(core.getZoom() * 100).toString();
@@ -79,27 +80,38 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
     const zoomFlyoutMenu = {
       dataElement: flyoutElement,
       className: 'ZoomFlyoutMenu',
-      items: getZoomFlyoutItems(zoomOptionsList, dispatch, size, setZoomValue)
+      items: getZoomFlyoutItems({ zoomOptionsList, isSpreadsheetEditorMode, dispatch, size, onZoomChanged: setZoomValue })
     };
     dispatch(actions.updateFlyout(flyoutElement, zoomFlyoutMenu));
   }, [size]);
 
+  const zoomProps = {
+    isActive: isActive,
+    isZoomFlyoutMenuActive: isZoomFlyoutMenuActive,
+    getZoom: core.getZoom,
+    setZoomHandler: setZoomValue,
+    zoomValue: zoomValue,
+    zoomTo: zoomTo,
+    getCurrentZoom: getCurrentZoom,
+    onZoomInClicked: onZoomInClicked,
+    onZoomOutClicked: onZoomOutClicked,
+    setFlyoutTriggerRef: setFlyoutTriggerRef,
+    size: size,
+    className: className
+  };
   return (
     <ZoomControls
-      size={size}
-      elementRef={elementRef}
-      getZoom={core.getZoom}
-      setZoomHandler={setZoomValue}
-      zoomValue={zoomValue}
-      zoomTo={zoomTo}
-      getCurrentZoom={getCurrentZoom}
-      onZoomInClicked={onZoomInClicked}
-      onZoomOutClicked={onZoomOutClicked}
-      isZoomFlyoutMenuActive={isZoomFlyoutMenuActive}
       dataElement={dataElement}
-      isActive={isActive}
-      setFlyoutTriggerRef={setFlyoutTriggerRef} />
+      elementRef={elementRef}
+      componentProps={zoomProps}
+    />
   );
+};
+
+ZoomControlsContainer.propTypes = {
+  dataElement: PropTypes.string,
+  headerDirection: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default ZoomControlsContainer;

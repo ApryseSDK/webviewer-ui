@@ -25,15 +25,8 @@ const RubberStampPanelInApp = (context, location) => {
         contextMenuPopup: false,
         rubberStampPanel: true,
       },
-      lastPickedToolForGroupedItems: {
-        'insertGroupedItems': 'AnnotationCreateRubberStamp'
-      },
       activeGroupedItems: ['insertGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Insert',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateRubberStamp',
-        group: ['insertGroupedItems', 'insertToolsGroupedItems'],
-      },
       activeToolName: 'AnnotationCreateRubberStamp',
       activeTheme: context.globals.theme,
     },

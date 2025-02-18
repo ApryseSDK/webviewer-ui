@@ -93,8 +93,8 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
 
   const handleToolModeChange = useCallback((newTool) => {
     if (newTool instanceof Tools.FormFieldCreateTool) {
-      const { options , flags, Width: width = 0, Height: height = 0, value = '', indicatorText = '', showIndicator = false } = getToolStyles(newTool.name) || {};
-      setFieldProperties((prev) => ({ ...prev, value }));
+      const { options , flags, Width: width = 0, Height: height = 0, defaultValue = '', indicatorText = '', showIndicator = false } = getToolStyles(newTool.name) || {};
+      setFieldProperties((prev) => ({ ...prev, defaultValue }));
       setFieldDimension({ width, height });
       setFieldFlags({
         ReadOnly: flags?.READ_ONLY || false,
@@ -196,7 +196,9 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     setFieldProperties((prev) => ({
       ...prev,
       name: fieldName,
-      value: field.value,
+      // Are there repercussions with this?
+      // Expected result for TextField but what about other fields?
+      defaultValue: field.defaultValue,
       radioButtonGroups: [...new Set([...radioButtons, ...formFieldCreationManager.getRadioButtonGroups()])]
     }));
     setFieldFlags({
@@ -253,16 +255,16 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     }
   }, [annotation]);
 
-  const onFieldValueChange = useCallback((value) => {
+  const onFieldValueChange = useCallback((defaultValue) => {
     setFieldProperties((previousFieldProperties) => ({
       ...previousFieldProperties,
-      value,
+      defaultValue,
     }));
     if (annotation) {
-      annotation.getField().setValue(value);
+      annotation.getField().defaultValue = defaultValue;
     } else {
       const currentTool = core.getToolMode();
-      setToolStyles(currentTool.name, 'value', value);
+      setToolStyles(currentTool.name, 'defaultValue', defaultValue);
     }
   }, [annotation]);
 

@@ -3,7 +3,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import SignatureModes from 'constants/signatureModes';
-import setToolMode from '../apis/setToolMode';
 
 export default (store, documentViewerKey) => async (_, widget) => {
   const signatureTool = core.getTool('AnnotationCreateSignature', documentViewerKey);
@@ -42,13 +41,20 @@ export default (store, documentViewerKey) => async (_, widget) => {
       store.dispatch(actions.openElement(DataElements.TOOLS_OVERLAY));
 
       const isToolsOverlayDisabled = selectors.isElementDisabled(state, DataElements.TOOLS_OVERLAY) || selectors.isElementDisabled(state, 'toolsHeader');
+      const ribbonAssociatedWithTool = selectors.getRibbonAssociatedWithTool(state, ToolNames.SIGNATURE);
+      const activeCustomRibbon = selectors.getActiveCustomRibbon(state);
+      const toolsAssociatedWithRibbon = selectors.getToolsAssociatedWithRibbon(state, activeCustomRibbon);
+      // set active ribbon that has the signature tool
+      if (isCustomizableUI && !toolsAssociatedWithRibbon.includes(ToolNames.SIGNATURE) && ribbonAssociatedWithTool) {
+        store.dispatch(actions.setActiveCustomRibbon(ribbonAssociatedWithTool));
+      }
+
       if ((savedSignatures.length === 0 && !requiresInitials) || isToolsOverlayDisabled) {
         store.dispatch(actions.openElement('signatureModal'));
       } else if ((savedInitials.length === 0 && requiresInitials) || isToolsOverlayDisabled) {
         store.dispatch(actions.openElement('signatureModal'));
       } else if (widget && isCustomizableUI) {
-        // set active ribbon that has the signature tool
-        setToolMode(store)(ToolNames.SIGNATURE);
+        core.setToolMode(ToolNames.SIGNATURE);
         const isSignatureListPanelOpen = selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL);
         if (!isSignatureListPanelOpen) {
           store.dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));

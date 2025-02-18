@@ -153,11 +153,11 @@ const IndexPanel = ({ widgets }) => {
     core.deleteAnnotations(widgets);
   };
 
-  const handleSingleSelection = (id) => {
+  const handleSingleSelection = (id, force = false) => {
     const isSelected = selectingWidgets.includes(id);
     const widget = core.getAnnotationById(id);
     core.deselectAllAnnotations();
-    if (isSelected) {
+    if (isSelected && !force) {
       setSelectingWidgets([]);
       return;
     }
@@ -201,7 +201,7 @@ const IndexPanel = ({ widgets }) => {
   const handleSetSelected = (id, val, widgets) => {
     singleSelectedNoteId.current = id;
     if (!isMultiSelectionMode) {
-      handleSingleSelection(id);
+      handleSingleSelection(id, val);
       return;
     }
     handleMultiSelection(id, val, widgets);

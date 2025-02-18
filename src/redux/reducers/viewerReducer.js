@@ -2,7 +2,11 @@ import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import { ITEM_TYPE, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import { defaultPanels } from '../modularComponents';
-import { defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents, defaultOfficeEditorPanels } from '../officeEditorModularComponents';
+import {
+  defaultOfficeEditorModularHeaders,
+  defaultOfficeEditorModularComponents,
+  defaultOfficeEditorPanels
+} from '../officeEditorModularComponents';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -172,10 +176,15 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isOfficeEditorHeaderEnabled: payload.isOfficeEditorHeaderEnabled,
       };
-    case 'SET_IS_SHEET_EDITOR_MODE':
+    case 'ENABLE_SPREADSHEET_EDITOR_MODE':
       return {
         ...state,
-        isSheetEditorMode: payload.isSheetEditorMode,
+        isSpreadsheetEditorModeEnabled: true,
+      };
+    case 'DISABLE_SPREADSHEET_EDITOR_MODE':
+      return {
+        ...state,
+        isSpreadsheetEditorModeEnabled: false,
       };
     case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
       return {
@@ -499,14 +508,6 @@ export default (initialState) => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
-    case 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS':
-      return {
-        ...state,
-        lastPickedToolForGroupedItems: {
-          ...state.lastPickedToolForGroupedItems,
-          [payload.groupedItem]: payload.toolName,
-        }
-      };
     case 'SET_LAST_ACTIVE_TOOL_FOR_RIBBON':
       return {
         ...state,
@@ -514,11 +515,6 @@ export default (initialState) => (state = initialState, action) => {
           ...state.lastActiveToolForRibbon,
           [payload.ribbon]: payload.toolName,
         }
-      };
-    case 'SET_LAST_PICKED_TOOL_AND_GROUP':
-      return {
-        ...state,
-        lastPickedToolAndGroup: payload,
       };
     case 'SET_ACTIVE_CUSTOM_RIBBON':
       return { ...state, activeCustomRibbon: payload.customRibbon };
@@ -705,6 +701,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, errorMessage: payload.message, errorTitle: payload.title };
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
+    case 'SET_INTERNAL_NOTE_FILTER':
+      return { ...state, internalNoteFilter: payload.internalNoteFilter };
     case 'SET_INLINE_COMMENT_FILTER':
       return { ...state, inlineCommentFilter: payload.inlineCommentFilter };
     case 'SET_ZOOM_LIST':
@@ -900,8 +898,6 @@ export default (initialState) => (state = initialState, action) => {
         activeFlyout: initialState.activeFlyout,
         flyoutToggleElement: initialState.flyoutToggleElement,
         openElements: initialState.openElements,
-        lastPickedToolAndGroup: initialState.lastPickedToolAndGroup,
-        lastPickedToolForGroupedItems: initialState.lastPickedToolForGroupedItems,
         flyoutPosition: initialState.flyoutPosition,
         genericPanels: defaultPanels,
       };
@@ -1183,7 +1179,7 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, compareAnnotationsMap: payload };
     }
     case 'STASH_ENABLED_RIBBONS': {
-      return { ...state, enabledRibbonsStash: [...payload.ribbonItems] };
+      return { ...state, enabledRibbonsStash: [...state.enabledRibbonsStash, ...payload.ribbonItems] };
     }
     case 'STASH_COMPONENTS': {
       const { UIMode } = payload;
@@ -1240,6 +1236,8 @@ export default (initialState) => (state = initialState, action) => {
         genericPanels: [...panels],
       };
     }
+    case 'SET_SHOULD_ADD_A11Y_CONTENT':
+      return { ...state, shouldAddA11yContentToDOM: payload.shouldAddA11yContentToDOM };
     default:
       return state;
   }

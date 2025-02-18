@@ -2,11 +2,61 @@ import getRootNode from './getRootNode';
 import { isIOS, isSafari } from 'helpers/device';
 import { getGrayscaleDarknessFactor } from 'helpers/printGrayscaleDarknessFactor';
 import { getCurrentViewRect } from './printCurrentViewHelper';
+import { workerTypes } from 'constants/types';
 
 import core from 'core';
 
 export const iosWindowOpen = () => {
   return (isIOS && isSafari) ? window.open() : null;
+};
+
+export const canEmbedPrint = (isEmbedPrintSupported) => {
+  const supportedFileTypes = [
+    workerTypes.PDF,
+  ];
+  const embeddedFileTypeSupport = supportedFileTypes.includes(core.getDocument().getType());
+  return isEmbedPrintSupported && embeddedFileTypeSupport;
+};
+
+export const embeddedPrintNoneSupportedOptions = (options) => {
+  const unsupportedOptions = {
+    maintainPageOrientation: 'Embedded Printing does not support maintaining page orientation.',
+    onProgress: 'Embedded Printing does not support a callback function for printing',
+  };
+  Object.entries(unsupportedOptions).forEach(([key, message]) => {
+    if (options[key]) {
+      console.warn(message);
+    }
+  });
+};
+
+export const processEmbeddedPrintOptions = async (options, document, annotManager) => {
+  const {
+    includeAnnotations,
+    includeComments,
+    isCurrentView,
+    isGrayscale = false,
+    watermarkModalOptions,
+    pagesToPrint
+  } = options;
+  const pagesToPrintArray = pagesToPrint ?? getPageArray(document.getPageCount());
+  const printingOptions = {
+    includeAnnotations,
+    includeComments,
+    isCurrentView,
+  };
+  let pdf = await createEmbeddedPrintPages(
+    document,
+    annotManager,
+    pagesToPrintArray,
+    printingOptions,
+    watermarkModalOptions
+  );
+
+  if (isGrayscale) {
+    pdf = await convertToGrayscaleDocument(pdf);
+  }
+  return pdf;
 };
 
 const getRemovePagesArray = (currentPageNumber, numPages) => {
@@ -57,21 +107,19 @@ const cropDocumentToCurrentView = async (document) => {
 };
 
 // printingOptions: isCurrentView, includeAnnotations
-export const createPages = async (document, annotManager, pagesToPrint, printingOptions, watermarkModalOptions) => {
+export const createEmbeddedPrintPages = async (document, annotManager, pagesToPrint, printingOptions, watermarkModalOptions) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
   let result;
   let data;
-  let pagesArray = [];
+  let pagesArray = pagesToPrint;
   let xfdf;
-
   if (printingOptions?.includeComments) {
+    // includesAnnotations is passed as true here intentionally
     xfdf = await extractXFDF(annotManager, pagesToPrint, true);
-    pagesArray = getPageArray(pagesToPrint.length);
   } else {
     xfdf = await extractXFDF(annotManager, pagesToPrint, printingOptions?.includeAnnotations);
   }
-
   if (extension === 'pdf' && !bbURLPromise) {
     data = await document.extractPages(pagesToPrint, xfdf);
     result = await window.Core.createDocument(data, { extension: 'pdf' });
@@ -86,6 +134,10 @@ export const createPages = async (document, annotManager, pagesToPrint, printing
   if (printingOptions?.isCurrentView) {
     result = await cropDocumentToCurrentView(result);
     pagesArray = getPageArray(result.getPageCount());
+
+    // Flatten the cropped document so that annotations are clipped by the cropbox
+    const buf = await result.getFileData({ xfdfString: xfdf, flatten: true });
+    result = await window.Core.createDocument(buf, { extension: 'pdf' });
   }
 
   if (watermarkModalOptions) {
@@ -94,7 +146,6 @@ export const createPages = async (document, annotManager, pagesToPrint, printing
   }
 
   if (printingOptions?.includeComments && printingOptions?.includeAnnotations) {
-    pagesArray = getPageArray(pagesToPrint.length);
     result = await result.formatDocumentForPrint(pagesArray);
   } else if (printingOptions?.includeComments && !printingOptions?.includeAnnotations) {
     result = await result.formatDocumentForPrint(pagesArray);
@@ -124,7 +175,6 @@ export const extractXFDF = async (annotManager, pagesToPrint, includeAnnotations
       });
       return acc;
     }, []);
-
     const annotationList = annotManager.getAnnotationsList().filter((annot) => pagesToPrint.indexOf(annot.PageNumber) > -1);
     const xfdfString = await annotManager.exportAnnotations({ annotationList: annotationList, widgets: true, links: true, fields: true, generateInlineAppearances: true });
     // Later, we restore the original setting
@@ -137,7 +187,8 @@ export const extractXFDF = async (annotManager, pagesToPrint, includeAnnotations
   return '<?xml version="1.0" encoding="UTF-8" ?><xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve"></xfdf>';
 };
 
-export const printPDF = (pdfDocument, windowRef) => {
+export const printEmbeddedPDF = (pdfDocument) => {
+  const windowRef = iosWindowOpen();
   const printDocument = true;
 
   return pdfDocument.getFileData({ printDocument })
@@ -267,5 +318,5 @@ const createDocumentForPrint = async (document, fileDataOptions) => {
 };
 
 const getPageArray = (pageCount) => {
-  return Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
+  return Array.from({ length: pageCount }, (_, i) => (i + 1));
 };

@@ -146,6 +146,13 @@ const SaveModal = () => {
     }
   };
   const onSave = () => {
+    let doc = core.getDocument(activeDocumentViewerKey);
+
+    if (!doc) {
+      console.warn('Document is not loaded');
+      return;
+    }
+
     if (!filename) {
       return;
     }

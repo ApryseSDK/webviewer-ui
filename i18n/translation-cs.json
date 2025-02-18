@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Přidat odstavec",
     "add": "Přidat",
+    "addSheet": "Přidat list",
     "apply": "Aplikovat",
     "applyAll": "Použít vše",
     "calendar": "Kalendář",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Přílohy",
-    "leftPanel": "Panel",
+    "leftPanel": "Levý panel",
     "toolsHeader": "Nástroje",
     "searchOverlay": "Vyhledávání",
     "searchPanel": "Vyhledávání",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Bezpečnostní varování",
       "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Upravit upozornění",
+      "message": "Tento název listu již existuje. Zadejte prosím jiné jméno."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Upravit upozornění",
+      "message": "Tento název listu nemůže být prázdný."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Upravit upozornění",
+      "message": "Opravdu chcete tento list smazat?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Přidal:",
     "editing": "Editace",
     "editingDescription": "Upravit dokument",
-    "pageBreak": "Konec stránky",
     "reviewing": "Recenze",
     "reviewingDescription": "Dělat návrhy",
     "viewOnly": "Pouze zobrazení",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Vkládání není ve vašem prohlížeči podporováno. Místo toho můžete použít klávesovou zkratku",
     "pastingWithoutFormatTitle": "Vkládání bez formátování není k dispozici",
     "pastingWithoutFormatMessage": "Vkládání bez formátování není ve vašem prohlížeči podporováno. Místo toho můžete použít klávesovou zkratku",
+    "breaks": "Přestávky",
+    "pageBreak": "Konec stránky",
+    "pageBreakDescription": "Konec stránky a začátek na nové stránce",
+    "sectionBreakNextPage": "Konec sekce - další stránka",
+    "sectionBreakNextPageDescription": "Vložte konec oddílu a začněte na další stránce",
+    "sectionBreakContinuous": "Přestávka sekce - Průběžná",
+    "sectionBreakContinuousDescription": "Vložte konec oddílu a pokračujte na stejné stránce ",
+    "header": {
+      "0": "Záhlaví",
+      "1": "Záhlaví první stránky",
+      "2": "Sudé záhlaví stránky",
+      "3": "Záhlaví liché stránky"
+    },
+    "footer": {
+      "0": "Zápatí",
+      "1": "Zápatí první stránky",
+      "2": "Zápatí sudé stránky",
+      "3": "Zápatí liché stránky"
+    },
+    "options": "Možnosti",
+    "pageOptions": "Možnosti stránky",
+    "removeHeader": "Odebrat záhlaví",
+    "removeFooter": "Odebrat zápatí",
+    "headerFooterOptionsModal": {
+      "title": "Formát záhlaví a zápatí",
+      "margins": "Okraje",
+      "headerFromTop": "Záhlaví shora",
+      "footerFromBottom": "Zápatí zdola",
+      "layouts": {
+        "layout": "Rozložení",
+        "noSelection": "Žádný výběr",
+        "differentFirstPage": "Jiná první stránka",
+        "differentEvenOddPages": "Různé sudé a liché stránky",
+        "differentFirstEvenOddPages": "Různé první, sudé a liché stránky"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Rodina písem"
     }
+  },
+  "sheetEditor": {
+    "editing": "Editace",
+    "viewOnly": "Prohlížení",
+    "editingDescription": "Upravit dokument",
+    "viewOnlyDescription": "Pouze zobrazení",
+    "bold": "Tučné",
+    "italic": "kurzíva",
+    "underline": "Zdůraznit",
+    "strikethrough": "Přeškrtnutí",
+    "cellBorderStyle": "Styl ohraničení",
+    "merge": "Spojit",
+    "unmerge": "Zrušit sloučení",
+    "cellFormat": "Formát buňky",
+    "automatic": "Automatický",
+    "plainText": "Prostý text",
+    "increaseDecimal": "Zvětšit desetinné místo",
+    "decreaseDecimal": "Snížit desetinné místo",
+    "number": "Číslo",
+    "percent": "procent",
+    "accounting": "Účetnictví",
+    "financial": "Finanční",
+    "currency": "Měna",
+    "currencyRounded": "Měna zaokrouhlená",
+    "calendar": "Datum",
+    "clockHour": "Čas",
+    "calendarTime": "Datum Čas",
+    "formatAsCurrency": "Formát jako měna",
+    "formatAsPercent": "Formátovat jako procento",
+    "formatAsDecDecimal": "Snížit desetinnou čárku",
+    "formatAsIncDecimal": "Zvětšit desetinnou čárku",
+    "fontColor": "Barva písma",
+    "cellBackgroundColor": "Barva pozadí buňky",
+    "textAlignment": "Zarovnání textu",
+    "alignLeft": "Zarovnejte doleva",
+    "alignCenter": "Zarovnejte střed",
+    "alignRight": "Zarovnejte doprava",
+    "alignTop": "Zarovnejte horní část",
+    "alignMiddle": "Zarovnejte na střed",
+    "alignBottom": "Zarovnejte spodní část",
+    "cellAdjustment": "Úprava buňky",
+    "insertColLeft": "Vložit sloupec vlevo",
+    "columnInsertLeft": "Vložit sloupec vlevo",
+    "columnInsertRight": "Vložit sloupec vpravo",
+    "rowInsertTop": "Vložit řádek výše",
+    "rowInsertBottom": "Vložte řádek níže",
+    "columnInsertShiftDown": "Vložte buňky a posuňte dolů",
+    "columnInsertShiftRight": "Vložte buňky a posuňte doprava",
+    "columnDelete": "Smazat sloupec",
+    "rowDelete": "Smazat řádek",
+    "columnDeleteShiftUp": "Smažte buňky a posuňte se nahoru",
+    "columnDeleteShiftLeft": "Smažte buňky a posuňte se doleva"
   },
   "insertPageModal": {
     "title": "Vložit novou stránku",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Pravé záhlaví",
       "bottomHeader": "Spodní záhlaví",
       "documentContent": "Obsah dokumentu"
-    }
+    },
+    "label": "Přístupnost",
+    "accessibilityMode": "Režim usnadnění",
+    "skipTo": "Přejít na",
+    "document": "Dokument",
+    "notes": "Poznámky"
+  },
+  "formulaBar": {
+    "label": "Formule bar",
+    "range": "Rozsah",
+    "formulas": "Vzorce",
+    "sumif": "Podmíněný součet v celém rozsahu",
+    "sumsq": "Vrátí součet druhých mocnin rozsahu",
+    "sum": "Sečte všechna čísla v rozsahu",
+    "asinh": "Vrátí inverzní hyperbolický sinus čísla",
+    "acos": "Vrátí arckosinus čísla v radiánech",
+    "cosh": "Vrátí hyperbolický kosinus čísla",
+    "iseven": "Kontroluje, zda je číslo sudé",
+    "isodd": "Kontroluje, zda je číslo liché"
   }
 }

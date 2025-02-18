@@ -6,6 +6,7 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import classNames from 'classnames';
 
 /**
  * A button that performs the undo action.
@@ -13,7 +14,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const UndoButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, style, className } = props;
   const { presetDataElement, icon, title } = menuItems.undoButton;
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canUndo = useSelector((state) => selectors.canUndo(state, activeDocumentViewerKey));
@@ -32,13 +33,18 @@ const UndoButton = forwardRef((props, ref) => {
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} disabled={disabled} />
       : (
         <ActionButton
-          className={'PresetButton undo-button'}
+          className={classNames({
+            PresetButton: true,
+            'undo-button': true,
+            [className]: true,
+          })}
           dataElement={presetDataElement}
           title={title}
           img={icon}
           onClick={handleClick}
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
           disabled={disabled}
+          style={style}
         />
       )
   );
@@ -46,6 +52,8 @@ const UndoButton = forwardRef((props, ref) => {
 
 UndoButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 UndoButton.displayName = 'UndoButton';
 

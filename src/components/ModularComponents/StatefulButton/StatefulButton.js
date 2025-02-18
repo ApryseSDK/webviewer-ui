@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, forwardRef } from 'react';
 import '../../Button/Button.scss';
 import './StatefulButton.scss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import FlyoutItemContainer from '../FlyoutItemContainer';
+import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 
-const StatefulButton = (props) => {
-  const { dataElement, disabled, mount, unmount, states } = props;
+const StatefulButton = forwardRef((props, ref) => {
+  const { dataElement, disabled, mount, unmount, states, style, className, isFlyoutItem = false } = props;
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -43,17 +45,35 @@ const StatefulButton = (props) => {
 
   const { title, img, getContent, isActive } = states[activeState];
   const content = getContent ? getContent(states[activeState]) : '';
-  const className = [
+  const buttonClasses = [
     'StatefulButton',
     states[activeState].className ? states[activeState].className : '',
+    [className],
   ].join(' ').trim();
 
-  return (
+  const flyoutOnClick = (...args) => (e) => {
+    onClick();
+    props?.onClickHandler?.(...args)(e);
+  };
+
+  return isFlyoutItem ? (
+    <FlyoutItemContainer
+      {...props}
+      ref={ref}
+      label={content || title}
+      additionalClass={isActive && isActive(props.flyoutItem) ? 'active' : ''}
+      icon={getIconDOMElement({ icon: img }, props.items)}
+      onClickHandler={flyoutOnClick}
+      title={title}
+      dataElement={dataElement}
+      disabled={disabled}
+    />
+  ) : (
     <Button
       className={classNames({
         'CustomButton': true,
         'Button': true,
-        [className]: className
+        [buttonClasses]: true,
       })}
       isActive={isActive && isActive(props)}
       img={img}
@@ -62,14 +82,23 @@ const StatefulButton = (props) => {
       dataElement={dataElement}
       onClick={onClick}
       disabled={disabled}
+      style={style}
     ></Button>
   );
-};
+});
 
 StatefulButton.propTypes = {
+  dataElement: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  isFlyoutItem: PropTypes.bool,
+  onClickHandler: PropTypes.func,
+  flyoutItem: PropTypes.object,
+  items: PropTypes.array,
   initialState: PropTypes.string.isRequired,
   mount: PropTypes.func.isRequired,
   unmount: PropTypes.func,
+  style: PropTypes.object,
+  className: PropTypes.string,
   states: PropTypes.shape({
     activeState: PropTypes.shape({
       img: PropTypes.string,
@@ -87,5 +116,7 @@ StatefulButton.propTypes = {
     }),
   }),
 };
+
+StatefulButton.displayName = 'StatefulButton';
 
 export default React.memo(StatefulButton);

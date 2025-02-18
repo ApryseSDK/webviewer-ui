@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import ToolButton from './ToolButton';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/ToolButton',
@@ -53,4 +54,30 @@ export const OverrideToolButtonProps = () => {
       <ToolButton {...props} />
     </WithProvider>
   );
+};
+
+export const WithCustomStyle = () => {
+  const props = {
+    dataElement: 'AnnotationCreateSticky',
+    toolName: 'AnnotationCreateSticky',
+    img: 'icon-tool-measurement-arc',
+    title: 'Arc measurement',
+    className: 'arc-measurement-class',
+    style: {
+      backgroundColor: 'darksalmon',
+      color: 'white',
+      borderRadius: '50%',
+    }
+  };
+  return (
+    <WithProvider>
+      <ToolButton {...props} />
+    </WithProvider>
+  );
+};
+
+WithCustomStyle.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Arc measurement/i });
+  expect(button.classList.contains('arc-measurement-class')).toBe(true);
 };

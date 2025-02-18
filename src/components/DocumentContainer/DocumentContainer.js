@@ -59,6 +59,8 @@ class DocumentContainer extends React.PureComponent {
     bottomHeaderHeight: PropTypes.number,
     activeDocumentViewerKey: PropTypes.number,
     isLogoBarEnabled: PropTypes.bool,
+    currentTabs: PropTypes.array,
+    activeTab: PropTypes.number,
   };
 
   constructor(props) {
@@ -293,6 +295,8 @@ class DocumentContainer extends React.PureComponent {
       bottomHeaderHeight,
       leftHeaderWidth,
       documentContainerLeftMargin,
+      currentTabs,
+      activeTab
     } = this.props;
 
     const style = {
@@ -308,9 +312,9 @@ class DocumentContainer extends React.PureComponent {
     });
     const document = core.getDocument();
     const fileName = document ? removeFileNameExtension(document.filename) : '';
-    const showPageNav = totalPages > 1;
 
     const { customizableUI } = featureFlags;
+    const showPageNav = totalPages > 1 && !customizableUI;
     const footerStyle = {
       ...style,
       left: customizableUI ? `${leftHeaderWidth}px` : undefined,
@@ -320,12 +324,15 @@ class DocumentContainer extends React.PureComponent {
     if (customizableUI) {
       style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
     }
+    const tabSuffix = currentTabs.length > 0 ? `-${activeTab}` : '';
+    const tabId = `tab-${fileName}${tabSuffix}`;
+
     return (
       <div
         style={style}
         id={`document-container-${fileName}`}
         role="tabpanel"
-        aria-labelledby={`tab-${fileName}`}
+        aria-labelledby={tabId}
         className={classNames({
           'document-content-container': true,
           'closed': isMultiTabEmptyPageOpen,
@@ -404,6 +411,8 @@ const mapStateToProps = (state) => ({
   activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
   isLogoBarEnabled: !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
   leftHeaderWidth: selectors.getLeftHeaderWidth(state),
+  currentTabs: selectors.getTabs(state),
+  activeTab: selectors.getActiveTab(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

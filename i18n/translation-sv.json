@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Lägg till stycke",
     "add": "Lägg till",
+    "addSheet": "Lägg till ark",
     "apply": "Tillämpa",
     "applyAll": "Tillämpa alla",
     "calendar": "Kalender",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Bilagor",
-    "leftPanel": "Panel",
+    "leftPanel": "Vänster panel",
     "toolsHeader": "Verktyg",
     "searchOverlay": "Sök",
     "searchPanel": "Sök",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Säkerhetsvarning",
       "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Redigera varning",
+      "message": "Detta arknamn finns redan. Vänligen ange ett annat namn."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Redigera varning",
+      "message": "Detta arknamn får inte vara tomt."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Redigera varning",
+      "message": "Är du säker på att du vill ta bort det här bladet?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Lagt till:",
     "editing": "Redigering",
     "editingDescription": "Redigera dokument",
-    "pageBreak": "Sidbrytning",
     "reviewing": "Granskning",
     "reviewingDescription": "Ge förslag",
     "viewOnly": "Titta enbart",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Inklistring stöds inte i din webbläsare. Istället kan du använda ett kortkommando",
     "pastingWithoutFormatTitle": "Det går inte att klistra in utan formatering",
     "pastingWithoutFormatMessage": "Klistra in utan formatering stöds inte i din webbläsare. Istället kan du använda ett kortkommando",
+    "breaks": "Pauser",
+    "pageBreak": "Sidbrytning",
+    "pageBreakDescription": "Slutsida och start på ny sida",
+    "sectionBreakNextPage": "Avsnittsbrytning - Nästa sida",
+    "sectionBreakNextPageDescription": "Infoga avsnittsbrytning och börja på nästa sida",
+    "sectionBreakContinuous": "Sektionsavbrott - Kontinuerlig",
+    "sectionBreakContinuousDescription": "Infoga avsnittsbrytning och fortsätt på samma sida ",
+    "header": {
+      "0": "Rubrik",
+      "1": "Första sidans rubrik",
+      "2": "Jämn sidhuvud",
+      "3": "Udda sidhuvud"
+    },
+    "footer": {
+      "0": "Sidfot",
+      "1": "Första sidans sidfot",
+      "2": "Sidfot på jämn sida",
+      "3": "Sidfot på udda sida"
+    },
+    "options": "Alternativ",
+    "pageOptions": "Sidalternativ",
+    "removeHeader": "Ta bort rubriken",
+    "removeFooter": "Ta bort sidfot",
+    "headerFooterOptionsModal": {
+      "title": "Format för sidhuvud och sidfot",
+      "margins": "Marginaler",
+      "headerFromTop": "Header från toppen",
+      "footerFromBottom": "Sidfot från Botten",
+      "layouts": {
+        "layout": "Layout",
+        "noSelection": "Inget urval",
+        "differentFirstPage": "Annan första sida",
+        "differentEvenOddPages": "Olika jämna och udda sidor",
+        "differentFirstEvenOddPages": "Olika första, jämna och udda sidor"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Typsnittsfamilj"
     }
+  },
+  "sheetEditor": {
+    "editing": "Redigering",
+    "viewOnly": "Visning",
+    "editingDescription": "Redigera dokument",
+    "viewOnlyDescription": "Endast visning",
+    "bold": "Djärv",
+    "italic": "Kursiv",
+    "underline": "Betona",
+    "strikethrough": "Genomstruken",
+    "cellBorderStyle": "Gränsstil",
+    "merge": "Slå ihop",
+    "unmerge": "Avsluta",
+    "cellFormat": "Cellformat",
+    "automatic": "Automatisk",
+    "plainText": "Vanlig text",
+    "increaseDecimal": "Öka decimaltal",
+    "decreaseDecimal": "Minska decimaltal",
+    "number": "Antal",
+    "percent": "Procent",
+    "accounting": "Bokföring",
+    "financial": "Finansiell",
+    "currency": "Valuta",
+    "currencyRounded": "Valuta avrundad",
+    "calendar": "Datum",
+    "clockHour": "Tid",
+    "calendarTime": "Datum Tid",
+    "formatAsCurrency": "Formatera som valuta",
+    "formatAsPercent": "Formatera som procent",
+    "formatAsDecDecimal": "Minska decimalkomma",
+    "formatAsIncDecimal": "Öka decimalkomma",
+    "fontColor": "Teckensnittsfärg",
+    "cellBackgroundColor": "Cellbakgrundsfärg",
+    "textAlignment": "Textjustering",
+    "alignLeft": "Rikta åt vänster",
+    "alignCenter": "Rikta in mitten",
+    "alignRight": "Justera höger",
+    "alignTop": "Rikta upp toppen",
+    "alignMiddle": "Justera mitten",
+    "alignBottom": "Justera botten",
+    "cellAdjustment": "Celljustering",
+    "insertColLeft": "Infoga kolumn till vänster",
+    "columnInsertLeft": "Infoga kolumn till vänster",
+    "columnInsertRight": "Infoga kolumn till höger",
+    "rowInsertTop": "Sätt in raden ovanför",
+    "rowInsertBottom": "Infoga raden nedan",
+    "columnInsertShiftDown": "Infoga celler och flytta nedåt",
+    "columnInsertShiftRight": "Infoga celler och flytta åt höger",
+    "columnDelete": "Ta bort kolumn",
+    "rowDelete": "Ta bort rad",
+    "columnDeleteShiftUp": "Ta bort celler och flytta uppåt",
+    "columnDeleteShiftLeft": "Ta bort celler och flytta åt vänster"
   },
   "insertPageModal": {
     "title": "Infoga ny sida",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Höger rubrik",
       "bottomHeader": "Nedre rubrik",
       "documentContent": "Dokumentinnehåll"
-    }
+    },
+    "label": "Tillgänglighet",
+    "accessibilityMode": "Tillgänglighetsläge",
+    "skipTo": "Hoppa till",
+    "document": "Dokumentera",
+    "notes": "Anteckningar"
+  },
+  "formulaBar": {
+    "label": "Formelbar",
+    "range": "Räckvidd",
+    "formulas": "Formler",
+    "sumif": "En villkorad summa över ett intervall",
+    "sumsq": "Returnerar summan av kvadraterna i ett område",
+    "sum": "Lägger till alla siffror i ett intervall",
+    "asinh": "Returnerar invers hyperbolisk sinus för ett tal",
+    "acos": "Returnerar arccosinus för ett tal, i radianer",
+    "cosh": "Returnerar hyperbolisk cosinus för ett tal",
+    "iseven": "Kontrollerar om ett nummer är jämnt",
+    "isodd": "Kontrollerar om ett nummer är udda"
   }
 }

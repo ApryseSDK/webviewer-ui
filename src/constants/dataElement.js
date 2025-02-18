@@ -72,6 +72,7 @@ const DataElements = {
   CALIBRATION_MODAL: 'calibrationModal',
   PAGE_NAV_FLOATING_HEADER: 'page-nav-floating-header',
   TABS_LIST_MENU: 'tabsListMenu',
+  ADDITIONAL_SHEET_TABS_MENU: 'additionalSheetTabsMenu',
 
   NotesPanel: {
     DefaultHeader: {
@@ -140,6 +141,7 @@ const DataElements = {
   PAGE_CONTROLS_FLYOUT: 'pageControlsFlyout',
   NOTE_STATE_FLYOUT: 'noteStateFlyout',
   NOTE_POPUP_FLYOUT: 'notePopupFlyout',
+  SHEET_TAB_OPTIONS_FLYOUT: 'sheetTabOptionsFlyout',
   BOOKMARK_OUTLINE_FLYOUT: 'bookmarkOutlineFlyout',
   BOOKMARK_FLYOUT: 'bookmarkFlyout',
   LINE_SPACING_FLYOUT: 'lineSpacingFlyout',
@@ -171,6 +173,7 @@ const DataElements = {
   OPEN_FILE_MODAL: 'OpenFileModal',
   CUSTOM_MODAL: 'customModal',
   CREATE_PORTFOLIO_MODAL: 'createPortfolioModal',
+  HEADER_FOOTER_OPTIONS_MODAL: 'headerFooterOptionsModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
@@ -212,6 +215,8 @@ const DataElements = {
 
   // MultiViewer Mode (MultiViewer)
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
+  // Sheet Editor
+  SPREADSHEET_EDITOR_TOOLS_HEADER: 'spreadsheetEditorToolsHeader',
 
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
@@ -231,11 +236,14 @@ const DataElements = {
   OFFICE_EDITOR_DELETE_ROW: 'officeEditorDeleteRow',
   OFFICE_EDITOR_DELETE_COLUMN: 'officeEditorDeleteColumn',
   OFFICE_EDITOR_DELETE_TABLE: 'officeEditorDeleteTable',
+  OFFICE_EDITOR_BREAK_DROPDOWN_TOGGLE: 'officeEditorBreakDropdownToggle',
+  OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_PAGE_BREAK: 'officeEditorPageBreak',
   OFFICE_EDITOR_FLYOUT_COLOR_PICKER: 'officeEditorColorPicker',
   OFFICE_EDITOR_COLOR_PICKER_OVERLAY: 'officeEditorColorPickerOverlay',
   OFFICE_EDITOR_TEXT_COLOR_BUTTON: 'textColorButton',
   OFFICE_EDITOR_REVIEW_PANEL: 'officeEditorReviewPanel',
+  HEADER_FOOTER_CONTROLS_OVERLAY: 'headerFooterControlsOverlay',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
@@ -284,6 +292,7 @@ const DataElements = {
   SETTINGS_PRESET_BUTTON: 'settingsPresetButton',
   FORM_FIELD_EDIT_PRESET_BUTTON: 'formFieldEditPresetButton',
   CONTENT_EDIT_PRESET_BUTTON: 'contentEditPresetButton',
+  TOGGLE_ACCESSIBILITY_MODE_PRESET_BUTTON: 'toggleAccessibilityModePresetButton',
   BOLD_PRESET_BUTTON: 'boldPresetButton',
   ITALIC_PRESET_BUTTON: 'italicPresetButton',
   UNDERLINE_PRESET_BUTTON: 'underlinePresetButton',
@@ -295,7 +304,46 @@ const DataElements = {
   JUSTIFY_RIGHT_PRESET_BUTTON: 'justifyRightPresetButton',
   JUSTIFY_BOTH_PRESET_BUTTON: 'justifyBothPresetButton',
   OFFICE_EDITOR_COLOR_PICKER_PRESET_BUTTON: 'officeEditorColorPickerPresetButton',
-  NEW_SHEET_DOCUMENT_PRESET_BUTTON: 'newSheetDocumentPresetButton',
+  NEW_SPREADSHEET_PRESET_BUTTON: 'newSpreadsheetPresetButton',
+
+  STRIKETHROUGH_PRESET_BUTTON: 'strikethroughPresetButton',
+
+  CELL_TEXT_COLOR_BUTTON: 'cellTextColorButton',
+  CELL_BG_COLOR_BUTTON: 'cellBackgroundColorButton',
+
+
+  // Cell Border Style
+  BORDER_STYLE_BUTTON: 'cellBorderStyleButton',
+
+  MERGE_TOGGLE_BUTTON: 'mergeToggleButton',
+  UNMERGE_TOGGLE_BUTTON: 'unmergeToggleButton',
+
+  // Cell Formats
+  CELL_FORMAT_CURRENCY_BUTTON: 'cellFormatAsCurrencyButton',
+  CELL_FORMAT_PERCENT_BUTTON: 'cellFormatAsPercentButton',
+  CELL_FORMAT_DEC_DECIMAL_BUTTON: 'cellFormatAsDecDecimalButton',
+  CELL_FORMAT_INC_DECIMAL_BUTTON: 'cellFormatAsIncDecimalButton',
+  CELL_FORMAT_MORE_BUTTON: 'formatMore',
+  CELL_FORMAT_MORE_FLYOUT: 'cellFormatMoreFlyout',
+
+  CELL_COPY_BUTTON: 'cellCopyButton',
+  CELL_CUT_BUTTON: 'cellCutButton',
+  CELL_PASTE_BUTTON: 'cellPasteButton',
+
+  // Text Alignment
+  CELL_TEXT_ALIGNMENT_BUTTON: 'cellTextAlignmentButton',
+  CELL_TEXT_ALIGN_LEFT_BUTTON: 'cellTextAlignLeftButton',
+  CELL_TEXT_ALIGN_CENTER_BUTTON: 'cellTextAlignCenterButton',
+  CELL_TEXT_ALIGN_RIGHT_BUTTON: 'cellTextAlignRightButton',
+  CELL_TEXT_ALIGN_TOP_BUTTON: 'cellTextAlignTopButton',
+  CELL_TEXT_ALIGN_MIDDLE_BUTTON: 'cellTextAlignMiddleButton',
+  CELL_TEXT_ALIGN_BOTTOM_BUTTON: 'cellTextAlignBottomButton',
+  CELL_TEXT_ALIGNMENT_FLYOUT: 'cellTextAlignmentFlyout',
+
+  // Cell Adjustment
+  CELL_ADJUSTMENT_BUTTON: 'cellAdjustmentButton',
+  CELL_ADJUSTMENT_FLYOUT: 'cellAdjustmentFlyout ',
+  ABJ_INCERT_COL_LEFT: 'adjustmentIncertColLeft ',
 
   // Rubber Stamp Panel
   CREATE_RUBBER_STAMP_BUTTON_WRAP: 'createRubberStampButtonWrap',
@@ -303,6 +351,9 @@ const DataElements = {
 
   PREVIOUS_PAGE_BUTTON: 'previousPageButton',
   NEXT_PAGE_BUTTON: 'nextPageButton',
+
+  // Sheets Editor
+  FORMULA_BAR: 'formulaBar',
 };
 
 DataElements.TOOLBAR_GROUPS = [

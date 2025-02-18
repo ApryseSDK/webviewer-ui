@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import StatefulButtonComponent from './StatefulButton';
+import { expect, within } from '@storybook/test';
 
 const initialState = {
   viewer: {
@@ -72,4 +73,41 @@ StatefulButtonStates.args = {
     },
   },
   mount: () => {},
+};
+
+
+export const StatefulButtonWithStyleAndClass = BasicComponent.bind({});
+StatefulButtonWithStyleAndClass.args = {
+  type: 'statefulButton',
+  dataElement: 'clockwisePageBtn',
+  initialState: 'Clockwise',
+  states: {
+    Clockwise: {
+      img: 'icon-header-page-manipulation-page-rotation-clockwise-line',
+      onClick: (update) => {
+        update('CounterClockwise');
+      },
+      title: 'Clockwise',
+    },
+    CounterClockwise: {
+      img: 'icon-header-page-manipulation-page-rotation-counterclockwise-line',
+      onClick: (update) => {
+        update('Clockwise');
+      },
+      title: 'CounterClockwise',
+    },
+  },
+  mount: () => {},
+  style: {
+    background: 'pink',
+    color: 'darkblue',
+    border: '2px solid green',
+  },
+  className: 'custom-class',
+};
+
+StatefulButtonWithStyleAndClass.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Clockwise/i });
+  expect(button.classList.contains('custom-class')).toBe(true);
 };

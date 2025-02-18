@@ -13,6 +13,17 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onCrossStampAnnotationAdded = eventListeners.onCrossStampAnnotationAdded(dispatch, documentViewerKey);
   const onDisplayModeUpdated = eventListeners.onDisplayModeUpdated(dispatch);
   const onDocumentLoaded = eventListeners.onDocumentLoaded(store, documentViewerKey);
+  const enableRedactionElements = eventListeners.enableRedactionElements(dispatch);
+  const addPageLabelsToRedux = eventListeners.addPageLabelsToRedux(store, documentViewerKey);
+  const handlePasswordModal = eventListeners.handlePasswordModal(dispatch, documentViewerKey);
+  const showProgressModal = eventListeners.showProgressModal(dispatch);
+  const setPrintHandler = eventListeners.setPrintHandler(store, documentViewerKey);
+  const toggleAnnotations = eventListeners.toggleAnnotations();
+  const setServerProperties = eventListeners.setServerProperties();
+  const checkDocumentForTools = eventListeners.checkDocumentForTools(dispatch);
+  const updateOutlines = eventListeners.updateOutlines(dispatch, documentViewerKey);
+  const updatePortfolioAndLayers = eventListeners.updatePortfolioAndLayers(store);
+  const configureOfficeEditor = eventListeners.configureOfficeEditor(store);
   const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch, documentViewerKey);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
@@ -57,10 +68,16 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onAccessibleReadingOrderModeEnded = eventListeners.onAccessibleReadingOrderModeEnded(dispatch, store);
   const onAccessibleReadingOrderModeNoStructure = eventListeners.onAccessibleReadingOrderModeNoStructure(dispatch, store);
   const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch);
-
+  const onSpreadsheetEditorSelectionChanged = eventListeners.onSpreadsheetEditorSelectionChanged(dispatch);
   return {
     addEventHandlers: () => {
       if (documentViewerKey === 1) {
+        core.addEventListener('documentLoaded', enableRedactionElements, { once: true }, documentViewerKey);
+        core.addEventListener('documentLoaded', addPageLabelsToRedux, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', checkDocumentForTools, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', updateOutlines, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', updatePortfolioAndLayers, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', configureOfficeEditor, undefined, documentViewerKey);
         core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged, undefined, documentViewerKey);
         core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
         core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
@@ -76,6 +93,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('accessibleReadingOrderModeReady', onAccessibleReadingOrderModeReady);
         core.addEventListener('accessibleReadingOrderModeEnded', onAccessibleReadingOrderModeEnded);
         core.addEventListener('accessibleReadingOrderModeNoStructure', onAccessibleReadingOrderModeNoStructure);
+        core.addEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
         document.addEventListener('fullscreenchange', onFullScreenChange);
         document.addEventListener('mozfullscreenchange', onFullScreenChange);
         document.addEventListener('webkitfullscreenchange', onFullScreenChange);
@@ -105,6 +123,11 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText3', documentViewerKey).addEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).addEventListener('annotationAdded', onCaretAnnotationAdded);
       }
+      core.addEventListener('documentLoaded', handlePasswordModal, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', showProgressModal, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', setPrintHandler, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', toggleAnnotations, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', setServerProperties, undefined, documentViewerKey);
       core.addEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded, undefined, documentViewerKey);
       core.addEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded, undefined, documentViewerKey);
       core.addEventListener('displayModeUpdated', onDisplayModeUpdated, undefined, documentViewerKey);
@@ -129,6 +152,12 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
     },
     removeEventHandlers: () => {
       if (documentViewerKey === 1) {
+        core.removeEventListener('documentLoaded', enableRedactionElements, documentViewerKey);
+        core.removeEventListener('documentLoaded', addPageLabelsToRedux, documentViewerKey);
+        core.removeEventListener('documentLoaded', checkDocumentForTools, documentViewerKey);
+        core.removeEventListener('documentLoaded', updateOutlines, documentViewerKey);
+        core.removeEventListener('documentLoaded', updatePortfolioAndLayers, documentViewerKey);
+        core.removeEventListener('documentLoaded', configureOfficeEditor, documentViewerKey);
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted);
@@ -166,7 +195,13 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText2', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText3', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
+        core.removeEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
       }
+      core.removeEventListener('documentLoaded', handlePasswordModal, documentViewerKey);
+      core.removeEventListener('documentLoaded', showProgressModal, documentViewerKey);
+      core.removeEventListener('documentLoaded', setPrintHandler, documentViewerKey);
+      core.removeEventListener('documentLoaded', toggleAnnotations, documentViewerKey);
+      core.removeEventListener('documentLoaded', setServerProperties, documentViewerKey);
       core.removeEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded, documentViewerKey);
       core.removeEventListener('displayModeUpdated', onDisplayModeUpdated, documentViewerKey);
       core.removeEventListener('documentLoaded', onDocumentLoaded, documentViewerKey);

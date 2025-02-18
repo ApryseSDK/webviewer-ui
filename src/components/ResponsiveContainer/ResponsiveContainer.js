@@ -9,7 +9,7 @@ const propTypes = {
   elementRef: PropTypes.object,
   children: PropTypes.any,
   items: PropTypes.array,
-  parent: PropTypes.string,
+  parentDataElement: PropTypes.string,
 };
 
 const ResponsiveContainer = ({
@@ -17,7 +17,7 @@ const ResponsiveContainer = ({
   elementRef,
   children,
   items,
-  parent,
+  parentDataElement,
 }) => {
   const isResizingRef = useRef(false);
   const enabledItems = useSelector((state) => items.map((item) => {
@@ -33,8 +33,10 @@ const ResponsiveContainer = ({
     }
     isResizingRef.current = true;
     requestAnimationFrame(async () => {
-      let freeSpace;
       try {
+        if (ResizingPromises[parentDataElement]) {
+          await ResizingPromises[parentDataElement].promise;
+        }
         for (let item of items) {
           const { dataElement } = item;
           if (ResizingPromises[dataElement]) {
@@ -46,8 +48,12 @@ const ResponsiveContainer = ({
         if (newSize <= 0) {
           return;
         }
-        freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
-        const itemToResizeFunc = findItemToResize(enabledItems, freeSpace, headerDirection, parent, elementRef.current);
+        const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
+        const itemToResizeFunc = findItemToResize({
+          items: enabledItems,
+          freeSpace,
+          headerDirection, parentDataElement,
+        });
         if (itemToResizeFunc) {
           itemToResizeFunc();
         }
@@ -60,15 +66,27 @@ const ResponsiveContainer = ({
   };
 
   useEffect(() => {
-    if (!window.ResizeObserver) {
+    if (!window.ResizeObserver || !window.MutationObserver) {
       return console.error('Browser not support for header responsiveness');
+    }
+    if (!elementRef.current) {
+      // Element might be disabled so no error or warning
+      return;
     }
     const resizeObserver = new ResizeObserver(resizeResponsively);
     resizeObserver.observe(elementRef.current);
+    const mutationObserver = new MutationObserver(resizeResponsively);
+    mutationObserver.observe(elementRef.current, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    });
     return () => {
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
     };
-  }, [items, elementRef, parent, headerDirection]);
+  }, [items, elementRef?.current, parentDataElement, headerDirection]);
 
   useEffect(() => {
     resizeResponsively();

@@ -108,10 +108,18 @@
 .dropdown-text-icon {
 
   &.open,
-  &:hover {
+  &:hover:not([disabled]):not(.disabled) {
     .display-button {
       @extend %icon-button-hover;
       border-radius: 4px;
+    }
+  }
+
+  &[disabled],
+  &.disabled {
+    .display-button,
+    .Button {
+      cursor: not-allowed;
     }
   }
 

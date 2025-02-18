@@ -29,7 +29,6 @@ const initialState = {
       topHeaders: 40,
       bottomHeaders: 40
     },
-    lastPickedToolForGroupedItems: {},
     lastActiveToolForRibbon: {},
     customHeadersAdditionalProperties: {},
     modularComponents: mockModularComponents,

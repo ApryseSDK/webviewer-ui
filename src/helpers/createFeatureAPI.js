@@ -29,6 +29,8 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'linkButton',
         'noteState',
         DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
+        'tools-header',
+        'markReplaceTextToolButton',
       ],
       fn: () => {
         if (enable) {

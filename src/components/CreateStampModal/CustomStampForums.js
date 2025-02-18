@@ -243,8 +243,8 @@ const CustomStampForums = ({
           };
           updateCanvas(stampTextInputValue, timestampFormat, state);
         }
+        getInstanceNode().instance.UI.removeEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
       }
-      getInstanceNode().instance.UI.removeEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
     };
     getInstanceNode().instance.UI.addEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
   };

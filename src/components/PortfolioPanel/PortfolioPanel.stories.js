@@ -25,8 +25,6 @@ const mockInitialState = {
       portfolioPanel: true,
       panel: true,
     },
-    lastPickedToolForGroupedItems: {
-    },
     panelWidths: { panel: 300 },
     activeGroupedItems: ['insertGroupedItems'],
     activeTabInPanel: {

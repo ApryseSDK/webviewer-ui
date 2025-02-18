@@ -43,6 +43,7 @@ const ITEM_TYPE = {
   PRESET_BUTTON: 'presetButton',
   VIEW_CONTROLS: 'viewControls',
   TABS_PANEL: 'tabPanel',
+  SHEET_EDITOR_FILE_NAME: 'sheetEditorFileName',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
   FONT_FACE_DROPDOWN: 'fontFaceDropdown',
@@ -50,12 +51,16 @@ const ITEM_TYPE = {
   PAGE_NAVIGATION_BUTTON: 'pageNavigationButton',
   CREATE_TABLE_DROPDOWN: 'createTableDropdown',
   OFFICE_EDITOR_INSERT_IMAGE_BUTTON: 'officeEditorInsertImageButton',
-  OFFICE_EDITOR_PAGE_BREAK_BUTTON: 'officeEditorPageBreakButton',
+  OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
   OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON: 'officeEditorToggleNonPrintingCharactersButton',
   LINE_SPACING_BUTTON: 'lineSpacingButton',
   ORDERED_LIST: 'orderedListButton',
   UNORDERED_LIST: 'unorderedListButton',
+  GENERIC_FILE_TAB: 'genericFileTab',
+  LABEL: 'label',
+  SHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorModeDropdown',
+  CUSTOM_ELEMENT: 'customElement',
 };
 
 const FLYOUT_ITEM_TYPES = {
@@ -67,6 +72,7 @@ const FLYOUT_ITEM_TYPES = {
   ZOOM_OPTIONS_BUTTON: 'zoomOptionsButton',
   ZOOM_BUTTON: 'zoomButton',
   PAGE_NAVIGATION_INPUT: 'pageNavigationInput',
+  PAGE_NAVIGATION_BUTTON: 'pageNavigationButton',
   UNDO_BUTTON: 'undoButton',
   REDO_BUTTON: 'redoButton',
   TAB_PANEL_ITEM: 'tabPanelItem',
@@ -77,8 +83,20 @@ const FLYOUT_ITEM_TYPES = {
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
   FONT_FACE_DROPDOWN: 'fontFaceDropdown',
   STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
+  OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
+  SHEET_EDITOR_MODE_DROPDOWN: 'sheetEditorModeDropdown',
+  CUSTOM_ELEMENT: 'customElement',
+  STATEFUL_BUTTON: 'statefulButton',
+  RIBBON_GROUP: 'ribbonGroup',
+  GROUPED_ITEMS: 'groupedItems',
+  CUSTOM_BUTTON: 'customButton',
+  MODULAR_HEADER: 'modularHeader',
+  FLYOUT: 'flyout',
+  PAGE_CONTROLS: 'pageControls',
+  ZOOM: 'zoom',
+  VIEW_CONTROLS: 'viewControls',
 };
 
 const PREBUILT_FLYOUTS = [
@@ -150,13 +168,12 @@ const DEFAULT_STYLES = {
  * @property {string} BOLD {@link UI.Components.PresetButton.boldButton}
  * @property {string} ITALIC {@link UI.Components.PresetButton.italicButton}
  * @property {string} UNDERLINE {@link UI.Components.PresetButton.underlineButton}
- * @property {string} JUSTIFY_LEFT {@link UI.Components.PresetButton.justifyLeftButton}
- * @property {string} JUSTIFY_CENTER {@link UI.Components.PresetButton.justifyCenterButton}
- * @property {string} JUSTIFY_RIGHT {@link UI.Components.PresetButton.justifyRightButton}
+ * @property {string} ALIGN_LEFT {@link UI.Components.PresetButton.alignLeftButton}
+ * @property {string} ALIGN_CENTER {@link UI.Components.PresetButton.alignCenterButton}
+ * @property {string} ALIGN_RIGHT {@link UI.Components.PresetButton.alignRightButton}
  * @property {string} JUSTIFY_BOTH {@link UI.Components.PresetButton.justifyBothButton}
  * @property {string} OE_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorColorPicker}
  * @property {string} INSERT_IMAGE {@link UI.Components.PresetButton.insertImageButton}
- * @property {string} PAGE_BREAK {@link UI.Components.PresetButton.pageBreakButton}
  * @property {string} OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON {@link UI.Components.PresetButton.officeEditorToggleNonPrintingCharactersButton}
  * @example
  * const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
@@ -165,7 +182,7 @@ const PRESET_BUTTON_TYPES = {
   UNDO: 'undoButton',
   REDO: 'redoButton',
   NEW_DOCUMENT: 'newDocumentButton',
-  NEW_SHEET_DOCUMENT: 'newSheetDocumentButton',
+  NEW_SPREADSHEET: 'newSpreadsheetButton',
   FILE_PICKER: 'filePickerButton',
   DOWNLOAD: 'downloadButton',
   FULLSCREEN: 'fullscreenButton',
@@ -175,21 +192,63 @@ const PRESET_BUTTON_TYPES = {
   SETTINGS: 'settingsButton',
   FORM_FIELD_EDIT: 'formFieldEditButton',
   CONTENT_EDIT: 'contentEditButton',
+  TOGGLE_ACCESSIBILITY_MODE: 'toggleAccessibilityModeButton',
   RENAME: 'renameButton',
   INCREASE_INDENT: 'increaseIndentButton',
   DECREASE_INDENT: 'decreaseIndentButton',
   BOLD: 'boldButton',
   ITALIC: 'italicButton',
   UNDERLINE: 'underlineButton',
-  JUSTIFY_LEFT: 'justifyLeftButton',
-  JUSTIFY_CENTER: 'justifyCenterButton',
-  JUSTIFY_RIGHT: 'justifyRightButton',
+  STRIKETHROUGH: 'strikethroughButton',
+  ALIGN_LEFT: 'alignLeftButton',
+  ALIGN_CENTER: 'alignCenterButton',
+  ALIGN_RIGHT: 'alignRightButton',
   JUSTIFY_BOTH: 'justifyBothButton',
+  ALIGN_TOP: 'alignTopButton',
+  ALIGN_MIDDLE: 'alignMiddleButton',
+  ALIGN_BOTTOM: 'alignBottomButton',
+
   OE_COLOR_PICKER: 'officeEditorColorPicker',
   OE_TOGGLE_NON_PRINTING_CHARACTERS: 'officeEditorToggleNonPrintingCharactersButton',
   INSERT_IMAGE: 'insertImageButton',
   COMPARE: 'compareButton',
   PAGE_BREAK: 'pageBreakButton',
+
+  CELL_DECORATOR_BOLD: 'cellDecoratorBold',
+  CELL_DECORATOR_ITALIC: 'cellDecoratorItalic',
+  CELL_DECORATOR_UNDERLINE: 'cellDecoratorUnderline',
+  CELL_DECORATOR_STRIKETHROUGH: 'strikethroughButton',
+
+  CELL_TEXT_COLOR: 'cellTextColor',
+  CELL_BACKGROUND_COLOR: 'cellBackgroundColor',
+
+  // CELL TEXT ALIGNMENT
+  CELL_TEXT_ALIGNMENT: 'cellTextAlignment',
+  CELL_ALIGN_LEFT: 'cellAlignLeft',
+  CELL_ALIGN_CENTER: 'cellAlignCenter',
+  CELL_ALIGN_RIGHT: 'cellAlignRight',
+  // END TEXT ALIGNMENT
+
+
+  CELL_MERGE_TOGGLE: 'cellMergeToggle',
+  CELL_UNMERGE_TOGGLE: 'cellUnmergeToggle',
+
+  CELL_FORMAT_CURRENCY: 'formatCurrency',
+  CELL_FORMAT_PERCENT: 'formatPercent',
+  CELL_FORMAT_DEC_DECIMAL: 'formatDecreaseDecimal',
+  CELL_FORMAT_INC_DECIMAL: 'formatIncreaseDecimal',
+  CELL_FORMAT_MORE: 'formatMore',
+
+  // Cell Adjustment
+  CELL_ADJUSTMENT: 'cellAdjustment',
+  ABJ_INCERT_COL_LEFT: 'adjustmentIncertColLeft',
+
+  // Cell Border Style
+  CELL_BORDER_STYLE: 'cellBorderStyle',
+
+  CELL_COPY: 'cellCopy',
+  CELL_PASTE: 'cellPaste',
+  CELL_CUT: 'cellCut',
 };
 
 const PRESET_BUTTONS_MODAL_TOGGLES = [
@@ -205,6 +264,40 @@ const VIEWER_CONFIGURATIONS = {
   DEFAULT: 'default',
   DOCX_EDITOR: 'docxEditor',
 };
+
+const CELL_ADJUSTMENT_BUTTONS = [
+  'ColumnInsertLeft',
+  'ColumnInsertRight',
+  'RowInsertTop',
+  'RowInsertBottom',
+  'ColumnInsertShiftDown',
+  'ColumnInsertShiftRight',
+  'divider',
+  'ColumnDelete',
+  'RowDelete',
+  'ColumnDeleteShiftUp',
+  'ColumnDeleteShiftLeft',
+];
+
+const CELL_FORMAT_BUTTONS = [
+  { label: 'Automatic' },
+  { label: 'PlainText', icon: 'icon-tool-text-free-text' },
+  'divider',
+  { label: 'IncreaseDecimal' },
+  { label: 'DecreaseDecimal' },
+  'divider',
+  { label: 'Number', desc: '1,000.12' },
+  { label: 'Percent', desc: '10.12%' },
+  'divider',
+  { label: 'Accounting', desc: '$(1,000.12)' },
+  { label: 'Financial', icon: 'ic-calculator', desc: '(1,000.12)' },
+  { label: 'Currency', icon: 'ic-dollar-circle', desc: '$1,000.12' },
+  { label: 'CurrencyRounded', icon: 'ic-dollar-circle-rounded', desc: '$1,000' },
+  'divider',
+  { label: 'Calendar', desc: '9/26/2008' },
+  { label: 'ClockHour', desc: '3:59:00PM' },
+  { label: 'CalendarTime', desc: '9/26/2008 15:29:00' },
+];
 
 export {
   PLACEMENT,
@@ -224,4 +317,6 @@ export {
   FLYOUT_ITEM_TYPES,
   PRESET_BUTTONS_MODAL_TOGGLES,
   VIEWER_CONFIGURATIONS,
+  CELL_ADJUSTMENT_BUTTONS,
+  CELL_FORMAT_BUTTONS,
 };

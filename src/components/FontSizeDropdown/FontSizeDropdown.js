@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import core from 'core';
 import PropTypes from 'prop-types';
 import { restoreSelection, keepTextEditSelectionOnInputFocus } from './pdfEditHelper';
@@ -123,11 +123,11 @@ const FontSizeDropdown = ({
     applyOnlyOnBlur && restoreSelection();
   };
 
-  const onClickDropdownItem = useCallback((key) => {
+  const onClickDropdownItem = (key) => {
     // no floating point numbers
     const sizeAsNumber = parseInt(key, 10);
     sizeChange(sizeAsNumber);
-  }, []);
+  };
 
   const currentKeyAsString = `${currentFontSize}`;
 

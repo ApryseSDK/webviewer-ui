@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
 import core from 'core';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { OfficeEditorEditMode, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 
 import './TrackChangeOverlay.scss';
 
@@ -31,7 +31,6 @@ const items = [
     description: 'viewOnlyDescription',
   }
 ];
-const translationPrefix = 'officeEditor.';
 
 const TrackChangeOverlay = ({
   isFlyoutItem = false,
@@ -52,9 +51,9 @@ const TrackChangeOverlay = ({
   );
 
   const renderDropdownItem = (item) => (
-    <div className='Dropdown__item-TrackChange'>
-      <div className='Dropdown__item-mode'>{t(`${translationPrefix}${item.key}`)}</div>
-      <div className='Dropdown__item-description'>{t(`${translationPrefix}${item.description}`)}</div>
+    <div className='Dropdown__item-vertical'>
+      <div className='Dropdown__item-label'>{t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}${item.key}`)}</div>
+      <div className='Dropdown__item-description'>{t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}${item.description}`)}</div>
     </div>
   );
 
@@ -76,11 +75,11 @@ const TrackChangeOverlay = ({
         id='track-change-overlay'
         items={items}
         width={144}
-        getCustomItemStyle={() => ({ width: '144px', height: '48px' })}
+        getCustomItemStyle={() => ({ height: '48px' })}
         applyCustomStyleToButton={false}
         currentSelectionKey={(editMode === OfficeEditorEditMode.PREVIEW) ? OfficeEditorEditMode.REVIEWING : editMode}
         onClickItem={onClickItem}
-        getDisplayValue={(item) => t(`${translationPrefix}${item.key}`)}
+        getDisplayValue={(item) => t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}${item.key}`)}
         getKey={(item) => item.key}
         renderItem={renderDropdownItem}
         className="text-left"

@@ -7,8 +7,8 @@ import DataElements from 'constants/dataElement';
 import core from 'core';
 
 import { printPages } from 'helpers/print';
-import { creatingPages } from 'helpers/rasterPrint';
-import { printPDF, createPages, iosWindowOpen, convertToGrayscaleDocument } from 'helpers/embeddedPrint';
+import { createRasterizedPrintPages } from 'helpers/rasterPrint';
+import { processEmbeddedPrintOptions, printEmbeddedPDF } from 'helpers/embeddedPrint';
 import PrintModal from './PrintModal';
 import useFocusOnClose from 'hooks/useFocusOnClose';
 
@@ -116,32 +116,17 @@ const PrintModalContainer = () => {
     }
 
     if (useEmbeddedPrint && fileType !== 'xod') {
-      embeddedPrinting(iosWindowOpen());
+      embeddedPrinting();
     } else {
       rasterPrinting(e);
     }
   };
 
-  const embeddedPrinting = async (windowRef) => {
-    if (pagesToPrint.length < 1) {
-      return;
-    }
+  const embeddedPrinting = async () => {
+    const printingOptions = { isCurrentView, includeAnnotations, includeComments, watermarkModalOptions, pagesToPrint };
     const document = core.getDocument();
     const annotManager = core.getAnnotationManager();
-    const printingOptions = { isCurrentView, includeAnnotations, includeComments };
-    let pdf = await createPages(
-      document,
-      annotManager,
-      pagesToPrint,
-      printingOptions,
-      watermarkModalOptions
-    );
-
-    if (isGrayscale) {
-      pdf = await convertToGrayscaleDocument(pdf);
-    }
-
-    printPDF(pdf, windowRef);
+    printEmbeddedPDF(await processEmbeddedPrintOptions(printingOptions, document, annotManager));
   };
 
   const rasterPrinting = (e) => {
@@ -174,7 +159,7 @@ const PrintModalContainer = () => {
       isGrayscale
     };
 
-    const createPages = creatingPages(
+    const createPages = createRasterizedPrintPages(
       pagesToPrint,
       printOptions,
       undefined

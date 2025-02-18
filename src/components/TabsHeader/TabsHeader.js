@@ -119,10 +119,11 @@ const TabsHeader = () => {
     e.dataTransfer.effectAllowed = 'move';
   };
 
-  const onDragOver = (e, index, fileName) => {
+  const onDragOver = (e, index, tab) => {
     e.preventDefault();
     e.stopPropagation();
-    const id = `tab-${fileName}`;
+    const fileName = removeFileNameExtension(tab.options.filename);
+    const id = `tab-${fileName}-${tab.id}`;
     const element = e.currentTarget;
     const centerX = element.offsetLeft + element.offsetWidth / 2;
     const moveLeft = centerX >= e.pageX;
@@ -245,11 +246,11 @@ const TabsHeader = () => {
     const renderedTabs = currTabs.map((tab, index) => {
       const isActive = tab.id === activeTab;
       const fileName = removeFileNameExtension(tab.options.filename);
-      const tabId = `tab-${fileName}`;
+      const tabId = `tab-${fileName}-${tab.id}`;
       if (index < breakpoint) {
         return <Tab
           onDragStart={(e) => onDragStart(e, index)}
-          onDragOver={(e) => onDragOver(e, index, fileName)}
+          onDragOver={(e) => onDragOver(e, index, tab)}
           onDragLeave={onDragLeave}
           setActive={() => setActiveTab(tab.id)}
           key={tab.id}

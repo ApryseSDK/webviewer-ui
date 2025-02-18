@@ -3,6 +3,7 @@ import RibbonItem from './RibbonItem';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { mockModularComponents } from '../AppStories/mockAppState';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/RibbonItem',
@@ -22,7 +23,6 @@ const initialState = {
     toolButtonObjects: {},
     activeCustomRibbon: 'Ribbon Item1',
     activeGroupedItems: [],
-    lastPickedToolForGroupedItems: {},
     customHeadersAdditionalProperties: {},
     modularComponents: mockModularComponents,
     lastActiveToolForRibbon: {},
@@ -130,4 +130,27 @@ export const RibbonItemsWithHoverState = () => {
 
 RibbonItemsWithHoverState.parameters = {
   pseudo: { hover: true },
+};
+
+export const RibbonItemsWithCustomStyleAndClass = () => {
+  return (
+    <Provider store={store}>
+      <div style={{ display: 'flex', gap: '8px', backgroundColor: 'white' }}>
+        <RibbonItem {...item1Props} style={{ borderStyle: 'dotted' }} className='ribbon-class'/>
+        <RibbonItem {...item2Props} style={{ color: 'hotpink' }} className='ribbon-class'/>
+        <RibbonItem {...item3Props} style={{ border: '2px dotted blue' }} className='ribbon-class'/>
+      </div>
+    </Provider>
+  );
+};
+
+RibbonItemsWithCustomStyleAndClass.parameters = {
+  pseudo: { hover: true },
+};
+
+RibbonItemsWithCustomStyleAndClass.play = async ({ canvasElement }) => {
+  const ribbonItems = canvasElement.querySelectorAll('.RibbonItem');
+  ribbonItems.forEach((item) => {
+    expect(item.classList.contains('ribbon-class')).toBe(true);
+  });
 };

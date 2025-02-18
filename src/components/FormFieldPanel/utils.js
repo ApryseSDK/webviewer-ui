@@ -5,7 +5,7 @@ const { Annotations, Tools } = window.Core;
 
 export const defaultProperties = {
   name: '',
-  value: '',
+  defaultValue: '',
   radioButtonGroups: [],
 };
 
@@ -24,6 +24,7 @@ export const defaultFlags = {
 export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdownDisabled) => {
   const currentTool = core.getToolMode();
   const panelFields = [];
+
   switch (true) {
     case annotation instanceof Annotations.RadioButtonWidgetAnnotation:
       panelFields.push(fields['RADIO_GROUP']);
@@ -32,16 +33,29 @@ export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdo
       panelFields.push(fields['NAME']);
       break;
   }
+
   switch (true) {
     case annotation instanceof Annotations.SignatureWidgetAnnotation && !isSignatureOptionsDropdownDisabled:
     case currentTool instanceof Tools.SignatureFormFieldCreateTool && !isSignatureOptionsDropdownDisabled:
       panelFields.push(fields['SIGNATURE_OPTION']);
       break;
-    case annotation instanceof Annotations.TextWidgetAnnotation:
-    case currentTool instanceof Tools.TextFormFieldCreateTool:
-      panelFields.push(fields['VALUE']);
-      break;
   }
+
+  const noneSelected = !annotation;
+  const isTextWidgetSelected = annotation instanceof Annotations.TextWidgetAnnotation;
+  const isTextFormFieldToolSelected = currentTool instanceof Tools.TextFormFieldCreateTool;
+
+  const showDefaultValueInput = (
+    isTextWidgetSelected ||
+    // This handles an edge case where if the text field tool is active but a non-text widget is selected
+    // it will incorrectly show the default value input for the wrong widget type.
+    (isTextFormFieldToolSelected && (isTextWidgetSelected || noneSelected))
+  );
+
+  if (showDefaultValueInput) {
+    panelFields.push(fields['DEFAULT_VALUE']);
+  }
+
   return panelFields;
 };
 
@@ -132,10 +146,10 @@ export const createFields = (options) => {
       type: 'text',
       focus: true,
     },
-    VALUE: {
+    DEFAULT_VALUE: {
       label: 'formField.formFieldPopup.fieldValue',
       onChange: onFieldValueChange,
-      value: fieldProperties.value,
+      value: fieldProperties.defaultValue,
       type: 'text',
     },
     RADIO_GROUP: {

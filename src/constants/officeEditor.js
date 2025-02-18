@@ -23,6 +23,7 @@ export const STYLE_TOGGLE_OPTIONS = {
   Bold: 'bold',
   Italic: 'italic',
   Underline: 'underline',
+  Strikethrough: 'strikethrough',
 };
 
 export const LIST_OPTIONS = {
@@ -54,6 +55,10 @@ export const OFFICE_NUMBER_OPTIONS = [
 export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
 
 export const OfficeEditorEditMode = window.Core.Document.OfficeEditorEditMode;
+
+export const OfficeEditorHeaderFooterLayouts = window.Core.Document.OfficeEditorHeaderFooterLayouts;
+
+export const EditingStreamType = window.Core.Document.EditingStreamType;
 
 export const OFFICE_EDITOR_SCOPE = 'office-editor';
 
@@ -115,3 +120,7 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
   },
 };
 /* eslint-enable custom/no-hex-colors */
+
+export const CM_PER_INCH = 2.54;
+
+export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';

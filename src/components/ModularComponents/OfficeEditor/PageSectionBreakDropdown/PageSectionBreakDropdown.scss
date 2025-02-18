@@ -1,0 +1,13 @@
+@import '../../../../constants/officeEditor.scss';
+
+.office-editor-break-dropdown {
+  @include oe-modular-custom-dropdown;
+
+  .Dropdown__item-description {
+    font-size: 13px;
+  }
+
+  &.modular-ui.flyout-item {
+    @include oe-modular-flyout-dropdown;
+  }
+}

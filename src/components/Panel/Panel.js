@@ -74,6 +74,12 @@ const DesktopPanel = ({ children }) => {
     dispatch(actions.setPanelWidth(dataElement, Math.min(_width, maxAllowedWidth)));
   };
 
+  const onDragOver = (e) => {
+    // Enable drop operations for child elements, e.g. ThumbnailPanel
+    e.preventDefault();
+  };
+
+
   return (
     <div
       className={classNames({
@@ -88,6 +94,7 @@ const DesktopPanel = ({ children }) => {
         'multi-tab-active': isMultiTabActive,
       })}
       data-element={dataElement}
+      onDragOver={onDragOver}
     >
       {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}

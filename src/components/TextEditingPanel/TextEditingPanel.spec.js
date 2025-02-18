@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import React, { useState } from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import TextEditingPanel from './TextEditingPanel';
 import core from 'core';
 
@@ -117,5 +117,43 @@ describe('TextEditingPanel', () => {
 
     redoButton.click();
     expect(mockProps.undoRedoProperties.handleRedo).toHaveBeenCalled();
+  });
+
+  it('should call handlePropertyChange with correct selectedContentBox when a font size dropdown item is clicked', async () => {
+    const checkIsCalled = jest.fn();
+    const TestWrapper = () => {
+      const [selectedContentBox, setSelectedContentBox] = useState(null);
+      const handlePropertyChange = jest.fn(() => {
+        checkIsCalled();
+        expect(selectedContentBox).toEqual({ id: 1, text: 'Updated content' });
+      });
+      mockProps.handlePropertyChange = handlePropertyChange;
+      mockProps.contentSelectMode = true;
+
+      return (
+        <div>
+          <button
+            data-testid="update-content-box"
+            onClick={() => setSelectedContentBox({ id: 1, text: 'Updated content' })}
+          >
+            Update Content Box
+          </button>
+          <TestTextEditingPanel {...mockProps} />
+        </div>
+      );
+    };
+
+    render(<TestWrapper />);
+
+    const updateContentBoxButton = screen.getByRole('button', { name: 'Update Content Box' });
+    fireEvent.click(updateContentBoxButton);
+
+    const fontSizeDropdown = screen.getByRole('combobox', { name: /Font Size/i });
+    fireEvent.click(fontSizeDropdown);
+
+    const fontSizeItem24 = screen.getByRole('option', { name: '196' });
+
+    fireEvent.click(fontSizeItem24);
+    expect(checkIsCalled).toHaveBeenCalled();
   });
 });

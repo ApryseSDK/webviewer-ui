@@ -24,14 +24,7 @@ const state = {
     openElements: {},
     genericPanels: defaultPanels,
     activeGroupedItems: ['annotateGroupedItems'],
-    lastPickedToolForGroupedItems: {
-      annotateGroupedItems: 'AnnotationCreateTextUnderline',
-    },
     activeCustomRibbon: 'toolbarGroup-Annotate',
-    lastPickedToolAndGroup: {
-      tool: 'AnnotationCreateTextUnderline',
-      group: ['annotateGroupedItems'],
-    },
     activeToolName: 'AnnotationCreateTextUnderline',
     isMultiTab: true,
     tabs:[

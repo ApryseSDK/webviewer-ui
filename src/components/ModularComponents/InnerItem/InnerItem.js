@@ -11,18 +11,21 @@ import ZoomControls from '../ZoomControls';
 import ToolButton from '../ToolButton';
 import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
+import GenericFileTab from '../GenericFileTab';
 import ViewControls from '../ViewControls';
-import OfficeEditorFileName from '../OfficeEditor/OfficeEditorFileName';
+import EditorFileName from '../EditorFileName';
+import Label from '../Label';
 import FontSizeDropdown from '../OfficeEditor/FontSizeDropdown';
 import FontFaceDropdown from '../OfficeEditor/FontFaceDropdown';
 import StylePresetDropdown from '../OfficeEditor/StylePresetDropdown';
 import CreateTableDropdown from '../OfficeEditor/CreateTableDropdown';
 import OfficeEditorModeDropdown from '../OfficeEditor/OfficeEditorModeDropdown';
+import SheetEditorModeDropdown from '../SheetEditorModeDropdown';
 import LineSpacingToggleButton from '../OfficeEditor/LineSpacing';
 import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertImageButton';
-import OfficeEditorPageBreakButton from '../OfficeEditor/OfficeEditorPageBreakButton';
-
+import PageSectionBreakDropdown from '../OfficeEditor/PageSectionBreakDropdown';
 import ListToggleButton from '../OfficeEditor/ListToggleButton';
+import CustomElement from 'components/CustomElement';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -53,8 +56,10 @@ const InnerItem = (props) => {
       return <PresetButton key={key} {...props} />;
     case ITEM_TYPE.VIEW_CONTROLS:
       return <ViewControls key={key} {...props} />;
+    case ITEM_TYPE.SHEET_EDITOR_FILE_NAME:
+      return <EditorFileName key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_FILE_NAME:
-      return <OfficeEditorFileName key={key} {...props} />;
+      return <EditorFileName key={key} {...props} />;
     case ITEM_TYPE.FONT_SIZE_DROPDOWN:
       return <FontSizeDropdown key={key} {...props} />;
     case ITEM_TYPE.FONT_FACE_DROPDOWN:
@@ -65,8 +70,8 @@ const InnerItem = (props) => {
       return <CreateTableDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON:
       return <OfficeEditorInsertImageButton key={key} {...props} />;
-    case ITEM_TYPE.OFFICE_EDITOR_PAGE_BREAK_BUTTON:
-      return <OfficeEditorPageBreakButton key={key} {...props} />;
+    case ITEM_TYPE.OFFICE_EDITOR_BREAK_DROPDOWN:
+      return <PageSectionBreakDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_MODE_DROPDOWN:
       return <OfficeEditorModeDropdown key={key}  {...props} />;
     case ITEM_TYPE.LINE_SPACING_BUTTON:
@@ -75,6 +80,14 @@ const InnerItem = (props) => {
       return <ListToggleButton {...props} listType={LIST_OPTIONS.Ordered} key={key} />;
     case ITEM_TYPE.UNORDERED_LIST:
       return <ListToggleButton {...props} listType={LIST_OPTIONS.Unordered} key={key} />;
+    case ITEM_TYPE.GENERIC_FILE_TAB:
+      return <GenericFileTab {...props} key={key} />;
+    case ITEM_TYPE.LABEL:
+      return <Label key={key} {...props} />;
+    case ITEM_TYPE.SHEET_EDITOR_MODE_DROPDOWN:
+      return <SheetEditorModeDropdown key={key} {...props} />;
+    case ITEM_TYPE.CUSTOM_ELEMENT:
+      return <CustomElement key={key} {...props} />;
     default:
       console.warn(`${type} is not a valid item type.`);
       return null;

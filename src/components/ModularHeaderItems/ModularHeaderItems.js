@@ -61,7 +61,11 @@ const ModularHeaderItems = (props) => {
 
     dispatch(actions.updateFlyout(flyoutDataElement, flyout));
   }, [size, items.length]);
-  useSizeStore({ elementRef, dataElement: headerId, size, headerDirection, shouldDelay: true });
+  useSizeStore({
+    elementRef,
+    dataElement: headerId,
+    headerDirection,
+  });
 
   const headerItems = items?.map((item, index) => {
     const hasToShrink = size > 0;
@@ -93,7 +97,8 @@ const ModularHeaderItems = (props) => {
         maxWidth: `${maxWidth}px`,
         maxHeight: `${maxHeight}px`,
       }}>
-      <ResponsiveContainer headerDirection={headerDirection} elementRef={elementRef} parent={headerId} items={items}>
+      <ResponsiveContainer headerDirection={headerDirection} elementRef={elementRef} parentDataElement={headerId}
+        items={items}>
         {headerItems}
       </ResponsiveContainer>
       {size > 0 &&

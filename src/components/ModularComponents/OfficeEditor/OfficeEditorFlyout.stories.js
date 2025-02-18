@@ -8,7 +8,7 @@ import { expect } from '@storybook/test';
 
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 
 export default {
@@ -70,21 +70,21 @@ const unorderedListButton = {
 };
 
 const leftAlignButton = {
-  dataElement: 'justifyLeftButton',
+  dataElement: 'alignLeftButton',
   type: 'presetButton',
-  buttonType: 'justifyLeftButton'
+  buttonType: 'alignLeftButton'
 };
 
 const centerAlignButton = {
-  dataElement: 'justifyCenterButton',
+  dataElement: 'alignCenterButton',
   type: 'presetButton',
-  buttonType: 'justifyCenterButton',
+  buttonType: 'alignCenterButton',
 };
 
 const rightAlignButton = {
-  dataElement: 'justifyRightButton',
+  dataElement: 'alignRightButton',
   type: 'presetButton',
-  buttonType: 'justifyRightButton',
+  buttonType: 'alignRightButton',
 };
 
 const justifyBothButton = {
@@ -157,13 +157,11 @@ const initialState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING
+    editMode: OfficeEditorEditMode.EDITING,
+    stream: EditingStreamType.BODY,
   },
   viewer: {
     isOfficeEditorMode: true,
-    lastPickedToolForGroupedItems: {
-      undefined: '',
-    },
     toolButtonObjects: {},
     colorMap: {},
     disabledElements: {},
@@ -280,11 +278,11 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   expect(unorderedListButton.parentElement.classList.contains('active'), 'unordered list button should be inactve').toBe(false);
 
   // check alignment buttons active state
-  const leftAlignButton = canvasElement.querySelector('[data-element="justifyLeftButton"]');
+  const leftAlignButton = canvasElement.querySelector('[data-element="alignLeftButton"]');
   expect(leftAlignButton.parentElement.classList.contains('active'), 'justify left button should be inactive').toBe(false);
-  const centerAlignButton = canvasElement.querySelector('[data-element="justifyCenterButton"]');
+  const centerAlignButton = canvasElement.querySelector('[data-element="alignCenterButton"]');
   expect(centerAlignButton.parentElement.classList.contains('active'), 'justify center button should be inactive').toBe(false);
-  const rightAlignButton = canvasElement.querySelector('[data-element="justifyRightButton"]');
+  const rightAlignButton = canvasElement.querySelector('[data-element="alignRightButton"]');
   expect(rightAlignButton.parentElement.classList.contains('active'), 'justify right button should be inactive').toBe(false);
   const justifyBothButton = canvasElement.querySelector('[data-element="justifyBothButton"]');
   expect(justifyBothButton.parentElement.classList.contains('active'), 'justify both button should be active').toBe(true);
@@ -294,6 +292,6 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
 
   // check active non printing characters button
-  // const nonPrintingCharactersButton = canvasElement.querySelector('[data-element="officeEditorToggleNonPrintingCharactersButton"]');
-  // expect(nonPrintingCharactersButton.parentElement.classList.contains('active'), 'non printing characters button should be active').toBe(true);
+  const nonPrintingCharactersButton = canvasElement.querySelector('[data-element="officeEditorToggleNonPrintingCharactersButton"]');
+  expect(nonPrintingCharactersButton.parentElement.classList.contains('active'), 'non printing characters button should be active').toBe(true);
 };

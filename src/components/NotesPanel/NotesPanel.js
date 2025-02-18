@@ -50,6 +50,7 @@ const NotesPanel = ({
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NOTES_PANEL));
   const pageLabels = useSelector(selectors.getPageLabels, shallowEqual);
   const customNoteFilter = useSelector(selectors.getCustomNoteFilter, shallowEqual);
+  const internalNoteFilter = useSelector(selectors.getInternalNoteFilter, shallowEqual);
   const currentNotesPanelWidth = useSelector((state) => parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state), shallowEqual);
   const notesInLeftPanel = useSelector(selectors.getNotesInLeftPanel);
   const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
@@ -127,6 +128,10 @@ const NotesPanel = ({
 
     if (customNoteFilter) {
       shouldRender = shouldRender && customNoteFilter(note);
+    }
+
+    if (internalNoteFilter) {
+      shouldRender = shouldRender && internalNoteFilter(note);
     }
 
     if (searchInput) {

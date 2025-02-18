@@ -1,5 +1,5 @@
-import React, { useState, useEffect, forwardRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, forwardRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { workerTypes } from 'constants/types';
@@ -9,6 +9,8 @@ import DataElements from 'constants/dataElement';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import useFocusHandler from 'hooks/useFocusHandler';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
+import selectors from 'selectors';
 
 /**
  * A button that opens the save as modal.
@@ -16,21 +18,26 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const SaveAsButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, className, style } = props;
   const [documentType, setDocumentType] = useState();
   const dispatch = useDispatch();
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   useEffect(() => {
-    const onDocumentLoaded = () => {
-      const type = core.getDocument()?.getType();
-      setDocumentType(type);
+    const onDocumentLoaded = (viewerKey) => {
+      const document = core.getDocument(viewerKey);
+      setDocumentType(document?.getType() || null);
     };
-    onDocumentLoaded();
+
+    onDocumentLoaded(activeDocumentViewerKey);
     core.addEventListener('documentLoaded', onDocumentLoaded);
-    return () => {
-      core.removeEventListener('documentLoaded', onDocumentLoaded);
-    };
+    return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
+  }, [activeDocumentViewerKey]);
+
+  const handleDocumentUnloaded = useCallback(() => {
+    setDocumentType(null);
   }, []);
+  useOnDocumentUnloaded(handleDocumentUnloaded);
 
   const handleClick = () => {
     dispatch(actions.openElement(DataElements.SAVE_MODAL));
@@ -38,7 +45,7 @@ const SaveAsButton = forwardRef((props, ref) => {
 
   const handleSaveAsButtonClick = useFocusHandler(handleClick);
 
-  const isDisabled = documentType === workerTypes.XOD;
+  const isDisabled = !documentType || documentType === workerTypes.XOD;
 
   if (isDisabled) {
     if (isFlyoutItem) {
@@ -51,12 +58,20 @@ const SaveAsButton = forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={handleSaveAsButtonClick} />
       :
-      getPresetButtonDOM(PRESET_BUTTON_TYPES.SAVE_AS, isDisabled, handleSaveAsButtonClick)
+      getPresetButtonDOM({
+        buttonType: PRESET_BUTTON_TYPES.SAVE_AS,
+        isDisabled,
+        onClick: handleSaveAsButtonClick,
+        className,
+        style,
+      })
   );
 });
 
 SaveAsButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 SaveAsButton.displayName = 'SaveAsButton';
 

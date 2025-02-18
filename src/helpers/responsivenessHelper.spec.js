@@ -4,7 +4,8 @@ import sizeManager, {
   findItemToResize,
   getCurrentFreeSpace,
   resetLastSizedElementMap,
-  useSizeStore
+  useSizeStore,
+  storeWidth
 } from './responsivenessHelper';
 import { renderHook } from '@testing-library/react-hooks';
 
@@ -13,8 +14,12 @@ const noop = () => {
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useLayoutEffect: jest.fn(),
-  useEffect: noop,
+  useEffect: jest.fn(),
+}));
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useStore: () => ({}),
 }));
 
 jest.spyOn(React, 'useLayoutEffect');
@@ -62,17 +67,25 @@ window.getComputedStyle = jest.fn().mockImplementation((element) => {
 
 describe('Responsiveness Helper', () => {
   describe('Tests for useSizeStore hook', () => {
-    test('Stores the size of an element in the sizeManager object', () => {
+    test('Stores the size of an element in the sizeManager object', async () => {
       const dataElement = 'modularHeaderGroupedItems';
       const size = 0;
       const headerDirection = DIRECTION.ROW;
       const elementRef = {
-        current: createHTMLElement('div', 150, 32)
+        current: createHTMLElement('div', 150, 32, { dataElement })
       };
+      const childElement = createHTMLElement('div', 150, 32);
+      elementRef.current.appendChild(childElement);
 
-      renderHook(() => useSizeStore({ dataElement, size, elementRef, headerDirection }));
-      useSizeStore({ dataElement, size, elementRef, headerDirection });
-      React.useLayoutEffect.mock.calls[0][0]();
+      renderHook(() => useSizeStore({ dataElement, elementRef, headerDirection }));
+      useSizeStore({ dataElement, elementRef, headerDirection });
+
+      storeWidth({
+        dataElement,
+        element: elementRef.current,
+        headerDirection,
+        size,
+      });
 
       expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 150 });
       expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 32 });
@@ -96,9 +109,15 @@ describe('Responsiveness Helper', () => {
 
       renderHook(() => useSizeStore({ dataElement, size, elementRef, headerDirection }));
       useSizeStore({ dataElement, size, elementRef, headerDirection });
-      React.useLayoutEffect.mock.calls[0][0]();
 
-      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 150 });
+      storeWidth({
+        dataElement,
+        element: elementRef.current,
+        headerDirection,
+        size,
+      });
+
+      expect(sizeManager[dataElement].sizeToWidth).toEqual({ '0': 144 });
       expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 32 });
     });
   });
@@ -197,7 +216,11 @@ describe('Responsiveness Helper', () => {
         'canShrink': true,
         'size': 1,
         shrink: jest.fn(),
-        grow: jest.fn()
+        grow: jest.fn(),
+        sizeToWidth: {
+          '0': 160,
+          '1': 150,
+        }
       };
     });
 
@@ -212,7 +235,7 @@ describe('Responsiveness Helper', () => {
       const modularHeaderGroupedItemsDom = createHTMLElement('div', 150, 32, { dataElement: 'modularHeaderGroupedItems' });
       parentDomElement.appendChild(modularHeaderGroupedItemsDom);
 
-      const returnFunction = findItemToResize(items, freeSpace, headerDirection, parentDataElement, parentDomElement);
+      const returnFunction = findItemToResize({ items, freeSpace, headerDirection, parentDataElement });
       expect(typeof returnFunction).toBe('function');
       returnFunction();
       expect(sizeManager['modularHeaderGroupedItems'].shrink).toBeCalled();
@@ -227,7 +250,7 @@ describe('Responsiveness Helper', () => {
       const modularHeaderGroupedItemsDom = createHTMLElement('div', 150, 32, { dataElement: 'modularHeaderGroupedItems' });
       parentDomElement.appendChild(modularHeaderGroupedItemsDom);
 
-      const returnFunction = findItemToResize(items, freeSpace, headerDirection, parentDataElement, parentDomElement);
+      const returnFunction = findItemToResize({ items, freeSpace, headerDirection, parentDataElement });
       expect(typeof returnFunction).toBe('function');
       returnFunction();
       expect(sizeManager[parentDataElement].grow).toBeCalled();

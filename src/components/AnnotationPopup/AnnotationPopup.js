@@ -190,6 +190,7 @@ const AnnotationPopup = ({
   let StrokeStyle = 'solid';
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
   const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
+  const showClearSignatureButton = isAppearanceSignature && !showFormFieldButton;
   try {
     StrokeStyle = (focusedAnnotation['Style'] === 'dash')
       ? `${focusedAnnotation['Style']},${focusedAnnotation['Dashes']}`
@@ -326,13 +327,13 @@ const AnnotationPopup = ({
                     onClick={onEditContent}
                   />
                 )}
-                {isAppearanceSignature && (
+                {showClearSignatureButton && (
                   <ActionButton
                     className="main-menu-button"
                     dataElement="annotationClearSignatureButton"
-                    label={isReadOnlySignature ? 'action.readOnlySignature' : (isRightClickMenu ? 'action.clearSignature' : '')}
+                    label={!isReadOnlySignature && isRightClickMenu ? 'action.clearSignature' : ''}
                     title={isReadOnlySignature ? 'action.readOnlySignature' : (!isRightClickMenu ? 'action.clearSignature' : '')}
-                    img={isReadOnlySignature ? '' : 'icon-delete-line'}
+                    img={'icon-delete-line'}
                     onClick={onClearAppearanceSignature}
                     isNotClickableSelector={() => isReadOnlySignature}
                   />

@@ -390,8 +390,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
   pendingCanvases.push(id);
 });
 
-// printOptions = includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, colorMap, dateFormat, isCurrentView, language, timezone, createCanvases, isGrayscale
-export const creatingPages = (pagesToPrint, printOptions, onProgress) => {
+export const createRasterizedPrintPages = (pagesToPrint, printOptions, onProgress) => {
   const createdPages = [];
   pendingCanvases = [];
   PRINT_QUALITY = printOptions?.printQuality;

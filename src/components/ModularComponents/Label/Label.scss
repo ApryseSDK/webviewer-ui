@@ -1,0 +1,16 @@
+@import "../../../constants/styles";
+
+.Label {
+  cursor: default;
+  font-weight: bold;
+  font-size: var(--font-size-default);
+  font-family: var(--font-family);
+  white-space: nowrap;
+
+  &:not(.flyout-label) {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+}

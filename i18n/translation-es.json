@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Agregar párrafo",
     "add": "Agregar",
+    "addSheet": "Agregar hoja",
     "apply": "Aplicar",
     "applyAll": "Aplicar todo",
     "calendar": "Calandrar",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Archivos adjuntos",
-    "leftPanel": "Panel",
+    "leftPanel": "Panel izquierdo",
     "toolsHeader": "Herramientas",
     "searchOverlay": "Buscar",
     "searchPanel": "Buscar",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Advertencia de seguridad",
       "message": "Este documento está intentando conectarse a:\n\n{{- uri}}\n\n Si confía en este documento, haga clic en Confirmar para abrirlo."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Advertencia de edición",
+      "message": "Este nombre de hoja ya existe. Por favor, introduzca otro nombre."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Advertencia de edición",
+      "message": "Este nombre de hoja no puede estar vacío."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Advertencia de edición",
+      "message": "¿Está seguro de que desea eliminar esta hoja?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Agregado:",
     "editing": "Edición",
     "editingDescription": "Editar documento",
-    "pageBreak": "Salto de página",
     "reviewing": "Revisando",
     "reviewingDescription": "Hacer sugerencias",
     "viewOnly": "Sólo vista",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Su navegador no admite pegar. En su lugar, puedes usar un atajo de teclado.",
     "pastingWithoutFormatTitle": "Pegar sin formatear no está disponible",
     "pastingWithoutFormatMessage": "Su navegador no admite pegar sin formatear. En su lugar, puedes usar un atajo de teclado.",
+    "breaks": "Descansos",
+    "pageBreak": "Salto de página",
+    "pageBreakDescription": "Fin de página y comienzo en nueva página",
+    "sectionBreakNextPage": "Salto de sección - Página siguiente",
+    "sectionBreakNextPageDescription": "Insertar salto de sección y comenzar en la página siguiente",
+    "sectionBreakContinuous": "Salto de sección - Continuo",
+    "sectionBreakContinuousDescription": "Insertar salto de sección y continuar en la misma página",
+    "header": {
+      "0": "Encabezamiento",
+      "1": "Encabezado de la primera página",
+      "2": "Encabezado de página par",
+      "3": "Encabezado de página extraño"
+    },
+    "footer": {
+      "0": "Pie de página",
+      "1": "Pie de página de la primera página",
+      "2": "Pie de página uniforme",
+      "3": "Pie de página impar"
+    },
+    "options": "Opciones",
+    "pageOptions": "Opciones de página",
+    "removeHeader": "Quitar encabezado",
+    "removeFooter": "Quitar pie de página",
+    "headerFooterOptionsModal": {
+      "title": "Formato de encabezado y pie de página",
+      "margins": "Márgenes",
+      "headerFromTop": "Encabezado desde arriba",
+      "footerFromBottom": "Pie de página desde abajo",
+      "layouts": {
+        "layout": "Disposición",
+        "noSelection": "Sin selección",
+        "differentFirstPage": "Primera página diferente",
+        "differentEvenOddPages": "Diferentes páginas pares e impares",
+        "differentFirstEvenOddPages": "Diferentes páginas iniciales, pares e impares"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Familia de fuentes"
     }
+  },
+  "sheetEditor": {
+    "editing": "Edición",
+    "viewOnly": "Visita",
+    "editingDescription": "Editar documento",
+    "viewOnlyDescription": "Ver solamente",
+    "bold": "Atrevido",
+    "italic": "Itálico",
+    "underline": "Subrayar",
+    "strikethrough": "Tachado",
+    "cellBorderStyle": "Estilo de borde",
+    "merge": "Unir",
+    "unmerge": "Desvincular",
+    "cellFormat": "Formato de celda",
+    "automatic": "Automático",
+    "plainText": "Texto simple",
+    "increaseDecimal": "Aumentar decimal",
+    "decreaseDecimal": "Disminuir decimal",
+    "number": "Número",
+    "percent": "Por ciento",
+    "accounting": "Contabilidad",
+    "financial": "Financiero",
+    "currency": "Divisa",
+    "currencyRounded": "Moneda redondeada",
+    "calendar": "Fecha",
+    "clockHour": "Tiempo",
+    "calendarTime": "Fecha y hora",
+    "formatAsCurrency": "Formato como moneda",
+    "formatAsPercent": "Formato como porcentaje",
+    "formatAsDecDecimal": "Disminuir el punto decimal",
+    "formatAsIncDecimal": "Aumentar el punto decimal",
+    "fontColor": "Color de fuente",
+    "cellBackgroundColor": "Color de fondo de la celda",
+    "textAlignment": "Alineación de texto",
+    "alignLeft": "Alinear a la izquierda",
+    "alignCenter": "Alinear al centro",
+    "alignRight": "Alinear a la derecha",
+    "alignTop": "Alinear la parte superior",
+    "alignMiddle": "Alinear el medio",
+    "alignBottom": "Alinear la parte inferior",
+    "cellAdjustment": "Ajuste de celda",
+    "insertColLeft": "Insertar columna a la izquierda",
+    "columnInsertLeft": "Insertar columna a la izquierda",
+    "columnInsertRight": "Insertar columna a la derecha",
+    "rowInsertTop": "Insertar fila arriba",
+    "rowInsertBottom": "Insertar fila a continuación",
+    "columnInsertShiftDown": "Insertar celdas y desplazarse hacia abajo",
+    "columnInsertShiftRight": "Insertar celdas y desplazarlas a la derecha",
+    "columnDelete": "Eliminar columna",
+    "rowDelete": "Eliminar fila",
+    "columnDeleteShiftUp": "Eliminar celdas y desplazarse hacia arriba",
+    "columnDeleteShiftLeft": "Eliminar celdas y desplazarlas a la izquierda"
   },
   "insertPageModal": {
     "title": "Insertar nueva página",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Encabezado derecho",
       "bottomHeader": "Encabezado inferior",
       "documentContent": "Contenido del documento"
-    }
+    },
+    "label": "Accesibilidad",
+    "accessibilityMode": "Modo de accesibilidad",
+    "skipTo": "Saltar a",
+    "document": "Documento",
+    "notes": "Notas"
+  },
+  "formulaBar": {
+    "label": "Barra de fórmulas",
+    "range": "Rango",
+    "formulas": "Fórmulas",
+    "sumif": "Una suma condicional en un rango",
+    "sumsq": "Devuelve la suma de los cuadrados de un rango",
+    "sum": "Suma todos los números en un rango",
+    "asinh": "Devuelve el seno hiperbólico inverso de un número",
+    "acos": "Devuelve el arcocoseno de un número, en radianes.",
+    "cosh": "Devuelve el coseno hiperbólico de un número",
+    "iseven": "Comprueba si un número es par",
+    "isodd": "Comprueba si un número es impar"
   }
 }

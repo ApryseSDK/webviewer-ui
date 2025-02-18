@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { panelData } from 'src/constants/panel';
 import PropTypes from 'prop-types';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/ToggleElementButton',
@@ -55,9 +56,14 @@ export const ToggleElementButtonComponent = () => (
 
 export const ToggleElementButtonWithLabelOnHoverState = () => (
   <Provider store={store}>
-    <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' label='Toggle Element' />
+    <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' label='Toggle Element' className='custom-class' />
   </Provider>
 );
+ToggleElementButtonWithLabelOnHoverState.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Toggle Element/i });
+  expect(button.classList.contains('custom-class')).toBe(true);
+};
 
 ToggleElementButtonWithLabelOnHoverState.parameters = {
   pseudo: { hover: true },

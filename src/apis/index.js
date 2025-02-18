@@ -273,6 +273,8 @@ import closeTooltip from './closeToolTip';
 import startTextComparison from './startTextComparison';
 import stopTextComparison from './stopTextComparison';
 import setActiveTabInPanel from './setActiveTabInPanel';
+import Label from './ModularComponents/label';
+import CustomElement from 'src/apis/ModularComponents/customElement';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -459,19 +461,21 @@ export default (store) => {
       BottomHeader: ModularHeader(store),
       LeftHeader: ModularHeader(store),
       RightHeader: ModularHeader(store),
-      CustomButton,
-      ToolButton,
-      ToggleElementButton,
-      RibbonItem,
+      CustomButton: CustomButton(store),
+      ToolButton: ToolButton(store),
+      ToggleElementButton: ToggleElementButton(store),
+      RibbonItem: RibbonItem(store),
       RibbonGroup: RibbonGroup(store),
       Zoom,
       Flyout: Flyout(store),
-      PresetButton,
-      StatefulButton,
+      PresetButton: PresetButton(store),
+      StatefulButton : StatefulButton(store),
       ViewControls,
       PageControls,
       MainMenu: MainMenu(store),
       TabPanel,
+      Label: Label(store),
+      CustomElement: CustomElement(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     disableElement: disableElement(store),

@@ -3,7 +3,7 @@ import ActionButton from 'components/ActionButton';
 import core from 'core';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import PropTypes from 'prop-types';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import { menuItems } from '../../../Helpers/menuItems';
 
@@ -19,34 +19,25 @@ const NonPrintingCharactersToggleButton = forwardRef((props, ref) => {
     await doc.getOfficeEditor().toggleNonPrintingCharacters();
   };
 
-  const [
-    enableNonPrintingCharacters,
-  ] = useSelector(
-    (state) => [
-      selectors.isNonPrintingCharactersEnabled(state),
-    ],
-    shallowEqual,
-  );
+  const enableNonPrintingCharacters = useSelector((state) => selectors.isNonPrintingCharactersEnabled(state));
 
   const { icon, title, dataElement } = menuItems.officeEditorToggleNonPrintingCharactersButton;
 
   return (
-    isFlyoutItem ?
-      <FlyoutItemContainer
+    isFlyoutItem
+      ? <FlyoutItemContainer
         {...props}
         ref={ref}
         onClick={handleClick}
-        additionalClass = {enableNonPrintingCharacters ? 'active' : ''}
+        additionalClass={enableNonPrintingCharacters ? 'active' : ''}
       />
-      : (
-        <ActionButton
-          onClick={handleClick}
-          dataElement={dataElement}
-          title={title}
-          isActive={enableNonPrintingCharacters}
-          img={icon}
-        />
-      )
+      : <ActionButton
+        onClick={handleClick}
+        dataElement={dataElement}
+        title={title}
+        isActive={enableNonPrintingCharacters}
+        img={icon}
+      />
   );
 });
 

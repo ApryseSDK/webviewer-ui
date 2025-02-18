@@ -9,6 +9,7 @@ import wv3dPropertiesPanelReducer from 'src/redux/reducers/wv3dPropertiesPanelRe
 import officeEditorReducer from 'src/redux/reducers/officeEditorReducer';
 import digitalSignatureValidationReducer from 'src/redux/reducers/digitalSignatureValidationReducer';
 import featureFlagsReducer from './featureFlagsReducer';
+import spreadsheetEditorReducer from './spreadsheetEditorReducer';
 import { getInstanceID } from 'helpers/getRootNode';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -24,8 +25,6 @@ const viewerPersistConfig = {
     'lastPickedToolGroup',
     'activeGroupedItems',
     'lastActiveToolForRibbon',
-    'lastPickedToolForGroupedItems',
-    'lastPickedToolAndGroup',
     'activeCustomRibbon',
     'currentLanguage',
     'activeTheme',
@@ -58,4 +57,5 @@ export default combineReducers({
   wv3dPropertiesPanel: wv3dPropertiesPanelReducer(initialState.wv3dPropertiesPanel),
   officeEditor: officeEditorReducer(initialState.officeEditor),
   digitalSignatureValidation: digitalSignatureValidationReducer(initialState.digitalSignatureValidation),
+  spreadsheetEditor: spreadsheetEditorReducer(initialState.spreadsheetEditor)
 });

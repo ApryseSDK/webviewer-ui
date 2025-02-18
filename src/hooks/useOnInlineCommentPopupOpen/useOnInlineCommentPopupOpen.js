@@ -14,6 +14,7 @@ export default function useOnInlineCommentPopupOpen() {
     activeLeftPanel,
     inlineCommentFilter,
     activeDocumentViewerKey,
+    isReviewPanelOpen,
     isOfficeEditorMode,
   ] = useSelector(
     (state) => [
@@ -23,6 +24,7 @@ export default function useOnInlineCommentPopupOpen() {
       selectors.getActiveLeftPanel(state),
       selectors.getInlineCommentFilter(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_REVIEW_PANEL),
       selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual,
@@ -34,8 +36,9 @@ export default function useOnInlineCommentPopupOpen() {
   const [reopenFlag, setReopenFlag] = useState(false);
   const { ToolNames } = window.Core.Tools;
 
-  const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && (activeLeftPanel === 'notesPanel' || isOfficeEditorMode));
-
+  const isNotesPanelOpenOrActive = isNotesPanelOpen
+  || isReviewPanelOpen
+  || (notesInLeftPanel && leftPanelOpen && (activeLeftPanel === 'notesPanel' || isOfficeEditorMode));
   const closeAndReset = () => {
     dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
     setAnnotation(null);

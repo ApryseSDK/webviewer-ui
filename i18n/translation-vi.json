@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Thêm đoạn văn",
     "add": "Thêm vào",
+    "addSheet": "Thêm trang tính",
     "apply": "Áp dụng",
     "applyAll": "Áp dụng tất cả",
     "calendar": "Lịch",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Tệp đính kèm",
-    "leftPanel": "Bảng",
+    "leftPanel": "Bảng bên trái",
     "toolsHeader": "Công cụ",
     "searchOverlay": "Tìm kiếm",
     "searchPanel": "Tìm kiếm",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Cảnh báo an ninh",
       "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Chỉnh sửa cảnh báo",
+      "message": "Tên trang tính này đã tồn tại. Vui lòng nhập tên khác."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Chỉnh sửa cảnh báo",
+      "message": "Tên trang tính này không được để trống."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Chỉnh sửa cảnh báo",
+      "message": "Bạn có chắc chắn muốn xóa trang tính này không?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Thêm:",
     "editing": "Chỉnh sửa",
     "editingDescription": "Chỉnh sửa tài liệu",
-    "pageBreak": "Ngắt trang",
     "reviewing": "Đang xem xét",
     "reviewingDescription": "Góp ý kiến",
     "viewOnly": "Chỉ xem",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Dán không được hỗ trợ trong trình duyệt của bạn. Thay vào đó, bạn có thể sử dụng phím tắt",
     "pastingWithoutFormatTitle": "Dán không có định dạng không có sẵn",
     "pastingWithoutFormatMessage": "Dán không có định dạng không được hỗ trợ trong trình duyệt của bạn. Thay vào đó, bạn có thể sử dụng phím tắt",
+    "breaks": "Ngắt trang",
+    "pageBreak": "Ngắt trang",
+    "pageBreakDescription": "Kết thúc trang và bắt đầu trang mới",
+    "sectionBreakNextPage": "Ngắt phần - Trang tiếp theo",
+    "sectionBreakNextPageDescription": "Chèn ngắt phần và bắt đầu ở trang tiếp theo",
+    "sectionBreakContinuous": "Ngắt phần - Liên tục",
+    "sectionBreakContinuousDescription": "Chèn ngắt phần và tiếp tục trên cùng một trang",
+    "header": {
+      "0": "Tiêu đề",
+      "1": "Tiêu đề trang đầu tiên",
+      "2": "Tiêu đề trang chẵn",
+      "3": "Tiêu đề trang lẻ"
+    },
+    "footer": {
+      "0": "Chân trang",
+      "1": "Trang đầu tiên Chân trang",
+      "2": "Ngay cả chân trang",
+      "3": "Chân trang lẻ"
+    },
+    "options": "Tùy chọn",
+    "pageOptions": "Tùy chọn trang",
+    "removeHeader": "Xóa Tiêu đề",
+    "removeFooter": "Xóa chân trang",
+    "headerFooterOptionsModal": {
+      "title": "Định dạng đầu trang và chân trang",
+      "margins": "Lề",
+      "headerFromTop": "Tiêu đề từ trên xuống",
+      "footerFromBottom": "Chân trang từ dưới lên",
+      "layouts": {
+        "layout": "Cách trình bày",
+        "noSelection": "Không có lựa chọn",
+        "differentFirstPage": "Trang đầu tiên khác nhau",
+        "differentEvenOddPages": "Các trang chẵn và lẻ khác nhau",
+        "differentFirstEvenOddPages": "Các trang đầu tiên, trang chẵn và trang lẻ khác nhau"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1,5",
       "115": "1,15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Họ phông chữ"
     }
+  },
+  "sheetEditor": {
+    "editing": "Chỉnh sửa",
+    "viewOnly": "Xem",
+    "editingDescription": "Chỉnh sửa tài liệu",
+    "viewOnlyDescription": "Chỉ xem",
+    "bold": "In đậm",
+    "italic": "nghiêng",
+    "underline": "Gạch chân",
+    "strikethrough": "Gạch ngang",
+    "cellBorderStyle": "Kiểu viền",
+    "merge": "Hợp nhất",
+    "unmerge": "Bỏ hợp nhất",
+    "cellFormat": "Định dạng ô",
+    "automatic": "Tự động",
+    "plainText": "Văn bản thuần túy",
+    "increaseDecimal": "Tăng số thập phân",
+    "decreaseDecimal": "Giảm số thập phân",
+    "number": "Con số",
+    "percent": "Phần trăm",
+    "accounting": "Kế toán",
+    "financial": "Tài chính",
+    "currency": "Tiền tệ",
+    "currencyRounded": "Tiền tệ được làm tròn",
+    "calendar": "Ngày",
+    "clockHour": "Thời gian",
+    "calendarTime": "Ngày giờ",
+    "formatAsCurrency": "Định dạng như tiền tệ",
+    "formatAsPercent": "Định dạng theo phần trăm",
+    "formatAsDecDecimal": "Giảm dấu thập phân",
+    "formatAsIncDecimal": "Tăng dấu thập phân",
+    "fontColor": "Màu chữ",
+    "cellBackgroundColor": "Màu nền của ô",
+    "textAlignment": "Căn chỉnh văn bản",
+    "alignLeft": "Căn trái",
+    "alignCenter": "Căn giữa",
+    "alignRight": "Căn phải",
+    "alignTop": "Căn chỉnh đầu trang",
+    "alignMiddle": "Căn giữa",
+    "alignBottom": "Căn chỉnh đáy",
+    "cellAdjustment": "Điều chỉnh ô",
+    "insertColLeft": "Chèn cột bên trái",
+    "columnInsertLeft": "Chèn cột bên trái",
+    "columnInsertRight": "Chèn cột bên phải",
+    "rowInsertTop": "Chèn hàng ở trên",
+    "rowInsertBottom": "Chèn hàng bên dưới",
+    "columnInsertShiftDown": "Chèn ô và dịch chuyển xuống",
+    "columnInsertShiftRight": "Chèn ô và dịch chuyển sang phải",
+    "columnDelete": "Xóa cột",
+    "rowDelete": "Xóa hàng",
+    "columnDeleteShiftUp": "Xóa ô và dịch chuyển lên",
+    "columnDeleteShiftLeft": "Xóa ô và dịch chuyển sang trái"
   },
   "insertPageModal": {
     "title": "Chèn trang mới",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Tiêu đề bên phải",
       "bottomHeader": "Tiêu đề dưới cùng",
       "documentContent": "Nội dung tài liệu"
-    }
+    },
+    "label": "Khả năng tiếp cận",
+    "accessibilityMode": "Chế độ trợ năng",
+    "skipTo": "Bỏ qua để",
+    "document": "Tài liệu",
+    "notes": "Ghi chú"
+  },
+  "formulaBar": {
+    "label": "Thanh công thức",
+    "range": "Phạm vi",
+    "formulas": "Công thức",
+    "sumif": "Tổng có điều kiện trên một phạm vi",
+    "sumsq": "Trả về tổng các bình phương của một phạm vi",
+    "sum": "Thêm tất cả các số trong một phạm vi",
+    "asinh": "Trả về sin hyperbolic nghịch đảo của một số",
+    "acos": "Trả về arccosine của một số, tính bằng radian",
+    "cosh": "Trả về cosin hyperbolic của một số",
+    "iseven": "Kiểm tra xem một số có chẵn không",
+    "isodd": "Kiểm tra xem một số có phải là số lẻ không"
   }
 }

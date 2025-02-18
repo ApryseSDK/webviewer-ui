@@ -13,7 +13,7 @@ import ToggleElementButton from 'components/ModularComponents/ToggleElementButto
 import RedactionPanel from 'components/RedactionPanel';
 import { panelNames, panelData } from 'constants/panel';
 import DataElements from 'constants/dataElement';
-import { getPanelToRender, createCustomElement } from 'helpers/tabPanelHelper';
+import { getPanelToRender, createCustomElement, getEnabledPanels } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
 const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }) => {
@@ -41,6 +41,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
   const isPortfolioPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL));
   const portfolioFiles = useSelector((state) => selectors.getPortfolio(state));
+  const disabledElements = useSelector(selectors.getDisabledElements);
 
   const isSignaturePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SIGNATURE_PANEL));
 
@@ -60,7 +61,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
   const getPanelsObjectToRender = () => {
     const panelsToRender = {};
-    panelsList?.forEach((panel, index) => {
+    const enabledPanels = getEnabledPanels({ panelsList, disabledElements, tabPanelDataElement });
+    enabledPanels?.forEach((panel, index) => {
       const isPortfolioPanelNotAvailable = panel.render === panelNames.PORTFOLIO && (isPortfolioPanelDisabled || portfolioFiles.length === 0);
       if (isPortfolioPanelNotAvailable || panel.render === panelNames.SIGNATURE && isSignaturePanelDisabled) {
         return;
@@ -265,7 +267,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     setPanelsObject(getPanelsObjectToRender());
     // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
     setOverflowItems([]);
-  }, [isPortfolioPanelDisabled, portfolioFiles, isSignaturePanelDisabled, redactionAnnotationsList]);
+  }, [isPortfolioPanelDisabled, portfolioFiles, isSignaturePanelDisabled, redactionAnnotationsList, disabledElements]);
 
   useEffect(() => {
     if (!selectedTab) {
@@ -304,6 +306,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
       return visiblePanelTabs.map((tab, index) => {
         const panelInfo = panelsObject[tab];
         const isActive = tab === selectedTab;
+        const tabSelector = `${tab}-${tabPanelDataElement}`;
         return (
           <Button
             className={classNames({
@@ -312,9 +315,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
               hasLabel: labelFlag,
               lastButton: overflowItems.length === 0 && index === visiblePanelTabs.length - 1,
             })}
-            key={`${tab}-${tabPanelDataElement}`}
+            key={tabSelector}
             isActive={isActive}
-            dataElement={`${tab}-${tabPanelDataElement}`}
+            dataElement={tabSelector}
             img={panelInfo.icon}
             onClick={() => dispatch(actions.setActiveTabInPanel(tab, tabPanelDataElement))}
             title={panelInfo.title}

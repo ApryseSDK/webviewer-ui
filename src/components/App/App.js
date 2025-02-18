@@ -52,6 +52,8 @@ import useOnLinkAnnotationPopupOpen from 'hooks/useOnLinkAnnotationPopupOpen';
 import useOnAnnotationCreateSignatureToolMode from 'hooks/useOnAnnotationCreateSignatureToolMode';
 import useOnAnnotationCreateRubberStampToolMode from 'hooks/useOnAnnotationCreateRubberStampToolMode';
 import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
+import useOnHeaderFooterUpdate from 'src/hooks/useOnHeaderFooterUpdate';
+import useOnHeaderFooterOptionsModalOpen from 'src/hooks/useOnHeaderFooterOptionsModalOpen';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
@@ -71,11 +73,12 @@ import {
   defaultOfficeEditorModularHeaders,
   defaultOfficeEditorPanels,
 } from '../../redux/officeEditorModularComponents';
-import { defaultSheetsEditorHeaders,
-  defaultSheetsEditorComponents,
-  defaultSheetsEditorPanels,
-  defaultSheetFlyoutMap
-} from '../../redux/sheetsEditorComponents';
+import {
+  defaultSpreadsheetEditorHeaders,
+  defaultSpreadsheetEditorComponents,
+  defaultSpreadsheetEditorPanels,
+  defaultSpreadsheetFlyoutMap
+} from '../../redux/spreadsheetEditorComponents';
 
 import setLanguage from 'src/apis/setLanguage';
 import { loadDefaultFonts } from 'src/helpers/loadFont';
@@ -107,9 +110,10 @@ const App = ({ removeEventHandlers }) => {
   const customModals = useSelector(selectors.getCustomModals, shallowEqual);
   const notesInLeftPanel = useSelector(selectors.getNotesInLeftPanel, shallowEqual);
   const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
-  const isAccessibileMode = useSelector(selectors.isAccessibleMode);
+  const isAccessibleMode = useSelector(selectors.isAccessibleMode);
   const activeFlyout = useSelector(selectors.getActiveFlyout);
   const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
+  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
 
   // These hooks control behaviours regarding the opening and closing of panels and in the case
   // of the redaction hook it creates a reference that tracks the redaction annotations
@@ -118,7 +122,7 @@ const App = ({ removeEventHandlers }) => {
   useCloseOnWindowResize(() => {
     activeFlyout && dispatch(actions.closeElements([activeFlyout]));
   });
-  if (isAccessibileMode) {
+  if (isAccessibleMode) {
     useTabFocus();
   }
   const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
@@ -127,23 +131,23 @@ const App = ({ removeEventHandlers }) => {
   useEffect(() => {
     const uiConfigPath = getHashParameters('uiConfig', '');
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
-    const sheetsEditorBetaEnabled = getHashParameters('sheetsEditorBeta', false);
+    const isSpreadsheetEditorBetaEnabled = getHashParameters('enableSpreadsheetEditorBeta', false);
     if (isOfficeEditingEnabled && isMobileDevice) {
       dispatch(actions.showWarningMessage({
         message: 'officeEditor.notSupportedOnMobile',
       }));
     }
     if (isOfficeEditingEnabled) {
-    // If a UIConfig was passed it means we wanted to modify the UI so we won't load the default
+      // If a UIConfig was passed it means we wanted to modify the UI so we won't load the default
       if (!uiConfigPath) {
-        if (sheetsEditorBetaEnabled) {
-        // set Beat UI for Sheets Office Editor
-          dispatch(actions.setModularHeadersAndComponents(defaultSheetsEditorHeaders, defaultSheetsEditorComponents));
-          dispatch(actions.setGenericPanels(defaultSheetsEditorPanels));
-          Object.values(defaultSheetFlyoutMap).forEach((flyout) => {
+        if (isSpreadsheetEditorBetaEnabled) {
+          // set Beat UI for Sheets Office Editor
+          dispatch(actions.setModularHeadersAndComponents(defaultSpreadsheetEditorHeaders, defaultSpreadsheetEditorComponents));
+          dispatch(actions.setGenericPanels(defaultSpreadsheetEditorPanels));
+          Object.values(defaultSpreadsheetFlyoutMap).forEach((flyout) => {
             dispatch(actions.addFlyout(flyout));
           });
-          dispatch(actions.setIsSheetEditorMode(true));
+          dispatch(actions.enableSpreadsheetEditorMode());
         } else {
           // set default UI for DOCX Office Editor
           dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents));
@@ -442,6 +446,7 @@ const App = ({ removeEventHandlers }) => {
         )}
         {customizableUI && <TabsHeader />}
         <TopHeader />
+        {isSpreadsheetEditorModeEnabled && <LazyLoadWrapper Component={LazyLoadComponents.FormulaBar} dataElement={DataElements.FORMULA_BAR} />}
         <div className="content">
           <LeftHeader />
           {!customizableUI && <LazyLoadWrapper
@@ -637,6 +642,18 @@ const App = ({ removeEventHandlers }) => {
         <LogoBar />
         <LazyLoadWrapper Component={LazyLoadComponents.CreatePortfolioModal} dataElement={DataElements.CREATE_PORTFOLIO_MODAL} />
         <EmbeddedJSPopup />
+        {isOfficeEditorMode && (
+          <>
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.HeaderFooterControlsOverlay}
+              dataElement={DataElements.HEADER_FOOTER_CONTROLS_OVERLAY}
+              onOpenHook={useOnHeaderFooterUpdate}/>
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.HeaderFooterOptionsModal}
+              dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
+              onOpenHook={useOnHeaderFooterOptionsModalOpen}/>
+          </>
+        )}
       </div>
 
       <PrintHandler />

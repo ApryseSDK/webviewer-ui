@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Adăugați un paragraf",
     "add": "Adăuga",
+    "addSheet": "Adăugați o foaie",
     "apply": "aplica",
     "applyAll": "Aplica tot",
     "calendar": "Calendar",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Atasamente",
-    "leftPanel": "Panou",
+    "leftPanel": "Panoul din stânga",
     "toolsHeader": "Instrumente",
     "searchOverlay": "Căutare",
     "searchPanel": "Căutare",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Avertizare de securitate",
       "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Editare avertisment",
+      "message": "Acest nume de foaie există deja. Vă rugăm să introduceți un alt nume."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Editare avertisment",
+      "message": "Numele acestei foi nu poate fi gol."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Editare avertisment",
+      "message": "Sigur doriți să ștergeți această foaie?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Adăugat:",
     "editing": "Editare",
     "editingDescription": "Editați documentul",
-    "pageBreak": "Pauza de pagină",
     "reviewing": "Revizuirea",
     "reviewingDescription": "A face recomandări",
     "viewOnly": "Doar vizualizare",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Lipirea nu este acceptată în browserul dvs. În schimb, puteți utiliza o comandă rapidă de la tastatură",
     "pastingWithoutFormatTitle": "Lipirea fără formatare nu este disponibilă",
     "pastingWithoutFormatMessage": "Lipirea fără formatare nu este acceptată în browserul dvs. În schimb, puteți utiliza o comandă rapidă de la tastatură",
+    "breaks": "Pauze",
+    "pageBreak": "Pauza de pagină",
+    "pageBreakDescription": "Încheiați pagina și începeți pe o pagină nouă",
+    "sectionBreakNextPage": "Pauza de secțiune - Pagina următoare",
+    "sectionBreakNextPageDescription": "Introduceți pauză de secțiune și începeți pe pagina următoare",
+    "sectionBreakContinuous": "Pauza de sectiune - Continuu",
+    "sectionBreakContinuousDescription": "Introduceți pauză de secțiune și continuați pe aceeași pagină ",
+    "header": {
+      "0": "Antet",
+      "1": "Antet prima pagină",
+      "2": "Chiar și antetul paginii",
+      "3": "Antet de pagină impară"
+    },
+    "footer": {
+      "0": "Subsol",
+      "1": "Subsolul primei pagini",
+      "2": "Subsolul paginii chiar",
+      "3": "Subsolul paginii impare"
+    },
+    "options": "Opțiuni",
+    "pageOptions": "Opțiuni de pagină",
+    "removeHeader": "Eliminați antetul",
+    "removeFooter": "Eliminați subsolul",
+    "headerFooterOptionsModal": {
+      "title": "Format antet și subsol",
+      "margins": "Marjele",
+      "headerFromTop": "Antet de sus",
+      "footerFromBottom": "Subsol de jos",
+      "layouts": {
+        "layout": "Aspect",
+        "noSelection": "Fără selecție",
+        "differentFirstPage": "Prima pagină diferită",
+        "differentEvenOddPages": "Pagini pare și impare diferite",
+        "differentFirstEvenOddPages": "Pagini prima, pare și impare diferite"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Familia de fonturi"
     }
+  },
+  "sheetEditor": {
+    "editing": "Editare",
+    "viewOnly": "Vizionare",
+    "editingDescription": "Editați documentul",
+    "viewOnlyDescription": "Numai vizualizare",
+    "bold": "Îndrăzneţ",
+    "italic": "Cursiv",
+    "underline": "Subliniați",
+    "strikethrough": "Striat",
+    "cellBorderStyle": "Stil de chenar",
+    "merge": "Îmbinați",
+    "unmerge": "Deconectați",
+    "cellFormat": "Format de celule",
+    "automatic": "Automat",
+    "plainText": "Text simplu",
+    "increaseDecimal": "Mărește zecimală",
+    "decreaseDecimal": "Scădeți zecimală",
+    "number": "Număr",
+    "percent": "La sută",
+    "accounting": "Contabilitate",
+    "financial": "Financiar",
+    "currency": "Valută",
+    "currencyRounded": "Moneda rotunjită",
+    "calendar": "Data",
+    "clockHour": "Timp",
+    "calendarTime": "Data Ora",
+    "formatAsCurrency": "Formatați ca monedă",
+    "formatAsPercent": "Formatați ca procente",
+    "formatAsDecDecimal": "Descrește punctul zecimal",
+    "formatAsIncDecimal": "Mărește punctul zecimal",
+    "fontColor": "Culoare font",
+    "cellBackgroundColor": "Culoarea de fundal a celulei",
+    "textAlignment": "Alinierea textului",
+    "alignLeft": "Aliniați la stânga",
+    "alignCenter": "Aliniați centrul",
+    "alignRight": "Aliniați la dreapta",
+    "alignTop": "Aliniați partea de sus",
+    "alignMiddle": "Aliniați mijlocul",
+    "alignBottom": "Aliniați partea de jos",
+    "cellAdjustment": "Ajustarea celulelor",
+    "insertColLeft": "Inserați coloana la stânga",
+    "columnInsertLeft": "Inserați coloana la stânga",
+    "columnInsertRight": "Inserați coloana la dreapta",
+    "rowInsertTop": "Introduceți rândul de deasupra",
+    "rowInsertBottom": "Introduceți rândul de mai jos",
+    "columnInsertShiftDown": "Introduceți celule și comutați în jos",
+    "columnInsertShiftRight": "Introduceți celule și deplasați la dreapta",
+    "columnDelete": "Ștergeți coloana",
+    "rowDelete": "Ștergeți rândul",
+    "columnDeleteShiftUp": "Ștergeți celulele și treceți în sus",
+    "columnDeleteShiftLeft": "Ștergeți celulele și comutați la stânga"
   },
   "insertPageModal": {
     "title": "Inserați o pagină nouă",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Antet dreapta",
       "bottomHeader": "Antet de jos",
       "documentContent": "Conținutul documentului"
-    }
+    },
+    "label": "Accesibilitate",
+    "accessibilityMode": "Modul de accesibilitate",
+    "skipTo": "Sari la",
+    "document": "Document",
+    "notes": "Note"
+  },
+  "formulaBar": {
+    "label": "Barul de formule",
+    "range": "Gamă",
+    "formulas": "Formule",
+    "sumif": "O sumă condiționată dintr-un interval",
+    "sumsq": "Returnează suma pătratelor unui interval",
+    "sum": "Adaugă toate numerele dintr-un interval",
+    "asinh": "Returnează sinusul hiperbolic invers al unui număr",
+    "acos": "Returnează arccosinusul unui număr, în radiani",
+    "cosh": "Returnează cosinusul hiperbolic al unui număr",
+    "iseven": "Verifică dacă un număr este par",
+    "isodd": "Verifică dacă un număr este impar"
   }
 }

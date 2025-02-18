@@ -1,0 +1,3 @@
+import useOnHeaderFooterOptionsModalOpen from './useOnHeaderFooterOptionsModalOpen';
+
+export default useOnHeaderFooterOptionsModalOpen;

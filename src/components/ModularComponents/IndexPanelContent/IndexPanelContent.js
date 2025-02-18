@@ -134,7 +134,7 @@ const IndexPanelContent = forwardRef(({
     switch (val) {
       case menuTypes.OPENFORMFIELDPANEL:
         dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
-        setSelected(widgetId);
+        setSelected(widgetId, true);
         break;
       case menuTypes.RENAME:
         setIsEditing(true);

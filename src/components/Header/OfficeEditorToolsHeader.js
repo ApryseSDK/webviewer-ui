@@ -176,23 +176,12 @@ const ListOptions = ({ listType }) => {
           await core.getOfficeEditor().increaseIndent();
         }}
       />
-      {/* <ActionButton
-        onClick={async () => {
-          const doc = core.getDocument();
-          await doc.getOfficeEditor().toggleNonPrintingCharacters();
-        }}
-        dataElement={'officeEditorToggleNonPrintingCharactersButton'}
-        title={'officeEditor.nonPrintingCharacters'}
-        isActive={enableNonPrintingCharacters}
-        img={'icon-office-editor-toggle-non-printing-characters'}
-      /> */}
     </>
   );
 };
 
 ListOptions.propTypes = {
   listType: PropTypes.string,
-  enableNonPrintingCharacters: PropTypes.bool,
 };
 
 const OfficeEditorToolsHeader = () => {

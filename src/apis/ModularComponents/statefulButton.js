@@ -17,6 +17,8 @@ const { checkTypes, TYPES } = window.Core;
  * @param {string} [properties.dataElement] The data element of the button.
  * @param {string} [properties.title] The title of the button which appears in a tooltip.
  * @param {boolean} [properties.hidden] Whether the button is hidden or not.
+ * @param {object} [properties.style] An object defining inline CSS styles for the button, where each key represents a CSS property and its corresponding value.
+ * @param {string} [properties.className] String with CSS classes to be applied to the button, allowing additional styling and customization through external stylesheets.
  * @example
 const myButton = new instance.UI.Components.StatefulButton({
   initialState: 'SinglePage',
@@ -64,4 +66,7 @@ class StatefulButton extends Item {
   }
 }
 
-export default StatefulButton;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new StatefulButton(propsWithStore);
+};

@@ -22,7 +22,6 @@ const paramsToStringify = ['initialDoc'];
 
 export default window.isApryseWebViewerWebComponent ? (param, defaultValue = false) => {
   const defaultType = typeof defaultValue;
-
   const correctedParam = paramCorrections[param] ? paramCorrections[param] : param;
 
   let val = getInstanceNode().getAttribute(correctedParam);
@@ -38,7 +37,7 @@ export default window.isApryseWebViewerWebComponent ? (param, defaultValue = fal
 
       // Check if the filename has query parameters attached
       // E.g. "http://website.com/path/file.pdf?foo=bar"
-      if (/\?\w+=\w+/.test(file)) {
+      if (/\?[a-zA-Z0-9_-]+=\w+/.test(file)) {
         file = file.split('?')[0];
       }
 
@@ -66,6 +65,5 @@ export default window.isApryseWebViewerWebComponent ? (param, defaultValue = fal
       return false;
     }
   }
-
   return val || defaultValue;
 } : window.Core.getHashParameter;

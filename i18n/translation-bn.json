@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "অনুচ্ছেদ যোগ করুন",
     "add": "যোগ করুন",
+    "addSheet": "শীট যোগ করুন",
     "apply": "আবেদন করুন",
     "applyAll": "সব আবেদন",
     "calendar": "ক্যালেন্ডার",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "সংযুক্তি",
-    "leftPanel": "প্যানেল",
+    "leftPanel": "বাম প্যানেল",
     "toolsHeader": "টুলস",
     "searchOverlay": "অনুসন্ধান করুন",
     "searchPanel": "অনুসন্ধান করুন",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "নিরাপত্তা সতর্কতা",
       "message": "এই নথিতে সংযোগ করার চেষ্টা করছে:\n\n{{- uri}}\n\n আপনি যদি এই নথিতে বিশ্বাস করেন তবে এটি খুলতে নিশ্চিত করুন ক্লিক করুন৷"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "সতর্কতা সম্পাদনা করুন",
+      "message": "এই পত্রকের নাম ইতিমধ্যেই বিদ্যমান। অন্য নাম লিখুন."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "সতর্কতা সম্পাদনা করুন",
+      "message": "এই শীট নাম খালি হতে পারে না."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "সতর্কতা সম্পাদনা করুন",
+      "message": "আপনি কি এই পত্রকটি মুছতে চান?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "যোগ করা হয়েছে:",
     "editing": "সম্পাদনা",
     "editingDescription": "নথি সম্পাদনা করুন",
-    "pageBreak": "পৃষ্ঠা বিরতি",
     "reviewing": "পর্যালোচনা করা হচ্ছে",
     "reviewingDescription": "পরামর্শ করতে",
     "viewOnly": "শুধু দেখো",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "পেস্ট করা আপনার ব্রাউজারে সমর্থিত নয়। পরিবর্তে, আপনি একটি কীবোর্ড শর্টকাট ব্যবহার করতে পারেন",
     "pastingWithoutFormatTitle": "বিন্যাস ছাড়া আটকানো উপলব্ধ নয়",
     "pastingWithoutFormatMessage": "বিন্যাস ছাড়া পেস্ট করা আপনার ব্রাউজারে সমর্থিত নয়। পরিবর্তে, আপনি একটি কীবোর্ড শর্টকাট ব্যবহার করতে পারেন",
+    "breaks": "বিরতি",
+    "pageBreak": "পৃষ্ঠা বিরতি",
+    "pageBreakDescription": "পৃষ্ঠা শেষ করুন এবং নতুন পৃষ্ঠায় শুরু করুন",
+    "sectionBreakNextPage": "বিভাগ বিরতি - পরবর্তী পৃষ্ঠা",
+    "sectionBreakNextPageDescription": "বিভাগ বিরতি ঢোকান এবং পরবর্তী পৃষ্ঠায় শুরু করুন",
+    "sectionBreakContinuous": "বিভাগ বিরতি - ক্রমাগত",
+    "sectionBreakContinuousDescription": "বিভাগ বিরতি ঢোকান এবং একই পৃষ্ঠায় চালিয়ে যান ",
+    "header": {
+      "0": "হেডার",
+      "1": "প্রথম পৃষ্ঠার শিরোনাম",
+      "2": "জোড় পৃষ্ঠার শিরোনাম",
+      "3": "বিজোড় পৃষ্ঠার শিরোনাম"
+    },
+    "footer": {
+      "0": "পাদলেখ",
+      "1": "প্রথম পৃষ্ঠার পাদলেখ",
+      "2": "জোড় পৃষ্ঠার পাদলেখ",
+      "3": "বিজোড় পৃষ্ঠার পাদলেখ"
+    },
+    "options": "অপশন",
+    "pageOptions": "পৃষ্ঠা বিকল্প",
+    "removeHeader": "হেডার সরান",
+    "removeFooter": "ফুটার সরান",
+    "headerFooterOptionsModal": {
+      "title": "হেডার এবং ফুটার ফরম্যাট",
+      "margins": "মার্জিন",
+      "headerFromTop": "শীর্ষ থেকে শিরোনাম",
+      "footerFromBottom": "নিচ থেকে ফুটার",
+      "layouts": {
+        "layout": "লেআউট",
+        "noSelection": "কোনো নির্বাচন নেই",
+        "differentFirstPage": "ভিন্ন প্রথম পাতা",
+        "differentEvenOddPages": "বিভিন্ন জোড় ও বিজোড় পৃষ্ঠা",
+        "differentFirstEvenOddPages": "বিভিন্ন প্রথম, জোড় এবং বিজোড় পৃষ্ঠা"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "ফন্ট পরিবার"
     }
+  },
+  "sheetEditor": {
+    "editing": "সম্পাদনা",
+    "viewOnly": "দেখা হচ্ছে",
+    "editingDescription": "নথি সম্পাদনা করুন",
+    "viewOnlyDescription": "শুধুমাত্র দেখুন",
+    "bold": "সাহসী",
+    "italic": "তির্যক",
+    "underline": "আন্ডারলাইন করুন",
+    "strikethrough": "স্ট্রাইকথ্রু",
+    "cellBorderStyle": "বর্ডার স্টাইল",
+    "merge": "একত্রিত করুন",
+    "unmerge": "আনমার্জ করুন",
+    "cellFormat": "সেল ফরম্যাট",
+    "automatic": "স্বয়ংক্রিয়",
+    "plainText": "সরল পাঠ্য",
+    "increaseDecimal": "দশমিক বাড়ান",
+    "decreaseDecimal": "দশমিক হ্রাস করুন",
+    "number": "সংখ্যা",
+    "percent": "শতাংশ",
+    "accounting": "অ্যাকাউন্টিং",
+    "financial": "আর্থিক",
+    "currency": "মুদ্রা",
+    "currencyRounded": "মুদ্রা গোলাকার",
+    "calendar": "তারিখ",
+    "clockHour": "সময়",
+    "calendarTime": "তারিখ সময়",
+    "formatAsCurrency": "মুদ্রা হিসাবে বিন্যাস",
+    "formatAsPercent": "শতাংশ হিসাবে বিন্যাস করুন",
+    "formatAsDecDecimal": "দশমিক বিন্দু হ্রাস করুন",
+    "formatAsIncDecimal": "দশমিক বিন্দু বাড়ান",
+    "fontColor": "হরফের রঙ",
+    "cellBackgroundColor": "ঘরের পটভূমির রঙ",
+    "textAlignment": "পাঠ্য প্রান্তিককরণ",
+    "alignLeft": "বাম সারিবদ্ধ করুন",
+    "alignCenter": "কেন্দ্র সারিবদ্ধ করুন",
+    "alignRight": "ডানদিকে সারিবদ্ধ করুন",
+    "alignTop": "শীর্ষ সারিবদ্ধ",
+    "alignMiddle": "মাঝখানে সারিবদ্ধ করুন",
+    "alignBottom": "নীচে সারিবদ্ধ করুন",
+    "cellAdjustment": "সেল সামঞ্জস্য",
+    "insertColLeft": "বাম দিকে কলাম ঢোকান",
+    "columnInsertLeft": "বাম দিকে কলাম ঢোকান",
+    "columnInsertRight": "ডানদিকে কলাম ঢোকান",
+    "rowInsertTop": "উপরে সারি ঢোকান",
+    "rowInsertBottom": "নীচে সারি ঢোকান",
+    "columnInsertShiftDown": "কক্ষ সন্নিবেশ এবং নিচে স্থানান্তর",
+    "columnInsertShiftRight": "কক্ষ সন্নিবেশ করুন এবং ডানদিকে সরান",
+    "columnDelete": "কলাম মুছুন",
+    "rowDelete": "সারি মুছুন",
+    "columnDeleteShiftUp": "সেল মুছুন এবং উপরে স্থানান্তর করুন",
+    "columnDeleteShiftLeft": "সেল মুছুন এবং বাম দিকে সরান"
   },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা ঢোকান",
@@ -1480,6 +1580,24 @@
       "rightHeader": "ডান হেডার",
       "bottomHeader": "নীচের শিরোনাম",
       "documentContent": "নথি বিষয়বস্তু"
-    }
+    },
+    "label": "অ্যাক্সেসযোগ্যতা",
+    "accessibilityMode": "অ্যাক্সেসিবিলিটি মোড",
+    "skipTo": "এড়িয়ে যান",
+    "document": "দলিল",
+    "notes": "নোট"
+  },
+  "formulaBar": {
+    "label": "সূত্র বার",
+    "range": "পরিসর",
+    "formulas": "সূত্র",
+    "sumif": "একটি ব্যাপ্তি জুড়ে একটি শর্তসাপেক্ষ সমষ্টি৷",
+    "sumsq": "একটি ব্যাপ্তির বর্গক্ষেত্রের যোগফল প্রদান করে",
+    "sum": "একটি পরিসরে সমস্ত সংখ্যা যোগ করে",
+    "asinh": "একটি সংখ্যার বিপরীত হাইপারবোলিক সাইন প্রদান করে",
+    "acos": "রেডিয়ানে একটি সংখ্যার আর্কোসাইন প্রদান করে",
+    "cosh": "একটি সংখ্যার হাইপারবোলিক কোসাইন প্রদান করে",
+    "iseven": "একটি সংখ্যা জোড় কিনা তা পরীক্ষা করে",
+    "isodd": "একটি সংখ্যা বিজোড় কিনা তা পরীক্ষা করে"
   }
 }

@@ -47,7 +47,7 @@ const Fields = {
     required: true,
     type: 'text',
   },
-  VALUE: {
+  DEFAULT_VALUE: {
     label: 'formField.formFieldPopup.fieldValue',
     onChange: noop,
     value: 'fieldValue',
@@ -57,7 +57,7 @@ const Fields = {
 
 const fields = [
   Fields.NAME,
-  Fields.VALUE
+  Fields.DEFAULT_VALUE
 ];
 
 const Flags = {
@@ -88,8 +88,6 @@ const flags = [
   Flags.MULTI_LINE,
   Flags.REQUIRED,
 ];
-
-
 
 export function Basic() {
   const props = {

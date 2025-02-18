@@ -14,6 +14,8 @@ import Item from './item';
  * @param {string} [properties.label] The label of the item.
  * @param {string} [properties.img] The icon of the item.
  * @param {string} [properties.toolbarGroup] The group that the item belongs to.
+ * @param {object} [properties.style] An object defining inline CSS styles for the ribbon, where each key represents a CSS property and its corresponding value.
+ * @param {string} [properties.className] String with CSS classes to be applied to the ribbon, allowing additional styling and customization through external stylesheets.
  * @param {Array<UI.Components.Item>} [properties.groupedItems] Grouped Items to be contained by the RibbonItem.
  * @example
 const ribbonItem = new instance.UI.Components.RibbonItem({
@@ -49,4 +51,7 @@ class RibbonItem extends Item {
   }
 }
 
-export default RibbonItem;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new RibbonItem(propsWithStore);
+};

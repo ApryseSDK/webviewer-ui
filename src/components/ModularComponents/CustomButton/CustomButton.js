@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import { PLACEMENT } from 'constants/customizationVariables';
 
 const CustomButton = (props) => {
-  const { title, dataElement, label, img, onClick, disabled, className, preset, headerPlacement, ariaLabel } = props;
+  const { title, dataElement, label, img, onClick, disabled, className, preset, headerPlacement, ariaLabel, style } = props;
   let forceTooltipPosition;
   if ([PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(headerPlacement)) {
     forceTooltipPosition = headerPlacement === PLACEMENT.LEFT ? PLACEMENT.RIGHT : PLACEMENT.LEFT;
@@ -31,6 +31,7 @@ const CustomButton = (props) => {
       disabled={disabled}
       forceTooltipPosition={forceTooltipPosition}
       ariaLabel={ariaLabel}
+      style={style}
     ></Button>
   );
 };
@@ -42,6 +43,11 @@ CustomButton.propTypes = {
   img: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
+  preset: PropTypes.string,
+  headerPlacement: PropTypes.string,
+  ariaLabel: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default CustomButton;

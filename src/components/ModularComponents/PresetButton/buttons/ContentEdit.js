@@ -8,6 +8,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import classNames from 'classnames';
 
 /**
  * A button that toggles Content Edit Mode.
@@ -15,7 +16,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const ContentEditButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const { isFlyoutItem, style, className } = props;
   const { presetDataElement, icon, title } = menuItems.contentEditButton;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const dispatch = useDispatch();
@@ -39,12 +40,17 @@ const ContentEditButton = forwardRef((props, ref) => {
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} />
       : (
         <ActionButton
-          className={'PresetButton contentEditButton'}
+          className={classNames({
+            PresetButton: true,
+            contentEditButton: true,
+            [className]: true,
+          })}
           dataElement={presetDataElement}
           title={title}
           img={icon}
           onClick={handleClick}
           isActive={core.getContentEditManager().isInContentEditMode()}
+          style={style}
         />
       )
   );
@@ -52,6 +58,8 @@ const ContentEditButton = forwardRef((props, ref) => {
 
 ContentEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 ContentEditButton.displayName = 'ContentEditButton';
 

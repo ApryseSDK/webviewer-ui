@@ -356,34 +356,7 @@ export const getFirstToolForGroupedItems = (state, group) => {
   return firstTool;
 };
 
-export const getLastPickedToolForGroupedItems = (state, group) => {
-  const getLastPickedTool = (group) => {
-    const lastPickedTool = state.viewer.lastPickedToolForGroupedItems[group];
-
-    if (!lastPickedTool) {
-      const firstToolForGroupedItems = getFirstToolForGroupedItems(state, group);
-      return firstToolForGroupedItems;
-    }
-    return lastPickedTool;
-  };
-
-  if (Array.isArray(group)) {
-    let firstTool = '';
-    for (const groupItem of group) {
-      const lastPickedTool = getLastPickedTool(groupItem);
-      if (lastPickedTool) {
-        firstTool = lastPickedTool;
-        break;
-      }
-    }
-    return firstTool;
-  }
-  return getLastPickedTool(group);
-};
-
 export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
-
-export const getLastPickedToolAndGroup = (state) => state.viewer.lastPickedToolAndGroup;
 
 export const getActiveHeaders = (state) => {
   const allHeaders = Object.values(state.viewer.modularHeaders);
@@ -551,38 +524,6 @@ export const getDisabledElementPriority = (state, dataElement) => state.viewer.d
 export const getToolsHeaderItems = (state) => {
   const toolbarGroup = getCurrentToolbarGroup(state);
   return state.viewer.headers[toolbarGroup] || [];
-};
-
-export const getGroupedItemsWithSelectedTool = (state, toolName) => {
-  const modularComponents = state.viewer.modularComponents;
-
-  const filterGroupedItems = (dataElement) => {
-    const { type, items } = modularComponents[dataElement];
-
-    if (type !== ITEM_TYPE.GROUPED_ITEMS) {
-      return false;
-    }
-
-    if (type === ITEM_TYPE.GROUPED_ITEMS) {
-      const nestedGroupedItems = [dataElement, ...getNestedGroupedItems(state, dataElement)];
-      if (nestedGroupedItems.length > 0) {
-        return nestedGroupedItems.some((groupedItem) => modularComponents[groupedItem].items.some((subItem) => {
-          const subItemDetails = modularComponents[subItem];
-          return subItemDetails?.type === ITEM_TYPE.TOOL_BUTTON && subItemDetails.toolName === toolName;
-        }),
-        );
-      }
-
-      return items.some((item) => {
-        const itemDetails = modularComponents[item];
-        return itemDetails?.type === ITEM_TYPE.TOOL_BUTTON && itemDetails.toolName === toolName;
-      });
-    }
-
-    return false;
-  };
-
-  return Object.keys(modularComponents).filter(filterGroupedItems);
 };
 
 export const getAlwaysVisibleGroupedItems = (state) => {
@@ -760,6 +701,8 @@ export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorM
 
 export const getCustomNoteFilter = (state) => state.viewer.customNoteFilter;
 
+export const getInternalNoteFilter = (state) => state.viewer.internalNoteFilter;
+
 export const getInlineCommentFilter = (state) => state.viewer.inlineCommentFilter;
 
 export const getIsReplyDisabled = (state) => state.viewer.isReplyDisabledFunc;
@@ -847,11 +790,12 @@ export const getShowAskAgainCheckbox = (state) => state.viewer.warning?.showAskA
 
 export const getShowDeleteTabWarning = (state) => state.viewer.warning?.showDeleteTabWarning ?? true;
 
+// Returns if the "accessibleMode" constructor option is set to true
 export const isAccessibleMode = (state) => state.viewer.isAccessibleMode;
 
-export const getDisabledFeaturesInAccessibleReadingMode = (state) => state.viewer.disabledFeaturesInAccessibleReadingMode;
+export const shouldAddA11yContentToDOM = (state) => state.viewer.shouldAddA11yContentToDOM;
 
-export const isAccessibleReadingModeEnabled = (state) => state.viewer.isAccessibleReadingModeEnabled;
+export const getDisabledFeaturesInAccessibleReadingMode = (state) => state.viewer.disabledFeaturesInAccessibleReadingMode;
 
 export const getWarningTemplateStrings = (state) => state.viewer.warning?.templateStrings || {};
 
@@ -990,6 +934,8 @@ export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state)
 
 export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
 
+export const getOfficeEditorActiveStream = (state) => state.officeEditor.stream;
+
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
@@ -1092,6 +1038,11 @@ export const getIsOfficeEditorHeaderEnabled = (state) => {
   return state.viewer.isOfficeEditorHeaderEnabled;
 };
 
-export const isSheetEditorMode = (state) => {
-  return state.viewer.isSheetEditorMode;
+export const isSpreadsheetEditorModeEnabled = (state) => {
+  return state.viewer.isSpreadsheetEditorModeEnabled;
 };
+
+// ** SpreadhseetEditor Selectors **
+export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellRange;
+export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
+export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;

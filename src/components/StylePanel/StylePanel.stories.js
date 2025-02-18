@@ -68,13 +68,6 @@ const StylePanelInApp = (context, location) => {
         stylePanel: true,
       },
       activeCustomRibbon: 'toolbarGroup-Annotate',
-      lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationEdit',
-      },
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationEdit',
-        group: ['annotateGroupedItems'],
-      },
       activeGroupedItems: ['annotateGroupedItems'],
       activeTheme: context.globals.theme,
     },

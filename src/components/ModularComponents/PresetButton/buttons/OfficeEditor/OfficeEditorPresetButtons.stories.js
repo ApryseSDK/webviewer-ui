@@ -79,32 +79,32 @@ export function ActiveUnderlineButton() {
 
 export function AlignLeftButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_LEFT);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_LEFT);
 }
 
 export function ActiveAlignLeftButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'left'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_LEFT);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_LEFT);
 }
 
 export function AlignCenterButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_CENTER);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_CENTER);
 }
 
 export function ActiveAlignCenterButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'center'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_CENTER);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_CENTER);
 }
 
 export function AlignRightButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_RIGHT);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_RIGHT);
 }
 
 export function ActiveAlignRightButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'right'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_RIGHT);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_RIGHT);
 }
 
 export function AlignJustifyButton() {
@@ -137,10 +137,6 @@ ColorPickerButton.play = async ({ canvasElement }) => {
 
 export function InsertImageButton() {
   return prepareButtonStory(PRESET_BUTTON_TYPES.INSERT_IMAGE);
-}
-
-export function PageBreakButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.PAGE_BREAK);
 }
 
 export function ToggleNonPrintingCharactersButton() {

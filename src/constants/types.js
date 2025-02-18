@@ -8,4 +8,5 @@ export const workerTypes = {
   XOD: 'xod',
   CONTENT_EDIT: 'contentEdit',
   ALL: 'all',
+  SPREADSHEET_EDITOR: 'spreadsheetEditor',
 };

@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Додати абзац",
     "add": "Додати",
+    "addSheet": "Додати аркуш",
     "apply": "Застосувати",
     "applyAll": "Застосувати все",
     "calendar": "Календар",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Вкладення",
-    "leftPanel": "Панель",
+    "leftPanel": "Ліва панель",
     "toolsHeader": "Інструменти",
     "searchOverlay": "Пошук",
     "searchPanel": "Пошук",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Попередження безпеки",
       "message": "Цей документ намагається підключитися до:\n\n{{- uri}}\n\n Якщо ви довіряєте цьому документу, натисніть Підтвердити, щоб відкрити його."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Редагувати попередження",
+      "message": "Ця назва аркуша вже існує. Будь ласка, введіть інше ім'я."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Редагувати попередження",
+      "message": "Це ім’я аркуша не може бути порожнім."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Редагувати попередження",
+      "message": "Ви впевнені, що хочете видалити цей аркуш?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Додано:",
     "editing": "Редагування",
     "editingDescription": "Редагувати документ",
-    "pageBreak": "Розрив сторінки",
     "reviewing": "Рецензування",
     "reviewingDescription": "Вносити пропозиції",
     "viewOnly": "Лише перегляд",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Вставлення не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
     "pastingWithoutFormatTitle": "Вставлення без форматування недоступне",
     "pastingWithoutFormatMessage": "Вставлення без форматування не підтримується у вашому браузері. Замість цього можна використовувати комбінацію клавіш",
+    "breaks": "Перерви",
+    "pageBreak": "Розрив сторінки",
+    "pageBreakDescription": "Кінцева сторінка та початок з нової сторінки",
+    "sectionBreakNextPage": "Розрив розділу - наступна сторінка",
+    "sectionBreakNextPageDescription": "Вставте розрив розділу та почніть із наступної сторінки",
+    "sectionBreakContinuous": "Розрив розділу - безперервний",
+    "sectionBreakContinuousDescription": "Вставте розрив розділу та продовжте на тій же сторінці ",
+    "header": {
+      "0": "Заголовок",
+      "1": "Верхній колонтитул першої сторінки",
+      "2": "Верхній колонтитул парної сторінки",
+      "3": "Заголовок непарної сторінки"
+    },
+    "footer": {
+      "0": "нижній колонтитул",
+      "1": "Нижній колонтитул першої сторінки",
+      "2": "Парний колонтитул сторінки",
+      "3": "Нижній колонтитул непарної сторінки"
+    },
+    "options": "Опції",
+    "pageOptions": "Параметри сторінки",
+    "removeHeader": "Видалити заголовок",
+    "removeFooter": "Видалити нижній колонтитул",
+    "headerFooterOptionsModal": {
+      "title": "Формат верхнього та нижнього колонтитулів",
+      "margins": "Поля",
+      "headerFromTop": "Заголовок зверху",
+      "footerFromBottom": "Нижній колонтитул",
+      "layouts": {
+        "layout": "Макет",
+        "noSelection": "Немає вибору",
+        "differentFirstPage": "Інша перша сторінка",
+        "differentEvenOddPages": "Різні парні та непарні сторінки",
+        "differentFirstEvenOddPages": "Різні перші, парні та непарні сторінки"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Сімейство шрифтів"
     }
+  },
+  "sheetEditor": {
+    "editing": "Редагування",
+    "viewOnly": "Перегляд",
+    "editingDescription": "Редагувати документ",
+    "viewOnlyDescription": "Тільки перегляд",
+    "bold": "Жирний",
+    "italic": "Курсив",
+    "underline": "Підкреслити",
+    "strikethrough": "Закреслення",
+    "cellBorderStyle": "Стиль кордону",
+    "merge": "Об’єднати",
+    "unmerge": "Роз’єднати",
+    "cellFormat": "Формат комірки",
+    "automatic": "Автоматичний",
+    "plainText": "Звичайний текст",
+    "increaseDecimal": "Збільшити десятковий дроб",
+    "decreaseDecimal": "Зменшення десяткової дроби",
+    "number": "Номер",
+    "percent": "Відсоток",
+    "accounting": "Бухгалтерський облік",
+    "financial": "Фінансовий",
+    "currency": "Валюта",
+    "currencyRounded": "Валюта округлена",
+    "calendar": "Дата",
+    "clockHour": "час",
+    "calendarTime": "Дата Час",
+    "formatAsCurrency": "Відформатувати як валюту",
+    "formatAsPercent": "Відформатувати у відсотках",
+    "formatAsDecDecimal": "Зменшити десяткову кому",
+    "formatAsIncDecimal": "Збільшити десяткову кому",
+    "fontColor": "Колір шрифту",
+    "cellBackgroundColor": "Колір фону комірки",
+    "textAlignment": "Вирівнювання тексту",
+    "alignLeft": "Вирівняти ліворуч",
+    "alignCenter": "Вирівняти по центру",
+    "alignRight": "Вирівняти праворуч",
+    "alignTop": "Вирівняти верх",
+    "alignMiddle": "Вирівняти посередині",
+    "alignBottom": "Вирівняти низ",
+    "cellAdjustment": "Коригування комірки",
+    "insertColLeft": "Вставити стовпець зліва",
+    "columnInsertLeft": "Вставити стовпець зліва",
+    "columnInsertRight": "Вставити стовпець справа",
+    "rowInsertTop": "Вставте рядок вище",
+    "rowInsertBottom": "Вставте рядок нижче",
+    "columnInsertShiftDown": "Вставити клітинки та зсунути вниз",
+    "columnInsertShiftRight": "Вставити клітинки зі зрушенням вправо",
+    "columnDelete": "Видалити стовпець",
+    "rowDelete": "Видалити рядок",
+    "columnDeleteShiftUp": "Видалити комірки та зсунути вгору",
+    "columnDeleteShiftLeft": "Видалити комірки та зсунути вліво"
   },
   "insertPageModal": {
     "title": "Вставити нову сторінку",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Правий заголовок",
       "bottomHeader": "Нижній заголовок",
       "documentContent": "Зміст документа"
-    }
+    },
+    "label": "Доступність",
+    "accessibilityMode": "Режим доступності",
+    "skipTo": "Перейти до",
+    "document": "документ",
+    "notes": "Примітки"
+  },
+  "formulaBar": {
+    "label": "Панель формул",
+    "range": "Діапазон",
+    "formulas": "Формули",
+    "sumif": "Умовна сума в діапазоні",
+    "sumsq": "Повертає суму квадратів діапазону",
+    "sum": "Додає всі числа в діапазоні",
+    "asinh": "Повертає гіперболічний арксинус числа",
+    "acos": "Повертає аркосинус числа в радіанах",
+    "cosh": "Повертає гіперболічний косинус числа",
+    "iseven": "Перевіряє, чи число парне",
+    "isodd": "Перевіряє, чи є число непарним"
   }
 }

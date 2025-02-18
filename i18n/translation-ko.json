@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "단락 추가",
     "add": "추가",
+    "addSheet": "시트 추가",
     "apply": "적용",
     "applyAll": "모두적용",
     "calendar": "캘린더",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "첨부파일",
-    "leftPanel": "패널",
+    "leftPanel": "왼쪽 패널",
     "toolsHeader": "도구",
     "searchOverlay": "검색",
     "searchPanel": "검색",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "보안 경고",
       "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- uri}}\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "편집 경고",
+      "message": "이 시트 이름은 이미 존재합니다. 다른 이름을 입력하세요."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "편집 경고",
+      "message": "이 시트 이름은 비워둘 수 없습니다."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "편집 경고",
+      "message": "이 시트를 삭제하시겠습니까?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "추가됨:",
     "editing": "편집",
     "editingDescription": "문서 편집",
-    "pageBreak": "페이지 나누기",
     "reviewing": "검토 중",
     "reviewingDescription": "의견을 내세요",
     "viewOnly": "보기 전용",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "귀하의 브라우저에서는 붙여넣기가 지원되지 않습니다. 대신 키보드 단축키를 사용할 수 있습니다.",
     "pastingWithoutFormatTitle": "서식을 지정하지 않고 붙여넣을 수 없습니다.",
     "pastingWithoutFormatMessage": "서식을 지정하지 않고 붙여넣는 기능은 해당 브라우저에서 지원되지 않습니다. 대신 키보드 단축키를 사용할 수 있습니다.",
+    "breaks": "휴식",
+    "pageBreak": "페이지 나누기",
+    "pageBreakDescription": "페이지를 종료하고 새 페이지에서 시작",
+    "sectionBreakNextPage": "섹션 나누기 - 다음 페이지",
+    "sectionBreakNextPageDescription": "섹션 나누기를 삽입하고 다음 페이지에서 시작하세요",
+    "sectionBreakContinuous": "섹션 나누기 - 연속",
+    "sectionBreakContinuousDescription": "섹션 나누기를 삽입하고 같은 페이지에서 계속합니다.",
+    "header": {
+      "0": "헤더",
+      "1": "첫 번째 페이지 헤더",
+      "2": "짝수 페이지 헤더",
+      "3": "이상한 페이지 헤더"
+    },
+    "footer": {
+      "0": "보행인",
+      "1": "첫 페이지 바닥글",
+      "2": "짝수 페이지 바닥글",
+      "3": "홀수 페이지 바닥글"
+    },
+    "options": "옵션",
+    "pageOptions": "페이지 옵션",
+    "removeHeader": "헤더 제거",
+    "removeFooter": "푸터 제거",
+    "headerFooterOptionsModal": {
+      "title": "헤더 및 푸터 형식",
+      "margins": "여백",
+      "headerFromTop": "상단에서 헤더",
+      "footerFromBottom": "하단에서 바닥글",
+      "layouts": {
+        "layout": "공들여 나열한 것",
+        "noSelection": "선택 없음",
+        "differentFirstPage": "다른 첫 페이지",
+        "differentEvenOddPages": "다른 짝수 및 홀수 페이지",
+        "differentFirstEvenOddPages": "다른 첫 번째, 짝수 및 홀수 페이지"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "글꼴 패밀리"
     }
+  },
+  "sheetEditor": {
+    "editing": "편집 중",
+    "viewOnly": "보기",
+    "editingDescription": "문서 편집",
+    "viewOnlyDescription": "보기만",
+    "bold": "용감한",
+    "italic": "이탤릭체",
+    "underline": "밑줄",
+    "strikethrough": "취소선",
+    "cellBorderStyle": "테두리 스타일",
+    "merge": "병합",
+    "unmerge": "병합 해제",
+    "cellFormat": "셀 형식",
+    "automatic": "오토매틱",
+    "plainText": "일반 텍스트",
+    "increaseDecimal": "소수점 증가",
+    "decreaseDecimal": "소수점 이하 자릿수 감소",
+    "number": "숫자",
+    "percent": "퍼센트",
+    "accounting": "회계",
+    "financial": "재정적인",
+    "currency": "통화",
+    "currencyRounded": "반올림된 통화",
+    "calendar": "날짜",
+    "clockHour": "시간",
+    "calendarTime": "날짜 시간",
+    "formatAsCurrency": "통화로 형식 지정",
+    "formatAsPercent": "퍼센트로 형식 지정",
+    "formatAsDecDecimal": "소수점 감소",
+    "formatAsIncDecimal": "소수점 증가",
+    "fontColor": "글꼴 색상",
+    "cellBackgroundColor": "셀 배경색",
+    "textAlignment": "텍스트 정렬",
+    "alignLeft": "왼쪽 정렬",
+    "alignCenter": "중앙 정렬",
+    "alignRight": "오른쪽 정렬",
+    "alignTop": "위쪽 정렬",
+    "alignMiddle": "가운데 정렬",
+    "alignBottom": "하단 맞춤",
+    "cellAdjustment": "셀 조정",
+    "insertColLeft": "열 왼쪽에 삽입",
+    "columnInsertLeft": "열 왼쪽에 삽입",
+    "columnInsertRight": "오른쪽 열 삽입",
+    "rowInsertTop": "위에 행 삽입",
+    "rowInsertBottom": "아래에 행 삽입",
+    "columnInsertShiftDown": "셀 삽입 및 아래로 이동",
+    "columnInsertShiftRight": "셀 삽입 및 오른쪽으로 이동",
+    "columnDelete": "열 삭제",
+    "rowDelete": "행 삭제",
+    "columnDeleteShiftUp": "셀을 삭제하고 위로 이동",
+    "columnDeleteShiftLeft": "셀 삭제 및 왼쪽으로 이동"
   },
   "insertPageModal": {
     "title": "새 페이지 삽입",
@@ -1480,6 +1580,24 @@
       "rightHeader": "오른쪽 헤더",
       "bottomHeader": "하단 헤더",
       "documentContent": "문서 내용"
-    }
+    },
+    "label": "접근성",
+    "accessibilityMode": "접근성 모드",
+    "skipTo": "바로가기",
+    "document": "문서",
+    "notes": "노트"
+  },
+  "formulaBar": {
+    "label": "수식 입력줄",
+    "range": "범위",
+    "formulas": "방식",
+    "sumif": "범위에 걸친 조건부 합계",
+    "sumsq": "범위의 제곱의 합을 반환합니다.",
+    "sum": "범위 내의 모든 숫자를 더합니다",
+    "asinh": "숫자의 역 쌍곡선 사인을 반환합니다.",
+    "acos": "숫자의 아크코사인을 라디안으로 반환합니다.",
+    "cosh": "숫자의 쌍곡선 코사인을 반환합니다.",
+    "iseven": "숫자가 짝수인지 확인합니다",
+    "isodd": "숫자가 홀수인지 확인합니다"
   }
 }

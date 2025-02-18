@@ -63,6 +63,7 @@ const getDefaultOptions = () => ({
   backendType: getHashParameters('pdf', null),
   loadAsPDF: getHashParameters('loadAsPDF', null),
   enableOfficeEditing: getHashParameters('enableOfficeEditing', false),
+  enableSpreadsheetEditorBeta: getHashParameters('enableSpreadsheetEditorBeta', false),
 });
 
 /**

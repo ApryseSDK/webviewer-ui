@@ -75,9 +75,6 @@ export const NoBookmarks = () => {
       isOutlineEditingEnabled: true,
       pageLabels: pageLabels,
       currentPage: 3,
-      lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
-      },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-View',
     },
@@ -129,16 +126,8 @@ export const CustomBasic = (args, context) => {
       },
       pageLabels: pageLabels,
       currentPage: 3,
-      lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
-        'annotateToolsGroupedItems': 'AnnotationCreateTextHighlight',
-      },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateTextHighlight',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
-      },
       activeToolName: 'AnnotationCreateTextHighlight',
       activeTheme: context.globals.theme,
     },
@@ -185,10 +174,6 @@ export const CustomBasicNoBookmarks = (args, context) => {
       pageLabels: pageLabels,
       currentPage: 3,
       activeCustomRibbon: 'toolbarGroup-View',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationEdit',
-        group: ['groupedLeftPanelItems'],
-      },
       activeTheme: context.globals.theme,
     },
     document: {
@@ -233,10 +218,6 @@ export const CustomRightSide = (args, context) => {
       pageLabels: pageLabels,
       currentPage: 3,
       activeCustomRibbon: 'toolbarGroup-View',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationEdit',
-        group: ['groupedLeftPanelItems'],
-      },
       activeTheme: context.globals.theme,
     },
     document: {

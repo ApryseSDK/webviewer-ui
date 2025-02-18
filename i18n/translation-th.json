@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "เพิ่มย่อหน้า",
     "add": "เพิ่ม",
+    "addSheet": "เพิ่มแผ่นงาน",
     "apply": "นำมาใช้",
     "applyAll": "สมัครทั้งหมด",
     "calendar": "ปฏิทิน",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "เอกสารแนบ",
-    "leftPanel": "แผงหน้าปัด",
+    "leftPanel": "แผงด้านซ้าย",
     "toolsHeader": "เครื่องมือ",
     "searchOverlay": "ค้นหา",
     "searchPanel": "ค้นหา",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "คำเตือนความปลอดภัย",
       "message": "เอกสารนี้พยายามเชื่อมต่อกับ:\n\n{{- uri}}\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อเปิด"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "แก้ไขคำเตือน",
+      "message": "ชื่อชีตนี้มีอยู่แล้ว กรุณาใส่ชื่ออื่น"
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "แก้ไขคำเตือน",
+      "message": "ชื่อชีตนี้ไม่สามารถว่างเปล่าได้"
+    },
+    "sheetTabDeleteMessage": {
+      "title": "แก้ไขคำเตือน",
+      "message": "คุณแน่ใจว่าต้องการลบแผ่นงานนี้หรือไม่?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "เพิ่ม:",
     "editing": "การแก้ไข",
     "editingDescription": "แก้ไขเอกสาร",
-    "pageBreak": "ตัวแบ่งหน้า",
     "reviewing": "กำลังทบทวน",
     "reviewingDescription": "ให้คำแนะนำ",
     "viewOnly": "สำหรับดูเท่านั้น",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "เบราว์เซอร์ของคุณไม่รองรับการวาง คุณสามารถใช้แป้นพิมพ์ลัดแทนได้",
     "pastingWithoutFormatTitle": "ไม่สามารถวางโดยไม่มีการจัดรูปแบบได้",
     "pastingWithoutFormatMessage": "เบราว์เซอร์ของคุณไม่รองรับการวางโดยไม่จัดรูปแบบ คุณสามารถใช้แป้นพิมพ์ลัดแทนได้",
+    "breaks": "เบรก",
+    "pageBreak": "ตัวแบ่งหน้า",
+    "pageBreakDescription": "จบหน้าและเริ่มหน้าใหม่",
+    "sectionBreakNextPage": "การแบ่งส่วน - หน้าถัดไป",
+    "sectionBreakNextPageDescription": "แทรกตัวแบ่งส่วนและเริ่มต้นที่หน้าถัดไป",
+    "sectionBreakContinuous": "การแบ่งส่วน - ต่อเนื่อง",
+    "sectionBreakContinuousDescription": "แทรกตัวแบ่งส่วนและดำเนินการต่อในหน้าเดียวกัน",
+    "header": {
+      "0": "ส่วนหัว",
+      "1": "ส่วนหัวหน้าแรก",
+      "2": "ส่วนหัวของหน้าคู่",
+      "3": "ส่วนหัวของหน้าคี่"
+    },
+    "footer": {
+      "0": "ส่วนท้าย",
+      "1": "ส่วนท้ายหน้าแรก",
+      "2": "ส่วนท้ายของหน้าคู่",
+      "3": "ส่วนท้ายของหน้าคี่"
+    },
+    "options": "ตัวเลือก",
+    "pageOptions": "ตัวเลือกหน้า",
+    "removeHeader": "ลบส่วนหัว",
+    "removeFooter": "ลบส่วนท้าย",
+    "headerFooterOptionsModal": {
+      "title": "รูปแบบส่วนหัวและส่วนท้าย",
+      "margins": "ระยะขอบ",
+      "headerFromTop": "ส่วนหัวจากด้านบน",
+      "footerFromBottom": "ส่วนท้ายจากด้านล่าง",
+      "layouts": {
+        "layout": "เค้าโครง",
+        "noSelection": "ไม่มีการเลือก",
+        "differentFirstPage": "หน้าแรกที่แตกต่างกัน",
+        "differentEvenOddPages": "หน้าคู่และหน้าคี่ที่แตกต่างกัน",
+        "differentFirstEvenOddPages": "หน้าแรก หน้าคู่ และหน้าคี่ที่แตกต่างกัน"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "ฟอนต์ตระกูล"
     }
+  },
+  "sheetEditor": {
+    "editing": "การแก้ไข",
+    "viewOnly": "การดู",
+    "editingDescription": "แก้ไขเอกสาร",
+    "viewOnlyDescription": "ดูอย่างเดียว",
+    "bold": "ตัวหนา",
+    "italic": "ตัวเอียง",
+    "underline": "ขีดเส้นใต้",
+    "strikethrough": "ขีดทับ",
+    "cellBorderStyle": "สไตล์ขอบ",
+    "merge": "ผสาน",
+    "unmerge": "ยกเลิกการรวม",
+    "cellFormat": "รูปแบบเซลล์",
+    "automatic": "อัตโนมัติ",
+    "plainText": "ข้อความธรรมดา",
+    "increaseDecimal": "เพิ่มทศนิยม",
+    "decreaseDecimal": "ลดทศนิยม",
+    "number": "ตัวเลข",
+    "percent": "เปอร์เซ็นต์",
+    "accounting": "การบัญชี",
+    "financial": "การเงิน",
+    "currency": "สกุลเงิน",
+    "currencyRounded": "สกุลเงินที่ปัดเศษ",
+    "calendar": "วันที่",
+    "clockHour": "เวลา",
+    "calendarTime": "วันที่ เวลา",
+    "formatAsCurrency": "รูปแบบเป็นสกุลเงิน",
+    "formatAsPercent": "รูปแบบเป็นเปอร์เซ็นต์",
+    "formatAsDecDecimal": "ลดจุดทศนิยม",
+    "formatAsIncDecimal": "เพิ่มจุดทศนิยม",
+    "fontColor": "สีตัวอักษร",
+    "cellBackgroundColor": "สีพื้นหลังเซลล์",
+    "textAlignment": "การจัดตำแหน่งข้อความ",
+    "alignLeft": "จัดชิดซ้าย",
+    "alignCenter": "จัดตำแหน่งศูนย์กลาง",
+    "alignRight": "จัดชิดขวา",
+    "alignTop": "จัดตำแหน่งด้านบน",
+    "alignMiddle": "จัดตำแหน่งตรงกลาง",
+    "alignBottom": "จัดตำแหน่งด้านล่าง",
+    "cellAdjustment": "การปรับเซลล์",
+    "insertColLeft": "แทรกคอลัมน์ด้านซ้าย",
+    "columnInsertLeft": "แทรกคอลัมน์ด้านซ้าย",
+    "columnInsertRight": "แทรกคอลัมน์ด้านขวา",
+    "rowInsertTop": "แทรกแถวด้านบน",
+    "rowInsertBottom": "แทรกแถวด้านล่าง",
+    "columnInsertShiftDown": "แทรกเซลล์และเลื่อนลง",
+    "columnInsertShiftRight": "แทรกเซลล์และเลื่อนไปทางขวา",
+    "columnDelete": "ลบคอลัมน์",
+    "rowDelete": "ลบแถว",
+    "columnDeleteShiftUp": "ลบเซลล์และเลื่อนขึ้น",
+    "columnDeleteShiftLeft": "ลบเซลล์และเลื่อนไปทางซ้าย"
   },
   "insertPageModal": {
     "title": "แทรกหน้าใหม่",
@@ -1480,6 +1580,24 @@
       "rightHeader": "ส่วนหัวด้านขวา",
       "bottomHeader": "ส่วนหัวด้านล่าง",
       "documentContent": "เนื้อหาเอกสาร"
-    }
+    },
+    "label": "การเข้าถึงได้",
+    "accessibilityMode": "โหมดการเข้าถึง",
+    "skipTo": "ข้ามไป",
+    "document": "เอกสาร",
+    "notes": "หมายเหตุ"
+  },
+  "formulaBar": {
+    "label": "ฟอร์มูล่าบาร์",
+    "range": "พิสัย",
+    "formulas": "สูตร",
+    "sumif": "ผลรวมแบบมีเงื่อนไขในช่วง",
+    "sumsq": "คืนค่าผลรวมของกำลังสองของช่วง",
+    "sum": "บวกตัวเลขทั้งหมดในช่วง",
+    "asinh": "ส่งคืนค่าไซน์ไฮเปอร์โบลิกผกผันของตัวเลข",
+    "acos": "คืนค่าอาร์กโคไซน์ของตัวเลขเป็นเรเดียน",
+    "cosh": "คืนค่าไฮเปอร์โบลิกโคไซน์ของตัวเลข",
+    "iseven": "ตรวจสอบว่าตัวเลขเป็นเลขคู่หรือไม่",
+    "isodd": "ตรวจสอบว่าตัวเลขเป็นคี่หรือไม่"
   }
 }

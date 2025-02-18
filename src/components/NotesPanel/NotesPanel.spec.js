@@ -52,6 +52,7 @@ describe('NotesPanel', () => {
       getMeasurementManager: noop,
       getContentEditManager: noop,
       getAccessibleReadingOrderManager: noop,
+      getSpreadsheetEditorManager: noop,
       getAnnotationManager: () => {
         return {
           getEditBoxManager: noop,

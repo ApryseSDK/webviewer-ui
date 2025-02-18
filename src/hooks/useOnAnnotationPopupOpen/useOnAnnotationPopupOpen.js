@@ -66,7 +66,8 @@ export default function useOnAnnotationPopupOpen() {
   };
 
   const canAnnotationBeModified = (annotation) => {
-    const isSignedByAppearance = annotation instanceof Annotations.SignatureWidgetAnnotation && annotation.isSignedByAppearance();
+    const formFieldCreationManager = core.getFormFieldCreationManager();
+    const isSignedByAppearance = annotation instanceof Annotations.SignatureWidgetAnnotation && annotation.isSignedByAppearance() && !formFieldCreationManager.isInFormFieldCreationMode();
     return core.canModify(annotation) && !isSignedByAppearance;
   };
 

@@ -63,7 +63,7 @@ const validateComponents = (components, functionMap) => {
       }
       checkTypes([components[key]], [normalizedComponent], 'UI.importModularComponents.validateComponents');
       isElementDisabled(components[key]);
-      const COMPONENT_FUNCTION_KEYS = ['onClick', 'mount', 'unmount'];
+      const COMPONENT_FUNCTION_KEYS = ['onClick', 'mount', 'unmount', 'render'];
       Object.keys(components[key]).forEach((prop) => {
         if (COMPONENT_FUNCTION_KEYS.includes(prop) && (!components[key][prop] || !functionMap[components[key][prop]])) {
           console.warn(`Function: ${components[key][prop] || prop} not defined on component: ${key}. Use Function Map to define it. See https://docs.apryse.com/api/web/UI.html#.importModularComponents__anchor for more information.`);
@@ -105,7 +105,7 @@ const validateHeaders = (headers, components) => {
   });
 };
 
-const validatePanels = (panels) => {
+const validatePanels = (panels, functionMap = {}) => {
   const normalizedPanel = TYPES.OBJECT({
     dataElement: TYPES.STRING,
     location: TYPES.ONE_OF('left', 'right'),
@@ -114,6 +114,9 @@ const validatePanels = (panels) => {
   const panelKeys = Object.keys(panels);
   panelKeys.forEach((key) => {
     try {
+      if (Object.keys(functionMap).includes(panels[key].render)) {
+        panels[key].render = functionMap[panels[key].render];
+      }
       checkTypes([panels[key]], [normalizedPanel], 'UI.importModularComponents.validatePanels');
       isElementDisabled(panels[key]);
     } catch (error) {
@@ -182,7 +185,7 @@ const validateJSONStructure = (jsonData, functionMap) => {
   }
 
   if (jsonData.panels) {
-    validatePanels(jsonData.panels);
+    validatePanels(jsonData.panels, functionMap);
   }
 
   if (jsonData.flyouts) {
@@ -239,6 +242,9 @@ export default (store) => async (components, functions = {}) => {
       }
       component.mount = getFunctionFromFunctionMap(component.mount);
       component.unmount = getFunctionFromFunctionMap(component.unmount);
+    }
+    if (component.type === ITEM_TYPE.CUSTOM_ELEMENT) {
+      component.render = getFunctionFromFunctionMap(component.render);
     }
   });
 

@@ -9,6 +9,7 @@
  */
 import { PANEL_TYPE } from './addPanel';
 import { ITEM_TYPE, PREBUILT_FLYOUTS, OVERFLOW_FLYOUTS } from 'constants/customizationVariables';
+import cloneDeep from 'lodash/cloneDeep';
 
 export default (store) => () => {
   const state = store.getState();
@@ -24,7 +25,22 @@ export default (store) => () => {
     }
   };
 
-  const validateComponents = (componentObject) => {
+  const getFunctionKey = (functionReference, storedFunctions, componentName, functionSignature) => {
+    for (const [functionKey, storedFunction] of Object.entries(storedFunctions)) {
+      if (storedFunction === functionSignature) {
+        return functionKey;
+      }
+    }
+    console.warn(
+      `Function in ${functionReference} of ${componentName} not found in Function Map and cannot be included in export JSON. Ensure that the following is included to your Function Map to define it on import:\n`,
+      `\nfunctionMap: {\n  ...,\n  '${'{functionName}'}': ${functionSignature},\n}\n`,
+      '\nSee https://docs.apryse.com/api/web/UI.html#.importModularComponents__anchor for more information.'
+    );
+    return '';
+  };
+
+  const validateComponents = (component) => {
+    const componentObject = cloneDeep(component);
     for (const key in componentObject) {
       if (key === 'undefined' || key === 'null') {
         console.warn(`Null or undefined item found. Removing item: ${key} found in components`);
@@ -43,12 +59,7 @@ export default (store) => () => {
       } else if (typeof value === 'function') {
         const storedModularComponentFunctions = state.viewer.modularComponentFunctions;
         const component = componentObject.dataElement || JSON.stringify(componentObject);
-        if (Object.values(storedModularComponentFunctions).includes(value)) {
-          componentObject[key] = Object.keys(storedModularComponentFunctions).find((funcKey) => storedModularComponentFunctions[funcKey] === value);
-        } else {
-          console.warn(`Function in ${key} of ${component} not found in Function Map and cannot be included in export JSON. Ensure that the following is included to your Function Map to define it on import:\n`, `\nfunctionMap: {\n  ...,\n  '${'{functionName}'}': ${value},\n}\n`, '\nSee https://docs.apryse.com/api/web/UI.html#.importModularComponents__anchor for more information.');
-          componentObject[key] = '';
-        }
+        componentObject[key] = getFunctionKey(key, storedModularComponentFunctions, component, value);
       }
       // We should not export icons for preset buttons
       if (componentObject?.type === ITEM_TYPE.PRESET_BUTTON) {
@@ -85,9 +96,16 @@ export default (store) => () => {
     const panelsMap = {};
 
     panelsArray.forEach((panel) => {
-      checkTypes([panel], [PANEL_TYPE], 'UI.exportModularComponents');
-      shouldAddDisabledFlag(panel);
-      panelsMap[panel.dataElement] = panel;
+      const panelObject = cloneDeep(panel);
+      checkTypes([panelObject], [PANEL_TYPE], 'UI.exportModularComponents');
+      shouldAddDisabledFlag(panelObject);
+      const PANEL_RENDER_FUNCTION_KEY = 'render';
+      if (typeof panelObject[PANEL_RENDER_FUNCTION_KEY] === 'function') {
+        const storedModularComponentFunctions = state.viewer.modularComponentFunctions;
+        const dataElement = panelObject.dataElement;
+        panelObject.render = getFunctionKey(PANEL_RENDER_FUNCTION_KEY, storedModularComponentFunctions, dataElement, panelObject.render);
+      }
+      panelsMap[panelObject.dataElement] = panelObject;
     });
 
     return panelsMap;

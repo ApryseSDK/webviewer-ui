@@ -9,7 +9,7 @@ import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 import { availableFontFaces, cssFontValues } from 'src/constants/officeEditorFonts';
-import { DEFAULT_POINT_SIZE } from 'src/constants/officeEditor';
+import { DEFAULT_POINT_SIZE, EditingStreamType, OfficeEditorEditMode } from 'src/constants/officeEditor';
 
 const noop = () => { };
 
@@ -21,7 +21,9 @@ export const createStore = (preloadedState) => {
   });
 };
 
-export const MockApp = ({ initialState, width, height }) => {
+// isOffset adds a div beside WebViewer, so that it behaves as if it was
+// in Showcase or our samples.
+export const MockApp = ({ initialState, width, height, isOffset }) => {
   const store = createStore(initialState);
 
   setItemToFlyoutStore(store);
@@ -35,13 +37,24 @@ export const MockApp = ({ initialState, width, height }) => {
     maxWidth: width,
     maxHeight: height,
     width: '100%',
-    height: '100%'
+    height: '100%',
   };
+
+  if (isOffset) {
+    divStyle.display = 'flex';
+  }
 
   return (
     <Provider store={store}>
       <div style={divStyle}>
-        <App removeEventHandlers={noop}/>
+        {isOffset && <div
+          style={{
+            width: '100px',
+            backgroundColor: 'lightblue',
+            flexShrink: 0,
+          }}
+        />}
+        <App removeEventHandlers={noop} />
       </div>
     </Provider>
   );
@@ -51,6 +64,7 @@ MockApp.propTypes = {
   initialState: PropTypes.object.isRequired,
   width: PropTypes.string,
   height: PropTypes.string,
+  isOffset: PropTypes.bool,
 };
 
 const BasicAppTemplate = (args, context) => {
@@ -65,14 +79,7 @@ const BasicAppTemplate = (args, context) => {
       openElements: {},
       genericPanels: defaultPanels,
       activeGroupedItems: ['annotateGroupedItems'],
-      lastPickedToolForGroupedItems: {
-        annotateGroupedItems: 'AnnotationCreateTextUnderline',
-      },
       activeCustomRibbon: 'toolbarGroup-Annotate',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateTextUnderline',
-        group: ['annotateGroupedItems'],
-      },
       activeToolName: 'AnnotationCreateTextUnderline',
       isMultiTab,
       tabs: isMultiTab ? [
@@ -126,7 +133,7 @@ MockDocumentContainer.propTypes = {
   children: PropTypes.node,
 };
 
-// This is the initial state of the Modualar UI OfficeEditor store
+// This is the initial state of the Modular UI OfficeEditor store
 export const OEModularUIMockState = {
   officeEditor: {
     cursorProperties: {
@@ -155,7 +162,8 @@ export const OEModularUIMockState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: 'editing',
+    editMode: OfficeEditorEditMode.EDITING,
+    stream: EditingStreamType.BODY,
   },
   viewer: {
     isOfficeEditorMode: true,
@@ -166,4 +174,15 @@ export const OEModularUIMockState = {
   featureFlags: {
     customizableUI: true,
   }
+};
+
+export const oePartialState = {
+  officeEditor: {
+    cursorProperties: {
+      locationProperties: {
+        inTable: false,
+      },
+    },
+    stream: EditingStreamType.BODY,
+  },
 };

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import NoteStateFlyout, { noteStateFlyoutItems } from './NoteStateFlyout';
 import Flyout from '../Flyout';
 
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 
@@ -16,6 +16,7 @@ export default {
 
 function createReduxWrapper(dataElement, disabled) {
   const currentState = {
+    ...oePartialState,
     viewer: {
       disabledElements: {},
       customElementOverrides: {},

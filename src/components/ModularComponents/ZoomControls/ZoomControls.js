@@ -7,20 +7,21 @@ import { useTranslation } from 'react-i18next';
 import './ZoomControls.scss';
 
 function ZoomControls(props) {
+  const { componentProps, dataElement, elementRef } = props;
   const {
     setZoomHandler,
     zoomValue,
     zoomTo,
     isZoomFlyoutMenuActive,
-    dataElement,
     isActive,
     setFlyoutTriggerRef,
-    elementRef,
     size,
     onZoomInClicked,
     onZoomOutClicked,
     getCurrentZoom,
-  } = props;
+    style,
+    className,
+  } = componentProps;
 
   const [t] = useTranslation();
   const INPUT_WIDTH_MULTIPLIER = 8;
@@ -60,7 +61,8 @@ function ZoomControls(props) {
   return (
     <div className={classNames('ZoomContainerWrapper', {
       [`size${size}`]: true,
-    })} data-element={dataElement} ref={elementRef}>
+      [className]: true,
+    })} data-element={dataElement} ref={elementRef} style={{ ...style }}>
       {size === 0 && <>
         <div className="ToggleZoomMenu">
           <div tabIndex={-1}
@@ -83,6 +85,7 @@ function ZoomControls(props) {
               />
               <span>%</span>
             </div>
+
             <ToggleElementButton
               dataElement="zoom-toggle-button"
               className="zoomToggleButton"
@@ -93,6 +96,7 @@ function ZoomControls(props) {
               tabIndex={-1}
               setFlyoutTriggerRef={setFlyoutTriggerRef}
             />
+
           </div>
         </div>
         <CustomButton
@@ -127,18 +131,22 @@ function ZoomControls(props) {
 }
 
 ZoomControls.propTypes = {
-  setZoomHandler: PropTypes.func.isRequired,
-  zoomValue: PropTypes.string.isRequired,
-  zoomTo: PropTypes.func.isRequired,
-  isZoomFlyoutMenuActive: PropTypes.bool.isRequired,
   dataElement: PropTypes.string.isRequired,
-  isActive: PropTypes.bool,
-  setFlyoutTriggerRef: PropTypes.func,
   elementRef: PropTypes.object,
-  size: PropTypes.number,
-  onZoomInClicked: PropTypes.func,
-  onZoomOutClicked: PropTypes.func,
-  getCurrentZoom: PropTypes.func,
+  componentProps: PropTypes.shape({
+    setZoomHandler: PropTypes.func.isRequired,
+    zoomValue: PropTypes.string.isRequired,
+    zoomTo: PropTypes.func.isRequired,
+    isZoomFlyoutMenuActive: PropTypes.bool.isRequired,
+    isActive: PropTypes.bool,
+    setFlyoutTriggerRef: PropTypes.func,
+    size: PropTypes.number,
+    onZoomInClicked: PropTypes.func,
+    onZoomOutClicked: PropTypes.func,
+    getCurrentZoom: PropTypes.func,
+    style: PropTypes.object,
+    className: PropTypes.string,
+  })
 };
 
 export default ZoomControls;

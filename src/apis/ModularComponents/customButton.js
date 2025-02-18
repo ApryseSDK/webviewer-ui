@@ -15,6 +15,8 @@ const { checkTypes, TYPES } = window.Core;
  * @param {string} [options.title] The title of the button.
  * @param {string} [options.img] The icon of the button.
  * @param {function} [options.onClick] The function that is called when the button is clicked.
+ * @param {object} [properties.style] An object defining inline CSS styles for the button, where each key represents a CSS property and its corresponding value.
+ * @param {string} [properties.className] String with CSS classes to be applied to the button, allowing additional styling and customization through external stylesheets.
  * @example
 const testButton = new instance.UI.Components.CustomButton({
   label: 'test',
@@ -41,4 +43,7 @@ class CustomButton extends Item {
   }
 }
 
-export default CustomButton;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new CustomButton(propsWithStore);
+};

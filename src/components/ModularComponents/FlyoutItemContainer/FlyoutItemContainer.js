@@ -8,10 +8,11 @@ import '../Flyout/Flyout.scss';
 const FlyoutItemContainer = forwardRef((props, ref) => {
   const {
     label,
+    secondaryLabel,
     title,
     dataElement,
     disabled,
-    additionalClass,
+    additionalClass = '',
     icon,
     ariaKeyshortcuts,
     children,
@@ -51,6 +52,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
           {finalLabel && <span className="flyout-item-label">{finalLabel}</span>}
         </div>
         {ariaKeyshortcuts && <span className="hotkey-wrapper">{`(${ariaKeyshortcuts})`}</span>}
+        {secondaryLabel && <span className="secondary-label">{secondaryLabel}</span>}
         {children && <Icon className="icon-open-submenu" glyph="icon-chevron-right" />}
       </button>
     );
@@ -80,6 +82,7 @@ FlyoutItemContainer.propTypes = {
     // e.g. Zoom Options
     PropTypes.object,
   ]),
+  secondaryLabel: PropTypes.string,
   title: PropTypes.string,
   dataElement: PropTypes.string,
   disabled: PropTypes.bool,

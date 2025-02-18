@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Dodaj akapit",
     "add": "Dodaj",
+    "addSheet": "Dodaj arkusz",
     "apply": "Zastosuj",
     "applyAll": "Zastosuj wszystkie",
     "calendar": "Kalendarz",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Załączniki",
-    "leftPanel": "Panel",
+    "leftPanel": "Lewy panel",
     "toolsHeader": "Narzędzia",
     "searchOverlay": "Szukaj",
     "searchPanel": "Szukaj",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Ostrzeżenie bezpieczeństwa",
       "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Ostrzeżenie o edycji",
+      "message": "Ta nazwa arkusza już istnieje. Proszę wprowadzić inną nazwę."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Ostrzeżenie o edycji",
+      "message": "Nazwa arkusza nie może być pusta."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Ostrzeżenie o edycji",
+      "message": "Czy na pewno chcesz usunąć ten arkusz?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Dodany:",
     "editing": "Redagowanie",
     "editingDescription": "Edytuj dokument",
-    "pageBreak": "Podział strony",
     "reviewing": "Przeglądanie",
     "reviewingDescription": "Zasugeruj",
     "viewOnly": "Tylko podgląd",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Twoja przeglądarka nie obsługuje wklejania. Zamiast tego możesz użyć skrótu klawiaturowego",
     "pastingWithoutFormatTitle": "Wklejanie bez formatowania nie jest możliwe",
     "pastingWithoutFormatMessage": "Wklejanie bez formatowania nie jest obsługiwane w Twojej przeglądarce. Zamiast tego możesz użyć skrótu klawiaturowego",
+    "breaks": "Przerwy",
+    "pageBreak": "Podział strony",
+    "pageBreakDescription": "Zakończ stronę i zacznij na nowej stronie",
+    "sectionBreakNextPage": "Podział sekcji - Następna strona",
+    "sectionBreakNextPageDescription": "Wstaw podział sekcji i zacznij na następnej stronie",
+    "sectionBreakContinuous": "Podział sekcji - ciągły",
+    "sectionBreakContinuousDescription": "Wstaw podział sekcji i kontynuuj na tej samej stronie",
+    "header": {
+      "0": "Chodnikowiec",
+      "1": "Nagłówek pierwszej strony",
+      "2": "Nagłówek strony parzystej",
+      "3": "Nagłówek strony nieparzystej"
+    },
+    "footer": {
+      "0": "Stopka",
+      "1": "Stopka pierwszej strony",
+      "2": "Stopka strony parzystej",
+      "3": "Stopka strony nieparzystej"
+    },
+    "options": "Opcje",
+    "pageOptions": "Opcje strony",
+    "removeHeader": "Usuń nagłówek",
+    "removeFooter": "Usuń stopkę",
+    "headerFooterOptionsModal": {
+      "title": "Format nagłówka i stopki",
+      "margins": "Marginesy",
+      "headerFromTop": "Nagłówek od góry",
+      "footerFromBottom": "Stopka od dołu",
+      "layouts": {
+        "layout": "Układ",
+        "noSelection": "Brak wyboru",
+        "differentFirstPage": "Inna pierwsza strona",
+        "differentEvenOddPages": "Różne strony parzyste i nieparzyste",
+        "differentFirstEvenOddPages": "Różne strony pierwsze, parzyste i nieparzyste"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1,5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Rodzina czcionek"
     }
+  },
+  "sheetEditor": {
+    "editing": "Redagowanie",
+    "viewOnly": "Oglądanie",
+    "editingDescription": "Edytuj dokument",
+    "viewOnlyDescription": "Tylko do przeglądania",
+    "bold": "Pogrubiony",
+    "italic": "italski",
+    "underline": "Podkreślać",
+    "strikethrough": "Przekreślenie",
+    "cellBorderStyle": "Styl obramowania",
+    "merge": "Łączyć",
+    "unmerge": "Rozłącz",
+    "cellFormat": "Format komórki",
+    "automatic": "Automatyczny",
+    "plainText": "Zwykły tekst",
+    "increaseDecimal": "Zwiększ liczbę dziesiętną",
+    "decreaseDecimal": "Zmniejsz liczbę dziesiętną",
+    "number": "Numer",
+    "percent": "Procent",
+    "accounting": "Księgowość",
+    "financial": "Budżetowy",
+    "currency": "Waluta",
+    "currencyRounded": "Zaokrąglona waluta",
+    "calendar": "Data",
+    "clockHour": "Czas",
+    "calendarTime": "Data i godzina",
+    "formatAsCurrency": "Formatuj jako walutę",
+    "formatAsPercent": "Formatuj jako procent",
+    "formatAsDecDecimal": "Zmniejsz przecinek dziesiętny",
+    "formatAsIncDecimal": "Zwiększ przecinek dziesiętny",
+    "fontColor": "Kolor czcionki",
+    "cellBackgroundColor": "Kolor tła komórki",
+    "textAlignment": "Wyrównanie tekstu",
+    "alignLeft": "Wyrównaj do lewej",
+    "alignCenter": "Wyrównaj do środka",
+    "alignRight": "Wyrównaj do prawej",
+    "alignTop": "Wyrównaj górę",
+    "alignMiddle": "Wyrównaj do środka",
+    "alignBottom": "Wyrównaj dół",
+    "cellAdjustment": "Regulacja komórki",
+    "insertColLeft": "Wstaw kolumnę po lewej stronie",
+    "columnInsertLeft": "Wstaw kolumnę po lewej stronie",
+    "columnInsertRight": "Wstaw kolumnę po prawej",
+    "rowInsertTop": "Wstaw wiersz powyżej",
+    "rowInsertBottom": "Wstaw wiersz poniżej",
+    "columnInsertShiftDown": "Wstaw komórki i przesuń w dół",
+    "columnInsertShiftRight": "Wstaw komórki i przesuń w prawo",
+    "columnDelete": "Usuń kolumnę",
+    "rowDelete": "Usuń wiersz",
+    "columnDeleteShiftUp": "Usuń komórki i przesuń w górę",
+    "columnDeleteShiftLeft": "Usuń komórki i przesuń w lewo"
   },
   "insertPageModal": {
     "title": "Wstaw nową stronę",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Nagłówek prawy",
       "bottomHeader": "Nagłówek dolny",
       "documentContent": "Zawartość dokumentu"
-    }
+    },
+    "label": "Dostępność",
+    "accessibilityMode": "Tryb ułatwień dostępu",
+    "skipTo": "Przejdź do",
+    "document": "Dokument",
+    "notes": "Notatki"
+  },
+  "formulaBar": {
+    "label": "Pasek formuły",
+    "range": "Zakres",
+    "formulas": "Formuły",
+    "sumif": "Suma warunkowa w zakresie",
+    "sumsq": "Zwraca sumę kwadratów zakresu",
+    "sum": "Dodaje wszystkie liczby w zakresie",
+    "asinh": "Zwraca odwrotny sinus hiperboliczny liczby",
+    "acos": "Zwraca arcus cosinus liczby w radianach",
+    "cosh": "Zwraca cosinus hiperboliczny liczby",
+    "iseven": "Sprawdza, czy liczba jest parzysta",
+    "isodd": "Sprawdza, czy liczba jest nieparzysta"
   }
 }

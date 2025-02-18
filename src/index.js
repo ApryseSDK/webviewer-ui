@@ -93,12 +93,16 @@ if (window.CanvasRenderingContext2D) {
   let fullAPIReady = Promise.resolve();
   const state = store.getState();
 
-  if (state.advanced.fullAPI) {
+  if (state.advanced.fullAPI || state.viewer.isAccessibleMode) {
     window.Core.enableFullPDF();
     if (window.isApryseWebViewerWebComponent) {
       fullAPIReady = loadScript(`${window.webViewerPath}core/pdf/PDFNet.js`);
     } else {
       fullAPIReady = loadScript('../core/pdf/PDFNet.js');
+    }
+
+    if (state.viewer.isAccessibleMode) {
+      console.warn('FullAPI is required for accessibleMode. It has been automatically enabled to ensure accesible reading order mode will work.');
     }
   }
 
@@ -203,7 +207,7 @@ if (window.CanvasRenderingContext2D) {
   };
 
   const initTransports = () => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR } = workerTypes;
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, SPREADSHEET_EDITOR } = workerTypes;
     const workersToLoad = getWorkersToLoad(preloadWorker);
 
     if (workersToLoad.includes(PDF)) {
@@ -246,6 +250,14 @@ if (window.CanvasRenderingContext2D) {
 
     if (workersToLoad.includes(CONTENT_EDIT)) {
       window.Core.ContentEdit.preloadWorker(documentViewer.getContentEditManager());
+    }
+
+    if (workersToLoad.includes(SPREADSHEET_EDITOR)) {
+      window.Core.initSpreadsheetEditorWorkerTransports({
+        workerLoadingProgress: (percent) => {
+          store.dispatch(actions.setLoadingProgress(percent));
+        },
+      });
     }
   };
 

@@ -7,6 +7,7 @@ import rootReducer from 'reducers/rootReducer';
 import { MockApp } from 'helpers/storybookHelper';
 import actions from 'actions';
 import initialState from 'src/redux/initialState';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/ZoomControls',
@@ -21,9 +22,14 @@ export const FullSize = () => {
   return (
     <Provider store={store}>
       <FlyoutContainer/>
-      <ZoomControlsContainer/>
+      <ZoomControlsContainer className='zoom-full-size' />
     </Provider>
   );
+};
+
+FullSize.play = async ({ canvasElement }) => {
+  const zoomContainer = canvasElement.querySelector('.ZoomContainerWrapper');
+  expect(zoomContainer.classList.contains('zoom-full-size')).toBe(true);
 };
 
 export const SmallSize = () => {
@@ -34,10 +40,33 @@ export const SmallSize = () => {
   return (
     <Provider store={store}>
       <FlyoutContainer/>
-      <ZoomControlsContainer/>
+      <ZoomControlsContainer />
     </Provider>
   );
 };
+
+export const ZoomInSheetEditorMode = () => {
+  let preloadedState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isSpreadsheetEditorModeEnabled: true,
+    },
+  };
+
+  const store = configureStore({
+    preloadedState: preloadedState,
+    reducer: rootReducer,
+  });
+
+  return (
+    <Provider store={store}>
+      <FlyoutContainer/>
+      <ZoomControlsContainer />
+    </Provider>
+  );
+};
+
 
 const getStateWithFlyoutOpen = (context) => {
   return {

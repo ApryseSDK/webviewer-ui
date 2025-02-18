@@ -4,6 +4,7 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import classNames from 'classnames';
 
 /**
  * A button that toggles form field edit mode.
@@ -11,7 +12,7 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const FormFieldEditButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, dataElement } = props;
+  const { isFlyoutItem, dataElement, style, className } = props;
   const { icon, title } = menuItems.formFieldEditButton;
 
   const handleClick = () => {
@@ -29,12 +30,17 @@ const FormFieldEditButton = forwardRef((props, ref) => {
       <FlyoutItemContainer {...props} ref={ref} onClick={handleClick} />
       : (
         <ActionButton
-          className={'PresetButton formFieldEditButton'}
+          className={classNames({
+            PresetButton: true,
+            formFieldEditButton: true,
+            [className]: true,
+          })}
           dataElement={dataElement}
           title={title}
           img={icon}
           onClick={handleClick}
           isActive={core.getFormFieldCreationManager().isInFormFieldCreationMode()}
+          style={style}
         />
       )
   );
@@ -43,6 +49,8 @@ const FormFieldEditButton = forwardRef((props, ref) => {
 FormFieldEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 FormFieldEditButton.displayName = 'FormFieldEditButton';
 

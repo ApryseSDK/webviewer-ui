@@ -18,7 +18,9 @@ const store = configureStore({ reducer: () => initialState });
 const prepareEditModeDropdownStory = () => {
   return (
     <Provider store={store}>
-      <OfficeEditorModeDropdown/>
+      <div style={{ width: 145 }}>
+        <OfficeEditorModeDropdown/>
+      </div>
     </Provider>
   );
 };

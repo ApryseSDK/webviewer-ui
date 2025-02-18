@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "पैराग्राफ जोड़ें",
     "add": "जोड़ें",
+    "addSheet": "शीट जोड़ें",
     "apply": "लागू करना",
     "applyAll": "सभी लागू",
     "calendar": "पंचांग",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "संलग्नक",
-    "leftPanel": "पैनल",
+    "leftPanel": "बायां पैनल",
     "toolsHeader": "उपकरण",
     "searchOverlay": "खोज",
     "searchPanel": "खोज",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "सुरक्षा चेतावनी",
       "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}\n\n यदि आपको इस दस्तावेज़ पर भरोसा है, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "चेतावनी संपादित करें",
+      "message": "यह शीट नाम पहले से मौजूद है। कृपया कोई दूसरा नाम दर्ज करें।"
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "चेतावनी संपादित करें",
+      "message": "यह शीट नाम रिक्त नहीं रह सकता."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "चेतावनी संपादित करें",
+      "message": "क्या आप वाकई इस शीट को हटाना चाहते हैं?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "जोड़ा गया:",
     "editing": "संपादन",
     "editingDescription": "दस्तावेज़ संपादित करें",
-    "pageBreak": "पृष्ठ ब्रेक",
     "reviewing": "की समीक्षा",
     "reviewingDescription": "सुझाव दो",
     "viewOnly": "केवल देखें",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "आपके ब्राउज़र में पेस्ट करना समर्थित नहीं है। इसके बजाय, आप कीबोर्ड शॉर्टकट का उपयोग कर सकते हैं",
     "pastingWithoutFormatTitle": "बिना फ़ॉर्मेटिंग के पेस्ट करना उपलब्ध नहीं है",
     "pastingWithoutFormatMessage": "आपके ब्राउज़र में बिना फ़ॉर्मेटिंग के पेस्ट करना समर्थित नहीं है। इसके बजाय, आप कीबोर्ड शॉर्टकट का उपयोग कर सकते हैं",
+    "breaks": "ब्रेक",
+    "pageBreak": "पृष्ठ ब्रेक",
+    "pageBreakDescription": "पृष्ठ समाप्त करें और नए पृष्ठ पर प्रारंभ करें",
+    "sectionBreakNextPage": "अनुभाग विराम - अगला पृष्ठ",
+    "sectionBreakNextPageDescription": "अनुभाग विराम डालें और अगले पृष्ठ पर प्रारंभ करें",
+    "sectionBreakContinuous": "खंड विराम - निरंतर",
+    "sectionBreakContinuousDescription": "अनुभाग विराम डालें और उसी पृष्ठ पर जारी रखें",
+    "header": {
+      "0": "हैडर",
+      "1": "प्रथम पृष्ठ शीर्षक",
+      "2": "सम पृष्ठ शीर्षलेख",
+      "3": "विषम पृष्ठ शीर्षलेख"
+    },
+    "footer": {
+      "0": "फ़ुटबाल",
+      "1": "प्रथम पृष्ठ फ़ुटर",
+      "2": "सम पृष्ठ पादलेख",
+      "3": "विषम पृष्ठ पादलेख"
+    },
+    "options": "विकल्प",
+    "pageOptions": "पेज विकल्प",
+    "removeHeader": "हेडर हटाएँ",
+    "removeFooter": "फ़ुटर हटाएँ",
+    "headerFooterOptionsModal": {
+      "title": "शीर्षलेख एवं पादलेख प्रारूप",
+      "margins": "मार्जिन",
+      "headerFromTop": "शीर्ष से हेडर",
+      "footerFromBottom": "नीचे से पादलेख",
+      "layouts": {
+        "layout": "लेआउट",
+        "noSelection": "कोई चयन नहीं",
+        "differentFirstPage": "अलग पहला पेज",
+        "differentEvenOddPages": "विभिन्न सम एवं विषम पृष्ठ",
+        "differentFirstEvenOddPages": "अलग-अलग प्रथम, सम और विषम पृष्ठ"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "फुहारा परिवार"
     }
+  },
+  "sheetEditor": {
+    "editing": "संपादन",
+    "viewOnly": "देखना",
+    "editingDescription": "दस्तावेज़ संपादित करें",
+    "viewOnlyDescription": "केवल देखें",
+    "bold": "बोल्ड",
+    "italic": "तिरछा",
+    "underline": "रेखांकन",
+    "strikethrough": "स्ट्राइकथ्रू",
+    "cellBorderStyle": "बॉर्डर शैली",
+    "merge": "मर्ज",
+    "unmerge": "अलग करें",
+    "cellFormat": "सेल प्रारूप",
+    "automatic": "स्वचालित",
+    "plainText": "सादे पाठ",
+    "increaseDecimal": "दशमलव बढ़ाएँ",
+    "decreaseDecimal": "दशमलव घटाएँ",
+    "number": "संख्या",
+    "percent": "प्रतिशत",
+    "accounting": "लेखांकन",
+    "financial": "वित्तीय",
+    "currency": "मुद्रा",
+    "currencyRounded": "मुद्रा गोल",
+    "calendar": "तारीख",
+    "clockHour": "समय",
+    "calendarTime": "दिनांक समय",
+    "formatAsCurrency": "मुद्रा के रूप में प्रारूपित करें",
+    "formatAsPercent": "प्रतिशत के रूप में प्रारूपित करें",
+    "formatAsDecDecimal": "दशमलव बिंदु घटाएँ",
+    "formatAsIncDecimal": "दशमलव बिंदु बढ़ाएँ",
+    "fontColor": "फ़ॉन्ट रंग",
+    "cellBackgroundColor": "सेल पृष्ठभूमि रंग",
+    "textAlignment": "पाठ संरेखण",
+    "alignLeft": "बाईं ओर संरेखित करें",
+    "alignCenter": "मध्य में संरेखित करें",
+    "alignRight": "दाएँ संरेखित करें",
+    "alignTop": "शीर्ष संरेखित करें",
+    "alignMiddle": "मध्य संरेखित करें",
+    "alignBottom": "नीचे संरेखित करें",
+    "cellAdjustment": "सेल समायोजन",
+    "insertColLeft": "स्तंभ बाईं ओर डालें",
+    "columnInsertLeft": "स्तंभ बाईं ओर डालें",
+    "columnInsertRight": "स्तंभ दाईं ओर डालें",
+    "rowInsertTop": "ऊपर पंक्ति डालें",
+    "rowInsertBottom": "नीचे पंक्ति डालें",
+    "columnInsertShiftDown": "सेल डालें और नीचे शिफ्ट करें",
+    "columnInsertShiftRight": "सेल डालें और दाईं ओर शिफ्ट करें",
+    "columnDelete": "स्तंभ हटाएं",
+    "rowDelete": "पंक्ति को हटाएं",
+    "columnDeleteShiftUp": "कोशिकाओं को हटाएँ और ऊपर शिफ्ट करें",
+    "columnDeleteShiftLeft": "कक्षों को हटाएं और बाईं ओर शिफ्ट करें"
   },
   "insertPageModal": {
     "title": "नया पेज डालें",
@@ -1480,6 +1580,24 @@
       "rightHeader": "दायाँ हेडर",
       "bottomHeader": "निचला हेडर",
       "documentContent": "दस्तावेज़ सामग्री"
-    }
+    },
+    "label": "सरल उपयोग",
+    "accessibilityMode": "पहुँच क्षमता मोड",
+    "skipTo": "छलांग लगाओ",
+    "document": "दस्तावेज़",
+    "notes": "नोट्स"
+  },
+  "formulaBar": {
+    "label": "फॉर्मूला बार",
+    "range": "श्रेणी",
+    "formulas": "सूत्रों",
+    "sumif": "एक सीमा में सशर्त योग",
+    "sumsq": "किसी श्रेणी के वर्गों का योग लौटाता है",
+    "sum": "किसी श्रेणी में सभी संख्याओं को जोड़ता है",
+    "asinh": "किसी संख्या का व्युत्क्रम हाइपरबोलिक साइन लौटाता है",
+    "acos": "किसी संख्या का आर्ककोसाइन, रेडियन में लौटाता है",
+    "cosh": "किसी संख्या का हाइपरबोलिक कोसाइन लौटाता है",
+    "iseven": "जाँचता है कि संख्या सम है या नहीं",
+    "isodd": "जाँचता है कि कोई संख्या विषम है या नहीं"
   }
 }

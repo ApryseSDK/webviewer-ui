@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Bekezdés hozzáadása",
     "add": "Hozzáadás",
+    "addSheet": "Lap hozzáadása",
     "apply": "Alkalmaz",
     "applyAll": "Alkalmazza az összeset",
     "calendar": "Naptár",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Mellékletek",
-    "leftPanel": "Panel",
+    "leftPanel": "Bal oldali panel",
     "toolsHeader": "Eszközök",
     "searchOverlay": "Keresés",
     "searchPanel": "Keresés",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Biztonsági figyelmeztetés",
       "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Figyelmeztetés szerkesztése",
+      "message": "Ez a munkalapnév már létezik. Kérjük, adjon meg egy másik nevet."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Figyelmeztetés szerkesztése",
+      "message": "A munkalap neve nem lehet üres."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Figyelmeztetés szerkesztése",
+      "message": "Biztosan törli ezt a lapot?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Hozzáadva:",
     "editing": "Szerkesztés",
     "editingDescription": "Dokumentum szerkesztése",
-    "pageBreak": "Oldaltörés",
     "reviewing": "Áttekintés",
     "reviewingDescription": "Tegyél javaslatokat",
     "viewOnly": "Csak megtekintésre",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "A beillesztés nem támogatott az Ön böngészőjében. Ehelyett használhat billentyűkódot",
     "pastingWithoutFormatTitle": "A formázás nélküli beillesztés nem lehetséges",
     "pastingWithoutFormatMessage": "A formázás nélküli beillesztést a böngésző nem támogatja. Ehelyett használhat billentyűkódot",
+    "breaks": "Szünetek",
+    "pageBreak": "Oldaltörés",
+    "pageBreakDescription": "Végoldal és kezdés új oldalon",
+    "sectionBreakNextPage": "Szakasztörés – Következő oldal",
+    "sectionBreakNextPageDescription": "Szúrja be a szakasztörést, és kezdje a következő oldalon",
+    "sectionBreakContinuous": "Szakasz szünet - Folyamatos",
+    "sectionBreakContinuousDescription": "Szúrja be a szakasztörést, és folytassa ugyanazon az oldalon ",
+    "header": {
+      "0": "Fejléc",
+      "1": "Első oldal fejléce",
+      "2": "Páros oldalfejléc",
+      "3": "Páratlan oldal fejléce"
+    },
+    "footer": {
+      "0": "Lábléc",
+      "1": "Első oldal lábléce",
+      "2": "Még az oldalláb is",
+      "3": "Páratlan oldal lábléce"
+    },
+    "options": "Opciók",
+    "pageOptions": "Oldalbeállítások",
+    "removeHeader": "Fejléc eltávolítása",
+    "removeFooter": "Távolítsa el a láblécet",
+    "headerFooterOptionsModal": {
+      "title": "Fejléc és lábléc formátuma",
+      "margins": "Margók",
+      "headerFromTop": "Fejléc felülről",
+      "footerFromBottom": "Lábléc alulról",
+      "layouts": {
+        "layout": "Elrendezés",
+        "noSelection": "Nincs kiválasztás",
+        "differentFirstPage": "Különböző első oldal",
+        "differentEvenOddPages": "Különböző páros és páratlan oldalak",
+        "differentFirstEvenOddPages": "Különböző első, páros és páratlan oldalak"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Betűcsalád"
     }
+  },
+  "sheetEditor": {
+    "editing": "Szerkesztés",
+    "viewOnly": "Megtekintés",
+    "editingDescription": "Dokumentum szerkesztése",
+    "viewOnlyDescription": "Csak megtekintés",
+    "bold": "Bátor",
+    "italic": "Dőlt",
+    "underline": "Aláhúzás",
+    "strikethrough": "Áthúzott",
+    "cellBorderStyle": "Szegély stílus",
+    "merge": "Összeolvad",
+    "unmerge": "Egyesítés megszüntetése",
+    "cellFormat": "Cellaformátum",
+    "automatic": "Automatikus",
+    "plainText": "Egyszerű szöveg",
+    "increaseDecimal": "Tizedesjegy növelése",
+    "decreaseDecimal": "Csökkentse a tizedesjegyet",
+    "number": "Szám",
+    "percent": "Százalékos",
+    "accounting": "Számvitel",
+    "financial": "Pénzügyi",
+    "currency": "Valuta",
+    "currencyRounded": "Pénznem kerekítve",
+    "calendar": "Dátum",
+    "clockHour": "Idő",
+    "calendarTime": "Dátum Idő",
+    "formatAsCurrency": "Formátum pénznemként",
+    "formatAsPercent": "Formátum százalékban",
+    "formatAsDecDecimal": "Tizedesvessző csökkentése",
+    "formatAsIncDecimal": "Tizedesvessző növelése",
+    "fontColor": "Betűszín",
+    "cellBackgroundColor": "Cell háttérszín",
+    "textAlignment": "Szöveg igazítása",
+    "alignLeft": "Balra igazítás",
+    "alignCenter": "Középre igazítás",
+    "alignRight": "Igazítsa jobbra",
+    "alignTop": "Igazítsa a tetejét",
+    "alignMiddle": "Középre igazítás",
+    "alignBottom": "Igazítsa az alját",
+    "cellAdjustment": "Cellák beállítása",
+    "insertColLeft": "Oszlop beszúrása balra",
+    "columnInsertLeft": "Oszlop beszúrása balra",
+    "columnInsertRight": "Oszlop beszúrása jobbra",
+    "rowInsertTop": "Szúrjon be egy sort felül",
+    "rowInsertBottom": "Szúrjon be egy sort alább",
+    "columnInsertShiftDown": "Helyezze be a cellákat, és tolja lefelé",
+    "columnInsertShiftRight": "Szúrjon be cellákat és tolja jobbra",
+    "columnDelete": "Oszlop törlése",
+    "rowDelete": "Sor törlése",
+    "columnDeleteShiftUp": "Törölje a cellákat és tolja felfelé",
+    "columnDeleteShiftLeft": "Törölje a cellákat és tolja balra"
   },
   "insertPageModal": {
     "title": "Új oldal beszúrása",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Jobb fejléc",
       "bottomHeader": "Alsó fejléc",
       "documentContent": "Dokumentumtartalom"
-    }
+    },
+    "label": "Megközelíthetőség",
+    "accessibilityMode": "Kisegítő lehetőségek",
+    "skipTo": "Ugrás ide",
+    "document": "Dokumentum",
+    "notes": "Megjegyzések"
+  },
+  "formulaBar": {
+    "label": "Formula bár",
+    "range": "Hatótávolság",
+    "formulas": "Képletek",
+    "sumif": "Egy tartományon belüli feltételes összeg",
+    "sumsq": "Egy tartomány négyzeteinek összegét adja eredményül",
+    "sum": "Összeadja egy tartomány összes számát",
+    "asinh": "Egy szám inverz hiperbolikus szinuszát adja eredményül",
+    "acos": "Egy szám arckoszinuszát adja vissza radiánban",
+    "cosh": "Egy szám hiperbolikus koszinuszát adja eredményül",
+    "iseven": "Ellenőrzi, hogy egy szám páros-e",
+    "isodd": "Ellenőrzi, hogy egy szám páratlan-e"
   }
 }

@@ -20,6 +20,7 @@ function PageControls(props) {
     nextPageButton,
     elementRef,
     headerDirection,
+    className,
   } = props;
 
   const totalPages = useSelector(selectors.getTotalPages);
@@ -27,7 +28,7 @@ function PageControls(props) {
   const { t } = useTranslation();
 
   return (
-    <div className="PageControlsWrapper"
+    <div className={classNames({ PageControlsWrapper: true, [className]: true })}
       data-element={dataElement}
       style={{ flexDirection: headerDirection }}
       ref={elementRef}>
@@ -67,6 +68,7 @@ PageControls.propTypes = {
   nextPageButton: PropTypes.object,
   elementRef: PropTypes.any,
   headerDirection: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default PageControls;

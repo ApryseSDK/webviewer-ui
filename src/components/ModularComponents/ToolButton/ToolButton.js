@@ -33,6 +33,7 @@ const ToolButton = forwardRef((props, ref) => {
     isFlyoutItem = false,
     groupedItem,
     allFlyoutItems = [],
+    style
   } = props;
 
   // use this so that state gets updated when active tool styles change
@@ -42,7 +43,6 @@ const ToolButton = forwardRef((props, ref) => {
   const iconColorKey = useSelector((state) => selectors.getIconColor(state, mapToolNameToKey(toolName)));
   const toolButtonObject = useSelector((state) => selectors.getToolButtonObject(state, toolName), shallowEqual);
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems, shallowEqual);
-  const lastPickedToolAndGroup = useSelector(selectors.getLastPickedToolAndGroup, shallowEqual);
   const isSignatureListPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL));
   const isRubberStampPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL));
   const customOverrides = useSelector(
@@ -86,11 +86,9 @@ const ToolButton = forwardRef((props, ref) => {
 
   useEffect(() => {
     const handleToolModeChange = (tool) => {
-      // prevent edit tool from deactivating when text is hovered
-      const isEditToolAndItIsActive = toolName === ToolNames.EDIT && lastPickedToolAndGroup.tool === ToolNames.EDIT;
       const isSignatureToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
       const isRubberStampToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
-      const shouldActivateButton = tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT) || isSignatureToolActive || isRubberStampToolActive;
+      const shouldActivateButton = tool.name === toolName || isSignatureToolActive || isRubberStampToolActive;
 
       if (shouldActivateButton) {
         setIsButtonActive(true);
@@ -195,6 +193,7 @@ const ToolButton = forwardRef((props, ref) => {
       fillColor={fillColor}
       strokeColor={strokeColor}
       ariaCurrent={isButtonActive}
+      style={style}
     />
   );
 });
@@ -208,6 +207,7 @@ ToolButton.propTypes = {
   disabled: PropTypes.bool,
   groupedItem: PropTypes.string,
   allFlyoutItems: PropTypes.array,
+  style: PropTypes.object,
 };
 ToolButton.displayName = 'ToolButton';
 

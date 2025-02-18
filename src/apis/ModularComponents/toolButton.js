@@ -12,6 +12,9 @@ import Item from './item';
  * @param {string} [properties.label] The label of the button.
  * @param {string} [properties.img] The icon of the button.
  * @param {Core.Tools.ToolNames | string} [properties.toolName] The name of the tool that the button activates. Refer to: {@link Core.Tools.ToolNames}
+ * @param {object} [properties.style] An object defining inline CSS styles for the tool button, where each key represents a CSS property and its corresponding value.
+ * @param {string} [properties.className] String with CSS classes to be applied to the tool button, allowing additional styling and customization through external stylesheets.
+
  * @example
 const toolButton = new instance.UI.Components.ToolButton({
   label: 'Pan',
@@ -37,4 +40,7 @@ class ToolButton extends Item {
   }
 }
 
-export default ToolButton;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new ToolButton(propsWithStore);
+};

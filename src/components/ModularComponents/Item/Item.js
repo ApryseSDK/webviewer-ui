@@ -11,6 +11,8 @@ Item.propTypes = {
   dataElement: PropTypes.string.isRequired,
   title: PropTypes.string,
   disabled: PropTypes.bool,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default Item;

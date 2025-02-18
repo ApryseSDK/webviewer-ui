@@ -63,3 +63,13 @@ export const createCustomElement = (item) => {
     render={item.render}
   />;
 };
+
+export const getEnabledPanels = (paramsObject) => {
+  const { panelsList, disabledElements, tabPanelDataElement } = paramsObject;
+  const enabledPanels = panelsList.filter((panel) => {
+    const isPanelDisabled = disabledElements[panel.render]?.disabled;
+    const isPanelTabDisabled = disabledElements[`${panel.render}-${tabPanelDataElement}`]?.disabled;
+    return !isPanelDisabled && !isPanelTabDisabled;
+  });
+  return enabledPanels;
+};

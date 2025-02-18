@@ -2,7 +2,6 @@ import onBeforeDocumentLoaded from './onBeforeDocumentLoaded';
 import onCheckStampAnnotationAdded from './onCheckStampAnnotationAdded';
 import onCrossStampAnnotationAdded from './onCrossStampAnnotationAdded';
 import onDisplayModeUpdated from './onDisplayModeUpdated';
-import onDocumentLoaded from './onDocumentLoaded';
 import onDocumentUnloaded from './onDocumentUnloaded';
 import onFitModeUpdated from './onFitModeUpdated';
 import onRotationUpdated from './onRotationUpdated';
@@ -48,6 +47,20 @@ import onAccessibleReadingOrderModeReady from './onAccessibleReadingOrderModeRea
 import onAccessibleReadingOrderModeEnded from './onAccessibleReadingOrderModeEnded';
 import onAccessibleReadingOrderModeNoStructure from './onAccessibleReadingOrderModeNoStructure';
 import onUserBookmarksChanged from './onUserBookmarksChanged';
+import onDocumentLoaded, {
+  enableRedactionElements,
+  addPageLabelsToRedux,
+  handlePasswordModal,
+  showProgressModal,
+  setPrintHandler,
+  toggleAnnotations,
+  setServerProperties,
+  checkDocumentForTools,
+  updateOutlines,
+  updatePortfolioAndLayers,
+  configureOfficeEditor,
+} from './onDocumentLoaded';
+import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
 
 export {
   onSignatureSaved,
@@ -100,4 +113,16 @@ export {
   onAccessibleReadingOrderModeEnded,
   onAccessibleReadingOrderModeNoStructure,
   onUserBookmarksChanged,
+  enableRedactionElements,
+  addPageLabelsToRedux,
+  handlePasswordModal,
+  showProgressModal,
+  setPrintHandler,
+  toggleAnnotations,
+  setServerProperties,
+  checkDocumentForTools,
+  updateOutlines,
+  updatePortfolioAndLayers,
+  configureOfficeEditor,
+  onSpreadsheetEditorSelectionChanged,
 };

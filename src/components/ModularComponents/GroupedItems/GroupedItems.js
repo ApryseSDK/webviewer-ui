@@ -93,7 +93,7 @@ const GroupedItems = (props) => {
     handleMoreButtonIcon();
   }, [size, items]);
 
-  useSizeStore({ dataElement, size, elementRef, headerDirection });
+  useSizeStore({ dataElement, elementRef, headerDirection });
 
   useEffect(() => {
     const flyout = {

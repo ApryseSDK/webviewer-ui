@@ -82,7 +82,7 @@ const RibbonGroup = (props) => {
       dispatch(actions.closeElement(FLYOUT_NAME));
     }
   }, [size]);
-  useSizeStore({ dataElement, size, elementRef, headerDirection, shouldDelay: true });
+  useSizeStore({ dataElement, elementRef, headerDirection });
 
   const setActiveCustomRibbon = useCallback(
     (ribbon) => {
@@ -150,7 +150,7 @@ const RibbonGroup = (props) => {
       itemProps.direction = headerDirection;
       itemProps.justifyContent = justifyContent;
       const isActive = item.toolbarGroup === activeCustomRibbon;
-      itemProps.ariaCurrent = isActive ? 'location' : undefined;
+      itemProps.ariaCurrent = isActive ? 'true' : undefined;
       return <RibbonItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} />;
     }).filter((item) => !!item);
   }, [ribbonItems, activeCustomRibbon]);

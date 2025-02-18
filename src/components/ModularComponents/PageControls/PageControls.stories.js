@@ -8,7 +8,8 @@ import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
-import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { MockDocumentContainer, oePartialState } from 'helpers/storybookHelper';
+import { expect } from '@storybook/test';
 
 const leftChevron = {
   onClick: () => { },
@@ -35,6 +36,7 @@ const rightChevron = {
 };
 
 const initialState = {
+  ...oePartialState,
   viewer: {
     modularComponents: {},
     modularHeaders: {},
@@ -87,6 +89,9 @@ const initialState = {
   },
   document: {
     totalPages: { 1: 9, 2: 0 }
+  },
+  featureFlags: {
+    customizableUI: true,
   },
 };
 
@@ -145,6 +150,7 @@ export const PageControlsInHeader = (storyProps) => {
   const pageControlsTools = {
     dataElement: 'pageControlsTools',
     type: 'pageControls',
+    className: 'page-controls-in-header',
   };
 
   const props = {
@@ -166,6 +172,11 @@ export const PageControlsInHeader = (storyProps) => {
       <ModularHeader {...props} />
     </Provider>
   );
+};
+
+PageControlsInHeader.play = async ({ canvasElement }) => {
+  const pageControls = canvasElement.querySelector('[data-element="pageControlsTools"]');
+  expect(pageControls.classList.contains('page-controls-in-header')).toBe(true);
 };
 
 export const PageControlsInFlyout = () => {

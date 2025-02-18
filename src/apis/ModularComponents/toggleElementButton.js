@@ -14,6 +14,8 @@ import { ITEM_TYPE } from 'constants/customizationVariables';
  * @param {string} [properties.title] The tooltip text to be displayed when hovering over the toggle button.
  * @param {string} [properties.label] The label of the button.
  * @param {string} [properties.img] The title of the button which appears in a tooltip.
+ * @param {object} [properties.style] An object defining inline CSS styles for the button, where each key represents a CSS property and its corresponding value.
+ * @param {string} [properties.className] String with CSS classes to be applied to the button, allowing additional styling and customization through external stylesheets.
  * @example
 const toggleButton = new instance.UI.Components.ToggleElementButton({
   label: 'Toggle',
@@ -33,4 +35,7 @@ class ToggleElementButton extends Item {
   }
 }
 
-export default ToggleElementButton;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new ToggleElementButton(propsWithStore);
+};

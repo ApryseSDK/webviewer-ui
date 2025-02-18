@@ -6,7 +6,7 @@ import { disableElements, enableElements, setActiveFlyout } from 'actions/intern
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getGenericPanels, getGroupedItemsWithSelectedTool, getOpenGenericPanel, getEnabledRibbonItems } from 'selectors/exposedSelectors';
+import { getGenericPanels, getOpenGenericPanel, getEnabledRibbonItems } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import { OPACITY_LEVELS } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
@@ -209,12 +209,6 @@ export const setLastActiveToolForRibbon = ({ ribbon, toolName }) => ({
   payload: { ribbon, toolName }
 });
 
-
-export const setLastPickedToolAndGroup = (toolAndGroup) => ({
-  type: 'SET_LAST_PICKED_TOOL_AND_GROUP',
-  payload: { tool: toolAndGroup.tool, group: toolAndGroup.group },
-});
-
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   if (!groupedItems.length) {
     dispatch(setGroupedItems([]));
@@ -225,22 +219,6 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, groupedItems);
 
   dispatch(setGroupedItems(allAssociatedGroupedItems));
-};
-
-export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch, getState) => {
-  const state = getState();
-  const groupedItemsWithTool = getGroupedItemsWithSelectedTool(state, toolName);
-  const activeGroupedItems = selectors.getActiveGroupedItems(state);
-  const activeGroupedItemsContainsTool = activeGroupedItems.filter((item) => groupedItemsWithTool.includes(item));
-
-  const arrayOfGroupedItems = Array.isArray(groupedItem) ? groupedItem : [groupedItem];
-  const groupsToSetLastPickedTool = Array.from(new Set(activeGroupedItemsContainsTool.concat(arrayOfGroupedItems)));
-  for (const group of groupsToSetLastPickedTool) {
-    dispatch({
-      type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
-      payload: { toolName, groupedItem: group },
-    });
-  }
 };
 
 const setGroupedItems = (groupedItems) => ({
@@ -653,7 +631,7 @@ const itemKeysToStore = [
   'groupedItems', 'grow', 'gap', 'position', 'placement', 'alwaysVisible',
   'style', 'headerDirection', 'icon', 'toolbarGroup', 'direction',
   'states', 'mount', 'unmount', 'initialState', 'hidden', 'toggleElement',
-  'toolName', 'color', 'buttonType'];
+  'toolName', 'color', 'buttonType', 'render', 'renderArguments', 'className'];
 
 //* Recursively normalize the items in a header
 const normalizeItems = (items, componentsMap, existingComponentsMap) => {
@@ -904,6 +882,10 @@ export const showErrorMessage = (message, title = '') => (dispatch) => {
 export const setCustomNoteFilter = (filterFunc) => ({
   type: 'SET_CUSTOM_NOTE_FILTER',
   payload: { customNoteFilter: filterFunc },
+});
+export const setInternalNoteFilter = (filterFunc) => ({
+  type: 'SET_INTERNAL_NOTE_FILTER',
+  payload: { internalNoteFilter: filterFunc },
 });
 export const setInlineCommentFilter = (filterFunc) => ({
   type: 'SET_INLINE_COMMENT_FILTER',
@@ -1171,3 +1153,8 @@ export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, 
     payload: type === 'text' ? { textColors: colors } : { colors },
   });
 };
+
+export const setShouldAddA11yContentToDOM = (shouldAddA11yContentToDOM) => ({
+  type: 'SET_SHOULD_ADD_A11Y_CONTENT',
+  payload: { shouldAddA11yContentToDOM },
+});

@@ -1,0 +1,16 @@
+.CellAdjustment, .CellTextAlignment {
+    .flyout-item-label {
+        text-transform: none !important;
+    }
+}
+
+.CellAdjustment {
+    min-width: 250px !important;
+}
+.CellTextAlignment {
+    min-width: 200px !important;
+}
+
+.CellFormat {
+    min-width: 300px !important;
+}

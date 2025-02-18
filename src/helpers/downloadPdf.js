@@ -4,7 +4,7 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import actions from 'actions';
-import { creatingPages } from 'helpers/rasterPrint';
+import { createRasterizedPrintPages } from 'helpers/rasterPrint';
 import selectors from 'selectors';
 import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -22,6 +22,12 @@ let previousFileName = '';
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
   let doc = core.getDocument(documentViewerKey);
+
+  if (!doc) {
+    console.warn('Document is not loaded');
+    return;
+  }
+
   if (previousFileName !== doc?.getFilename()) {
     previousFileName = doc?.getFilename();
     isDownloaded = false;
@@ -215,7 +221,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       createCanvases: true,
       isGrayscale: false
     };
-    const createdPages = creatingPages(
+    const createdPages = createRasterizedPrintPages(
       pages,
       printingOptions,
       undefined,

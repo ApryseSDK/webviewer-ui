@@ -5,13 +5,19 @@ import { FLYOUT_ITEM_TYPES } from 'src/constants/customizationVariables';
 
 const noop = () => {
 };
-export const getZoomFlyoutItems = (zoomOptionsList, dispatch, size = 0, onZoomChanged = noop) => {
+export const getZoomFlyoutItems = ({
+  zoomOptionsList,
+  isSpreadsheetEditorMode = false,
+  dispatch,
+  size = 0,
+  onZoomChanged = noop
+}) => {
   const {
     onMarqueeZoom,
     onZoomInClicked,
     onZoomOutClicked,
     onClickZoomLevelOption
-  } = getZoomHandlers(zoomOptionsList, dispatch, size, onZoomChanged);
+  } = getZoomHandlers(dispatch, size, onZoomChanged);
 
   const fitToWidthButton = {
     icon: 'icon-header-zoom-fit-to-width',
@@ -57,41 +63,51 @@ export const getZoomFlyoutItems = (zoomOptionsList, dispatch, size = 0, onZoomCh
     className: 'zoomOutButton'
   };
 
+  const transformedZoomOptionsList = [];
+  zoomOptionsList.forEach((zoomValue) => {
+    const item =  {
+      label: `${zoomValue * 100}%`,
+      onClick: () => {
+        onClickZoomLevelOption(zoomValue);
+      },
+      dataElement: `zoom-button-${zoomValue * 100}`,
+    };
+    if (isSpreadsheetEditorMode && zoomValue <= 2) {
+      transformedZoomOptionsList.push(item);
+    }
+    if (!isSpreadsheetEditorMode) {
+      transformedZoomOptionsList.push(item);
+    }
+  });
+
   let zoomItems;
   if (size === 0) {
     const divider = 'divider';
-    zoomItems = [fitToWidthButton, fitToPageButton, divider];
-    zoomOptionsList.forEach((zoomValue) => {
-      const item = {
-        label: `${zoomValue * 100}%`,
-        onClick: () => {
-          onClickZoomLevelOption(zoomValue);
-        },
-        dataElement: `zoom-button-${zoomValue * 100}`
-      };
-      zoomItems.push(item);
-    });
-    zoomItems.push(divider);
-    zoomItems.push(marqueeButton);
+    zoomItems = isSpreadsheetEditorMode
+      ? []
+      : [fitToWidthButton, fitToPageButton, divider];
+
+    zoomItems = zoomItems.concat(transformedZoomOptionsList);
+
+    if (!isSpreadsheetEditorMode) {
+      zoomItems.push(divider);
+      zoomItems.push(marqueeButton);
+    }
   } else if (size === 1) {
     const zoomOptionsItem = {
       dataElement: FLYOUT_ITEM_TYPES.ZOOM_OPTIONS_BUTTON,
-      children: zoomOptionsList.map((zoomValue) => {
-        return {
-          label: `${zoomValue * 100}%`,
-          onClick: () => {
-            onClickZoomLevelOption(zoomValue);
-          },
-          dataElement: `zoom-button-${zoomValue * 100}`
-        };
-      }),
+      children: transformedZoomOptionsList,
+      type: FLYOUT_ITEM_TYPES.ZOOM_OPTIONS_BUTTON,
     };
-    zoomItems = [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton, marqueeButton];
+
+    zoomItems = isSpreadsheetEditorMode
+      ? [zoomOptionsItem, zoomInButton, zoomOutButton]
+      : [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton, marqueeButton];
   }
   return zoomItems;
 };
 
-export const getZoomHandlers = (zoomOptionsList, dispatch, size = 0, onZoomChanged = noop) => {
+export const getZoomHandlers = (dispatch, size = 0, onZoomChanged = noop) => {
   const onClickZoomLevelOption = (zoomLevel) => {
     zoomTo(zoomLevel);
     (size === 0 || size === 1) && dispatch(actions.closeElement('zoom-containerFlyout'));

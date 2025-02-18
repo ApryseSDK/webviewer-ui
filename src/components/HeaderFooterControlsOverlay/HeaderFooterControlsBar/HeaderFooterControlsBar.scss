@@ -1,0 +1,122 @@
+@import '../../../constants/styles';
+
+.header-footer-edit-ui {
+  position: absolute;
+  height: 46px;
+  width: 100%;
+  align-items: center;
+  display: none;
+
+  &.header-edit-ui {
+    top: 143px;
+  }
+
+  &.footer-edit-ui {
+    bottom: 143px;
+  }
+
+  &.active {
+    display: flex;
+  }
+
+  .box-shadow-div {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    &:after { // using pseudo element so we can hide the left and right box-shadow
+      content:"";
+      position: absolute;
+      width: 100%;
+      height: 40px;
+      padding: 3px 0;
+      background-color: var(--gray-0);
+      box-shadow: 0px 0px 3px 0px var(--gray-7);
+      z-index: -1;
+    }
+  }
+
+
+  .label {
+    color: var(--gray-8);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    margin-left: 16px;
+  }
+
+  .options-dropdown-container {
+    position: absolute;
+    right: 16px;
+
+    .options-button {
+      color: var(--blue-5);
+      padding: 8px 32px 8px 8px;
+      background: transparent;
+      width: auto;
+      border: none;
+      cursor: pointer;
+
+      .Icon {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        right: 9.5px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        color: var(--blue-5);
+      }
+
+      &:hover, &.active {
+        color: var(--blue-6);
+
+        .Icon {
+          color: var(--blue-6);
+        }
+      }
+
+      &.active {
+        .Icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .Dropdown__items {
+      padding: 4px 0;
+      min-width: 157px;
+
+      .Dropdown__item {
+        height: 32px;
+        padding: 0 10px 0 40px;
+        position: relative;
+        width: auto;
+
+        &:first-child {
+          margin-bottom: 9px;
+        }
+
+        .Icon {
+          position: absolute;
+          left: 10px;
+          fill: var(--gray-7);
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
+      }
+
+      .Divider {
+        flex-basis: 100%;
+        width: 100%;
+        height: 1px;
+        margin: 0;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+      }
+    }
+  }
+}

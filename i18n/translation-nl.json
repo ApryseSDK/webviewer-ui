@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Alinea toevoegen",
     "add": "Toevoegen",
+    "addSheet": "Blad toevoegen",
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
     "calendar": "Kalender",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "Bijlagen",
-    "leftPanel": "Panel",
+    "leftPanel": "Linkerpaneel",
     "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
     "searchPanel": "Zoeken",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Veiligheidswaarschuwing",
       "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Bewerken Waarschuwing",
+      "message": "Deze bladnaam bestaat al. Voer een andere naam in."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Bewerken Waarschuwing",
+      "message": "Deze bladnaam mag niet leeg zijn."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Bewerken Waarschuwing",
+      "message": "Weet u zeker dat u dit blad wilt verwijderen?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Toegevoegd:",
     "editing": "Bewerken",
     "editingDescription": "Document bewerken",
-    "pageBreak": "Pagina-einde",
     "reviewing": "Beoordelen",
     "reviewingDescription": "Suggesties doen",
     "viewOnly": "Alleen bekijken",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Plakken wordt niet ondersteund in uw browser. In plaats daarvan kunt u een sneltoets gebruiken",
     "pastingWithoutFormatTitle": "Plakken zonder opmaak is niet beschikbaar",
     "pastingWithoutFormatMessage": "Plakken zonder opmaak wordt niet ondersteund in uw browser. In plaats daarvan kunt u een sneltoets gebruiken",
+    "breaks": "Pauzes",
+    "pageBreak": "Pagina-einde",
+    "pageBreakDescription": "Eindpagina en begin op een nieuwe pagina",
+    "sectionBreakNextPage": "Sectie-einde - Volgende pagina",
+    "sectionBreakNextPageDescription": "Sectie-einde invoegen en op de volgende pagina beginnen",
+    "sectionBreakContinuous": "Sectie-einde - Doorlopend",
+    "sectionBreakContinuousDescription": "Sectie-einde invoegen en doorgaan op dezelfde pagina",
+    "header": {
+      "0": "Koptekst",
+      "1": "Koptekst eerste pagina",
+      "2": "Even paginakoptekst",
+      "3": "Oneven paginakoptekst"
+    },
+    "footer": {
+      "0": "Voettekst",
+      "1": "Voettekst eerste pagina",
+      "2": "Voettekst op even pagina's",
+      "3": "Voettekst vreemde pagina"
+    },
+    "options": "Opties",
+    "pageOptions": "Pagina-opties",
+    "removeHeader": "Koptekst verwijderen",
+    "removeFooter": "Voettekst verwijderen",
+    "headerFooterOptionsModal": {
+      "title": "Kop- en voettekstformaat",
+      "margins": "Marges",
+      "headerFromTop": "Koptekst van boven",
+      "footerFromBottom": "Voettekst van onderen",
+      "layouts": {
+        "layout": "Indeling",
+        "noSelection": "Geen selectie",
+        "differentFirstPage": "Verschillende eerste pagina",
+        "differentEvenOddPages": "Verschillende even en oneven pagina's",
+        "differentFirstEvenOddPages": "Verschillende eerste, even en oneven pagina's"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Lettertypefamilie"
     }
+  },
+  "sheetEditor": {
+    "editing": "Bewerken",
+    "viewOnly": "Bekijken",
+    "editingDescription": "Document bewerken",
+    "viewOnlyDescription": "Alleen bekijken",
+    "bold": "Vetgedrukt",
+    "italic": "Cursief",
+    "underline": "Onderstrepen",
+    "strikethrough": "Doorhalen",
+    "cellBorderStyle": "Randstijl",
+    "merge": "Samenvoegen",
+    "unmerge": "Samenvoegen",
+    "cellFormat": "Celopmaak",
+    "automatic": "Automatisch",
+    "plainText": "Gewone tekst",
+    "increaseDecimal": "Decimaal vergroten",
+    "decreaseDecimal": "Decimaal verkleinen",
+    "number": "Nummer",
+    "percent": "Procent",
+    "accounting": "Boekhouding",
+    "financial": "Financieel",
+    "currency": "Munteenheid",
+    "currencyRounded": "Valuta afgerond",
+    "calendar": "Datum",
+    "clockHour": "Tijd",
+    "calendarTime": "Datum Tijd",
+    "formatAsCurrency": "Formaat als valuta",
+    "formatAsPercent": "Formaat als percentage",
+    "formatAsDecDecimal": "Decimaal punt verkleinen",
+    "formatAsIncDecimal": "Decimaal punt vergroten",
+    "fontColor": "Letterkleur",
+    "cellBackgroundColor": "Achtergrondkleur van de cel",
+    "textAlignment": "Tekstuitlijning",
+    "alignLeft": "Links uitlijnen",
+    "alignCenter": "Centreren",
+    "alignRight": "Rechts uitlijnen",
+    "alignTop": "Bovenkant uitlijnen",
+    "alignMiddle": "Midden uitlijnen",
+    "alignBottom": "Onderkant uitlijnen",
+    "cellAdjustment": "Celaanpassing",
+    "insertColLeft": "Kolom links invoegen",
+    "columnInsertLeft": "Kolom links invoegen",
+    "columnInsertRight": "Kolom rechts invoegen",
+    "rowInsertTop": "Rij boven invoegen",
+    "rowInsertBottom": "Rij hieronder invoegen",
+    "columnInsertShiftDown": "Cellen invoegen en omlaag schuiven",
+    "columnInsertShiftRight": "Cellen invoegen en naar rechts verschuiven",
+    "columnDelete": "Kolom verwijderen",
+    "rowDelete": "Rij verwijderen",
+    "columnDeleteShiftUp": "Cellen verwijderen en omhoog schuiven",
+    "columnDeleteShiftLeft": "Cellen verwijderen en naar links verschuiven"
   },
   "insertPageModal": {
     "title": "Nieuwe pagina invoegen",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Rechter koptekst",
       "bottomHeader": "Onderste koptekst",
       "documentContent": "Documentinhoud"
-    }
+    },
+    "label": "Toegankelijkheid",
+    "accessibilityMode": "Toegankelijkheidsmodus",
+    "skipTo": "Ga naar",
+    "document": "Document",
+    "notes": "Notities"
+  },
+  "formulaBar": {
+    "label": "Formulebalk",
+    "range": "Bereik",
+    "formulas": "Formules",
+    "sumif": "Een voorwaardelijke som over een bereik",
+    "sumsq": "Retourneert de som van de kwadraten van een bereik",
+    "sum": "Telt alle getallen in een bereik bij elkaar op",
+    "asinh": "Retourneert de inverse hyperbolische sinus van een getal",
+    "acos": "Retourneert de arccosinus van een getal, in radialen",
+    "cosh": "Retourneert de hyperbolische cosinus van een getal",
+    "iseven": "Controleert of een getal even is",
+    "isodd": "Controleert of een getal oneven is"
   }
 }

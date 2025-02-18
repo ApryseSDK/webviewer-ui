@@ -3,6 +3,7 @@ import CustomButton from './CustomButton';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'Components/CustomButton',
@@ -69,4 +70,30 @@ CancelButton.args = {
   onClick: () => {
     alert('Cancel button clicked!');
   }
+};
+
+export const CustomButtonWithStyle = BasicComponent.bind({});
+CustomButtonWithStyle.args = {
+  dataElement: 'button-data-element',
+  title: 'Button title',
+  disabled: false,
+  label: 'Click',
+  img: 'icon-save',
+  onClick: () => {
+    alert('Clicked!');
+  },
+  style: {
+    backgroundColor: 'red',
+    color: 'white',
+  },
+  className: 'custom-class',
+};
+
+CustomButtonWithStyle.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const span = canvas.getByText('Click');
+  const button = span.closest('button');
+  expect(button).not.toBeNull();
+  // Checking if the class was added to the button
+  expect(button.classList.contains('custom-class')).toBe(true);
 };

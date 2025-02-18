@@ -115,7 +115,7 @@ const PrintModal = ({
   const handlePageNumberChange = (pageNumbers) => {
     if (pageNumbers.length > 0) {
       setPageNumberError('');
-      onChange();
+      setSpecifiedPages(pageNumbers);
     }
   };
 
@@ -391,15 +391,15 @@ const PrintModal = ({
                   currentSelectionKey={printQuality?.toString()}
                   width={274}
                 />
-                <div className="total">
-                  {isPrinting ? (
-                    <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
-                  ) : (
-                    <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
-                  )}
-                </div>
               </DataElementWrapper>
             )}
+            <div className="total">
+              {isPrinting ? (
+                <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
+              ) : (
+                <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+              )}
+            </div>
             {!isApplyWatermarkDisabled && (
               <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
                 <div className="section-label">{t('option.watermark.title')}</div>
@@ -420,6 +420,7 @@ const PrintModal = ({
               className="button"
               onClick={createPagesAndPrint}
               label={t('action.print')}
+              ariaLabel={t('action.print')}
             />
           </div>
         </ModalWrapper>

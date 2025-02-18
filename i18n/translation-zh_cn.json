@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "添加段落",
     "add": "添加",
+    "addSheet": "添加工作表",
     "apply": "应用",
     "applyAll": "全部申请",
     "calendar": "日历",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "附件",
-    "leftPanel": "面板",
+    "leftPanel": "左侧面板",
     "toolsHeader": "工具类",
     "searchOverlay": "搜索",
     "searchPanel": "搜索",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "安全警告",
       "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "编辑警告",
+      "message": "此工作表名称已存在。请输入其他名称。"
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "编辑警告",
+      "message": "该工作表名称不能为空。"
+    },
+    "sheetTabDeleteMessage": {
+      "title": "编辑警告",
+      "message": "您确实要删除该工作表吗？"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "添加： ",
     "editing": "編輯",
     "editingDescription": "編輯文檔",
-    "pageBreak": "分页符",
     "reviewing": "审阅",
     "reviewingDescription": "提供建议",
     "viewOnly": "只读",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "您的浏览器不支持粘贴。您可以使用键盘快捷键",
     "pastingWithoutFormatTitle": "无法进行无格式粘贴",
     "pastingWithoutFormatMessage": "您的浏览器不支持不带格式粘贴。您可以使用键盘快捷键",
+    "breaks": "休息",
+    "pageBreak": "分页符",
+    "pageBreakDescription": "结束页面并开始新的页面",
+    "sectionBreakNextPage": "分节符 - 下一页",
+    "sectionBreakNextPageDescription": "插入分节符并从下一页开始",
+    "sectionBreakContinuous": "分节符 - 连续",
+    "sectionBreakContinuousDescription": "插入分节符并在同一页继续",
+    "header": {
+      "0": "标头",
+      "1": "首页页眉",
+      "2": "偶数页页眉",
+      "3": "奇数页页眉"
+    },
+    "footer": {
+      "0": "页脚",
+      "1": "首页页脚",
+      "2": "偶数页页脚",
+      "3": "奇数页页脚"
+    },
+    "options": "选项",
+    "pageOptions": "页面选项",
+    "removeHeader": "移除标题",
+    "removeFooter": "删除页脚",
+    "headerFooterOptionsModal": {
+      "title": "页眉和页脚格式",
+      "margins": "边距",
+      "headerFromTop": "顶部标头",
+      "footerFromBottom": "页脚从底部开始",
+      "layouts": {
+        "layout": "布局",
+        "noSelection": "没有选择",
+        "differentFirstPage": "首页不同",
+        "differentEvenOddPages": "不同的偶数页和奇数页",
+        "differentFirstEvenOddPages": "不同的首页、偶数页和奇数页"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "字体系列"
     }
+  },
+  "sheetEditor": {
+    "editing": "編輯",
+    "viewOnly": "查看",
+    "editingDescription": "編輯文檔",
+    "viewOnlyDescription": "仅查看",
+    "bold": "大胆的",
+    "italic": "斜体",
+    "underline": "强调",
+    "strikethrough": "删除线",
+    "cellBorderStyle": "边框样式",
+    "merge": "合并",
+    "unmerge": "取消合并",
+    "cellFormat": "单元格格式",
+    "automatic": "自动的",
+    "plainText": "纯文本",
+    "increaseDecimal": "增加小数",
+    "decreaseDecimal": "减少小数",
+    "number": "数字",
+    "percent": "百分比",
+    "accounting": "会计",
+    "financial": "金融的",
+    "currency": "货币",
+    "currencyRounded": "货币四舍五入",
+    "calendar": "日期",
+    "clockHour": "时间",
+    "calendarTime": "日期时间",
+    "formatAsCurrency": "格式化为货币",
+    "formatAsPercent": "格式为百分比",
+    "formatAsDecDecimal": "减少小数点",
+    "formatAsIncDecimal": "增加小数点",
+    "fontColor": "字体颜色",
+    "cellBackgroundColor": "单元格背景颜色",
+    "textAlignment": "文本对齐",
+    "alignLeft": "左对齐",
+    "alignCenter": "居中对齐",
+    "alignRight": "右对齐",
+    "alignTop": "顶部对齐",
+    "alignMiddle": "居中对齐",
+    "alignBottom": "底部对齐",
+    "cellAdjustment": "单元格调整",
+    "insertColLeft": "插入左侧列",
+    "columnInsertLeft": "插入左侧列",
+    "columnInsertRight": "插入右侧列",
+    "rowInsertTop": "在上方插入行",
+    "rowInsertBottom": "在下面插入行",
+    "columnInsertShiftDown": "插入单元格并下移",
+    "columnInsertShiftRight": "插入单元格并右移",
+    "columnDelete": "删除列",
+    "rowDelete": "删除行",
+    "columnDeleteShiftUp": "删除单元格并上移",
+    "columnDeleteShiftLeft": "删除单元格并左移"
   },
   "insertPageModal": {
     "title": "插入新页",
@@ -1480,6 +1580,24 @@
       "rightHeader": "右标题",
       "bottomHeader": "底部标题",
       "documentContent": "文档内容"
-    }
+    },
+    "label": "无障碍设施",
+    "accessibilityMode": "辅助功能模式",
+    "skipTo": "跳至",
+    "document": "文档",
+    "notes": "笔记"
+  },
+  "formulaBar": {
+    "label": "公式栏",
+    "range": "范围",
+    "formulas": "公式",
+    "sumif": "跨范围的条件和",
+    "sumsq": "返回某个范围的平方和",
+    "sum": "将某个范围内的所有数字相加",
+    "asinh": "返回数字的反双曲正弦值",
+    "acos": "返回数字的反余弦（以弧度为单位）",
+    "cosh": "返回数字的双曲余弦",
+    "iseven": "检查数字是否为偶数",
+    "isodd": "检查数字是否为奇数"
   }
 }

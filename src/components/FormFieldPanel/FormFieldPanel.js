@@ -74,6 +74,7 @@ const FormFieldPanel = ({
     field.onChange(input?.value || '');
     onRadioFieldNameChange(input?.value || '');
   }, []);
+
   const renderTextInput = (field) => {
     const { required, label, onChange, value } = field;
     const hasError = required && !isValid;

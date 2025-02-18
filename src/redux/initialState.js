@@ -23,7 +23,7 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -97,6 +97,7 @@ export default {
       [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true,
       [DataElements.CUSTOM_MODAL]: true,
       [DataElements.RICH_TEXT_STYLE_CONTAINER]: true,
+      [DataElements.FORMULA_BAR]: true,
     },
     hiddenElements: {},
     panelWidths: {
@@ -122,11 +123,6 @@ export default {
     documentContainerHeight: null,
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
-    lastPickedToolForGroupedItems: {},
-    lastPickedToolAndGroup: {
-      tool: 'AnnotationEdit',
-      group: [],
-    },
     lastActiveToolForRibbon: {},
     highContrastMode: getHashParameters('highContrastMode', false),
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
@@ -2028,12 +2024,14 @@ export default {
     colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     warning: {},
     customNoteFilter: null,
+    internalNoteFilter: null,
     inlineCommentFilter: (annot) => {
       const isAnnotationInstanceOf = defaultToolsWithInlineComment.some((annotationInstance) => annot instanceof annotationInstance);
       return isAnnotationInstanceOf;
     },
     zoomList: defaultZoomList,
     isAccessibleMode: getHashParameters('accessibleMode', false),
+    shouldAddA11yContentToDOM: getHashParameters('accessibleMode', false),
     disabledFeaturesInAccessibleReadingMode: {},
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
@@ -2130,7 +2128,7 @@ export default {
     fixedGroupedItems: [],
     modularHeadersHeight: {
       topHeaders: 49,
-      bottomHeaders: 32
+      bottomHeaders: 45
     },
     modularHeadersWidth: {
       rightHeader: 0,
@@ -2153,7 +2151,7 @@ export default {
     isMultiViewerModeAvailable: false,
     isOfficeEditorMode: false,
     isOfficeEditorHeaderEnabled: false,
-    isSheetEditorMode: false,
+    isSpreadsheetEditorModeEnabled: false,
     colors: initialColors,
     textColors: initialTextColors,
     toolColorOverrides: {},
@@ -2254,7 +2252,8 @@ export default {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING
+    editMode: OfficeEditorEditMode.EDITING,
+    stream: EditingStreamType.BODY,
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',
@@ -2264,4 +2263,16 @@ export default {
     isRevocationCheckingEnabled: false,
     revocationProxyPrefix: null,
   },
+  spreadsheetEditor: {
+    activeCellRange: '',
+    cellProperties: {
+      cellType: null,
+      cellFormula: null,
+      stringCellValue: null,
+      topLeftRow: null,
+      topLeftColumn: null,
+      bottomRightRow: null,
+      bottomRightColumn: null,
+    }
+  }
 };

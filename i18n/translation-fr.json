@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Ajouter un paragraphe",
     "add": "Ajouter",
+    "addSheet": "Ajouter une feuille",
     "apply": "Appliquer",
     "applyAll": "Appliquer tout",
     "calendar": "Calandre",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Avertissement de sécurité",
       "message": "Ce document tente de se connecter à :\n\n{{- uri}}\n\n Si vous faites confiance à ce document, cliquez sur Confirmer pour l'ouvrir."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Modifier l'avertissement",
+      "message": "Ce nom de feuille existe déjà. Veuillez saisir un autre nom."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Modifier l'avertissement",
+      "message": "Ce nom de feuille ne peut pas être vide."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Modifier l'avertissement",
+      "message": "Etes-vous sûr de vouloir supprimer cette feuille ?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Ajoutée:",
     "editing": "Édition",
     "editingDescription": "Modifier le document",
-    "pageBreak": "Saut de page",
     "reviewing": "Révision",
     "reviewingDescription": "Faire des suggestions",
     "viewOnly": "Afficher uniquement",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Le collage n'est pas pris en charge dans votre navigateur. Au lieu de cela, vous pouvez utiliser un raccourci clavier",
     "pastingWithoutFormatTitle": "Collage sans formatage non disponible",
     "pastingWithoutFormatMessage": "Le collage sans formatage n'est pas pris en charge dans votre navigateur. Au lieu de cela, vous pouvez utiliser un raccourci clavier",
+    "breaks": "Pauses",
+    "pageBreak": "Saut de page",
+    "pageBreakDescription": "Fin de page et début d'une nouvelle page",
+    "sectionBreakNextPage": "Saut de section - Page suivante",
+    "sectionBreakNextPageDescription": "Insérer un saut de section et commencer à la page suivante",
+    "sectionBreakContinuous": "Saut de section - Continu",
+    "sectionBreakContinuousDescription": "Insérer un saut de section et continuer sur la même page",
+    "header": {
+      "0": "En-tête",
+      "1": "En-tête de la première page",
+      "2": "En-tête de page uniforme",
+      "3": "En-tête de page impaire"
+    },
+    "footer": {
+      "0": "Pied de page",
+      "1": "Pied de page de la première page",
+      "2": "Pied de page pair",
+      "3": "Pied de page de page impaire"
+    },
+    "options": "Options",
+    "pageOptions": "Options de page",
+    "removeHeader": "Supprimer l'en-tête",
+    "removeFooter": "Supprimer le pied de page",
+    "headerFooterOptionsModal": {
+      "title": "Format d'en-tête et de pied de page",
+      "margins": "Marges",
+      "headerFromTop": "En-tête du haut",
+      "footerFromBottom": "Pied de page depuis le bas",
+      "layouts": {
+        "layout": "Mise en page",
+        "noSelection": "Aucune sélection",
+        "differentFirstPage": "Première page différente",
+        "differentEvenOddPages": "Différentes pages paires et impaires",
+        "differentFirstEvenOddPages": "Premières pages, pages paires et pages impaires différentes"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1,5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Famille de polices"
     }
+  },
+  "sheetEditor": {
+    "editing": "Édition",
+    "viewOnly": "Affichage",
+    "editingDescription": "Modifier le document",
+    "viewOnlyDescription": "Voir seulement",
+    "bold": "Audacieux",
+    "italic": "Italique",
+    "underline": "Souligner",
+    "strikethrough": "Barré",
+    "cellBorderStyle": "Style de bordure",
+    "merge": "Fusionner",
+    "unmerge": "Annuler la fusion",
+    "cellFormat": "Format de cellule",
+    "automatic": "Automatique",
+    "plainText": "Texte brut",
+    "increaseDecimal": "Augmenter la décimale",
+    "decreaseDecimal": "Diminuer la décimale",
+    "number": "Nombre",
+    "percent": "Pour cent",
+    "accounting": "Comptabilité",
+    "financial": "Financier",
+    "currency": "Devise",
+    "currencyRounded": "Devise arrondie",
+    "calendar": "Date",
+    "clockHour": "Temps",
+    "calendarTime": "Date Heure",
+    "formatAsCurrency": "Formater comme devise",
+    "formatAsPercent": "Format en pourcentage",
+    "formatAsDecDecimal": "Diminuer le point décimal",
+    "formatAsIncDecimal": "Augmenter le point décimal",
+    "fontColor": "Couleur de police",
+    "cellBackgroundColor": "Couleur d'arrière-plan de la cellule",
+    "textAlignment": "Alignement du texte",
+    "alignLeft": "Aligner à gauche",
+    "alignCenter": "Aligner le centre",
+    "alignRight": "Aligner à droite",
+    "alignTop": "Aligner le haut",
+    "alignMiddle": "Aligner au milieu",
+    "alignBottom": "Aligner le bas",
+    "cellAdjustment": "Ajustement des cellules",
+    "insertColLeft": "Insérer la colonne à gauche",
+    "columnInsertLeft": "Insérer la colonne à gauche",
+    "columnInsertRight": "Insérer la colonne à droite",
+    "rowInsertTop": "Insérer une ligne au-dessus",
+    "rowInsertBottom": "Insérer une ligne ci-dessous",
+    "columnInsertShiftDown": "Insérer des cellules et décaler vers le bas",
+    "columnInsertShiftRight": "Insérer des cellules et décaler vers la droite",
+    "columnDelete": "Supprimer la colonne",
+    "rowDelete": "Supprimer la ligne",
+    "columnDeleteShiftUp": "Supprimer des cellules et décaler vers le haut",
+    "columnDeleteShiftLeft": "Supprimer les cellules et décaler vers la gauche"
   },
   "insertPageModal": {
     "title": "Insérer une nouvelle page",
@@ -1480,6 +1580,24 @@
       "rightHeader": "En-tête droit",
       "bottomHeader": "En-tête inférieur",
       "documentContent": "Contenu du document"
-    }
+    },
+    "label": "Accessibilité",
+    "accessibilityMode": "Mode d'accessibilité",
+    "skipTo": "Passer à",
+    "document": "Document",
+    "notes": "Remarques"
+  },
+  "formulaBar": {
+    "label": "Barre de formule",
+    "range": "Gamme",
+    "formulas": "Formules",
+    "sumif": "Une somme conditionnelle sur une plage",
+    "sumsq": "Renvoie la somme des carrés d'une plage",
+    "sum": "Additionne tous les nombres d'une plage",
+    "asinh": "Renvoie le sinus hyperbolique inverse d'un nombre",
+    "acos": "Renvoie l'arc cosinus d'un nombre, en radians",
+    "cosh": "Renvoie le cosinus hyperbolique d'un nombre",
+    "iseven": "Vérifie si un nombre est pair",
+    "isodd": "Vérifie si un nombre est impair"
   }
 }

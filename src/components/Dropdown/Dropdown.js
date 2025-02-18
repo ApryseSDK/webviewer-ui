@@ -55,6 +55,7 @@ const propTypes = {
   isFlyoutItem: PropTypes.bool,
   onKeyDownHandler: PropTypes.func,
   onFocus: PropTypes.func,
+  stopPropagationOnMouseDown: PropTypes.bool,
 };
 
 // Save a list of named combobox actions, for future readability
@@ -112,6 +113,7 @@ function Dropdown({
   isFlyoutItem = false,
   onKeyDownHandler = null,
   onFocus = null,
+  stopPropagationOnMouseDown = false,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -352,6 +354,12 @@ function Dropdown({
     );
   });
 
+  const stopPropagationCheck = (e) => {
+    if (stopPropagationOnMouseDown) {
+      e.stopPropagation();
+    }
+  };
+
   useEffect(() => {
     if (isSearchEnabled) {
       setFilteredItems(items.filter((key) => getTranslatedDisplayValue(key).toLowerCase().includes(inputVal.toLowerCase())));
@@ -405,6 +413,7 @@ function Dropdown({
           dataElement={`dropdown-item-${key}`}
           className={classNames('Dropdown__item', { selected: key === currentSelectionKey, active: i === activeIndex })}
           onClick={(e) => onClickDropdownItem(e, key, i, translatedDisplayValue)}
+          onMouseDown={stopPropagationCheck}
           tabIndex={isOpen ? 0 : -1}
           ref={(el) => optionRefs.current[i] = el}
           style={getDropdownStyles(item, maxHeight)}
@@ -717,7 +726,15 @@ function Dropdown({
         </div>
       }
       {displayButton &&
-        <div ref={buttonRef} onClick={onToggle} className='display-button'>
+        <div
+          ref={buttonRef}
+          className='display-button'
+          tabIndex={disabled ? -1 : 0}
+          aria-activedescendant={isOpen ? activeDescendantId : null}
+          onClick={onToggle}
+          onKeyDown={onComboBoxKeyDown}
+          onMouseDown={stopPropagationCheck}
+        >
           {displayButton(isOpen)}
         </div>
       }

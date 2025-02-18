@@ -82,7 +82,7 @@ const defaultOfficeEditorModularHeaders = {
 
 const defaultOfficeEditorModularComponents = {
   officeEditorFileName: {
-    dataElement: 'officeEditorFileName',
+    dataElement: DataElements.OFFICE_EDITOR_FILE_NAME,
     type: 'officeEditorFileName',
   },
   fontSizeDropdown: {
@@ -112,16 +112,15 @@ const defaultOfficeEditorModularComponents = {
     type: 'presetButton',
     buttonType: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
   },
-  officeEditorPageBreakButton: {
-    dataElement: PRESET_BUTTON_TYPES.PAGE_BREAK,
-    type: ITEM_TYPE.PRESET_BUTTON,
-    buttonType: PRESET_BUTTON_TYPES.PAGE_BREAK,
+  officeEditorBreakDropdown: {
+    dataElement: DataElements.OFFICE_EDITOR_BREAK_DROPDOWN,
+    type: ITEM_TYPE.OFFICE_EDITOR_BREAK_DROPDOWN,
     icon: 'icon-office-editor-page-break',
-    title: 'officeEditor.pageBreak',
+    title: 'officeEditor.breaks',
   },
   createTableDropdown: {
     dataElement: 'createTableDropdown',
-    type: 'createTableDropdown',
+    type: ITEM_TYPE.CREATE_TABLE_DROPDOWN,
     title: 'officeEditor.table',
     icon: 'ic-table',
   },
@@ -163,20 +162,20 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'unorderedListButton',
     type: 'unorderedListButton',
   },
-  justifyLeftButton: {
-    dataElement: 'justifyLeftButton',
+  alignLeftButton: {
+    dataElement: 'alignLeftButton',
     type: 'presetButton',
-    buttonType: 'justifyLeftButton'
+    buttonType: 'alignLeftButton'
   },
-  justifyCenterButton: {
-    dataElement: 'justifyCenterButton',
+  alignCenterButton: {
+    dataElement: 'alignCenterButton',
     type: 'presetButton',
-    buttonType: 'justifyCenterButton'
+    buttonType: 'alignCenterButton'
   },
-  justifyRightButton: {
-    dataElement: 'justifyRightButton',
+  alignRightButton: {
+    dataElement: 'alignRightButton',
     type: 'presetButton',
-    buttonType: 'justifyRightButton'
+    buttonType: 'alignRightButton'
   },
   justifyBothButton: {
     dataElement: 'justifyBothButton',
@@ -336,8 +335,8 @@ const defaultOfficeEditorModularComponents = {
     img: 'icon-header-search',
     toggleElement: 'searchPanel'
   },
-  officeEditorHomeToolsGroupedItems: {
-    dataElement: 'officeEditorHomeToolsGroupedItems',
+  officeEditorHomeGroupedItems: {
+    dataElement: 'officeEditorHomeGroupedItems',
     items: [
       'stylePresetDropdown',
       'fontFaceDropdown',
@@ -354,9 +353,9 @@ const defaultOfficeEditorModularComponents = {
       'unorderedListButton',
       'orderedListButton',
       'divider-0.6',
-      'justifyLeftButton',
-      'justifyCenterButton',
-      'justifyRightButton',
+      'alignLeftButton',
+      'alignCenterButton',
+      'alignRightButton',
       'justifyBothButton',
       'divider-0.7',
       'decreaseIndentButton',
@@ -372,35 +371,13 @@ const defaultOfficeEditorModularComponents = {
     alwaysVisible: false,
     style: {}
   },
-  officeEditorHomeGroupedItems: {
-    dataElement: 'officeEditorHomeGroupedItems',
-    items: [
-      'officeEditorHomeToolsGroupedItems',
-    ],
-    type: 'groupedItems',
-    grow: 0,
-    gap: 12,
-    alwaysVisible: false,
-    style: {}
-  },
-  officeEditorInsertToolsGroupedItems: {
-    dataElement: 'officeEditorInsertToolsGroupedItems',
-    items: [
-      ITEM_TYPE.OFFICE_EDITOR_PAGE_BREAK_BUTTON,
-      'divider-0.9',
-      'createTableDropdown',
-      ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON,
-    ],
-    type: 'groupedItems',
-    grow: 0,
-    gap: 12,
-    alwaysVisible: false,
-    style: {}
-  },
   officeEditorInsertGroupedItems: {
     dataElement: 'officeEditorInsertGroupedItems',
     items: [
-      'officeEditorInsertToolsGroupedItems',
+      ITEM_TYPE.OFFICE_EDITOR_BREAK_DROPDOWN,
+      'divider-0.9',
+      'createTableDropdown',
+      ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON,
     ],
     type: 'groupedItems',
     grow: 0,

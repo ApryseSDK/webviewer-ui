@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "Tambahkan Paragraf",
     "add": "Menambahkan",
+    "addSheet": "Tambahkan Lembar",
     "apply": "Berlaku",
     "applyAll": "Terapkan semua",
     "calendar": "Kalender",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "lampiran",
-    "leftPanel": "Panel",
+    "leftPanel": "Panel Kiri",
     "toolsHeader": "Peralatan",
     "searchOverlay": "Mencari",
     "searchPanel": "Mencari",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "Peringatan keamanan",
       "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "Edit Peringatan",
+      "message": "Nama lembar ini sudah ada. Silakan masukkan nama lain."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "Edit Peringatan",
+      "message": "Nama lembar ini tidak boleh kosong."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "Edit Peringatan",
+      "message": "Apakah Anda yakin ingin menghapus lembar ini?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "Ditambahkan:",
     "editing": "Mengedit",
     "editingDescription": "Sunting dokumen",
-    "pageBreak": "Istirahat Halaman",
     "reviewing": "Meninjau",
     "reviewingDescription": "Membuat saran",
     "viewOnly": "Lihat Saja",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "Penempelan tidak didukung di browser Anda. Sebagai gantinya, Anda dapat menggunakan pintasan keyboard",
     "pastingWithoutFormatTitle": "Menempel tanpa memformat tidak tersedia",
     "pastingWithoutFormatMessage": "Menempel tanpa memformat tidak didukung di browser Anda. Sebagai gantinya, Anda dapat menggunakan pintasan keyboard",
+    "breaks": "Istirahat",
+    "pageBreak": "Istirahat Halaman",
+    "pageBreakDescription": "Akhiri halaman dan mulai di halaman baru",
+    "sectionBreakNextPage": "Pemisah Bagian - Halaman Berikutnya",
+    "sectionBreakNextPageDescription": "Masukkan pemisah bagian dan mulai di halaman berikutnya",
+    "sectionBreakContinuous": "Pemisah Bagian - Berkelanjutan",
+    "sectionBreakContinuousDescription": "Masukkan pemisah bagian dan lanjutkan pada halaman yang sama",
+    "header": {
+      "0": "Judul",
+      "1": "Header Halaman Pertama",
+      "2": "Header Halaman Genap",
+      "3": "Header Halaman Ganjil"
+    },
+    "footer": {
+      "0": "Catatan kaki",
+      "1": "Catatan Kaki Halaman Pertama",
+      "2": "Bahkan Footer Halaman",
+      "3": "Footer Halaman Ganjil"
+    },
+    "options": "Pilihan",
+    "pageOptions": "Opsi Halaman",
+    "removeHeader": "Hapus Header",
+    "removeFooter": "Hapus Footer",
+    "headerFooterOptionsModal": {
+      "title": "Format header dan footer",
+      "margins": "Margin",
+      "headerFromTop": "Header dari Atas",
+      "footerFromBottom": "Footer dari Bawah",
+      "layouts": {
+        "layout": "Tata Letak",
+        "noSelection": "Tidak Ada Pilihan",
+        "differentFirstPage": "Halaman Pertama Berbeda",
+        "differentEvenOddPages": "Halaman Genap & Ganjil yang Berbeda",
+        "differentFirstEvenOddPages": "Halaman Pertama, Genap, dan Ganjil yang Berbeda"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "Keluarga Font"
     }
+  },
+  "sheetEditor": {
+    "editing": "Mengedit",
+    "viewOnly": "Melihat",
+    "editingDescription": "Edit dokumen",
+    "viewOnlyDescription": "Lihat saja",
+    "bold": "Berani",
+    "italic": "Miring",
+    "underline": "Menggarisbawahi",
+    "strikethrough": "Dicoret",
+    "cellBorderStyle": "Gaya Perbatasan",
+    "merge": "Menggabungkan",
+    "unmerge": "Pisahkan",
+    "cellFormat": "Format Sel",
+    "automatic": "Otomatis",
+    "plainText": "Teks biasa",
+    "increaseDecimal": "Meningkatkan desimal",
+    "decreaseDecimal": "Kurangi desimal",
+    "number": "Nomor",
+    "percent": "Persen",
+    "accounting": "Akuntansi",
+    "financial": "Finansial",
+    "currency": "Mata uang",
+    "currencyRounded": "Mata uang dibulatkan",
+    "calendar": "Tanggal",
+    "clockHour": "Waktu",
+    "calendarTime": "Tanggal Waktu",
+    "formatAsCurrency": "Format sebagai mata uang",
+    "formatAsPercent": "Format sebagai persen",
+    "formatAsDecDecimal": "Kurangi titik desimal",
+    "formatAsIncDecimal": "Meningkatkan titik desimal",
+    "fontColor": "Warna Huruf",
+    "cellBackgroundColor": "Warna Latar Belakang Sel",
+    "textAlignment": "Penyelarasan Teks",
+    "alignLeft": "Rata kiri",
+    "alignCenter": "Sejajarkan tengah",
+    "alignRight": "Rata kanan",
+    "alignTop": "Sejajarkan bagian atas",
+    "alignMiddle": "Sejajarkan tengah",
+    "alignBottom": "Sejajarkan bagian bawah",
+    "cellAdjustment": "Penyesuaian Sel",
+    "insertColLeft": "Sisipkan kolom kiri",
+    "columnInsertLeft": "Sisipkan kolom kiri",
+    "columnInsertRight": "Sisipkan kolom kanan",
+    "rowInsertTop": "Sisipkan baris di atas",
+    "rowInsertBottom": "Sisipkan baris di bawah",
+    "columnInsertShiftDown": "Masukkan sel dan geser ke bawah",
+    "columnInsertShiftRight": "Sisipkan sel dan geser ke kanan",
+    "columnDelete": "Hapus kolom",
+    "rowDelete": "Hapus baris",
+    "columnDeleteShiftUp": "Hapus sel dan geser ke atas",
+    "columnDeleteShiftLeft": "Hapus sel dan geser ke kiri"
   },
   "insertPageModal": {
     "title": "Sisipkan Halaman Baru",
@@ -1480,6 +1580,24 @@
       "rightHeader": "Header Kanan",
       "bottomHeader": "Header Bawah",
       "documentContent": "Konten Dokumen"
-    }
+    },
+    "label": "Aksesibilitas",
+    "accessibilityMode": "Mode Aksesibilitas",
+    "skipTo": "Lewati ke",
+    "document": "Dokumen",
+    "notes": "Catatan"
+  },
+  "formulaBar": {
+    "label": "Bilah Rumus",
+    "range": "Jangkauan",
+    "formulas": "Rumus",
+    "sumif": "Jumlah bersyarat di seluruh rentang",
+    "sumsq": "Mengembalikan jumlah kuadrat suatu rentang",
+    "sum": "Menambahkan semua angka dalam suatu rentang",
+    "asinh": "Mengembalikan sinus hiperbolik invers dari suatu angka",
+    "acos": "Mengembalikan arccosine dari suatu angka, dalam radian",
+    "cosh": "Mengembalikan kosinus hiperbolik suatu angka",
+    "iseven": "Memeriksa apakah suatu angka genap",
+    "isodd": "Memeriksa apakah suatu angka ganjil"
   }
 }

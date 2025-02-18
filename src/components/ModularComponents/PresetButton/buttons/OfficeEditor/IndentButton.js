@@ -4,14 +4,17 @@ import core from 'core';
 import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
+import classNames from 'classnames';
 
 const propTypes = {
   isIncreaseIndent: PropTypes.bool.isRequired,
   isFlyoutItem: PropTypes.bool,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 const IndentButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, isIncreaseIndent } = props;
+  const { isFlyoutItem, isIncreaseIndent, style, className } = props;
   const indentType = isIncreaseIndent ? 'increase' : 'decrease';
 
   const handleClick = async () => {
@@ -30,13 +33,19 @@ const IndentButton = forwardRef((props, ref) => {
       : (
         <ActionButton
           key={indentType}
-          className={`PresetButton indent-button ${indentType}-indent-button`}
+          className={classNames({
+            PresetButton: true,
+            'indent-button': true,
+            [`${indentType}-indent-button`]: true,
+            [className]: className
+          })}
           dataElement={dataElement}
           title={title}
           img={icon}
           onClick={async () => {
             await handleClick();
           }}
+          style={style}
         />
       )
   );

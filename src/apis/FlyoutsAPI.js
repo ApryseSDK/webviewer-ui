@@ -2,6 +2,7 @@ import { ITEM_TYPE } from 'constants/customizationVariables';
 import actions from 'actions';
 import Flyout from './ModularComponents/flyout';
 import selectors from 'selectors/index';
+import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Namespace used to add, remove, and interact with flyouts in the UI
@@ -111,7 +112,7 @@ export default (store) => {
     if (!flyout) {
       return null;
     }
-    return new (Flyout(store))(flyout);
+    return new (Flyout(store))(cloneDeep(flyout));
   };
 
   const getAllFlyouts = () => {

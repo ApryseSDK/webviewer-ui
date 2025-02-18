@@ -49,3 +49,28 @@ export function shouldEndAccessibleReadingOrderMode() {
   const accessibleReadingOrderManager = core.getDocumentViewer()?.getAccessibleReadingOrderManager();
   accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
 }
+
+export function prepareAccessibleModeContent(store, pageNumber) {
+  const state = store.getState();
+  const documentViewerKey = state.viewer.activeDocumentViewerKey;
+
+  if (state.viewer.shouldAddA11yContentToDOM) {
+    core.getDocument(documentViewerKey).loadPageText(pageNumber, (text) => {
+      const id = `pageText${pageNumber}`;
+      // remove duplicate / pre-existing divs first before appending again
+      const pageContainerElement = core.getViewerElement(documentViewerKey).querySelector(`#pageContainer${pageNumber}`);
+      const existingTextContainer = pageContainerElement.querySelector(`#${id}`);
+      if (existingTextContainer) {
+        pageContainerElement.removeChild(existingTextContainer);
+      }
+
+      const textContainer = document.createElement('div');
+      textContainer.tabIndex = 0;
+      textContainer.textContent = `Page ${pageNumber}.\n${text}\nEnd of page ${pageNumber}.`;
+      textContainer.style = 'font-size: 5px; overflow: auto; position: absolute; z-index: -99999; top: 0; bottom: 0;';
+      textContainer.id = id;
+      // add pageText to the beginning of the pageContainer so that it comes first in tab order
+      pageContainerElement.prepend(textContainer);
+    });
+  }
+}

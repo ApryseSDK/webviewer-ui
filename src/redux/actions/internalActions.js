@@ -796,9 +796,17 @@ export const setOfficeEditorEditMode = (editMode) => ({
   payload: { editMode }
 });
 
-export const setIsSheetEditorMode = (isSheetEditorMode) => ({
-  type: 'SET_IS_SHEET_EDITOR_MODE',
-  payload: { isSheetEditorMode }
+export const setOfficeEditorActiveStream = (stream) => ({
+  type: 'SET_OFFICE_EDITOR_ACTIVE_STREAM',
+  payload: { stream }
+});
+
+export const enableSpreadsheetEditorMode = () => ({
+  type: 'ENABLE_SPREADSHEET_EDITOR_MODE',
+});
+
+export const disableSpreadsheetEditorMode = () => ({
+  type: 'DISABLE_SPREADSHEET_EDITOR_MODE',
 });
 
 export const growCustomElement = (dataElement) => (dispatch, getState) => {
@@ -864,4 +872,9 @@ export const stashComponents = (UIMode) => ({
 export const restoreComponents = (UIMode) => ({
   type: 'RESTORE_COMPONENTS',
   payload: { UIMode },
+});
+
+export const setActiveCellRange = ({ activeCellRange, cellProperties }) => ({
+  type: 'SET_ACTIVE_CELL_RANGE',
+  payload: { activeCellRange, cellProperties },
 });

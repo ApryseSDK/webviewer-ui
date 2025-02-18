@@ -5,6 +5,7 @@ import {
   AVAILABLE_STYLE_PRESET_MAP,
   ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
   DEFAULT_COLOR,
+  OFFICE_EDITOR_TRANSLATION_PREFIX,
 } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { rgbaToHex } from 'helpers/color';
@@ -117,3 +118,27 @@ export const getListTypeFlyoutItems = (type, options) => options.map((option) =>
     icon: option.img,
   };
 });
+
+export const PAGE_SECTION_BREAK_OPTIONS = [
+  {
+    key: 'pageBreak',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreak`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreakDescription`,
+    icon: 'icon-office-editor-page-break-split',
+    onClick: () => core.getOfficeEditor().insertPageBreak(),
+  },
+  {
+    key: 'sectionBreakNextPage',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPage`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPageDescription`,
+    icon: 'icon-office-editor-page-break',
+    onClick: () => core.getOfficeEditor().insertSectionBreakNextPage(),
+  },
+  {
+    key: 'sectionBreakContinuous',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuous`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuousDescription`,
+    icon: 'icon-page-manipulation-extract',
+    onClick: () => core.getOfficeEditor().insertSectionBreakContinuous(),
+  },
+];

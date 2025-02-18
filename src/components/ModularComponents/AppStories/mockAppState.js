@@ -615,3 +615,149 @@ export const mockLeftHeader = {
   'flyouts': {
   }
 };
+
+export const uiWithCustomElements = {
+  'modularComponents': {
+    'customElement1': {
+      'dataElement': 'customElement1',
+      'title': 'Test',
+      'disabled': false,
+      'type': 'customElement',
+      'render': 'customElement1Render',
+      'renderArguments': ['Test Args']
+    },
+    'customPanelToggleButton': {
+      'dataElement': 'customPanelToggleButton',
+      'title': 'Test Panel',
+      'label': 'Test Panel',
+      'type': 'toggleButton',
+      'img': 'icon-header-sidebar-line',
+      'toggleElement': 'customPanel'
+    }
+  },
+  'modularHeaders': {
+    'default-top-header': {
+      'dataElement': 'default-top-header',
+      'placement': 'top',
+      'grow': 0,
+      'gap': 12,
+      'position': 'start',
+      'float': false,
+      'stroke': true,
+      'dimension': {
+        'paddingTop': 8,
+        'paddingBottom': 8,
+        'borderWidth': 1
+      },
+      'style': {},
+      'items': [
+        'customElement1',
+        'customPanelToggleButton'
+      ]
+    },
+  },
+  'panels': {
+    'customPanel': {
+      'dataElement': 'customPanel',
+      'render': 'customPanelRender',
+      'location': 'left'
+    }
+  },
+  'flyouts': {
+  }
+};
+
+
+export const uiWithCustomElementsFunctions = {
+  customElement1Render: (args) => {
+    const element = document.createElement('div');
+    element.style.backgroundColor = 'darkgrey';
+    element.style.color = 'white';
+    element.style.textWrap = 'nowrap';
+    element.style.textAlign = 'center';
+    element.innerText = args;
+    return element;
+  },
+  customPanelRender: () => {
+    const div = document.createElement('div');
+    div.innerHTML = 'My custom panel';
+    return div;
+  },
+};
+
+export const uiWithCustomStyleAndClass = {
+  'modularComponents': {
+    'leftPanelButton': {
+      'dataElement': 'leftPanelButton',
+      'title': 'Left Panel',
+      'type': 'toggleButton',
+      'img': 'icon-header-sidebar-line',
+      'toggleElement': 'tabPanel',
+      'style': {
+        'border': '3px solid green',
+        'borderRadius': '8px'
+      }
+    },
+    'panToolButton': {
+      'dataElement': 'panToolButton',
+      'type': 'toolButton',
+      'toolName': 'Pan',
+      'style': {
+        'border': '2px solid hotpink',
+        'borderRadius': '20px',
+        'width': '32px',
+        'height': '32px'
+      },
+      'className': 'my-new-class-for-tools'
+    },
+    'toolbarGroup-Annotate': {
+      'dataElement': 'toolbarGroup-Annotate',
+      'title': 'Annotate',
+      'type': 'ribbonItem',
+      'className': 'annotate-ribbon',
+      'style': {
+        'border': '2px dotted blue'
+      },
+      'label': 'Annotate',
+      'groupedItems': [
+        'annotateGroupedItems'
+      ],
+      'toolbarGroup': 'toolbarGroup-Annotate'
+    },
+    'default-ribbon-group': {
+      'dataElement': 'default-ribbon-group',
+      'items': [
+        'toolbarGroup-Annotate',
+      ],
+      'type': 'ribbonGroup',
+      'justifyContent': 'start',
+      'grow': 2,
+      'gap': 12,
+      'alwaysVisible': false
+    },
+  },
+  'modularHeaders': {
+    'default-top-header': {
+      'dataElement': 'default-top-header',
+      'placement': 'top',
+      'grow': 0,
+      'gap': 12,
+      'position': 'start',
+      'float': false,
+      'stroke': true,
+      'dimension': {
+        'paddingTop': 8,
+        'paddingBottom': 8,
+        'borderWidth': 1
+      },
+      'style': {},
+      'items': [
+        'leftPanelButton',
+        'default-ribbon-group',
+        'panToolButton'
+      ]
+    },
+  },
+  'panels': {},
+  'flyouts': {},
+};

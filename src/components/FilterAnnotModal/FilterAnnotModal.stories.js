@@ -38,6 +38,17 @@ const initialState = {
   },
 };
 
+function customFilter(annotation) {
+  return (
+    annotation['Author'] === 'Guest_1' || annotation['Author'] === 'Guest_2'
+  );
+}
+function customFilterTwo(annotation) {
+  return (
+    annotation['Author'] === 'Guest_1'
+  );
+}
+
 export function UserPanel() {
   const props = {
     isOpen: true
@@ -48,7 +59,32 @@ export function UserPanel() {
       ...initialState.viewer,
       tab: {
         filterAnnotModal: 'annotationUserFilterPanelButton'
-      }
+      },
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialStateUserPanel })}>
+      <FilterAnnotModal {...props} />
+    </Provider>
+  );
+}
+
+export function UserPanelWithFilter() {
+  const props = {
+    isOpen: true
+  };
+
+  const initialStateUserPanel = {
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        filterAnnotModal: 'annotationUserFilterPanelButton'
+      },
+      customNoteFilter: customFilter,
     },
     featureFlags: {
       customizableUI: true,
@@ -73,6 +109,31 @@ export function ColorPanel() {
       tab: {
         filterAnnotModal: 'annotationColorFilterPanelButton'
       },
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
+    }
+  };
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialStateColorPanel })}>
+      <FilterAnnotModal {...props} />
+    </Provider>
+  );
+}
+
+export function ColorPanelWithFilter() {
+  const props = {
+    isOpen: true
+  };
+
+  const initialStateColorPanel = {
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        filterAnnotModal: 'annotationColorFilterPanelButton'
+      },
+      customNoteFilter: customFilterTwo,
     },
     featureFlags: {
       ...initialState.featureFlags,

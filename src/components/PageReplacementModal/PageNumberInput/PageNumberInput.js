@@ -54,7 +54,7 @@ function PageNumberInput({
     const inputValue = e.target.value;
     const lastChar = inputValue[inputValue.length - 1];
 
-    if (lastChar === ',' || lastChar === '-') {
+    if (lastChar === ',' || lastChar === '-' || lastChar === ' ') {
       setPageString(inputValue);
       return;
     }

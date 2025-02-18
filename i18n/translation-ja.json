@@ -2,6 +2,7 @@
   "action": {
     "addParagraph": "段落を追加",
     "add": "追加",
+    "addSheet": "シートを追加",
     "apply": "適用",
     "applyAll": "すべて適用",
     "calendar": "カレンダー",
@@ -230,7 +231,7 @@
   },
   "component": {
     "attachmentPanel": "添付ファイル",
-    "leftPanel": "パネル",
+    "leftPanel": "左パネル",
     "toolsHeader": "ツール",
     "searchOverlay": "検索",
     "searchPanel": "検索",
@@ -846,6 +847,18 @@
     "connectToURL": {
       "title": "セキュリティ警告 ",
       "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "編集警告",
+      "message": "このシート名は既に存在します。別の名前を入力してください。"
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "編集警告",
+      "message": "このシート名は空にできません。"
+    },
+    "sheetTabDeleteMessage": {
+      "title": "編集警告",
+      "message": "このシートを削除してもよろしいですか?"
     }
   },
   "shortcut": {
@@ -1282,7 +1295,6 @@
     "added": "追加した： ",
     "editing": "編集",
     "editingDescription": "ドキュメントを編集",
-    "pageBreak": "ページ区切り",
     "reviewing": "レビュー中",
     "reviewingDescription": "提案をします",
     "viewOnly": "表示のみ",
@@ -1295,6 +1307,42 @@
     "pastingMessage": "お使いのブラウザでは貼り付けはサポートされていません。代わりにキーボードショートカットを使用することができます。",
     "pastingWithoutFormatTitle": "書式なしで貼り付けることはできません",
     "pastingWithoutFormatMessage": "お使いのブラウザでは、書式なしの貼り付けはサポートされていません。代わりに、キーボードショートカットを使用できます。",
+    "breaks": "休憩",
+    "pageBreak": "ページ区切り",
+    "pageBreakDescription": "ページを終了し、新しいページから開始します",
+    "sectionBreakNextPage": "セクション区切り - 次のページ",
+    "sectionBreakNextPageDescription": "セクション区切りを挿入して次のページから開始します",
+    "sectionBreakContinuous": "セクション区切り - 連続",
+    "sectionBreakContinuousDescription": "セクション区切りを挿入し、同じページに続ける",
+    "header": {
+      "0": "ヘッダ",
+      "1": "最初のページのヘッダー",
+      "2": "偶数ページヘッダー",
+      "3": "奇数ページヘッダー"
+    },
+    "footer": {
+      "0": "フッター",
+      "1": "最初のページのフッター",
+      "2": "偶数ページフッター",
+      "3": "奇数ページフッター"
+    },
+    "options": "オプション",
+    "pageOptions": "ページオプション",
+    "removeHeader": "ヘッダーを削除",
+    "removeFooter": "フッターを削除",
+    "headerFooterOptionsModal": {
+      "title": "ヘッダーとフッターのフォーマット",
+      "margins": "マージン",
+      "headerFromTop": "上からのヘッダー",
+      "footerFromBottom": "下からのフッター",
+      "layouts": {
+        "layout": "レイアウト",
+        "noSelection": "選択なし",
+        "differentFirstPage": "最初のページが異なる",
+        "differentEvenOddPages": "異なる偶数ページと奇数ページ",
+        "differentFirstEvenOddPages": "最初のページ、偶数ページ、奇数ページが異なる"
+      }
+    },
     "lineSpacingOptions": {
       "15": "1.5",
       "115": "1.15",
@@ -1328,6 +1376,58 @@
     "fontFamily": {
       "dropdownLabel": "フォントファミリー"
     }
+  },
+  "sheetEditor": {
+    "editing": "編集",
+    "viewOnly": "閲覧",
+    "editingDescription": "ドキュメントを編集",
+    "viewOnlyDescription": "表示のみ",
+    "bold": "大胆な",
+    "italic": "イタリック",
+    "underline": "下線",
+    "strikethrough": "取り消し線",
+    "cellBorderStyle": "境界線のスタイル",
+    "merge": "マージ",
+    "unmerge": "結合解除",
+    "cellFormat": "セルの書式",
+    "automatic": "自動",
+    "plainText": "プレーンテキスト",
+    "increaseDecimal": "小数点を増やす",
+    "decreaseDecimal": "小数点以下を減算",
+    "number": "番号",
+    "percent": "パーセント",
+    "accounting": "会計",
+    "financial": "金融",
+    "currency": "通貨",
+    "currencyRounded": "通貨は四捨五入",
+    "calendar": "日付",
+    "clockHour": "時間",
+    "calendarTime": "日付時刻",
+    "formatAsCurrency": "通貨としてフォーマット",
+    "formatAsPercent": "パーセントでフォーマット",
+    "formatAsDecDecimal": "小数点以下を下げる",
+    "formatAsIncDecimal": "小数点を増やす",
+    "fontColor": "フォントの色",
+    "cellBackgroundColor": "セルの背景色",
+    "textAlignment": "テキストの配置",
+    "alignLeft": "左揃え",
+    "alignCenter": "中央揃え",
+    "alignRight": "右揃え",
+    "alignTop": "上揃え",
+    "alignMiddle": "中央揃え",
+    "alignBottom": "下揃え",
+    "cellAdjustment": "セル調整",
+    "insertColLeft": "左に列を挿入",
+    "columnInsertLeft": "左に列を挿入",
+    "columnInsertRight": "右に列を挿入",
+    "rowInsertTop": "上に行を挿入",
+    "rowInsertBottom": "下に行を挿入",
+    "columnInsertShiftDown": "セルを挿入して下へシフト",
+    "columnInsertShiftRight": "セルを挿入して右にシフト",
+    "columnDelete": "列を削除",
+    "rowDelete": "行を削除",
+    "columnDeleteShiftUp": "セルを削除して上にシフト",
+    "columnDeleteShiftLeft": "セルを削除して左にシフト"
   },
   "insertPageModal": {
     "title": "新しいページを挿入",
@@ -1480,6 +1580,24 @@
       "rightHeader": "右ヘッダー",
       "bottomHeader": "下部ヘッダー",
       "documentContent": "文書の内容"
-    }
+    },
+    "label": "アクセシビリティ",
+    "accessibilityMode": "アクセシビリティモード",
+    "skipTo": "スキップ",
+    "document": "書類",
+    "notes": "注記"
+  },
+  "formulaBar": {
+    "label": "数式バー",
+    "range": "範囲",
+    "formulas": "数式",
+    "sumif": "範囲にわたる条件付き合計",
+    "sumsq": "範囲の二乗の合計を返します",
+    "sum": "範囲内のすべての数字を加算します",
+    "asinh": "数値の逆双曲線正弦を返します。",
+    "acos": "数値の逆余弦をラジアンで返します",
+    "cosh": "数値の双曲線余弦を返します",
+    "iseven": "数が偶数かどうかをチェックします",
+    "isodd": "数が奇数かどうかをチェックします"
   }
 }

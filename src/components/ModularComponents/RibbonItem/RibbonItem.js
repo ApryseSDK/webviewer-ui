@@ -29,7 +29,9 @@ const RibbonItem = forwardRef((props, ref) => {
     justifyContent,
     isFlyoutItem,
     toolbarGroup,
-    ariaCurrent
+    ariaCurrent,
+    style,
+    className,
   } = props;
 
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
@@ -115,6 +117,7 @@ const RibbonItem = forwardRef((props, ref) => {
         'horizontal': direction === DIRECTION.ROW,
         'left': justifyContent !== JUSTIFY_CONTENT.END,
         'right': justifyContent === JUSTIFY_CONTENT.END,
+        [className]: true,
       })}
       >
         <Button
@@ -127,6 +130,8 @@ const RibbonItem = forwardRef((props, ref) => {
           onClick={onClick}
           disabled={disabled}
           ariaCurrent={ariaCurrent}
+          style={style}
+          className={className}
         >
         </Button>
       </div>
@@ -146,6 +151,8 @@ RibbonItem.propTypes = {
   iconDOMElement: PropTypes.any,
   toolbarGroup: PropTypes.string,
   ariaCurrent: PropTypes.string,
+  style: PropTypes.object,
+  className: PropTypes.string,
 };
 RibbonItem.displayName = 'RibbonItem';
 
