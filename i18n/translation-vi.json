@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Số bạn đã nhập không hợp lệ, bạn có thể nhập các giá trị như 7,5 hoặc 7 1/2",
     "linkURLorPage": "Liên kết URL hoặc một Trang",
     "warning": "Cảnh báo",
+    "svgMalicious": "Tập lệnh SVG bị bỏ qua để bảo mật",
     "enterContentEditingMode": "Bạn sắp vào chế độ chỉnh sửa nội dung.",
     "existingAnnotationWarning": "Chú thích hiện có có thể không khớp với văn bản sau khi đã được chỉnh sửa.",
     "changesCannotBeUndone": "Bất kỳ thay đổi nào được thực hiện không thể được hoàn tác.",

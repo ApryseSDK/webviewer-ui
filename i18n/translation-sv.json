@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Numret du har angett är ogiltigt, du kan ange värden som 7,5 eller 7 1/2",
     "linkURLorPage": "Länka URL eller en sida",
     "warning": "Varning",
+    "svgMalicious": "SVG-skript ignoreras för säkerhets skull",
     "enterContentEditingMode": "Du är på väg att gå in i innehållsredigeringsläge.",
     "existingAnnotationWarning": "Befintliga kommentarer kanske inte matchar texten efter att den har redigerats.",
     "changesCannotBeUndone": "Eventuella ändringar kan inte ångras.",

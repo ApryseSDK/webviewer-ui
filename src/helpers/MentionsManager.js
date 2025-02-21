@@ -161,6 +161,13 @@ class MentionsManager {
     }
   }
 
+  doesDeltaContainMention(deltas) {
+    const containsMention = deltas.some((delta) => {
+      return delta.insert?.mention;
+    });
+    return containsMention;
+  }
+
   getFormattedTextFromDeltas(deltas) {
     const formattedMentionTextList = [];
     deltas.forEach((delta) => {

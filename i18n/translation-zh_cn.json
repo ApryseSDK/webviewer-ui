@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "您输入的数字无效，您可以输入7.5或7 1/2之类的值",
     "linkURLorPage": "链接网址或页面",
     "warning": "警告",
+    "svgMalicious": "出于安全原因忽略了 SVG 脚本",
     "enterContentEditingMode": "您即将进入文本编辑模式。",
     "existingAnnotationWarning": "现有注释在编辑后可能与文本不匹配。",
     "changesCannotBeUndone": "所做的任何更改都无法撤消。",

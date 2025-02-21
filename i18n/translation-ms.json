@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Nombor yang anda masukkan tidak sah, anda boleh memasukkan nilai seperti 7.5 atau 7 1/2",
     "linkURLorPage": "Pautan URL atau Halaman",
     "warning": "Amaran",
+    "svgMalicious": "Skrip SVG diabaikan untuk keselamatan",
     "enterContentEditingMode": "Anda akan memasuki mod penyuntingan kandungan.",
     "existingAnnotationWarning": "Anotasi sedia ada mungkin tidak sepadan dengan teks selepas ia diedit.",
     "changesCannotBeUndone": "Sebarang perubahan yang dibuat tidak boleh dibuat asal.",

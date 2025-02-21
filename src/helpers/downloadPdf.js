@@ -442,6 +442,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     } else {
       annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
     }
+  } else if (!options.xfdfString && !includeAnnotations) {
+    options.xfdfString = window.Core.EMPTY_XFDF;
   }
 
   return annotationsPromise.then(async (xfdfString) => {

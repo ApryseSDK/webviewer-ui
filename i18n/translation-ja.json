@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "ページまたはURLのリンクを挿入",
     "warning": "警告",
+    "svgMalicious": "セキュリティのために無視される SVG スクリプト",
     "enterContentEditingMode": "編集モードを開始しようとしています。",
     "existingAnnotationWarning": "編集内容が既存の注釈と一致しない場合があります。",
     "changesCannotBeUndone": "行った変更は元に戻せません。",

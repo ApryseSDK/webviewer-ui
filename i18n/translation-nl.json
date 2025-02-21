@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Het getal dat je hebt ingevoerd is ongeldig, je kunt waarden invoeren zoals 7,5 of 7 1/2",
     "linkURLorPage": "Link-URL of een pagina",
     "warning": "Waarschuwing",
+    "svgMalicious": "SVG-script genegeerd om veiligheidsredenen",
     "enterContentEditingMode": "U staat op het punt om naar de tekstbewerkingsmodus te gaan.",
     "existingAnnotationWarning": "Bestaande annotaties komen mogelijk niet overeen met de tekst nadat deze is bewerkt.",
     "changesCannotBeUndone": "Aangebrachte wijzigingen kunnen niet ongedaan worden gemaakt.",

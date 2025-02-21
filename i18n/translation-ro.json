@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Numărul pe care l-ați introdus este nevalid, puteți introduce valori precum 7,5 sau 7 1/2",
     "linkURLorPage": "Link URL sau o pagină",
     "warning": "Avertizare",
+    "svgMalicious": "Scriptul SVG a fost ignorat pentru securitate",
     "enterContentEditingMode": "Sunteți pe cale să intrați în modul de editare a conținutului.",
     "existingAnnotationWarning": "Este posibil ca adnotările existente să nu se potrivească cu textul după ce acesta a fost editat.",
     "changesCannotBeUndone": "Orice modificare efectuată nu poate fi anulată.",

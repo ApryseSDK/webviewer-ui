@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Girdiğiniz sayı geçersiz, 7,5 veya 7 1/2 gibi değerler girebilirsiniz.",
     "linkURLorPage": "Bağlantı URL'si veya Sayfa",
     "warning": "Uyarı",
+    "svgMalicious": "SVG betiği güvenlik nedeniyle yok sayıldı",
     "enterContentEditingMode": "İçerik düzenleme moduna girmek üzeresiniz.",
     "existingAnnotationWarning": "Mevcut ek açıklamalar, düzenlendikten sonra metinle eşleşmeyebilir.",
     "changesCannotBeUndone": "Yapılan herhangi bir değişiklik geri alınamaz.",

@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useRef, useContext, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import NoteContext from 'components/Note/Context';
 import selectors from 'selectors';
 import CommentTextarea from './CommentTextarea/CommentTextarea';
+import mentionsManager from 'helpers/MentionsManager';
 
 const propTypes = {
   // same the value attribute of a HTML textarea element
@@ -32,7 +33,6 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
-  const [pasting, setPasting] = useState(false);
 
   useLayoutEffect(() => {
     // when the height of the textarea changes, we also want to call resize
@@ -48,23 +48,16 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     // eslint-disable-next-line
   }, [props.value, resize]);
 
-  useEffect(() => {
-    const handlePasting = () => {
-      setPasting(true);
-    };
-    window.addEventListener('paste', handlePasting);
-    return () => {
-      window.removeEventListener('paste', handlePasting);
-    };
-  }, []);
-
   const handleKeyDown = (e) => {
     const enterKey = 13;
-    const isSubmittingByEnter = canSubmitByEnter && e.which === enterKey;
-    const isSubmittingByCtrlEnter = (e.metaKey || e.ctrlKey) && e.which === enterKey;
+    const enterKeyPressed = e.which === enterKey;
+    if (enterKeyPressed) {
+      const isSubmittingByEnter = canSubmitByEnter;
+      const isSubmittingByCtrlEnter = (e.metaKey || e.ctrlKey);
 
-    if (isSubmittingByEnter || isSubmittingByCtrlEnter) {
-      props.onSubmit(e);
+      if (isSubmittingByEnter || isSubmittingByCtrlEnter) {
+        props.onSubmit(e);
+      }
     }
   };
 
@@ -79,7 +72,20 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
       value = content.target ? content.target.value : content;
     }
     props.onChange(value);
-    setPasting(false);
+
+    // If the delta contains a mention, then move the cursor to the end of the editor.
+    // This is necessary instead of using debounce when mentioning a user because
+    // the debounce was generating the following bug
+    // https://apryse.atlassian.net/browse/WVR-2380
+    const deltaContainsMention = mentionsManager.doesDeltaContainMention(delta.ops);
+    if (deltaContainsMention) {
+      const formattedText = mentionsManager.getFormattedTextFromDeltas(delta.ops);
+      const mentionData = mentionsManager.extractMentionDataFromStr(formattedText);
+      const editortextValue = editor.getText();
+      const totalTextLength = editortextValue.length + mentionData.plainTextValue.length;
+      const textareaEditor = textareaRef.current.editor;
+      setTimeout(() => textareaEditor.setSelection(totalTextLength, totalTextLength), 1);
+    }
   };
 
   const textareaProps = {
@@ -88,7 +94,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
       textareaRef.current = el;
       forwardedRef(el);
     },
-    onChange: pasting ? handleChange : _.debounce(handleChange, 100),
+    onChange: handleChange,
     onKeyDown: handleKeyDown,
     userData,
   };

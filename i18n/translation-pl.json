@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Wprowadzony numer jest nieprawidłowy, możesz wprowadzić wartości takie jak 7,5 lub 7 1/2",
     "linkURLorPage": "Adres URL linku lub strony",
     "warning": "Ostrzeżenie",
+    "svgMalicious": "Skrypt SVG został zignorowany ze względów bezpieczeństwa",
     "enterContentEditingMode": "Masz zamiar wejść w tryb edycji treści.",
     "existingAnnotationWarning": "Istniejące adnotacje mogą nie pasować do tekstu po jego edycji.",
     "changesCannotBeUndone": "Wprowadzonych zmian nie można cofnąć.",

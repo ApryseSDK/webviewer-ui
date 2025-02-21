@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Le nombre que vous avez entré est invalide, vous pouvez entrer des valeurs comme 7,5 ou 7 1/2",
     "linkURLorPage": "Lien URL ou une page",
     "warning": "Avertissement",
+    "svgMalicious": "Script SVG ignoré pour des raisons de sécurité",
     "enterContentEditingMode": "Vous êtes sur le point d'entrer en mode d'édition de texte.",
     "existingAnnotationWarning": "Les annotations existantes peuvent ne pas correspondre au texte une fois qu'il a été modifié.",
     "changesCannotBeUndone": "Toute modification apportée ne peut être annulée.",

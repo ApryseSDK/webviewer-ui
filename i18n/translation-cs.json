@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "Zadané číslo je neplatné, můžete zadat hodnoty jako 7,5 nebo 7 1/2",
     "linkURLorPage": "Adresa URL odkazu nebo stránka",
     "warning": "Varování",
+    "svgMalicious": "Skript SVG je kvůli bezpečnosti ignorován",
     "enterContentEditingMode": "Chystáte se vstoupit do režimu úprav obsahu.",
     "existingAnnotationWarning": "Stávající anotace se po úpravě nemusí shodovat s textem.",
     "changesCannotBeUndone": "Jakékoli provedené změny nelze vrátit zpět.",

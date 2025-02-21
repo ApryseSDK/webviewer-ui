@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "A megadott szám érvénytelen, olyan értékeket adhat meg, mint 7,5 vagy 7 1/2",
     "linkURLorPage": "Link URL vagy oldal",
     "warning": "Figyelem",
+    "svgMalicious": "Az SVG-szkriptet a biztonság érdekében figyelmen kívül hagyták",
     "enterContentEditingMode": "A tartalomszerkesztő módba lép.",
     "existingAnnotationWarning": "Előfordulhat, hogy a meglévő megjegyzések nem egyeznek a szöveggel a szerkesztés után.",
     "changesCannotBeUndone": "A végrehajtott változtatások nem vonhatók vissza.",

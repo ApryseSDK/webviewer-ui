@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "잘못된 형식의 숫자를 입력하였습니다. 7.5 또는 7 1/2과 같은 값을 입력하세요.",
     "linkURLorPage": "링크URL 또는 페이지",
     "warning": "경고",
+    "svgMalicious": "보안을 위해 SVG 스크립트 무시됨",
     "enterContentEditingMode": "텍스트 편집모드로 전환합니다.",
     "existingAnnotationWarning": "편집 후 기존 주석과 일치하지 않을 수 있습니다.",
     "changesCannotBeUndone": "변경사항은 취소할 수 없습니다.",

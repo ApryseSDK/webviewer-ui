@@ -2,10 +2,9 @@
  * Transforming RichText Style object into the Object acceptable by React Quill component.
  */
 
-const setReactQuillContent = (annotation) => {
+const setReactQuillContent = (annotation, editor) => {
   const richTextStyle = annotation.getRichTextStyle();
   const indexes = Object.keys(richTextStyle);
-  const editor = annotation.editor;
   const text = editor.getText();
   const ops = [];
 

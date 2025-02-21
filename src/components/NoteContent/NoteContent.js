@@ -441,7 +441,8 @@ const ContentArea = ({
     // on initial mount, focus the last character of the textarea
     if (isNotesPanelOpen && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
-      annotation.editor = editor;
+      const isFreeTextAnnnotation = annotation && annotation instanceof window.Core.Annotations.FreeTextAnnotation;
+      isFreeTextAnnnotation && editor.setText('');
 
       /**
        * If there is a pending text we should update the annotation rich text style
@@ -467,14 +468,14 @@ const ContentArea = ({
 
           const annotRichTextStyle = annotation.getRichTextStyle();
           if (annotRichTextStyle) {
-            setReactQuillContent(annotation);
+            setReactQuillContent(annotation, editor);
           }
         }
       }, 0);
 
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
-      annotation.editor.setSelection(textLength, textLength);
+      editor.setSelection(textLength, textLength);
     }
   }, [isNotesPanelOpen]);
 

@@ -251,6 +251,7 @@
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
     "warning": "Warning",
+    "svgMalicious": "SVG script ignored for security",
     "enterContentEditingMode": "You are about to enter content editing mode.",
     "existingAnnotationWarning": "Existing annotations may not match up with the text after it has been edited.",
     "changesCannotBeUndone": "Any changes made cannot be undone.",
