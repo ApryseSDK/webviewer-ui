@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RedactionSearchPanel from './RedactionSearchPanel';
 import useOnRedactionSearchCompleted from 'hooks/useOnRedactionSearchCompleted';
 
@@ -8,6 +8,8 @@ const ReactionSearchPanelContainer = () => {
     isProcessingRedactionResults,
     clearRedactionSearchResults,
     searchStatus,
+    patternsInUse,
+    setPatternsInUse
   } = useOnRedactionSearchCompleted();
 
   return (
@@ -16,6 +18,8 @@ const ReactionSearchPanelContainer = () => {
       isProcessingRedactionResults={isProcessingRedactionResults}
       clearRedactionSearchResults={clearRedactionSearchResults}
       searchStatus={searchStatus}
+      searchTerms={patternsInUse}
+      setSearchTerms={setPatternsInUse}
     />
   );
 };
