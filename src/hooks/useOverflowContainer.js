@@ -69,7 +69,7 @@ const useOverflowContainer = (isOpen, options) => {
         setTransform(newTransform);
       }
     }
-  }, [isOpen, popupMenuRef, containerEle, topBottomCalc, offset]); // Removed `transform` and `location` from dependencies
+  }, [isOpen, popupMenuRef, containerEle, topBottomCalc, offset]);
 
   const style = useMemo(() => ({ top, bottom, transform }), [top, bottom, transform]);
 
