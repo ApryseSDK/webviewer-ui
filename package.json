@@ -1,7 +1,7 @@
 {
   "name": "@uniwise/webviewer-ui",
   "author": "Apryse Software Inc.",
-  "version": "10.12.1",
+  "version": "10.13.0",
   "description": "WebViewer UI built in React",
   "files": [
     "./build"
