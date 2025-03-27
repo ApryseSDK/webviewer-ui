@@ -285,6 +285,7 @@ const Note = ({
         noteIndex={0}
         annotation={annotation}
         setIsEditing={setIsEditing}
+        handleNoteClick={handleNoteClick}
         isEditing={isEditingMap[0]}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
@@ -320,6 +321,7 @@ const Note = ({
                     handleMultiSelect={handleMultiSelect}
                     isMultiSelected={isMultiSelected}
                     isMultiSelectMode={isMultiSelectMode}
+                    handleNoteClick={handleNoteClick}
                   />
                 </div>
               ))}

@@ -46,6 +46,9 @@
     cursor: text;
     padding-left: 52px;
     padding-right: var(--note-content-right-padding-width);
+    > * {
+      pointer-events: all;
+    }
   }
 
   .container-reply {
@@ -208,6 +211,6 @@
         @extend %default-button-disabled;
         border: none;
       }
-    }  
+    }
   }
 }

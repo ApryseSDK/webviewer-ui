@@ -1,22 +1,47 @@
 import core from 'core';
+import { withThemeByClassName } from '@storybook/addon-themes';
 import I18nDecorator from "./I18nDecorator";
 import 'react-quill/dist/quill.snow.css';
-
 import '../src/index.scss';
 import '../src/components/App/App.scss';
+import './storybook-global.css';
 import { loadDefaultFonts } from '../src/helpers/loadFont';
+import { parse } from '../src/helpers/cssVariablesParser';
+import Theme from '../src/constants/theme';
 import { approvedStamp } from './static/assets/standardStamps';
 import { customRubberStamps } from './static/assets/customStamps';
+import modularUILightModeString from '!!raw-loader!../src/constants/lightWCAG.scss';
+import modularUIDarkModeString from '!!raw-loader!../src/constants/darkWCAG.scss';
+import lightModeString from '!!raw-loader!../src/constants/light.scss';
+import darkModeString from '!!raw-loader!../src/constants/dark.scss';
+import { allModes } from './modes';
 
 // We add this class to the StoryBook root element to mimick how we have
 // structured our classes in the UI, where everythign is wrapped by the App class.
 // If this is not done we miss some styles, and the Stories will look a bit different.
-document.getElementById('root').className = 'App';
+document.getElementById('storybook-root').className = 'App';
 
 function noop() {
 }
 
 loadDefaultFonts();
+
+const setThemeDecorator = (storyFn, context) => {
+  const theme = context.globals.theme;
+  const isLegacyUI = context.parameters?.legacyUI;
+  let themeVarString = theme === Theme.DARK ? modularUIDarkModeString : modularUILightModeString;
+  if (isLegacyUI) {
+    themeVarString = theme === Theme.DARK ? darkModeString : lightModeString;
+  }
+  const root = document.documentElement;
+  const themeVariables = parse(themeVarString, {});
+  Object.keys(themeVariables).forEach((key) => {
+    const themeVariable = themeVariables[key];
+    root.style.setProperty(`--${key}`, themeVariable);
+  });
+
+  return storyFn();
+};
 
 // Some helpful mocked annotations
 let rectangle;
@@ -68,7 +93,11 @@ const mockAnnotationManager = {
   redrawAnnotation: noop,
   redrawAnnotations: noop,
   getEditBoxManager: noop,
-  getFormFieldCreationManager: noop,
+  getFormFieldCreationManager: () => ({
+    isInFormFieldCreationMode: () => false,
+    addEventListener: noop,
+    removeEventListener: noop,
+  }),
   getDisplayAuthor: (userId) => userId,
   deselectAllAnnotations: noop,
   selectAnnotation: noop,
@@ -101,6 +130,8 @@ const mockFormFieldCreationManager = {
   isInFormFieldCreationMode: () => false,
   startFormFieldCreationMode: noop,
   endFormFieldCreationMode: noop,
+  addEventListener: noop,
+  removeEventListener: noop,
 };
 
 function generateCanvasWithImage() {
@@ -137,10 +168,26 @@ const mockDocument = {
   isWebViewerServerDocument: () => false,
   addEventListener: noop,
   removeEventListener: noop,
+  isWebViewerServerDocument: noop,
+  getOfficeEditor: () => mockOfficeEditor,
+  getSpreadsheetEditorDocument: () => {},
 };
+
+const mockOfficeEditor = {
+  areCursorsReady: () => true,
+  getHeaderPosition: () => 80,
+  getFooterPosition: () => 600,
+  getHeaderPageType: () => 0,
+  getFooterPageType: () => 0,
+  getHeaderFooterMarginsInInches: () => ({ headerDistanceToTop: 0.5, footerDistanceToBottom: 0.5 }),
+  getDifferentFirstPage: () => false,
+  getOddEven: () => false,
+  getMaxHeaderFooterDistance: () => 3.6667,
+}
 
 const mockDisplayModeManager = {
   isVirtualDisplayEnabled: () => true,
+  getDisplayMode: () => { },
 };
 
 let currentPage = 0;
@@ -166,7 +213,8 @@ const mockDocumentViewer = {
   removeEventListener: noop,
   getAnnotationHistoryManager: noop,
   getMeasurementManager: noop,
-  getToolModeMap: () => ({}),
+  getToolModeMap: () => ({
+  }),
   getWatermark: () => Promise.resolve(),
   getDisplayModeManager: () => mockDisplayModeManager,
   getContentEditHistoryManager: () => ({
@@ -180,10 +228,26 @@ const mockDocumentViewer = {
   setUserBookmarks: noop,
   getToolMode: noop,
   getAnnotationsLoadedPromise: () => Promise.resolve(),
-  getDisplayModeManager: noop,
   refreshAll: noop,
   updateView: noop,
   getPageSearchResults: () => [],
+  rotateClockwise: noop,
+  getAccessibleReadingOrderManager: noop,
+  getSpreadsheetEditorManager: () => ({
+    addEventListener: noop,
+  }),
+  SnapMode: {
+    DEFAULT: 14,
+    POINT_ON_LINE: 1,
+    LINE_MID_POINT: 2,
+    LINE_INTERSECTION: 4,
+    PATH_ENDPOINT: 8,
+    e_DefaultSnapMode: 14,
+    e_PointOnLine: 1,
+    e_LineMidpoint: 2,
+    e_LineIntersection: 4,
+    e_PathEndpoint: 8
+  }
 };
 
 core.getTool = (toolName) => {
@@ -194,7 +258,7 @@ core.getTool = (toolName) => {
 };
 core.setToolMode = noop;
 core.getToolMode = noop;
-core.isFullPDFEnabled = () => { return false; };
+core.isFullPDFEnabled = () => { return true; };
 core.addEventListener = () => { };
 core.removeEventListener = () => { };
 core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
@@ -202,6 +266,9 @@ core.getDocumentViewer = () => mockDocumentViewer;
 core.getDocumentViewers = () => [mockDocumentViewer];
 core.getDisplayAuthor = (author) => author ? author : 'Duncan Idaho';
 core.getAnnotationManager = () => mockAnnotationManager;
+core.getDisplayModeObject = () => ({
+  pageToWindow: () => ({ x: 0, y: 0 }),
+});
 core.getCurrentPage = () => 1;
 core.setScrollViewElement = noop;
 core.setViewerElement = noop;
@@ -222,11 +289,20 @@ core.getScrollViewElement = () => ({
 });
 core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
+  endContentEditMode: noop,
+  addEventListener: noop,
+  removeEventListener: noop,
 });
 core.getZoom = () => 1;
 
 class MockTool {
   // Mock any methods here or mock a specific tool if needed
+}
+
+class MockMeasureMentTool {
+  setSnapMode = noop;
+  getSnapMode = () => core.getDocumentViewer().SnapMode.DEFAULT;
+  Measure = {};
 }
 
 class MockRubberStampCreateTool {
@@ -274,6 +350,20 @@ const getNewEmptyToolClass = (OtherTool) => {
 
 const RectangleCreateTool = getNewEmptyToolClass();
 
+const defaultMockedScale = {
+  pageScale: {
+    value: 1,
+    unit: 'in'
+  },
+  worldScale: {
+    value: 1,
+    unit: 'in'
+  },
+  toString: () => '1 in = 1 in',
+  getScaleRatioAsArray: () => [[1, 'in'], [1, 'in']],
+  isValid: () => true
+};
+
 window.Core = {
   documentViewer: mockDocumentViewer,
   annotations: {
@@ -283,6 +373,10 @@ window.Core = {
     addEventListener: noop,
     removeEventListener: noop,
     getContentEditingFonts: () => Promise.resolve([]),
+    Types: {
+      TEXT: 'text',
+      OBJECT: 'object',
+    }
   },
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
@@ -356,7 +450,7 @@ window.Core = {
     EllipseCreateTool: getNewEmptyToolClass(),
     PolygonCloudCreateTool: getNewEmptyToolClass(),
     EllipseMeasurementCreateTool: getNewEmptyToolClass(),
-    AreaMeasurementCreateTool: getNewEmptyToolClass(),
+    AreaMeasurementCreateTool: getNewEmptyToolClass(MockMeasureMentTool),
     FreeTextCreateTool: getNewEmptyToolClass(),
     CalloutCreateTool: getNewEmptyToolClass(),
     TextUnderlineCreateTool: getNewEmptyToolClass(),
@@ -364,8 +458,8 @@ window.Core = {
     TextSquigglyCreateTool: getNewEmptyToolClass(),
     TextStrikeoutCreateTool: getNewEmptyToolClass(),
     CountMeasurementCreateTool: getNewEmptyToolClass(),
-    DistanceMeasurementCreateTool: getNewEmptyToolClass(),
-    ArcMeasurementCreateTool: getNewEmptyToolClass(),
+    DistanceMeasurementCreateTool: getNewEmptyToolClass(MockMeasureMentTool),
+    ArcMeasurementCreateTool: getNewEmptyToolClass(MockMeasureMentTool),
     PerimeterMeasurementCreateTool: getNewEmptyToolClass(),
     RectangularAreaMeasurementCreateTool: getNewEmptyToolClass(),
     CloudyRectangularAreaMeasurementCreateTool: getNewEmptyToolClass(),
@@ -390,6 +484,8 @@ window.Core = {
     AddImageContentTool: getNewEmptyToolClass(),
     SnippingCreateTool: getNewEmptyToolClass(RectangleCreateTool),
     EraserTool: getNewEmptyToolClass(),
+    GenericAnnotationCreateTool: getNewEmptyToolClass(),
+    TextAnnotationCreateTool: getNewEmptyToolClass(),
   },
   getHashParameter: (hashParameter, defaultValue) => {
     if (hashParameter === 'a') {
@@ -403,44 +499,96 @@ window.Core = {
   isBlendModeSupported: () => true,
   FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
   getCanvasMultiplier: () => 1,
-  Scale: () => {
+  Scale: (scale) => {
+    if (!scale) {
+      return defaultMockedScale;
+    }
+
+    let pageScale;
+    let worldScale;
+    const isScaleObjectFormat = typeof scale === 'object';
+    const isScaleStringFormat = typeof scale === 'string';
+    const isScaleArrayFormat = Array.isArray(scale) && scale.length === 2;
+
+    // So many formats to creating a Scale object ...
+    if (isScaleObjectFormat && scale.pageScale && scale.worldScale) {
+      pageScale = scale.pageScale;
+      worldScale = scale.worldScale;
+    } else if (isScaleStringFormat) {
+      const [pageValue, pageUnit, worldValue, worldUnit] = scale.split(/[\s=]+/);
+      pageScale = { value: parseFloat(pageValue), unit: pageUnit };
+      worldScale = { value: parseFloat(worldValue), unit: worldUnit };
+    } else if (isScaleArrayFormat) {
+      pageScale = { value: scale[0][0], unit: scale[0][1] };
+      worldScale = { value: scale[1][0], unit: scale[1][1] };
+    } else {
+      return {};
+    }
+
     return {
-      pageScale: {
-        value: 1,
-        unit: 'in'
-      },
-      worldScale: {
-        value: 1,
-        unit: 'in'
-      },
-      toString: () => '1 in = 1 in',
-      getScaleRatioAsArray: () => [[1, 'in'], [1, 'in']],
-      isValid: () => true
+      pageScale,
+      worldScale,
+      toString: () => scale,
+      isValid: () => true,
+      getScaleRatioAsArray: () => [
+        [pageScale.value, pageScale.unit],
+        [worldScale.value, worldScale.unit]],
     }
   },
   Document: {
-    OfficeEditorListStylePresets: {
-      '0': 'BULLET',
-      '1': 'BULLET_SQUARE',
-      '2': 'SQUARE_BULLET',
-      '3': 'DIAMOND',
-      '4': 'CHECK',
-      '5': 'ARROW',
-      '6': 'NUMBER_LATIN_ROMAN_1',
-      '7': 'NUMBER_DECIMAL',
-      '8': 'NUMBER_LATIN_ROMAN_2',
-      '10': 'LATIN_ROMAN',
-      '11': 'ROMAN_LATIN_NUMBER'
-    },
-    OfficeEditorToggleableStyles: {
-      BOLD: 'bold',
-      ITALIC: 'italic',
-      UNDERLINE: 'underline',
-    },
+    OfficeEditor: {
+      ToggleableStyles: {
+        BOLD: 'bold',
+        ITALIC: 'italic',
+        UNDERLINE: 'underline',
+      },
+      ListStylePresets: {
+        '0': 'BULLET',
+        '1': 'BULLET_SQUARE',
+        '2': 'SQUARE_BULLET',
+        '3': 'DIAMOND',
+        '4': 'CHECK',
+        '5': 'ARROW',
+        '6': 'NUMBER_LATIN_ROMAN_1',
+        '7': 'NUMBER_DECIMAL',
+        '8': 'NUMBER_LATIN_ROMAN_2',
+        '10': 'LATIN_ROMAN',
+        '11': 'ROMAN_LATIN_NUMBER'
+      },
+      EditMode: {
+        EDITING: 'editing',
+        REVIEWING: 'reviewing',
+        VIEW_ONLY: 'viewOnly',
+        PREVIEW: 'preview',
+      },
+      EditingStreamType: {
+        BODY: 0,
+        HEADER: 1,
+        FOOTER: 2,
+      },
+    }
   },
   setBasePath: noop,
   getAllowedFileExtensions: () => ['pdf', 'xod'],
+  quillShadowDOMWorkaround: noop,
+  getDocument: () => mockDocument,
+  TYPES: {
+    OBJECT: noop,
+    ARRAY: noop,
+    MULTI_TYPE: noop,
+    OPTIONAL: noop,
+    ONE_OF: noop,
+  },
+  checkTypes: noop,
+  SpreadsheetEditor: {
+    SpreadsheetEditorEditMode: {
+      EDITING: 'editing',
+      VIEW_ONLY: 'viewOnly'
+    }
+  }
 };
+
+window.Core.Scale.getFormattedValue = (value, unit) => `${value} ${unit}`;
 
 const DEFAULT_PAGE_HEIGHT = 792;
 const DEFAULT_PAGE_WIDTH = 612;
@@ -470,13 +618,31 @@ window.documentViewer = {
 // to support stories for components that rely on code that is calling methods/objects from the window object.
 // For an example of the preferred mocking method refer to RedactionPageGroup.stories.js
 class MockAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   static datePickerOptions = {};
+  static MeasurementUnits = {};
+  getReplies = () => [];
+  getAssociatedNumber = () => null;
+  getAttachments = () => [];
 }
 
+class MockWidgetAnnotation {
+  getCustomData = () => '';
+  getStatus = () => '';
+};
+
+class MockTextWidgetAnnotation extends MockWidgetAnnotation {};
+class MockChoiceWidgetAnnotation extends MockWidgetAnnotation {};
+class MockListWidgetAnnotation extends MockWidgetAnnotation {};
+class MockSignatureWidgetAnnotation extends MockWidgetAnnotation {};
+class MockButtonWidgetAnnotation extends MockWidgetAnnotation {};
+class MockRadioButtonWidgetAnnotation extends MockWidgetAnnotation {};
+class MockCheckButtonWidgetAnnotation extends MockWidgetAnnotation {};
+class MockPushButtonWidgetAnnotation extends MockWidgetAnnotation {};
+class MockDatePickerWidgetAnnotation extends MockWidgetAnnotation {};
+MockDatePickerWidgetAnnotation.datePickerOptions = {};
+
 class MockLineAnnotation {
-  isFormFieldPlaceholder = () => false;
   getStartStyle = () => 'None';
   getEndStyle = () => 'None';
   getIntent = () => null;
@@ -491,14 +657,25 @@ class MockFreeTextAnnotation {
   }
   getIntent = () => 'FreeText';
   getRichTextStyle = () => null;
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   setLineStyle = () => { };
+  getEditor = () => { };
 };
 
 class MockRectangleAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
+  isReply = () => false;
+  isGrouped = () => false;
+  isContentEditPlaceholder = () => false;
+  getContents = () => '';
+  getReplies = () => [];
+  getRichTextStyle = () => null;
+  getAssociatedNumber = () => null;
+  getStatus = () => '';
+  getAttachments = () => [];
+  getRect = () => ({x1: 0, y1: 0, x2: 100, y2: 100});
+  getPageNumber = () => 1;
+  getNoZoomReferencePoint = () => {};
 }
 
 class MockEllipseAnnotation {
@@ -507,33 +684,27 @@ class MockEllipseAnnotation {
 }
 
 class Model3DAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   static datePickerOptions = {};
 }
 
 class PolygonAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   static datePickerOptions = {};
 }
 
 class RedactionAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   static datePickerOptions = {};
 }
 
 class FileAttachmentAnnotation {
-  isFormFieldPlaceholder = () => false;
   getCustomData = () => '';
   static datePickerOptions = {};
 }
 
 window.Core.Annotations = {
-  Annotation: {
-    MeasurementUnits: {},
-  },
+  Annotation: MockAnnotation,
   FreeTextAnnotation: MockFreeTextAnnotation,
   FreeHandAnnotation: MockAnnotation,
   LineAnnotation: MockLineAnnotation,
@@ -556,8 +727,16 @@ window.Core.Annotations = {
   Link: MockAnnotation,
   CaretAnnotation: MockAnnotation,
   CustomAnnotation: MockAnnotation,
-  SignatureWidgetAnnotation: MockAnnotation,
-  DatePickerWidgetAnnotation: MockAnnotation,
+  WidgetAnnotation: MockWidgetAnnotation,
+  TextWidgetAnnotation: MockTextWidgetAnnotation,
+  ChoiceWidgetAnnotation: MockChoiceWidgetAnnotation,
+  ListWidgetAnnotation: MockListWidgetAnnotation,
+  SignatureWidgetAnnotation: MockSignatureWidgetAnnotation,
+  ButtonWidgetAnnotation: MockButtonWidgetAnnotation,
+  RadioButtonWidgetAnnotation: MockRadioButtonWidgetAnnotation,
+  CheckButtonWidgetAnnotation: MockCheckButtonWidgetAnnotation,
+  PushButtonWidgetAnnotation: MockPushButtonWidgetAnnotation,
+  DatePickerWidgetAnnotation: MockDatePickerWidgetAnnotation,
   Forms: {
     Field: MockAnnotation,
   }
@@ -622,7 +801,7 @@ export const decorators = [
 
 rectangle = new window.Core.Annotations.RectangleAnnotation();
 rectangle.Author = 'Guest_1';
-rectangle.getStatus = () => null;
+rectangle.getStatus = () => '';
 rectangle.getCustomData = () => '';
 rectangle.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
 
@@ -664,18 +843,50 @@ window.storybook.MobileParameters = {
   },
   chromatic: {
     modes: {
-      mobile: {
-        viewport: 'Mobile',
-      }
+      'Mobile light theme': allModes['light mobile'],
+      'Mobile dark theme': allModes['dark mobile'],
     }
   },
 };
+
+const storedURL = {
+  id: undefined,
+  globals: undefined,
+};
+window.navigation.addEventListener("navigate", (event) => {
+  const URLParams = new URLSearchParams(event.destination.url);
+  const id = URLParams.get('id');
+  const globals = URLParams.get('globals');
+  if (id === storedURL.id && globals !== storedURL.globals) {
+    storedURL.globals = globals;
+    window.location.href = window.location.href;
+  }
+  storedURL.id = id;
+  storedURL.globals = globals;
+});
+
 
 export default {
   parameters: {
     viewport: {
       viewports,
       defaultViewport: 'Responsive',
+    },
+    chromatic: {
+      modes: {
+        'Light theme': allModes.light,
+        'Dark theme': allModes.dark,
+      }
     }
-  }
+  },
+  decorators: [
+    setThemeDecorator,
+    withThemeByClassName({
+      themes: {
+        light: Theme.LIGHT,
+        dark: Theme.DARK,
+      },
+      defaultTheme: Theme.LIGHT,
+    })
+  ]
 };

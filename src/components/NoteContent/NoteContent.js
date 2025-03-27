@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import isString from 'lodash/isString';
-
+import escape from 'lodash/escape';
 import NoteTextarea from 'components/NoteTextarea';
 import NoteContext from 'components/Note/Context';
 import NoteHeader from 'components/NoteHeader';
@@ -21,7 +21,6 @@ import setReactQuillContent from 'helpers/setReactQuillContent';
 import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import { isMobile } from 'helpers/device';
-
 import core from 'core';
 import { getDataWithKey, mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import Theme from 'constants/theme';
@@ -49,6 +48,7 @@ const propTypes = {
   isMultiSelectMode: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
   isGroupMember: PropTypes.bool,
+  handleNoteClick: PropTypes.func,
 };
 
 const NoteContent = ({
@@ -63,6 +63,7 @@ const NoteContent = ({
   isMultiSelectMode,
   handleMultiSelect,
   isGroupMember,
+  handleNoteClick,
 }) => {
 
   const noteDateFormat = useSelector((state) => selectors.getNoteDateFormat(state));
@@ -265,7 +266,10 @@ const NoteContent = ({
   } catch (e) {
     customData = annotation.getCustomData('trn-mention');
   }
-  const contents = customData?.contents || annotation.getContents();
+
+  let contents = customData?.contents || annotation.getContents();
+  contents = sanitizeContent(contents);
+
   const contentsToRender = annotation.getContents();
   const richTextStyle = annotation.getRichTextStyle();
   let textColor = annotation['TextColor'];
@@ -323,6 +327,7 @@ const NoteContent = ({
     if (window.getSelection()?.toString()) {
       e?.stopPropagation();
     }
+    handleNoteClick(e);
   };
 
   const noteContentClass = classNames({
@@ -770,3 +775,15 @@ const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, e
   });
   return contentToRender;
 };
+
+/**
+ * @ignore
+ * Sanitizes the given content to prevent XSS attacks by converting HTML characters
+ * into their encoded equivalents.
+ *
+ * @param {string} content - The content to sanitize.
+ * @returns {string} The sanitized content, or the original content if no changes are needed.
+ */
+function sanitizeContent(content) {
+  return content ? escape(content) : content;
+}
