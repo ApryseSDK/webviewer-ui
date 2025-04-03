@@ -61,6 +61,7 @@ class DocumentContainer extends React.PureComponent {
     isLogoBarEnabled: PropTypes.bool,
     currentTabs: PropTypes.array,
     activeTab: PropTypes.number,
+    isSpreadsheetEditorModeEnabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -71,6 +72,7 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToNavigatePages = throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = throttle(this.handleResize.bind(this), 200);
+    this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.debouncedHidePageNavigationOverlay = debounce(
       this.hidePageNavigationOverlay,
       PAGE_NAVIGATION_OVERLAY_FADEOUT,
@@ -265,9 +267,16 @@ class DocumentContainer extends React.PureComponent {
   }
 
   onTransitionEnd(event) {
+    const { isSpreadsheetEditorModeEnabled } = this.props;
+    const { propertyName } = event;
+    const standardPropertiesToIgnore = ['background-color', 'opacity'];
+    const spreadsheetSpecificPropertiesToIgnore = ['top', 'left'];
+    const isStandardIgnoredProperty = standardPropertiesToIgnore.includes(propertyName);
+    const isSpreadsheetSpecificIgnoredProperty =
+      isSpreadsheetEditorModeEnabled && spreadsheetSpecificPropertiesToIgnore.includes(propertyName);
     // I don't know if this is needed. But better safe than sorry.
-    const transitionProperiesToIgnore = ['background-color', 'opacity'];
-    if (!transitionProperiesToIgnore.includes(event.propertyName)) {
+    const isTriggeringUpdate = !(isStandardIgnoredProperty || isSpreadsheetSpecificIgnoredProperty);
+    if (isTriggeringUpdate) {
       // We have a corner case where if you have 1st and 2nd page different size and you are in fit page mode
       // if you have callout (freetext) annotation on second page. If you open notes panel then click annotation and click
       // edit on it. This will cause our document container to re-render. We also have background-color transition
@@ -324,15 +333,15 @@ class DocumentContainer extends React.PureComponent {
     if (customizableUI) {
       style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
     }
-    const tabSuffix = currentTabs.length > 0 ? `-${activeTab}` : '';
-    const tabId = `tab-${fileName}${tabSuffix}`;
+
+    const ariaLabelledById = currentTabs.length > 0 ? `tab-${fileName}-${activeTab}` : undefined;
 
     return (
       <div
         style={style}
         id={`document-container-${fileName}`}
         role="tabpanel"
-        aria-labelledby={tabId}
+        aria-labelledby={ariaLabelledById}
         className={classNames({
           'document-content-container': true,
           'closed': isMultiTabEmptyPageOpen,
@@ -413,6 +422,7 @@ const mapStateToProps = (state) => ({
   leftHeaderWidth: selectors.getLeftHeaderWidth(state),
   currentTabs: selectors.getTabs(state),
   activeTab: selectors.getActiveTab(state),
+  isSpreadsheetEditorModeEnabled: selectors.isSpreadsheetEditorModeEnabled(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
