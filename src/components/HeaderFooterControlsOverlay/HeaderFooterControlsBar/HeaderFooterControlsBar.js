@@ -25,14 +25,16 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const blockerRef = useRef();
   const dropdownId = `${type}-options-dropdown-${pageNumber}`;
   const barId = `${type}-edit-ui-${pageNumber}`;
-  const barClassName = classNames({
-    'header-footer-edit-ui': true,
-    [`${type}-edit-ui`]: true,
-    'active': isActive
-  });
+
   const [containerTop, setContainerTop] = useState(0);
   const [headerType, setHeaderType] = useState(0); // 0 is default for header type all
   const [footerType, setFooterType] = useState(0); // 0 is default for footer type all
+
+  const barClassName = classNames(
+    'header-footer-edit-ui',
+    `${type}-edit-ui`,
+    { 'active': (isActive && containerTop > 0) }
+  );
 
   const getHeaderFooterTop = () => {
     const officeEditor = core.getDocument().getOfficeEditor();

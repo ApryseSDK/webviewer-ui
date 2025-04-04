@@ -30,7 +30,12 @@ export function Basic() {
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement.parentNode);
 
+  await waitFor(() => {
+    expect(canvas.getByText('Header')).toBeVisible();
+  });
+
   const optionsButton = await canvas.getByRole('button', { name: 'Header Options' });
+
   expect(optionsButton).toBeInTheDocument();
   await userEvent.click(optionsButton);
 
