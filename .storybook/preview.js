@@ -845,7 +845,8 @@ window.storybook.MobileParameters = {
     modes: {
       'Mobile light theme': allModes['light mobile'],
       'Mobile dark theme': allModes['dark mobile'],
-    }
+    },
+    delay: 500,
   },
 };
 
