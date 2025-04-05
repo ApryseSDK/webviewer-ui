@@ -269,7 +269,7 @@ class DocumentContainer extends React.PureComponent {
   onTransitionEnd(event) {
     const { isSpreadsheetEditorModeEnabled } = this.props;
     const { propertyName } = event;
-    const standardPropertiesToIgnore = ['background-color', 'opacity'];
+    const standardPropertiesToIgnore = ['background-color', 'opacity', 'scrollbar-color'];
     const spreadsheetSpecificPropertiesToIgnore = ['top', 'left'];
     const isStandardIgnoredProperty = standardPropertiesToIgnore.includes(propertyName);
     const isSpreadsheetSpecificIgnoredProperty =
