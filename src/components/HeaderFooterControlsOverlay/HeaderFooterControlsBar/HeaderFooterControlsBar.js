@@ -49,7 +49,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     }
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     // This stops the cursor from moving when the user clicks on the bar
     const onBarClick = (event) => {
       if (event.type === 'mousedown') {
@@ -70,14 +70,13 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         setContainerTop(headerFooterTop);
       }
     };
-
-    core.getDocument().addEventListener('officeDocumentEdited', updateHeaderFooterTop);
+    core.getDocument().addEventListener('headerFooterUpdated', updateHeaderFooterTop);
     return () => {
       ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
-        blockerRef.current.removeEventListener(eventType, onBarClick);
+        blockerRef.current?.removeEventListener(eventType, onBarClick);
       });
 
-      core.getDocument().removeEventListener('officeDocumentEdited', updateHeaderFooterTop);
+      core.getDocument().removeEventListener('headerFooterUpdated', updateHeaderFooterTop);
     };
   }, []);
 
