@@ -145,7 +145,7 @@
     "showMoreColors": "और अधिक रंग दिखाएं",
     "showLessColors": "कम रंग दिखाएं",
     "fromCustomColorPicker": "कस्टम कलर पिकर से",
-    "newSheetDocument": "नई स्प्रेडशीट"
+    "newSpreadsheetDocument": "नई स्प्रेडशीट"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "अनुमति सत्यापन अक्षम कर दिया गया है।",
       "hasAllowedChanges": "दस्तावेज़ में ऐसे परिवर्तन हैं जिनकी अनुमति हस्ताक्षर अनुमति सेटिंग्स द्वारा दी गई है।",
       "invalidatedByDisallowedChanges": "दस्तावेज़ में ऐसे परिवर्तन हैं जो हस्ताक्षर अनुमति सेटिंग्स द्वारा अस्वीकृत हैं।",
-      "unmodified": "दस्तावेज़ को तब से संशोधित नहीं किया गया है जब से यह था"
+      "unmodified": "दस्तावेज़ को तब से संशोधित नहीं किया गया है जब से यह था",
+      "unsupportedPermissionsFeatures": "असमर्थित अनुमति सुविधाएँ सामने आईं."
     },
     "trustStatus": {
       "trustVerified": "{{verificationType}} में सफलतापूर्वक विश्वास स्थापित किया।",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "डाइजेस्ट सत्यापन अक्षम कर दिया गया है।",
       "weakDigestAlgorithmButDigestVerifiable": "डाइजेस्ट सही है, लेकिन डाइजेस्ट एल्गोरिथम कमजोर है और सुरक्षित नहीं है।",
       "noDigestStatus": "रिपोर्ट करने के लिए कोई डाइजेस्ट स्थिति नहीं है।",
-      "unsupportedEncoding": "कोई भी स्थापित सिग्नेचरहैंडलर हस्ताक्षर के एन्कोडिंग को पहचानने में सक्षम नहीं था"
+      "unsupportedEncoding": "कोई भी स्थापित सिग्नेचरहैंडलर हस्ताक्षर के एन्कोडिंग को पहचानने में सक्षम नहीं था",
+      "documentHasBeenAltered": "हस्ताक्षरित होने के बाद दस्तावेज़ में परिवर्तन किया गया है या वह दूषित हो गया है।"
     },
     "documentStatus": {
       "noError": "रिपोर्ट करने के लिए कोई सामान्य त्रुटि नहीं।",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "अनुभाग विराम डालें और अगले पृष्ठ पर प्रारंभ करें",
     "sectionBreakContinuous": "खंड विराम - निरंतर",
     "sectionBreakContinuousDescription": "अनुभाग विराम डालें और उसी पृष्ठ पर जारी रखें",
-    "header": "हैडर",
-    "footer": "फ़ुटबाल",
+    "section": "अनुभाग",
+    "header": {
+      "0": "हैडर",
+      "1": "प्रथम पृष्ठ शीर्षक",
+      "2": "सम पृष्ठ शीर्षलेख",
+      "3": "विषम पृष्ठ शीर्षलेख",
+      "-1": "अमान्य हेडर"
+    },
+    "footer": {
+      "0": "फ़ुटबाल",
+      "1": "प्रथम पृष्ठ फ़ुटर",
+      "2": "सम पृष्ठ पादलेख",
+      "3": "विषम पृष्ठ पादलेख",
+      "-1": "अमान्य फ़ुटर"
+    },
     "options": "विकल्प",
     "pageOptions": "पेज विकल्प",
     "removeHeader": "हेडर हटाएँ",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "फुहारा परिवार"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "संपादन",
     "viewOnly": "देखना",
     "editingDescription": "दस्तावेज़ संपादित करें",

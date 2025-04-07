@@ -145,7 +145,7 @@
     "showMoreColors": "Tunjukkan Lebih Banyak Warna",
     "showLessColors": "Tunjukkan Kurang Warna",
     "fromCustomColorPicker": "daripada Pemilih Warna Tersuai",
-    "newSheetDocument": "Hamparan Baharu"
+    "newSpreadsheetDocument": "Hamparan Baharu"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Pengesahan kebenaran telah dilumpuhkan.",
       "hasAllowedChanges": "Dokumen mempunyai perubahan yang dibenarkan oleh tetapan kebenaran tandatangan.",
       "invalidatedByDisallowedChanges": "Dokumen mempunyai perubahan yang tidak dibenarkan oleh tetapan kebenaran tandatangan.",
-      "unmodified": "Dokumen itu tidak diubah suai sejak ia dibuat"
+      "unmodified": "Dokumen itu tidak diubah suai sejak ia dibuat",
+      "unsupportedPermissionsFeatures": "Menghadapi ciri kebenaran yang tidak disokong."
     },
     "trustStatus": {
       "trustVerified": "Mewujudkan kepercayaan dalam {{verificationType}} berjaya.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Pengesahan ringkasan telah dilumpuhkan.",
       "weakDigestAlgorithmButDigestVerifiable": "Digest adalah betul, tetapi algoritma digest lemah dan tidak selamat.",
       "noDigestStatus": "Tiada status ringkasan untuk dilaporkan.",
-      "unsupportedEncoding": "Tiada SignatureHandler yang dipasang dapat mengecam pengekodan tandatangan"
+      "unsupportedEncoding": "Tiada SignatureHandler yang dipasang dapat mengecam pengekodan tandatangan",
+      "documentHasBeenAltered": "Dokumen telah diubah atau rosak sejak ia ditandatangani."
     },
     "documentStatus": {
       "noError": "Tiada ralat umum untuk dilaporkan.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Masukkan pemisah bahagian dan mulakan pada halaman seterusnya",
     "sectionBreakContinuous": "Pecah Bahagian - Berterusan",
     "sectionBreakContinuousDescription": "Masukkan pemisah bahagian dan teruskan pada halaman yang sama ",
-    "header": "Pengepala",
-    "footer": "Pengaki",
+    "section": "Bahagian",
+    "header": {
+      "0": "Pengepala",
+      "1": "Pengepala Halaman Pertama",
+      "2": "Pengepala Halaman Genap",
+      "3": "Pengepala Halaman Ganjil",
+      "-1": "Pengepala tidak sah"
+    },
+    "footer": {
+      "0": "Pengaki",
+      "1": "Pengaki Halaman Pertama",
+      "2": "Pengaki Halaman Genap",
+      "3": "Pengaki Halaman Ganjil",
+      "-1": "Pengaki Tidak Sah"
+    },
     "options": "Pilihan",
     "pageOptions": "Pilihan Halaman",
     "removeHeader": "Alih Keluar Pengepala",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Keluarga Font"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Mengedit",
     "viewOnly": "Melihat",
     "editingDescription": "Edit dokumen",

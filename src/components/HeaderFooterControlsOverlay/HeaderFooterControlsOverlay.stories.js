@@ -31,10 +31,10 @@ Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement.parentNode);
 
   await waitFor(() => {
-    expect(canvas.getByText('Header')).toBeVisible();
+    expect(canvas.getByText('Header - Section 1')).toBeVisible();
   });
 
-  const optionsButton = await canvas.getByRole('button', { name: 'Header Options' });
+  const optionsButton = await canvas.getByRole('button', { name:'Header - Section 1 Options' });
 
   expect(optionsButton).toBeInTheDocument();
   await userEvent.click(optionsButton);

@@ -27,6 +27,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const barId = `${type}-edit-ui-${pageNumber}`;
 
   const [containerTop, setContainerTop] = useState(0);
+  const [sectionNumber, setSectionNumber] = useState(null);
   const [headerType, setHeaderType] = useState(0); // 0 is default for header type all
   const [footerType, setFooterType] = useState(0); // 0 is default for footer type all
 
@@ -49,6 +50,13 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     }
   };
 
+  const updateHeaderFooterSectionNumber = async () => {
+    const officeEditor = core.getDocument().getOfficeEditor();
+
+    const sectionNumber = await officeEditor.getSectionNumber(pageNumber);
+    setSectionNumber(sectionNumber);
+  };
+
   useEffect(() => {
     // This stops the cursor from moving when the user clicks on the bar
     const onBarClick = (event) => {
@@ -62,6 +70,13 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
       blockerRef.current.addEventListener(eventType, onBarClick);
     });
 
+    const onHeaderFooterUpdated = () => {
+      if (isActive) {
+        updateHeaderFooterTop();
+        updateHeaderFooterSectionNumber();
+      }
+    };
+
     const updateHeaderFooterTop = async () => {
       const headerFooterTop = getHeaderFooterTop();
       if (headerFooterTop > 0) {
@@ -70,15 +85,18 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         setContainerTop(headerFooterTop);
       }
     };
-    core.getDocument().addEventListener('headerFooterUpdated', updateHeaderFooterTop);
+
+    core.getDocument().addEventListener('headerFooterUpdated', onHeaderFooterUpdated);
+    setContainerTop(getHeaderFooterTop());
+
     return () => {
       ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
         blockerRef.current?.removeEventListener(eventType, onBarClick);
       });
 
-      core.getDocument().removeEventListener('headerFooterUpdated', updateHeaderFooterTop);
+      core.getDocument().removeEventListener('headerFooterUpdated', onHeaderFooterUpdated);
     };
-  }, []);
+  }, [isActive]);
 
   useEffect(() => {
     const onLayoutChange = () => {
@@ -87,8 +105,8 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
         headerType != -1 && setHeaderType(headerType);
         footerType != -1 && setFooterType(footerType);
-      // Core resolves the promise too early.
-      // So we have to wait a bit to get the correct value
+        // Core resolves the promise too early.
+        // So we have to wait a bit to get the correct value
       }, 800);
     };
     const doc = core.getDocument();
@@ -99,14 +117,11 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   }, [pageNumber]);
 
   useEffect(() => {
-    setContainerTop(getHeaderFooterTop());
-  }, [isActive]);
-
-  useEffect(() => {
     const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
     const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
     headerType != -1 && setHeaderType(headerType);
     footerType != -1 && setFooterType(footerType);
+    updateHeaderFooterSectionNumber();
   }, [isActive, pageNumber]);
 
   const handlePageOptionsClick = async () => {
@@ -165,13 +180,14 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
       isActive={isOpen}
     />
   );
+  const sectionLabel = sectionNumber ? ` - ${t('officeEditor.section')} ${sectionNumber}` : '';
 
   const layoutType = type === 'header' ? headerType: footerType;
 
   return (
     <div className={barClassName} id={barId} style={{ top: containerTop }}>
       <div className='box-shadow-div' ref={blockerRef}></div>
-      <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}</div>
+      <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}{sectionLabel}</div>
 
       <Dropdown
         width='auto'

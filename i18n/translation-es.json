@@ -145,7 +145,7 @@
     "showMoreColors": "Mostrar más colores",
     "showLessColors": "Mostrar menos colores",
     "fromCustomColorPicker": "del Selector de color personalizado",
-    "newSheetDocument": "Nueva hoja de cálculo"
+    "newSpreadsheetDocument": "Nueva hoja de cálculo"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Se ha inhabilitado la verificación de permisos.",
       "hasAllowedChanges": "El documento tiene cambios permitidos por la configuración de permisos de firmas.",
       "invalidatedByDisallowedChanges": "El documento tiene cambios que no están permitidos por la configuración de permisos de firmas.",
-      "unmodified": "El documento no ha sido modificado desde que fue"
+      "unmodified": "El documento no ha sido modificado desde que fue",
+      "unsupportedPermissionsFeatures": "Se encontraron funciones de permisos no compatibles."
     },
     "trustStatus": {
       "trustVerified": "Confianza establecida en {{verificationType}} con éxito.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "La verificación de resumen se ha deshabilitado.",
       "weakDigestAlgorithmButDigestVerifiable": "El resumen es correcto, pero el algoritmo de resumen es débil y no seguro.",
       "noDigestStatus": "Sin estado de resumen para informar.",
-      "unsupportedEncoding": "Ningún SignatureHandler instalado pudo reconocer la codificación de la firma"
+      "unsupportedEncoding": "Ningún SignatureHandler instalado pudo reconocer la codificación de la firma",
+      "documentHasBeenAltered": "El documento ha sido alterado o dañado desde que fue firmado."
     },
     "documentStatus": {
       "noError": "No hay ningún error general que informar.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Insertar salto de sección y comenzar en la página siguiente",
     "sectionBreakContinuous": "Salto de sección - Continuo",
     "sectionBreakContinuousDescription": "Insertar salto de sección y continuar en la misma página",
-    "header": "Encabezamiento",
-    "footer": "Pie de página",
+    "section": "Sección",
+    "header": {
+      "0": "Encabezamiento",
+      "1": "Encabezado de la primera página",
+      "2": "Encabezado de página par",
+      "3": "Encabezado de página extraño",
+      "-1": "Encabezado inválido"
+    },
+    "footer": {
+      "0": "Pie de página",
+      "1": "Pie de página de la primera página",
+      "2": "Pie de página uniforme",
+      "3": "Pie de página impar",
+      "-1": "Pie de página no válido"
+    },
     "options": "Opciones",
     "pageOptions": "Opciones de página",
     "removeHeader": "Quitar encabezado",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Familia de fuentes"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Edición",
     "viewOnly": "Visita",
     "editingDescription": "Editar documento",

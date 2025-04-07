@@ -145,7 +145,7 @@
     "showMoreColors": "แสดงสีเพิ่มเติม",
     "showLessColors": "แสดงสีน้อยลง",
     "fromCustomColorPicker": "จากเครื่องมือเลือกสีที่กำหนดเอง",
-    "newSheetDocument": "สเปรดชีตใหม่"
+    "newSpreadsheetDocument": "สเปรดชีตใหม่"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "การตรวจสอบสิทธิ์ถูกปิดใช้งาน",
       "hasAllowedChanges": "เอกสารมีการเปลี่ยนแปลงที่อนุญาตโดยการตั้งค่าการอนุญาตลายเซ็น",
       "invalidatedByDisallowedChanges": "เอกสารมีการเปลี่ยนแปลงที่ไม่ได้รับอนุญาตโดยการตั้งค่าการอนุญาตลายเซ็น",
-      "unmodified": "เอกสารยังไม่ได้รับการแก้ไขตั้งแต่เป็น"
+      "unmodified": "เอกสารยังไม่ได้รับการแก้ไขตั้งแต่เป็น",
+      "unsupportedPermissionsFeatures": "พบคุณสมบัติการอนุญาตที่ไม่ได้รับการสนับสนุน"
     },
     "trustStatus": {
       "trustVerified": "สร้างความเชื่อถือใน {{verificationType}} ได้สำเร็จ",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "การยืนยันไดเจสต์ถูกปิดใช้งาน",
       "weakDigestAlgorithmButDigestVerifiable": "ไดเจสต์นั้นถูกต้อง แต่อัลกอริธึมไดเจสต์นั้นอ่อนแอและไม่ปลอดภัย",
       "noDigestStatus": "ไม่มีสถานะสรุปรายงาน",
-      "unsupportedEncoding": "ไม่มี SignatureHandler ที่ติดตั้งไว้สามารถรับรู้การเข้ารหัสของลายเซ็น"
+      "unsupportedEncoding": "ไม่มี SignatureHandler ที่ติดตั้งไว้สามารถรับรู้การเข้ารหัสของลายเซ็น",
+      "documentHasBeenAltered": "เอกสารถูกเปลี่ยนแปลงหรือเสียหายนับตั้งแต่มีการลงนาม"
     },
     "documentStatus": {
       "noError": "ไม่มีข้อผิดพลาดทั่วไปในการรายงาน",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "แทรกตัวแบ่งส่วนและเริ่มต้นที่หน้าถัดไป",
     "sectionBreakContinuous": "การแบ่งส่วน - ต่อเนื่อง",
     "sectionBreakContinuousDescription": "แทรกตัวแบ่งส่วนและดำเนินการต่อในหน้าเดียวกัน",
-    "header": "ส่วนหัว",
-    "footer": "ส่วนท้าย",
+    "section": "ส่วน",
+    "header": {
+      "0": "ส่วนหัว",
+      "1": "ส่วนหัวหน้าแรก",
+      "2": "ส่วนหัวของหน้าคู่",
+      "3": "ส่วนหัวของหน้าคี่",
+      "-1": "ส่วนหัวไม่ถูกต้อง"
+    },
+    "footer": {
+      "0": "ส่วนท้าย",
+      "1": "ส่วนท้ายหน้าแรก",
+      "2": "ส่วนท้ายของหน้าคู่",
+      "3": "ส่วนท้ายของหน้าคี่",
+      "-1": "ส่วนท้ายไม่ถูกต้อง"
+    },
     "options": "ตัวเลือก",
     "pageOptions": "ตัวเลือกหน้า",
     "removeHeader": "ลบส่วนหัว",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "ฟอนต์ตระกูล"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "การแก้ไข",
     "viewOnly": "การดู",
     "editingDescription": "แก้ไขเอกสาร",

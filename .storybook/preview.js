@@ -183,6 +183,7 @@ const mockOfficeEditor = {
   getDifferentFirstPage: () => false,
   getOddEven: () => false,
   getMaxHeaderFooterDistance: () => 3.6667,
+  getSectionNumber: () => 1,
 }
 
 const mockDisplayModeManager = {

@@ -145,7 +145,7 @@
     "showMoreColors": "더 많은 색상 표시",
     "showLessColors": "색상 줄이기",
     "fromCustomColorPicker": "사용자 정의 색상 선택기에서",
-    "newSheetDocument": "새로운 스프레드시트"
+    "newSpreadsheetDocument": "새로운 스프레드시트"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "권한확인이 비활성화되었습니다.",
       "hasAllowedChanges": "문서에 허용된 변경내역이 있습니다.",
       "invalidatedByDisallowedChanges": "문서에 허용하지 않은 변경내역이 있습니다.",
-      "unmodified": "문서에 변경내역이 없습니다."
+      "unmodified": "문서에 변경내역이 없습니다.",
+      "unsupportedPermissionsFeatures": "지원되지 않는 권한 기능이 발견되었습니다."
     },
     "trustStatus": {
       "trustVerified": "{{verificationType}}에 대한 신뢰가 성공적으로 설정되었습니다.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "다이제스트 확인이 비활성화되었습니다.",
       "weakDigestAlgorithmButDigestVerifiable": "다이제스트는 정확하지만 다이제스트 알고리즘은 약하고 안전하지 않습니다.",
       "noDigestStatus": "보고 할 다이제스트 상태가 없습니다.",
-      "unsupportedEncoding": "설치된 SignatureHandler가 서명의 인코딩을 인식 할 수 없습니다."
+      "unsupportedEncoding": "설치된 SignatureHandler가 서명의 인코딩을 인식 할 수 없습니다.",
+      "documentHasBeenAltered": "서명된 이후 문서가 변경되거나 손상되었습니다."
     },
     "documentStatus": {
       "noError": "보고 할 일반적인 오류가 없습니다.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "섹션 나누기를 삽입하고 다음 페이지에서 시작하세요",
     "sectionBreakContinuous": "섹션 나누기 - 연속",
     "sectionBreakContinuousDescription": "섹션 나누기를 삽입하고 같은 페이지에서 계속합니다.",
-    "header": "헤더",
-    "footer": "보행인",
+    "section": "부분",
+    "header": {
+      "0": "헤더",
+      "1": "첫 번째 페이지 헤더",
+      "2": "짝수 페이지 헤더",
+      "3": "이상한 페이지 헤더",
+      "-1": "잘못된 헤더"
+    },
+    "footer": {
+      "0": "보행인",
+      "1": "첫 페이지 바닥글",
+      "2": "짝수 페이지 바닥글",
+      "3": "홀수 페이지 바닥글",
+      "-1": "잘못된 바닥글"
+    },
     "options": "옵션",
     "pageOptions": "페이지 옵션",
     "removeHeader": "헤더 제거",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "글꼴 패밀리"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "편집 중",
     "viewOnly": "보기",
     "editingDescription": "문서 편집",

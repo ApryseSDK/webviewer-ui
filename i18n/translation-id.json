@@ -145,7 +145,7 @@
     "showMoreColors": "Tampilkan Lebih Banyak Warna",
     "showLessColors": "Tampilkan Lebih Sedikit Warna",
     "fromCustomColorPicker": "dari Pemilih Warna Kustom",
-    "newSheetDocument": "Lembar Kerja Baru"
+    "newSpreadsheetDocument": "Lembar Kerja Baru"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Verifikasi izin telah dinonaktifkan.",
       "hasAllowedChanges": "Dokumen memiliki perubahan yang diizinkan oleh pengaturan izin tanda tangan.",
       "invalidatedByDisallowedChanges": "Dokumen memiliki perubahan yang tidak diizinkan oleh pengaturan izin tanda tangan.",
-      "unmodified": "Dokumen belum diubah sejak itu"
+      "unmodified": "Dokumen belum diubah sejak itu",
+      "unsupportedPermissionsFeatures": "Menemukan fitur izin yang tidak didukung."
     },
     "trustStatus": {
       "trustVerified": "Membangun kepercayaan di {{verificationType}} dengan sukses.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Verifikasi intisari telah dinonaktifkan.",
       "weakDigestAlgorithmButDigestVerifiable": "Intisari benar, tetapi algoritma intisari lemah dan tidak aman.",
       "noDigestStatus": "Tidak ada status intisari untuk dilaporkan.",
-      "unsupportedEncoding": "Tidak ada SignatureHandler yang terpasang yang dapat mengenali penyandian tanda tangan"
+      "unsupportedEncoding": "Tidak ada SignatureHandler yang terpasang yang dapat mengenali penyandian tanda tangan",
+      "documentHasBeenAltered": "Dokumen telah diubah atau rusak sejak ditandatangani."
     },
     "documentStatus": {
       "noError": "Tidak ada kesalahan umum untuk dilaporkan.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Masukkan pemisah bagian dan mulai di halaman berikutnya",
     "sectionBreakContinuous": "Pemisah Bagian - Berkelanjutan",
     "sectionBreakContinuousDescription": "Masukkan pemisah bagian dan lanjutkan pada halaman yang sama",
-    "header": "Judul",
-    "footer": "Catatan kaki",
+    "section": "Bagian",
+    "header": {
+      "0": "Judul",
+      "1": "Header Halaman Pertama",
+      "2": "Header Halaman Genap",
+      "3": "Header Halaman Ganjil",
+      "-1": "Header tidak valid"
+    },
+    "footer": {
+      "0": "Catatan kaki",
+      "1": "Catatan Kaki Halaman Pertama",
+      "2": "Bahkan Footer Halaman",
+      "3": "Footer Halaman Ganjil",
+      "-1": "Footer Tidak Valid"
+    },
     "options": "Pilihan",
     "pageOptions": "Opsi Halaman",
     "removeHeader": "Hapus Header",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Keluarga Font"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Mengedit",
     "viewOnly": "Melihat",
     "editingDescription": "Edit dokumen",

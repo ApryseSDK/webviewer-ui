@@ -145,7 +145,7 @@
     "showMoreColors": "Afficher plus de couleurs",
     "showLessColors": "Afficher moins de couleurs",
     "fromCustomColorPicker": "à partir du sélecteur de couleurs personnalisé",
-    "newSheetDocument": "Nouvelle feuille de calcul"
+    "newSpreadsheetDocument": "Nouvelle feuille de calcul"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "La vérification des autorisations a été désactivée.",
       "hasAllowedChanges": "Le document comporte des modifications autorisées par les paramètres d'autorisations de signatures.",
       "invalidatedByDisallowedChanges": "Le document comporte des modifications qui ne sont pas autorisées par les paramètres d'autorisations de signatures.",
-      "unmodified": "Le document n'a pas été modifié depuis"
+      "unmodified": "Le document n'a pas été modifié depuis",
+      "unsupportedPermissionsFeatures": "Des fonctionnalités d'autorisations non prises en charge ont été rencontrées."
     },
     "trustStatus": {
       "trustVerified": "Confiance établie avec {{verificationType}} avec succès.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "La vérification du résumé a été désactivée.",
       "weakDigestAlgorithmButDigestVerifiable": "L'empreinte est correcte, mais l'algorithme d'empreinte est faible et non sécurisé.",
       "noDigestStatus": "Aucun état d'empreinte détecté",
-      "unsupportedEncoding": "Aucune entête de signature installée, impossible de connaître le codage de la signature"
+      "unsupportedEncoding": "Aucune entête de signature installée, impossible de connaître le codage de la signature",
+      "documentHasBeenAltered": "Le document a été modifié ou corrompu depuis sa signature."
     },
     "documentStatus": {
       "noError": "Aucune erreur générale à signaler.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Insérer un saut de section et commencer à la page suivante",
     "sectionBreakContinuous": "Saut de section - Continu",
     "sectionBreakContinuousDescription": "Insérer un saut de section et continuer sur la même page",
-    "header": "En-tête",
-    "footer": "Pied de page",
+    "section": "Section",
+    "header": {
+      "0": "En-tête",
+      "1": "En-tête de la première page",
+      "2": "En-tête de page uniforme",
+      "3": "En-tête de page impaire",
+      "-1": "En-tête invalide"
+    },
+    "footer": {
+      "0": "Pied de page",
+      "1": "Pied de page de la première page",
+      "2": "Pied de page pair",
+      "3": "Pied de page de page impaire",
+      "-1": "Pied de page invalide"
+    },
     "options": "Options",
     "pageOptions": "Options de page",
     "removeHeader": "Supprimer l'en-tête",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Famille de polices"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Édition",
     "viewOnly": "Affichage",
     "editingDescription": "Modifier le document",

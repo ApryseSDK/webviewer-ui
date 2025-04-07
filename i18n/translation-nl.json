@@ -145,7 +145,7 @@
     "showMoreColors": "Meer kleuren weergeven",
     "showLessColors": "Minder kleuren weergeven",
     "fromCustomColorPicker": "van Aangepaste kleurenkiezer",
-    "newSheetDocument": "Nieuw spreadsheet"
+    "newSpreadsheetDocument": "Nieuw spreadsheet"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Machtigingsverificatie is uitgeschakeld.",
       "hasAllowedChanges": "Het document heeft wijzigingen die zijn toegestaan door de machtigingsinstellingen voor handtekeningen.",
       "invalidatedByDisallowedChanges": "Het document bevat wijzigingen die niet zijn toegestaan door de machtigingsinstellingen voor handtekeningen.",
-      "unmodified": "Het document is niet gewijzigd sinds het was"
+      "unmodified": "Het document is niet gewijzigd sinds het was",
+      "unsupportedPermissionsFeatures": "Er zijn niet-ondersteunde machtigingsfuncties aangetroffen."
     },
     "trustStatus": {
       "trustVerified": "Succesvol vertrouwen gevestigd in {{verificatieType}}.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Digest-verificatie is uitgeschakeld.",
       "weakDigestAlgorithmButDigestVerifiable": "De samenvatting is correct, maar het algoritme voor de samenvatting is zwak en niet veilig.",
       "noDigestStatus": "Geen overzichtsstatus om te rapporteren.",
-      "unsupportedEncoding": "Geen enkele geïnstalleerde SignatureHandler kon de codering van de handtekening herkennen"
+      "unsupportedEncoding": "Geen enkele geïnstalleerde SignatureHandler kon de codering van de handtekening herkennen",
+      "documentHasBeenAltered": "Het document is gewijzigd of beschadigd sinds de ondertekening."
     },
     "documentStatus": {
       "noError": "Geen algemene fout te melden.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Sectie-einde invoegen en op de volgende pagina beginnen",
     "sectionBreakContinuous": "Sectie-einde - Doorlopend",
     "sectionBreakContinuousDescription": "Sectie-einde invoegen en doorgaan op dezelfde pagina",
-    "header": "Koptekst",
-    "footer": "Voettekst",
+    "section": "Sectie",
+    "header": {
+      "0": "Koptekst",
+      "1": "Koptekst eerste pagina",
+      "2": "Even paginakoptekst",
+      "3": "Oneven paginakoptekst",
+      "-1": "Ongeldige koptekst"
+    },
+    "footer": {
+      "0": "Voettekst",
+      "1": "Voettekst eerste pagina",
+      "2": "Voettekst op even pagina's",
+      "3": "Voettekst vreemde pagina",
+      "-1": "Ongeldige voettekst"
+    },
     "options": "Opties",
     "pageOptions": "Pagina-opties",
     "removeHeader": "Koptekst verwijderen",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Lettertypefamilie"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Bewerken",
     "viewOnly": "Bekijken",
     "editingDescription": "Document bewerken",

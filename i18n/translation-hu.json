@@ -145,7 +145,7 @@
     "showMoreColors": "További színek megjelenítése",
     "showLessColors": "Kevesebb szín megjelenítése",
     "fromCustomColorPicker": "Egyedi színválasztóból",
-    "newSheetDocument": "Új táblázat"
+    "newSpreadsheetDocument": "Új táblázat"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Az engedélyek ellenőrzése le van tiltva.",
       "hasAllowedChanges": "A dokumentum módosításokat tartalmaz, amelyeket az aláírási engedélyek beállításai engedélyeznek.",
       "invalidatedByDisallowedChanges": "A dokumentum olyan módosításokat tartalmaz, amelyeket az aláírási engedélyek beállításai nem engedélyeznek.",
-      "unmodified": "A dokumentumot azóta nem módosították"
+      "unmodified": "A dokumentumot azóta nem módosították",
+      "unsupportedPermissionsFeatures": "Nem támogatott engedélyezési funkciókkal találkoztam."
     },
     "trustStatus": {
       "trustVerified": "Sikeresen létrejött a bizalom a(z) {{verificationType}} iránt.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "A kivonat ellenőrzése le van tiltva.",
       "weakDigestAlgorithmButDigestVerifiable": "A kivonat helyes, de a kivonatolási algoritmus gyenge és nem biztonságos.",
       "noDigestStatus": "Nincs jelentendő kivonat állapota.",
-      "unsupportedEncoding": "Egyik telepített SignatureHandler sem tudta felismerni az aláírás kódolását"
+      "unsupportedEncoding": "Egyik telepített SignatureHandler sem tudta felismerni az aláírás kódolását",
+      "documentHasBeenAltered": "A dokumentumot megváltoztatták vagy megsérültek aláírása óta."
     },
     "documentStatus": {
       "noError": "Nincs jelentendő általános hiba.",
@@ -1314,8 +1316,21 @@
     "sectionBreakNextPageDescription": "Szúrja be a szakasztörést, és kezdje a következő oldalon",
     "sectionBreakContinuous": "Szakasz szünet - Folyamatos",
     "sectionBreakContinuousDescription": "Szúrja be a szakasztörést, és folytassa ugyanazon az oldalon ",
-    "header": "Fejléc",
-    "footer": "Lábléc",
+    "section": "Szakasz",
+    "header": {
+      "0": "Fejléc",
+      "1": "Első oldal fejléce",
+      "2": "Páros oldalfejléc",
+      "3": "Páratlan oldal fejléce",
+      "-1": "Érvénytelen fejléc"
+    },
+    "footer": {
+      "0": "Lábléc",
+      "1": "Első oldal lábléce",
+      "2": "Még az oldalláb is",
+      "3": "Páratlan oldal lábléce",
+      "-1": "Érvénytelen lábléc"
+    },
     "options": "Opciók",
     "pageOptions": "Oldalbeállítások",
     "removeHeader": "Fejléc eltávolítása",
@@ -1367,7 +1382,7 @@
       "dropdownLabel": "Betűcsalád"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Szerkesztés",
     "viewOnly": "Megtekintés",
     "editingDescription": "Dokumentum szerkesztése",
