@@ -145,7 +145,7 @@
     "showMoreColors": "Show More Colors",
     "showLessColors": "Show Less Colors",
     "fromCustomColorPicker": "from Custom Color Picker",
-    "newSheetDocument": "New Spreadsheet"
+    "newSpreadsheetDocument": "New Spreadsheet"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -1121,9 +1121,10 @@
     "permissionStatus": {
       "noPermissionsStatus": "No permissions status to report.",
       "permissionsVerificationDisabled": "Permissions verification has been disabled.",
-      "hasAllowedChanges": "The document has changes that are allowed by the signatures permissions settings.",
-      "invalidatedByDisallowedChanges": "The document has changes that are disallowed by the signatures permissions settings.",
-      "unmodified": "The document has not been modified since it was"
+      "hasAllowedChanges": "The document has changes that are allowed by the signature's permissions settings.",
+      "invalidatedByDisallowedChanges": "The document has changes that are disallowed by the signature's permissions settings.",
+      "unmodified": "The document has not been modified since it was",
+      "unsupportedPermissionsFeatures": "Encountered unsupported permissions features."
     },
     "trustStatus": {
       "trustVerified": "Established trust in {{verificationType}} successfully.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Digest verification has been disabled.",
       "weakDigestAlgorithmButDigestVerifiable": "The digest is correct, but the digest algorithm is weak and not secure.",
       "noDigestStatus": "No digest status to report.",
-      "unsupportedEncoding": "No installed SignatureHandler was able to recognize the signature's encoding"
+      "unsupportedEncoding": "No installed SignatureHandler was able to recognize the signature's encoding",
+      "documentHasBeenAltered": "Document has been altered or corrupted since it was signed."
     },
     "documentStatus": {
       "noError": "No general error to report.",
@@ -1314,13 +1316,16 @@
     "sectionBreakNextPageDescription": "Insert section break and start on next page",
     "sectionBreakContinuous": "Section Break - Continuous",
     "sectionBreakContinuousDescription": "Insert section break and continue on the same page ",
+    "section": "Section",
     "header": {
+      "-1": "Invalid Header",
       "0": "Header",
       "1": "First Page Header",
       "2": "Even Page Header",
       "3": "Odd Page Header"
     },
     "footer": {
+      "-1": "Invalid Footer",
       "0": "Footer",
       "1": "First Page Footer",
       "2": "Even Page Footer",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Font Family"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Editing",
     "viewOnly": "Viewing",
     "editingDescription": "Edit document",

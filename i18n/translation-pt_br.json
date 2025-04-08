@@ -145,7 +145,7 @@
     "showMoreColors": "Mostrar mais cores",
     "showLessColors": "Mostrar menos cores",
     "fromCustomColorPicker": "do seletor de cores personalizado",
-    "newSheetDocument": "Nova Planilha"
+    "newSpreadsheetDocument": "Nova Planilha"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "A verificação de permissões foi desativada.",
       "hasAllowedChanges": "O documento tem alterações que são permitidas pelas configurações de permissões de assinaturas.",
       "invalidatedByDisallowedChanges": "O documento tem alterações que não são permitidas pelas configurações de permissões de assinaturas.",
-      "unmodified": "O documento não foi modificado desde que foi"
+      "unmodified": "O documento não foi modificado desde que foi",
+      "unsupportedPermissionsFeatures": "Foram encontrados recursos de permissões não suportados."
     },
     "trustStatus": {
       "trustVerified": "Confiança estabelecida em {{verificationType}} com sucesso.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "A verificação resumida foi desativada.",
       "weakDigestAlgorithmButDigestVerifiable": "O resumo está correto, mas o algoritmo de resumo é fraco e inseguro.",
       "noDigestStatus": "Nenhum status de resumo para relatar.",
-      "unsupportedEncoding": "Nenhum SignatureHandler instalado foi capaz de reconhecer a codificação da assinatura"
+      "unsupportedEncoding": "Nenhum SignatureHandler instalado foi capaz de reconhecer a codificação da assinatura",
+      "documentHasBeenAltered": "O documento foi alterado ou corrompido desde que foi assinado."
     },
     "documentStatus": {
       "noError": "Nenhum erro geral para relatar.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Inserir quebra de seção e começar na próxima página",
     "sectionBreakContinuous": "Quebra de Seção - Contínua",
     "sectionBreakContinuousDescription": "Insira uma quebra de seção e continue na mesma página",
+    "section": "Seção",
     "header": {
       "0": "Cabeçalho",
       "1": "Cabeçalho da primeira página",
       "2": "Cabeçalho de página par",
-      "3": "Cabeçalho de página ímpar"
+      "3": "Cabeçalho de página ímpar",
+      "-1": "Cabeçalho inválido"
     },
     "footer": {
       "0": "Rodapé",
       "1": "Rodapé da primeira página",
       "2": "Rodapé de página par",
-      "3": "Rodapé de página ímpar"
+      "3": "Rodapé de página ímpar",
+      "-1": "Rodapé inválido"
     },
     "options": "Opções",
     "pageOptions": "Opções de página",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Família de fontes"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Edição",
     "viewOnly": "Visualização",
     "editingDescription": "Editar documento",

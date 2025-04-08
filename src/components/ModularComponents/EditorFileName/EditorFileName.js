@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import core from 'core';
+import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import useOnDocumentFileNameEdit from 'hooks/useOnDocumentFileNameEdit';
 import Button from 'components/Button';
 import './EditorFileName.scss';
 import PropTypes from 'prop-types';
 import { isMobileSize } from 'helpers/getDeviceSize';
+import { useSelector } from 'react-redux';
+import classNames from 'classnames';
+import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 
-const EditorFileName = ({ dataElement, readOnly }) => {
+const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
+
+const EditorFileName = ({ dataElement }) => {
   const { t } = useTranslation();
   const {
+    extension,
     isEditing,
     fileNameWithoutExtension,
     setFileNameWithoutExtension,
@@ -18,12 +25,39 @@ const EditorFileName = ({ dataElement, readOnly }) => {
     handleKeyDown,
   } = useOnDocumentFileNameEdit();
 
+  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
+  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
+  const isSpreadsheetAndReadOnlyMode = isSpreadsheetEditorMode && spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY;
+  const buttonTitlePrefix = isSpreadsheetAndReadOnlyMode ? '' : `${t('action.edit')} ${t('saveModal.fileName')} - `;
+  const [fileName, setFileName] = useState(core.getDocument()?.getFilename());
+
+  useEffect(() => {
+    const getFileName = () => {
+      setFileName(core.getDocument()?.getFilename());
+    };
+    core.addEventListener('documentLoaded', getFileName);
+    getFileName();
+    return () => core.removeEventListener('documentLoaded', getFileName);
+  }, []);
+
+  const handleDocumentUnloaded = useCallback(() => {
+    setFileName('');
+  }, []);
+
+  useOnDocumentUnloaded(handleDocumentUnloaded);
+
+  useEffect(() => {
+    if (fileNameWithoutExtension && extension) {
+      setFileName(`${fileNameWithoutExtension}${extension}`);
+    }
+  }, [fileNameWithoutExtension, extension]);
+
   // Hiding this component on mobile until we implement mobile functionality
   return !isMobileSize() && isEditing ? (
     <input
       type='text'
       className={'input-file-name'}
-      aria-label={`${t('action.edit')} ${t('saveModal.fileName')} - ${core.getDocument()?.getFilename()}`}
+      aria-label={`${t('action.edit')} ${t('saveModal.fileName')} - ${fileName}`}
       value={fileNameWithoutExtension}
       onChange={(e) => setFileNameWithoutExtension(e.target.value)}
       onBlur={finishEditing}
@@ -33,18 +67,20 @@ const EditorFileName = ({ dataElement, readOnly }) => {
   ) : (
     <Button
       dataElement={dataElement}
-      className={'button-file-name'}
-      label={core.getDocument()?.getFilename()}
-      title={`${t('action.edit')} ${t('saveModal.fileName')} - ${core.getDocument()?.getFilename()}`}
+      className={classNames({
+        'button-file-name': true,
+        [dataElement]: true,
+      })}
+      label={fileName}
+      title={`${buttonTitlePrefix}${fileName}`}
       onClick={startEditing}
-      disabled={readOnly}
+      disabled={isSpreadsheetAndReadOnlyMode}
     />
   );
 };
 
 EditorFileName.propTypes = {
   dataElement: PropTypes.string.isRequired,
-  readOnly: PropTypes.bool,
 };
 
 export default EditorFileName;

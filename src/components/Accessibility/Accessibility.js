@@ -87,12 +87,13 @@ function Accessibility() {
   const a11yClass = classNames('Accessibility', isVisible ? 'visible' : 'hidden');
 
   return (
-    <div className={a11yClass} data-element="accessibility" onFocus={onFocus} onBlur={onBlur}>
-      <div>{t('accessibility.skipTo')} </div>
-      <button onClick={onSkipToDocument}>{t('accessibility.document')}</button>
-      {isSearchPanelDisabled ? null : <button onClick={onSkipToSearch}>{t('component.searchOverlay')}</button>}
-      {isNotesPanelDisabled ? null : <button onClick={onSkipToNotes}>{t('accessibility.notes')}</button>}
-    </div>
+    <fieldset className={a11yClass} data-element="accessibility" onFocus={onFocus} onBlur={onBlur}>
+      <legend>{t('accessibility.skipTo')}</legend>
+      <button onClick={onSkipToDocument} role="link">{t('accessibility.document')}</button>
+      {isSearchPanelDisabled ? null :
+        <button onClick={onSkipToSearch} role="link">{t('component.searchOverlay')}</button>}
+      {isNotesPanelDisabled ? null : <button onClick={onSkipToNotes} role="link">{t('accessibility.notes')}</button>}
+    </fieldset>
   );
 }
 

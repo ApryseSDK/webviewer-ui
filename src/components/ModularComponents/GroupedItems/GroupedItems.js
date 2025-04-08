@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
@@ -24,11 +24,14 @@ const GroupedItems = (props) => {
   } = props;
   const dispatch = useDispatch();
   const [itemsGap, setItemsGap] = useState(gap);
-  const itemValidTypes = Object.values(ITEM_TYPE);
-  const validItems = items?.filter((item) => {
-    const itemType = item.type || item.props.type;
-    return itemValidTypes.includes(itemType);
-  });
+
+  const validItems = useMemo(() => {
+    const itemValidTypes = Object.values(ITEM_TYPE);
+    return items?.filter((item) => {
+      const itemType = item.type || item.props.type;
+      return itemValidTypes.includes(itemType);
+    });
+  }, [items]);
 
   const flyoutDataElement = `${dataElement}Flyout`;
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
@@ -43,7 +46,6 @@ const GroupedItems = (props) => {
     if (!flyoutItems) {
       return;
     }
-
     for (const item of flyoutItems) {
       if (item.toolName && item.toolName === activeTool?.name) {
         return item;
@@ -101,7 +103,6 @@ const GroupedItems = (props) => {
       className: 'GroupedItemsFlyout',
       items: [],
     };
-
     if (size > 0) {
       const indexToExclude = validItems.length - size;
       for (let i = 0; i < validItems.length; i++) {
@@ -115,13 +116,27 @@ const GroupedItems = (props) => {
         }
       }
     }
-
-    dispatch(actions.updateFlyout(flyoutDataElement, flyout));
-  }, [size, validItems.length]);
+    flyout.items.length > 0 ? dispatch(actions.updateFlyout(flyoutDataElement, flyout)) : dispatch(actions.removeFlyout(flyoutDataElement));
+  }, [size, validItems]);
 
   useEffect(() => {
     setItemsGap(gap);
   }, [gap]);
+
+  const renderedItems = useMemo(() => {
+    return validItems.map((item, index) => {
+      const hasToShrink = size > 0;
+      const indexesToExclude = validItems.length - size;
+      const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
+      const shouldExcludeIndex = index >= indexesToExclude || isLastIndexAndDivider;
+      if (hasToShrink && shouldExcludeIndex) {
+        return null;
+      }
+      const itemProps = item.props || item;
+      return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection}
+        groupedItem={dataElement}/>;
+    });
+  }, [validItems, size]);
 
   if (validItems && validItems.length) {
     return (
@@ -135,19 +150,7 @@ const GroupedItems = (props) => {
           flexGrow: grow,
           ...style,
         }}>
-        {
-          validItems.map((item, index) => {
-            const hasToShrink = size > 0;
-            const indexesToExclude = validItems.length - size;
-            const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
-            const shouldExcludeIndex = index >= indexesToExclude || isLastIndexAndDivider;
-            if (hasToShrink && shouldExcludeIndex) {
-              return null;
-            }
-            const itemProps = item.props || item;
-            return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection} groupedItem={dataElement} />;
-          })
-        }
+        {renderedItems}
         {size > 0 &&
           <ToggleElementButton
             dataElement={`${flyoutDataElement}Toggle`}

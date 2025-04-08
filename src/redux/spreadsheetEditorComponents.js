@@ -18,7 +18,7 @@ const defaultSpreadsheetEditorHeaders = {
     style: {},
     items: [
       'groupedLeftHeaderButtons',
-      'editorDropDown'
+      'editorDropdown'
     ]
   },
   'tools-header': {
@@ -40,22 +40,6 @@ const defaultSpreadsheetEditorHeaders = {
       'spreadsheetEditorHomeGroupedItems',
     ]
   },
-  'sheet-tabs-bottom': {
-    dataElement: 'sheet-tabs-bottom',
-    placement: 'bottom',
-    grow: 0,
-    gap: 12,
-    position: 'start',
-    'float': false,
-    stroke: true,
-    style: {
-      background: 'none',
-      padding: 0
-    },
-    items: [
-      'generic-file-tab',
-    ]
-  }
 };
 
 const formatButtonsConfigs = CELL_FORMAT_BUTTONS.reduce((acc, item) => {
@@ -93,15 +77,15 @@ const defaultSpreadsheetEditorComponents = {
     toggleElement: 'MainMenuFlyout',
     type: 'toggleButton',
   },
-  spreadsheetEditorModeDropdown: {
-    dataElement: 'spreadsheetEditorModeDropdown',
-    type: 'spreadsheetEditorModeDropdown',
-    disabled: false,
+  spreadsheetEditorEditModeDropdown: {
+    dataElement: 'spreadsheetEditorEditModeDropdown',
+    type: 'spreadsheetEditorEditModeDropdown',
+    disabled: true,
   },
-  editorDropDown: {
-    dataElement: 'editorDropDown',
+  editorDropdown: {
+    dataElement: 'editorDropdown',
     items: [
-      'spreadsheetEditorModeDropdown',
+      'spreadsheetEditorEditModeDropdown',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -125,12 +109,6 @@ const defaultSpreadsheetEditorComponents = {
     style: {}
   },
 
-  'generic-file-tab': {
-    dataElement: 'generic-file-tab',
-    title: 'component.menuOverlay',
-    type: 'genericFileTab',
-  },
-
   'zoom-container': {
     dataElement: 'zoom-container',
     type: 'zoom'
@@ -144,8 +122,8 @@ const defaultSpreadsheetEditorComponents = {
     type: 'divider'
   },
   'spreadsheetEditorFileName': {
-    dataElement: ITEM_TYPE.SHEET_EDITOR_FILE_NAME,
-    type: ITEM_TYPE.SHEET_EDITOR_FILE_NAME,
+    dataElement: ITEM_TYPE.SPREADSHEET_EDITOR_FILE_NAME,
+    type: ITEM_TYPE.SPREADSHEET_EDITOR_FILE_NAME,
     readOnly: true,
   },
 
@@ -406,7 +384,7 @@ const defaultSpreadsheetFlyoutMap = {
       {
         'dataElement': 'cellTextAlignmentFlyout',
         'type': 'label',
-        'label': 'sheetEditor.textAlignment',
+        'label': 'spreadsheetEditor.textAlignment',
       },
       {
         'dataElement': 'cellAlignLeft',
@@ -446,7 +424,7 @@ const defaultSpreadsheetFlyoutMap = {
       {
         'dataElement': 'cellAdjustmentFlyout',
         'type': 'label',
-        'label': 'sheetEditor.cellAdjustment',
+        'label': 'spreadsheetEditor.cellAdjustment',
       },
       ...adjustmentButtons,
     ]
@@ -459,7 +437,7 @@ const defaultSpreadsheetFlyoutMap = {
       {
         'dataElement': 'cellFormatFlyout',
         'type': 'label',
-        'label': 'sheetEditor.cellFormat',
+        'label': 'spreadsheetEditor.cellFormat',
       },
       ...formatButtons,
     ]
@@ -467,4 +445,11 @@ const defaultSpreadsheetFlyoutMap = {
 };
 
 
-export { defaultSpreadsheetEditorHeaders, defaultSpreadsheetEditorComponents, defaultSpreadsheetEditorPanels, defaultSpreadsheetFlyoutMap };
+export {
+  defaultSpreadsheetEditorHeaders,
+  defaultSpreadsheetEditorComponents,
+  defaultSpreadsheetEditorPanels,
+  defaultSpreadsheetFlyoutMap,
+  formatButtonsConfigs,
+  adjustmentButtonsConfig,
+};

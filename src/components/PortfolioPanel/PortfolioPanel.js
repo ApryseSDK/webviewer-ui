@@ -17,12 +17,20 @@ import DataElements from 'constants/dataElement';
 import { DropLocation as MoveDirection } from 'constants/dnd';
 import { isMobileDevice } from 'helpers/device';
 import { enableMultiTab } from 'helpers/TabManager';
-import { addFile, deletePortfolioFile, downloadPortfolioFile, getPortfolioFiles, isOpenableFile, renamePortfolioFile, reorderPortfolioFile } from 'helpers/portfolio';
+import {
+  addFile,
+  deletePortfolioFile,
+  downloadPortfolioFile,
+  getPortfolioFiles,
+  isOpenableFile,
+  renamePortfolioFile,
+  reorderPortfolioFile
+} from 'helpers/portfolio';
 import core from 'core';
 
 import '../../constants/bookmarksOutlinesShared.scss';
 import './PortfolioPanel.scss';
-import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuTypes } from 'helpers/outlineFlyoutHelper';
 
 const PortfolioPanel = () => {
   const [

@@ -6,7 +6,7 @@ import './StylePicker.scss';
 import ColorPicker from './ColorPicker';
 import Slider from 'components/Slider';
 import DataElements from 'constants/dataElement';
-import { strokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
+import { getStrokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
 import {
   defaultStartLineStyles,
   defaultStrokeStyles,
@@ -239,7 +239,7 @@ const StylePicker = ({
           min: 0,
           max: MAX_STROKE_THICKNESS,
           step: 1,
-          steps: strokeSliderSteps,
+          steps: getStrokeSliderSteps(isFreeText),
         };
       case 'fontsize':
         if (FontSize === null) {

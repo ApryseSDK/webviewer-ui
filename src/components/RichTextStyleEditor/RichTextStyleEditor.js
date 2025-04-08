@@ -15,7 +15,10 @@ const propTypes = {
   annotation: PropTypes.object,
   editor: PropTypes.object,
   style: PropTypes.shape({
-    TextColor: PropTypes.string,
+    TextColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
     RichTextStyle: PropTypes.any,
   }),
   isFreeTextAutoSize: PropTypes.bool,

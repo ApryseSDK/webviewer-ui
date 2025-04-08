@@ -145,7 +145,7 @@
     "showMoreColors": "Visa fler färger",
     "showLessColors": "Visa färre färger",
     "fromCustomColorPicker": "från Custom Color Picker",
-    "newSheetDocument": "Nytt kalkylblad"
+    "newSpreadsheetDocument": "Nytt kalkylblad"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Behörighetsverifiering har inaktiverats.",
       "hasAllowedChanges": "Dokumentet har ändringar som är tillåtna av signaturernas behörighetsinställningar.",
       "invalidatedByDisallowedChanges": "Dokumentet har ändringar som inte är tillåtna av inställningarna för signaturbehörigheter.",
-      "unmodified": "Dokumentet har inte ändrats sedan det gjordes"
+      "unmodified": "Dokumentet har inte ändrats sedan det gjordes",
+      "unsupportedPermissionsFeatures": "Påträffade behörighetsfunktioner som inte stöds."
     },
     "trustStatus": {
       "trustVerified": "Etablerade förtroende för {{verificationType}} framgångsrikt.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Sammanfattningsverifiering har inaktiverats.",
       "weakDigestAlgorithmButDigestVerifiable": "Sammanfattningen är korrekt, men sammanfattningsalgoritmen är svag och inte säker.",
       "noDigestStatus": "Ingen sammanfattningsstatus att rapportera.",
-      "unsupportedEncoding": "Ingen installerad SignatureHandler kunde känna igen signaturens kodning"
+      "unsupportedEncoding": "Ingen installerad SignatureHandler kunde känna igen signaturens kodning",
+      "documentHasBeenAltered": "Dokumentet har ändrats eller skadats sedan det undertecknades."
     },
     "documentStatus": {
       "noError": "Inget generellt fel att rapportera.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Infoga avsnittsbrytning och börja på nästa sida",
     "sectionBreakContinuous": "Sektionsavbrott - Kontinuerlig",
     "sectionBreakContinuousDescription": "Infoga avsnittsbrytning och fortsätt på samma sida ",
+    "section": "Avsnitt",
     "header": {
       "0": "Rubrik",
       "1": "Första sidans rubrik",
       "2": "Jämn sidhuvud",
-      "3": "Udda sidhuvud"
+      "3": "Udda sidhuvud",
+      "-1": "Ogiltig rubrik"
     },
     "footer": {
       "0": "Sidfot",
       "1": "Första sidans sidfot",
       "2": "Sidfot på jämn sida",
-      "3": "Sidfot på udda sida"
+      "3": "Sidfot på udda sida",
+      "-1": "Ogiltig sidfot"
     },
     "options": "Alternativ",
     "pageOptions": "Sidalternativ",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Typsnittsfamilj"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Redigering",
     "viewOnly": "Visning",
     "editingDescription": "Redigera dokument",

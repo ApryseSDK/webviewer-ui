@@ -13,6 +13,18 @@ import '../ColorPalette/ColorPalette.scss';
 const propTypes = {
   color: PropTypes.any,
   toolTipXOffset: PropTypes.number,
+  disabled: PropTypes.bool,
+  customColors: PropTypes.array,
+  getHexColor: PropTypes.func,
+  openColorPicker: PropTypes.func,
+  handleColorOnClick: PropTypes.func,
+  openDeleteModal: PropTypes.func,
+  colorToBeDeleted: PropTypes.string,
+  setColorToBeDeleted: PropTypes.func,
+  enableEdit: PropTypes.bool,
+  disableTitle: PropTypes.bool,
+  colorsAreHex: PropTypes.bool,
+  ariaLabelledBy: PropTypes.string,
 };
 
 const ColorPalettePicker = ({
@@ -29,6 +41,7 @@ const ColorPalettePicker = ({
   colorsAreHex = false,
   ariaLabelledBy,
   toolTipXOffset = 0,
+  disabled = false,
 }) => {
   const [t] = useTranslation();
   const addCustomColorRef = useRef(null);
@@ -73,6 +86,7 @@ const ColorPalettePicker = ({
                 aria-label={`${t('option.colorPalette.colorLabel')} ${bg?.toUpperCase?.()}`}
                 aria-current={colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
                   color?.toHexString?.()?.toLowerCase() === bg.toLowerCase()}
+                disabled={disabled}
               >
                 <div
                   className={classNames({
@@ -102,6 +116,7 @@ const ColorPalettePicker = ({
               title={t('option.colorPalettePicker.addColor')}
               onClick={handleAddColor}
               ref={addCustomColorRef}
+              disabled={disabled}
             >
               <div className="cell-outer">
                 <div className="cellIcon" id="addCustomColor">
@@ -114,7 +129,7 @@ const ColorPalettePicker = ({
             <button
               className="cell-container cell-tool"
               id="removeCustomColor"
-              disabled={!colorToBeDeleted}
+              disabled={disabled || !colorToBeDeleted}
               onClick={handleOpenDeleteModal}
               title={t('warning.colorPalettePicker.deleteTitle')}
               data-element="removeCustomColor"

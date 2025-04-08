@@ -43,7 +43,7 @@ const ITEM_TYPE = {
   PRESET_BUTTON: 'presetButton',
   VIEW_CONTROLS: 'viewControls',
   TABS_PANEL: 'tabPanel',
-  SHEET_EDITOR_FILE_NAME: 'sheetEditorFileName',
+  SPREADSHEET_EDITOR_FILE_NAME: 'spreadsheetEditorFileName',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
   FONT_FACE_DROPDOWN: 'fontFaceDropdown',
@@ -57,9 +57,8 @@ const ITEM_TYPE = {
   LINE_SPACING_BUTTON: 'lineSpacingButton',
   ORDERED_LIST: 'orderedListButton',
   UNORDERED_LIST: 'unorderedListButton',
-  GENERIC_FILE_TAB: 'genericFileTab',
   LABEL: 'label',
-  SHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorModeDropdown',
+  SHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorEditModeDropdown',
   CUSTOM_ELEMENT: 'customElement',
 };
 
@@ -263,7 +262,11 @@ const DEFAULT_GAP = 12;
 const VIEWER_CONFIGURATIONS = {
   DEFAULT: 'default',
   DOCX_EDITOR: 'docxEditor',
+  SPREADSHEET_EDITOR: 'spreadsheetEditor',
 };
+
+const VALID_DOCX_EXTENSIONS = ['docx', 'doc'];
+const VALID_XLSX_EXTENSIONS = ['xlsx'];
 
 const CELL_ADJUSTMENT_BUTTONS = [
   'ColumnInsertLeft',
@@ -319,4 +322,6 @@ export {
   VIEWER_CONFIGURATIONS,
   CELL_ADJUSTMENT_BUTTONS,
   CELL_FORMAT_BUTTONS,
+  VALID_DOCX_EXTENSIONS,
+  VALID_XLSX_EXTENSIONS,
 };

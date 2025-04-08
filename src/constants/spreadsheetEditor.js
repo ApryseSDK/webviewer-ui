@@ -1,3 +1,5 @@
+export const SpreadsheetEditorEditMode = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
+
 export const CELL_JUSTIFICATION_OPTIONS = {
   Left: 'left',
   Center: 'center',

@@ -127,6 +127,10 @@ const isNonPrintingCharactersEnabled = () => {
   return core.getDocument() && core.getDocument().getOfficeEditor().getIsNonPrintingCharactersEnabled();
 };
 
+const isOfficeEditorUndoEnabled = (state) => state.officeEditor.canUndo;
+
+const isOfficeEditorRedoEnabled = (state) => state.officeEditor.canRedo;
+
 export {
   isStyleButtonActive,
   getPointSizeSelectionKey,
@@ -138,4 +142,6 @@ export {
   getIsOfficeEditorMode,
   isJustificationButtonActive,
   isNonPrintingCharactersEnabled,
+  isOfficeEditorUndoEnabled,
+  isOfficeEditorRedoEnabled,
 };

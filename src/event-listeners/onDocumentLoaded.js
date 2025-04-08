@@ -12,12 +12,11 @@ import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
 import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'helpers/hotkeysManager';
 import { getInstanceNode } from 'helpers/getRootNode';
-import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { isOfficeEditorMode, isSpreadsheetEditorDocument } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { panelNames } from 'constants/panel';
 import { getPortfolioFiles } from 'helpers/portfolio';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
-import { defaultPanels } from '../redux/modularComponents';
 import {
   OFFICE_EDITOR_SCOPE,
   OfficeEditorEditMode,
@@ -279,18 +278,22 @@ export const configureOfficeEditor = (store) => () => {
     dispatch(actions.setOfficeEditorActiveStream(stream));
   };
 
+  const swapUIConfiguration = (newUIConfiguration) => {
+    if (currentUIConfiguration === newUIConfiguration) {
+      return;
+    }
+    dispatch(actions.stashComponents(currentUIConfiguration));
+    dispatch(actions.restoreComponents(newUIConfiguration));
+  };
+
+  const currentUIConfiguration = selectors.getUIConfiguration(getState());
   const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
-  const isSpreadsheetEditorEnabled = selectors.isSpreadsheetEditorModeEnabled(getState());
   if (isOfficeEditorMode()) {
-    // isOfficeEditorMode checks to see if the file type is workerTypes.OFFICE_EDITOR
     if (!isOfficeEditorHeaderEnabled(store)) {
-      // Since we are switching to Office Editor mode, we need to stash the current UI state in case we return to default viewing mode
-      dispatch(actions.stashComponents(VIEWER_CONFIGURATIONS.DEFAULT));
-      // if isOfficeEditorHeaderEnabled wasn't already set then we need to set the UI to the default OE UI
-      // If the UI for the docx editor was previously customised, we restore that stash
-      // if no stash is found the default is set
-      dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
+      swapUIConfiguration(VIEWER_CONFIGURATIONS.DOCX_EDITOR);
       dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+      dispatch(actions.disableSpreadsheetEditorMode());
+      dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
     }
     dispatch(actions.setIsOfficeEditorMode(true));
     dispatch(actions.enableElements(
@@ -319,16 +322,29 @@ export const configureOfficeEditor = (store) => () => {
     doc.addEventListener('editModeUpdated', handleEditModeUpdate);
     handleActiveStreamChanged(EditingStreamType.BODY);
     contentSelectTool.addEventListener('activeStreamChanged', handleActiveStreamChanged);
+    doc.addEventListener('editOperationStarted', () => {
+      core.getOfficeEditor().setEditMode('viewOnly');
+      dispatch(actions.openElement('loadingModal'));
+    });
+    doc.addEventListener('editOperationEnded', () => {
+      core.getOfficeEditor().setEditMode('editing');
+      dispatch(actions.closeElement('loadingModal'));
+    });
     // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
     core.zoomTo(1, 0, 0);
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
-  } else if (isOfficeEditorHeaderEnabled(store) && !isSpreadsheetEditorEnabled) {
-    // Since we are leaving office editor we can stash the current UI state
-    dispatch(actions.stashComponents(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
-    // The Default UI only gets loaded if isOfficeEditorHeaderEnabled is true, to prevent overwriting the custom UI
-    dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DEFAULT));
-    const panels = getIsCustomUIEnabled(store) ? defaultPanels : [];
+  } else if (isSpreadsheetEditorDocument()) {
+    swapUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR);
+    dispatch(actions.enableSpreadsheetEditorMode());
+    dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
+  } else {
+    swapUIConfiguration(VIEWER_CONFIGURATIONS.DEFAULT);
+    dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.DEFAULT));
+    dispatch(actions.disableSpreadsheetEditorMode());
+
+    const currentGenericPanels = selectors.getGenericPanels(getState());
+    const panels = getIsCustomUIEnabled(store) ? currentGenericPanels : [];
     dispatch(actions.setGenericPanels(panels));
     doc.removeEventListener('editModeUpdated', handleEditModeUpdate);
     contentSelectTool.removeEventListener('activeStreamChanged', handleActiveStreamChanged);

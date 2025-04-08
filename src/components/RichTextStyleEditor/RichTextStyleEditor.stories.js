@@ -11,6 +11,7 @@ export default {
   title: 'Components/RichTextStyleEditor',
   component: RichTextStyleEditor,
 };
+const noop = () => {};
 
 // Mock some state to show the style popups
 const state = {
@@ -100,7 +101,6 @@ const baseObject = {
   onRichTextStyleChange: () => {},
 };
 
-const noop = () => {};
 
 const store = configureStore({
   reducer: () => state

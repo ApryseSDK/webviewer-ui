@@ -6,7 +6,7 @@ import core from 'core';
 import selectors from 'selectors';
 import Button from '../Button';
 import TextButton from '../TextButton';
-import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuTypes } from 'helpers/outlineFlyoutHelper';
 import OutlineContext from '../Outline/Context';
 import './OutlineContent.scss';
 import '../../constants/bookmarksOutlinesShared.scss';
@@ -193,7 +193,7 @@ const OutlineContent = ({
     }
   };
 
-  const flyoutSelector = `${DataElements.BOOKMARK_OUTLINE_FLYOUT}-${outlinePath}`;
+  const flyoutSelector = DataElements.BOOKMARK_OUTLINE_FLYOUT;
   const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
   const type = 'outline';
 
@@ -206,7 +206,7 @@ const OutlineContent = ({
   };
 
   const contextMenuMoreButtonOptions = {
-    flyoutToggleElement: `bookmarkOutlineFlyout-${outlinePath}`,
+    flyoutToggleElement: 'bookmarkOutlineFlyout',
     moreOptionsDataElement: `outline-more-button-${outlinePath}`,
   };
 

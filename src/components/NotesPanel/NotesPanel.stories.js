@@ -1,5 +1,5 @@
 /* eslint-disable no-unsanitized/property */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import NotesPanel from './NotesPanelContainer';
@@ -9,6 +9,9 @@ import { default as mockAppState } from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
+import core from 'core';
+import { userEvent, within, expect, waitFor, fireEvent } from '@storybook/test';
+
 
 export default {
   title: 'Components/NotesPanel/NotesPanel',
@@ -50,6 +53,7 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
+    unreadAnnotationIdSet: new Set(),
   },
   featureFlags: {
     customizableUI: true,
@@ -57,6 +61,33 @@ const initialState = {
   officeEditor: {
     editMode: 'editing'
   },
+};
+
+const createCustomStore = (customState, context) => {
+  const baseState = {
+    ...mockAppState,
+    viewer: {
+      ...mockAppState.viewer,
+      openElements: {
+        notesPanel: true,
+      },
+      activeTheme: context?.globals?.theme,
+      selectedScale: undefined,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  const mergedState = {
+    ...baseState,
+    ...(customState || {}),
+  };
+
+  return configureStore({
+    reducer: () => mergedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false })
+  });
 };
 
 export function Basic() {
@@ -195,3 +226,189 @@ const NotesPanelInApp = (context, location, panelSize) => {
 export const NotesPanelInMobile = (args, context) => NotesPanelInApp(context, 'right');
 
 NotesPanelInMobile.parameters = window.storybook?.MobileParameters;
+
+const createTestAnnotations = () => {
+  const rectangle = new window.Core.Annotations.RectangleAnnotation();
+  rectangle.Listable = true;
+  rectangle.Id = '123';
+  rectangle.PageNumber = 1;
+  rectangle.ToolName = 'AnnotationCreateRectangle';
+
+  const widget1 = new window.Core.Annotations.TextWidgetAnnotation();
+  widget1.Listable = true;
+  widget1.Id = '456';
+  widget1.PageNumber = 1;
+  widget1.ToolName = 'AnnotationCreateTextWidget';
+
+  const widget2 = new window.Core.Annotations.ChoiceWidgetAnnotation();
+  widget2.Listable = false;
+  widget2.Id = '789';
+  widget2.PageNumber = 1;
+  widget2.ToolName = 'AnnotationCreateChoiceWidget';
+
+  return { rectangle, widget1, widget2 };
+};
+
+const setupCoreMocks = (annotations, selectedAnnotations) => {
+  core.getAnnotationsList = () => annotations;
+  core.getSelectedAnnotations = () => selectedAnnotations;
+  core.getDisplayModeObject = () => ({
+    pageToWindow: () => ({ x: 0, y: 0 }),
+  });
+};
+
+export function NotesPanelWithNotes(args, context) {
+  const { rectangle, widget1, widget2 } = createTestAnnotations();
+  const store = createCustomStore(null, context);
+
+  setupCoreMocks([rectangle, widget1, widget2], [rectangle]);
+
+  return (
+    <Provider store={store}>
+      <RightPanel dataElement="notesPanel" onResize={noop}>
+        <NotesPanel />
+      </RightPanel>
+    </Provider>
+  );
+}
+
+NotesPanelWithNotes.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const listItems = await canvas.findAllByRole('listitem');
+  expect(listItems.length).toBe(1);
+};
+
+const customNoteFunction = () => { };
+export const NotesPanelNotesWithComments = (args, context) => {
+  const mockState = {
+    ...mockAppState,
+    viewer: {
+      ...mockAppState.viewer,
+      openElements: {
+        notesPanel: true,
+      },
+      activeTheme: context.globals.theme,
+      colorMap: {
+        rectangle: {
+          currentStyleTab: 'StrokeColor',
+          iconColor: 'StrokeColor'
+        },
+      },
+      selectedScale: undefined,
+      customNoteFunction: customNoteFunction
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  const store = configureStore({
+    reducer: () => mockState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  });
+
+  const replyAnnot = new window.Core.Annotations.StickyAnnotation();
+  replyAnnot.Listable = true;
+  replyAnnot.isReply = () => true;
+  replyAnnot.getContents = () => 'Reply comment test';
+  replyAnnot.getRichTextStyle = () => ({ '0':{},'13':{ 'font-weight':'bold' },'18':{} });
+
+  const annotationsList = window.Core.documentViewer.getAnnotationManager().getAnnotationsList();
+  const rectangle = annotationsList.find((item) => item instanceof window.Core.Annotations.RectangleAnnotation);
+  rectangle.Listable = true;
+  rectangle.getContents = () => 'Test comment https://google.ca test';
+  rectangle.getRichTextStyle = () => ({ '0':{},'13':{ 'font-weight':'bold' },'30':{} });
+  rectangle._replies = [replyAnnot];
+  rectangle.getReplies = () => [replyAnnot];
+
+  core.getAnnotationsList = () => [rectangle, replyAnnot];
+  core.getSelectedAnnotations = () => [rectangle];
+
+  return (
+    <Provider store={store}>
+      <RightPanel dataElement="notesPanel" onResize={noop}>
+        <NotesPanel />
+      </RightPanel>
+    </Provider>
+  );
+};
+
+NotesPanelNotesWithComments.parameters = {
+  chromatic: { delay: 500 },
+};
+
+NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  expect(canvas.getByRole('button', { name: /Multi Select/i })).toBeVisible();
+
+  await waitFor(async () => {
+    await expect(canvas.getByRole('button', { name: 'Status' })).toBeInTheDocument();
+  });
+
+  const textElement = await canvas.getByText(/Test comment/i);
+  await expect(textElement).toBeInTheDocument();
+
+  await userEvent.click(textElement);
+  await expect(customNoteFunction).toHaveBeenCalled;
+
+  const link = await canvas.getByRole('link', { name: /google.ca/i });
+  await expect(link).toBeInTheDocument();
+  expect(link).toHaveAttribute('href', 'https://google.ca');
+  expect(link).toHaveAttribute('target', '_blank');
+  link.removeAttribute('target');
+  link.setAttribute('onclick', 'return false;');
+
+  await userEvent.click(link);
+
+  const replyTextElement = await canvas.getByText(/Reply comment/i);
+  await expect(replyTextElement).toBeInTheDocument();
+  await userEvent.click(replyTextElement);
+  await fireEvent.blur(replyTextElement);
+};
+
+export function NotesPanelWithNotesInFormFieldMode(args, context) {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    const originalAnnotationManager = core.getAnnotationManager;
+    const mockFormFieldManager = {
+      isInFormFieldCreationMode: () => true,
+      addEventListener: noop,
+      removeEventListener: noop,
+    };
+
+    const mockAnnotationManager = () => {
+      const originalManager = originalAnnotationManager();
+      return {
+        ...originalManager,
+        getFormFieldCreationManager: () => mockFormFieldManager,
+      };
+    };
+
+    core.getAnnotationManager = mockAnnotationManager;
+
+    setShouldRender(true);
+
+    return () => {
+      core.getAnnotationManager = originalAnnotationManager;
+    };
+  }, []);
+
+  const store = createCustomStore(null, context);
+  const { rectangle, widget1, widget2 } = createTestAnnotations();
+
+  setupCoreMocks([rectangle, widget1, widget2], [widget1]);
+
+  return shouldRender ? (
+    <Provider store={store}>
+      <RightPanel dataElement="notesPanel" onResize={noop}>
+        <NotesPanel />
+      </RightPanel>
+    </Provider>
+  ) : <>Loading...</>;
+}
+
+NotesPanelWithNotesInFormFieldMode.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const listItems = await canvas.findAllByRole('listitem');
+  expect(listItems.length).toBe(3);
+};

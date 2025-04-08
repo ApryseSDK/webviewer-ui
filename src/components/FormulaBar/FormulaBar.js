@@ -8,7 +8,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import classNames from 'classnames';
 
 const FormulaBar = (props) => {
-  const { isReadOnly, activeCellRange, cellFormula, stringCellValue } = props;
+  const { isReadOnly, activeCellRange, cellFormula, stringCellValue, onRangeInputChange, onRangeInputKeyDown } = props;
 
   const { t } = useTranslation();
 
@@ -16,10 +16,23 @@ const FormulaBar = (props) => {
 
   return (
     <DataElementWrapper className='FormulaBar' dataElement={DataElements.FORMULA_BAR}>
-      <input type="text" className='RangeInput' value={activeCellRange} readOnly={isReadOnly} aria-label={t('formulaBar.range')}/>
+      <input
+        type="text"
+        className='RangeInput'
+        value={activeCellRange}
+        onChange={(e) => onRangeInputChange(e.target.value)}
+        onKeyDown={onRangeInputKeyDown}
+        aria-label={t('formulaBar.range')}
+      />
       <div className={classNames('Formula', { readOnly: isReadOnly })}>
         <Icon glyph="function" className={classNames('FormulaIcon', { readOnly: isReadOnly })}/>
-        <input className={classNames('FormulaInput', { readOnly: isReadOnly })} type="text" value={formulaBarValue} readOnly={isReadOnly} aria-label={t('formulaBar.label')}/>
+        <input type="text"
+          className={classNames('FormulaInput', { readOnly: isReadOnly })}
+          onChange={()=>{}}
+          value={formulaBarValue}
+          readOnly={isReadOnly}
+          aria-label={t('formulaBar.label')}
+        />
       </div>
     </DataElementWrapper>
   );
@@ -28,8 +41,10 @@ const FormulaBar = (props) => {
 FormulaBar.propTypes = {
   isReadOnly: PropTypes.bool,
   activeCellRange: PropTypes.string,
-  cellFormula: PropTypes.string,
+  cellFormula: PropTypes.oneOfType([PropTypes.string , PropTypes.number]),
   stringCellValue: PropTypes.string,
+  onRangeInputChange: PropTypes.func,
+  onRangeInputKeyDown: PropTypes.func,
 };
 
 export default FormulaBar;

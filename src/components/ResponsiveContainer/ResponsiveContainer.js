@@ -33,6 +33,7 @@ const ResponsiveContainer = ({
     }
     isResizingRef.current = true;
     requestAnimationFrame(async () => {
+      let retry = false;
       try {
         if (ResizingPromises[parentDataElement]) {
           await ResizingPromises[parentDataElement].promise;
@@ -48,7 +49,7 @@ const ResponsiveContainer = ({
         if (newSize <= 0) {
           return;
         }
-        const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
+        const freeSpace = getCurrentFreeSpace({ headerDirection, element: elementRef.current });
         const itemToResizeFunc = findItemToResize({
           items: enabledItems,
           freeSpace,
@@ -56,11 +57,15 @@ const ResponsiveContainer = ({
         });
         if (itemToResizeFunc) {
           itemToResizeFunc();
+          retry = true;
         }
       } catch (e) {
         console.error(e);
       } finally {
         isResizingRef.current = false;
+        if (retry) {
+          resizeResponsively();
+        }
       }
     });
   };

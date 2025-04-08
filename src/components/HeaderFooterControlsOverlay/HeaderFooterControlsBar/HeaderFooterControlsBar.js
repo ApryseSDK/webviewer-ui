@@ -9,6 +9,7 @@ import DataElements from 'constants/dataElement';
 import Dropdown from 'components/Dropdown';
 import classNames from 'classnames';
 import core from 'core';
+import HeaderFooterModalState from 'helpers/headerFooterModalState';
 
 import './HeaderFooterControlsBar.scss';
 
@@ -16,21 +17,25 @@ const propTypes = {
   type: PropTypes.oneOf(['header', 'footer']),
   pageNumber: PropTypes.number,
   isActive: PropTypes.bool,
-  layoutType: PropTypes.number,
 };
 
-const HeaderFooterControlsBar = ({ type, pageNumber, isActive, layoutType }) => {
+const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const blockerRef = useRef();
   const dropdownId = `${type}-options-dropdown-${pageNumber}`;
   const barId = `${type}-edit-ui-${pageNumber}`;
-  const barClassName = classNames({
-    'header-footer-edit-ui': true,
-    [`${type}-edit-ui`]: true,
-    'active': isActive
-  });
+
   const [containerTop, setContainerTop] = useState(0);
+  const [sectionNumber, setSectionNumber] = useState(null);
+  const [headerType, setHeaderType] = useState(0); // 0 is default for header type all
+  const [footerType, setFooterType] = useState(0); // 0 is default for footer type all
+
+  const barClassName = classNames(
+    'header-footer-edit-ui',
+    `${type}-edit-ui`,
+    { 'active': (isActive && containerTop > 0) }
+  );
 
   const getHeaderFooterTop = () => {
     const officeEditor = core.getDocument().getOfficeEditor();
@@ -45,7 +50,14 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive, layoutType }) => 
     }
   };
 
-  useEffect(async () => {
+  const updateHeaderFooterSectionNumber = async () => {
+    const officeEditor = core.getDocument().getOfficeEditor();
+
+    const sectionNumber = await officeEditor.getSectionNumber(pageNumber);
+    setSectionNumber(sectionNumber);
+  };
+
+  useEffect(() => {
     // This stops the cursor from moving when the user clicks on the bar
     const onBarClick = (event) => {
       if (event.type === 'mousedown') {
@@ -58,28 +70,62 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive, layoutType }) => 
       blockerRef.current.addEventListener(eventType, onBarClick);
     });
 
-    const updateHeaderFooterTop = async () => {
-      setContainerTop(getHeaderFooterTop());
+    const onHeaderFooterUpdated = () => {
+      if (isActive) {
+        updateHeaderFooterTop();
+        updateHeaderFooterSectionNumber();
+      }
     };
 
-    core.getDocument().addEventListener('officeDocumentEdited', updateHeaderFooterTop);
+    const updateHeaderFooterTop = async () => {
+      const headerFooterTop = getHeaderFooterTop();
+      if (headerFooterTop > 0) {
+        // Sometimes the headerTop is 0 when the data isn't loaded.
+        // In this case just ignore it and wait for the next event to update the position
+        setContainerTop(headerFooterTop);
+      }
+    };
+
+    core.getDocument().addEventListener('headerFooterUpdated', onHeaderFooterUpdated);
+    setContainerTop(getHeaderFooterTop());
+
     return () => {
       ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
-        blockerRef.current.removeEventListener(eventType, onBarClick);
+        blockerRef.current?.removeEventListener(eventType, onBarClick);
       });
 
-      core.getDocument().removeEventListener('officeDocumentEdited', updateHeaderFooterTop);
+      core.getDocument().removeEventListener('headerFooterUpdated', onHeaderFooterUpdated);
     };
-  }, []);
-
-  useEffect(() => {
-    setContainerTop(getHeaderFooterTop());
   }, [isActive]);
 
+  useEffect(() => {
+    const onLayoutChange = () => {
+      setTimeout(() => {
+        const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
+        const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
+        headerType != -1 && setHeaderType(headerType);
+        footerType != -1 && setFooterType(footerType);
+        // Core resolves the promise too early.
+        // So we have to wait a bit to get the correct value
+      }, 800);
+    };
+    const doc = core.getDocument();
+    doc.addEventListener('headerFooterLayoutUpdated', onLayoutChange);
+    return () => {
+      doc.removeEventListener('headerFooterLayoutUpdated', onLayoutChange);
+    };
+  }, [pageNumber]);
+
+  useEffect(() => {
+    const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
+    const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
+    headerType != -1 && setHeaderType(headerType);
+    footerType != -1 && setFooterType(footerType);
+    updateHeaderFooterSectionNumber();
+  }, [isActive, pageNumber]);
+
   const handlePageOptionsClick = async () => {
-    // Need to exit header and footer mode so margins and layout can be properly set
-    // Moving to selectedPage so margins will only affect the section that opened the modal
-    await core.getOfficeEditor().exitHeaderFooterModeAndMoveToPage(pageNumber);
+    HeaderFooterModalState.setPageNumber(pageNumber);
     dispatch(actions.openElement(DataElements.HEADER_FOOTER_OPTIONS_MODAL));
   };
 
@@ -134,11 +180,14 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive, layoutType }) => 
       isActive={isOpen}
     />
   );
+  const sectionLabel = sectionNumber ? ` - ${t('officeEditor.section')} ${sectionNumber}` : '';
+
+  const layoutType = type === 'header' ? headerType: footerType;
 
   return (
     <div className={barClassName} id={barId} style={{ top: containerTop }}>
       <div className='box-shadow-div' ref={blockerRef}></div>
-      <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}</div>
+      <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}{sectionLabel}</div>
 
       <Dropdown
         width='auto'
@@ -156,9 +205,5 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive, layoutType }) => 
 };
 
 HeaderFooterControlsBar.propTypes = propTypes;
-
-HeaderFooterControlsBar.defaultProps = {
-  layoutType: 0,
-};
 
 export default React.memo(HeaderFooterControlsBar);

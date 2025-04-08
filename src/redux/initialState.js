@@ -25,19 +25,22 @@ import { getMeasurementScalePreset, initialScale } from 'constants/measurementSc
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
+import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
+import defaultToolsWithInlineComment from 'constants/defaultToolsWithInlineCommentOnAnnotationSelected';
+import { PANEL_SIZES } from 'constants/panel';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
-import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { SYNC_MODES } from 'constants/multiViewerContants';
+import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { getInstanceID } from 'helpers/getRootNode';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels } from './modularComponents';
-import { PANEL_SIZES } from 'constants/panel';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
 
 export default {
   viewer: {
+    uiConfiguration: VIEWER_CONFIGURATIONS.DEFAULT,
     initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,
@@ -69,14 +72,16 @@ export default {
     isInDesktopOnlyMode: false,
     toolbarGroup: DataElements.ANNOTATE_TOOLBAR_GROUP,
     activeTheme: 'light',
-    currentLanguage: 'en',
+    currentLanguage: getHashParameters('defaultLanguage', 'en'),
     disabledElements: {
       [DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON]: { disabled: true, priority: 2 },
-      [DataElements.SAVED_SIGNATURES_TAB]: { disabled: true, priorty: 2 },
+      [DataElements.SAVED_SIGNATURES_TAB]: { disabled: true, priority: 2 },
       [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
       'comparePanelToggle': { disabled: true, priority: 2 },
+      [DataElements.SPREADSHEET_EDITOR_TOOLS_HEADER]: { disabled: true },
+      [PRESET_BUTTON_TYPES.NEW_SPREADSHEET]: { disabled: true },
     },
     enabledRibbonsStash: [],
     selectedScale: initialScale,
@@ -98,6 +103,7 @@ export default {
       [DataElements.CUSTOM_MODAL]: true,
       [DataElements.RICH_TEXT_STYLE_CONTAINER]: true,
       [DataElements.FORMULA_BAR]: true,
+      [DataElements.SPREADSHEET_SWITCHER]: true,
     },
     hiddenElements: {},
     panelWidths: {
@@ -817,18 +823,6 @@ export default {
       { dataElement: 'leftPanelPageTabsMove' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsMore' },
-    ],
-    multiPageManipulationControlsLarge: [
-      { dataElement: 'leftPanelPageTabsRotate' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsMove' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsOperations' },
-    ],
-    multiPageManipulationControlsSmall: [
-      { dataElement: 'leftPanelPageTabsRotate' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsMoreSmall' },
     ],
     thumbnailControlMenu: [{ dataElement: 'thumbRotateClockwise' }, { dataElement: 'thumbDelete' }],
     toolButtonObjects: {
@@ -2056,7 +2050,7 @@ export default {
     selectedDisplayedSignatureIndex: 0,
     selectedDisplayedInitialsIndex: 0,
     annotationContentOverlayHandler: null,
-    isSnapModeEnabled: false,
+    snapMode: {},
     isReaderMode: false,
     unreadAnnotationIdSet: new Set(),
     watermarkModalOptions: null,
@@ -2243,6 +2237,8 @@ export default {
     },
   },
   officeEditor: {
+    canUndo: false,
+    canRedo: false,
     cursorProperties: {
       paragraphProperties: {},
       locationProperties: {},
@@ -2273,6 +2269,7 @@ export default {
       topLeftColumn: null,
       bottomRightRow: null,
       bottomRightColumn: null,
-    }
+    },
+    editMode: SpreadsheetEditorEditMode['VIEW_ONLY'],
   }
 };

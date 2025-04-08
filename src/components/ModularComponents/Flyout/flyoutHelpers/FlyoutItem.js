@@ -21,7 +21,7 @@ import FontSizeDropdown from 'components/ModularComponents/OfficeEditor/FontSize
 import FontFaceDropdown from 'components/ModularComponents/OfficeEditor/FontFaceDropdown';
 import StylePresetDropdown from 'components/ModularComponents/OfficeEditor/StylePresetDropdown';
 import OfficeEditorModeDropdown from 'components/ModularComponents/OfficeEditor/OfficeEditorModeDropdown';
-import SheetEditorModeDropdown from 'components/ModularComponents/SheetEditorModeDropdown';
+import SpreadsheetEditorEditModeDropdown from 'components/ModularComponents/SpreadsheetEditorEditModeDropdown';
 import Label from 'components/ModularComponents/Label';
 import CustomElement from 'components/CustomElement';
 import StatefulButton from 'components/ModularComponents/StatefulButton';
@@ -204,7 +204,7 @@ const StaticItem = React.forwardRef((props, ref) => {
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case FLYOUT_ITEM_TYPES.SHEET_EDITOR_MODE_DROPDOWN: {
-      const dropdownElement = <SheetEditorModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`sheet-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
+      const dropdownElement = <SpreadsheetEditorEditModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`sheet-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_FILE_NAME: {

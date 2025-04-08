@@ -145,7 +145,7 @@
     "showMoreColors": "আরো রং দেখান",
     "showLessColors": "কম রং দেখান",
     "fromCustomColorPicker": "কাস্টম কালার পিকার থেকে",
-    "newSheetDocument": "নতুন স্প্রেডশীট"
+    "newSpreadsheetDocument": "নতুন স্প্রেডশীট"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "অনুমতি যাচাই নিষ্ক্রিয় করা হয়েছে.",
       "hasAllowedChanges": "নথিতে পরিবর্তন রয়েছে যা স্বাক্ষর অনুমতি সেটিংস দ্বারা অনুমোদিত৷",
       "invalidatedByDisallowedChanges": "নথিতে এমন পরিবর্তন রয়েছে যা স্বাক্ষর অনুমতি সেটিংস দ্বারা অনুমোদিত নয়৷",
-      "unmodified": "ডকুমেন্টটি এর পর থেকে পরিবর্তন করা হয়নি"
+      "unmodified": "ডকুমেন্টটি এর পর থেকে পরিবর্তন করা হয়নি",
+      "unsupportedPermissionsFeatures": "অসমর্থিত অনুমতি বৈশিষ্ট্যগুলির সম্মুখীন হয়েছে।"
     },
     "trustStatus": {
       "trustVerified": "সফলভাবে {{verificationType}}-এ বিশ্বাস স্থাপন করা হয়েছে।",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "ডাইজেস্ট যাচাই নিষ্ক্রিয় করা হয়েছে.",
       "weakDigestAlgorithmButDigestVerifiable": "ডাইজেস্ট সঠিক, কিন্তু ডাইজেস্ট অ্যালগরিদম দুর্বল এবং নিরাপদ নয়।",
       "noDigestStatus": "রিপোর্ট করার জন্য কোন ডাইজেস্ট অবস্থা।",
-      "unsupportedEncoding": "কোনো ইনস্টল করা স্বাক্ষর হ্যান্ডলার স্বাক্ষরের এনকোডিং চিনতে সক্ষম হয়নি"
+      "unsupportedEncoding": "কোনো ইনস্টল করা স্বাক্ষর হ্যান্ডলার স্বাক্ষরের এনকোডিং চিনতে সক্ষম হয়নি",
+      "documentHasBeenAltered": "স্বাক্ষর করার পর থেকে নথিটি পরিবর্তিত বা দূষিত হয়েছে।"
     },
     "documentStatus": {
       "noError": "রিপোর্ট করার জন্য কোন সাধারণ ত্রুটি নেই।",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "বিভাগ বিরতি ঢোকান এবং পরবর্তী পৃষ্ঠায় শুরু করুন",
     "sectionBreakContinuous": "বিভাগ বিরতি - ক্রমাগত",
     "sectionBreakContinuousDescription": "বিভাগ বিরতি ঢোকান এবং একই পৃষ্ঠায় চালিয়ে যান ",
+    "section": "বিভাগ",
     "header": {
       "0": "হেডার",
       "1": "প্রথম পৃষ্ঠার শিরোনাম",
       "2": "জোড় পৃষ্ঠার শিরোনাম",
-      "3": "বিজোড় পৃষ্ঠার শিরোনাম"
+      "3": "বিজোড় পৃষ্ঠার শিরোনাম",
+      "-1": "অবৈধ হেডার"
     },
     "footer": {
       "0": "পাদলেখ",
       "1": "প্রথম পৃষ্ঠার পাদলেখ",
       "2": "জোড় পৃষ্ঠার পাদলেখ",
-      "3": "বিজোড় পৃষ্ঠার পাদলেখ"
+      "3": "বিজোড় পৃষ্ঠার পাদলেখ",
+      "-1": "অবৈধ পাদলেখ"
     },
     "options": "অপশন",
     "pageOptions": "পৃষ্ঠা বিকল্প",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "ফন্ট পরিবার"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "সম্পাদনা",
     "viewOnly": "দেখা হচ্ছে",
     "editingDescription": "নথি সম্পাদনা করুন",

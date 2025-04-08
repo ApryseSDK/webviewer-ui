@@ -30,7 +30,9 @@ const initialState = {
         'currentStyleTab': 'StrokeColor',
         'iconColor': 'StrokeColor'
       }
-    }
+    },
+    activeToolName: '',
+    snapMode: {},
   }
 };
 

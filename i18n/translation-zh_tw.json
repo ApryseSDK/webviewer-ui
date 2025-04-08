@@ -145,7 +145,7 @@
     "showMoreColors": "顯示更多顏色",
     "showLessColors": "顯示較少的顏色",
     "fromCustomColorPicker": "來自自訂顏色選擇器",
-    "newSheetDocument": "新電子表格"
+    "newSpreadsheetDocument": "新電子表格"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "權限驗證已被禁用。",
       "hasAllowedChanges": "該文檔具有簽名權限設置所允許的更改。",
       "invalidatedByDisallowedChanges": "文檔具有簽名權限設置不允許的更改。",
-      "unmodified": "該文檔自從"
+      "unmodified": "該文檔自從",
+      "unsupportedPermissionsFeatures": "遇到不支援的權限功能。"
     },
     "trustStatus": {
       "trustVerified": "已成功建立對{{verificationType}}的信任。",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "摘要驗證已禁用。",
       "weakDigestAlgorithmButDigestVerifiable": "摘要是正確的，但摘要算法較弱且不安全。",
       "noDigestStatus": "沒有摘要狀態可報告。",
-      "unsupportedEncoding": "沒有安裝的SignatureHandler能夠識別簽名的編碼"
+      "unsupportedEncoding": "沒有安裝的SignatureHandler能夠識別簽名的編碼",
+      "documentHasBeenAltered": "文件自簽署以來已被更改或損壞。"
     },
     "documentStatus": {
       "noError": "沒有一般錯誤要報告。",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "插入分節符號並從下一頁開始",
     "sectionBreakContinuous": "分節符號 - 連續",
     "sectionBreakContinuousDescription": "插入分節符號並在同一頁上繼續 ",
+    "section": "部分",
     "header": {
       "0": "標頭",
       "1": "首頁頁眉",
       "2": "偶數頁頁眉",
-      "3": "奇數頁頁眉"
+      "3": "奇數頁頁眉",
+      "-1": "無效標頭"
     },
     "footer": {
       "0": "頁尾",
       "1": "首頁頁腳",
       "2": "偶數頁頁腳",
-      "3": "奇數頁頁腳"
+      "3": "奇數頁頁腳",
+      "-1": "頁尾無效"
     },
     "options": "選項",
     "pageOptions": "頁面選項",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "字體家族"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "編輯",
     "viewOnly": "觀看",
     "editingDescription": "編輯文檔",

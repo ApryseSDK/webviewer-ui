@@ -290,10 +290,17 @@ if (window.CanvasRenderingContext2D) {
 
     setupLoadAnnotationsFromServer(store);
 
+    const currentLanguage = store.getState().viewer.currentLanguage;
+
+    const defaultLanguage = getHashParameters('defaultLanguage', 'en');
+
+    const language = currentLanguage || defaultLanguage;
+
     // nsSeparator is the colon. We do not currently use this we had a customer request to remove the colon from the namespace
     // as it broke their labels
     i18next.init({
       nsSeparator: false,
+      lng: language,
     });
 
     ReactDOM.render(

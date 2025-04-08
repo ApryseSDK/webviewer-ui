@@ -11,7 +11,7 @@ import { userEvent, within, expect } from '@storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { fireEvent } from '@testing-library/react';
 import createItemsForBookmarkOutlineFlyout from 'src/helpers/createItemsForBookmarkOutlineFlyout';
-import { menuItems as MenuItemsForBookmarkOutlines, menuTypes } from 'src/components/MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuItems as MenuItemsForBookmarkOutlines, menuTypes } from 'helpers/outlineFlyoutHelper';
 
 export default {
   title: 'ModularComponents/Flyout',

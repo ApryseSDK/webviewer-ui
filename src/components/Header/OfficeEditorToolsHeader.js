@@ -36,7 +36,7 @@ import '../HeaderItems/HeaderItems.scss';
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
 const moreButtonWidth = 77;
-const officeEditorToggleableStyles = window.Core.Document.OfficeEditorToggleableStyles;
+const officeEditorToggleableStyles = window.Core.Document.OfficeEditor.ToggleableStyles;
 
 const TextStyles = ({ activeStates }) => {
   return Object.values(officeEditorToggleableStyles).map((style) => (

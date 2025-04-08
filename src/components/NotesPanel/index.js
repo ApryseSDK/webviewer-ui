@@ -1,3 +1,3 @@
-import NotesPanelContainer from './NotesPanelContainer';
+import NotesPanelWrapper from './NotesPanelContainer';
 
-export default NotesPanelContainer;
+export default NotesPanelWrapper;

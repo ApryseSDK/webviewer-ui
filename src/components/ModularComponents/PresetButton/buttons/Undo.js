@@ -19,7 +19,8 @@ const UndoButton = forwardRef((props, ref) => {
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canUndo = useSelector((state) => selectors.canUndo(state, activeDocumentViewerKey));
   const isOfficeEditorMode = useSelector((state) => selectors.getIsOfficeEditorMode(state));
-  const disabled = !canUndo && !isOfficeEditorMode;
+  const isOfficeEditorUndoEnabled = useSelector((state) => selectors.isOfficeEditorUndoEnabled(state));
+  const disabled = (!isOfficeEditorMode && !canUndo) || (isOfficeEditorMode && !isOfficeEditorUndoEnabled);
 
   const handleClick = () => {
     if (isOfficeEditorMode) {

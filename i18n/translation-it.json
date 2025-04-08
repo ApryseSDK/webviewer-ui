@@ -145,7 +145,7 @@
     "showMoreColors": "Mostra altri colori",
     "showLessColors": "Mostra meno colori",
     "fromCustomColorPicker": "da Selettore colori personalizzato",
-    "newSheetDocument": "Nuovo foglio di calcolo"
+    "newSpreadsheetDocument": "Nuovo foglio di calcolo"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "La verifica delle autorizzazioni è stata disabilitata.",
       "hasAllowedChanges": "Il documento presenta modifiche consentite dalle impostazioni delle autorizzazioni delle firme.",
       "invalidatedByDisallowedChanges": "Il documento contiene modifiche non consentite dalle impostazioni delle autorizzazioni delle firme.",
-      "unmodified": "Il documento non è stato modificato da quando lo è stato"
+      "unmodified": "Il documento non è stato modificato da quando lo è stato",
+      "unsupportedPermissionsFeatures": "Sono state riscontrate funzionalità di autorizzazione non supportate."
     },
     "trustStatus": {
       "trustVerified": "Affidabilità stabilita in {{verificationType}} correttamente.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "La verifica del digest è stata disabilitata.",
       "weakDigestAlgorithmButDigestVerifiable": "Il digest è corretto, ma l'algoritmo del digest è debole e non sicuro.",
       "noDigestStatus": "Nessuno stato del digest da segnalare.",
-      "unsupportedEncoding": "Nessun SignatureHandler installato è stato in grado di riconoscere la codifica della firma"
+      "unsupportedEncoding": "Nessun SignatureHandler installato è stato in grado di riconoscere la codifica della firma",
+      "documentHasBeenAltered": "Il documento è stato alterato o corrotto dopo la firma."
     },
     "documentStatus": {
       "noError": "Nessun errore generale da segnalare.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Inserisci interruzione di sezione e inizia nella pagina successiva",
     "sectionBreakContinuous": "Interruzione di sezione - Continua",
     "sectionBreakContinuousDescription": "Inserisci interruzione di sezione e continua sulla stessa pagina",
+    "section": "Sezione",
     "header": {
       "0": "Intestazione",
       "1": "Intestazione della prima pagina",
       "2": "Intestazione di pagina pari",
-      "3": "Intestazione di pagina dispari"
+      "3": "Intestazione di pagina dispari",
+      "-1": "Intestazione non valida"
     },
     "footer": {
       "0": "Piè di pagina",
       "1": "Piè di pagina della prima pagina",
       "2": "Piè di pagina pari",
-      "3": "Piè di pagina delle pagine dispari"
+      "3": "Piè di pagina delle pagine dispari",
+      "-1": "Piè di pagina non valido"
     },
     "options": "Opzioni",
     "pageOptions": "Opzioni pagina",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Famiglia di caratteri"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Modifica",
     "viewOnly": "Visualizzazione",
     "editingDescription": "Modifica documento",

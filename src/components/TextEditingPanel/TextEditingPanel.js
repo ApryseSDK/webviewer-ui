@@ -12,6 +12,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 const TextEditingPanel = ({
   addActiveColor,
   contentSelectMode,
+  imageSelectMode,
   disableLinkButton,
   fonts,
   format,
@@ -101,6 +102,7 @@ const TextEditingPanel = ({
           property={currentPalette}
           onStyleChange={handleColorChange}
           overridePalette2={[rgbColor?.toHexString()]}
+          disabled={imageSelectMode}
         />
         <Button
           img="ic-copy-color"
@@ -108,7 +110,7 @@ const TextEditingPanel = ({
           title={i18next.t('stylePanel.addColorToCustom')}
           dataElement={'addColorToCustom'}
           className={isCustomUI ? '' : 'addToCustomButton'}
-          disabled={isCopyBtnDisabled}
+          disabled={imageSelectMode || isCopyBtnDisabled}
         />
       </div>
       <div className="custom-colors-section">
@@ -121,6 +123,7 @@ const TextEditingPanel = ({
             disableTitle
             enableEdit
             getHexColor={(color) => color?.toHexString()}
+            disabled={imageSelectMode}
           />
         </div>
       </div>
@@ -166,6 +169,7 @@ const TextEditingPanel = ({
 TextEditingPanel.propTypes = {
   addActiveColor: PropTypes.func,
   contentSelectMode: PropTypes.bool,
+  imageSelectMode: PropTypes.bool,
   disableLinkButton: PropTypes.bool,
   fonts: PropTypes.arrayOf(PropTypes.string),
   format: PropTypes.object,

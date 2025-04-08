@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 import getRootNode from 'helpers/getRootNode';
-
+import transformTextForQuill from 'helpers/convertNewlinesToParagraphs';
+import { CustomKeyboard, BlurInputModule, QuillPasteExtra } from 'helpers/quillModules';
 import '../../../constants/quill.scss';
 import './CommentTextarea.scss';
 
@@ -39,32 +40,9 @@ const formats = [
   'mention',
 ];
 
-// We override the default keyboard module to disable the list autofill feature
-const Keyboard = Quill.import('modules/keyboard');
-
-class CustomKeyboard extends Keyboard {
-  static DEFAULTS = {
-    ...Keyboard.DEFAULTS,
-    bindings: {
-      ...Keyboard.DEFAULTS.bindings,
-      'list autofill': undefined,
-    }
-  };
-}
-
 Quill.register('modules/keyboard', CustomKeyboard, true);
-
-// Overriding clipboard module to fix cursor issue after pasting text
-const Clipboard = Quill.import('modules/clipboard');
-const { quillShadowDOMWorkaround } = window.Core;
-
-class QuillPasteExtra extends Clipboard {
-  constructor(quill, options) {
-    quillShadowDOMWorkaround(quill);
-    super(quill, options);
-  }
-}
 Quill.register('modules/clipboard', QuillPasteExtra, true);
+Quill.register('modules/blurInput', BlurInputModule);
 
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {
@@ -127,17 +105,8 @@ const CommentTextarea = React.forwardRef(
       e.stopPropagation();
     };
 
-    // Convert text with newline ("\n") to <p>...</p> format so
-    // that editor handles multiline text correctly
-    const containsNewlines = value && value.split('\n').length > 1;
-    if (containsNewlines) {
-      const contentArray = value.split('\n');
-      value = contentArray.map((item) => {
-        const paragraph = document.createElement('p');
-        paragraph.innerText = item || '\n';
-        return paragraph.outerHTML;
-      }).join('');
-    }
+    value = transformTextForQuill(value);
+    const baseModule = { blurInput: {} };
 
     // onBlur and onFocus have to be outside in the div because of quill bug
     return (
@@ -151,7 +120,7 @@ const CommentTextarea = React.forwardRef(
             }
             return ref(ele);
           }}
-          modules={userData && userData.length > 0 ? mentionModule : {}}
+          modules={userData && userData.length > 0 ? { ...baseModule, ...mentionModule } : baseModule }
           theme="snow"
           value={value}
           placeholder={`${isReply ? t('action.reply') : t('action.comment')}...`}

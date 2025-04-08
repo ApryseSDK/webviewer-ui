@@ -32,6 +32,7 @@ const useOnDocumentFileNameEdit = () => {
   };
 
   return {
+    extension,
     isEditing,
     fileNameWithoutExtension,
     setFileNameWithoutExtension,

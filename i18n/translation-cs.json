@@ -145,7 +145,7 @@
     "showMoreColors": "Zobrazit více barev",
     "showLessColors": "Zobrazit méně barev",
     "fromCustomColorPicker": "z Custom Color Picker",
-    "newSheetDocument": "Nová tabulka"
+    "newSpreadsheetDocument": "Nová tabulka"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Ověřování oprávnění bylo zakázáno.",
       "hasAllowedChanges": "Dokument obsahuje změny, které jsou povoleny nastavením oprávnění k podpisům.",
       "invalidatedByDisallowedChanges": "Dokument obsahuje změny, které nejsou povoleny nastavením oprávnění k podpisům.",
-      "unmodified": "Dokument nebyl od té doby změněn"
+      "unmodified": "Dokument nebyl od té doby změněn",
+      "unsupportedPermissionsFeatures": "Došlo k nepodporovaným funkcím oprávnění."
     },
     "trustStatus": {
       "trustVerified": "Úspěšně navázána důvěra v {{verificationType}}.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Ověření přehledu bylo zakázáno.",
       "weakDigestAlgorithmButDigestVerifiable": "Digest je správný, ale algoritmus digest je slabý a není bezpečný.",
       "noDigestStatus": "Žádný stav přehledu k nahlášení.",
-      "unsupportedEncoding": "Žádný nainstalovaný SignatureHandler nebyl schopen rozpoznat kódování podpisu"
+      "unsupportedEncoding": "Žádný nainstalovaný SignatureHandler nebyl schopen rozpoznat kódování podpisu",
+      "documentHasBeenAltered": "Dokument byl od podpisu změněn nebo poškozen."
     },
     "documentStatus": {
       "noError": "Žádná obecná chyba k nahlášení.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Vložte konec oddílu a začněte na další stránce",
     "sectionBreakContinuous": "Přestávka sekce - Průběžná",
     "sectionBreakContinuousDescription": "Vložte konec oddílu a pokračujte na stejné stránce ",
+    "section": "Sekce",
     "header": {
       "0": "Záhlaví",
       "1": "Záhlaví první stránky",
       "2": "Sudé záhlaví stránky",
-      "3": "Záhlaví liché stránky"
+      "3": "Záhlaví liché stránky",
+      "-1": "Neplatné záhlaví"
     },
     "footer": {
       "0": "Zápatí",
       "1": "Zápatí první stránky",
       "2": "Zápatí sudé stránky",
-      "3": "Zápatí liché stránky"
+      "3": "Zápatí liché stránky",
+      "-1": "Neplatné zápatí"
     },
     "options": "Možnosti",
     "pageOptions": "Možnosti stránky",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Rodina písem"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Editace",
     "viewOnly": "Prohlížení",
     "editingDescription": "Upravit dokument",

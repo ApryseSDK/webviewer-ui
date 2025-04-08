@@ -20,13 +20,19 @@ function LeftHeaderContainer() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { customizableUI } = featureFlags;
-  const floatingHeaders = leftHeaders.filter((header) => header.float);
-  const fullLengthHeaders = leftHeaders.filter((header) => !header.float);
-  if (fullLengthHeaders.length > 1) {
-    console.warn(`Left headers only support one full length header but ${fullLengthHeaders.length} were added. Only the first one will be rendered.`);
-  }
 
-  const leftHeader = fullLengthHeaders[0];
+  const [floatingHeaders, leftHeader] = useMemo(() => {
+    const floatingHeaders = [];
+    const fullLengthHeaders = [];
+    for (let header of leftHeaders) {
+      header.float ? floatingHeaders.push(header) : fullLengthHeaders.push(header);
+    }
+    if (fullLengthHeaders.length > 1) {
+      console.warn(`Left headers only support one full length header but ${fullLengthHeaders.length} were added. Only the first one will be rendered.`);
+    }
+    return [floatingHeaders, fullLengthHeaders[0]];
+  }, [leftHeaders]);
+
   const userDefinedStyle = leftHeader ? leftHeader.style : {};
   const [elementRef, dimensions] = useResizeObserver();
   useEffect(() => {
@@ -41,21 +47,21 @@ function LeftHeaderContainer() {
     ...userDefinedStyle
   }), [leftPanelOpen, leftPanelWidth, bottomHeadersHeight, userDefinedStyle]);
 
+  const renderedHeader = useMemo(() => {
+    if (leftHeader) {
+      const { dataElement } = leftHeader;
+      return (<ModularHeader ref={elementRef} {...leftHeader} key={dataElement} style={style}/>);
+    }
+  }, [leftHeader]);
+
   if (!customizableUI || !leftHeaders.length) {
     return null;
   }
 
-  const renderLeftHeader = () => {
-    if (leftHeader) {
-      const { dataElement } = leftHeader;
-      return (<ModularHeader ref={elementRef} {...leftHeader} key={dataElement} style={style} />);
-    }
-  };
-
   return (
     <nav aria-label={t('accessibility.landmarks.leftHeader')}>
       <FloatingHeaderContainer floatingHeaders={floatingHeaders} placement={PLACEMENT.LEFT} />
-      {renderLeftHeader()}
+      {renderedHeader}
     </nav>
   );
 }

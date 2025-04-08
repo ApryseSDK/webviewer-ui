@@ -134,11 +134,11 @@ const PresetButton = forwardRef((props, ref) => {
           case PRESET_BUTTON_TYPES.CELL_ALIGN_RIGHT:
             return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_RIGHT} />;
           case PRESET_BUTTON_TYPES.ALIGN_TOP:
-            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_TOP} />;
+            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_TOP} alignmentValue='top' />;
           case PRESET_BUTTON_TYPES.ALIGN_MIDDLE:
-            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_MIDDLE} />;
+            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_MIDDLE} alignmentValue='middle' />;
           case PRESET_BUTTON_TYPES.ALIGN_BOTTOM:
-            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_BOTTOM} />;
+            return <TextAlignmentButton {...props} ref={ref} alignment={PRESET_BUTTON_TYPES.ALIGN_BOTTOM} alignmentValue='bottom' />;
           case PRESET_BUTTON_TYPES.CELL_ADJUSTMENT:
             return <CellAdjustmentButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.CELL_BORDER_STYLE:

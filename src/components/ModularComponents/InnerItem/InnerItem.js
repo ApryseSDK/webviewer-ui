@@ -11,7 +11,6 @@ import ZoomControls from '../ZoomControls';
 import ToolButton from '../ToolButton';
 import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
-import GenericFileTab from '../GenericFileTab';
 import ViewControls from '../ViewControls';
 import EditorFileName from '../EditorFileName';
 import Label from '../Label';
@@ -20,7 +19,7 @@ import FontFaceDropdown from '../OfficeEditor/FontFaceDropdown';
 import StylePresetDropdown from '../OfficeEditor/StylePresetDropdown';
 import CreateTableDropdown from '../OfficeEditor/CreateTableDropdown';
 import OfficeEditorModeDropdown from '../OfficeEditor/OfficeEditorModeDropdown';
-import SheetEditorModeDropdown from '../SheetEditorModeDropdown';
+import SpreadsheetEditorEditModeDropdown from '../SpreadsheetEditorEditModeDropdown';
 import LineSpacingToggleButton from '../OfficeEditor/LineSpacing';
 import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertImageButton';
 import PageSectionBreakDropdown from '../OfficeEditor/PageSectionBreakDropdown';
@@ -56,7 +55,7 @@ const InnerItem = (props) => {
       return <PresetButton key={key} {...props} />;
     case ITEM_TYPE.VIEW_CONTROLS:
       return <ViewControls key={key} {...props} />;
-    case ITEM_TYPE.SHEET_EDITOR_FILE_NAME:
+    case ITEM_TYPE.SPREADSHEET_EDITOR_FILE_NAME:
       return <EditorFileName key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_FILE_NAME:
       return <EditorFileName key={key} {...props} />;
@@ -80,12 +79,10 @@ const InnerItem = (props) => {
       return <ListToggleButton {...props} listType={LIST_OPTIONS.Ordered} key={key} />;
     case ITEM_TYPE.UNORDERED_LIST:
       return <ListToggleButton {...props} listType={LIST_OPTIONS.Unordered} key={key} />;
-    case ITEM_TYPE.GENERIC_FILE_TAB:
-      return <GenericFileTab {...props} key={key} />;
     case ITEM_TYPE.LABEL:
       return <Label key={key} {...props} />;
     case ITEM_TYPE.SHEET_EDITOR_MODE_DROPDOWN:
-      return <SheetEditorModeDropdown key={key} {...props} />;
+      return <SpreadsheetEditorEditModeDropdown key={key} {...props} />;
     case ITEM_TYPE.CUSTOM_ELEMENT:
       return <CustomElement key={key} {...props} />;
     default:

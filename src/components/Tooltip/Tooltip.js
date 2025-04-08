@@ -268,4 +268,4 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
 Tooltip.displayName = 'Tooltip';
 Tooltip.propTypes = propTypes;
 
-export default Tooltip;
+export default React.memo(Tooltip);

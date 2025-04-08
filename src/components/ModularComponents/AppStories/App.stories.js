@@ -11,6 +11,12 @@ export default {
 
 export const DefaultUI = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
 
+DefaultUI.play = async ({ canvasElement }) => {
+  const canvas = await within(canvasElement);
+  const documentContainer = canvas.getByRole('tabpanel');
+  expect(documentContainer).not.toHaveAttribute('aria-labelledby');
+};
+
 const headersWithLeftHeader = {
   ...defaultModularHeaders,
   'tools-header': {

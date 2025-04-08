@@ -110,5 +110,9 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     accessibleReadingOrderModeNoStructure: accessibleReadingOrderManager,
     userBookmarksChanged: documentViewer,
     selectionChanged: spreadsheetEditorManager,
+    spreadsheetEditorEditModeChanged: spreadsheetEditorManager,
+    activeSheetChanged: spreadsheetEditorManager,
+    spreadsheetEditorLoaded: spreadsheetEditorManager,
+    spreadsheetEditorReady: spreadsheetEditorManager,
   };
 };

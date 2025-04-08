@@ -137,6 +137,8 @@ const activeColor = {
 
 const initialState = {
   officeEditor: {
+    canUndo: true,
+    canRedo: false,
     cursorProperties: {
       bold: true,
       italic: true,
@@ -248,11 +250,16 @@ export const FlyoutComponent = () => {
       getIsNonPrintingCharactersEnabled: () => true,
     }),
   });
-  window.Core.Annotations.Color = () => ({
-    toString: () => 'rgba(0, 255, 0, 1)',
+  window.Core.Annotations.Color = class {
+    toString() {
+      return 'rgba(0, 255, 0, 1)';
+    }
+
+    toHexString() {
     // eslint-disable-next-line custom/no-hex-colors
-    toHexString: () => '#00FF00',
-  });
+      return '#00FF00';
+    }
+  };
 
   return (
     <Provider store={store}>
@@ -294,4 +301,10 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   // check active non printing characters button
   const nonPrintingCharactersButton = canvasElement.querySelector('[data-element="officeEditorToggleNonPrintingCharactersButton"]');
   expect(nonPrintingCharactersButton.parentElement.classList.contains('active'), 'non printing characters button should be active').toBe(true);
+
+  // check undo is enabled and redo is disabled
+  const undoButton = canvasElement.querySelector('[data-element="undoButton"]');
+  expect(undoButton.disabled, 'undo button should not be disabled').toBe(false);
+  const redoButton = canvasElement.querySelector('[data-element="redoButton"]');
+  expect(redoButton.disabled, 'redo button should be disabled').toBe(true);
 };

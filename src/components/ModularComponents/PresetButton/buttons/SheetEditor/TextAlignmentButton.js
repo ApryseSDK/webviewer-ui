@@ -6,27 +6,33 @@ import PropTypes from 'prop-types';
 import actions from 'actions';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
+import setCellAlignment from 'src/helpers/setCellAlignment';
+import getSelectedCellsAlignment from 'src/helpers/getSelectedCellsAlignment';
 
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
   alignment: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  alignmentValue: PropTypes.string,
 };
 
 const TextAlignmentButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, alignment, style, className } = props;
+  const { isFlyoutItem, alignment, style, className, alignmentValue } = props;
   const dispatch = useDispatch();
-  const isActive = false;
+  let isActive = false;
 
-  let txt = 'cellTextAlignment';
-  if (alignment) {
-    txt = alignment;
-  }
+  const txt = alignment || 'cellTextAlignment';
+
   const { dataElement, icon, title } = menuItems[txt];
+  const { verticalAlignment: currentVerticalAlignment } = getSelectedCellsAlignment();
+
+  if (alignmentValue === currentVerticalAlignment) {
+    isActive = true;
+  }
 
   const handleClick = () => {
-    // handle button click
+    setCellAlignment(alignmentValue);
     dispatch(actions.setFlyoutToggleElement(dataElement));
     dispatch(actions.toggleElement(DataElements.CELL_TEXT_ALIGNMENT_FLYOUT));
   };

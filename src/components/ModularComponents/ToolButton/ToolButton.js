@@ -38,7 +38,7 @@ const ToolButton = forwardRef((props, ref) => {
 
   // use this so that state gets updated when active tool styles change
   // eslint-disable-next-line no-unused-vars
-  const activeToolStyles = useSelector((state) => selectors.getActiveToolStyles(state), shallowEqual);
+  const activeToolStyles = useSelector(selectors.getActiveToolStyles);
   const activeToolName = useSelector(selectors.getActiveToolName);
   const iconColorKey = useSelector((state) => selectors.getIconColor(state, mapToolNameToKey(toolName)));
   const toolButtonObject = useSelector((state) => selectors.getToolButtonObject(state, toolName), shallowEqual);

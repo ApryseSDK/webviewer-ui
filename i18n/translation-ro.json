@@ -145,7 +145,7 @@
     "showMoreColors": "Afișează mai multe culori",
     "showLessColors": "Afișați mai puține culori",
     "fromCustomColorPicker": "din Custom Color Picker",
-    "newSheetDocument": "Noua foaie de calcul"
+    "newSpreadsheetDocument": "Noua foaie de calcul"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Verificarea permisiunilor a fost dezactivată.",
       "hasAllowedChanges": "Documentul are modificări care sunt permise de setările de permisiuni pentru semnături.",
       "invalidatedByDisallowedChanges": "Documentul are modificări care sunt interzise de setările de permisiuni pentru semnături.",
-      "unmodified": "Documentul nu a fost modificat de când a fost"
+      "unmodified": "Documentul nu a fost modificat de când a fost",
+      "unsupportedPermissionsFeatures": "S-au întâlnit funcții de permisiuni neacceptate."
     },
     "trustStatus": {
       "trustVerified": "S-a stabilit cu succes încrederea în {{verificationType}}.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Verificarea rezumatului a fost dezactivată.",
       "weakDigestAlgorithmButDigestVerifiable": "Rezumatul este corect, dar algoritmul de rezumat este slab și nu este sigur.",
       "noDigestStatus": "Nicio stare de rezumat de raportat.",
-      "unsupportedEncoding": "Niciun SignatureHandler instalat nu a putut recunoaște codificarea semnăturii"
+      "unsupportedEncoding": "Niciun SignatureHandler instalat nu a putut recunoaște codificarea semnăturii",
+      "documentHasBeenAltered": "Documentul a fost modificat sau corupt de când a fost semnat."
     },
     "documentStatus": {
       "noError": "Nicio eroare generală de raportat.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Introduceți pauză de secțiune și începeți pe pagina următoare",
     "sectionBreakContinuous": "Pauza de sectiune - Continuu",
     "sectionBreakContinuousDescription": "Introduceți pauză de secțiune și continuați pe aceeași pagină ",
+    "section": "Secțiune",
     "header": {
       "0": "Antet",
       "1": "Antet prima pagină",
       "2": "Chiar și antetul paginii",
-      "3": "Antet de pagină impară"
+      "3": "Antet de pagină impară",
+      "-1": "Antet nevalid"
     },
     "footer": {
       "0": "Subsol",
       "1": "Subsolul primei pagini",
       "2": "Subsolul paginii chiar",
-      "3": "Subsolul paginii impare"
+      "3": "Subsolul paginii impare",
+      "-1": "Subsol nevalid"
     },
     "options": "Opțiuni",
     "pageOptions": "Opțiuni de pagină",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Familia de fonturi"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Editare",
     "viewOnly": "Vizionare",
     "editingDescription": "Editați documentul",

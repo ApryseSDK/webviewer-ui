@@ -7,6 +7,9 @@
   height: fit-content;
   width: calc(100% - var(--note-content-right-padding-width));
   overflow: hidden;
+  > * {
+    pointer-events: all;
+  }
 }
 
 .preview-comment {

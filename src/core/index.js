@@ -142,6 +142,8 @@ import getOfficeEditor from './getOfficeEditor';
 import isValidURI from './isValidURI';
 import openURI from './openURI';
 import getAllowedFileExtensions from './getAllowedFileExtensions';
+import loadBlankSpreadsheet from './loadBlankSpreadsheet';
+import getCellRange from './getCellRange';
 
 export default {
   getSemanticDiffAnnotations,
@@ -292,4 +294,6 @@ export default {
   isValidURI,
   openURI,
   getAllowedFileExtensions,
+  loadBlankSpreadsheet,
+  getCellRange,
 };

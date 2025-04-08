@@ -7,6 +7,8 @@
   border-bottom: 1px solid #e0e0e0;
 
   .RangeInput {
+    padding: 6px 8px;
+
     &:focus-visible {
       outline: var(--focus-visible-outline) !important;
     }
@@ -22,9 +24,9 @@
     border-radius: 4px;
     background-color: var(--component-background);
     padding-left: 30px;
-
+    
     &.readOnly {
-      border: 1px solid var(--disabled-text)
+      border-color: var(--lighter-border);
     }
   }
 
@@ -44,14 +46,10 @@
   .FormulaInput {
     flex-grow: 1;
     width: 100%;
-    padding: 4px;
+    padding: 6px 8px;
     border: none;
     outline: none;
     font-size: 14px;
     background-color: transparent;
-
-    &.readOnly {
-      color: var(--disabled-text);
-    }
   }
 }

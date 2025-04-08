@@ -19,7 +19,8 @@ const RedoButton = forwardRef((props, ref) => {
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const canRedo = useSelector((state) => selectors.canRedo(state, activeDocumentViewerKey));
   const isOfficeEditorMode = useSelector((state) => selectors.getIsOfficeEditorMode(state));
-  const disabled = !canRedo && !isOfficeEditorMode;
+  const isOfficeEditorRedoEnabled = useSelector((state) => selectors.isOfficeEditorRedoEnabled(state));
+  const disabled = (!isOfficeEditorMode && !canRedo) || (isOfficeEditorMode && !isOfficeEditorRedoEnabled);
 
   const handleClick = () => {
     if (isOfficeEditorMode) {

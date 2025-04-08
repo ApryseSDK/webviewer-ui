@@ -4,6 +4,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import StylePicker from './StylePicker';
 import { StylePicker as StoryBookStylePicker } from './StylePicker.stories';
+import userEvent from '@testing-library/user-event';
 
 const initialState = {
   viewer: {
@@ -16,6 +17,9 @@ const initialState = {
     },
     disabledElements: {},
     documentContainerHeight: 0,
+    colors: [],
+    activeToolName: '',
+    snapMode: {},
   }
 };
 
@@ -43,6 +47,16 @@ const style = {
     [1, 'in']
   ],
   Precision: 0.1,
+};
+
+const freeTextProps = {
+  style: style,
+  sliderProperties: ['Opacity', 'StrokeThickness'],
+  showLineStyleOptions: false,
+  isFreeText: true,
+  strokeStyle: 'solid',
+  activeTool: 'AnnotationCreateFreeText',
+  onStyleChange: () => { },
 };
 
 const props = {
@@ -96,5 +110,31 @@ describe('StylePicker', () => {
 
     const strokeStylePickerCopyButton = screen.getByRole('button', { name: 'Stroke Copy Selected Color transparent' });
     expect(strokeStylePickerCopyButton).toBeInTheDocument();
+  });
+
+  const checkStrokeInputChange = async (inputValue, expectedFinalValue, props) => {
+    render(<StylePickerWithRedux {...props} />);
+    const strokeThicknessInput = screen.getByRole('textbox', { name: /Stroke/i } );
+    expect(strokeThicknessInput).toHaveValue('1pt');
+    userEvent.clear(strokeThicknessInput);
+    userEvent.type(strokeThicknessInput, inputValue);
+    userEvent.type(strokeThicknessInput, '{enter}');
+    expect(screen.getByRole('textbox', { name: /Stroke/i } )).toHaveValue(expectedFinalValue);
+  };
+
+  it('should accept zero StrokeThickness for FreeText annotations', async () => {
+    checkStrokeInputChange('0', '0pt', freeTextProps);
+  });
+
+  it('should NOT accept zero StrokeThickness for annotations other than FreeText', async () => {
+    checkStrokeInputChange('0', '0.10pt', props);
+  });
+
+  it('should restores the last stroke value when invalid input is provided', async () => {
+    checkStrokeInputChange('-abc', '1pt', props);
+  });
+
+  it('should restores the last stroke value when empty value is provided', async () => {
+    checkStrokeInputChange('', '1pt', props);
   });
 });

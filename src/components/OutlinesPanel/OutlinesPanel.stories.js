@@ -31,7 +31,7 @@ const MockApp = ({ initialState, width, height }) => {
     <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
       <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={store}>
-          <OutlinesPanel />
+          <OutlinesPanel isTest/>
         </Provider>
       </div>
     </div>
@@ -54,9 +54,9 @@ const Template = (args) => {
       pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       flyoutMap: {
       },
-      activeFlyout: 'bookmarkOutlineFlyout-0',
+      activeFlyout: 'bookmarkOutlineFlyout',
       openElements: {
-        'bookmarkOutlineFlyout-0': true,
+        'bookmarkOutlineFlyout': true,
       },
       activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',
       ...argsViewer,

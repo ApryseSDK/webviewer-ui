@@ -8,6 +8,13 @@ import {
   defaultOfficeEditorPanels
 } from '../officeEditorModularComponents';
 
+import {
+  defaultSpreadsheetEditorHeaders,
+  defaultSpreadsheetEditorComponents,
+  defaultSpreadsheetEditorPanels,
+  defaultSpreadsheetFlyoutMap
+} from '../spreadsheetEditorComponents';
+
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -60,13 +67,16 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeFlyout: payload.dataElement,
       };
-    case 'REMOVE_FLYOUT':
-      const flyoutMap = state.flyoutMap;
+    case 'REMOVE_FLYOUT': {
+      const flyoutMap = { ...state.flyoutMap };
       delete flyoutMap[payload.dataElement];
       return {
         ...state,
-        flyoutMap,
+        flyoutMap: {
+          ...flyoutMap
+        },
       };
+    }
     case 'ADD_FLYOUT':
     case 'UPDATE_FLYOUT':
       return {
@@ -944,8 +954,11 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_MOUSE_WHEEL_ZOOM':
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
-    case 'SET_ENABLE_SNAP_MODE':
-      return { ...state, isSnapModeEnabled: payload.enable };
+    case 'SET_ENABLE_SNAP_MODE': {
+      const { snapMode } = state;
+      const updatedSnapMode = { ...snapMode, [payload.toolName]: payload.isEnabled };
+      return { ...state, snapMode: { ...updatedSnapMode } };
+    }
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
     case 'SET_SUBMIT_COMMENT_MODE':
@@ -1056,16 +1069,6 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         multiPageManipulationControls: payload.items,
-      };
-    case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_SMALL':
-      return {
-        ...state,
-        multiPageManipulationControlsSmall: payload.items,
-      };
-    case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE':
-      return {
-        ...state,
-        multiPageManipulationControlsLarge: payload.items,
       };
     case 'SET_PAGE_MANIPULATION_OVERLAY_ALTERNATIVE_POSITION':
       return {
@@ -1201,21 +1204,34 @@ export default (initialState) => (state = initialState, action) => {
       const modularComponentStash = { ...state.modularComponentStash };
 
       if (!modularComponentStash[UIMode]) {
-        // If no stash is found we reset to the default components for that viewer mode
-        if (UIMode === VIEWER_CONFIGURATIONS.DEFAULT) {
-          return {
-            ...state,
-            modularHeaders: { ...initialState.modularHeaders },
-            modularComponents: { ...initialState.modularComponents },
-            genericPanels: [...initialState.genericPanels],
-          };
-        } else if (UIMode === VIEWER_CONFIGURATIONS.DOCX_EDITOR) {
-          return {
-            ...state,
-            modularHeaders: { ...defaultOfficeEditorModularHeaders },
-            modularComponents: { ...defaultOfficeEditorModularComponents },
-            genericPanels: [...defaultOfficeEditorPanels],
-          };
+        switch (UIMode) {
+          case VIEWER_CONFIGURATIONS.DEFAULT:
+            return {
+              ...state,
+              modularHeaders: { ...initialState.modularHeaders },
+              modularComponents: { ...initialState.modularComponents },
+              genericPanels: [...initialState.genericPanels],
+            };
+
+          case VIEWER_CONFIGURATIONS.DOCX_EDITOR:
+            return {
+              ...state,
+              modularHeaders: { ...defaultOfficeEditorModularHeaders },
+              modularComponents: { ...defaultOfficeEditorModularComponents },
+              genericPanels: [...defaultOfficeEditorPanels],
+            };
+
+          case VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR:
+            return {
+              ...state,
+              modularHeaders: { ...defaultSpreadsheetEditorHeaders },
+              modularComponents: { ...defaultSpreadsheetEditorComponents },
+              genericPanels: [...defaultSpreadsheetEditorPanels],
+              flyoutMap: { ...state.flyoutMap, ...defaultSpreadsheetFlyoutMap },
+            };
+
+          default:
+            return state; // Fallback: return the current state if UIMode is unrecognized
         }
       }
 
@@ -1238,6 +1254,8 @@ export default (initialState) => (state = initialState, action) => {
     }
     case 'SET_SHOULD_ADD_A11Y_CONTENT':
       return { ...state, shouldAddA11yContentToDOM: payload.shouldAddA11yContentToDOM };
+    case 'SET_UI_CONFIGURATION':
+      return { ...state, uiConfiguration: payload };
     default:
       return state;
   }

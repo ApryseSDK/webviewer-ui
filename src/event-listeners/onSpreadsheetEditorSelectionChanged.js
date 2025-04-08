@@ -5,7 +5,7 @@ export default (dispatch) => (event) => {
   const activeCellRange = event.getSelectionRangeDisplayValue();
   // Get cellRange returns the top-left and bottom-right cell of the current selection
   // Top left will be the cell containing the active cell a value or formula
-  const [topLeft, bottomRight] = event.getCellRange();
+  const [topLeft, bottomRight] = event.getBoundingCells();
   const { cellFormula, stringCellValue } = topLeft;
   const { rowIndex: topLeftRow, columnIndex: topLeftColumn, cellType  } = topLeft;
   // if bottomRight is undefined, then the selection is a single cell so we can repeat the topLeft values

@@ -154,15 +154,15 @@ FreeText.args = {
 };
 
 const dummyField = new window.Core.Annotations.Forms.Field('MyTextField', { type: 'Tx', value: 'Value' });
-const widgetAnnotation = new window.Core.Annotations.WidgetAnnotation(dummyField, {});
+const textWidgetAnnotation = new window.Core.Annotations.TextWidgetAnnotation(dummyField, {});
 
 export const WidgetAnnotation = BasicTemplate.bind({});
 WidgetAnnotation.args = {
-  annotations: [widgetAnnotation],
-  style: getAnnotationStyles(widgetAnnotation),
+  annotations: [textWidgetAnnotation],
+  style: getAnnotationStyles(textWidgetAnnotation),
   closeElement: () => { },
   properties: {
     StrokeStyle: 'solid'
   },
-  colorMapKey: mapAnnotationToKey(widgetAnnotation),
+  colorMapKey: mapAnnotationToKey(textWidgetAnnotation),
 };

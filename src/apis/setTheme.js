@@ -10,6 +10,7 @@ import highContastLightModeString from '!!raw-loader!../constants/highContrastLi
 import darkModeString from '!!raw-loader!../constants/dark.scss';
 import highContrastDarkModeString from '!!raw-loader!../constants/highContrastDark.scss';
 import Theme from '../constants/theme';
+import getRootNode from 'helpers/getRootNode';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
@@ -52,7 +53,10 @@ export default (store) => {
 };
 
 const setVariables = (themeVarString = '') => {
-  const root = document.documentElement;
+  let root = document.documentElement;
+  if (window.isApryseWebViewerWebComponent) {
+    root = getRootNode().host;
+  }
   const themeVariables = parse(themeVarString, {});
   Object.keys(themeVariables).forEach((key) => {
     const themeVariable = themeVariables[key];

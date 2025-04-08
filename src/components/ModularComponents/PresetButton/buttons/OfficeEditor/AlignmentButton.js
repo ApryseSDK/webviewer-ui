@@ -8,6 +8,7 @@ import { JUSTIFICATION_OPTIONS } from 'constants/officeEditor';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
+import setCellAlignment from 'src/helpers/setCellAlignment';
 
 const propTypes = {
   alignmentType: PropTypes.oneOf(Object.values(JUSTIFICATION_OPTIONS)).isRequired,
@@ -19,6 +20,7 @@ const propTypes = {
 const AlignmentButton = forwardRef((props, ref) => {
   const { isFlyoutItem, alignmentType, style, className } = props;
   const isActive = useSelector((state) => selectors.isJustificationButtonActive(state, alignmentType));
+  const uiConfiguration = useSelector((state) => selectors.getUIConfiguration(state));
 
   const capitalizedJustificationType = alignmentType.charAt(0).toUpperCase() + alignmentType.slice(1);
   let key = `align${capitalizedJustificationType}Button`;
@@ -28,6 +30,10 @@ const AlignmentButton = forwardRef((props, ref) => {
   const { dataElement, icon, title } = menuItems[key];
 
   const handleClick = () => {
+    if (uiConfiguration === 'spreadsheetEditor') {
+      return setCellAlignment(alignmentType);
+    }
+
     core.getOfficeEditor().updateParagraphStyle({
       justification: alignmentType
     });

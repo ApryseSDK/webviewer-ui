@@ -11,6 +11,7 @@
 
 /**
  * A class which contains MultiPageManipulationControls APIs. <br/><br/>
+ * The MultiPageManipulationControls shows the first 3 sets of controls and the rest in a flyout menu.
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in the MultiPageManipulationControls, use {@link UI.disableElements disableElements}.
  * @class
  * @name UI.MultiPageManipulationControls
@@ -88,19 +89,10 @@ const MultiPageManipulationControls = {
 
     const index = this._getIndexByDataElement(dataElementToInsertAfter);
     const items = this.getItems();
-    const indexSmall = this._getIndexByDataElementSmall(dataElementToInsertAfter);
-    const itemsSmall = this.getItemsSmall();
-    const indexLarge = this._getIndexByDataElementLarge(dataElementToInsertAfter);
-    const itemsLarge = this.getItemsLarge();
 
     items.splice(index + 1, 0, ...operations);
-    itemsSmall.splice(indexSmall + 1, 0, ...operations);
-    itemsLarge.splice(indexLarge + 1, 0, ...operations);
 
     this.store.dispatch(actions.setMultiPageManipulationControlsItems(items));
-    this.store.dispatch(actions.setMultiPageManipulationControlsItemsSmall(itemsSmall));
-    this.store.dispatch(actions.setMultiPageManipulationControlsItemsLarge(itemsLarge));
-
     return this;
   },
 
@@ -154,8 +146,6 @@ const MultiPageManipulationControls = {
       operations = [];
     }
     this.store.dispatch(actions.setMultiPageManipulationControlsItems(operations));
-    this.store.dispatch(actions.setMultiPageManipulationControlsItemsSmall(operations));
-    this.store.dispatch(actions.setMultiPageManipulationControlsItemsLarge(operations));
 
     return this;
   },
@@ -173,12 +163,6 @@ WebViewer(...)
   getItems() {
     return [...selectors.getMultiPageManipulationControlsItems(this.store.getState())];
   },
-  getItemsSmall() {
-    return [...selectors.getMultiPageManipulationControlsItemsSmall(this.store.getState())];
-  },
-  getItemsLarge() {
-    return [...selectors.getMultiPageManipulationControlsItemsLarge(this.store.getState())];
-  },
   _getIndexByDataElement(dataElement) {
     let index;
 
@@ -187,30 +171,6 @@ WebViewer(...)
     } else {
       const state = this.store.getState();
       index = selectors.getMultiPageManipulationControlsItems(state).findIndex((obj) => obj.dataElement === dataElement);
-    }
-
-    return index;
-  },
-  _getIndexByDataElementSmall(dataElement) {
-    let index;
-
-    if (typeof dataElement === 'undefined') {
-      index = -1;
-    } else {
-      const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsSmall(state).findIndex((obj) => obj.dataElement === dataElement);
-    }
-
-    return index;
-  },
-  _getIndexByDataElementLarge(dataElement) {
-    let index;
-
-    if (typeof dataElement === 'undefined') {
-      index = -1;
-    } else {
-      const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsLarge(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

@@ -145,7 +145,7 @@
     "showMoreColors": "その他の色を表示",
     "showLessColors": "色を少なく表示",
     "fromCustomColorPicker": "カスタムカラーピッカーから",
-    "newSheetDocument": "新しいスプレッドシート"
+    "newSpreadsheetDocument": "新しいスプレッドシート"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "権限の認証が無効になっています。",
       "hasAllowedChanges": "このドキュメントには、署名権限設定で許可されている変更があります。",
       "invalidatedByDisallowedChanges": "このドキュメントには、署名権限設定で許可されていない変更があります。",
-      "unmodified": "このドキュメントに変更はありません。"
+      "unmodified": "このドキュメントに変更はありません。",
+      "unsupportedPermissionsFeatures": "サポートされていない権限機能に遭遇しました。"
     },
     "trustStatus": {
       "trustVerified": "{{verificationType}}の信頼性が正常に確保されました。",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "ダイジェスト認証が無効になっています。",
       "weakDigestAlgorithmButDigestVerifiable": "ダイジェストは正しいですが、ダイジェストアルゴリズムが弱く、セキュアではありません。",
       "noDigestStatus": "報告するダイジェストステータスはありません。",
-      "unsupportedEncoding": "インストールされたSignatureHandlerが署名のエンコーディングを認識できませんでした"
+      "unsupportedEncoding": "インストールされたSignatureHandlerが署名のエンコーディングを認識できませんでした",
+      "documentHasBeenAltered": "文書は署名されてから変更または破損しています。"
     },
     "documentStatus": {
       "noError": "報告する一般的なエラーはありません。",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "セクション区切りを挿入して次のページから開始します",
     "sectionBreakContinuous": "セクション区切り - 連続",
     "sectionBreakContinuousDescription": "セクション区切りを挿入し、同じページに続ける",
+    "section": "セクション",
     "header": {
       "0": "ヘッダ",
       "1": "最初のページのヘッダー",
       "2": "偶数ページヘッダー",
-      "3": "奇数ページヘッダー"
+      "3": "奇数ページヘッダー",
+      "-1": "無効なヘッダー"
     },
     "footer": {
       "0": "フッター",
       "1": "最初のページのフッター",
       "2": "偶数ページフッター",
-      "3": "奇数ページフッター"
+      "3": "奇数ページフッター",
+      "-1": "無効なフッター"
     },
     "options": "オプション",
     "pageOptions": "ページオプション",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "フォントファミリー"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "編集",
     "viewOnly": "閲覧",
     "editingDescription": "ドキュメントを編集",

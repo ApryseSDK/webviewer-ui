@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import StylePopup from '.';
 import core from 'core';
+import { createStore } from 'helpers/storybookHelper';
 import '../HeaderItems/HeaderItems.scss';
+import { within, expect, userEvent } from '@storybook/test';
 
 export default {
   title: 'Components/StylePopup',
@@ -31,7 +33,7 @@ const state = {
       }
     },
     fonts: ['Helvetica', 'Times New Roman', 'Arimo'],
-    isSnapModeEnabled: false,
+    snapMode: {},
     customElementOverrides: {}
   }
 };
@@ -152,6 +154,169 @@ export const StylePopupForRedactionToolInHeaderItem = () => {
   );
 };
 
+
+export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+  const props = {
+    toolName: 'AnnotationCreateDistanceMeasurement',
+    colorMapKey: 'distanceMeasurement',
+    style: {
+      StrokeColor: new window.Core.Annotations.Color(212, 211, 211),
+      FillColor: new window.Core.Annotations.Color(0, 0, 0),
+      StrokeThickness: 1,
+      Opacity: 1,
+      StartLineStyle: 'OpenArrow',
+      EndLineStyle: 'OpenArrow',
+      StrokeStyle: 'solid',
+      measurementCaptionOptions: {
+        isEnabled: true,
+        captionRect: {
+          x1: 0,
+          y1: 0,
+          x2: 0,
+          y2: 0
+        },
+        captionStyle: {
+          fontFamily: 'sans-serif',
+          color: '',
+          staticSize: '0pt',
+          maximumSize: '0pt'
+        }
+      },
+      initProps: {
+        measurementCaptionOptions: 'measurementCaptionOptions',
+        calculateCurrentCaptionSize: 'calculateCurrentCaptionSize',
+        setCaptionStyle: 'setCaptionStyle',
+        getDefaultCaptionRect: 'getDefaultCaptionRect',
+        setDefaultCaptionRect: 'setDefaultCaptionRect',
+        getCaptionTopAndLeft: 'getCaptionTopAndLeft',
+        isCaptionRectValid: 'isCaptionRectValid',
+        drawMeasurementCaption: 'drawMeasurementCaption',
+        getCustomAppearance: 'getCustomAppearance',
+        getMeasurementText: 'getMeasurementText',
+        setMeasurementCaptionOptions: 'setMeasurementCaptionOptions',
+        getMeasurementCaptionOptions: 'getMeasurementCaptionOptions',
+        isUnitCanBeTransferToImperialMark: 'isUnitCanBeTransferToImperialMark',
+        Precision: 'Precision',
+        Scale: 'Scale',
+        System: 'System',
+        DisplayFormat: 'DisplayFormat',
+        DisplayUnits: 'DisplayUnits'
+      },
+      Precision: 0.1,
+      Scale: [
+        [
+          1,
+          'in'
+        ],
+        [
+          1,
+          'in'
+        ]
+      ]
+    },
+    isFreeText: false,
+    isEllipse: false,
+    hideSnapModeCheckbox: false,
+    properties: {
+      StartLineStyle: 'OpenArrow',
+      EndLineStyle: 'OpenArrow',
+      StrokeStyle: 'solid'
+    },
+    isRedaction: false,
+    showLineStyleOptions: true,
+    isMobile: false,
+    currentStyleTab: 'StrokeColor',
+    isFontSizeSliderDisabled: false,
+    isTextStyleContainerActive: true,
+    isColorsContainerActive: false,
+    isLabelTextContainerActive: true,
+    fonts: [
+      'Helvetica',
+      'Times New Roman',
+      'Arimo',
+      'Caladea',
+      'Carlito',
+      'Cousine',
+      'Liberation Serif',
+      'Open Sans',
+      'Roboto',
+      'Roboto Mono',
+      'Tinos'
+    ],
+    isSnapModeEnabled: false,
+    isInFormBuilderAndNotFreeText: false,
+    onStyleChange: noop,
+    onSliderChange: noop,
+    closeElement: noop,
+    openElement: noop,
+    onPropertyChange: noop,
+    onRichTextStyleChange: noop,
+    onLineStyleChange: noop,
+  };
+
+  const basicMockState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      openElements: {
+        stylePanel: true,
+        strokeStyleContainer: true,
+        fillColorContainer: true,
+        opacityContainer: true,
+        richTextStyleContainer: true,
+      },
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+
+  const mockStore = createStore(basicMockState);
+
+  useEffect(() => {
+    const oldGetToolMode = core.getToolMode;
+    const oldGetToolModeMap = core.getToolModeMap;
+    const newTool = new window.Core.Tools.DistanceMeasurementCreateTool();
+    newTool.name = props.toolName;
+    newTool.defaults = props.style;
+
+    core.getToolMode = () => newTool;
+    core.getToolModeMap = () => ({ [props.toolName]: newTool });
+
+    const oldGetTool = core.getTool;
+    core.getTool = () => newTool;
+
+    setShouldRender(true);
+    return () => {
+      core.getToolMode = oldGetToolMode;
+      core.getTool = oldGetTool;
+      core.getToolModeMap = oldGetToolModeMap;
+    };
+  }, []);
+
+  mockStore.dispatch({
+    type: 'SET_ACTIVE_TOOL_NAME',
+    payload: { toolName: props.toolName },
+  });
+  return shouldRender ?
+    (
+      <Provider store={mockStore}>
+        <div className="HeaderItems">
+          <StylePopup {...props} />
+        </div>
+      </Provider>
+    ) : <>Loading...</>;
+};
+
+StylePopupForDistanceMeasurementToolInHeaderItem.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  expect(checkbox).toBeInTheDocument();
+  expect(checkbox.checked).toBe(true);
+  await userEvent.click(checkbox);
+  expect(checkbox.checked).toBe(false);
+};
 export const StylePopupForFreeTextToolInHeaderItem = () => {
   const props = {
     currentStyleTab: 'TextColor',

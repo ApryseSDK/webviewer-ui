@@ -126,7 +126,7 @@ describe('Responsiveness Helper', () => {
     test('Returns correct free space for a children element', () => {
       const elementChild = createHTMLElement('div', 40, 32);
       const headerDirection = DIRECTION.ROW;
-      const freeSpace = getCurrentFreeSpace(headerDirection, elementChild, true);
+      const freeSpace = getCurrentFreeSpace({ headerDirection, element: elementChild, isChild: true });
       expect(freeSpace).toBe(0);
     });
 
@@ -142,7 +142,7 @@ describe('Responsiveness Helper', () => {
       const element = parentElement;
 
       // Putting the isChild flag to true to be able to enter in the flow of the case where the element is a child
-      const freeSpace = getCurrentFreeSpace(headerDirection, element);
+      const freeSpace = getCurrentFreeSpace({ headerDirection, element });
       // Expect free space to be -> parentElement.width - (elementChild1.width + elementChild2.width + elementChild3.width) - 2 * rowGap
       expect(freeSpace).toBe(256);
     });
@@ -159,7 +159,7 @@ describe('Responsiveness Helper', () => {
       const element = parentElement;
 
       // Putting the isChild flag to true to be able to enter in the flow of the case where the element is a child
-      const freeSpace = getCurrentFreeSpace(headerDirection, element, true);
+      const freeSpace = getCurrentFreeSpace({ headerDirection, element, isChild: true });
       // Expect free space to be -> parentElement.height - (elementChild1.height + elementChild2.height + elementChild3.height) - 2 * columnGap
       expect(freeSpace).toBe(140);
     });
@@ -174,7 +174,7 @@ describe('Responsiveness Helper', () => {
       const element = parentElement;
 
       // Putting the isChild flag to true to be able to enter in the flow of the case where the element is a child
-      const freeSpace = getCurrentFreeSpace(headerDirection, element, true);
+      const freeSpace = getCurrentFreeSpace({ headerDirection, element, isChild: true });
       expect(freeSpace).toBe(-22);
     });
   });
@@ -239,7 +239,7 @@ describe('Responsiveness Helper', () => {
       expect(typeof returnFunction).toBe('function');
       returnFunction();
       expect(sizeManager['modularHeaderGroupedItems'].shrink).toBeCalled();
-      const newFreeSpace = getCurrentFreeSpace(headerDirection, parentDomElement);
+      const newFreeSpace = getCurrentFreeSpace({ headerDirection, element: parentDomElement });
       expect(newFreeSpace).toBe(10);
     });
 

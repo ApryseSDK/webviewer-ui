@@ -10,7 +10,10 @@ export const getCircleRadius = (isMobile, customCircleRadius) => {
 };
 export const circleRadius = 8;
 
-export const strokeSliderSteps = [0.10, 0.25, 0.50, 0.75, ...Array.from({ length: 20 }, (_, i) => i + 1)];
+export const getStrokeSliderSteps = (isFreeText = false) => {
+  const firstStep = isFreeText ? 0 : 0.10;
+  return [firstStep, 0.25, 0.50, 0.75, ...Array.from({ length: 20 }, (_, i) => i + 1)];
+};
 
 export const getStrokeDisplayValue = (strokeThickness) => {
   if (typeof strokeThickness === 'string' || strokeThickness instanceof String) {

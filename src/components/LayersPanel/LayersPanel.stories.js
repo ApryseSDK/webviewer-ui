@@ -105,9 +105,11 @@ Basic.play = async ({ canvasElement }) => {
   expect(closeBtn).toBeInTheDocument();
   await userEvent.click(closeBtn);
 
-  const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
-  expect(pageNav).toBeInTheDocument();
-  expect(pageNav).toBeVisible();
+  await waitFor(async () => {
+    const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
+    expect(pageNav).toBeInTheDocument();
+    expect(pageNav).toBeVisible();
+  });
 };
 
 export const RightSide = (args, context) => {

@@ -35,7 +35,6 @@ describe('OutlinesPanel', () => {
 
   it('Clicks on one outline should make it active and clicks on the panel empty area should deselect the selected outline', async () => {
     const { container } = render(<BasicOutlinesPanel />);
-
     const outlineElements = container.querySelectorAll('.outline-drag-container');
     const outlineSingle = outlineElements[0].querySelector('.bookmark-outline-single-container');
 

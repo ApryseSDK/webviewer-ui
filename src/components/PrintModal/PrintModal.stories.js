@@ -9,7 +9,7 @@ const NOOP = () => { };
 
 export default {
   title: 'Components/PrintModal',
-  component: PrintModal,
+  component: PrintModalComponent,
 };
 
 const initialState = {

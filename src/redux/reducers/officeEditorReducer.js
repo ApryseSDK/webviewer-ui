@@ -17,6 +17,20 @@ export default (initialState) => (state = initialState, action) => {
         selectionProperties,
       };
     }
+    case 'SET_OFFICE_EDITOR_CAN_UNDO': {
+      const { canUndo } = payload;
+      return {
+        ...state,
+        canUndo,
+      };
+    }
+    case 'SET_OFFICE_EDITOR_CAN_REDO': {
+      const { canRedo } = payload;
+      return {
+        ...state,
+        canRedo,
+      };
+    }
     case 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE': {
       const { fontFace } = payload;
       const fontFaces = state.availableFontFaces.slice();

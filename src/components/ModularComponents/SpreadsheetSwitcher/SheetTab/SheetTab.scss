@@ -1,0 +1,77 @@
+.sheet-tab {
+    cursor: pointer;
+    border-bottom: none;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    min-width: 170px;
+    height: 40px;
+    position: relative;
+    border-right: 1px solid transparent;
+
+    &:hover {
+      background: var(--faded-component-background);
+    }
+
+    &.no-left-border .tab-body {
+      border-right: 1px solid transparent;
+    }
+
+    .tab-body {
+      height: 24px;
+      display: flex;
+      padding: 0px;
+      padding-left: 8px;
+      padding-right: 8px;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right: 1px solid var(--border);
+      &.input-mode {
+        padding-left: 5px;
+        padding-right: 6px;
+      }
+      .sheet-label {
+        width: 100%;
+        text-align: left;
+        justify-content: left;
+        height: 24px;
+      }
+
+      input.input-error {
+        border-color: red;
+      }
+    }
+
+    &.active {
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: var(--gray-0);
+
+      .tab-body {
+        border-right: 1px solid transparent;
+      }
+    }
+
+    .sheet-options {
+      .ToggleElementButton button {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+
+        .Icon {
+          width: 16px;
+          height: 14px;
+        }
+
+      }
+      .more-options-icon {
+        height: 24px;
+        width: 24px;
+        .Icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }

@@ -145,7 +145,7 @@
     "showMoreColors": "显示更多颜色",
     "showLessColors": "显示较少颜色",
     "fromCustomColorPicker": "来自自定义颜色选择器",
-    "newSheetDocument": "新建电子表格"
+    "newSpreadsheetDocument": "新建电子表格"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "权限验证已被禁用。",
       "hasAllowedChanges": "该文档具有签名权限设置所允许的更改。",
       "invalidatedByDisallowedChanges": "文档具有签名权限设置不允许的更改。",
-      "unmodified": "该文档自从"
+      "unmodified": "该文档自从",
+      "unsupportedPermissionsFeatures": "遇到不支持的权限功能。"
     },
     "trustStatus": {
       "trustVerified": "已成功建立对{{verificationType}}的信任。",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "摘要验证已禁用。",
       "weakDigestAlgorithmButDigestVerifiable": "摘要是正确的，但摘要算法较弱且不安全。",
       "noDigestStatus": "没有摘要状态可报告。",
-      "unsupportedEncoding": "没有安装的SignatureHandler能够识别签名的编码"
+      "unsupportedEncoding": "没有安装的SignatureHandler能够识别签名的编码",
+      "documentHasBeenAltered": "文件自签署以来已被更改或损坏。"
     },
     "documentStatus": {
       "noError": "没有一般错误要报告。",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "插入分节符并从下一页开始",
     "sectionBreakContinuous": "分节符 - 连续",
     "sectionBreakContinuousDescription": "插入分节符并在同一页继续",
+    "section": "部分",
     "header": {
       "0": "标头",
       "1": "首页页眉",
       "2": "偶数页页眉",
-      "3": "奇数页页眉"
+      "3": "奇数页页眉",
+      "-1": "无效标头"
     },
     "footer": {
       "0": "页脚",
       "1": "首页页脚",
       "2": "偶数页页脚",
-      "3": "奇数页页脚"
+      "3": "奇数页页脚",
+      "-1": "页脚无效"
     },
     "options": "选项",
     "pageOptions": "页面选项",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "字体系列"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "編輯",
     "viewOnly": "查看",
     "editingDescription": "編輯文檔",

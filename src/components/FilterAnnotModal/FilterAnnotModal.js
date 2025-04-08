@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import PropTypes from 'prop-types';
 import fireEvent from 'helpers/fireEvent';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
@@ -23,7 +24,7 @@ import './FilterAnnotModal.scss';
 
 const TABS_ID = 'filterAnnotModal';
 
-const FilterAnnotModal = () => {
+const FilterAnnotModal = ({ isInFormBuilderMode }) => {
   const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters,
     isMeasurementAnnotationFilterEnabled, customNoteFilter] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),
@@ -121,6 +122,7 @@ const FilterAnnotModal = () => {
       }
       return type && author && color && status;
     };
+
     dispatch(actions.setInternalNoteFilter(newFilter));
     dispatch(actions.setAnnotationFilters({
       isDocumentFilterActive,
@@ -130,10 +132,17 @@ const FilterAnnotModal = () => {
       typeFilter: typesFilter,
       statusFilter
     }));
+
     const redrawList = [];
     if (isDocumentFilterActive) {
       core.getDocumentViewers().forEach((documentViewer, index) => documentViewer.getAnnotationManager()
         .getAnnotationsList().forEach((annot) => {
+
+          // Do not hide widgets if filtering outside of form builder mode.
+          if (!isInFormBuilderMode && annot instanceof window.Core.Annotations.WidgetAnnotation) {
+            return;
+          }
+
           const shouldHide = !newFilter(annot, index + 1);
           if (shouldHide !== annot.NoView) {
             annot.NoView = shouldHide;
@@ -221,7 +230,6 @@ const FilterAnnotModal = () => {
         authorsToBeAdded.add(displayAuthor);
       }
 
-      const isInFormBuilderMode = core.getAnnotationManager().getFormFieldCreationManager().isInFormFieldCreationMode();
       const ignoreFilter = (
         (!isInFormBuilderMode && annot instanceof window.Core.Annotations.WidgetAnnotation) ||
         (annot instanceof window.Core.Annotations.StickyAnnotation && annot.isReply()) ||
@@ -506,6 +514,10 @@ const FilterAnnotModal = () => {
       </ModalWrapper>
     </div>
   );
+};
+
+FilterAnnotModal.propTypes = {
+  isInFormBuilderMode: PropTypes.bool,
 };
 
 export default FilterAnnotModal;

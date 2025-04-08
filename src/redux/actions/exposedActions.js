@@ -396,6 +396,14 @@ export const setOfficeEditorSelectionProperties = (selectionProperties) => ({
   type: 'SET_OFFICE_EDITOR_SELECTION_PROPERTIES',
   payload: { selectionProperties },
 });
+export const setOfficeEditorCanUndo = (canUndo) => ({
+  type: 'SET_OFFICE_EDITOR_CAN_UNDO',
+  payload: { canUndo },
+});
+export const setOfficeEditorCanRedo = (canRedo) => ({
+  type: 'SET_OFFICE_EDITOR_CAN_REDO',
+  payload: { canRedo },
+});
 export const addOfficeEditorAvailableFontFace = (fontFace) => ({
   type: 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE',
   payload: { fontFace },
@@ -1157,4 +1165,9 @@ export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, 
 export const setShouldAddA11yContentToDOM = (shouldAddA11yContentToDOM) => ({
   type: 'SET_SHOULD_ADD_A11Y_CONTENT',
   payload: { shouldAddA11yContentToDOM },
+});
+
+export const setSpreadsheetEditorEditMode = (mode) => ({
+  type: 'SET_SPREADSHEET_EDITOR_EDIT_MODE',
+  payload: { mode },
 });

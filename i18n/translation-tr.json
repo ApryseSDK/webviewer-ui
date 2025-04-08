@@ -145,7 +145,7 @@
     "showMoreColors": "Daha Fazla Renk Göster",
     "showLessColors": "Daha Az Renk Göster",
     "fromCustomColorPicker": "Özel Renk Seçici'den",
-    "newSheetDocument": "Yeni E-Tablo"
+    "newSpreadsheetDocument": "Yeni E-Tablo"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "İzin doğrulama devre dışı bırakıldı.",
       "hasAllowedChanges": "Belgede, imza izinleri ayarları tarafından izin verilen değişiklikler var.",
       "invalidatedByDisallowedChanges": "Belgede, imza izinleri ayarları tarafından izin verilmeyen değişiklikler var.",
-      "unmodified": "Belge, değiştirildiğinden beri değiştirilmedi."
+      "unmodified": "Belge, değiştirildiğinden beri değiştirilmedi.",
+      "unsupportedPermissionsFeatures": "Desteklenmeyen izin özellikleriyle karşılaşıldı."
     },
     "trustStatus": {
       "trustVerified": "{{verificationType}} güvenini başarıyla oluşturdu.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Özet doğrulama devre dışı bırakıldı.",
       "weakDigestAlgorithmButDigestVerifiable": "Özet doğru, ancak özet algoritması zayıf ve güvenli değil.",
       "noDigestStatus": "Bildirilecek özet durumu yok.",
-      "unsupportedEncoding": "Yüklü SignatureHandler imzanın kodlamasını tanıyamadı"
+      "unsupportedEncoding": "Yüklü SignatureHandler imzanın kodlamasını tanıyamadı",
+      "documentHasBeenAltered": "İmzalandığı tarihten bu yana belgede değişiklik veya bozulma meydana gelmiş."
     },
     "documentStatus": {
       "noError": "Bildirilecek genel bir hata yok.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Bölüm sonu ekle ve bir sonraki sayfadan başla",
     "sectionBreakContinuous": "Bölüm Sonu - Sürekli",
     "sectionBreakContinuousDescription": "Bölüm sonu ekle ve aynı sayfada devam et",
+    "section": "Bölüm",
     "header": {
       "0": "Başlık",
       "1": "İlk Sayfa Başlığı",
       "2": "Çift Sayfa Başlığı",
-      "3": "Tek Sayfa Başlığı"
+      "3": "Tek Sayfa Başlığı",
+      "-1": "Geçersiz Başlık"
     },
     "footer": {
       "0": "Altbilgi",
       "1": "İlk Sayfa Alt Bilgisi",
       "2": "Çift Sayfa Alt Bilgisi",
-      "3": "Tek Sayfa Alt Bilgisi"
+      "3": "Tek Sayfa Alt Bilgisi",
+      "-1": "Geçersiz Altbilgi"
     },
     "options": "Seçenekler",
     "pageOptions": "Sayfa Seçenekleri",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Yazı Tipi Ailesi"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Düzenleme",
     "viewOnly": "Görüntüleme",
     "editingDescription": "Belgeyi düzenle",

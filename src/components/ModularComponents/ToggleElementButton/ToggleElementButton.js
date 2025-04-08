@@ -12,7 +12,18 @@ import classNames from 'classnames';
 const ToggleElementButton = (props) => {
   const buttonRef = useRef();
   const isMobile = isMobileSize();
-  const { dataElement, title, disabled, img, label, toggleElement, setFlyoutTriggerRef = null, onToggle, className } = props;
+  const {
+    dataElement,
+    title,
+    disabled,
+    img,
+    label,
+    toggleElement,
+    setFlyoutTriggerRef = null,
+    onToggle,
+    className,
+    onClick: customOnClick = null
+  } = props;
 
   const isActive = useSelector((state) => selectors.isElementOpen(state, toggleElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
@@ -22,6 +33,8 @@ const ToggleElementButton = (props) => {
 
   const [isElementActive, setIsElementActive] = useState(isActive);
   const [isElementDisabled, setIsElementDisabled] = useState(disabled);
+
+  const isFlyoutItem = !!flyoutMap?.[toggleElement];
 
   useEffect(() => {
     setIsElementActive(isActive);
@@ -39,7 +52,8 @@ const ToggleElementButton = (props) => {
 
   const onClick = (event) => {
     event.stopPropagation();
-    if (flyoutMap[toggleElement]) {
+    customOnClick && customOnClick(event);
+    if (isFlyoutItem) {
       if (setFlyoutTriggerRef) {
         setFlyoutTriggerRef();
       } else {
@@ -70,8 +84,8 @@ const ToggleElementButton = (props) => {
         onClick={onClickFocusWrapped}
         disabled={isElementDisabled}
         className={className}
-        ariaPressed={isElementActive}
-        ariaExpanded={isElementActive}
+        ariaPressed={isFlyoutItem ? undefined : isElementActive}
+        ariaExpanded={isFlyoutItem ? isElementActive : undefined}
         {...props}
       >
         {props.children}
@@ -90,6 +104,7 @@ ToggleElementButton.propTypes = {
   setFlyoutTriggerRef: PropTypes.func,
   className: PropTypes.string,
   onToggle: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default ToggleElementButton;

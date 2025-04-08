@@ -448,6 +448,8 @@ const SignatureValidationModal = () => {
                 ModificationPermissionsStatus,
                 permissionStatus,
                 translate,
+                digestStatus,
+                DigestStatusErrorCodes: DigestStatus,
               })
             }
             {renderDocumentPermission()}

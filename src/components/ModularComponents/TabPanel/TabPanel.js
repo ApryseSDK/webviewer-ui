@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Measure from 'react-measure';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,8 @@ import { panelNames, panelData } from 'constants/panel';
 import DataElements from 'constants/dataElement';
 import { getPanelToRender, createCustomElement, getEnabledPanels } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
+
+const removeDuplicates = (array) => [...new Set(array)];
 
 const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }) => {
   const dispatch = useDispatch();
@@ -171,15 +173,15 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
 
   const moveItemsToOverflow = (items) => {
-    setOverflowItems([...overflowItems, ...items].sort((a, b) => panelsObject[a].sortIndex - panelsObject[b].sortIndex));
+    setOverflowItems(removeDuplicates([...overflowItems, ...items]).sort((a, b) => panelsObject[a].sortIndex - panelsObject[b].sortIndex));
     const itemsToKeepVisible = visiblePanelTabs.filter((item) => !(items.includes(item)));
-    setVisiblePanelTabs(itemsToKeepVisible);
+    setVisiblePanelTabs(removeDuplicates(itemsToKeepVisible));
   };
 
   const moveItemsToContainer = (items) => {
-    setVisiblePanelTabs([...visiblePanelTabs, ...items]);
+    setVisiblePanelTabs(removeDuplicates([...visiblePanelTabs, ...items]));
     const itemsToKeepInOverflow = overflowItems.filter((item) => !(items.includes(item)));
-    setOverflowItems(itemsToKeepInOverflow);
+    setOverflowItems(removeDuplicates(itemsToKeepInOverflow));
   };
 
   const getItemsToHide = (itemsDom, missingSpace) => {
@@ -292,7 +294,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     }
   }, [headerContainerWidth]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleTabPanelElements();
     overflowItems.length > 0 && setOverflowFlyout();
   }, [

@@ -82,6 +82,16 @@ const Note = ({
     shallowEqual,
   );
 
+  const setIsEditing = useCallback(
+    (isEditing, index) => {
+      setIsEditingMap((map) => ({
+        ...map,
+        [index]: isEditing,
+      }));
+    },
+    [setIsEditingMap],
+  );
+
   const replies = annotation
     .getReplies()
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
@@ -252,16 +262,6 @@ const Note = ({
     }
   };
 
-  const setIsEditing = useCallback(
-    (isEditing, index) => {
-      setIsEditingMap((map) => ({
-        ...map,
-        [index]: isEditing,
-      }));
-    },
-    [setIsEditingMap],
-  );
-
   const groupAnnotations = core.getGroupAnnotations(annotation, documentViewerKey);
   const isGroup = groupAnnotations.length > 1;
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
@@ -285,6 +285,7 @@ const Note = ({
         noteIndex={0}
         annotation={annotation}
         setIsEditing={setIsEditing}
+        handleNoteClick={handleNoteClick}
         isEditing={isEditingMap[0]}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
@@ -320,6 +321,7 @@ const Note = ({
                     handleMultiSelect={handleMultiSelect}
                     isMultiSelected={isMultiSelected}
                     isMultiSelectMode={isMultiSelectMode}
+                    handleNoteClick={handleNoteClick}
                   />
                 </div>
               ))}

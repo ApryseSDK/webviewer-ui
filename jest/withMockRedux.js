@@ -62,6 +62,10 @@ export default function withMockRedux(Component, mockInitialState ={ viewer: {},
       ...defaultState.document,
       ...mockInitialState.document,
     },
+    spreadsheetEditor: {
+      ...defaultState.spreadsheetEditor,
+      ...mockInitialState.spreadsheetEditor,
+    },
   };
   return function WithMockReduxWrapper(props) {
     return (

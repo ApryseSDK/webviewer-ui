@@ -145,7 +145,7 @@
     "showMoreColors": "Pokaż więcej kolorów",
     "showLessColors": "Pokaż mniej kolorów",
     "fromCustomColorPicker": "z niestandardowego selektora kolorów",
-    "newSheetDocument": "Nowa Arkusz Kalkulacyjny"
+    "newSpreadsheetDocument": "Nowa Arkusz Kalkulacyjny"
   },
   "annotation": {
     "areaMeasurement": "Pomiar powierzchni",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Weryfikacja uprawnień została wyłączona.",
       "hasAllowedChanges": "Dokument zawiera zmiany, na które zezwalają ustawienia uprawnień do podpisów.",
       "invalidatedByDisallowedChanges": "Dokument zawiera zmiany, które nie są dozwolone przez ustawienia uprawnień do podpisów.",
-      "unmodified": "Dokument nie został zmodyfikowany, ponieważ został"
+      "unmodified": "Dokument nie został zmodyfikowany, ponieważ został",
+      "unsupportedPermissionsFeatures": "Napotkano nieobsługiwane funkcje uprawnień."
     },
     "trustStatus": {
       "trustVerified": "Pomyślnie ustanowiono zaufanie do {{verificationType}}.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Weryfikacja skrótu została wyłączona.",
       "weakDigestAlgorithmButDigestVerifiable": "Skrót jest poprawny, ale algorytm skrótu jest słaby i nie jest bezpieczny.",
       "noDigestStatus": "Brak stanu podsumowania do zgłoszenia.",
-      "unsupportedEncoding": "Żaden zainstalowany program SignatureHandler nie był w stanie rozpoznać kodowania podpisu"
+      "unsupportedEncoding": "Żaden zainstalowany program SignatureHandler nie był w stanie rozpoznać kodowania podpisu",
+      "documentHasBeenAltered": "Dokument został zmieniony lub uszkodzony od momentu podpisania."
     },
     "documentStatus": {
       "noError": "Brak ogólnego błędu do zgłoszenia.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Wstaw podział sekcji i zacznij na następnej stronie",
     "sectionBreakContinuous": "Podział sekcji - ciągły",
     "sectionBreakContinuousDescription": "Wstaw podział sekcji i kontynuuj na tej samej stronie",
+    "section": "Sekcja",
     "header": {
       "0": "Chodnikowiec",
       "1": "Nagłówek pierwszej strony",
       "2": "Nagłówek strony parzystej",
-      "3": "Nagłówek strony nieparzystej"
+      "3": "Nagłówek strony nieparzystej",
+      "-1": "Nieprawidłowy nagłówek"
     },
     "footer": {
       "0": "Stopka",
       "1": "Stopka pierwszej strony",
       "2": "Stopka strony parzystej",
-      "3": "Stopka strony nieparzystej"
+      "3": "Stopka strony nieparzystej",
+      "-1": "Nieprawidłowa stopka"
     },
     "options": "Opcje",
     "pageOptions": "Opcje strony",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Rodzina czcionek"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Redagowanie",
     "viewOnly": "Oglądanie",
     "editingDescription": "Edytuj dokument",

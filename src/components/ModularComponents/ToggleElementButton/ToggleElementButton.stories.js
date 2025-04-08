@@ -16,23 +16,31 @@ const initialState = {
     disabledElements: {},
     customElementOverrides: {},
     openElements: {
-      signatureModal: false
+      signatureModal: false,
+      testFlyout: false,
     },
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
     genericPanels: [],
     lastPickedToolGroup: '',
+    flyoutMap: {
+      testFlyout: {}
+    },
+    activeFlyout: null,
   },
   featureFlags: {
     customizableUI: true
-  }
+  },
 };
 const initialStateActive = {
+  ...initialState,
   viewer: {
     ...initialState.viewer,
     openElements: {
       signatureModal: true,
+      testFlyout: true,
     },
+    activeFlyout: 'testFlyout',
   },
 };
 
@@ -87,4 +95,18 @@ export const TogglePanelButtons = () => (
 
 TogglePanelButtons.propTypes = {
   dataElement: PropTypes.string,
+};
+
+const activeStore = configureStore({ reducer: () => initialStateActive });
+
+export const ToggleFlyoutButtonActive = () => (
+  <Provider store={activeStore}>
+    <ToggleElementButton img="icon-header-search" toggleElement="testFlyout" dataElement="toggleButton"/>
+  </Provider>
+);
+ToggleFlyoutButtonActive.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  await expect(button.ariaPressed).toBe(null);
+  await expect(button.ariaExpanded).toBe('true');
 };

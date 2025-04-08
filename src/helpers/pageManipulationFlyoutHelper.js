@@ -154,6 +154,20 @@ export const getPageManipulationControls = (store, warn = false) => {
   ];
 };
 
+export const getPageCustomControlsFlyout = (store, customControls) => [
+  customControls.header,
+  ...customControls.operations.map((operation) => ({
+    dataElement: operation.dataElement,
+    label: operation.label || operation.title,
+    title: operation.title,
+    icon: operation.img,
+    onClick: () => {
+      const pageNumbers = getPageNumbers(store);
+      operation.onClick(pageNumbers);
+    },
+  })),
+];
+
 export const getPageNumbers = (store, warn = false) => {
   const state = store.getState();
   const selectedPageIndexes = selectors.getSelectedThumbnailPageIndexes(state);

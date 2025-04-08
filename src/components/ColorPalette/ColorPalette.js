@@ -22,6 +22,7 @@ const propTypes = {
   onStyleChange: PropTypes.func.isRequired,
   colorMapKey: PropTypes.string,
   onClose: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 const ColorPalette = ({
@@ -34,6 +35,7 @@ const ColorPalette = ({
   onStyleChange,
   colorMapKey,
   onClose,
+  disabled = false,
 }) => {
 
   const [
@@ -224,6 +226,8 @@ const ColorPalette = ({
               aria-label={`${t('option.colorPalette.colorLabel')} ${buttonColor.toUpperCase()}`}
               onClick={() => setColor(buttonColor)}
               onKeyDown={onKeyDown(buttonColor, i)}
+              disabled={disabled}
+              aria-disabled={disabled}
             >
               <div
                 className={classNames({

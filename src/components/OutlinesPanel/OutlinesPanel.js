@@ -24,8 +24,9 @@ import '../../constants/bookmarksOutlinesShared.scss';
 import './OutlinesPanel.scss';
 import { OutlinesDragLayer } from './OutlinesDragLayer';
 import classNames from 'classnames';
+import { Virtuoso } from 'react-virtuoso';
 
-const OutlinesPanel = () => {
+const OutlinesPanel = ({ isTest = false }) => {
   const [
     isDisabled,
     outlines,
@@ -337,7 +338,7 @@ const OutlinesPanel = () => {
             {!isAddingNewOutline && outlines.length === 0 &&
               <div className="msg msg-no-bookmark-outline">{t('message.noOutlines')}</div>
             }
-            {outlines.map((outline) => (
+            <Virtuoso data={outlines} itemContent={(index, outline) => (
               <Outline
                 key={outlineUtils.getOutlineId(outline)}
                 outline={outline}
@@ -356,7 +357,7 @@ const OutlinesPanel = () => {
                 moveOutlineBeforeTarget={moveOutlineBeforeTarget}
                 moveOutlineAfterTarget={moveOutlineAfterTarget}
               />
-            ))}
+            )} initialItemCount={isTest ? outlines.length : undefined}/>
             {isAddingNewOutline && activeOutlinePath === null && (
               <DataElementWrapper className="bookmark-outline-single-container editing">
                 <OutlineContent

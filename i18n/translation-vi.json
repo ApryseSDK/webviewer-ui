@@ -145,7 +145,7 @@
     "showMoreColors": "Hiển thị thêm màu sắc",
     "showLessColors": "Hiển thị ít màu sắc hơn",
     "fromCustomColorPicker": "từ Bộ chọn màu tùy chỉnh",
-    "newSheetDocument": "Bảng tính mới"
+    "newSpreadsheetDocument": "Bảng tính mới"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Xác minh quyền đã bị vô hiệu hóa.",
       "hasAllowedChanges": "Tài liệu có những thay đổi được cho phép bởi các thiết đặt quyền chữ ký.",
       "invalidatedByDisallowedChanges": "Tài liệu có những thay đổi không được cho phép bởi các thiết đặt quyền chữ ký.",
-      "unmodified": "Tài liệu đã không được sửa đổi kể từ khi nó được"
+      "unmodified": "Tài liệu đã không được sửa đổi kể từ khi nó được",
+      "unsupportedPermissionsFeatures": "Gặp phải tính năng cấp quyền không được hỗ trợ."
     },
     "trustStatus": {
       "trustVerified": "Đã thiết lập uy tín vào {{verificationType}} thành công.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Xác minh lĩnh hội đã bị vô hiệu hóa.",
       "weakDigestAlgorithmButDigestVerifiable": "Lĩnh hội chính xác, nhưng thuật toán lĩnh hội yếu và không bảo mật.",
       "noDigestStatus": "Không có trạng thái lĩnh hội nào để báo cáo.",
-      "unsupportedEncoding": "Không có SignatureHandler được cài đặt nào có thể nhận ra mã hóa chữ ký"
+      "unsupportedEncoding": "Không có SignatureHandler được cài đặt nào có thể nhận ra mã hóa chữ ký",
+      "documentHasBeenAltered": "Tài liệu đã bị thay đổi hoặc bị hỏng kể từ khi được ký."
     },
     "documentStatus": {
       "noError": "Không có lỗi chung để báo cáo.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Chèn ngắt phần và bắt đầu ở trang tiếp theo",
     "sectionBreakContinuous": "Ngắt phần - Liên tục",
     "sectionBreakContinuousDescription": "Chèn ngắt phần và tiếp tục trên cùng một trang",
+    "section": "Phần",
     "header": {
       "0": "Tiêu đề",
       "1": "Tiêu đề trang đầu tiên",
       "2": "Tiêu đề trang chẵn",
-      "3": "Tiêu đề trang lẻ"
+      "3": "Tiêu đề trang lẻ",
+      "-1": "Tiêu đề không hợp lệ"
     },
     "footer": {
       "0": "Chân trang",
       "1": "Trang đầu tiên Chân trang",
       "2": "Ngay cả chân trang",
-      "3": "Chân trang lẻ"
+      "3": "Chân trang lẻ",
+      "-1": "Chân trang không hợp lệ"
     },
     "options": "Tùy chọn",
     "pageOptions": "Tùy chọn trang",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Họ phông chữ"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Chỉnh sửa",
     "viewOnly": "Xem",
     "editingDescription": "Chỉnh sửa tài liệu",

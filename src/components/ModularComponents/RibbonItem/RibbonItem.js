@@ -97,9 +97,15 @@ const RibbonItem = forwardRef((props, ref) => {
     return null;
   }
 
-  const translatedLabel = tReady && toolbarGroup ?
-    t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties))
-    : label;
+  let translatedLabel;
+
+  if (tReady) {
+    if (toolbarGroup) {
+      translatedLabel = t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties));
+    } else if (label) {
+      translatedLabel = t(label);
+    }
+  }
 
   return (
     isFlyoutItem ?

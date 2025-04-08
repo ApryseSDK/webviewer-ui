@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import PresetButton from './PresetButton';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 import { expect, within } from '@storybook/test';
+import core from 'core';
 
 export default {
   title: 'ModularComponents/PresetButton',
@@ -155,6 +156,45 @@ FormFieldEditButtonWithStyleAndClass.play = async ({ canvasElement }) => {
   iteractiveTest(canvasElement, /Edit Form Fields/i, 'form-field-button-class');
 };
 
+let eventList = [];
+let inMode = true;
+let resolver;
+let promise = new Promise((resolve) => resolver = resolve);
+
+export function FormFieldEditToggle() {
+  eventList = [];
+  inMode = true;
+  resolver = null;
+  promise = new Promise((resolve) => resolver = resolve);
+  const originalFunc = core.getFormFieldCreationManager;
+  const addToEvents = (func) => {
+    eventList.push(func);
+    if (eventList.length > 1) {
+      resolver();
+    }
+  };
+  core.getFormFieldCreationManager = () => ({
+    addEventListener: (_, func) => addToEvents(func),
+    removeEventListener: (_, func) => eventList.splice(eventList.indexOf(func), 1),
+    isInFormFieldCreationMode: () => inMode,
+  });
+  useEffect(() => {
+    return () => core.getFormFieldCreationManager = originalFunc;
+  }, []);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.FORM_FIELD_EDIT);
+}
+
+FormFieldEditToggle.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Edit Form Fields/i });
+  await expect(button.ariaPressed).toBe('true');
+  // Ensure it updates states from the event
+  inMode = false;
+  await promise;
+  eventList[0]();
+  await expect(button.ariaPressed).toBe('false');
+};
+
 export function ContentEditButton() {
   return prepareButtonStory(PRESET_BUTTON_TYPES.CONTENT_EDIT);
 }
@@ -164,6 +204,40 @@ export function ContentEditButtonWithStyleAndClass() {
 }
 ContentEditButtonWithStyleAndClass.play = async ({ canvasElement }) => {
   iteractiveTest(canvasElement, /Edit Content/i, 'content-edit-button-class');
+};
+
+export function ContentEditToggle() {
+  eventList = [];
+  inMode = true;
+  resolver = null;
+  promise = new Promise((resolve) => resolver = resolve);
+  const originalFunc = core.getContentEditManager;
+  const addToEvents = (func) => {
+    eventList.push(func);
+    if (eventList.length > 1) {
+      resolver();
+    }
+  };
+  core.getContentEditManager = () => ({
+    addEventListener: (_, func) => addToEvents(func),
+    removeEventListener: (_, func) => eventList.splice(eventList.indexOf(func), 1),
+    isInContentEditMode: () => inMode,
+  });
+  useEffect(() => {
+    return () => core.getContentEditManager = originalFunc;
+  }, []);
+  return prepareButtonStory(PRESET_BUTTON_TYPES.CONTENT_EDIT);
+}
+
+ContentEditToggle.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Edit Content/i });
+  await expect(button.ariaPressed).toBe('true');
+  // Ensure it updates states from the event
+  inMode = false;
+  await promise;
+  eventList[0]();
+  await expect(button.ariaPressed).toBe('false');
 };
 
 export function ToggleAccessibilityModeButton() {

@@ -145,7 +145,7 @@
     "showMoreColors": "Weitere Farben anzeigen",
     "showLessColors": "Weniger Farben anzeigen",
     "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler",
-    "newSheetDocument": "Neue Tabelle"
+    "newSpreadsheetDocument": "Neue Tabelle"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -1123,7 +1123,8 @@
       "permissionsVerificationDisabled": "Die Berechtigungsüberprüfung wurde deaktiviert.",
       "hasAllowedChanges": "Das Dokument enthält Änderungen, die in den Einstellungen für Signaturberechtigungen zulässig sind.",
       "invalidatedByDisallowedChanges": "Das Dokument enthält Änderungen, die von den Einstellungen für Signaturberechtigungen nicht zugelassen werden.",
-      "unmodified": "Das Dokument wurde seitdem nicht mehr geändert"
+      "unmodified": "Das Dokument wurde seitdem nicht mehr geändert",
+      "unsupportedPermissionsFeatures": "Es sind nicht unterstützte Berechtigungsfunktionen aufgetreten."
     },
     "trustStatus": {
       "trustVerified": "Vertrauenswürdigkeit in {{verificationType}} erfolgreich hergestellt.",
@@ -1137,7 +1138,8 @@
       "digestVerificationDisabled": "Die Digest-Überprüfung wurde deaktiviert.",
       "weakDigestAlgorithmButDigestVerifiable": "Der Digest ist korrekt, aber der Digest-Algorithmus ist schwach und nicht sicher.",
       "noDigestStatus": "Kein Digest-Status zu melden.",
-      "unsupportedEncoding": "Kein installierter SignatureHandler konnte die Codierung der Signatur erkennen"
+      "unsupportedEncoding": "Kein installierter SignatureHandler konnte die Codierung der Signatur erkennen",
+      "documentHasBeenAltered": "Das Dokument wurde seit seiner Unterzeichnung geändert oder beschädigt."
     },
     "documentStatus": {
       "noError": "Kein allgemeiner Fehler zu melden.",
@@ -1314,17 +1316,20 @@
     "sectionBreakNextPageDescription": "Abschnittsumbruch einfügen und auf der nächsten Seite beginnen",
     "sectionBreakContinuous": "Abschnittsumbruch - Fortlaufend",
     "sectionBreakContinuousDescription": "Abschnittsumbruch einfügen und auf derselben Seite fortfahren",
+    "section": "Abschnitt",
     "header": {
       "0": "Kopfbereich",
       "1": "Kopfzeile der ersten Seite",
       "2": "Gerader Seitenkopf",
-      "3": "Kopfzeile für ungerade Seiten"
+      "3": "Kopfzeile für ungerade Seiten",
+      "-1": "Ungültiger Header"
     },
     "footer": {
       "0": "Fußzeile",
       "1": "Fußzeile der ersten Seite",
       "2": "Gerader Seitenfuß",
-      "3": "Fußzeile für ungerade Seiten"
+      "3": "Fußzeile für ungerade Seiten",
+      "-1": "Ungültige Fußzeile"
     },
     "options": "Optionen",
     "pageOptions": "Seitenoptionen",
@@ -1377,7 +1382,7 @@
       "dropdownLabel": "Schriftfamilie"
     }
   },
-  "sheetEditor": {
+  "spreadsheetEditor": {
     "editing": "Bearbeitung",
     "viewOnly": "Besichtigung",
     "editingDescription": "Dokument bearbeiten",

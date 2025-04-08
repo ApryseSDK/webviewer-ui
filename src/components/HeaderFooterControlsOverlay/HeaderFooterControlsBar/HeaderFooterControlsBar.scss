@@ -5,7 +5,8 @@
   height: 46px;
   width: 100%;
   align-items: center;
-  display: none;
+  display: flex;
+  visibility: hidden;
 
   &.header-edit-ui {
     top: 143px;
@@ -16,7 +17,7 @@
   }
 
   &.active {
-    display: flex;
+    visibility: visible;
   }
 
   .box-shadow-div {
