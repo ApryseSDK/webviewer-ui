@@ -90,6 +90,7 @@ import TabsHeader from 'components/TabsHeader';
 import useTabFocus from 'hooks/useTabFocus';
 import useCloseOnWindowResize from 'hooks/useCloseOnWindowResize';
 import PageManipulationFlyout from 'components/ModularComponents/PageManipulationFlyout';
+import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -112,7 +113,8 @@ const App = ({ removeEventHandlers }) => {
   const isAccessibleMode = useSelector(selectors.isAccessibleMode);
   const activeFlyout = useSelector(selectors.getActiveFlyout);
   const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
-  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
+  const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
+  const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
 
   // These hooks control behaviours regarding the opening and closing of panels and in the case
   // of the redaction hook it creates a reference that tracks the redaction annotations
@@ -128,35 +130,59 @@ const App = ({ removeEventHandlers }) => {
   const { annotation: widgetAnnotationAddedOrSelected } = useOnFormFieldAnnotationAddedOrSelected();
 
   useEffect(() => {
+    const initialMode = getHashParameters('initialMode', null);
     const uiConfigPath = getHashParameters('uiConfig', '');
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
-    const isSpreadsheetEditorBetaEnabled = getHashParameters('enableSpreadsheetEditorBeta', false);
+
     if (isOfficeEditingEnabled && isMobileDevice) {
       dispatch(actions.showWarningMessage({
         message: 'officeEditor.notSupportedOnMobile',
       }));
     }
-    if (isOfficeEditingEnabled) {
-      // If a UIConfig was passed it means we wanted to modify the UI so we won't load the default
-      if (!uiConfigPath) {
-        if (isSpreadsheetEditorBetaEnabled) {
-          // set Beat UI for Sheets Office Editor
-          dispatch(actions.setModularHeadersAndComponents(defaultSpreadsheetEditorHeaders, defaultSpreadsheetEditorComponents));
-          dispatch(actions.setGenericPanels(defaultSpreadsheetEditorPanels));
-          Object.values(defaultSpreadsheetFlyoutMap).forEach((flyout) => {
-            dispatch(actions.addFlyout(flyout));
-          });
-          dispatch(actions.enableSpreadsheetEditorMode());
-        } else {
-          // set default UI for DOCX Office Editor
-          dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents));
-          dispatch(actions.setGenericPanels(defaultOfficeEditorPanels));
-        }
 
-      }
-      dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+    // Determine final mode (Explicit initialMode takes precedence, fallback to DOCX if office editing is enabled)
+    let finalMode = initialMode || (isOfficeEditingEnabled ? VIEWER_CONFIGURATIONS.DOCX_EDITOR : null);
+
+    const validModes = new Set([
+      VIEWER_CONFIGURATIONS.DOCX_EDITOR,
+      VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR,
+      VIEWER_CONFIGURATIONS.DEFAULT,
+    ]);
+
+    if (!validModes.has(finalMode)) {
+      finalMode = VIEWER_CONFIGURATIONS.DEFAULT;
     }
+
+    // If no mode or office editing, exit early, the default UI will be loaded
+    if (!finalMode) {
+      return;
+    }
+
+    // Ensure default UI is loaded only if no custom `uiConfig` is set
+    if (!uiConfigPath) {
+      if (finalMode === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR) {
+        loadSpreadsheetEditorUI();
+      } else if (finalMode === VIEWER_CONFIGURATIONS.DOCX_EDITOR) {
+        loadDocxEditorUI();
+      }
+    }
+
+    dispatch(actions.setUIConfiguration(finalMode));
+
   }, []);
+
+  const loadSpreadsheetEditorUI = () => {
+    dispatch(actions.setModularHeadersAndComponents(defaultSpreadsheetEditorHeaders, defaultSpreadsheetEditorComponents));
+    dispatch(actions.setGenericPanels(defaultSpreadsheetEditorPanels));
+    Object.values(defaultSpreadsheetFlyoutMap).forEach((flyout) => dispatch(actions.addFlyout(flyout)));
+    dispatch(actions.enableSpreadsheetEditorMode());
+  };
+
+  const loadDocxEditorUI = () => {
+    dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents));
+    dispatch(actions.setGenericPanels(defaultOfficeEditorPanels));
+    dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+  };
 
   useEffect(() => {
     loadDefaultFonts();
@@ -207,10 +233,15 @@ const App = ({ removeEventHandlers }) => {
 
     async function loadInitialDocument() {
       let initialDoc = getHashParameters('d', '');
-      const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
-      if (!initialDoc && isOfficeEditingEnabled) {
+
+      let defaultFile = null;
+      if (!initialDoc) {
+        defaultFile = getDefaultFile();
+      }
+
+      if (defaultFile) {
         loadDocument(dispatch, null, {
-          filename: 'Untitled.docx',
+          filename: defaultFile,
           isOfficeEditingEnabled: true,
         });
 
@@ -251,6 +282,19 @@ const App = ({ removeEventHandlers }) => {
           loadDocument(dispatch, initialDoc, options);
         }
       }
+    }
+
+    function getDefaultFile() {
+      const initialMode = getHashParameters('initialMode', null);
+      const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
+
+      if (initialMode === VIEWER_CONFIGURATIONS.DOCX_EDITOR || isOfficeEditingEnabled) {
+        return 'Untitled.docx';
+      }
+      if (initialMode === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR) {
+        return 'Untitled.xlsx';
+      }
+      return null;
     }
 
     function loadDocumentAndCleanup() {
@@ -351,13 +395,19 @@ const App = ({ removeEventHandlers }) => {
       const onSelectionPropertiesUpdated = (selectionProperties) => {
         dispatch(actions.setOfficeEditorSelectionProperties(selectionProperties));
       };
+      const onOfficeEditorUndoRedoStateChanged = (canUndo, canRedo) => {
+        dispatch(actions.setOfficeEditorCanUndo(canUndo));
+        dispatch(actions.setOfficeEditorCanRedo(canRedo));
+      };
 
       core.getDocument().addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
       core.getDocument().addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
+      core.getDocument().addEventListener('officeEditorUndoRedoStateChanged', onOfficeEditorUndoRedoStateChanged);
 
       return () => {
         core.getDocument().removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
         core.getDocument().removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+        core.getDocument().removeEventListener('officeEditorUndoRedoStateChanged', onOfficeEditorUndoRedoStateChanged);
       };
     }
   }, [isOfficeEditorMode, customizableUI]);
@@ -379,7 +429,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.TEXT_EDITING:
         return <TextEditingPanel dataElement={dataElement} />;
       case panelNames.CHANGE_LIST:
-        return <MultiViewerWrapper><ComparePanel dataElement={dataElement} /></MultiViewerWrapper>;
+        return <ComparePanel dataElement={dataElement}/>;
       case panelNames.STYLE:
         return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
       case panelNames.REDACTION:
@@ -445,9 +495,10 @@ const App = ({ removeEventHandlers }) => {
         )}
         {customizableUI && <TabsHeader />}
         <TopHeader />
-        {isSpreadsheetEditorModeEnabled && <LazyLoadWrapper Component={LazyLoadComponents.FormulaBar} dataElement={DataElements.FORMULA_BAR} />}
+        {isSpreadsheetEditorModeEnabled &&
+          <LazyLoadWrapper Component={LazyLoadComponents.FormulaBar} dataElement={DataElements.FORMULA_BAR}/>}
         <div className="content">
-          <LeftHeader />
+          <LeftHeader/>
           {!customizableUI && <LazyLoadWrapper
             Component={LazyLoadComponents.LeftPanel}
             dataElement={DataElements.LEFT_PANEL}
@@ -493,8 +544,8 @@ const App = ({ removeEventHandlers }) => {
               <ComparePanel />
             </RightPanel>
           </MultiViewerWrapper>}
-          <RightHeader />
-          <BottomHeader />
+          <RightHeader/>
+          <BottomHeader/>
           {!isMultiViewerMode && <DocumentContainer />}
         </div>
         <LazyLoadWrapper
@@ -647,7 +698,10 @@ const App = ({ removeEventHandlers }) => {
               Component={LazyLoadComponents.HeaderFooterControlsOverlay}
               dataElement={DataElements.HEADER_FOOTER_CONTROLS_OVERLAY}
               onOpenHook={useOnHeaderFooterUpdate}/>
-            <LazyLoadWrapper Component={LazyLoadComponents.HeaderFooterOptionsModal} dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}/>
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.HeaderFooterOptionsModal}
+              dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
+            />
           </>
         )}
       </div>

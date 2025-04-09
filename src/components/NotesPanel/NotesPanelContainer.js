@@ -5,6 +5,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
+import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 
 function NotesPanelContainer(props) {
   const { isCustomPanelOpen, parentDataElement = undefined, dataElement } = props;
@@ -199,4 +200,12 @@ function NotesPanelContainer(props) {
   );
 }
 
-export default NotesPanelContainer;
+function NotesPanelWrapper(props) {
+  return (
+    <MultiViewerWrapper wrapOnlyInMultiViewerMode>
+      <NotesPanelContainer {...props}/>
+    </MultiViewerWrapper>
+  );
+}
+
+export default NotesPanelWrapper;

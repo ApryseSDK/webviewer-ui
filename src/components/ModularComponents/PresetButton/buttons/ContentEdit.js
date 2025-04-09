@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
@@ -20,6 +20,20 @@ const ContentEditButton = forwardRef((props, ref) => {
   const { presetDataElement, icon, title } = menuItems.contentEditButton;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const dispatch = useDispatch();
+  const [active, setActive] = useState(core.getContentEditManager().isInContentEditMode());
+
+  useEffect(() => {
+    const contentEditManager = core.getContentEditManager();
+    if (contentEditManager) {
+      const updateState = () => setActive(contentEditManager.isInContentEditMode());
+      contentEditManager.addEventListener('contentEditModeStarted', updateState);
+      contentEditManager.addEventListener('contentEditModeEnded', updateState);
+      return () => {
+        contentEditManager.removeEventListener('contentEditModeStarted', updateState);
+        contentEditManager.removeEventListener('contentEditModeEnded', updateState);
+      };
+    }
+  }, []);
 
   const handleClick = () => {
     const contentEditManager = core.getContentEditManager();
@@ -29,8 +43,9 @@ const ContentEditButton = forwardRef((props, ref) => {
       if (!areContentEditWorkersLoaded) {
         dispatch(actions.openElement(DataElements.LOADING_MODAL));
       }
-      dispatch(actions.openElement(DataElements.TEXT_EDITING_PANEL));
       contentEditManager.startContentEditMode();
+      setActive(true);
+      dispatch(actions.openElement(DataElements.TEXT_EDITING_PANEL));
     };
     contentEditManager.isInContentEditMode() ? contentEditManager.endContentEditMode() : beginContentEditMode();
   };
@@ -49,8 +64,9 @@ const ContentEditButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           onClick={handleClick}
-          isActive={core.getContentEditManager().isInContentEditMode()}
+          isActive={active}
           style={style}
+          ariaPressed={active}
         />
       )
   );

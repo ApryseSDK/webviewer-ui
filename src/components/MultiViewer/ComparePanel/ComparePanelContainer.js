@@ -5,6 +5,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
 import core from 'core';
+import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 
 const ComparePanelContainer = () => {
   const dispatch = useDispatch();
@@ -72,4 +73,12 @@ const ComparePanelContainer = () => {
   );
 };
 
-export default ComparePanelContainer;
+function ComparePanelWrapper(props) {
+  return (
+    <MultiViewerWrapper>
+      <ComparePanelContainer {...props}/>
+    </MultiViewerWrapper>
+  );
+}
+
+export default ComparePanelWrapper;

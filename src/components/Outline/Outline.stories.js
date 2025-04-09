@@ -5,7 +5,7 @@ import Outline from './Outline';
 import OutlineContext from './Context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuItems } from 'helpers/outlineFlyoutHelper';
 import '../LeftPanel/LeftPanel.scss';
 import thunk from 'redux-thunk';
 

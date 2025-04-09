@@ -6,6 +6,7 @@ import { createStore, createTemplate } from 'helpers/storybookHelper';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { defaultPanels } from 'src/redux/modularComponents';
 import initialState from 'src/redux/initialState';
+import { expect, within } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/MultiTab',
@@ -87,12 +88,17 @@ export const MultiTabWithMarginOffset = () => {
 
 export const MultiTabWithNameHandler = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents, isMultiTab: true });
 
-MultiTabWithNameHandler.play = async () => {
+MultiTabWithNameHandler.play = async ({ canvasElement }) => {
+  const canvas = await within(canvasElement);
+
   const instance = window.instance;
 
   instance.UI.TabManager.setTabNameHandler((originalName) => {
     return originalName.toUpperCase();
   });
+
+  const documentContainer = canvas.getByRole('tabpanel');
+  expect(documentContainer).toHaveAttribute('aria-labelledby');
 };
 
 MultiTabWithNameHandler.parameters = {

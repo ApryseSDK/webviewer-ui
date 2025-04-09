@@ -11,7 +11,7 @@ export const ResizingPromises = {};
 
 export const storeWidth = ({ dataElement, element, headerDirection, size }) => {
   if (element) {
-    const freeSpace = getCurrentFreeSpace(headerDirection, element);
+    const freeSpace = getCurrentFreeSpace({ headerDirection, element });
     if (!sizeManager[dataElement]) {
       sizeManager[dataElement] = {};
     }
@@ -35,6 +35,8 @@ export const useSizeStore = ({
 }) => {
   const store = useStore();
   const getSize = () => selectors.getCustomElementSize(store.getState(), dataElement);
+  const storeWidthWrapper = () =>
+    storeWidth({ dataElement, element: elementRef.current, headerDirection, size: getSize() });
 
   if (!ResizingPromises[dataElement]) {
     queueResizingPromise(dataElement);
@@ -44,6 +46,7 @@ export const useSizeStore = ({
     sizeManager[dataElement] = {
       ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
       dataElement,
+      storeWidth: storeWidthWrapper,
     };
   }, []);
 
@@ -55,17 +58,16 @@ export const useSizeStore = ({
       // Element might be disabled so no error or warning
       return;
     }
-    const observerFunc = () => storeWidth({
-      dataElement,
-      element: elementRef.current,
-      headerDirection,
-      size: getSize(),
-    });
-    const resizeObserver = new ResizeObserver(observerFunc);
+    const resizeObserver = new ResizeObserver(storeWidthWrapper);
     resizeObserver.observe(elementRef.current);
-    const mutationObserver = new MutationObserver(observerFunc);
-    mutationObserver.observe(elementRef.current, { childList: true, subtree: true });
-    observerFunc();
+    const mutationObserver = new MutationObserver(storeWidthWrapper);
+    mutationObserver.observe(elementRef.current, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    });
+    storeWidthWrapper();
     return () => {
       resizeObserver.disconnect();
       mutationObserver.disconnect();
@@ -82,7 +84,11 @@ const getCSSValue = (style, property) => {
   }
   return pixelToNumber(value);
 };
-export const getCurrentFreeSpace = (headerDirection, element, isChild = false) => {
+export const getCurrentFreeSpace = ({
+  headerDirection = DIRECTION.ROW,
+  element,
+  isChild = false,
+}) => {
   const isVertical = headerDirection === DIRECTION.COLUMN;
   const widthOrHeight = isVertical ? 'height' : 'width';
   const style = window.getComputedStyle(element);
@@ -92,7 +98,11 @@ export const getCurrentFreeSpace = (headerDirection, element, isChild = false) =
   }
   let calculatedFreeSpace = rect[widthOrHeight];
   for (const child of element.children) {
-    calculatedFreeSpace -= child.getBoundingClientRect()[widthOrHeight] - getCurrentFreeSpace(headerDirection, child, true);
+    calculatedFreeSpace -= child.getBoundingClientRect()[widthOrHeight] - getCurrentFreeSpace({
+      headerDirection,
+      element: child,
+      isChild: true,
+    });
   }
   const leftOrTop = isVertical ? 'Left' : 'Top';
   const rightOrBottom = isVertical ? 'Right' : 'Bottom';
@@ -137,7 +147,7 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
         createSizeChange({
           parentDataElement,
           item: lastSizedElement,
-          changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW
+          changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
         });
       };
     }
@@ -154,7 +164,11 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
       return null;
     }
     return () => {
-      createSizeChange({ parentDataElement, item: itemToGrow, changeType: SIZE_CHANGE_TYPES.GROW });
+      createSizeChange({
+        parentDataElement,
+        item: itemToGrow,
+        changeType: SIZE_CHANGE_TYPES.GROW,
+      });
     };
   }
   const itemToShrink = findItemToShrink(itemList, groupedItemList);
@@ -162,7 +176,11 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
     return null;
   }
   return () => {
-    createSizeChange({ parentDataElement, item: itemToShrink, changeType: SIZE_CHANGE_TYPES.SHRINK });
+    createSizeChange({
+      parentDataElement,
+      item: itemToShrink,
+      changeType: SIZE_CHANGE_TYPES.SHRINK,
+    });
   };
 };
 
@@ -267,11 +285,13 @@ const getParentElements = (dataElement) => {
 const queueResizingPromise = (dataElement) => {
   const promiseCapability = {};
   promiseCapability.promise = new Promise((resolve, reject) => {
-    promiseCapability.resolve = resolve;
+    // Timeout to auto resolve to prevent getting stuck
+    let timeout = setTimeout(() => sizeManager[dataElement].storeWidth(), 200);
+    promiseCapability.resolve = () => {
+      clearTimeout(timeout);
+      resolve();
+    };
     promiseCapability.reject = reject;
-    // Auto resolve to prevent getting stuck incase resize observer didn't see a size change after changing elements
-    // Ex: button replaced with more button that has the same width
-    setTimeout(resolve, 200);
   });
   ResizingPromises[dataElement] = promiseCapability;
 };

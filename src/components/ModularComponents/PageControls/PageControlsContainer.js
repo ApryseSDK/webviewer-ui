@@ -60,11 +60,13 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     };
 
     dispatch(actions.updateFlyout(pageControlsFlyout.dataElement, pageControlsFlyout));
+  }, [totalPages]);
 
+  useEffect(() => {
     if (size === 0) {
-      dispatch(actions.closeElement(pageControlsFlyout.dataElement));
+      dispatch(actions.closeElement('pageControlsFlyout'));
     }
-  }, [size, totalPages, currentPage]);
+  }, [size]);
 
   useEffect(() => {
     if (!shouldFadePageNavigationComponent) {

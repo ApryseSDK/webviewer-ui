@@ -12,7 +12,11 @@ export default (initialState) => (state = initialState, action) => {
         }
       };
     }
-
+    case 'SET_SPREADSHEET_EDITOR_EDIT_MODE':
+      return {
+        ...state,
+        editMode: payload.mode,
+      };
     default:
       return state;
   }

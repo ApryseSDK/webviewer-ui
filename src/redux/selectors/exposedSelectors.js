@@ -3,10 +3,14 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getAllAssociatedGroupedItems } from 'helpers/modularUIHelpers';
+import {
+  getNestedGroupedItems,
+  getBasicItemsFromGroupedItems,
+  getAllAssociatedGroupedItems
+} from 'helpers/modularUIHelpers';
 import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
 import getHashParameters from 'helpers/getHashParameters';
-
+import { createSelector } from 'reselect';
 // OE selectors
 export const {
   isStyleButtonActive,
@@ -19,6 +23,8 @@ export const {
   getIsOfficeEditorMode,
   isJustificationButtonActive,
   isNonPrintingCharactersEnabled,
+  isOfficeEditorUndoEnabled,
+  isOfficeEditorRedoEnabled,
 } = exposedOfficeEditorSelectors;
 
 // viewer
@@ -426,41 +432,60 @@ export const getHydratedHeader = (state, dataElement) => {
   return hydratedHeader;
 };
 
+export const getModularComponents = (state) => state.viewer.modularComponents;
+export const getModularHeaders = (state) => state.viewer.modularHeaders;
+const headerSelectorFactory = (placement) => {
+  return createSelector(
+    [getModularHeaders, getModularComponents],
+    (modularHeaders, components) => {
+      const allHeaders = Object.values(modularHeaders);
+      let headersToHydrate;
+
+      if (placement) {
+        headersToHydrate = allHeaders.filter((header) => header.placement === placement);
+      } else {
+        headersToHydrate = allHeaders;
+      }
+
+      const hydratedHeaders = headersToHydrate.map((header) => ({
+        ...header,
+        items: hydrateItems(header.items, components),
+      }));
+
+      return hydratedHeaders;
+    }
+  );
+};
+
+const headerSelectors = {
+  'all': headerSelectorFactory(),
+  [PLACEMENT.TOP]: headerSelectorFactory(PLACEMENT.TOP),
+  [PLACEMENT.BOTTOM]: headerSelectorFactory(PLACEMENT.BOTTOM),
+  [PLACEMENT.LEFT]: headerSelectorFactory(PLACEMENT.LEFT),
+  [PLACEMENT.RIGHT]: headerSelectorFactory(PLACEMENT.RIGHT),
+};
+
 export const getHydratedHeaders = (state, placement) => {
-  const allHeaders = Object.values(state.viewer.modularHeaders);
-
-  let headersToHydrate;
-  if (placement) {
-    headersToHydrate = allHeaders.filter((header) => header.placement === placement);
-  } else {
-    headersToHydrate = allHeaders;
+  if (!placement) {
+    return headerSelectors['all'](state);
   }
-
-  const components = state.viewer.modularComponents;
-  const hydratedHeaders = headersToHydrate.map((header) => {
-    return {
-      ...header,
-      items: hydrateItems(header.items, components)
-    };
-  });
-
-  return hydratedHeaders;
+  return headerSelectors[placement](state);
 };
 
 export const getTopHeaders = (state) => {
-  return getHydratedHeaders(state, PLACEMENT.TOP);
+  return headerSelectors[PLACEMENT.TOP](state);
 };
 
 export const getBottomHeaders = (state) => {
-  return getHydratedHeaders(state, PLACEMENT.BOTTOM);
+  return headerSelectors[PLACEMENT.BOTTOM](state);
 };
 
 export const getLeftHeader = (state) => {
-  return getHydratedHeaders(state, PLACEMENT.LEFT);
+  return headerSelectors[PLACEMENT.LEFT](state);
 };
 
 export const getRightHeader = (state) => {
-  return getHydratedHeaders(state, PLACEMENT.RIGHT);
+  return headerSelectors[PLACEMENT.RIGHT](state);
 };
 
 export const getActiveTopHeaders = (state) => {
@@ -478,8 +503,9 @@ export const getBottomHeadersHeight = (state) => {
   const activeHeaders = getActiveHeaders(state)
     .filter((header) => header.placement === PLACEMENT.BOTTOM)
     .filter((header) => !header.float);
+  const isSpreadSheetEditorMode = isSpreadsheetEditorModeEnabled(state);
 
-  return activeHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders;
+  return (activeHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders) + (isSpreadSheetEditorMode ? 44 : 0);
 };
 
 export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
@@ -553,14 +579,17 @@ export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataEle
   return ribbonItems;
 };
 
-export const getEnabledRibbonItems = (state) => {
-  const modularComponents = state.viewer.modularComponents;
-  return Object.keys(modularComponents).filter((dataElement) => {
-    const { type } = modularComponents[dataElement];
-    return type === ITEM_TYPE.RIBBON_ITEM && !isElementDisabled(state, dataElement);
-  });
-};
+export const getDisabledElements = (state) => state.viewer.disabledElements;
 
+export const getEnabledRibbonItems = createSelector(
+  [getModularComponents, getDisabledElements],
+  (modularComponents, disabledElements) => {
+    return Object.keys(modularComponents).filter((dataElement) => {
+      const { type } = modularComponents[dataElement];
+      return type === ITEM_TYPE.RIBBON_ITEM && !(disabledElements[dataElement]?.disabled);
+    });
+  }
+);
 export const getModularComponentFunctions = (state) => state.viewer.modularComponentFunctions;
 
 export const getToolbarGroupItems = (toolbarGroup) => (state) => {
@@ -692,8 +721,6 @@ export const getColorMap = (state) => state.viewer.colorMap;
 export const getCursorOverlayData = (state) => state.viewer.cursorOverlay;
 
 export const getOpenElements = (state) => state.viewer.openElements;
-
-export const getDisabledElements = (state) => state.viewer.disabledElements;
 
 export const getcurrentStyleTab = (state, colorMapKey) => state.viewer.colorMap[colorMapKey]?.currentStyleTab;
 
@@ -871,7 +898,7 @@ export const getCustomMultiViewerSyncHandler = (state) => state.viewer.customMul
 
 export const getCustomMultiViewerAcceptedFileFormats = (state) => state.viewer.customMultiViewerAcceptedFileFormats;
 
-export const isSnapModeEnabled = (state) => state.viewer.isSnapModeEnabled;
+export const isSnapModeEnabled = (state) => !!state.viewer.snapMode[state.viewer.activeToolName];
 
 export const getUnreadAnnotationIdSet = (state) => state.viewer.unreadAnnotationIdSet;
 
@@ -903,10 +930,6 @@ export const getPageManipulationOverlayItems = (state) => state.viewer.pageManip
 
 export const getMultiPageManipulationControlsItems = (state) => state.viewer.multiPageManipulationControls;
 
-export const getMultiPageManipulationControlsItemsSmall = (state) => state.viewer.multiPageManipulationControlsSmall;
-
-export const getMultiPageManipulationControlsItemsLarge = (state) => state.viewer.multiPageManipulationControlsLarge;
-
 export const getPageManipulationOverlayAlternativePosition = (state) => state.viewer.pageManipulationOverlayAlternativePosition;
 
 export const openingPageManipulationOverlayByRightClickEnabled = (state) => state.viewer.pageManipulationOverlayOpenByRightClick;
@@ -933,6 +956,8 @@ export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.
 export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state).locationProperties.inTable;
 
 export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
+
+export const getOfficeEditorActiveStream = (state) => state.officeEditor.stream;
 
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
@@ -1040,7 +1065,10 @@ export const isSpreadsheetEditorModeEnabled = (state) => {
   return state.viewer.isSpreadsheetEditorModeEnabled;
 };
 
+export const getUIConfiguration = (state) => state.viewer.uiConfiguration;
+
 // ** SpreadhseetEditor Selectors **
 export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellRange;
 export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
 export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;
+export const getSpreadsheetEditorEditMode = (state) => state.spreadsheetEditor.editMode;

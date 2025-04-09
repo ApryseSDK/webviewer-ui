@@ -8,7 +8,7 @@ import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
-import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { MockDocumentContainer, oePartialState } from 'helpers/storybookHelper';
 import { expect } from '@storybook/test';
 
 const leftChevron = {
@@ -36,6 +36,7 @@ const rightChevron = {
 };
 
 const initialState = {
+  ...oePartialState,
   viewer: {
     modularComponents: {},
     modularHeaders: {},

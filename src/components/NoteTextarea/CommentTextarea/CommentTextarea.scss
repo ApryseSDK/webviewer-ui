@@ -45,6 +45,11 @@
 
     &.ql-snow {
       border: none;
+
+      &:focus {
+        outline: var(--focus-visible-outline);
+        border-radius: 4px;
+      }
     }
   }
 

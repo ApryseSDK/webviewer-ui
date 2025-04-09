@@ -42,6 +42,9 @@ const initialState = {
       },
     },
   },
+  spreadsheetEditor: {
+    editMode: 'editing',
+  }
 };
 
 export const BasicHorizontal = () => {

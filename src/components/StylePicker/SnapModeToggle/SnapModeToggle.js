@@ -32,9 +32,9 @@ const SnapModeToggle = ({
 
     measurementTools.forEach((tool) => {
       tool.setSnapMode?.(mode);
+      dispatch(actions.setEnableSnapMode({ toolName: tool.name, isEnabled: enableSnapping }));
     });
 
-    dispatch(actions.setEnableSnapMode(enableSnapping));
   };
 
   return (

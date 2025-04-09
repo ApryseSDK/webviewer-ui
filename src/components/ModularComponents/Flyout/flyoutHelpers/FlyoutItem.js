@@ -6,7 +6,7 @@ import './ZoomText.scss';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import classNames from 'classnames';
 import { itemToFlyout, getIconDOMElement } from 'helpers/itemToFlyoutHelper';
-import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS } from 'constants/officeEditor';
+import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS, EditingStreamType } from 'constants/officeEditor';
 import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS } from 'helpers/officeEditor';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
@@ -21,7 +21,7 @@ import FontSizeDropdown from 'components/ModularComponents/OfficeEditor/FontSize
 import FontFaceDropdown from 'components/ModularComponents/OfficeEditor/FontFaceDropdown';
 import StylePresetDropdown from 'components/ModularComponents/OfficeEditor/StylePresetDropdown';
 import OfficeEditorModeDropdown from 'components/ModularComponents/OfficeEditor/OfficeEditorModeDropdown';
-import SheetEditorModeDropdown from 'components/ModularComponents/SheetEditorModeDropdown';
+import SpreadsheetEditorEditModeDropdown from 'components/ModularComponents/SpreadsheetEditorEditModeDropdown';
 import Label from 'components/ModularComponents/Label';
 import CustomElement from 'components/CustomElement';
 import StatefulButton from 'components/ModularComponents/StatefulButton';
@@ -83,6 +83,8 @@ const StaticItem = React.forwardRef((props, ref) => {
   const isDisabledItem = useSelector((state) => selectors.isElementDisabled(state, flyoutItem?.dataElement));
   const currentLineSpacing = useSelector(selectors.getLineSpacing);
   const activeListType = useSelector((state) => selectors.getActiveListType(state));
+  const isCursorInTable = useSelector(selectors.isCursorInTable);
+  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   if (isDisabledItem || (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden)) {
     return null;
@@ -202,7 +204,7 @@ const StaticItem = React.forwardRef((props, ref) => {
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case FLYOUT_ITEM_TYPES.SHEET_EDITOR_MODE_DROPDOWN: {
-      const dropdownElement = <SheetEditorModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`sheet-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
+      const dropdownElement = <SpreadsheetEditorEditModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`sheet-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_FILE_NAME: {
@@ -244,6 +246,7 @@ const StaticItem = React.forwardRef((props, ref) => {
           index={index}
           dataElement={flyoutItem.dataElement}
           icon={icon}
+          disabled={isCursorInTable || activeStream !== EditingStreamType.BODY}
         />
       );
     }
@@ -257,7 +260,7 @@ const StaticItem = React.forwardRef((props, ref) => {
         itemIsAPanelTab && getActiveTabInPanel === flyoutItem.dataElement ||
         itemIsAZoomButton && Math.ceil(core.getZoom() * 100).toString() === flyoutItem.dataElement?.split('zoom-button-')[1];
 
-      const secondaryLabel = flyoutItem.description || null;
+      allProps.additionalClass = allProps.additionalClass || '';
       const flyoutItemClasses = classNames({
         'disabled': flyoutItem.disabled,
         'active': isItemActive,
@@ -269,7 +272,7 @@ const StaticItem = React.forwardRef((props, ref) => {
           label={alabel}
           additionalClass={flyoutItemClasses}
           icon={icon}
-          secondaryLabel={secondaryLabel}
+          secondaryLabel={flyoutItem.secondaryLabel || null}
         />
       );
     }

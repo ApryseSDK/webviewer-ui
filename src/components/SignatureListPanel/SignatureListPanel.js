@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector, shallowEqual, useStore } from 'react-redux';
+import { useDispatch, useSelector, useStore, shallowEqual } from 'react-redux';
 import DataElementWrapper from '../DataElementWrapper';
 import defaultTool from 'constants/defaultTool';
 import DataElements from 'constants/dataElement';
@@ -23,28 +23,15 @@ const SignatureListPanel = ({ panelSize }) => {
   const [t] = useTranslation();
   const isMobile = isMobileSize();
 
-  const [
-    savedSignatures,
-    maxSignaturesCount,
-    displayedSignaturesFilterFunction,
-    isSignatureDeleteButtonDisabled,
-    savedInitials,
-    selectedSignatureIndex,
-    signatureMode,
-    mobilePanelSize
-  ] = useSelector(
-    (state) => [
-      selectors.getSavedSignatures(state),
-      selectors.getMaxSignaturesCount(state),
-      selectors.getDisplayedSignaturesFilterFunction(state),
-      selectors.isElementDisabled(state, 'defaultSignatureDeleteButton'),
-      selectors.getSavedInitials(state),
-      selectors.getSelectedDisplayedSignatureIndex(state),
-      selectors.getSignatureMode(state),
-      selectors.getMobilePanelSize(state),
-    ],
-    shallowEqual,
-  );
+  const savedSignatures = useSelector(selectors.getSavedSignatures, shallowEqual);
+  const maxSignaturesCount = useSelector(selectors.getMaxSignaturesCount);
+  const displayedSignaturesFilterFunction = useSelector(selectors.getDisplayedSignaturesFilterFunction);
+  const isSignatureDeleteButtonDisabled = useSelector((state) => selectors.isElementDisabled(state, 'defaultSignatureDeleteButton'));
+  const savedInitials = useSelector(selectors.getSavedInitials, shallowEqual);
+  const selectedSignatureIndex = useSelector(selectors.getSelectedDisplayedSignatureIndex);
+  const signatureMode = useSelector(selectors.getSignatureMode);
+  const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
+
   const store = useStore();
   const TOOL_NAME = 'AnnotationCreateSignature';
   const signatureToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);

@@ -111,7 +111,7 @@ function SearchOverlay(props) {
   };
 
   const search = async (searchValue) => {
-    if (searchValue && searchValue.length > 1) {
+    if (searchValue && searchValue.length > 0) {
       setIsSearchInProgress(true);
       setSearchStatus('SEARCH_IN_PROGRESS');
 
@@ -123,7 +123,7 @@ function SearchOverlay(props) {
         wholeWord: isWholeWord,
         wildcard: isWildcard,
       });
-    } else if (!searchValue) {
+    } else {
       clearSearchResult();
     }
   };

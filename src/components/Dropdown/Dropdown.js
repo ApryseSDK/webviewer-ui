@@ -711,6 +711,7 @@ function Dropdown({
           onTouchEnd={onToggle}
           onKeyDown={onComboBoxKeyDown}
           ref={buttonRef}
+          aria-disabled={disabled}
           disabled={disabled}
           tabIndex={disabled ? -1 : 0}
         >

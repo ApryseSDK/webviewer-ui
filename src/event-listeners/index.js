@@ -61,6 +61,9 @@ import onDocumentLoaded, {
   configureOfficeEditor,
 } from './onDocumentLoaded';
 import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
+import onSpreadsheetEditorEditModeChanged from './onSpreadsheetEditorEditModeChanged';
+import { openSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorLoaded';
+import { closeSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorReady';
 
 export {
   onSignatureSaved,
@@ -125,4 +128,7 @@ export {
   updatePortfolioAndLayers,
   configureOfficeEditor,
   onSpreadsheetEditorSelectionChanged,
+  onSpreadsheetEditorEditModeChanged,
+  openSpreadsheetEditorLoadingModal,
+  closeSpreadsheetEditorLoadingModal,
 };

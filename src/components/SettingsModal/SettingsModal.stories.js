@@ -107,6 +107,32 @@ export function GeneralDisabled() {
   );
 }
 
+const spreadsheetStore = () => {
+  const store = getStore(1);
+
+  const originalGetState = store.getState;
+  store.getState = () => {
+    const state = originalGetState();
+    return {
+      ...state,
+      viewer: {
+        ...state.viewer,
+        isSpreadsheetEditorModeEnabled: true,
+      },
+    };
+  };
+
+  return store;
+};
+
+export function SpreadsheetEditor() {
+  return (
+    <Provider store={spreadsheetStore()}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
 export function TabbingTest() {
   const store = getStore(1);
   hotkeysManager.initialize(store);

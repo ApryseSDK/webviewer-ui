@@ -1,25 +1,22 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import SheetEditorModeDropdown from './SheetEditorModeDropdown';
+import SpreadsheetEditorEditModeDropdown from './SpreadsheetEditorEditModeDropdown';
 import { userEvent, expect, within } from '@storybook/test';
-import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+import rootReducer from 'src/redux/reducers/rootReducer';
 
 export default {
-  title: 'SpreadsheetEditor/SheetEditorModeDropdown',
-  component: SheetEditorModeDropdown,
+  title: 'SpreadsheetEditor/SpreadsheetEditorEditModeDropdown',
+  component: SpreadsheetEditorEditModeDropdown,
 };
 
-const initialState = OEModularUIMockState;
-
-const store = configureStore({ reducer: () => initialState });
-
+const store = configureStore({ reducer: rootReducer });
 
 export function ModeChangingDropdown() {
   return (
     <Provider store={store}>
       <div style={{ width: 145 }}>
-        <SheetEditorModeDropdown />
+        <SpreadsheetEditorEditModeDropdown />
       </div>
     </Provider>
   );

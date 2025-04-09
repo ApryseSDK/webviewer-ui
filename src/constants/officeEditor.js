@@ -34,7 +34,7 @@ export const LIST_OPTIONS = {
 export const DEFAULT_POINT_SIZE = 11;
 export const DEFAULT_COLOR = new window.Core.Annotations.Color(0, 0, 0, 1);
 
-const OfficeEditorListStylePresets = window.Core.Document.OfficeEditorListStylePresets;
+const OfficeEditorListStylePresets = window.Core.Document.OfficeEditor.ListStylePresets;
 export const OFFICE_BULLET_OPTIONS = [
   { enum: OfficeEditorListStylePresets.BULLET, img: 'icon-office-editor-list-style-bullet' },
   { enum: OfficeEditorListStylePresets.BULLET_SQUARE, img: 'icon-office-editor-list-style-square' },
@@ -54,7 +54,9 @@ export const OFFICE_NUMBER_OPTIONS = [
 
 export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
 
-export const OfficeEditorEditMode = window.Core.Document.OfficeEditorEditMode;
+export const OfficeEditorEditMode = window.Core.Document.OfficeEditor.EditMode;
+
+export const EditingStreamType = window.Core.Document.OfficeEditor.EditingStreamType;
 
 export const OFFICE_EDITOR_SCOPE = 'office-editor';
 
@@ -116,5 +118,7 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
   },
 };
 /* eslint-enable custom/no-hex-colors */
+
+export const CM_PER_INCH = 2.54;
 
 export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';

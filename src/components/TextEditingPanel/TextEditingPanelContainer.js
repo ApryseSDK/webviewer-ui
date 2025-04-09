@@ -37,7 +37,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const dispatch = useDispatch();
   const instance = getInstanceNode().instance;
 
-  // selection modes used are 'FreeText' and 'ContentBox'
+  // selection modes used are 'object' and 'text'
   const [selectionMode, setSelectionMode] = useState(null);
   const [fonts, setFonts] = useState([]);
 
@@ -163,7 +163,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     const textAttributes = await getTextEditPropertiesFromContentEditPlaceHolder(annotation);
     setFormat(textAttributes);
     setTextEditProperties(textAttributes);
-    setSelectionMode('ContentBox');
+    setSelectionMode(annotation.getContentEditType());
     annotationRef.current = null;
     if (!isDisabled && !isOpen) {
       dispatch(actions.toggleElement(dataElement));
@@ -171,23 +171,13 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   }
 
   useEffect(() => {
-    const handleAnnotationSelected = async (annotations, action) => {
+    const handleAnnotationSelected = (annotations, action) => {
       if (!core.getContentEditManager().isInContentEditMode()) {
         return;
       }
       const annotation = annotations[0];
-      const isFreeText =
-        annotation instanceof instance.Core.Annotations.FreeTextAnnotation &&
-        annotation.getIntent() === instance.Core.Annotations.FreeTextAnnotation.Intent.FreeText &&
-        (annotation.getContentEditAnnotationId() || annotation.ToolName === instance.Core.Tools.ToolNames.ADD_PARAGRAPH);
       if (action === 'selected') {
-        if (isFreeText) {
-          annotationRef.current = annotation;
-          setSelectionMode('FreeText');
-          if (!isDisabled && !isOpen) {
-            dispatch(actions.toggleElement(dataElement));
-          }
-        } else if (annotation.isContentEditPlaceholder()) {
+        if (annotation.isContentEditPlaceholder()) {
           setContentEditPanelProperties(annotation);
         }
       } else if (action === 'deselected') {
@@ -206,19 +196,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     };
   }, [isDisabled, isOpen]);
 
-  useEffect(() => {
-    const onResize = () => {
-      if (core.getContentEditManager().isInContentEditMode()) {
-        dispatch(actions.openElement(dataElement));
-      }
-    };
-    window.addEventListener('resize', onResize);
-    const annotation = core.getSelectedAnnotations()[0];
-    if (annotation?.isContentEditPlaceholder()) {
-      setContentEditPanelProperties(annotation);
-    }
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
 
   const handlePropertyChange = (property, value) => {
     if (annotationRef.current) {
@@ -406,8 +383,8 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
         undoRedoProperties={undoRedoProperties}
-        freeTextMode={selectionMode === 'FreeText'}
-        contentSelectMode={selectionMode === 'ContentBox'}
+        contentSelectMode={selectionMode === instance.Core.ContentEdit.Types.TEXT}
+        imageSelectMode={selectionMode === instance.Core.ContentEdit.Types.OBJECT}
         textEditProperties={textEditProperties}
         handlePropertyChange={handlePropertyChange}
         format={format}

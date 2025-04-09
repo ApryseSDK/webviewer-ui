@@ -24,7 +24,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const updateOutlines = eventListeners.updateOutlines(dispatch, documentViewerKey);
   const updatePortfolioAndLayers = eventListeners.updatePortfolioAndLayers(store);
   const configureOfficeEditor = eventListeners.configureOfficeEditor(store);
-  const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch, documentViewerKey);
+  const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch, store, documentViewerKey);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
   const onToolUpdated = eventListeners.onToolUpdated(dispatch);
@@ -69,6 +69,10 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onAccessibleReadingOrderModeNoStructure = eventListeners.onAccessibleReadingOrderModeNoStructure(dispatch, store);
   const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch);
   const onSpreadsheetEditorSelectionChanged = eventListeners.onSpreadsheetEditorSelectionChanged(dispatch);
+  const onSpreadsheetEditorEditModeChanged = eventListeners.onSpreadsheetEditorEditModeChanged(dispatch);
+  const openSpreadsheetEditorLoadingModal = eventListeners.openSpreadsheetEditorLoadingModal(dispatch);
+  const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch, store);
+
   return {
     addEventHandlers: () => {
       if (documentViewerKey === 1) {
@@ -94,6 +98,9 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('accessibleReadingOrderModeEnded', onAccessibleReadingOrderModeEnded);
         core.addEventListener('accessibleReadingOrderModeNoStructure', onAccessibleReadingOrderModeNoStructure);
         core.addEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
+        core.addEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged);
+        core.addEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal);
+        core.addEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal);
         document.addEventListener('fullscreenchange', onFullScreenChange);
         document.addEventListener('mozfullscreenchange', onFullScreenChange);
         document.addEventListener('webkitfullscreenchange', onFullScreenChange);
@@ -196,6 +203,9 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText3', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.removeEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
+        core.removeEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged);
+        core.removeEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal);
+        core.removeEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal);
       }
       core.removeEventListener('documentLoaded', handlePasswordModal, documentViewerKey);
       core.removeEventListener('documentLoaded', showProgressModal, documentViewerKey);

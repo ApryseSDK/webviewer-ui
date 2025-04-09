@@ -2,7 +2,6 @@ import React from 'react';
 import { panelNames } from 'constants/panel';
 import LayersPanel from 'components/LayersPanel';
 import TextEditingPanel from 'components/TextEditingPanel';
-import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
 import OutlinesPanel from 'components/OutlinesPanel';
 import SignaturePanel from 'components/SignaturePanel';
@@ -37,7 +36,7 @@ export const getPanelToRender = (panelName, dataElement, tabPanelDataElement) =>
     case panelNames.PORTFOLIO:
       return <PortfolioPanel />;
     case panelNames.CHANGE_LIST:
-      return <MultiViewerWrapper><ComparePanel dataElement={dataElement}/></MultiViewerWrapper>;
+      return <ComparePanel dataElement={dataElement}/>;
     case panelNames.STYLE:
       return <StylePanel dataElement={dataElement}/>;
     case panelNames.SEARCH:

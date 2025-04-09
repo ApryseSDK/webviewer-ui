@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -6,28 +6,31 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
+import core from 'core';
 
+
+const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
 const items = [
   {
-    key: 'editing',
+    key: EDIT_MODE.EDITING,
     description: 'editingDescription',
   },
   {
-    key: 'viewOnly',
+    key: EDIT_MODE.VIEW_ONLY,
     description: 'viewOnlyDescription',
   }
 ];
-const translationPrefix = 'sheetEditor.';
+const translationPrefix = 'spreadsheetEditor.';
 
 
-const SheetEditorModeDropdown = (props) => {
+const SpreadsheetEditorEditModeDropdown = (props) => {
   const { isFlyoutItem, onKeyDownHandler, disabled = false } = props;
   const activeFlyout = useSelector(selectors.getActiveFlyout);
+  const editMode = useSelector(selectors.getSpreadsheetEditorEditMode);
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [editMode, setEditMode] = useState('editing');
 
   const renderDropdownItem = (item) => (
     <div className='Dropdown__item-vertical'>
@@ -37,8 +40,8 @@ const SheetEditorModeDropdown = (props) => {
   );
 
   const onClickItem = (mode) => {
-    // set edit mode locally
-    setEditMode(mode);
+    const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
+    spreadsheetEditorManager.setEditMode(mode);
 
     if (isFlyoutItem && activeFlyout) {
       dispatch(actions.closeElement(activeFlyout));
@@ -51,7 +54,7 @@ const SheetEditorModeDropdown = (props) => {
       'flyout-item': isFlyoutItem,
     })}>
       <Dropdown
-        id={'sheetEditor'}
+        id={'spreadsheetEditor'}
         items={items}
         width={144}
         disabled={disabled}
@@ -70,10 +73,10 @@ const SheetEditorModeDropdown = (props) => {
   );
 };
 
-SheetEditorModeDropdown.propTypes = {
+SpreadsheetEditorEditModeDropdown.propTypes = {
   isFlyoutItem: PropTypes.bool,
   onKeyDownHandler: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SheetEditorModeDropdown;
+export default SpreadsheetEditorEditModeDropdown;

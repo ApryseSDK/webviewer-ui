@@ -392,18 +392,6 @@ export const setMultiPageManipulationControlsItems = (items) => ({
     items,
   },
 });
-export const setMultiPageManipulationControlsItemsSmall = (items) => ({
-  type: 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_SMALL',
-  payload: {
-    items,
-  },
-});
-export const setMultiPageManipulationControlsItemsLarge = (items) => ({
-  type: 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE',
-  payload: {
-    items,
-  },
-});
 export const setPageManipulationOverlayAlternativePosition = (position) => ({
   type: 'SET_PAGE_MANIPULATION_OVERLAY_ALTERNATIVE_POSITION',
   payload: { position },
@@ -686,9 +674,9 @@ export const setCustomMultiViewerAcceptedFileFormats = (customMultiViewerAccepte
   payload: { customMultiViewerAcceptedFileFormats },
 });
 
-export const setEnableSnapMode = (enable) => ({
+export const setEnableSnapMode = ({ toolName, isEnabled }) => ({
   type: 'SET_ENABLE_SNAP_MODE',
-  payload: { enable },
+  payload: { toolName, isEnabled },
 });
 
 export const setLanguage = (language) => ({
@@ -796,6 +784,11 @@ export const setOfficeEditorEditMode = (editMode) => ({
   payload: { editMode }
 });
 
+export const setOfficeEditorActiveStream = (stream) => ({
+  type: 'SET_OFFICE_EDITOR_ACTIVE_STREAM',
+  payload: { stream }
+});
+
 export const enableSpreadsheetEditorMode = () => ({
   type: 'ENABLE_SPREADSHEET_EDITOR_MODE',
 });
@@ -872,4 +865,9 @@ export const restoreComponents = (UIMode) => ({
 export const setActiveCellRange = ({ activeCellRange, cellProperties }) => ({
   type: 'SET_ACTIVE_CELL_RANGE',
   payload: { activeCellRange, cellProperties },
+});
+
+export const setUIConfiguration = (uiConfiguration) => ({
+  type: 'SET_UI_CONFIGURATION',
+  payload: uiConfiguration,
 });

@@ -13,12 +13,12 @@ const propTypes = {
 };
 
 const HeaderFooterControlsOverlay = ({ visiblePages, isHeaderControlsActive, isFooterControlsActive }) => {
-
   const portals = visiblePages.map((pageNumber) => {
     const pageSection = getRootNode().getElementById(`pageSection${pageNumber}`);
     if (!pageSection) {
       return null;
     }
+
     return createPortal(
       <div key={pageNumber} className='HeaderFooterControlsOverlay'>
         <HeaderFooterControlsBar type='header' pageNumber={pageNumber} isActive={isHeaderControlsActive} />

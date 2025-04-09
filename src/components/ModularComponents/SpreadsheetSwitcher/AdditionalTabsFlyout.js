@@ -30,7 +30,7 @@ const AdditionalTabsFlyout = (props) => {
           disabled: item.disabled,
           isActive: tabLabel === activeItem,
           dataElement: Symbol(tabLabel).toString(),
-          onClick: () => onClick(tabLabel),
+          onClick: () => onClick(tabLabel, item.sheetIndex),
         };
       })
     };
@@ -46,7 +46,11 @@ const AdditionalTabsFlyout = (props) => {
 
 AdditionalTabsFlyout.propTypes = {
   id: PropTypes.string,
-  additionalTabs: PropTypes.array,
+  additionalTabs: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    sheetIndex: PropTypes.number,
+    disabled: PropTypes.bool,
+  })),
   tabsForReference: PropTypes.array,
   onClick: PropTypes.func,
   activeItem: PropTypes.string,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import './ModularHeaderItems.scss';
 import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT, DIRECTION, ITEM_TYPE } from 'constants/customizationVariables';
@@ -9,6 +9,7 @@ import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import actions from 'actions';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
+import PropTypes from 'prop-types';
 
 const ModularHeaderItems = (props) => {
   const dispatch = useDispatch();
@@ -44,7 +45,6 @@ const ModularHeaderItems = (props) => {
       className: 'GroupedItemsFlyout',
       items: [],
     };
-
     if (size > 0) {
       const indexToExclude = items.length - size;
       for (let i = 0; i < items.length; i++) {
@@ -58,16 +58,15 @@ const ModularHeaderItems = (props) => {
         }
       }
     }
-
-    dispatch(actions.updateFlyout(flyoutDataElement, flyout));
-  }, [size, items.length]);
+    flyout.items.length > 0 ? dispatch(actions.updateFlyout(flyoutDataElement, flyout)) : dispatch(actions.removeFlyout(flyoutDataElement));
+  }, [size, items]);
   useSizeStore({
     elementRef,
     dataElement: headerId,
     headerDirection,
   });
 
-  const headerItems = items?.map((item, index) => {
+  const headerItems = useMemo(() => items?.map((item, index) => {
     const hasToShrink = size > 0;
     const indexesToExclude = items.length - size;
     const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
@@ -85,7 +84,7 @@ const ModularHeaderItems = (props) => {
     const { type, dataElement } = itemProps;
     const key = `${type}-${dataElement || index}-wrapper-${index}`;
     return <InnerItem key={key} {...itemProps} headerDirection={headerDirection} />;
-  });
+  }), [items, size]);
 
   return (
     <div className={`ModularHeaderItems ${className}`}
@@ -110,6 +109,17 @@ const ModularHeaderItems = (props) => {
       }
     </div>
   );
+};
+
+ModularHeaderItems.props = {
+  items: PropTypes.array,
+  placement: PropTypes.string,
+  gap: PropTypes.any,
+  justifyContent: PropTypes.string,
+  className: PropTypes.string,
+  maxWidth: PropTypes.any,
+  maxHeight: PropTypes.any,
+  headerId: PropTypes.string,
 };
 
 export default ModularHeaderItems;

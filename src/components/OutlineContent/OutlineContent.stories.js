@@ -3,7 +3,7 @@ import { legacy_createStore as createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import OutlineContent from './OutlineContent';
 import OutlineContext from '../Outline/Context';
-import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuItems } from 'helpers/outlineFlyoutHelper';
 import '../LeftPanel/LeftPanel.scss';
 
 const NOOP = () => { };

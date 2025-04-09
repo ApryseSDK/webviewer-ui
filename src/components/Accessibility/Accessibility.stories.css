@@ -1,0 +1,6 @@
+.Accessibility {
+    /* Storybook CSS ONLY */
+    position: static !important;
+    width: fit-content !important;
+    transform: translateY(0%) !important;
+}

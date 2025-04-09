@@ -13,7 +13,7 @@ import TextStylePicker from 'components/TextStylePicker';
 import LabelTextEditor from 'components/LabelTextEditor';
 import LineStyleOptions from 'components/LineStyleOptions';
 import Choice from 'components/Choice/Choice';
-import { strokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
+import { getStrokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
 import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
@@ -70,6 +70,7 @@ class StylePopup extends React.PureComponent {
 
   componentDidMount() {
     core.addEventListener('documentLoaded', this.onDocumentLoaded);
+    this.updateSnapModeFromTool();
   }
 
   componentWillUnmount() {
@@ -96,9 +97,21 @@ class StylePopup extends React.PureComponent {
 
     measurementTools.forEach((tool) => {
       tool.setSnapMode?.(mode);
+      if (this.props.onSnapModeChange) {
+        this.props.onSnapModeChange({ toolName: tool.name, isEnabled: enableSnapping });
+      }
     });
-    if (this.props.onSnapModeChange) {
-      this.props.onSnapModeChange(enableSnapping);
+  };
+
+  updateSnapModeFromTool = () => {
+    if (!core.isFullPDFEnabled()) {
+      return;
+    }
+    const { onSnapModeChange } = this.props;
+    const toolMode = core.getToolMode();
+    if (toolMode && toolMode.getSnapMode) {
+      const isSnapModeEnabled = !!toolMode.getSnapMode();
+      onSnapModeChange({ toolName: toolMode.name, isEnabled: isSnapModeEnabled });
     }
   };
 
@@ -144,7 +157,7 @@ class StylePopup extends React.PureComponent {
         min: 0,
         max: 23,
         step: 1,
-        steps: strokeSliderSteps,
+        steps: getStrokeSliderSteps(this.props.isFreeText),
       };
     }
     if (!isFontSizeSliderDisabled) {

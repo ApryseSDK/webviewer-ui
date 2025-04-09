@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Button from '../Button';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
-import MoreOptionsContextMenuFlyout from '../MoreOptionsContextMenuFlyout';
 import Icon from 'components/Icon';
 import './PanelListItem.scss';
 import useNestingLevel from 'src/hooks/useNestingLevel';
+import createItemsForBookmarkOutlineFlyout from 'helpers/createItemsForBookmarkOutlineFlyout';
+import { menuItems, menuTypes } from 'helpers/outlineFlyoutHelper';
+import { useDispatch } from 'react-redux';
+import actions from 'actions';
 
 const PanelListChildren = ({ children }) => {
   if (!children || children.length === 0) {
@@ -16,8 +19,8 @@ const PanelListChildren = ({ children }) => {
   }
   return (
     <ul className="panel-list-children">
-      {children.map((child, index) => (
-        <li key={index}>{child}</li>
+      {children.map((child) => (
+        <li key={child?.key}>{child}</li>
       ))}
     </ul>
   );
@@ -96,6 +99,7 @@ const PanelListItem = ({
   const currentNestingLevel = useNestingLevel(panelListItemRef);
   const [isExpanded, setIsExpanded] = useState(expanded ?? false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const {
     shouldHideDeleteButton = false,
     currentFlyout,
@@ -108,6 +112,21 @@ const PanelListItem = ({
     flyoutToggleElement,
     moreOptionsDataElement,
   } = contextMenuMoreButtonOptions;
+
+  const updateFlyout = () => {
+    const bookmarkOutlineFlyout = {
+      dataElement: flyoutSelector,
+      className: 'MoreOptionsContextMenuFlyout',
+      items: createItemsForBookmarkOutlineFlyout(menuItems, type, shouldHideDeleteButton, handleOnClick, menuTypes),
+    };
+    if (!currentFlyout) {
+      dispatch(actions.addFlyout(bookmarkOutlineFlyout));
+    } else {
+      dispatch(actions.updateFlyout(flyoutSelector, bookmarkOutlineFlyout));
+    }
+    dispatch(actions.setFlyoutToggleElement(moreOptionsDataElement));
+    dispatch(actions.toggleElement(flyoutSelector));
+  };
 
   const showCheckBox = checkboxOptions && !checkboxOptions.disabled || false;
 
@@ -182,13 +201,7 @@ const PanelListItem = ({
                 dataElement={moreOptionsDataElement}
                 img="icon-tool-more"
                 disabled={false}
-              />
-              <MoreOptionsContextMenuFlyout
-                type={type}
-                shouldHideDeleteButton={shouldHideDeleteButton}
-                currentFlyout={currentFlyout}
-                flyoutSelector={flyoutSelector}
-                handleOnClick={handleOnClick}
+                onClick={updateFlyout}
               />
             </div>
           )}

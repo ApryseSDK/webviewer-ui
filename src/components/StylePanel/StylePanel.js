@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import Icon from 'components/Icon';
@@ -21,6 +21,7 @@ import {
   shouldShowNoStyles
 } from 'helpers/stylePanelHelper';
 import defaultTool from 'constants/defaultTool';
+import actions from 'actions';
 
 const { ToolNames } = window.Core.Tools;
 const { Annotations } = window.Core;
@@ -65,6 +66,7 @@ const StylePanel = () => {
   const [isAutoSizeFont, setIsAutoSizeFont] = useState(style.isAutoSizeFont);
   const [activeTool, setActiveTool] = useState(currentToolName || 'Edit');
   const [editorInstance, setEditorInstance] = useState(null);
+  const dispatch = useDispatch();
 
   const filteredTypes = [
     Annotations.PushButtonWidgetAnnotation,
@@ -74,7 +76,18 @@ const StylePanel = () => {
     if (currentTool?.name === 'AnnotationCreateRubberStamp') {
       core.setToolMode(defaultTool);
     }
+    updateSnapModeFromTool(currentTool);
   }, [currentTool]);
+
+  const updateSnapModeFromTool = (currentTool) => {
+    if (!core.isFullPDFEnabled()) {
+      return;
+    }
+    if (currentTool && currentTool.getSnapMode) {
+      const isSnapModeEnabled = !!currentTool.getSnapMode();
+      dispatch(actions.setEnableSnapMode({ toolName: currentTool.name, isEnabled: isSnapModeEnabled }));
+    }
+  };
 
   const getStrokeStyle = (annot) => {
     const style = annot['Style'];

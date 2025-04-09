@@ -322,6 +322,14 @@ export const configureOfficeEditor = (store) => () => {
     doc.addEventListener('editModeUpdated', handleEditModeUpdate);
     handleActiveStreamChanged(EditingStreamType.BODY);
     contentSelectTool.addEventListener('activeStreamChanged', handleActiveStreamChanged);
+    doc.addEventListener('editOperationStarted', () => {
+      core.getOfficeEditor().setEditMode('viewOnly');
+      dispatch(actions.openElement('loadingModal'));
+    });
+    doc.addEventListener('editOperationEnded', () => {
+      core.getOfficeEditor().setEditMode('editing');
+      dispatch(actions.closeElement('loadingModal'));
+    });
     // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
     core.zoomTo(1, 0, 0);
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());

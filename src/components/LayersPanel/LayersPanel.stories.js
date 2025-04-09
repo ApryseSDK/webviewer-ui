@@ -3,6 +3,7 @@ import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import { userEvent, within, waitFor, expect } from '@storybook/test';
+import core from 'core';
 
 export default {
   title: 'Components/LayersPanel',
@@ -25,6 +26,13 @@ const layers = [
 ];
 
 export function Basic(args, context) {
+  const documentViewer = core.getDocumentViewer();
+  const annotationManager = documentViewer.getAnnotationManager();
+  annotationManager.drawAnnotationsFromList = () => {};
+  documentViewer.getAnnotationManager = () => annotationManager;
+
+  core.getDocumentViewer = () => documentViewer;
+
   const stateWithLayersPanel = {
     ...initialState,
     viewer: {
@@ -97,9 +105,11 @@ Basic.play = async ({ canvasElement }) => {
   expect(closeBtn).toBeInTheDocument();
   await userEvent.click(closeBtn);
 
-  const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
-  expect(pageNav).toBeInTheDocument();
-  expect(pageNav).toBeVisible();
+  await waitFor(async () => {
+    const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
+    expect(pageNav).toBeInTheDocument();
+    expect(pageNav).toBeVisible();
+  });
 };
 
 export const RightSide = (args, context) => {

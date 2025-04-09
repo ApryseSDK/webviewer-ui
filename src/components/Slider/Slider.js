@@ -95,6 +95,10 @@ function Slider(props) {
       maxV = steps[steps.length - 1];
     }
 
+    if (isNaN(e.target.value) || e.target.value === '') {
+      return;
+    }
+
     if (e.target.value > maxV) {
       e.target.value = maxV;
     }

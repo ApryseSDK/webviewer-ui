@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import actions from 'actions';
+import { useDispatch, useSelector } from 'react-redux';
 import core from 'core';
+import actions from 'actions';
+import selectors from 'selectors';
+import { EditingStreamType } from 'constants/officeEditor';
 import DataElements from 'constants/dataElement';
 
 export default function useOnHeaderFooterUpdate() {
+  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   const dispatch = useDispatch();
   const [visiblePages, setVisiblePages] = useState([]);
@@ -12,31 +15,27 @@ export default function useOnHeaderFooterUpdate() {
   const [isFooterControlsActive, setIsFooterControlsActive] = useState(false);
 
   useEffect(() => {
-
     const onVisiblePagesChanged = (visiblePages) => {
       setVisiblePages(visiblePages);
     };
 
-    const onActiveStreamChanged = (stream) => {
-      setIsHeaderControlsActive(stream === 'header');
-      setIsFooterControlsActive(stream === 'footer');
-    };
-
     const documentViewer = core.getDocumentViewer();
-    const contentSelectTool = documentViewer.getTool('OfficeEditorContentSelect');
 
     // visible pages are updated before isOfficeEditorMode is set, so we need to get the first set of visible pages here.
     setVisiblePages(core.getDocumentViewer().getDisplayModeManager().getDisplayMode().getVisiblePages());
 
     documentViewer.addEventListener('visiblePagesChanged', onVisiblePagesChanged);
-    contentSelectTool.addEventListener('activeStreamChanged', onActiveStreamChanged);
     dispatch(actions.openElement(DataElements.HEADER_FOOTER_CONTROLS_OVERLAY));
     return () => {
       documentViewer.removeEventListener('visiblePagesChanged', onVisiblePagesChanged);
-      contentSelectTool.removeEventListener('activeStreamChanged', onActiveStreamChanged);
       dispatch(actions.closeElement(DataElements.HEADER_FOOTER_CONTROLS_OVERLAY));
     };
   }, []);
+
+  useEffect(() => {
+    setIsHeaderControlsActive(activeStream === EditingStreamType.HEADER);
+    setIsFooterControlsActive(activeStream === EditingStreamType.FOOTER);
+  }, [activeStream]);
 
   return { visiblePages, isHeaderControlsActive, isFooterControlsActive };
 }

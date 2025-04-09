@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import './TopHeader.scss';
@@ -28,9 +28,9 @@ const TopHeaderContainer = () => {
   }
 
   // Sort the headers by position and take only the first two
-  const sortedTopHeaders = fullLengthHeaders
+  const sortedTopHeaders = useMemo(() => fullLengthHeaders
     .sort((a) => (a.position === POSITION.START ? -1 : 1))
-    .slice(0, 2);
+    .slice(0, 2), [fullLengthHeaders]);
 
   const floatingHeaders = topHeaders.filter((header) => header.float);
 
@@ -47,17 +47,17 @@ const TopHeaderContainer = () => {
     }
   }, [dimensions, floatingHeaders.length]);
 
-  if (!customizableUI || !topHeaders.length) {
-    return null;
-  }
-
-  const modularHeaders = sortedTopHeaders.map((header, index) => {
+  const modularHeaders = useMemo(() => sortedTopHeaders.map((header, index) => {
     const { dataElement } = header;
     const autoHide = index === 0 ? false : header.autoHide;
     return (
-      <ModularHeader {...header} key={dataElement} autoHide={autoHide} />
+      <ModularHeader {...header} key={dataElement} autoHide={autoHide}/>
     );
-  });
+  }), [sortedTopHeaders]);
+
+  if (!customizableUI || !topHeaders.length) {
+    return null;
+  }
 
   return (
     <nav aria-label={t('accessibility.landmarks.topHeader')}>

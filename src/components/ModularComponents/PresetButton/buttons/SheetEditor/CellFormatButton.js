@@ -10,13 +10,13 @@ import { menuItems } from '../../../Helpers/menuItems';
 const propTypes = {
   formatType: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
-  description: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
 };
 
 const CellFormatButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, formatType, description, style, className } = props;
+  const { isFlyoutItem, formatType, secondaryLabel, style, className } = props;
   const dispatch = useDispatch();
   const isActive = false;
 
@@ -37,7 +37,7 @@ const CellFormatButton = forwardRef((props, ref) => {
         {...props}
         ref={ref}
         onClick={handleClick}
-        secondaryLabel={description}
+        secondaryLabel={secondaryLabel}
         additionalClass={isActive ? 'active' : ''}
       />
       : (

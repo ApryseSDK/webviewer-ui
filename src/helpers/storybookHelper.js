@@ -8,8 +8,8 @@ import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
-import { availableFontFaces, cssFontValues } from 'src/constants/officeEditorFonts';
-import { DEFAULT_POINT_SIZE } from 'src/constants/officeEditor';
+import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
+import { DEFAULT_POINT_SIZE, EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 
 const noop = () => { };
 
@@ -89,17 +89,30 @@ const BasicAppTemplate = (args, context) => {
       ] : [],
       activeTab: 3,
       activeTheme: context.globals.theme,
+      ...args.viewerRedux,
     },
     featureFlags: {
       customizableUI: true,
     },
+    spreadsheetEditor: {
+      ...args.spreadsheetEditorRedux,
+    }
   };
   return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} />;
 };
 
-export const createTemplate = ({ headers = {}, components = {}, flyoutMap = {}, isMultiTab = false, width = '100%', height = '100%' }) => {
+export const createTemplate = ({
+  headers = {},
+  components = {},
+  flyoutMap = {},
+  isMultiTab = false,
+  width = '100%',
+  height = '100%',
+  spreadsheetEditorRedux = {},
+  viewerRedux = {}
+}) => {
   const template = BasicAppTemplate.bind({});
-  template.args = { headers, components, flyoutMap, isMultiTab, width, height };
+  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux };
   template.parameters = { layout: 'fullscreen' };
   return template;
 };
@@ -133,7 +146,7 @@ MockDocumentContainer.propTypes = {
   children: PropTypes.node,
 };
 
-// This is the initial state of the Modualar UI OfficeEditor store
+// This is the initial state of the Modular UI OfficeEditor store
 export const OEModularUIMockState = {
   officeEditor: {
     cursorProperties: {
@@ -162,7 +175,8 @@ export const OEModularUIMockState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: 'editing',
+    editMode: OfficeEditorEditMode.EDITING,
+    stream: EditingStreamType.BODY,
   },
   viewer: {
     isOfficeEditorMode: true,
@@ -172,5 +186,19 @@ export const OEModularUIMockState = {
   },
   featureFlags: {
     customizableUI: true,
-  }
+  },
+  spreadsheetEditor: {
+    editMode: 'editing',
+  },
+};
+
+export const oePartialState = {
+  officeEditor: {
+    cursorProperties: {
+      locationProperties: {
+        inTable: false,
+      },
+    },
+    stream: EditingStreamType.BODY,
+  },
 };

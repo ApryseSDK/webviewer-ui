@@ -128,7 +128,7 @@ StrokePanelSection.propTypes = {
   isStamp: PropTypes.bool,
   onStrokeColorChange: PropTypes.func,
   onStyleChange: PropTypes.func,
-  strokeColor: PropTypes.string,
+  strokeColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeTool: PropTypes.string,
   hideStrokeSlider: PropTypes.bool,
   strokethicknessComponent: PropTypes.node,

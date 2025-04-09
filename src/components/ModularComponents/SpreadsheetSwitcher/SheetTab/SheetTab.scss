@@ -1,31 +1,4 @@
-.Flyout:has(.SheetOptionsFlyout) {
-  z-index: 130;
-}
-
-.GenericFileTab {
-  display: flex;
-  padding-left: 4px;
-  padding-top: 4px;
-
-  .dropdown-menu {
-    border: solid 1px var(--border);
-    margin-top: 3px;
-    margin-left: 5px;
-    .Icon {
-      position: absolute;
-    }
-  }
-
-  .add-sheet-tab {
-    margin-top: 3px;
-    margin-left: 5px;
-    .Icon {
-      width: 14px;
-      height: 14px;
-    }
-  }
-
-  .sheet-tab {
+.sheet-tab {
     cursor: pointer;
     border-bottom: none;
     border-top-right-radius: 4px;
@@ -102,4 +75,3 @@
       }
     }
   }
-}

@@ -13,7 +13,7 @@ const TabOptions = (props) => {
     onToggle,
     label,
     disabled,
-    tabs,
+    sheetCount,
   } = props;
 
   const [t] = useTranslation();
@@ -35,7 +35,7 @@ const TabOptions = (props) => {
       />
       <SheetOptionsFlyout
         sheetId={id}
-        tabs={tabs}
+        sheetCount={sheetCount}
         handleClick={(option) => handleClick(id, label, option)}
       />
     </>
@@ -48,7 +48,7 @@ TabOptions.propTypes = {
   onToggle: PropTypes.func,
   handleClick: PropTypes.func,
   disabled: PropTypes.bool,
-  tabs: PropTypes.array,
+  sheetCount: PropTypes.number,
 };
 
 export default TabOptions;

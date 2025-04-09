@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import '../LeftPanel/LeftPanel.scss';
 import initialState from 'src/redux/initialState';
 import { MockApp } from 'helpers/storybookHelper';
-import { menuItems } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuItems } from 'helpers/outlineFlyoutHelper';
 
 export default {
   title: 'Components/BookmarksPanel',

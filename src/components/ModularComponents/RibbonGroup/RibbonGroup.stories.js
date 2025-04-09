@@ -42,14 +42,12 @@ const item1 = {
   dataElement: 'toolbarGroup-View',
   img: 'icon-header-pan',
   title: 'icon only',
-  toolbarGroup: 'toolbarGroup-View',
   type: 'ribbonItem',
 };
 
 const item2 = {
   dataElement: 'toolbarGroup-Annotate',
   label: 'label only',
-  toolbarGroup: 'toolbarGroup-Annotate',
   type: 'ribbonItem',
 };
 
@@ -57,11 +55,13 @@ const item3 = {
   dataElement: 'toolbarGroup-Shapes',
   label: 'icon and label',
   img: 'icon-header-pan',
-  toolbarGroup: 'toolbarGroup-Shapes',
   type: 'ribbonItem',
 };
 
-const item4 = {
+const item4 = { ...mockModularComponents['toolbarGroup-Insert'] };
+
+// no label only icon
+const item5 = {
   dataElement: 'toolbarGroup-Measure',
   title: 'Measure',
   'img': 'icon-tool-measurement-distance-line',
@@ -69,26 +69,20 @@ const item4 = {
   type: 'ribbonItem',
 };
 
+const item6 = { ...mockModularComponents['toolbarGroup-Edit'] };
+const item7 = { ...mockModularComponents['toolbarGroup-FillAndSign'] };
+const item8 = { ...mockModularComponents['toolbarGroup-Forms'] };
+
 const store = configureStore({
   reducer: () => initialState,
 });
 
 export const RibbonGroupFull = () => {
-  // Removing toolbarGroup for match the testing output
-  // And avoiding re-creating test objects without toolbarGroup
-  const temp1 = { ...item1, toolbarGroup: null };
-  const temp2 = { ...item2, toolbarGroup: null };
-  const temp3 = { ...item3, toolbarGroup: null };
-  const temp4 = { ...mockModularComponents['toolbarGroup-Insert'],  toolbarGroup: null };
-  const temp5 = { ...item4, toolbarGroup: null };
-  const temp6 = { ...mockModularComponents['toolbarGroup-Edit'],  toolbarGroup: null };
-  const temp7 = { ...mockModularComponents['toolbarGroup-FillAndSign'],  toolbarGroup: null };
-  const temp8 = { ...mockModularComponents['toolbarGroup-Forms'],  toolbarGroup: null };
 
   const props = {
     dataElement: 'ribbon-group',
     headerDirection: 'row',
-    items: [temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8],
+    items: [item1, item2, item3, item4, item5, item6, item7, item8],
   };
 
   setItemToFlyoutStore(store);

@@ -26,10 +26,11 @@ const PAGE_RANGES = {
   SPECIFY: 'specify'
 };
 const FILE_TYPES = {
-  OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' },
-  PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
-  IMAGE: { label: 'PNG (*.png)', extension: 'png', },
-  OFFICE_EDITOR: { label: 'Word Document (*.docx)', extension: 'office', },
+  OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: workerTypes.OFFICE },
+  PDF: { label: 'PDF (*.pdf)', extension: workerTypes.PDF },
+  IMAGE: { label: 'PNG (*.png)', extension: 'png' },
+  OFFICE_EDITOR: { label: 'Word Document (*.docx)', extension: workerTypes.OFFICE },
+  SPREADSHEET_EDITOR: { label: 'Excel Document (*.xlsx)', extension: workerTypes.SPREADSHEET_EDITOR },
 };
 // These legacy office extensions return corrupted file data from the workers if downloaded as OFFICE
 const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
@@ -38,10 +39,9 @@ const SaveModal = () => {
   const store = useStore();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [isOpen, activeDocumentViewerKey] = useSelector((state) => [
-    selectors.isElementOpen(state, DataElements.SAVE_MODAL),
-    selectors.getActiveDocumentViewerKey(state),
-  ]);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SAVE_MODAL));
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
+  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
 
   const initalFileTypes = [FILE_TYPES.PDF, FILE_TYPES.IMAGE];
   const [fileTypes, setFileTypes] = useState(initalFileTypes);
@@ -77,6 +77,12 @@ const SaveModal = () => {
             FILE_TYPES.PDF
           ]);
           setFiletype(FILE_TYPES.OFFICE_EDITOR);
+        } else if (type === workerTypes.SPREADSHEET_EDITOR) {
+          setFileTypes([
+            FILE_TYPES.SPREADSHEET_EDITOR,
+            FILE_TYPES.PDF
+          ]);
+          setFiletype(FILE_TYPES.SPREADSHEET_EDITOR);
         }
         setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
@@ -183,7 +189,7 @@ const SaveModal = () => {
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
 
-  const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode();
+  const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode() || isSpreadsheetEditorMode;
 
   const customPagesLabelElement = (
     <div className={classNames('page-number-input-container', { error: !!errorText })}>

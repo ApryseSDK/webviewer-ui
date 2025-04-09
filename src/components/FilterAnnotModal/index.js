@@ -1,3 +1,3 @@
-import FilterAnnotModal from './FilterAnnotModal';
+import FilterAnnotModalContainer from './FilterAnnotModalContainer';
 
-export default FilterAnnotModal;
+export default FilterAnnotModalContainer;

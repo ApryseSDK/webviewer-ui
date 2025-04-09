@@ -1,9 +1,11 @@
 import { setCheckPasswordFunction } from 'components/PasswordModal';
 import core from 'core';
 import { fireError } from 'helpers/fireEvent';
+import getFileExtension from 'helpers/getFileExtension';
 import getHashParameters from 'helpers/getHashParameters';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
+import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_XLSX_EXTENSIONS } from 'constants/customizationVariables';
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   core.closeDocument(documentViewerKey);
@@ -28,9 +30,25 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
+  const extension = getFileExtension(src, options);
 
-  if (options.enableOfficeEditing && !src) {
-    core.loadBlankOfficeEditorDocument(options);
+  const isDOCXEditorMode = options.initialMode === VIEWER_CONFIGURATIONS.DOCX_EDITOR || options.enableOfficeEditing; // For backward compatibility
+  const isXLSXEditorMode = options.initialMode === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
+
+  if (isDOCXEditorMode && VALID_DOCX_EXTENSIONS.includes(extension)) {
+    options.enableOfficeEditing = true;
+  } else if (isXLSXEditorMode && VALID_XLSX_EXTENSIONS.includes(extension)) {
+    options.enableOfficeEditing = true;
+  } else {
+    options.enableOfficeEditing = false;
+  }
+
+  if (!src) {
+    if (isXLSXEditorMode) {
+      core.loadBlankSpreadsheet(options);
+    } else if (isDOCXEditorMode) {
+      core.loadBlankOfficeEditorDocument(options);
+    }
   } else {
     // ignore caught errors because they are already being handled in the onError callback
     core.loadDocument(src, options, documentViewerKey).catch(() => {});
@@ -62,8 +80,8 @@ const getDefaultOptions = () => ({
   useDownloader: getHashParameters('useDownloader', true),
   backendType: getHashParameters('pdf', null),
   loadAsPDF: getHashParameters('loadAsPDF', null),
+  initialMode: getHashParameters('initialMode', null),
   enableOfficeEditing: getHashParameters('enableOfficeEditing', false),
-  enableSpreadsheetEditorBeta: getHashParameters('enableSpreadsheetEditorBeta', false),
 });
 
 /**

@@ -4,7 +4,8 @@ import TextEditingPanel from './TextEditingPanel';
 import core from 'core';
 
 const TestTextEditingPanel = withProviders(TextEditingPanel);
-
+// eslint-disable-next-line custom/no-hex-colors
+const TEST_COLOR = '#FF0000';
 const noop = () => { };
 
 const mockProps = {
@@ -17,6 +18,11 @@ const mockProps = {
     underline: false,
   },
   undoRedoProperties: undefined,
+  rgbColor: {
+    toHexString: () => {
+      return TEST_COLOR;
+    }
+  }
 };
 
 core.getContentEditManager = () => ({
@@ -117,6 +123,43 @@ describe('TextEditingPanel', () => {
 
     redoButton.click();
     expect(mockProps.undoRedoProperties.handleRedo).toHaveBeenCalled();
+  });
+
+  it('should render font size dropdown disabled when contentSelectMode is false', () => {
+    mockProps.contentSelectMode = false;
+
+    render(<TestTextEditingPanel {...mockProps} />);
+    const fontSizeDropdown = screen.getByRole('combobox', { name: /Font Size/i });
+    expect(fontSizeDropdown).toHaveAttribute('disabled');
+  });
+
+  it('should render all style buttons disabled when contentSelectMode is false', () => {
+    mockProps.contentSelectMode = false;
+
+    render(<TestTextEditingPanel {...mockProps} />);
+    const boldButton = screen.getByRole('button', { name: 'Bold' });
+    const italicButton = screen.getByRole('button', { name: 'Italic' });
+    const underlineButton = screen.getByRole('button', { name: 'Underline' });
+    const strikeoutButton = screen.getByRole('button', { name: 'Strikeout' });
+    const alignLeftButton = screen.getByRole('button', { name: 'Text align left' });
+    const alignCenterButton = screen.getByRole('button', { name: 'Text align center' });
+    const alignRightButton = screen.getByRole('button', { name: 'Text align right' });
+
+    expect(boldButton).toBeDisabled();
+    expect(italicButton).toBeDisabled();
+    expect(underlineButton).toBeDisabled();
+    expect(strikeoutButton).toBeDisabled();
+    expect(alignLeftButton).toBeDisabled();
+    expect(alignCenterButton).toBeDisabled();
+    expect(alignRightButton).toBeDisabled();
+  });
+
+  it('should render color palette button disabled when imageSelectMode is true', () => {
+    mockProps.imageSelectMode = true;
+
+    render(<TestTextEditingPanel {...mockProps} />);
+    const colorPalette = screen.getByRole('button', { name: `Color ${TEST_COLOR}` });
+    expect(colorPalette).toBeDisabled();
   });
 
   it('should call handlePropertyChange with correct selectedContentBox when a font size dropdown item is clicked', async () => {

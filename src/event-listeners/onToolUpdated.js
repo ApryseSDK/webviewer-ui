@@ -14,6 +14,12 @@ export default (dispatch) => (tool) => {
   if (currentTool && currentTool.name === toolName) {
     dispatch(actions.setActiveToolStyles(toolStyles));
   }
+
+  const shouldCallSetSnapMode = core.isFullPDFEnabled() && currentTool && currentTool.getSnapMode;
+  if (shouldCallSetSnapMode) {
+    const snapMode = currentTool.getSnapMode();
+    dispatch(actions.setEnableSnapMode({ toolName, isEnabled: !!snapMode }));
+  }
 };
 
 const storeStyle = (toolName, toolStyles) => {

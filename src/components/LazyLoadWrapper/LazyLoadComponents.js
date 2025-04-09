@@ -72,6 +72,7 @@ const IndexPanel = lazy(() => import('src/components/ModularComponents/IndexPane
 
 // Sheets Editor
 const FormulaBar = lazy(() => import('components/FormulaBar'));
+const SpreadsheetSwitcher = lazy(() => import('components/ModularComponents/SpreadsheetSwitcher'));
 
 const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
 
@@ -140,6 +141,7 @@ const LazyLoadComponents = {
   FormFieldPanel,
   HeaderFooterOptionsModal,
   FormulaBar,
+  SpreadsheetSwitcher,
 };
 
 export default LazyLoadComponents;

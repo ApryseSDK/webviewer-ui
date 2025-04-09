@@ -150,7 +150,14 @@ const mockState = {
       'tabPanel': 'thumbnailsPanel',
     },
     flyoutMap: {},
-    customPanels: []
+    customPanels: [],
+    multiPageManipulationControls: [
+      { dataElement: 'leftPanelPageTabsRotate' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMove' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMore' },
+    ],
   },
   document: {
     bookmarks: [],
@@ -216,7 +223,14 @@ const initialStateThumbnailsOnly = {
     thumbnailSelectingPages: true,
     panelWidths: {
       'tabPanelIconsAndLabels': panelMinWidth,
-    }
+    },
+    multiPageManipulationControls: [
+      { dataElement: 'leftPanelPageTabsRotate' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMove' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMore' },
+    ],
   },
   document: {
     bookmarks: [],

@@ -1,9 +1,9 @@
 import React from 'react';
 import ScaleModal from './ScaleModal';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import core from 'core';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
+import { configureStore } from '@reduxjs/toolkit';
 
 export default {
   title: 'Components/ScaleModal',
@@ -14,36 +14,29 @@ core.getScales = () => [];
 core.getScalePrecision = () => 0.1;
 core.getViewerElement = () => {};
 
-const getStore = () => {
-  const initialState = {
-    viewer: {
-      openElements: { scaleModal: true },
-      disabledElements: {},
-      hiddenElements: {},
-      calibrationInfo: {
-        tempScale: '',
-        isFractionalUnit: false
-      },
-      measurementScalePreset: getMeasurementScalePreset(),
-      measurementUnits: {
-        from: ['in', 'mm', 'cm', 'pt'],
-        to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
-      },
-      selectedScale: initialScale,
-      customElementOverrides: {},
-    }
-  };
-
-  function rootReducer(state = initialState, action) {
-    return state;
+const initialState = {
+  viewer: {
+    openElements: { scaleModal: true },
+    disabledElements: {},
+    hiddenElements: {},
+    calibrationInfo: {
+      tempScale: '',
+      isFractionalUnit: false
+    },
+    measurementScalePreset: getMeasurementScalePreset(),
+    measurementUnits: {
+      from: ['in', 'mm', 'cm', 'pt'],
+      to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
+    },
+    selectedScale: initialScale,
+    customElementOverrides: {},
+    isAddingNewScale: true,
   }
-
-  return createStore(rootReducer);
 };
 
 export function Basic() {
   return (
-    <Provider store={getStore()}>
+    <Provider store={configureStore({ reducer: () => initialState })}>
       <ScaleModal />
     </Provider>
   );

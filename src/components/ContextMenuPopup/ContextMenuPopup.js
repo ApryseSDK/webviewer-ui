@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
-import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import FocusTrap from 'components/FocusTrap';
 import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
@@ -16,6 +16,7 @@ import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
+import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 
 import './ContextMenuPopup.scss';
 
@@ -58,24 +59,18 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
 const ContextMenuPopup = ({
   clickPosition,
 }) => {
-  const [
-    isOpen,
-    isDisabled,
-    isRightClickAnnotationPopupEnabled,
-    isMultiViewerMode,
-    activeDocumentViewerKey,
-    isCursorInTable,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP),
-      selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP),
-      selectors.isRightClickAnnotationPopupEnabled(state),
-      selectors.isMultiViewerMode(state),
-      selectors.getActiveDocumentViewerKey(state),
-      selectors.isCursorInTable(state),
-    ],
-    shallowEqual,
-  );
+
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP));
+  const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const isCursorInTable = useSelector(selectors.isCursorInTable);
+  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
+  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
+  const isReadOnlyMode = spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
+
+  const [isSpreadsheetAndReadOnlyMode, setIsSpreadsheetAndReadOnlyMode] = useState(isSpreadsheetEditorModeEnabled && isReadOnlyMode);
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -103,55 +98,82 @@ const ContextMenuPopup = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const isReadOnlyMode = spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
+    setIsSpreadsheetAndReadOnlyMode(isSpreadsheetEditorModeEnabled && isReadOnlyMode);
+  }, [isSpreadsheetEditorModeEnabled, spreadsheetEditorEditMode]);
+
   useLayoutEffect(() => {
-    let { left, top } = clickPosition;
-    const { width, height } = popupRef.current.getBoundingClientRect();
-    const documentContainer =
-      isMultiViewerMode
-        ? getRootNode().querySelector(`#DocumentContainer${activeDocumentViewerKey}`)
-        : getRootNode().querySelector('.DocumentContainer');
-    if (documentContainer) {
-      const containerBox = documentContainer.getBoundingClientRect();
-      const horizontalGap = 2;
-      const verticalGap = 2;
-      let offsetLeft = 0;
-      let offsetTop = 0;
-
-      if (window.isApryseWebViewerWebComponent) {
-        const host = getRootNode()?.host;
-        const hostBoundingRect = host?.getBoundingClientRect();
-
-        if (hostBoundingRect) {
-          offsetLeft = hostBoundingRect.left;
-          offsetTop = hostBoundingRect.top;
-
-          // Include host scroll offsets
-          offsetLeft += host.scrollLeft;
-          offsetTop += host.scrollTop;
-        }
-      }
-
-      left -= offsetLeft;
-      top -= offsetTop;
-
-      if (left < containerBox.left - offsetLeft) {
-        left = containerBox.left + horizontalGap - offsetLeft;
-      }
-
-      if (left + width > containerBox.right - offsetLeft) {
-        left = containerBox.right - width - horizontalGap - offsetLeft;
-      }
-
-      if (top < containerBox.top - offsetTop) {
-        top = containerBox.top + verticalGap - offsetTop;
-      }
-
-      if (top + height > containerBox.bottom - offsetTop) {
-        top = containerBox.bottom - height - verticalGap;
-      }
-      setPosition({ left, top });
+    if (isSpreadsheetAndReadOnlyMode) {
+      return;
     }
-  }, [clickPosition, isMultiViewerMode, activeDocumentViewerKey]);
+
+    const { width, height } = popupRef.current.getBoundingClientRect();
+    const documentContainerSelector = isMultiViewerMode ? `#DocumentContainer${activeDocumentViewerKey}` : '.DocumentContainer';
+    const documentContainer = getRootNode().querySelector(documentContainerSelector);
+    if (!documentContainer) {
+      return;
+    }
+
+    const containerBox = documentContainer.getBoundingClientRect();
+    const { left, top } = adjustPopupPosition(clickPosition, containerBox, width, height);
+    setPosition({ left, top });
+  }, [clickPosition, isMultiViewerMode, activeDocumentViewerKey, isSpreadsheetAndReadOnlyMode]);
+
+  /**
+   * Adjusts the position of the popup relative to the container.
+   */
+  const adjustPopupPosition = (clickPos, containerBox, width, height) => {
+    let { left, top } = clickPos;
+    const { offsetLeft, offsetTop } = getOffsetAdjustments();
+
+    left -= offsetLeft;
+    top -= offsetTop;
+
+    const horizontalGap = 2;
+    const verticalGap = 2;
+
+    if (left < containerBox.left - offsetLeft) {
+      left = containerBox.left + horizontalGap - offsetLeft;
+    }
+
+    if (left + width > containerBox.right - offsetLeft) {
+      left = containerBox.right - width - horizontalGap - offsetLeft;
+    }
+
+    if (top < containerBox.top - offsetTop) {
+      top = containerBox.top + verticalGap - offsetTop;
+    }
+
+    if (top + height > containerBox.bottom - offsetTop) {
+      top = containerBox.bottom - height - verticalGap;
+    }
+
+    return { left, top };
+  };
+
+  /**
+   * Retrieves offset adjustments if the app is running inside a Web Component.
+   */
+  const getOffsetAdjustments = () => {
+    let offsetLeft = 0;
+    let offsetTop = 0;
+
+    if (window.isApryseWebViewerWebComponent) {
+      const host = getRootNode()?.host;
+      const hostBoundingRect = host?.getBoundingClientRect();
+
+      if (hostBoundingRect) {
+        offsetLeft = hostBoundingRect.left;
+        offsetTop = hostBoundingRect.top;
+
+        // Include host scroll offsets
+        offsetLeft += host.scrollLeft;
+        offsetTop += host.scrollTop;
+      }
+    }
+    return { offsetLeft, offsetTop };
+  };
 
   const modifierKey = isMac ? '⌘ Command' : 'Ctrl';
   const modifierKeyShort = isMac ? '⌘Cmd' : 'Ctrl';
@@ -365,6 +387,10 @@ const ContextMenuPopup = ({
       </FocusTrap>
     </div>
   );
+
+  if (isSpreadsheetAndReadOnlyMode) {
+    return null;
+  }
 
   return isIE || isMobile ? (
     contextMenuPopup

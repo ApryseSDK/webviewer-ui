@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import TextButton from '../TextButton';
 import DataElementWrapper from '../DataElementWrapper';
-import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuTypes } from 'helpers/outlineFlyoutHelper';
 import DataElements from 'constants/dataElement';
 import PanelListItem from 'components/PanelListItem';
 

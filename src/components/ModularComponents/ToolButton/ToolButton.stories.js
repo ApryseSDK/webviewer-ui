@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import ToolButton from './ToolButton';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import { expect, within } from '@storybook/test';
+import core from 'core';
+import actions from 'actions';
 
 export default {
   title: 'ModularComponents/ToolButton',
@@ -80,4 +82,63 @@ WithCustomStyle.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button', { name: /Arc measurement/i });
   expect(button.classList.contains('arc-measurement-class')).toBe(true);
+};
+
+let toolStyles;
+const ReduxStory = () => {
+  toolStyles = {
+    StrokeColor: {
+      R: 0,
+      G: 122,
+      B: 59,
+      A: 1,
+      // eslint-disable-next-line custom/no-hex-colors
+      toHexString: () => '#007a3b'
+    },
+    StrokeThickness: 1,
+    Opacity: 1,
+  };
+  const props = {
+    dataElement: 'AnnotationCreateRectangle',
+    toolName: 'AnnotationCreateRectangle',
+  };
+  const originalGetTool = core.getTool;
+  core.getTool = () => ({
+    ...originalGetTool(),
+    defaults: toolStyles,
+  });
+  useEffect(() => {
+    return () => core.getTool = originalGetTool;
+  }, []);
+  return <ToolButton {...props}/>;
+};
+
+const store = configureStore({
+  reducer: () => ({
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      activeToolStyles: { ...toolStyles },
+    }
+  })
+});
+export const ChangingToolStylesShouldRerender = () => (
+  <Provider store={store}>
+    <ReduxStory/>
+  </Provider>
+);
+ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button', { name: /Rectangle/i });
+  await expect(button.firstChild.style.color).toBe('rgb(0, 122, 59)');
+  toolStyles.StrokeColor = {
+    R: 100,
+    G: 0,
+    B: 100,
+    A: 1,
+    // eslint-disable-next-line custom/no-hex-colors
+    toHexString: () => '#640064',
+  };
+  store.dispatch(actions.setActiveToolStyles(toolStyles));
+  await expect(button.firstChild.style.color).toBe('rgb(100, 0, 100)');
 };

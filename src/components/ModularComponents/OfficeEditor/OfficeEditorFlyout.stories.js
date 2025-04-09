@@ -8,7 +8,7 @@ import { expect } from '@storybook/test';
 
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 
 export default {
@@ -137,6 +137,8 @@ const activeColor = {
 
 const initialState = {
   officeEditor: {
+    canUndo: true,
+    canRedo: false,
     cursorProperties: {
       bold: true,
       italic: true,
@@ -157,7 +159,8 @@ const initialState = {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OfficeEditorEditMode.EDITING
+    editMode: OfficeEditorEditMode.EDITING,
+    stream: EditingStreamType.BODY,
   },
   viewer: {
     isOfficeEditorMode: true,
@@ -293,4 +296,10 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   // check active non printing characters button
   const nonPrintingCharactersButton = canvasElement.querySelector('[data-element="officeEditorToggleNonPrintingCharactersButton"]');
   expect(nonPrintingCharactersButton.parentElement.classList.contains('active'), 'non printing characters button should be active').toBe(true);
+
+  // check undo is enabled and redo is disabled
+  const undoButton = canvasElement.querySelector('[data-element="undoButton"]');
+  expect(undoButton.disabled, 'undo button should not be disabled').toBe(false);
+  const redoButton = canvasElement.querySelector('[data-element="redoButton"]');
+  expect(redoButton.disabled, 'redo button should be disabled').toBe(true);
 };

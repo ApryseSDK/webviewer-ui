@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import React, { forwardRef, useEffect, useState, useRef, } from 'react';
 import './IndexPanelContent.scss';
 import actions from 'actions';
 import Button from 'components/Button';
@@ -15,7 +10,7 @@ import PropTypes from 'prop-types';
 import DataElements from 'constants/dataElement';
 import { useTranslation } from 'react-i18next';
 import PanelListItem from 'src/components/PanelListItem';
-import { menuTypes } from '../../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuTypes } from 'helpers/outlineFlyoutHelper';
 import selectors from 'selectors';
 import { useSelector, useDispatch } from 'react-redux';
 

@@ -171,6 +171,76 @@ export function TypePanel() {
   );
 }
 
+export function TypePanelWithWidgetsInFormBuilderMode() {
+  const widgetAnnotations = [
+    new window.Core.Annotations.TextWidgetAnnotation(),
+    new window.Core.Annotations.ChoiceWidgetAnnotation(),
+    new window.Core.Annotations.ListWidgetAnnotation()
+  ];
+
+  const originalAnnotationList = window.documentViewer.getAnnotationManager().getAnnotationsList();
+  window.documentViewer.getAnnotationManager().getAnnotationsList = () => {
+    return [...originalAnnotationList, ...widgetAnnotations];
+  };
+
+  const props = {
+    isInFormBuilderMode: true
+  };
+
+  const initialStateTypePanel = {
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        filterAnnotModal: 'annotationTypeFilterPanelButton'
+      }
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
+    }
+  };
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialStateTypePanel })}>
+      <FilterAnnotModal {...props} />
+    </Provider>
+  );
+}
+
+export function TypePanelWithWidgetsNotInFormBuilderMode() {
+  const widgetAnnotations = [
+    new window.Core.Annotations.TextWidgetAnnotation(),
+    new window.Core.Annotations.ChoiceWidgetAnnotation(),
+    new window.Core.Annotations.ListWidgetAnnotation()
+  ];
+
+  const originalAnnotationList = window.documentViewer.getAnnotationManager().getAnnotationsList();
+  window.documentViewer.getAnnotationManager().getAnnotationsList = () => {
+    return [...originalAnnotationList, ...widgetAnnotations];
+  };
+
+  const props = {
+    isInFormBuilderMode: false
+  };
+
+  const initialStateTypePanel = {
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        filterAnnotModal: 'annotationTypeFilterPanelButton'
+      }
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
+    }
+  };
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialStateTypePanel })}>
+      <FilterAnnotModal {...props} />
+    </Provider>
+  );
+}
+
 export function MeasurementAnnotationsFilterEnabled() {
   const props = {
     isOpen: true

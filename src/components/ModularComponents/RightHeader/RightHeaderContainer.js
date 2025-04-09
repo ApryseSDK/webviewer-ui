@@ -21,14 +21,19 @@ function RightHeaderContainer() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { customizableUI } = featureFlags;
-  const floatingHeaders = rightHeaders.filter((header) => header.float);
-  const fullLengthHeaders = rightHeaders.filter((header) => !header.float);
 
-  if (fullLengthHeaders.length > 1) {
-    console.warn(`Right headers only support one full length header but ${fullLengthHeaders.length} were added. Only the first one will be rendered.`);
-  }
+  const [floatingHeaders, rightHeader] = useMemo(() => {
+    const floatingHeaders = [];
+    const fullLengthHeaders = [];
+    for (let header of rightHeaders) {
+      header.float ? floatingHeaders.push(header) : fullLengthHeaders.push(header);
+    }
+    if (fullLengthHeaders.length > 1) {
+      console.warn(`Right headers only support one full length header but ${fullLengthHeaders.length} were added. Only the first one will be rendered.`);
+    }
+    return [floatingHeaders, fullLengthHeaders[0]];
+  }, [rightHeaders]);
 
-  const rightHeader = fullLengthHeaders[0];
   const userDefinedStyle = rightHeader ? rightHeader.style : {};
   const [elementRef, dimensions] = useResizeObserver();
 
@@ -48,21 +53,21 @@ function RightHeaderContainer() {
     return styleObject;
   }, [bottomHeadersHeight, rightPanelOpen, rightPanelWidth, userDefinedStyle]);
 
+  const renderedHeader = useMemo(() => {
+    if (rightHeader) {
+      const { dataElement } = rightHeader;
+      return (<ModularHeader ref={elementRef} {...rightHeader} key={dataElement} style={style}/>);
+    }
+  }, [rightHeader]);
+
   if (!customizableUI || !rightHeaders.length) {
     return null;
   }
 
-  const renderRightHeader = () => {
-    if (rightHeader) {
-      const { dataElement } = rightHeader;
-      return (<ModularHeader ref={elementRef} {...rightHeader} key={dataElement} style={style} />);
-    }
-  };
-
   return (
     <nav className='RightHeaderNav' aria-label={t('accessibility.landmarks.rightHeader')}>
       <FloatingHeaderContainer floatingHeaders={floatingHeaders} placement={PLACEMENT.RIGHT} />
-      {renderRightHeader()}
+      {renderedHeader}
     </nav>
   );
 }

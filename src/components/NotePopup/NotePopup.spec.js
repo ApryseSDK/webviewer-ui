@@ -73,10 +73,10 @@ describe('NotePopup', () => {
     }).not.toThrow();
   });
 
-  it('Check aria-pressed tag', () => {
+  it('Check aria-expanded tag', () => {
     render(<BasicStory />);
     const btn = screen.getByRole('button');
-    expect(btn.getAttribute('aria-pressed')).toBe('true');
+    expect(btn.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('DifferentStates story should not throw error when rendering', () => {

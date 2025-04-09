@@ -15,4 +15,10 @@
   &:hover:not(:disabled) {
     box-shadow: inset 0 0 0 1px var(--gray-9);
   }
+
+  &.spreadsheetEditorFileName {
+    &:disabled span{
+      color: var(--text-color);
+    }
+  }
 }

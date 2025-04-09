@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
@@ -14,6 +14,20 @@ import classNames from 'classnames';
 const FormFieldEditButton = forwardRef((props, ref) => {
   const { isFlyoutItem, dataElement, style, className } = props;
   const { icon, title } = menuItems.formFieldEditButton;
+  const [active, setActive] = useState(core.getFormFieldCreationManager().isInFormFieldCreationMode());
+
+  useEffect(() => {
+    const formFieldCreationManager = core.getFormFieldCreationManager();
+    if (formFieldCreationManager) {
+      const updateState = () => setActive(formFieldCreationManager.isInFormFieldCreationMode());
+      formFieldCreationManager.addEventListener('formFieldCreationModeStarted', updateState);
+      formFieldCreationManager.addEventListener('formFieldCreationModeEnded', updateState);
+      return () => {
+        formFieldCreationManager.removeEventListener('formFieldCreationModeStarted', updateState);
+        formFieldCreationManager.removeEventListener('formFieldCreationModeEnded', updateState);
+      };
+    }
+  }, []);
 
   const handleClick = () => {
     const formFieldCreationManager = core.getFormFieldCreationManager();
@@ -39,8 +53,9 @@ const FormFieldEditButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           onClick={handleClick}
-          isActive={core.getFormFieldCreationManager().isInFormFieldCreationMode()}
+          isActive={active}
           style={style}
+          ariaPressed={active}
         />
       )
   );

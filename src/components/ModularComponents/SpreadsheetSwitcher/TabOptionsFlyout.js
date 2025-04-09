@@ -10,6 +10,7 @@ const createFlyoutItem = (option, dataElement) => ({
   title: `action.${option.toLowerCase()}`,
   option,
   dataElement,
+  disabled: true,
 });
 
 export const sheetTabOptionsFlyoutItems = [
@@ -21,7 +22,7 @@ const TabOptionsFlyout = (props) => {
   const {
     sheetId,
     handleClick,
-    tabs,
+    sheetCount,
   } = props;
 
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const TabOptionsFlyout = (props) => {
       dataElement: flyoutSelector,
       className: 'TabOptionsFlyout',
       items: sheetTabOptionsFlyoutItems.map((item) => {
-        let isDisabled = (item.option === 'Delete' && tabs.length === 1);
+        let isDisabled = (item.option === 'Delete' && sheetCount === 1) || item.disabled;
 
         return {
           ...item,
@@ -50,7 +51,7 @@ const TabOptionsFlyout = (props) => {
     }
   };
 
-  useLayoutEffect(update, [tabs]);
+  useLayoutEffect(update, [sheetCount]);
 
   return null;
 };
@@ -58,7 +59,7 @@ const TabOptionsFlyout = (props) => {
 TabOptionsFlyout.propTypes  = {
   sheetId: PropTypes.string,
   handleClick: PropTypes.func,
-  tabs: PropTypes.array,
+  sheetCount: PropTypes.number,
 };
 
 export default TabOptionsFlyout;

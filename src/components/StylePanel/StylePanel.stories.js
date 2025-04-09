@@ -96,6 +96,7 @@ StylePanelInAppMobileVersion.parameters = window.storybook.MobileParameters;
 const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
   useEffect(() => {
     const oldGetToolMode = core.getToolMode;
+    const oldToolMap = core.getToolModeMap;
     const newTool = new toolClass();
     newTool.name = toolName;
     newTool.defaults = {
@@ -107,7 +108,13 @@ const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
       ...defaults,
     };
     core.getToolMode = () => newTool;
-
+    core.getToolModeMap = () => ({
+      [toolName]: newTool,
+    });
+    mockStore.dispatch({
+      type: 'SET_ACTIVE_TOOL_NAME',
+      payload: { toolName },
+    });
     const oldGetTool = core.getTool;
     core.getTool = () => newTool;
 
@@ -115,6 +122,7 @@ const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
     return () => {
       core.getToolMode = oldGetToolMode;
       core.getTool = oldGetTool;
+      core.getToolModeMap = oldToolMap;
     };
   }, []);
 };
@@ -197,6 +205,15 @@ export const StylePanelDistanceTool = () => {
   });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
+
+StylePanelDistanceTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  expect(checkbox).toBeInTheDocument();
+  expect(checkbox.checked).toBe(true);
+  await userEvent.click(checkbox);
+  expect(checkbox.checked).toBe(false);
+};
 export const StylePanelArcMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useToolHook(window.Core.Tools.ArcMeasurementCreateTool, window.Core.Tools.ToolNames.ARC_MEASUREMENT, setShouldRender, {
@@ -204,6 +221,14 @@ export const StylePanelArcMeasurementTool = () => {
     Precision: 0.1,
   });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
+};
+StylePanelArcMeasurementTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  expect(checkbox).toBeInTheDocument();
+  expect(checkbox.checked).toBe(true);
+  await userEvent.click(checkbox);
+  expect(checkbox.checked).toBe(false);
 };
 export const StylePanelAreaMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -213,6 +238,14 @@ export const StylePanelAreaMeasurementTool = () => {
     Precision: 0.1,
   });
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
+};
+StylePanelAreaMeasurementTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  expect(checkbox).toBeInTheDocument();
+  expect(checkbox.checked).toBe(true);
+  await userEvent.click(checkbox);
+  expect(checkbox.checked).toBe(false);
 };
 export const StylePanelEllipseMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);

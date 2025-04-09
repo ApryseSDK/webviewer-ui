@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState, useCallback } from 'rea
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { menuTypes } from '../MoreOptionsContextMenuFlyout/MoreOptionsContextMenuFlyout';
+import { menuTypes } from 'helpers/outlineFlyoutHelper';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 import { Input } from '@pdftron/webviewer-react-toolkit';

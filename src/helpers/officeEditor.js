@@ -18,6 +18,10 @@ export function isOfficeEditorMode() {
   return core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR;
 }
 
+export function isSpreadsheetEditorDocument() {
+  return core.getDocument()?.getType() === workerTypes.SPREADSHEET_EDITOR;
+}
+
 export const calculateLineSpacing = (lineHeightMultiplier, lineHeight, fontSize) => {
   // if lineHeight is provided, it takes precedence, because the rule sets the line height in points (either exact or at least)
   const lineSpacing = lineHeight ? lineHeight / fontSize : lineHeightMultiplier;
@@ -124,7 +128,21 @@ export const PAGE_SECTION_BREAK_OPTIONS = [
     key: 'pageBreak',
     label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreak`,
     description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}pageBreakDescription`,
-    icon: 'icon-header-page-manipulation-page-layout-double-page-line',
+    icon: 'icon-office-editor-page-break-split',
     onClick: () => core.getOfficeEditor().insertPageBreak(),
+  },
+  {
+    key: 'sectionBreakNextPage',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPage`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakNextPageDescription`,
+    icon: 'icon-office-editor-page-break',
+    onClick: () => core.getOfficeEditor().insertSectionBreakNextPage(),
+  },
+  {
+    key: 'sectionBreakContinuous',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuous`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}sectionBreakContinuousDescription`,
+    icon: 'icon-page-manipulation-extract',
+    onClick: () => core.getOfficeEditor().insertSectionBreakContinuous(),
   },
 ];

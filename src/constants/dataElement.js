@@ -72,7 +72,7 @@ const DataElements = {
   CALIBRATION_MODAL: 'calibrationModal',
   PAGE_NAV_FLOATING_HEADER: 'page-nav-floating-header',
   TABS_LIST_MENU: 'tabsListMenu',
-  ADDITIONAL_SHEET_TABS_MENU: 'additionalSheetTabsMenu',
+  ADDITIONAL_SPREADSHEET_TABS_MENU: 'additionalSpreadsheetTabsMenu',
 
   NotesPanel: {
     DefaultHeader: {
@@ -215,7 +215,7 @@ const DataElements = {
 
   // MultiViewer Mode (MultiViewer)
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
-  // Sheet Editor
+  // Spreadsheet Editor
   SPREADSHEET_EDITOR_TOOLS_HEADER: 'spreadsheetEditorToolsHeader',
 
   // Office Editor
@@ -354,6 +354,7 @@ const DataElements = {
 
   // Sheets Editor
   FORMULA_BAR: 'formulaBar',
+  SPREADSHEET_SWITCHER: 'spreadsheetSwitcher'
 };
 
 DataElements.TOOLBAR_GROUPS = [

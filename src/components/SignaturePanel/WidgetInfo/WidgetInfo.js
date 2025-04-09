@@ -20,40 +20,26 @@ export const renderPermissionStatus = ({
   ModificationPermissionsStatus,
   permissionStatus,
   translate,
+  digestStatus,
+  DigestStatusErrorCodes
 }) => {
-  let content;
 
-  switch (permissionStatus) {
-    case ModificationPermissionsStatus.e_invalidated_by_disallowed_changes:
-      content = translate(
-        'digitalSignatureVerification.permissionStatus.invalidatedByDisallowedChanges'
-      );
-      break;
-    case ModificationPermissionsStatus.e_has_allowed_changes:
-      content = translate(
-        'digitalSignatureVerification.permissionStatus.hasAllowedChanges'
-      );
-      break;
-    case ModificationPermissionsStatus.e_unmodified:
-      content = `${translate('digitalSignatureVerification.permissionStatus.unmodified')
-      } ${isCertification
-        ? translate('digitalSignatureVerification.certified')
-        : translate('digitalSignatureVerification.signed')
-      }.`;
-      break;
-    case ModificationPermissionsStatus.e_permissions_verification_disabled:
-      content = translate(
-        'digitalSignatureVerification.permissionStatus.permissionsVerificationDisabled'
-      );
-      break;
-    case ModificationPermissionsStatus.e_no_permissions_status:
-      content = translate(
-        'digitalSignatureVerification.permissionStatus.noPermissionsStatus'
-      );
-      break;
+  if (digestStatus === DigestStatusErrorCodes.e_digest_invalid) {
+    return <p>{translate('digitalSignatureVerification.digestStatus.documentHasBeenAltered')}</p>;
   }
 
-  return <p>{content}</p>;
+  const permissionMessages = {
+    [ModificationPermissionsStatus.e_invalidated_by_disallowed_changes]: 'digitalSignatureVerification.permissionStatus.invalidatedByDisallowedChanges',
+    [ModificationPermissionsStatus.e_has_allowed_changes]: 'digitalSignatureVerification.permissionStatus.hasAllowedChanges',
+    [ModificationPermissionsStatus.e_unmodified]: isCertification
+      ? `${translate('digitalSignatureVerification.permissionStatus.unmodified')} ${translate('digitalSignatureVerification.certified')}.`
+      : `${translate('digitalSignatureVerification.permissionStatus.unmodified')} ${translate('digitalSignatureVerification.signed')}.`,
+    [ModificationPermissionsStatus.e_permissions_verification_disabled]: 'digitalSignatureVerification.permissionStatus.permissionsVerificationDisabled',
+    [ModificationPermissionsStatus.e_no_permissions_status]: 'digitalSignatureVerification.permissionStatus.noPermissionsStatus',
+    [ModificationPermissionsStatus.e_unsupported_permissions_features]: 'digitalSignatureVerification.permissionStatus.unsupportedPermissionsFeatures'
+  };
+
+  return <p>{translate(permissionMessages[permissionStatus] || '')}</p>;
 };
 
 const propTypes = {
@@ -68,7 +54,7 @@ const WidgetInfo = ({ name, field }) => {
   const [signatureDetailsExpanded, setSignatureDetailsExpanded] = useState(false);
   const { VerificationResult, VerificationOptions } = window.Core.PDFNet;
   const { TimeMode } = VerificationOptions;
-  const { ModificationPermissionsStatus } = VerificationResult;
+  const { ModificationPermissionsStatus, DigestStatus: DigestStatusErrorCodes } = VerificationResult;
   const [translate] = useTranslation();
 
   const {
@@ -86,6 +72,7 @@ const WidgetInfo = ({ name, field }) => {
     location,
     reason,
     signerName,
+    digestStatus,
   } = verificationResult;
 
   const dispatch = useDispatch();
@@ -146,48 +133,6 @@ const WidgetInfo = ({ name, field }) => {
           }
         </p>
       </div>
-    );
-  };
-
-  const renderPermissionStatus = () => {
-    let content;
-
-    switch (permissionStatus) {
-      case ModificationPermissionsStatus.e_invalidated_by_disallowed_changes:
-        content = translate(
-          'digitalSignatureVerification.permissionStatus.invalidatedByDisallowedChanges'
-        );
-        break;
-      case ModificationPermissionsStatus.e_has_allowed_changes:
-        content = translate(
-          'digitalSignatureVerification.permissionStatus.hasAllowedChanges'
-        );
-        break;
-      case ModificationPermissionsStatus.e_unmodified:
-        content = `${translate('digitalSignatureVerification.permissionStatus.unmodified')
-        } ${isCertification
-          ? translate('digitalSignatureVerification.certified')
-          : translate('digitalSignatureVerification.signed')
-        }.`;
-        break;
-      case ModificationPermissionsStatus.e_permissions_verification_disabled:
-        content = translate(
-          'digitalSignatureVerification.permissionStatus.permissionsVerificationDisabled'
-        );
-        break;
-      case ModificationPermissionsStatus.e_no_permissions_status:
-        content = translate(
-          'digitalSignatureVerification.permissionStatus.noPermissionsStatus'
-        );
-        break;
-    }
-
-    return (
-      <li>
-        <p>
-          {content}
-        </p>
-      </li>
     );
   };
 
@@ -296,7 +241,6 @@ const WidgetInfo = ({ name, field }) => {
               arrow: true,
               expanded: signatureDetailsExpanded,
             })}
-            role="button"
             ariaExpanded={signatureDetailsExpanded}
             isActive={signatureDetailsExpanded}
             ariaLabel={translate('digitalSignatureVerification.signatureDetails.signatureDetails')}
@@ -441,14 +385,18 @@ const WidgetInfo = ({ name, field }) => {
                   })
                 }
                 <ul className="body">
-                  {
-                    renderPermissionStatus({
-                      isCertification,
-                      ModificationPermissionsStatus,
-                      permissionStatus,
-                      translate,
-                    })
-                  }
+                  <li>
+                    {
+                      renderPermissionStatus({
+                        isCertification,
+                        ModificationPermissionsStatus,
+                        permissionStatus,
+                        translate,
+                        digestStatus,
+                        DigestStatusErrorCodes,
+                      })
+                    }
+                  </li>
                   {renderDisallowedChanges()}
                   {renderTrustVerification()}
                   {renderSignaturePropertiesButton()}
