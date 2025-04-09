@@ -153,13 +153,14 @@ function Slider(props) {
 
   function renderInputElement() {
     const text = t(`option.slider.${displayProperty}`);
-    const ariaLabel = `${text} ${getDisplayValue(displayValue)}`;
+    const ariaLabel = `${text} ${displayValue}pt`;
     return (isEditingInputField && inputFieldType === 'number') ? (
       <div className="slider-input-wrapper">
         <input
           ref={inputRef}
           className="slider-input-field is-editing"
           aria-label={ariaLabel}
+          aria-labelledby={`slider-${label}`}
           autoFocus
           type="text"
           min={min}
@@ -177,6 +178,7 @@ function Slider(props) {
         type="text"
         className="slider-input-field"
         aria-label={ariaLabel}
+        aria-labelledby={`slider-${label}`}
         value={getDisplayValue(displayValue)}
         onFocus={setIsEditingInputField}
       />
@@ -195,6 +197,7 @@ function Slider(props) {
           <input
             ref={sliderRef}
             style={{ width: '100%' }}
+            aria-labelledby={`slider-${label}`}
             aria-label={label}
             aria-valuemin={min}
             aria-valuemax={max}

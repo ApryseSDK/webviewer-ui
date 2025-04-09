@@ -81,7 +81,7 @@ function Dropdown({
   id = '',
   items,
   images,
-  width = DEFAULT_WIDTH,
+  width = width || DEFAULT_WIDTH,
   height,
   columns = 1,
   currentSelectionKey,

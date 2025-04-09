@@ -35,6 +35,7 @@ const prepareButtonStory = (buttonType, enableNonPrintingCharacters = false) => 
   );
 };
 
+
 export function MergeToggle() {
   initialState.officeEditor.cursorProperties.bold = false; // set inactive state
   return prepareButtonStory(PRESET_BUTTON_TYPES.CELL_MERGE_TOGGLE);

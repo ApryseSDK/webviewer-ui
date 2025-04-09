@@ -5,6 +5,7 @@ import core from 'core';
 import { userEvent, expect, within } from '@storybook/test';
 import EditorFileName from './EditorFileName';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+
 export default {
   title: 'ModularComponents/EditorFileName',
   component: EditorFileName,

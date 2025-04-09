@@ -8,7 +8,7 @@ import { expect, userEvent, within } from '@storybook/test';
 
 export default {
   title: 'Components/WatermarkModal',
-  component: WatermarkModalComponent,
+  component: WatermarkModal,
 };
 
 const reducer = combineReducers({

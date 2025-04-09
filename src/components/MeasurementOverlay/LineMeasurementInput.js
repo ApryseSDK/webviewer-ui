@@ -29,6 +29,22 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
   const unit = annotation?.DisplayUnits[0] || selectedTool?.Measure?.unit;
   const [length, setLength] = useState((annotation?.getLineLength() * factor || 0).toFixed(2));
 
+  useEffect(() => {
+    if (!annotation) {
+      setAngle(computeAngle());
+      return;
+    }
+    const onAnnotationChanged = () => {
+      setLength((annotation.getLineLength() * factor).toFixed(2));
+      setAngle(computeAngle());
+    };
+    core.addEventListener('mouseMove', onAnnotationChanged);
+
+    return () => {
+      core.removeEventListener('mouseMove', onAnnotationChanged);
+    };
+  }, [annotation, computeAngle, factor, selectedTool]);
+
   const onInputChanged = (event) => {
     setLength(event.target.value);
     validateLineLength(event);
@@ -67,42 +83,6 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
   const isApproximatelyEqual = (value1, value2) => {
     return Math.abs(value1 - value2) < 0.1;
   };
-
-  const forceLineRedraw = useCallback(() => {
-    const annotationManager = core.getAnnotationManager();
-    annotationManager.drawAnnotations(annotation.PageNumber);
-    annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
-  }, [annotation]);
-
-  const getMaxLineLengthInPts = useCallback(() => {
-    const currentPageNumber = core.getCurrentPage();
-    const documentWidth = core.getPageWidth(currentPageNumber);
-    const documentHeight = core.getPageHeight(currentPageNumber);
-    const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
-    const startPoint = annotation.getStartPoint();
-    const startX = startPoint.x;
-    const startY = startPoint.y;
-
-    let maxX;
-    let maxY;
-    if (Math.abs(angleInDegrees) < 90) {
-      maxX = documentWidth;
-    } else {
-      maxX = 0;
-    }
-
-    if (angleInDegrees > 0) {
-      maxY = documentHeight;
-    } else {
-      maxY = 0;
-    }
-
-    const maxLenX = Math.abs((maxX - startX) / Math.cos(annotation.getAngle()));
-    const maxLenY = Math.abs((maxY - startY) / Math.sin(annotation.getAngle()));
-
-    return Math.min(maxLenX, maxLenY);
-  }, [annotation]);
-
 
   const ensureLineIsWithinBounds = useCallback(
     (lengthInPts) => {
@@ -151,6 +131,41 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
     );
   };
 
+  const forceLineRedraw = useCallback(() => {
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.drawAnnotations(annotation.PageNumber);
+    annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
+  }, [annotation]);
+
+  const getMaxLineLengthInPts = useCallback(() => {
+    const currentPageNumber = core.getCurrentPage();
+    const documentWidth = core.getPageWidth(currentPageNumber);
+    const documentHeight = core.getPageHeight(currentPageNumber);
+    const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
+    const startPoint = annotation.getStartPoint();
+    const startX = startPoint.x;
+    const startY = startPoint.y;
+
+    let maxX;
+    let maxY;
+    if (Math.abs(angleInDegrees) < 90) {
+      maxX = documentWidth;
+    } else {
+      maxX = 0;
+    }
+
+    if (angleInDegrees > 0) {
+      maxY = documentHeight;
+    } else {
+      maxY = 0;
+    }
+
+    const maxLenX = Math.abs((maxX - startX) / Math.cos(annotation.getAngle()));
+    const maxLenY = Math.abs((maxY - startY) / Math.sin(annotation.getAngle()));
+
+    return Math.min(maxLenX, maxLenY);
+  }, [annotation]);
+
   const setLineAngle = (event) => {
     const angle = event.target.value;
     const angleInRadians = angle * (Math.PI / 180) * -1;
@@ -187,22 +202,6 @@ function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
       ensureLineIsWithinBounds(annotation.getLineLength());
     }
   }, [annotation, ensureLineIsWithinBounds, isOpen]);
-
-  useEffect(() => {
-    if (!annotation) {
-      setAngle(computeAngle());
-      return;
-    }
-    const onAnnotationChanged = () => {
-      setLength((annotation.getLineLength() * factor).toFixed(2));
-      setAngle(computeAngle());
-    };
-    core.addEventListener('mouseMove', onAnnotationChanged);
-
-    return () => {
-      core.removeEventListener('mouseMove', onAnnotationChanged);
-    };
-  }, [annotation, computeAngle, factor, selectedTool]);
 
   return (
     <>

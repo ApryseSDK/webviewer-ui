@@ -82,16 +82,6 @@ const Note = ({
     shallowEqual,
   );
 
-  const setIsEditing = useCallback(
-    (isEditing, index) => {
-      setIsEditingMap((map) => ({
-        ...map,
-        [index]: isEditing,
-      }));
-    },
-    [setIsEditingMap],
-  );
-
   const replies = annotation
     .getReplies()
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
@@ -261,6 +251,16 @@ const Note = ({
       repliesSetToRead.forEach((r) => dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: r.Id })));
     }
   };
+
+  const setIsEditing = useCallback(
+    (isEditing, index) => {
+      setIsEditingMap((map) => ({
+        ...map,
+        [index]: isEditing,
+      }));
+    },
+    [setIsEditingMap],
+  );
 
   const groupAnnotations = core.getGroupAnnotations(annotation, documentViewerKey);
   const isGroup = groupAnnotations.length > 1;

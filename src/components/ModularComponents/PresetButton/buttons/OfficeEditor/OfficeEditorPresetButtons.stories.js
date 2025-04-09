@@ -34,16 +34,11 @@ const prepareButtonStory = (buttonType, enableNonPrintingCharacters = false) => 
       getIsNonPrintingCharactersEnabled: () => enableNonPrintingCharacters,
     }),
   });
-  window.Core.Annotations.Color = class {
-    toString() {
-      return 'rgba(0, 255, 0, 1)';
-    }
-
-    toHexString() {
+  window.Core.Annotations.Color = () => ({
+    toString: () => 'rgba(0, 255, 0, 1)',
     // eslint-disable-next-line custom/no-hex-colors
-      return '#00FF00';
-    }
-  };
+    toHexString: () => '#00FF00',
+  });
 
   return (
     <Provider store={store}>

@@ -2,32 +2,42 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import Dropdown from 'components/Dropdown';
-import OfficeEditorCreateTablePopup from 'components/OfficeEditorCreateTablePopup';
 import DataElement from 'constants/dataElement';
-import ActionButton from 'components/ActionButton';
+import { EditingStreamType } from 'constants/officeEditor';
+import Dropdown from 'components/Dropdown';
 import Icon from 'components/Icon';
+import ActionButton from 'components/ActionButton';
+import OfficeEditorCreateTablePopup from 'components/OfficeEditorCreateTablePopup';
 
-const TableButton = (isOpen) => {
+const TableButton = ({ isOpen, disabled }) => {
   return (
     <>
       <ActionButton
         dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE_BUTTON}
         title='officeEditor.table'
         img='ic-table'
-        isActive={isOpen}
         label="officeEditor.table"
+        isActive={isOpen}
         ariaPressed={isOpen}
         ariaExpanded={isOpen}
+        disabled={disabled}
       />
-      <Icon className="arrow" glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+      <Icon
+        className='arrow'
+        glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`}
+        disabled={disabled}
+      />
     </>
   );
 };
 
+const renderToggleButton = (isOpen, disabled) => <TableButton isOpen={isOpen} disabled={disabled} />;
+
 const CreateTableDropdown = () => {
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
   const [isOpen, setIsOpen] = useState(false);
+  const isDisabled = activeStream !== EditingStreamType.BODY;
 
   return (
     <Dropdown
@@ -37,8 +47,9 @@ const CreateTableDropdown = () => {
         'dropdown-text-icon': true,
         'modular-ui': customizableUI,
       })}
-      displayButton={TableButton}
       width={136}
+      disabled={isDisabled}
+      displayButton={(isOpen) => renderToggleButton(isOpen, isDisabled)}
       onOpened={() => setIsOpen(true)}
       onClosed={() => setIsOpen(false)}
     >

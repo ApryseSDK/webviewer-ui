@@ -54,26 +54,6 @@ function NotesPanelContainer(props) {
   }, [activeDocumentViewerKey, isMultiSelectedViewerMap[1], isMultiSelectedViewerMap[2], setIsMultiSelectedViewerMap]);
   const isMultiSelectedMap = isMultiSelectedViewerMap[activeDocumentViewerKey] || isMultiSelectedViewerMap[1];
 
-  const isValidAnnotation = (annot) => {
-    const annotationManager = core.getAnnotationManager();
-    const formFieldCreationManager = annotationManager.getFormFieldCreationManager();
-    const isWidgetAnnotation = annot instanceof window.Core.Annotations.WidgetAnnotation;
-
-    const isListableAnnotation = annot.Listable && !isWidgetAnnotation;
-    const isInFormCreationMode = isWidgetAnnotation && formFieldCreationManager.isInFormFieldCreationMode();
-    const isValidForOfficeEditor = !isOfficeEditorMode || mapAnnotationToKey(annot) === annotationMapKeys.TRACKED_CHANGE;
-
-    return (
-      (isListableAnnotation || isInFormCreationMode) &&
-      !annot.isReply() &&
-      !annot.Hidden &&
-      !annot.isGrouped() &&
-      annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
-      !annot.isContentEditPlaceholder() &&
-      isValidForOfficeEditor
-    );
-  };
-
   useEffect(() => {
     const onDocumentUnloaded = (documentViewerKey = activeDocumentViewerKey) => () => {
       setNotes([], documentViewerKey);
@@ -91,7 +71,15 @@ function NotesPanelContainer(props) {
       setNotes(
         core
           .getAnnotationsList(documentViewerKey)
-          .filter(isValidAnnotation),
+          .filter(
+            (annot) => annot.Listable &&
+              !annot.isReply() &&
+              !annot.Hidden &&
+              !annot.isGrouped() &&
+              annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
+              !annot.isContentEditPlaceholder() &&
+              (!isOfficeEditorMode || mapAnnotationToKey(annot) === annotationMapKeys.TRACKED_CHANGE),
+          ),
         documentViewerKey,
       );
     };
