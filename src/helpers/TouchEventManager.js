@@ -410,7 +410,7 @@ const TouchEventManager = {
     requestAnimationFrame(momentumScroll);
   },
   easeOutQuad(currentTime, startValue, changeInValue, duration) {
-    // http://gizma.com/easing/#quad2
+    // https://nicmulvaney.com/easing/#quad2
     currentTime /= duration;
 
     return -changeInValue * currentTime * (currentTime - 2) + startValue;
