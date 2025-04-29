@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    runs-on: self-hosted
+    runs-on: default
     steps:
       - name: Checkout
         uses: actions/checkout@v3
