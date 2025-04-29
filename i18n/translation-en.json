@@ -519,7 +519,9 @@
       "type": "Type",
       "shareType": "Share type",
       "coAssessor": "Co-assessor",
-      "author": "Author"
+      "author": "Author",
+      "filterDocument": "Filter document and comments panel",
+      "filterSettings": "Filter Settings"
     },
     "state": {
       "accepted": "Accepted",
@@ -921,38 +923,9 @@
       "November",
       "December"
     ],
-    "monthsShort": [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
-    "weekdays": [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "weekdaysShort": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
+    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "today": "Today",
     "invalidDateTime": "Invalid Date/Time: Input should match format"
   },
