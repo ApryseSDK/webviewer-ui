@@ -164,6 +164,23 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
     }
   }
 
+  getItemsValidationError(items) {
+    if (this.type === ITEM_TYPE.RIBBON_GROUP) {
+      const allAreRibbonItems = items.every((item) => item?.type === ITEM_TYPE.RIBBON_ITEM);
+      if (!allAreRibbonItems) {
+        return 'Invalid items provided to setItems. Ribbon Group only accepts Ribbon Items.';
+      }
+    } else {
+      const hasInvalid = items.some((item) => {
+        return typeof item !== 'object' || !item.type || item.type === ITEM_TYPE.RIBBON_ITEM;
+      });
+      if (hasInvalid) {
+        return 'Invalid items provided to setItems. Items should be an array of objects.';
+      }
+    }
+    return false;
+  }
+
   /**
    * Sets the items in the GroupedItems
    * @method UI.Components.GroupedItems#setItems
@@ -171,6 +188,11 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
    */
   setItems(items) {
     checkTypes([items], [TYPES.ARRAY(TYPES.ANY)], 'GroupedItems.setItems');
+    const itemsValidationError = this.getItemsValidationError(items);
+    if (itemsValidationError) {
+      console.warn(itemsValidationError);
+      return;
+    }
     this.items = items;
     this.store.dispatch(actions.updateGroupedItems(this.dataElement, items));
   }

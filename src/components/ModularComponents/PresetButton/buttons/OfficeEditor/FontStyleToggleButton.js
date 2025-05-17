@@ -6,7 +6,7 @@ import selectors from 'selectors';
 import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
-import { STYLE_TOGGLE_OPTIONS } from 'src/constants/officeEditor';
+import { STYLE_TOGGLE_OPTIONS } from 'src/constants/customizationVariables';
 
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,

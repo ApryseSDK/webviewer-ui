@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import DataElements from 'constants/dataElement';
-import actions from 'actions';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import setCellFormatString from '../../../../../helpers/setCellFormatString';
 
 const propTypes = {
   formatType: PropTypes.string,
@@ -13,22 +13,18 @@ const propTypes = {
   secondaryLabel: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  selector: PropTypes.func,
 };
 
 const CellFormatButton = forwardRef((props, ref) => {
   const { isFlyoutItem, formatType, secondaryLabel, style, className } = props;
-  const dispatch = useDispatch();
-  const isActive = false;
+  const currentFormatType = useSelector((state) => selectors.getActiveCellFormatType(state));
+  const isActive = formatType === currentFormatType;
 
-  const key = `${formatType.charAt(0).toLowerCase()}${formatType.slice(1)}`;
-  const { dataElement, icon, title } = menuItems[key];
+  const { dataElement, icon, title } = menuItems[formatType];
 
   const handleClick = () => {
-    // handle button click
-    if (dataElement === DataElements.CELL_FORMAT_MORE_BUTTON) {
-      dispatch(actions.setFlyoutToggleElement(dataElement));
-      dispatch(actions.toggleElement(DataElements.CELL_FORMAT_MORE_FLYOUT));
-    }
+    setCellFormatString(formatType);
   };
 
   return (

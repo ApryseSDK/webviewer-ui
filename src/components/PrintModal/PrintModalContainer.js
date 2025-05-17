@@ -123,10 +123,19 @@ const PrintModalContainer = () => {
   };
 
   const embeddedPrinting = async () => {
-    const printingOptions = { isCurrentView, includeAnnotations, includeComments, watermarkModalOptions, pagesToPrint };
+    const isAlwaysPrintAnnotationsInColorEnabled = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
+    const printingOptions = {
+      isCurrentView,
+      includeAnnotations,
+      includeComments,
+      watermarkModalOptions,
+      pagesToPrint,
+      isGrayscale,
+      isAlwaysPrintAnnotationsInColorEnabled,
+    };
     const document = core.getDocument();
-    const annotManager = core.getAnnotationManager();
-    printEmbeddedPDF(await processEmbeddedPrintOptions(printingOptions, document, annotManager));
+    const annotationManager = core.getAnnotationManager();
+    printEmbeddedPDF(await processEmbeddedPrintOptions(printingOptions, document, annotationManager));
   };
 
   const rasterPrinting = (e) => {

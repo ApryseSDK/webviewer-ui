@@ -32,7 +32,8 @@ const getStore = (num) => {
           }
         }
       ],
-      shortcutKeyMap: { ...ShortcutKeys }
+      shortcutKeyMap: { ...ShortcutKeys },
+      isWidgetHighlightingEnabled: true,
     },
     search: {
       clearSearchPanelOnClose: false

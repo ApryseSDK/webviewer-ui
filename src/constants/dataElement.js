@@ -35,13 +35,15 @@ const DataElements = {
   OUTLINE_PANEL: 'outlinesPanel',
   OUTLINE_PANEL_BUTTON: 'outlinesPanelButton',
   OUTLINE_MULTI_SELECT: 'outlineMultiSelect',
-  OUTLINE_CONTROLS: 'outlineControls',
   OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
   OUTLINE_ADD_NEW_BUTTON: 'addNewOutlineButton',
-  OUTLINE_MOVE_UP_BUTTON: 'moveOutlineUpButton',
-  OUTLINE_MOVE_DOWN_BUTTON: 'moveOutlineDownButton',
-  OUTLINE_MOVE_OUTWARD_BUTTON: 'moveOutlineOutwardButton',
-  OUTLINE_MOVE_INWARD_BUTTON: 'moveOutlineInwardButton',
+  OUTLINE_RENAME_BUTTON: 'outlineRenameButton',
+  OUTLINE_SET_DESTINATION_BUTTON: 'outlineSetDestinationButton',
+  OUTLINE_DELETE_BUTTON: 'outlineDeleteButton',
+  OUTLINE_MOVE_UP_BUTTON: 'outlineMoveUpButton',
+  OUTLINE_MOVE_DOWN_BUTTON: 'outlineMoveDownButton',
+  OUTLINE_MOVE_LEFT_BUTTON: 'outlineMoveLeftButton',
+  OUTLINE_MOVE_RIGHT_BUTTON: 'outlineMoveRightButton',
   BOOKMARK_PANEL: 'bookmarksPanel',
   BOOKMARK_MULTI_SELECT: 'bookmarkMultiSelect',
   BOOKMARK_SHORTCUT_OPTION: 'bookmarkShortcutOption',
@@ -147,6 +149,10 @@ const DataElements = {
   LINE_SPACING_FLYOUT: 'lineSpacingFlyout',
   PAGE_MANIPULATION: 'pageManipulationFlyout',
   PAGE_MANIPULATION_FLYOUT_MULTI_SELECT: 'pageManipulationFlyoutMultiSelect',
+  CELL_TEXT_COLOR_FLYOUT: 'cellTextColorFlyout',
+  CELL_BACKGROUND_COLOR_FLYOUT: 'cellBackgroundColorFlyout',
+  CELL_BORDER_COLOR_FLYOUT: 'cellBorderColorFlyout',
+  CELL_BORDER_BUTTONS_FLYOUT: 'cellBorderButtonsFlyout',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -173,7 +179,6 @@ const DataElements = {
   OPEN_FILE_MODAL: 'OpenFileModal',
   CUSTOM_MODAL: 'customModal',
   CREATE_PORTFOLIO_MODAL: 'createPortfolioModal',
-  HEADER_FOOTER_OPTIONS_MODAL: 'headerFooterOptionsModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
@@ -243,7 +248,12 @@ const DataElements = {
   OFFICE_EDITOR_COLOR_PICKER_OVERLAY: 'officeEditorColorPickerOverlay',
   OFFICE_EDITOR_TEXT_COLOR_BUTTON: 'textColorButton',
   OFFICE_EDITOR_REVIEW_PANEL: 'officeEditorReviewPanel',
+  HEADER_FOOTER_OPTIONS_MODAL: 'headerFooterOptionsModal',
+  OFFICE_EDITOR_MARGINS_MODAL: 'officeEditorMarginsModal',
   HEADER_FOOTER_CONTROLS_OVERLAY: 'headerFooterControlsOverlay',
+  TRACK_CHANGE_DROPDOWN: 'trackChangeDropdown',
+  OFFICE_EDITOR_MARGIN_DROPDOWN_TOGGLE: 'officeEditorMarginDropdownToggle',
+  OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
@@ -313,7 +323,8 @@ const DataElements = {
 
 
   // Cell Border Style
-  BORDER_STYLE_BUTTON: 'cellBorderStyleButton',
+  CELL_BORDER_FLYOUT: 'cellBorderFlyout',
+  BORDER_STYLE_DROPDOWN: 'cellBorderStyleDropdown',
 
   MERGE_TOGGLE_BUTTON: 'mergeToggleButton',
   UNMERGE_TOGGLE_BUTTON: 'unmergeToggleButton',
@@ -323,9 +334,7 @@ const DataElements = {
   CELL_FORMAT_PERCENT_BUTTON: 'cellFormatAsPercentButton',
   CELL_FORMAT_DEC_DECIMAL_BUTTON: 'cellFormatAsDecDecimalButton',
   CELL_FORMAT_INC_DECIMAL_BUTTON: 'cellFormatAsIncDecimalButton',
-  CELL_FORMAT_MORE_BUTTON: 'formatMore',
   CELL_FORMAT_MORE_FLYOUT: 'cellFormatMoreFlyout',
-
   CELL_COPY_BUTTON: 'cellCopyButton',
   CELL_CUT_BUTTON: 'cellCutButton',
   CELL_PASTE_BUTTON: 'cellPasteButton',
@@ -342,8 +351,7 @@ const DataElements = {
 
   // Cell Adjustment
   CELL_ADJUSTMENT_BUTTON: 'cellAdjustmentButton',
-  CELL_ADJUSTMENT_FLYOUT: 'cellAdjustmentFlyout ',
-  ABJ_INCERT_COL_LEFT: 'adjustmentIncertColLeft ',
+  CELL_ADJUSTMENT_FLYOUT: 'cellAdjustmentFlyout',
 
   // Rubber Stamp Panel
   CREATE_RUBBER_STAMP_BUTTON_WRAP: 'createRubberStampButtonWrap',

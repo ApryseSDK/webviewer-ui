@@ -11,6 +11,8 @@ import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import { workerTypes } from 'constants/types';
+import getType from 'core/getType';
 import { isOfficeEditorMode } from './officeEditor';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
@@ -275,15 +277,22 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.OutlineEditing]: {
       dataElements: [
-        'outlineControls',
-        'addNewOutlineButtonContainer',
-        'addNewOutlineButton',
-        'outlineEditPopup',
-        'outlineRenameButton',
-        'outlineSetDestinationButton',
-        'outlineDeleteButton',
+        DataElements.OUTLINE_MULTI_SELECT,
+        DataElements.OUTLINE_ADD_NEW_BUTTON_CONTAINER,
+        DataElements.OUTLINE_ADD_NEW_BUTTON,
+        DataElements.OUTLINE_RENAME_BUTTON,
+        DataElements.OUTLINE_SET_DESTINATION_BUTTON,
+        DataElements.OUTLINE_DELETE_BUTTON,
+        DataElements.OUTLINE_MOVE_UP_BUTTON,
+        DataElements.OUTLINE_MOVE_DOWN_BUTTON,
+        DataElements.OUTLINE_MOVE_LEFT_BUTTON,
+        DataElements.OUTLINE_MOVE_RIGHT_BUTTON,
       ],
       fn: () => {
+        if (getType() === workerTypes.OFFICE) {
+          console.warn('Outline Editing is not supported in Office Viewing mode');
+        }
+
         store.dispatch(actions.setIsOutlineEditing(enable));
       }
     },

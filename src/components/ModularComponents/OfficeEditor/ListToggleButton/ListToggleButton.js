@@ -72,10 +72,11 @@ const ListToggleButton = (props) => {
         dataElement={`office-editor-${listTypeName}-list-dropdown`}
         images={listTypeName === 'bullet' ? bulletListObjects : numberListOptions}
         columns={3}
+        width={'auto'}
+        height={32}
         onClickItem={(val) => {
           core.getOfficeEditor().setListPreset(val);
         }}
-        className='list-style-dropdown'
         translationPrefix={`officeEditor.${listTypeName}Dropdown`}
         showLabelInList={true}
       />

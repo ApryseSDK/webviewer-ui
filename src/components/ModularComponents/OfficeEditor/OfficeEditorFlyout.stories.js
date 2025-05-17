@@ -4,12 +4,13 @@ import Flyout from '../Flyout';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
-import { expect } from '@storybook/test';
+import { expect, within } from '@storybook/test';
 
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
+import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 export default {
   title: 'ModularComponents/OfficeEditorFlyout',
@@ -24,9 +25,9 @@ const stylePresetDropdown = {
   type: 'stylePresetDropdown',
 };
 
-const fontFaceDropdown = {
-  dataElement: 'fontFaceDropdown',
-  type: 'fontFaceDropdown',
+const fontFamilyDropdown = {
+  dataElement: 'fontFamilyDropdown',
+  type: 'fontFamilyDropdown',
 };
 
 const fontSizeDropdown = {
@@ -163,6 +164,7 @@ const initialState = {
     stream: EditingStreamType.BODY,
   },
   viewer: {
+    uiConfiguration: VIEWER_CONFIGURATIONS.DOCX_EDITOR,
     isOfficeEditorMode: true,
     toolButtonObjects: {},
     colorMap: {},
@@ -190,7 +192,7 @@ const initialState = {
         'dataElement': 'flyoutMenu',
         'items': [
           stylePresetDropdown,
-          fontFaceDropdown,
+          fontFamilyDropdown,
           fontSizeDropdown,
           divider,
           boldButton,
@@ -240,15 +242,13 @@ const store = configureStore({
 export const FlyoutComponent = () => {
   core.getOfficeEditor = () => ({
     isTextSelected: () => false,
-    isCursorInTable: () => false
+    isCursorInTable: () => false,
+    getIsNonPrintingCharactersEnabled: () => true,
   });
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
     addEventListener: () => { },
     removeEventListener: () => { },
-    getOfficeEditor: () => ({
-      getIsNonPrintingCharactersEnabled: () => true,
-    }),
   });
   window.Core.Annotations.Color = class {
     toString() {
@@ -270,41 +270,43 @@ export const FlyoutComponent = () => {
 
 
 FlyoutComponent.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
   // check style buttons active state
-  const boldButton = canvasElement.querySelector('[data-element="boldButton"]');
-  expect(boldButton.parentElement.classList.contains('active'), 'bold button should be active').toBe(true);
-  const italicButton = canvasElement.querySelector('[data-element="italicButton"]');
-  expect(italicButton.parentElement.classList.contains('active'), 'italic button should be active').toBe(true);
-  const underlineButton = canvasElement.querySelector('[data-element="underlineButton"]');
-  expect(underlineButton.parentElement.classList.contains('active'), 'underline button should be active').toBe(true);
+  const boldButton = await canvas.findByRole('button', { name: 'Bold' });
+  expect(boldButton).toHaveAttribute('aria-pressed', 'true');
+  const italicButton = await canvas.findByRole('button', { name: 'Italic' });
+  expect(italicButton).toHaveAttribute('aria-pressed', 'true');
+  const underlineButton =  await canvas.findByRole('button', { name: 'Underline' });
+  expect(underlineButton).toHaveAttribute('aria-pressed', 'true');
 
   // check list type buttons active state
-  const orderedListButton = canvasElement.querySelector('[data-element="orderedListButton"]');
-  expect(orderedListButton.parentElement.classList.contains('active'), 'ordered list button should be active').toBe(true);
-  const unorderedListButton = canvasElement.querySelector('[data-element="unorderedListButton"]');
-  expect(unorderedListButton.parentElement.classList.contains('active'), 'unordered list button should be inactve').toBe(false);
+  const orderedListButton =  await canvas.findByRole('button', { name: 'Numbered list' });
+  expect(orderedListButton).toHaveAttribute('aria-pressed', 'true');
+  const unorderedListButton = await canvas.findByRole('button', { name: 'Bulleted list' });
+  expect(unorderedListButton).toHaveAttribute('aria-pressed', 'false');
 
   // check alignment buttons active state
-  const leftAlignButton = canvasElement.querySelector('[data-element="alignLeftButton"]');
-  expect(leftAlignButton.parentElement.classList.contains('active'), 'justify left button should be inactive').toBe(false);
-  const centerAlignButton = canvasElement.querySelector('[data-element="alignCenterButton"]');
-  expect(centerAlignButton.parentElement.classList.contains('active'), 'justify center button should be inactive').toBe(false);
-  const rightAlignButton = canvasElement.querySelector('[data-element="alignRightButton"]');
-  expect(rightAlignButton.parentElement.classList.contains('active'), 'justify right button should be inactive').toBe(false);
-  const justifyBothButton = canvasElement.querySelector('[data-element="justifyBothButton"]');
-  expect(justifyBothButton.parentElement.classList.contains('active'), 'justify both button should be active').toBe(true);
+  const leftAlignButton =  await canvas.findByRole('button', { name: 'Left align' });
+  expect(leftAlignButton).toHaveAttribute('aria-pressed', 'false');
+  const centerAlignButton = await canvas.findByRole('button', { name: 'Center align' });
+  expect(centerAlignButton).toHaveAttribute('aria-pressed', 'false');
+  const rightAlignButton = await canvas.findByRole('button', { name: 'Right align' });
+  expect(rightAlignButton).toHaveAttribute('aria-pressed', 'false');
+  const justifyBothButton = await canvas.findByRole('button', { name: 'Justify' });
+  expect(justifyBothButton).toHaveAttribute('aria-pressed', 'true');
 
-  // check active color picker button
-  const colorPickerButtonIcon = canvasElement.querySelector('[data-element="textColorButton"]');
-  expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
+  // check active color picker button's icon
+  // eslint-disable-next-line custom/no-hex-colors
+  const colorPickerIcon = canvas.getByLabelText('#00FF00');
+  expect(colorPickerIcon).toBeInTheDocument();
 
   // check active non printing characters button
-  const nonPrintingCharactersButton = canvasElement.querySelector('[data-element="officeEditorToggleNonPrintingCharactersButton"]');
-  expect(nonPrintingCharactersButton.parentElement.classList.contains('active'), 'non printing characters button should be active').toBe(true);
+  const nonPrintingCharactersButton = await canvas.findByRole('button', { name: 'Non-printing characters' });
+  expect(nonPrintingCharactersButton).toHaveAttribute('aria-pressed', 'true');
 
   // check undo is enabled and redo is disabled
-  const undoButton = canvasElement.querySelector('[data-element="undoButton"]');
+  const undoButton = await canvas.findByRole('button', { name: 'Undo' });
   expect(undoButton.disabled, 'undo button should not be disabled').toBe(false);
-  const redoButton = canvasElement.querySelector('[data-element="redoButton"]');
+  const redoButton = await canvas.findByRole('button', { name: 'Redo' });
   expect(redoButton.disabled, 'redo button should be disabled').toBe(true);
 };

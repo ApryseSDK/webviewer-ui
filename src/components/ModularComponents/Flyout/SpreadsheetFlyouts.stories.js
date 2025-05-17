@@ -7,6 +7,8 @@ import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import { defaultSpreadsheetFlyoutMap } from '../../../redux/spreadsheetEditorComponents';
 import { oePartialState } from 'helpers/storybookHelper';
+import { within } from '@storybook/test';
+import { fireEvent } from '@testing-library/react';
 
 export default {
   title: 'SpreadsheetEditor/Flyouts',
@@ -50,8 +52,10 @@ const createInitialState = (activeFlyout, openElement) => ({
         ],
       },
       [DataElements.CELL_FORMAT_MORE_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_FORMAT_MORE_FLYOUT],
+      [DataElements.CELL_BORDER_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_BORDER_FLYOUT],
       [DataElements.CELL_ADJUSTMENT_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_ADJUSTMENT_FLYOUT],
       [DataElements.CELL_TEXT_ALIGNMENT_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_TEXT_ALIGNMENT_FLYOUT],
+      [DataElements.CELL_BORDER_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_BORDER_FLYOUT],
     },
     modularComponents: {},
     flyoutPosition: { x: 0, y: 0 },
@@ -63,10 +67,28 @@ const createInitialState = (activeFlyout, openElement) => ({
       bottomHeaders: 40,
     },
     isSpreadsheetEditorModeEnabled: true,
+    uiConfiguration: 'spreadsheetEditor',
   },
   featureFlags: {
     customizableUI: true,
   },
+  spreadsheetEditor: {
+    'activeCellRange': 'A1',
+    'cellProperties': {
+      'cellType': 3,
+      'stringCellValue': '[Company Name]',
+      'topLeftRow': 0,
+      'topLeftColumn': 0,
+      'bottomRightRow': 0,
+      'bottomRightColumn': 0,
+      'styles': {
+        'verticalAlignment': 'middle',
+        'horizontalAlignment': 'left',
+        'formatType': 'currencyRoundedFormat',
+      }
+    },
+    editMode: 'editing',
+  }
 });
 
 const createStore = (activeFlyout, openElement) => {
@@ -99,6 +121,29 @@ export const CellAdjustmentFlyout = () => {
       <Flyout />
     </Provider>
   );
+};
+
+export const CellBorderFlyout = () => {
+  const store = createStore(DataElements.CELL_BORDER_FLYOUT, DataElements.CELL_BORDER_FLYOUT);
+  return (
+    <Provider store={store}>
+      <Flyout />
+    </Provider>
+  );
+};
+
+export const CellBorderFlyoutWithDropdown = () => {
+  const store = createStore(DataElements.CELL_BORDER_FLYOUT, DataElements.CELL_BORDER_FLYOUT);
+  return (
+    <Provider store={store}>
+      <Flyout />
+    </Provider>
+  );
+};
+CellBorderFlyoutWithDropdown.play = async ({ canvasElement }) => {
+  const canvas = await within(canvasElement);
+  const dropdown = canvas.getByRole('combobox');
+  fireEvent.mouseDown(dropdown);
 };
 
 export const CellTextAlignmentFlyout = () => {

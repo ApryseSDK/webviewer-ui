@@ -145,7 +145,8 @@
     "showMoreColors": "Zobrazit více barev",
     "showLessColors": "Zobrazit méně barev",
     "fromCustomColorPicker": "z Custom Color Picker",
-    "newSpreadsheetDocument": "Nová tabulka"
+    "newSpreadsheetDocument": "Nová tabulka",
+    "resetDefault": "Obnovit výchozí"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Načtení zašifrovaného dokumentu se nezdařilo. Příliš mnoho pokusů.",
     "encryptedUserCancelled": "Načtení zašifrovaného dokumentu se nezdařilo. Zadání hesla bylo zrušeno.",
     "enterPassword": "Tento dokument je chráněn heslem. Prosím, vložte heslo",
-    "incorrectPassword": "Nesprávné heslo, zbývající počet pokusů: {{ zbývajícíPokusy }}",
+    "incorrectPassword": "Nesprávné heslo, zbývající počet pokusů: {{ remainingAttempts }}",
     "noAnnotations": "Začněte vytvářet poznámky, abyste mohli zanechat komentář.",
     "noAnnotationsReadOnly": "Tento dokument neobsahuje žádné poznámky.",
     "noAnnotationsFilter": "Začněte vytvářet poznámky a zde se zobrazí filtry.",
@@ -305,6 +306,8 @@
     "searching": "Hledání...",
     "searchCommentsPlaceholder": "Hledat komentáře",
     "searchDocumentPlaceholder": "Vyhledat dokument",
+    "clearSearchResults": "Vymazat výsledky vyhledávání",
+    "searchResultsCleared": "Výsledky vyhledávání byly vymazány",
     "searchSettingsPlaceholder": "Nastavení vyhledávání",
     "searchSuggestionsPlaceholder": "Návrhy vyhledávání",
     "signHere": "Zde se podepište",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redigovat",
       "toolbarGroup-oe-Home": "Domov",
       "toolbarGroup-oe-Insert": "Vložit",
+      "toolbarGroup-oe-Layout": "Rozvržení",
       "toolbarGroup-oe-Review": "Posouzení"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Přidat nové razítko"
     },
     "signatureOverlay": {
-      "addSignature": "Přidat nový podpis",
-      "addSignatureOrInitials": "Podpis/Iniciály"
+      "addSignatureOrInitials": "Nový podpis/iniciály",
+      "addSignature": "Nový podpis"
     },
     "signatureModal": {
       "modalName": "Vytvořit nový podpis",
@@ -728,6 +732,8 @@
       "viewing": "Prohlížení",
       "disableFadePageNavigationComponent": "Zakažte komponentu navigace na stránce Fade",
       "disableFadePageNavigationComponentDesc": "Vždy mějte komponentu Navigace na obrazovce na obrazovce. Výchozí chování je vyblednout po určité době nečinnosti.",
+      "enabledFormFieldHighlighting": "Povolit zvýraznění polí formuláře",
+      "enabledFormFieldHighlightingDesc": "Povolit zvýraznění polí formuláře v dokumentech PDF. Ve výchozím nastavení povoleno.",
       "disableNativeScrolling": "Zakázat nativní posouvání",
       "disableNativeScrollingDesc": "Zakažte nativní chování posouvání mobilního zařízení, pokud bylo dříve povoleno. Všimněte si, že nativní chování posouvání mobilních zařízení je ve výchozím nastavení vypnuto.",
       "annotations": "Anotace",
@@ -798,6 +804,12 @@
       "editShortcut": "Upravit zástupce",
       "shortcutAlreadyExists": "Výše uvedená klávesová zkratka již existuje.",
       "close": "Zavřít popisek"
+    },
+    "cellBorderStyle": {
+      "none": "Žádný",
+      "solid": "Solidní",
+      "dashed": "čárkovaná",
+      "dotted": "Tečkovaný"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Přestávka sekce - Průběžná",
     "sectionBreakContinuousDescription": "Vložte konec oddílu a pokračujte na stejné stránce ",
     "section": "Sekce",
+    "margins": "Okraje",
+    "normal": "Normální",
+    "narrow": "Úzký",
+    "moderate": "Mírný",
+    "wide": "Široký",
+    "top": "Nahoře",
+    "bottom": "Dno",
+    "left": "Vlevo",
+    "right": "Právo",
+    "customMargins": "Vlastní okraje",
+    "customMarginsDescription": "Definování vlastních okrajů",
     "header": {
       "0": "Záhlaví",
       "1": "Záhlaví první stránky",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Odebrat zápatí",
     "headerFooterOptionsModal": {
       "title": "Formát záhlaví a zápatí",
-      "margins": "Okraje",
       "headerFromTop": "Záhlaví shora",
       "footerFromBottom": "Zápatí zdola",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Různé sudé a liché stránky",
         "differentFirstEvenOddPages": "Různé první, sudé a liché stránky"
       }
+    },
+    "marginsModal": {
+      "title": "Vlastní úprava okrajů",
+      "leftMargin": "Levý okraj",
+      "rightMargin": "Pravý okraj",
+      "topMargin": "Horní okraj",
+      "bottomMargin": "Dolní okraj"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "kurzíva",
     "underline": "Zdůraznit",
     "strikethrough": "Přeškrtnutí",
+    "strikeout": "Přeškrtnutí",
     "cellBorderStyle": "Styl ohraničení",
     "merge": "Spojit",
     "unmerge": "Zrušit sloučení",
     "cellFormat": "Formát buňky",
-    "automatic": "Automatický",
-    "plainText": "Prostý text",
-    "increaseDecimal": "Zvětšit desetinné místo",
-    "decreaseDecimal": "Snížit desetinné místo",
-    "number": "Číslo",
-    "percent": "procent",
-    "accounting": "Účetnictví",
-    "financial": "Finanční",
-    "currency": "Měna",
-    "currencyRounded": "Měna zaokrouhlená",
-    "calendar": "Datum",
-    "clockHour": "Čas",
-    "calendarTime": "Datum Čas",
+    "automaticFormat": "Automatický",
+    "plainTextFormat": "Prostý text",
+    "increaseDecimalFormat": "Zvětšit desetinné místo",
+    "decreaseDecimalFormat": "Snížit desetinné místo",
+    "numberFormat": "Číslo",
+    "percentFormat": "procent",
+    "accountingFormat": "Účetnictví",
+    "financialFormat": "Finanční",
+    "currencyFormat": "Měna",
+    "currencyRoundedFormat": "Měna zaokrouhlená",
+    "calendarFormat": "Datum",
+    "clockHourFormat": "Čas",
+    "calendarTimeFormat": "Datum Čas",
     "formatAsCurrency": "Formát jako měna",
     "formatAsPercent": "Formátovat jako procento",
     "formatAsDecDecimal": "Snížit desetinnou čárku",
     "formatAsIncDecimal": "Zvětšit desetinnou čárku",
-    "fontColor": "Barva písma",
-    "cellBackgroundColor": "Barva pozadí buňky",
+    "textColor": "Barva textu",
+    "cellBackgroundColor": "Barva pozadí",
+    "cellBorderColor": "Barva ohraničení",
+    "textLabel": "Text",
+    "backgroundLabel": "Pozadí",
+    "borderLabel": "Pohraniční",
     "textAlignment": "Zarovnání textu",
-    "alignLeft": "Zarovnejte doleva",
-    "alignCenter": "Zarovnejte střed",
-    "alignRight": "Zarovnejte doprava",
-    "alignTop": "Zarovnejte horní část",
-    "alignMiddle": "Zarovnejte na střed",
-    "alignBottom": "Zarovnejte spodní část",
+    "topAlign": "Zarovnat nahoru",
+    "middleAlign": "Zarovnat na střed",
+    "bottomAlign": "Spodní zarovnání",
     "cellAdjustment": "Úprava buňky",
-    "insertColLeft": "Vložit sloupec vlevo",
-    "columnInsertLeft": "Vložit sloupec vlevo",
-    "columnInsertRight": "Vložit sloupec vpravo",
-    "rowInsertTop": "Vložit řádek výše",
-    "rowInsertBottom": "Vložte řádek níže",
-    "columnInsertShiftDown": "Vložte buňky a posuňte dolů",
-    "columnInsertShiftRight": "Vložte buňky a posuňte doprava",
-    "columnDelete": "Smazat sloupec",
-    "rowDelete": "Smazat řádek",
-    "columnDeleteShiftUp": "Smažte buňky a posuňte se nahoru",
-    "columnDeleteShiftLeft": "Smažte buňky a posuňte se doleva"
+    "cellFormatMoreOptions": "Více možností formátu buněk",
+    "insertColumnLeft": "Vložit sloupec vlevo",
+    "insertColumnRight": "Vložit sloupec vpravo",
+    "insertRowTop": "Vložit řádek výše",
+    "insertRowBottom": "Vložte řádek níže",
+    "insertColumnShiftDown": "Vložte buňky a posuňte dolů",
+    "insertColumnShiftRight": "Vložte buňky a posuňte doprava",
+    "deleteColumn": "Smazat sloupec",
+    "deleteRow": "Smazat řádek",
+    "deleteColumnShiftUp": "Smažte buňky a posuňte se nahoru",
+    "deleteColumnShiftLeft": "Smažte buňky a posuňte se doleva",
+    "clearBorder": "Jasné ohraničení",
+    "cellBorderAll": "Všechny hranice",
+    "cellBorderInside": "Uvnitř hranic",
+    "cellBorderOutside": "Mimo hranice",
+    "cellBorderTop": "Horní okraj",
+    "cellBorderBottom": "Dolní okraj",
+    "cellBorderLeft": "Levá hranice",
+    "cellBorderRight": "Pravá hranice",
+    "cellBorderVertical": "Vertikální ohraničení",
+    "cellBorderHorizontal": "Horizontální hranice",
+    "cellBorderNone": "Žádné hranice",
+    "borders": "Hranice",
+    "fontSize": {
+      "dropdownLabel": "Velikost písma"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Rodina písem"
+    },
+    "blankSheet": "Prázdný list"
   },
   "insertPageModal": {
     "title": "Vložit novou stránku",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Přidat k vlastním barvám",
     "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj",
     "noToolStyle": "Nástroj neobsahuje žádné stylingové vlastnosti.",
+    "noSharedToolStyle": "Vybrané anotace nesdílejí žádné stylistické vlastnosti.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Začátek řádku"

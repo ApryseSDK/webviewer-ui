@@ -6,6 +6,10 @@ import {
   ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
   DEFAULT_COLOR,
   OFFICE_EDITOR_TRANSLATION_PREFIX,
+  MARGIN_VALUES,
+  MARGIN_SIDES,
+  MARGIN_UNITS,
+  CM_PER_INCH,
 } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { rgbaToHex } from 'helpers/color';
@@ -146,3 +150,69 @@ export const PAGE_SECTION_BREAK_OPTIONS = [
     onClick: () => core.getOfficeEditor().insertSectionBreakContinuous(),
   },
 ];
+
+async function applyMargins() {
+  // const { top, left, bottom, right } = this;
+  // core.getOfficeEditor().setMargins({ top, left, bottom, right });
+}
+
+export const MARGIN_OPTIONS = [
+  {
+    key: 'normal',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}normal`,
+    [MARGIN_SIDES.TOP]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.BOTTOM]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.LEFT]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.RIGHT]: MARGIN_VALUES.NORMAL,
+    onClick: applyMargins,
+  },
+  {
+    key: 'narrow',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}narrow`,
+    [MARGIN_SIDES.TOP]: MARGIN_VALUES.NARROW,
+    [MARGIN_SIDES.BOTTOM]: MARGIN_VALUES.NARROW,
+    [MARGIN_SIDES.LEFT]: MARGIN_VALUES.NARROW,
+    [MARGIN_SIDES.RIGHT]: MARGIN_VALUES.NARROW,
+    onClick: applyMargins,
+  },
+  {
+    key: 'moderate',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}moderate`,
+    [MARGIN_SIDES.TOP]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.BOTTOM]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.LEFT]: MARGIN_VALUES.MODERATE,
+    [MARGIN_SIDES.RIGHT]: MARGIN_VALUES.MODERATE,
+    onClick: applyMargins,
+  },
+  {
+    key: 'wide',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}wide`,
+    [MARGIN_SIDES.TOP]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.BOTTOM]: MARGIN_VALUES.NORMAL,
+    [MARGIN_SIDES.LEFT]: MARGIN_VALUES.WIDE,
+    [MARGIN_SIDES.RIGHT]: MARGIN_VALUES.WIDE,
+    onClick: applyMargins,
+  },
+  {
+    key: 'customMargins',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customMargins`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customMarginsDescription`,
+    onClick: () => {},
+  },
+];
+
+export const validateMarginInput = (input, maxMarginInInches, currentUnit) => {
+  let maxMarginConverted = maxMarginInInches;
+  if (currentUnit === MARGIN_UNITS.CM) {
+    maxMarginConverted = maxMarginInInches * CM_PER_INCH;
+  }
+  if (input && input <= 0) {
+    return '0';
+  }
+  // Removes leading zero unless it is followed by a decimal
+  const validatedInput = input.replace(/^0+(?!\.)/, '');
+  if (parseFloat(validatedInput) > maxMarginConverted) {
+    return maxMarginConverted.toFixed(2);
+  }
+  return validatedInput;
+};

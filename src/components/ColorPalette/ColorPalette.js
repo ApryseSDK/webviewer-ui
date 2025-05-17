@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { BASIC_PALETTE } from 'constants/commonColors';
 import Tooltip from 'components/Tooltip';
 import DataElements from 'constants/dataElement';
+import { transparentIcon } from 'helpers/colorPickerHelper';
 
 import './ColorPalette.scss';
 
@@ -23,6 +24,8 @@ const propTypes = {
   colorMapKey: PropTypes.string,
   onClose: PropTypes.func,
   disabled: PropTypes.bool,
+  ariaTypeLabel: PropTypes.string,
+  onKeyDownHandler: PropTypes.func,
 };
 
 const ColorPalette = ({
@@ -36,6 +39,8 @@ const ColorPalette = ({
   colorMapKey,
   onClose,
   disabled = false,
+  ariaTypeLabel = '',
+  onKeyDownHandler,
 }) => {
 
   const [
@@ -46,8 +51,19 @@ const ColorPalette = ({
     selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
   ]);
 
+  const getActivePalette = () => {
+    const allowTransparent = property !== 'TextColor' && property !== 'StrokeColor';
+
+    let activePalette = overridePalette2 || overridePalette?.[colorMapKey] || overridePalette?.global || BASIC_PALETTE;
+    if (!allowTransparent) {
+      activePalette = activePalette.filter((p) => p?.toLowerCase() !== 'transparency');
+    }
+
+    return activePalette;
+  };
+
   const [t] = useTranslation();
-  const [palette, setPalette] = useState(BASIC_PALETTE);
+  const [palette, setPalette] = useState(getActivePalette());
   const [numberOfRows, setNumberOfRows] = useState(1);
   const [activeButton, setActiveButton] = useState(null);
   const [buttonRefs, setButtonRefs] = useState([]);
@@ -61,18 +77,6 @@ const ColorPalette = ({
     }
     onStyleChange(property, rgbaColor);
   };
-
-  /* eslint-disable custom/no-hex-colors */
-  const transparentIcon = (
-    <svg
-      width="100%"
-      height="100%"
-      className='transparent'
-    >
-      <line stroke='#D82E28' x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-  /* eslint-enable custom/no-hex-colors */
 
   const getRowColFromIndex = (buttonIndex) => {
     const rowIndex = parseInt((buttonIndex) / DEFAULT_GRID_COLS, 10);
@@ -129,6 +133,10 @@ const ColorPalette = ({
   };
 
   const onKeyDown = (buttonColor, buttonIndex) => (event) => {
+    if (onKeyDownHandler) {
+      onKeyDownHandler(event);
+      return;
+    }
     const { rowIndex, colIndex } = getRowColFromIndex(buttonIndex);
     switch (event.key) {
       case 'ArrowRight':
@@ -172,13 +180,7 @@ const ColorPalette = ({
   };
 
   useEffect(() => {
-    const allowTransparent = property !== 'TextColor' && property !== 'StrokeColor';
-
-    let activePalette = overridePalette2 || overridePalette?.[colorMapKey] || overridePalette?.global || BASIC_PALETTE;
-    if (!allowTransparent) {
-      activePalette = activePalette.filter((p) => p?.toLowerCase() !== 'transparency');
-    }
-
+    const activePalette = getActivePalette();
     setPalette(activePalette.map((color) => color?.toLowerCase()));
     setNumberOfRows(Math.ceil(activePalette.length / DEFAULT_GRID_COLS));
     setButtonRefs(activePalette.map(() => createRef()));
@@ -203,6 +205,15 @@ const ColorPalette = ({
     return null;
   }
 
+  const getColorButtonLabel = (buttonColor) => {
+    let label = '';
+    if (ariaTypeLabel) {
+      label += `${t(ariaTypeLabel)} `;
+    }
+    label += `${t('option.colorPalette.colorLabel')} ${buttonColor.toUpperCase()}`;
+    return label;
+  };
+
   return (
     <div
       data-element={DataElements.COLOR_PALETTE}
@@ -217,13 +228,13 @@ const ColorPalette = ({
           ? <div key={`color-${i + 1}`} className='dummy-cell' />
           : <Tooltip
             key={`color-${i + 1}`}
-            content={`${t('option.colorPalette.colorLabel')} ${buttonColor.toUpperCase()}`}
+            content={getColorButtonLabel(buttonColor)}
             ref={buttonRefs[i]}
           >
             <button
               className='cell-container'
               aria-current={isButtonSelected(buttonColor)}
-              aria-label={`${t('option.colorPalette.colorLabel')} ${buttonColor.toUpperCase()}`}
+              aria-label={getColorButtonLabel(buttonColor)}
               onClick={() => setColor(buttonColor)}
               onKeyDown={onKeyDown(buttonColor, i)}
               disabled={disabled}

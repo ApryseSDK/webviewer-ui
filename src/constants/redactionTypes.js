@@ -33,7 +33,7 @@ export const defaultRedactionTypes = {
     label: 'redactionPanel.redactionItem.fullVideoFrameAndAudioRedaction',
   },
   [redactionTypeMap['TEXT']]: {
-    icon: 'icon-form-field-text',
+    icon: 'icon-text-redaction',
   },
   [redactionTypeMap['IMAGE']]: {
     icon: 'redact-icons-image',

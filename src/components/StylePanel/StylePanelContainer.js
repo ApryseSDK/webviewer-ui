@@ -35,12 +35,28 @@ const StylePanelContainer = () => {
   };
 
   const handleAnnotationSelected = (annotations, action) => {
+    const annotationManager = core.getAnnotationManager();
+    const allSelectedAnnotations = new Set();
+
+    annotations.forEach((annotation) => allSelectedAnnotations.add(annotation));
+
+    annotations.forEach((annotation) => {
+      if (annotation.isGrouped()) {
+        const groupedAnnotations = annotationManager.getGroupAnnotations(annotation);
+        groupedAnnotations.forEach((grouped) => allSelectedAnnotations.add(grouped));
+      } else if (annotation.getGroupedChildren().length > 1) {
+        annotation.getGroupedChildren().forEach((child) => allSelectedAnnotations.add(child));
+      }
+    });
+
+    const selectedAnnotations = Array.from(allSelectedAnnotations);
+
     if (action === 'selected') {
-      if (shouldShowNoStyles(annotations, filteredTypes)) {
+      if (shouldShowNoStyles(selectedAnnotations, filteredTypes)) {
         setShowStyles(false);
         return;
       }
-      setSelectedAnnotations(annotations);
+      setSelectedAnnotations(selectedAnnotations);
       setShowStyles(true);
     } else if (action === 'deselected') {
       handleAnnotationDeselected();

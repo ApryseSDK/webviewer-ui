@@ -101,7 +101,7 @@ const activeStore = configureStore({ reducer: () => initialStateActive });
 
 export const ToggleFlyoutButtonActive = () => (
   <Provider store={activeStore}>
-    <ToggleElementButton img="icon-header-search" toggleElement="testFlyout" dataElement="toggleButton"/>
+    <ToggleElementButton img="icon-tools-more-active" toggleElement="testFlyout" dataElement="toggleButton"/>
   </Provider>
 );
 ToggleFlyoutButtonActive.play = async ({ canvasElement }) => {

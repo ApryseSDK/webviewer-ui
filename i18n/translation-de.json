@@ -145,7 +145,8 @@
     "showMoreColors": "Weitere Farben anzeigen",
     "showLessColors": "Weniger Farben anzeigen",
     "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler",
-    "newSpreadsheetDocument": "Neue Tabelle"
+    "newSpreadsheetDocument": "Neue Tabelle",
+    "resetDefault": "Auf Standard zurücksetzen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -305,6 +306,8 @@
     "searching": "Suche...",
     "searchCommentsPlaceholder": "Kommentare suchen",
     "searchDocumentPlaceholder": "Dokument durchsuchen",
+    "clearSearchResults": "Suchergebnisse löschen",
+    "searchResultsCleared": "Suchergebnisse gelöscht",
     "searchSettingsPlaceholder": "Sucheinstellungen",
     "searchSuggestionsPlaceholder": "Suchvorschläge",
     "signHere": "Hier unterschreiben",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Schwärzen",
       "toolbarGroup-oe-Home": "Heim",
       "toolbarGroup-oe-Insert": "Einfügen",
+      "toolbarGroup-oe-Layout": "Layout",
       "toolbarGroup-oe-Review": "Rezension"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
-      "addSignature": "Unterschrift hinzufügen",
-      "addSignatureOrInitials": "Unterschrift/Initialen"
+      "addSignatureOrInitials": "Neue Unterschrift/Initialen",
+      "addSignature": "Neue Signatur"
     },
     "signatureModal": {
       "modalName": "Neue Signatur erstellen",
@@ -728,6 +732,8 @@
       "viewing": "Anzeigen",
       "disableFadePageNavigationComponent": "Deaktivieren Sie die Seitennavigationskomponente ausblenden",
       "disableFadePageNavigationComponentDesc": "Lassen Sie die Seitennavigationskomponente immer auf dem Bildschirm. Das Standardverhalten besteht darin, es nach einer bestimmten Zeit der Inaktivität auszublenden.",
+      "enabledFormFieldHighlighting": "Hervorhebungen von Formularfeldern aktivieren",
+      "enabledFormFieldHighlightingDesc": "Aktivieren Sie die Hervorhebung von Formularfeldern in PDF-Dokumenten. Standardmäßig aktiviert.",
       "disableNativeScrolling": "Natives Scrollen deaktivieren",
       "disableNativeScrollingDesc": "Deaktivieren Sie das native Scrollverhalten mobiler Geräte, wenn es zuvor aktiviert wurde. Beachten Sie, dass das native Scrollverhalten mobiler Geräte standardmäßig deaktiviert ist.",
       "annotations": "Anmerkungen",
@@ -798,6 +804,12 @@
       "editShortcut": "Verknüpfung bearbeiten",
       "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits.",
       "close": "Tooltip schließen"
+    },
+    "cellBorderStyle": {
+      "none": "Keiner",
+      "solid": "Solide",
+      "dashed": "Gestrichelt",
+      "dotted": "Gepunktet"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Abschnittsumbruch - Fortlaufend",
     "sectionBreakContinuousDescription": "Abschnittsumbruch einfügen und auf derselben Seite fortfahren",
     "section": "Abschnitt",
+    "margins": "Ränder",
+    "normal": "Normal",
+    "narrow": "Eng",
+    "moderate": "Mäßig",
+    "wide": "Breit",
+    "top": "Spitze",
+    "bottom": "Unten",
+    "left": "Links",
+    "right": "Rechts",
+    "customMargins": "Benutzerdefinierte Ränder",
+    "customMarginsDescription": "Definieren Sie benutzerdefinierte Ränder",
     "header": {
       "0": "Kopfbereich",
       "1": "Kopfzeile der ersten Seite",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Fußzeile entfernen",
     "headerFooterOptionsModal": {
       "title": "Kopf- und Fußzeilenformat",
-      "margins": "Ränder",
       "headerFromTop": "Kopfzeile von oben",
       "footerFromBottom": "Fußzeile von unten",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Unterschiedliche gerade und ungerade Seiten",
         "differentFirstEvenOddPages": "Unterschiedliche erste, gerade und ungerade Seiten"
       }
+    },
+    "marginsModal": {
+      "title": "Benutzerdefinierte Randanpassung",
+      "leftMargin": "Linker Rand",
+      "rightMargin": "Rechter Rand",
+      "topMargin": "Oberer Rand",
+      "bottomMargin": "Unterer Rand"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Kursiv",
     "underline": "Unterstreichen",
     "strikethrough": "Durchgestrichen",
+    "strikeout": "Durchgestrichen",
     "cellBorderStyle": "Rahmenstil",
     "merge": "Verschmelzen",
     "unmerge": "Zusammenführung aufheben",
     "cellFormat": "Zellenformat",
-    "automatic": "Automatisch",
-    "plainText": "Plain text",
-    "increaseDecimal": "Dezimalstellen erhöhen",
-    "decreaseDecimal": "Dezimalstellen verringern",
-    "number": "Nummer",
-    "percent": "Prozent",
-    "accounting": "Buchhaltung",
-    "financial": "Finanziell",
-    "currency": "Währung",
-    "currencyRounded": "Währung gerundet",
-    "calendar": "Datum",
-    "clockHour": "Zeit",
-    "calendarTime": "Datum Uhrzeit",
+    "automaticFormat": "Automatisch",
+    "plainTextFormat": "Plain Text",
+    "increaseDecimalFormat": "Dezimalstellen erhöhen",
+    "decreaseDecimalFormat": "Dezimalstellen verringern",
+    "numberFormat": "Nummer",
+    "percentFormat": "Prozent",
+    "accountingFormat": "Buchhaltung",
+    "financialFormat": "Finanziell",
+    "currencyFormat": "Währung",
+    "currencyRoundedFormat": "Währung gerundet",
+    "calendarFormat": "Datum",
+    "clockHourFormat": "Zeit",
+    "calendarTimeFormat": "Datum Uhrzeit",
     "formatAsCurrency": "Als Währung formatieren",
     "formatAsPercent": "Als Prozent formatieren",
     "formatAsDecDecimal": "Dezimalpunkt verringern",
     "formatAsIncDecimal": "Dezimalpunkt erhöhen",
-    "fontColor": "Schriftfarbe",
-    "cellBackgroundColor": "Zellen-Hintergrundfarbe",
+    "textColor": "Textfarbe",
+    "cellBackgroundColor": "Hintergrundfarbe",
+    "cellBorderColor": "Rahmenfarbe",
+    "textLabel": "Text",
+    "backgroundLabel": "Hintergrund",
+    "borderLabel": "Grenze",
     "textAlignment": "Textausrichtung",
-    "alignLeft": "Linksbündig",
-    "alignCenter": "Zentriert ausrichten",
-    "alignRight": "Rechtsbündig",
-    "alignTop": "Oben ausrichten",
-    "alignMiddle": "Mitte ausrichten",
-    "alignBottom": "Unten ausrichten",
+    "topAlign": "Oben ausrichten",
+    "middleAlign": "Mitte ausrichten",
+    "bottomAlign": "Unten ausrichten",
     "cellAdjustment": "Zellenanpassung",
-    "insertColLeft": "Spalte links einfügen",
-    "columnInsertLeft": "Spalte links einfügen",
-    "columnInsertRight": "Spalte rechts einfügen",
-    "rowInsertTop": "Zeile darüber einfügen",
-    "rowInsertBottom": "Zeile darunter einfügen",
-    "columnInsertShiftDown": "Zellen einfügen und nach unten verschieben",
-    "columnInsertShiftRight": "Zellen einfügen und nach rechts verschieben",
-    "columnDelete": "Spalte löschen",
-    "rowDelete": "Zeile löschen",
-    "columnDeleteShiftUp": "Zellen löschen und nach oben verschieben",
-    "columnDeleteShiftLeft": "Zellen löschen und nach links verschieben"
+    "cellFormatMoreOptions": "Weitere Optionen für das Zellenformat",
+    "insertColumnLeft": "Spalte links einfügen",
+    "insertColumnRight": "Spalte rechts einfügen",
+    "insertRowTop": "Zeile darüber einfügen",
+    "insertRowBottom": "Zeile unten einfügen",
+    "insertColumnShiftDown": "Zellen einfügen und nach unten verschieben",
+    "insertColumnShiftRight": "Zellen einfügen und nach rechts verschieben",
+    "deleteColumn": "Spalte löschen",
+    "deleteRow": "Zeile löschen",
+    "deleteColumnShiftUp": "Zellen löschen und nach oben verschieben",
+    "deleteColumnShiftLeft": "Zellen löschen und nach links verschieben",
+    "clearBorder": "Klarer Rand",
+    "cellBorderAll": "Alle Grenzen",
+    "cellBorderInside": "Innengrenzen",
+    "cellBorderOutside": "Außengrenzen",
+    "cellBorderTop": "Oberer Rand",
+    "cellBorderBottom": "Unterer Rand",
+    "cellBorderLeft": "Linker Rand",
+    "cellBorderRight": "Rechter Rand",
+    "cellBorderVertical": "Vertikaler Rand",
+    "cellBorderHorizontal": "Horizontaler Rand",
+    "cellBorderNone": "Keine Grenzen",
+    "borders": "Grenzen",
+    "fontSize": {
+      "dropdownLabel": "Schriftgröße"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Schriftfamilie"
+    },
+    "blankSheet": "Leeres Blatt"
   },
   "insertPageModal": {
     "title": "Neue Seite einfügen",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
     "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
     "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften.",
+    "noSharedToolStyle": "Ausgewählte Anmerkungen haben keine gemeinsamen Stileigenschaften.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Zeilenanfang"

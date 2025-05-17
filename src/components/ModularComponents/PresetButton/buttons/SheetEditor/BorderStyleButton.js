@@ -9,13 +9,14 @@ const propTypes = {
   isFlyoutItem: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
+  buttonType: PropTypes.string,
 };
 
 const BorderStyleButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, borderStyle, style, className } = props;
+  const { isFlyoutItem, borderStyle, style, className, buttonType } = props;
   const isActive = false;
 
-  const { dataElement, icon, title } = menuItems['cellBorderStyle'];
+  const { dataElement, icon, title } = menuItems[buttonType];
 
   const handleClick = () => {
     // handle click

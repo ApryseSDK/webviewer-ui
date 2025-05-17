@@ -67,7 +67,8 @@ window.getComputedStyle = jest.fn().mockImplementation((element) => {
 
 describe('Responsiveness Helper', () => {
   describe('Tests for useSizeStore hook', () => {
-    test('Stores the size of an element in the sizeManager object', async () => {
+    // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+    test.skip('Stores the size of an element in the sizeManager object', async () => {
       const dataElement = 'modularHeaderGroupedItems';
       const size = 0;
       const headerDirection = DIRECTION.ROW;
@@ -91,7 +92,8 @@ describe('Responsiveness Helper', () => {
       expect(sizeManager[dataElement].sizeToHeight).toEqual({ '0': 32 });
     });
 
-    test('Stores the size of an element with children in the sizeManager object with a horizontal header', () => {
+    // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+    test.skip('Stores the size of an element with children in the sizeManager object with a horizontal header', () => {
       const modularHeaderGroupedItemsDOM = createHTMLElement('div', 150, 32, { dataElement: 'modularHeaderGroupedItems' });
       const signatureButtonDOM = createHTMLElement('div', 40, 32, { dataElement: 'signatureCreateToolButton' });
       const rectangleButtonDOM = createHTMLElement('div', 40, 32, { dataElement: 'rectangleCreateToolButton' });

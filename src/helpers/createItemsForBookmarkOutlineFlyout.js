@@ -4,7 +4,7 @@ function createItemsForBookmarkOutlineFlyout(menuItems, type, shouldHideDeleteBu
     [menuTypes.DOWNLOAD]: () => type !== 'portfolio',
     [menuTypes.OPENFILE]: () => type !== 'portfolio',
     [menuTypes.SETDEST]: () => type !== 'outline',
-    [menuTypes.OPENFORMFIELDPANEL]: () => ['portfolio', 'bookmark'].includes(type),
+    [menuTypes.OPENFORMFIELDPANEL]: () => ['portfolio', 'bookmark', 'outline'].includes(type),
     [menuTypes.MOVE_LEFT]: () => type !== 'outline',
     [menuTypes.MOVE_RIGHT]: () => type !== 'outline',
     [menuTypes.MOVE_UP]: () => type !== 'outline' && type !== 'portfolio',

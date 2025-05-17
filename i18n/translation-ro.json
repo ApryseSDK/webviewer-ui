@@ -145,7 +145,8 @@
     "showMoreColors": "Afișează mai multe culori",
     "showLessColors": "Afișați mai puține culori",
     "fromCustomColorPicker": "din Custom Color Picker",
-    "newSpreadsheetDocument": "Noua foaie de calcul"
+    "newSpreadsheetDocument": "Noua foaie de calcul",
+    "resetDefault": "Resetați la valoarea implicită"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Nu s-a încărcat documentul criptat. Prea multe incercari.",
     "encryptedUserCancelled": "Nu s-a încărcat documentul criptat. Introducerea parolei a fost anulată.",
     "enterPassword": "Acest document este protejat prin parolă. Vă rugăm să introduceți o parolă",
-    "incorrectPassword": "Parolă incorectă, încercări rămase: {{ restingAttempts }}",
+    "incorrectPassword": "Parolă incorectă, încercări rămase: {{ remainingAttempts }}",
     "noAnnotations": "Începeți să faceți adnotări pentru a lăsa un comentariu.",
     "noAnnotationsReadOnly": "Acest document nu are adnotări.",
     "noAnnotationsFilter": "Începeți să faceți adnotări și filtrele vor apărea aici.",
@@ -305,6 +306,8 @@
     "searching": "In cautarea...",
     "searchCommentsPlaceholder": "Căutați comentarii",
     "searchDocumentPlaceholder": "Căutați documentul",
+    "clearSearchResults": "Ștergeți rezultatele căutării",
+    "searchResultsCleared": "Rezultatele căutării au fost șterse",
     "searchSettingsPlaceholder": "Setări de căutare",
     "searchSuggestionsPlaceholder": "Căutați sugestii",
     "signHere": "Înregistrează aici",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redacta",
       "toolbarGroup-oe-Home": "Acasă",
       "toolbarGroup-oe-Insert": "Introduce",
+      "toolbarGroup-oe-Layout": "Aspect",
       "toolbarGroup-oe-Review": "Revizuire"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Adăugați o ștampilă nouă"
     },
     "signatureOverlay": {
-      "addSignature": "Adăugați o semnătură nouă",
-      "addSignatureOrInitials": "Semnătura/inițiale"
+      "addSignatureOrInitials": "Semnătură/Inițiale noi",
+      "addSignature": "Semnătură nouă"
     },
     "signatureModal": {
       "modalName": "Creați o semnătură nouă",
@@ -728,6 +732,8 @@
       "viewing": "Vizionare",
       "disableFadePageNavigationComponent": "Dezactivați Componenta de navigare a paginii Fade",
       "disableFadePageNavigationComponentDesc": "Păstrați întotdeauna Componenta de navigare a paginii pe ecran. Comportamentul implicit este de a-l estompa după o anumită perioadă de inactivitate.",
+      "enabledFormFieldHighlighting": "Activați Evidențieri câmpuri formular",
+      "enabledFormFieldHighlightingDesc": "Activați evidențierea câmpurilor de formular în documentele PDF. Activat implicit.",
       "disableNativeScrolling": "Dezactivați derularea nativă",
       "disableNativeScrollingDesc": "Dezactivați comportamentul nativ de defilare a dispozitivului mobil dacă acesta a fost activat anterior. Rețineți că comportamentul nativ de defilare a dispozitivului mobil este dezactivat în mod implicit.",
       "annotations": "Adnotări",
@@ -798,6 +804,12 @@
       "editShortcut": "Editați comanda rapidă",
       "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja.",
       "close": "Închideți tooltip"
+    },
+    "cellBorderStyle": {
+      "none": "Nici unul",
+      "solid": "Solid",
+      "dashed": "întreruptă",
+      "dotted": "Punctat"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Pauza de sectiune - Continuu",
     "sectionBreakContinuousDescription": "Introduceți pauză de secțiune și continuați pe aceeași pagină ",
     "section": "Secțiune",
+    "margins": "Margini",
+    "normal": "Normal",
+    "narrow": "Îngust",
+    "moderate": "Moderat",
+    "wide": "Lat",
+    "top": "Top",
+    "bottom": "Fund",
+    "left": "Stânga",
+    "right": "Corect",
+    "customMargins": "Margini personalizate",
+    "customMarginsDescription": "Definiți margini personalizate",
     "header": {
       "0": "Antet",
       "1": "Antet prima pagină",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Eliminați subsolul",
     "headerFooterOptionsModal": {
       "title": "Format antet și subsol",
-      "margins": "Marjele",
       "headerFromTop": "Antet de sus",
       "footerFromBottom": "Subsol de jos",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Pagini pare și impare diferite",
         "differentFirstEvenOddPages": "Pagini prima, pare și impare diferite"
       }
+    },
+    "marginsModal": {
+      "title": "Ajustare personalizată a marginii",
+      "leftMargin": "Marja din stânga",
+      "rightMargin": "Marja dreaptă",
+      "topMargin": "Marja superioară",
+      "bottomMargin": "Marja inferioară"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Cursiv",
     "underline": "Subliniați",
     "strikethrough": "Striat",
+    "strikeout": "Strikeout",
     "cellBorderStyle": "Stil de chenar",
     "merge": "Îmbinați",
     "unmerge": "Deconectați",
     "cellFormat": "Format de celule",
-    "automatic": "Automat",
-    "plainText": "Text simplu",
-    "increaseDecimal": "Mărește zecimală",
-    "decreaseDecimal": "Scădeți zecimală",
-    "number": "Număr",
-    "percent": "La sută",
-    "accounting": "Contabilitate",
-    "financial": "Financiar",
-    "currency": "Valută",
-    "currencyRounded": "Moneda rotunjită",
-    "calendar": "Data",
-    "clockHour": "Timp",
-    "calendarTime": "Data Ora",
+    "automaticFormat": "Automat",
+    "plainTextFormat": "Text simplu",
+    "increaseDecimalFormat": "Mărește zecimală",
+    "decreaseDecimalFormat": "Scădeți zecimală",
+    "numberFormat": "Număr",
+    "percentFormat": "La sută",
+    "accountingFormat": "Contabilitate",
+    "financialFormat": "Financiar",
+    "currencyFormat": "Valută",
+    "currencyRoundedFormat": "Moneda rotunjită",
+    "calendarFormat": "Data",
+    "clockHourFormat": "Timp",
+    "calendarTimeFormat": "Data Ora",
     "formatAsCurrency": "Formatați ca monedă",
     "formatAsPercent": "Formatați ca procente",
     "formatAsDecDecimal": "Descrește punctul zecimal",
     "formatAsIncDecimal": "Mărește punctul zecimal",
-    "fontColor": "Culoare font",
-    "cellBackgroundColor": "Culoarea de fundal a celulei",
+    "textColor": "Culoare text",
+    "cellBackgroundColor": "Culoare de fundal",
+    "cellBorderColor": "Culoarea chenarului",
+    "textLabel": "Text",
+    "backgroundLabel": "Fundal",
+    "borderLabel": "Frontieră",
     "textAlignment": "Alinierea textului",
-    "alignLeft": "Aliniați la stânga",
-    "alignCenter": "Aliniați centrul",
-    "alignRight": "Aliniați la dreapta",
-    "alignTop": "Aliniați partea de sus",
-    "alignMiddle": "Aliniați mijlocul",
-    "alignBottom": "Aliniați partea de jos",
+    "topAlign": "Alinierea de sus",
+    "middleAlign": "Alinierea la mijloc",
+    "bottomAlign": "Alinierea de jos",
     "cellAdjustment": "Ajustarea celulelor",
-    "insertColLeft": "Inserați coloana la stânga",
-    "columnInsertLeft": "Inserați coloana la stânga",
-    "columnInsertRight": "Inserați coloana la dreapta",
-    "rowInsertTop": "Introduceți rândul de deasupra",
-    "rowInsertBottom": "Introduceți rândul de mai jos",
-    "columnInsertShiftDown": "Introduceți celule și comutați în jos",
-    "columnInsertShiftRight": "Introduceți celule și deplasați la dreapta",
-    "columnDelete": "Ștergeți coloana",
-    "rowDelete": "Ștergeți rândul",
-    "columnDeleteShiftUp": "Ștergeți celulele și treceți în sus",
-    "columnDeleteShiftLeft": "Ștergeți celulele și comutați la stânga"
+    "cellFormatMoreOptions": "Mai multe opțiuni de format de celule",
+    "insertColumnLeft": "Inserați coloana la stânga",
+    "insertColumnRight": "Inserați coloana la dreapta",
+    "insertRowTop": "Introduceți rândul de deasupra",
+    "insertRowBottom": "Introduceți rândul de mai jos",
+    "insertColumnShiftDown": "Introduceți celule și comutați în jos",
+    "insertColumnShiftRight": "Inserați celule și deplasați la dreapta",
+    "deleteColumn": "Ștergeți coloana",
+    "deleteRow": "Ștergeți rândul",
+    "deleteColumnShiftUp": "Ștergeți celulele și treceți în sus",
+    "deleteColumnShiftLeft": "Ștergeți celulele și comutați la stânga",
+    "clearBorder": "Ștergeți chenarul",
+    "cellBorderAll": "Toate Granițele",
+    "cellBorderInside": "În interiorul granițelor",
+    "cellBorderOutside": "În afara granițelor",
+    "cellBorderTop": "Chenar de sus",
+    "cellBorderBottom": "Chenar de jos",
+    "cellBorderLeft": "Chenarul din stânga",
+    "cellBorderRight": "Chenarul din dreapta",
+    "cellBorderVertical": "Chenar vertical",
+    "cellBorderHorizontal": "Frontieră orizontală",
+    "cellBorderNone": "Fără Frontiere",
+    "borders": "Frontiere",
+    "fontSize": {
+      "dropdownLabel": "Dimensiunea fontului"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Familia de fonturi"
+    },
+    "blankSheet": "Foaie goală"
   },
   "insertPageModal": {
     "title": "Inserați o pagină nouă",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Adaugă la culori personalizate",
     "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
     "noToolStyle": "Instrumentul nu conține nicio proprietate de stil.",
+    "noSharedToolStyle": "Adnotările selectate nu au proprietăți de stil comune.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Început de linie"

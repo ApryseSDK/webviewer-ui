@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import actions from 'actions';
-import classNames from 'classnames';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
 import core from 'core';
-import { CM_PER_INCH } from 'constants/officeEditor';
+import { MARGIN_UNITS } from 'constants/officeEditor';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
+import { validateMarginInput } from 'helpers/officeEditor';
 
 import './HeaderFooterOptionsModal.scss';
 
@@ -26,27 +26,7 @@ const HeaderFooterOptionsModal = () => {
   const [differentFirstPageEnabled, setDifferentFirstPageEnabled] = useState(false);
   const [oddEvenEnabled, setOddEvenEnabled] = useState(false);
   const [maxMarginsInInches, setMaxMarginsInInches] = useState(0);
-  const [currentUnit, setCurrentUnit] = useState('cm');
-
-  const validateInput = (input) => {
-    if (input && input <= 0) {
-      return '0';
-    }
-    // Removes leading zero unless it is followed by a decimal
-    const validatedInput = input.replace(/^0+(?!\.)/, '');
-
-    let maxMarginsConverted = maxMarginsInInches;
-
-    if (currentUnit === 'cm') {
-      maxMarginsConverted = maxMarginsInInches * CM_PER_INCH;
-    }
-
-    if (parseFloat(validatedInput) > maxMarginsConverted) {
-      return maxMarginsConverted.toFixed(2);
-    }
-
-    return validatedInput;
-  };
+  const [currentUnit, setCurrentUnit] = useState(MARGIN_UNITS.CM);
 
   const onHeaderInputBlur = (e) => {
     if (e.target.value === '') {
@@ -61,51 +41,33 @@ const HeaderFooterOptionsModal = () => {
   };
 
   const onHeaderToTopChange = (e) => {
-    const val = validateInput(e.target.value);
+    const val = validateMarginInput(e.target.value, maxMarginsInInches, currentUnit);
     setHeaderToTop(val);
   };
 
   const onFooterToBottomChange = (e) => {
-    const val = validateInput(e.target.value);
+    const val = validateMarginInput(e.target.value, maxMarginsInInches, currentUnit);
     setFooterToBottom(val);
-  };
-
-  const inchesToCurrentUnit = (inches) => {
-    let val = inches;
-    if (currentUnit === 'cm') {
-      val = (parseFloat(inches) * CM_PER_INCH).toFixed(2);
-    }
-    return val;
-  };
-
-  const currentUnitToInches = (input) => {
-    let val = parseFloat(input);
-    if (currentUnit === 'cm') {
-      val = val / CM_PER_INCH;
-    }
-    return val;
   };
 
   const onSave = async () => {
     dispatch(actions.closeElement(DataElements.HEADER_FOOTER_OPTIONS_MODAL));
-    const headerToTopInches = currentUnitToInches(headerToTop);
-    const footerToBottomInches = currentUnitToInches(footerToBottom);
     const pageNumber = HeaderFooterModalState.getPageNumber();
     const headerFooterDistanceChanged = headerToTopOnOpen !== headerToTop || footerToBottomOnOpen !== footerToBottom;
     return Promise.all([
       core.getOfficeEditor().setDifferentFirstPage(pageNumber, differentFirstPageEnabled),
       core.getOfficeEditor().setOddEven(oddEvenEnabled),
-      headerFooterDistanceChanged && core.getOfficeEditor().setHeaderFooterMarginsInInches(pageNumber, headerToTopInches, footerToBottomInches),
+      headerFooterDistanceChanged && core.getOfficeEditor().setHeaderFooterMargins(pageNumber, { headerDistanceToTop: headerToTop, footerDistanceToBottom: footerToBottom }, currentUnit),
     ]);
   };
 
   useEffect(async () => {
     if (isOpen) {
-      setCurrentUnit('cm');
+      setCurrentUnit(MARGIN_UNITS.CM);
       const pageNumber = HeaderFooterModalState.getPageNumber();
-      const { headerDistanceToTop, footerDistanceToBottom } = await core.getOfficeEditor().getHeaderFooterMarginsInInches(pageNumber);
-      const headerDistanceToTopConverted = inchesToCurrentUnit(headerDistanceToTop);
-      const footerDistanceToBottomConverted = inchesToCurrentUnit(footerDistanceToBottom);
+      const { headerDistanceToTop, footerDistanceToBottom } = await core.getOfficeEditor().getHeaderFooterMargins(pageNumber, currentUnit);
+      const headerDistanceToTopConverted = headerDistanceToTop.toFixed(2);
+      const footerDistanceToBottomConverted = footerDistanceToBottom.toFixed(2);
       setHeaderToTop(headerDistanceToTopConverted);
       setFooterToBottom(footerDistanceToBottomConverted);
       setHeaderToTopOnOpen(headerDistanceToTopConverted);
@@ -127,12 +89,25 @@ const HeaderFooterOptionsModal = () => {
     }, 0);
   };
 
-  const modalClass = classNames({
-    'HeaderFooterOptionsModal': true
-  });
+  const inputElements = [
+    {
+      id: 'headerToTopInput',
+      value: headerToTop,
+      label: t('officeEditor.headerFooterOptionsModal.headerFromTop'),
+      onChange: onHeaderToTopChange,
+      onBlur: onHeaderInputBlur,
+    },
+    {
+      id: 'footerToBottomInput',
+      value: footerToBottom,
+      label: t('officeEditor.headerFooterOptionsModal.footerFromBottom'),
+      onChange: onFooterToBottomChange,
+      onBlur: onFooterInputBlur,
+    },
+  ];
 
   return isOpen && (
-    <div className={modalClass} data-element={DataElements.HEADER_FOOTER_OPTIONS_MODAL}>
+    <div className='HeaderFooterOptionsModal' data-element={DataElements.HEADER_FOOTER_OPTIONS_MODAL}>
       <ModalWrapper
         isOpen={isOpen}
         title={t('officeEditor.headerFooterOptionsModal.title')}
@@ -141,33 +116,21 @@ const HeaderFooterOptionsModal = () => {
         swipeToClose
       >
         <div className='modal-body'>
-          <div className='title'>{t('officeEditor.headerFooterOptionsModal.margins')}</div>
-          <div className='input-container'>
-            <label htmlFor='headerToTopInput' className='label'>{t('officeEditor.headerFooterOptionsModal.headerFromTop')}</label>
-            <Input
-              type='number'
-              id='headerToTopInput'
-              data-testid="headerToTopInput"
-              onChange={onHeaderToTopChange}
-              onBlur={onHeaderInputBlur}
-              value={headerToTop}
-              min='0'
-              step='any'
-            />
-          </div>
-          <div className='input-container'>
-            <label htmlFor='footerToBottomInput' className='label'>{t('officeEditor.headerFooterOptionsModal.footerFromBottom')}</label>
-            <Input
-              type='number'
-              id='footerToBottomInput'
-              data-testid="footerToBottomInput"
-              onChange={onFooterToBottomChange}
-              onBlur={onFooterInputBlur}
-              value={footerToBottom}
-              min='0'
-              step='any'
-            />
-          </div>
+          <div className='title'>{t('officeEditor.margins')}</div>
+          {inputElements.map((input) => (
+            <div key={input.id} className='input-container'>
+              <label htmlFor={input.id} className='label'>{input.label}</label>
+              <Input
+                type='number'
+                id={input.id}
+                onChange={input.onChange}
+                onBlur={input.onBlur}
+                value={input.value}
+                min='0'
+                step='any'
+              />
+            </div>
+          ))}
           <div className='title'>{t('officeEditor.headerFooterOptionsModal.layouts.layout')}</div>
           <Choice
             id={'different-first-page'}

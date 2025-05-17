@@ -12,22 +12,22 @@ import classNames from 'classnames';
 import CompareZoomOverlay from 'components/MultiViewer/CompareZoomOverlay';
 import eventHandler from 'helpers/eventHandler';
 import throttle from 'lodash/throttle';
-import { zoomTo } from 'helpers/zoom';
 import ComparisonButton from 'components/MultiViewer/ComparisonButton';
-import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer, setupOpenURLHandler } from 'helpers/documentViewerHelper';
+import {
+  addDocumentViewer,
+  syncDocumentViewers,
+  removeDocumentViewer,
+  setupOpenURLHandler,
+} from 'helpers/documentViewerHelper';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
-import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS, SYNC_MODES } from 'constants/multiViewerContants';
+import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
 import DataElements from 'constants/dataElement';
-import multiViewerHelper, {
-  getIsScrolledByClickingChangeItem,
-  setIsScrolledByClickingChangeItem
-} from 'helpers/multiViewerHelper';
+import multiViewerHelper, { useMultiViewerSync } from 'helpers/multiViewerHelper';
 
 const MIN_WIDTH = 350;
 
 const MultiViewer = () => {
-  const documentViewerKeys = [1, 2];
   const dispatch = useDispatch();
   const store = useStore();
   const [initialSetup, setInitialSetup] = useState(false);
@@ -38,8 +38,6 @@ const MultiViewer = () => {
   const [doc2Loaded, setDoc2Loaded] = useState(false);
   const [width, setWidth] = useState(0);
   const [width2, setWidth2] = useState(0);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const removeHandlerFunctions = useRef([]);
   const funcRefs = useRef({
     updateScrollView: throttle(() => core.scrollViewUpdated(), 100, { leading: true }),
     resizeObserverFunc: throttle((records) => {
@@ -62,54 +60,23 @@ const MultiViewer = () => {
       }
     }, 100, { leading: true }),
   });
-  const syncState = useRef({
-    scrollTop1: 0,
-    scrollLeft1: 0,
-    scrollTop2: 0,
-    scrollLeft2: 0,
-    currentScrollContainer: null,
-    topOverflow1: 0,
-    topOverflow2: 0,
-    page1: 1,
-    page2: 1,
-  });
   const rootContainerRef = useRef();
   const resizeOberver = useRef(new ResizeObserver(funcRefs.current.resizeObserverFunc));
   const removeHandlersRef = useRef();
   const readyDefaultState = { 1: false, 2: false, viewer: false, eventFired: false };
   const readyState = useRef(readyDefaultState);
 
-  const [
-    isMultiViewerMode,
-    isComparisonDisabled,
-    activeDocumentViewerKey,
-    documentContainerWidth,
-    documentContentContainerWidthStyle,
-    zoom,
-    zoom2,
-    activeToolbarGroup,
-    activeToolName,
-    customMultiViewerSyncHandler,
-    syncViewer,
-    multiViewerSyncScrollMode,
-    documentContainerLeftMargin,
-    isShowComparisonButtonEnabled,
-  ] = useSelector((state) => [
-    selectors.isMultiViewerMode(state),
-    selectors.isComparisonDisabled(state),
-    selectors.getActiveDocumentViewerKey(state),
-    selectors.getDocumentContainerWidth(state),
-    selectors.getDocumentContentContainerWidthStyle(state),
-    selectors.getZoom(state, 1),
-    selectors.getZoom(state, 2),
-    selectors.getCurrentToolbarGroup(state),
-    selectors.getActiveToolName(state),
-    selectors.getCustomMultiViewerSyncHandler(state),
-    selectors.getSyncViewer(state),
-    selectors.getMultiViewerSyncScrollMode(state),
-    selectors.getDocumentContainerLeftMargin(state),
-    selectors.getIsShowComparisonButtonEnabled(state)
-  ]);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
+  const isComparisonDisabled = useSelector(selectors.isComparisonDisabled);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const documentContainerWidth = useSelector(selectors.getDocumentContainerWidth);
+  const documentContentContainerWidthStyle = useSelector(selectors.getDocumentContentContainerWidthStyle);
+  const zoom = useSelector((state) => selectors.getZoom(state, 1));
+  const zoom2 = useSelector((state) => selectors.getZoom(state, 2));
+  const activeToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
+  const activeToolName = useSelector(selectors.getActiveToolName);
+  const documentContainerLeftMargin = useSelector(selectors.getDocumentContainerLeftMargin);
+  const isShowComparisonButtonEnabled = useSelector(selectors.getIsShowComparisonButtonEnabled);
 
   useEffect(() => {
     const setupMultiViewer = () => {
@@ -276,176 +243,7 @@ const MultiViewer = () => {
   const setFirstViewerActive = () => updateActiveDocumentViewerKey(1);
   const setSecondViewerActive = () => updateActiveDocumentViewerKey(2);
 
-  const shouldSkipSyncEvent = () => {
-    const state = store.getState();
-    return core.getDocumentViewers().length < 2 || !core.getDocument(1) || !core.getDocument(2) ||
-    !selectors.isMultiViewerMode(state) || !selectors.getSyncViewer(state);
-  };
-
-  const createOnScrollHandler = (documentViewerKey) => (e) => {
-    if (shouldSkipSyncEvent()) {
-      return;
-    }
-    const { scrollTop, scrollLeft } = e.target;
-    if (getIsScrolledByClickingChangeItem()) {
-      syncState.current[`scrollTop${documentViewerKey}`] = scrollTop;
-      syncState.current[`scrollLeft${documentViewerKey}`] = scrollLeft;
-      if (documentViewerKey === 2) {
-        setIsScrolledByClickingChangeItem(false);
-      }
-      return;
-    }
-    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
-    if (syncState.current.currentScrollContainer !== otherViewerNumber) {
-      syncState.current.currentScrollContainer = documentViewerKey;
-      const diffTop = scrollTop - syncState.current[`scrollTop${documentViewerKey}`];
-      const diffLeft = scrollLeft - syncState.current[`scrollLeft${documentViewerKey}`];
-      const otherContainer = otherViewerNumber === 1 ? container.current : container2.current;
-      const topOverflow = otherContainer.scrollTop + diffTop;
-      const bottomOverflow = otherContainer.scrollHeight - otherContainer.scrollTop - diffTop - otherContainer.clientHeight;
-      if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerHelper.matchedPages) {
-        const { matchedPages } = multiViewerHelper;
-        const documentViewer = core.getDocumentViewer(documentViewerKey);
-        const otherDocumentViewer = core.getDocumentViewer(otherViewerNumber);
-        const visiblePages = documentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
-        const mainPage = visiblePages[0];
-        if (matchedPages[documentViewerKey][mainPage]) {
-          const { otherSidePages, thisSidePages } = matchedPages[documentViewerKey][mainPage];
-          const mainPageBoundingRect = documentViewer.getViewerElement().querySelector(`#pageContainer${thisSidePages[0]}`)?.getBoundingClientRect();
-          const otherSidePageBoundingRect = otherDocumentViewer.getViewerElement()
-            .querySelector(`#pageContainer${otherSidePages[0]}`)?.getBoundingClientRect();
-          const scrollRatio = otherSidePages.length / thisSidePages.length;
-          const heightRatio = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.height / mainPageBoundingRect.height : 1;
-          const currentDiffTop = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.top - mainPageBoundingRect.top : diffTop;
-          const adjustedDiffTop = (scrollRatio !== 1 ? diffTop : currentDiffTop) * scrollRatio * heightRatio;
-          otherContainer.scrollTop += adjustedDiffTop;
-        } else {
-          const visiblePageOtherSide = otherDocumentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
-          const otherMainPage = visiblePageOtherSide[0];
-          const secondaryPage = visiblePageOtherSide[1];
-          if (!matchedPages[otherViewerNumber][otherMainPage] || (secondaryPage && !matchedPages[otherViewerNumber][secondaryPage])) {
-            otherContainer.scrollTop += diffTop;
-          }
-        }
-      } else {
-        if (topOverflow < 0) {
-          syncState.current[`topOverflow${otherViewerNumber}`] += topOverflow;
-          otherContainer.scrollTop += diffTop;
-        } else if (bottomOverflow < 0) {
-          syncState.current[`topOverflow${otherViewerNumber}`] -= bottomOverflow;
-          otherContainer.scrollTop += diffTop;
-        } else {
-          const isTopOverflowPositive = syncState.current[`topOverflow${otherViewerNumber}`] > 0;
-          const isDiffTopPositive = diffTop > 0;
-          const isZero = diffTop === 0 || syncState.current[`topOverflow${otherViewerNumber}`] === 0;
-          if (isDiffTopPositive !== isTopOverflowPositive && !isZero) {
-            syncState.current[`topOverflow${otherViewerNumber}`] += diffTop;
-            if (syncState.current[`topOverflow${otherViewerNumber}`] > 0 !== isTopOverflowPositive) {
-              otherContainer.scrollTop += syncState.current[`topOverflow${otherViewerNumber}`];
-              syncState.current[`topOverflow${otherViewerNumber}`] = 0;
-            }
-          } else {
-            otherContainer.scrollTop += diffTop - syncState.current[`topOverflow${documentViewerKey}`];
-            syncState.current[`topOverflow${documentViewerKey}`] = 0;
-            otherContainer.scrollLeft += diffLeft;
-          }
-        }
-      }
-    } else {
-      syncState.current.currentScrollContainer = null;
-    }
-    syncState.current[`scrollTop${documentViewerKey}`] = scrollTop;
-    syncState.current[`scrollLeft${documentViewerKey}`] = scrollLeft;
-  };
-  const onZoomHandler = (zoomLevel) => {
-    if (shouldSkipSyncEvent()) {
-      return;
-    }
-    for (const documentViewerKey of documentViewerKeys) {
-      if (core.getZoom(documentViewerKey) !== zoomLevel) {
-        zoomTo(zoomLevel, isMultiViewerMode, documentViewerKey);
-      }
-      const containerRef = (documentViewerKey === 1 ? container : container2).current;
-      syncState.current[`scrollTop${documentViewerKey}`] = containerRef.scrollTop;
-      syncState.current[`scrollLeft${documentViewerKey}`] = containerRef.scrollLeft;
-    }
-  };
-  const createOnPageUpdateHandler = (documentViewerKey) => (nextPage) => {
-    if (shouldSkipSyncEvent()) {
-      return;
-    }
-    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
-    if (syncState.current.currentScrollContainer !== otherViewerNumber) {
-      syncState.current.currentScrollContainer = documentViewerKey;
-      const diff = nextPage - syncState.current[`page${documentViewerKey}`];
-      const newPage2 = core.getCurrentPage(otherViewerNumber) + diff;
-      core.setCurrentPage(newPage2, otherViewerNumber);
-    } else {
-      syncState.current.currentScrollContainer = null;
-    }
-    syncState.current[`page${documentViewerKey}`] = nextPage;
-  };
-  const startSyncing = (primaryDocumentViewerKey) => {
-    setIsSyncing(true);
-    const zoomLevel = core.getZoom(primaryDocumentViewerKey);
-    if (primaryDocumentViewerKey === 1) {
-      zoomTo(zoomLevel, isMultiViewerMode, 2);
-    } else if (primaryDocumentViewerKey === 2) {
-      zoomTo(zoomLevel, isMultiViewerMode, 1);
-    }
-    const isScrollable = core.getDocumentViewer().getDisplayModeManager().getDisplayMode().isContinuous();
-    for (const documentViewerKey of documentViewerKeys) {
-      core.addEventListener('zoomUpdated', onZoomHandler, undefined, documentViewerKey);
-      removeHandlerFunctions.current.push(() => core.removeEventListener('zoomUpdated', onZoomHandler, documentViewerKey));
-      if (isScrollable) {
-        const onScrollHandler = createOnScrollHandler(documentViewerKey);
-        const containerRef = documentViewerKey === 1 ? container.current : container2.current;
-        containerRef.addEventListener('scroll', onScrollHandler);
-        removeHandlerFunctions.current.push(() => containerRef.removeEventListener('scroll', onScrollHandler));
-      } else {
-        const onPageUpdatedHandler = createOnPageUpdateHandler(documentViewerKey);
-        core.addEventListener('pageNumberUpdated', onPageUpdatedHandler, undefined, documentViewerKey);
-        removeHandlerFunctions.current.push(() => core.removeEventListener('pageNumberUpdated', onPageUpdatedHandler, documentViewerKey));
-      }
-    }
-
-    if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED) {
-      container.current.scrollTop = 0;
-      container2.current.scrollTop = 0;
-    }
-
-    syncState.current = {
-      scrollTop1: container.current.scrollTop,
-      scrollLeft1: container.current.scrollLeft,
-      scrollTop2: container2.current.scrollTop,
-      scrollLeft2: container2.current.scrollLeft,
-      topOverflow1: 0,
-      topOverflow2: 0,
-      page1: core.getCurrentPage(1),
-      page2: core.getCurrentPage(2),
-    };
-
-    if (customMultiViewerSyncHandler) {
-      customMultiViewerSyncHandler(primaryDocumentViewerKey, removeHandlerFunctions.current);
-    }
-  };
-  const stopSyncing = () => {
-    setIsSyncing(false);
-    syncState.current.topOverflow1 = 0;
-    syncState.current.topOverflow2 = 0;
-    removeHandlerFunctions.current.forEach((removeHandler) => removeHandler());
-    removeHandlerFunctions.current = [];
-  };
-
-  useEffect(() => {
-    if (isMultiViewerMode) {
-      if (syncViewer && !isSyncing) {
-        startSyncing(syncViewer);
-      } else if (!syncViewer && isSyncing) {
-        stopSyncing();
-      }
-    }
-  }, [syncViewer]);
+  const { stopSyncing, isSyncing } = useMultiViewerSync(container, container2);
 
   const onReady = (key) => {
     readyState.current[key] = true;

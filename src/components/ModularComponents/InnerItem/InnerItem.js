@@ -13,18 +13,24 @@ import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
 import ViewControls from '../ViewControls';
 import EditorFileName from '../EditorFileName';
+import CellBorders from '../CellBorders';
 import Label from '../Label';
-import FontSizeDropdown from '../OfficeEditor/FontSizeDropdown';
-import FontFaceDropdown from '../OfficeEditor/FontFaceDropdown';
 import StylePresetDropdown from '../OfficeEditor/StylePresetDropdown';
 import CreateTableDropdown from '../OfficeEditor/CreateTableDropdown';
 import OfficeEditorModeDropdown from '../OfficeEditor/OfficeEditorModeDropdown';
-import SpreadsheetEditorEditModeDropdown from '../SpreadsheetEditorEditModeDropdown';
+import SpreadsheetEditorEditModeDropdown from '../SpreadsheetEditor/SpreadsheetEditorEditModeDropdown';
+import CellBorderStyleDropdown from '../CellBorderStyleDropdown';
 import LineSpacingToggleButton from '../OfficeEditor/LineSpacing';
 import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertImageButton';
 import PageSectionBreakDropdown from '../OfficeEditor/PageSectionBreakDropdown';
 import ListToggleButton from '../OfficeEditor/ListToggleButton';
+import OfficeEditorMarginDropdown from '../OfficeEditor/OfficeEditorMarginDropdown';
 import CustomElement from 'components/CustomElement';
+import CellTextColor from '../SpreadsheetEditor/CellTextColor';
+import CellBorderColor from '../SpreadsheetEditor/CellBorderColor';
+import CellBackgroundColor from '../SpreadsheetEditor/CellBackgroundColor';
+import FontSizeDropdownContainer from '../EditorSwitchers/FontSizeDropdown/FontSizeDropdownContainer';
+import FontFamilyDropdownContainer from '../EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -55,16 +61,20 @@ const InnerItem = (props) => {
       return <PresetButton key={key} {...props} />;
     case ITEM_TYPE.VIEW_CONTROLS:
       return <ViewControls key={key} {...props} />;
+    case ITEM_TYPE.CELL_BORDERS:
+      return <CellBorders key={key} {...props} />;
     case ITEM_TYPE.SPREADSHEET_EDITOR_FILE_NAME:
       return <EditorFileName key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_FILE_NAME:
       return <EditorFileName key={key} {...props} />;
     case ITEM_TYPE.FONT_SIZE_DROPDOWN:
-      return <FontSizeDropdown key={key} {...props} />;
-    case ITEM_TYPE.FONT_FACE_DROPDOWN:
-      return <FontFaceDropdown key={key} {...props} />;
+      return <FontSizeDropdownContainer key={key} {...props} />;
+    case ITEM_TYPE.FONT_FAMILY_DROPDOWN:
+      return <FontFamilyDropdownContainer key={key} {...props} />;
     case ITEM_TYPE.STYLE_PRESET_DROPDOWN:
       return <StylePresetDropdown key={key} {...props} />;
+    case ITEM_TYPE.OFFICE_EDITOR_MARGIN_DROPDOWN:
+      return <OfficeEditorMarginDropdown key={key} {...props} />;
     case ITEM_TYPE.CREATE_TABLE_DROPDOWN:
       return <CreateTableDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON:
@@ -72,7 +82,7 @@ const InnerItem = (props) => {
     case ITEM_TYPE.OFFICE_EDITOR_BREAK_DROPDOWN:
       return <PageSectionBreakDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_MODE_DROPDOWN:
-      return <OfficeEditorModeDropdown key={key}  {...props} />;
+      return <OfficeEditorModeDropdown key={key} {...props} />;
     case ITEM_TYPE.LINE_SPACING_BUTTON:
       return <LineSpacingToggleButton key={key} {...props} />;
     case ITEM_TYPE.ORDERED_LIST:
@@ -81,8 +91,16 @@ const InnerItem = (props) => {
       return <ListToggleButton {...props} listType={LIST_OPTIONS.Unordered} key={key} />;
     case ITEM_TYPE.LABEL:
       return <Label key={key} {...props} />;
-    case ITEM_TYPE.SHEET_EDITOR_MODE_DROPDOWN:
+    case ITEM_TYPE.SPREADSHEET_EDITOR_MODE_DROPDOWN:
       return <SpreadsheetEditorEditModeDropdown key={key} {...props} />;
+    case ITEM_TYPE.CELL_TEXT_COLOR:
+      return <CellTextColor key={key} {...props} />;
+    case ITEM_TYPE.CELL_BORDER_COLOR:
+      return <CellBorderColor key={key} {...props} />;
+    case ITEM_TYPE.CELL_BACKGROUND_COLOR:
+      return <CellBackgroundColor key={key} {...props} />;
+    case ITEM_TYPE.CELL_BORDER_STYLE_DROPDOWN:
+      return <CellBorderStyleDropdown key={key} {...props} />;
     case ITEM_TYPE.CUSTOM_ELEMENT:
       return <CustomElement key={key} {...props} />;
     default:

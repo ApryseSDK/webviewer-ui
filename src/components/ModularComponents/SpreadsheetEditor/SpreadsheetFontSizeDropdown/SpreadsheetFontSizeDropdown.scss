@@ -1,0 +1,5 @@
+@import '../../../../constants/officeEditor.scss';
+
+.SpreadsheetEditorFontSizeDropdown.Dropdown__wrapper.modular-ui.flyout-item {
+  @include oe-modular-flyout-dropdown;
+}

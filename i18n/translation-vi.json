@@ -145,7 +145,8 @@
     "showMoreColors": "Hiển thị thêm màu sắc",
     "showLessColors": "Hiển thị ít màu sắc hơn",
     "fromCustomColorPicker": "từ Bộ chọn màu tùy chỉnh",
-    "newSpreadsheetDocument": "Bảng tính mới"
+    "newSpreadsheetDocument": "Bảng tính mới",
+    "resetDefault": "Đặt lại về mặc định"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -305,6 +306,8 @@
     "searching": "Đang tìm kiếm...",
     "searchCommentsPlaceholder": "Tìm kiếm bình luận",
     "searchDocumentPlaceholder": "Tìm kiếm tài liệu",
+    "clearSearchResults": "Xóa kết quả tìm kiếm",
+    "searchResultsCleared": "Kết quả tìm kiếm đã xóa",
     "searchSettingsPlaceholder": "Cài đặt tìm kiếm",
     "searchSuggestionsPlaceholder": "Tìm kiếm gợi ý",
     "signHere": "Ký tại đây",
@@ -395,7 +398,8 @@
       "toolbarGroup-Redact": "Biên tập",
       "toolbarGroup-oe-Home": "Trang chủ",
       "toolbarGroup-oe-Insert": "Chèn",
-      "toolbarGroup-oe-Review": "Ôn tập"
+      "toolbarGroup-oe-Layout": "Bố trí",
+      "toolbarGroup-oe-Review": "Xem lại"
     },
     "annotationColor": {
       "StrokeColor": "Nét",
@@ -490,8 +494,8 @@
       "addStamp": "Thêm Tem Mới"
     },
     "signatureOverlay": {
-      "addSignature": "Thêm Chữ Ký Mới",
-      "addSignatureOrInitials": "Chữ ký / Tên viết tắt"
+      "addSignatureOrInitials": "Chữ ký/Chữ viết tắt mới",
+      "addSignature": "Chữ ký mới"
     },
     "signatureModal": {
       "modalName": "Tạo Chữ Ký Mới",
@@ -728,6 +732,8 @@
       "viewing": "Đang xem",
       "disableFadePageNavigationComponent": "Tắt thành phần điều hướng trang làm mờ",
       "disableFadePageNavigationComponentDesc": "Luôn giữ Thành phần Điều hướng Trang trên màn hình. Hành vi mặc định là làm mờ dần nó sau một thời gian không hoạt động nhất định.",
+      "enabledFormFieldHighlighting": "Bật tính năng tô sáng trường biểu mẫu",
+      "enabledFormFieldHighlightingDesc": "Bật tính năng tô sáng các trường biểu mẫu trong tài liệu PDF. Được bật theo mặc định.",
       "disableNativeScrolling": "Tắt tính năng cuộn gốc",
       "disableNativeScrollingDesc": "Tắt hành vi cuộn thiết bị di động gốc nếu nó đã được bật trước đó. Lưu ý rằng hành vi cuộn trên thiết bị di động gốc bị tắt theo mặc định.",
       "annotations": "Chú thích",
@@ -798,6 +804,12 @@
       "editShortcut": "Chỉnh sửa phím tắt",
       "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại.",
       "close": "Đóng chú giải công cụ"
+    },
+    "cellBorderStyle": {
+      "none": "Không có",
+      "solid": "Chất rắn",
+      "dashed": "Đứt nét",
+      "dotted": "Say mê"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Ngắt phần - Liên tục",
     "sectionBreakContinuousDescription": "Chèn ngắt phần và tiếp tục trên cùng một trang",
     "section": "Phần",
+    "margins": "Lề",
+    "normal": "Bình thường",
+    "narrow": "Hẹp",
+    "moderate": "Trung bình",
+    "wide": "Rộng",
+    "top": "Trên cùng",
+    "bottom": "Dưới cùng",
+    "left": "Bên trái",
+    "right": "Bên phải",
+    "customMargins": "Lề tùy chỉnh",
+    "customMarginsDescription": "Thiết đặt lề tùy chỉnh",
     "header": {
       "0": "Tiêu đề",
       "1": "Tiêu đề trang đầu tiên",
@@ -1337,16 +1360,22 @@
     "removeFooter": "Xóa chân trang",
     "headerFooterOptionsModal": {
       "title": "Định dạng đầu trang và chân trang",
-      "margins": "Lề",
       "headerFromTop": "Tiêu đề từ trên xuống",
       "footerFromBottom": "Chân trang từ dưới lên",
       "layouts": {
-        "layout": "Cách trình bày",
+        "layout": "Bố trí",
         "noSelection": "Không có lựa chọn",
         "differentFirstPage": "Trang đầu tiên khác nhau",
         "differentEvenOddPages": "Các trang chẵn và lẻ khác nhau",
         "differentFirstEvenOddPages": "Các trang đầu tiên, trang chẵn và trang lẻ khác nhau"
       }
+    },
+    "marginsModal": {
+      "title": "Điều chỉnh lề tùy chỉnh",
+      "leftMargin": "Lề trái",
+      "rightMargin": "Lề phải",
+      "topMargin": "Lề trên cùng",
+      "bottomMargin": "Lề dưới"
     },
     "lineSpacingOptions": {
       "15": "1,5",
@@ -1391,48 +1420,69 @@
     "italic": "nghiêng",
     "underline": "Gạch chân",
     "strikethrough": "Gạch ngang",
+    "strikeout": "Strikeout",
     "cellBorderStyle": "Kiểu viền",
     "merge": "Hợp nhất",
     "unmerge": "Bỏ hợp nhất",
     "cellFormat": "Định dạng ô",
-    "automatic": "Tự động",
-    "plainText": "Văn bản thuần túy",
-    "increaseDecimal": "Tăng số thập phân",
-    "decreaseDecimal": "Giảm số thập phân",
-    "number": "Con số",
-    "percent": "Phần trăm",
-    "accounting": "Kế toán",
-    "financial": "Tài chính",
-    "currency": "Tiền tệ",
-    "currencyRounded": "Tiền tệ được làm tròn",
-    "calendar": "Ngày",
-    "clockHour": "Thời gian",
-    "calendarTime": "Ngày giờ",
+    "automaticFormat": "Tự động",
+    "plainTextFormat": "Văn bản thuần túy",
+    "increaseDecimalFormat": "Tăng số thập phân",
+    "decreaseDecimalFormat": "Giảm số thập phân",
+    "numberFormat": "Con số",
+    "percentFormat": "Phần trăm",
+    "accountingFormat": "Kế toán",
+    "financialFormat": "Tài chính",
+    "currencyFormat": "Tiền tệ",
+    "currencyRoundedFormat": "Tiền tệ được làm tròn",
+    "calendarFormat": "Ngày",
+    "clockHourFormat": "Thời gian",
+    "calendarTimeFormat": "Ngày giờ",
     "formatAsCurrency": "Định dạng như tiền tệ",
     "formatAsPercent": "Định dạng theo phần trăm",
     "formatAsDecDecimal": "Giảm dấu thập phân",
     "formatAsIncDecimal": "Tăng dấu thập phân",
-    "fontColor": "Màu chữ",
-    "cellBackgroundColor": "Màu nền của ô",
+    "textColor": "Màu chữ",
+    "cellBackgroundColor": "Màu nền",
+    "cellBorderColor": "Màu viền",
+    "textLabel": "Chữ",
+    "backgroundLabel": "Lý lịch",
+    "borderLabel": "Ranh giới",
     "textAlignment": "Căn chỉnh văn bản",
-    "alignLeft": "Căn trái",
-    "alignCenter": "Căn giữa",
-    "alignRight": "Căn phải",
-    "alignTop": "Căn chỉnh đầu trang",
-    "alignMiddle": "Căn giữa",
-    "alignBottom": "Căn chỉnh đáy",
+    "topAlign": "Căn chỉnh trên cùng",
+    "middleAlign": "Căn giữa",
+    "bottomAlign": "Căn chỉnh dưới cùng",
     "cellAdjustment": "Điều chỉnh ô",
-    "insertColLeft": "Chèn cột bên trái",
-    "columnInsertLeft": "Chèn cột bên trái",
-    "columnInsertRight": "Chèn cột bên phải",
-    "rowInsertTop": "Chèn hàng ở trên",
-    "rowInsertBottom": "Chèn hàng bên dưới",
-    "columnInsertShiftDown": "Chèn ô và dịch chuyển xuống",
-    "columnInsertShiftRight": "Chèn ô và dịch chuyển sang phải",
-    "columnDelete": "Xóa cột",
-    "rowDelete": "Xóa hàng",
-    "columnDeleteShiftUp": "Xóa ô và dịch chuyển lên",
-    "columnDeleteShiftLeft": "Xóa ô và dịch chuyển sang trái"
+    "cellFormatMoreOptions": "Thêm tùy chọn định dạng ô",
+    "insertColumnLeft": "Chèn cột bên trái",
+    "insertColumnRight": "Chèn cột bên phải",
+    "insertRowTop": "Chèn hàng ở trên",
+    "insertRowBottom": "Chèn hàng bên dưới",
+    "insertColumnShiftDown": "Chèn ô và dịch chuyển xuống",
+    "insertColumnShiftRight": "Chèn ô và dịch chuyển sang phải",
+    "deleteColumn": "Xóa cột",
+    "deleteRow": "Xóa hàng",
+    "deleteColumnShiftUp": "Xóa ô và dịch chuyển lên",
+    "deleteColumnShiftLeft": "Xóa ô và dịch chuyển sang trái",
+    "clearBorder": "Đường viền rõ ràng",
+    "cellBorderAll": "Tất cả các đường viền",
+    "cellBorderInside": "Bên trong biên giới",
+    "cellBorderOutside": "Bên ngoài biên giới",
+    "cellBorderTop": "Đường viền trên cùng",
+    "cellBorderBottom": "Đường viền dưới",
+    "cellBorderLeft": "Đường viền trái",
+    "cellBorderRight": "Đường viền bên phải",
+    "cellBorderVertical": "Đường viền dọc",
+    "cellBorderHorizontal": "Đường viền ngang",
+    "cellBorderNone": "Không có biên giới",
+    "borders": "Đường viền",
+    "fontSize": {
+      "dropdownLabel": "Kích thước phông chữ"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Họ phông chữ"
+    },
+    "blankSheet": "Tờ giấy trắng"
   },
   "insertPageModal": {
     "title": "Chèn trang mới",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Thêm vào màu tùy chỉnh",
     "noToolSelected": "Chọn một công cụ để xem thuộc tính của công cụ",
     "noToolStyle": "Công cụ không chứa bất kỳ thuộc tính tạo kiểu nào.",
+    "noSharedToolStyle": "Các chú thích được chọn không chia sẻ bất kỳ thuộc tính kiểu dáng nào.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Bắt đầu dòng"

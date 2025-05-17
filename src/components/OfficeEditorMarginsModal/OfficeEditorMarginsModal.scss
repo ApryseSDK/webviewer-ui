@@ -1,0 +1,15 @@
+@import '../../constants/officeEditor.scss';
+
+.OfficeEditorMarginsModal {
+  @include oe-modal;
+
+  .modal-container .modal-body {
+    display: grid;
+    grid-template-columns: 216px 216px;
+    grid-row-gap: 24px;
+  }
+  .ui__input__wrapper {
+    width: 216px;
+  }
+
+}

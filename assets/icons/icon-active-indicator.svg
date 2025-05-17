@@ -4,5 +4,5 @@
 </defs>
 <title>icon - tools - more</title>
 
-<circle cx="21" cy="3" r="3" fill="#3183C8"/>
+<circle class="active-item-indicator" cx="21" cy="3" r="3">
 </svg>

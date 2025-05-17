@@ -145,7 +145,8 @@
     "showMoreColors": "और अधिक रंग दिखाएं",
     "showLessColors": "कम रंग दिखाएं",
     "fromCustomColorPicker": "कस्टम कलर पिकर से",
-    "newSpreadsheetDocument": "नई स्प्रेडशीट"
+    "newSpreadsheetDocument": "नई स्प्रेडशीट",
+    "resetDefault": "वितथ पर ले जाएं"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "एन्क्रिप्टेड दस्तावेज़ लोड करने में विफल. भी कई प्रयास।",
     "encryptedUserCancelled": "एन्क्रिप्टेड दस्तावेज़ लोड करने में विफल. पासवर्ड प्रविष्टि रद्द की गई।",
     "enterPassword": "यह दस्तावेज़ पासवर्ड से सुरक्षित है। कृपया पासवर्ड दर्ज करें",
-    "incorrectPassword": "गलत पासवर्ड, प्रयास शेष: {{शेष प्रयास}}",
+    "incorrectPassword": "गलत पासवर्ड, प्रयास शेष: {{ remainingAttempts }}",
     "noAnnotations": "टिप्पणी करने के लिए टिप्पणियां करना प्रारंभ करें।",
     "noAnnotationsReadOnly": "इस दस्तावेज़ में कोई टिप्पणी नहीं है।",
     "noAnnotationsFilter": "एनोटेशन बनाना शुरू करें और फिल्टर यहां दिखाई देंगे।",
@@ -305,6 +306,8 @@
     "searching": "खोज कर...",
     "searchCommentsPlaceholder": "टिप्पणियाँ खोजें",
     "searchDocumentPlaceholder": "दस्तावेज़ खोजें",
+    "clearSearchResults": "खोज परिणाम साफ़ करें",
+    "searchResultsCleared": "खोज परिणाम साफ़ किए गए",
     "searchSettingsPlaceholder": "खोज सेटिंग",
     "searchSuggestionsPlaceholder": "खोज सुझाव",
     "signHere": "यहाँ पर हस्ताक्षर करे",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "संपादन",
       "toolbarGroup-oe-Home": "घर",
       "toolbarGroup-oe-Insert": "डालना",
+      "toolbarGroup-oe-Layout": "लेआउट",
       "toolbarGroup-oe-Review": "समीक्षा"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "नया स्टाम्प जोड़ें"
     },
     "signatureOverlay": {
-      "addSignature": "नया हस्ताक्षर जोड़ें",
-      "addSignatureOrInitials": "हस्ताक्षर / आद्याक्षर"
+      "addSignatureOrInitials": "नये हस्ताक्षर/आद्याक्षर",
+      "addSignature": "नया हस्ताक्षर"
     },
     "signatureModal": {
       "modalName": "नया हस्ताक्षर बनाएं",
@@ -728,6 +732,8 @@
       "viewing": "देखना",
       "disableFadePageNavigationComponent": "फीका पृष्ठ नेविगेशन घटक अक्षम करें",
       "disableFadePageNavigationComponentDesc": "पेज नेविगेशन कंपोनेंट को हमेशा स्क्रीन पर रखें। निष्क्रियता की निश्चित अवधि के बाद इसे फीका करना डिफ़ॉल्ट व्यवहार है।",
+      "enabledFormFieldHighlighting": "फ़ॉर्म फ़ील्ड हाइलाइट सक्षम करें",
+      "enabledFormFieldHighlightingDesc": "PDF दस्तावेज़ों में फ़ॉर्म फ़ील्ड को हाइलाइट करना सक्षम करें। डिफ़ॉल्ट रूप से सक्षम।",
       "disableNativeScrolling": "मूल स्क्रॉलिंग अक्षम करें",
       "disableNativeScrollingDesc": "मूल मोबाइल डिवाइस स्क्रॉलिंग व्यवहार को अक्षम करें यदि इसे पहले सक्षम किया गया था। ध्यान दें कि स्थानीय मोबाइल डिवाइस स्क्रॉलिंग व्यवहार डिफ़ॉल्ट रूप से बंद होता है।",
       "annotations": "एनोटेशन",
@@ -798,6 +804,12 @@
       "editShortcut": "शॉर्टकट संपादित करें",
       "shortcutAlreadyExists": "ऊपर दिया गया कीबोर्ड शॉर्टकट पहले से मौजूद है।",
       "close": "टूलटिप बंद करें"
+    },
+    "cellBorderStyle": {
+      "none": "कोई नहीं",
+      "solid": "ठोस",
+      "dashed": "धराशायी",
+      "dotted": "छितराया हुआ"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "खंड विराम - निरंतर",
     "sectionBreakContinuousDescription": "अनुभाग विराम डालें और उसी पृष्ठ पर जारी रखें",
     "section": "अनुभाग",
+    "margins": "मार्जिन",
+    "normal": "सामान्य",
+    "narrow": "सँकरा",
+    "moderate": "मध्यम",
+    "wide": "चौड़ा",
+    "top": "शीर्ष",
+    "bottom": "तल",
+    "left": "बाएं",
+    "right": "सही",
+    "customMargins": "कस्टम मार्जिन",
+    "customMarginsDescription": "कस्टम मार्जिन परिभाषित करें",
     "header": {
       "0": "हैडर",
       "1": "प्रथम पृष्ठ शीर्षक",
@@ -1337,7 +1360,6 @@
     "removeFooter": "फ़ुटर हटाएँ",
     "headerFooterOptionsModal": {
       "title": "शीर्षलेख एवं पादलेख प्रारूप",
-      "margins": "मार्जिन",
       "headerFromTop": "शीर्ष से हेडर",
       "footerFromBottom": "नीचे से पादलेख",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "विभिन्न सम एवं विषम पृष्ठ",
         "differentFirstEvenOddPages": "अलग-अलग प्रथम, सम और विषम पृष्ठ"
       }
+    },
+    "marginsModal": {
+      "title": "कस्टम मार्जिन समायोजन",
+      "leftMargin": "बायां मार्जिन",
+      "rightMargin": "दायाँ मार्जिन",
+      "topMargin": "शीर्ष मार्जिन",
+      "bottomMargin": "नीचे में मार्जिन"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "तिरछा",
     "underline": "रेखांकन",
     "strikethrough": "स्ट्राइकथ्रू",
+    "strikeout": "मिटाना",
     "cellBorderStyle": "बॉर्डर शैली",
     "merge": "मर्ज",
     "unmerge": "अलग करें",
     "cellFormat": "सेल प्रारूप",
-    "automatic": "स्वचालित",
-    "plainText": "सादे पाठ",
-    "increaseDecimal": "दशमलव बढ़ाएँ",
-    "decreaseDecimal": "दशमलव घटाएँ",
-    "number": "संख्या",
-    "percent": "प्रतिशत",
-    "accounting": "लेखांकन",
-    "financial": "वित्तीय",
-    "currency": "मुद्रा",
-    "currencyRounded": "मुद्रा गोल",
-    "calendar": "तारीख",
-    "clockHour": "समय",
-    "calendarTime": "दिनांक समय",
+    "automaticFormat": "स्वचालित",
+    "plainTextFormat": "सादे पाठ",
+    "increaseDecimalFormat": "दशमलव बढ़ाएँ",
+    "decreaseDecimalFormat": "दशमलव घटाएँ",
+    "numberFormat": "संख्या",
+    "percentFormat": "प्रतिशत",
+    "accountingFormat": "लेखांकन",
+    "financialFormat": "वित्तीय",
+    "currencyFormat": "मुद्रा",
+    "currencyRoundedFormat": "मुद्रा गोल",
+    "calendarFormat": "तारीख",
+    "clockHourFormat": "समय",
+    "calendarTimeFormat": "दिनांक समय",
     "formatAsCurrency": "मुद्रा के रूप में प्रारूपित करें",
     "formatAsPercent": "प्रतिशत के रूप में प्रारूपित करें",
     "formatAsDecDecimal": "दशमलव बिंदु घटाएँ",
     "formatAsIncDecimal": "दशमलव बिंदु बढ़ाएँ",
-    "fontColor": "फ़ॉन्ट रंग",
-    "cellBackgroundColor": "सेल पृष्ठभूमि रंग",
+    "textColor": "पाठ का रंग",
+    "cellBackgroundColor": "पृष्ठभूमि का रंग",
+    "cellBorderColor": "सीमा रंग",
+    "textLabel": "मूलपाठ",
+    "backgroundLabel": "पृष्ठभूमि",
+    "borderLabel": "सीमा",
     "textAlignment": "पाठ संरेखण",
-    "alignLeft": "बाईं ओर संरेखित करें",
-    "alignCenter": "मध्य में संरेखित करें",
-    "alignRight": "दाएँ संरेखित करें",
-    "alignTop": "शीर्ष संरेखित करें",
-    "alignMiddle": "मध्य संरेखित करें",
-    "alignBottom": "नीचे संरेखित करें",
+    "topAlign": "शीर्ष संरेखित करें",
+    "middleAlign": "मध्य संरेखित करें",
+    "bottomAlign": "नीचे संरेखित करें",
     "cellAdjustment": "सेल समायोजन",
-    "insertColLeft": "स्तंभ बाईं ओर डालें",
-    "columnInsertLeft": "स्तंभ बाईं ओर डालें",
-    "columnInsertRight": "स्तंभ दाईं ओर डालें",
-    "rowInsertTop": "ऊपर पंक्ति डालें",
-    "rowInsertBottom": "नीचे पंक्ति डालें",
-    "columnInsertShiftDown": "सेल डालें और नीचे शिफ्ट करें",
-    "columnInsertShiftRight": "सेल डालें और दाईं ओर शिफ्ट करें",
-    "columnDelete": "स्तंभ हटाएं",
-    "rowDelete": "पंक्ति को हटाएं",
-    "columnDeleteShiftUp": "कोशिकाओं को हटाएँ और ऊपर शिफ्ट करें",
-    "columnDeleteShiftLeft": "कक्षों को हटाएं और बाईं ओर शिफ्ट करें"
+    "cellFormatMoreOptions": "अधिक सेल प्रारूप विकल्प",
+    "insertColumnLeft": "स्तंभ बाईं ओर डालें",
+    "insertColumnRight": "स्तंभ दाईं ओर डालें",
+    "insertRowTop": "ऊपर पंक्ति डालें",
+    "insertRowBottom": "नीचे पंक्ति डालें",
+    "insertColumnShiftDown": "सेल डालें और नीचे शिफ्ट करें",
+    "insertColumnShiftRight": "सेल डालें और दाईं ओर शिफ्ट करें",
+    "deleteColumn": "स्तंभ हटाएं",
+    "deleteRow": "पंक्ति को हटाएं",
+    "deleteColumnShiftUp": "सेल हटाएँ और ऊपर शिफ्ट करें",
+    "deleteColumnShiftLeft": "कक्षों को हटाएं और बाईं ओर शिफ्ट करें",
+    "clearBorder": "सीमा साफ़ करें",
+    "cellBorderAll": "सभी सीमाएँ",
+    "cellBorderInside": "सीमाओं के अंदर",
+    "cellBorderOutside": "सीमाओं के बाहर",
+    "cellBorderTop": "शीर्ष सीमा",
+    "cellBorderBottom": "निचली सीमा",
+    "cellBorderLeft": "बायाँ बॉर्डर",
+    "cellBorderRight": "दायाँ बॉर्डर",
+    "cellBorderVertical": "ऊर्ध्वाधर सीमा",
+    "cellBorderHorizontal": "क्षैतिज सीमा",
+    "cellBorderNone": "कोई सीमा नहीं",
+    "borders": "सीमाएं",
+    "fontSize": {
+      "dropdownLabel": "फ़ॉन्ट आकार"
+    },
+    "fontFamily": {
+      "dropdownLabel": "फुहारा परिवार"
+    },
+    "blankSheet": "ब्लेंक शीट"
   },
   "insertPageModal": {
     "title": "नया पेज डालें",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "कस्टम रंगों में जोड़ें",
     "noToolSelected": "उपकरण गुण देखने के लिए कोई उपकरण चुनें",
     "noToolStyle": "टूल में कोई स्टाइलिंग गुण नहीं हैं.",
+    "noSharedToolStyle": "चयनित एनोटेशन किसी भी स्टाइलिंग गुण को साझा नहीं करते हैं.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "लाइन प्रारंभ"

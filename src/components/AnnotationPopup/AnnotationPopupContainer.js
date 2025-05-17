@@ -120,9 +120,6 @@ const AnnotationPopupContainer = ({
 
   const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation, activeDocumentViewerKey) : true;
   const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
-  const isNotesPanelOpenOrActive = isNotesPanelOpen
-    || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel')
-    || isAnyCustomPanelOpen;
   const sixtyFramesPerSecondIncrement = 16;
   // on tablet, the behaviour will be like on desktop, including being draggable
 
@@ -488,6 +485,11 @@ const AnnotationPopupContainer = ({
     focusedAnnotation instanceof Annotations.SoundAnnotation &&
     focusedAnnotation.hasAudioData()
   );
+
+  const isNotesPanelOpenOrActive = isNotesPanelOpen
+    || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel')
+    || isAnyCustomPanelOpen
+    || isInFormFieldCreationMode;
 
   const handlePlaySound = (annotation) => {
     dispatch(actions.setActiveSoundAnnotation(annotation));

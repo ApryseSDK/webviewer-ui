@@ -30,21 +30,11 @@ const MobilePanelWrapper = ({ children }) => {
   const dispatch = useDispatch();
   const contentElement = children?.props?.dataElement;
 
-  const [
-    isOpen,
-    isContentOpen,
-    documentContainerWidthStyle,
-    mobilePanelSize,
-    isSearchAndReplaceDisabled
-  ] = useSelector((state) => [
-    selectors.isElementOpen(state, MOBILE_PANEL_WRAPPER),
-    selectors.isElementOpen(state, contentElement),
-    selectors.getDocumentContentContainerWidthStyle(state),
-    selectors.getMobilePanelSize(state),
-    selectors.isElementDisabled(state, 'searchAndReplace'),
-  ]);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, MOBILE_PANEL_WRAPPER));
+  const isContentOpen = useSelector((state) => selectors.isElementOpen(state, contentElement));
+  const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
+  const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
 
-  const [style, setStyle] = useState({});
   const [wrapperBodyStyle, setWrapperBodyStyle] = useState({});
 
   const setMobilePanelSize = (size) => {
@@ -79,10 +69,6 @@ const MobilePanelWrapper = ({ children }) => {
       dispatch(actions.closeElement(MOBILE_PANEL_WRAPPER));
     }
   }, [isContentOpen]);
-
-  useEffect(() => {
-    setStyle({ width: documentContainerWidthStyle });
-  }, [documentContainerWidthStyle]);
 
   useEffect(() => {
     if (dimensions.height !== null) {
@@ -150,7 +136,6 @@ const MobilePanelWrapper = ({ children }) => {
       [mobilePanelSize]: true,
     })}
     ref={wrapperRef}
-    style={style}
     role='none'
     onClick={onContainerClick}
     onKeyDown={onContainerClick}>

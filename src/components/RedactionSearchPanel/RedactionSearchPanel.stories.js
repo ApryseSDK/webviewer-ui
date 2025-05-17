@@ -14,7 +14,7 @@ export const mockSearchResults = [
     resultStrEnd: 9,
     index: 0,
     pageNum: 1,
-    icon: 'icon-form-field-text',
+    icon: 'icon-text-redaction',
   },
   {
     type: redactionTypeMap['CREDIT_CARD'],

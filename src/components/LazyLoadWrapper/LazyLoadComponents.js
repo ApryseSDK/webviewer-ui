@@ -51,6 +51,7 @@ const SignatureValidationModal = lazy(() => import('components/SignatureValidati
 const CustomModal = lazy(() => import('components/CustomModal'));
 const CreatePortfolioModal = lazy(() => import('components/CreatePortfolioModal'));
 const HeaderFooterOptionsModal = lazy(() => import('components/HeaderFooterOptionsModal'));
+const OfficeEditorMarginsModal = lazy(() => import('components/OfficeEditorMarginsModal'));
 
 // Panels
 const OutlinesPanel = lazy(() => import('components/OutlinesPanel'));
@@ -72,7 +73,7 @@ const IndexPanel = lazy(() => import('src/components/ModularComponents/IndexPane
 
 // Sheets Editor
 const FormulaBar = lazy(() => import('components/FormulaBar'));
-const SpreadsheetSwitcher = lazy(() => import('components/ModularComponents/SpreadsheetSwitcher'));
+const SpreadsheetSwitcher = lazy(() => import('components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher'));
 
 const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
 
@@ -140,6 +141,7 @@ const LazyLoadComponents = {
   RubberStampPanel,
   FormFieldPanel,
   HeaderFooterOptionsModal,
+  OfficeEditorMarginsModal,
   FormulaBar,
   SpreadsheetSwitcher,
 };

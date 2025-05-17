@@ -106,8 +106,11 @@ const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandS
       case 91:
       case 93:
         return 'command';
-      default:
-        return e.key.toLowerCase();
+      default: {
+        const keyString = hotkeys.getPressedKeyString();
+        const index = hotkeys.getPressedKeyCodes().indexOf(e.keyCode);
+        return keyString[index];
+      }
     }
   };
 

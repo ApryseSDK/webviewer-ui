@@ -18,7 +18,7 @@
       .Icon {
         color: var(--view-header-icon-active-fill);
 
-        svg path {
+        svg path:not(.no-fill) {
           fill: var(--view-header-icon-active-fill);
         }
       }

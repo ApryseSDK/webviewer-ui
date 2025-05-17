@@ -145,7 +145,8 @@
     "showMoreColors": "Показати більше кольорів",
     "showLessColors": "Показати менше кольорів",
     "fromCustomColorPicker": "із спеціальної палітри кольорів",
-    "newSpreadsheetDocument": "Нова електронна таблиця"
+    "newSpreadsheetDocument": "Нова електронна таблиця",
+    "resetDefault": "Скинути до замовчування"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Не вдалося завантажити зашифрований документ. Забагато спроб.",
     "encryptedUserCancelled": "Не вдалося завантажити зашифрований документ. Введення пароля скасовано.",
     "enterPassword": "Цей документ захищений паролем. Будь ласка, введіть пароль",
-    "incorrectPassword": "Неправильний пароль, залишилося спроб: {{ restingAttempts }}",
+    "incorrectPassword": "Неправильний пароль, залишилося спроб: {{ remainingAttempts }}",
     "noAnnotations": "Почніть робити анотації, щоб залишити коментар.",
     "noAnnotationsReadOnly": "Цей документ не має анотацій.",
     "noAnnotationsFilter": "Почніть створювати анотації, і тут з’являться фільтри.",
@@ -305,6 +306,8 @@
     "searching": "Пошук...",
     "searchCommentsPlaceholder": "Шукати коментарі",
     "searchDocumentPlaceholder": "Пошук документа",
+    "clearSearchResults": "Очистити результати пошуку",
+    "searchResultsCleared": "Результати пошуку очищені",
     "searchSettingsPlaceholder": "Налаштування пошуку",
     "searchSuggestionsPlaceholder": "Пошукові пропозиції",
     "signHere": "Підпишіть тут",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Редагувати",
       "toolbarGroup-oe-Home": "додому",
       "toolbarGroup-oe-Insert": "Вставка",
+      "toolbarGroup-oe-Layout": "Макет",
       "toolbarGroup-oe-Review": "огляд"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Додати новий штамп"
     },
     "signatureOverlay": {
-      "addSignature": "Додати новий підпис",
-      "addSignatureOrInitials": "Підпис/Ініціали"
+      "addSignatureOrInitials": "Новий підпис/ініціали",
+      "addSignature": "Новий підпис"
     },
     "signatureModal": {
       "modalName": "Створити новий підпис",
@@ -728,6 +732,8 @@
       "viewing": "Перегляд",
       "disableFadePageNavigationComponent": "Вимкнути навігаційний компонент Fade Page",
       "disableFadePageNavigationComponentDesc": "Завжди тримайте компонент навігації сторінкою на екрані. Поведінка за замовчуванням — зникати після певного періоду бездіяльності.",
+      "enabledFormFieldHighlighting": "Увімкнути підсвічування полів форми",
+      "enabledFormFieldHighlightingDesc": "Увімкнути підсвічування полів форми в документах PDF. Увімкнено за замовчуванням.",
       "disableNativeScrolling": "Вимкнути власну прокрутку",
       "disableNativeScrollingDesc": "Вимкніть власну поведінку прокручування мобільного пристрою, якщо її було ввімкнено раніше. Зауважте, що стандартну поведінку прокручування мобільного пристрою вимкнено за умовчанням.",
       "annotations": "Анотації",
@@ -798,6 +804,12 @@
       "editShortcut": "Редагувати ярлик",
       "shortcutAlreadyExists": "Комбінація клавіш вище вже існує.",
       "close": "Закрити підказку"
+    },
+    "cellBorderStyle": {
+      "none": "Жодного",
+      "solid": "Твердий",
+      "dashed": "Штриховий",
+      "dotted": "Пунктирний"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Розрив розділу - безперервний",
     "sectionBreakContinuousDescription": "Вставте розрив розділу та продовжте на тій же сторінці ",
     "section": "Розділ",
+    "margins": "Поля",
+    "normal": "Звичайний",
+    "narrow": "Вузький",
+    "moderate": "Помірний",
+    "wide": "Широкий",
+    "top": "Верх",
+    "bottom": "Дно",
+    "left": "Ліворуч",
+    "right": "Праворуч",
+    "customMargins": "Налаштовані поля",
+    "customMarginsDescription": "Визначення користувацьких полів",
     "header": {
       "0": "Заголовок",
       "1": "Верхній колонтитул першої сторінки",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Видалити нижній колонтитул",
     "headerFooterOptionsModal": {
       "title": "Формат верхнього та нижнього колонтитулів",
-      "margins": "Поля",
       "headerFromTop": "Заголовок зверху",
       "footerFromBottom": "Нижній колонтитул",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Різні парні та непарні сторінки",
         "differentFirstEvenOddPages": "Різні перші, парні та непарні сторінки"
       }
+    },
+    "marginsModal": {
+      "title": "Коригування користувацького поля",
+      "leftMargin": "Ліве поле",
+      "rightMargin": "Праве поле",
+      "topMargin": "Верхнє поле",
+      "bottomMargin": "Нижнє поле"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Курсив",
     "underline": "Підкреслити",
     "strikethrough": "Закреслення",
+    "strikeout": "Закреслення",
     "cellBorderStyle": "Стиль кордону",
     "merge": "Об’єднати",
     "unmerge": "Роз’єднати",
     "cellFormat": "Формат комірки",
-    "automatic": "Автоматичний",
-    "plainText": "Звичайний текст",
-    "increaseDecimal": "Збільшити десятковий дроб",
-    "decreaseDecimal": "Зменшення десяткової дроби",
-    "number": "Номер",
-    "percent": "Відсоток",
-    "accounting": "Бухгалтерський облік",
-    "financial": "Фінансовий",
-    "currency": "Валюта",
-    "currencyRounded": "Валюта округлена",
-    "calendar": "Дата",
-    "clockHour": "час",
-    "calendarTime": "Дата Час",
+    "automaticFormat": "Автоматичний",
+    "plainTextFormat": "Звичайний текст",
+    "increaseDecimalFormat": "Збільшити десятковий дроб",
+    "decreaseDecimalFormat": "Зменшення десяткової дроби",
+    "numberFormat": "Номер",
+    "percentFormat": "Відсоток",
+    "accountingFormat": "Бухгалтерський облік",
+    "financialFormat": "Фінансовий",
+    "currencyFormat": "Валюта",
+    "currencyRoundedFormat": "Валюта округлена",
+    "calendarFormat": "Дата",
+    "clockHourFormat": "час",
+    "calendarTimeFormat": "Дата Час",
     "formatAsCurrency": "Відформатувати як валюту",
     "formatAsPercent": "Відформатувати у відсотках",
     "formatAsDecDecimal": "Зменшити десяткову кому",
     "formatAsIncDecimal": "Збільшити десяткову кому",
-    "fontColor": "Колір шрифту",
-    "cellBackgroundColor": "Колір фону комірки",
+    "textColor": "Колір тексту",
+    "cellBackgroundColor": "Колір фону",
+    "cellBorderColor": "Колір рамки",
+    "textLabel": "Текст",
+    "backgroundLabel": "Передісторія",
+    "borderLabel": "Кордон",
     "textAlignment": "Вирівнювання тексту",
-    "alignLeft": "Вирівняти ліворуч",
-    "alignCenter": "Вирівняти по центру",
-    "alignRight": "Вирівняти праворуч",
-    "alignTop": "Вирівняти верх",
-    "alignMiddle": "Вирівняти посередині",
-    "alignBottom": "Вирівняти низ",
+    "topAlign": "Вирівняти зверху",
+    "middleAlign": "Вирівнювання посередині",
+    "bottomAlign": "Вирівнювання по нижньому краю",
     "cellAdjustment": "Коригування комірки",
-    "insertColLeft": "Вставити стовпець зліва",
-    "columnInsertLeft": "Вставити стовпець зліва",
-    "columnInsertRight": "Вставити стовпець справа",
-    "rowInsertTop": "Вставте рядок вище",
-    "rowInsertBottom": "Вставте рядок нижче",
-    "columnInsertShiftDown": "Вставити клітинки та зсунути вниз",
-    "columnInsertShiftRight": "Вставити клітинки зі зрушенням вправо",
-    "columnDelete": "Видалити стовпець",
-    "rowDelete": "Видалити рядок",
-    "columnDeleteShiftUp": "Видалити комірки та зсунути вгору",
-    "columnDeleteShiftLeft": "Видалити комірки та зсунути вліво"
+    "cellFormatMoreOptions": "Більше параметрів формату клітинок",
+    "insertColumnLeft": "Вставити стовпець зліва",
+    "insertColumnRight": "Вставити стовпець справа",
+    "insertRowTop": "Вставте рядок вище",
+    "insertRowBottom": "Вставте рядок нижче",
+    "insertColumnShiftDown": "Вставити клітинки та зсунути вниз",
+    "insertColumnShiftRight": "Вставити клітинки зі зрушенням вправо",
+    "deleteColumn": "Видалити стовпець",
+    "deleteRow": "Видалити рядок",
+    "deleteColumnShiftUp": "Видалити комірки та зсунути вгору",
+    "deleteColumnShiftLeft": "Видалити комірки та зсунути вліво",
+    "clearBorder": "Очистити кордон",
+    "cellBorderAll": "Усі кордони",
+    "cellBorderInside": "Внутрішні кордони",
+    "cellBorderOutside": "За кордоном",
+    "cellBorderTop": "Верхня межа",
+    "cellBorderBottom": "Нижня межа",
+    "cellBorderLeft": "Ліва межа",
+    "cellBorderRight": "Права межа",
+    "cellBorderVertical": "Вертикальна межа",
+    "cellBorderHorizontal": "Горизонтальна межа",
+    "cellBorderNone": "Без кордонів",
+    "borders": "Кордони",
+    "fontSize": {
+      "dropdownLabel": "Розмір шрифту"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Сімейство шрифтів"
+    },
+    "blankSheet": "Чистий аркуш"
   },
   "insertPageModal": {
     "title": "Вставити нову сторінку",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Додати до власних кольорів",
     "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
     "noToolStyle": "Інструмент не містить властивостей стилізації.",
+    "noSharedToolStyle": "Вибрані анотації не мають спільних властивостей стилю.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Початок лінії"

@@ -1,0 +1,1 @@
+export const FILESAVERJS_MAX_NAME_LENTH = 244;

@@ -10,6 +10,7 @@ import selectors from 'selectors';
 import classNames from 'classnames';
 
 import Icon from 'components/Icon';
+import Button from 'components/Button';
 import Choice from '../Choice/Choice';
 import Spinner from '../Spinner';
 import { getInstanceNode } from 'helpers/getRootNode';
@@ -322,6 +323,7 @@ function SearchOverlay(props) {
     />
   </div>);
 
+
   return (
     <div className={classNames({
       'SearchOverlay': true,
@@ -342,13 +344,14 @@ function SearchOverlay(props) {
           tabIndex={isPanelOpen ? 0 : -1}
         />
         {(searchValue !== undefined) && searchValue.length > 0 && (
-          <button
+          <Button
             className="clearSearch-button"
+            img="icon-close"
             onClick={clearSearchResult}
-            aria-label={t('message.searchDocumentPlaceholder')}
-          >
-            <Icon glyph="icon-close" />
-          </button>
+            title={t('message.clearSearchResults')}
+            ariaLabel={t('message.clearSearchResults')}
+            onClickAnnouncement={t('message.searchResultsCleared')}
+          />
         )
         }
       </div>

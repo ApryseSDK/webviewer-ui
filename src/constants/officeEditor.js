@@ -19,13 +19,6 @@ export const JUSTIFICATION_OPTIONS = {
   Both: 'both'
 };
 
-export const STYLE_TOGGLE_OPTIONS = {
-  Bold: 'bold',
-  Italic: 'italic',
-  Underline: 'underline',
-  Strikethrough: 'strikethrough',
-};
-
 export const LIST_OPTIONS = {
   Ordered: 'ordered',
   Unordered: 'unordered',
@@ -119,6 +112,34 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
 };
 /* eslint-enable custom/no-hex-colors */
 
+export const HEADER_FOOTER_BAR_DEFAULT_POSITION = 100;
+
 export const CM_PER_INCH = 2.54;
+export const PIXELS_PER_INCH = 96;
+
+export const MARGIN_UNITS = window.Core.Document.OfficeEditor.MarginUnits;
+
+export const MARGIN_UNIT_LABELS = {
+  CM: 'cm',
+  INCH: '"',
+};
+
+export const MARGIN_VALUES = {
+  NORMAL: 2.54,
+  NARROW: 1.27,
+  MODERATE: 1.91,
+  WIDE: 5.08,
+};
+
+export const MARGIN_SIDES = {
+  TOP: 'top',
+  BOTTOM: 'bottom',
+  LEFT: 'left',
+  RIGHT: 'right'
+};
+
+export const MARGIN_TOP_AND_BOTTOM_MAX_PERCENTAGE = 0.4;
+
+export const MINIMUM_COLUMN_WIDTH_IN_INCHES = 0.5;
 
 export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';

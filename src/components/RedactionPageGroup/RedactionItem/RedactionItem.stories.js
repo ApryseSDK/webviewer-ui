@@ -46,7 +46,7 @@ const getMockRedactionAnnotation = () => ({
 export function TextRedactionItem() {
   const mockTextRedactionAnnotation = getMockRedactionAnnotation();
   mockTextRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
-  mockTextRedactionAnnotation.icon = 'icon-form-field-text';
+  mockTextRedactionAnnotation.icon = 'icon-text-redaction';
   const textRedactionItemProps = {
     iconColor: initialColors[0],
     annotation: mockTextRedactionAnnotation,

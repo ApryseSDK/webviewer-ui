@@ -227,6 +227,7 @@ const RichTextStyleEditor = ({
     if (property === 'FontSize' || property === 'Font') {
       adjustFreeTextBoundingBox(annotation);
     }
+    // Needs this setTimeout since blur has a slight delay
     setTimeout(() => {
       oldSelectionRef.current = { index, length };
       const editBoxManager = core.getAnnotationManager().getEditBoxManager();

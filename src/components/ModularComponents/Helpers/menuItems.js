@@ -2,7 +2,8 @@ import React from 'react';
 import DataElements from 'constants/dataElement';
 import {
   PRESET_BUTTON_TYPES,
-  CELL_ADJUSTMENT_BUTTONS,
+  CELL_ADJUSTMENT_FLYOUT_ITEMS,
+  CELL_BORDER_BUTTONS,
   CELL_FORMAT_BUTTONS,
 } from 'constants/customizationVariables';
 import Button from 'components/Button';
@@ -150,6 +151,14 @@ const baseMenuItems = {
     title: 'spreadsheetEditor.strikethrough',
     hidden: false,
   },
+  [PRESET_BUTTON_TYPES.STRIKEOUT]: {
+    dataElement: 'strikeoutButton',
+    presetDataElement: DataElements.STRIKEOUT_PRESET_BUTTON,
+    icon: 'icon-tool-text-manipulation-strikethrough',
+    label: 'spreadsheetEditor.strikeout',
+    title: 'spreadsheetEditor.strikeout',
+    hidden: false,
+  },
   [PRESET_BUTTON_TYPES.INCREASE_INDENT]: {
     dataElement: 'increaseIndentButton',
     presetDataElement: DataElements.INCREASE_INDENT_PRESET_BUTTON,
@@ -237,41 +246,6 @@ const baseMenuItems = {
     title: 'action.newSpreadsheetDocument',
     isActive: false,
   },
-
-
-
-  [PRESET_BUTTON_TYPES.CELL_TEXT_COLOR]: {
-    dataElement: 'cellTextColor',
-    presetDataElement: DataElements.CELL_TEXT_COLOR_BUTTON,
-    icon: 'icon-tool-text-free-text',
-    label: 'spreadsheetEditor.fontColor',
-    title: 'spreadsheetEditor.fontColor',
-    hidden: false,
-  },
-  [PRESET_BUTTON_TYPES.CELL_BACKGROUND_COLOR]: {
-    dataElement: 'cellBackgroundColor',
-    presetDataElement: DataElements.CELL_BG_COLOR_BUTTON,
-    icon: 'ic-fill',
-    label: 'spreadsheetEditor.cellBackgroundColor',
-    title: 'spreadsheetEditor.cellBackgroundColor',
-    hidden: false,
-  },
-  [PRESET_BUTTON_TYPES.CELL_ADJUSTMENT]: {
-    dataElement: 'cellAdjustment',
-    presetDataElement: DataElements.CELL_ADJUSTMENT_BUTTON,
-    icon: 'ic-column-insert',
-    label: 'spreadsheetEditor.cellAdjustment',
-    title: 'spreadsheetEditor.cellAdjustment',
-    hidden: false,
-  },
-  [PRESET_BUTTON_TYPES.CELL_BORDER_STYLE]: {
-    dataElement: 'cellBorderStyle',
-    presetDataElement: DataElements.BORDER_STYLE_BUTTON,
-    icon: 'ic-border-main',
-    label: 'spreadsheetEditor.cellBorderStyle',
-    title: 'spreadsheetEditor.cellBorderStyle',
-    hidden: false,
-  },
   [PRESET_BUTTON_TYPES.CELL_MERGE_TOGGLE]: {
     dataElement: 'cellMergeToggle',
     presetDataElement: DataElements.MERGE_TOGGLE_BUTTON,
@@ -294,14 +268,6 @@ const baseMenuItems = {
     icon: 'ic-currency-dollar',
     label: 'spreadsheetEditor.formatAsCurrency',
     title: 'spreadsheetEditor.formatAsCurrency',
-    hidden: false,
-  },
-  [PRESET_BUTTON_TYPES.CELL_FORMAT_MORE]: {
-    dataElement: 'formatMore',
-    presetDataElement: DataElements.CELL_FORMAT_MORE_BUTTON,
-    icon: 'icon-tools-more-vertical',
-    label: 'action.more',
-    title: 'action.more',
     hidden: false,
   },
 
@@ -332,54 +298,63 @@ const baseMenuItems = {
   },
 
   /** CELL TEXT ALIGNMENT */
-  [PRESET_BUTTON_TYPES.CELL_TEXT_ALIGNMENT]: {
-    dataElement: 'cellTextAlignment',
-    presetDataElement: DataElements.CELL_TEXT_ALIGNMENT_BUTTON,
-    icon: 'icon-menu-left-align',
-    label: 'spreadsheetEditor.textAlignment',
-    title: 'spreadsheetEditor.textAlignment',
-    hidden: false,
-  },
   [PRESET_BUTTON_TYPES.ALIGN_TOP]: {
     dataElement: PRESET_BUTTON_TYPES.ALIGN_TOP,
     presetDataElement: DataElements.CELL_TEXT_ALIGN_TOP_BUTTON,
     icon: 'ic-align-top-ios',
-    label: 'spreadsheetEditor.alignTop',
-    title: 'spreadsheetEditor.alignTop',
+    label: 'spreadsheetEditor.topAlign',
+    title: 'spreadsheetEditor.topAlign',
     isActive: false,
   },
   [PRESET_BUTTON_TYPES.ALIGN_MIDDLE]: {
     dataElement: PRESET_BUTTON_TYPES.ALIGN_MIDDLE,
     presetDataElement: DataElements.CELL_TEXT_ALIGN_MIDDLE_BUTTON,
     icon: 'ic-align-middle-ios',
-    label: 'spreadsheetEditor.alignMiddle',
-    title: 'spreadsheetEditor.alignMiddle',
+    label: 'spreadsheetEditor.middleAlign',
+    title: 'spreadsheetEditor.middleAlign',
     isActive: false,
   },
   [PRESET_BUTTON_TYPES.ALIGN_BOTTOM]: {
     dataElement: PRESET_BUTTON_TYPES.ALIGN_BOTTOM,
     presetDataElement: DataElements.CELL_TEXT_ALIGN_BOTTOM_BUTTON,
     icon: 'ic-align-bottom-ios',
-    label: 'spreadsheetEditor.alignBottom',
-    title: 'spreadsheetEditor.alignBottom',
+    label: 'spreadsheetEditor.bottomAlign',
+    title: 'spreadsheetEditor.bottomAlign',
     isActive: false,
   },
 };
 
 export const menuItems = {
   ...baseMenuItems,
-  ...CELL_ADJUSTMENT_BUTTONS.reduce((acc, item) => {
+  ...CELL_ADJUSTMENT_FLYOUT_ITEMS.reduce((acc, item) => {
     if (item === 'divider') {
       return acc;
     }
-    const icon = item.replace(/[A-Z]/g, (m) => `-${  m.toLowerCase()}`);
-    const label = item.charAt(0).toLowerCase() + item.slice(1);
-    acc[`adjustment${item}`] = {
-      dataElement: `adjustment${item}`,
-      presetDataElement: `adjustment${item}Btn`,
-      icon: `ic${icon}`,
-      label: `spreadsheetEditor.${label}`,
-      title: `spreadsheetEditor.${label}`,
+    const icon = item.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+    acc[item] = {
+      dataElement: `${item}`,
+      presetDataElement: `${item}PresetButton`,
+      icon: `ic-${icon}`,
+      label: `spreadsheetEditor.${item}`,
+      title: `spreadsheetEditor.${item}`,
+      isActive: false,
+    };
+    return acc;
+  }, {}),
+
+  ...CELL_BORDER_BUTTONS.reduce((acc, item) => {
+    if (item === 'divider') {
+      return acc;
+    }
+
+    const icon = item.replace(/cellBorder([A-Z])/g, (match, p1) => `border-${p1.toLowerCase()}`);
+
+    acc[`${item}`] = {
+      dataElement: `${item}`,
+      presetDataElement: `${item}`,
+      icon: `ic-${icon}`,
+      label: `spreadsheetEditor.${item}`,
+      title: `spreadsheetEditor.${item}`,
       isActive: false,
     };
     return acc;
@@ -389,19 +364,19 @@ export const menuItems = {
     if (item === 'divider') {
       return acc;
     }
-    const { label } = item;
-    let { icon } = item;
+    let { icon, label } = item;
     if (!icon) {
-      icon = `ic${label.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`;
+      let iconNameSuffix = label.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+      iconNameSuffix = iconNameSuffix.replace(/-format/g, '');
+      icon = `ic-${iconNameSuffix}`;
     }
 
-    const txt = label.charAt(0).toLowerCase() + label.slice(1);
-    acc[`format${label}`] = {
-      dataElement: `format${label}`,
-      presetDataElement: `format${label}Btn`,
-      icon: `${icon}`,
-      label: `spreadsheetEditor.${txt}`,
-      title: `spreadsheetEditor.${txt}`,
+    acc[label] = {
+      dataElement: label,
+      presetDataElement: `${label}PresetButton`,
+      icon: icon,
+      label: `spreadsheetEditor.${label}`,
+      title: `spreadsheetEditor.${label}`,
       isActive: false,
     };
     return acc;

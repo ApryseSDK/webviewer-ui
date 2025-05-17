@@ -52,7 +52,7 @@ function LeftHeaderContainer() {
       const { dataElement } = leftHeader;
       return (<ModularHeader ref={elementRef} {...leftHeader} key={dataElement} style={style}/>);
     }
-  }, [leftHeader]);
+  }, [leftHeader, style]);
 
   if (!customizableUI || !leftHeaders.length) {
     return null;

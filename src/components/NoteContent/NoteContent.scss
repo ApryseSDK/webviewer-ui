@@ -46,7 +46,8 @@
     cursor: text;
     padding-left: 52px;
     padding-right: var(--note-content-right-padding-width);
-    > * {
+
+    >* {
       pointer-events: all;
     }
   }
@@ -193,6 +194,7 @@
   .selected-text-preview {
     padding-left: 52px;
     padding-top: 8px;
+    pointer-events: auto;
   }
 
   .reply-attachment-list {

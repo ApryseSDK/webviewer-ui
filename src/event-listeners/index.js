@@ -64,6 +64,8 @@ import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionC
 import onSpreadsheetEditorEditModeChanged from './onSpreadsheetEditorEditModeChanged';
 import { openSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorLoaded';
 import { closeSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorReady';
+import onWidgetHighlightingChanged from './onWidgetHighlightingChanged';
+import onSelectedRangeStyleChanged from './onSelectedRangeStyleChanged';
 
 export {
   onSignatureSaved,
@@ -131,4 +133,6 @@ export {
   onSpreadsheetEditorEditModeChanged,
   openSpreadsheetEditorLoadingModal,
   closeSpreadsheetEditorLoadingModal,
+  onWidgetHighlightingChanged,
+  onSelectedRangeStyleChanged,
 };

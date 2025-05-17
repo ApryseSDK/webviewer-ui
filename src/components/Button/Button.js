@@ -87,6 +87,7 @@ const Button = (props) => {
     hideOnClick,
     shouldPassActiveDocumentViewerKeyToOnClickHandler,
     onClickAnnouncement,
+    onKeyDownHandler,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -152,9 +153,10 @@ const Button = (props) => {
       onClick={actuallyDisabled ? NOOP : onClickHandler}
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
+      onKeyDown={actuallyDisabled ? NOOP : onKeyDownHandler}
       aria-label={aLabel}
       aria-labelledby={ariaLabelledby}
-      aria-controls={aControls}
+      aria-controls={aControls ? aControls : undefined}
       role={role}
       tabIndex={tabIndex}
       type={isSubmitType ? 'submit' : 'button'}

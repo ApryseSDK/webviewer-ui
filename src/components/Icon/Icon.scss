@@ -6,6 +6,10 @@
   pointer-events: none;
   color: var(--icon-color);
 
+  .active-item-indicator {
+    fill: var(--icon-active-item-indicator) !important;
+  }
+
   &.icon-border {
     rect {
       stroke: var(--border) !important;
@@ -28,6 +32,7 @@
 
   &.disabled {
     fill: var(--disabled-icon);
+
     path {
       fill: var(--disabled-icon);
     }

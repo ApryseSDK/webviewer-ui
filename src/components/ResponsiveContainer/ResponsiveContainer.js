@@ -19,6 +19,7 @@ const ResponsiveContainer = ({
   items,
   parentDataElement,
 }) => {
+  const animationRequest = useRef(null);
   const isResizingRef = useRef(false);
   const enabledItems = useSelector((state) => items.map((item) => {
     if (selectors.isElementDisabled(state, item.dataElement)) {
@@ -32,7 +33,8 @@ const ResponsiveContainer = ({
       return;
     }
     isResizingRef.current = true;
-    requestAnimationFrame(async () => {
+    animationRequest.current = requestAnimationFrame(async () => {
+      animationRequest.current = null;
       let retry = false;
       try {
         if (ResizingPromises[parentDataElement]) {
@@ -90,6 +92,11 @@ const ResponsiveContainer = ({
     return () => {
       resizeObserver.disconnect();
       mutationObserver.disconnect();
+      if (animationRequest.current) {
+        cancelAnimationFrame(animationRequest.current);
+        animationRequest.current = null;
+        isResizingRef.current = false;
+      }
     };
   }, [items, elementRef?.current, parentDataElement, headerDirection]);
 

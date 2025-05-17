@@ -3,11 +3,7 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import {
-  getNestedGroupedItems,
-  getBasicItemsFromGroupedItems,
-  getAllAssociatedGroupedItems
-} from 'helpers/modularUIHelpers';
+import { getBasicItemsFromGroupedItems } from 'helpers/modularUIHelpers';
 import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
 import getHashParameters from 'helpers/getHashParameters';
 import { createSelector } from 'reselect';
@@ -364,32 +360,43 @@ export const getFirstToolForGroupedItems = (state, group) => {
 
 export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
 
-export const getActiveHeaders = (state) => {
-  const allHeaders = Object.values(state.viewer.modularHeaders);
-  const activeGroupedItemsSet = new Set(state.viewer.activeGroupedItems);
-  const fixedGroupedItemsSet = new Set(state.viewer.fixedGroupedItems);
-  const componentsMap = state.viewer.modularComponents;
 
-  // An item is active if it meets one of the following conditions:
-  // 1. It is not a grouped item
-  // 2. It is a grouped item and its dataElement is in the activeGroupedItems or fixedGroupedItems
-  const isActiveItem = (item) => {
-    const modularComponent = componentsMap[item];
-    if (!modularComponent) {
-      return false;
-    }
+// An item is active if it is not disabled and meets one of the following conditions:
+// 1. It is not a grouped item
+// 2. It is a grouped item and its dataElement is in the activeGroupedItems or fixedGroupedItems
+export const getActiveHeaders = createSelector(
+  [
+    (state) => state.viewer.modularHeaders,
+    (state) => state.viewer.activeGroupedItems,
+    (state) => state.viewer.fixedGroupedItems,
+    (state) => state.viewer.modularComponents,
+    (state) => state.viewer.disabledElements,
+  ],
+  (modularHeaders, activeGroupedItems, fixedGroupedItems, componentsMap, disabledElements) => {
+    const activeGroupedItemsSet = new Set(activeGroupedItems);
+    const fixedGroupedItemsSet = new Set(fixedGroupedItems);
 
-    const { type, dataElement } = modularComponent;
-    return type !== ITEM_TYPE.GROUPED_ITEMS ||
-      activeGroupedItemsSet.has(dataElement) ||
-      fixedGroupedItemsSet.has(dataElement);
-  };
+    const isActiveItem = (item) => {
+      const modularComponent = componentsMap[item];
+      if (!modularComponent) {
+        return false;
+      }
 
-  // if a header contains at least one active item, it is active
-  return allHeaders.filter(({ items, dataElement }) => {
-    return !isElementDisabled(state, dataElement) && items?.length && items.some(isActiveItem);
-  });
-};
+      const { type, dataElement } = modularComponent;
+      return type !== ITEM_TYPE.GROUPED_ITEMS ||
+        activeGroupedItemsSet.has(dataElement) ||
+        fixedGroupedItemsSet.has(dataElement);
+    };
+
+    return Object.values(modularHeaders).filter(({ items, dataElement }) => {
+      if (disabledElements[dataElement]?.disabled) {
+        return false;
+      }
+      // if a header contains at least one active item, it is active
+      return !isElementDisabled(dataElement) && items?.length && items.some(isActiveItem);
+    });
+  }
+);
 
 export const getActiveTheme = (state) => state.viewer.activeTheme;
 
@@ -488,25 +495,29 @@ export const getRightHeader = (state) => {
   return headerSelectors[PLACEMENT.RIGHT](state);
 };
 
-export const getActiveTopHeaders = (state) => {
-  return getActiveHeaders(state)
+export const getActiveTopHeaders = createSelector(
+  [getActiveHeaders],
+  (activeHeaders) => activeHeaders
     .filter((header) => header.placement === PLACEMENT.TOP)
-    .filter((header) => !header.float);
-};
+    .filter((header) => !header.float)
+);
 
-export const getTopHeadersHeight = (state) => {
-  const activeHeaders = getActiveTopHeaders(state);
-  return activeHeaders.length * state.viewer.modularHeadersHeight.topHeaders;
-};
-
-export const getBottomHeadersHeight = (state) => {
-  const activeHeaders = getActiveHeaders(state)
+export const getActiveBottomHeaders = createSelector(
+  [getActiveHeaders],
+  (activeHeaders) => activeHeaders
     .filter((header) => header.placement === PLACEMENT.BOTTOM)
-    .filter((header) => !header.float);
-  const isSpreadSheetEditorMode = isSpreadsheetEditorModeEnabled(state);
+    .filter((header) => !header.float)
+);
 
-  return (activeHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders) + (isSpreadSheetEditorMode ? 44 : 0);
-};
+export const getTopHeadersHeight = createSelector(
+  [getActiveTopHeaders, (state) => state.viewer.modularHeadersHeight.topHeaders],
+  (activeHeaders, topHeadersHeight) => activeHeaders.length * topHeadersHeight
+);
+
+export const getBottomHeadersHeight = createSelector(
+  [getActiveBottomHeaders, (state) => state.viewer.modularHeadersHeight.bottomHeaders],
+  (activeHeaders, bottomHeadersHeight) => activeHeaders.length * bottomHeadersHeight
+);
 
 export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
 
@@ -555,28 +566,6 @@ export const getToolsHeaderItems = (state) => {
 export const getAlwaysVisibleGroupedItems = (state) => {
   const modularComponents = state.viewer.modularComponents;
   return Object.keys(modularComponents).filter((dataElement) => modularComponents[dataElement].alwaysVisible);
-};
-
-export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
-  const modularComponents = state.viewer.modularComponents;
-  const groupedItems = modularComponents[customRibbonDataElement]?.groupedItems || [];
-  const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, groupedItems);
-
-  return allAssociatedGroupedItems;
-};
-
-export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {
-  const modularComponents = state.viewer.modularComponents;
-  const ribbonItems = Object.keys(modularComponents).find((component) => {
-    const { type, groupedItems = [] } = modularComponents[component];
-
-    if (type === ITEM_TYPE.RIBBON_ITEM) {
-      const allGroupedItems = [...groupedItems, ...getNestedGroupedItems(state, groupedItems)];
-      return allGroupedItems?.includes(groupedItemDataElement);
-    }
-    return false;
-  });
-  return ribbonItems;
 };
 
 export const getDisabledElements = (state) => state.viewer.disabledElements;
@@ -906,6 +895,8 @@ export const getCurrentLanguage = (state) => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = (state) => state.viewer.fadePageNavigationComponent;
 
+export const isWidgetHighlightingEnabled  = (state) => state.viewer.isWidgetHighlightingEnabled;
+
 export const isContentEditWarningHidden = (state) => state.viewer.hideContentEditWarning;
 
 export const areContentEditWorkersLoaded = (state) => state.viewer.contentEditWorkersLoaded;
@@ -1072,3 +1063,8 @@ export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellR
 export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
 export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;
 export const getSpreadsheetEditorEditMode = (state) => state.spreadsheetEditor.editMode;
+export const getActiveCellRangeVerticalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.verticalAlignment;
+export const getActiveCellRangeHorizontalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.horizontalAlignment;
+export const getActiveCellRangeFontStyle = (state, style) => state.spreadsheetEditor.cellProperties.styles.font[style];
+export const getActiveCellFormatType = (state) => state.spreadsheetEditor.cellProperties.styles.formatType;
+export const getCellStyleColors = (state) => state.spreadsheetEditor.cellStyleColors;

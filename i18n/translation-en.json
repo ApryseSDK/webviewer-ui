@@ -145,7 +145,8 @@
     "showMoreColors": "Show More Colors",
     "showLessColors": "Show Less Colors",
     "fromCustomColorPicker": "from Custom Color Picker",
-    "newSpreadsheetDocument": "New Spreadsheet"
+    "newSpreadsheetDocument": "New Spreadsheet",
+    "resetDefault": "Reset to default"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -305,6 +306,8 @@
     "searching": "Searching...",
     "searchCommentsPlaceholder": "Search comments",
     "searchDocumentPlaceholder": "Search document",
+    "clearSearchResults": "Clear search results",
+    "searchResultsCleared": "Search results cleared",
     "searchSettingsPlaceholder": "Search settings",
     "searchSuggestionsPlaceholder": "Search suggestions",
     "signHere": "Sign here",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redact",
       "toolbarGroup-oe-Home": "Home",
       "toolbarGroup-oe-Insert": "Insert",
+      "toolbarGroup-oe-Layout": "Layout",
       "toolbarGroup-oe-Review": "Review"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Add New Stamp"
     },
     "signatureOverlay": {
-      "addSignature": "Signature",
-      "addSignatureOrInitials": "Signature/Initials"
+      "addSignatureOrInitials": "New Signature/Initials",
+      "addSignature": "New Signature"
     },
     "signatureModal": {
       "modalName": "Create New Signature",
@@ -728,6 +732,8 @@
       "viewing": "Viewing",
       "disableFadePageNavigationComponent": "Disable Fade Page Navigation Component",
       "disableFadePageNavigationComponentDesc": "Always keep the Page Navigation Component on screen. Default behaviour is to fade it after certain period of inactivity.",
+      "enabledFormFieldHighlighting": "Enable Form Field Highlights",
+      "enabledFormFieldHighlightingDesc": "Enable highlighting of form fields in PDF documents. Enabled by default.",
       "disableNativeScrolling": "Disable Native Scrolling",
       "disableNativeScrollingDesc": "Disable native mobile device scrolling behavior if it had previously been enabled. Note that native mobile device scrolling behavior is off by default.",
       "annotations": "Annotations",
@@ -798,6 +804,12 @@
       "editShortcut": "Edit Shortcut",
       "shortcutAlreadyExists": "The keyboard shortcut above already exists.",
       "close": "Close tooltip"
+    },
+    "cellBorderStyle": {
+      "none": "None",
+      "solid": "Solid",
+      "dashed": "Dashed",
+      "dotted": "Dotted"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Section Break - Continuous",
     "sectionBreakContinuousDescription": "Insert section break and continue on the same page ",
     "section": "Section",
+    "margins": "Margins",
+    "normal": "Normal",
+    "narrow": "Narrow",
+    "moderate": "Moderate",
+    "wide": "Wide",
+    "top": "Top",
+    "bottom": "Bottom",
+    "left": "Left",
+    "right": "Right",
+    "customMargins": "Custom Margins",
+    "customMarginsDescription": "Define custom margins",
     "header": {
       "-1": "Invalid Header",
       "0": "Header",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Remove Footer",
     "headerFooterOptionsModal": {
       "title": "Header & footer format",
-      "margins": "Margins",
       "headerFromTop": "Header from Top",
       "footerFromBottom": "Footer from Bottom",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Different Even & Odd Pages",
         "differentFirstEvenOddPages": "Different First, Even, and Odd Pages"
       }
+    },
+    "marginsModal": {
+      "title": "Custom Margin Adjustment",
+      "leftMargin": "Left Margin",
+      "rightMargin": "Right Margin",
+      "topMargin": "Top Margin",
+      "bottomMargin": "Bottom Margin"
     },
     "lineSpacingOptions": {
       "single": "Single",
@@ -1391,48 +1420,69 @@
     "italic": "Italic",
     "underline": "Underline",
     "strikethrough": "Strikethrough",
+    "strikeout": "Strikeout",
     "cellBorderStyle": "Border Style",
     "merge": "Merge",
     "unmerge": "Unmerge",
     "cellFormat": "Cell Format",
-    "automatic": "Automatic",
-    "plainText": "Plain text",
-    "increaseDecimal": "Increase decimal",
-    "decreaseDecimal": "Decrease decimal",
-    "number": "Number",
-    "percent": "Percent",
-    "accounting": "Accounting",
-    "financial": "Financial",
-    "currency": "Currency",
-    "currencyRounded": "Currency rounded",
-    "calendar": "Date",
-    "clockHour": "Time",
-    "calendarTime": "Date Time",
+    "automaticFormat": "Automatic",
+    "plainTextFormat": "Plain text",
+    "increaseDecimalFormat": "Increase decimal",
+    "decreaseDecimalFormat": "Decrease decimal",
+    "numberFormat": "Number",
+    "percentFormat": "Percent",
+    "accountingFormat": "Accounting",
+    "financialFormat": "Financial",
+    "currencyFormat": "Currency",
+    "currencyRoundedFormat": "Currency rounded",
+    "calendarFormat": "Date",
+    "clockHourFormat": "Time",
+    "calendarTimeFormat": "Date Time",
     "formatAsCurrency": "Format as currency",
     "formatAsPercent": "Format as percent",
     "formatAsDecDecimal": "Decrease decimal point",
     "formatAsIncDecimal": "Increase decimal point",
-    "fontColor": "Font Color",
-    "cellBackgroundColor": "Cell Background Color",
+    "textColor": "Text Color",
+    "cellBackgroundColor": "Background Color",
+    "cellBorderColor": "Border Color",
+    "textLabel": "Text",
+    "backgroundLabel": "Background",
+    "borderLabel": "Border",
     "textAlignment": "Text Alignment",
-    "alignLeft": "Align left",
-    "alignCenter": "Align center",
-    "alignRight": "Align right",
-    "alignTop": "Align top",
-    "alignMiddle": "Align middle",
-    "alignBottom": "Align bottom",
+    "topAlign": "Top align",
+    "middleAlign": "Middle align",
+    "bottomAlign": "Bottom align",
     "cellAdjustment": "Cell Adjustment",
-    "insertColLeft": "Insert column left",
-    "columnInsertLeft": "Insert column left",
-    "columnInsertRight": "Insert column right",
-    "rowInsertTop": "Insert row above",
-    "rowInsertBottom": "Insert row below",
-    "columnInsertShiftDown": "Insert cells and shift down",
-    "columnInsertShiftRight": "Insert cells and shift right",
-    "columnDelete": "Delete column",
-    "rowDelete": "Delete row",
-    "columnDeleteShiftUp": "Delete cells and shift up",
-    "columnDeleteShiftLeft": "Delete cells and shift left"
+    "cellFormatMoreOptions": "More cell format options",
+    "insertColumnLeft": "Insert column left",
+    "insertColumnRight": "Insert column right",
+    "insertRowTop": "Insert row above",
+    "insertRowBottom": "Insert row below",
+    "insertColumnShiftDown": "Insert cells and shift down",
+    "insertColumnShiftRight": "Insert cells and shift right",
+    "deleteColumn": "Delete column",
+    "deleteRow": "Delete row",
+    "deleteColumnShiftUp": "Delete cells and shift up",
+    "deleteColumnShiftLeft": "Delete cells and shift left",
+    "clearBorder": "Clear Borders",
+    "cellBorderAll": "All Borders",
+    "cellBorderInside": "Inside Borders",
+    "cellBorderOutside": "Outside Borders",
+    "cellBorderTop": "Top Border",
+    "cellBorderBottom": "Bottom Border",
+    "cellBorderLeft": "Left Border",
+    "cellBorderRight": "Right Border",
+    "cellBorderVertical": "Vertical Border",
+    "cellBorderHorizontal": "Horizontal Border",
+    "cellBorderNone": "No Borders",
+    "borders": "Borders",
+    "fontSize": {
+      "dropdownLabel": "Font Size"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Font Family"
+    },
+    "blankSheet": "Blank Sheet"
   },
   "insertPageModal": {
     "title": "Insert New Page",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Add to custom colors",
     "noToolSelected": "Select a tool to view tool properties",
     "noToolStyle": "Tool does not contain any styling properties.",
+    "noSharedToolStyle": "Selected annotations do not share any styling properties.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Line Start"

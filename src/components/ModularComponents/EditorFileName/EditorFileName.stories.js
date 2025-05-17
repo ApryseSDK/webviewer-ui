@@ -4,7 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import { userEvent, expect, within } from '@storybook/test';
 import EditorFileName from './EditorFileName';
-import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+import { OEModularUIMockState, string280Chars } from 'src/helpers/storybookHelper';
+import { FILESAVERJS_MAX_NAME_LENTH } from 'src/constants/fileName';
 export default {
   title: 'ModularComponents/EditorFileName',
   component: EditorFileName,
@@ -51,4 +52,11 @@ FileNameButton.play = async ({ canvasElement }) => {
   await userEvent.keyboard('{Escape}');
   const fileNameButtonAfterClick = await canvas.findByRole('button', { name: /newFileName.docx/i });
   expect(fileNameButtonAfterClick).toBeInTheDocument();
+
+  const extension = '.xlsx';
+  await userEvent.click(fileNameButtonAfterClick);
+  const secondInput = await canvas.findByRole('textbox');
+  await userEvent.type(secondInput, string280Chars);
+  const inputCap = secondInput.value.length + extension.length;
+  expect(inputCap).toBe(FILESAVERJS_MAX_NAME_LENTH);
 };

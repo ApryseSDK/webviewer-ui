@@ -10,6 +10,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
+import { FILESAVERJS_MAX_NAME_LENTH } from 'src/constants/fileName';
 
 const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
@@ -55,6 +56,7 @@ const EditorFileName = ({ dataElement }) => {
   // Hiding this component on mobile until we implement mobile functionality
   return !isMobileSize() && isEditing ? (
     <input
+      maxLength={FILESAVERJS_MAX_NAME_LENTH - extension.length}
       type='text'
       className={'input-file-name'}
       aria-label={`${t('action.edit')} ${t('saveModal.fileName')} - ${fileName}`}
@@ -74,7 +76,6 @@ const EditorFileName = ({ dataElement }) => {
       label={fileName}
       title={`${buttonTitlePrefix}${fileName}`}
       onClick={startEditing}
-      disabled={isSpreadsheetAndReadOnlyMode}
     />
   );
 };

@@ -145,7 +145,8 @@
     "showMoreColors": "Daha Fazla Renk Göster",
     "showLessColors": "Daha Az Renk Göster",
     "fromCustomColorPicker": "Özel Renk Seçici'den",
-    "newSpreadsheetDocument": "Yeni E-Tablo"
+    "newSpreadsheetDocument": "Yeni E-Tablo",
+    "resetDefault": "Varsayılana sıfırla"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Şifreli belge yüklenemedi. Çok fazla deneme.",
     "encryptedUserCancelled": "Şifreli belge yüklenemedi. Şifre girişi iptal edildi.",
     "enterPassword": "Bu belge parola korumalıdır. lütfen bir şifre girin",
-    "incorrectPassword": "Yanlış şifre, kalan deneme sayısı: {{ kalanAttempts }}",
+    "incorrectPassword": "Yanlış şifre, kalan deneme sayısı: {{ remainingAttempts }}",
     "noAnnotations": "Yorum bırakmak için ek açıklamalar yapmaya başlayın.",
     "noAnnotationsReadOnly": "Bu belgede ek açıklama yok.",
     "noAnnotationsFilter": "Ek açıklamalar yapmaya başlayın ve filtreler burada görünecektir.",
@@ -305,6 +306,8 @@
     "searching": "Aranıyor...",
     "searchCommentsPlaceholder": "Yorum ara",
     "searchDocumentPlaceholder": "Belge ara",
+    "clearSearchResults": "Arama sonuçlarını temizle",
+    "searchResultsCleared": "Arama sonuçları temizlendi",
     "searchSettingsPlaceholder": "Arama ayarları",
     "searchSuggestionsPlaceholder": "Önerileri ara",
     "signHere": "Burayı imzalayın",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Yazıya dökmek",
       "toolbarGroup-oe-Home": "Ev",
       "toolbarGroup-oe-Insert": "Sokmak",
+      "toolbarGroup-oe-Layout": "Düzen",
       "toolbarGroup-oe-Review": "Gözden geçirmek"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Yeni Damga Ekle"
     },
     "signatureOverlay": {
-      "addSignature": "Yeni İmza Ekle",
-      "addSignatureOrInitials": "İmza/Baş Harfler"
+      "addSignatureOrInitials": "Yeni İmza/Baş Harfler",
+      "addSignature": "Yeni İmza"
     },
     "signatureModal": {
       "modalName": "Yeni İmza Oluştur",
@@ -728,6 +732,8 @@
       "viewing": "görüntüleme",
       "disableFadePageNavigationComponent": "Soldurma Sayfa Gezinme Bileşenini Devre Dışı Bırak",
       "disableFadePageNavigationComponentDesc": "Sayfa Gezinme Bileşenini her zaman ekranda tutun. Varsayılan davranış, belirli bir hareketsizlik süresinden sonra onu soldurmaktır.",
+      "enabledFormFieldHighlighting": "Form Alanı Vurgularını Etkinleştir",
+      "enabledFormFieldHighlightingDesc": "PDF belgelerinde form alanlarının vurgulanmasını etkinleştirin. Varsayılan olarak etkindir.",
       "disableNativeScrolling": "Yerel Kaydırmayı Devre Dışı Bırak",
       "disableNativeScrollingDesc": "Daha önce etkinleştirildiyse yerel mobil cihaz kaydırma davranışını devre dışı bırakın. Yerel mobil cihaz kaydırma davranışının varsayılan olarak kapalı olduğunu unutmayın.",
       "annotations": "Ek açıklamalar",
@@ -798,6 +804,12 @@
       "editShortcut": "Kısayolu Düzenle",
       "shortcutAlreadyExists": "Yukarıdaki klavye kısayolu zaten var.",
       "close": "İpucunu kapat"
+    },
+    "cellBorderStyle": {
+      "none": "Hiçbiri",
+      "solid": "Sağlam",
+      "dashed": "Kesik kesik",
+      "dotted": "Noktalı"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Bölüm Sonu - Sürekli",
     "sectionBreakContinuousDescription": "Bölüm sonu ekle ve aynı sayfada devam et",
     "section": "Bölüm",
+    "margins": "Marjlar",
+    "normal": "Normal",
+    "narrow": "Dar",
+    "moderate": "Ilıman",
+    "wide": "Geniş",
+    "top": "Tepe",
+    "bottom": "Alt",
+    "left": "Sol",
+    "right": "Sağ",
+    "customMargins": "Özel Kenar Boşlukları",
+    "customMarginsDescription": "Özel kenar boşluklarını tanımlayın",
     "header": {
       "0": "Başlık",
       "1": "İlk Sayfa Başlığı",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Altbilgiyi Kaldır",
     "headerFooterOptionsModal": {
       "title": "Üstbilgi ve altbilgi biçimi",
-      "margins": "Marjlar",
       "headerFromTop": "Üstten Başlık",
       "footerFromBottom": "Alt Bilgi Alttan",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Farklı Çift ve Tek Sayfalar",
         "differentFirstEvenOddPages": "Farklı İlk, Çift ve Tek Sayfalar"
       }
+    },
+    "marginsModal": {
+      "title": "Özel Marj Ayarlaması",
+      "leftMargin": "Sol Kenar Boşluğu",
+      "rightMargin": "Sağ Kenar Boşluğu",
+      "topMargin": "Üst Marj",
+      "bottomMargin": "Alt Marj"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "İtalik",
     "underline": "Altı çizili",
     "strikethrough": "Üstü çizili",
+    "strikeout": "Vuruş",
     "cellBorderStyle": "Sınır Stili",
     "merge": "Birleştir",
     "unmerge": "Birleştirmeyi kaldır",
     "cellFormat": "Hücre Biçimi",
-    "automatic": "Otomatik",
-    "plainText": "Düz metin",
-    "increaseDecimal": "Ondalık sayıyı artır",
-    "decreaseDecimal": "Ondalık sayıyı azalt",
-    "number": "Sayı",
-    "percent": "Yüzde",
-    "accounting": "Muhasebe",
-    "financial": "Finansal",
-    "currency": "Para birimi",
-    "currencyRounded": "Yuvarlatılmış para birimi",
-    "calendar": "Tarih",
-    "clockHour": "Zaman",
-    "calendarTime": "Tarih Saat",
+    "automaticFormat": "Otomatik",
+    "plainTextFormat": "Düz metin",
+    "increaseDecimalFormat": "Ondalık sayıyı artır",
+    "decreaseDecimalFormat": "Ondalık sayıyı azalt",
+    "numberFormat": "Sayı",
+    "percentFormat": "Yüzde",
+    "accountingFormat": "Muhasebe",
+    "financialFormat": "Finansal",
+    "currencyFormat": "Para birimi",
+    "currencyRoundedFormat": "Yuvarlatılmış para birimi",
+    "calendarFormat": "Tarih",
+    "clockHourFormat": "Zaman",
+    "calendarTimeFormat": "Tarih Saat",
     "formatAsCurrency": "Para birimi olarak biçimlendir",
     "formatAsPercent": "Yüzde olarak biçimlendir",
     "formatAsDecDecimal": "Ondalık noktayı azalt",
     "formatAsIncDecimal": "Ondalık noktayı artır",
-    "fontColor": "Yazı Tipi Rengi",
-    "cellBackgroundColor": "Hücre Arkaplan Rengi",
+    "textColor": "Metin Rengi",
+    "cellBackgroundColor": "Arkaplan Rengi",
+    "cellBorderColor": "Sınır Rengi",
+    "textLabel": "Metin",
+    "backgroundLabel": "Arka plan",
+    "borderLabel": "Sınır",
     "textAlignment": "Metin Hizalaması",
-    "alignLeft": "Sola hizala",
-    "alignCenter": "Ortaya hizala",
-    "alignRight": "Sağa hizala",
-    "alignTop": "Üst hizala",
-    "alignMiddle": "Ortaya hizala",
-    "alignBottom": "Alt tarafı hizala",
+    "topAlign": "Üst hizalama",
+    "middleAlign": "Orta hizalama",
+    "bottomAlign": "Alt hizalama",
     "cellAdjustment": "Hücre Ayarlaması",
-    "insertColLeft": "Sol sütun ekle",
-    "columnInsertLeft": "Sol sütun ekle",
-    "columnInsertRight": "Sağa sütun ekle",
-    "rowInsertTop": "Yukarıya satır ekle",
-    "rowInsertBottom": "Aşağıya satır ekle",
-    "columnInsertShiftDown": "Hücreleri ekle ve aşağı kaydır",
-    "columnInsertShiftRight": "Hücreleri ekle ve sağa kaydır",
-    "columnDelete": "Sütunu sil",
-    "rowDelete": "Satırı sil",
-    "columnDeleteShiftUp": "Hücreleri sil ve yukarı kaydır",
-    "columnDeleteShiftLeft": "Hücreleri sil ve sola kaydır"
+    "cellFormatMoreOptions": "Daha fazla hücre biçimi seçeneği",
+    "insertColumnLeft": "Sol sütun ekle",
+    "insertColumnRight": "Sağa sütun ekle",
+    "insertRowTop": "Yukarıya satır ekle",
+    "insertRowBottom": "Aşağıya satır ekle",
+    "insertColumnShiftDown": "Hücreleri ekle ve aşağı kaydır",
+    "insertColumnShiftRight": "Hücreleri ekle ve sağa kaydır",
+    "deleteColumn": "Sütunu sil",
+    "deleteRow": "Satırı sil",
+    "deleteColumnShiftUp": "Hücreleri sil ve yukarı kaydır",
+    "deleteColumnShiftLeft": "Hücreleri sil ve sola kaydır",
+    "clearBorder": "Sınırı Temizle",
+    "cellBorderAll": "Tüm Sınırlar",
+    "cellBorderInside": "Sınırların İçinde",
+    "cellBorderOutside": "Dış Sınırlar",
+    "cellBorderTop": "Üst Sınır",
+    "cellBorderBottom": "Alt Sınır",
+    "cellBorderLeft": "Sol Sınır",
+    "cellBorderRight": "Sağ Sınır",
+    "cellBorderVertical": "Dikey Kenarlık",
+    "cellBorderHorizontal": "Yatay Kenarlık",
+    "cellBorderNone": "Sınır Yok",
+    "borders": "Sınırlar",
+    "fontSize": {
+      "dropdownLabel": "Yazı Tipi Boyutu"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Yazı Tipi Ailesi"
+    },
+    "blankSheet": "Boş Sayfa"
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Özel renklere ekle",
     "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
     "noToolStyle": "Araç herhangi bir stil özelliği içermiyor.",
+    "noSharedToolStyle": "Seçili açıklamalar hiçbir stil özelliğini paylaşmıyor.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Satır Başlangıcı"

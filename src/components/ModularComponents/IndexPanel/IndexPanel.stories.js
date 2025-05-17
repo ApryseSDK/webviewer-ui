@@ -3,8 +3,7 @@ import React from 'react';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore } from 'helpers/storybookHelper';
+import { MockApp } from 'helpers/storybookHelper';
 import IndexPanelContainer from './IndexPanelContainer';
 import IndexPanel from './IndexPanel';
 import { widgets } from './helper';
@@ -73,8 +72,6 @@ export function WithWidgets() {
 
 const IndexPanelInApp = (location) => {
   mockState.viewer.genericPanels[0].location = location;
-  const store = createStore(mockState);
-  setItemToFlyoutStore(store);
   return <MockApp initialState={mockState} />;
 };
 

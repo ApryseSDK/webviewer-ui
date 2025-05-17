@@ -10,8 +10,7 @@
   border-radius: 4px;
 
   .FlyoutContainer {
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
     z-index: 200;
     background-color: var(--component-background);
     min-width: 140px;
@@ -138,7 +137,6 @@
         .Icon,
         .Icon svg * {
           color: var(--gray-0);
-          fill: var(--gray-0);
         }
 
         .hotkey-wrapper,
@@ -252,6 +250,7 @@
   &.mobile {
     position: fixed;
     width: 100%;
+    max-height: 100vh;
     left: 0;
     bottom: 0;
     border-radius: 0px;
@@ -261,6 +260,7 @@
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     padding: 30px 0 12px;
     z-index: 110;
+    overflow-y: auto;
 
     .swipe-indicator {
       @extend %swipe-indicator;

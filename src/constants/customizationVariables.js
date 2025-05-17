@@ -27,6 +27,13 @@ const DIRECTION = {
   COLUMN: 'column',
 };
 
+export const STYLE_TOGGLE_OPTIONS = {
+  Bold: 'bold',
+  Italic: 'italic',
+  Underline: 'underline',
+  Strikeout: 'strikeout',
+};
+
 const ITEM_TYPE = {
   MODULAR_HEADER: 'modularHeader',
   BUTTON: 'customButton',
@@ -46,9 +53,10 @@ const ITEM_TYPE = {
   SPREADSHEET_EDITOR_FILE_NAME: 'spreadsheetEditorFileName',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
-  FONT_FACE_DROPDOWN: 'fontFaceDropdown',
+  FONT_FAMILY_DROPDOWN: 'fontFamilyDropdown',
   STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
   PAGE_NAVIGATION_BUTTON: 'pageNavigationButton',
+  OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
   CREATE_TABLE_DROPDOWN: 'createTableDropdown',
   OFFICE_EDITOR_INSERT_IMAGE_BUTTON: 'officeEditorInsertImageButton',
   OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
@@ -58,8 +66,13 @@ const ITEM_TYPE = {
   ORDERED_LIST: 'orderedListButton',
   UNORDERED_LIST: 'unorderedListButton',
   LABEL: 'label',
-  SHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorEditModeDropdown',
+  SPREADSHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorEditModeDropdown',
+  CELL_BORDER_STYLE_DROPDOWN: 'cellBorderStyleDropdown',
   CUSTOM_ELEMENT: 'customElement',
+  CELL_TEXT_COLOR: 'cellTextColor',
+  CELL_BORDER_COLOR: 'cellBorderColor',
+  CELL_BACKGROUND_COLOR: 'cellBackgroundColor',
+  CELL_BORDERS: 'cellBorders',
 };
 
 const FLYOUT_ITEM_TYPES = {
@@ -80,12 +93,13 @@ const FLYOUT_ITEM_TYPES = {
   LINE_SPACING_OPTIONS_BUTTON: 'lineHeightButton',
   LIST_TYPE_BUTTON: 'listTypeButton',
   FONT_SIZE_DROPDOWN: 'fontSizeDropdown',
-  FONT_FACE_DROPDOWN: 'fontFaceDropdown',
+  FONT_FAMILY_DROPDOWN: 'fontFamilyDropdown',
   STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
+  OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
   OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
-  SHEET_EDITOR_MODE_DROPDOWN: 'sheetEditorModeDropdown',
+  SPREADSHEET_EDITOR_MODE_DROPDOWN: 'spreadsheetEditorEditModeDropdown',
   CUSTOM_ELEMENT: 'customElement',
   STATEFUL_BUTTON: 'statefulButton',
   RIBBON_GROUP: 'ribbonGroup',
@@ -96,6 +110,9 @@ const FLYOUT_ITEM_TYPES = {
   PAGE_CONTROLS: 'pageControls',
   ZOOM: 'zoom',
   VIEW_CONTROLS: 'viewControls',
+  CELL_TEXT_COLOR: 'cellTextColor',
+  CELL_BORDER_COLOR: 'cellBorderColor',
+  CELL_BACKGROUND_COLOR: 'cellBackgroundColor',
 };
 
 const PREBUILT_FLYOUTS = [
@@ -107,6 +124,7 @@ const PREBUILT_FLYOUTS = [
   DataElements.PAGE_MANIPULATION,
   'NotePopupFlyout',
   DataElements.PAGE_MANIPULATION_FLYOUT_MULTI_SELECT,
+  'CellBordersFlyout',
 ];
 
 const OVERFLOW_FLYOUTS = [
@@ -199,6 +217,7 @@ const PRESET_BUTTON_TYPES = {
   ITALIC: 'italicButton',
   UNDERLINE: 'underlineButton',
   STRIKETHROUGH: 'strikethroughButton',
+  STRIKEOUT: 'strikeoutButton',
   ALIGN_LEFT: 'alignLeftButton',
   ALIGN_CENTER: 'alignCenterButton',
   ALIGN_RIGHT: 'alignRightButton',
@@ -216,34 +235,36 @@ const PRESET_BUTTON_TYPES = {
   CELL_DECORATOR_BOLD: 'cellDecoratorBold',
   CELL_DECORATOR_ITALIC: 'cellDecoratorItalic',
   CELL_DECORATOR_UNDERLINE: 'cellDecoratorUnderline',
-  CELL_DECORATOR_STRIKETHROUGH: 'strikethroughButton',
+  CELL_DECORATOR_STRIKEOUT: 'strikeoutButton',
 
-  CELL_TEXT_COLOR: 'cellTextColor',
   CELL_BACKGROUND_COLOR: 'cellBackgroundColor',
 
   // CELL TEXT ALIGNMENT
-  CELL_TEXT_ALIGNMENT: 'cellTextAlignment',
   CELL_ALIGN_LEFT: 'cellAlignLeft',
   CELL_ALIGN_CENTER: 'cellAlignCenter',
   CELL_ALIGN_RIGHT: 'cellAlignRight',
   // END TEXT ALIGNMENT
 
-
   CELL_MERGE_TOGGLE: 'cellMergeToggle',
   CELL_UNMERGE_TOGGLE: 'cellUnmergeToggle',
 
-  CELL_FORMAT_CURRENCY: 'formatCurrency',
-  CELL_FORMAT_PERCENT: 'formatPercent',
-  CELL_FORMAT_DEC_DECIMAL: 'formatDecreaseDecimal',
-  CELL_FORMAT_INC_DECIMAL: 'formatIncreaseDecimal',
-  CELL_FORMAT_MORE: 'formatMore',
-
-  // Cell Adjustment
-  CELL_ADJUSTMENT: 'cellAdjustment',
-  ABJ_INCERT_COL_LEFT: 'adjustmentIncertColLeft',
+  CELL_FORMAT_CURRENCY: 'currencyFormat',
+  CELL_FORMAT_PERCENT: 'percentFormat',
+  CELL_FORMAT_DEC_DECIMAL: 'decreaseDecimalFormat',
+  CELL_FORMAT_INC_DECIMAL: 'increaseDecimalFormat',
 
   // Cell Border Style
   CELL_BORDER_STYLE: 'cellBorderStyle',
+  CELL_BORDER_ALL: 'cellBorderAll',
+  CELL_BORDER_OUTSIDE: 'cellBorderOutside',
+  CELL_BORDER_INSIDE: 'cellBorderInside',
+  CELL_BORDER_HORIZONTAL: 'cellBorderHorizontal',
+  CELL_BORDER_VERTICAL: 'cellBorderVertical',
+  CELL_BORDER_TOP: 'cellBorderTop',
+  CELL_BORDER_BOTTOM: 'cellBorderBottom',
+  CELL_BORDER_LEFT: 'cellBorderLeft',
+  CELL_BORDER_RIGHT: 'cellBorder vRight',
+  CELL_BORDER_NONE: 'cellBorderNone',
 
   CELL_COPY: 'cellCopy',
   CELL_PASTE: 'cellPaste',
@@ -268,38 +289,65 @@ const VIEWER_CONFIGURATIONS = {
 const VALID_DOCX_EXTENSIONS = ['docx', 'doc'];
 const VALID_XLSX_EXTENSIONS = ['xlsx'];
 
-const CELL_ADJUSTMENT_BUTTONS = [
-  'ColumnInsertLeft',
-  'ColumnInsertRight',
-  'RowInsertTop',
-  'RowInsertBottom',
-  'ColumnInsertShiftDown',
-  'ColumnInsertShiftRight',
+const CELL_ADJUSTMENT_BUTTONS = {
+  INSERT_COLUMN_LEFT: 'insertColumnLeft',
+  INSERT_COLUMN_RIGHT: 'insertColumnRight',
+  INSERT_ROW_TOP: 'insertRowTop',
+  INSERT_ROW_BOTTOM: 'insertRowBottom',
+  INSERT_COLUMN_SHIFT_DOWN: 'insertColumnShiftDown',
+  INSERT_COLUMN_SHIFT_RIGHT: 'insertColumnShiftRight',
+  DELETE_COLUMN: 'deleteColumn',
+  DELETE_ROW: 'deleteRow',
+  DELETE_COLUMN_SHIFT_UP: 'deleteColumnShiftUp',
+  DELETE_COLUMN_SHIFT_LEFT: 'deleteColumnShiftLeft'
+};
+
+const CELL_ADJUSTMENT_FLYOUT_ITEMS = [
+  CELL_ADJUSTMENT_BUTTONS.INSERT_COLUMN_LEFT,
+  CELL_ADJUSTMENT_BUTTONS.INSERT_COLUMN_RIGHT,
+  CELL_ADJUSTMENT_BUTTONS.INSERT_ROW_TOP,
+  CELL_ADJUSTMENT_BUTTONS.INSERT_ROW_BOTTOM,
+  // CELL_ADJUSTMENT_BUTTONS.INSERT_COLUMN_SHIFT_DOWN,
+  // CELL_ADJUSTMENT_BUTTONS.INSERT_COLUMN_SHIFT_RIGHT,
   'divider',
-  'ColumnDelete',
-  'RowDelete',
-  'ColumnDeleteShiftUp',
-  'ColumnDeleteShiftLeft',
+  CELL_ADJUSTMENT_BUTTONS.DELETE_COLUMN,
+  CELL_ADJUSTMENT_BUTTONS.DELETE_ROW,
+  // CELL_ADJUSTMENT_BUTTONS.DELETE_COLUMN_SHIFT_UP,
+  // CELL_ADJUSTMENT_BUTTONS.DELETE_COLUMN_SHIFT_LEFT
+
+];
+
+const CELL_BORDER_BUTTONS = [
+  'cellBorderNone',
+  'cellBorderAll',
+  'cellBorderOutside',
+  'cellBorderInside',
+  'cellBorderVertical',
+  'cellBorderHorizontal',
+  'cellBorderTop',
+  'cellBorderBottom',
+  'cellBorderLeft',
+  'cellBorderRight',
 ];
 
 const CELL_FORMAT_BUTTONS = [
-  { label: 'Automatic' },
-  { label: 'PlainText', icon: 'icon-tool-text-free-text' },
+  { label: 'automaticFormat' },
+  { label: 'plainTextFormat', icon: 'icon-tool-text-free-text' },
   'divider',
-  { label: 'IncreaseDecimal' },
-  { label: 'DecreaseDecimal' },
+  { label: 'increaseDecimalFormat' },
+  { label: 'decreaseDecimalFormat' },
   'divider',
-  { label: 'Number', desc: '1,000.12' },
-  { label: 'Percent', desc: '10.12%' },
+  { label: 'numberFormat', desc: '1,000.12' },
+  { label: 'percentFormat', desc: '10.12%' },
   'divider',
-  { label: 'Accounting', desc: '$(1,000.12)' },
-  { label: 'Financial', icon: 'ic-calculator', desc: '(1,000.12)' },
-  { label: 'Currency', icon: 'ic-dollar-circle', desc: '$1,000.12' },
-  { label: 'CurrencyRounded', icon: 'ic-dollar-circle-rounded', desc: '$1,000' },
+  { label: 'accountingFormat', desc: '$(1,000.12)' },
+  { label: 'financialFormat', icon: 'ic-calculator', desc: '(1,000.12)' },
+  { label: 'currencyFormat', icon: 'ic-dollar-circle', desc: '$1,000.12' },
+  { label: 'currencyRoundedFormat', icon: 'ic-dollar-circle-rounded', desc: '$1,000' },
   'divider',
-  { label: 'Calendar', desc: '9/26/2008' },
-  { label: 'ClockHour', desc: '3:59:00PM' },
-  { label: 'CalendarTime', desc: '9/26/2008 15:29:00' },
+  { label: 'calendarFormat', desc: '9/26/2008' },
+  { label: 'clockHourFormat', desc: '3:59:00PM' },
+  { label: 'calendarTimeFormat', desc: '9/26/2008 15:29:00' },
 ];
 
 export {
@@ -320,8 +368,10 @@ export {
   FLYOUT_ITEM_TYPES,
   PRESET_BUTTONS_MODAL_TOGGLES,
   VIEWER_CONFIGURATIONS,
-  CELL_ADJUSTMENT_BUTTONS,
+  CELL_ADJUSTMENT_FLYOUT_ITEMS,
+  CELL_BORDER_BUTTONS,
   CELL_FORMAT_BUTTONS,
   VALID_DOCX_EXTENSIONS,
   VALID_XLSX_EXTENSIONS,
+  CELL_ADJUSTMENT_BUTTONS,
 };

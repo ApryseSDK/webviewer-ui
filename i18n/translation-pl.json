@@ -145,7 +145,8 @@
     "showMoreColors": "Pokaż więcej kolorów",
     "showLessColors": "Pokaż mniej kolorów",
     "fromCustomColorPicker": "z niestandardowego selektora kolorów",
-    "newSpreadsheetDocument": "Nowa Arkusz Kalkulacyjny"
+    "newSpreadsheetDocument": "Nowa Arkusz Kalkulacyjny",
+    "resetDefault": "Przywróć domyślne"
   },
   "annotation": {
     "areaMeasurement": "Pomiar powierzchni",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Nie udało się wczytać zaszyfrowanego dokumentu. Zbyt wiele prób.",
     "encryptedUserCancelled": "Nie udało się wczytać zaszyfrowanego dokumentu. Wprowadzanie hasła zostało anulowane.",
     "enterPassword": "Ten dokument jest chroniony hasłem. proszę wprowadzić hasło",
-    "incorrectPassword": "Nieprawidłowe hasło, pozostałe próby: {{ pozostale próby }}",
+    "incorrectPassword": "Nieprawidłowe hasło, pozostałe próby: {{ remainingAttempts }}",
     "noAnnotations": "Zacznij tworzyć adnotacje, aby zostawić komentarz.",
     "noAnnotationsReadOnly": "Ten dokument nie zawiera adnotacji.",
     "noAnnotationsFilter": "Rozpocznij tworzenie adnotacji, a pojawią się tutaj filtry.",
@@ -305,6 +306,8 @@
     "searching": "Szukanie...",
     "searchCommentsPlaceholder": "Szukaj komentarzy",
     "searchDocumentPlaceholder": "Wyszukaj dokument",
+    "clearSearchResults": "Wyczyść wyniki wyszukiwania",
+    "searchResultsCleared": "Wyniki wyszukiwania zostały wyczyszczone",
     "searchSettingsPlaceholder": "Ustawienia wyszukiwania",
     "searchSuggestionsPlaceholder": "Wyszukaj sugestie",
     "signHere": "Podpisz tutaj",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redaguj",
       "toolbarGroup-oe-Home": "Dom",
       "toolbarGroup-oe-Insert": "Wstawić",
+      "toolbarGroup-oe-Layout": "Układ",
       "toolbarGroup-oe-Review": "Recenzja"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Dodaj nowy stempel"
     },
     "signatureOverlay": {
-      "addSignature": "Dodaj nowy podpis",
-      "addSignatureOrInitials": "Podpis/Inicjały"
+      "addSignatureOrInitials": "Nowy podpis/inicjały",
+      "addSignature": "Nowy podpis"
     },
     "signatureModal": {
       "modalName": "Utwórz nowy podpis",
@@ -728,6 +732,8 @@
       "viewing": "Przeglądanie",
       "disableFadePageNavigationComponent": "Wyłącz komponent nawigacji po zanikaniu stron",
       "disableFadePageNavigationComponentDesc": "Zawsze utrzymuj komponent nawigacji strony na ekranie. Domyślnym zachowaniem jest zanikanie go po pewnym okresie bezczynności.",
+      "enabledFormFieldHighlighting": "Włącz podświetlanie pól formularza",
+      "enabledFormFieldHighlightingDesc": "Włącz podświetlanie pól formularza w dokumentach PDF. Domyślnie włączone.",
       "disableNativeScrolling": "Wyłącz przewijanie natywne",
       "disableNativeScrollingDesc": "Wyłącz natywne zachowanie przewijania na urządzeniu mobilnym, jeśli zostało wcześniej włączone. Pamiętaj, że natywne przewijanie na urządzeniach mobilnych jest domyślnie wyłączone.",
       "annotations": "Adnotacje",
@@ -798,6 +804,12 @@
       "editShortcut": "Edytuj skrót",
       "shortcutAlreadyExists": "Powyższy skrót klawiaturowy już istnieje.",
       "close": "Zamknij podpowiedź"
+    },
+    "cellBorderStyle": {
+      "none": "Nic",
+      "solid": "Solidny",
+      "dashed": "Przerywany",
+      "dotted": "Kropkowany"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Podział sekcji - ciągły",
     "sectionBreakContinuousDescription": "Wstaw podział sekcji i kontynuuj na tej samej stronie",
     "section": "Sekcja",
+    "margins": "Marginesy",
+    "normal": "Normalna",
+    "narrow": "Wąski",
+    "moderate": "Umiarkowany",
+    "wide": "Szeroki",
+    "top": "Szczyt",
+    "bottom": "Spód",
+    "left": "Lewy",
+    "right": "Prawidłowy",
+    "customMargins": "Niestandardowe marginesy",
+    "customMarginsDescription": "Zdefiniuj niestandardowe marginesy",
     "header": {
       "0": "Chodnikowiec",
       "1": "Nagłówek pierwszej strony",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Usuń stopkę",
     "headerFooterOptionsModal": {
       "title": "Format nagłówka i stopki",
-      "margins": "Marginesy",
       "headerFromTop": "Nagłówek od góry",
       "footerFromBottom": "Stopka od dołu",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Różne strony parzyste i nieparzyste",
         "differentFirstEvenOddPages": "Różne strony pierwsze, parzyste i nieparzyste"
       }
+    },
+    "marginsModal": {
+      "title": "Dostosowanie niestandardowego marginesu",
+      "leftMargin": "Lewy margines",
+      "rightMargin": "Prawy margines",
+      "topMargin": "Górny margines",
+      "bottomMargin": "Dolny margines"
     },
     "lineSpacingOptions": {
       "15": "1,5",
@@ -1391,48 +1420,69 @@
     "italic": "italski",
     "underline": "Podkreślać",
     "strikethrough": "Przekreślenie",
+    "strikeout": "Wykreślić",
     "cellBorderStyle": "Styl obramowania",
     "merge": "Łączyć",
     "unmerge": "Rozłącz",
     "cellFormat": "Format komórki",
-    "automatic": "Automatyczny",
-    "plainText": "Zwykły tekst",
-    "increaseDecimal": "Zwiększ liczbę dziesiętną",
-    "decreaseDecimal": "Zmniejsz liczbę dziesiętną",
-    "number": "Numer",
-    "percent": "Procent",
-    "accounting": "Księgowość",
-    "financial": "Budżetowy",
-    "currency": "Waluta",
-    "currencyRounded": "Zaokrąglona waluta",
-    "calendar": "Data",
-    "clockHour": "Czas",
-    "calendarTime": "Data i godzina",
+    "automaticFormat": "Automatyczny",
+    "plainTextFormat": "Zwykły tekst",
+    "increaseDecimalFormat": "Zwiększ liczbę dziesiętną",
+    "decreaseDecimalFormat": "Zmniejsz liczbę dziesiętną",
+    "numberFormat": "Numer",
+    "percentFormat": "Procent",
+    "accountingFormat": "Księgowość",
+    "financialFormat": "Budżetowy",
+    "currencyFormat": "Waluta",
+    "currencyRoundedFormat": "Zaokrąglona waluta",
+    "calendarFormat": "Data",
+    "clockHourFormat": "Czas",
+    "calendarTimeFormat": "Data i godzina",
     "formatAsCurrency": "Formatuj jako walutę",
     "formatAsPercent": "Formatuj jako procent",
     "formatAsDecDecimal": "Zmniejsz przecinek dziesiętny",
     "formatAsIncDecimal": "Zwiększ przecinek dziesiętny",
-    "fontColor": "Kolor czcionki",
-    "cellBackgroundColor": "Kolor tła komórki",
+    "textColor": "Kolor tekstu",
+    "cellBackgroundColor": "Kolor tła",
+    "cellBorderColor": "Kolor obramowania",
+    "textLabel": "Tekst",
+    "backgroundLabel": "Tło",
+    "borderLabel": "Granica",
     "textAlignment": "Wyrównanie tekstu",
-    "alignLeft": "Wyrównaj do lewej",
-    "alignCenter": "Wyrównaj do środka",
-    "alignRight": "Wyrównaj do prawej",
-    "alignTop": "Wyrównaj górę",
-    "alignMiddle": "Wyrównaj do środka",
-    "alignBottom": "Wyrównaj dół",
+    "topAlign": "Wyrównanie do góry",
+    "middleAlign": "Wyrównanie do środka",
+    "bottomAlign": "Wyrównanie do dołu",
     "cellAdjustment": "Regulacja komórki",
-    "insertColLeft": "Wstaw kolumnę po lewej stronie",
-    "columnInsertLeft": "Wstaw kolumnę po lewej stronie",
-    "columnInsertRight": "Wstaw kolumnę po prawej",
-    "rowInsertTop": "Wstaw wiersz powyżej",
-    "rowInsertBottom": "Wstaw wiersz poniżej",
-    "columnInsertShiftDown": "Wstaw komórki i przesuń w dół",
-    "columnInsertShiftRight": "Wstaw komórki i przesuń w prawo",
-    "columnDelete": "Usuń kolumnę",
-    "rowDelete": "Usuń wiersz",
-    "columnDeleteShiftUp": "Usuń komórki i przesuń w górę",
-    "columnDeleteShiftLeft": "Usuń komórki i przesuń w lewo"
+    "cellFormatMoreOptions": "Więcej opcji formatu komórek",
+    "insertColumnLeft": "Wstaw kolumnę po lewej stronie",
+    "insertColumnRight": "Wstaw kolumnę po prawej",
+    "insertRowTop": "Wstaw wiersz powyżej",
+    "insertRowBottom": "Wstaw wiersz poniżej",
+    "insertColumnShiftDown": "Wstaw komórki i przesuń w dół",
+    "insertColumnShiftRight": "Wstaw komórki i przesuń w prawo",
+    "deleteColumn": "Usuń kolumnę",
+    "deleteRow": "Usuń wiersz",
+    "deleteColumnShiftUp": "Usuń komórki i przesuń w górę",
+    "deleteColumnShiftLeft": "Usuń komórki i przesuń w lewo",
+    "clearBorder": "Wyczyść granicę",
+    "cellBorderAll": "Wszystkie granice",
+    "cellBorderInside": "Wewnątrz granic",
+    "cellBorderOutside": "Poza granicami",
+    "cellBorderTop": "Górna granica",
+    "cellBorderBottom": "Dolna granica",
+    "cellBorderLeft": "Lewa granica",
+    "cellBorderRight": "Prawa granica",
+    "cellBorderVertical": "Pionowa granica",
+    "cellBorderHorizontal": "Obramowanie poziome",
+    "cellBorderNone": "Bez granic",
+    "borders": "Granice",
+    "fontSize": {
+      "dropdownLabel": "Rozmiar czcionki"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Rodzina czcionek"
+    },
+    "blankSheet": "Pusta Arkusz"
   },
   "insertPageModal": {
     "title": "Wstaw nową stronę",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Dodaj do niestandardowych kolorów",
     "noToolSelected": "Wybierz narzędzie, aby wyświetlić jego właściwości",
     "noToolStyle": "Narzędzie nie zawiera żadnych właściwości stylizacji.",
+    "noSharedToolStyle": "Wybrane adnotacje nie mają wspólnych właściwości stylistycznych.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Początek linii"

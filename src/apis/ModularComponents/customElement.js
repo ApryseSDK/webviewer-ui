@@ -2,13 +2,13 @@ import Item from './item';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 
 /**
- * Creates a new instance of RibbonItem.
+ * Creates a new instance of a Custom Element.
  * @name CustomElement
  * @memberOf UI.Components
  * @class UI.Components.CustomElement
  * @extends UI.Components.Item
- * @param {Object} properties An object that contains the properties of the Label Item.
- * @param {string} properties.dataElement The data element of the label item.
+ * @param {Object} properties An object that contains the properties of the custom element.
+ * @param {string} properties.dataElement The data element of the custom element.
  * @param {function} properties.render Function that returns the React element or HTML element to render. Cannot use React Hooks in the render. For more information see; https://docs.apryse.com/web/faq/react-hooks-error
  * @param {Array} [properties.renderArguments] Array of arguments to pass to the render function
  * @param {string} [properties.title] Text to show on hover of the item (Tooltip)

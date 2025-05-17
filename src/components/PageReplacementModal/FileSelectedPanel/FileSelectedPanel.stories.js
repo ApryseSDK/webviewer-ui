@@ -49,7 +49,7 @@ const ProcessingFile = () => (
   </Provider>
 );
 
-// This story is solely for the purposes of a unit test
+// This story is solely for the purposes of a unit test.
 const FileSelected = () => {
   return (
     <Provider store={store}>

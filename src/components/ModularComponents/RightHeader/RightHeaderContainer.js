@@ -58,7 +58,7 @@ function RightHeaderContainer() {
       const { dataElement } = rightHeader;
       return (<ModularHeader ref={elementRef} {...rightHeader} key={dataElement} style={style}/>);
     }
-  }, [rightHeader]);
+  }, [rightHeader, style]);
 
   if (!customizableUI || !rightHeaders.length) {
     return null;

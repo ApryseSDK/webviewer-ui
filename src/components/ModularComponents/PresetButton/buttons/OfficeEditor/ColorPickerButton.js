@@ -39,6 +39,7 @@ const ColorPickerButton = forwardRef((props, ref) => {
       className={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color menu-icon`}
       glyph='icon-office-editor-circle'
       color={activeColor.toString()}
+      ariaLabel={ariaLabel}
     />
   );
 

@@ -56,7 +56,7 @@
   &.modular-ui {
 
     &.button-text-icon,
-    &.icon-only {
+    &.icon-only:not(.dropdown-icon-only) {
       &:hover:not(:disabled):not(.disabled) {
         @extend %icon-button-hover;
       }

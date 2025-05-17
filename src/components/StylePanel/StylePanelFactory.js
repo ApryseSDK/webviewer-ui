@@ -1,15 +1,21 @@
-import FreeTextStylePanel from './panels/FreeTextStylePanel';
+import TextStylePanel from './panels/TextStylePanel';
 import DefaultStylePanel from './panels/DefaultStylePanel';
+import NoSharedStylePanel from './panels/NoSharedStylePanel';
+import { getAnnotationTypes, shouldShowTextStyle, shouldHideSharedStyleOptions } from 'helpers/stylePanelHelper';
 
-const { ToolNames } = window.Core.Tools;
-
-const panelMap = {
-  [ToolNames.FREETEXT]: FreeTextStylePanel,
+const getPanelFromNames = (toolNames) => {
+  if (toolNames.length > 1 && toolNames.some((toolName) => shouldHideSharedStyleOptions(toolName))) {
+    return NoSharedStylePanel;
+  }
+  if (toolNames.every((toolName) => shouldShowTextStyle(toolName))) {
+    return TextStylePanel;
+  }
+  return DefaultStylePanel;
 };
 
 export const getStylePanelComponent = (currentTool, selectedAnnotations) => {
-  const annotationTool = selectedAnnotations?.length === 1 ? selectedAnnotations[0].ToolName : null;
-  const toolName = annotationTool || currentTool.name;
+  const annotationTypes = getAnnotationTypes(selectedAnnotations);
+  const toolNames = annotationTypes?.length >= 1 ? annotationTypes : [currentTool.name];
 
-  return panelMap[toolName] || DefaultStylePanel;
+  return getPanelFromNames(toolNames);
 };

@@ -1,5 +1,5 @@
 import { ITEM_TYPE, RESPONSIVE_ITEMS, DIRECTION } from 'constants/customizationVariables';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useStore } from 'react-redux';
 import selectors from 'selectors';
 import getRootNode from 'helpers/getRootNode';
@@ -10,7 +10,7 @@ export default sizeManager;
 export const ResizingPromises = {};
 
 export const storeWidth = ({ dataElement, element, headerDirection, size }) => {
-  if (element) {
+  if (element && element.sizeManagerSize === size) {
     const freeSpace = getCurrentFreeSpace({ headerDirection, element });
     if (!sizeManager[dataElement]) {
       sizeManager[dataElement] = {};
@@ -41,6 +41,12 @@ export const useSizeStore = ({
   if (!ResizingPromises[dataElement]) {
     queueResizingPromise(dataElement);
   }
+
+  useLayoutEffect(() => {
+    if (elementRef.current) {
+      elementRef.current.sizeManagerSize = getSize();
+    }
+  }, [getSize()]);
 
   useEffect(() => {
     sizeManager[dataElement] = {

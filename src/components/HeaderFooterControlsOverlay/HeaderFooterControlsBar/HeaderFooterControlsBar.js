@@ -10,6 +10,7 @@ import Dropdown from 'components/Dropdown';
 import classNames from 'classnames';
 import core from 'core';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
+import { HEADER_FOOTER_BAR_DEFAULT_POSITION, OfficeEditorEditMode } from 'constants/officeEditor';
 
 import './HeaderFooterControlsBar.scss';
 
@@ -22,23 +23,25 @@ const propTypes = {
 const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const doc = core.getDocument();
+  const officeEditor = doc.getOfficeEditor();
   const blockerRef = useRef();
   const dropdownId = `${type}-options-dropdown-${pageNumber}`;
   const barId = `${type}-edit-ui-${pageNumber}`;
 
-  const [containerTop, setContainerTop] = useState(0);
+  const [containerStyle, setContainerStyle] = useState({});
   const [sectionNumber, setSectionNumber] = useState(null);
   const [headerType, setHeaderType] = useState(0); // 0 is default for header type all
   const [footerType, setFooterType] = useState(0); // 0 is default for footer type all
+  const [optionsDisabled, setOptionsDisabled] = useState(false);
 
   const barClassName = classNames(
     'header-footer-edit-ui',
     `${type}-edit-ui`,
-    { 'active': (isActive && containerTop > 0) }
+    { 'active': isActive }
   );
 
   const getHeaderFooterTop = () => {
-    const officeEditor = core.getDocument().getOfficeEditor();
     const heightOfBar = blockerRef.current?.clientHeight || 0;
     switch (type) {
       case 'header':
@@ -51,8 +54,6 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   };
 
   const updateHeaderFooterSectionNumber = async () => {
-    const officeEditor = core.getDocument().getOfficeEditor();
-
     const sectionNumber = await officeEditor.getSectionNumber(pageNumber);
     setSectionNumber(sectionNumber);
   };
@@ -78,47 +79,58 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     };
 
     const updateHeaderFooterTop = async () => {
-      const headerFooterTop = getHeaderFooterTop();
-      if (headerFooterTop > 0) {
+      const top = getHeaderFooterTop();
+      if (top > 0) {
         // Sometimes the headerTop is 0 when the data isn't loaded.
         // In this case just ignore it and wait for the next event to update the position
-        setContainerTop(headerFooterTop);
+        setContainerStyle({ top });
       }
     };
 
-    core.getDocument().addEventListener('headerFooterUpdated', onHeaderFooterUpdated);
-    setContainerTop(getHeaderFooterTop());
+    doc.addEventListener('headerFooterUpdated', onHeaderFooterUpdated);
+
+    const onEditModeUpdated = (editMode) => {
+      const isReadOnlyMode = editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW;
+      setOptionsDisabled(isReadOnlyMode);
+    };
+    doc.addEventListener('editModeUpdated', onEditModeUpdated);
+
+    const getInitialHeaderFooterStyle = () => {
+      const headerFooterStyle = type === 'header' ? { top: HEADER_FOOTER_BAR_DEFAULT_POSITION } : { bottom: HEADER_FOOTER_BAR_DEFAULT_POSITION };
+      const top = getHeaderFooterTop();
+      return top > 0 ? { top } : headerFooterStyle;
+    };
+    setContainerStyle(getInitialHeaderFooterStyle());
 
     return () => {
       ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
         blockerRef.current?.removeEventListener(eventType, onBarClick);
       });
 
-      core.getDocument().removeEventListener('headerFooterUpdated', onHeaderFooterUpdated);
+      doc.removeEventListener('headerFooterUpdated', onHeaderFooterUpdated);
+      doc.removeEventListener('editModeUpdated', onEditModeUpdated);
     };
   }, [isActive]);
 
   useEffect(() => {
-    const onLayoutChange = () => {
-      setTimeout(() => {
-        const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
-        const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
-        headerType != -1 && setHeaderType(headerType);
-        footerType != -1 && setFooterType(footerType);
-        // Core resolves the promise too early.
-        // So we have to wait a bit to get the correct value
-      }, 800);
+    const onLayoutChange = (e) => {
+      if (e.source !== 'headerFooter') {
+        return;
+      }
+      const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
+      const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
+      headerType != -1 && setHeaderType(headerType);
+      footerType != -1 && setFooterType(footerType);
     };
-    const doc = core.getDocument();
-    doc.addEventListener('headerFooterLayoutUpdated', onLayoutChange);
+    doc.addEventListener('officeDocumentEdited', onLayoutChange);
     return () => {
-      doc.removeEventListener('headerFooterLayoutUpdated', onLayoutChange);
+      doc.removeEventListener('officeDocumentEdited', onLayoutChange);
     };
   }, [pageNumber]);
 
   useEffect(() => {
-    const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
-    const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
+    const headerType = officeEditor.getHeaderPageType(pageNumber);
+    const footerType = officeEditor.getFooterPageType(pageNumber);
     headerType != -1 && setHeaderType(headerType);
     footerType != -1 && setFooterType(footerType);
     updateHeaderFooterSectionNumber();
@@ -131,10 +143,10 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
 
   const handleRemoveHeaderFooterOnClick = () => {
     if (type === 'header') {
-      return core.getOfficeEditor().removeHeaders(pageNumber);
+      return officeEditor.removeHeaders(pageNumber);
     }
     if (type === 'footer') {
-      return core.getOfficeEditor().removeFooters(pageNumber);
+      return officeEditor.removeFooters(pageNumber);
     }
   };
 
@@ -178,14 +190,15 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
       img={'ic_chevron_down_black_24px'}
       label={t('officeEditor.options')}
       isActive={isOpen}
+      disabled={optionsDisabled}
     />
   );
   const sectionLabel = sectionNumber ? ` - ${t('officeEditor.section')} ${sectionNumber}` : '';
 
-  const layoutType = type === 'header' ? headerType: footerType;
+  const layoutType = type === 'header' ? headerType : footerType;
 
   return (
-    <div className={barClassName} id={barId} style={{ top: containerTop }}>
+    <div className={barClassName} id={barId} style={containerStyle}>
       <div className='box-shadow-div' ref={blockerRef}></div>
       <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}{sectionLabel}</div>
 
@@ -199,6 +212,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         onClickItem={onClickItem}
         displayButton={renderDropdownButton}
         stopPropagationOnMouseDown={true}
+        disabled={optionsDisabled}
       />
     </div>
   );

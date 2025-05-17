@@ -16,6 +16,7 @@ const { checkTypes, TYPES } = window.Core;
    * @property {'start' | 'center' | 'end'} [position] A string that determines the position of the container.
    * @property {Array<Object>} [items] The items or other containers within the container.
    * @property {Object} [style] An object that can set the CSS style of the container.
+   * @property {boolean} [stroke] A boolean that determines if the container has a stroke. The default is true.
    */
 /**
    * Creates a new instance of ModularHeader.
@@ -32,11 +33,6 @@ const defaultTopHeader = new instance.UI.Components.ModularHeader({
   gap: 12,
   position: 'start',
   stroke: true,
-  dimension: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    borderWidth: 1
-  },
   style: {},
   items: [
     // these items would need to be defined in your code

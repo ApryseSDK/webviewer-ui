@@ -17,6 +17,8 @@ import outlineUtils from 'helpers/OutlineUtils';
 import { shouldEndAccessibleReadingOrderMode } from 'helpers/accessibility';
 import DataElements from 'constants/dataElement';
 import defaultTool from 'constants/defaultTool';
+import { workerTypes } from 'constants/types';
+import getType from 'core/getType';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -86,7 +88,16 @@ const OutlinesPanel = ({ isTest = false }) => {
   }, [outlines]);
 
   useEffect(() => {
-    setOutlineEditable(core.isFullPDFEnabled() && outlineEditingEnabled);
+    const evaluateOutlineEditable = () => core.isFullPDFEnabled() && getType() !== workerTypes.OFFICE && outlineEditingEnabled;
+
+    setOutlineEditable(evaluateOutlineEditable());
+
+    const onDocumentLoaded = () => {
+      setOutlineEditable(evaluateOutlineEditable());
+    };
+
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+    return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
   }, [outlineEditingEnabled]);
 
   useEffect(() => {

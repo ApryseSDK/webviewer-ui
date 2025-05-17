@@ -15,7 +15,7 @@ export function Text() {
     ambientStr: 'The spice must flow.',
     resultStrStart: 4,
     resultStrEnd: 9,
-    icon: 'icon-form-field-text',
+    icon: 'icon-text-redaction',
   };
   return (
     <RedactionSearchResult {...props} />

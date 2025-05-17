@@ -89,6 +89,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     setNoteText: annotManager,
     fileAttachmentDataAvailable: annotManager,
     digitalSignatureAvailable: annotManager,
+    widgetHighlightingChanged: annotManager,
     editorFocus: editBoxManager,
     editorBlur: editBoxManager,
     editorTextChanged: editBoxManager,
@@ -114,5 +115,6 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     activeSheetChanged: spreadsheetEditorManager,
     spreadsheetEditorLoaded: spreadsheetEditorManager,
     spreadsheetEditorReady: spreadsheetEditorManager,
+    selectedRangeStyleChanged: spreadsheetEditorManager,
   };
 };

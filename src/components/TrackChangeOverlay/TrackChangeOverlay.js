@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
+import DataElements from 'constants/dataElement';
 import core from 'core';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 
@@ -73,6 +74,7 @@ const TrackChangeOverlay = ({
     })}>
       <Dropdown
         id='track-change-overlay'
+        dataElement={DataElements.TRACK_CHANGE_DROPDOWN}
         items={items}
         width={144}
         getCustomItemStyle={() => ({ height: '48px' })}

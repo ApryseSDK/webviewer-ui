@@ -145,7 +145,8 @@
     "showMoreColors": "További színek megjelenítése",
     "showLessColors": "Kevesebb szín megjelenítése",
     "fromCustomColorPicker": "Egyedi színválasztóból",
-    "newSpreadsheetDocument": "Új táblázat"
+    "newSpreadsheetDocument": "Új táblázat",
+    "resetDefault": "Visszaállítás alapértelmezettre"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Nem sikerült betölteni a titkosított dokumentumot. Túl sok próbálkozás.",
     "encryptedUserCancelled": "Nem sikerült betölteni a titkosított dokumentumot. A jelszó megadása megszakítva.",
     "enterPassword": "Ez a dokumentum jelszóval védett. Adjon meg egy jelszót",
-    "incorrectPassword": "Hibás jelszó, próbálkozások maradt: {{ fennmaradó kísérletek }}",
+    "incorrectPassword": "Hibás jelszó, próbálkozások maradt: {{ remainingAttempts }}",
     "noAnnotations": "Ha megjegyzést szeretnél írni, kezdj el megjegyzéseket készíteni.",
     "noAnnotationsReadOnly": "Ez a dokumentum nem tartalmaz megjegyzéseket.",
     "noAnnotationsFilter": "Kezdje el a megjegyzések készítését, és itt jelennek meg a szűrők.",
@@ -305,6 +306,8 @@
     "searching": "Keresés...",
     "searchCommentsPlaceholder": "Keresés a megjegyzésekben",
     "searchDocumentPlaceholder": "Dokumentum keresése",
+    "clearSearchResults": "Keresési eredmények törlése",
+    "searchResultsCleared": "Keresési eredmények törölve",
     "searchSettingsPlaceholder": "Keresési beállítások",
     "searchSuggestionsPlaceholder": "Keresési javaslatok",
     "signHere": "Itt írd alá",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Szerkeszt",
       "toolbarGroup-oe-Home": "itthon",
       "toolbarGroup-oe-Insert": "Beszúrás",
+      "toolbarGroup-oe-Layout": "Elrendezés",
       "toolbarGroup-oe-Review": "Felülvizsgálat"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Új bélyegző hozzáadása"
     },
     "signatureOverlay": {
-      "addSignature": "Új aláírás hozzáadása",
-      "addSignatureOrInitials": "Aláírás/kezdeményezők"
+      "addSignatureOrInitials": "Új aláírás/kezdőbetűk",
+      "addSignature": "Új aláírás"
     },
     "signatureModal": {
       "modalName": "Új aláírás létrehozása",
@@ -728,6 +732,8 @@
       "viewing": "Megtekintés",
       "disableFadePageNavigationComponent": "Az oldal eltüntetése navigációs összetevőjének letiltása",
       "disableFadePageNavigationComponentDesc": "Mindig tartsa a képernyőn az oldalnavigációs összetevőt. Az alapértelmezett viselkedés az, hogy bizonyos tétlenség után elhalványul.",
+      "enabledFormFieldHighlighting": "Űrlapmező kiemelések engedélyezése",
+      "enabledFormFieldHighlightingDesc": "Engedélyezze az űrlapmezők kiemelését a PDF dokumentumokban. Alapértelmezés szerint engedélyezve.",
       "disableNativeScrolling": "A natív görgetés letiltása",
       "disableNativeScrollingDesc": "A natív mobileszköz görgetési viselkedésének letiltása, ha korábban engedélyezve volt. Vegye figyelembe, hogy a natív mobileszközök görgetési viselkedése alapértelmezés szerint ki van kapcsolva.",
       "annotations": "Annotációk",
@@ -798,6 +804,12 @@
       "editShortcut": "Parancsikon szerkesztése",
       "shortcutAlreadyExists": "A fenti billentyűparancs már létezik.",
       "close": "Eszköztipp bezárása"
+    },
+    "cellBorderStyle": {
+      "none": "Egyik sem",
+      "solid": "Szilárd",
+      "dashed": "Szaggatott",
+      "dotted": "Pontozott"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Szakasz szünet - Folyamatos",
     "sectionBreakContinuousDescription": "Szúrja be a szakasztörést, és folytassa ugyanazon az oldalon ",
     "section": "Szakasz",
+    "margins": "Margók",
+    "normal": "Normál",
+    "narrow": "Keskeny",
+    "moderate": "Mérsékelt",
+    "wide": "Széles",
+    "top": "Felső",
+    "bottom": "Alsó",
+    "left": "Balra",
+    "right": "Jobbra",
+    "customMargins": "Egyéni margók",
+    "customMarginsDescription": "Egyéni margók meghatározása",
     "header": {
       "0": "Fejléc",
       "1": "Első oldal fejléce",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Távolítsa el a láblécet",
     "headerFooterOptionsModal": {
       "title": "Fejléc és lábléc formátuma",
-      "margins": "Margók",
       "headerFromTop": "Fejléc felülről",
       "footerFromBottom": "Lábléc alulról",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Különböző páros és páratlan oldalak",
         "differentFirstEvenOddPages": "Különböző első, páros és páratlan oldalak"
       }
+    },
+    "marginsModal": {
+      "title": "Egyéni margóbeállítás",
+      "leftMargin": "Bal margó",
+      "rightMargin": "Jobb margó",
+      "topMargin": "Felső margó",
+      "bottomMargin": "Alsó margó"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Dőlt",
     "underline": "Aláhúzás",
     "strikethrough": "Áthúzott",
+    "strikeout": "Áthúzni",
     "cellBorderStyle": "Szegély stílus",
     "merge": "Összeolvad",
     "unmerge": "Egyesítés megszüntetése",
     "cellFormat": "Cellaformátum",
-    "automatic": "Automatikus",
-    "plainText": "Egyszerű szöveg",
-    "increaseDecimal": "Tizedesjegy növelése",
-    "decreaseDecimal": "Csökkentse a tizedesjegyet",
-    "number": "Szám",
-    "percent": "Százalékos",
-    "accounting": "Számvitel",
-    "financial": "Pénzügyi",
-    "currency": "Valuta",
-    "currencyRounded": "Pénznem kerekítve",
-    "calendar": "Dátum",
-    "clockHour": "Idő",
-    "calendarTime": "Dátum Idő",
+    "automaticFormat": "Automatikus",
+    "plainTextFormat": "Egyszerű szöveg",
+    "increaseDecimalFormat": "Tizedesjegy növelése",
+    "decreaseDecimalFormat": "Csökkentse a tizedesjegyet",
+    "numberFormat": "Szám",
+    "percentFormat": "Százalékos",
+    "accountingFormat": "Számvitel",
+    "financialFormat": "Pénzügyi",
+    "currencyFormat": "Valuta",
+    "currencyRoundedFormat": "Pénznem kerekítve",
+    "calendarFormat": "Dátum",
+    "clockHourFormat": "Idő",
+    "calendarTimeFormat": "Dátum Idő",
     "formatAsCurrency": "Formátum pénznemként",
     "formatAsPercent": "Formátum százalékban",
     "formatAsDecDecimal": "Tizedesvessző csökkentése",
     "formatAsIncDecimal": "Tizedesvessző növelése",
-    "fontColor": "Betűszín",
-    "cellBackgroundColor": "Cell háttérszín",
+    "textColor": "Szöveg színe",
+    "cellBackgroundColor": "Háttérszín",
+    "cellBorderColor": "Szegély színe",
+    "textLabel": "Szöveg",
+    "backgroundLabel": "Háttér",
+    "borderLabel": "Határ",
     "textAlignment": "Szöveg igazítása",
-    "alignLeft": "Balra igazítás",
-    "alignCenter": "Középre igazítás",
-    "alignRight": "Igazítsa jobbra",
-    "alignTop": "Igazítsa a tetejét",
-    "alignMiddle": "Középre igazítás",
-    "alignBottom": "Igazítsa az alját",
+    "topAlign": "Felső igazítás",
+    "middleAlign": "Középre igazítás",
+    "bottomAlign": "Alulra igazítás",
     "cellAdjustment": "Cellák beállítása",
-    "insertColLeft": "Oszlop beszúrása balra",
-    "columnInsertLeft": "Oszlop beszúrása balra",
-    "columnInsertRight": "Oszlop beszúrása jobbra",
-    "rowInsertTop": "Szúrjon be egy sort felül",
-    "rowInsertBottom": "Szúrjon be egy sort alább",
-    "columnInsertShiftDown": "Helyezze be a cellákat, és tolja lefelé",
-    "columnInsertShiftRight": "Szúrjon be cellákat és tolja jobbra",
-    "columnDelete": "Oszlop törlése",
-    "rowDelete": "Sor törlése",
-    "columnDeleteShiftUp": "Törölje a cellákat és tolja felfelé",
-    "columnDeleteShiftLeft": "Törölje a cellákat és tolja balra"
+    "cellFormatMoreOptions": "További cellaformátum-beállítások",
+    "insertColumnLeft": "Oszlop beszúrása balra",
+    "insertColumnRight": "Oszlop beszúrása jobbra",
+    "insertRowTop": "Szúrjon be egy sort felül",
+    "insertRowBottom": "Szúrjon be egy sort alább",
+    "insertColumnShiftDown": "Helyezze be a cellákat, és tolja lefelé",
+    "insertColumnShiftRight": "Szúrjon be cellákat és tolja jobbra",
+    "deleteColumn": "Oszlop törlése",
+    "deleteRow": "Sor törlése",
+    "deleteColumnShiftUp": "Törölje a cellákat és tolja felfelé",
+    "deleteColumnShiftLeft": "Törölje a cellákat és tolja balra",
+    "clearBorder": "Tiszta határ",
+    "cellBorderAll": "Minden határ",
+    "cellBorderInside": "A határokon belül",
+    "cellBorderOutside": "Határokon kívül",
+    "cellBorderTop": "Felső szegély",
+    "cellBorderBottom": "Alsó szegély",
+    "cellBorderLeft": "Bal határ",
+    "cellBorderRight": "Jobb határ",
+    "cellBorderVertical": "Függőleges szegély",
+    "cellBorderHorizontal": "Vízszintes határ",
+    "cellBorderNone": "Nincs határ",
+    "borders": "Határok",
+    "fontSize": {
+      "dropdownLabel": "Betűméret"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Betűcsalád"
+    },
+    "blankSheet": "Üres lap"
   },
   "insertPageModal": {
     "title": "Új oldal beszúrása",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Adjon hozzá egyedi színekhez",
     "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez",
     "noToolStyle": "Az eszköz nem tartalmaz stílustulajdonságokat.",
+    "noSharedToolStyle": "A kiválasztott megjegyzések nem osztanak meg semmilyen stílustulajdonságot.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Sor indítása"

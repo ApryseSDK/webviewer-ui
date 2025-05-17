@@ -42,6 +42,7 @@ const Flyout = () => {
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
   const [focusableElements, setFocusableElements] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [shouldOverflow, setShouldOverflow] = useState(false);
 
   let activeItem = null;
   for (const index of activePath) {
@@ -106,6 +107,12 @@ const Flyout = () => {
     // We should wait for the flyout to be rendered before calculating the position
     requestAnimationFrame(calculateAndSetPosition);
   }, [activeItem, position, items, inputValue]);
+
+  useLayoutEffect(() => {
+    const appRect = getRootNode()?.getElementById('app')?.getBoundingClientRect();
+    const flyoutRect = flyoutRef.current?.getBoundingClientRect();
+    setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && flyoutRect.height > appRect.height);
+  }, [activeItem, position, items]);
 
   useEffect(() => {
     if (flyoutRef.current) {
@@ -199,10 +206,12 @@ const Flyout = () => {
     } else {
       switch (e.code) {
         case 'ArrowDown':
+        case 'ArrowRight':
           e.preventDefault();
           moveFocus(1);
           break;
         case 'ArrowUp':
+        case 'ArrowLeft':
           e.preventDefault();
           moveFocus(-1);
           break;
@@ -282,6 +291,8 @@ const Flyout = () => {
           items={itemsToRender}
           activeFlyout={activeFlyout}
           type={itemType}
+          id={item?.id}
+          labelledById={item?.labelledById}
         />
       );
     });
@@ -323,6 +334,7 @@ const Flyout = () => {
             FlyoutContainer: true,
             [className]: true,
           })}
+          style={shouldOverflow ? { overflowY: 'auto' } : undefined}
         >
           {activeItem ? (
             <>

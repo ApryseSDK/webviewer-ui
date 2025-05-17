@@ -49,6 +49,17 @@ export default (dispatch, store, documentViewerKey) => () => {
         topLeftColumn: null,
         bottomRightRow: null,
         bottomRightColumn: null,
+        styles: {
+          verticalAlignment: null,
+          horizontalAlignment: null,
+          formatType: null,
+          font: {
+            bold: false,
+            italic: false,
+            underline: false,
+            strikeout: false,
+          }
+        }
       },
     }));
   }

@@ -68,16 +68,8 @@ import { panelNames } from 'constants/panel';
 import DataElements from 'constants/dataElement';
 import { defaultPanels } from '../../redux/modularComponents';
 import {
-  defaultOfficeEditorModularComponents,
-  defaultOfficeEditorModularHeaders,
   defaultOfficeEditorPanels,
 } from '../../redux/officeEditorModularComponents';
-import {
-  defaultSpreadsheetEditorHeaders,
-  defaultSpreadsheetEditorComponents,
-  defaultSpreadsheetEditorPanels,
-  defaultSpreadsheetFlyoutMap
-} from '../../redux/spreadsheetEditorComponents';
 
 import setLanguage from 'src/apis/setLanguage';
 import { loadDefaultFonts } from 'src/helpers/loadFont';
@@ -91,7 +83,7 @@ import useTabFocus from 'hooks/useTabFocus';
 import useCloseOnWindowResize from 'hooks/useCloseOnWindowResize';
 import PageManipulationFlyout from 'components/ModularComponents/PageManipulationFlyout';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
-
+import useWidgetHighlightingSync from 'hooks/useWidgetHighlightingSync';
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
@@ -128,6 +120,9 @@ const App = ({ removeEventHandlers }) => {
   }
   const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
   const { annotation: widgetAnnotationAddedOrSelected } = useOnFormFieldAnnotationAddedOrSelected();
+
+
+  useWidgetHighlightingSync();
 
   useEffect(() => {
     const initialMode = getHashParameters('initialMode', null);
@@ -168,20 +163,19 @@ const App = ({ removeEventHandlers }) => {
     }
 
     dispatch(actions.setUIConfiguration(finalMode));
-
   }, []);
 
   const loadSpreadsheetEditorUI = () => {
-    dispatch(actions.setModularHeadersAndComponents(defaultSpreadsheetEditorHeaders, defaultSpreadsheetEditorComponents));
-    dispatch(actions.setGenericPanels(defaultSpreadsheetEditorPanels));
-    Object.values(defaultSpreadsheetFlyoutMap).forEach((flyout) => dispatch(actions.addFlyout(flyout)));
+    if (!customizableUI) {
+      console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
+      dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
+    }
+    dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
     dispatch(actions.enableSpreadsheetEditorMode());
   };
 
   const loadDocxEditorUI = () => {
-    dispatch(actions.setModularHeadersAndComponents(defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents));
-    dispatch(actions.setGenericPanels(defaultOfficeEditorPanels));
-    dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
+    dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DOCX_EDITOR));
   };
 
   useEffect(() => {
@@ -272,12 +266,19 @@ const App = ({ removeEventHandlers }) => {
         const activeTab = state.viewer.activeTab || 0;
         initialDoc = initialDoc[activeTab];
         if ((initialDoc && doesAutoLoad) || startOffline) {
+          let chunkSize = getHashParameters('chunkSize', undefined);
+          try {
+            chunkSize = chunkSize ? parseInt(chunkSize) : undefined;
+          } catch (e) {
+            console.error('chunkSize must be a number');
+          }
           const options = {
             extension: getHashParameters('extension', null),
             filename: getHashParameters('filename', null),
             externalPath: getHashParameters('p', ''),
             documentId: getHashParameters('did', null),
             showInvalidBookmarks: getHashParameters('showInvalidBookmarks', false),
+            chunkSize,
           };
           loadDocument(dispatch, initialDoc, options);
         }
@@ -701,6 +702,10 @@ const App = ({ removeEventHandlers }) => {
             <LazyLoadWrapper
               Component={LazyLoadComponents.HeaderFooterOptionsModal}
               dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
+            />
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.OfficeEditorMarginsModal}
+              dataElement={DataElements.OFFICE_EDITOR_MARGINS_MODAL}
             />
           </>
         )}

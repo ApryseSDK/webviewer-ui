@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 const OpacityPanelSection = ({
   showFillColorAndCollapsablePanelSections,
   shouldHideOpacitySlider,
-  activeTool,
   showLineStyleOptions,
   renderSlider,
   isOpacityContainerActive,
@@ -16,8 +15,7 @@ const OpacityPanelSection = ({
 
   OpacityPanelSection.propTypes = {
     showFillColorAndCollapsablePanelSections: PropTypes.bool,
-    shouldHideOpacitySlider: PropTypes.func,
-    activeTool: PropTypes.string,
+    shouldHideOpacitySlider: PropTypes.bool,
     showLineStyleOptions: PropTypes.bool,
     renderSlider: PropTypes.func,
     isOpacityContainerActive: PropTypes.bool,
@@ -30,13 +28,13 @@ const OpacityPanelSection = ({
         If showLineStyleOptions is true, then we don't want to show the opacity slider
         in the bottom because it is already shown before together with the stroke slider
       */}
-      {!showLineStyleOptions && !shouldHideOpacitySlider(activeTool) && (
+      {!showLineStyleOptions && !shouldHideOpacitySlider && (
         <div className="StyleOption">{renderSlider('opacity', showFillColorAndCollapsablePanelSections)}</div>
       )}
     </div>
   );
 
-  if (!(showFillColorAndCollapsablePanelSections && !shouldHideOpacitySlider(activeTool))) {
+  if (!(showFillColorAndCollapsablePanelSections && !shouldHideOpacitySlider)) {
     return sectionContent;
   }
 

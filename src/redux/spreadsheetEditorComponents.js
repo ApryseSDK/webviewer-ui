@@ -1,5 +1,5 @@
 import DataElements from 'constants/dataElement';
-import { ITEM_TYPE, CELL_ADJUSTMENT_BUTTONS, CELL_FORMAT_BUTTONS } from 'src/constants/customizationVariables';
+import { ITEM_TYPE, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS } from 'src/constants/customizationVariables';
 
 const defaultSpreadsheetEditorHeaders = {
   'default-top-header': {
@@ -47,24 +47,22 @@ const formatButtonsConfigs = CELL_FORMAT_BUTTONS.reduce((acc, item) => {
     return acc;
   }
   const { label } = item;
-  const key = label.charAt(0).toLowerCase() + label.slice(1);
-  acc[key] = {
-    dataElement: `format${label}`,
+  acc[label] = {
+    dataElement: label,
     type: 'presetButton',
-    buttonType: `format${label}`,
+    buttonType: label,
   };
   return acc;
 }, {});
 
-const adjustmentButtonsConfig = CELL_ADJUSTMENT_BUTTONS.reduce((acc, item) => {
+const adjustmentButtonsConfig = CELL_ADJUSTMENT_FLYOUT_ITEMS.reduce((acc, item) => {
   if (item === 'divider') {
     return acc;
   }
-  const key = item.charAt(0).toLowerCase() + item.slice(1);
-  acc[key] = {
-    dataElement: `adjustment${item}`,
+  acc[item] = {
+    dataElement: item,
     type: 'presetButton',
-    buttonType: `adjustment${item}`,
+    buttonType: item,
   };
   return acc;
 }, {});
@@ -134,28 +132,30 @@ const defaultSpreadsheetEditorComponents = {
       'cellCopyButton',
       'cellPasteButton',
       'divider-0.2',
-
+      'fontFamilyDropdown',
+      'fontSizeDropdown',
+      'divider-0.3',
       'boldButton',
       'italicButton',
       'underlineButton',
-
-      'strikethroughButton',
-      'divider-0.3',
-      'cellTextColorButton',
-      'cellBackgroundColorBtn',
+      'strikeoutButton',
       'divider-0.4',
-      'cellTextAlignment',
+      'cellTextColorElement',
+      'cellBackgroundColorElement',
       'divider-0.5',
-      'cellAdjustment',
-      'cellBorderStyleButton',
-      'mergeToggleButton',
+      'textAlignmentToggleButton',
       'divider-0.6',
+      'cellAdjustmentButton',
+      'borderStyleToggleButton',
+      'cellBorderColorElement',
+      'mergeToggleButton',
+      'divider-0.7',
       'cellFormatAsCurrency',
       'cellFormatAsPercent',
       'cellFormatDecreaseDecimal',
       'cellFormatIncreaseDecimal',
-      'cellFormatMore',
-      'divider-0.7',
+      'cellFormatMoreToggleButton',
+      'divider-0.8',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -191,6 +191,10 @@ const defaultSpreadsheetEditorComponents = {
     dataElement: 'divider-0.7',
     type: 'divider'
   },
+  'divider-0.8': {
+    dataElement: 'divider-0.8',
+    type: 'divider'
+  },
   cellCutButton: {
     dataElement: 'cellCutButton',
     type: 'presetButton',
@@ -210,49 +214,51 @@ const defaultSpreadsheetEditorComponents = {
   boldButton: {
     dataElement: 'boldButton',
     type: 'presetButton',
-    buttonType: 'cellDecoratorBold'
+    buttonType: 'boldButton'
   },
   italicButton: {
     dataElement: 'italicButton',
     type: 'presetButton',
-    buttonType: 'cellDecoratorItalic'
+    buttonType: 'italicButton'
   },
   underlineButton: {
     dataElement: 'underlineButton',
     type: 'presetButton',
-    buttonType: 'cellDecoratorUnderline'
+    buttonType: 'underlineButton'
   },
-  strikethroughButton: {
-    dataElement: 'strikethroughButton',
+  strikeoutButton: {
+    dataElement: 'strikeoutButton',
     type: 'presetButton',
-    buttonType: 'strikethroughButton',
+    buttonType: 'strikeoutButton',
   },
-
-
-
-  cellTextColorButton: {
-    dataElement: 'cellTextColorButton',
-    type: 'presetButton',
-    buttonType: 'cellTextColor',
+  cellTextColorElement: {
+    dataElement: 'cellTextColorElement',
+    type: 'cellTextColor',
   },
-  cellBackgroundColorBtn: {
-    dataElement: 'cellBackgroundColorBtn',
-    type: 'presetButton',
-    buttonType: 'cellBackgroundColor',
+  cellBackgroundColorElement: {
+    dataElement: 'cellBackgroundColorElement',
+    type: 'cellBackgroundColor',
   },
-  cellTextAlignment: {
-    dataElement: 'cellTextAlignment',
-    type: 'presetButton',
-    buttonType: 'cellTextAlignment',
+  textAlignmentToggleButton: {
+    dataElement: 'textAlignmentToggleButton',
+    img: 'icon-menu-left-align',
+    title: 'spreadsheetEditor.textAlignment',
+    toggleElement: DataElements.CELL_TEXT_ALIGNMENT_FLYOUT,
+    type: 'toggleButton',
   },
 
   /** Cell Border Style */
-  cellBorderStyleButton: {
-    dataElement: 'cellBorderStyleButton',
-    type: 'presetButton',
-    buttonType: 'cellBorderStyle',
+  borderStyleToggleButton: {
+    dataElement: 'borderStyleToggleButton',
+    img: 'ic-border-main',
+    title: 'spreadsheetEditor.cellBorderStyle',
+    toggleElement: DataElements.CELL_BORDER_FLYOUT,
+    type: 'toggleButton',
   },
-
+  cellBorderColorElement: {
+    dataElement: 'cellBorderColorElement',
+    type: 'cellBorderColor',
+  },
 
   mergeToggleButton: {
     dataElement: 'mergeToggleButton',
@@ -264,30 +270,31 @@ const defaultSpreadsheetEditorComponents = {
   cellFormatAsCurrency: {
     dataElement: 'formatAsCurrency',
     type: 'presetButton',
-    buttonType: 'formatCurrency',
+    buttonType: 'currencyFormat',
   },
   cellFormatAsPercent: {
     dataElement: 'cellFormatAsPercent',
     type: 'presetButton',
-    buttonType: 'formatPercent',
+    buttonType: 'percentFormat',
   },
   cellFormatDecreaseDecimal: {
     dataElement: 'cellFormatDecreaseDecimal',
     type: 'presetButton',
-    buttonType: 'formatDecreaseDecimal',
+    buttonType: 'decreaseDecimalFormat',
   },
   cellFormatIncreaseDecimal: {
     dataElement: 'cellFormatIncreaseDecimal',
     type: 'presetButton',
-    buttonType: 'formatIncreaseDecimal',
+    buttonType: 'increaseDecimalFormat',
   },
-  cellFormatMore: {
-    dataElement: 'formatMore',
-    type: 'presetButton',
-    buttonType: 'formatMore',
+  cellFormatMoreToggleButton: {
+    dataElement: 'cellFormatMoreToggleButton',
+    type: 'toggleButton',
+    img: 'icon-tools-more',
+    title: 'spreadsheetEditor.cellFormatMoreOptions',
+    toggleElement: DataElements.CELL_FORMAT_MORE_FLYOUT,
   },
   ...formatButtonsConfigs,
-
 
   alignTopButton: {
     dataElement: 'alignTopButton',
@@ -305,30 +312,37 @@ const defaultSpreadsheetEditorComponents = {
     buttonType: 'alignBottomButton'
   },
 
-
   /** Cell Adjustment */
-  cellAdjustment: {
-    dataElement: 'cellAdjustment',
-    type: 'presetButton',
-    buttonType: 'cellAdjustment',
+  cellAdjustmentButton: {
+    dataElement: 'cellAdjustmentButton',
+    img: 'ic-insert-column',
+    title: 'spreadsheetEditor.cellAdjustment',
+    toggleElement: DataElements.CELL_ADJUSTMENT_FLYOUT,
+    type: 'toggleButton',
   },
   ...adjustmentButtonsConfig,
 
+  fontSizeDropdown: {
+    dataElement: 'fontSizeDropdown',
+    type: 'fontSizeDropdown',
+  },
+  fontFamilyDropdown: {
+    dataElement: 'fontFamilyDropdown',
+    type: 'fontFamilyDropdown',
+  },
 };
-
 
 const defaultSpreadsheetEditorPanels = [
 ];
 
-
-const adjustmentButtons = CELL_ADJUSTMENT_BUTTONS.map((item) => {
+const adjustmentButtons = CELL_ADJUSTMENT_FLYOUT_ITEMS.map((item) => {
   if (item === 'divider') {
     return 'divider';
   }
   return {
-    dataElement: `adjustment${item}`,
+    dataElement: item,
     type: 'presetButton',
-    buttonType: `adjustment${item}`,
+    buttonType: item,
   };
 });
 
@@ -337,9 +351,9 @@ const formatButtons = CELL_FORMAT_BUTTONS.map((item) => {
     return 'divider';
   }
   return {
-    dataElement: `format${item.label}`,
+    dataElement: item.label,
     type: 'presetButton',
-    buttonType: `format${item.label}`,
+    buttonType: item.label,
     secondaryLabel: item.desc,
   };
 });
@@ -382,7 +396,7 @@ const defaultSpreadsheetFlyoutMap = {
     'className': 'CellTextAlignment',
     'items': [
       {
-        'dataElement': 'cellTextAlignmentFlyout',
+        'dataElement': 'cellTextAlignmentFlyoutLabel',
         'type': 'label',
         'label': 'spreadsheetEditor.textAlignment',
       },
@@ -404,14 +418,17 @@ const defaultSpreadsheetFlyoutMap = {
       'divider',
       {
         'dataElement': 'alignTopButton',
+        'buttonType': 'alignTopButton',
         'type': 'presetButton',
       },
       {
         'dataElement': 'alignMiddleButton',
+        'buttonType': 'alignMiddleButton',
         'type': 'presetButton',
       },
       {
         'dataElement': 'alignBottomButton',
+        'buttonType': 'alignBottomButton',
         'type': 'presetButton',
       },
     ]
@@ -430,6 +447,33 @@ const defaultSpreadsheetFlyoutMap = {
     ]
   },
 
+  [DataElements.CELL_BORDER_FLYOUT]: {
+    'dataElement': DataElements.CELL_BORDER_FLYOUT,
+    'className': 'CellBorder',
+    'items': [
+      {
+        'dataElement': 'cellBorderStyleFlyout',
+        'type': 'label',
+        'label': 'spreadsheetEditor.borders',
+      },
+      {
+        'dataElement': 'cellBorderButtons',
+        'type': 'cellBorders',
+      },
+      'divider',
+      {
+        'dataElement': 'cellBorderStyle',
+        'type': 'label',
+        'label': 'spreadsheetEditor.cellBorderStyle',
+        'id': 'cellBorderStyleLabel',
+      },
+      {
+        'type': 'cellBorderStyleDropdown',
+        'labelledById': 'cellBorderStyleLabel',
+      },
+    ]
+  },
+
   [DataElements.CELL_FORMAT_MORE_FLYOUT]: {
     'dataElement': DataElements.CELL_FORMAT_MORE_FLYOUT,
     'className': 'CellFormat',
@@ -441,7 +485,7 @@ const defaultSpreadsheetFlyoutMap = {
       },
       ...formatButtons,
     ]
-  }
+  },
 };
 
 
@@ -450,6 +494,4 @@ export {
   defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorPanels,
   defaultSpreadsheetFlyoutMap,
-  formatButtonsConfigs,
-  adjustmentButtonsConfig,
 };

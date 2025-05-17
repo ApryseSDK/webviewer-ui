@@ -24,6 +24,8 @@ const ModularHeaderItems = (props) => {
 
   const flyoutDataElement = `${headerId}Flyout`;
   const size = useSelector((state) => selectors.getCustomElementSize(state, headerId));
+  const disabledElements = useSelector(selectors.getDisabledElements);
+
   useEffect(() => {
     sizeManager[headerId] = {
       ...(sizeManager[headerId] ? sizeManager[headerId] : {}),
@@ -66,7 +68,7 @@ const ModularHeaderItems = (props) => {
     headerDirection,
   });
 
-  const headerItems = useMemo(() => items?.map((item, index) => {
+  const headerItems = useMemo(() => items?.filter((item) => !disabledElements[item.dataElement]?.disabled).map((item, index) => {
     const hasToShrink = size > 0;
     const indexesToExclude = items.length - size;
     const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
@@ -84,7 +86,7 @@ const ModularHeaderItems = (props) => {
     const { type, dataElement } = itemProps;
     const key = `${type}-${dataElement || index}-wrapper-${index}`;
     return <InnerItem key={key} {...itemProps} headerDirection={headerDirection} />;
-  }), [items, size]);
+  }), [items, size, disabledElements]);
 
   return (
     <div className={`ModularHeaderItems ${className}`}
@@ -112,7 +114,9 @@ const ModularHeaderItems = (props) => {
 };
 
 ModularHeaderItems.props = {
-  items: PropTypes.array,
+  items: PropTypes.arrayOf({
+    dataElement: PropTypes.string.isRequired,
+  }),
   placement: PropTypes.string,
   gap: PropTypes.any,
   justifyContent: PropTypes.string,

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
-import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
+import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import core from 'core';
+
+const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
 /**
  * A button that creates a new sheet document.
@@ -14,16 +17,30 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  */
 const NewSpreadsheetButton = React.forwardRef((props, ref) => {
   const { isFlyoutItem, className, style } = props;
-  const isDisabled = !useSelector(selectors.isSpreadsheetEditorModeEnabled);
+
+  const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
+  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
+
+  const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
+  const [isDisabled, setIsDisabled] = useState(!isSpreadsheetEditorModeEnabled || spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY);
+
+  useEffect(() => {
+    const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
+    const shouldDisableButton = !isSpreadsheetEditorModeEnabled || spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY;
+    if (shouldDisableButton) {
+      console.warn('The new spreadsheet preset button is only available if the Spreadsheet Editor mode is enabled in editing mode.');
+    }
+    setIsDisabled(shouldDisableButton);
+  }, [currentUIConfiguration, spreadsheetEditorEditMode]);
+
+
+  const onClick = async () => {
+    core.loadBlankSpreadsheet();
+  };
 
   if (isDisabled) {
-    if (isFlyoutItem) {
-      return null;
-    }
-    console.warn('The new spreadsheet preset button is only available if the Sheet Editor mode is enabled.');
+    return null;
   }
-
-  const onClick = async () => { };
 
   return (
     isFlyoutItem ?

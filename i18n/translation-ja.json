@@ -145,7 +145,8 @@
     "showMoreColors": "その他の色を表示",
     "showLessColors": "色を少なく表示",
     "fromCustomColorPicker": "カスタムカラーピッカーから",
-    "newSpreadsheetDocument": "新しいスプレッドシート"
+    "newSpreadsheetDocument": "新しいスプレッドシート",
+    "resetDefault": "デフォルトにリセット"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -305,6 +306,8 @@
     "searching": "検索中...",
     "searchCommentsPlaceholder": "コメントを検索",
     "searchDocumentPlaceholder": "ドキュメント内を検索",
+    "clearSearchResults": "検索結果をクリア",
+    "searchResultsCleared": "検索結果をクリアしました",
     "searchSettingsPlaceholder": "検索設定",
     "searchSuggestionsPlaceholder": "検索候補",
     "signHere": "ここに署名してください",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "墨消し",
       "toolbarGroup-oe-Home": "家",
       "toolbarGroup-oe-Insert": "入れる",
+      "toolbarGroup-oe-Layout": "レイアウト",
       "toolbarGroup-oe-Review": "レビュー"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
-      "addSignature": "新しい署名を追加",
-      "addSignatureOrInitials": "署名/イニシャル"
+      "addSignatureOrInitials": "新しい署名/イニシャル",
+      "addSignature": "新しい署名"
     },
     "signatureModal": {
       "modalName": "新しい署名を作成する",
@@ -728,6 +732,8 @@
       "viewing": "閲覧中",
       "disableFadePageNavigationComponent": "フェード ページ ナビゲーション コンポーネントを無効にする",
       "disableFadePageNavigationComponentDesc": "ページ ナビゲーション コンポーネントを常に画面に表示します。デフォルトの動作は、非アクティブ状態が一定時間続くとフェードすることです。",
+      "enabledFormFieldHighlighting": "フォームフィールドのハイライトを有効にする",
+      "enabledFormFieldHighlightingDesc": "PDF ドキュメント内のフォーム フィールドのハイライト表示を有効にします。デフォルトで有効になっています。",
       "disableNativeScrolling": "ネイティブ スクロールを無効にする",
       "disableNativeScrollingDesc": "ネイティブのモバイル デバイスのスクロール動作が以前に有効になっている場合は無効にします。デフォルトでは、ネイティブのモバイル デバイスのスクロール動作はオフになっていることに注意してください。",
       "annotations": "注釈",
@@ -798,6 +804,12 @@
       "editShortcut": "ショートカットの編集",
       "shortcutAlreadyExists": "上記のキーボード ショートカットは既に存在します。",
       "close": "ツールチップを閉じる"
+    },
+    "cellBorderStyle": {
+      "none": "なし",
+      "solid": "固体",
+      "dashed": "破線",
+      "dotted": "点在"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "セクション区切り - 連続",
     "sectionBreakContinuousDescription": "セクション区切りを挿入し、同じページに続ける",
     "section": "セクション",
+    "margins": "マージン",
+    "normal": "普通",
+    "narrow": "狭い",
+    "moderate": "適度",
+    "wide": "広い",
+    "top": "トップ",
+    "bottom": "底",
+    "left": "左",
+    "right": "右",
+    "customMargins": "カスタムマージン",
+    "customMarginsDescription": "カスタムマージンを定義する",
     "header": {
       "0": "ヘッダ",
       "1": "最初のページのヘッダー",
@@ -1337,7 +1360,6 @@
     "removeFooter": "フッターを削除",
     "headerFooterOptionsModal": {
       "title": "ヘッダーとフッターのフォーマット",
-      "margins": "マージン",
       "headerFromTop": "上からのヘッダー",
       "footerFromBottom": "下からのフッター",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "異なる偶数ページと奇数ページ",
         "differentFirstEvenOddPages": "最初のページ、偶数ページ、奇数ページが異なる"
       }
+    },
+    "marginsModal": {
+      "title": "カスタムマージン調整",
+      "leftMargin": "左余白",
+      "rightMargin": "右余白",
+      "topMargin": "上余白",
+      "bottomMargin": "下余白"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "イタリック",
     "underline": "下線",
     "strikethrough": "取り消し線",
+    "strikeout": "三振",
     "cellBorderStyle": "境界線のスタイル",
     "merge": "マージ",
     "unmerge": "結合解除",
     "cellFormat": "セルの書式",
-    "automatic": "自動",
-    "plainText": "プレーンテキスト",
-    "increaseDecimal": "小数点を増やす",
-    "decreaseDecimal": "小数点以下を減算",
-    "number": "番号",
-    "percent": "パーセント",
-    "accounting": "会計",
-    "financial": "金融",
-    "currency": "通貨",
-    "currencyRounded": "通貨は四捨五入",
-    "calendar": "日付",
-    "clockHour": "時間",
-    "calendarTime": "日付時刻",
+    "automaticFormat": "自動",
+    "plainTextFormat": "プレーンテキスト",
+    "increaseDecimalFormat": "小数点を増やす",
+    "decreaseDecimalFormat": "小数点以下を減算",
+    "numberFormat": "番号",
+    "percentFormat": "パーセント",
+    "accountingFormat": "会計",
+    "financialFormat": "金融",
+    "currencyFormat": "通貨",
+    "currencyRoundedFormat": "通貨は四捨五入",
+    "calendarFormat": "日付",
+    "clockHourFormat": "時間",
+    "calendarTimeFormat": "日付時刻",
     "formatAsCurrency": "通貨としてフォーマット",
     "formatAsPercent": "パーセントでフォーマット",
     "formatAsDecDecimal": "小数点以下を下げる",
     "formatAsIncDecimal": "小数点を増やす",
-    "fontColor": "フォントの色",
-    "cellBackgroundColor": "セルの背景色",
+    "textColor": "テキストの色",
+    "cellBackgroundColor": "背景色",
+    "cellBorderColor": "境界線の色",
+    "textLabel": "文章",
+    "backgroundLabel": "背景",
+    "borderLabel": "国境",
     "textAlignment": "テキストの配置",
-    "alignLeft": "左揃え",
-    "alignCenter": "中央揃え",
-    "alignRight": "右揃え",
-    "alignTop": "上揃え",
-    "alignMiddle": "中央揃え",
-    "alignBottom": "下揃え",
+    "topAlign": "上揃え",
+    "middleAlign": "中央揃え",
+    "bottomAlign": "下揃え",
     "cellAdjustment": "セル調整",
-    "insertColLeft": "左に列を挿入",
-    "columnInsertLeft": "左に列を挿入",
-    "columnInsertRight": "右に列を挿入",
-    "rowInsertTop": "上に行を挿入",
-    "rowInsertBottom": "下に行を挿入",
-    "columnInsertShiftDown": "セルを挿入して下へシフト",
-    "columnInsertShiftRight": "セルを挿入して右にシフト",
-    "columnDelete": "列を削除",
-    "rowDelete": "行を削除",
-    "columnDeleteShiftUp": "セルを削除して上にシフト",
-    "columnDeleteShiftLeft": "セルを削除して左にシフト"
+    "cellFormatMoreOptions": "その他のセル書式オプション",
+    "insertColumnLeft": "左に列を挿入",
+    "insertColumnRight": "右に列を挿入",
+    "insertRowTop": "上に行を挿入",
+    "insertRowBottom": "下に行を挿入",
+    "insertColumnShiftDown": "セルを挿入して下へシフト",
+    "insertColumnShiftRight": "セルを挿入して右にシフト",
+    "deleteColumn": "列を削除",
+    "deleteRow": "行を削除",
+    "deleteColumnShiftUp": "セルを削除して上にシフト",
+    "deleteColumnShiftLeft": "セルを削除して左にシフト",
+    "clearBorder": "境界線をクリア",
+    "cellBorderAll": "すべての国境",
+    "cellBorderInside": "国境の内側",
+    "cellBorderOutside": "国境の外",
+    "cellBorderTop": "上枠",
+    "cellBorderBottom": "下枠線",
+    "cellBorderLeft": "左の境界線",
+    "cellBorderRight": "右の境界線",
+    "cellBorderVertical": "垂直境界線",
+    "cellBorderHorizontal": "水平境界線",
+    "cellBorderNone": "国境なし",
+    "borders": "国境",
+    "fontSize": {
+      "dropdownLabel": "フォントサイズ"
+    },
+    "fontFamily": {
+      "dropdownLabel": "フォントファミリー"
+    },
+    "blankSheet": "白紙"
   },
   "insertPageModal": {
     "title": "新しいページを挿入",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "カスタムカラーに追加",
     "noToolSelected": "ツールプロパティを表示するにはツールを選択してください",
     "noToolStyle": "ツールにはスタイル設定プロパティが含まれていません。",
+    "noSharedToolStyle": "選択した注釈はスタイル プロパティを共有しません。",
     "lineEnding": {
       "start": {
         "dropdownLabel": "ライン開始"

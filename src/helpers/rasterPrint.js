@@ -7,7 +7,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { adjustListBoxForPrint } from './printHTMLToCanvasHelper';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import { getGrayscaleDarknessFactor } from './printGrayscaleDarknessFactor';
+import { getGrayscaleDarknessFactor } from './grayScaleHelper';
 import { getCurrentViewRect, doesCurrentViewContainEntirePage } from './printCurrentViewHelper';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { hideRequiredWidgetStyling, showRequiredWidgetStyling } from './widgetPrintHelpers';

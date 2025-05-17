@@ -87,7 +87,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
       ref={popupRef}
       style={{ ...position }}
       onClick={onClose}
-      role="listbox"
       aria-label={t('component.textPopup')}
     >
       <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
@@ -103,7 +102,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               title={!isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
               img="ic_copy_black_24px"
               onClick={() => copyText(activeDocumentViewerKey)}
-              role="option"
             />
             <ActionButton
               className="main-menu-button"
@@ -112,7 +110,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
               img="icon-tool-highlight"
               onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation, activeDocumentViewerKey)}
-              role="option"
             />
             <ActionButton
               className="main-menu-button"
@@ -121,7 +118,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
               img="icon-tool-text-manipulation-underline"
               onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation, activeDocumentViewerKey)}
-              role="option"
             />
             <ActionButton
               className="main-menu-button"
@@ -130,7 +126,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
               img="icon-tool-text-manipulation-squiggly"
               onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation, activeDocumentViewerKey)}
-              role="option"
             />
             <ActionButton
               className="main-menu-button"
@@ -139,7 +134,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               img="icon-tool-text-manipulation-strikethrough"
               onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
               dataElement="textStrikeoutToolButton"
-              role="option"
             />
             <ActionButton
               className="main-menu-button"
@@ -148,7 +142,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               img="icon-tool-link"
               onClick={() => dispatch(actions.openElement(DataElements.LINK_MODAL))}
               dataElement="linkButton"
-              role="option"
             />
             {core.isCreateRedactionEnabled() && (
               <ActionButton
@@ -159,7 +152,6 @@ const TextPopup = ({ t, selectedTextQuads }) => {
                 fillColor="868E96"
                 img="icon-tool-select-area-redaction"
                 onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation, activeDocumentViewerKey)}
-                role="option"
               />
             )}
           </CustomizablePopup>

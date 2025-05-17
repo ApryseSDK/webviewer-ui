@@ -212,6 +212,8 @@ import signSignatureWidget from './signSignatureWidget';
 import addModularHeaders from './addModularHeaders';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
+import getGroupedItems from './getGroupedItems';
+import getRibbonGroup from './getRibbonGroup';
 import exportModularComponents from './exportModularComponents';
 import setGroupedItemsGap from './setGroupedItemsGap';
 import setGroupedItemsJustifyContent from './setGroupedItemsJustifyContent';
@@ -219,6 +221,8 @@ import setGroupedItemsGrow from './setGroupedItemsGrow';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
 import Item from './ModularComponents/item';
+import Divider from './ModularComponents/divider';
+import Label from './ModularComponents/label';
 import GroupedItems from './ModularComponents/groupedItems';
 import ModularHeader from './ModularComponents/modularHeader';
 import CustomButton from './ModularComponents/customButton';
@@ -273,7 +277,6 @@ import closeTooltip from './closeToolTip';
 import startTextComparison from './startTextComparison';
 import stopTextComparison from './stopTextComparison';
 import setActiveTabInPanel from './setActiveTabInPanel';
-import Label from './ModularComponents/label';
 import CustomElement from 'src/apis/ModularComponents/customElement';
 
 export default (store) => {
@@ -446,6 +449,8 @@ export default (store) => {
     setModularHeaders: setModularHeaders(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
+    getGroupedItems: getGroupedItems(store),
+    getRibbonGroup: getRibbonGroup(store),
     exportModularComponents: exportModularComponents(store),
     Flyouts: FlyoutsAPI(store),
     setGroupedItemsGap: setGroupedItemsGap(store),
@@ -475,6 +480,7 @@ export default (store) => {
       MainMenu: MainMenu(store),
       TabPanel,
       Label: Label(store),
+      Divider: Divider(store),
       CustomElement: CustomElement(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),

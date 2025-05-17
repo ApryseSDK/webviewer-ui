@@ -8,6 +8,7 @@ const noop = () => {
 export const getZoomFlyoutItems = ({
   zoomOptionsList,
   isSpreadsheetEditorMode = false,
+  isOfficeEditorMode = false,
   dispatch,
   size = 0,
   onZoomChanged = noop
@@ -89,7 +90,7 @@ export const getZoomFlyoutItems = ({
 
     zoomItems = zoomItems.concat(transformedZoomOptionsList);
 
-    if (!isSpreadsheetEditorMode) {
+    if (!isSpreadsheetEditorMode && !isOfficeEditorMode) {
       zoomItems.push(divider);
       zoomItems.push(marqueeButton);
     }
@@ -100,9 +101,13 @@ export const getZoomFlyoutItems = ({
       type: FLYOUT_ITEM_TYPES.ZOOM_OPTIONS_BUTTON,
     };
 
-    zoomItems = isSpreadsheetEditorMode
-      ? [zoomOptionsItem, zoomInButton, zoomOutButton]
-      : [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton, marqueeButton];
+    zoomItems = [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton, marqueeButton];
+    if (isSpreadsheetEditorMode) {
+      zoomItems = [zoomOptionsItem, zoomInButton, zoomOutButton];
+    }
+    if (isOfficeEditorMode) {
+      zoomItems = [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton];
+    }
   }
   return zoomItems;
 };

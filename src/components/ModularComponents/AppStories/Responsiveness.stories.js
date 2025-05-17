@@ -35,7 +35,8 @@ const ExtraItemsAddedHeaders = {
       'searchPanelToggle',
       'notesPanelToggle',
       'stylePanelToggle',
-      'filePickerButton',
+      'redactionToolButton',
+      'filePickerButton', // this button shouldn't render because it start as disabled
       'downloadButton',
       'settingsButton',
       'annotateGroupedItems2',

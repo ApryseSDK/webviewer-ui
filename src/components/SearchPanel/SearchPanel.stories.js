@@ -7,6 +7,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import { default as mockAppInitialState } from 'src/redux/initialState';
+import { within, expect } from '@storybook/test';
 
 export default {
   title: 'ModularComponents/SearchPanel',
@@ -23,6 +24,7 @@ const initialState = {
     tab: {},
     panelWidths: { panel: 300 },
     modularHeaders: {},
+    pageLabels: [1,2,3],
   },
   search: {},
   featureFlags: {
@@ -49,8 +51,14 @@ export function SearchPanelLeft() {
 }
 
 export function SearchPanelRight() {
+  const stateWithSearchValue = {
+    ...initialState,
+    search: {
+      value: 'Test search',
+    },
+  };
   return (
-    <Provider store={configureStore({ reducer: () => initialState })}>
+    <Provider store={configureStore({ reducer: () => stateWithSearchValue })}>
       <Panel location={'right'} dataElement={'panel'}>
         <SearchPanelContainer />
       </Panel>
@@ -58,6 +66,13 @@ export function SearchPanelRight() {
   );
 }
 
+SearchPanelRight.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const searchInput = await canvas.findByRole('textbox', { name: 'Search document' });
+  expect(searchInput).toBeInTheDocument();
+  const clearSearchButton = await canvas.findByRole('button', { name: 'Clear search results' });
+  expect(clearSearchButton).toBeInTheDocument();
+};
 const SearchPanelInApp = (context, location, panelSize) => {
   const mockState = {
     ...mockAppInitialState,

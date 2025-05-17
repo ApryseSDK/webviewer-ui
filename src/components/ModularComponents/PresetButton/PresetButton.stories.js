@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import PresetButton from './PresetButton';
-import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
+import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_BUTTONS } from 'src/constants/customizationVariables';
 import { expect, within } from '@storybook/test';
 import core from 'core';
 
@@ -250,3 +250,13 @@ export function ToggleAccessibilityModeButtonWithStyleAndClass() {
 ToggleAccessibilityModeButtonWithStyleAndClass.play = async ({ canvasElement }) => {
   iteractiveTest(canvasElement, /Accessibility Mode/i, 'accessibility-mode-class');
 };
+
+export function CellAdjustmentButtons() {
+  return (
+    <Provider store={store}>
+      {Object.values(CELL_ADJUSTMENT_BUTTONS).map((buttonType) =>
+        <PresetButton buttonType={buttonType}
+          key={buttonType} />)}
+    </Provider>
+  );
+}

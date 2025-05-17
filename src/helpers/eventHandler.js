@@ -72,6 +72,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onSpreadsheetEditorEditModeChanged = eventListeners.onSpreadsheetEditorEditModeChanged(dispatch);
   const openSpreadsheetEditorLoadingModal = eventListeners.openSpreadsheetEditorLoadingModal(dispatch);
   const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch, store);
+  const onWidgetHighlightingChanged = eventListeners.onWidgetHighlightingChanged(dispatch, store);
+  const onSelectedRangeStyleChanged = eventListeners.onSelectedRangeStyleChanged(dispatch);
 
   return {
     addEventHandlers: () => {
@@ -98,6 +100,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('accessibleReadingOrderModeEnded', onAccessibleReadingOrderModeEnded);
         core.addEventListener('accessibleReadingOrderModeNoStructure', onAccessibleReadingOrderModeNoStructure);
         core.addEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
+        core.addEventListener('selectedRangeStyleChanged', onSelectedRangeStyleChanged);
         core.addEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged);
         core.addEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal);
         core.addEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal);
@@ -147,6 +150,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.addEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
       core.addEventListener('userBookmarksChanged', onUserBookmarksChanged);
+      core.addEventListener('widgetHighlightingChanged', onWidgetHighlightingChanged, undefined, documentViewerKey);
       core.getTool('AnnotationCreateStamp', documentViewerKey).addEventListener('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSignature', documentViewerKey).addEventListener('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature', documentViewerKey).addEventListener('annotationAdded', onSignatureAnnotationAdded);
@@ -203,6 +207,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText3', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).removeEventListener('annotationAdded', onCaretAnnotationAdded);
         core.removeEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged);
+        core.removeEventListener('selectedRangeStyleChanged', onSelectedRangeStyleChanged);
         core.removeEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged);
         core.removeEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal);
         core.removeEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal);
@@ -222,6 +227,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.removeEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable, documentViewerKey);
       core.removeEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable, documentViewerKey);
       core.removeEventListener('userBookmarksChanged', onUserBookmarksChanged, documentViewerKey);
+      core.removeEventListener('widgetHighlightingChanged', onWidgetHighlightingChanged, documentViewerKey);
       core.getTool('AnnotationCreateStamp', documentViewerKey).removeEventListener('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSignature', documentViewerKey).removeEventListener('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature', documentViewerKey).removeEventListener('annotationAdded', onSignatureAnnotationAdded);

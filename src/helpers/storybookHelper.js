@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 import { DEFAULT_POINT_SIZE, EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 const noop = () => { };
 
@@ -24,7 +25,19 @@ export const createStore = (preloadedState) => {
 // isOffset adds a div beside WebViewer, so that it behaves as if it was
 // in Showcase or our samples.
 export const MockApp = ({ initialState, width, height, isOffset }) => {
-  const store = createStore(initialState);
+  const [store] = useState(createStore(initialState));
+
+  // We get around the code that sets the UI configuration by querying the hash
+  // parameter by delaying this action
+  // Patch UI config *after* mount, because useEffect in App uses hash params to overwrite redux
+  useEffect(() => {
+    if (initialState?.viewer?.uiConfiguration) {
+      store.dispatch({
+        type: 'SET_UI_CONFIGURATION',
+        payload: initialState.viewer.uiConfiguration,
+      });
+    }
+  }, [store, initialState]);
 
   setItemToFlyoutStore(store);
   defineWebViewerInstanceUIAPIs(store);
@@ -44,7 +57,7 @@ export const MockApp = ({ initialState, width, height, isOffset }) => {
     divStyle.display = 'flex';
   }
 
-  return (
+  return !store ? null : (
     <Provider store={store}>
       <div style={divStyle}>
         {isOffset && <div
@@ -73,6 +86,7 @@ const BasicAppTemplate = (args, context) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
+      uiConfiguration: args.uiConfiguration,
       modularHeaders: args.headers,
       modularComponents: args.components,
       flyoutMap: args.flyoutMap,
@@ -95,6 +109,7 @@ const BasicAppTemplate = (args, context) => {
       customizableUI: true,
     },
     spreadsheetEditor: {
+      ...initialState.spreadsheetEditor,
       ...args.spreadsheetEditorRedux,
     }
   };
@@ -109,10 +124,11 @@ export const createTemplate = ({
   width = '100%',
   height = '100%',
   spreadsheetEditorRedux = {},
-  viewerRedux = {}
+  viewerRedux = {},
+  uiConfiguration = VIEWER_CONFIGURATIONS.DEFAULT,
 }) => {
   const template = BasicAppTemplate.bind({});
-  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux };
+  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux, uiConfiguration };
   template.parameters = { layout: 'fullscreen' };
   return template;
 };
@@ -179,6 +195,7 @@ export const OEModularUIMockState = {
     stream: EditingStreamType.BODY,
   },
   viewer: {
+    uiConfiguration: VIEWER_CONFIGURATIONS.DOCX_EDITOR,
     isOfficeEditorMode: true,
     disabledElements: {},
     customElementOverrides: {},
@@ -189,6 +206,26 @@ export const OEModularUIMockState = {
   },
   spreadsheetEditor: {
     editMode: 'editing',
+    cellProperties: {
+      cellType: null,
+      cellFormula: null,
+      stringCellValue: null,
+      topLeftRow: null,
+      topLeftColumn: null,
+      bottomRightRow: null,
+      bottomRightColumn: null,
+      styles: {
+        verticalAlignment: null,
+        horizontalAlignment: null,
+        font: {
+          bold: false,
+          italic: false,
+          underline: false,
+          strikeout: false,
+        },
+        formatType: null,
+      }
+    },
   },
 };
 
@@ -202,3 +239,5 @@ export const oePartialState = {
     stream: EditingStreamType.BODY,
   },
 };
+
+export const string280Chars = 'very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_';

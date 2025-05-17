@@ -1,30 +1,35 @@
 import React from 'react';
 import selectors from 'selectors';
+import core from 'core';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import './ZoomText.scss';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { itemToFlyout, getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS, EditingStreamType } from 'constants/officeEditor';
-import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS } from 'helpers/officeEditor';
+import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS, MARGIN_OPTIONS } from 'helpers/officeEditor';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
 import ZoomText from 'components/ModularComponents/Flyout/flyoutHelpers/ZoomText';
 import PageControlsInput from 'components/ModularComponents/PageControls/PageControlsInput';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import ToolButton from 'components/ModularComponents/ToolButton';
-import PropTypes from 'prop-types';
-import core from 'core';
-import FlyoutItemContainer from '../../FlyoutItemContainer';
-import FontSizeDropdown from 'components/ModularComponents/OfficeEditor/FontSizeDropdown';
-import FontFaceDropdown from 'components/ModularComponents/OfficeEditor/FontFaceDropdown';
+import FlyoutItemContainer from 'components/ModularComponents/FlyoutItemContainer';
 import StylePresetDropdown from 'components/ModularComponents/OfficeEditor/StylePresetDropdown';
 import OfficeEditorModeDropdown from 'components/ModularComponents/OfficeEditor/OfficeEditorModeDropdown';
-import SpreadsheetEditorEditModeDropdown from 'components/ModularComponents/SpreadsheetEditorEditModeDropdown';
+import CellBorderStyleDropdown from 'components/ModularComponents/CellBorderStyleDropdown';
 import Label from 'components/ModularComponents/Label';
 import CustomElement from 'components/CustomElement';
 import StatefulButton from 'components/ModularComponents/StatefulButton';
+import CellTextColor from '../../SpreadsheetEditor/CellTextColor';
+import CellBorderColor from '../../SpreadsheetEditor/CellBorderColor';
+import CellBackgroundColor from '../../SpreadsheetEditor/CellBackgroundColor';
+import CellBorders from '../../CellBorders';
+import FontSizeDropdownContainer from 'components/ModularComponents/EditorSwitchers/FontSizeDropdown';
+import FontFamilyDropdownContainer from 'components/ModularComponents/EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
+import SpreadsheetEditorEditModeDropdown from '../../SpreadsheetEditor/SpreadsheetEditorEditModeDropdown';
 
 const propTypes = {
   flyoutItem: PropTypes.oneOfType([
@@ -142,6 +147,9 @@ const StaticItem = React.forwardRef((props, ref) => {
         />
       );
     }
+    case ITEM_TYPE.CELL_BORDERS: {
+      return <CellBorders {...allProps} isFlyoutItem={true} />;
+    }
     case ITEM_TYPE.ORDERED_LIST: {
       const isActive = LIST_OPTIONS.Ordered === activeListType;
       flyoutItem.icon = 'icon-office-editor-number-list';
@@ -188,11 +196,11 @@ const StaticItem = React.forwardRef((props, ref) => {
       );
     }
     case FLYOUT_ITEM_TYPES.FONT_SIZE_DROPDOWN: {
-      const dropdownElement = <FontSizeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`font-size-dropdown-${index}`} isFlyoutItem={true} />;
+      const dropdownElement = <FontSizeDropdownContainer {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`font-size-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
-    case FLYOUT_ITEM_TYPES.FONT_FACE_DROPDOWN: {
-      const dropdownElement = <FontFaceDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`font-face-dropdown-${index}`} isFlyoutItem={true} />;
+    case FLYOUT_ITEM_TYPES.FONT_FAMILY_DROPDOWN: {
+      const dropdownElement = <FontFamilyDropdownContainer {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`font-face-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case FLYOUT_ITEM_TYPES.STYLE_PRESET_DROPDOWN: {
@@ -203,13 +211,26 @@ const StaticItem = React.forwardRef((props, ref) => {
       const dropdownElement = <OfficeEditorModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`office-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
-    case FLYOUT_ITEM_TYPES.SHEET_EDITOR_MODE_DROPDOWN: {
+    case FLYOUT_ITEM_TYPES.SPREADSHEET_EDITOR_MODE_DROPDOWN: {
       const dropdownElement = <SpreadsheetEditorEditModeDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`sheet-editor-mode-dropdown-${index}`} isFlyoutItem={true} />;
       return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
+    }
+    case FLYOUT_ITEM_TYPES.CELL_TEXT_COLOR: {
+      return <CellTextColor {...allProps} isFlyoutItem={true} ref={ref} />;
+    }
+    case FLYOUT_ITEM_TYPES.CELL_BORDER_COLOR: {
+      return <CellBorderColor {...allProps} isFlyoutItem={true} ref={ref} />;
+    }
+    case FLYOUT_ITEM_TYPES.CELL_BACKGROUND_COLOR: {
+      return <CellBackgroundColor {...allProps} isFlyoutItem={true} ref={ref} />;
     }
     case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_FILE_NAME: {
       // Hiding this component from the flyout until we implement mobile functionality
       return null;
+    }
+    case ITEM_TYPE.CELL_BORDER_STYLE_DROPDOWN: {
+      const dropdownElement = <CellBorderStyleDropdown {...allProps} onKeyDown={onKeyDownHandler} ref={ref} key={`cell-border-style-dropdown-${index}`} isFlyoutItem={true} />;
+      return wrapElementInListItem(dropdownElement, 'flyout-item-dropdown-container');
     }
     case ITEM_TYPE.LINE_SPACING_BUTTON: {
       flyoutItem.icon = 'icon-office-editor-line-spacing';
@@ -247,6 +268,19 @@ const StaticItem = React.forwardRef((props, ref) => {
           dataElement={flyoutItem.dataElement}
           icon={icon}
           disabled={isCursorInTable || activeStream !== EditingStreamType.BODY}
+        />
+      );
+    }
+    case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_MARGIN_DROPDOWN: {
+      flyoutItem.children = MARGIN_OPTIONS;
+      return (
+        <FlyoutItemContainer
+          {...allProps}
+          ref={ref}
+          index={index}
+          dataElement={flyoutItem.dataElement}
+          icon={icon}
+          isChild={isChild}
         />
       );
     }

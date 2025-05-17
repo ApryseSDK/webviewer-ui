@@ -1,6 +1,31 @@
 import core from 'core';
+import { useSelector, useDispatch } from 'react-redux';
+import DataElements from 'constants/dataElement';
+import selectors from 'selectors';
+import actions from 'actions';
 
-const Tools = window.Core.Tools;
+const { Tools, Annotations } = window.Core;
+const { ToolNames } = Tools;
+
+export const shouldHideSharedStyleOptions = (toolName) => {
+  const toolsWithNoSharedStyles = [
+    Tools.RedactionCreateTool,
+  ];
+
+  return toolsWithNoSharedStyles.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
+export const shouldHideStrokeDropdowns = (toolName) => {
+  const toolsWithNoStrokeDropdowns = [
+    Tools.CountMeasurementCreateTool,
+    Tools.FreeHandCreateTool,
+    Tools.FreeHandHighlightCreateTool,
+    Tools.ArcCreateTool,
+    Tools.ArcMeasurementCreateTool,
+  ];
+
+  return toolsWithNoStrokeDropdowns.some((tool) => core.getTool(toolName) instanceof tool);
+};
 
 export const shouldHideStylePanelOptions = (toolName) => {
   const toolsNoStylePanelOptions = [
@@ -68,6 +93,14 @@ export const shouldHideStrokeStyle = (toolName) => {
     Tools.EraserTool,
   ];
   return toolsWithHiddenStrokeStyle.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
+export const shouldHideCloudyLineStyle = (toolName) => {
+  const toolsWithHiddenCloudyLineStyle = [
+    Tools.EllipseCreateTool,
+    Tools.LineCreateTool,
+  ];
+  return toolsWithHiddenCloudyLineStyle.some((tool) => core.getTool(toolName) instanceof tool);
 };
 
 export const shouldShowTextStyle = (toolName) => {
@@ -147,7 +180,6 @@ export const stylePanelSectionTitles = (toolName, section) => {
 };
 
 export const shouldRenderWidgetLayout = (toolName) => {
-  const { ToolNames } = window.Core.Tools;
   const toolsWithHiddenTextStylePicker = [
     ToolNames.TEXT_FORM_FIELD,
     ToolNames.LIST_BOX_FIELD,
@@ -162,4 +194,79 @@ export const isInstanceOfAny = (annotation, types) => {
 
 export const shouldShowNoStyles = (annotations, filteredTypes) => {
   return annotations.length === 1 && isInstanceOfAny(annotations[0], filteredTypes);
+};
+
+export const getAnnotationTypes = (selectedAnnotations) => {
+  return selectedAnnotations.length >= 1
+    ? Array.from(new Set(selectedAnnotations.map((annotation) => annotation.ToolName)))
+    : null;
+};
+
+export const parseToolType = (selectedAnnotations, currentTool) => {
+  const annotationTypes = getAnnotationTypes(selectedAnnotations);
+  const toolName = annotationTypes?.length > 0 ? annotationTypes[0] : currentTool.name;
+
+  const isRedaction =
+    annotationTypes?.length === 1 && annotationTypes[0] === ToolNames.REDACTION ||
+    toolName === ToolNames.REDACTION;
+  const isStamp = annotationTypes?.includes(ToolNames.STAMP) || toolName === ToolNames.STAMP;
+  const isWidget = selectedAnnotations.some((annotation) => annotation instanceof Annotations.WidgetAnnotation) || shouldRenderWidgetLayout(currentTool.name);
+  const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
+  const isFreeText = toolName === ToolNames.FREE_TEXT;
+
+  return {
+    toolName,
+    isRedaction,
+    isStamp,
+    isWidget,
+    isInFormFieldCreationMode,
+    isFreeText,
+    activeTool: toolName,
+    annotationTypes,
+  };
+};
+
+export const useStylePanelSections = () => {
+  const dispatch = useDispatch();
+  const isSnapModeEnabled = useSelector(selectors.isSnapModeEnabled);
+  const isStyleOptionDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.STYLE_OPTION));
+  const isStrokeStyleContainerActive = useSelector((state) => selectors.isElementOpen(state, DataElements.STROKE_STYLE_CONTAINER));
+  const isFillColorContainerActive = useSelector((state) => selectors.isElementOpen(state, DataElements.FILL_COLOR_CONTAINER));
+  const isOpacityContainerActive = useSelector((state) => selectors.isElementOpen(state, DataElements.OPACITY_CONTAINER));
+  const isTextStyleContainerActive = useSelector((state) => selectors.isElementOpen(state, DataElements.RICH_TEXT_STYLE_CONTAINER));
+
+  const panelItems = {
+    [DataElements.STROKE_STYLE_CONTAINER]: isStrokeStyleContainerActive,
+    [DataElements.FILL_COLOR_CONTAINER]: isFillColorContainerActive,
+    [DataElements.OPACITY_CONTAINER]: isOpacityContainerActive,
+    [DataElements.RICH_TEXT_STYLE_CONTAINER]: isTextStyleContainerActive,
+  };
+
+  const togglePanelItem = (dataElement) => {
+    if (!panelItems[dataElement]) {
+      dispatch(actions.openElement(dataElement));
+    } else {
+      dispatch(actions.closeElement(dataElement));
+    }
+  };
+  const openTextStyleContainer = () => {
+    dispatch(actions.openElements(DataElements.RICH_TEXT_EDITOR));
+    togglePanelItem(DataElements.RICH_TEXT_STYLE_CONTAINER);
+  };
+  const openStrokeStyleContainer = () => togglePanelItem(DataElements.STROKE_STYLE_CONTAINER);
+  const openFillColorContainer = () => togglePanelItem(DataElements.FILL_COLOR_CONTAINER);
+  const openOpacityContainer = () => togglePanelItem(DataElements.OPACITY_CONTAINER);
+
+  return {
+    isSnapModeEnabled,
+    isStyleOptionDisabled,
+    isStrokeStyleContainerActive,
+    isFillColorContainerActive,
+    isOpacityContainerActive,
+    isTextStyleContainerActive,
+    openTextStyleContainer,
+    openStrokeStyleContainer,
+    openFillColorContainer,
+    openOpacityContainer,
+  };
 };

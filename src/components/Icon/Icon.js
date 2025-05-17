@@ -77,7 +77,7 @@ class Icon extends React.PureComponent {
         svgElement = svgElement.replace('fill="none"', `fill="#${fillColor}"`);
       }
       if (strokeColor) {
-        svgElement = svgElement.replace('fill="stroke"', `fill="#${strokeColor}"`);
+        svgElement = svgElement.replaceAll('fill="stroke"', `fill="#${strokeColor}"`);
       }
     }
 

@@ -8,6 +8,8 @@ import ZoomControls from './ZoomControls';
 import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
 import PropTypes from 'prop-types';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
+import { defaultZoomList } from 'constants/zoomFactors';
 
 const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className }) => {
   const flyoutElement = `${dataElement}Flyout`;
@@ -19,6 +21,26 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   const isZoomFlyoutMenuActive = useSelector((state) => selectors.isElementOpen(state, flyoutElement));
   const isSpreadsheetEditorMode = useSelector((state) => selectors.isSpreadsheetEditorModeEnabled(state));
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
+
+  const updateZoomItems = () => {
+    // we only allow max zoom of 200% for office editor
+    let zoomList = isOfficeEditorMode() ? defaultZoomList.filter((z) => z <= window.Core.Document.OfficeEditor.MaxZoomLevel) : defaultZoomList;
+
+    const zoomFlyoutMenu = {
+      dataElement: flyoutElement,
+      className: 'ZoomFlyoutMenu',
+      items: getZoomFlyoutItems({
+        zoomOptionsList: zoomList,
+        isSpreadsheetEditorMode,
+        isOfficeEditorMode: isOfficeEditorMode(),
+        dispatch,
+        size,
+        onZoomChanged: setZoomValue
+      })
+    };
+    dispatch(actions.setZoomList(zoomList));
+    dispatch(actions.updateFlyout(flyoutElement, zoomFlyoutMenu));
+  };
 
   useEffect(() => {
     sizeManager[dataElement] = {
@@ -37,10 +59,14 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   useSizeStore({ dataElement, elementRef, headerDirection });
 
   useEffect(() => {
-    const onDocumentLoaded = () => setZoomValue(Math.ceil(core.getZoom() * 100).toString());
+    const onDocumentLoaded = () => {
+      setZoomValue(Math.ceil(core.getZoom() * 100).toString());
+      updateZoomItems();
+    };
     const onDocumentUnloaded = () => setZoomValue('100');
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
+    updateZoomItems();
 
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
@@ -63,9 +89,6 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
     dispatch(actions.setFlyoutToggleElement(dataElement));
   };
 
-  const [zoomOptionsList] = useSelector((state) => [
-    selectors.getZoomList(state),
-  ]);
 
   const {
     onZoomInClicked,
@@ -77,12 +100,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   };
 
   useEffect(() => {
-    const zoomFlyoutMenu = {
-      dataElement: flyoutElement,
-      className: 'ZoomFlyoutMenu',
-      items: getZoomFlyoutItems({ zoomOptionsList, isSpreadsheetEditorMode, dispatch, size, onZoomChanged: setZoomValue })
-    };
-    dispatch(actions.updateFlyout(flyoutElement, zoomFlyoutMenu));
+    updateZoomItems();
   }, [size]);
 
   const zoomProps = {

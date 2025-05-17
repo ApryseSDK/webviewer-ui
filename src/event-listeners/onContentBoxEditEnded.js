@@ -1,3 +1,3 @@
 export default (hotkeysManager) => () => {
-  hotkeysManager.on();
+  hotkeysManager.restoreHotkeys();
 };

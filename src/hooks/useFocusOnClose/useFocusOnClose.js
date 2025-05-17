@@ -11,7 +11,9 @@ const useFocusOnClose = (onCloseClick) => {
     if (dataElement) {
       const elementToFocus = getRootNode().querySelector(`[data-element="${dataElement}"]`);
       if (elementToFocus) {
-        elementToFocus.focus();
+        requestAnimationFrame(() => {
+          elementToFocus.focus();
+        });
       }
     }
   }, [onCloseClick]);

@@ -1,3 +1,5 @@
+@import './modal';
+
 // office editor flyout dropdown
 @mixin oe-modular-flyout-dropdown {
   min-width: 200px; // expands the flyout container to display dropdown item content
@@ -65,5 +67,101 @@
     position: absolute;
     bottom: -5px;
     left: 0;
+  }
+}
+
+@mixin oe-modal {
+  @extend %modal;
+  flex-direction: column;
+
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 480px;
+
+    .modal-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      font-size: var(--font-size-default);
+      font-family: var(--font-family);
+      gap: 16px;
+
+      .title {
+        line-height: 16px;
+        font-weight: var(--font-weight-bold);
+      }
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .label {
+          color: var(--gray-12);
+          display: block;
+          text-align: left;
+          font-weight: var(--font-weight-normal);
+        }
+
+        .ui__input {
+          border-color: var(--gray-5);
+          position: relative;
+
+          &:after {
+            content:'cm';
+            font-size: 13px;
+            color: var(--gray-8);
+            position: absolute;
+            right: 16px;
+            pointer-events: none;
+          }
+
+          &.ui__input--focused {
+            box-shadow: none;
+            border-color: var(--focus-border);
+          }
+        }
+
+        input{
+          padding: 8px 40px 8px 8px;
+          height: 32px;
+          font-size: var(--font-size-default);
+
+          &[type=number] {
+            -moz-appearance:textfield;
+          }
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
+
+    .footer {
+      padding: 16px;
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid var(--gray-5);
+
+      button {
+        border: none;
+        border-radius: 4px;
+        background: var(--primary-button);
+        min-width: 59px;
+        width: auto;
+        padding: 8px 16px;
+        height: 32px;
+        color: var(--primary-button-text);
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
+      }
+    }
   }
 }

@@ -145,7 +145,8 @@
     "showMoreColors": "Mostrar más colores",
     "showLessColors": "Mostrar menos colores",
     "fromCustomColorPicker": "del Selector de color personalizado",
-    "newSpreadsheetDocument": "Nueva hoja de cálculo"
+    "newSpreadsheetDocument": "Nueva hoja de cálculo",
+    "resetDefault": "Restablecer a valores predeterminados"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -305,6 +306,8 @@
     "searching": "Buscando...",
     "searchCommentsPlaceholder": "Buscar comentarios",
     "searchDocumentPlaceholder": "Buscar documento",
+    "clearSearchResults": "Borrar resultados de búsqueda",
+    "searchResultsCleared": "Resultados de búsqueda borrados",
     "searchSettingsPlaceholder": "Configuración de búsqueda",
     "searchSuggestionsPlaceholder": "Sugerencias de búsqueda",
     "signHere": "Firma aquí",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redactar",
       "toolbarGroup-oe-Home": "Hogar",
       "toolbarGroup-oe-Insert": "Insertar",
+      "toolbarGroup-oe-Layout": "Disposición",
       "toolbarGroup-oe-Review": "Revisar"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Agregar nuevo sello"
     },
     "signatureOverlay": {
-      "addSignature": "Añadir una firma",
-      "addSignatureOrInitials": "Firma/Iniciales"
+      "addSignatureOrInitials": "Nueva firma/iniciales",
+      "addSignature": "Nueva firma"
     },
     "signatureModal": {
       "modalName": "Crear nueva firma",
@@ -728,6 +732,8 @@
       "viewing": "Visita",
       "disableFadePageNavigationComponent": "Deshabilitar el componente de navegación de página de atenuación",
       "disableFadePageNavigationComponentDesc": "Mantenga siempre el componente de navegación de página en la pantalla. El comportamiento predeterminado es atenuarlo después de cierto período de inactividad.",
+      "enabledFormFieldHighlighting": "Habilitar resaltados de campos de formulario",
+      "enabledFormFieldHighlightingDesc": "Habilitar el resaltado de campos de formulario en documentos PDF. Habilitado por defecto.",
       "disableNativeScrolling": "Deshabilitar el desplazamiento nativo",
       "disableNativeScrollingDesc": "Deshabilite el comportamiento de desplazamiento del dispositivo móvil nativo si se había habilitado previamente. Tenga en cuenta que el comportamiento de desplazamiento del dispositivo móvil nativo está desactivado de forma predeterminada.",
       "annotations": "Anotaciones",
@@ -798,6 +804,12 @@
       "editShortcut": "Editar acceso directo",
       "shortcutAlreadyExists": "El método abreviado de teclado anterior ya existe.",
       "close": "Cerrar información sobre herramientas"
+    },
+    "cellBorderStyle": {
+      "none": "Ninguno",
+      "solid": "Sólido",
+      "dashed": "Discontinua",
+      "dotted": "Punteado"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Salto de sección - Continuo",
     "sectionBreakContinuousDescription": "Insertar salto de sección y continuar en la misma página",
     "section": "Sección",
+    "margins": "Márgenes",
+    "normal": "Normal",
+    "narrow": "Angosto",
+    "moderate": "Moderado",
+    "wide": "Ancho",
+    "top": "Arriba",
+    "bottom": "Abajo",
+    "left": "Izquierda",
+    "right": "Bien",
+    "customMargins": "Márgenes personalizados",
+    "customMarginsDescription": "Definir márgenes personalizados",
     "header": {
       "0": "Encabezamiento",
       "1": "Encabezado de la primera página",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Quitar pie de página",
     "headerFooterOptionsModal": {
       "title": "Formato de encabezado y pie de página",
-      "margins": "Márgenes",
       "headerFromTop": "Encabezado desde arriba",
       "footerFromBottom": "Pie de página desde abajo",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Diferentes páginas pares e impares",
         "differentFirstEvenOddPages": "Diferentes páginas iniciales, pares e impares"
       }
+    },
+    "marginsModal": {
+      "title": "Ajuste de margen personalizado",
+      "leftMargin": "Margen izquierdo",
+      "rightMargin": "Margen derecho",
+      "topMargin": "Margen superior",
+      "bottomMargin": "Margen inferior"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Itálico",
     "underline": "Subrayar",
     "strikethrough": "Tachado",
+    "strikeout": "Ponche",
     "cellBorderStyle": "Estilo de borde",
     "merge": "Unir",
     "unmerge": "Desvincular",
     "cellFormat": "Formato de celda",
-    "automatic": "Automático",
-    "plainText": "Texto simple",
-    "increaseDecimal": "Aumentar decimal",
-    "decreaseDecimal": "Disminuir decimal",
-    "number": "Número",
-    "percent": "Por ciento",
-    "accounting": "Contabilidad",
-    "financial": "Financiero",
-    "currency": "Divisa",
-    "currencyRounded": "Moneda redondeada",
-    "calendar": "Fecha",
-    "clockHour": "Tiempo",
-    "calendarTime": "Fecha y hora",
+    "automaticFormat": "Automático",
+    "plainTextFormat": "Texto sin formato",
+    "increaseDecimalFormat": "Aumentar decimal",
+    "decreaseDecimalFormat": "Disminuir decimal",
+    "numberFormat": "Número",
+    "percentFormat": "Por ciento",
+    "accountingFormat": "Contabilidad",
+    "financialFormat": "Financiero",
+    "currencyFormat": "Divisa",
+    "currencyRoundedFormat": "Moneda redondeada",
+    "calendarFormat": "Fecha",
+    "clockHourFormat": "Tiempo",
+    "calendarTimeFormat": "Fecha y hora",
     "formatAsCurrency": "Formato como moneda",
     "formatAsPercent": "Formato como porcentaje",
     "formatAsDecDecimal": "Disminuir el punto decimal",
     "formatAsIncDecimal": "Aumentar el punto decimal",
-    "fontColor": "Color de fuente",
-    "cellBackgroundColor": "Color de fondo de la celda",
+    "textColor": "Color del texto",
+    "cellBackgroundColor": "Color de fondo",
+    "cellBorderColor": "Color del borde",
+    "textLabel": "Texto",
+    "backgroundLabel": "Fondo",
+    "borderLabel": "Borde",
     "textAlignment": "Alineación de texto",
-    "alignLeft": "Alinear a la izquierda",
-    "alignCenter": "Alinear al centro",
-    "alignRight": "Alinear a la derecha",
-    "alignTop": "Alinear la parte superior",
-    "alignMiddle": "Alinear el medio",
-    "alignBottom": "Alinear la parte inferior",
+    "topAlign": "Alineación superior",
+    "middleAlign": "Alineación media",
+    "bottomAlign": "Alineación inferior",
     "cellAdjustment": "Ajuste de celda",
-    "insertColLeft": "Insertar columna a la izquierda",
-    "columnInsertLeft": "Insertar columna a la izquierda",
-    "columnInsertRight": "Insertar columna a la derecha",
-    "rowInsertTop": "Insertar fila arriba",
-    "rowInsertBottom": "Insertar fila a continuación",
-    "columnInsertShiftDown": "Insertar celdas y desplazarse hacia abajo",
-    "columnInsertShiftRight": "Insertar celdas y desplazarlas a la derecha",
-    "columnDelete": "Eliminar columna",
-    "rowDelete": "Eliminar fila",
-    "columnDeleteShiftUp": "Eliminar celdas y desplazarse hacia arriba",
-    "columnDeleteShiftLeft": "Eliminar celdas y desplazarlas a la izquierda"
+    "cellFormatMoreOptions": "Más opciones de formato de celda",
+    "insertColumnLeft": "Insertar columna a la izquierda",
+    "insertColumnRight": "Insertar columna a la derecha",
+    "insertRowTop": "Insertar fila arriba",
+    "insertRowBottom": "Insertar fila debajo",
+    "insertColumnShiftDown": "Insertar celdas y desplazarse hacia abajo",
+    "insertColumnShiftRight": "Insertar celdas y desplazar a la derecha",
+    "deleteColumn": "Eliminar columna",
+    "deleteRow": "Eliminar fila",
+    "deleteColumnShiftUp": "Eliminar celdas y desplazarse hacia arriba",
+    "deleteColumnShiftLeft": "Eliminar celdas y desplazarse a la izquierda",
+    "clearBorder": "Borde claro",
+    "cellBorderAll": "Todos los bordes",
+    "cellBorderInside": "Border internos",
+    "cellBorderOutside": "Bordes externos",
+    "cellBorderTop": "Borde superior",
+    "cellBorderBottom": "Borde inferior",
+    "cellBorderLeft": "Borde izquierdo",
+    "cellBorderRight": "Borde derecho",
+    "cellBorderVertical": "Borde vertical",
+    "cellBorderHorizontal": "Borde horizontal",
+    "cellBorderNone": "Sin bordes",
+    "borders": "Bordes",
+    "fontSize": {
+      "dropdownLabel": "Tamaño de fuente"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Familia de fuentes"
+    },
+    "blankSheet": "Hoja en blanco"
   },
   "insertPageModal": {
     "title": "Insertar nueva página",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Agregar a colores personalizados",
     "noToolSelected": "Seleccione una herramienta para ver sus propiedades",
     "noToolStyle": "La herramienta no contiene ninguna propiedad de estilo.",
+    "noSharedToolStyle": "Las anotaciones seleccionadas no comparten ninguna propiedad de estilo.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Inicio de línea"

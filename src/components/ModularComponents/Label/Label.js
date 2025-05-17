@@ -16,6 +16,7 @@ const Label = (props) => {
     style = {},
     isFlyoutItem = false,
     className,
+    id,
   } = props;
 
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const Label = (props) => {
       <div className={classNames('Label', {
         'flyout-label': isFlyoutItem,
         [className]: true,
-      })} style={style} data-element={dataElement}>
+      })} style={style} data-element={dataElement} id={id}>
         {t(label)}
       </div>
     </Tooltip>
@@ -45,6 +46,7 @@ Label.propTypes = {
   style: PropTypes.object,
   isFlyoutItem: PropTypes.bool,
   className: PropTypes.string,
+  id: PropTypes.string
 };
 
 export default Label;

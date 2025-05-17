@@ -65,7 +65,7 @@ describe('RedactionItem', () => {
       setMockRefElement({ clientWidth: 150 });
       const mockRedactionAnnotation = getMockRedactionAnnotation();
       mockRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
-      mockRedactionAnnotation.icon = 'icon-form-field-text';
+      mockRedactionAnnotation.icon = 'icon-text-redaction';
       const textRedactionItemProps = {
         iconColor: initialColors[0],
         annotation: mockRedactionAnnotation,

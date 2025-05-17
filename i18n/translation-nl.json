@@ -145,7 +145,8 @@
     "showMoreColors": "Meer kleuren weergeven",
     "showLessColors": "Minder kleuren weergeven",
     "fromCustomColorPicker": "van Aangepaste kleurenkiezer",
-    "newSpreadsheetDocument": "Nieuw spreadsheet"
+    "newSpreadsheetDocument": "Nieuw spreadsheet",
+    "resetDefault": "Resetten naar standaardinstellingen"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -305,6 +306,8 @@
     "searching": "Zoeken...",
     "searchCommentsPlaceholder": "Zoek opmerkingen",
     "searchDocumentPlaceholder": "Document zoeken",
+    "clearSearchResults": "Zoekresultaten wissen",
+    "searchResultsCleared": "Zoekresultaten gewist",
     "searchSettingsPlaceholder": "Zoekinstellingen",
     "searchSuggestionsPlaceholder": "Zoeksuggesties",
     "signHere": "Teken hier",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redigeren",
       "toolbarGroup-oe-Home": "Thuis",
       "toolbarGroup-oe-Insert": "Invoegen",
+      "toolbarGroup-oe-Layout": "Indeling",
       "toolbarGroup-oe-Review": "Beoordeling"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Nieuwe stempel toevoegen"
     },
     "signatureOverlay": {
-      "addSignature": "Voeg een handtekening toe",
-      "addSignatureOrInitials": "Handtekening/initialen"
+      "addSignatureOrInitials": "Nieuwe handtekening/initialen",
+      "addSignature": "Nieuwe handtekening"
     },
     "signatureModal": {
       "modalName": "Nieuwe handtekening maken",
@@ -728,6 +732,8 @@
       "viewing": "Bekijken",
       "disableFadePageNavigationComponent": "Fade Pagina-navigatiecomponent uitschakelen",
       "disableFadePageNavigationComponentDesc": "Houd de paginanavigatiecomponent altijd op het scherm. Het standaardgedrag is om het te vervagen na een bepaalde periode van inactiviteit.",
+      "enabledFormFieldHighlighting": "Formulierveldmarkeringen inschakelen",
+      "enabledFormFieldHighlightingDesc": "Markeer formuliervelden in PDF-documenten. Standaard ingeschakeld.",
       "disableNativeScrolling": "Native scrollen uitschakelen",
       "disableNativeScrollingDesc": "Schakel het systeemeigen scrollgedrag van mobiele apparaten uit als dit eerder was ingeschakeld. Houd er rekening mee dat het oorspronkelijke scrollgedrag van mobiele apparaten standaard is uitgeschakeld.",
       "annotations": "annotaties",
@@ -798,6 +804,12 @@
       "editShortcut": "Snelkoppeling bewerken",
       "shortcutAlreadyExists": "De sneltoets hierboven bestaat al.",
       "close": "Knopinfo sluiten"
+    },
+    "cellBorderStyle": {
+      "none": "Geen",
+      "solid": "Stevig",
+      "dashed": "Gestreept",
+      "dotted": "Gestippeld"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Sectie-einde - Doorlopend",
     "sectionBreakContinuousDescription": "Sectie-einde invoegen en doorgaan op dezelfde pagina",
     "section": "Sectie",
+    "margins": "Marges",
+    "normal": "Normaal",
+    "narrow": "Smal",
+    "moderate": "Gematigd",
+    "wide": "Breed",
+    "top": "Bovenkant",
+    "bottom": "Onderkant",
+    "left": "Links",
+    "right": "Rechts",
+    "customMargins": "Aangepaste marges",
+    "customMarginsDescription": "Aangepaste marges definiëren",
     "header": {
       "0": "Koptekst",
       "1": "Koptekst eerste pagina",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Voettekst verwijderen",
     "headerFooterOptionsModal": {
       "title": "Kop- en voettekstformaat",
-      "margins": "Marges",
       "headerFromTop": "Koptekst van boven",
       "footerFromBottom": "Voettekst van onderen",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Verschillende even en oneven pagina's",
         "differentFirstEvenOddPages": "Verschillende eerste, even en oneven pagina's"
       }
+    },
+    "marginsModal": {
+      "title": "Aangepaste marge-aanpassing",
+      "leftMargin": "Linkermarge",
+      "rightMargin": "Rechtermarge",
+      "topMargin": "Bovenmarge",
+      "bottomMargin": "Ondermarge"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Cursief",
     "underline": "Onderstrepen",
     "strikethrough": "Doorhalen",
+    "strikeout": "Strike-out",
     "cellBorderStyle": "Randstijl",
     "merge": "Samenvoegen",
     "unmerge": "Samenvoegen",
     "cellFormat": "Celopmaak",
-    "automatic": "Automatisch",
-    "plainText": "Gewone tekst",
-    "increaseDecimal": "Decimaal vergroten",
-    "decreaseDecimal": "Decimaal verkleinen",
-    "number": "Nummer",
-    "percent": "Procent",
-    "accounting": "Boekhouding",
-    "financial": "Financieel",
-    "currency": "Munteenheid",
-    "currencyRounded": "Valuta afgerond",
-    "calendar": "Datum",
-    "clockHour": "Tijd",
-    "calendarTime": "Datum Tijd",
+    "automaticFormat": "Automatisch",
+    "plainTextFormat": "Gewone tekst",
+    "increaseDecimalFormat": "Decimaal vergroten",
+    "decreaseDecimalFormat": "Decimaal verkleinen",
+    "numberFormat": "Nummer",
+    "percentFormat": "Procent",
+    "accountingFormat": "Boekhouding",
+    "financialFormat": "Financieel",
+    "currencyFormat": "Munteenheid",
+    "currencyRoundedFormat": "Valuta afgerond",
+    "calendarFormat": "Datum",
+    "clockHourFormat": "Tijd",
+    "calendarTimeFormat": "Datum Tijd",
     "formatAsCurrency": "Formaat als valuta",
     "formatAsPercent": "Formaat als percentage",
     "formatAsDecDecimal": "Decimaal punt verkleinen",
     "formatAsIncDecimal": "Decimaal punt vergroten",
-    "fontColor": "Letterkleur",
-    "cellBackgroundColor": "Achtergrondkleur van de cel",
+    "textColor": "Tekstkleur",
+    "cellBackgroundColor": "Achtergrondkleur",
+    "cellBorderColor": "Randkleur",
+    "textLabel": "Tekst",
+    "backgroundLabel": "Achtergrond",
+    "borderLabel": "Grens",
     "textAlignment": "Tekstuitlijning",
-    "alignLeft": "Links uitlijnen",
-    "alignCenter": "Centreren",
-    "alignRight": "Rechts uitlijnen",
-    "alignTop": "Bovenkant uitlijnen",
-    "alignMiddle": "Midden uitlijnen",
-    "alignBottom": "Onderkant uitlijnen",
+    "topAlign": "Boven uitlijnen",
+    "middleAlign": "Midden uitlijnen",
+    "bottomAlign": "Onderaan uitlijnen",
     "cellAdjustment": "Celaanpassing",
-    "insertColLeft": "Kolom links invoegen",
-    "columnInsertLeft": "Kolom links invoegen",
-    "columnInsertRight": "Kolom rechts invoegen",
-    "rowInsertTop": "Rij boven invoegen",
-    "rowInsertBottom": "Rij hieronder invoegen",
-    "columnInsertShiftDown": "Cellen invoegen en omlaag schuiven",
-    "columnInsertShiftRight": "Cellen invoegen en naar rechts verschuiven",
-    "columnDelete": "Kolom verwijderen",
-    "rowDelete": "Rij verwijderen",
-    "columnDeleteShiftUp": "Cellen verwijderen en omhoog schuiven",
-    "columnDeleteShiftLeft": "Cellen verwijderen en naar links verschuiven"
+    "cellFormatMoreOptions": "Meer opties voor celopmaak",
+    "insertColumnLeft": "Kolom links invoegen",
+    "insertColumnRight": "Kolom rechts invoegen",
+    "insertRowTop": "Rij hierboven invoegen",
+    "insertRowBottom": "Rij hieronder invoegen",
+    "insertColumnShiftDown": "Cellen invoegen en naar beneden schuiven",
+    "insertColumnShiftRight": "Cellen invoegen en naar rechts verschuiven",
+    "deleteColumn": "Kolom verwijderen",
+    "deleteRow": "Rij verwijderen",
+    "deleteColumnShiftUp": "Cellen verwijderen en omhoog schuiven",
+    "deleteColumnShiftLeft": "Cellen verwijderen en naar links verschuiven",
+    "clearBorder": "Duidelijke grens",
+    "cellBorderAll": "Alle grenzen",
+    "cellBorderInside": "Binnengrenzen",
+    "cellBorderOutside": "Buitengrenzen",
+    "cellBorderTop": "Bovenste rand",
+    "cellBorderBottom": "Onderste rand",
+    "cellBorderLeft": "Linker rand",
+    "cellBorderRight": "Rechter rand",
+    "cellBorderVertical": "Verticale rand",
+    "cellBorderHorizontal": "Horizontale rand",
+    "cellBorderNone": "Geen grenzen",
+    "borders": "Grenzen",
+    "fontSize": {
+      "dropdownLabel": "Lettergrootte"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Lettertypefamilie"
+    },
+    "blankSheet": "Leeg vel"
   },
   "insertPageModal": {
     "title": "Nieuwe pagina invoegen",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Voeg toe aan aangepaste kleuren",
     "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken",
     "noToolStyle": "Tool bevat geen stijleigenschappen.",
+    "noSharedToolStyle": "Geselecteerde annotaties hebben geen gemeenschappelijke stijlkenmerken.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Lijn start"

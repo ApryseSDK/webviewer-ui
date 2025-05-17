@@ -140,9 +140,9 @@ export const itemToFlyout = (item, {
       flyoutItem.className = 'FontSizeDropdown';
       break;
     }
-    case ITEM_TYPE.FONT_FACE_DROPDOWN:{
+    case ITEM_TYPE.FONT_FAMILY_DROPDOWN:{
       flyoutItem.type = type;
-      flyoutItem.className = 'FontFaceDropdown';
+      flyoutItem.className = 'FontFamilyDropdown';
       break;
     }
     case ITEM_TYPE.STYLE_PRESET_DROPDOWN:{

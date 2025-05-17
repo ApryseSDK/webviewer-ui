@@ -14,7 +14,8 @@ const getFileExtension = (src, options) => {
     return src.name.split('.').pop().toLowerCase();
   }
 
-  if (src instanceof Blob && options?.filename) {
+  const isBinarySource = src instanceof Blob || src instanceof ArrayBuffer;
+  if (isBinarySource && options?.filename) {
     return options.filename.split('.').pop().toLowerCase();
   }
 

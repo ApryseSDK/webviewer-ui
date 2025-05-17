@@ -145,7 +145,8 @@
     "showMoreColors": "顯示更多顏色",
     "showLessColors": "顯示較少的顏色",
     "fromCustomColorPicker": "來自自訂顏色選擇器",
-    "newSpreadsheetDocument": "新電子表格"
+    "newSpreadsheetDocument": "新電子表格",
+    "resetDefault": "重設為預設值"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -305,6 +306,8 @@
     "searching": "正在搜尋...",
     "searchCommentsPlaceholder": "搜索評論",
     "searchDocumentPlaceholder": "搜索文件",
+    "clearSearchResults": "清除搜尋結果",
+    "searchResultsCleared": "搜尋結果已清除",
     "searchSettingsPlaceholder": "搜尋設定",
     "searchSuggestionsPlaceholder": "搜尋建議",
     "signHere": "在這裡簽名",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "纂",
       "toolbarGroup-oe-Home": "家",
       "toolbarGroup-oe-Insert": "插入",
+      "toolbarGroup-oe-Layout": "佈局",
       "toolbarGroup-oe-Review": "審查"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "添加新郵票"
     },
     "signatureOverlay": {
-      "addSignature": "新增簽名",
-      "addSignatureOrInitials": "簽名/姓名縮寫"
+      "addSignatureOrInitials": "新的簽名/首字母",
+      "addSignature": "新簽名"
     },
     "signatureModal": {
       "modalName": "創建新簽名",
@@ -728,6 +732,8 @@
       "viewing": "查看",
       "disableFadePageNavigationComponent": "禁用淡入淡出頁面導航組件",
       "disableFadePageNavigationComponentDesc": "始終保持頁面導航組件在屏幕上。默認行為是在一段時間不活動後將其淡化。",
+      "enabledFormFieldHighlighting": "啟用表單欄位突出顯示",
+      "enabledFormFieldHighlightingDesc": "啟用 PDF 文件中表單欄位的突出顯示。預設啟用。",
       "disableNativeScrolling": "禁用本機滾動",
       "disableNativeScrollingDesc": "如果之前已啟用，則禁用本機移動設備滾動行為。請注意，本機移動設備滾動行為默認情況下是關閉的。",
       "annotations": "註釋",
@@ -798,6 +804,12 @@
       "editShortcut": "編輯快捷方式",
       "shortcutAlreadyExists": "上面的鍵盤快捷鍵已經存在。",
       "close": "關閉工具提示"
+    },
+    "cellBorderStyle": {
+      "none": "沒有任何",
+      "solid": "堅硬的",
+      "dashed": "虛線",
+      "dotted": "虛線"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "分節符號 - 連續",
     "sectionBreakContinuousDescription": "插入分節符號並在同一頁上繼續 ",
     "section": "部分",
+    "margins": "邊距",
+    "normal": "普通的",
+    "narrow": "狹窄的",
+    "moderate": "緩和",
+    "wide": "寬的",
+    "top": "頂部",
+    "bottom": "底部",
+    "left": "左邊",
+    "right": "正確的",
+    "customMargins": "自訂邊距",
+    "customMarginsDescription": "訂定自訂邊距",
     "header": {
       "0": "標頭",
       "1": "首頁頁眉",
@@ -1337,7 +1360,6 @@
     "removeFooter": "刪除頁腳",
     "headerFooterOptionsModal": {
       "title": "頁首和頁尾格式",
-      "margins": "邊距",
       "headerFromTop": "標題從頂部",
       "footerFromBottom": "頁腳從底部開始",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "不同的偶數頁和奇數頁",
         "differentFirstEvenOddPages": "不同的首頁、偶數頁和奇數頁"
       }
+    },
+    "marginsModal": {
+      "title": "自訂邊距調整",
+      "leftMargin": "左邊距",
+      "rightMargin": "右邊距",
+      "topMargin": "上邊距",
+      "bottomMargin": "下邊距"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "斜體",
     "underline": "強調",
     "strikethrough": "刪除線",
+    "strikeout": "刪除線",
     "cellBorderStyle": "邊框樣式",
     "merge": "合併",
     "unmerge": "取消合併",
     "cellFormat": "單元格格式",
-    "automatic": "自動的",
-    "plainText": "純文字",
-    "increaseDecimal": "增加小數點",
-    "decreaseDecimal": "減少小數",
-    "number": "數位",
-    "percent": "百分比",
-    "accounting": "會計",
-    "financial": "金融的",
-    "currency": "貨幣",
-    "currencyRounded": "貨幣四捨五入",
-    "calendar": "日期",
-    "clockHour": "時間",
-    "calendarTime": "日期時間",
+    "automaticFormat": "自動的",
+    "plainTextFormat": "純文字",
+    "increaseDecimalFormat": "增加小數",
+    "decreaseDecimalFormat": "減少小數",
+    "numberFormat": "數位",
+    "percentFormat": "百分比",
+    "accountingFormat": "會計",
+    "financialFormat": "金融的",
+    "currencyFormat": "貨幣",
+    "currencyRoundedFormat": "貨幣四捨五入",
+    "calendarFormat": "日期",
+    "clockHourFormat": "時間",
+    "calendarTimeFormat": "日期時間",
     "formatAsCurrency": "格式為貨幣",
     "formatAsPercent": "格式為百分比",
     "formatAsDecDecimal": "減少小數點",
     "formatAsIncDecimal": "增加小數點",
-    "fontColor": "字體顏色",
-    "cellBackgroundColor": "單元格背景顏色",
+    "textColor": "文字顏色",
+    "cellBackgroundColor": "背景顏色",
+    "cellBorderColor": "邊框顏色",
+    "textLabel": "文字",
+    "backgroundLabel": "背景",
+    "borderLabel": "邊界",
     "textAlignment": "文字對齊",
-    "alignLeft": "左對齊",
-    "alignCenter": "居中對齊",
-    "alignRight": "右對齊",
-    "alignTop": "頂部對齊",
-    "alignMiddle": "中間對齊",
-    "alignBottom": "對齊底部",
+    "topAlign": "頂部對齊",
+    "middleAlign": "中間對齊",
+    "bottomAlign": "底部對齊",
     "cellAdjustment": "細胞調整",
-    "insertColLeft": "向左插入列",
-    "columnInsertLeft": "向左插入列",
-    "columnInsertRight": "向右插入列",
-    "rowInsertTop": "在上方插入行",
-    "rowInsertBottom": "在下面插入行",
-    "columnInsertShiftDown": "插入單元格並向下移動",
-    "columnInsertShiftRight": "插入單元格並右移",
-    "columnDelete": "刪除列",
-    "rowDelete": "刪除行",
-    "columnDeleteShiftUp": "刪除單元格並上移",
-    "columnDeleteShiftLeft": "刪除單元格並左移"
+    "cellFormatMoreOptions": "更多單元格格式選項",
+    "insertColumnLeft": "插入左側列",
+    "insertColumnRight": "插入右側列",
+    "insertRowTop": "在上方插入行",
+    "insertRowBottom": "在下面插入行",
+    "insertColumnShiftDown": "插入單元格並下移",
+    "insertColumnShiftRight": "插入單元格並右移",
+    "deleteColumn": "刪除列",
+    "deleteRow": "刪除行",
+    "deleteColumnShiftUp": "刪除單元格並上移",
+    "deleteColumnShiftLeft": "刪除單元格並左移",
+    "clearBorder": "清除邊框",
+    "cellBorderAll": "所有邊界",
+    "cellBorderInside": "邊界內",
+    "cellBorderOutside": "境外",
+    "cellBorderTop": "頂部邊框",
+    "cellBorderBottom": "下邊框",
+    "cellBorderLeft": "左邊框",
+    "cellBorderRight": "右邊框",
+    "cellBorderVertical": "垂直邊框",
+    "cellBorderHorizontal": "水平邊框",
+    "cellBorderNone": "無邊界",
+    "borders": "邊界",
+    "fontSize": {
+      "dropdownLabel": "字體大小"
+    },
+    "fontFamily": {
+      "dropdownLabel": "字體系列"
+    },
+    "blankSheet": "空白頁"
   },
   "insertPageModal": {
     "title": "插入新頁面",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "新增到自訂顏色",
     "noToolSelected": "選擇工具以查看工具屬性",
     "noToolStyle": "工具不包含任何樣式屬性。",
+    "noSharedToolStyle": "選定的註釋不共用任何樣式屬性。",
     "lineEnding": {
       "start": {
         "dropdownLabel": "行開始"

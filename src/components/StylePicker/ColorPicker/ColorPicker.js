@@ -1,50 +1,27 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import './ColorPicker.scss';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import actions from 'actions';
-import { useDispatch, useStore, useSelector } from 'react-redux';
-import Events from 'constants/events';
-import { getInstanceNode } from 'helpers/getRootNode';
+import { useDispatch, useSelector } from 'react-redux';
+import { parseColor, transparentIcon } from 'helpers/colorPickerHelper';
 import selectors from 'selectors';
 import Button from 'components/Button';
-import useFocusHandler from 'hooks/useFocusHandler';
 import Tooltip from 'components/Tooltip';
-
-const parseColor = (color) => {
-  if (!color) {
-    return color;
-  }
-  let parsedColor = color;
-  if (parsedColor?.toHexString) {
-    parsedColor = parsedColor.toHexString();
-  }
-  if (parsedColor?.toLowerCase) {
-    parsedColor = parsedColor.toLowerCase();
-  }
-
-  return parsedColor;
-};
+import useFocusHandler from 'hooks/useFocusHandler';
+import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
+import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
 
 const TRANSPARENT_COLOR = 'transparent';
 
-/* eslint-disable custom/no-hex-colors */
-const transparentIcon = (
-  <svg
-    width="100%"
-    height="100%"
-    className={classNames('transparent')}
-  >
-    <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-/* eslint-enable custom/no-hex-colors */
-
-
 const propTypes = {
   color: PropTypes.any,
-  ariaTypeLabel: PropTypes.string
+  ariaTypeLabel: PropTypes.string,
+  activeTool: PropTypes.string,
+  type: PropTypes.string,
+  onColorChange: PropTypes.func,
+  hasTransparentColor: PropTypes.bool,
 };
 
 const ColorPicker = ({
@@ -56,7 +33,6 @@ const ColorPicker = ({
   ariaTypeLabel
 }) => {
   const activeToolName = Object.values(window.Core.Tools.ToolNames).includes(activeTool) ? activeTool : window.Core.Tools.ToolNames.EDIT;
-  const store = useStore();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [colors] = useSelector((state) => [
@@ -76,49 +52,22 @@ const ColorPicker = ({
     }
   }, [color]);
 
-  const getCustomColorAndRemove = () => {
-    const customColor = selectors.getCustomColor(store.getState());
-    dispatch(actions.setCustomColor(null));
-    return customColor;
-  };
-
-  const handleAddColor = useCallback(() => {
-    dispatch(actions.openElement('ColorPickerModal'));
-    const onVisibilityChanged = (e) => {
-      const { element, isVisible } = e.detail;
-      if (element === 'ColorPickerModal' && !isVisible) {
-        const color = parseColor(getCustomColorAndRemove());
-        if (color) {
-          if (colors.includes(color)) {
-            setSelectedColor(color);
-            onColorChange(color);
-          } else {
-            const newColors = [...colors, color];
-            dispatch(actions.setColors(newColors, activeToolName, type, true));
-            setSelectedColor(color);
-            onColorChange(color);
-          }
-        }
-        getInstanceNode().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
-      }
-    };
-    getInstanceNode().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
-  }, [colors?.length, dispatch, setSelectedColor, onColorChange, getCustomColorAndRemove, type, activeToolName]);
+  const handleAddColor = useColorPickerAddColor({
+    colors: colors,
+    setSelectedColor,
+    onColorChange,
+    setColors: (newColors) => dispatch(actions.setColors(newColors, activeToolName, type, true)),
+  });
 
   const openColorPickerModalWithFocus = useFocusHandler(handleAddColor);
 
-  const handleDelete = () => {
-    const color = parseColor(selectedColor);
-    const newColors = [...colors];
-    const indexToDelete = newColors.indexOf(color);
-    if (indexToDelete > -1) {
-      const nextIndex = indexToDelete === newColors.length - 1 ? 0 : indexToDelete + 1;
-      setSelectedColor(colors[nextIndex]);
-      onColorChange(colors[nextIndex]);
-      newColors.splice(indexToDelete, 1);
-      dispatch(actions.setColors(newColors, activeToolName, type, true));
-    }
-  };
+  const handleDelete = useColorPickerDeleteColor({
+    selectedColor,
+    colors,
+    setSelectedColor,
+    onColorChange,
+    updateColorsAction: actions.setColors,
+  });
 
   const handleCopyColor = () => {
     const color = parseColor(selectedColor);

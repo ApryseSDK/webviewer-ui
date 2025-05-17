@@ -145,7 +145,8 @@
     "showMoreColors": "Показать больше цветов",
     "showLessColors": "Показать меньше цветов",
     "fromCustomColorPicker": "из пользовательского палитры цветов",
-    "newSpreadsheetDocument": "Новая электронная таблица"
+    "newSpreadsheetDocument": "Новая электронная таблица",
+    "resetDefault": "Сбросить до значений по умолчанию"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -305,6 +306,8 @@
     "searching": "Поиск...",
     "searchCommentsPlaceholder": "Поиск комментариев",
     "searchDocumentPlaceholder": "Искать документ",
+    "clearSearchResults": "Очистить результаты поиска",
+    "searchResultsCleared": "Результаты поиска очищены",
     "searchSettingsPlaceholder": "Настройки поиска",
     "searchSuggestionsPlaceholder": "Поисковые предложения",
     "signHere": "Распишетесь здесь",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Редактировать",
       "toolbarGroup-oe-Home": "Дом",
       "toolbarGroup-oe-Insert": "Вставлять",
+      "toolbarGroup-oe-Layout": "Макет",
       "toolbarGroup-oe-Review": "Обзор"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Добавить новый штамп"
     },
     "signatureOverlay": {
-      "addSignature": "Добавить подпись",
-      "addSignatureOrInitials": "Подпись/Инициалы"
+      "addSignatureOrInitials": "Новая подпись/инициалы",
+      "addSignature": "Новая подпись"
     },
     "signatureModal": {
       "modalName": "Создать новую подпись",
@@ -728,6 +732,8 @@
       "viewing": "Viewing",
       "disableFadePageNavigationComponent": "Отключить компонент навигации Fade Page",
       "disableFadePageNavigationComponentDesc": "Всегда держите компонент навигации по страницам на экране. Поведение по умолчанию — исчезать после определенного периода бездействия.",
+      "enabledFormFieldHighlighting": "Включить подсветку полей формы",
+      "enabledFormFieldHighlightingDesc": "Включить подсветку полей форм в документах PDF. Включено по умолчанию.",
       "disableNativeScrolling": "Отключить встроенную прокрутку",
       "disableNativeScrollingDesc": "Отключите собственное поведение прокрутки мобильного устройства, если оно было ранее включено. Обратите внимание, что встроенное поведение прокрутки мобильного устройства по умолчанию отключено.",
       "annotations": "Аннотации",
@@ -798,6 +804,12 @@
       "editShortcut": "Редактировать ярлык",
       "shortcutAlreadyExists": "Комбинация клавиш выше уже существует.",
       "close": "Закрыть подсказку"
+    },
+    "cellBorderStyle": {
+      "none": "Никто",
+      "solid": "Твердый",
+      "dashed": "Пунктирная",
+      "dotted": "Пунктирный"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Разрыв раздела - Непрерывный",
     "sectionBreakContinuousDescription": "Вставить разрыв раздела и продолжить на той же странице",
     "section": "Раздел",
+    "margins": "Поля",
+    "normal": "Нормальный",
+    "narrow": "Узкий",
+    "moderate": "Умеренный",
+    "wide": "Широкий",
+    "top": "Вершина",
+    "bottom": "Нижний",
+    "left": "Левый",
+    "right": "Верно",
+    "customMargins": "Пользовательские поля",
+    "customMarginsDescription": "Определить пользовательские поля",
     "header": {
       "0": "Заголовок",
       "1": "Заголовок первой страницы",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Удалить нижний колонтитул",
     "headerFooterOptionsModal": {
       "title": "Формат верхнего и нижнего колонтитула",
-      "margins": "Поля",
       "headerFromTop": "Заголовок сверху",
       "footerFromBottom": "Нижний колонтитул снизу",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Разные четные и нечетные страницы",
         "differentFirstEvenOddPages": "Разные первые, четные и нечетные страницы"
       }
+    },
+    "marginsModal": {
+      "title": "Пользовательская настройка маржи",
+      "leftMargin": "Левое поле",
+      "rightMargin": "Правое поле",
+      "topMargin": "Верхнее поле",
+      "bottomMargin": "Нижнее поле"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Курсив",
     "underline": "Подчеркнуть",
     "strikethrough": "Зачеркивание",
+    "strikeout": "Вычеркивание",
     "cellBorderStyle": "Стиль границы",
     "merge": "Слияние",
     "unmerge": "Разъединить",
     "cellFormat": "Формат ячейки",
-    "automatic": "Автоматический",
-    "plainText": "Обычный текст",
-    "increaseDecimal": "Увеличить десятичную дробь",
-    "decreaseDecimal": "Уменьшить десятичную дробь",
-    "number": "Число",
-    "percent": "Процент",
-    "accounting": "Бухгалтерский учет",
-    "financial": "Финансовый",
-    "currency": "Валюта",
-    "currencyRounded": "Валюта округлена",
-    "calendar": "Дата",
-    "clockHour": "Время",
-    "calendarTime": "Дата Время",
+    "automaticFormat": "Автоматический",
+    "plainTextFormat": "Обычный текст",
+    "increaseDecimalFormat": "Увеличить десятичную дробь",
+    "decreaseDecimalFormat": "Уменьшить десятичную дробь",
+    "numberFormat": "Число",
+    "percentFormat": "Процент",
+    "accountingFormat": "Бухгалтерский учет",
+    "financialFormat": "Финансовый",
+    "currencyFormat": "Валюта",
+    "currencyRoundedFormat": "Валюта округлена",
+    "calendarFormat": "Дата",
+    "clockHourFormat": "Время",
+    "calendarTimeFormat": "Дата Время",
     "formatAsCurrency": "Форматировать как валюту",
     "formatAsPercent": "Форматировать как процент",
     "formatAsDecDecimal": "Уменьшить десятичную точку",
     "formatAsIncDecimal": "Увеличить десятичную точку",
-    "fontColor": "Цвет шрифта",
-    "cellBackgroundColor": "Цвет фона ячейки",
+    "textColor": "Цвет текста",
+    "cellBackgroundColor": "Цвет фона",
+    "cellBorderColor": "Цвет границы",
+    "textLabel": "Текст",
+    "backgroundLabel": "Фон",
+    "borderLabel": "Граница",
     "textAlignment": "Выравнивание текста",
-    "alignLeft": "Выровнять по левому краю",
-    "alignCenter": "Выровнять по центру",
-    "alignRight": "Выровнять по правому краю",
-    "alignTop": "Выровнять по верху",
-    "alignMiddle": "Выровнять по центру",
-    "alignBottom": "Выровнять по низу",
+    "topAlign": "Выравнивание по верхнему краю",
+    "middleAlign": "Выравнивание по центру",
+    "bottomAlign": "Выравнивание по нижнему краю",
     "cellAdjustment": "Регулировка ячеек",
-    "insertColLeft": "Вставить столбец слева",
-    "columnInsertLeft": "Вставить столбец слева",
-    "columnInsertRight": "Вставить столбец справа",
-    "rowInsertTop": "Вставить строку выше",
-    "rowInsertBottom": "Вставьте строку ниже",
-    "columnInsertShiftDown": "Вставить ячейки и сместить вниз",
-    "columnInsertShiftRight": "Вставить ячейки и сдвинуть вправо",
-    "columnDelete": "Удалить столбец",
-    "rowDelete": "Удалить строку",
-    "columnDeleteShiftUp": "Удалить ячейки и сдвинуть вверх",
-    "columnDeleteShiftLeft": "Удалить ячейки и сдвинуть влево"
+    "cellFormatMoreOptions": "Дополнительные параметры формата ячеек",
+    "insertColumnLeft": "Вставить столбец слева",
+    "insertColumnRight": "Вставить столбец справа",
+    "insertRowTop": "Вставить строку выше",
+    "insertRowBottom": "Вставьте строку ниже",
+    "insertColumnShiftDown": "Вставить ячейки и сместить вниз",
+    "insertColumnShiftRight": "Вставить ячейки и сдвинуть вправо",
+    "deleteColumn": "Удалить столбец",
+    "deleteRow": "Удалить строку",
+    "deleteColumnShiftUp": "Удалить ячейки и сдвинуть вверх",
+    "deleteColumnShiftLeft": "Удалить ячейки и сдвинуть влево",
+    "clearBorder": "Очистить границу",
+    "cellBorderAll": "Все границы",
+    "cellBorderInside": "Внутренние границы",
+    "cellBorderOutside": "Вне границ",
+    "cellBorderTop": "Верхняя граница",
+    "cellBorderBottom": "Нижняя граница",
+    "cellBorderLeft": "Левая граница",
+    "cellBorderRight": "Правая граница",
+    "cellBorderVertical": "Вертикальная граница",
+    "cellBorderHorizontal": "Горизонтальная граница",
+    "cellBorderNone": "Никаких границ",
+    "borders": "Границы",
+    "fontSize": {
+      "dropdownLabel": "Размер шрифта"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Семейство шрифтов"
+    },
+    "blankSheet": "Чистый Лист"
   },
   "insertPageModal": {
     "title": "Вставить новую страницу",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Добавить в пользовательские цвета",
     "noToolSelected": "Выберите инструмент, чтобы просмотреть его свойства.",
     "noToolStyle": "Инструмент не содержит никаких свойств стиля.",
+    "noSharedToolStyle": "Выбранные аннотации не имеют общих свойств стиля.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Начало линии"

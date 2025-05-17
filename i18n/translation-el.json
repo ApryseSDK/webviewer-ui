@@ -145,7 +145,8 @@
     "showMoreColors": "Εμφάνιση περισσότερων χρωμάτων",
     "showLessColors": "Εμφάνιση λιγότερων χρωμάτων",
     "fromCustomColorPicker": "από το Custom Color Picker",
-    "newSpreadsheetDocument": "Νέο υπολογιστικό φύλλο"
+    "newSpreadsheetDocument": "Νέο υπολογιστικό φύλλο",
+    "resetDefault": "Επαναφορά στην προεπιλογή"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Αποτυχία φόρτωσης κρυπτογραφημένου εγγράφου. Πάρα πολλές προσπάθειες.",
     "encryptedUserCancelled": "Αποτυχία φόρτωσης κρυπτογραφημένου εγγράφου. Η καταχώριση κωδικού πρόσβασης ακυρώθηκε.",
     "enterPassword": "Αυτό το έγγραφο προστατεύεται με κωδικό πρόσβασης. Εισαγάγετε έναν κωδικό πρόσβασης",
-    "incorrectPassword": "Λανθασμένος κωδικός πρόσβασης, απομένουν προσπάθειες: {{ restingAttempts }}",
+    "incorrectPassword": "Λανθασμένος κωδικός πρόσβασης, απομένουν προσπάθειες: {{ remainingAttempts }}",
     "noAnnotations": "Ξεκινήστε να κάνετε σχολιασμούς για να αφήσετε ένα σχόλιο.",
     "noAnnotationsReadOnly": "Αυτό το έγγραφο δεν έχει σχολιασμούς.",
     "noAnnotationsFilter": "Ξεκινήστε να κάνετε σχολιασμούς και τα φίλτρα θα εμφανιστούν εδώ.",
@@ -305,6 +306,8 @@
     "searching": "Ερευνητικός...",
     "searchCommentsPlaceholder": "Αναζήτηση σχολίων",
     "searchDocumentPlaceholder": "Αναζήτηση εγγράφου",
+    "clearSearchResults": "Εκκαθάριση αποτελεσμάτων αναζήτησης",
+    "searchResultsCleared": "Τα αποτελέσματα αναζήτησης διαγράφηκαν",
     "searchSettingsPlaceholder": "Ρυθμίσεις αναζήτησης",
     "searchSuggestionsPlaceholder": "Προτάσεις αναζήτησης",
     "signHere": "Υπόγραψε εδώ",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Συντάσσω",
       "toolbarGroup-oe-Home": "Σπίτι",
       "toolbarGroup-oe-Insert": "Εισάγετε",
+      "toolbarGroup-oe-Layout": "Σχέδιο",
       "toolbarGroup-oe-Review": "Ανασκόπηση"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Προσθήκη νέας σφραγίδας"
     },
     "signatureOverlay": {
-      "addSignature": "Προσθήκη νέας υπογραφής",
-      "addSignatureOrInitials": "Υπογραφή/Αρχικά"
+      "addSignatureOrInitials": "Νέα Υπογραφή/Αρχικά",
+      "addSignature": "Νέα Υπογραφή"
     },
     "signatureModal": {
       "modalName": "Δημιουργία νέας υπογραφής",
@@ -728,6 +732,8 @@
       "viewing": "Προβολή",
       "disableFadePageNavigationComponent": "Απενεργοποιήστε το στοιχείο πλοήγησης Fade Page",
       "disableFadePageNavigationComponentDesc": "Διατηρείτε πάντα το στοιχείο πλοήγησης σελίδας στην οθόνη. Η προεπιλεγμένη συμπεριφορά είναι να εξαφανιστεί μετά από ορισμένη περίοδο αδράνειας.",
+      "enabledFormFieldHighlighting": "Ενεργοποιήστε τις επισημάνσεις πεδίου φόρμας",
+      "enabledFormFieldHighlightingDesc": "Ενεργοποιήστε την επισήμανση των πεδίων φόρμας σε έγγραφα PDF. Ενεργοποιημένο από προεπιλογή.",
       "disableNativeScrolling": "Απενεργοποιήστε την εγγενή κύλιση",
       "disableNativeScrollingDesc": "Απενεργοποιήστε τη συμπεριφορά κύλισης της εγγενούς κινητής συσκευής, εάν είχε προηγουμένως ενεργοποιηθεί. Λάβετε υπόψη ότι η συμπεριφορά κύλισης εγγενούς κινητής συσκευής είναι απενεργοποιημένη από προεπιλογή.",
       "annotations": "Σχολιασμοί",
@@ -798,6 +804,12 @@
       "editShortcut": "Επεξεργασία συντόμευσης",
       "shortcutAlreadyExists": "Η παραπάνω συντόμευση πληκτρολογίου υπάρχει ήδη.",
       "close": "Κλείστε την επεξήγηση εργαλείου"
+    },
+    "cellBorderStyle": {
+      "none": "Κανένας",
+      "solid": "Στερεός",
+      "dashed": "Διακεκομμένη",
+      "dotted": "Διάσπαρτος"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Διάλειμμα ενότητας - Συνεχές",
     "sectionBreakContinuousDescription": "Εισαγάγετε την αλλαγή ενότητας και συνεχίστε στην ίδια σελίδα ",
     "section": "Τμήμα",
+    "margins": "Περιθώρια",
+    "normal": "Κανονικός",
+    "narrow": "Στενός",
+    "moderate": "Μέτριος",
+    "wide": "Ευρύς",
+    "top": "Κορυφή",
+    "bottom": "Κάτω μέρος",
+    "left": "Αριστερά",
+    "right": "Δικαίωμα",
+    "customMargins": "Προσαρμοσμένα περιθώρια",
+    "customMarginsDescription": "Ορίστε προσαρμοσμένα περιθώρια",
     "header": {
       "0": "Επί κεφαλής",
       "1": "Κεφαλίδα πρώτης σελίδας",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Αφαιρέστε το υποσέλιδο",
     "headerFooterOptionsModal": {
       "title": "Μορφή κεφαλίδας και υποσέλιδου",
-      "margins": "Περιθώρια",
       "headerFromTop": "Κεφαλίδα από την κορυφή",
       "footerFromBottom": "Υποσέλιδο από το κάτω μέρος",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Διαφορετικές ζυγές και μονές σελίδες",
         "differentFirstEvenOddPages": "Διαφορετικές πρώτες, ζυγές και μονές σελίδες"
       }
+    },
+    "marginsModal": {
+      "title": "Προσαρμογή Προσαρμοσμένου Περιθωρίου",
+      "leftMargin": "Αριστερό Περιθώριο",
+      "rightMargin": "Δεξί περιθώριο",
+      "topMargin": "Κορυφαίο Περιθώριο",
+      "bottomMargin": "Κάτω Περιθώριο"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Πλάγια",
     "underline": "Υπογραμμίζω",
     "strikethrough": "Strikethrough",
+    "strikeout": "Strikeout",
     "cellBorderStyle": "Στυλ συνόρων",
     "merge": "Συγχώνευση",
     "unmerge": "Κατάργηση συγχώνευσης",
     "cellFormat": "Μορφή κελιού",
-    "automatic": "Αυτόματο",
-    "plainText": "Απλό κείμενο",
-    "increaseDecimal": "Αύξηση δεκαδικού",
-    "decreaseDecimal": "Μείωση δεκαδικού",
-    "number": "Αριθμός",
-    "percent": "Τοις εκατό",
-    "accounting": "Λογιστική",
-    "financial": "Οικονομικός",
-    "currency": "Νόμισμα",
-    "currencyRounded": "Στρογγυλοποιημένο νόμισμα",
-    "calendar": "Ημερομηνία",
-    "clockHour": "Φορά",
-    "calendarTime": "Ημερομηνία Ώρα",
+    "automaticFormat": "Αυτόματο",
+    "plainTextFormat": "Απλό κείμενο",
+    "increaseDecimalFormat": "Αύξηση δεκαδικού",
+    "decreaseDecimalFormat": "Μείωση δεκαδικού",
+    "numberFormat": "Αριθμός",
+    "percentFormat": "Τοις εκατό",
+    "accountingFormat": "Λογιστική",
+    "financialFormat": "Οικονομικός",
+    "currencyFormat": "Νόμισμα",
+    "currencyRoundedFormat": "Στρογγυλοποιημένο νόμισμα",
+    "calendarFormat": "Ημερομηνία",
+    "clockHourFormat": "Φορά",
+    "calendarTimeFormat": "Ημερομηνία Ώρα",
     "formatAsCurrency": "Μορφοποίηση ως νόμισμα",
     "formatAsPercent": "Μορφοποίηση ως ποσοστό",
     "formatAsDecDecimal": "Μείωση υποδιαστολής",
     "formatAsIncDecimal": "Αύξηση υποδιαστολής",
-    "fontColor": "Χρώμα γραμματοσειράς",
-    "cellBackgroundColor": "Χρώμα φόντου κελιού",
+    "textColor": "Χρώμα κειμένου",
+    "cellBackgroundColor": "Χρώμα φόντου",
+    "cellBorderColor": "Χρώμα περιγράμματος",
+    "textLabel": "Κείμενο",
+    "backgroundLabel": "Φόντο",
+    "borderLabel": "Σύνορο",
     "textAlignment": "Ευθυγράμμιση κειμένου",
-    "alignLeft": "Ευθυγράμμιση αριστερά",
-    "alignCenter": "Ευθυγράμμιση κέντρου",
-    "alignRight": "Στοίχιση δεξιά",
-    "alignTop": "Ευθυγραμμίστε την κορυφή",
-    "alignMiddle": "Ευθυγραμμίστε τη μέση",
-    "alignBottom": "Ευθυγραμμίστε το κάτω μέρος",
+    "topAlign": "Ευθυγράμμιση από πάνω",
+    "middleAlign": "Μεσαία στοίχιση",
+    "bottomAlign": "Στοίχιση κάτω",
     "cellAdjustment": "Ρύθμιση κυψέλης",
-    "insertColLeft": "Εισαγωγή στήλης αριστερά",
-    "columnInsertLeft": "Εισαγωγή στήλης αριστερά",
-    "columnInsertRight": "Εισαγωγή στήλης δεξιά",
-    "rowInsertTop": "Εισαγάγετε τη σειρά πάνω",
-    "rowInsertBottom": "Εισαγάγετε τη σειρά παρακάτω",
-    "columnInsertShiftDown": "Εισαγάγετε κελιά και μετακινήστε προς τα κάτω",
-    "columnInsertShiftRight": "Εισαγάγετε κελιά και μετακινηθείτε προς τα δεξιά",
-    "columnDelete": "Διαγραφή στήλης",
-    "rowDelete": "Διαγραφή σειράς",
-    "columnDeleteShiftUp": "Διαγραφή κελιών και μετατόπιση προς τα επάνω",
-    "columnDeleteShiftLeft": "Διαγραφή κελιών και μετατόπιση αριστερά"
+    "cellFormatMoreOptions": "Περισσότερες επιλογές μορφής κελιού",
+    "insertColumnLeft": "Εισαγωγή στήλης αριστερά",
+    "insertColumnRight": "Εισαγωγή στήλης δεξιά",
+    "insertRowTop": "Εισαγάγετε τη σειρά από πάνω",
+    "insertRowBottom": "Εισαγάγετε τη σειρά παρακάτω",
+    "insertColumnShiftDown": "Εισαγάγετε κελιά και μετακινήστε προς τα κάτω",
+    "insertColumnShiftRight": "Εισαγάγετε κελιά και μετακινηθείτε προς τα δεξιά",
+    "deleteColumn": "Διαγραφή στήλης",
+    "deleteRow": "Διαγραφή σειράς",
+    "deleteColumnShiftUp": "Διαγραφή κελιών και μετατόπιση προς τα επάνω",
+    "deleteColumnShiftLeft": "Διαγραφή κελιών και μετατόπιση αριστερά",
+    "clearBorder": "Καθαρά σύνορα",
+    "cellBorderAll": "Όλα τα σύνορα",
+    "cellBorderInside": "Εντός Συνόρων",
+    "cellBorderOutside": "Εκτός συνόρων",
+    "cellBorderTop": "Κορυφαίο περίγραμμα",
+    "cellBorderBottom": "Κάτω περίγραμμα",
+    "cellBorderLeft": "Αριστερά σύνορα",
+    "cellBorderRight": "Δεξιά σύνορα",
+    "cellBorderVertical": "Κάθετο περίγραμμα",
+    "cellBorderHorizontal": "Οριζόντια σύνορα",
+    "cellBorderNone": "Χωρίς Σύνορα",
+    "borders": "σύνορα",
+    "fontSize": {
+      "dropdownLabel": "Μέγεθος γραμματοσειράς"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Οικογένεια γραμματοσειρών"
+    },
+    "blankSheet": "Κενό φύλλο"
   },
   "insertPageModal": {
     "title": "Εισαγωγή νέας σελίδας",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Προσθήκη στα προσαρμοσμένα χρώματα",
     "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου",
     "noToolStyle": "Το εργαλείο δεν περιέχει ιδιότητες styling.",
+    "noSharedToolStyle": "Οι επιλεγμένες σχολιασμοί δεν έχουν κοινές ιδιότητες στυλ.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Έναρξη γραμμής"

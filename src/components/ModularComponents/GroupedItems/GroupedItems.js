@@ -35,10 +35,12 @@ const GroupedItems = (props) => {
 
   const flyoutDataElement = `${dataElement}Flyout`;
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
+  const activeToolName = useSelector(selectors.getActiveToolName);
   const alwaysVisibleGroupedItems = useSelector(selectors.getAlwaysVisibleGroupedItems);
   const flyoutItems = useSelector((state) => selectors.getFlyoutMap(state)[flyoutDataElement]?.items);
 
   const moreButtonDefaultIcon = 'icon-tools-more';
+  const moreButtonActiveIcon = 'icon-tools-more-active';
   const [moreButtonIcon, setMoreButtonIcon] = useState(moreButtonDefaultIcon);
 
   const findActiveToolInFlyout = (flyoutItems) => {
@@ -63,7 +65,7 @@ const GroupedItems = (props) => {
     const isActiveToolInFlyout = findActiveToolInFlyout(flyoutItems);
     const isGroupedItemsActive = activeGroupedItems?.includes(dataElement) || alwaysVisibleGroupedItems?.includes(dataElement);
     if (size > 0 && isActiveToolInFlyout && isGroupedItemsActive) {
-      setMoreButtonIcon('icon-tools-more-active');
+      setMoreButtonIcon(moreButtonActiveIcon);
     } else {
       setMoreButtonIcon(moreButtonDefaultIcon);
     }
@@ -93,7 +95,7 @@ const GroupedItems = (props) => {
       size: size,
     };
     handleMoreButtonIcon();
-  }, [size, items]);
+  }, [size, items, activeToolName]);
 
   useSizeStore({ dataElement, elementRef, headerDirection });
 

@@ -24,15 +24,13 @@ const prepareButtonStory = (buttonType, enableNonPrintingCharacters = false) => 
 
   core.getOfficeEditor = () => ({
     isTextSelected: () => false,
-    isCursorInTable: () => false
+    isCursorInTable: () => false,
+    getIsNonPrintingCharactersEnabled: () => enableNonPrintingCharacters,
   });
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
     addEventListener: () => { },
     removeEventListener: () => { },
-    getOfficeEditor: () => ({
-      getIsNonPrintingCharactersEnabled: () => enableNonPrintingCharacters,
-    }),
   });
   window.Core.Annotations.Color = class {
     toString() {

@@ -871,3 +871,8 @@ export const setUIConfiguration = (uiConfiguration) => ({
   type: 'SET_UI_CONFIGURATION',
   payload: uiConfiguration,
 });
+
+export const setActiveCellRangeStyle = (styles) => ({
+  type: 'SET_ACTIVE_CELL_RANGE_STYLE',
+  payload: { styles },
+});

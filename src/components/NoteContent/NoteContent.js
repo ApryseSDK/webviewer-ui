@@ -389,6 +389,7 @@ const NoteContent = ({
       if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
         return (
           <DataElementWrapper
+            onClick={handleNoteClick}
             className="selected-text-preview"
             dataElement="notesSelectedTextPreview">
             <NoteTextPreview linesToBreak={3}>

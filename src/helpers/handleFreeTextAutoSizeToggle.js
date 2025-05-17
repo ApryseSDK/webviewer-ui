@@ -9,9 +9,8 @@ import core from 'core';
  */
 export default (annotation, setAutoSizeFont, isAutoSizeFont) => {
   const freeTextAnnot = annotation;
-  const calculatedFontSize = freeTextAnnot.getCalculatedFontSize();
   if (isAutoSizeFont) {
-    freeTextAnnot.FontSize = calculatedFontSize;
+    freeTextAnnot.switchOutFromAutoFontSize();
   } else {
     freeTextAnnot.switchToAutoFontSize();
   }

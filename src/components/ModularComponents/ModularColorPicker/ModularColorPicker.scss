@@ -1,0 +1,65 @@
+@import '../../../constants/styles.scss';
+
+.ModularColorPicker {
+  .resetToDefaultColor {
+    width: 100%;
+    color: var(--blue-5);
+    border: solid 1px var(--blue-5);
+    border-radius: 4px;
+  }
+
+  .color-picker-container.flyout-item {
+    padding: 0 8px;
+  }
+  
+  .ColorPalette {
+    padding-top: 8px;
+  }
+
+  .palette-controls {
+    padding-right: 12px;
+    padding-left: 2px;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+
+    .button-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .control-button {
+       cursor: pointer;
+      
+      &.show-more-button {
+        @extend %tertiary-button-selected;
+        color: var(--ribbon-active-color);
+
+        &:hover {
+          @extend %tertiary-button-hover;
+        }
+
+        @include mobile {
+          color: var(--ribbon-active-color);
+        }
+      }
+
+      &:disabled {
+        cursor: no-drop;
+
+        .Icon {
+          color: var(--disabled-icon);
+        }
+      }
+
+      &.hidden {
+        display: none;
+      }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline);
+      }
+    }
+
+  }
+}

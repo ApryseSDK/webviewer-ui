@@ -35,7 +35,7 @@ function useOnRedactionSearchCompleted() {
     // If it didn't match any of the patterns, return the default type which is text
     result.type = resultType === undefined ? redactionTypeMap['TEXT'] : resultType;
     // And also set the icon to display in the panel. If no icon provided use the text icon
-    const { icon = 'icon-form-field-text' } = searchPatterns[result.type] || {};
+    const { icon = 'icon-text-redaction' } = searchPatterns[result.type] || {};
     result.icon = icon;
     return result;
   }, [searchPatterns]);// Dependency is an object but it is memoized so it will not re-create unless the patterns change

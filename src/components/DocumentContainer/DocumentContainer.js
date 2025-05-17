@@ -241,11 +241,13 @@ class DocumentContainer extends React.PureComponent {
     this.hidePageNavigationOverlay();
   };
 
-  getClassName = (props) => {
-    const { isSearchOverlayOpen } = props;
+  getClassName = () => {
+    const { isSearchOverlayOpen, isSpreadsheetEditorModeEnabled } = this.props;
+    const disablePageScroll = isSpreadsheetEditorModeEnabled;
 
     return classNames({
       DocumentContainer: true,
+      'disable-page-scroll': disablePageScroll,
       'search-overlay': isSearchOverlayOpen,
     });
   };
@@ -314,7 +316,7 @@ class DocumentContainer extends React.PureComponent {
       // Using transform makes a clunky animation because the panels are using transform already.
       marginLeft: `${documentContainerLeftMargin}px`,
     };
-    const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
+    const documentContainerClassName = isIE ? getClassNameInIE() : this.getClassName();
     const documentClassName = classNames({
       document: true,
       hidden: this.props.isReaderMode,
@@ -453,4 +455,5 @@ const ConnectedComponent = (props) => {
   return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
 };
 
+export { DocumentContainer as UnconnectedDocumentContainer };
 export default ConnectedComponent;

@@ -31,6 +31,7 @@ const viewerPersistConfig = {
     'fadePageNavigationComponent',
     'toolDefaultStyleUpdateFromAnnotationPopupEnabled',
     'enableNoteSubmissionWithEnter',
+    'isWidgetHighlightingEnabled',
     'isCommentThreadExpansionEnabled',
     'isNotesPanelRepliesCollapsingEnabled',
     'isNotesPanelTextCollapsingEnabled',

@@ -145,7 +145,8 @@
     "showMoreColors": "Visa fler färger",
     "showLessColors": "Visa färre färger",
     "fromCustomColorPicker": "från Custom Color Picker",
-    "newSpreadsheetDocument": "Nytt kalkylblad"
+    "newSpreadsheetDocument": "Nytt kalkylblad",
+    "resetDefault": "Återställ till standard"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -305,6 +306,8 @@
     "searching": "Sökande...",
     "searchCommentsPlaceholder": "Sök kommentarer",
     "searchDocumentPlaceholder": "Sök dokument",
+    "clearSearchResults": "Rensa sökresultat",
+    "searchResultsCleared": "Sökresultaten rensade",
     "searchSettingsPlaceholder": "Sökinställningar",
     "searchSuggestionsPlaceholder": "Sökförslag",
     "signHere": "Skriv under här",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redigera",
       "toolbarGroup-oe-Home": "Hem",
       "toolbarGroup-oe-Insert": "Föra in",
+      "toolbarGroup-oe-Layout": "Layout",
       "toolbarGroup-oe-Review": "Recension"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Lägg till ny stämpel"
     },
     "signatureOverlay": {
-      "addSignature": "Lägg till ny signatur",
-      "addSignatureOrInitials": "Signatur/Initialer"
+      "addSignatureOrInitials": "Ny signatur/initialer",
+      "addSignature": "Ny signatur"
     },
     "signatureModal": {
       "modalName": "Skapa ny signatur",
@@ -728,6 +732,8 @@
       "viewing": "Visning",
       "disableFadePageNavigationComponent": "Inaktivera Fade Page Navigation Component",
       "disableFadePageNavigationComponentDesc": "Håll alltid sidnavigeringskomponenten på skärmen. Standardbeteendet är att blekna det efter en viss period av inaktivitet.",
+      "enabledFormFieldHighlighting": "Aktivera formulärfältshöjdpunkter",
+      "enabledFormFieldHighlightingDesc": "Aktivera markering av formulärfält i PDF-dokument. Aktiverad som standard.",
       "disableNativeScrolling": "Inaktivera Native Scrolling",
       "disableNativeScrollingDesc": "Inaktivera inbyggd rullning av mobila enheter om det tidigare hade aktiverats. Observera att rullningsbeteendet för inbyggd mobil enhet är avstängt som standard.",
       "annotations": "Anteckningar",
@@ -798,6 +804,12 @@
       "editShortcut": "Redigera genväg",
       "shortcutAlreadyExists": "Kortkommandot ovan finns redan.",
       "close": "Stäng verktygstips"
+    },
+    "cellBorderStyle": {
+      "none": "Ingen",
+      "solid": "Fast",
+      "dashed": "Streckad",
+      "dotted": "Prickad"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Sektionsavbrott - Kontinuerlig",
     "sectionBreakContinuousDescription": "Infoga avsnittsbrytning och fortsätt på samma sida ",
     "section": "Avsnitt",
+    "margins": "Marginaler",
+    "normal": "Normal",
+    "narrow": "Smal",
+    "moderate": "Måttlig",
+    "wide": "Bred",
+    "top": "Bästa",
+    "bottom": "Botten",
+    "left": "Vänster",
+    "right": "Rätt",
+    "customMargins": "Anpassade marginaler",
+    "customMarginsDescription": "Definiera anpassade marginaler",
     "header": {
       "0": "Rubrik",
       "1": "Första sidans rubrik",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Ta bort sidfot",
     "headerFooterOptionsModal": {
       "title": "Format för sidhuvud och sidfot",
-      "margins": "Marginaler",
       "headerFromTop": "Header från toppen",
       "footerFromBottom": "Sidfot från Botten",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Olika jämna och udda sidor",
         "differentFirstEvenOddPages": "Olika första, jämna och udda sidor"
       }
+    },
+    "marginsModal": {
+      "title": "Anpassad marginaljustering",
+      "leftMargin": "Vänster marginal",
+      "rightMargin": "Högermarginal",
+      "topMargin": "Toppmarginal",
+      "bottomMargin": "Nedre marginal"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Kursiv",
     "underline": "Betona",
     "strikethrough": "Genomstruken",
+    "strikeout": "Överstrykning",
     "cellBorderStyle": "Gränsstil",
     "merge": "Slå ihop",
     "unmerge": "Avsluta",
     "cellFormat": "Cellformat",
-    "automatic": "Automatisk",
-    "plainText": "Vanlig text",
-    "increaseDecimal": "Öka decimaltal",
-    "decreaseDecimal": "Minska decimaltal",
-    "number": "Antal",
-    "percent": "Procent",
-    "accounting": "Bokföring",
-    "financial": "Finansiell",
-    "currency": "Valuta",
-    "currencyRounded": "Valuta avrundad",
-    "calendar": "Datum",
-    "clockHour": "Tid",
-    "calendarTime": "Datum Tid",
+    "automaticFormat": "Automatisk",
+    "plainTextFormat": "Vanlig text",
+    "increaseDecimalFormat": "Öka decimaltal",
+    "decreaseDecimalFormat": "Minska decimaltal",
+    "numberFormat": "Antal",
+    "percentFormat": "Procent",
+    "accountingFormat": "Bokföring",
+    "financialFormat": "Finansiell",
+    "currencyFormat": "Valuta",
+    "currencyRoundedFormat": "Valuta avrundad",
+    "calendarFormat": "Datum",
+    "clockHourFormat": "Tid",
+    "calendarTimeFormat": "Datum Tid",
     "formatAsCurrency": "Formatera som valuta",
     "formatAsPercent": "Formatera som procent",
     "formatAsDecDecimal": "Minska decimalkomma",
     "formatAsIncDecimal": "Öka decimalkomma",
-    "fontColor": "Teckensnittsfärg",
-    "cellBackgroundColor": "Cellbakgrundsfärg",
+    "textColor": "Text färg",
+    "cellBackgroundColor": "Bakgrundsfärg",
+    "cellBorderColor": "Kantfärg",
+    "textLabel": "Text",
+    "backgroundLabel": "Bakgrund",
+    "borderLabel": "Gräns",
     "textAlignment": "Textjustering",
-    "alignLeft": "Rikta åt vänster",
-    "alignCenter": "Rikta in mitten",
-    "alignRight": "Justera höger",
-    "alignTop": "Rikta upp toppen",
-    "alignMiddle": "Justera mitten",
-    "alignBottom": "Justera botten",
+    "topAlign": "Justera uppåt",
+    "middleAlign": "Mittjustera",
+    "bottomAlign": "Justera botten",
     "cellAdjustment": "Celljustering",
-    "insertColLeft": "Infoga kolumn till vänster",
-    "columnInsertLeft": "Infoga kolumn till vänster",
-    "columnInsertRight": "Infoga kolumn till höger",
-    "rowInsertTop": "Sätt in raden ovanför",
-    "rowInsertBottom": "Infoga raden nedan",
-    "columnInsertShiftDown": "Infoga celler och flytta nedåt",
-    "columnInsertShiftRight": "Infoga celler och flytta åt höger",
-    "columnDelete": "Ta bort kolumn",
-    "rowDelete": "Ta bort rad",
-    "columnDeleteShiftUp": "Ta bort celler och flytta uppåt",
-    "columnDeleteShiftLeft": "Ta bort celler och flytta åt vänster"
+    "cellFormatMoreOptions": "Fler cellformatsalternativ",
+    "insertColumnLeft": "Infoga kolumn till vänster",
+    "insertColumnRight": "Infoga kolumn till höger",
+    "insertRowTop": "Sätt in raden ovanför",
+    "insertRowBottom": "Infoga raden nedan",
+    "insertColumnShiftDown": "Infoga celler och flytta nedåt",
+    "insertColumnShiftRight": "Infoga celler och flytta åt höger",
+    "deleteColumn": "Ta bort kolumn",
+    "deleteRow": "Ta bort rad",
+    "deleteColumnShiftUp": "Ta bort celler och flytta uppåt",
+    "deleteColumnShiftLeft": "Ta bort celler och flytta åt vänster",
+    "clearBorder": "Rensa gränsen",
+    "cellBorderAll": "Alla gränser",
+    "cellBorderInside": "Inuti gränserna",
+    "cellBorderOutside": "Utanför gränserna",
+    "cellBorderTop": "Top Border",
+    "cellBorderBottom": "Nedre kant",
+    "cellBorderLeft": "Vänster gräns",
+    "cellBorderRight": "Höger gräns",
+    "cellBorderVertical": "Vertikal kant",
+    "cellBorderHorizontal": "Horisontell kant",
+    "cellBorderNone": "Inga gränser",
+    "borders": "Gränser",
+    "fontSize": {
+      "dropdownLabel": "Fontstorlek"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Typsnittsfamilj"
+    },
+    "blankSheet": "Tomt ark"
   },
   "insertPageModal": {
     "title": "Infoga ny sida",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Lägg till anpassade färger",
     "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper",
     "noToolStyle": "Verktyget innehåller inga stylingegenskaper.",
+    "noSharedToolStyle": "Valda annoteringar delar inga formateringsegenskaper.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Linjestart"

@@ -25,6 +25,7 @@ import {
   ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
 } from 'constants/officeEditor';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
+import FeatureFlags from 'constants/featureFlags';
 
 let notesInLeftPanel;
 
@@ -253,8 +254,9 @@ export const configureOfficeEditor = (store) => () => {
   const { getState, dispatch } = store;
   const doc = core.getDocument();
   const contentSelectTool = core.getTool('OfficeEditorContentSelect');
-  const handleEditModeUpdate = (editMode) => {
-    const isCustomUIEnabled = getIsCustomUIEnabled(store);
+  const isCustomUIEnabled = getIsCustomUIEnabled(store);
+
+  const updateEditMode = (editMode) => {
     dispatch(actions.setOfficeEditorEditMode(editMode));
     if (editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW) {
       isCustomUIEnabled ?
@@ -274,7 +276,7 @@ export const configureOfficeEditor = (store) => () => {
     }
   };
 
-  const handleActiveStreamChanged = (stream) => {
+  const updateActiveSteam = (stream) => {
     dispatch(actions.setOfficeEditorActiveStream(stream));
   };
 
@@ -318,10 +320,17 @@ export const configureOfficeEditor = (store) => () => {
       OFFICE_EDITOR_SCOPE,
       hotkeysManager.keyHandlerMap[setHeaderFocusShortcutKeys],
     );
-    handleEditModeUpdate(OfficeEditorEditMode.EDITING);
-    doc.addEventListener('editModeUpdated', handleEditModeUpdate);
-    handleActiveStreamChanged(EditingStreamType.BODY);
-    contentSelectTool.addEventListener('activeStreamChanged', handleActiveStreamChanged);
+    const officeEditorOptions = getHashParameters('officeEditorOptions', '{}');
+    let onLoadEditMode = JSON.parse(officeEditorOptions).initialEditMode || OfficeEditorEditMode.EDITING;
+    if (!Object.values(OfficeEditorEditMode).includes(onLoadEditMode)) {
+      console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to Editing mode.`);
+      onLoadEditMode = OfficeEditorEditMode.EDITING;
+    }
+    doc.getOfficeEditor().setEditMode(onLoadEditMode);
+    updateEditMode(onLoadEditMode);
+    doc.addEventListener('editModeUpdated', updateEditMode);
+    updateActiveSteam(EditingStreamType.BODY);
+    contentSelectTool.addEventListener('activeStreamChanged', updateActiveSteam);
     doc.addEventListener('editOperationStarted', () => {
       core.getOfficeEditor().setEditMode('viewOnly');
       dispatch(actions.openElement('loadingModal'));
@@ -335,6 +344,10 @@ export const configureOfficeEditor = (store) => () => {
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
   } else if (isSpreadsheetEditorDocument()) {
+    if (!isCustomUIEnabled) {
+      console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
+      dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
+    }
     swapUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR);
     dispatch(actions.enableSpreadsheetEditorMode());
     dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
@@ -346,8 +359,8 @@ export const configureOfficeEditor = (store) => () => {
     const currentGenericPanels = selectors.getGenericPanels(getState());
     const panels = getIsCustomUIEnabled(store) ? currentGenericPanels : [];
     dispatch(actions.setGenericPanels(panels));
-    doc.removeEventListener('editModeUpdated', handleEditModeUpdate);
-    contentSelectTool.removeEventListener('activeStreamChanged', handleActiveStreamChanged);
+    doc.removeEventListener('editModeUpdated', updateEditMode);
+    contentSelectTool.removeEventListener('activeStreamChanged', updateActiveSteam);
     hotkeys.setScope(defaultHotkeysScope);
     dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));

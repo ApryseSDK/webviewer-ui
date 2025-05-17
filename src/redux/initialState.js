@@ -134,6 +134,7 @@ export default {
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
     autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),
     fadePageNavigationComponent: true,
+    isWidgetHighlightingEnabled: true,
     pageDeletionConfirmationModalEnabled: true,
     autoExpandOutlines: getHashParameters('autoExpandOutlines', false),
     isAnnotationNumberingEnabled: getHashParameters('enableAnnotationNumbering', false),
@@ -2269,7 +2270,19 @@ export default {
       topLeftColumn: null,
       bottomRightRow: null,
       bottomRightColumn: null,
+      styles: {
+        verticalAlignment: null,
+        horizontalAlignment: null,
+        font: {
+          bold: false,
+          italic: false,
+          underline: false,
+          strikeout: false,
+        },
+        formatType: null,
+      }
     },
+    cellStyleColors: initialTextColors,
     editMode: SpreadsheetEditorEditMode['VIEW_ONLY'],
   }
 };

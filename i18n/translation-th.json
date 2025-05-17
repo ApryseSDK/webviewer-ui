@@ -145,7 +145,8 @@
     "showMoreColors": "แสดงสีเพิ่มเติม",
     "showLessColors": "แสดงสีน้อยลง",
     "fromCustomColorPicker": "จากเครื่องมือเลือกสีที่กำหนดเอง",
-    "newSpreadsheetDocument": "สเปรดชีตใหม่"
+    "newSpreadsheetDocument": "สเปรดชีตใหม่",
+    "resetDefault": "รีเซ็ตเป็นค่าเริ่มต้น"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "ไม่สามารถโหลดเอกสารที่เข้ารหัส พยายามมากเกินไป",
     "encryptedUserCancelled": "ไม่สามารถโหลดเอกสารที่เข้ารหัส การป้อนรหัสผ่านถูกยกเลิก",
     "enterPassword": "เอกสารนี้มีการป้องกันด้วยรหัสผ่าน กรุณาใส่รหัสผ่าน",
-    "incorrectPassword": "รหัสผ่านไม่ถูกต้อง เหลือความพยายาม: {{ leftAttempts }}",
+    "incorrectPassword": "รหัสผ่านไม่ถูกต้อง เหลือความพยายาม: {{ remainingAttempts }}",
     "noAnnotations": "เริ่มสร้างคำอธิบายประกอบเพื่อแสดงความคิดเห็น",
     "noAnnotationsReadOnly": "เอกสารนี้ไม่มีคำอธิบายประกอบ",
     "noAnnotationsFilter": "เริ่มสร้างคำอธิบายประกอบและตัวกรองจะปรากฏที่นี่",
@@ -305,6 +306,8 @@
     "searching": "กำลังค้นหา...",
     "searchCommentsPlaceholder": "ค้นหาความคิดเห็น",
     "searchDocumentPlaceholder": "ค้นหาเอกสาร",
+    "clearSearchResults": "ล้างผลการค้นหา",
+    "searchResultsCleared": "ผลลัพธ์การค้นหาถูกล้างแล้ว",
     "searchSettingsPlaceholder": "การตั้งค่าการค้นหา",
     "searchSuggestionsPlaceholder": "คำแนะนำการค้นหา",
     "signHere": "ลงชื่อที่นี่",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redact",
       "toolbarGroup-oe-Home": "บ้าน",
       "toolbarGroup-oe-Insert": "แทรก",
+      "toolbarGroup-oe-Layout": "เค้าโครง",
       "toolbarGroup-oe-Review": "ทบทวน"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "เพิ่มแสตมป์ใหม่"
     },
     "signatureOverlay": {
-      "addSignature": "เพิ่มลายเซ็นใหม่",
-      "addSignatureOrInitials": "ลายเซ็น/ชื่อย่อ"
+      "addSignatureOrInitials": "ลายเซ็น/อักษรย่อใหม่",
+      "addSignature": "ลายเซ็นใหม่"
     },
     "signatureModal": {
       "modalName": "สร้างลายเซ็นใหม่",
@@ -728,6 +732,8 @@
       "viewing": "กำลังดู",
       "disableFadePageNavigationComponent": "ปิดใช้งานส่วนประกอบการนำทางหน้าเฟด",
       "disableFadePageNavigationComponentDesc": "เก็บส่วนประกอบการนำทางของเพจไว้บนหน้าจอเสมอ พฤติกรรมเริ่มต้นคือการจางหายไปหลังจากไม่มีการใช้งานในช่วงระยะเวลาหนึ่ง",
+      "enabledFormFieldHighlighting": "เปิดใช้งานการเน้นฟิลด์ฟอร์ม",
+      "enabledFormFieldHighlightingDesc": "เปิดใช้งานการเน้นข้อความในช่องฟอร์มในเอกสาร PDF เปิดใช้งานตามค่าเริ่มต้น",
       "disableNativeScrolling": "ปิดการใช้งาน Native Scrolling",
       "disableNativeScrollingDesc": "ปิดใช้งานลักษณะการเลื่อนของอุปกรณ์มือถือดั้งเดิมหากเปิดใช้งานไว้ก่อนหน้านี้ โปรดทราบว่าลักษณะการเลื่อนของอุปกรณ์เคลื่อนที่ดั้งเดิมจะปิดอยู่โดยค่าเริ่มต้น",
       "annotations": "คำอธิบายประกอบ",
@@ -798,6 +804,12 @@
       "editShortcut": "แก้ไขทางลัด",
       "shortcutAlreadyExists": "แป้นพิมพ์ลัดด้านบนมีอยู่แล้ว",
       "close": "ปิดคำแนะนำเครื่องมือ"
+    },
+    "cellBorderStyle": {
+      "none": "ไม่มี",
+      "solid": "แข็ง",
+      "dashed": "เส้นประ",
+      "dotted": "จุด"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "การแบ่งส่วน - ต่อเนื่อง",
     "sectionBreakContinuousDescription": "แทรกตัวแบ่งส่วนและดำเนินการต่อในหน้าเดียวกัน",
     "section": "ส่วน",
+    "margins": "ระยะขอบ",
+    "normal": "ปกติ",
+    "narrow": "แคบ",
+    "moderate": "ปานกลาง",
+    "wide": "กว้าง",
+    "top": "สูงสุด",
+    "bottom": "ด้านล่าง",
+    "left": "ซ้าย",
+    "right": "ขวา",
+    "customMargins": "ระยะขอบที่กำหนดเอง",
+    "customMarginsDescription": "กำหนดระยะขอบที่กำหนดเอง",
     "header": {
       "0": "ส่วนหัว",
       "1": "ส่วนหัวหน้าแรก",
@@ -1337,7 +1360,6 @@
     "removeFooter": "ลบส่วนท้าย",
     "headerFooterOptionsModal": {
       "title": "รูปแบบส่วนหัวและส่วนท้าย",
-      "margins": "ระยะขอบ",
       "headerFromTop": "ส่วนหัวจากด้านบน",
       "footerFromBottom": "ส่วนท้ายจากด้านล่าง",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "หน้าคู่และหน้าคี่ที่แตกต่างกัน",
         "differentFirstEvenOddPages": "หน้าแรก หน้าคู่ และหน้าคี่ที่แตกต่างกัน"
       }
+    },
+    "marginsModal": {
+      "title": "การปรับระยะขอบแบบกำหนดเอง",
+      "leftMargin": "ขอบซ้าย",
+      "rightMargin": "ระยะขอบขวา",
+      "topMargin": "ขอบด้านบน",
+      "bottomMargin": "ขอบล่าง"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "ตัวเอียง",
     "underline": "ขีดเส้นใต้",
     "strikethrough": "ขีดทับ",
+    "strikeout": "สไตรค์เอาท์",
     "cellBorderStyle": "สไตล์ขอบ",
     "merge": "ผสาน",
     "unmerge": "ยกเลิกการรวม",
     "cellFormat": "รูปแบบเซลล์",
-    "automatic": "อัตโนมัติ",
-    "plainText": "ข้อความธรรมดา",
-    "increaseDecimal": "เพิ่มทศนิยม",
-    "decreaseDecimal": "ลดทศนิยม",
-    "number": "ตัวเลข",
-    "percent": "เปอร์เซ็นต์",
-    "accounting": "การบัญชี",
-    "financial": "การเงิน",
-    "currency": "สกุลเงิน",
-    "currencyRounded": "สกุลเงินที่ปัดเศษ",
-    "calendar": "วันที่",
-    "clockHour": "เวลา",
-    "calendarTime": "วันที่ เวลา",
+    "automaticFormat": "อัตโนมัติ",
+    "plainTextFormat": "ข้อความธรรมดา",
+    "increaseDecimalFormat": "เพิ่มทศนิยม",
+    "decreaseDecimalFormat": "ลดทศนิยม",
+    "numberFormat": "ตัวเลข",
+    "percentFormat": "เปอร์เซ็นต์",
+    "accountingFormat": "การบัญชี",
+    "financialFormat": "การเงิน",
+    "currencyFormat": "สกุลเงิน",
+    "currencyRoundedFormat": "สกุลเงินที่ปัดเศษ",
+    "calendarFormat": "วันที่",
+    "clockHourFormat": "เวลา",
+    "calendarTimeFormat": "วันที่ เวลา",
     "formatAsCurrency": "รูปแบบเป็นสกุลเงิน",
     "formatAsPercent": "รูปแบบเป็นเปอร์เซ็นต์",
     "formatAsDecDecimal": "ลดจุดทศนิยม",
     "formatAsIncDecimal": "เพิ่มจุดทศนิยม",
-    "fontColor": "สีตัวอักษร",
-    "cellBackgroundColor": "สีพื้นหลังเซลล์",
+    "textColor": "สีข้อความ",
+    "cellBackgroundColor": "สีพื้นหลัง",
+    "cellBorderColor": "สีเส้นขอบ",
+    "textLabel": "ข้อความ",
+    "backgroundLabel": "พื้นหลัง",
+    "borderLabel": "ชายแดน",
     "textAlignment": "การจัดตำแหน่งข้อความ",
-    "alignLeft": "จัดชิดซ้าย",
-    "alignCenter": "จัดตำแหน่งศูนย์กลาง",
-    "alignRight": "จัดชิดขวา",
-    "alignTop": "จัดตำแหน่งด้านบน",
-    "alignMiddle": "จัดตำแหน่งตรงกลาง",
-    "alignBottom": "จัดตำแหน่งด้านล่าง",
+    "topAlign": "จัดตำแหน่งด้านบน",
+    "middleAlign": "จัดตำแหน่งตรงกลาง",
+    "bottomAlign": "จัดตำแหน่งด้านล่าง",
     "cellAdjustment": "การปรับเซลล์",
-    "insertColLeft": "แทรกคอลัมน์ด้านซ้าย",
-    "columnInsertLeft": "แทรกคอลัมน์ด้านซ้าย",
-    "columnInsertRight": "แทรกคอลัมน์ด้านขวา",
-    "rowInsertTop": "แทรกแถวด้านบน",
-    "rowInsertBottom": "แทรกแถวด้านล่าง",
-    "columnInsertShiftDown": "แทรกเซลล์และเลื่อนลง",
-    "columnInsertShiftRight": "แทรกเซลล์และเลื่อนไปทางขวา",
-    "columnDelete": "ลบคอลัมน์",
-    "rowDelete": "ลบแถว",
-    "columnDeleteShiftUp": "ลบเซลล์และเลื่อนขึ้น",
-    "columnDeleteShiftLeft": "ลบเซลล์และเลื่อนไปทางซ้าย"
+    "cellFormatMoreOptions": "ตัวเลือกการจัดรูปแบบเซลล์เพิ่มเติม",
+    "insertColumnLeft": "แทรกคอลัมน์ด้านซ้าย",
+    "insertColumnRight": "แทรกคอลัมน์ด้านขวา",
+    "insertRowTop": "แทรกแถวด้านบน",
+    "insertRowBottom": "แทรกแถวด้านล่าง",
+    "insertColumnShiftDown": "แทรกเซลล์และเลื่อนลง",
+    "insertColumnShiftRight": "แทรกเซลล์และเลื่อนไปทางขวา",
+    "deleteColumn": "ลบคอลัมน์",
+    "deleteRow": "ลบแถว",
+    "deleteColumnShiftUp": "ลบเซลล์และเลื่อนขึ้น",
+    "deleteColumnShiftLeft": "ลบเซลล์และเลื่อนไปทางซ้าย",
+    "clearBorder": "ขอบใส",
+    "cellBorderAll": "ทุกพรมแดน",
+    "cellBorderInside": "ขอบเขตภายใน",
+    "cellBorderOutside": "นอกเขตแดน",
+    "cellBorderTop": "ขอบด้านบน",
+    "cellBorderBottom": "ขอบล่าง",
+    "cellBorderLeft": "ขอบด้านซ้าย",
+    "cellBorderRight": "ขอบด้านขวา",
+    "cellBorderVertical": "ขอบแนวตั้ง",
+    "cellBorderHorizontal": "ขอบแนวนอน",
+    "cellBorderNone": "ไม่มีพรมแดน",
+    "borders": "พรมแดน",
+    "fontSize": {
+      "dropdownLabel": "ขนาดตัวอักษร"
+    },
+    "fontFamily": {
+      "dropdownLabel": "ฟอนต์ตระกูล"
+    },
+    "blankSheet": "แผ่นเปล่า"
   },
   "insertPageModal": {
     "title": "แทรกหน้าใหม่",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "เพิ่มลงในสีที่กำหนดเอง",
     "noToolSelected": "เลือกเครื่องมือเพื่อดูคุณสมบัติของเครื่องมือ",
     "noToolStyle": "เครื่องมือไม่มีคุณสมบัติการจัดรูปแบบใดๆ",
+    "noSharedToolStyle": "คำอธิบายประกอบที่เลือกไม่แบ่งปันคุณสมบัติรูปแบบใดๆ",
     "lineEnding": {
       "start": {
         "dropdownLabel": "การเริ่มต้นสาย"

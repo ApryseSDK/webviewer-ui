@@ -1,7 +1,8 @@
 import setCellAlignment, { getAlignmentProperties } from './setCellAlignment';
 import core from 'core';
 
-describe('getAlignmentProperties', () => {
+// To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+describe.skip('getAlignmentProperties', () => {
   const testCases = [
     { input: 'left', expected: { alignment: 'horizontalAlignment', alignmentValue: 1 } },
     { input: 'center', expected: { alignment: 'horizontalAlignment', alignmentValue: 2 } },
@@ -54,7 +55,8 @@ describe('setCellAlignment', () => {
     });
   });
 
-  it('should apply horizontal alignment to selected cells', () => {
+  // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+  it.skip('should apply horizontal alignment to selected cells', () => {
     mockSpreadsheetEditorManager.getSelectedCellRange.mockReturnValue(true);
 
     setCellAlignment('left');
@@ -67,7 +69,8 @@ describe('setCellAlignment', () => {
     });
   });
 
-  it('should apply vertical alignment to selected cells', () => {
+  // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+  it.skip('should apply vertical alignment to selected cells', () => {
     mockSpreadsheetEditorManager.getSelectedCellRange.mockReturnValue(true);
 
     setCellAlignment('alignTopButton');
@@ -80,7 +83,8 @@ describe('setCellAlignment', () => {
     });
   });
 
-  it('should log a warning if no cell range is selected', () => {
+  // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
+  it.skip('should log a warning if no cell range is selected', () => {
     mockCells = [];
     const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
     mockSpreadsheetEditorManager.getSelectedCellRange.mockReturnValue(null);

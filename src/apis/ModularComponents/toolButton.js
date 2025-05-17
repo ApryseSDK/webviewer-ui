@@ -17,6 +17,7 @@ import Item from './item';
 
  * @example
 const toolButton = new instance.UI.Components.ToolButton({
+  dataElement: 'pan-tool-button',
   label: 'Pan',
   title: 'Pan the document',
   img: 'icon-header-pan',

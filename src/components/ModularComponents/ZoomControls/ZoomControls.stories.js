@@ -8,6 +8,8 @@ import { MockApp } from 'helpers/storybookHelper';
 import actions from 'actions';
 import initialState from 'src/redux/initialState';
 import { expect } from '@storybook/test';
+import core from 'core';
+import { workerTypes } from 'src/constants/types';
 
 export default {
   title: 'ModularComponents/ZoomControls',
@@ -67,6 +69,20 @@ export const ZoomInSheetEditorMode = () => {
   );
 };
 
+export const ZoomInOfficeEditorMode = (args, context) => {
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    getOfficeEditor: () => {},
+  });
+
+  return <MockApp initialState={getStateWithFlyoutOpen(context)} />;
+};
+
+ZoomInOfficeEditorMode.parameters = {
+  layout: 'fullscreen',
+};
 
 const getStateWithFlyoutOpen = (context) => {
   return {

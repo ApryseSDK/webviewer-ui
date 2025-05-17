@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
 import { SearchWrapper } from './SearchWrapper';
+import core from 'core';
 
 import './AdvancedTab.scss';
 
@@ -22,7 +23,8 @@ const AdvancedTab = () => {
     pageDeletionConfirmationModalEnabled,
     isThumbnailSelectingPages,
     customSettings,
-    isToolDefaultStyleUpdateFromAnnotationPopupEnabled
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
+    isWidgetHighlightingEnabled,
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
     selectors.isNoteSubmissionWithEnterEnabled(state),
@@ -33,8 +35,10 @@ const AdvancedTab = () => {
     selectors.pageDeletionConfirmationModalEnabled(state),
     selectors.isThumbnailSelectingPages(state),
     selectors.getCustomSettings(state),
-    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
+    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state),
+    selectors.isWidgetHighlightingEnabled(state),
   ]);
+
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
@@ -57,8 +61,24 @@ const AdvancedTab = () => {
       (enable) => {
         touchEventManager.useNativeScroll = !enable;
       }
+    ),
+    createItem(
+      t('option.settings.enabledFormFieldHighlighting'),
+      t('option.settings.enabledFormFieldHighlightingDesc'),
+      isWidgetHighlightingEnabled,
+      (enable) => {
+        enable ? enableWidgetHighlighting() : disableWidgetHighlighting();
+      }
     )
   ];
+
+  const disableWidgetHighlighting = () => {
+    core.getAnnotationManager().getFieldManager().disableWidgetHighlighting();
+  };
+
+  const enableWidgetHighlighting = () => {
+    core.getAnnotationManager().getFieldManager().enableWidgetHighlighting();
+  };
 
   const annotationsItems = [
     createItem(

@@ -321,6 +321,7 @@ const ToolNameHotkeyMap = {
 };
 
 const unbindedHotkeysMap = {};
+let previousUnbindedHotkeysMap = {};
 
 export const defaultHotkeysScope = 'viewer';
 
@@ -336,6 +337,7 @@ const HotkeysManager = {
     hotkeys.filter = () => true;
     this.store = store;
     this.keyHandlerMap = this.createKeyHandlerMap();
+    this.previousKeyHandlerMap = this.keyHandlerMap;
     this.prevToolName = null;
     const shortcutKeyMap = this.getShortcutKeyMap();
     Object.keys(shortcutKeyMap).forEach((shortcut) => {
@@ -471,6 +473,7 @@ WebViewer(...)
   });
    */
   off(key, handler) {
+    previousUnbindedHotkeysMap = { ...unbindedHotkeysMap };
     const isToolName = !!core.getToolModeMap()[key];
     if (isToolName) {
       key = ToolNameHotkeyMap[key];
@@ -917,6 +920,20 @@ WebViewer(...)
   },
   disableShortcut(shortcut) {
     this.off(this.getShortcutKeyMap()[shortcut]);
+  },
+  /**
+   * @name UI.Hotkeys.restoreHotkeys
+   * Restores the hotkeys to default and disables previously unbinded hotkeys.
+   * @ignore
+   */
+  restoreHotkeys() {
+    const disabledHotkeys = { ...previousUnbindedHotkeysMap };
+    this.on();
+    for (const property in Keys) {
+      if (disabledHotkeys[Keys[property]] === false) {
+        this.off(Keys[property]);
+      }
+    }
   }
 };
 

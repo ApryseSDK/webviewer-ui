@@ -145,7 +145,8 @@
     "showMoreColors": "আরো রং দেখান",
     "showLessColors": "কম রং দেখান",
     "fromCustomColorPicker": "কাস্টম কালার পিকার থেকে",
-    "newSpreadsheetDocument": "নতুন স্প্রেডশীট"
+    "newSpreadsheetDocument": "নতুন স্প্রেডশীট",
+    "resetDefault": "ডিফল্টে রিসেট করুন"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -305,6 +306,8 @@
     "searching": "অনুসন্ধান করা হচ্ছে...",
     "searchCommentsPlaceholder": "মন্তব্য অনুসন্ধান করুন",
     "searchDocumentPlaceholder": "নথি অনুসন্ধান করুন",
+    "clearSearchResults": "অনুসন্ধান ফলাফল সাফ করুন",
+    "searchResultsCleared": "অনুসন্ধান ফলাফল সাফ করা হয়েছে",
     "searchSettingsPlaceholder": "অনুসন্ধান সেটিংস",
     "searchSuggestionsPlaceholder": "অনুসন্ধান পরামর্শ",
     "signHere": "এখানে স্বাক্ষর কর",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "সংশোধিত",
       "toolbarGroup-oe-Home": "বাড়ি",
       "toolbarGroup-oe-Insert": "ঢোকান",
+      "toolbarGroup-oe-Layout": "লেআউট",
       "toolbarGroup-oe-Review": "পুনঃমূল্যায়ন"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "নতুন স্ট্যাম্প যোগ করুন"
     },
     "signatureOverlay": {
-      "addSignature": "নতুন স্বাক্ষর যোগ করুন",
-      "addSignatureOrInitials": "স্বাক্ষর/আদ্যক্ষর"
+      "addSignatureOrInitials": "নতুন স্বাক্ষর/আদ্যক্ষর",
+      "addSignature": "নতুন স্বাক্ষর"
     },
     "signatureModal": {
       "modalName": "নতুন স্বাক্ষর তৈরি করুন",
@@ -728,6 +732,8 @@
       "viewing": "দেখা হচ্ছে",
       "disableFadePageNavigationComponent": "ফেইড পেজ নেভিগেশন কম্পোনেন্ট অক্ষম করুন",
       "disableFadePageNavigationComponentDesc": "পৃষ্ঠা নেভিগেশন কম্পোনেন্ট সবসময় স্ক্রিনে রাখুন। ডিফল্ট আচরণ হল নির্দিষ্ট সময়ের নিষ্ক্রিয়তার পরে এটিকে বিবর্ণ করা।",
+      "enabledFormFieldHighlighting": "ফর্ম ফিল্ড হাইলাইটগুলি সক্ষম করুন",
+      "enabledFormFieldHighlightingDesc": "PDF ডকুমেন্টে ফর্ম ফিল্ড হাইলাইট করা সক্ষম করুন। ডিফল্টরূপে সক্ষম।",
       "disableNativeScrolling": "নেটিভ স্ক্রোলিং অক্ষম করুন",
       "disableNativeScrollingDesc": "নেটিভ মোবাইল ডিভাইস স্ক্রোলিং আচরণ অক্ষম করুন যদি এটি পূর্বে সক্ষম করা থাকে। মনে রাখবেন যে নেটিভ মোবাইল ডিভাইস স্ক্রোলিং আচরণ ডিফল্টরূপে বন্ধ থাকে।",
       "annotations": "টীকা",
@@ -798,6 +804,12 @@
       "editShortcut": "শর্টকাট সম্পাদনা করুন",
       "shortcutAlreadyExists": "উপরের কীবোর্ড শর্টকাট ইতিমধ্যেই বিদ্যমান।",
       "close": "টুলটিপ বন্ধ করুন"
+    },
+    "cellBorderStyle": {
+      "none": "কোনটিই নয়",
+      "solid": "কঠিন",
+      "dashed": "ড্যাশড",
+      "dotted": "বিন্দুযুক্ত"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "বিভাগ বিরতি - ক্রমাগত",
     "sectionBreakContinuousDescription": "বিভাগ বিরতি ঢোকান এবং একই পৃষ্ঠায় চালিয়ে যান ",
     "section": "বিভাগ",
+    "margins": "মার্জিন",
+    "normal": "স্বাভাবিক",
+    "narrow": "সংকীর্ণ",
+    "moderate": "মাঝারি",
+    "wide": "প্রশস্ত",
+    "top": "শীর্ষ",
+    "bottom": "নীচে",
+    "left": "বাম",
+    "right": "ঠিক",
+    "customMargins": "কাস্টম মার্জিন",
+    "customMarginsDescription": "কাস্টম মার্জিন নির্ধারণ করুন",
     "header": {
       "0": "হেডার",
       "1": "প্রথম পৃষ্ঠার শিরোনাম",
@@ -1337,7 +1360,6 @@
     "removeFooter": "ফুটার সরান",
     "headerFooterOptionsModal": {
       "title": "হেডার এবং ফুটার ফরম্যাট",
-      "margins": "মার্জিন",
       "headerFromTop": "শীর্ষ থেকে শিরোনাম",
       "footerFromBottom": "নিচ থেকে ফুটার",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "বিভিন্ন জোড় ও বিজোড় পৃষ্ঠা",
         "differentFirstEvenOddPages": "বিভিন্ন প্রথম, জোড় এবং বিজোড় পৃষ্ঠা"
       }
+    },
+    "marginsModal": {
+      "title": "কাস্টম মার্জিন সমন্বয়",
+      "leftMargin": "বাম মার্জিন",
+      "rightMargin": "ডান মার্জিন",
+      "topMargin": "উপরের মার্জিন",
+      "bottomMargin": "নিচের মার্জিন"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "তির্যক",
     "underline": "আন্ডারলাইন করুন",
     "strikethrough": "স্ট্রাইকথ্রু",
+    "strikeout": "স্ট্রাইকআউট",
     "cellBorderStyle": "বর্ডার স্টাইল",
     "merge": "একত্রিত করুন",
     "unmerge": "আনমার্জ করুন",
     "cellFormat": "সেল ফরম্যাট",
-    "automatic": "স্বয়ংক্রিয়",
-    "plainText": "সরল পাঠ্য",
-    "increaseDecimal": "দশমিক বাড়ান",
-    "decreaseDecimal": "দশমিক হ্রাস করুন",
-    "number": "সংখ্যা",
-    "percent": "শতাংশ",
-    "accounting": "অ্যাকাউন্টিং",
-    "financial": "আর্থিক",
-    "currency": "মুদ্রা",
-    "currencyRounded": "মুদ্রা গোলাকার",
-    "calendar": "তারিখ",
-    "clockHour": "সময়",
-    "calendarTime": "তারিখ সময়",
+    "automaticFormat": "স্বয়ংক্রিয়",
+    "plainTextFormat": "সরল লেখা",
+    "increaseDecimalFormat": "দশমিক বৃদ্ধি করুন",
+    "decreaseDecimalFormat": "দশমিক কমান",
+    "numberFormat": "সংখ্যা",
+    "percentFormat": "শতাংশ",
+    "accountingFormat": "হিসাবরক্ষণ",
+    "financialFormat": "আর্থিক",
+    "currencyFormat": "মুদ্রা",
+    "currencyRoundedFormat": "মুদ্রা রাউন্ডেড",
+    "calendarFormat": "তারিখ",
+    "clockHourFormat": "সময়",
+    "calendarTimeFormat": "তারিখ সময়",
     "formatAsCurrency": "মুদ্রা হিসাবে বিন্যাস",
     "formatAsPercent": "শতাংশ হিসাবে বিন্যাস করুন",
     "formatAsDecDecimal": "দশমিক বিন্দু হ্রাস করুন",
     "formatAsIncDecimal": "দশমিক বিন্দু বাড়ান",
-    "fontColor": "হরফের রঙ",
-    "cellBackgroundColor": "ঘরের পটভূমির রঙ",
+    "textColor": "লেখার রঙ",
+    "cellBackgroundColor": "পটভূমির রঙ",
+    "cellBorderColor": "সীমানার রঙ",
+    "textLabel": "টেক্সট",
+    "backgroundLabel": "পটভূমি",
+    "borderLabel": "সীমানা",
     "textAlignment": "পাঠ্য প্রান্তিককরণ",
-    "alignLeft": "বাম সারিবদ্ধ করুন",
-    "alignCenter": "কেন্দ্র সারিবদ্ধ করুন",
-    "alignRight": "ডানদিকে সারিবদ্ধ করুন",
-    "alignTop": "শীর্ষ সারিবদ্ধ",
-    "alignMiddle": "মাঝখানে সারিবদ্ধ করুন",
-    "alignBottom": "নীচে সারিবদ্ধ করুন",
+    "topAlign": "উপরের সারিবদ্ধকরণ",
+    "middleAlign": "মাঝখানে সারিবদ্ধ করুন",
+    "bottomAlign": "নীচের সারিবদ্ধকরণ",
     "cellAdjustment": "সেল সামঞ্জস্য",
-    "insertColLeft": "বাম দিকে কলাম ঢোকান",
-    "columnInsertLeft": "বাম দিকে কলাম ঢোকান",
-    "columnInsertRight": "ডানদিকে কলাম ঢোকান",
-    "rowInsertTop": "উপরে সারি ঢোকান",
-    "rowInsertBottom": "নীচে সারি ঢোকান",
-    "columnInsertShiftDown": "কক্ষ সন্নিবেশ এবং নিচে স্থানান্তর",
-    "columnInsertShiftRight": "কক্ষ সন্নিবেশ করুন এবং ডানদিকে সরান",
-    "columnDelete": "কলাম মুছুন",
-    "rowDelete": "সারি মুছুন",
-    "columnDeleteShiftUp": "সেল মুছুন এবং উপরে স্থানান্তর করুন",
-    "columnDeleteShiftLeft": "সেল মুছুন এবং বাম দিকে সরান"
+    "cellFormatMoreOptions": "আরও সেল ফর্ম্যাট বিকল্প",
+    "insertColumnLeft": "বাম দিকে কলাম ঢোকান",
+    "insertColumnRight": "ডানদিকে কলাম ঢোকান",
+    "insertRowTop": "উপরে সারি ঢোকান",
+    "insertRowBottom": "নিচে সারি ঢোকান",
+    "insertColumnShiftDown": "কোষ ঢোকান এবং নীচের দিকে সরান",
+    "insertColumnShiftRight": "কোষ ঢোকান এবং ডানদিকে সরান",
+    "deleteColumn": "কলাম মুছুন",
+    "deleteRow": "সারি মুছুন",
+    "deleteColumnShiftUp": "কোষগুলি মুছুন এবং উপরে সরান",
+    "deleteColumnShiftLeft": "ঘরগুলি মুছুন এবং বাম দিকে সরান",
+    "clearBorder": "সীমানা পরিষ্কার করুন",
+    "cellBorderAll": "সকল সীমানা",
+    "cellBorderInside": "সীমানার ভিতরে",
+    "cellBorderOutside": "সীমানার বাইরে",
+    "cellBorderTop": "উপরের সীমানা",
+    "cellBorderBottom": "নীচের সীমানা",
+    "cellBorderLeft": "বাম সীমানা",
+    "cellBorderRight": "ডান সীমানা",
+    "cellBorderVertical": "উল্লম্ব সীমানা",
+    "cellBorderHorizontal": "অনুভূমিক সীমানা",
+    "cellBorderNone": "সীমানা নেই",
+    "borders": "সীমানা",
+    "fontSize": {
+      "dropdownLabel": "ফন্ট সাইজ"
+    },
+    "fontFamily": {
+      "dropdownLabel": "ফন্ট ফ্যামিলি"
+    },
+    "blankSheet": "খালি শীট"
   },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা ঢোকান",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "কাস্টম রং যোগ করুন",
     "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন",
     "noToolStyle": "টুলে কোনো স্টাইলিং বৈশিষ্ট্য নেই।",
+    "noSharedToolStyle": "নির্বাচিত টীকাগুলি কোনও স্টাইলিং বৈশিষ্ট্য ভাগ করে না।",
     "lineEnding": {
       "start": {
         "dropdownLabel": "লাইন স্টার্ট"

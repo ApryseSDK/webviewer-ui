@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import DocumentContainer from './DocumentContainer';
+import DocumentContainer, { UnconnectedDocumentContainer } from './DocumentContainer';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import core from 'core';
@@ -23,7 +23,7 @@ jest.mock('react-redux', () => ({
 }));
 
 jest.mock('react-measure', () => {
-  return ({ children }) => children({ measureRef: () => {} });
+  return ({ children }) => children({ measureRef: () => { } });
 });
 
 jest.mock('components/PageNavOverlay', () => {
@@ -134,6 +134,12 @@ describe('DocumentContainer', () => {
         const { container } = renderWithRedux(<DocumentContainer {...spreadsheetProps} />);
         container.dispatchEvent(createTransitionEvent('left'));
         expect(core.scrollViewUpdated).not.toHaveBeenCalled();
+      });
+
+      test('should not be able to scroll the DocumentContainer element', () => {
+        const componentInstance = new UnconnectedDocumentContainer(spreadsheetProps);
+        const result = componentInstance.getClassName();
+        expect(result).toContain('disable-page-scroll');
       });
     });
 

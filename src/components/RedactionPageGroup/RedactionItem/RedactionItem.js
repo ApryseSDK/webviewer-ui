@@ -44,7 +44,7 @@ const RedactionItem = (props) => {
   const className = classNames('redaction-item', { 'redaction-item-selected': isSelected }, { 'modular-ui': isCustomUI });
   const {
     label,
-    icon = 'icon-form-field-text', // Default icon if none provided
+    icon = 'icon-text-redaction', // Default icon if none provided
     redactionType
   } = annotation;
 

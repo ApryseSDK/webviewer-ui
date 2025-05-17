@@ -285,7 +285,7 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
   } = options;
 
   const document = core.getDocument();
-  const annotManager = core.getAnnotationManager();
+  const annotationManager = core.getAnnotationManager();
 
   if (!document) {
     return;
@@ -297,12 +297,13 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
   }
   const pageArray = isPrintCurrentView ? [core.getDocumentViewer().getCurrentPage()] : pagesToPrintPageArray(pagesToPrint);
   options.pagesToPrint = pageArray;
+  options.isAlwaysPrintAnnotationsInColorEnabled = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
   const bbURLPromise = core.getPrintablePDF();
   if (!isGrayscale && bbURLPromise && !useClientSidePrint) {
     serverPrint(bbURLPromise);
   } else if (canEmbedPrint(isEmbedPrintSupported)) {
     embeddedPrintNoneSupportedOptions(options);
-    printEmbeddedPDF(await processEmbeddedPrintOptions(options, document, annotManager));
+    printEmbeddedPDF(await processEmbeddedPrintOptions(options, document, annotationManager));
   } else if (includeAnnotations || includeComments || printWithoutModal) {
     const printOptions = {
       includeComments,

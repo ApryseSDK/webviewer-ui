@@ -145,7 +145,8 @@
     "showMoreColors": "더 많은 색상 표시",
     "showLessColors": "색상 줄이기",
     "fromCustomColorPicker": "사용자 정의 색상 선택기에서",
-    "newSpreadsheetDocument": "새로운 스프레드시트"
+    "newSpreadsheetDocument": "새로운 스프레드시트",
+    "resetDefault": "기본값으로 재설정"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -305,6 +306,8 @@
     "searching": "검색 중...",
     "searchCommentsPlaceholder": "코멘트 검색",
     "searchDocumentPlaceholder": "문서 검색",
+    "clearSearchResults": "검색 결과 지우기",
+    "searchResultsCleared": "검색 결과가 지워졌습니다",
     "searchSettingsPlaceholder": "검색 설정",
     "searchSuggestionsPlaceholder": "검색 제안",
     "signHere": "여기에 서명하세요",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "수정",
       "toolbarGroup-oe-Home": "집",
       "toolbarGroup-oe-Insert": "끼워 넣다",
+      "toolbarGroup-oe-Layout": "공들여 나열한 것",
       "toolbarGroup-oe-Review": "검토"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "스탬프 추가"
     },
     "signatureOverlay": {
-      "addSignature": "서명 추가",
-      "addSignatureOrInitials": "서명/이니셜"
+      "addSignatureOrInitials": "새로운 서명/이니셜",
+      "addSignature": "새로운 서명"
     },
     "signatureModal": {
       "modalName": "서명 만들기",
@@ -728,6 +732,8 @@
       "viewing": "보기",
       "disableFadePageNavigationComponent": "페이드 페이지 탐색 구성 요소 비활성화",
       "disableFadePageNavigationComponentDesc": "항상 페이지 탐색 구성 요소를 화면에 유지하십시오. 기본 동작은 일정 시간 동안 사용하지 않으면 페이드하는 것입니다.",
+      "enabledFormFieldHighlighting": "양식 필드 강조 표시 활성화",
+      "enabledFormFieldHighlightingDesc": "PDF 문서에서 양식 필드 강조 표시를 활성화합니다. 기본적으로 활성화되어 있습니다.",
       "disableNativeScrolling": "기본 스크롤 비활성화",
       "disableNativeScrollingDesc": "이전에 활성화한 경우 기본 모바일 장치 스크롤 동작을 비활성화합니다. 기본 모바일 장치 스크롤 동작은 기본적으로 꺼져 있습니다.",
       "annotations": "주석",
@@ -798,6 +804,12 @@
       "editShortcut": "편집 단축키",
       "shortcutAlreadyExists": "위의 키보드 단축키가 이미 존재합니다.",
       "close": "툴팁 닫기"
+    },
+    "cellBorderStyle": {
+      "none": "없음",
+      "solid": "단단한",
+      "dashed": "점선",
+      "dotted": "점이 찍힌"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "섹션 나누기 - 연속",
     "sectionBreakContinuousDescription": "섹션 나누기를 삽입하고 같은 페이지에서 계속합니다.",
     "section": "부분",
+    "margins": "여백",
+    "normal": "정상",
+    "narrow": "좁은",
+    "moderate": "보통의",
+    "wide": "넓은",
+    "top": "맨 위",
+    "bottom": "맨 아래",
+    "left": "왼쪽",
+    "right": "오른쪽",
+    "customMargins": "사용자 정의 여백",
+    "customMarginsDescription": "사용자 정의 여백 정의",
     "header": {
       "0": "헤더",
       "1": "첫 번째 페이지 헤더",
@@ -1337,7 +1360,6 @@
     "removeFooter": "푸터 제거",
     "headerFooterOptionsModal": {
       "title": "헤더 및 푸터 형식",
-      "margins": "여백",
       "headerFromTop": "상단에서 헤더",
       "footerFromBottom": "하단에서 바닥글",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "다른 짝수 및 홀수 페이지",
         "differentFirstEvenOddPages": "다른 첫 번째, 짝수 및 홀수 페이지"
       }
+    },
+    "marginsModal": {
+      "title": "사용자 정의 마진 조정",
+      "leftMargin": "왼쪽 여백",
+      "rightMargin": "오른쪽 여백",
+      "topMargin": "상위 마진",
+      "bottomMargin": "하단 여백"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "이탤릭체",
     "underline": "밑줄",
     "strikethrough": "취소선",
+    "strikeout": "스트라이크아웃",
     "cellBorderStyle": "테두리 스타일",
     "merge": "병합",
     "unmerge": "병합 해제",
     "cellFormat": "셀 형식",
-    "automatic": "오토매틱",
-    "plainText": "일반 텍스트",
-    "increaseDecimal": "소수점 증가",
-    "decreaseDecimal": "소수점 이하 자릿수 감소",
-    "number": "숫자",
-    "percent": "퍼센트",
-    "accounting": "회계",
-    "financial": "재정적인",
-    "currency": "통화",
-    "currencyRounded": "반올림된 통화",
-    "calendar": "날짜",
-    "clockHour": "시간",
-    "calendarTime": "날짜 시간",
+    "automaticFormat": "오토매틱",
+    "plainTextFormat": "일반 텍스트",
+    "increaseDecimalFormat": "소수점 증가",
+    "decreaseDecimalFormat": "소수점 이하 자릿수 감소",
+    "numberFormat": "숫자",
+    "percentFormat": "퍼센트",
+    "accountingFormat": "회계",
+    "financialFormat": "재정적인",
+    "currencyFormat": "통화",
+    "currencyRoundedFormat": "반올림된 통화",
+    "calendarFormat": "날짜",
+    "clockHourFormat": "시간",
+    "calendarTimeFormat": "날짜 시간",
     "formatAsCurrency": "통화로 형식 지정",
     "formatAsPercent": "퍼센트로 형식 지정",
     "formatAsDecDecimal": "소수점 감소",
     "formatAsIncDecimal": "소수점 증가",
-    "fontColor": "글꼴 색상",
-    "cellBackgroundColor": "셀 배경색",
+    "textColor": "텍스트 색상",
+    "cellBackgroundColor": "배경색",
+    "cellBorderColor": "테두리 색상",
+    "textLabel": "텍스트",
+    "backgroundLabel": "배경",
+    "borderLabel": "국경",
     "textAlignment": "텍스트 정렬",
-    "alignLeft": "왼쪽 정렬",
-    "alignCenter": "중앙 정렬",
-    "alignRight": "오른쪽 정렬",
-    "alignTop": "위쪽 정렬",
-    "alignMiddle": "가운데 정렬",
-    "alignBottom": "하단 맞춤",
+    "topAlign": "상단 정렬",
+    "middleAlign": "가운데 정렬",
+    "bottomAlign": "하단 정렬",
     "cellAdjustment": "셀 조정",
-    "insertColLeft": "열 왼쪽에 삽입",
-    "columnInsertLeft": "열 왼쪽에 삽입",
-    "columnInsertRight": "오른쪽 열 삽입",
-    "rowInsertTop": "위에 행 삽입",
-    "rowInsertBottom": "아래에 행 삽입",
-    "columnInsertShiftDown": "셀 삽입 및 아래로 이동",
-    "columnInsertShiftRight": "셀 삽입 및 오른쪽으로 이동",
-    "columnDelete": "열 삭제",
-    "rowDelete": "행 삭제",
-    "columnDeleteShiftUp": "셀을 삭제하고 위로 이동",
-    "columnDeleteShiftLeft": "셀 삭제 및 왼쪽으로 이동"
+    "cellFormatMoreOptions": "더 많은 셀 서식 옵션",
+    "insertColumnLeft": "왼쪽 열 삽입",
+    "insertColumnRight": "오른쪽 열 삽입",
+    "insertRowTop": "위에 행 삽입",
+    "insertRowBottom": "아래에 행 삽입",
+    "insertColumnShiftDown": "셀 삽입 및 아래로 이동",
+    "insertColumnShiftRight": "셀 삽입 및 오른쪽으로 이동",
+    "deleteColumn": "열 삭제",
+    "deleteRow": "행 삭제",
+    "deleteColumnShiftUp": "셀을 삭제하고 위로 이동",
+    "deleteColumnShiftLeft": "셀 삭제 및 왼쪽으로 이동",
+    "clearBorder": "테두리 지우기",
+    "cellBorderAll": "모든 국경",
+    "cellBorderInside": "내부 경계",
+    "cellBorderOutside": "국경 밖",
+    "cellBorderTop": "상단 테두리",
+    "cellBorderBottom": "하단 테두리",
+    "cellBorderLeft": "왼쪽 테두리",
+    "cellBorderRight": "오른쪽 테두리",
+    "cellBorderVertical": "수직 테두리",
+    "cellBorderHorizontal": "수평 테두리",
+    "cellBorderNone": "국경 없음",
+    "borders": "국경",
+    "fontSize": {
+      "dropdownLabel": "글꼴 크기"
+    },
+    "fontFamily": {
+      "dropdownLabel": "글꼴 패밀리"
+    },
+    "blankSheet": "빈 시트"
   },
   "insertPageModal": {
     "title": "새 페이지 삽입",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "사용자 정의 색상에 추가",
     "noToolSelected": "도구 속성을 보려면 도구를 선택하세요",
     "noToolStyle": "도구에는 스타일 속성이 포함되어 있지 않습니다.",
+    "noSharedToolStyle": "선택된 주석은 어떤 스타일 속성도 공유하지 않습니다.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "라인 시작"

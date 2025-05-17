@@ -41,6 +41,14 @@ export function ActiveOrderedListButton() {
   return prepareButtonStory(LIST_OPTIONS.Ordered);
 }
 
+export function InactiveOrderedListHover() {
+  return prepareButtonStory(LIST_OPTIONS.Ordered);
+}
+
+InactiveOrderedListHover.parameters = {
+  pseudo: { hover: true },
+};
+
 export function InactiveUnorderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Ordered; // set inactive state
   return prepareButtonStory(LIST_OPTIONS.Unordered);
@@ -50,3 +58,11 @@ export function ActiveUnorderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Unordered; // set active state
   return prepareButtonStory(LIST_OPTIONS.Unordered);
 }
+
+export function InactiveUnorderedListHover() {
+  return prepareButtonStory(LIST_OPTIONS.Unordered);
+}
+
+InactiveUnorderedListHover.parameters = {
+  pseudo: { hover: true },
+};

@@ -53,11 +53,12 @@ const CollapsibleSection = (props) => {
   const HeadingTag = `h${headingLevel}`;
 
   const headerContent = typeof header === 'function' ? header() : header;
+  const ariaLabel = expansionDescription || header;
 
   return (
     <div className={classNames({ CollapsibleSection: true, [className]: !!className })} role={role} style={style}>
       <HeadingTag className="collapsible-page-group-header">
-        <button onClick={handleToggle} aria-expanded={isExpanded} aria-controls={ariaControls} aria-label={expansionDescription}>
+        <button onClick={handleToggle} aria-expanded={isExpanded} aria-controls={ariaControls} aria-label={ariaLabel}>
           {headerContent}
           <Icon
             className="arrow"

@@ -1,4 +1,4 @@
-import { setGrayscaleDarknessFactor } from 'helpers/printGrayscaleDarknessFactor';
+import { setGrayscaleDarknessFactor } from 'helpers/grayScaleHelper';
 
 /**
  * Set Grayscale Darkness Factor for printing in Grayscale

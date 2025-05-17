@@ -1171,3 +1171,15 @@ export const setSpreadsheetEditorEditMode = (mode) => ({
   type: 'SET_SPREADSHEET_EDITOR_EDIT_MODE',
   payload: { mode },
 });
+
+export const enableWidgetHighlighting = () => ({
+  type: 'ENABLE_WIDGET_HIGHLIGHTING',
+});
+export const disableWidgetHighlighting = () => ({
+  type: 'DISABLE_WIDGET_HIGHLIGHTING',
+});
+
+export const setCellStyleColors = (cellStyleColors) => ({
+  type: 'SET_CELL_STYLE_COLORS',
+  payload: { cellStyleColors },
+});

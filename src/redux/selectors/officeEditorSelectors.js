@@ -3,8 +3,12 @@ import { getOfficeEditorCursorProperties, getOfficeEditorSelectionProperties } f
 import { DEFAULT_COLOR, DEFAULT_POINT_SIZE } from 'constants/officeEditor';
 import { calculateLineSpacing, convertCursorToStylePreset, convertCoreColorToWebViewerColor } from 'helpers/officeEditor';
 
+const isOfficeEditorReady = (state) => {
+  return getIsOfficeEditorMode(state) && core.getOfficeEditor();
+};
+
 const isStyleButtonActive = (state, styleType) => {
-  if (!core.getDocument() || !styleType || !getIsOfficeEditorMode(state)) {
+  if (!styleType || !isOfficeEditorReady(state)) {
     return false;
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -20,7 +24,7 @@ const isStyleButtonActive = (state, styleType) => {
 };
 
 const getPointSizeSelectionKey = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return '';
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -35,7 +39,7 @@ const getPointSizeSelectionKey = (state) => {
 };
 
 const getCursorStyleToPreset = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return '';
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -49,7 +53,7 @@ const getCursorStyleToPreset = (state) => {
 };
 
 const getCurrentFontFace = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return '';
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -63,7 +67,7 @@ const getCurrentFontFace = (state) => {
 };
 
 const getActiveListType = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return false;
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -77,7 +81,7 @@ const getActiveListType = (state) => {
 };
 
 const getLineSpacing = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return '';
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -94,7 +98,7 @@ const getLineSpacing = (state) => {
 };
 
 const isJustificationButtonActive = (state, justificationType) => {
-  if (!core.getDocument() || !justificationType || !getIsOfficeEditorMode(state)) {
+  if (!justificationType || !isOfficeEditorReady(state)) {
     return false;
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -108,7 +112,7 @@ const isJustificationButtonActive = (state, justificationType) => {
 };
 
 const getActiveColor = (state) => {
-  if (!core.getDocument() || !getIsOfficeEditorMode(state)) {
+  if (!isOfficeEditorReady(state)) {
     return DEFAULT_COLOR;
   }
   const isTextSelected = core.getOfficeEditor().isTextSelected();
@@ -123,8 +127,11 @@ const getActiveColor = (state) => {
 
 const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
 
-const isNonPrintingCharactersEnabled = () => {
-  return core.getDocument() && core.getDocument().getOfficeEditor().getIsNonPrintingCharactersEnabled();
+const isNonPrintingCharactersEnabled = (state) => {
+  if (!isOfficeEditorReady(state)) {
+    return false;
+  }
+  return core.getOfficeEditor().getIsNonPrintingCharactersEnabled();
 };
 
 const isOfficeEditorUndoEnabled = (state) => state.officeEditor.canUndo;

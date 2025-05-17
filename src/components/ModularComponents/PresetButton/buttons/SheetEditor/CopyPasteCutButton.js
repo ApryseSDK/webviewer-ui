@@ -3,7 +3,8 @@ import ActionButton from 'components/ActionButton';
 import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
-import { CELL_ACTION_OPTIONS } from 'src/constants/spreadsheetEditor';
+import { CELL_ACTION_OPTIONS } from 'constants/spreadsheetEditor';
+import capitalize from 'helpers/capitalize';
 
 const propTypes = {
   actionType: PropTypes.oneOf(Object.values(CELL_ACTION_OPTIONS)).isRequired,
@@ -16,8 +17,8 @@ const CopyPasteCutButton = forwardRef((props, ref) => {
   const { isFlyoutItem, actionType, style, className } = props;
   const isActive = false;
 
-  const key = `cell${actionType.charAt(0).toUpperCase()}${actionType.slice(1)}`;
-  const { dataElement, icon, title } = menuItems[key];
+  const buttonSelector = `cell${capitalize(actionType)}`;
+  const { dataElement, icon, title } = menuItems[buttonSelector];
 
   const handleClick = () => {
     // handle button click

@@ -1,9 +1,12 @@
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
 import PropTypes from 'prop-types';
-import { STYLE_TOGGLE_OPTIONS } from 'constants/officeEditor';
+import { STYLE_TOGGLE_OPTIONS } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import setCellFontStyle from 'src/helpers/setCellFontStyle';
 
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,
@@ -14,13 +17,12 @@ const propTypes = {
 
 const CellDecoratorButton = forwardRef((props, ref) => {
   const { isFlyoutItem, styleType, style, className } = props;
-  const isActive = false;
-
-  const lowerCaseStyleType = styleType.charAt(0).toLowerCase() + styleType.slice(1);
-  const { dataElement, icon, title } = menuItems[`${lowerCaseStyleType}Button`];
+  const currentFontStyle = useSelector((state) => selectors.getActiveCellRangeFontStyle(state, styleType));
+  const isActive = currentFontStyle;
+  const { dataElement, icon, title } = menuItems[`${styleType}Button`];
 
   const handleClick = () => {
-    // handle button click
+    setCellFontStyle({ [styleType]: !isActive });
   };
 
   return (

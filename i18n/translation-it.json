@@ -145,7 +145,8 @@
     "showMoreColors": "Mostra altri colori",
     "showLessColors": "Mostra meno colori",
     "fromCustomColorPicker": "da Selettore colori personalizzato",
-    "newSpreadsheetDocument": "Nuovo foglio di calcolo"
+    "newSpreadsheetDocument": "Nuovo foglio di calcolo",
+    "resetDefault": "Ripristina impostazioni predefinite"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Caricamento del documento crittografato non riuscito. Troppi tentativi.",
     "encryptedUserCancelled": "Caricamento del documento crittografato non riuscito. Inserimento password annullato.",
     "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
-    "incorrectPassword": "Password errata, tentativi rimasti: {{rimanendo tentativi}}",
+    "incorrectPassword": "Password errata, tentativi rimasti: {{ remainingAttempts }}",
     "noAnnotations": "Inizia a fare annotazioni per lasciare un commento.",
     "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
@@ -305,6 +306,8 @@
     "searching": "Ricerca in corso ...",
     "searchCommentsPlaceholder": "Cerca commenti",
     "searchDocumentPlaceholder": "Cerca documento",
+    "clearSearchResults": "Cancella i risultati della ricerca",
+    "searchResultsCleared": "Risultati della ricerca cancellati",
     "searchSettingsPlaceholder": "Impostazioni di ricerca",
     "searchSuggestionsPlaceholder": "Suggerimenti per la ricerca",
     "signHere": "Firmare qui",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Redigere",
       "toolbarGroup-oe-Home": "Casa",
       "toolbarGroup-oe-Insert": "Inserire",
+      "toolbarGroup-oe-Layout": "Disposizione",
       "toolbarGroup-oe-Review": "Revisione"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Aggiungi nuovo timbro"
     },
     "signatureOverlay": {
-      "addSignature": "Aggiungi una firma",
-      "addSignatureOrInitials": "Firma/iniziali"
+      "addSignatureOrInitials": "Nuova firma/iniziali",
+      "addSignature": "Nuova firma"
     },
     "signatureModal": {
       "modalName": "Crea nuova firma",
@@ -728,6 +732,8 @@
       "viewing": "Visualizzazione",
       "disableFadePageNavigationComponent": "Disabilita il componente di navigazione della pagina di dissolvenza",
       "disableFadePageNavigationComponentDesc": "Tieni sempre sullo schermo il componente di navigazione della pagina. Il comportamento predefinito è svanire dopo un certo periodo di inattività.",
+      "enabledFormFieldHighlighting": "Abilita evidenziazione campi modulo",
+      "enabledFormFieldHighlightingDesc": "Abilita l'evidenziazione dei campi modulo nei documenti PDF. Abilitata per impostazione predefinita.",
       "disableNativeScrolling": "Disabilita lo scorrimento nativo",
       "disableNativeScrollingDesc": "Disabilita il comportamento di scorrimento del dispositivo mobile nativo se era stato precedentemente abilitato. Tieni presente che il comportamento di scorrimento del dispositivo mobile nativo è disattivato per impostazione predefinita.",
       "annotations": "Annotazioni",
@@ -798,6 +804,12 @@
       "editShortcut": "Modifica collegamento",
       "shortcutAlreadyExists": "La scorciatoia da tastiera sopra esiste già.",
       "close": "Chiudi la descrizione comando"
+    },
+    "cellBorderStyle": {
+      "none": "Nessuno",
+      "solid": "Solido",
+      "dashed": "Tratteggiato",
+      "dotted": "punteggiato"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Interruzione di sezione - Continua",
     "sectionBreakContinuousDescription": "Inserisci interruzione di sezione e continua sulla stessa pagina",
     "section": "Sezione",
+    "margins": "Margini",
+    "normal": "Normale",
+    "narrow": "Stretto",
+    "moderate": "Moderare",
+    "wide": "Largo",
+    "top": "Superiore",
+    "bottom": "Metter il fondo a",
+    "left": "Sinistra",
+    "right": "Giusto",
+    "customMargins": "Margini personalizzati",
+    "customMarginsDescription": "Definisci margini personalizzati",
     "header": {
       "0": "Intestazione",
       "1": "Intestazione della prima pagina",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Rimuovi piè di pagina",
     "headerFooterOptionsModal": {
       "title": "Formato intestazione e piè di pagina",
-      "margins": "Margini",
       "headerFromTop": "Intestazione dall'alto",
       "footerFromBottom": "Piè di pagina dal basso",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Pagine pari e dispari diverse",
         "differentFirstEvenOddPages": "Diverse prime pagine, pari e dispari"
       }
+    },
+    "marginsModal": {
+      "title": "Regolazione del margine personalizzata",
+      "leftMargin": "Margine sinistro",
+      "rightMargin": "Margine destro",
+      "topMargin": "Margine superiore",
+      "bottomMargin": "Margine inferiore"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Corsivo",
     "underline": "Sottolineare",
     "strikethrough": "Barrato",
+    "strikeout": "Barrato",
     "cellBorderStyle": "Stile del bordo",
     "merge": "Unisci",
     "unmerge": "Separare",
     "cellFormat": "Formato cella",
-    "automatic": "Automatico",
-    "plainText": "Testo normale",
-    "increaseDecimal": "Aumenta decimale",
-    "decreaseDecimal": "Diminuire il decimale",
-    "number": "Numero",
-    "percent": "Percent",
-    "accounting": "Contabilità",
-    "financial": "Finanziario",
-    "currency": "Valuta",
-    "currencyRounded": "Valuta arrotondata",
-    "calendar": "Data",
-    "clockHour": "Tempo",
-    "calendarTime": "Data Ora",
+    "automaticFormat": "Automatico",
+    "plainTextFormat": "Testo normale",
+    "increaseDecimalFormat": "Aumenta decimale",
+    "decreaseDecimalFormat": "Diminuire il decimale",
+    "numberFormat": "Numero",
+    "percentFormat": "Percent",
+    "accountingFormat": "Contabilità",
+    "financialFormat": "Finanziario",
+    "currencyFormat": "Valuta",
+    "currencyRoundedFormat": "Valuta arrotondata",
+    "calendarFormat": "Data",
+    "clockHourFormat": "Tempo",
+    "calendarTimeFormat": "Data Ora",
     "formatAsCurrency": "Formato come valuta",
     "formatAsPercent": "Formato come percentuale",
     "formatAsDecDecimal": "Diminuire il punto decimale",
     "formatAsIncDecimal": "Aumentare il punto decimale",
-    "fontColor": "Colore del carattere",
-    "cellBackgroundColor": "Colore di sfondo della cella",
+    "textColor": "Colore del testo",
+    "cellBackgroundColor": "Colore di sfondo",
+    "cellBorderColor": "Colore del bordo",
+    "textLabel": "Testo",
+    "backgroundLabel": "Sfondo",
+    "borderLabel": "Confine",
     "textAlignment": "Allineamento del testo",
-    "alignLeft": "Allinea a sinistra",
-    "alignCenter": "Allinea il centro",
-    "alignRight": "Allinea a destra",
-    "alignTop": "Allinea in alto",
-    "alignMiddle": "Allinea al centro",
-    "alignBottom": "Allinea in basso",
+    "topAlign": "Allineamento superiore",
+    "middleAlign": "Allineamento centrale",
+    "bottomAlign": "Allineamento inferiore",
     "cellAdjustment": "Regolazione delle celle",
-    "insertColLeft": "Inserisci colonna a sinistra",
-    "columnInsertLeft": "Inserisci colonna a sinistra",
-    "columnInsertRight": "Inserisci colonna a destra",
-    "rowInsertTop": "Inserisci riga sopra",
-    "rowInsertBottom": "Inserisci riga sotto",
-    "columnInsertShiftDown": "Inserisci celle e spostati verso il basso",
-    "columnInsertShiftRight": "Inserisci celle e sposta a destra",
-    "columnDelete": "Elimina colonna",
-    "rowDelete": "Elimina riga",
-    "columnDeleteShiftUp": "Elimina le celle e spostati verso l'alto",
-    "columnDeleteShiftLeft": "Elimina le celle e sposta a sinistra"
+    "cellFormatMoreOptions": "Ulteriori opzioni di formato delle celle",
+    "insertColumnLeft": "Inserisci colonna a sinistra",
+    "insertColumnRight": "Inserisci colonna a destra",
+    "insertRowTop": "Inserisci riga sopra",
+    "insertRowBottom": "Inserisci riga sotto",
+    "insertColumnShiftDown": "Inserisci celle e sposta verso il basso",
+    "insertColumnShiftRight": "Inserisci celle e sposta a destra",
+    "deleteColumn": "Elimina colonna",
+    "deleteRow": "Elimina riga",
+    "deleteColumnShiftUp": "Elimina le celle e spostati verso l'alto",
+    "deleteColumnShiftLeft": "Elimina le celle e sposta a sinistra",
+    "clearBorder": "Cancella bordo",
+    "cellBorderAll": "Tutti i confini",
+    "cellBorderInside": "All'interno dei confini",
+    "cellBorderOutside": "Fuori dai confini",
+    "cellBorderTop": "Bordo superiore",
+    "cellBorderBottom": "Bordo inferiore",
+    "cellBorderLeft": "Bordo sinistro",
+    "cellBorderRight": "Bordo destro",
+    "cellBorderVertical": "Bordo verticale",
+    "cellBorderHorizontal": "Bordo orizzontale",
+    "cellBorderNone": "Nessun confine",
+    "borders": "Confini",
+    "fontSize": {
+      "dropdownLabel": "Dimensione del carattere"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Famiglia di caratteri"
+    },
+    "blankSheet": "Foglio bianco"
   },
   "insertPageModal": {
     "title": "Inserisci nuova pagina",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Aggiungi a colori personalizzati",
     "noToolSelected": "Seleziona uno strumento per visualizzarne le proprietà",
     "noToolStyle": "Lo strumento non contiene alcuna proprietà di stile.",
+    "noSharedToolStyle": "Le annotazioni selezionate non condividono alcuna proprietà di stile.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Inizio della linea"

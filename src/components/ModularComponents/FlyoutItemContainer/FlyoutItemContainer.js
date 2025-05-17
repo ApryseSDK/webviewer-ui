@@ -37,6 +37,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
 
     const flyoutItemLabel = label ?? title;
     const finalLabel = typeof flyoutItemLabel === 'string' ? t(flyoutItemLabel) : flyoutItemLabel;
+    const isSelected = props.additionalClass === 'active';
     return (
       <button
         className="flyout-item"
@@ -46,6 +47,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
         onKeyDown={onKeyDownHandler}
         data-element={dataElement}
         aria-label={finalLabel}
+        aria-pressed={isSelected}
       >
         <div className="icon-label-wrapper">
           {icon}

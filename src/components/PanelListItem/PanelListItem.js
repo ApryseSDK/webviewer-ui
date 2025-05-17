@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -113,7 +113,8 @@ const PanelListItem = ({
     moreOptionsDataElement,
   } = contextMenuMoreButtonOptions;
 
-  const updateFlyout = () => {
+  const updateFlyout = (e) => {
+    e.stopPropagation();
     const bookmarkOutlineFlyout = {
       dataElement: flyoutSelector,
       className: 'MoreOptionsContextMenuFlyout',
@@ -129,6 +130,18 @@ const PanelListItem = ({
   };
 
   const showCheckBox = checkboxOptions && !checkboxOptions.disabled || false;
+
+  useEffect(() => {
+    setIsExpanded(expanded);
+  }, [expanded]);
+
+  const handleOnExpand = (e) => {
+    e.stopPropagation();
+    setIsExpanded(!isExpanded);
+    if (setIsExpandedHandler) {
+      setIsExpandedHandler(!isExpanded);
+    }
+  };
 
   /* component layout when all options are enabled:
   checkbox|chevron| icon |    label header   |menu
@@ -163,12 +176,7 @@ const PanelListItem = ({
           )}
 
           <div
-            onClick={() => {
-              setIsExpanded(!isExpanded);
-              if (setIsExpandedHandler) {
-                setIsExpandedHandler(!isExpanded);
-              }
-            }}
+            onClick={handleOnExpand}
             className={classNames({
               'chevron-container': true,
               toggled: isExpanded,

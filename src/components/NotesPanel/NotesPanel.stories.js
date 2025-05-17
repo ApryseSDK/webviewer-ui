@@ -10,7 +10,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import core from 'core';
-import { userEvent, within, expect, waitFor, fireEvent } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from '@storybook/test';
 
 
 export default {
@@ -319,6 +319,13 @@ export const NotesPanelNotesWithComments = (args, context) => {
   rectangle.getRichTextStyle = () => ({ '0':{},'13':{ 'font-weight':'bold' },'30':{} });
   rectangle._replies = [replyAnnot];
   rectangle.getReplies = () => [replyAnnot];
+  rectangle.getCustomData = (key) => {
+    const customData = {
+      'trn-annot-preview': 'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before.',
+    };
+
+    return customData[key];
+  };
 
   core.getAnnotationsList = () => [rectangle, replyAnnot];
   core.getSelectedAnnotations = () => [rectangle];
@@ -359,10 +366,16 @@ NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
 
   await userEvent.click(link);
 
+  const preview = await canvas.getByText(/Space, the final frontier. These are the voyages of the Starship Enterprise/i);
+  expect(preview).toBeInTheDocument();
+
+  // Check computed style (text should be selectable and interactable)
+  const computedStyle = window.getComputedStyle(preview);
+  expect(computedStyle.pointerEvents).not.toBe('none');
+  expect(computedStyle.userSelect).not.toBe('none');
+
   const replyTextElement = await canvas.getByText(/Reply comment/i);
   await expect(replyTextElement).toBeInTheDocument();
-  await userEvent.click(replyTextElement);
-  await fireEvent.blur(replyTextElement);
 };
 
 export function NotesPanelWithNotesInFormFieldMode(args, context) {

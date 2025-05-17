@@ -4,6 +4,15 @@ import ColorPicker from '../ColorPicker';
 import Dropdown from '../../Dropdown';
 import CollapsibleSection from 'src/components/CollapsibleSection';
 import PropTypes from 'prop-types';
+import {
+  defaultStartLineStyles,
+  defaultStrokeStyles,
+  defaultEndLineStyles,
+  cloudyStrokeStyle
+} from 'constants/strokeStyleIcons';
+import { stylePanelSectionTitles } from 'helpers/stylePanelHelper';
+
+const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
 const StrokePanelSection = ({
   showFillColorAndCollapsablePanelSections,
@@ -12,6 +21,7 @@ const StrokePanelSection = ({
   onStyleChange,
   strokeColor,
   activeTool,
+  hideStrokeDropdowns,
   hideStrokeSlider,
   strokethicknessComponent,
   showLineStyleOptions,
@@ -19,26 +29,20 @@ const StrokePanelSection = ({
   strokeStyle,
   isInFormFieldCreationMode,
   isFreeText,
-  isFreeHand,
-  isArc,
   onStartLineStyleChange,
   startingLineStyle,
   isStyleOptionDisabled,
   onStrokeStyleChange,
   strokeLineStyle,
-  middleLineSegmentLabel,
-  isEllipse,
-  withCloudyStyle,
   onEndLineStyleChange,
   endingLineStyle,
-  defaultStartLineStyles,
-  defaultStrokeStyles,
-  defaultEndLineStyles,
   openStrokeStyleContainer,
   isStrokeStyleContainerActive,
-  stylePanelSectionTitles,
+  hideCloudyLineStyle,
 }) => {
   const [t] = useTranslation();
+
+  const middleLineSegmentLabel = showLineStyleOptions ? 'stylePanel.lineEnding.middle' : 'stylePanel.borderStyle';
 
   const sectionContent = (
     <div className="panel-section-wrapper">
@@ -53,7 +57,7 @@ const StrokePanelSection = ({
             When showLineStyleOptions is true, we want to show the opacity slider together with the stroke slider
           */}
           {showLineStyleOptions && <div className="StyleOption">{renderSlider('opacity')}</div>}
-          {!!strokeStyle && !(isInFormFieldCreationMode && !isFreeText) && !isFreeHand && !isArc && (
+          {!!strokeStyle && !(isInFormFieldCreationMode && !isFreeText) && !hideStrokeDropdowns && (
             <div className="StyleOption">
               <div className="styles-container lineStyleContainer">
                 <div className="styles-title">{t('option.styleOption.style')}</div>
@@ -77,7 +81,7 @@ const StrokePanelSection = ({
                       className={`StylePicker-StrokeLineStyleDropdown${!!strokeStyle && !showLineStyleOptions ? ' StyleOptions' : ''
                       }`}
                       dataElement="middleLineStyleDropdown"
-                      images={isEllipse || showLineStyleOptions ? defaultStrokeStyles : withCloudyStyle}
+                      images={showLineStyleOptions || hideCloudyLineStyle ? defaultStrokeStyles : withCloudyStyle}
                       onClickItem={onStrokeStyleChange}
                       currentSelectionKey={strokeLineStyle}
                       showLabelInList
@@ -130,6 +134,7 @@ StrokePanelSection.propTypes = {
   onStyleChange: PropTypes.func,
   strokeColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeTool: PropTypes.string,
+  hideStrokeDropdowns: PropTypes.bool,
   hideStrokeSlider: PropTypes.bool,
   strokethicknessComponent: PropTypes.node,
   showLineStyleOptions: PropTypes.bool,
@@ -137,22 +142,14 @@ StrokePanelSection.propTypes = {
   strokeStyle: PropTypes.string,
   isInFormFieldCreationMode: PropTypes.bool,
   isFreeText: PropTypes.bool,
-  isFreeHand: PropTypes.bool,
-  isArc: PropTypes.bool,
   onStartLineStyleChange: PropTypes.func,
   startingLineStyle: PropTypes.string,
   isStyleOptionDisabled: PropTypes.bool,
   onStrokeStyleChange: PropTypes.func,
   strokeLineStyle: PropTypes.string,
-  middleLineSegmentLabel: PropTypes.string,
-  isEllipse: PropTypes.bool,
-  withCloudyStyle: PropTypes.array,
   onEndLineStyleChange: PropTypes.func,
   endingLineStyle: PropTypes.string,
-  defaultStartLineStyles: PropTypes.array,
-  defaultStrokeStyles: PropTypes.array,
-  defaultEndLineStyles: PropTypes.array,
   openStrokeStyleContainer: PropTypes.func,
   isStrokeStyleContainerActive: PropTypes.bool,
-  stylePanelSectionTitles: PropTypes.func,
+  hideCloudyLineStyle: PropTypes.bool,
 };

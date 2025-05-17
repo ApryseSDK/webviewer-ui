@@ -33,6 +33,14 @@ LeftHeader.play = async ({ canvasElement }) => {
   expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
 };
 
+export const LeftHeaderWithPanel = createTemplate({ headers: headersWithLeftHeader, components: defaultModularComponents });
+LeftHeaderWithPanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const toolsHeader = canvas.getByLabelText('tools-header');
+  expect(toolsHeader).toBeInTheDocument();
+  window.instance.UI.openElements(['tabPanel']);
+};
+
 const headersWithRightHeader = {
   ...defaultModularHeaders,
   'tools-header': {
@@ -47,6 +55,14 @@ RightHeader.play = async ({ canvasElement }) => {
   expect(canvas.getByRole('navigation', { name: 'Top Header' })).toBeInTheDocument();
   expect(canvas.getByRole('navigation', { name: 'Right Header' })).toBeInTheDocument();
   expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
+};
+
+export const RightHeaderWithPanel = createTemplate({ headers: headersWithRightHeader, components: defaultModularComponents });
+RightHeaderWithPanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const toolsHeader = canvas.getByLabelText('tools-header');
+  expect(toolsHeader).toBeInTheDocument();
+  window.instance.UI.openElements(['searchPanel']);
 };
 
 const headersWithBottomHeader = {
@@ -64,6 +80,15 @@ BottomHeader.play = async ({ canvasElement }) => {
   expect(canvas.getByRole('navigation', { name: 'Bottom Header' })).toBeInTheDocument();
   expect(canvas.getByRole('main', { name: 'Document Content' })).toBeInTheDocument();
 };
+
+export const bottomHeaderWithPanels = createTemplate({ headers: headersWithBottomHeader, components: defaultModularComponents });
+bottomHeaderWithPanels.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const toolsHeader = canvas.getByLabelText('tools-header');
+  expect(toolsHeader).toBeInTheDocument();
+  window.instance.UI.openElements(['tabPanel', 'searchPanel']);
+};
+
 
 export const ActiveGroupHeaderTest = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
 ActiveGroupHeaderTest.play = async ({ canvasElement }) => {

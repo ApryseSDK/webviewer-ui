@@ -87,7 +87,7 @@ const PageSectionBreakDropdown = (props) => {
       return;
     }
     const item = PAGE_SECTION_BREAK_OPTIONS.find((item) => item.key === itemKey);
-    await item?.onClick();
+    await item.onClick();
 
     if (isFlyoutItem && activeFlyout) {
       dispatch(actions.closeElement(activeFlyout));

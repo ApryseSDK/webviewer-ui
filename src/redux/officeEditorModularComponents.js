@@ -48,6 +48,7 @@ const defaultOfficeEditorModularHeaders = {
     style: {},
     items: [
       'officeEditorHomeGroupedItems',
+      'officeEditorLayoutGroupedItems',
       'officeEditorInsertGroupedItems',
       // 'officeEditorReviewGroupedItems'
     ]
@@ -89,9 +90,9 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'fontSizeDropdown',
     type: 'fontSizeDropdown',
   },
-  fontFaceDropdown: {
-    dataElement: 'fontFaceDropdown',
-    type: 'fontFaceDropdown',
+  fontFamilyDropdown: {
+    dataElement: 'fontFamilyDropdown',
+    type: 'fontFamilyDropdown',
   },
   stylePresetDropdown: {
     dataElement: 'stylePresetDropdown',
@@ -111,6 +112,12 @@ const defaultOfficeEditorModularComponents = {
     dataElement: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
     type: 'presetButton',
     buttonType: PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+  },
+  officeEditorMarginDropdown: {
+    dataElement: DataElements.OFFICE_EDITOR_MARGIN_DROPDOWN,
+    type: ITEM_TYPE.OFFICE_EDITOR_MARGIN_DROPDOWN,
+    icon: 'icon-office-editor-margin',
+    title: 'officeEditor.margins',
   },
   officeEditorBreakDropdown: {
     dataElement: DataElements.OFFICE_EDITOR_BREAK_DROPDOWN,
@@ -249,6 +256,10 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'divider-0.9',
     type: 'divider'
   },
+  'divider-1.0': {
+    dataElement: 'divider-1.0',
+    type: 'divider'
+  },
   'menuButton': {
     dataElement: DataElements.MENU_OVERLAY_BUTTON,
     img: 'ic-hamburger-menu',
@@ -294,6 +305,16 @@ const defaultOfficeEditorModularComponents = {
       'officeEditorHomeGroupedItems',
     ],
   },
+  'toolbarGroup-oe-Layout': {
+    dataElement: 'toolbarGroup-oe-Layout',
+    title: 'Layout',
+    type: 'ribbonItem',
+    label: 'Layout',
+    toolbarGroup: 'toolbarGroup-oe-Layout',
+    groupedItems: [
+      'officeEditorLayoutGroupedItems',
+    ],
+  },
   'toolbarGroup-oe-Insert': {
     dataElement: 'toolbarGroup-oe-Insert',
     title: 'Insert',
@@ -318,6 +339,7 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'office-editor-default-ribbon-group',
     items: [
       'toolbarGroup-oe-Home',
+      'toolbarGroup-oe-Layout',
       'toolbarGroup-oe-Insert',
       // 'toolbarGroup-oe-Review',
     ],
@@ -339,7 +361,7 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'officeEditorHomeGroupedItems',
     items: [
       'stylePresetDropdown',
-      'fontFaceDropdown',
+      'fontFamilyDropdown',
       'fontSizeDropdown',
       'divider-0.2',
       'boldButton',
@@ -362,6 +384,20 @@ const defaultOfficeEditorModularComponents = {
       'increaseIndentButton',
       'toggleNonPrintingCharactersButton',
       'divider-0.8',
+      'undoButton',
+      'redoButton',
+    ],
+    type: 'groupedItems',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {}
+  },
+  officeEditorLayoutGroupedItems: {
+    dataElement: 'officeEditorLayoutGroupedItems',
+    items: [
+      ITEM_TYPE.OFFICE_EDITOR_MARGIN_DROPDOWN,
+      'divider-1.0',
       'undoButton',
       'redoButton',
     ],

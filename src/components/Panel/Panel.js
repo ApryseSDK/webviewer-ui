@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -16,34 +16,18 @@ const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
   const isMobile = isMobileSize();
 
-  const [
-    currentWidth,
-    isInDesktopOnlyMode,
-    isOpen,
-    isDisabled,
-    currentToolbarGroup,
-    isHeaderOpen,
-    isToolsHeaderOpen,
-    isLogoBarEnabled,
-    featureFlags,
-    activeTopHeaders,
-    isMultiTabActive,
-  ] = useSelector(
-    (state) => [
-      selectors.getPanelWidth(state, dataElement),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.isElementOpen(state, dataElement),
-      selectors.isElementDisabled(state, dataElement),
-      selectors.getCurrentToolbarGroup(state),
-      selectors.isElementOpen(state, 'header'),
-      selectors.isElementOpen(state, 'toolsHeader'),
-      !selectors.isElementDisabled(state, 'logoBar'),
-      selectors.getFeatureFlags(state),
-      selectors.getActiveTopHeaders(state),
-      selectors.getIsMultiTab(state),
-    ],
-    shallowEqual,
-  );
+  const currentWidth = useSelector((state) => selectors.getPanelWidth(state, dataElement));
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, dataElement));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
+  const currentToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
+  const isHeaderOpen = useSelector((state) => selectors.isElementOpen(state, 'header'));
+  const isToolsHeaderOpen = useSelector((state) => selectors.isElementOpen(state, 'toolsHeader'));
+  const isLogoBarEnabled = useSelector((state) => !selectors.isElementDisabled(state, 'logoBar'));
+  const featureFlags = useSelector(selectors.getFeatureFlags);
+  const activeTopHeaders = useSelector(selectors.getActiveTopHeaders);
+  const activeBottomHeaders = useSelector(selectors.getActiveBottomHeaders);
+  const isMultiTabActive = useSelector(selectors.getIsMultiTab);
   const dispatch = useDispatch();
 
   let style = {};
@@ -79,6 +63,10 @@ const DesktopPanel = ({ children }) => {
     e.preventDefault();
   };
 
+  const isModularToolsHeaderOpen =
+    activeTopHeaders.length === 2 ||
+    (activeTopHeaders.length === 1 && activeBottomHeaders.length === 1) ||
+    activeBottomHeaders.length === 2;
 
   return (
     <div
@@ -87,8 +75,8 @@ const DesktopPanel = ({ children }) => {
         'closed': !isVisible,
         'left': isLeftSide,
         'right': isRightSide,
-        'tools-header-open': customizableUI ? activeTopHeaders.length === 2 : legacyToolsHeaderOpen,
-        'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 : legacyAllHeadersHidden,
+        'tools-header-open': customizableUI ? isModularToolsHeaderOpen : legacyToolsHeaderOpen,
+        'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 && activeBottomHeaders.length === 0 : legacyAllHeadersHidden,
         'logo-bar-enabled': isLogoBarEnabled,
         'modular-ui-panel': customizableUI,
         'multi-tab-active': isMultiTabActive,

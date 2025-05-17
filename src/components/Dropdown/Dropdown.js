@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
+import isNumber from 'lodash/isNumber';
 
 import './Dropdown.scss';
 
@@ -197,7 +198,10 @@ function Dropdown({
     }
 
     // Keep the dropdown within the bounds of the viewer.
-    const overlayBounds = overlayRef?.current?.getBoundingClientRect();
+    let overlayHeight = overlayRef.current?.scrollHeight;
+    if (maxHeight) {
+      overlayHeight = Math.min(overlayHeight, maxHeight);
+    }
     const buttonBounds = buttonRef?.current?.getBoundingClientRect();
     let scrollBounds = overlayRef?.current?.closest('body')?.getBoundingClientRect();
 
@@ -206,27 +210,38 @@ function Dropdown({
     }
 
     // Only proceed with positioning if we have bounds and the dropdown is being opened.
-    if (overlayBounds && !isOpen) {
+    if (overlayHeight && !isOpen) {
       const offset = (arrowDirection === 'left' || arrowDirection === 'right') ? buttonBounds.height : 0;
 
       // Determine whether to open downward or upward based on available space
-      const canOpenDownward = scrollBounds.bottom >= buttonBounds.bottom + overlayBounds.height;
-      const canOpenUpward = scrollBounds.top <= buttonBounds.top - overlayBounds.height;
+      const canOpenDownward = scrollBounds.bottom >= buttonBounds.bottom + overlayHeight;
+      const canOpenUpward = scrollBounds.top <= buttonBounds.top - overlayHeight;
 
       // Adjust the top position of the dropdown based on available space
       if (canOpenDownward) {
         overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
         overlayRef.current.style.maxHeight = maxHeight ? `${maxHeight}px` : '';
       } else if (canOpenUpward) {
-        overlayRef.current.style.top = `-${overlayBounds.height - offset}px`;
+        overlayRef.current.style.top = `-${overlayHeight - offset}px`;
         overlayRef.current.style.maxHeight = maxHeight ? `${maxHeight}px` : ''; // Use prop if available
       } else {
-        // Default to downward with clipping and scrolling
-        overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
-        // Set max height to either the prop value or the available space
-        overlayRef.current.style.maxHeight = maxHeight
-          ? `${maxHeight}px`
-          : `${scrollBounds.bottom - buttonBounds.bottom}px`; // Fallback to available space
+        const spaceAbove = buttonBounds.top;
+        const spaceBelow = scrollBounds.bottom - buttonBounds.bottom;
+        const SMALLEST_HEIGHT = 24;
+        const getMaxHeight = (availableSpace) => {
+          let valuesToCheck = [maxHeight, overlayHeight, availableSpace].filter((val) => isNumber(val));
+          let val = Math.min(...valuesToCheck);
+          return Math.max(val, SMALLEST_HEIGHT);
+        };
+        if (spaceBelow >= spaceAbove) {
+          const newHeight = getMaxHeight(spaceBelow);
+          overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
+          overlayRef.current.style.maxHeight = `${newHeight}px`;
+        } else {
+          const newHeight = getMaxHeight(spaceAbove);
+          overlayRef.current.style.top = `-${newHeight - offset}px`;
+          overlayRef.current.style.maxHeight = `${newHeight}px`;
+        }
         overlayRef.current.style.overflowY = 'auto'; // Enable vertical scrolling
       }
 

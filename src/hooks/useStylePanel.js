@@ -9,10 +9,7 @@ import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import handleFreeTextAutoSizeToggle from 'helpers/handleFreeTextAutoSizeToggle';
 import getTextDecoration from 'helpers/getTextDecoration';
 import { hexToRGBA } from 'helpers/color';
-import {
-  extractUniqueFontFamilies,
-  stylePanelSectionTitles,
-} from 'helpers/stylePanelHelper';
+import { extractUniqueFontFamilies, stylePanelSectionTitles, } from 'helpers/stylePanelHelper';
 import { useTranslation } from 'react-i18next';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
@@ -52,9 +49,6 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   const selectedAnnotation = selectedAnnotations?.[0];
 
   useEffect(() => {
-    if (currentTool?.name === 'AnnotationCreateRubberStamp') {
-      core.setToolMode(defaultTool);
-    }
     updateSnapModeFromTool(currentTool);
   }, [currentTool]);
 
@@ -166,7 +160,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       setIsAutoSizeFont(styles.isAutoSizeFont);
     }
 
-    setStyle(styles);
+    setStyle(styles || {});
     setStartLineStyle(styles?.StartLineStyle || '');
     setEndLineStyle(styles?.EndLineStyle || '');
     setStrokeStyle(styles?.StrokeStyle || '');
@@ -181,7 +175,8 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
         setPanelTitleForAnnotation(selectedAnnotation);
       }
       updateStylePanelProps(selectedAnnotation);
-      setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(selectedAnnotation.ToolName)).hasLineEndings);
+      const hasLineEndings = selectedAnnotations.every((annotation) => getDataWithKey(mapToolNameToKey(annotation.ToolName)).hasLineEndings);
+      setShowLineStyleOptions(hasLineEndings);
     } else if (currentTool) {
       updateFromTool(currentTool);
       setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
@@ -235,6 +230,9 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
         } else {
           setToolStyles(currentTool.name, property, value);
         }
+        if (currentTool instanceof window.Core.Tools.RubberStampCreateTool) {
+          currentTool.showPreview();
+        }
       }
     }
   };
@@ -283,9 +281,10 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   };
 
   const handleAutoSize = () => {
-    const annotation = selectedAnnotations[0];
-    if (annotation) {
-      handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont);
+    if (selectedAnnotations.length > 0) {
+      selectedAnnotations.forEach((annotation) => {
+        handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont);
+      });
     } else if (currentTool) {
       setToolStyles(currentTool.name, 'isAutoSizeFont', !isAutoSizeFont);
       setIsAutoSizeFont(!isAutoSizeFont);

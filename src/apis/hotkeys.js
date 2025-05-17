@@ -14,5 +14,12 @@ export default {
   off: (...args) => {
     hotkeysManager.off(...args);
   },
+  /**
+   * Restores the hotkeys to default and disables previously unbinded hotkeys.
+   * @ignore
+   */
+  restoreHotkeys: () => {
+    hotkeysManager.restoreHotkeys();
+  },
   Keys,
 };

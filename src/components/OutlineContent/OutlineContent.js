@@ -76,7 +76,6 @@ const OutlineContent = ({
 
   const [isDefault, setIsDefault] = useState(false);
   const [outlineText, setOutlineText] = useState(text);
-  const [isRenaming, setIsRenaming] = useState(false);
   const inputRef = useRef();
 
   const handleKeyDown = (e) => {
@@ -102,7 +101,6 @@ const OutlineContent = ({
 
   const onRenameOutline = () => {
     setOutlineRenaming(false);
-    setIsRenaming(false);
     renameOutline(outlinePath, outlineText);
   };
 
@@ -110,7 +108,6 @@ const OutlineContent = ({
     updateOutlines();
     if (isOutlineRenaming) {
       setOutlineRenaming(false);
-      setIsRenaming(false);
       setOutlineText(text);
     }
     if (isOutlineChangingDest) {
@@ -159,7 +156,6 @@ const OutlineContent = ({
     switch (val) {
       case menuTypes.RENAME:
         setOutlineRenaming(true);
-        setIsRenaming(true);
         break;
       case menuTypes.SETDEST:
         setOutlineChangingDest(true);
@@ -223,7 +219,6 @@ const OutlineContent = ({
   const onDoubleClick = () => {
     if (isOutlineEditable) {
       setOutlineRenaming(true);
-      setIsRenaming(true);
     }
   };
 
@@ -247,7 +242,7 @@ const OutlineContent = ({
           {t('component.newOutlineTitle')}
         </div>
       }
-      {isRenaming &&
+      {isOutlineRenaming &&
         <div className="bookmark-outline-label">
           {t('component.outlineTitle')}
         </div>
@@ -258,7 +253,7 @@ const OutlineContent = ({
           key={outlinePath}
           labelHeader={text}
           textColor={textColor}
-          enableMoreOptionsContextMenuFlyout={true}
+          enableMoreOptionsContextMenuFlyout={isOutlineEditable}
           onDoubleClick={onDoubleClick}
           checkboxOptions={checkboxOptions}
           contentMenuFlyoutOptions={contentMenuFlyoutOptions}
@@ -295,7 +290,7 @@ const OutlineContent = ({
         />
       }
 
-      {(isAdding || isRenaming || isOutlineChangingDest) &&
+      {(isAdding || isOutlineChangingDest) &&
         <div className="outline-destination">
           {t('component.destination')}: {t('component.bookmarkPage')} {currentDestPage},
           <span style={{ fontStyle: 'italic' }}> “{currentDestText}”</span>

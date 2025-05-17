@@ -2,7 +2,8 @@ import React from 'react';
 import GroupedItems from './GroupedItems';
 import { Provider, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { mockModularComponents } from '../AppStories/mockAppState';
+import { defaultModularComponents } from 'src/redux/modularComponents';
+import initialState from 'src/redux/initialState';
 import {
   button1,
   button2,
@@ -24,28 +25,19 @@ export default {
   component: GroupedItems,
 };
 
-const initialState = {
-  viewer: {
-    disabledElements: {},
-    customElementOverrides: {},
-    openElements: {},
-    customPanels: [],
-    flyoutMap: {},
-    modularComponents: {
-      ...mockModularComponents,
-      button1,
-      button2,
-    },
-  },
-  featureFlags: {
-    customizableUI: true,
-  },
-};
 
-export const Group = () => {
+export const GroupWithFormBuilderTools = () => {
+  const {
+    signatureFieldButton,
+    textFieldButton,
+    checkboxFieldButton,
+    radioFieldButton,
+    listBoxFieldButton,
+    comboBoxFieldButton,
+  } = defaultModularComponents;
   const props = {
     dataElement: 'grouped-item',
-    items: [button1, button2]
+    items: [signatureFieldButton, textFieldButton, checkboxFieldButton, radioFieldButton, listBoxFieldButton, comboBoxFieldButton],
   };
 
   return (
@@ -72,28 +64,7 @@ const groupedItem = {
   dataElement: 'grouped-item',
   items,
 };
-const state = {
-  ...initialState,
-  viewer: {
-    ...initialState.viewer,
-    modularComponents: {
-      'grouped-item': groupedItem,
-      button1,
-      button2,
-      button3,
-      button4,
-      button5,
-      button6,
-      button7,
-      button8,
-      button9,
-    },
-    customElementSizes: {
-      'grouped-item': 5,
-    },
-    genericPanels: [],
-  },
-};
+
 const store = configureStore({ reducer: rootReducer });
 store.dispatch(actions.setModularHeaderItems('default-top-header', [groupedItem]));
 store.dispatch(actions.setCustomElementSize('grouped-item', 5));

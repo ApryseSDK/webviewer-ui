@@ -1256,6 +1256,17 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, shouldAddA11yContentToDOM: payload.shouldAddA11yContentToDOM };
     case 'SET_UI_CONFIGURATION':
       return { ...state, uiConfiguration: payload };
+
+    case 'ENABLE_WIDGET_HIGHLIGHTING':
+      return {
+        ...state,
+        isWidgetHighlightingEnabled: true,
+      };
+    case 'DISABLE_WIDGET_HIGHLIGHTING':
+      return {
+        ...state,
+        isWidgetHighlightingEnabled: false,
+      };
     default:
       return state;
   }

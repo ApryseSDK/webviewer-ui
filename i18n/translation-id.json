@@ -145,7 +145,8 @@
     "showMoreColors": "Tampilkan Lebih Banyak Warna",
     "showLessColors": "Tampilkan Lebih Sedikit Warna",
     "fromCustomColorPicker": "dari Pemilih Warna Kustom",
-    "newSpreadsheetDocument": "Lembar Kerja Baru"
+    "newSpreadsheetDocument": "Lembar Kerja Baru",
+    "resetDefault": "Setel ulang ke default"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -283,7 +284,7 @@
     "encryptedAttemptsExceeded": "Gagal memuat dokumen terenkripsi. Terlalu banyak upaya.",
     "encryptedUserCancelled": "Gagal memuat dokumen terenkripsi. Entri kata sandi dibatalkan.",
     "enterPassword": "Dokumen ini dilindungi kata sandi. Silakan masukkan kata sandi",
-    "incorrectPassword": "Sandi salah, upaya tersisa: {{ residualAttempts }}",
+    "incorrectPassword": "Sandi salah, upaya tersisa: {{ remainingAttempts }}",
     "noAnnotations": "Mulailah membuat anotasi untuk meninggalkan komentar.",
     "noAnnotationsReadOnly": "Dokumen ini tidak memiliki anotasi.",
     "noAnnotationsFilter": "Mulai membuat anotasi dan filter akan muncul di sini.",
@@ -305,6 +306,8 @@
     "searching": "Mencari...",
     "searchCommentsPlaceholder": "Cari komentar",
     "searchDocumentPlaceholder": "Cari dokumen",
+    "clearSearchResults": "Hapus hasil pencarian",
+    "searchResultsCleared": "Hasil pencarian dihapus",
     "searchSettingsPlaceholder": "Pengaturan pencarian",
     "searchSuggestionsPlaceholder": "Saran pencarian",
     "signHere": "Tanda tangan di sini",
@@ -395,6 +398,7 @@
       "toolbarGroup-Redact": "Menyusun",
       "toolbarGroup-oe-Home": "Rumah",
       "toolbarGroup-oe-Insert": "Menyisipkan",
+      "toolbarGroup-oe-Layout": "Tata Letak",
       "toolbarGroup-oe-Review": "Tinjauan"
     },
     "annotationColor": {
@@ -490,8 +494,8 @@
       "addStamp": "Tambahkan Stempel Baru"
     },
     "signatureOverlay": {
-      "addSignature": "Tambahkan Tanda Tangan Baru",
-      "addSignatureOrInitials": "Tanda tangan/Inisial"
+      "addSignatureOrInitials": "Tanda tangan/Inisial Baru",
+      "addSignature": "Tanda Tangan Baru"
     },
     "signatureModal": {
       "modalName": "Buat Tanda Tangan Baru",
@@ -728,6 +732,8 @@
       "viewing": "Melihat",
       "disableFadePageNavigationComponent": "Nonaktifkan Komponen Navigasi Halaman Pudar",
       "disableFadePageNavigationComponentDesc": "Selalu simpan Komponen Navigasi Halaman di layar. Perilaku default adalah memudarnya setelah periode tidak aktif tertentu.",
+      "enabledFormFieldHighlighting": "Aktifkan Sorotan Bidang Formulir",
+      "enabledFormFieldHighlightingDesc": "Aktifkan penyorotan kolom formulir dalam dokumen PDF. Diaktifkan secara default.",
       "disableNativeScrolling": "Nonaktifkan Pengguliran Asli",
       "disableNativeScrollingDesc": "Nonaktifkan perilaku pengguliran perangkat seluler asli jika sebelumnya telah diaktifkan. Perhatikan bahwa perilaku pengguliran perangkat seluler asli dinonaktifkan secara default.",
       "annotations": "Anotasi",
@@ -798,6 +804,12 @@
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan keyboard di atas sudah ada.",
       "close": "Tutup keterangan alat"
+    },
+    "cellBorderStyle": {
+      "none": "Tidak ada",
+      "solid": "Padat",
+      "dashed": "putus-putus",
+      "dotted": "Burik"
     }
   },
   "warning": {
@@ -1317,6 +1329,17 @@
     "sectionBreakContinuous": "Pemisah Bagian - Berkelanjutan",
     "sectionBreakContinuousDescription": "Masukkan pemisah bagian dan lanjutkan pada halaman yang sama",
     "section": "Bagian",
+    "margins": "Margin",
+    "normal": "Normal",
+    "narrow": "Sempit",
+    "moderate": "Sedang",
+    "wide": "Lebar",
+    "top": "Atas",
+    "bottom": "Dasar",
+    "left": "Kiri",
+    "right": "Benar",
+    "customMargins": "Margin Kustom",
+    "customMarginsDescription": "Tentukan margin khusus",
     "header": {
       "0": "Judul",
       "1": "Header Halaman Pertama",
@@ -1337,7 +1360,6 @@
     "removeFooter": "Hapus Footer",
     "headerFooterOptionsModal": {
       "title": "Format header dan footer",
-      "margins": "Margin",
       "headerFromTop": "Header dari Atas",
       "footerFromBottom": "Footer dari Bawah",
       "layouts": {
@@ -1347,6 +1369,13 @@
         "differentEvenOddPages": "Halaman Genap & Ganjil yang Berbeda",
         "differentFirstEvenOddPages": "Halaman Pertama, Genap, dan Ganjil yang Berbeda"
       }
+    },
+    "marginsModal": {
+      "title": "Penyesuaian Margin Kustom",
+      "leftMargin": "Margin Kiri",
+      "rightMargin": "Margin Kanan",
+      "topMargin": "Margin Atas",
+      "bottomMargin": "Margin Bawah"
     },
     "lineSpacingOptions": {
       "15": "1.5",
@@ -1391,48 +1420,69 @@
     "italic": "Miring",
     "underline": "Menggarisbawahi",
     "strikethrough": "Dicoret",
+    "strikeout": "Coretan",
     "cellBorderStyle": "Gaya Perbatasan",
     "merge": "Menggabungkan",
     "unmerge": "Pisahkan",
     "cellFormat": "Format Sel",
-    "automatic": "Otomatis",
-    "plainText": "Teks biasa",
-    "increaseDecimal": "Meningkatkan desimal",
-    "decreaseDecimal": "Kurangi desimal",
-    "number": "Nomor",
-    "percent": "Persen",
-    "accounting": "Akuntansi",
-    "financial": "Finansial",
-    "currency": "Mata uang",
-    "currencyRounded": "Mata uang dibulatkan",
-    "calendar": "Tanggal",
-    "clockHour": "Waktu",
-    "calendarTime": "Tanggal Waktu",
+    "automaticFormat": "Otomatis",
+    "plainTextFormat": "Teks biasa",
+    "increaseDecimalFormat": "Meningkatkan desimal",
+    "decreaseDecimalFormat": "Kurangi desimal",
+    "numberFormat": "Nomor",
+    "percentFormat": "Persen",
+    "accountingFormat": "Akuntansi",
+    "financialFormat": "Finansial",
+    "currencyFormat": "Mata uang",
+    "currencyRoundedFormat": "Mata uang dibulatkan",
+    "calendarFormat": "Tanggal",
+    "clockHourFormat": "Waktu",
+    "calendarTimeFormat": "Tanggal Waktu",
     "formatAsCurrency": "Format sebagai mata uang",
     "formatAsPercent": "Format sebagai persen",
     "formatAsDecDecimal": "Kurangi titik desimal",
     "formatAsIncDecimal": "Meningkatkan titik desimal",
-    "fontColor": "Warna Huruf",
-    "cellBackgroundColor": "Warna Latar Belakang Sel",
+    "textColor": "Warna Teks",
+    "cellBackgroundColor": "Warna Latar Belakang",
+    "cellBorderColor": "Warna Batas",
+    "textLabel": "Teks",
+    "backgroundLabel": "Latar belakang",
+    "borderLabel": "Berbatasan",
     "textAlignment": "Penyelarasan Teks",
-    "alignLeft": "Rata kiri",
-    "alignCenter": "Sejajarkan tengah",
-    "alignRight": "Rata kanan",
-    "alignTop": "Sejajarkan bagian atas",
-    "alignMiddle": "Sejajarkan tengah",
-    "alignBottom": "Sejajarkan bagian bawah",
+    "topAlign": "Rata atas",
+    "middleAlign": "Rata tengah",
+    "bottomAlign": "Rata bawah",
     "cellAdjustment": "Penyesuaian Sel",
-    "insertColLeft": "Sisipkan kolom kiri",
-    "columnInsertLeft": "Sisipkan kolom kiri",
-    "columnInsertRight": "Sisipkan kolom kanan",
-    "rowInsertTop": "Sisipkan baris di atas",
-    "rowInsertBottom": "Sisipkan baris di bawah",
-    "columnInsertShiftDown": "Masukkan sel dan geser ke bawah",
-    "columnInsertShiftRight": "Sisipkan sel dan geser ke kanan",
-    "columnDelete": "Hapus kolom",
-    "rowDelete": "Hapus baris",
-    "columnDeleteShiftUp": "Hapus sel dan geser ke atas",
-    "columnDeleteShiftLeft": "Hapus sel dan geser ke kiri"
+    "cellFormatMoreOptions": "Lebih banyak opsi format sel",
+    "insertColumnLeft": "Sisipkan kolom kiri",
+    "insertColumnRight": "Sisipkan kolom kanan",
+    "insertRowTop": "Sisipkan baris di atas",
+    "insertRowBottom": "Sisipkan baris di bawah",
+    "insertColumnShiftDown": "Masukkan sel dan geser ke bawah",
+    "insertColumnShiftRight": "Masukkan sel dan geser ke kanan",
+    "deleteColumn": "Hapus kolom",
+    "deleteRow": "Hapus baris",
+    "deleteColumnShiftUp": "Hapus sel dan geser ke atas",
+    "deleteColumnShiftLeft": "Hapus sel dan geser ke kiri",
+    "clearBorder": "Batas yang jelas",
+    "cellBorderAll": "Semua Perbatasan",
+    "cellBorderInside": "Di Dalam Perbatasan",
+    "cellBorderOutside": "Di Luar Batas",
+    "cellBorderTop": "Batas Atas",
+    "cellBorderBottom": "Batas Bawah",
+    "cellBorderLeft": "Batas Kiri",
+    "cellBorderRight": "Batas Kanan",
+    "cellBorderVertical": "Batas Vertikal",
+    "cellBorderHorizontal": "Batas Horisontal",
+    "cellBorderNone": "Tidak Ada Batas",
+    "borders": "Perbatasan",
+    "fontSize": {
+      "dropdownLabel": "Ukuran Font"
+    },
+    "fontFamily": {
+      "dropdownLabel": "Keluarga Font"
+    },
+    "blankSheet": "Lembar Kosong"
   },
   "insertPageModal": {
     "title": "Sisipkan Halaman Baru",
@@ -1547,6 +1597,7 @@
     "addColorToCustom": "Tambahkan ke warna khusus",
     "noToolSelected": "Pilih alat untuk melihat properti alat",
     "noToolStyle": "Alat tidak mengandung properti penataan gaya apa pun.",
+    "noSharedToolStyle": "Anotasi yang dipilih tidak berbagi properti gaya apa pun.",
     "lineEnding": {
       "start": {
         "dropdownLabel": "Garis Mulai"
