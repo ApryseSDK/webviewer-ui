@@ -13,6 +13,7 @@ const useAddColorHandler = ({
   type,
   activeToolName = '',
   setColors,
+  useHex = false,
 }) => {
   const dispatch = useDispatch();
   const store = useStore();
@@ -26,15 +27,16 @@ const useAddColorHandler = ({
       if (element === DataElements.COLOR_PICKER_MODAL && !isVisible) {
         const colorObject = getCustomColorAndRemove(dispatch, store);
         const color = parseColor(colorObject);
+        const newColor = useHex ? color : colorObject;
         if (color) {
           if (colors.includes(color)) {
-            setSelectedColor(colorObject);
-            onColorChange(colorObject);
+            setSelectedColor(newColor);
+            onColorChange(newColor);
           } else {
             const newColors = [...colors, color];
             setColors(newColors);
-            setSelectedColor(colorObject);
-            onColorChange(colorObject);
+            setSelectedColor(newColor);
+            onColorChange(newColor);
           }
         }
         getInstanceNode().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);

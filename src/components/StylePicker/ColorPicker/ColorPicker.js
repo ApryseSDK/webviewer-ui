@@ -57,6 +57,7 @@ const ColorPicker = ({
     setSelectedColor,
     onColorChange,
     setColors: (newColors) => dispatch(actions.setColors(newColors, activeToolName, type, true)),
+    useHex: true,
   });
 
   const openColorPickerModalWithFocus = useFocusHandler(handleAddColor);

@@ -703,10 +703,6 @@ const App = ({ removeEventHandlers }) => {
               Component={LazyLoadComponents.HeaderFooterOptionsModal}
               dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
             />
-            <LazyLoadWrapper
-              Component={LazyLoadComponents.OfficeEditorMarginsModal}
-              dataElement={DataElements.OFFICE_EDITOR_MARGINS_MODAL}
-            />
           </>
         )}
       </div>

@@ -4,8 +4,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import { userEvent, expect, within } from '@storybook/test';
 import EditorFileName from './EditorFileName';
-import { OEModularUIMockState, string280Chars } from 'src/helpers/storybookHelper';
-import { FILESAVERJS_MAX_NAME_LENTH } from 'src/constants/fileName';
+import { OEModularUIMockState, string280Chars } from 'helpers/storybookHelper';
+import { FILESAVERJS_MAX_NAME_LENTH } from 'constants/fileName';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+
 export default {
   title: 'ModularComponents/EditorFileName',
   component: EditorFileName,
@@ -15,7 +18,7 @@ const initialState = OEModularUIMockState;
 
 const store = configureStore({ reducer: () => initialState });
 
-const prepareButtonStory = () => {
+const prepareButtonStory = (dataElement = 'editorFileName') => {
   const oldDoc = core.getDocument;
   core.getDocument = () => ({
     getFilename: () => 'test.docx',
@@ -27,7 +30,7 @@ const prepareButtonStory = () => {
 
   return (
     <Provider store={store}>
-      <EditorFileName dataElement='editorFileName' />
+      <EditorFileName dataElement={dataElement} />
     </Provider>
   );
 };
@@ -60,3 +63,14 @@ FileNameButton.play = async ({ canvasElement }) => {
   const inputCap = secondInput.value.length + extension.length;
   expect(inputCap).toBe(FILESAVERJS_MAX_NAME_LENTH);
 };
+
+export function OfficeEditorDisabledFileName() {
+  initialState.officeEditor.editMode = OfficeEditorEditMode.VIEW_ONLY;
+  return prepareButtonStory();
+}
+
+export function SpreadsheetEditorDisabledFileName() {
+  initialState.viewer.isSpreadsheetEditorModeEnabled = true;
+  initialState.spreadsheetEditor.editMode = SpreadsheetEditorEditMode.VIEW_ONLY;
+  return prepareButtonStory('spreadsheetEditorFileName');
+}

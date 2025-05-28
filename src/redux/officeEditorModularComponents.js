@@ -48,7 +48,6 @@ const defaultOfficeEditorModularHeaders = {
     style: {},
     items: [
       'officeEditorHomeGroupedItems',
-      'officeEditorLayoutGroupedItems',
       'officeEditorInsertGroupedItems',
       // 'officeEditorReviewGroupedItems'
     ]
@@ -339,7 +338,6 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'office-editor-default-ribbon-group',
     items: [
       'toolbarGroup-oe-Home',
-      'toolbarGroup-oe-Layout',
       'toolbarGroup-oe-Insert',
       // 'toolbarGroup-oe-Review',
     ],

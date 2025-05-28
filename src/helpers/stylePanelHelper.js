@@ -22,6 +22,7 @@ export const shouldHideStrokeDropdowns = (toolName) => {
     Tools.FreeHandHighlightCreateTool,
     Tools.ArcCreateTool,
     Tools.ArcMeasurementCreateTool,
+    Tools.TextAnnotationCreateTool,
   ];
 
   return toolsWithNoStrokeDropdowns.some((tool) => core.getTool(toolName) instanceof tool);

@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import core from 'core';
-import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import useOnDocumentFileNameEdit from 'hooks/useOnDocumentFileNameEdit';
 import Button from 'components/Button';
 import './EditorFileName.scss';
 import PropTypes from 'prop-types';
 import { isMobileSize } from 'helpers/getDeviceSize';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 import { FILESAVERJS_MAX_NAME_LENTH } from 'src/constants/fileName';
 
-const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
 const EditorFileName = ({ dataElement }) => {
   const { t } = useTranslation();
   const {
+    viewOnly,
     extension,
     isEditing,
     fileNameWithoutExtension,
@@ -26,10 +24,7 @@ const EditorFileName = ({ dataElement }) => {
     handleKeyDown,
   } = useOnDocumentFileNameEdit();
 
-  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
-  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
-  const isSpreadsheetAndReadOnlyMode = isSpreadsheetEditorMode && spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY;
-  const buttonTitlePrefix = isSpreadsheetAndReadOnlyMode ? '' : `${t('action.edit')} ${t('saveModal.fileName')} - `;
+  const buttonTitlePrefix = viewOnly ? '' : `${t('action.edit')} ${t('saveModal.fileName')} - `;
   const [fileName, setFileName] = useState(core.getDocument()?.getFilename());
 
   useEffect(() => {
@@ -54,7 +49,7 @@ const EditorFileName = ({ dataElement }) => {
   }, [fileNameWithoutExtension, extension]);
 
   // Hiding this component on mobile until we implement mobile functionality
-  return !isMobileSize() && isEditing ? (
+  return !isMobileSize() && (isEditing && !viewOnly) ? (
     <input
       maxLength={FILESAVERJS_MAX_NAME_LENTH - extension.length}
       type='text'
@@ -76,6 +71,7 @@ const EditorFileName = ({ dataElement }) => {
       label={fileName}
       title={`${buttonTitlePrefix}${fileName}`}
       onClick={startEditing}
+      disabled={viewOnly}
     />
   );
 };
