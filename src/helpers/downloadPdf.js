@@ -73,9 +73,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     }
     if (getSaveAsHandler() !== null) {
       const handler = getSaveAsHandler();
-      handler(fileData, fileName);
+      handler(file, downloadName || filename);
     } else {
-      saveAs(fileData, fileName);
+      saveAs(file, downloadName || filename);
     }
 
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
