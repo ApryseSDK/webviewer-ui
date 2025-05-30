@@ -1,5 +1,6 @@
 import core from 'core';
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import { getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
 
 const extensionRegExp = /(?:\.([^.?]+))?$/;
@@ -252,7 +253,12 @@ export const downloadPortfolioFile = async (portfolioItem) => {
   const { fileObject, name } = portfolioItem;
   try {
     const blob = await getEmbeddedFileData(fileObject);
-    saveAs(blob, name);
+    if (getSaveAsHandler() !== null) {
+      const handler = getSaveAsHandler();
+      handler(blob, name);
+    } else {
+      saveAs(blob, name);
+    }
   } catch (e) {
     console.warn(e);
   }

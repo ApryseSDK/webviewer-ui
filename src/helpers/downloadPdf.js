@@ -1,4 +1,5 @@
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import core from 'core';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
@@ -70,7 +71,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     } else {
       file = new File([arr], filename, { type: downloadType });
     }
-    saveAs(file, downloadName || filename);
+    if (getSaveAsHandler() !== null) {
+      const handler = getSaveAsHandler();
+      handler(fileData, fileName);
+    } else {
+      saveAs(fileData, fileName);
+    }
 
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
     fireEvent(Events.FILE_DOWNLOADED);
@@ -264,13 +270,19 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           dataURL = page;
         }
       }
-      const link = document.createElement('a');
-      link.href = dataURL;
-      link.download = `${filename}.png`;
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (getSaveAsHandler() !== null) {
+        const handler = getSaveAsHandler();
+        const blob = await (await fetch(fileData)).blob(); 
+        handler(blob, `${filename}.png`);
+      } else {
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = `${filename}.png`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     }
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
     fireEvent(Events.FILE_DOWNLOADED);

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Tooltip from 'components/Tooltip';
@@ -95,7 +96,12 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     e.stopPropagation();
 
     const fileData = file.url ? file.url : await decompressFileContent(file);
-    saveAs(fileData, file.name);
+    if (getSaveAsHandler() !== null) {
+      const handler = getSaveAsHandler();
+      handler(fileData, file.name);
+    } else {
+      saveAs(fileData, file.name);
+    }
   };
 
   return (

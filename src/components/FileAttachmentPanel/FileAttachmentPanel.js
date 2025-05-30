@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getFileAttachments, getEmbeddedFileData } from 'helpers/getFileAttachments';
 import Spinner from '../Spinner';
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import Icon from 'components/Icon';
 import core from 'core';
 import { useSelector, useDispatch } from 'react-redux';
@@ -124,7 +125,12 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
             () => {
               setFileIdProcessSpinner(`embeddedFile_${idx}`);
               getEmbeddedFileData(file.fileObject).then((blob) => {
-                saveAs(blob, getActualFileName(file.filename));
+                if (getSaveAsHandler() !== null) {
+                  const handler = getSaveAsHandler();
+                  handler(blob, file.filename);
+                } else {
+                  saveAs(blob, file.filename);
+                }
               }).finally(() => {
                 setFileIdProcessSpinner(null);
               });
