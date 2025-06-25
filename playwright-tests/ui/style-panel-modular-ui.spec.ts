@@ -140,13 +140,15 @@ test.describe('Style panel modular ui', () => {
     const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(page, 'viewing/viewing');
     await waitForInstance();
     await waitForWVEvent('documentLoaded');
+
+    await iframe.getByRole('button', { name: 'Annotate' }).click();
+    await iframe.getByRole('button', { name: 'Style' }).click();
     await iframe.evaluate(() => {
       const freetext = new window.instance.Core.Annotations.FreeTextAnnotation({
         X: 0,
         Y: 0,
       });
       window.instance.Core.annotationManager.addAnnotation(freetext);
-      window.instance.UI.openElement('stylePanel');
       // Need a brief moment for the panel to load elements.
       // Otherwise, the style options will not appear.
       setTimeout(() => {
@@ -154,10 +156,12 @@ test.describe('Style panel modular ui', () => {
       }, 100);
     });
 
-    const testColor = '1ACA1A';
+    const addNewTextStyleColorButton = iframe.getByRole('button', { name: /Text Style Add New Color from/i });
+    await expect(addNewTextStyleColorButton).toBeVisible();
+    await addNewTextStyleColorButton.click();
 
-    await iframe.getByLabel('Text Style Add New Color from').click();
     let hexInput = iframe.getByLabel('hex');
+    const testColor = '1ACA1A';
     await hexInput.fill(testColor);
     await iframe.getByRole('button', { name: 'OK', exact: true }).click();
 

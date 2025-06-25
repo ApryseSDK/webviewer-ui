@@ -476,7 +476,7 @@ const AnnotationPopup = ({
   return isIE || isMobile ? (
     annotationPopup
   ) : (
-    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button, input">{annotationPopup}</Draggable>
+    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button, input, .Dropdown, .Dropdown__item">{annotationPopup}</Draggable>
   );
 };
 
