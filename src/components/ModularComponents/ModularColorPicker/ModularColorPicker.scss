@@ -63,3 +63,19 @@
 
   }
 }
+
+.CellBackgroundToggle {
+  .Button {
+    &.active {
+      .Icon {
+        svg path:not(.no-fill) {
+          fill: currentColor
+        }
+
+        svg path.bucket-outline {
+          fill: var(--view-header-icon-active-fill);
+        }
+      }
+    }
+  }
+}

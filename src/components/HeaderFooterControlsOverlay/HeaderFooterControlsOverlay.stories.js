@@ -35,7 +35,7 @@ Basic.play = async ({ canvasElement }) => {
     expect(canvas.getByText('Header - Section 1')).toBeVisible();
   });
 
-  const optionsButton = await canvas.getByRole('button', { name: 'Header - Section 1 Options' });
+  const optionsButton = canvas.getByRole('button', { name: 'Header - Section 1 Options' });
 
   expect(optionsButton).toBeInTheDocument();
   await userEvent.click(optionsButton);

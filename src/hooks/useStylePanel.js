@@ -9,7 +9,7 @@ import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import handleFreeTextAutoSizeToggle from 'helpers/handleFreeTextAutoSizeToggle';
 import getTextDecoration from 'helpers/getTextDecoration';
 import { hexToRGBA } from 'helpers/color';
-import { extractUniqueFontFamilies, stylePanelSectionTitles, } from 'helpers/stylePanelHelper';
+import { extractUniqueFontFamilies, stylePanelSectionTitles } from 'helpers/stylePanelHelper';
 import { useTranslation } from 'react-i18next';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
@@ -181,7 +181,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       updateFromTool(currentTool);
       setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
     }
-  }, [selectedAnnotation, currentTool]);
+  }, [selectedAnnotation, currentTool, selectedAnnotations]);
 
   const onStyleChange = (property, value) => {
     const newStyle = { ...style, [property]: value };

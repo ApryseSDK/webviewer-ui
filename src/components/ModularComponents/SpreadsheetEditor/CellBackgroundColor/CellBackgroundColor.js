@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import actions from 'actions';
 import ModularColorPicker from '../../ModularColorPicker/ModularColorPicker';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import { FLYOUT_ITEM_TYPES } from 'constants/customizationVariables';
 import PropTypes from 'prop-types';
 import { getColorFromHex } from 'helpers/colorPickerHelper';
+import selectors from 'selectors';
+import setCellBackgroundColor from 'src/helpers/setCellBackgroundColor';
+import { defaultBackgroundColor } from 'src/helpers/initialColorStates';
 
 const CellBackgroundColor = (props) => {
-  // eslint-disable-next-line custom/no-hex-colors
-  const { isFlyoutItem, dataElement = 'cell-background-color', defaultColor='#FFFFFF', disabled, onKeyDownHandler } = props;
+  const { isFlyoutItem, dataElement = 'cell-background-color', defaultColor = defaultBackgroundColor, disabled, onKeyDownHandler } = props;
   const dispatch = useDispatch();
 
   const defaultRGBAColor = getColorFromHex(defaultColor);
-  const [selectedColor, setSelectedColor] = useState(getColorFromHex(defaultRGBAColor));
+  const currentBackGroundColor = useSelector((state) => selectors.getCellBackgroundColor(state));
+  const currentRGBColor = getColorFromHex(currentBackGroundColor) || defaultRGBAColor;
 
   useEffect(() => {
     const flyout = {
@@ -31,7 +34,7 @@ const CellBackgroundColor = (props) => {
   }, [isFlyoutItem]);
 
   const handleColorChange = (color) => {
-    setSelectedColor(color);
+    setCellBackgroundColor(color);
   };
 
   return (
@@ -44,7 +47,7 @@ const CellBackgroundColor = (props) => {
       toggleElement={DataElements.CELL_BACKGROUND_COLOR_FLYOUT}
       property='CellBackgroundColor'
       defaultColor={defaultRGBAColor}
-      color={selectedColor}
+      color={currentRGBColor}
       disabled={disabled}
       ariaTypeLabel={'spreadsheetEditor.backgroundLabel'}
       onKeyDownHandler={onKeyDownHandler}

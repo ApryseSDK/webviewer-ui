@@ -662,6 +662,12 @@ export const getDisplayMode = (state) => state.viewer.displayMode;
 
 export const getCurrentPage = (state) => state.viewer.currentPage;
 
+export const getCurrentPageLabel = (state) => {
+  const pageLabels = getPageLabels(state);
+  const currentPage = getCurrentPage(state);
+  return pageLabels?.[currentPage - 1] ?? '';
+};
+
 export const getSortStrategy = (state) => state.viewer.sortStrategy;
 
 export const getRotation = (state) => state.viewer.rotation;
@@ -950,6 +956,8 @@ export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
 
 export const getOfficeEditorActiveStream = (state) => state.officeEditor.stream;
 
+export const getOfficeEditorUnitMeasurement = (state) => state.officeEditor.unitMeasurement;
+
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
@@ -1058,7 +1066,7 @@ export const isSpreadsheetEditorModeEnabled = (state) => {
 
 export const getUIConfiguration = (state) => state.viewer.uiConfiguration;
 
-// ** SpreadhseetEditor Selectors **
+// ** Spreadsheet Editor Selectors **
 export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellRange;
 export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
 export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;
@@ -1067,4 +1075,17 @@ export const getActiveCellRangeVerticalAlignment = (state) => state.spreadsheetE
 export const getActiveCellRangeHorizontalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.horizontalAlignment;
 export const getActiveCellRangeFontStyle = (state, style) => state.spreadsheetEditor.cellProperties.styles.font[style];
 export const getActiveCellFormatType = (state) => state.spreadsheetEditor.cellProperties.styles.formatType;
-export const getCellStyleColors = (state) => state.spreadsheetEditor.cellStyleColors;
+export const getActiveCellBorderStyle = (state) => state.spreadsheetEditor.cellProperties.styles.border;
+export const getSelectedBorderColorOption = (state) => state.spreadsheetEditor.selectedBorderColorOption;
+export const getSelectedBorderStyleListOption = (state) => state.spreadsheetEditor.selectedBorderStyleListOption;
+export const getTextColors = (state) => state.spreadsheetEditor.textColors;
+export const getBorderColors = (state) => state.spreadsheetEditor.borderColors;
+export const getCellBackgroundColors = (state) => state.spreadsheetEditor.cellBackgroundColors;
+export const getIsSingleCell = (state) => state.spreadsheetEditor.cellProperties.isSingleCell;
+export const getIsCellRangeMerged = (state) => state.spreadsheetEditor.cellProperties.styles.isCellRangeMerged;
+export const getCellBackgroundColor = (state) => state.spreadsheetEditor.cellProperties.styles.backgroundColor;
+export const getCanCopy = (state) => state.spreadsheetEditor.cellProperties.canCopy;
+export const getCanPaste = (state) => state.spreadsheetEditor.cellProperties.canPaste;
+export const getCanCut = (state) => state.spreadsheetEditor.cellProperties.canCut;
+export const getAvailableSpreadsheetEditorFontFaces = (state) => state.spreadsheetEditor.availableFontFaces;
+export const getSpreadsheetEditorCSSFontValues = (state) => state.spreadsheetEditor.cssFontValues;

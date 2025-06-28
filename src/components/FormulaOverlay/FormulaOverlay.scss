@@ -1,0 +1,55 @@
+.FormulaOverlay {
+  max-height: 320px;
+  width: 320px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--component-background);
+  z-index: 90;
+  list-style: none;
+  margin: 0;
+  padding: var(--padding-tiny) 0;
+  box-shadow: 0px 0px 3px 0px var(--box-shadow);
+  border-radius: var(--border-radius);
+  overflow-x: hidden;   // necessary so that children respect border-radius on hover
+  overflow-y: auto;
+
+  .formula-label {
+    display: flex;
+    font-weight: var(--font-weight-bold);
+    height: 28px;
+    padding: var(--padding-tiny) var(--padding-small);
+    line-height: 20px;
+  }
+
+  .formula-overlay-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .formula-option {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-tiny) var(--padding-small);
+    height: 32px;
+    line-height: 20px;
+
+    .formula-description {
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 16px;
+    }
+
+    &.highlighted {
+      background-color: var(--dropdown-item-hover);
+      color: var(--dropdown-item-active-text);
+      height: 44px;
+
+      .formula-name {
+        font-weight: var(--font-weight-bold);
+      }
+    }
+  }
+}

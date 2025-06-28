@@ -50,7 +50,8 @@ const propTypes = {
 
 const MAX_STROKE_THICKNESS = 23;
 
-const StylePicker = ({  onStyleChange,
+const StylePicker = ({
+  onStyleChange,
   style,
   isFreeText,
   isRedaction,

@@ -8,38 +8,65 @@ import Button from 'components/Button';
 import ColorPalette from 'components/ColorPalette';
 import DataElementWrapper from 'components/DataElementWrapper';
 import './ColorPicker.scss';
-import { getColorFromHex, parseColor } from 'helpers/colorPickerHelper';
+import { getColorFromHex, isColorTransparent, parseColor } from 'helpers/colorPickerHelper';
 import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
 import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
 import useFocusHandler from 'hooks/useFocusHandler';
+import difference from 'lodash/difference';
+import { defaultBorderColor, defaultTextColor } from 'src/helpers/initialColorStates';
 
 const propTypes = {
   onColorChange: PropTypes.func,
   property: PropTypes.string,
-  color: PropTypes.object,
+  color: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   dataElement: PropTypes.string,
   ariaTypeLabel: PropTypes.string,
   onKeyDownHandler: PropTypes.func,
 };
 
+const propertySetters = {
+  CellBackgroundColor: 'setCellBackgroundColors',
+  BorderColor: 'setBorderColors',
+  TextColor: 'setTextColors',
+};
+
+const propertyGetters = {
+  CellBackgroundColor: 'getCellBackgroundColors',
+  BorderColor: 'getBorderColors',
+  TextColor: 'getTextColors',
+};
+
 const SpreadsheetColorPicker = ({
   onColorChange,
   property,
-  color: selectedColor,
+  color: selectedColors,
   dataElement,
   ariaTypeLabel,
   onKeyDownHandler,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  if (!Array.isArray(selectedColors)) {
+    selectedColors = [selectedColors];
+  }
+  const setterName = propertySetters[property];
+  const getterName = propertyGetters[property];
 
-  const cellStyleColors = useSelector(selectors.getCellStyleColors);
+  const cellStyleColors =  useSelector(selectors[getterName]);
 
   const [palette, setPalette] = useState(cellStyleColors);
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const isCopyButtonDisabled = !(selectedColor && !palette.includes(parseColor(selectedColor)));
-  const isDeleteDisabled = palette.length <= 1 || !isCopyButtonDisabled;
+  const newColors = difference(selectedColors.map(parseColor), palette);
+  const areAllColorsInPalette = newColors.length === 0;
+
+  const isTransparentColor = selectedColors.every(isColorTransparent);
+  const isDefaultTextColor = selectedColors.every((color) => color?.toHexString?.() === defaultTextColor && property === 'TextColor');
+  const isDefaultCellBorderColor = selectedColors.every((color) => color?.toHexString?.() === defaultBorderColor && property === 'BorderColor');
+
+  const isCopyButtonDisabled = !selectedColors || areAllColorsInPalette || isTransparentColor;
+  const isDeleteDisabled = palette.length <= 1 || !isCopyButtonDisabled || isTransparentColor || isDefaultTextColor || isDefaultCellBorderColor;
+  const selectedColor = selectedColors.length === 1 ? selectedColors[0] : undefined;
 
   useEffect(() => {
     const colorsLowercase = cellStyleColors.map((color) => color.toLowerCase());
@@ -52,15 +79,6 @@ const SpreadsheetColorPicker = ({
     setPalette(colorsLowercase);
   }, [cellStyleColors, isExpanded]);
 
-  useEffect(() => {
-    // This is for when the users set the default color that does not exist in the palette
-    const hexColor = parseColor(selectedColor);
-    if (hexColor && !palette.includes(hexColor)) {
-      const newColors = [...palette, hexColor];
-      dispatch(actions.setCellStyleColors(newColors));
-    }
-  }, [selectedColor]);
-
   const toggleExpanded = () => {
     const newValue = !isExpanded;
     setIsExpanded(newValue);
@@ -69,7 +87,7 @@ const SpreadsheetColorPicker = ({
   const handleAddColor = useFocusHandler(useColorPickerAddColor({
     colors: cellStyleColors,
     onColorChange,
-    setColors: (newColors) => dispatch(actions.setCellStyleColors(newColors)),
+    setColors: (newColors) => dispatch(actions[setterName](newColors)),
   }));
 
   const handleColorChange = (property, color) => {
@@ -81,13 +99,12 @@ const SpreadsheetColorPicker = ({
     colors: palette,
     onColorChange,
     transformFn: getColorFromHex,
-    updateColorsAction: actions.setCellStyleColors,
+    updateColorsAction: actions[setterName],
   });
 
   const handleCopyColor = () => {
-    const hexColor = parseColor(selectedColor);
-    const newColors = [...palette, hexColor];
-    dispatch(actions.setCellStyleColors(newColors));
+    const newCellStyleColors = [...palette, ...newColors];
+    dispatch(actions[setterName](newCellStyleColors));
   };
 
   return (

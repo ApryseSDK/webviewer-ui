@@ -789,6 +789,11 @@ export const setOfficeEditorActiveStream = (stream) => ({
   payload: { stream }
 });
 
+export const setOfficeEditorUnitMeasurement = (unitMeasurement) => ({
+  type: 'SET_OFFICE_EDITOR_UNIT_MEASUREMENT',
+  payload: { unitMeasurement }
+});
+
 export const enableSpreadsheetEditorMode = () => ({
   type: 'ENABLE_SPREADSHEET_EDITOR_MODE',
 });
@@ -875,4 +880,14 @@ export const setUIConfiguration = (uiConfiguration) => ({
 export const setActiveCellRangeStyle = (styles) => ({
   type: 'SET_ACTIVE_CELL_RANGE_STYLE',
   payload: { styles },
+});
+
+export const setSelectedBorderColorOption = (selectedBorderColorOption) => ({
+  type: 'SET_SELECTED_BORDER_COLOR_OPTION',
+  payload: { selectedBorderColorOption },
+});
+
+export const setSelectedBorderStyleListOption = (selectedBorderStyleListOption) => ({
+  type: 'SET_SELECTED_BORDER_STYLE_OPTION',
+  payload: { selectedBorderStyleListOption },
 });

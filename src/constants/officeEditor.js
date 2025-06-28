@@ -114,13 +114,15 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
 
 export const HEADER_FOOTER_BAR_DEFAULT_POSITION = 100;
 
-export const CM_PER_INCH = 2.54;
-export const PIXELS_PER_INCH = 96;
+export const CM_PER_INCH = window.Core.Document.OfficeEditor.CM_PER_INCH; // 2.54
+export const PIXELS_PER_INCH = window.Core.Document.OfficeEditor.PIXELS_PER_INCH; // 96
+export const MM_PER_CM = window.Core.Document.OfficeEditor.MM_PER_CM; // 10
 
 export const MARGIN_UNITS = window.Core.Document.OfficeEditor.MarginUnits;
 
 export const MARGIN_UNIT_LABELS = {
   CM: 'cm',
+  MM: 'mm',
   INCH: '"',
 };
 
@@ -131,6 +133,11 @@ export const MARGIN_VALUES = {
   WIDE: 5.08,
 };
 
+export const COLUMN_INPUT_TYPES = {
+  WIDTH: 'width',
+  SPACING: 'spacing',
+};
+
 export const MARGIN_SIDES = {
   TOP: 'top',
   BOTTOM: 'bottom',
@@ -138,8 +145,15 @@ export const MARGIN_SIDES = {
   RIGHT: 'right'
 };
 
-export const MARGIN_TOP_AND_BOTTOM_MAX_PERCENTAGE = 0.4;
+export const PAGE_LAYOUT_WARNING_TYPE = {
+  COLUMN: 'column',
+  MARGIN: 'margin',
+};
+
+export const VERTICAL_MARGIN_LIMIT = window.Core.Document.OfficeEditor.VERTICAL_MARGIN_LIMIT; // 0.4
 
 export const MINIMUM_COLUMN_WIDTH_IN_INCHES = 0.5;
+
+export const DEFAULT_COLUMN_SPACING_IN_INCHES = 0.5;
 
 export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';

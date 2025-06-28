@@ -6,6 +6,12 @@
   border-radius: 50%;
   animation: spin 1.2s ease infinite;
 
+  &.panel-type {
+    margin: 10px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #aaa;
+  }
+
   @keyframes spin {
     0% {
       transform: rotate(0deg);

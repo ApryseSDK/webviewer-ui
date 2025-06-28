@@ -1,0 +1,18 @@
+export const availableSpreadsheetEditorFonts = [
+  'Arial',
+  'Arial Black',
+  'Arial Narrow',
+  'Arial Rounded MT Bold',
+  'Brush Script MT',
+  'Calibri',
+  'Comic Sans MS',
+  'Courier',
+  'Courier New',
+  'Georgia',
+  'Gill Sans',
+  'Helvetica',
+  'Tahoma',
+  'Times New Roman',
+  'Trebuchet MS',
+  'Verdana',
+];

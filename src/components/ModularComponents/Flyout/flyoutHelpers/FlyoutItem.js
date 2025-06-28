@@ -1,7 +1,8 @@
 import React from 'react';
 import selectors from 'selectors';
 import core from 'core';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import './ZoomText.scss';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
@@ -9,7 +10,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { itemToFlyout, getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS, EditingStreamType } from 'constants/officeEditor';
-import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS, MARGIN_OPTIONS } from 'helpers/officeEditor';
+import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS, MARGIN_OPTIONS, COLUMN_OPTIONS } from 'helpers/officeEditor';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
 import ZoomText from 'components/ModularComponents/Flyout/flyoutHelpers/ZoomText';
@@ -83,6 +84,7 @@ const StaticItem = React.forwardRef((props, ref) => {
   const { flyoutItem, isChild, index, activeItem, items, activeFlyout, type, onKeyDownHandler } = props;
   const allProps = { ...flyoutItem, ...props };
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const customHeadersAdditionalProperties = useSelector(selectors.getCustomHeadersAdditionalProperties, shallowEqual);
   const getActiveTabInPanel = useSelector((state) => selectors.getActiveTabInPanel(state, activeFlyout.split('-flyout')[0]));
   const isDisabledItem = useSelector((state) => selectors.isElementDisabled(state, flyoutItem?.dataElement));
@@ -272,7 +274,26 @@ const StaticItem = React.forwardRef((props, ref) => {
       );
     }
     case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_MARGIN_DROPDOWN: {
-      flyoutItem.children = MARGIN_OPTIONS;
+      flyoutItem.children = MARGIN_OPTIONS.map((item) => ({
+        ...item,
+        onClick: () => item.onClick(dispatch, actions),
+      }));
+      return (
+        <FlyoutItemContainer
+          {...allProps}
+          ref={ref}
+          index={index}
+          dataElement={flyoutItem.dataElement}
+          icon={icon}
+          isChild={isChild}
+        />
+      );
+    }
+    case FLYOUT_ITEM_TYPES.OFFICE_EDITOR_COLUMN_DROPDOWN: {
+      flyoutItem.children = COLUMN_OPTIONS.map((item) => ({
+        ...item,
+        onClick: () => item.onClick(dispatch, actions),
+      }));
       return (
         <FlyoutItemContainer
           {...allProps}

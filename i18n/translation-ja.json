@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "AnnotationCreateTextHighlight ツールを選択します",
       "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout ツールを選択します。",
       "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline ツールを選択します。",
-      "editKeyboardShorcut": "キーボード ショートカットの編集",
+      "editKeyboardShortcut": "キーボード ショートカットの編集",
       "setShortcut": "ショートカットを設定",
       "editShortcut": "ショートカットの編集",
       "shortcutAlreadyExists": "上記のキーボード ショートカットは既に存在します。",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "なし",
-      "solid": "固体",
+      "thin": "固体",
       "dashed": "破線",
       "dotted": "点在"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "編集警告",
       "message": "このシートを削除してもよろしいですか?"
+    },
+    "officeEditorPageLayout": {
+      "title": "ページレイアウト",
+      "columnsMessage": "一部のセクションでは、列間隔の設定がページ幅に対して大きすぎます。",
+      "marginsMessage": "一部のセクションでは、余白の設定がページ幅に対して大きすぎます。"
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "右",
     "customMargins": "カスタムマージン",
     "customMarginsDescription": "カスタムマージンを定義する",
+    "column": "カラム",
+    "columns": "列",
+    "singleColumn": "1列",
+    "twoColumn": "2列",
+    "threeColumn": "3列",
+    "customColumn": "カスタム列",
+    "customColumnDescription": "カスタム列を定義する",
+    "unitMeasurement": "単位測定",
     "header": {
       "0": "ヘッダ",
       "1": "最初のページのヘッダー",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "異なる偶数ページと奇数ページ",
         "differentFirstEvenOddPages": "最初のページ、偶数ページ、奇数ページが異なる"
       }
+    },
+    "columnsModal": {
+      "title": "カスタム列調整",
+      "columnAmount": "列数",
+      "columnNumber": "列番号",
+      "width": "幅",
+      "spacing": "間隔",
+      "widthAndSpacing": "幅と間隔",
+      "equalColumns": "均等列幅"
     },
     "marginsModal": {
       "title": "カスタムマージン調整",
@@ -1416,6 +1438,7 @@
     "viewOnly": "閲覧",
     "editingDescription": "ドキュメントを編集",
     "viewOnlyDescription": "表示のみ",
+    "editModeDropdown": "編集モードの選択",
     "bold": "大胆な",
     "italic": "イタリック",
     "underline": "下線",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "セルを削除して上にシフト",
     "deleteColumnShiftLeft": "セルを削除して左にシフト",
     "clearBorder": "境界線をクリア",
-    "cellBorderAll": "すべての国境",
-    "cellBorderInside": "国境の内側",
-    "cellBorderOutside": "国境の外",
-    "cellBorderTop": "上枠",
-    "cellBorderBottom": "下枠線",
-    "cellBorderLeft": "左の境界線",
-    "cellBorderRight": "右の境界線",
-    "cellBorderVertical": "垂直境界線",
-    "cellBorderHorizontal": "水平境界線",
-    "cellBorderNone": "国境なし",
+    "all": "すべての国境",
+    "inside": "国境の内側",
+    "outside": "国境の外",
+    "top": "上枠",
+    "bottom": "下枠線",
+    "left": "左の境界線",
+    "right": "右の境界線",
+    "vertical": "垂直境界線",
+    "horizontal": "水平境界線",
+    "none": "国境なし",
     "borders": "国境",
     "fontSize": {
       "dropdownLabel": "フォントサイズ"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "数式バー",
     "range": "範囲",
-    "formulas": "数式",
-    "sumif": "範囲にわたる条件付き合計",
-    "sumsq": "範囲の二乗の合計を返します",
-    "sum": "範囲内のすべての数字を加算します",
-    "asinh": "数値の逆双曲線正弦を返します。",
-    "acos": "数値の逆余弦をラジアンで返します",
-    "cosh": "数値の双曲線余弦を返します",
-    "iseven": "数が偶数かどうかをチェックします",
-    "isodd": "数が奇数かどうかをチェックします"
+    "formulas": "数式"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "範囲全体の条件付き合計。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "`criterion` に対してテストされる範囲。"
+        },
+        "criterion": {
+          "name": "基準",
+          "detail": "`range` に適用するパターンまたはテスト。"
+        },
+        "sum_range": {
+          "name": "合計範囲",
+          "detail": "`range` と異なる場合に合計する範囲。"
+        }
+      }
+    },
+    "TAN": {
+      "description": "ラジアンで指定された角度の正接。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "正接を求める角度（ラジアン単位）。"
+        }
+      }
+    },
+    "TANH": {
+      "description": "任意の実数の双曲線正接。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "双曲線正接を計算する任意の実数値。"
+        }
+      }
+    },
+    "CEILING": {
+      "description": "数値を最も近い係数の倍数に切り上げます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "`factor` の最も近い整数倍に切り上げる値。"
+        },
+        "factor": {
+          "name": "要素",
+          "detail": "`value` が丸められる倍数となる数値。"
+        }
+      }
+    },
+    "ATAN": {
+      "description": "ラジアンで表した値の逆正接。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆正接を計算する値。"
+        }
+      }
+    },
+    "ASINH": {
+      "description": "数値の逆双曲線正弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆双曲線正弦を計算する値。"
+        }
+      }
+    },
+    "ABS": {
+      "description": "数値の絶対値。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "絶対値を返す数値。"
+        }
+      }
+    },
+    "ACOS": {
+      "description": "ラジアンで表した値の逆余弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆余弦を計算する値。`-1` から `1` までの範囲で指定する必要があります。"
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "数値の逆双曲線余弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆双曲線余弦を計算する値。1 以上である必要があります。"
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "多項分布関数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "考慮すべき追加の値または範囲。"
+        }
+      }
+    },
+    "ATANH": {
+      "description": "数値の逆双曲線正接。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆双曲線正接を計算する値。-1 から 1 までの範囲で指定する必要があります（1 は含みません）。"
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "値の逆正接。",
+      "parameters": {
+        "x": {
+          "name": "×",
+          "detail": "x 軸からの角度を計算する線分の終点の x 座標。"
+        },
+        "y": {
+          "name": "そして",
+          "detail": "x 軸からの角度を計算する線分の終点の y 座標。"
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "空の値の数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "空白の数をカウントする最初の値または範囲。"
+        }
+      }
+    },
+    "COSH": {
+      "description": "任意の実数の双曲線余弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "双曲線余弦を計算する任意の実数値。"
+        }
+      }
+    },
+    "INT": {
+      "description": "数値を最も近い整数に切り捨てます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "最も近い整数に切り捨てられる値。"
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "指定された値が偶数かどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "偶数として検証される値。"
+        }
+      }
+    },
+    "ISODD": {
+      "description": "指定された値が奇数かどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "奇数として検証される値。"
+        }
+      }
+    },
+    "LCM": {
+      "description": "1 つ以上の整数の最小公倍数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最小公倍数を求める計算で考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最小公倍数を見つけるために考慮する必要がある追加の値または範囲。"
+        }
+      }
+    },
+    "LN": {
+      "description": "e を底とする数値の対数 (オイラー数)。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "対数を計算する値（底は e）。"
+        }
+      }
+    },
+    "LOG": {
+      "description": "数値を底に対して対数化したもの。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "対数を計算する値。"
+        },
+        "base": {
+          "name": "ベース",
+          "detail": "対数の計算に使用する底。"
+        }
+      }
+    },
+    "LOG10": {
+      "description": "10 を底とする数値の対数。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "10 を底とする対数を計算する値。"
+        }
+      }
+    },
+    "MOD": {
+      "description": "モジュロ（剰余）演算子。",
+      "parameters": {
+        "dividend": {
+          "name": "配当",
+          "detail": "余りを求めるために割る数値。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "割る数値。"
+        }
+      }
+    },
+    "MROUND": {
+      "description": "数値を最も近い整数の倍数に丸めます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "別の数値の最も近い整数倍に丸める数値。"
+        },
+        "factor": {
+          "name": "要素",
+          "detail": "`value` が丸められる倍数となる数値。"
+        }
+      }
+    },
+    "ODD": {
+      "description": "数値を最も近い奇数の整数に切り上げます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "次に大きい奇数に丸める値。"
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "平方の合計。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "合計する平方数の最初の数値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` の平方に追加する追加の数値または範囲。"
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "オブジェクト セットからの組み合わせの数。",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "選択するオブジェクトのプールのサイズ。"
+        },
+        "k": {
+          "name": "け",
+          "detail": "選択するオブジェクトの数。"
+        }
+      }
+    },
+    "SUM": {
+      "description": "一連の数値および/またはセルの合計。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "合計する最初の数値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` に追加する追加の数値または範囲。"
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "特定の関数を使用して範囲の小計を算出します。",
+      "parameters": {
+        "function_code": {
+          "name": "関数コード",
+          "detail": "小計集計に使用する関数。"
+        },
+        "range1": {
+          "name": "範囲1",
+          "detail": "小計を計算する最初の範囲。"
+        },
+        "range2": {
+          "name": "範囲2",
+          "detail": "小計を計算する追加の範囲。"
+        }
+      }
+    },
+    "ASIN": {
+      "description": "ラジアンで表した値の逆正弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆正弦を計算する値。`-1` から `1` までの範囲で指定する必要があります。"
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "範囲全体の条件付きカウント。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "`criterion` に対してテストされる範囲。"
+        },
+        "criterion": {
+          "name": "基準",
+          "detail": "`range` に適用するパターンまたはテスト。"
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "度単位の角度値をラジアンに変換します。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "度からラジアンに変換する角度。"
+        }
+      }
+    },
+    "RAND": {
+      "description": "0 以上 1 未満の乱数。"
+    },
+    "COUNTUNIQUE": {
+      "description": "範囲内の一意の値の数をカウントします。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "一意性を考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "一意性を考慮するための追加の値または範囲。"
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "ラジアン単位の角度値を度単位に変換します。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "ラジアンから度に変換する角度。"
+        }
+      }
+    },
+    "ERFC": {
+      "description": "値の補完ガウス誤差関数。",
+      "parameters": {
+        "z": {
+          "name": "と",
+          "detail": "相補ガウス誤差関数を計算する数値。"
+        }
+      }
+    },
+    "EVEN": {
+      "description": "数値を最も近い偶数に切り上げます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "次に大きい偶数に丸める値。"
+        }
+      }
+    },
+    "EXP": {
+      "description": "オイラー数、e (~2.718) の累乗。",
+      "parameters": {
+        "exponent": {
+          "name": "指数",
+          "detail": "e を累乗する指数。"
+        }
+      }
+    },
+    "FACT": {
+      "description": "数値の階乗。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "階乗を計算して返す数値または数値への参照。"
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "数値の「二重階乗」。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "二重階乗を計算して返す数値または数値への参照。"
+        }
+      }
+    },
+    "PI": {
+      "description": "円周率。"
+    },
+    "GCD": {
+      "description": "1 つ以上の整数の最大公約数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最大公約数を求める計算で考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最大公約数を見つけるために考慮する必要がある追加の値または範囲。"
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "2 つの値の間のランダムな整数。",
+      "parameters": {
+        "low": {
+          "name": "低い",
+          "detail": "ランダム範囲の下限。"
+        },
+        "high": {
+          "name": "高い",
+          "detail": "ランダム範囲の上限。"
+        }
+      }
+    },
+    "ROUND": {
+      "description": "標準の規則に従って数値を丸めます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "`places` 桁数に丸める値。"
+        },
+        "places": {
+          "name": "場所",
+          "detail": "四捨五入する小数点以下の桁数。"
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "数値を切り捨てます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "常に切り捨てられて、`places` 桁数に丸められる値。"
+        },
+        "places": {
+          "name": "場所",
+          "detail": "四捨五入する小数点以下の桁数。"
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "数値を切り上げます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "常に切り上げられて、`places` 桁数に丸められる値。"
+        },
+        "places": {
+          "name": "場所",
+          "detail": "四捨五入する小数点以下の桁数。"
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "べき級数の合計。",
+      "parameters": {
+        "x": {
+          "name": "×",
+          "detail": "べき級数への入力。近似の種類によって異なり、角度、指数、またはその他の値になる場合があります。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "べき級数で `x` を累乗する最初の累乗。"
+        },
+        "m": {
+          "name": "メートル",
+          "detail": "`x` を増やすための加算増分。"
+        },
+        "a": {
+          "name": "1つの",
+          "detail": "べき級数の係数を含む配列または範囲。"
+        }
+      }
+    },
+    "SIGN": {
+      "description": "指定された数値の符号 (+/-/0)。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "符号が評価される値。"
+        }
+      }
+    },
+    "SIN": {
+      "description": "ラジアンで指定された角度の正弦。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "正弦を求める角度（ラジアン単位）。"
+        }
+      }
+    },
+    "SINH": {
+      "description": "任意の実数の双曲線正弦。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "双曲線正弦を計算する任意の実数値。"
+        }
+      }
+    },
+    "SQRT": {
+      "description": "正の数の正の平方根。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "正の平方根を計算する数値。"
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "円周率と数値の積の平方根。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "円周率を掛けて平方根を返す数値"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "ガンマ関数の対数。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "ガンマ関数への入力。Gamma(`value`) の自然対数が返されます。"
+        }
+      }
+    },
+    "COS": {
+      "description": "ラジアンで指定された角度のコサイン。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "コサインを求める角度（ラジアン単位）。"
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "数値を切り捨てます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "切り捨てられる値。"
+        },
+        "places": {
+          "name": "場所",
+          "detail": "保持する小数点の右側の有効桁数。"
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "ある数を別の数で割ったもの。",
+      "parameters": {
+        "dividend": {
+          "name": "配当",
+          "detail": "除算される数値。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "割る数値。"
+        }
+      }
+    },
+    "POWER": {
+      "description": "数をべき乗したもの。",
+      "parameters": {
+        "base": {
+          "name": "ベース",
+          "detail": "`指数` 乗する数値。"
+        },
+        "exponent": {
+          "name": "指数",
+          "detail": "`base` を累乗する指数。"
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "複数の条件に応じて範囲を合計します。",
+      "parameters": {
+        "sum_range": {
+          "name": "合計範囲",
+          "detail": "合計する範囲。"
+        },
+        "criteria_range1": {
+          "name": "基準範囲1",
+          "detail": "基準1に対してチェックする範囲。"
+        },
+        "criterion1": {
+          "name": "基準1",
+          "detail": "criteria_range1 に適用するパターンまたはテスト。"
+        },
+        "criteria_range2": {
+          "name": "基準範囲2",
+          "detail": "確認する追加の範囲。"
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "複数の基準に応じて値をカウントします。",
+      "parameters": {
+        "criteria_range1": {
+          "name": "基準範囲1",
+          "detail": "`criterion1` に対してチェックする範囲。"
+        },
+        "criterion1": {
+          "name": "基準1",
+          "detail": "`criteria_range1` に適用するパターンまたはテスト。"
+        },
+        "criteria_range2": {
+          "name": "基準範囲2",
+          "detail": "確認する追加の範囲。"
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "一連の数値を掛け合わせた結果。",
+      "parameters": {
+        "factor1": {
+          "name": "要因1",
+          "detail": "積を計算する最初の数値または範囲。"
+        },
+        "factor2": {
+          "name": "因子2",
+          "detail": "積を計算するための追加の数値または範囲。"
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "データセットの調和平均。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "母集団の最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "母集団に含める追加の値または範囲。"
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "超幾何分布の確率。",
+      "parameters": {
+        "num_successes": {
+          "name": "成功回数",
+          "detail": "希望する成功数。"
+        },
+        "num_draws": {
+          "name": "描画回数",
+          "detail": "許可される抽選回数。"
+        },
+        "successes_in_pop": {
+          "name": "ポップ界の成功",
+          "detail": "母集団内の成功の総数。"
+        },
+        "pop_size": {
+          "name": "ポップサイズ",
+          "detail": "人口総数"
+        },
+        "cumulative": {
+          "name": "累積",
+          "detail": "関数形式の論理値を決定します。\n\ncumulative が TRUE() の場合、HYPGEOM.DIST は累積分布関数を返します。\n\nFALSE() の場合、確率密度関数を返します。"
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "線形回帰によって導き出された直線の Y 切片。",
+      "parameters": {
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データ_x",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "KURT": {
+      "description": "データセットの尖度。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "データセットの最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "データセットに含める追加の値または範囲。"
+        }
+      }
+    },
+    "LARGE": {
+      "description": "データ セットからの N 番目に大きい要素。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "検討するデータセットを含む配列または範囲。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "返される要素の最大から最小までの順位。"
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "サンプルの標準偏差（テキストは 0）。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "サンプルの最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "サンプルに含める追加の値または範囲。"
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "母集団全体の標準偏差。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "母集団の最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "母集団に含める追加の値または範囲。"
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "データセットの幾何平均。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "母集団の最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "母集団に含める追加の値または範囲。"
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "0 から 1 までのパーセンテージ順位 (パーセンタイル)。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "検討するデータセットを含む配列または範囲。"
+        },
+        "value": {
+          "name": "価値",
+          "detail": "パーセンテージ順位を決定する値。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "計算に使用する有効数字の桁数。デフォルトは3です。"
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "線形回帰に基づく期待される y 値。",
+      "parameters": {
+        "x": {
+          "name": "×",
+          "detail": "予測する x 軸の値。"
+        },
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データ_x",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "指定された値の逆フィッシャー変換。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "逆フィッシャー変換を計算する値。"
+        }
+      }
+    },
+    "FISHER": {
+      "description": "指定された値のフィッシャー変換。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "フィッシャー変換を計算する値。"
+        }
+      }
+    },
+    "COUNT": {
+      "description": "データセット内の数値の数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "カウント時に考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "カウント時に考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "データセット内の値の数。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "カウント時に考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "カウント時に考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "テキストを無視したデータセット内の数値平均値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "平均値を計算するときに考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "平均値を計算するときに考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "二項分布の確率。",
+      "parameters": {
+        "num_successes": {
+          "name": "成功回数",
+          "detail": "`num_trials` 回の試行で確率を計算する成功回数。"
+        },
+        "num_trials": {
+          "name": "試行回数",
+          "detail": "独立した試行の数。"
+        },
+        "prob_success": {
+          "name": "成功確率",
+          "detail": "特定の試行における成功確率。"
+        },
+        "cumulative": {
+          "name": "累積",
+          "detail": "二項累積分布を使用するかどうか。"
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "サンプルに基づく偏差の二乗の合計。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "サンプルの最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "サンプルに含める追加の値または範囲。"
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "基準に応じた値の平均。",
+      "parameters": {
+        "criteria_range": {
+          "name": "基準範囲",
+          "detail": "`criterion` に対してチェックする範囲。"
+        },
+        "criterion": {
+          "name": "基準",
+          "detail": "`criteria_range` に適用するパターンまたはテスト。"
+        },
+        "average_range": {
+          "name": "平均範囲",
+          "detail": "平均する範囲。指定しない場合は、代わりに「criteria_range」が平均として使用されます。"
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "複数の基準に応じた値の平均。",
+      "parameters": {
+        "average_range": {
+          "name": "平均範囲",
+          "detail": "平均する範囲。"
+        },
+        "criteria_range1": {
+          "name": "基準範囲1",
+          "detail": "`criterion1` に対してチェックする範囲。"
+        },
+        "criterion1": {
+          "name": "基準1",
+          "detail": "`criteria_range1` に適用するパターンまたはテスト。"
+        },
+        "criteria_range2": {
+          "name": "基準範囲2",
+          "detail": "確認する追加の範囲。"
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "多数のオブジェクトからの順列の数。",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "選択するオブジェクトのプールのサイズ。"
+        },
+        "k": {
+          "name": "け",
+          "detail": "選択するオブジェクトの数。"
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "上限/下限を除いたデータセットの平均。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "検討するデータセットを含む配列または範囲。"
+        },
+        "exclude_proportion": {
+          "name": "除外割合",
+          "detail": "セットの端から除外するデータセットの割合。"
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "ピアソン積率相関係数。",
+      "parameters": {
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データx",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "MINA": {
+      "description": "データセット内の最小の数値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最小値を計算するときに考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最小値を計算するときに考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "MIN": {
+      "description": "数値データセット内の最小値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最小値を計算するときに考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最小値を計算するときに考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "数値データセット内の中央値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "中央値を計算する際に考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "中央値を計算するときに考慮すべき追加の値または範囲。"
+        }
+      }
+    },
+    "MAXA": {
+      "description": "データセット内の最大数値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最大値を計算するときに考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最大値を計算するときに考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "MAX": {
+      "description": "数値データセット内の最大値。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最大値を計算するときに考慮する最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "最大値を計算するときに考慮する追加の値または範囲。"
+        }
+      }
+    },
+    "PROB": {
+      "description": "確率値は範囲内にあります。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "検討するデータセットを含む配列または範囲。"
+        },
+        "probabilities": {
+          "name": "確率",
+          "detail": "`data` に対応する確率を含む配列または範囲。"
+        },
+        "low_limit": {
+          "name": "下限",
+          "detail": "確率を計算する値の範囲の下限。"
+        },
+        "high_limit": {
+          "name": "上限",
+          "detail": "確率を計算する値の範囲の上限。"
+        }
+      }
+    },
+    "RSQ": {
+      "description": "相関係数の二乗。",
+      "parameters": {
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データ_x",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "VARA": {
+      "description": "サンプルの分散（テキストは 0）。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "サンプルの最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "サンプルに含める追加の値または範囲。"
+        }
+      }
+    },
+    "VARPA": {
+      "description": "全体の母集団の分散（テキストは 0）。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "母集団の最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "母集団に含める追加の値または範囲。"
+        }
+      }
+    },
+    "STEYX": {
+      "description": "回帰における予測 y 値の標準誤差。",
+      "parameters": {
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データ_x",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "ランダム変数の正規化された同等物。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "正規化するランダム変数の値。"
+        },
+        "mean": {
+          "name": "平均",
+          "detail": "分布の平均。"
+        },
+        "standard_deviation": {
+          "name": "標準偏差",
+          "detail": "分布の標準偏差。"
+        }
+      }
+    },
+    "SMALL": {
+      "description": "データ セット内の N 番目に小さい要素。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "検討するデータセットを含む配列または範囲。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "返される要素の最小から最大までの順位。"
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "データの線形回帰から得られた直線の傾き。",
+      "parameters": {
+        "data_y": {
+          "name": "データ_y",
+          "detail": "従属データの配列または行列を表す範囲。"
+        },
+        "data_x": {
+          "name": "データ_x",
+          "detail": "独立したデータの配列または行列を表す範囲。"
+        }
+      }
+    },
+    "SKEW": {
+      "description": "データセットの歪度。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "データセットの最初の値または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "データセットに含める追加の値または範囲。"
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "垂直検索。",
+      "parameters": {
+        "search_key": {
+          "name": "検索キー",
+          "detail": "検索する値。たとえば、`42`、`\"Cats\"`、`I24` などです。"
+        },
+        "range": {
+          "name": "範囲",
+          "detail": "検索対象とする範囲。範囲内の最初の列が、`search_key` で指定されたキーで検索されます。"
+        },
+        "index": {
+          "name": "索引",
+          "detail": "返される値の列インデックス。`range` の最初の列の番号は 1 です。"
+        },
+        "is_sorted": {
+          "name": "ソート済み",
+          "detail": "検索する列 (指定された範囲の最初の列) がソートされているかどうかを示します。ソートされている場合は、`search_key` に最も近い一致が返されます。"
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "水平検索",
+      "parameters": {
+        "search_key": {
+          "name": "検索キー",
+          "detail": "検索する値。たとえば、`42`、`\"Cats\"`、`I24` などです。"
+        },
+        "range": {
+          "name": "範囲",
+          "detail": "検索対象とする範囲。範囲内の最初の行が、`search_key` で指定されたキーで検索されます。"
+        },
+        "index": {
+          "name": "索引",
+          "detail": "返される値の行インデックス。`range` の最初の行の番号は 1 です。"
+        },
+        "is_sorted": {
+          "name": "ソート済み",
+          "detail": "検索する行 (指定された範囲の最初の行) が並べ替えられているかどうかを示します。"
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "値を検索します。",
+      "parameters": {
+        "search_key": {
+          "name": "検索キー",
+          "detail": "行または列で検索する値。例: `42`、`\"Cats\"`、`I24`。"
+        },
+        "search_range|search_result_array": {
+          "name": "検索範囲|検索結果の配列",
+          "detail": "この関数を使用する方法の一つは、`search_key` を検索する単一のソート済み行または列 `search_range` と、第二引数 `result_range` を指定することです。もう一つの方法は、これら二つの引数を一つの `search_result_array` に結合し、配列の最初の行または列を検索し、最後の行または列から値を返すことです。`search_key` が見つからない場合、完全一致ではない結果が返されることがあります。"
+        },
+        "result_range": {
+          "name": "結果範囲",
+          "detail": "結果を返す範囲。返される値は、`search_range` 内で `search_key` が見つかった位置に対応します。この範囲は単一の行または列のみで指定する必要があり、`search_result_array` メソッドを使用する場合は使用しないでください。"
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "文字列としてのセル参照。",
+      "parameters": {
+        "row": {
+          "name": "行",
+          "detail": "セル参照の行番号"
+        },
+        "column": {
+          "name": "カラム",
+          "detail": "セル参照の列番号（名前ではありません）。`A` は列番号 `1` です。"
+        },
+        "absolute_relative_mode": {
+          "name": "絶対相対モード",
+          "detail": "参照が行/列絶対かどうかを示すインジケータ。`1` は行と列が絶対 (例: $A$1)、`2` は行が絶対で列が相対 (例: A$1)、`3` は行が相対で列が絶対 (例: $A1)、`4` は行と列が相対 (例: A1) です。"
+        },
+        "use_a1_notation": {
+          "name": "a1表記法を使用する",
+          "detail": "`A1` スタイルの表記法 (TRUE) を使用するか、`R1C1` スタイルの表記法 (FALSE) を使用するかを示すブール値。"
+        },
+        "sheet": {
+          "name": "シート",
+          "detail": "アドレスが指すシートの名前を示すテキスト。"
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "文字列で指定されたセル参照。",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "文字列としてのセル参照",
+          "detail": "引用符で囲まれた文字列として記述されたセル参照。"
+        },
+        "is_A1_notation": {
+          "name": "A1表記法",
+          "detail": "セル参照が A1 表記 (TRUE) か R1C1 表記 (FALSE) かを示します。"
+        }
+      }
+    },
+    "ROW": {
+      "description": "指定されたセルの行番号。",
+      "parameters": {
+        "cell_reference": {
+          "name": "セル参照",
+          "detail": "行番号が返されるセル。"
+        }
+      }
+    },
+    "ROWS": {
+      "description": "指定された配列または範囲内の行数。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "行数が返される範囲。"
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "指定されたセルの列番号。",
+      "parameters": {
+        "cell_reference": {
+          "name": "セル参照",
+          "detail": "列番号が返されるセル。列「A」は「1」に対応します。"
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "指定された配列または範囲内の列の数。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "列数が返される範囲。"
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "セルに対する範囲参照オフセット。",
+      "parameters": {
+        "cell_reference": {
+          "name": "セル参照",
+          "detail": "オフセット行と列をカウントする開始点。"
+        },
+        "offset_rows": {
+          "name": "オフセット行",
+          "detail": "オフセットする行数。"
+        },
+        "offset_columns": {
+          "name": "オフセット列",
+          "detail": "オフセットする列数。"
+        },
+        "height": {
+          "name": "身長",
+          "detail": "オフセット ターゲットから始まる、返される範囲の高さ。"
+        },
+        "width": {
+          "name": "幅",
+          "detail": "オフセット ターゲットから始まる、返される範囲の幅。"
+        }
+      }
+    },
+    "MATCH": {
+      "description": "値に一致する範囲内の項目の位置。",
+      "parameters": {
+        "search_key": {
+          "name": "検索キー",
+          "detail": "検索する値。たとえば、`42`、`\"Cats\"`、`I24` などです。"
+        },
+        "range": {
+          "name": "範囲",
+          "detail": "検索する 1 次元配列。"
+        },
+        "search_type": {
+          "name": "検索タイプ",
+          "detail": "検索方法。`1` (デフォルト) は、`range` が昇順でソートされている場合に、`search_key` 以下の最大値を検索します。`0` は、`range` がソートされていない場合に正確な値を検索します。`-1` は、`range` が降順でソートされている場合に、`search_key` 以上の最小値を検索します。"
+        }
+      }
+    },
+    "INDEX": {
+      "description": "行と列のオフセットによって指定されたセルの内容。",
+      "parameters": {
+        "reference": {
+          "name": "参照",
+          "detail": "オフセットするセルの配列。"
+        },
+        "row": {
+          "name": "行",
+          "detail": "オフセット行の数。"
+        },
+        "column": {
+          "name": "カラム",
+          "detail": "オフセット列の数。"
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "指定された行と列の見出しに対応するピボット テーブルから集計値を抽出します。",
+      "parameters": {
+        "value_name": {
+          "name": "値名",
+          "detail": "データを取得するピボット テーブルの値の名前。"
+        },
+        "any_pivot_table_cell": {
+          "name": "任意のピボットテーブルセル",
+          "detail": "目的のピボット テーブル内のセルへの任意の参照 (上隅を推奨)。"
+        },
+        "original_column": {
+          "name": "オリジナルコラム",
+          "detail": "元のデータ セット (ピボット テーブルではない) の列の名前。"
+        },
+        "pivot_item": {
+          "name": "ピボットアイテム",
+          "detail": "取得する *original_column* に対応するピボット テーブルに表示される行または列の名前。"
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "インデックスに基づいた選択肢のリストからの要素。",
+      "parameters": {
+        "index": {
+          "name": "索引",
+          "detail": "返される選択肢（最大 30 個提供）"
+        },
+        "choice1": {
+          "name": "選択肢1",
+          "detail": "返される可能性のある値。必須。セルへの参照または個々の値を指定できます。"
+        },
+        "choice2": {
+          "name": "選択肢2",
+          "detail": "選択できる追加の値。"
+        }
+      }
+    },
+    "TIME": {
+      "description": "時/分/秒を時刻に変換します。",
+      "parameters": {
+        "hour": {
+          "name": "時間",
+          "detail": "時刻の時間部分。"
+        },
+        "minute": {
+          "name": "分",
+          "detail": "時間の分の部分。"
+        },
+        "second": {
+          "name": "2番",
+          "detail": "時間の2番目の要素。"
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "時間文字列をシリアル番号表現に変換します。",
+      "parameters": {
+        "time_string": {
+          "name": "時間文字列",
+          "detail": "時間表現を保持する文字列。"
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "日付の前または後の月の最終日。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "結果を計算する日付。"
+        },
+        "months": {
+          "name": "ヶ月",
+          "detail": "考慮する 'start_date' の前 (負) または後 (正) の月数。"
+        }
+      }
+    },
+    "EDATE": {
+      "description": "別の日付より数か月前/後の日付を指定します。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "結果を計算する日付。"
+        },
+        "months": {
+          "name": "ヶ月",
+          "detail": "計算する 'start_date' の前 (負) または後 (正) の月数。"
+        }
+      }
+    },
+    "SECOND": {
+      "description": "特定の時間の秒の要素。",
+      "parameters": {
+        "time": {
+          "name": "時間",
+          "detail": "2番目の要素を計算する時間"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "特定の時間の分の部分。",
+      "parameters": {
+        "time": {
+          "name": "時間",
+          "detail": "分コンポーネントを計算する時刻。"
+        }
+      }
+    },
+    "HOUR": {
+      "description": "特定の時刻の時間コンポーネント。",
+      "parameters": {
+        "time": {
+          "name": "時間",
+          "detail": "時間コンポーネントを計算する時刻。"
+        }
+      }
+    },
+    "NOW": {
+      "description": "現在の日付と時刻を日付値として表します。"
+    },
+    "NETWORKDAYS": {
+      "description": "指定された 2 日間の間の正味営業日数。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "純就業日数を計算する期間の開始日。"
+        },
+        "end_date": {
+          "name": "終了日",
+          "detail": "純就業日数を計算する期間の終了日。"
+        },
+        "holidays": {
+          "name": "休日",
+          "detail": "休日とみなす日付のシリアル番号を含む範囲または配列定数。"
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "年間の ISO 週番号。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "ISO週番号を決定する日付。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "年間の週番号。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "週番号を決定する日付。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "type": {
+          "name": "タイプ",
+          "detail": "週が始まる曜日を表す数値。日曜日 = 1。"
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "指定された日付の曜日（数値として）。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "曜日を決定する日付。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "type": {
+          "name": "タイプ",
+          "detail": "曜日を表すために使用する番号体系を示す数値。デフォルトでは、日曜日を1としてカウントします。"
+        }
+      }
+    },
+    "DAY": {
+      "description": "特定の日付が該当する月の日。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "日を抽出する日付。"
+        }
+      }
+    },
+    "DAYS": {
+      "description": "2 つの日付間の日数。",
+      "parameters": {
+        "end_date": {
+          "name": "終了日",
+          "detail": "日付範囲の終了。"
+        },
+        "start_date": {
+          "name": "開始日",
+          "detail": "日付範囲の開始。"
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "360 日の年における 2 つの日付間の日数。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "計算で考慮する開始日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "end_date": {
+          "name": "終了日",
+          "detail": "計算対象となる終了日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "method": {
+          "name": "方法",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "DATE": {
+      "description": "年/月/日を日付に変換します。",
+      "parameters": {
+        "year": {
+          "name": "年",
+          "detail": "日付の年の部分。"
+        },
+        "month": {
+          "name": "月",
+          "detail": "日付の月の部分。"
+        },
+        "day": {
+          "name": "日",
+          "detail": "日付の日の部分。"
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "日付文字列を日付値に変換します。",
+      "parameters": {
+        "date_string": {
+          "name": "日付文字列",
+          "detail": "日付を表す文字列。"
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "日付の差。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "計算で考慮する開始日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "end_date": {
+          "name": "終了日",
+          "detail": "計算対象となる終了日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "unit": {
+          "name": "ユニット",
+          "detail": "時間の単位を表す文字列の略語。例：月は「M」。指定できる値は「Y」、「M」、「D」、「MD」、「YM」、「YD」です。"
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "開始日からの営業日数。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "カウントを開始する日付。"
+        },
+        "num_days": {
+          "name": "日数",
+          "detail": "`start_date` から何営業日進めるかを指定します。負数の場合は、逆方向にカウントします。"
+        },
+        "holidays": {
+          "name": "休日",
+          "detail": "休日とみなす日付を含む範囲または配列定数。"
+        }
+      }
+    },
+    "YEAR": {
+      "description": "特定の日付で指定された年。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "年を抽出する日付。"
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "2 つの日付間の正確な年数。",
+      "parameters": {
+        "start_date": {
+          "name": "開始日",
+          "detail": "計算で考慮する開始日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "end_date": {
+          "name": "終了日",
+          "detail": "計算対象となる終了日。日付を含むセルへの参照、日付型を返す関数、または数値である必要があります。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "TODAY": {
+      "description": "現在の日付を日付値として表します。"
+    },
+    "MONTH": {
+      "description": "特定の日付が該当する月。",
+      "parameters": {
+        "date": {
+          "name": "日付",
+          "detail": "月を抽出する日付。"
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "年実効金利。",
+      "parameters": {
+        "nominal_rate": {
+          "name": "名目金利",
+          "detail": "年当たりの名目金利。"
+        },
+        "periods_per_year": {
+          "name": "年間期間",
+          "detail": "年間の複利期間の数。"
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "スプレッドシートのロケールに固有の通貨として数値をフォーマットします。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "フォーマットする値。"
+        },
+        "number_of_places": {
+          "name": "場所の数",
+          "detail": "表示する小数点以下の桁数。"
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "小数を小数値に変換します。",
+      "parameters": {
+        "fractional_price": {
+          "name": "端数価格",
+          "detail": "分数小数規則を使用して提示される価格見積。"
+        },
+        "unit": {
+          "name": "ユニット",
+          "detail": "分数の単位。たとえば、1/8 の場合は `8`、1/32 の場合は `32` です。"
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "小数値を小数に変換します。",
+      "parameters": {
+        "decimal_price": {
+          "name": "小数点価格",
+          "detail": "価格見積は小数値として示されます。"
+        },
+        "unit": {
+          "name": "ユニット",
+          "detail": "希望する分数の単位。例: 1/8 の場合は `8`、1/32 の場合は `32`。"
+        }
+      }
+    },
+    "DB": {
+      "description": "定率法による減価償却。",
+      "parameters": {
+        "cost": {
+          "name": "料金",
+          "detail": "資産の初期コスト。"
+        },
+        "salvage": {
+          "name": "サルベージ",
+          "detail": "減価償却終了時の資産の価値。"
+        },
+        "life": {
+          "name": "人生",
+          "detail": "資産が減価償却される期間数。"
+        },
+        "period": {
+          "name": "期間",
+          "detail": "減価償却を計算する「耐用年数」内の単一期間。"
+        },
+        "month": {
+          "name": "月",
+          "detail": "減価償却の最初の年の月数。"
+        }
+      }
+    },
+    "DDB": {
+      "description": "定率法による減価償却。",
+      "parameters": {
+        "cost": {
+          "name": "料金",
+          "detail": "資産の初期コスト。"
+        },
+        "salvage": {
+          "name": "サルベージ",
+          "detail": "減価償却終了時の資産の価値。"
+        },
+        "life": {
+          "name": "人生",
+          "detail": "資産が減価償却される期間数。"
+        },
+        "period": {
+          "name": "期間",
+          "detail": "減価償却を計算する「耐用年数」内の単一期間。"
+        },
+        "factor": {
+          "name": "要素",
+          "detail": "減価償却が減少する係数。"
+        }
+      }
+    },
+    "RATE": {
+      "description": "年金投資の利率。",
+      "parameters": {
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "payment_per_period": {
+          "name": "期間ごとの支払い",
+          "detail": "期間ごとに支払われる金額。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        },
+        "rate_guess": {
+          "name": "レート推測",
+          "detail": "金利がいくらになるかの見積り。"
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "一定期間にわたって支払われる累積元金。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "first_period": {
+          "name": "最初の期間",
+          "detail": "累積計算を開始する支払期間の番号。"
+        },
+        "last_period": {
+          "name": "最終期間",
+          "detail": "累積計算を終了する支払期間の番号。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "決済日から満期日までのクーポン数。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "SYD": {
+      "description": "年数和法による減価償却。",
+      "parameters": {
+        "cost": {
+          "name": "料金",
+          "detail": "資産の初期コスト。"
+        },
+        "salvage": {
+          "name": "サルベージ",
+          "detail": "減価償却終了時の資産の価値。"
+        },
+        "life": {
+          "name": "人生",
+          "detail": "資産が減価償却される期間数。"
+        },
+        "period": {
+          "name": "期間",
+          "detail": "減価償却を計算する「耐用年数」内の単一期間。"
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "財務省短期証券の同等の利回り。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "discount": {
+          "name": "割引",
+          "detail": "購入時の請求書の割引率。"
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "価格に基づいた米国財務省短期証券の利回り。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "price": {
+          "name": "価格",
+          "detail": "証券を額面 100 あたりで購入する価格。"
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "米国財務省証券の価格。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "discount": {
+          "name": "割引",
+          "detail": "購入時の請求書の割引率。"
+        }
+      }
+    },
+    "PV": {
+      "description": "年金投資の現在の価値。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "payment_amount": {
+          "name": "支払い金額",
+          "detail": "期間ごとに支払われる金額。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "最初のクーポンから決済までの日数。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "決済日を含むクーポン期間の日数。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "FV": {
+      "description": "年金投資の将来価値。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "payment_amount": {
+          "name": "支払い金額",
+          "detail": "期間ごとに支払われる金額。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "一連のレートから算出した元本の将来価値。",
+      "parameters": {
+        "principal": {
+          "name": "主要",
+          "detail": "複利の対象となる初期資本または価値の額。"
+        },
+        "rate_schedule": {
+          "name": "料金スケジュール",
+          "detail": "「元本」に対して複利で適用される一連の金利。"
+        }
+      }
+    },
+    "YIELD": {
+      "description": "定期的に利息を支払う証券の年間利回り。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "rate": {
+          "name": "レート",
+          "detail": "年利率。"
+        },
+        "price": {
+          "name": "価格",
+          "detail": "証券を額面 100 あたりで購入する価格。"
+        },
+        "redemption": {
+          "name": "償還",
+          "detail": "額面価格 100 あたりの償還額。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "割引証券の年間利回り。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "price": {
+          "name": "価格",
+          "detail": "証券を額面 100 あたりで購入する価格。"
+        },
+        "redemption": {
+          "name": "償還",
+          "detail": "額面価格 100 あたりの償還額。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "年名目金利。",
+      "parameters": {
+        "effective_rate": {
+          "name": "実効レート",
+          "detail": "年間の実効金利。"
+        },
+        "periods_per_year": {
+          "name": "年間期間",
+          "detail": "年間の複利期間の数。"
+        }
+      }
+    },
+    "XIRR": {
+      "description": "非定期的なキャッシュフローを考慮した内部収益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "キャッシュフロー金額",
+          "detail": "投資に関連する収入または支払いを含む配列または範囲。"
+        },
+        "cashflow_dates": {
+          "name": "キャッシュフロー日付",
+          "detail": "`cashflow_amounts` 内のキャッシュフローに対応する日付を含む配列または範囲。"
+        },
+        "rate_guess": {
+          "name": "レート推測",
+          "detail": "内部収益率がいくらになるかの見積り。"
+        }
+      }
+    },
+    "MIRR": {
+      "description": "修正内部収益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "キャッシュフロー金額",
+          "detail": "投資に関連する収入または支払いを含む配列または範囲。"
+        },
+        "financing_rate": {
+          "name": "融資利率",
+          "detail": "投資された資金に対して支払われる利率。"
+        },
+        "reinvestment_return_rate": {
+          "name": "再投資収益率",
+          "detail": "投資から得た収入を再投資して得られる収益（パーセント）。"
+        }
+      }
+    },
+    "IRR": {
+      "description": "定期的なキャッシュフローを前提とした内部収益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "キャッシュフロー金額",
+          "detail": "投資に関連する収入または支払いを含む配列または範囲。"
+        },
+        "rate_guess": {
+          "name": "レート推測",
+          "detail": "内部収益率がいくらになるかの見積り。"
+        }
+      }
+    },
+    "NPV": {
+      "description": "一連の定期的なキャッシュフローと割引率に基づく投資の正味現在価値。",
+      "parameters": {
+        "discount": {
+          "name": "割引",
+          "detail": "1 期間にわたる投資の割引率。"
+        },
+        "cashflow1": {
+          "name": "キャッシュフロー1",
+          "detail": "最初の将来キャッシュフロー。"
+        },
+        "cashflow2": {
+          "name": "キャッシュフロー2",
+          "detail": "将来の追加キャッシュフロー。"
+        }
+      }
+    },
+    "XNPV": {
+      "description": "非定期的なキャッシュフローを考慮した正味現在価値。",
+      "parameters": {
+        "discount": {
+          "name": "割引",
+          "detail": "1 期間にわたる投資の割引率。"
+        },
+        "cashflow_amounts": {
+          "name": "キャッシュフロー金額",
+          "detail": "投資に関連する収入または支払いを含むセルの範囲。"
+        },
+        "cashflow_dates": {
+          "name": "キャッシュフロー日付",
+          "detail": "`cashflow_amounts` のキャッシュフローに対応する日付を持つセルの範囲。"
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "一定期間にわたって支払われる累積利息。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "first_period": {
+          "name": "最初の期間",
+          "detail": "累積計算を開始する支払期間の番号。"
+        },
+        "last_period": {
+          "name": "最終期間",
+          "detail": "累積計算を終了する支払期間の番号。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "PMT": {
+      "description": "年金投資に対する定期的な支払い。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "IPMT": {
+      "description": "投資に対する利息の支払い。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "period": {
+          "name": "期間",
+          "detail": "償却期間（期間数で表す）。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "PPMT": {
+      "description": "投資元本の支払い。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "period": {
+          "name": "期間",
+          "detail": "償却期間（期間数で表す）。"
+        },
+        "number_of_periods": {
+          "name": "期間数",
+          "detail": "行われる支払い回数。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "実効金利を計算します。",
+      "parameters": {
+        "buy_date": {
+          "name": "購入日",
+          "detail": "投資の購入日。"
+        },
+        "sell_date": {
+          "name": "販売日",
+          "detail": "投資の売却日。"
+        },
+        "buy_price": {
+          "name": "購入価格",
+          "detail": "投資を購入した価格。"
+        },
+        "sell_price": {
+          "name": "売り価格",
+          "detail": "投資が売却された価格。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "PRICE": {
+      "description": "定期的に利息を支払う証券の価格。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "rate": {
+          "name": "レート",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "収率",
+          "detail": "証券の予想年間利回り。"
+        },
+        "redemption": {
+          "name": "償還",
+          "detail": "額面価格 100 あたりの償還額。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "割引証券の価格。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "discount": {
+          "name": "割引",
+          "detail": "購入時の証券の割引率。"
+        },
+        "redemption": {
+          "name": "償還",
+          "detail": "額面価格 100 あたりの償還額。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "満期時に利息が支払われる証券の価格。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "issue": {
+          "name": "問題",
+          "detail": "証券が最初に発行された日付。"
+        },
+        "rate": {
+          "name": "レート",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "収率",
+          "detail": "証券の予想年間利回り。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "証券の満期時に受け取る金額。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "investment": {
+          "name": "投資",
+          "detail": "投資額（各証券の額面金額に関係なく）。"
+        },
+        "discount": {
+          "name": "割引",
+          "detail": "投資対象の証券の割引率。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "DISC": {
+      "description": "価格に基づいた証券の割引率。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "price": {
+          "name": "価格",
+          "detail": "証券を額面 100 あたりで購入する価格。"
+        },
+        "redemption": {
+          "name": "償還",
+          "detail": "額面価格 100 あたりの償還額。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "NPER": {
+      "description": "投資の支払い期間の数。",
+      "parameters": {
+        "rate": {
+          "name": "レート",
+          "detail": "金利。"
+        },
+        "payment_amount": {
+          "name": "支払い金額",
+          "detail": "支払われる各金額。"
+        },
+        "present_value": {
+          "name": "現在の価値",
+          "detail": "年金の現在の価値。"
+        },
+        "future_value": {
+          "name": "将来価値",
+          "detail": "最終支払いが行われた後に残る将来価値。"
+        },
+        "end_or_beginning": {
+          "name": "終わりまたは始まり",
+          "detail": "支払いが各期間の末日 (`0`) か、初め (`1`) かを示します。"
+        }
+      }
+    },
+    "SLN": {
+      "description": "定額法を使用した資産の減価償却。",
+      "parameters": {
+        "cost": {
+          "name": "料金",
+          "detail": "資産の初期コスト。"
+        },
+        "salvage": {
+          "name": "サルベージ",
+          "detail": "減価償却終了時の資産の価値。"
+        },
+        "life": {
+          "name": "人生",
+          "detail": "資産が減価償却される期間数。"
+        }
+      }
+    },
+    "DURATION": {
+      "description": "投資が価値に達するまでの期間数。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "rate": {
+          "name": "レート",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "収率",
+          "detail": "証券の予想年間利回り。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "修正マコーレー持続時間。",
+      "parameters": {
+        "settlement": {
+          "name": "決済",
+          "detail": "証券の決済日、つまり証券が発行後に買い手に引き渡される日。"
+        },
+        "maturity": {
+          "name": "成熟",
+          "detail": "証券の満期日または終了日。額面金額または額面価格で償還できる日です。"
+        },
+        "rate": {
+          "name": "レート",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "収率",
+          "detail": "証券の予想年間利回り。"
+        },
+        "frequency": {
+          "name": "頻度",
+          "detail": "年間の利息またはクーポンの支払い回数（1、2、または 4）。"
+        },
+        "day_count_convention": {
+          "name": "日数計算規則",
+          "detail": "使用する日数カウント方法を示すインジケーター。"
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "符号付き 2 進数を 10 進形式に変換します。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "符号付き2進数",
+          "detail": "10 進数に変換する符号付き 10 ビットのバイナリ値。文字列として提供されます。"
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "2 進数を 16 進数に変換します。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "符号付き2進数",
+          "detail": "符号付き 16 進数に変換する符号付き 10 ビット バイナリ値 (文字列として提供)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "2進数を8進数に変換します。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "符号付き2進数",
+          "detail": "符号付き 8 進数に変換する符号付き 10 ビット バイナリ値 (文字列として指定)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "10 進数を符号付き 2 進形式に変換します。",
+      "parameters": {
+        "decimal_number": {
+          "name": "小数点",
+          "detail": "符号付きバイナリに変換する 10 進数値 (文字列として指定)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "10 進数を 16 進数に変換します。",
+      "parameters": {
+        "decimal_number": {
+          "name": "小数点",
+          "detail": "符号付き 16 進数に変換する 10 進数値。文字列として提供されます。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "10 進数を符号付き 8 進形式に変換します。",
+      "parameters": {
+        "decimal_number": {
+          "name": "小数点",
+          "detail": "符号付き 8 進数に変換する 10 進数値 (文字列として指定)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "16 進数を 2 進数に変換します。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "符号付き16進数",
+          "detail": "符号付きバイナリに変換する符号付き 40 ビット 16 進数値 (文字列として指定)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "16 進数を 10 進数に変換します。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "符号付き16進数",
+          "detail": "10 進数に変換する符号付き 40 ビットの 16 進数値。文字列として提供されます。"
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "16 進数を 8 進数に変換します。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "符号付き16進数",
+          "detail": "符号付き 8 進数値に変換する符号付き 40 ビット 16 進数値 (文字列として提供)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "8 進数を 2 進数に変換します。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "符号付き8進数",
+          "detail": "符号付きバイナリに変換する符号付き 30 ビット 8 進数値 (文字列として指定)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "符号付き 8 進数を 10 進形式に変換します。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "符号付き8進数",
+          "detail": "10 進数に変換する符号付き 30 ビットの 8 進数値。文字列として提供されます。"
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "8 進数を 16 進数に変換します。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "符号付き8進数",
+          "detail": "符号付き 16 進数に変換する符号付き 30 ビット 8 進数値 (文字列として提供)。"
+        },
+        "significant_digits": {
+          "name": "有効桁数",
+          "detail": "結果で確保する有効桁数。"
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "複素数を作成します。",
+      "parameters": {
+        "real_part": {
+          "name": "実部",
+          "detail": "実係数。"
+        },
+        "imaginary_part": {
+          "name": "虚数部",
+          "detail": "虚数係数。"
+        },
+        "suffix": {
+          "name": "サフィックス",
+          "detail": "虚数係数の接尾辞は「i」または「j」のみ使用できます。省略された場合は「i」が使用されます。"
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "複素数の実係数。",
+      "parameters": {
+        "complex_number": {
+          "name": "複素数",
+          "detail": "a+bi または a+bj 形式の複素数。"
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "複素数の虚数係数。",
+      "parameters": {
+        "complex_number": {
+          "name": "複素数",
+          "detail": "a+bi または a+bj 形式の複素数。"
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "数値の複素共役。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "共役を計算する複素数。"
+        }
+      }
+    },
+    "IMABS": {
+      "description": "複素数の絶対値。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "絶対値を計算する複素数。"
+        }
+      }
+    },
+    "DELTA": {
+      "description": "2 つの数値を比較します。",
+      "parameters": {
+        "number1": {
+          "name": "番号1",
+          "detail": "比較する最初の数値。"
+        },
+        "number2": {
+          "name": "番号2",
+          "detail": "比較する2番目の数値。"
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "一連の複素数の合計。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "加算する最初の複素数または範囲。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` に追加する追加の複素数または範囲。"
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "2 つの複素数の差。",
+      "parameters": {
+        "first_number": {
+          "name": "最初の番号",
+          "detail": "second_number を減算する複素数。"
+        },
+        "second_number": {
+          "name": "秒数",
+          "detail": "first_number から減算する複素数。"
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "一連の複素数を掛け合わせた結果。",
+      "parameters": {
+        "factor1": {
+          "name": "要因1",
+          "detail": "積を計算する最初の数値または範囲。"
+        },
+        "factor2": {
+          "name": "因子2",
+          "detail": "積を計算する追加の複素数または範囲。"
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "1 つの複素数を別の複素数で割ったもの。",
+      "parameters": {
+        "dividend": {
+          "name": "配当",
+          "detail": "除算される複素数。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "除算する複素数。"
+        }
+      }
+    },
+    "NOT": {
+      "description": "指定された論理値の反対を返します。",
+      "parameters": {
+        "logical_expression": {
+          "name": "論理式",
+          "detail": "何らかの論理値を表す式または式を保持するセルへの参照。"
+        }
+      }
+    },
+    "TRUE": {
+      "description": "論理値 `true`。"
+    },
+    "FALSE": {
+      "description": "論理値 `false`。"
+    },
+    "AND": {
+      "description": "論理 `and` 演算子。",
+      "parameters": {
+        "logical_expression1": {
+          "name": "論理式1",
+          "detail": "何らかの論理値 (つまり `TRUE` または `FALSE`) を表す式、または論理値に強制変換できる式を含むセルへの式または参照。"
+        },
+        "logical_expression2": {
+          "name": "論理式2",
+          "detail": "論理値を表すその他の式。"
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "エラーでない場合は値、そうでない場合は 2 番目の引数。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "`value` 自体がエラーでない場合、返される値。"
+        },
+        "value_if_error": {
+          "name": "エラーの場合の値",
+          "detail": "`value` がエラーの場合に関数が返す値。"
+        }
+      }
+    },
+    "IF": {
+      "description": "論理式に応じて値を返します。",
+      "parameters": {
+        "logical_expression": {
+          "name": "論理式",
+          "detail": "何らかの論理値 (つまり `TRUE` または `FALSE`) を表す式または式を含むセルへの参照。"
+        },
+        "value_if_true": {
+          "name": "真の値",
+          "detail": "`logical_expression` が `TRUE` の場合に関数が返す値。"
+        },
+        "value_if_false": {
+          "name": "偽の場合の値",
+          "detail": "`logical_expression` が `FALSE` の場合に関数が返す値。"
+        }
+      }
+    },
+    "OR": {
+      "description": "論理 `or` 演算子。",
+      "parameters": {
+        "logical_expression1": {
+          "name": "論理式1",
+          "detail": "何らかの論理値 (つまり `TRUE` または `FALSE`) を表す式、または論理値に強制変換できる式を含むセルへの式または参照。"
+        },
+        "logical_expression2": {
+          "name": "論理式2",
+          "detail": "論理値に評価されるその他の式。"
+        }
+      }
+    },
+    "NE": {
+      "description": "等しくありません。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最初の値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` と比較して不等かどうかをテストする値。"
+        }
+      }
+    },
+    "EQ": {
+      "description": "等しい。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最初の値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` と比較して等しいかどうかをテストする値。"
+        }
+      }
+    },
+    "GT": {
+      "description": "厳密により大きい。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "`value2` より大きいかどうかをテストする値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "2番目の値。"
+        }
+      }
+    },
+    "GTE": {
+      "description": "より大きいか等しい。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "`value2` 以上であるかどうかをテストする値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "2 番目の値。"
+        }
+      }
+    },
+    "LT": {
+      "description": "未満。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "`value2` より小さいかどうかをテストする値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "2番目の値。"
+        }
+      }
+    },
+    "LTE": {
+      "description": "以下。",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "`value2` 以下であることをテストする値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "2 番目の値。"
+        }
+      }
+    },
+    "ADD": {
+      "description": "2つの数の合計",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "最初の加数。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "2番目の加数。"
+        }
+      }
+    },
+    "MINUS": {
+      "description": "2つの数値の差",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "減算される数。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "減数、つまり `value1` から減算する数値。"
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "2つの数の積",
+      "parameters": {
+        "factor1": {
+          "name": "要因1",
+          "detail": "最初の被乗数。"
+        },
+        "factor2": {
+          "name": "因子2",
+          "detail": "2 番目の被乗数。"
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "ある数を別の数で割る",
+      "parameters": {
+        "dividend": {
+          "name": "配当",
+          "detail": "除算される数値。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "割る数値。"
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "2つの値の連結",
+      "parameters": {
+        "value1": {
+          "name": "値1",
+          "detail": "`value2` が追加される値。"
+        },
+        "value2": {
+          "name": "値2",
+          "detail": "`value1` に追加する値。"
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "パーセンテージとして解釈される値。",
+      "parameters": {
+        "percentage": {
+          "name": "パーセンテージ",
+          "detail": "パーセンテージとして解釈する値。"
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "文字列を相互に追加します。",
+      "parameters": {
+        "string1": {
+          "name": "文字列1",
+          "detail": "最初の文字列。"
+        },
+        "string2": {
+          "name": "文字列2",
+          "detail": "順番に追加する文字列。"
+        }
+      }
+    },
+    "CODE": {
+      "description": "文字の数値 Unicode マップ値。",
+      "parameters": {
+        "string": {
+          "name": "弦",
+          "detail": "最初の文字の Unicode マップ値が返される文字列。"
+        }
+      }
+    },
+    "CHAR": {
+      "description": "数値に関連付けられた文字を取得します。",
+      "parameters": {
+        "table_number": {
+          "name": "テーブル番号",
+          "detail": "現在の Unicode テーブルから検索する文字の番号を 10 進形式で指定します。"
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "ローマ数字の値を計算します。",
+      "parameters": {
+        "roman_numeral": {
+          "name": "ローマ数字",
+          "detail": "書式設定するローマ数字。値は 1 から 3999 までの範囲でなければなりません。"
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "数値をローマ数字でフォーマットします。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "フォーマットする数値。1 から 3999 までの範囲です。"
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "正規表現を使用して一致する部分文字列を抽出します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "入力テキスト。"
+        },
+        "regular_expression": {
+          "name": "正規表現",
+          "detail": "この式に一致する `text` の最初の部分が返されます。"
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "テキストが正規表現に一致するかどうか。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "正規表現に対してテストされるテキスト。"
+        },
+        "regular_expression": {
+          "name": "正規表現",
+          "detail": "テキストをテストする正規表現。"
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "テキストを正規表現で置き換えます。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "一部が置き換えられるテキスト。"
+        },
+        "regular_expression": {
+          "name": "正規表現",
+          "detail": "正規表現。`text` 内の一致するインスタンスはすべて置換されます。"
+        },
+        "replacement": {
+          "name": "交換",
+          "detail": "元のテキストに挿入されるテキスト。"
+        }
+      }
+    },
+    "T": {
+      "description": "文字列引数をテキストとして指定します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "テキストに変換する引数。"
+        }
+      }
+    },
+    "FIXED": {
+      "description": "固定された小数点以下の桁数で数値をフォーマットします。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "フォーマットする数値。"
+        },
+        "number_of_places": {
+          "name": "場所の数",
+          "detail": "結果に表示する小数点以下の桁数。"
+        },
+        "suppress_separator": {
+          "name": "区切り文字を非表示にする",
+          "detail": "一部のロケールで使用される3桁区切り記号を抑制するかどうか（例：`1,000` は `1000` になります）。この値が 0 または省略されている場合は区切り記号が表示され、それ以外の場合は表示されません。"
+        }
+      }
+    },
+    "FIND": {
+      "description": "テキスト内で見つかった文字列の最初の位置。大文字と小文字が区別されます。",
+      "parameters": {
+        "search_for": {
+          "name": "検索する",
+          "detail": "`text_to_search` 内で検索する文字列。"
+        },
+        "text_to_search": {
+          "name": "検索テキスト",
+          "detail": "`search_for` の最初の出現を検索するテキスト。"
+        },
+        "starting_at": {
+          "name": "開始時刻",
+          "detail": "`text_to_search` 内で検索を開始する文字。"
+        }
+      }
+    },
+    "FINDB": {
+      "description": "テキスト (バイナリ) 内で文字列が最初に見つかった位置。",
+      "parameters": {
+        "search_for": {
+          "name": "検索する",
+          "detail": "`text_to_search` 内で検索する文字列。"
+        },
+        "text_to_search": {
+          "name": "検索テキスト",
+          "detail": "`search_for` の最初の出現を検索するテキスト。"
+        },
+        "starting_at": {
+          "name": "開始時刻",
+          "detail": "`text_to_search` 内で検索を開始する文字。"
+        }
+      }
+    },
+    "JOIN": {
+      "description": "区切り文字を使用して配列の要素を連結します。",
+      "parameters": {
+        "delimiter": {
+          "name": "デリミタ",
+          "detail": "連結された各値の間に配置する文字または文字列。"
+        },
+        "value_or_array1": {
+          "name": "値または配列1",
+          "detail": "`delimiter` を使用して追加される値。"
+        },
+        "value_or_array2": {
+          "name": "値または配列2",
+          "detail": "`delimiter` を使用して追加される値。"
+        }
+      }
+    },
+    "LEFT": {
+      "description": "指定された文字列の先頭からの部分文字列。",
+      "parameters": {
+        "string": {
+          "name": "弦",
+          "detail": "左部分が返される文字列。"
+        },
+        "number_of_characters": {
+          "name": "文字数",
+          "detail": "`string` の左側から返される文字数。"
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "指定された文字列の末尾からの部分文字列。",
+      "parameters": {
+        "string": {
+          "name": "弦",
+          "detail": "右側の部分が返される文字列。"
+        },
+        "number_of_characters": {
+          "name": "文字数",
+          "detail": "`string` の右側から返される文字数。"
+        }
+      }
+    },
+    "MID": {
+      "description": "文字列のセグメント。",
+      "parameters": {
+        "string": {
+          "name": "弦",
+          "detail": "セグメントを抽出する文字列。"
+        },
+        "starting_at": {
+          "name": "開始時刻",
+          "detail": "`string` の左から抽出を開始するインデックス。`string` の最初の文字のインデックスは 1 です。"
+        },
+        "extract_length": {
+          "name": "抽出長さ",
+          "detail": "抽出するセグメントの長さ。"
+        }
+      }
+    },
+    "LEN": {
+      "description": "文字列の長さ。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "長さが返される文字列。"
+        }
+      }
+    },
+    "LENB": {
+      "description": "文字列の長さ（バイト単位）。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "長さが返される文字列。"
+        }
+      }
+    },
+    "LOWER": {
+      "description": "指定された文字列を小文字に変換します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "小文字に変換する文字列。"
+        }
+      }
+    },
+    "UPPER": {
+      "description": "指定された文字列を大文字に変換します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "大文字に変換する文字列。"
+        }
+      }
+    },
+    "EXACT": {
+      "description": "2 つの文字列が同一かどうかをテストします。",
+      "parameters": {
+        "string1": {
+          "name": "文字列1",
+          "detail": "比較する最初の文字列"
+        },
+        "string2": {
+          "name": "文字列2",
+          "detail": "比較する2番目の文字列"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "テキスト文字列の一部を別のテキストに置き換えます。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "一部が置き換えられるテキスト。"
+        },
+        "position": {
+          "name": "位置",
+          "detail": "置換を開始する位置（1 から開始）。"
+        },
+        "length": {
+          "name": "長さ",
+          "detail": "置換するテキストの文字数。"
+        },
+        "new_text": {
+          "name": "新しいテキスト",
+          "detail": "元のテキストに挿入されるテキスト。"
+        }
+      }
+    },
+    "REPT": {
+      "description": "指定されたテキストが何回か繰り返されます。",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "テキストを繰り返す",
+          "detail": "繰り返す文字または文字列。"
+        },
+        "number_of_repetitions": {
+          "name": "繰り返し回数",
+          "detail": "返される値に `text_to_repeat` が出現する回数。"
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "大文字と小文字を区別せずに、テキスト内で見つかった文字列の最初の位置。",
+      "parameters": {
+        "search_for": {
+          "name": "検索する",
+          "detail": "`text_to_search` 内で検索する文字列。"
+        },
+        "text_to_search": {
+          "name": "検索テキスト",
+          "detail": "`search_for` の最初の出現を検索するテキスト。"
+        },
+        "starting_at": {
+          "name": "開始時刻",
+          "detail": "`text_to_search` 内で検索を開始する文字。"
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "文字列内の既存のテキストを新しいテキストに置き換えます。",
+      "parameters": {
+        "text_to_search": {
+          "name": "検索テキスト",
+          "detail": "検索および置換の対象となるテキスト。"
+        },
+        "search_for": {
+          "name": "検索する",
+          "detail": "`text_to_search` 内で検索する文字列。"
+        },
+        "replace_with": {
+          "name": "置換",
+          "detail": "`search_for` を置き換える文字列。"
+        },
+        "occurrence_number": {
+          "name": "発生回数",
+          "detail": "`text_to_search` 内の `search_for` のインスタンスを `replace_with` で置き換えます。デフォルトでは、`search_for` のすべての出現箇所が置き換えられますが、`occurrence_number` を指定した場合は、指定された `search_for` のインスタンスのみが置き換えられます。"
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "テキストの一部から印刷できない文字を削除します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "印刷できない文字を削除するテキスト。"
+        }
+      }
+    },
+    "TEXT": {
+      "description": "数値をテキストにフォーマットします。",
+      "parameters": {
+        "number": {
+          "name": "番号",
+          "detail": "フォーマットする数値、日付、または時刻。"
+        },
+        "format": {
+          "name": "形式",
+          "detail": "数値をフォーマットするパターン。引用符で囲みます。"
+        }
+      }
+    },
+    "TRIM": {
+      "description": "スペース文字を削除します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "トリムするテキストまたはテキストを含むセルへの参照。"
+        }
+      }
+    },
+    "VALUE": {
+      "description": "日付/時刻/数値の文字列を数値に変換します。",
+      "parameters": {
+        "text": {
+          "name": "文章",
+          "detail": "変換する値を含む文字列。"
+        }
+      }
+    },
+    "PROPER": {
+      "description": "指定された文字列内の各単語を大文字にします。",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "テキストを大文字にする",
+          "detail": "各単語の最初の文字を大文字にし、その他の文字をすべて小文字にして返されるテキスト。"
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "数値の単位変換。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "`end_unit` に変換する `start_unit` の数値。"
+        },
+        "start_unit": {
+          "name": "開始ユニット",
+          "detail": "開始単位。現在 `value` に割り当てられている単位。"
+        },
+        "end_unit": {
+          "name": "終了ユニット",
+          "detail": "引数 `value` を変換する測定単位。"
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "平方の差の合計。",
+      "parameters": {
+        "array_x": {
+          "name": "配列x",
+          "detail": "`array_y` 内の対応するエントリの平方によって減算され、合計される値の配列または範囲。"
+        },
+        "array_y": {
+          "name": "配列y",
+          "detail": "`array_x` 内の対応するエントリの平方からその平方を減算し、合計する値の配列または範囲。"
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "平方和の合計。",
+      "parameters": {
+        "array_x": {
+          "name": "配列x",
+          "detail": "`array_y` 内の対応するエントリの平方に加算されて合計される値の配列または範囲。"
+        },
+        "array_y": {
+          "name": "配列y",
+          "detail": "`array_x` 内の対応するエントリの平方に加算されて合計される値の配列または範囲。"
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "差の二乗の合計。",
+      "parameters": {
+        "array_x": {
+          "name": "配列x",
+          "detail": "`array_y` 内の対応するエントリによって減算され、2 乗されて合計される値の配列または範囲。"
+        },
+        "array_y": {
+          "name": "配列y",
+          "detail": "`array_x` 内の対応するエントリから減算され、その結果が 2 乗され、その結果がすべて加算される値の配列または範囲。"
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "配列の行と列を転置します。",
+      "parameters": {
+        "array_or_range": {
+          "name": "配列または範囲",
+          "detail": "行と列が交換される配列または範囲。"
+        }
+      }
+    },
+    "TREND": {
+      "description": "最小二乗法で導き出された線形傾向にポイントを適合させます。",
+      "parameters": {
+        "known_data_y": {
+          "name": "既知データy",
+          "detail": "理想的な線形傾向を曲線で近似するために使用される、既にわかっている従属 (y) 値を含む配列または範囲。"
+        },
+        "known_data_x": {
+          "name": "既知データx",
+          "detail": "`known_data_y` に対応する独立変数の値。"
+        },
+        "new_data_x": {
+          "name": "新しいデータx",
+          "detail": "理想的な曲線適合の `y` 値を返すデータ ポイント。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "曲線近似の一般的な線形形式 `y = m*x+b` が与えられ、`TRUE` の場合は `b` を計算し、`FALSE` の場合は `b` を `0` に強制して `m` 値のみを計算します (つまり、曲線近似が原点を通過するように強制します)。"
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "配列の頻度分布。",
+      "parameters": {
+        "data": {
+          "name": "データ",
+          "detail": "カウントする値を含む配列または範囲。"
+        },
+        "classes": {
+          "name": "クラス",
+          "detail": "クラスのセットを含む配列または範囲。"
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "ポイントは指数関数的成長傾向に適合します。",
+      "parameters": {
+        "known_data_y": {
+          "name": "既知データy",
+          "detail": "理想的な指数関数的成長曲線を曲線近似するために使用される、既にわかっている従属 (y) 値を含む配列または範囲。"
+        },
+        "known_data_x": {
+          "name": "既知データx",
+          "detail": "`known_data_y` に対応する独立変数の値。"
+        },
+        "new_data_x": {
+          "name": "新しいデータx",
+          "detail": "理想的な曲線適合の `y` 値を返すデータ ポイント。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "曲線近似の一般的な指数形式 `y = b*m^x` が指定されている場合、`TRUE` の場合は `b` を計算し、`FALSE` の場合は `b` を `1` に強制して `m` 値のみを計算します。"
+        }
+      }
+    },
+    "LINEST": {
+      "description": "最小二乗法による最適な線形傾向。",
+      "parameters": {
+        "known_data_y": {
+          "name": "既知データy",
+          "detail": "理想的な線形傾向を曲線で近似するために使用される、既にわかっている従属 (y) 値を含む配列または範囲。"
+        },
+        "known_data_x": {
+          "name": "既知データx",
+          "detail": "`known_data_y` に対応する独立変数の値。"
+        },
+        "calculate_b": {
+          "name": "計算b",
+          "detail": "線形形式「y = m*x+b」が与えられた場合、「TRUE」であればy切片（「b」）を計算します。「FALSE」であれば「b」を「0」に強制し、「m」の値のみを計算します。つまり、曲線近似が原点を通過するように強制します。"
+        },
+        "verbose": {
+          "name": "冗長な",
+          "detail": "追加の回帰統計を返すか、線形係数と y 切片のみを返すか (デフォルト) を指定するフラグ。"
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "最も適合する指数成長曲線。",
+      "parameters": {
+        "known_data_y": {
+          "name": "既知データy",
+          "detail": "理想的な指数関数的成長曲線を曲線近似するために使用される、既にわかっている従属 (y) 値を含む配列または範囲。"
+        },
+        "known_data_x": {
+          "name": "既知データx",
+          "detail": "`known_data_y` に対応する独立変数の値。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "曲線近似の一般的な指数形式 `y = b*m^x` が指定されている場合、`TRUE` の場合は `b` を計算し、`FALSE` の場合は `b` を `1` に強制して `m` 値のみを計算します。"
+        },
+        "verbose": {
+          "name": "冗長な",
+          "detail": "追加の回帰統計を返すか、計算された係数と指数のみを返すかを指定するフラグ。"
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "正方行列の行列式。",
+      "parameters": {
+        "square_matrix": {
+          "name": "正方行列",
+          "detail": "行列式が計算される行列を表す、行と列の数が等しい配列または範囲。"
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "正方行列の逆数。",
+      "parameters": {
+        "square_matrix": {
+          "name": "正方行列",
+          "detail": "逆数を計算する行列を表す、行と列の数が等しい配列または範囲。"
+        }
+      }
+    },
+    "MMULT": {
+      "description": "2 つの行列の行列積。",
+      "parameters": {
+        "matrix1": {
+          "name": "マトリックス1",
+          "detail": "行列乗算演算の最初の行列。配列または範囲として表されます。"
+        },
+        "matrix2": {
+          "name": "マトリックス2",
+          "detail": "行列乗算演算の 2 番目の行列。配列または範囲として表されます。"
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "2 つの配列の要素の積の合計。",
+      "parameters": {
+        "array1": {
+          "name": "配列1",
+          "detail": "エントリが 2 番目の配列または範囲の対応するエントリと乗算される最初の配列または範囲。"
+        },
+        "array2": {
+          "name": "配列2",
+          "detail": "最初の配列または範囲の対応するエントリと乗算されるエントリが含まれる 2 番目の配列または範囲。"
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "値が数式であるかどうか。",
+      "parameters": {
+        "cell": {
+          "name": "細胞",
+          "detail": "数式が含まれているかどうか検証するセル。"
+        }
+      }
+    },
+    "CELL": {
+      "description": "セルに関する情報を取得します。",
+      "parameters": {
+        "info_type": {
+          "name": "情報タイプ",
+          "detail": "要求される情報の種類（利用可能な種類については記事を参照）"
+        },
+        "reference": {
+          "name": "参照",
+          "detail": "セルへの参照。"
+        }
+      }
+    },
+    "NA": {
+      "description": "`#N/A` エラー。"
+    },
+    "ISBLANK": {
+      "description": "参照先のセルが空かどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "空かどうかをチェックするセルへの参照。"
+        }
+      }
+    },
+    "ISERR": {
+      "description": "値が `#n/a` 以外のエラーであるかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "`#N/A` 以外のエラー タイプとして検証される値。"
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "値がエラーかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "エラータイプとして検証される値。"
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "値が `true` か `false` か。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "論理 `TRUE` または `FALSE` として検証される値。"
+        }
+      }
+    },
+    "ISNA": {
+      "description": "値がエラー `#n/a` かどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "エラー値 `#N/A` と比較する値。"
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "値が非テキストであるかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "チェックする値。"
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "値が数値であるかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "数値として検証される値。"
+        }
+      }
+    },
+    "ISREF": {
+      "description": "値が有効なセル参照であるかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "セル参照として検証される値。"
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "値がテキストかどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "テキストとして検証される値。"
+        }
+      }
+    },
+    "TYPE": {
+      "description": "値の型を取得します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "型を決定する値。"
+        }
+      }
+    },
+    "N": {
+      "description": "引数は数値として提供されます。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "数値に変換する引数。"
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "指定された数値を日付に変換します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "日付に変換するセルへの引数または参照。"
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "任意の数値を純粋な数値に変換します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "純粋な数値に変換するセルへの引数または参照。"
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "指定された数値をテキスト値に変換します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "テキストに変換するセルへの引数または参照。"
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "指定された数値をドル値に変換します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "ドル値に変換するセルへの引数または参照。"
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "指定された数値をパーセンテージに変換します。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "パーセンテージに変換するセルへの引数または参照。"
+        }
+      }
+    },
+    "DGET": {
+      "description": "表のような範囲からの単一の値。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DMAX": {
+      "description": "表のような範囲の値の最大値。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DMIN": {
+      "description": "表のような範囲の値の最小値。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "表のような範囲の値のセットの平均。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "表のような範囲から値をカウントします。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "表のような範囲から値とテキストをカウントします。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "表のような範囲の値の積。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "表からの母集団サンプルの標準偏差。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "表からの全体の母集団の標準偏差。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DSUM": {
+      "description": "表のような範囲の値の合計。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DVAR": {
+      "description": "表のような範囲からの母集団サンプルの分散。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "DVARP": {
+      "description": "表のような範囲からの母集団の分散。",
+      "parameters": {
+        "database": {
+          "name": "データベース",
+          "detail": "検討するデータを含む配列または範囲。最初の行に各列の値のラベルが含まれるように構造化されています。"
+        },
+        "field": {
+          "name": "分野",
+          "detail": "`database` 内のどの列に抽出および操作の対象となる値が含まれているかを示します。"
+        },
+        "criteria": {
+          "name": "基準",
+          "detail": "操作前に `database` 値をフィルターするための 0 個以上の条件を含む配列または範囲。"
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "ID番号に基づいて性別を取得します。",
+      "parameters": {
+        "ID number": {
+          "name": "ID番号",
+          "detail": "15 桁または 18 桁の ID 番号または範囲。"
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "ID番号に基づいて出生地の州を取得します。",
+      "parameters": {
+        "ID number": {
+          "name": "ID番号",
+          "detail": "15 桁または 18 桁の ID 番号または範囲。"
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "ID番号に基づいて星座を取得します。",
+      "parameters": {
+        "ID number": {
+          "name": "ID番号",
+          "detail": "15 桁または 18 桁の ID 番号または範囲。"
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "A 株の対応する株式取引量を返します。",
+      "parameters": {
+        "Stock code": {
+          "name": "株式コード",
+          "detail": "6桁の株式コードが必要です。"
+        },
+        "Date": {
+          "name": "日付",
+          "detail": "株式の取引日。デフォルトは最新の取引日です。"
+        },
+        "Reversion and exclusion": {
+          "name": "復帰と排除",
+          "detail": "株式の権利回復タイプを選択します。デフォルトは0[以前の回復]、1[元の価格]、2[回復後]です。"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "値が日付かどうか。",
+      "parameters": {
+        "value": {
+          "name": "価値",
+          "detail": "日付として検証される値。"
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "スパークライン折れ線グラフを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Line color": {
+          "name": "線の色",
+          "detail": "折れ線グラフの線の色は、範囲A1、カラーテーブルのインデックス値、または特定の色値で指定できます。線の色を非表示にするには、0またはfalseに設定します。regx、rgb、rgbaなどに対応しています。デフォルトは#2ec7c9です。"
+        },
+        "Line thickness": {
+          "name": "線の太さ",
+          "detail": "折れ線グラフの線の太さ。デフォルトは1px"
+        },
+        "Auxiliary line": {
+          "name": "補助線",
+          "detail": "水平線。最小値、最大値、平均値、中央値、範囲、またはカスタム値を指定できます。デフォルトは 0 です。"
+        },
+        "Auxiliary line color": {
+          "name": "補助線の色",
+          "detail": "補助線の色設定、線の色設定と同じ、デフォルトは#000"
+        },
+        "Maximum mark": {
+          "name": "最高点",
+          "detail": "折れ線グラフの最大値を特定し、同じ線の色の設定、デフォルト0は表示されません"
+        },
+        "Minimum mark": {
+          "name": "最低点",
+          "detail": "折れ線グラフの最小値を識別し、同じ線の色の設定、デフォルト0は表示されません"
+        },
+        "Mark size": {
+          "name": "マークサイズ",
+          "detail": "マークサイズの最大と最小の設定。デフォルトは1.5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "スパークライン累積垂直ヒストグラムを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Stack by column": {
+          "name": "列ごとに積み重ねる",
+          "detail": "行ごとに積み重ねる必要がある場合は、この項目をfalseまたは0に設定します。デフォルトは1です。"
+        },
+        "Bar interval": {
+          "name": "バー間隔",
+          "detail": "バー間の距離。デフォルトは1"
+        },
+        "Max": {
+          "name": "マックス",
+          "detail": "累積バーの最大値。バーの長さを調節するために使用されます。デフォルトでは、false、auto、nullが自動的に計算されます。"
+        },
+        "Color palette": {
+          "name": "カラーパレット",
+          "detail": "カラーパレットでは、各ディメンションのバーの色を個別に設定でき、A1:A10 などの範囲に設定できます。デフォルトは #2ec7c9、#fc5c5c、#5ab1ef、#ffb980 などです。"
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "スパークライン累積水平棒グラフを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Stack by column": {
+          "name": "列ごとに積み重ねる",
+          "detail": "行ごとに積み重ねる必要がある場合は、この項目をfalseまたは0に設定します。デフォルトは1です。"
+        },
+        "Bar interval": {
+          "name": "バー間隔",
+          "detail": "バー間の距離。デフォルトは1"
+        },
+        "Max": {
+          "name": "マックス",
+          "detail": "累積バーの最大値。バーの長さを調節するために使用されます。デフォルトでは、false、auto、nullが自動的に計算されます。"
+        },
+        "Color palette": {
+          "name": "カラーパレット",
+          "detail": "カラーパレットでは、各ディメンションのバーの色を個別に設定でき、A1:A10 などの範囲に設定できます。デフォルトは #2ec7c9、#fc5c5c、#5ab1ef、#ffb980 などです。"
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "スパークライン離散グラフを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Segmentation threshold": {
+          "name": "セグメンテーションしきい値",
+          "detail": "離散グラフの列の色の区別。たとえば、値が 0 の場合、青は 0 より大きく、赤は 0 より小さく、デフォルトは 0 です。"
+        },
+        "Above threshold color": {
+          "name": "閾値以上の色",
+          "detail": "折れ線グラフの線の色は、範囲A1、カラーテーブルのインデックス値、または特定の色値で指定できます。線の色を非表示にするには、0またはfalseに設定します。regx、rgb、rgbaなどに対応しています。デフォルトは#2ec7c9です。"
+        },
+        "Below threshold color": {
+          "name": "閾値以下の色",
+          "detail": "しきい値以下のバーの色設定。しきい値を超える色と同じ。デフォルトは #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "スパークラインの3状態グラフを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Bar interval": {
+          "name": "バー間隔",
+          "detail": "バー間の距離。デフォルトは1"
+        },
+        "Bar color": {
+          "name": "バーの色",
+          "detail": "折れ線グラフの線の色は、範囲A1、カラーテーブルのインデックス値、または特定の色値で指定できます。線の色を非表示にするには、0またはfalseに設定します。regx、rgb、rgbaなどに対応しています。デフォルトは#fc5c5cです。"
+        },
+        "Negative bar color": {
+          "name": "負のバーの色",
+          "detail": "負のバーの色設定。負の値の色を表します。バーの色設定と同じ。デフォルトは #97b552。"
+        },
+        "Zero value bar color": {
+          "name": "ゼロ値バーの色",
+          "detail": "ゼロ値バーの色設定、0値の色を表し、バーと同じ色構成、デフォルトは#999"
+        },
+        "Color palette": {
+          "name": "カラーパレット",
+          "detail": "カラーパレットでは、各バーの色を個別に設定できます。複数の設定が可能で、2 つの形式がサポートされています。1 つ目の色 (#000 など) は、最初のバーの色が黒であることを意味します。2 つ目の値の範囲: 色 (-2:# 000 など) は、値が -2 のバーが黒であることを示し、0:5:#000 は、値が 0 ～ 5 のバーが黒であることを示します。デフォルトは空です。"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "スパークライン円グラフを生成する",
+      "parameters": {
+        "Range": {
+          "name": "範囲",
+          "detail": "範囲、A1:A20、{1,2,3,4,5}などの値を効率的に計算できます。"
+        },
+        "Rotation angle": {
+          "name": "回転角度",
+          "detail": "円グラフの回転角度。デフォルトは0です。"
+        },
+        "border": {
+          "name": "国境",
+          "detail": "円グラフの境界線のサイズ、デフォルトはなし 0"
+        },
+        "Border color": {
+          "name": "境界線の色",
+          "detail": "円グラフの境界線の色。デフォルトは#000です。"
+        },
+        "Color palette": {
+          "name": "カラーパレット",
+          "detail": "スライスの色はパレットで設定でき、A1:A10 などの範囲に設定できます。デフォルトは #2ec7c9、#fc5c5c、#5ab1ef、#ffb980 などです。"
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "スパークラインの箇条書きを生成する",
+      "parameters": {
+        "Target": {
+          "name": "ターゲット",
+          "detail": "達成目標値に対して、A1、100 などの数値を効率的に計算できます。"
+        },
+        "achieved": {
+          "name": "達成",
+          "detail": "値が完成した場合にのみ、A1、100 などの値を効果的に計算できます。"
+        },
+        "Contrast": {
+          "name": "対比",
+          "detail": "賞与の超過額、最小額、下限額などの比較値をA1、100など、効果的に計算できます。最大9つの比較値を設定できます。"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "スパークライングラフを1つのセルに結合する",
+      "parameters": {
+        "config": {
+          "name": "設定",
+          "detail": "A1:A20、完成した円グラフ、折れ線グラフの設定などのスパークライン グラフの設定。"
+        }
+      }
+    },
+    "SORT": {
+      "description": "指定された列で範囲の行を並べ替えます。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "ソートするデータ。"
+        },
+        "sort_column": {
+          "name": "ソート列",
+          "detail": "並べ替えの基準となる値を含む `range` 内の列のインデックス、または `range` 外の範囲。"
+        },
+        "is_ascending": {
+          "name": "昇順",
+          "detail": "`sort_column` を昇順で並べ替えるかどうかを示す `TRUE` または `FALSE`。`FALSE` の場合は降順で並べ替えます。"
+        },
+        "sort_column2": {
+          "name": "ソート列2",
+          "detail": "追加の列。"
+        }
+      }
+    },
+    "FILTER": {
+      "description": "指定された条件に基づいて範囲をフィルタリングします。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "フィルタリングするデータ。"
+        },
+        "condition1": {
+          "name": "条件1",
+          "detail": "`range` の最初の列または行に対応する true または false の値を含む列または行、あるいは true または false に評価される配列数式。"
+        },
+        "condition2": {
+          "name": "条件2",
+          "detail": "`range` 内の対応する行または列が `FILTER` を通過するかどうかを示すブール値 `TRUE` または `FALSE` を含む追加の行または列。また、これらの行または列を評価する配列数式を含めることもできます。すべての条件は同じ種類（行または列）である必要があります。行条件と列条件を混在させることはできません。"
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "指定されたソース範囲内の一意の行。",
+      "parameters": {
+        "range": {
+          "name": "範囲",
+          "detail": "一意のエントリでフィルタリングするデータ。"
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[オプション] - 比較方法を示す論理値。行 = FALSE() または省略。列 = TRUE()。"
+        },
+        "occurs_once": {
+          "name": "一度だけ発生する",
+          "detail": "[オプション] - 論理値、一意の値の 1 つの出現のみが返されます = TRUE(); すべての一意の値を含む = FALSE() または省略。"
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "乱数のグリッドを返します。",
+      "parameters": {
+        "rows": {
+          "name": "行",
+          "detail": "ランダムな数字を入力する行数。"
+        },
+        "columns": {
+          "name": "列",
+          "detail": "乱数を入力する列の数。"
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "連続した数字のグリッドを返します。",
+      "parameters": {
+        "rows": {
+          "name": "行",
+          "detail": "関数の結果のグリッド内の行数。"
+        },
+        "columns": {
+          "name": "列",
+          "detail": "関数の結果グリッドの列数。省略した場合、結果グリッドの列数は1になります。"
+        },
+        "start": {
+          "name": "始める",
+          "detail": "シーケンスを開始する番号。省略した場合、シーケンスは1から始まります。"
+        },
+        "step": {
+          "name": "ステップ",
+          "detail": "シーケンス内の各値の差の大きさ。省略した場合、各値の差は1になります。"
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "文字通りの式または表現に従って評価します。",
+      "parameters": {
+        "expression": {
+          "name": "表現",
+          "detail": "数式または表現"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "リモート バックエンド サーバー/API 上の関数を呼び出します。",
+      "parameters": {
+        "remote_expression": {
+          "name": "リモート式",
+          "detail": "式"
+        }
+      }
+    }
   }
 }

@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Wybierz narzędzie AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Wybierz narzędzie AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Wybierz narzędzie AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Edytuj skrót klawiaturowy",
+      "editKeyboardShortcut": "Edytuj skrót klawiaturowy",
       "setShortcut": "Ustaw skrót",
       "editShortcut": "Edytuj skrót",
       "shortcutAlreadyExists": "Powyższy skrót klawiaturowy już istnieje.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Nic",
-      "solid": "Solidny",
+      "thin": "Solidny",
       "dashed": "Przerywany",
       "dotted": "Kropkowany"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Ostrzeżenie o edycji",
       "message": "Czy na pewno chcesz usunąć ten arkusz?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Układ strony",
+      "columnsMessage": "Wybrane ustawienia odstępu między kolumnami są zbyt duże w stosunku do szerokości strony w niektórych sekcjach.",
+      "marginsMessage": "Wybrane ustawienia marginesów są w niektórych sekcjach za duże w stosunku do szerokości strony."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Prawidłowy",
     "customMargins": "Niestandardowe marginesy",
     "customMarginsDescription": "Zdefiniuj niestandardowe marginesy",
+    "column": "Kolumna",
+    "columns": "Kolumny",
+    "singleColumn": "1 Kolumna",
+    "twoColumn": "2 kolumny",
+    "threeColumn": "3 kolumny",
+    "customColumn": "Kolumny niestandardowe",
+    "customColumnDescription": "Zdefiniuj niestandardowe kolumny",
+    "unitMeasurement": "Jednostka miary",
     "header": {
       "0": "Chodnikowiec",
       "1": "Nagłówek pierwszej strony",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Różne strony parzyste i nieparzyste",
         "differentFirstEvenOddPages": "Różne strony pierwsze, parzyste i nieparzyste"
       }
+    },
+    "columnsModal": {
+      "title": "Niestandardowa regulacja kolumn",
+      "columnAmount": "Liczba kolumn",
+      "columnNumber": "Numer kolumny",
+      "width": "Szerokość",
+      "spacing": "Rozstaw",
+      "widthAndSpacing": "Szerokość i odstępy",
+      "equalColumns": "Równa szerokość kolumny"
     },
     "marginsModal": {
       "title": "Dostosowanie niestandardowego marginesu",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Oglądanie",
     "editingDescription": "Edytuj dokument",
     "viewOnlyDescription": "Tylko do przeglądania",
+    "editModeDropdown": "Wybór trybu edycji",
     "bold": "Pogrubiony",
     "italic": "italski",
     "underline": "Podkreślać",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Usuń komórki i przesuń w górę",
     "deleteColumnShiftLeft": "Usuń komórki i przesuń w lewo",
     "clearBorder": "Wyczyść granicę",
-    "cellBorderAll": "Wszystkie granice",
-    "cellBorderInside": "Wewnątrz granic",
-    "cellBorderOutside": "Poza granicami",
-    "cellBorderTop": "Górna granica",
-    "cellBorderBottom": "Dolna granica",
-    "cellBorderLeft": "Lewa granica",
-    "cellBorderRight": "Prawa granica",
-    "cellBorderVertical": "Pionowa granica",
-    "cellBorderHorizontal": "Obramowanie poziome",
-    "cellBorderNone": "Bez granic",
+    "all": "Wszystkie granice",
+    "inside": "Wewnątrz granic",
+    "outside": "Poza granicami",
+    "top": "Górna granica",
+    "bottom": "Dolna granica",
+    "left": "Lewa granica",
+    "right": "Prawa granica",
+    "vertical": "Pionowa granica",
+    "horizontal": "Obramowanie poziome",
+    "none": "Bez granic",
     "borders": "Granice",
     "fontSize": {
       "dropdownLabel": "Rozmiar czcionki"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Pasek formuły",
     "range": "Zakres",
-    "formulas": "Formuły",
-    "sumif": "Suma warunkowa w zakresie",
-    "sumsq": "Zwraca sumę kwadratów zakresu",
-    "sum": "Dodaje wszystkie liczby w zakresie",
-    "asinh": "Zwraca odwrotny sinus hiperboliczny liczby",
-    "acos": "Zwraca arcus cosinus liczby w radianach",
-    "cosh": "Zwraca cosinus hiperboliczny liczby",
-    "iseven": "Sprawdza, czy liczba jest parzysta",
-    "isodd": "Sprawdza, czy liczba jest nieparzysta"
+    "formulas": "Formuły"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Suma warunkowa w pewnym zakresie.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres, który jest testowany pod kątem `kryterium`."
+        },
+        "criterion": {
+          "name": "kryterium",
+          "detail": "Wzorzec lub test, który należy zastosować do `zakresu`."
+        },
+        "sum_range": {
+          "name": "zakres sumy",
+          "detail": "Zakres, który ma zostać zsumowany, jeśli jest inny niż `zakres`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangens kąta podany w radianach.",
+      "parameters": {
+        "angle": {
+          "name": "kąt",
+          "detail": "Kąt, którego tangens należy obliczyć, w radianach."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Tangens hiperboliczny dowolnej liczby rzeczywistej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Jakakolwiek wartość rzeczywista do obliczenia tangensa hiperbolicznego."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Zaokrągla liczbę w górę do najbliższej wielokrotności czynnika.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona w górę do najbliższej całkowitej wielokrotności `factor`."
+        },
+        "factor": {
+          "name": "czynnik",
+          "detail": "Liczba, do której wielokrotności zostanie zaokrąglona `wartość`."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Odwrotny tangens wartości w radianach.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć tangens odwrotny."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Odwrotny sinus hiperboliczny liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotny sinus hiperboliczny."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Wartość bezwzględna liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba, dla której należy zwrócić wartość bezwzględną."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Odwrotny cosinus wartości w radianach.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotny cosinus. Musi być pomiędzy `-1` i `1` włącznie."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Odwrotny cosinus hiperboliczny liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotny cosinus hiperboliczny. Musi być większa lub równa `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Funkcja rozkładu wielomianowego.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Odwrotny tangens hiperboliczny liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotny tangens hiperboliczny. Musi być pomiędzy -1 i 1, z wyłączeniem."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arcus tangens wartości.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Współrzędna x punktu końcowego odcinka, dla którego należy obliczyć kąt od osi x."
+        },
+        "y": {
+          "name": "I",
+          "detail": "Współrzędna y punktu końcowego odcinka, dla którego należy obliczyć kąt od osi x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Liczba pustych wartości.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, w którym należy policzyć liczbę pustych pól."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Cosinus hiperboliczny dowolnej liczby rzeczywistej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Dowolna wartość rzeczywista służąca do obliczenia cosinusa hiperbolicznego."
+        }
+      }
+    },
+    "INT": {
+      "description": "Zaokrągla liczbę w dół do najbliższej liczby całkowitej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona w dół do najbliższej liczby całkowitej."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Czy podana wartość jest parzysta.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako parzystą."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Czy podana wartość jest nieparzysta.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako nieparzystą."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Najmniejsza wspólna wielokrotność jednej lub więcej liczb całkowitych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, którego czynniki należy wziąć pod uwagę w obliczeniach mających na celu znalezienie najmniejszej wspólnej wielokrotności."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, których czynniki należy wziąć pod uwagę w celu znalezienia najmniejszej wspólnej wielokrotności."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logarytm liczby o podstawie e (liczba Eulera).",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć logarytm o podstawie e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logarytm liczby względem podstawy.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć logarytm."
+        },
+        "base": {
+          "name": "opierać",
+          "detail": "Podstawa, na której należy obliczyć logarytm."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logarytm liczby o podstawie 10.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć logarytm o podstawie 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Operator modulo (reszta).",
+      "parameters": {
+        "dividend": {
+          "name": "dywidenda",
+          "detail": "Liczba, którą należy podzielić, aby znaleźć resztę."
+        },
+        "divisor": {
+          "name": "dzielnik",
+          "detail": "Liczba, przez którą należy dokonać podziału."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Zaokrągla liczbę do najbliższej wielokrotności liczby całkowitej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba, która ma zostać zaokrąglona do najbliższej całkowitej wielokrotności innej liczby."
+        },
+        "factor": {
+          "name": "czynnik",
+          "detail": "Liczba, do której wielokrotności zostanie zaokrąglona `wartość`."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Zaokrągla liczbę w górę do najbliższej nieparzystej liczby całkowitej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona do najbliższej największej liczby nieparzystej."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Suma kwadratów.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza liczba lub zakres, którego kwadraty należy dodać."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe liczby lub zakresy, których kwadraty należy dodać do kwadratów wartości `value1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Liczba kombinacji ze zbioru obiektów.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Rozmiar puli obiektów do wyboru."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Liczba obiektów do wyboru."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Suma szeregu liczb i/lub komórek.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza liczba lub zakres do zsumowania."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe liczby lub zakresy, które należy dodać do `value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Suma częściowa dla zakresu przy użyciu określonej funkcji.",
+      "parameters": {
+        "function_code": {
+          "name": "kod_funkcji",
+          "detail": "Funkcja używana w agregacji sum cząstkowych."
+        },
+        "range1": {
+          "name": "zakres 1",
+          "detail": "Pierwszy zakres, dla którego obliczana jest suma częściowa."
+        },
+        "range2": {
+          "name": "zakres2",
+          "detail": "Dodatkowe zakresy, w których można obliczyć sumy częściowe."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Odwrotny sinus wartości w radianach.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotny sinus. Musi być pomiędzy `-1` i `1` włącznie."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Warunkowe zliczanie w zakresie.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres, który jest testowany pod kątem `kryterium`."
+        },
+        "criterion": {
+          "name": "kryterium",
+          "detail": "Wzorzec lub test, który należy zastosować do `zakresu`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Konwertuje wartość kąta w stopniach na radiany.",
+      "parameters": {
+        "angle": {
+          "name": "kąt",
+          "detail": "Kąt do przeliczenia ze stopni na radiany."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Liczba losowa z przedziału od 0 (włącznie) do 1 (bez 1)."
+    },
+    "COUNTUNIQUE": {
+      "description": "Zlicza liczbę unikalnych wartości w zakresie.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres brany pod uwagę przy określaniu unikalności."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę w celu zapewnienia unikalności."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Konwertuje wartość kąta w radianach na stopnie.",
+      "parameters": {
+        "angle": {
+          "name": "kąt",
+          "detail": "Kąt do przeliczenia z radianów na stopnie."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Uzupełniająca funkcja błędu Gaussa danej wartości.",
+      "parameters": {
+        "z": {
+          "name": "z",
+          "detail": "Liczba, dla której należy obliczyć uzupełniającą funkcję błędu Gaussa."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Zaokrągla liczbę w górę do najbliższej parzystej liczby całkowitej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona do najbliższej największej liczby parzystej."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Liczba Eulera e (~2,718) podniesiona do potęgi.",
+      "parameters": {
+        "exponent": {
+          "name": "wykładnik potęgowy",
+          "detail": "Wykładnik, do którego należy podnieść e."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Silnia liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba lub odwołanie do liczby, której silnia zostanie obliczona i zwrócona."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "„podwójna silnia” liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba lub odwołanie do liczby, której podwójna silnia zostanie obliczona i zwrócona."
+        }
+      }
+    },
+    "PI": {
+      "description": "Liczba pi."
+    },
+    "GCD": {
+      "description": "Największy wspólny dzielnik jednej lub więcej liczb całkowitych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, którego czynniki należy wziąć pod uwagę w obliczeniach mających na celu znalezienie największego wspólnego dzielnika."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, których czynniki należy wziąć pod uwagę przy wyszukiwaniu największego wspólnego dzielnika."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Losowa liczba całkowita pomiędzy dwiema wartościami włącznie.",
+      "parameters": {
+        "low": {
+          "name": "Niski",
+          "detail": "Dolny koniec zakresu losowego."
+        },
+        "high": {
+          "name": "wysoki",
+          "detail": "Górny koniec zakresu losowego."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Zaokrągla liczbę zgodnie ze standardowymi zasadami.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona do `miejsc` określonej liczby miejsc."
+        },
+        "places": {
+          "name": "miejsca",
+          "detail": "Liczba miejsc dziesiętnych, do których należy zaokrąglić."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Zaokrągla liczbę w dół.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona do `miejsc` określonej liczby miejsc, zawsze zaokrąglając w dół."
+        },
+        "places": {
+          "name": "miejsca",
+          "detail": "Liczba miejsc dziesiętnych, do których należy zaokrąglić."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Zaokrągla liczbę w górę.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać zaokrąglona do `miejsc` określonej liczby miejsc, zawsze zaokrąglana w górę."
+        },
+        "places": {
+          "name": "miejsca",
+          "detail": "Liczba miejsc dziesiętnych, do których należy zaokrąglić."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Suma szeregu potęgowego.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Dane wejściowe do szeregu potęgowego. Różnią się w zależności od rodzaju przybliżenia, mogą być kątem, wykładnikiem lub jakąś inną wartością."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Początkowa potęga, do której należy podnieść `x` w szeregu potęgowym."
+        },
+        "m": {
+          "name": "M",
+          "detail": "Przyrost addytywny, o który zwiększa się `x`."
+        },
+        "a": {
+          "name": "A",
+          "detail": "Tablica lub zakres zawierający współczynniki szeregu potęgowego."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Znak podanej liczby (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, której znak będzie oceniany."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus kąta podanego w radianach.",
+      "parameters": {
+        "angle": {
+          "name": "kąt",
+          "detail": "Kąt, dla którego należy obliczyć sinus, w radianach."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Sinus hiperboliczny dowolnej liczby rzeczywistej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Jakakolwiek wartość rzeczywista do obliczenia sinusa hiperbolicznego."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Dodatni pierwiastek kwadratowy liczby dodatniej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba, dla której należy obliczyć dodatni pierwiastek kwadratowy."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Pierwiastek kwadratowy iloczynu liczby pi i liczby.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Liczba, która zostanie pomnożona przez Pi i zwrócona zostanie pierwiastek kwadratowy iloczynu"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logarytm funkcji gamma.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Dane wejściowe dla funkcji Gamma. Zostanie zwrócony logarytm naturalny Gamma(`value`)."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosinus kąta podanego w radianach.",
+      "parameters": {
+        "angle": {
+          "name": "kąt",
+          "detail": "Kąt, dla którego należy obliczyć cosinus, w radianach."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Obcina liczbę.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, która ma zostać obcięta."
+        },
+        "places": {
+          "name": "miejsca",
+          "detail": "Liczba cyfr znaczących po prawej stronie przecinka dziesiętnego, które należy zachować."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Jedna liczba podzielona przez drugą.",
+      "parameters": {
+        "dividend": {
+          "name": "dywidenda",
+          "detail": "Liczba do podzielenia."
+        },
+        "divisor": {
+          "name": "dzielnik",
+          "detail": "Liczba, przez którą należy dokonać podziału."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Liczba podniesiona do potęgi.",
+      "parameters": {
+        "base": {
+          "name": "opierać",
+          "detail": "Liczba, którą należy podnieść do potęgi `wykładnika`."
+        },
+        "exponent": {
+          "name": "wykładnik potęgowy",
+          "detail": "Wykładnik, do którego należy podnieść `podstawę`."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Sumuje zakres w zależności od wielu kryteriów.",
+      "parameters": {
+        "sum_range": {
+          "name": "zakres sumy",
+          "detail": "Zakres do zsumowania."
+        },
+        "criteria_range1": {
+          "name": "zakres_kryteriów1",
+          "detail": "Zakres sprawdzania kryterium 1."
+        },
+        "criterion1": {
+          "name": "kryterium 1",
+          "detail": "Wzór lub test, który należy zastosować do criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "zakres_kryteriów2",
+          "detail": "Dodatkowe zakresy do sprawdzenia."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Zliczaj wartości w zależności od wielu kryteriów.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "zakres_kryteriów1",
+          "detail": "Zakres, który należy sprawdzić pod kątem kryterium `criterion1`."
+        },
+        "criterion1": {
+          "name": "kryterium 1",
+          "detail": "Wzorzec lub test, który należy zastosować do `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "zakres_kryteriów2",
+          "detail": "Dodatkowe zakresy do sprawdzenia."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Wynik mnożenia ciągu liczb.",
+      "parameters": {
+        "factor1": {
+          "name": "czynnik 1",
+          "detail": "Pierwsza liczba lub zakres do obliczenia dla produktu."
+        },
+        "factor2": {
+          "name": "czynnik2",
+          "detail": "Więcej liczb lub zakresów do obliczenia dla produktu."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Średnia harmoniczna zbioru danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres populacji."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w populacji."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Prawdopodobieństwo rozkładu hipergeometrycznego.",
+      "parameters": {
+        "num_successes": {
+          "name": "liczba_sukcesów",
+          "detail": "Pożądana liczba sukcesów."
+        },
+        "num_draws": {
+          "name": "liczba_pobrań",
+          "detail": "Liczba dozwolonych losowań."
+        },
+        "successes_in_pop": {
+          "name": "sukcesy_w_pop",
+          "detail": "Całkowita liczba sukcesów w populacji."
+        },
+        "pop_size": {
+          "name": "rozmiar_pop",
+          "detail": "Całkowita wielkość populacji"
+        },
+        "cumulative": {
+          "name": "łączny",
+          "detail": "Określ wartość logiczną formy funkcji. \n\nJeśli kumulatywny jest TRUE(), HYPGEOM.DIST zwraca funkcję rozkładu kumulatywnego;\n\njeśli FALSE(), zwraca funkcję gęstości prawdopodobieństwa."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Odcinek Y linii wyprowadzonej za pomocą regresji liniowej.",
+      "parameters": {
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtoza zbioru danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres zestawu danych."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w zestawie danych."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "N-ty największy element zbioru danych.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający zbiór danych do rozpatrzenia."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Rząd elementów do zwrócenia od największego do najmniejszego."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Odchylenie standardowe próbki (tekst jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres próbki."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w próbce."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Odchylenie standardowe całej populacji.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres populacji."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w populacji."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Średnia geometryczna zbioru danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres populacji."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w populacji."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Ranga procentowa (percentyl) od 0 do 1 włącznie.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający zestaw danych do rozważenia."
+        },
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, której ranga procentowa zostanie ustalona."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących do użycia w obliczeniach. Domyślnie 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Oczekiwana wartość y na podstawie regresji liniowej.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Wartość na osi x do prognozowania."
+        },
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Odwrotna transformacja Fishera określonej wartości.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć odwrotną transformację Fishera."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Transformata Fishera określonej wartości.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, dla której należy obliczyć transformację Fishera."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Liczba wartości liczbowych w zbiorze danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę podczas liczenia."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę podczas liczenia."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Liczba wartości w zestawie danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę podczas liczenia."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę podczas liczenia."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Średnia wartość liczbowa w zbiorze danych, ignorująca tekst.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości średniej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości średniej."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Prawdopodobieństwo rozkładu dwumianowego.",
+      "parameters": {
+        "num_successes": {
+          "name": "liczba_sukcesów",
+          "detail": "Liczba sukcesów, dla której należy obliczyć prawdopodobieństwo w próbach `num_trials`."
+        },
+        "num_trials": {
+          "name": "liczba_prób",
+          "detail": "Liczba niezależnych prób."
+        },
+        "prob_success": {
+          "name": "prawdopodobieństwo_pomyślności",
+          "detail": "Prawdopodobieństwo sukcesu w danym badaniu."
+        },
+        "cumulative": {
+          "name": "łączny",
+          "detail": "Czy stosować rozkład skumulowany dwumianowy."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Suma kwadratów odchyleń na podstawie próby.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres próbki."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w próbce."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Średnia wartości w zależności od kryteriów.",
+      "parameters": {
+        "criteria_range": {
+          "name": "zakres_kryteriów",
+          "detail": "Zakres sprawdzania zgodności z „kryterium”."
+        },
+        "criterion": {
+          "name": "kryterium",
+          "detail": "Wzorzec lub test, który należy zastosować do `criteria_range`."
+        },
+        "average_range": {
+          "name": "średni_zakres",
+          "detail": "Zakres do uśrednienia. Jeśli nie jest uwzględniony, `criteria_range` jest używany do uśredniania."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Średnia wartości w zależności od wielu kryteriów.",
+      "parameters": {
+        "average_range": {
+          "name": "średni_zakres",
+          "detail": "Zakres do średniej."
+        },
+        "criteria_range1": {
+          "name": "zakres_kryteriów1",
+          "detail": "Zakres, który należy sprawdzić pod kątem kryterium `criterion1`."
+        },
+        "criterion1": {
+          "name": "kryterium 1",
+          "detail": "Wzorzec lub test, który należy zastosować do `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "zakres_kryteriów2",
+          "detail": "Dodatkowe zakresy do sprawdzenia."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Liczba permutacji z pewnej liczby obiektów.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Rozmiar puli obiektów do wyboru."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Liczba obiektów do wyboru."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Średnia zbioru danych z wyłączeniem wartości wysokich/niskich.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający zbiór danych do rozpatrzenia."
+        },
+        "exclude_proportion": {
+          "name": "wyklucz_proporcję",
+          "detail": "Część zestawu danych, która ma zostać wykluczona ze skrajnych części zestawu."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Współczynnik korelacji momentów iloczynowych Pearsona.",
+      "parameters": {
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minimalna wartość liczbowa w zbiorze danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości minimalnej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości minimalnej."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimalna wartość w zbiorze danych liczbowych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości minimalnej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości minimalnej."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Wartość medianowa w zbiorze danych liczbowych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości środkowej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości środkowej."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maksymalna wartość liczbowa w zbiorze danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości maksymalnej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości maksymalnej."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maksymalna wartość w zbiorze danych liczbowych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres, który należy wziąć pod uwagę przy obliczaniu wartości maksymalnej."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy, które należy wziąć pod uwagę przy obliczaniu wartości maksymalnej."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Wartości prawdopodobieństwa mieszczą się w pewnym zakresie.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający zbiór danych do rozpatrzenia."
+        },
+        "probabilities": {
+          "name": "prawdopodobieństwa",
+          "detail": "Tablica lub zakres zawierający prawdopodobieństwa odpowiadające `danym`."
+        },
+        "low_limit": {
+          "name": "niski_limit",
+          "detail": "Dolna granica zakresu wartości, dla którego obliczane jest prawdopodobieństwo."
+        },
+        "high_limit": {
+          "name": "wysoki_limit",
+          "detail": "Górna granica zakresu wartości, dla którego należy obliczyć prawdopodobieństwo."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Kwadrat współczynnika korelacji.",
+      "parameters": {
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Wariancja próbki (tekst jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres próbki."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w próbce."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Wariancja całej populacji (tekst jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres populacji."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w populacji."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Błąd standardowy przewidywanych wartości y w regresji.",
+      "parameters": {
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Znormalizowany odpowiednik zmiennej losowej.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość zmiennej losowej do normalizacji."
+        },
+        "mean": {
+          "name": "mieć na myśli",
+          "detail": "Średnia rozkładu."
+        },
+        "standard_deviation": {
+          "name": "odchylenie_standardowe",
+          "detail": "Odchylenie standardowe rozkładu."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "N-ty najmniejszy element w zestawie danych.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający zestaw danych do rozważenia."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Rząd zwracanego elementu od najmniejszego do największego."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Nachylenie linii uzyskanej z regresji liniowej danych.",
+      "parameters": {
+        "data_y": {
+          "name": "dane_y",
+          "detail": "Zakres reprezentujący tablicę lub macierz zależnych danych."
+        },
+        "data_x": {
+          "name": "dane_x",
+          "detail": "Zakres reprezentujący tablicę lub macierz niezależnych danych."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Skośność zbioru danych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość lub zakres zestawu danych."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe wartości lub zakresy do uwzględnienia w zestawie danych."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Wyszukiwanie pionowe.",
+      "parameters": {
+        "search_key": {
+          "name": "klucz_wyszukiwania",
+          "detail": "Wartość do wyszukania. Na przykład `42`, `\"Koty\"` lub `I24`."
+        },
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres brany pod uwagę przy wyszukiwaniu. Pierwsza kolumna w zakresie jest przeszukiwana pod kątem klucza określonego w `search_key`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks kolumny wartości, która ma zostać zwrócona, gdzie pierwsza kolumna w `range` ma numer 1."
+        },
+        "is_sorted": {
+          "name": "jest_posortowane",
+          "detail": "Określa, czy kolumna, w której przeprowadzane jest przeszukiwanie (pierwsza kolumna określonego zakresu) jest posortowana. W takim przypadku zwrócone zostanie najbliższe dopasowanie dla `search_key`."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Wyszukiwanie poziome",
+      "parameters": {
+        "search_key": {
+          "name": "klucz_wyszukiwania",
+          "detail": "Wartość do wyszukania. Na przykład `42`, `\"Koty\"` lub `I24`."
+        },
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres brany pod uwagę przy wyszukiwaniu. Pierwszy wiersz w zakresie jest przeszukiwany pod kątem klucza określonego w `search_key`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks wiersza wartości, która ma zostać zwrócona, gdzie pierwszy wiersz w `zakresie` ma numer 1."
+        },
+        "is_sorted": {
+          "name": "jest_posortowane",
+          "detail": "Określa, czy wiersz, który ma zostać przeszukany (pierwszy wiersz określonego zakresu) jest posortowany."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Wyszukaj wartość.",
+      "parameters": {
+        "search_key": {
+          "name": "klucz_wyszukiwania",
+          "detail": "Wartość do wyszukania w wierszu lub kolumnie. Na przykład `42`, `\"Cats\"` lub `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "zakres_wyszukiwania|tablica_wyników_wyszukiwania",
+          "detail": "Jedną z metod użycia tej funkcji jest podanie pojedynczego posortowanego wiersza lub kolumny `search_range` do przeszukania w poszukiwaniu `search_key` z drugim argumentem `result_range`. Innym sposobem jest połączenie tych dwóch argumentów w jeden `search_result_array`, gdzie przeszukiwany jest pierwszy wiersz lub kolumna, a wartość jest zwracana z ostatniego wiersza lub kolumny w tablicy. Jeśli `search_key` nie zostanie znaleziony, może zostać zwrócone niedokładne dopasowanie."
+        },
+        "result_range": {
+          "name": "zakres_wyników",
+          "detail": "Zakres, z którego ma zostać zwrócony wynik. Zwrócona wartość odpowiada lokalizacji, w której `search_key` znajduje się w `search_range`. Ten zakres musi być tylko pojedynczym wierszem lub kolumną i nie powinien być używany, jeśli używana jest metoda `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Odwołanie do komórki jako ciąg znaków.",
+      "parameters": {
+        "row": {
+          "name": "wiersz",
+          "detail": "Numer wiersza odwołania do komórki"
+        },
+        "column": {
+          "name": "kolumna",
+          "detail": "Numer kolumny (nie nazwa) odwołania do komórki. `A` jest numerem kolumny `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "tryb_absolutny_względny",
+          "detail": "Wskaźnik, czy odwołanie jest bezwzględne do wiersza/kolumny. `1` jest bezwzględne do wiersza i kolumny (np. $A$1), `2` jest bezwzględne do wiersza, a względne do kolumny (np. A$1), `3` jest względne do wiersza, a bezwzględne do kolumny (np. $A1), a `4` jest względne do wiersza i kolumny (np. A1)."
+        },
+        "use_a1_notation": {
+          "name": "użyj_notacji_a1",
+          "detail": "Wartość logiczna wskazująca, czy należy używać notacji w stylu `A1` (TRUE), czy notacji w stylu `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "arkusz",
+          "detail": "Tekst wskazujący nazwę arkusza, na który wskazuje adres."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Odwołanie do komórki określone przez ciąg znaków.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "odniesienie_do_komórki_jako_ciąg",
+          "detail": "Odwołanie do komórki zapisane jako ciąg znaków ujętych w cudzysłowy."
+        },
+        "is_A1_notation": {
+          "name": "jest_notacja_A1",
+          "detail": "Określa, czy odwołanie do komórki jest w notacji A1 (PRAWDA) czy R1C1 (FAŁSZ)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Numer wiersza określonej komórki.",
+      "parameters": {
+        "cell_reference": {
+          "name": "odniesienie_komórkowe",
+          "detail": "Komórka, której numer wiersza zostanie zwrócony."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Liczba wierszy w określonej tablicy lub zakresie.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres, którego liczba wierszy zostanie zwrócona."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Numer kolumny określonej komórki.",
+      "parameters": {
+        "cell_reference": {
+          "name": "odniesienie_komórkowe",
+          "detail": "Komórka, której numer kolumny zostanie zwrócony. Kolumna `A` odpowiada `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Liczba kolumn w określonej tablicy lub zakresie.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Zakres, którego liczba kolumn zostanie zwrócona."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Przesunięcie odniesienia zakresu względem komórki.",
+      "parameters": {
+        "cell_reference": {
+          "name": "odniesienie_do_komórki",
+          "detail": "Punkt początkowy, od którego będą liczone przesunięte wiersze i kolumny."
+        },
+        "offset_rows": {
+          "name": "przesunięcie_wierszy",
+          "detail": "Liczba wierszy, o które należy przesunąć."
+        },
+        "offset_columns": {
+          "name": "kolumny_przesunięcia",
+          "detail": "Liczba kolumn, o które należy przesunąć."
+        },
+        "height": {
+          "name": "wysokość",
+          "detail": "Wysokość zakresu, który ma zostać zwrócony, zaczynając od przesuniętego celu."
+        },
+        "width": {
+          "name": "szerokość",
+          "detail": "Szerokość zakresu, który ma zostać zwrócony, zaczynając od przesuniętego celu."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Pozycja elementu w zakresie, która odpowiada wartości.",
+      "parameters": {
+        "search_key": {
+          "name": "klucz_wyszukiwania",
+          "detail": "Wartość do wyszukania. Na przykład `42`, `\"Koty\"` lub `I24`."
+        },
+        "range": {
+          "name": "zakres",
+          "detail": "Jednowymiarowa tablica, w której należy przeprowadzić przeszukanie."
+        },
+        "search_type": {
+          "name": "typ_wyszukiwania",
+          "detail": "Metoda wyszukiwania. `1` (domyślna) znajduje największą wartość mniejszą lub równą `search_key`, gdy `range` jest sortowane rosnąco. `0` znajduje dokładną wartość, gdy `range` jest nieposortowane. `-1` znajduje najmniejszą wartość większą lub równą `search_key`, gdy `range` jest sortowane malejąco."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Zawartość komórki określona przez przesunięcie wiersza i kolumny.",
+      "parameters": {
+        "reference": {
+          "name": "odniesienie",
+          "detail": "Tablica komórek, do której ma zostać przesunięte."
+        },
+        "row": {
+          "name": "wiersz",
+          "detail": "Liczba przesuniętych wierszy."
+        },
+        "column": {
+          "name": "kolumna",
+          "detail": "Liczba przesuniętych kolumn."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Wyodrębnia zagregowaną wartość z tabeli przestawnej odpowiadającą określonym nagłówkom wierszy i kolumn.",
+      "parameters": {
+        "value_name": {
+          "name": "nazwa_wartości",
+          "detail": "Nazwa wartości w tabeli przestawnej, dla której chcesz pobrać dane."
+        },
+        "any_pivot_table_cell": {
+          "name": "dowolna_komórka_tabeli_przestawnej",
+          "detail": "Wszelkie odwołanie do komórki w żądanej tabeli przestawnej (zaleca się odniesienie w górnym rogu)."
+        },
+        "original_column": {
+          "name": "oryginalna_kolumna",
+          "detail": "Nazwa kolumny w oryginalnym zestawie danych (nie tabeli przestawnej)."
+        },
+        "pivot_item": {
+          "name": "element_obrotowy",
+          "detail": "Nazwa wiersza lub kolumny wyświetlanej w tabeli przestawnej odpowiadającej *oryginalnej_kolumnie*, którą chcesz pobrać."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Element listy wyborów opartej na indeksie.",
+      "parameters": {
+        "index": {
+          "name": "indeks",
+          "detail": "Który wybór (spośród 30 podanych) zwrócić."
+        },
+        "choice1": {
+          "name": "wybór1",
+          "detail": "Potencjalna wartość do zwrócenia. Wymagane. Może być odwołaniem do komórki lub pojedynczej wartości."
+        },
+        "choice2": {
+          "name": "wybór2",
+          "detail": "Dodatkowe wartości, spośród których można wybierać."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Konwertuje godzinę/minutę/sekundę na czas.",
+      "parameters": {
+        "hour": {
+          "name": "godzina",
+          "detail": "Składnik godzinowy czasu."
+        },
+        "minute": {
+          "name": "chwila",
+          "detail": "Składowa minutowa czasu."
+        },
+        "second": {
+          "name": "drugi",
+          "detail": "Drugi składnik czasu."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Konwertuje ciąg czasu na jego reprezentację w postaci numeru seryjnego.",
+      "parameters": {
+        "time_string": {
+          "name": "ciąg_czasu",
+          "detail": "Ciąg znaków zawierający reprezentację czasu."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Ostatni dzień miesiąca przed lub po dacie.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data, od której należy obliczyć wynik."
+        },
+        "months": {
+          "name": "miesiące",
+          "detail": "Liczba miesięcy przed (ujemna) lub po (dodatnia) dacie 'start_date', którą należy wziąć pod uwagę."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Podaj datę przypadającą określoną liczbę miesięcy przed lub po innej dacie.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data, od której należy obliczyć wynik."
+        },
+        "months": {
+          "name": "miesiące",
+          "detail": "Liczba miesięcy przed (ujemna) lub po (dodatnia) dacie 'start_date', którą należy obliczyć."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Drugi składnik określonego czasu.",
+      "parameters": {
+        "time": {
+          "name": "czas",
+          "detail": "Czas, od którego należy obliczyć drugi składnik"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Składowa minutowa określonego czasu.",
+      "parameters": {
+        "time": {
+          "name": "czas",
+          "detail": "Czas, na podstawie którego obliczany jest składnik minutowy."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Składnik godzinowy określonego czasu.",
+      "parameters": {
+        "time": {
+          "name": "czas",
+          "detail": "Czas, na podstawie którego obliczany jest składnik godzinowy."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Bieżąca data i godzina jako wartość daty."
+    },
+    "NETWORKDAYS": {
+      "description": "Liczba dni roboczych netto pomiędzy dwoma podanymi dniami.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data początkowa okresu, od którego należy obliczyć liczbę dni roboczych netto."
+        },
+        "end_date": {
+          "name": "data_końcowa",
+          "detail": "Data końcowa okresu, od którego należy obliczyć liczbę dni roboczych netto."
+        },
+        "holidays": {
+          "name": "ferie",
+          "detail": "Zakres lub tablica stała zawierająca numery seryjne dat uznawanych za święta."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Numer tygodnia ISO w roku.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, dla której ma zostać określony numer tygodnia ISO. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Numer tygodnia w roku.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, dla której ma zostać określony numer tygodnia. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Liczba oznaczająca dzień, w którym zaczyna się tydzień. Niedziela = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Dzień tygodnia podanej daty (jako liczba).",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, dla której ma zostać określony dzień tygodnia. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Liczba wskazująca, którego systemu numeracji użyć do reprezentowania dni powszednich. Domyślnie liczba zaczyna się od niedzieli = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Dzień miesiąca, w którym przypada konkretna data.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, z której ma zostać wyodrębniony dzień."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Liczba dni pomiędzy dwiema datami.",
+      "parameters": {
+        "end_date": {
+          "name": "data_końcowa",
+          "detail": "Koniec zakresu dat."
+        },
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Początek zakresu dat."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Dni między dwiema datami w roku 360-dniowym.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data rozpoczęcia, która ma być brana pod uwagę w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "end_date": {
+          "name": "data_końcowa",
+          "detail": "Data końcowa do uwzględnienia w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "method": {
+          "name": "metoda",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Konwertuje rok/miesiąc/dzień na datę.",
+      "parameters": {
+        "year": {
+          "name": "rok",
+          "detail": "Komponent roku w dacie."
+        },
+        "month": {
+          "name": "miesiąc",
+          "detail": "Składnik miesiąca daty."
+        },
+        "day": {
+          "name": "dzień",
+          "detail": "Składnik daty określający dzień."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Konwertuje ciąg daty na wartość daty.",
+      "parameters": {
+        "date_string": {
+          "name": "ciąg_daty",
+          "detail": "Ciąg znaków reprezentujący datę."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Różnica dat.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data rozpoczęcia, która ma być brana pod uwagę w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "end_date": {
+          "name": "data_końcowa",
+          "detail": "Data końcowa do uwzględnienia w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "unit": {
+          "name": "jednostka",
+          "detail": "Skrót ciągu dla jednostki czasu. Na przykład „M” dla miesiąca. Akceptowalne wartości to „Y”, „M”, „D”, „MD”, „YM”, „YD”."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Liczba dni roboczych od daty rozpoczęcia.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data, od której należy rozpocząć liczenie."
+        },
+        "num_days": {
+          "name": "liczba_dni",
+          "detail": "Liczba dni roboczych do przesunięcia od `start_date`. Jeśli ujemna, liczy wstecz."
+        },
+        "holidays": {
+          "name": "ferie",
+          "detail": "Zakres lub tablica stała zawierająca daty, które mają być dniami wolnymi od pracy."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Rok określony podaną datą.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, z której ma zostać wyodrębniony rok."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Dokładna liczba lat pomiędzy dwiema datami.",
+      "parameters": {
+        "start_date": {
+          "name": "data_początkowa",
+          "detail": "Data rozpoczęcia, która ma być brana pod uwagę w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "end_date": {
+          "name": "data_końcowa",
+          "detail": "Data końcowa do uwzględnienia w obliczeniach. Musi być odwołaniem do komórki zawierającej datę, funkcję zwracającą typ daty lub liczbę."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Bieżąca data jako wartość daty."
+    },
+    "MONTH": {
+      "description": "Miesiąc roku, w którym przypada konkretna data.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data, z której ma zostać wyodrębniony miesiąc."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Rzeczywista roczna stopa procentowa.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "stawka_nominalna",
+          "detail": "Nominalna stopa procentowa w skali roku."
+        },
+        "periods_per_year": {
+          "name": "okresy_na_rok",
+          "detail": "Liczba okresów kapitalizacji w roku."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Formatuje liczbę jako walutę określoną dla ustawień regionalnych arkusza kalkulacyjnego.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Wartość do sformatowania."
+        },
+        "number_of_places": {
+          "name": "liczba_miejsc",
+          "detail": "Liczba miejsc dziesiętnych do wyświetlenia."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Konwertuje ułamek dziesiętny na wartość dziesiętną.",
+      "parameters": {
+        "fractional_price": {
+          "name": "cena_frakcyjna",
+          "detail": "Cena podana jest z użyciem ułamków dziesiętnych."
+        },
+        "unit": {
+          "name": "jednostka",
+          "detail": "Jednostki ułamka, np. `8` dla 1/8 lub `32` dla 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Konwertuje wartość dziesiętną na ułamek dziesiętny.",
+      "parameters": {
+        "decimal_price": {
+          "name": "cena_dziesiętna",
+          "detail": "Cena podana jest w postaci wartości dziesiętnej."
+        },
+        "unit": {
+          "name": "jednostka",
+          "detail": "Jednostki żądanego ułamka, np. `8` dla 1/8 lub `32` dla 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Amortyzacja metodą malejącej wartości.",
+      "parameters": {
+        "cost": {
+          "name": "koszt",
+          "detail": "Początkowy koszt aktywów."
+        },
+        "salvage": {
+          "name": "odzysk",
+          "detail": "Wartość aktywów na koniec amortyzacji."
+        },
+        "life": {
+          "name": "życie",
+          "detail": "Liczba okresów amortyzacji składnika aktywów."
+        },
+        "period": {
+          "name": "okres",
+          "detail": "Pojedynczy okres w „życiu”, dla którego obliczana jest amortyzacja."
+        },
+        "month": {
+          "name": "miesiąc",
+          "detail": "Liczba miesięcy w pierwszym roku amortyzacji."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Amortyzacja metodą podwójnie malejącego salda.",
+      "parameters": {
+        "cost": {
+          "name": "koszt",
+          "detail": "Początkowy koszt aktywów."
+        },
+        "salvage": {
+          "name": "odzysk",
+          "detail": "Wartość aktywów na koniec amortyzacji."
+        },
+        "life": {
+          "name": "życie",
+          "detail": "Liczba okresów amortyzacji składnika aktywów."
+        },
+        "period": {
+          "name": "okres",
+          "detail": "Pojedynczy okres w „życiu”, dla którego obliczana jest amortyzacja."
+        },
+        "factor": {
+          "name": "czynnik",
+          "detail": "Współczynnik, o który zmniejsza się amortyzacja."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Oprocentowanie inwestycji rentowej.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "payment_per_period": {
+          "name": "płatność_za_okres",
+          "detail": "Kwota do zapłaty za dany okres."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        },
+        "rate_guess": {
+          "name": "oceniać_zgadywać",
+          "detail": "Oszacowanie wysokości stopy procentowej."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Skumulowana kwota kapitału spłacana w ciągu określonych okresów.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "first_period": {
+          "name": "pierwszy_okres",
+          "detail": "Numer okresu płatności, od którego rozpoczyna się naliczanie kumulatywne."
+        },
+        "last_period": {
+          "name": "ostatni_okres",
+          "detail": "Numer okresu płatności kończącego naliczanie kumulacyjne."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Liczba kuponów pomiędzy rozliczeniem a terminem zapadalności.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Amortyzacja metodą sumy cyfr lat.",
+      "parameters": {
+        "cost": {
+          "name": "koszt",
+          "detail": "Początkowy koszt aktywów."
+        },
+        "salvage": {
+          "name": "odzysk",
+          "detail": "Wartość aktywów na koniec amortyzacji."
+        },
+        "life": {
+          "name": "życie",
+          "detail": "Liczba okresów amortyzacji składnika aktywów."
+        },
+        "period": {
+          "name": "okres",
+          "detail": "Pojedynczy okres w „życiu”, dla którego obliczana jest amortyzacja."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Równoważna stopa zwrotu dla bonu skarbowego.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa weksla w chwili zakupu."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Rentowność bonów skarbowych USA w oparciu o cenę.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, po której kupuje się papier wartościowy za 100 jego wartości nominalnej."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Cena amerykańskiego bonu skarbowego.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa weksla w chwili zakupu."
+        }
+      }
+    },
+    "PV": {
+      "description": "Wartość bieżąca inwestycji rentowej.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "payment_amount": {
+          "name": "kwota_płatności",
+          "detail": "Kwota do zapłaty za dany okres."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Liczba dni od pierwszego kuponu do rozliczenia.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Liczba dni w okresie kuponowym zawierająca datę rozliczenia.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "FV": {
+      "description": "Wartość przyszła inwestycji rentowej.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "payment_amount": {
+          "name": "kwota_płatności",
+          "detail": "Kwota do zapłaty za dany okres."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Wartość przyszła kapitału z szeregu stóp procentowych.",
+      "parameters": {
+        "principal": {
+          "name": "główny",
+          "detail": "Wysokość kapitału początkowego lub wartość, od której ma być naliczany zysk."
+        },
+        "rate_schedule": {
+          "name": "harmonogram_stawek",
+          "detail": "Seria stóp procentowych naliczanych od kapitału."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Roczna stopa zwrotu z papieru wartościowego przynoszącego okresowe odsetki.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Roczna stopa procentowa."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, po której kupuje się papier wartościowy za 100 jego wartości nominalnej."
+        },
+        "redemption": {
+          "name": "odkupienie",
+          "detail": "Kwota wykupu za 100 sztuk wartości nominalnej, czyli nominału."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Roczna stopa zwrotu z papieru wartościowego dyskontowego.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, po której kupuje się papier wartościowy za 100 jego wartości nominalnej."
+        },
+        "redemption": {
+          "name": "odkupienie",
+          "detail": "Kwota wykupu za 100 sztuk wartości nominalnej, czyli nominału."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Roczna nominalna stopa procentowa.",
+      "parameters": {
+        "effective_rate": {
+          "name": "efektywna_stawka",
+          "detail": "Efektywna roczna stopa procentowa."
+        },
+        "periods_per_year": {
+          "name": "okresy_na_rok",
+          "detail": "Liczba okresów kapitalizacji w roku."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Wewnętrzna stopa zwrotu przy założeniu nieokresowych przepływów pieniężnych.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kwoty_przepływu_pieniężnego",
+          "detail": "Tablica lub zakres zawierający dochody lub płatności związane z inwestycją."
+        },
+        "cashflow_dates": {
+          "name": "daty_przepływu_pieniężnego",
+          "detail": "Tablica lub zakres zawierający daty odpowiadające przepływom pieniężnym w `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "oceniać_zgadywać",
+          "detail": "Oszacowanie wewnętrznej stopy zwrotu."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Zmodyfikowana wewnętrzna stopa zwrotu.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kwoty_przepływu_pieniężnego",
+          "detail": "Tablica lub zakres zawierający dochody lub płatności związane z inwestycją."
+        },
+        "financing_rate": {
+          "name": "stopa_finansowania",
+          "detail": "Oprocentowanie płacone od zainwestowanych środków."
+        },
+        "reinvestment_return_rate": {
+          "name": "stopa_zwrotu_z_reinwestycji",
+          "detail": "Zwrot (wyrażony procentowo) uzyskany z reinwestowania dochodu uzyskanego z inwestycji."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Wewnętrzna stopa zwrotu z tytułu okresowych przepływów pieniężnych.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kwoty_przepływu_pieniężnego",
+          "detail": "Tablica lub zakres zawierający dochody lub płatności związane z inwestycją."
+        },
+        "rate_guess": {
+          "name": "oceniać_zgadywać",
+          "detail": "Oszacowanie wewnętrznej stopy zwrotu."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Bieżąca wartość netto inwestycji, obliczona na podstawie szeregu okresowych przepływów pieniężnych i stopy dyskontowej.",
+      "parameters": {
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa inwestycji w jednym okresie."
+        },
+        "cashflow1": {
+          "name": "przepływ gotówki1",
+          "detail": "Pierwszy przyszły przepływ środków pieniężnych."
+        },
+        "cashflow2": {
+          "name": "przepływ gotówki2",
+          "detail": "Dodatkowe przyszłe przepływy pieniężne."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Wartość bieżąca netto przy uwzględnieniu nieokresowych przepływów pieniężnych.",
+      "parameters": {
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa inwestycji w jednym okresie."
+        },
+        "cashflow_amounts": {
+          "name": "kwoty_przepływu_pieniężnego",
+          "detail": "Zakres komórek zawierający dochody lub płatności związane z inwestycją."
+        },
+        "cashflow_dates": {
+          "name": "daty_przepływu_pieniężnego",
+          "detail": "Zakres komórek z datami odpowiadającymi przepływom pieniężnym w `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Skumulowane odsetki płacone w ciągu określonych okresów.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "first_period": {
+          "name": "pierwszy_okres",
+          "detail": "Numer okresu płatności, od którego rozpoczyna się naliczanie kumulatywne."
+        },
+        "last_period": {
+          "name": "ostatni_okres",
+          "detail": "Numer okresu płatności kończącego naliczanie kumulacyjne."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Okresowa płatność za inwestycję rentową.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Płatność odsetek od inwestycji.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "period": {
+          "name": "okres",
+          "detail": "Okres amortyzacji wyrażony w liczbie okresów."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Spłata kapitału inwestycji.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "period": {
+          "name": "okres",
+          "detail": "Okres amortyzacji wyrażony w liczbie okresów."
+        },
+        "number_of_periods": {
+          "name": "liczba_okresów",
+          "detail": "Liczba płatności do dokonania."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Oblicza efektywną stopę procentową.",
+      "parameters": {
+        "buy_date": {
+          "name": "data_zakupu",
+          "detail": "Data zakupu inwestycji."
+        },
+        "sell_date": {
+          "name": "data_sprzedaży",
+          "detail": "Data sprzedaży inwestycji."
+        },
+        "buy_price": {
+          "name": "cena_kupna",
+          "detail": "Cena, po której nabyto inwestycję."
+        },
+        "sell_price": {
+          "name": "cena_sprzedaży",
+          "detail": "Cena, po jakiej sprzedano inwestycję."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Cena papieru wartościowego przynoszącego okresowe odsetki.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Roczna stopa procentowa."
+        },
+        "yield": {
+          "name": "dawać",
+          "detail": "Oczekiwana roczna stopa zwrotu z papieru wartościowego."
+        },
+        "redemption": {
+          "name": "odkupienie",
+          "detail": "Kwota wykupu za 100 sztuk wartości nominalnej, czyli nominału."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Cena papieru wartościowego z dyskontem.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa papieru wartościowego w chwili zakupu."
+        },
+        "redemption": {
+          "name": "odkupienie",
+          "detail": "Kwota wykupu za 100 sztuk wartości nominalnej, czyli nominału."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Cena papieru wartościowego przynoszącego odsetki w momencie zapadalności.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "issue": {
+          "name": "wydanie",
+          "detail": "Data pierwotnej emisji papieru wartościowego."
+        },
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Roczna stopa procentowa."
+        },
+        "yield": {
+          "name": "dawać",
+          "detail": "Oczekiwana roczna stopa zwrotu z papieru wartościowego."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Kwota otrzymana w momencie zapadalności papieru wartościowego.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "investment": {
+          "name": "inwestycja",
+          "detail": "Kwota zainwestowana (niezależnie od wartości nominalnej każdego papieru wartościowego)."
+        },
+        "discount": {
+          "name": "rabat",
+          "detail": "Stopa dyskontowa papieru wartościowego, w który zainwestowano."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Stopa dyskontowa papieru wartościowego oparta na cenie.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, po której kupuje się papier wartościowy za 100 jego wartości nominalnej."
+        },
+        "redemption": {
+          "name": "odkupienie",
+          "detail": "Kwota wykupu za 100 sztuk wartości nominalnej, czyli nominału."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Liczba okresów płatności dla inwestycji.",
+      "parameters": {
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Stopa procentowa."
+        },
+        "payment_amount": {
+          "name": "kwota_płatności",
+          "detail": "Kwota każdej dokonanej płatności."
+        },
+        "present_value": {
+          "name": "wartość_obecna",
+          "detail": "Aktualna wartość renty."
+        },
+        "future_value": {
+          "name": "wartość_przyszła",
+          "detail": "Wartość przyszła pozostająca po dokonaniu płatności końcowej."
+        },
+        "end_or_beginning": {
+          "name": "koniec_lub_początek",
+          "detail": "Czy płatności są wymagalne na koniec (`0`) czy na początek (`1`) każdego okresu."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Amortyzacja aktywów metodą liniową.",
+      "parameters": {
+        "cost": {
+          "name": "koszt",
+          "detail": "Początkowy koszt aktywów."
+        },
+        "salvage": {
+          "name": "odzysk",
+          "detail": "Wartość aktywów na koniec amortyzacji."
+        },
+        "life": {
+          "name": "życie",
+          "detail": "Liczba okresów amortyzacji składnika aktywów."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Liczba okresów, po których inwestycja osiągnie określoną wartość.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Roczna stopa procentowa."
+        },
+        "yield": {
+          "name": "dawać",
+          "detail": "Oczekiwana roczna stopa zwrotu z papieru wartościowego."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Zmodyfikowano czas trwania Macaulaya.",
+      "parameters": {
+        "settlement": {
+          "name": "osada",
+          "detail": "Data rozliczenia papieru wartościowego, data po emisji, kiedy papier wartościowy zostaje dostarczony kupującemu."
+        },
+        "maturity": {
+          "name": "dojrzałość",
+          "detail": "Data wygaśnięcia lub termin wykupu papieru wartościowego, kiedy można go wykupić po wartości nominalnej."
+        },
+        "rate": {
+          "name": "wskaźnik",
+          "detail": "Roczna stopa procentowa."
+        },
+        "yield": {
+          "name": "dawać",
+          "detail": "Oczekiwana roczna stopa zwrotu z papieru wartościowego."
+        },
+        "frequency": {
+          "name": "częstotliwość",
+          "detail": "Liczba płatności odsetek lub kuponów w ciągu roku (1, 2 lub 4)."
+        },
+        "day_count_convention": {
+          "name": "konwencja_liczenia_dni",
+          "detail": "Wskaźnik określający, jaką metodę liczenia dni zastosować."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Konwertuje liczbę binarną ze znakiem na format dziesiętny.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "liczba_binarna_ze_znakiem",
+          "detail": "Podpisana 10-bitowa wartość binarna, która ma zostać przekonwertowana na wartość dziesiętną, podana w postaci ciągu znaków."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Konwertuje liczbę binarną na szesnastkową.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "liczba_binarna_ze_znakiem",
+          "detail": "10-bitowa wartość binarna ze znakiem, która ma zostać przekonwertowana na wartość szesnastkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Konwertuje liczbę binarną na ósemkową.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "liczba_binarna_ze_znakiem",
+          "detail": "10-bitowa wartość binarna ze znakiem, która ma zostać przekonwertowana na liczbę ósemkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Konwertuje liczbę dziesiętną na format binarny ze znakiem.",
+      "parameters": {
+        "decimal_number": {
+          "name": "liczba_dziesiętna",
+          "detail": "Wartość dziesiętna, która ma zostać przekonwertowana na wartość binarną ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Konwertuje liczbę dziesiętną na liczbę szesnastkową.",
+      "parameters": {
+        "decimal_number": {
+          "name": "liczba_dziesiętna",
+          "detail": "Wartość dziesiętna, która ma zostać przekonwertowana na wartość szesnastkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Konwertuje liczbę dziesiętną na format ósemkowy ze znakiem.",
+      "parameters": {
+        "decimal_number": {
+          "name": "liczba_dziesiętna",
+          "detail": "Wartość dziesiętna, która ma zostać przekonwertowana na liczbę ósemkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Konwertuje liczbę szesnastkową na binarną.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "liczba_szesnastkowa_ze_znakiem",
+          "detail": "Podpisana 40-bitowa wartość szesnastkowa, która ma zostać przekonwertowana na wartość binarną ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Konwertuje liczbę szesnastkową na dziesiętną.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "liczba_szesnastkowa_ze_znakiem",
+          "detail": "Podpisana 40-bitowa wartość szesnastkowa, która ma zostać przekonwertowana na liczbę dziesiętną, podana jako ciąg znaków."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Konwertuje liczbę szesnastkową na ósemkową.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "liczba_szesnastkowa_ze_znakiem",
+          "detail": "40-bitowa wartość szesnastkowa ze znakiem, która ma zostać przekonwertowana na liczbę ósemkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Konwertuje liczbę ósemkową na liczbę binarną.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "liczba_ósemkowa_ze_znakiem",
+          "detail": "30-bitowa wartość ósemkowa ze znakiem, która ma zostać przekonwertowana na wartość binarną ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Konwertuje liczbę ósemkową ze znakiem na format dziesiętny.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "liczba_ósemkowa_ze_znakiem",
+          "detail": "30-bitowa wartość ósemkowa ze znakiem, która ma zostać przekonwertowana na liczbę dziesiętną, podawana jako ciąg znaków."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Konwertuje liczbę ósemkową na szesnastkową.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "liczba_ósemkowa_ze_znakiem",
+          "detail": "30-bitowa wartość ósemkowa ze znakiem, która ma zostać przekonwertowana na wartość szesnastkową ze znakiem, podana w postaci ciągu znaków."
+        },
+        "significant_digits": {
+          "name": "znaczące_cyfry",
+          "detail": "Liczba cyfr znaczących, jakie należy uwzględnić w wyniku."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Tworzy liczbę zespoloną.",
+      "parameters": {
+        "real_part": {
+          "name": "część_rzeczywista",
+          "detail": "Rzeczywisty współczynnik."
+        },
+        "imaginary_part": {
+          "name": "część_urojona",
+          "detail": "Współczynnik urojony."
+        },
+        "suffix": {
+          "name": "przyrostek",
+          "detail": "Sufiksem dla współczynnika urojonego może być tylko 'i' lub 'j'. Jeśli pominięto, zostanie użyte 'i'."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Rzeczywisty współczynnik liczby zespolonej.",
+      "parameters": {
+        "complex_number": {
+          "name": "liczba_zespolona",
+          "detail": "Liczba zespolona w formacie a+bi lub a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Współczynnik urojony liczby zespolonej.",
+      "parameters": {
+        "complex_number": {
+          "name": "liczba_zespolona",
+          "detail": "Liczba zespolona w formacie a+bi lub a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Sprzężenie zespolone liczby.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Liczba zespolona, dla której należy obliczyć sprzężenie."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Wartość bezwzględna liczby zespolonej.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Liczba zespolona, której wartość bezwzględna ma zostać obliczona."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Porównaj dwie wartości liczbowe.",
+      "parameters": {
+        "number1": {
+          "name": "numer 1",
+          "detail": "Pierwsza liczba do porównania."
+        },
+        "number2": {
+          "name": "numer2",
+          "detail": "Druga liczba do porównania."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Suma szeregu liczb zespolonych.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza liczba zespolona lub zakres do zsumowania."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Dodatkowe liczby zespolone lub zakresy, które należy dodać do `wartość1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Różnica pomiędzy dwiema liczbami zespolonymi.",
+      "parameters": {
+        "first_number": {
+          "name": "pierwszy_numer",
+          "detail": "Liczba zespolona, od której należy odjąć second_number."
+        },
+        "second_number": {
+          "name": "drugi_numer",
+          "detail": "Liczba zespolona, od której należy odjąć first_number."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Wynik mnożenia ciągu liczb zespolonych.",
+      "parameters": {
+        "factor1": {
+          "name": "czynnik 1",
+          "detail": "Pierwsza liczba lub zakres do obliczenia dla produktu."
+        },
+        "factor2": {
+          "name": "czynnik2",
+          "detail": "Dodatkowe liczby zespolone lub zakresy do obliczenia produktu."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Jedna liczba zespolona podzielona przez drugą.",
+      "parameters": {
+        "dividend": {
+          "name": "dywidenda",
+          "detail": "Liczba zespolona, która ma zostać podzielona."
+        },
+        "divisor": {
+          "name": "dzielnik",
+          "detail": "Liczba zespolona, przez którą następuje dzielenie."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Zwraca wartość przeciwną do podanej wartości logicznej.",
+      "parameters": {
+        "logical_expression": {
+          "name": "wyrażenie_logiczne",
+          "detail": "Wyrażenie lub odwołanie do komórki zawierającej wyrażenie reprezentujące pewną wartość logiczną."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Wartość logiczna `true`."
+    },
+    "FALSE": {
+      "description": "Wartość logiczna `fałsz`."
+    },
+    "AND": {
+      "description": "Operator logiczny `i`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "wyrażenie_logiczne1",
+          "detail": "Wyrażenie lub odwołanie do komórki zawierającej wyrażenie reprezentujące pewną wartość logiczną, np. `TRUE` lub `FALSE`, albo wyrażenie, które można przekształcić w wartość logiczną."
+        },
+        "logical_expression2": {
+          "name": "wyrażenie_logiczne2",
+          "detail": "Więcej wyrażeń reprezentujących wartości logiczne."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Wartość jeśli nie jest to błąd, w przeciwnym razie drugi argument.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość zwracana, jeśli `wartość` sama w sobie nie jest błędem."
+        },
+        "value_if_error": {
+          "name": "wartość_jeśli_błąd",
+          "detail": "Wartość zwracana przez funkcję, jeśli `wartość` jest błędem."
+        }
+      }
+    },
+    "IF": {
+      "description": "Zwraca wartość zależną od wyrażenia logicznego.",
+      "parameters": {
+        "logical_expression": {
+          "name": "wyrażenie_logiczne",
+          "detail": "Wyrażenie lub odwołanie do komórki zawierającej wyrażenie reprezentujące pewną wartość logiczną, np. `TRUE` lub `FALSE`."
+        },
+        "value_if_true": {
+          "name": "wartość_jeśli_prawda",
+          "detail": "Wartość zwracana przez funkcję, jeśli `logical_expression` ma wartość `TRUE`."
+        },
+        "value_if_false": {
+          "name": "wartość_jeśli_fałsz",
+          "detail": "Wartość zwracana przez funkcję, jeśli `logical_expression` ma wartość `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Operator logiczny `lub`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "wyrażenie_logiczne1",
+          "detail": "Wyrażenie lub odwołanie do komórki zawierającej wyrażenie reprezentujące pewną wartość logiczną, np. `TRUE` lub `FALSE`, albo wyrażenie, które można przekształcić w wartość logiczną."
+        },
+        "logical_expression2": {
+          "name": "wyrażenie_logiczne2",
+          "detail": "Więcej wyrażeń, które zwracają wartości logiczne."
+        }
+      }
+    },
+    "NE": {
+      "description": "Nierówne.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Wartość, którą należy sprawdzić pod kątem nierówności w porównaniu z wartością `value1`."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Równy.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwsza wartość."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Wartość, którą należy sprawdzić pod kątem równości z wartością `value1`."
+        }
+      }
+    },
+    "GT": {
+      "description": "Zdecydowanie większe niż.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Wartość, którą należy sprawdzić, czy jest większa niż `wartość2`."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Druga wartość."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Większe lub równe.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Wartość, którą należy sprawdzić, czy jest większa lub równa `value2`."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Druga wartość."
+        }
+      }
+    },
+    "LT": {
+      "description": "Mniej niż.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Wartość do sprawdzenia, czy jest mniejsza niż `wartość2`."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Druga wartość."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Mniejsze lub równe.",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Wartość, którą należy sprawdzić, czy jest mniejsza lub równa `value2`."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Druga wartość."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Suma dwóch liczb",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Pierwszy dodatek."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Drugi dodatek."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Różnica dwóch liczb",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Minuenda, czyli liczba, od której należy odjąć."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Odjemnik lub liczba, którą należy odjąć od `wartości1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Iloczyn dwóch liczb",
+      "parameters": {
+        "factor1": {
+          "name": "czynnik 1",
+          "detail": "Pierwsza mnożna."
+        },
+        "factor2": {
+          "name": "czynnik2",
+          "detail": "Druga mnożna."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Jedna liczba podzielona przez drugą",
+      "parameters": {
+        "dividend": {
+          "name": "dywidenda",
+          "detail": "Liczba do podzielenia."
+        },
+        "divisor": {
+          "name": "dzielnik",
+          "detail": "Liczba, przez którą należy dokonać podziału."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Połączenie dwóch wartości",
+      "parameters": {
+        "value1": {
+          "name": "wartość1",
+          "detail": "Wartość, do której zostanie dodana wartość `value2`."
+        },
+        "value2": {
+          "name": "wartość2",
+          "detail": "Wartość, która ma zostać dodana do `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Wartość interpretowana jako procent.",
+      "parameters": {
+        "percentage": {
+          "name": "procent",
+          "detail": "Wartość, którą należy interpretować jako procent."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Dołącza do siebie ciągi znaków.",
+      "parameters": {
+        "string1": {
+          "name": "ciąg1",
+          "detail": "Początkowy ciąg znaków."
+        },
+        "string2": {
+          "name": "ciąg2",
+          "detail": "Więcej ciągów do dodania w sekwencji."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Wartość numeryczna znaku w mapie Unicode.",
+      "parameters": {
+        "string": {
+          "name": "smyczkowy",
+          "detail": "Ciąg, którego pierwszy znak zostanie zwrócony w postaci wartości mapy Unicode."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Pobiera znak powiązany z liczbą.",
+      "parameters": {
+        "table_number": {
+          "name": "numer_tabeli",
+          "detail": "Numer znaku do wyszukania w bieżącej tabeli Unicode w formacie dziesiętnym."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Oblicza wartość liczby rzymskiej.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "cyfra_rzymska",
+          "detail": "Liczba rzymska do sformatowania, której wartość musi mieścić się w przedziale od 1 do 3999 włącznie."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Formatuje liczbę do postaci rzymskiej.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Liczba do sformatowania, od 1 do 3999 włącznie."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Wyodrębnia pasujące podciągi z wyrażeniem regularnym.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst wejściowy."
+        },
+        "regular_expression": {
+          "name": "wyrażenie_regularne",
+          "detail": "Zwrócona zostanie pierwsza część tekstu `text` odpowiadająca temu wyrażeniu."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Czy fragment tekstu pasuje do wyrażenia regularnego.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst, który ma zostać przetestowany pod kątem wyrażenia regularnego."
+        },
+        "regular_expression": {
+          "name": "wyrażenie_regularne",
+          "detail": "Wyrażenie regularne, według którego testowany jest tekst."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Zastępuje tekst wyrażeniami regularnymi.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst, którego część zostanie zastąpiona."
+        },
+        "regular_expression": {
+          "name": "wyrażenie_regularne",
+          "detail": "Wyrażenie regularne. Wszystkie pasujące wystąpienia w `text` zostaną zastąpione."
+        },
+        "replacement": {
+          "name": "wymiana",
+          "detail": "Tekst, który zostanie wstawiony do tekstu oryginalnego."
+        }
+      }
+    },
+    "T": {
+      "description": "Argumenty typu string jako tekst.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument, który należy przekonwertować na tekst."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formatuje liczby ze stałą liczbą miejsc dziesiętnych.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Liczba do sformatowania."
+        },
+        "number_of_places": {
+          "name": "liczba_miejsc",
+          "detail": "Liczba miejsc dziesiętnych wyświetlanych w wyniku."
+        },
+        "suppress_separator": {
+          "name": "pomiń_separator",
+          "detail": "Określa, czy pominąć separator tysięcy używany w niektórych ustawieniach regionalnych (np. `1,000` staje się `1000`). Separatory będą obecne, jeśli ta wartość wynosi 0 lub zostanie pominięta, a nieobecne w przeciwnym wypadku."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Pierwsza pozycja ciągu znaleziona w tekście, wielkość liter ma znaczenie.",
+      "parameters": {
+        "search_for": {
+          "name": "szukaj",
+          "detail": "Ciąg znaków, który należy wyszukać w `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_do_wyszukiwania",
+          "detail": "Tekst, w którym należy wyszukać pierwsze wystąpienie ciągu `search_for`."
+        },
+        "starting_at": {
+          "name": "zaczynając od",
+          "detail": "Znak w tekście `text_to_search`, od którego należy rozpocząć wyszukiwanie."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Pozycja, w której ciąg znaków zostaje znaleziony po raz pierwszy w tekście (binarnym).",
+      "parameters": {
+        "search_for": {
+          "name": "szukaj",
+          "detail": "Ciąg znaków, który należy wyszukać w `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_do_wyszukiwania",
+          "detail": "Tekst, w którym należy wyszukać pierwsze wystąpienie ciągu `search_for`."
+        },
+        "starting_at": {
+          "name": "zaczynając od",
+          "detail": "Znak w tekście `text_to_search`, od którego należy rozpocząć wyszukiwanie."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Łączy elementy tablic z ogranicznikami.",
+      "parameters": {
+        "delimiter": {
+          "name": "rozgranicznik",
+          "detail": "Znak lub ciąg znaków, który należy umieścić pomiędzy każdą łączoną wartością."
+        },
+        "value_or_array1": {
+          "name": "wartość_lub_tablica1",
+          "detail": "Wartość lub wartości, które mają zostać dołączone za pomocą `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "wartość_lub_tablica2",
+          "detail": "Więcej wartości zostanie dodanych za pomocą `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Podciąg z początku określonego ciągu.",
+      "parameters": {
+        "string": {
+          "name": "smyczkowy",
+          "detail": "Ciąg, z którego zostanie zwrócona lewa część."
+        },
+        "number_of_characters": {
+          "name": "liczba_znaków",
+          "detail": "Liczba znaków, które mają zostać zwrócone z lewej strony `string`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Podciąg z końca określonego ciągu.",
+      "parameters": {
+        "string": {
+          "name": "smyczkowy",
+          "detail": "Ciąg, z którego zostanie zwrócona prawa część."
+        },
+        "number_of_characters": {
+          "name": "liczba_znaków",
+          "detail": "Liczba znaków, które mają zostać zwrócone z prawej strony `string`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Fragment sznurka.",
+      "parameters": {
+        "string": {
+          "name": "smyczkowy",
+          "detail": "Ciąg, z którego ma zostać wyodrębniony segment."
+        },
+        "starting_at": {
+          "name": "zaczynając od",
+          "detail": "Indeks z lewej strony `string`, od którego należy rozpocząć ekstrakcję. Pierwszy znak w `string` ma indeks 1."
+        },
+        "extract_length": {
+          "name": "długość_wyciągu",
+          "detail": "Długość segmentu do wyodrębnienia."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Długość sznurka.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Ciąg, którego długość zostanie zwrócona."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Długość ciągu w bajtach.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Ciąg, którego długość zostanie zwrócona."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Konwertuje określony ciąg na małe litery.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Ciąg znaków, który ma zostać zamieniony na małe litery."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Konwertuje określony ciąg na wielkie litery.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Ciąg znaków, który ma zostać zamieniony na wielkie litery."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Sprawdza czy dwa ciągi znaków są identyczne.",
+      "parameters": {
+        "string1": {
+          "name": "ciąg1",
+          "detail": "Pierwszy ciąg do porównania"
+        },
+        "string2": {
+          "name": "ciąg2",
+          "detail": "Drugi ciąg do porównania"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Zastępuje część ciągu tekstowego innym tekstem.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst, którego część zostanie zastąpiona."
+        },
+        "position": {
+          "name": "pozycja",
+          "detail": "Pozycja, od której rozpocznie się wymiana (rozpoczynając od 1)."
+        },
+        "length": {
+          "name": "długość",
+          "detail": "Liczba znaków w tekście, które mają zostać zastąpione."
+        },
+        "new_text": {
+          "name": "nowy_tekst",
+          "detail": "Tekst, który zostanie wstawiony do tekstu oryginalnego."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Podany tekst powtórzony określoną liczbę razy.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "tekst_do_powtórzenia",
+          "detail": "Znak lub ciąg znaków do powtórzenia."
+        },
+        "number_of_repetitions": {
+          "name": "liczba_powtórzeń",
+          "detail": "Liczba wystąpień `text_to_repeat` w wartości zwróconej."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Pierwsza pozycja ciągu znaleziona w tekście, bez względu na wielkość liter.",
+      "parameters": {
+        "search_for": {
+          "name": "szukaj",
+          "detail": "Ciąg znaków, który należy wyszukać w `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_do_wyszukiwania",
+          "detail": "Tekst, w którym należy wyszukać pierwsze wystąpienie ciągu `search_for`."
+        },
+        "starting_at": {
+          "name": "zaczynając od",
+          "detail": "Znak w tekście `text_to_search`, od którego należy rozpocząć wyszukiwanie."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Zastępuje istniejący tekst nowym tekstem w ciągu.",
+      "parameters": {
+        "text_to_search": {
+          "name": "tekst_do_wyszukiwania",
+          "detail": "Tekst, w którym można wyszukiwać i zamieniać."
+        },
+        "search_for": {
+          "name": "szukaj",
+          "detail": "Ciąg znaków do wyszukania w `text_to_search`."
+        },
+        "replace_with": {
+          "name": "zamień na",
+          "detail": "Ciąg, który zastąpi `search_for`."
+        },
+        "occurrence_number": {
+          "name": "numer_wystąpienia",
+          "detail": "Wystąpienie `search_for` w `text_to_search`, które ma zostać zastąpione przez `replace_with`. Domyślnie zastępowane są wszystkie wystąpienia `search_for`; jednak jeśli określono `occurrence_number`, zastępowane jest tylko wskazane wystąpienie `search_for`."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Usuwa niedrukowalne znaki z fragmentu tekstu.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst, którego niedrukowalne znaki mają zostać usunięte."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Formatuje liczbę do postaci tekstu.",
+      "parameters": {
+        "number": {
+          "name": "numer",
+          "detail": "Liczba, data lub godzina do sformatowania."
+        },
+        "format": {
+          "name": "format",
+          "detail": "Wzór, według którego należy sformatować liczbę, ujętą w cudzysłów."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Usuwa znaki spacji.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Tekst lub odwołanie do komórki zawierającej tekst do przycięcia."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Konwertuje ciąg daty/godziny/liczby na liczbę.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "Ciąg zawierający wartość do konwersji."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Zamienia każde słowo w określonym ciągu na wielką literę.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "tekst_do_wielkiej_litery",
+          "detail": "Tekst, który zostanie zwrócony, w którym pierwsza litera każdego słowa będzie wielka, a wszystkie pozostałe litery będą małe."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Konwersja jednostek liczbowych.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość liczbowa w `start_unit` do przekonwertowania na `end_unit`."
+        },
+        "start_unit": {
+          "name": "jednostka_początkowa",
+          "detail": "Jednostka początkowa, jednostka aktualnie przypisana do `wartości`."
+        },
+        "end_unit": {
+          "name": "jednostka_końcowa",
+          "detail": "Jednostka miary, na którą należy przekonwertować argument, `wartość`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Suma różnic kwadratów.",
+      "parameters": {
+        "array_x": {
+          "name": "tablica_x",
+          "detail": "Tablica lub zakres wartości, których kwadraty zostaną pomniejszone o kwadraty odpowiadających sobie wpisów w tablicy `array_y` i zsumowane."
+        },
+        "array_y": {
+          "name": "tablica_y",
+          "detail": "Tablica lub zakres wartości, których kwadraty zostaną odjęte od kwadratów odpowiednich wpisów w tablicy `array_x` i dodane do siebie."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Suma sum kwadratów.",
+      "parameters": {
+        "array_x": {
+          "name": "tablica_x",
+          "detail": "Tablica lub zakres wartości, których kwadraty zostaną dodane do kwadratów odpowiednich wpisów w tablicy `array_y`, a następnie zsumowane."
+        },
+        "array_y": {
+          "name": "tablica_y",
+          "detail": "Tablica lub zakres wartości, których kwadraty zostaną dodane do kwadratów odpowiednich wpisów w tablicy `array_x`, a następnie zsumowane."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Suma kwadratów różnic.",
+      "parameters": {
+        "array_x": {
+          "name": "tablica_x",
+          "detail": "Tablica lub zakres wartości, które zostaną pomniejszone o odpowiadające im wpisy w tablicy `array_y`, podniesione do kwadratu i zsumowane."
+        },
+        "array_y": {
+          "name": "tablica_y",
+          "detail": "Tablica lub zakres wartości, które zostaną odjęte od odpowiednich wpisów w tablicy `array_x`, wynik podniesiony do kwadratu, a następnie wszystkie takie wyniki zsumowane."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transponuje wiersze i kolumny tablicy.",
+      "parameters": {
+        "array_or_range": {
+          "name": "tablica_lub_zakres",
+          "detail": "Tablica lub zakres, którego wiersze i kolumny zostaną zamienione."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Dopasowuje punkty do trendu liniowego uzyskanego metodą najmniejszych kwadratów.",
+      "parameters": {
+        "known_data_y": {
+          "name": "znane_dane_y",
+          "detail": "Tablica lub zakres zawierający zależne wartości (y), które są już znane, używane do dopasowania krzywej do idealnego trendu liniowego."
+        },
+        "known_data_x": {
+          "name": "znane_dane_x",
+          "detail": "Wartości zmiennych niezależnych odpowiadających `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "nowe_dane_x",
+          "detail": "Punkty danych zwracające wartości `y` dla idealnego dopasowania krzywej."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Biorąc pod uwagę ogólną postać liniową `y = m*x+b` dla dopasowania krzywej, oblicza `b`, jeśli `TRUE` lub wymusza ustawienie `b` na `0` i oblicza tylko wartości `m`, jeśli `FALSE`, tj. wymusza, aby dopasowanie krzywej przechodziło przez początek układu współrzędnych."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Rozkład częstotliwości tablicy.",
+      "parameters": {
+        "data": {
+          "name": "dane",
+          "detail": "Tablica lub zakres zawierający wartości przeznaczone do zliczenia."
+        },
+        "classes": {
+          "name": "zajęcia",
+          "detail": "Tablica lub zakres zawierający zbiór klas."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Pasuje do trendu wzrostu wykładniczego.",
+      "parameters": {
+        "known_data_y": {
+          "name": "znane_dane_y",
+          "detail": "Tablica lub zakres zawierający zależne wartości (y), które są już znane, używane do dopasowania krzywej do idealnej krzywej wzrostu wykładniczego."
+        },
+        "known_data_x": {
+          "name": "znane_dane_x",
+          "detail": "Wartości zmiennych niezależnych odpowiadających `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "nowe_dane_x",
+          "detail": "Punkty danych zwracające wartości `y` dla idealnego dopasowania krzywej."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Biorąc pod uwagę ogólną formę wykładniczą `y = b*m^x` dla dopasowania krzywej, oblicza `b`, jeśli `TRUE` lub wymusza ustawienie `b` na `1` i oblicza tylko wartości `m`, jeśli `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Najlepiej dopasowany trend liniowy metodą najmniejszych kwadratów.",
+      "parameters": {
+        "known_data_y": {
+          "name": "znane_dane_y",
+          "detail": "Tablica lub zakres zawierający zależne wartości (y), które są już znane, używane do dopasowania krzywej do idealnego trendu liniowego."
+        },
+        "known_data_x": {
+          "name": "znane_dane_x",
+          "detail": "Wartości zmiennych niezależnych odpowiadających `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "oblicz_b",
+          "detail": "Biorąc pod uwagę liniową postać `y = m*x+b`, oblicza odcinek odcięty od osi y (`b`), jeśli `TRUE`. W przeciwnym wypadku wymusza ustawienie `b` na `0` i oblicza tylko wartości `m`, jeśli `FALSE`, tj. wymusza, aby dopasowanie krzywej przechodziło przez początek układu współrzędnych."
+        },
+        "verbose": {
+          "name": "gadatliwy",
+          "detail": "Flaga określająca, czy zwrócić dodatkowe statystyki regresji, czy tylko współczynniki liniowe i odcinek y (domyślnie)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Najlepiej dopasowana krzywa wzrostu wykładniczego.",
+      "parameters": {
+        "known_data_y": {
+          "name": "znane_dane_y",
+          "detail": "Tablica lub zakres zawierający zależne wartości (y), które są już znane, używane do dopasowania krzywej do idealnej krzywej wzrostu wykładniczego."
+        },
+        "known_data_x": {
+          "name": "znane_dane_x",
+          "detail": "Wartości zmiennych niezależnych odpowiadających `known_data_y`."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Biorąc pod uwagę ogólną postać wykładniczą `y = b*m^x` dla dopasowania krzywej, oblicza `b`, jeśli `TRUE` lub wymusza ustawienie `b` na `1` i oblicza tylko wartości `m`, jeśli `FALSE`."
+        },
+        "verbose": {
+          "name": "gadatliwy",
+          "detail": "Flaga określająca, czy zwrócić dodatkowe statystyki regresji, czy tylko obliczony współczynnik i wykładniki."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Wyznacznik macierzowy macierzy kwadratowej.",
+      "parameters": {
+        "square_matrix": {
+          "name": "macierz_kwadratowa",
+          "detail": "Tablica lub zakres składający się z takiej samej liczby wierszy i kolumn, reprezentujący macierz, której wyznacznik zostanie obliczony."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Macierz odwrotna do macierzy kwadratowej.",
+      "parameters": {
+        "square_matrix": {
+          "name": "macierz_kwadratowa",
+          "detail": "Tablica lub zakres o takiej samej liczbie wierszy i kolumn, reprezentujący macierz, której odwrotność mnożenia zostanie obliczona."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Iloczyn macierzowy dwóch macierzy.",
+      "parameters": {
+        "matrix1": {
+          "name": "macierz1",
+          "detail": "Pierwsza macierz w operacji mnożenia macierzy, reprezentowana jako tablica lub zakres."
+        },
+        "matrix2": {
+          "name": "macierz2",
+          "detail": "Druga macierz w operacji mnożenia macierzy, reprezentowana jako tablica lub zakres."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Suma iloczynów elementów dwóch tablic.",
+      "parameters": {
+        "array1": {
+          "name": "tablica1",
+          "detail": "Pierwsza tablica lub zakres, którego wpisy zostaną pomnożone przez odpowiadające im wpisy w drugiej takiej tablicy lub zakresie."
+        },
+        "array2": {
+          "name": "tablica2",
+          "detail": "Druga tablica lub zakres, którego wpisy zostaną pomnożone przez odpowiadające im wpisy w pierwszej takiej tablicy lub zakresie."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Czy wartość jest formułą.",
+      "parameters": {
+        "cell": {
+          "name": "komórka",
+          "detail": "Komórka, w której sprawdza się, czy znajduje się formuła."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Pobiera informacje o komórce.",
+      "parameters": {
+        "info_type": {
+          "name": "typ_informacji",
+          "detail": "Rodzaj żądanych informacji (dostępne rodzaje informacji można znaleźć w artykule)"
+        },
+        "reference": {
+          "name": "odniesienie",
+          "detail": "Odniesienie do komórki."
+        }
+      }
+    },
+    "NA": {
+      "description": "Błąd `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Czy komórka, do której się odwołuje, jest pusta.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Odwołanie do komórki, która zostanie sprawdzona pod kątem pustki."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Czy wartość jest błędem innym niż `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako typ błędu inny niż `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Czy wartość jest błędem.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako typ błędu."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Czy wartość jest „prawda” czy „fałsz”.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako logiczną `TRUE` lub `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Czy wartość jest błędem `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy porównać z wartością błędu `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Czy wartość jest nietekstowa.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość do sprawdzenia."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Czy wartość jest liczbą.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość do zweryfikowania jako liczba."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Czy wartość jest prawidłowym odwołaniem do komórki.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, którą należy zweryfikować jako odwołanie do komórki."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Czy wartość jest tekstem.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość do zweryfikowania w postaci tekstu."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Pobierz typ wartości.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość, której typ ma zostać ustalony."
+        }
+      }
+    },
+    "N": {
+      "description": "Argument podany jako liczba.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument, który należy przekonwertować na liczbę."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Konwertuje podaną liczbę na datę.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument lub odwołanie do komórki, która ma zostać przekonwertowana na datę."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Konwertuje dowolną wartość liczbową na liczbę całkowitą.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument lub odwołanie do komórki, która ma zostać przekonwertowana na liczbę czystą."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Konwertuje podaną wartość liczbową na wartość tekstową.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument lub odwołanie do komórki, która ma zostać przekonwertowana na tekst."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Konwertuje podaną liczbę na wartość w dolarach.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument lub odwołanie do komórki, która ma zostać przekonwertowana na wartość dolarową."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Konwertuje podaną liczbę na wartość procentową.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Argument lub odwołanie do komórki, która ma zostać przekonwertowana na wartość procentową."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Pojedyncza wartość z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maksymalna wartość z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minimum wartości z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Średnia zestawu wartości z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Zlicza wartości z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Zlicza wartości i tekst z zakresu w formie tabeli.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Iloczyn wartości z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Odchylenie standardowe próby populacji z tabeli.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Odchylenie standardowe całej populacji z tabeli.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Suma wartości z zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Wariancja próby populacji od zakresu tablicowego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Wariancja populacji od zakresu tabelarycznego.",
+      "parameters": {
+        "database": {
+          "name": "baza danych",
+          "detail": "Tablica lub zakres zawierający dane do rozważenia, ustrukturyzowany w taki sposób, że pierwszy wiersz zawiera etykiety wartości każdej kolumny."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Wskazuje, która kolumna w „bazie danych” zawiera wartości, które mają zostać wyodrębnione i na których zostaną wykonane operacje."
+        },
+        "criteria": {
+          "name": "kryteria",
+          "detail": "Tablica lub zakres zawierający zero lub więcej kryteriów, według których należy filtrować wartości „bazy danych” przed wykonaniem operacji."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Określ płeć na podstawie numeru dowodu osobistego.",
+      "parameters": {
+        "ID number": {
+          "name": "Numer identyfikacyjny",
+          "detail": "Numer identyfikacyjny lub zakres 15- lub 18-cyfrowy."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Na podstawie numeru dowodu osobistego sprawdź prowincję, w której urodziłeś się.",
+      "parameters": {
+        "ID number": {
+          "name": "Numer identyfikacyjny",
+          "detail": "Numer identyfikacyjny lub zakres 15- lub 18-cyfrowy."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Uzyskaj konstelację na podstawie numeru identyfikacyjnego.",
+      "parameters": {
+        "ID number": {
+          "name": "Numer identyfikacyjny",
+          "detail": "Numer identyfikacyjny lub zakres 15- lub 18-cyfrowy."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Zwraca odpowiedni wolumen obrotu akcjami spółki A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Kod magazynowy",
+          "detail": "Wymagany 6-cyfrowy kod magazynowy."
+        },
+        "Date": {
+          "name": "Data",
+          "detail": "Dzień obrotu akcjami, domyślnie jest to najpóźniejszy dzień obrotu"
+        },
+        "Reversion and exclusion": {
+          "name": "Przywrócenie i wykluczenie",
+          "detail": "Wybierz typ przywrócenia akcji po wycofaniu, domyślnie 0 [poprzednia rewizja], 1 [pierwotna cena], 2 [po rewizji]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Czy wartość jest datą.",
+      "parameters": {
+        "value": {
+          "name": "wartość",
+          "detail": "Wartość do zweryfikowania jako data."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Generuj wykres liniowy sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Line color": {
+          "name": "Kolor linii",
+          "detail": "Kolor linii wykresu liniowego może być zakresem A1, wartością indeksu tabeli kolorów lub określoną wartością koloru. Ustaw na 0 lub false, aby go nie wyświetlać. Obsługuje regx, rgb, rgba itp. Domyślnie #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Grubość linii",
+          "detail": "Grubość linii wykresu liniowego, domyślna wartość to 1 px"
+        },
+        "Auxiliary line": {
+          "name": "Linia pomocnicza",
+          "detail": "Linia pozioma, która może być wartością minimalną, maksymalną, średnią, medianą, zakresem lub wartością niestandardową, domyślnie 0 brak"
+        },
+        "Auxiliary line color": {
+          "name": "Kolor linii pomocniczej",
+          "detail": "Ustawienie koloru linii pomocniczej, takie samo jak konfiguracja koloru linii, domyślnie #000"
+        },
+        "Maximum mark": {
+          "name": "Maksymalna ocena",
+          "detail": "Identyfikuje maksymalną wartość wykresu liniowego, ta sama konfiguracja koloru linii, domyślnie 0 nie jest wyświetlane"
+        },
+        "Minimum mark": {
+          "name": "Minimalna ocena",
+          "detail": "Określ minimalną wartość wykresu liniowego, ta sama konfiguracja kolorów linii, domyślnie 0 nie jest wyświetlane"
+        },
+        "Mark size": {
+          "name": "Rozmiar znacznika",
+          "detail": "Ustawienia maksymalnego i minimalnego rozmiaru znacznika, domyślnie 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Generuj wykresy sparkline i kumulatywny histogram pionowy",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Stack by column": {
+          "name": "Układanie według kolumny",
+          "detail": "Jeśli chcesz układać wiersze, ustaw ten element na fałsz lub 0, wartością domyślną jest 1"
+        },
+        "Bar interval": {
+          "name": "Interwał taktowy",
+          "detail": "Odległość między prętami, domyślnie 1"
+        },
+        "Max": {
+          "name": "Maksymalnie",
+          "detail": "Maksymalna wartość skumulowanego słupka, używana do regulacji długości słupka, domyślnie obliczane są automatycznie false, auto, null"
+        },
+        "Color palette": {
+          "name": "Paleta kolorów",
+          "detail": "Paleta kolorów umożliwia indywidualne ustawienie koloru paska dla każdego wymiaru. Kolor można ustawić na zakres A1:A10 itd. Wartości domyślne to #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Generuj wykresy słupkowe poziome i kumulacyjne",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Stack by column": {
+          "name": "Układanie według kolumny",
+          "detail": "Jeśli chcesz układać wiersze, ustaw ten element na fałsz lub 0, wartością domyślną jest 1"
+        },
+        "Bar interval": {
+          "name": "Interwał taktowy",
+          "detail": "Odległość między prętami, domyślnie 1"
+        },
+        "Max": {
+          "name": "Maksymalnie",
+          "detail": "Maksymalna wartość skumulowanego słupka, używana do regulacji długości słupka, domyślnie obliczane są automatycznie false, auto, null"
+        },
+        "Color palette": {
+          "name": "Paleta kolorów",
+          "detail": "Paleta kolorów umożliwia indywidualne ustawienie koloru paska dla każdego wymiaru. Kolor można ustawić na zakres A1:A10 itd. Wartości domyślne to #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Generuj wykresy dyskretne sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Segmentation threshold": {
+          "name": "Próg segmentacji",
+          "detail": "Rozróżnienie kolorów kolumn wykresu dyskretnego, na przykład: jeśli wartość wynosi 0, niebieski jest większy od 0, czerwony jest mniejszy od 0, a wartością domyślną jest 0"
+        },
+        "Above threshold color": {
+          "name": "Kolor powyżej progu",
+          "detail": "Kolor linii wykresu liniowego może być zakresem A1, wartością indeksu tabeli kolorów lub określoną wartością koloru. Ustaw na 0 lub false, aby go nie wyświetlać. Obsługuje regx, rgb, rgba itp. Domyślnie #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Kolor poniżej progu",
+          "detail": "Ustawienie koloru paska poniżej progu jest takie samo jak kolor powyżej progu, domyślnie #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Generuj wykresy sparkline w trzech stanach",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Bar interval": {
+          "name": "Interwał taktowy",
+          "detail": "Odległość między prętami, domyślnie 1"
+        },
+        "Bar color": {
+          "name": "Kolor paska",
+          "detail": "Kolor linii wykresu liniowego może być zakresem A1, wartością indeksu tabeli kolorów lub określoną wartością koloru. Ustaw na 0 lub false, aby go nie wyświetlać. Obsługuje regx, rgb, rgba itp. Domyślnie #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Kolor paska ujemnego",
+          "detail": "Ustawienie koloru paska ujemnego, reprezentujące kolor wartości ujemnej, takie samo jak konfiguracja koloru paska, domyślnie #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Kolor paska o wartości zerowej",
+          "detail": "Ustawienie koloru paska o wartości zerowej, reprezentujące kolor o wartości 0, taka sama konfiguracja kolorów paska, domyślna wartość #999"
+        },
+        "Color palette": {
+          "name": "Paleta kolorów",
+          "detail": "Paleta kolorów umożliwia ustawienie koloru każdego paska indywidualnie, można ustawić wiele ustawień i obsługiwane są dwa formaty: 1 kolor, taki jak #000, co oznacza, że kolor pierwszego paska jest czarny; 2 zakres wartości: kolor, taki jak -2:# 000 oznacza, że pasek o wartości -2 jest czarny, 0:5:#000 oznacza, że pasek o wartości 0-5 jest czarny, a domyślnie jest pusty"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Generuj wykres kołowy sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Zakres",
+          "detail": "Zakres, wartości można obliczyć efektywnie, np. A1:A20, {1,2,3,4,5} itd."
+        },
+        "Rotation angle": {
+          "name": "Kąt obrotu",
+          "detail": "Kąt obrotu wykresu kołowego, domyślnie 0"
+        },
+        "border": {
+          "name": "granica",
+          "detail": "Rozmiar obramowania wykresu kołowego, domyślnie brak 0"
+        },
+        "Border color": {
+          "name": "Kolor obramowania",
+          "detail": "Kolor obramowania wykresu kołowego, domyślny to #000"
+        },
+        "Color palette": {
+          "name": "Paleta kolorów",
+          "detail": "Kolor wycinka można ustawić w palecie, która może być ustawiona na zakres A1:A10, itd. Domyślne wartości to #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Generowanie wykresów sparkline",
+      "parameters": {
+        "Target": {
+          "name": "Cel",
+          "detail": "Wartość liczbową można skutecznie obliczyć dla osiągniętej wartości docelowej, takiej jak A1, 100 itd."
+        },
+        "achieved": {
+          "name": "osiągnięty",
+          "detail": "Dopiero po wypełnieniu pola wartość można obliczyć w sposób efektywny, np. A1, 100 itd."
+        },
+        "Contrast": {
+          "name": "Kontrast",
+          "detail": "Wartości porównawcze, takie jak nadwyżka, minimum i dolna linia dla nagród, można skutecznie obliczyć, na przykład A1, 100 itd. Można ustawić do 9 wartości porównawczych"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Połącz wykresy sparkline w jedną komórkę",
+      "parameters": {
+        "config": {
+          "name": "konfiguracja",
+          "detail": "Ustawienia wykresu Sparklines, takie jak A1:A20, wypełniony wykres kołowy, ustawienia wykresu liniowego itd."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sortuje wiersze zakresu według określonej kolumny.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Dane do posortowania."
+        },
+        "sort_column": {
+          "name": "kolumna_sortowania",
+          "detail": "Indeks kolumny w `range` lub zakres poza `range` zawierający wartości, według których należy sortować."
+        },
+        "is_ascending": {
+          "name": "rośnie",
+          "detail": "`TRUE` lub `FALSE` wskazujące, czy sortowanie `sort_column` ma odbywać się w kolejności rosnącej. `FALSE` sortuje w kolejności malejącej."
+        },
+        "sort_column2": {
+          "name": "kolumna_sortowania2",
+          "detail": "Dodatkowe kolumny."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filtruje zakres w oparciu o podane warunki.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Dane, które mają zostać przefiltrowane."
+        },
+        "condition1": {
+          "name": "stan1",
+          "detail": "Kolumna lub wiersz zawierający wartości prawda lub fałsz odpowiadające pierwszej kolumnie lub wierszowi zakresu, albo formuła tablicowa dająca wynik prawda lub fałsz."
+        },
+        "condition2": {
+          "name": "stan2",
+          "detail": "Dodatkowe wiersze lub kolumny zawierające wartości logiczne `TRUE` lub `FALSE` wskazujące, czy odpowiedni wiersz lub kolumna w `range` powinna przejść przez `FILTER`. Mogą również zawierać wyrażenia formuły tablicowej, które oceniają takie wiersze lub kolumny. Wszystkie warunki muszą być tego samego typu (wiersz lub kolumna). Mieszanie warunków wierszy i kolumn jest niedozwolone."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Unikalne wiersze w podanym zakresie źródłowym.",
+      "parameters": {
+        "range": {
+          "name": "zakres",
+          "detail": "Dane do filtrowania według unikalnych wpisów."
+        },
+        "by_col": {
+          "name": "przez_col",
+          "detail": "[Opcja] - Wartość logiczna wskazująca sposób porównywania; według wiersza = FALSE() lub pominięta; według kolumny = TRUE()."
+        },
+        "occurs_once": {
+          "name": "występuje_raz",
+          "detail": "[Opcja] - Wartość logiczna, zwracane jest tylko jedno wystąpienie wartości unikalnej = TRUE(); wliczając wszystkie wartości unikalne = FALSE() lub pomijane."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Zwraca siatkę liczb losowych.",
+      "parameters": {
+        "rows": {
+          "name": "wydziwianie",
+          "detail": "Liczba wierszy, które mają zostać wypełnione liczbą losową."
+        },
+        "columns": {
+          "name": "kolumny",
+          "detail": "Liczba kolumn, do których należy wstawić liczbę losową."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Zwraca siatkę kolejnych liczb.",
+      "parameters": {
+        "rows": {
+          "name": "wydziwianie",
+          "detail": "Liczba wierszy w siatce wynikowej funkcji."
+        },
+        "columns": {
+          "name": "kolumny",
+          "detail": "Liczba kolumn w wynikowej siatce funkcji. Jeśli pominięto, wynikowa siatka będzie miała 1 kolumnę."
+        },
+        "start": {
+          "name": "start",
+          "detail": "Liczba, od której ma się rozpocząć sekwencja. Jeśli pominięto, sekwencja rozpocznie się od 1."
+        },
+        "step": {
+          "name": "krok",
+          "detail": "Wartość, o którą będzie się różnić każda wartość w sekwencji. Jeśli pominięte, każda wartość będzie się różnić o 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Oceń na podstawie dosłownego wzoru lub wyrażenia.",
+      "parameters": {
+        "expression": {
+          "name": "wyrażenie",
+          "detail": "Wzór lub wyrażenie"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Wywołuje funkcję na zdalnym serwerze zaplecza/API.",
+      "parameters": {
+        "remote_expression": {
+          "name": "wyrażenie_zdalne",
+          "detail": "Formuła"
+        }
+      }
+    }
   }
 }

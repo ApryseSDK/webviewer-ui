@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Pilih alat AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Pilih alat AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Pilih alat AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Edit Pintasan Papan Kekunci",
+      "editKeyboardShortcut": "Edit Pintasan Papan Kekunci",
       "setShortcut": "Tetapkan Pintasan",
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "tiada",
-      "solid": "Padat",
+      "thin": "Padat",
       "dashed": "putus-putus",
       "dotted": "Bertitik"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Edit Amaran",
       "message": "Adakah anda pasti mahu memadamkan helaian ini?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Susun Atur Halaman",
+      "columnsMessage": "Tetapan yang anda pilih untuk jarak lajur terlalu besar untuk lebar halaman dalam beberapa bahagian.",
+      "marginsMessage": "Tetapan yang anda pilih untuk jidar terlalu besar untuk lebar halaman dalam beberapa bahagian."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Betul",
     "customMargins": "Margin Tersuai",
     "customMarginsDescription": "Tentukan margin tersuai",
+    "column": "Lajur",
+    "columns": "Lajur",
+    "singleColumn": "1 Lajur",
+    "twoColumn": "2 Lajur",
+    "threeColumn": "3 Lajur",
+    "customColumn": "Lajur Tersuai",
+    "customColumnDescription": "Tentukan lajur tersuai",
+    "unitMeasurement": "Pengukuran Unit",
     "header": {
       "0": "Pengepala",
       "1": "Pengepala Halaman Pertama",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Halaman Genap & Ganjil Berbeza",
         "differentFirstEvenOddPages": "Halaman Pertama, Genap dan Ganjil yang berbeza"
       }
+    },
+    "columnsModal": {
+      "title": "Pelarasan Lajur Tersuai",
+      "columnAmount": "Bilangan Lajur",
+      "columnNumber": "Nombor Lajur",
+      "width": "Lebar",
+      "spacing": "Jarak",
+      "widthAndSpacing": "Lebar dan Jarak",
+      "equalColumns": "Lebar Lajur Sama"
     },
     "marginsModal": {
       "title": "Pelarasan Margin Tersuai",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Melihat",
     "editingDescription": "Edit dokumen",
     "viewOnlyDescription": "Lihat sahaja",
+    "editModeDropdown": "Edit pemilihan mod",
     "bold": "berani",
     "italic": "Italic",
     "underline": "Garis bawah",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Padamkan sel dan alihkan ke atas",
     "deleteColumnShiftLeft": "Padamkan sel dan alih ke kiri",
     "clearBorder": "Kosongkan Sempadan",
-    "cellBorderAll": "Semua Sempadan",
-    "cellBorderInside": "Dalam Sempadan",
-    "cellBorderOutside": "Luar Sempadan",
-    "cellBorderTop": "Sempadan Atas",
-    "cellBorderBottom": "Sempadan Bawah",
-    "cellBorderLeft": "Sempadan Kiri",
-    "cellBorderRight": "Sempadan Kanan",
-    "cellBorderVertical": "Sempadan Menegak",
-    "cellBorderHorizontal": "Sempadan Mendatar",
-    "cellBorderNone": "Tiada Sempadan",
+    "all": "Semua Sempadan",
+    "inside": "Dalam Sempadan",
+    "outside": "Luar Sempadan",
+    "top": "Sempadan Atas",
+    "bottom": "Sempadan Bawah",
+    "left": "Sempadan Kiri",
+    "right": "Sempadan Kanan",
+    "vertical": "Sempadan Menegak",
+    "horizontal": "Sempadan Mendatar",
+    "none": "Tiada Sempadan",
     "borders": "Sempadan",
     "fontSize": {
       "dropdownLabel": "Saiz Font"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formula Bar",
     "range": "Julat",
-    "formulas": "Formula",
-    "sumif": "Jumlah bersyarat merentas julat",
-    "sumsq": "Mengembalikan hasil tambah kuasa dua julat",
-    "sum": "Menambah semua nombor dalam julat",
-    "asinh": "Mengembalikan sinus hiperbolik songsang bagi suatu nombor",
-    "acos": "Mengembalikan arkosinus nombor, dalam radian",
-    "cosh": "Mengembalikan kosinus hiperbolik suatu nombor",
-    "iseven": "Menyemak sama ada nombor genap",
-    "isodd": "Menyemak sama ada nombor itu ganjil"
+    "formulas": "Formula"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Jumlah bersyarat merentas julat.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Julat yang diuji terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Corak atau ujian untuk digunakan pada `julat`."
+        },
+        "sum_range": {
+          "name": "jumlah_julat",
+          "detail": "Julat untuk dijumlahkan, jika berbeza daripada `julat`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangen bagi sudut yang disediakan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk mencari tangen, dalam radian."
+        }
+      }
+    },
+    "TANH": {
+      "description": "tangen hiperbolik sebarang nombor nyata.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Sebarang nilai sebenar untuk mengira tangen hiperbola bagi."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Membundarkan nombor ke atas kepada gandaan terdekat bagi sesuatu faktor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada gandaan integer terdekat bagi `faktor`."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Nombor dengan gandaan `nilai`nya akan dibundarkan."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "tangen songsang bagi suatu nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira tangen songsang."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "sinus hiperbolik songsang bagi suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira sinus hiperbolik songsang."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Nilai mutlak suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor yang akan mengembalikan nilai mutlak."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Kosinus songsang bagi suatu nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira kosinus songsang. Mesti antara `-1` dan `1`, termasuk."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "kosinus hiperbolik songsang bagi suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira kosinus hiperbolik songsang. Mesti lebih besar daripada atau sama dengan `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Fungsi pengedaran multinomial.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama untuk dipertimbangkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "tangen hiperbola songsang bagi suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira tangen hiperbola songsang. Mesti antara -1 dan 1, eksklusif."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Artangen sesuatu nilai.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Koordinat x bagi titik akhir segmen garisan untuk mengira sudut dari paksi-x."
+        },
+        "y": {
+          "name": "dan",
+          "detail": "Koordinat y bagi titik akhir segmen garisan untuk mengira sudut dari paksi-x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Bilangan nilai kosong.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama untuk mengira bilangan kekosongan."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Kosinus hiperbolik sebarang nombor nyata.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Sebarang nilai sebenar untuk mengira kosinus hiperbola bagi."
+        }
+      }
+    },
+    "INT": {
+      "description": "Membundarkan nombor ke bawah kepada integer terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan ke bawah kepada integer terdekat."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Sama ada nilai yang diberikan adalah genap.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai genap."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Sama ada nilai yang diberikan adalah ganjil.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai ganjil."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Gandaan sepunya terkecil satu atau lebih integer.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang faktornya perlu dipertimbangkan dalam pengiraan untuk mencari gandaan sepunya terkecil."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan yang faktornya perlu dipertimbangkan untuk mencari gandaan sepunya terkecil."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logaritma nombor, asas e (nombor euler).",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira logaritma, asas e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logaritma nombor berkenaan dengan asas.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira logaritma."
+        },
+        "base": {
+          "name": "asas",
+          "detail": "Asas untuk digunakan untuk pengiraan logaritma."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logaritma nombor, asas 10.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira logaritma, asas 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Pengendali modulo (baki).",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Nombor yang perlu dibahagikan untuk mencari bakinya."
+        },
+        "divisor": {
+          "name": "pembahagi",
+          "detail": "Nombor untuk dibahagi dengan."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Membundarkan nombor kepada gandaan integer terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor untuk dibundarkan kepada gandaan integer terdekat yang lain."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Nombor dengan gandaan `nilai`nya akan dibundarkan."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Membundarkan nombor ke atas kepada integer ganjil terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada nombor ganjil terbesar seterusnya."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Jumlah kuasa dua.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nombor atau julat pertama yang kuasa duanya untuk ditambah bersama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nombor atau julat tambahan yang petaknya akan ditambah pada petak `nilai1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Bilangan gabungan daripada set objek.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Saiz kumpulan objek untuk dipilih."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Bilangan objek untuk dipilih."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Jumlah siri nombor dan/atau sel.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nombor atau julat pertama untuk ditambah bersama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nombor atau julat tambahan untuk ditambahkan pada `nilai1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Jumlah kecil untuk julat menggunakan fungsi tertentu.",
+      "parameters": {
+        "function_code": {
+          "name": "kod_fungsi",
+          "detail": "Fungsi untuk digunakan dalam pengagregatan subjumlah."
+        },
+        "range1": {
+          "name": "julat1",
+          "detail": "Julat pertama untuk mengira subjumlah."
+        },
+        "range2": {
+          "name": "julat2",
+          "detail": "Julat tambahan untuk mengira subjumlah."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Sinus songsang nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira sinus songsang. Mesti antara `-1` dan `1`, termasuk."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Kiraan bersyarat merentas julat.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Julat yang diuji terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Corak atau ujian untuk digunakan pada `julat`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Menukar nilai sudut dalam darjah kepada radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk menukar daripada darjah kepada radian."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Nombor rawak antara 0 inklusif dan 1 eksklusif."
+    },
+    "COUNTUNIQUE": {
+      "description": "Mengira bilangan nilai unik dalam julat.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan untuk keunikan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan untuk keunikan."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Menukar nilai sudut dalam radian kepada darjah.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk menukar daripada radian kepada darjah."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Fungsi ralat gauss pelengkap bagi sesuatu nilai.",
+      "parameters": {
+        "z": {
+          "name": "Dengan",
+          "detail": "Nombor untuk mengira fungsi ralat Gauss pelengkap."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Membundarkan nombor ke atas kepada integer genap terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada nombor genap terbesar seterusnya."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Nombor Euler, e (~2.718) dinaikkan kepada kuasa.",
+      "parameters": {
+        "exponent": {
+          "name": "eksponen",
+          "detail": "Eksponen untuk menaikkan e kepada."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Faktor bagi suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor atau rujukan kepada nombor yang pemfaktorannya akan dikira dan dikembalikan."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"faktorial berganda\" bagi suatu nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor atau rujukan kepada nombor yang pemfaktoran dua kalinya akan dikira dan dikembalikan."
+        }
+      }
+    },
+    "PI": {
+      "description": "Nombor pi."
+    },
+    "GCD": {
+      "description": "Pembahagi sepunya terbesar bagi satu atau lebih integer.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang faktornya perlu dipertimbangkan dalam pengiraan untuk mencari pembahagi sepunya terbesar."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan yang faktornya perlu dipertimbangkan untuk mencari pembahagi sepunya terbesar."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Integer rawak antara dua nilai, inklusif.",
+      "parameters": {
+        "low": {
+          "name": "rendah",
+          "detail": "Hujung rendah julat rawak."
+        },
+        "high": {
+          "name": "tinggi",
+          "detail": "Hujung tinggi julat rawak."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Membundarkan nombor mengikut peraturan piawai.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada `tempat` bilangan tempat."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Bilangan tempat perpuluhan yang hendak dibundarkan."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Membundarkan nombor ke bawah.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada `tempat` bilangan tempat, sentiasa dibundarkan ke bawah."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Bilangan tempat perpuluhan yang hendak dibundarkan."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Membundarkan nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dibundarkan kepada `tempat` bilangan tempat, sentiasa dibundarkan ke atas."
+        },
+        "places": {
+          "name": "tempat-tempat",
+          "detail": "Bilangan tempat perpuluhan yang hendak dibundarkan."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Jumlah siri kuasa.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Input kepada siri kuasa. Berbeza-beza bergantung pada jenis anggaran, mungkin sudut, eksponen atau beberapa nilai lain."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Kuasa awal untuk menaikkan `x` dalam siri kuasa."
+        },
+        "m": {
+          "name": "m",
+          "detail": "Kenaikan aditif untuk meningkatkan `x`."
+        },
+        "a": {
+          "name": "a",
+          "detail": "Tatasusunan atau julat yang mengandungi pekali siri kuasa."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Tanda nombor yang diberikan (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang tandanya akan dinilai."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus sudut yang disediakan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk mencari sinus, dalam radian."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Sinus hiperbolik sebarang nombor nyata.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Sebarang nilai sebenar untuk mengira sinus hiperbolik bagi."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Punca kuasa dua positif bagi nombor positif.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor untuk mengira punca kuasa dua positif."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Punca kuasa dua hasil darab pi dan nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nombor yang akan didarab dengan Pi dan punca kuasa dua hasil darab dikembalikan"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritma fungsi gamma.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Input kepada fungsi Gamma. Logaritma semula jadi Gamma(`nilai`) akan dikembalikan."
+        }
+      }
+    },
+    "COS": {
+      "description": "Kosinus sudut yang disediakan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk mencari kosinus, dalam radian."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Memotong nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dipotong."
+        },
+        "places": {
+          "name": "tempat-tempat",
+          "detail": "Bilangan digit bererti di sebelah kanan titik perpuluhan untuk dikekalkan."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Satu nombor dibahagikan dengan nombor lain.",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Nombor yang perlu dibahagikan."
+        },
+        "divisor": {
+          "name": "pembahagi",
+          "detail": "Nombor untuk dibahagi dengan."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Nombor dinaikkan kepada kuasa.",
+      "parameters": {
+        "base": {
+          "name": "asas",
+          "detail": "Nombor untuk dinaikkan kepada kuasa `eksponen`."
+        },
+        "exponent": {
+          "name": "eksponen",
+          "detail": "Eksponen untuk menaikkan `asas` kepada."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Menjumlahkan julat bergantung pada berbilang kriteria.",
+      "parameters": {
+        "sum_range": {
+          "name": "jumlah_julat",
+          "detail": "Julat untuk dijumlahkan."
+        },
+        "criteria_range1": {
+          "name": "julat_kriteria1",
+          "detail": "Julat untuk menyemak dengan kriteria1."
+        },
+        "criterion1": {
+          "name": "kriteria1",
+          "detail": "Corak atau ujian untuk digunakan pada julat_kriteria1."
+        },
+        "criteria_range2": {
+          "name": "julat_kriteria2",
+          "detail": "Julat tambahan untuk diperiksa."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Kira nilai bergantung pada berbilang kriteria.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "julat_kriteria1",
+          "detail": "Julat untuk diperiksa terhadap `kriteria1`."
+        },
+        "criterion1": {
+          "name": "kriteria1",
+          "detail": "Corak atau ujian untuk digunakan pada `julat_kriteria1`."
+        },
+        "criteria_range2": {
+          "name": "julat_kriteria2",
+          "detail": "Julat tambahan untuk diperiksa."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Hasil pendaraban siri nombor bersama.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Nombor atau julat pertama untuk dikira untuk produk."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Lebih banyak nombor atau julat untuk dikira untuk produk."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Purata harmonik bagi set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dimasukkan ke dalam populasi."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Kebarangkalian taburan hipergeometrik.",
+      "parameters": {
+        "num_successes": {
+          "name": "num_successes",
+          "detail": "Bilangan kejayaan yang diingini."
+        },
+        "num_draws": {
+          "name": "num_draws",
+          "detail": "Bilangan cabutan yang dibenarkan."
+        },
+        "successes_in_pop": {
+          "name": "kejayaan_dalam_pop",
+          "detail": "Jumlah bilangan kejayaan dalam populasi."
+        },
+        "pop_size": {
+          "name": "saiz_pop",
+          "detail": "Jumlah saiz populasi"
+        },
+        "cumulative": {
+          "name": "kumulatif",
+          "detail": "Tentukan nilai logik bentuk fungsi. \n\nJika kumulatif adalah TRUE(), HYPGEOM.DIST mengembalikan fungsi pengedaran kumulatif;\n\njika FALSE(), ia mengembalikan fungsi ketumpatan kebarangkalian."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Pintasan-Y bagi garisan yang diperolehi melalui regresi linear.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosis set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama set data."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk disertakan dalam set data."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Elemen ke-n terbesar daripada set data.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi set data untuk dipertimbangkan."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Kedudukan daripada terbesar kepada terkecil elemen untuk dikembalikan."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Sisihan piawai sampel (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Sisihan piawai bagi keseluruhan populasi.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dimasukkan ke dalam populasi."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Purata geometri bagi set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dimasukkan ke dalam populasi."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Kedudukan peratusan (persentil) daripada 0 hingga 1 termasuk.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi set data untuk dipertimbangkan."
+        },
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang peratusan kedudukannya akan ditentukan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan angka bererti untuk digunakan dalam pengiraan. Lalai ialah 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Jangkaan nilai y berdasarkan regresi linear.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Nilai pada paksi-x untuk diramalkan."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Transformasi nelayan songsang bagi nilai yang ditentukan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira penjelmaan Fisher songsang."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Transformasi Fisher bagi nilai tertentu.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk mengira transformasi Fisher."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Bilangan nilai angka dalam set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Bilangan nilai dalam set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Nilai purata berangka dalam set data, mengabaikan teks.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai purata."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai purata."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Kebarangkalian taburan binomial.",
+      "parameters": {
+        "num_successes": {
+          "name": "num_successes",
+          "detail": "Bilangan kejayaan untuk mengira kebarangkalian dalam percubaan `num_trials`."
+        },
+        "num_trials": {
+          "name": "num_trials",
+          "detail": "Bilangan percubaan bebas."
+        },
+        "prob_success": {
+          "name": "masalah_kejayaan",
+          "detail": "Kebarangkalian kejayaan dalam mana-mana percubaan tertentu."
+        },
+        "cumulative": {
+          "name": "kumulatif",
+          "detail": "Sama ada hendak menggunakan taburan kumulatif binomial."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Jumlah kuasa dua sisihan berdasarkan sampel.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Purata nilai bergantung pada kriteria.",
+      "parameters": {
+        "criteria_range": {
+          "name": "julat_kriteria",
+          "detail": "Julat untuk diperiksa terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Corak atau ujian untuk digunakan pada `julat_kriteria`."
+        },
+        "average_range": {
+          "name": "julat_purata",
+          "detail": "Julat kepada purata. Jika tidak disertakan, `julat_kriteria` digunakan untuk purata sebaliknya."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Purata nilai bergantung pada berbilang kriteria.",
+      "parameters": {
+        "average_range": {
+          "name": "julat_purata",
+          "detail": "Julat kepada purata."
+        },
+        "criteria_range1": {
+          "name": "julat_kriteria1",
+          "detail": "Julat untuk diperiksa terhadap `kriteria1`."
+        },
+        "criterion1": {
+          "name": "kriteria1",
+          "detail": "Corak atau ujian untuk digunakan pada `julat_kriteria1`."
+        },
+        "criteria_range2": {
+          "name": "julat_kriteria2",
+          "detail": "Julat tambahan untuk diperiksa."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Bilangan pilih atur daripada beberapa objek.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Saiz kumpulan objek untuk dipilih."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Bilangan objek untuk dipilih."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Purata set data tidak termasuk hujung tinggi/rendah.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi set data untuk dipertimbangkan."
+        },
+        "exclude_proportion": {
+          "name": "kecualikan_kadaran",
+          "detail": "Perkadaran set data untuk dikecualikan, daripada hujung set."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pekali Korelasi Momen Produk Pearson.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Nilai angka minimum dalam set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai minimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai minimum."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Nilai minimum dalam set data berangka.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai minimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai minimum."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Nilai median dalam set data berangka.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai median."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai median."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Nilai angka maksimum dalam set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai maksimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai maksimum."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Nilai maksimum dalam set data berangka.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama yang perlu dipertimbangkan semasa mengira nilai maksimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dipertimbangkan semasa mengira nilai maksimum."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Nilai kebarangkalian terletak dalam julat.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi set data untuk dipertimbangkan."
+        },
+        "probabilities": {
+          "name": "kebarangkalian",
+          "detail": "Tatasusunan atau julat yang mengandungi kebarangkalian yang sepadan dengan `data`."
+        },
+        "low_limit": {
+          "name": "had_rendah",
+          "detail": "Sempadan bawah pada julat nilai untuk mengira kebarangkalian."
+        },
+        "high_limit": {
+          "name": "had_tinggi",
+          "detail": "Sempadan atas pada julat nilai untuk mengira kebarangkalian."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Kuasa dua pekali korelasi.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Varians sampel (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Varians keseluruhan populasi (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk dimasukkan ke dalam populasi."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Ralat piawai bagi nilai-y yang diramalkan dalam regresi.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Setara ternormal pembolehubah rawak.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai pembolehubah rawak untuk dinormalkan."
+        },
+        "mean": {
+          "name": "bermakna",
+          "detail": "Purata pengagihan."
+        },
+        "standard_deviation": {
+          "name": "sisihan_piawai",
+          "detail": "Sisihan piawai bagi taburan."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Unsur terkecil ke-n dalam set data.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi set data untuk dipertimbangkan."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Kedudukan daripada terkecil kepada terbesar elemen untuk dikembalikan."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Cerun garisan daripada regresi linear data.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bergantung."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Julat yang mewakili tatasusunan atau matriks data bebas."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Kecondongan set data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau julat pertama set data."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau julat tambahan untuk disertakan dalam set data."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Carian menegak.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci_cari",
+          "detail": "Nilai untuk dicari. Contohnya, `42`, `\"Kucing\"` atau `I24`."
+        },
+        "range": {
+          "name": "julat",
+          "detail": "Julat untuk dipertimbangkan untuk carian. Lajur pertama dalam julat dicari untuk kunci yang dinyatakan dalam `kunci_carian`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks lajur bagi nilai yang akan dikembalikan, dengan lajur pertama dalam `julat` bernombor 1."
+        },
+        "is_sorted": {
+          "name": "is_sorted",
+          "detail": "Menunjukkan sama ada lajur yang hendak dicari (lajur pertama julat yang ditentukan) diisih, yang mana padanan terdekat untuk `kunci_carian` akan dikembalikan."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Carian mendatar",
+      "parameters": {
+        "search_key": {
+          "name": "kunci_cari",
+          "detail": "Nilai untuk dicari. Contohnya, `42`, `\"Kucing\"` atau `I24`."
+        },
+        "range": {
+          "name": "julat",
+          "detail": "Julat untuk dipertimbangkan untuk carian. Baris pertama dalam julat dicari untuk kunci yang dinyatakan dalam `kunci_carian`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks baris nilai yang akan dikembalikan, di mana baris pertama dalam `julat` bernombor 1."
+        },
+        "is_sorted": {
+          "name": "is_sorted",
+          "detail": "Menunjukkan sama ada baris yang hendak dicari (baris pertama julat yang ditentukan) diisih."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Cari nilai.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci_cari",
+          "detail": "Nilai untuk dicari dalam baris atau lajur. Contohnya, `42`, `\"Kucing\"` atau `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "julat_ carian|susunan_hasil_carian",
+          "detail": "Satu kaedah menggunakan fungsi ini ialah menyediakan satu baris atau lajur yang diisih `julat_carian` untuk mencari `kunci_carian` dengan argumen kedua `julat_hasil`. Cara lain ialah dengan menggabungkan kedua-dua hujah ini menjadi satu `susunan_hasil_carian` di mana baris atau lajur pertama dicari dan nilai dikembalikan daripada baris atau lajur terakhir dalam tatasusunan. Jika `kunci_carian` tidak ditemui, padanan yang tidak tepat mungkin dikembalikan."
+        },
+        "result_range": {
+          "name": "julat_hasil",
+          "detail": "Julat untuk mengembalikan hasil. Nilai yang dikembalikan sepadan dengan lokasi `kunci_carian` ditemui dalam `julat_carian`. Julat ini mestilah hanya satu baris atau lajur dan tidak boleh digunakan jika menggunakan kaedah `susunan_hasil_carian`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Rujukan sel sebagai rentetan.",
+      "parameters": {
+        "row": {
+          "name": "barisan",
+          "detail": "Nombor baris rujukan sel"
+        },
+        "column": {
+          "name": "lajur",
+          "detail": "Nombor lajur (bukan nama) rujukan sel. `A` ialah nombor lajur `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "mod_relatif mutlak",
+          "detail": "Penunjuk sama ada rujukan adalah mutlak baris/lajur. `1` ialah mutlak baris dan lajur (cth. $A$1), `2` ialah mutlak baris dan relatif lajur (cth. A$1), `3` ialah relatif baris dan mutlak lajur (cth. $A1) dan `4` ialah relatif baris dan lajur (cth. A1)."
+        },
+        "use_a1_notation": {
+          "name": "gunakan_a1_notasi",
+          "detail": "Boolean yang menunjukkan sama ada hendak menggunakan tatatanda gaya `A1` (TRUE) atau notasi gaya `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "lembaran",
+          "detail": "Teks yang menunjukkan nama helaian tempat alamat dituju."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Rujukan sel yang ditentukan oleh rentetan.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cell_reference_as_string",
+          "detail": "Rujukan sel, ditulis sebagai rentetan dengan tanda petikan di sekeliling."
+        },
+        "is_A1_notation": {
+          "name": "ialah_A1_notasi",
+          "detail": "Menunjukkan jika rujukan sel berada dalam tatatanda A1 (TRUE) atau tatatanda R1C1 (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Nombor baris sel yang ditentukan.",
+      "parameters": {
+        "cell_reference": {
+          "name": "rujukan_sel",
+          "detail": "Sel yang nombor barisnya akan dikembalikan."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Bilangan baris dalam tatasusunan atau julat yang ditentukan.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Julat yang kiraan barisnya akan dikembalikan."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Nombor lajur sel yang ditentukan.",
+      "parameters": {
+        "cell_reference": {
+          "name": "rujukan_sel",
+          "detail": "Sel yang nombor lajurnya akan dikembalikan. Lajur `A` sepadan dengan `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Bilangan lajur dalam tatasusunan atau julat yang ditentukan.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Julat yang jumlah lajurnya akan dikembalikan."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Rujukan julat mengimbangi relatif kepada sel.",
+      "parameters": {
+        "cell_reference": {
+          "name": "rujukan_sel",
+          "detail": "Titik permulaan untuk mengira baris dan lajur mengimbangi."
+        },
+        "offset_rows": {
+          "name": "offset_rows",
+          "detail": "Bilangan baris untuk diimbangi oleh."
+        },
+        "offset_columns": {
+          "name": "lajur_offset",
+          "detail": "Bilangan lajur untuk diimbangi oleh."
+        },
+        "height": {
+          "name": "ketinggian",
+          "detail": "Ketinggian julat untuk kembali bermula pada sasaran mengimbangi."
+        },
+        "width": {
+          "name": "lebar",
+          "detail": "Lebar julat untuk kembali bermula pada sasaran mengimbangi."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Kedudukan item dalam julat yang sepadan dengan nilai.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci_cari",
+          "detail": "Nilai untuk dicari. Contohnya, `42`, `\"Kucing\"` atau `I24`."
+        },
+        "range": {
+          "name": "julat",
+          "detail": "Tatasusunan satu dimensi untuk dicari."
+        },
+        "search_type": {
+          "name": "jenis_carian",
+          "detail": "Kaedah carian. `1` (lalai) mencari nilai terbesar kurang daripada atau sama dengan `kunci_carian` apabila `julat` diisih dalam tertib menaik. `0` mencari nilai yang tepat apabila `julat` tidak diisih. `-1` mencari nilai terkecil lebih besar daripada atau sama dengan `kunci_carian` apabila `julat` diisih dalam tertib menurun."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Kandungan sel yang ditentukan oleh baris dan lajur mengimbangi.",
+      "parameters": {
+        "reference": {
+          "name": "rujukan",
+          "detail": "Tatasusunan sel untuk diimbangi."
+        },
+        "row": {
+          "name": "barisan",
+          "detail": "Bilangan baris mengimbangi."
+        },
+        "column": {
+          "name": "lajur",
+          "detail": "Bilangan lajur offset."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Mengekstrak nilai agregat daripada jadual pangsi yang sepadan dengan tajuk baris dan lajur yang ditentukan.",
+      "parameters": {
+        "value_name": {
+          "name": "nama_nilai",
+          "detail": "Nama nilai dalam jadual pangsi yang anda ingin dapatkan data."
+        },
+        "any_pivot_table_cell": {
+          "name": "sebarang_sel_jadual_pangsi",
+          "detail": "Sebarang rujukan kepada sel dalam jadual pangsi yang diingini (sudut atas disyorkan)."
+        },
+        "original_column": {
+          "name": "lajur_asli",
+          "detail": "Nama lajur dalam set data asal (bukan jadual pangsi)."
+        },
+        "pivot_item": {
+          "name": "pivot_item",
+          "detail": "Nama baris atau lajur yang ditunjukkan dalam jadual pangsi yang sepadan dengan *lajur_asli* yang anda mahu dapatkan semula."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Elemen daripada senarai pilihan berdasarkan indeks.",
+      "parameters": {
+        "index": {
+          "name": "indeks",
+          "detail": "Pilihan yang manakah (sehingga 30 yang disediakan) untuk dikembalikan."
+        },
+        "choice1": {
+          "name": "pilihan1",
+          "detail": "Nilai berpotensi untuk dikembalikan. Diperlukan. Mungkin merujuk kepada sel atau nilai individu."
+        },
+        "choice2": {
+          "name": "pilihan2",
+          "detail": "Nilai tambahan di antaranya untuk dipilih."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Menukar jam/minit/saat kepada masa.",
+      "parameters": {
+        "hour": {
+          "name": "jam",
+          "detail": "Komponen jam masa itu."
+        },
+        "minute": {
+          "name": "minit",
+          "detail": "Komponen minit masa."
+        },
+        "second": {
+          "name": "kedua",
+          "detail": "Komponen kedua pada masa itu."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Menukar rentetan masa kepada perwakilan nombor sirinya.",
+      "parameters": {
+        "time_string": {
+          "name": "rentetan_masa",
+          "detail": "Rentetan yang memegang perwakilan masa."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Hari terakhir dalam sebulan sebelum atau selepas tarikh.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh dari mana untuk mengira keputusan."
+        },
+        "months": {
+          "name": "bulan",
+          "detail": "Bilangan bulan sebelum (negatif) atau selepas (positif) 'tarikh_mula' untuk dipertimbangkan."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Tarikh beberapa bulan sebelum/selepas tarikh lain.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh dari mana untuk mengira keputusan."
+        },
+        "months": {
+          "name": "bulan",
+          "detail": "Bilangan bulan sebelum (negatif) atau selepas (positif) 'tarikh_mula' untuk dikira."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Komponen kedua masa tertentu.",
+      "parameters": {
+        "time": {
+          "name": "masa",
+          "detail": "Masa untuk mengira komponen kedua"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Komponen minit masa tertentu.",
+      "parameters": {
+        "time": {
+          "name": "masa",
+          "detail": "Masa untuk mengira komponen minit."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Komponen jam bagi masa tertentu.",
+      "parameters": {
+        "time": {
+          "name": "masa",
+          "detail": "Masa untuk mengira komponen jam."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Tarikh dan masa semasa sebagai nilai tarikh."
+    },
+    "NETWORKDAYS": {
+      "description": "Hari bekerja bersih antara dua hari yang disediakan.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh mula tempoh untuk mengira bilangan hari bekerja bersih."
+        },
+        "end_date": {
+          "name": "tarikh_akhir",
+          "detail": "Tarikh tamat tempoh untuk mengira bilangan hari bekerja bersih."
+        },
+        "holidays": {
+          "name": "hari cuti",
+          "detail": "Pemalar julat atau tatasusunan yang mengandungi nombor siri tarikh untuk dipertimbangkan hari cuti."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Nombor minggu ISO tahun.",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk menentukan nombor minggu ISO. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Nombor minggu dalam tahun.",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk menentukan nombor minggu. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "type": {
+          "name": "menaip",
+          "detail": "Nombor yang mewakili hari di mana seminggu bermula. Ahad = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Hari dalam minggu tarikh yang diberikan (sebagai nombor).",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk menentukan hari dalam seminggu. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "type": {
+          "name": "menaip",
+          "detail": "Nombor yang menunjukkan sistem penomboran yang hendak digunakan untuk mewakili hari bekerja. Secara lalai, kiraan bermula dengan Ahad = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Hari dalam bulan yang tarikh tertentu jatuh pada.",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk mengeluarkan hari."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Bilangan hari antara dua tarikh.",
+      "parameters": {
+        "end_date": {
+          "name": "tarikh_akhir",
+          "detail": "Penghujung julat tarikh."
+        },
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Permulaan julat tarikh."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Hari antara dua tarikh pada tahun 360 hari.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh mula untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "end_date": {
+          "name": "tarikh_akhir",
+          "detail": "Tarikh tamat untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "method": {
+          "name": "kaedah",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Menukar tahun/bulan/hari kepada tarikh.",
+      "parameters": {
+        "year": {
+          "name": "tahun",
+          "detail": "Komponen tahun tarikh."
+        },
+        "month": {
+          "name": "bulan",
+          "detail": "Komponen bulan tarikh."
+        },
+        "day": {
+          "name": "hari",
+          "detail": "Komponen hari tarikh."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Menukar rentetan tarikh kepada nilai tarikh.",
+      "parameters": {
+        "date_string": {
+          "name": "rentetan_tarikh",
+          "detail": "Rentetan yang mewakili tarikh."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Perbezaan Tarikh.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh mula untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "end_date": {
+          "name": "tarikh_akhir",
+          "detail": "Tarikh tamat untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "Singkatan rentetan untuk unit masa. Contohnya, \"M\" untuk bulan. Nilai yang diterima ialah \"Y\",\"M\",\"D\",\"MD\", \"YM\", \"YD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Bilangan hari bekerja dari tarikh mula.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh mula mengira."
+        },
+        "num_days": {
+          "name": "num_days",
+          "detail": "Bilangan hari bekerja untuk maju dari `tarikh_mula`. Jika negatif, kira ke belakang."
+        },
+        "holidays": {
+          "name": "hari cuti",
+          "detail": "Pemalar julat atau tatasusunan yang mengandungi tarikh untuk dipertimbangkan hari cuti."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Tahun ditentukan mengikut tarikh tertentu.",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk mengeluarkan tahun."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Bilangan tepat tahun antara dua tarikh.",
+      "parameters": {
+        "start_date": {
+          "name": "tarikh_mula",
+          "detail": "Tarikh mula untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "end_date": {
+          "name": "tarikh_akhir",
+          "detail": "Tarikh tamat untuk dipertimbangkan dalam pengiraan. Mestilah rujukan kepada sel yang mengandungi tarikh, fungsi mengembalikan jenis tarikh atau nombor."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Tarikh semasa sebagai nilai tarikh."
+    },
+    "MONTH": {
+      "description": "Bulan dalam tahun tarikh tertentu jatuh.",
+      "parameters": {
+        "date": {
+          "name": "tarikh",
+          "detail": "Tarikh untuk mengeluarkan bulan."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Kadar faedah efektif tahunan.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "kadar_nominal",
+          "detail": "Kadar faedah nominal setahun."
+        },
+        "periods_per_year": {
+          "name": "tempoh_setiap_tahun",
+          "detail": "Bilangan tempoh pengkompaunan setahun."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Memformat nombor sebagai mata wang khusus untuk tempat hamparan anda.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nilai yang akan diformatkan."
+        },
+        "number_of_places": {
+          "name": "bilangan_tempat",
+          "detail": "Bilangan tempat perpuluhan untuk dipaparkan."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Menukar pecahan perpuluhan kepada nilai perpuluhan.",
+      "parameters": {
+        "fractional_price": {
+          "name": "harga_pecahan",
+          "detail": "Sebut harga yang diberikan menggunakan konvensyen perpuluhan pecahan."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "Unit pecahan, cth. `8` untuk 1/8 atau `32` untuk 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Menukar nilai perpuluhan kepada pecahan perpuluhan.",
+      "parameters": {
+        "decimal_price": {
+          "name": "perpuluhan_harga",
+          "detail": "Sebut harga yang diberikan sebagai nilai perpuluhan."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "Unit pecahan yang dikehendaki, cth. `8` untuk 1/8 atau `32` untuk 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Susut nilai melalui kaedah baki susut.",
+      "parameters": {
+        "cost": {
+          "name": "kos",
+          "detail": "Kos permulaan aset."
+        },
+        "salvage": {
+          "name": "penyelamatan",
+          "detail": "Nilai aset pada akhir susut nilai."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Bilangan tempoh di mana aset itu disusutnilaikan."
+        },
+        "period": {
+          "name": "tempoh",
+          "detail": "Tempoh tunggal dalam `kehidupan` untuk mengira susut nilai."
+        },
+        "month": {
+          "name": "bulan",
+          "detail": "Bilangan bulan dalam tahun pertama susut nilai."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Susut nilai melalui kaedah baki susut dua kali.",
+      "parameters": {
+        "cost": {
+          "name": "kos",
+          "detail": "Kos permulaan aset."
+        },
+        "salvage": {
+          "name": "penyelamatan",
+          "detail": "Nilai aset pada akhir susut nilai."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Bilangan tempoh di mana aset itu disusutnilaikan."
+        },
+        "period": {
+          "name": "tempoh",
+          "detail": "Tempoh tunggal dalam `kehidupan` untuk mengira susut nilai."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Faktor yang menyebabkan susut nilai berkurangan."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Kadar faedah pelaburan anuiti.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "payment_per_period": {
+          "name": "pembayaran_setiap_tempoh",
+          "detail": "Jumlah setiap tempoh yang perlu dibayar."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        },
+        "rate_guess": {
+          "name": "kadar_teka",
+          "detail": "Anggaran untuk kadar faedah."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Prinsipal kumulatif dibayar dalam satu set tempoh.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "first_period": {
+          "name": "tempoh_pertama",
+          "detail": "Bilangan tempoh pembayaran untuk memulakan pengiraan terkumpul."
+        },
+        "last_period": {
+          "name": "tempoh_akhir",
+          "detail": "Bilangan tempoh pembayaran untuk menamatkan pengiraan terkumpul."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Bilangan kupon antara penyelesaian dan kematangan.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Susut nilai melalui kaedah jumlah digit tahun.",
+      "parameters": {
+        "cost": {
+          "name": "kos",
+          "detail": "Kos permulaan aset."
+        },
+        "salvage": {
+          "name": "penyelamatan",
+          "detail": "Nilai aset pada akhir susut nilai."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Bilangan tempoh di mana aset itu disusutnilaikan."
+        },
+        "period": {
+          "name": "tempoh",
+          "detail": "Tempoh tunggal dalam `kehidupan` untuk mengira susut nilai."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Kadar pulangan yang setara untuk bil Perbendaharaan.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun bil semasa pembelian."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Hasil bil perbendaharaan AS berdasarkan harga.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga sekuriti itu dibeli bagi setiap 100 nilai muka."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Harga bil perbendaharaan AS.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun bil semasa pembelian."
+        }
+      }
+    },
+    "PV": {
+      "description": "Nilai semasa pelaburan anuiti.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "payment_amount": {
+          "name": "amaun_bayaran",
+          "detail": "Jumlah setiap tempoh yang perlu dibayar."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Bilangan hari dari kupon pertama hingga penyelesaian.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Hari dalam tempoh kupon yang mengandungi tarikh penyelesaian.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "FV": {
+      "description": "Nilai masa depan pelaburan anuiti.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "payment_amount": {
+          "name": "amaun_bayaran",
+          "detail": "Jumlah setiap tempoh yang perlu dibayar."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Nilai masa depan prinsipal daripada siri kadar.",
+      "parameters": {
+        "principal": {
+          "name": "pengetua",
+          "detail": "Jumlah modal permulaan atau nilai untuk dikompaun."
+        },
+        "rate_schedule": {
+          "name": "kadar_jadual",
+          "detail": "Satu siri kadar faedah untuk dikompaun terhadap `prinsipal`."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Hasil tahunan sekuriti yang membayar faedah berkala.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah tahunan."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga sekuriti itu dibeli bagi setiap 100 nilai muka."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Amaun penebusan setiap 100 nilai muka, atau par."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Hasil tahunan sekuriti diskaun.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga sekuriti itu dibeli bagi setiap 100 nilai muka."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Amaun penebusan setiap 100 nilai muka, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Kadar faedah nominal tahunan.",
+      "parameters": {
+        "effective_rate": {
+          "name": "kadar_berkesan",
+          "detail": "Kadar faedah berkesan setahun."
+        },
+        "periods_per_year": {
+          "name": "tempoh_setiap_tahun",
+          "detail": "Bilangan tempoh pengkompaunan setiap tahun."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Kadar pulangan dalaman diberikan aliran tunai bukan berkala.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_aliran tunai",
+          "detail": "Tatasusunan atau julat yang mengandungi pendapatan atau pembayaran yang berkaitan dengan pelaburan."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_dates",
+          "detail": "Tatasusunan atau julat dengan tarikh yang sepadan dengan aliran tunai dalam `jumlah_aliran tunai`."
+        },
+        "rate_guess": {
+          "name": "kadar_teka",
+          "detail": "Anggaran untuk kadar pulangan dalaman."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Kadar pulangan dalaman yang diubah suai.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_aliran tunai",
+          "detail": "Tatasusunan atau julat yang mengandungi pendapatan atau pembayaran yang berkaitan dengan pelaburan."
+        },
+        "financing_rate": {
+          "name": "kadar_pembiayaan",
+          "detail": "Kadar faedah yang dibayar ke atas dana yang dilaburkan."
+        },
+        "reinvestment_return_rate": {
+          "name": "kadar_pulangan_pelaburan semula",
+          "detail": "Pulangan (sebagai peratusan) yang diperoleh daripada pelaburan semula pendapatan yang diterima daripada pelaburan."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Kadar pulangan dalaman diberikan aliran tunai berkala.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_aliran tunai",
+          "detail": "Tatasusunan atau julat yang mengandungi pendapatan atau pembayaran yang berkaitan dengan pelaburan."
+        },
+        "rate_guess": {
+          "name": "kadar_teka",
+          "detail": "Anggaran untuk kadar pulangan dalaman."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Nilai semasa bersih pelaburan berdasarkan siri aliran tunai berkala dan kadar diskaun.",
+      "parameters": {
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun pelaburan dalam satu tempoh."
+        },
+        "cashflow1": {
+          "name": "aliran tunai1",
+          "detail": "Aliran tunai masa depan pertama."
+        },
+        "cashflow2": {
+          "name": "aliran tunai2",
+          "detail": "Aliran tunai masa depan tambahan."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Nilai semasa bersih diberikan aliran tunai bukan berkala.",
+      "parameters": {
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun pelaburan dalam satu tempoh."
+        },
+        "cashflow_amounts": {
+          "name": "jumlah_aliran tunai",
+          "detail": "Rangkaian sel yang mengandungi pendapatan atau pembayaran yang berkaitan dengan pelaburan."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_dates",
+          "detail": "Julat sel dengan tarikh yang sepadan dengan aliran tunai dalam `jumlah_aliran tunai`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Faedah terkumpul dibayar dalam satu set tempoh.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "first_period": {
+          "name": "tempoh_pertama",
+          "detail": "Bilangan tempoh pembayaran untuk memulakan pengiraan terkumpul."
+        },
+        "last_period": {
+          "name": "tempoh_akhir",
+          "detail": "Bilangan tempoh pembayaran untuk menamatkan pengiraan terkumpul."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Bayaran berkala untuk pelaburan anuiti.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Bayaran atas faedah untuk pelaburan.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "period": {
+          "name": "tempoh",
+          "detail": "Tempoh pelunasan, dari segi bilangan tempoh."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada bayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Bayaran ke atas prinsipal pelaburan.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "period": {
+          "name": "tempoh",
+          "detail": "Tempoh pelunasan, dari segi bilangan tempoh."
+        },
+        "number_of_periods": {
+          "name": "bilangan_tempoh",
+          "detail": "Bilangan pembayaran yang perlu dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada pembayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Mengira kadar faedah berkesan.",
+      "parameters": {
+        "buy_date": {
+          "name": "tarikh_beli",
+          "detail": "Tarikh pembelian pelaburan."
+        },
+        "sell_date": {
+          "name": "tarikh_jual",
+          "detail": "Tarikh penjualan pelaburan."
+        },
+        "buy_price": {
+          "name": "beli_harga",
+          "detail": "Harga di mana pelaburan itu dibeli."
+        },
+        "sell_price": {
+          "name": "harga_jual",
+          "detail": "Harga di mana pelaburan itu dijual."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Harga sekuriti yang membayar faedah berkala.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah tahunan."
+        },
+        "yield": {
+          "name": "hasil",
+          "detail": "Jangkaan hasil tahunan keselamatan."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Amaun penebusan setiap 100 nilai muka, atau par."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Harga keselamatan diskaun.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun sekuriti pada masa pembelian."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Amaun penebusan setiap 100 nilai muka, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Harga sekuriti membayar faedah pada tempoh matang.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "issue": {
+          "name": "isu",
+          "detail": "Tarikh sekuriti dikeluarkan pada mulanya."
+        },
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah tahunan."
+        },
+        "yield": {
+          "name": "hasil",
+          "detail": "Jangkaan hasil tahunan keselamatan."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Amaun yang diterima pada tarikh matang untuk sekuriti.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti itu dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "investment": {
+          "name": "pelaburan",
+          "detail": "Jumlah yang dilaburkan (tanpa mengira nilai muka setiap sekuriti)."
+        },
+        "discount": {
+          "name": "diskaun",
+          "detail": "Kadar diskaun sekuriti yang dilaburkan."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Kadar diskaun sekuriti berdasarkan harga.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga sekuriti itu dibeli bagi setiap 100 nilai muka."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Amaun penebusan setiap 100 nilai muka, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Bilangan tempoh pembayaran untuk pelaburan.",
+      "parameters": {
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah."
+        },
+        "payment_amount": {
+          "name": "amaun_bayaran",
+          "detail": "Jumlah setiap pembayaran yang dibuat."
+        },
+        "present_value": {
+          "name": "nilai_kini",
+          "detail": "Nilai semasa anuiti."
+        },
+        "future_value": {
+          "name": "nilai_masa hadapan",
+          "detail": "Nilai masa hadapan yang tinggal selepas pembayaran akhir dibuat."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_permulaan",
+          "detail": "Sama ada pembayaran perlu dibayar pada penghujung (`0`) atau permulaan (`1`) setiap tempoh."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Susut nilai aset menggunakan kaedah garis lurus.",
+      "parameters": {
+        "cost": {
+          "name": "kos",
+          "detail": "Kos permulaan aset."
+        },
+        "salvage": {
+          "name": "penyelamatan",
+          "detail": "Nilai aset pada akhir susut nilai."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Bilangan tempoh di mana aset itu disusutnilaikan."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Bilangan tempoh untuk pelaburan mencapai nilai.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah tahunan."
+        },
+        "yield": {
+          "name": "hasil",
+          "detail": "Jangkaan hasil tahunan keselamatan."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Tempoh Macaulay yang diubah suai.",
+      "parameters": {
+        "settlement": {
+          "name": "penyelesaian",
+          "detail": "Tarikh penyelesaian sekuriti, tarikh selepas pengeluaran apabila sekuriti dihantar kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tempoh matang atau tarikh tamat sekuriti, apabila ia boleh ditebus secara muka atau nilai tara."
+        },
+        "rate": {
+          "name": "kadar",
+          "detail": "Kadar faedah tahunan."
+        },
+        "yield": {
+          "name": "hasil",
+          "detail": "Jangkaan hasil tahunan keselamatan."
+        },
+        "frequency": {
+          "name": "kekerapan",
+          "detail": "Bilangan pembayaran faedah atau kupon setahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensyen_kiraan hari",
+          "detail": "Penunjuk kaedah kiraan hari untuk digunakan."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Menukar nombor binari yang ditandatangani kepada format perpuluhan.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "nombor_perduaan_tandatangan",
+          "detail": "Nilai binari 10-bit yang ditandatangani untuk ditukar kepada perpuluhan, disediakan sebagai rentetan."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Menukar nombor binari kepada perenambelasan.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "ditandatangani_nombor_binari",
+          "detail": "Nilai perduaan 10-bit yang ditandatangani untuk ditukar kepada heksademik bertanda, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Menukar nombor perduaan kepada perlapanan.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "nombor_perduaan_tandatangan",
+          "detail": "Nilai binari 10-bit yang ditandatangani untuk ditukar kepada perlapanan bertanda, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Menukar nombor perpuluhan kepada format binari yang ditandatangani.",
+      "parameters": {
+        "decimal_number": {
+          "name": "nombor_perpuluhan",
+          "detail": "Nilai perpuluhan untuk ditukar kepada perduaan bertandatangan, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Menukar nombor perpuluhan kepada perenambelasan.",
+      "parameters": {
+        "decimal_number": {
+          "name": "nombor_perpuluhan",
+          "detail": "Nilai perpuluhan yang hendak ditukar kepada perenambelasan bertandatangan, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Menukar nombor perpuluhan kepada format perlapanan yang ditandatangani.",
+      "parameters": {
+        "decimal_number": {
+          "name": "nombor_perpuluhan",
+          "detail": "Nilai perpuluhan untuk ditukar kepada perlapanan bertanda, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Menukar nombor perenambelasan kepada perduaan.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "ditandatangani_nombor_perenambelasan",
+          "detail": "Nilai heksadesimal 40-bit yang ditandatangani untuk ditukar kepada binari bertandatangan, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Menukar nombor perenambelasan kepada perpuluhan.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "ditandatangani_nombor_perenambelasan",
+          "detail": "Nilai heksadesimal 40-bit yang ditandatangani untuk ditukar kepada perpuluhan, disediakan sebagai rentetan."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Menukar nombor perenambelasan kepada perlapanan.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "bertanda_nombor_perenambelasan",
+          "detail": "Nilai heksadesimal 40-bit yang ditandatangani untuk ditukar kepada perlapanan bertanda, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Menukar nombor perlapanan kepada perduaan.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "nombor_oktal_ditandatangani",
+          "detail": "Nilai perlapanan 30-bit yang ditandatangani untuk ditukar kepada perduaan yang ditandatangani, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Menukar nombor perlapanan yang ditandatangani kepada format perpuluhan.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "nombor_oktal_ditandatangani",
+          "detail": "Nilai perlapanan 30-bit yang ditandatangani untuk ditukar kepada perpuluhan, disediakan sebagai rentetan."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Menukar nombor perlapanan kepada perenambelasan.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "nombor_oktal_ditandatangani",
+          "detail": "Nilai perlapanan 30-bit yang ditandatangani untuk ditukar kepada perenambelasan bertandatangan, disediakan sebagai rentetan."
+        },
+        "significant_digits": {
+          "name": "digit_bererti",
+          "detail": "Bilangan digit penting untuk memastikan dalam keputusan."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Mencipta nombor kompleks.",
+      "parameters": {
+        "real_part": {
+          "name": "bahagian_sebenar",
+          "detail": "Pekali sebenar."
+        },
+        "imaginary_part": {
+          "name": "bahagian_khayal",
+          "detail": "Pekali khayalan."
+        },
+        "suffix": {
+          "name": "akhiran",
+          "detail": "Akhiran bagi pekali khayalan, hanya boleh menjadi 'i' atau 'j'. Jika ditinggalkan, 'i' akan digunakan."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Pekali nyata bagi nombor kompleks.",
+      "parameters": {
+        "complex_number": {
+          "name": "nombor_kompleks",
+          "detail": "Nombor kompleks, dalam format a+bi atau a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Pekali khayalan bagi nombor kompleks.",
+      "parameters": {
+        "complex_number": {
+          "name": "nombor_kompleks",
+          "detail": "Nombor kompleks, dalam format a+bi atau a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Konjugat kompleks bagi suatu nombor.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nombor kompleks untuk mengira konjugat bagi."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Nilai mutlak nombor kompleks.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nombor kompleks untuk mengira nilai mutlak bagi."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Bandingkan dua nilai berangka.",
+      "parameters": {
+        "number1": {
+          "name": "nombor1",
+          "detail": "Nombor pertama untuk dibandingkan."
+        },
+        "number2": {
+          "name": "nombor2",
+          "detail": "Nombor kedua untuk dibandingkan."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Jumlah siri nombor kompleks.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nombor atau julat kompleks pertama untuk ditambah bersama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nombor atau julat kompleks tambahan untuk ditambahkan pada `nilai1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Perbezaan antara dua nombor kompleks.",
+      "parameters": {
+        "first_number": {
+          "name": "nombor_pertama",
+          "detail": "Nombor kompleks untuk menolak second_number daripada."
+        },
+        "second_number": {
+          "name": "nombor_kedua",
+          "detail": "Nombor kompleks untuk ditolak daripada nombor_pertama."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Hasil pendaraban siri nombor kompleks bersama-sama.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Nombor atau julat pertama untuk dikira untuk produk."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Nombor atau julat kompleks tambahan untuk dikira untuk produk."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Satu nombor kompleks dibahagikan dengan yang lain.",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Nombor kompleks untuk dibahagikan."
+        },
+        "divisor": {
+          "name": "pembahagi",
+          "detail": "Nombor kompleks untuk dibahagi dengan."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Mengembalikan bertentangan dengan nilai logik yang disediakan.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ungkapan_logik",
+          "detail": "Ungkapan atau rujukan kepada sel yang memegang ungkapan yang mewakili beberapa nilai logik."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Nilai logik `benar`."
+    },
+    "FALSE": {
+      "description": "Nilai logik `palsu`."
+    },
+    "AND": {
+      "description": "Pengendali `dan` logik.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ungkapan_logik1",
+          "detail": "Ungkapan atau rujukan kepada sel yang mengandungi ungkapan yang mewakili beberapa nilai logik, iaitu `BETUL` atau `SALAH`, atau ungkapan yang boleh dipaksa kepada nilai logik."
+        },
+        "logical_expression2": {
+          "name": "ungkapan_logik2",
+          "detail": "Lebih banyak ungkapan yang mewakili nilai logik."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Nilai jika ia bukan ralat, sebaliknya hujah ke-2.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk dikembalikan jika `nilai` itu sendiri bukan ralat."
+        },
+        "value_if_error": {
+          "name": "nilai_jika_ralat",
+          "detail": "Nilai yang dipulangkan oleh fungsi jika `nilai` ialah ralat."
+        }
+      }
+    },
+    "IF": {
+      "description": "Mengembalikan nilai bergantung pada ungkapan logik.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ungkapan_logik",
+          "detail": "Ungkapan atau rujukan kepada sel yang mengandungi ungkapan yang mewakili beberapa nilai logik, iaitu `BETUL` atau `PALSU`."
+        },
+        "value_if_true": {
+          "name": "nilai_jika_benar",
+          "detail": "Nilai yang dipulangkan oleh fungsi jika `logical_expression` ialah `TRUE`."
+        },
+        "value_if_false": {
+          "name": "nilai_jika_salah",
+          "detail": "Nilai yang dipulangkan oleh fungsi jika `logical_expression` ialah `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Pengendali `atau` logik.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ungkapan_logik1",
+          "detail": "Ungkapan atau rujukan kepada sel yang mengandungi ungkapan yang mewakili beberapa nilai logik, iaitu `BETUL` atau `SALAH`, atau ungkapan yang boleh dipaksa kepada nilai logik."
+        },
+        "logical_expression2": {
+          "name": "ungkapan_logik2",
+          "detail": "Lebih banyak ungkapan yang menilai kepada nilai logik."
+        }
+      }
+    },
+    "NE": {
+      "description": "Tak sama.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai untuk diuji terhadap `nilai1` untuk ketidaksamaan."
+        }
+      }
+    },
+    "EQ": {
+      "description": "sama.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai untuk diuji terhadap `nilai1` untuk kesaksamaan."
+        }
+      }
+    },
+    "GT": {
+      "description": "Lebih besar daripada.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai untuk diuji sebagai lebih besar daripada `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Lebih besar daripada atau sama dengan.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai untuk diuji sebagai lebih besar daripada atau sama dengan `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "LT": {
+      "description": "Kurang daripada.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai untuk diuji sebagai kurang daripada `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Kurang daripada atau sama dengan.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai untuk diuji sebagai kurang daripada atau sama dengan `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Jumlah dua nombor",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Tambahan pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Tambahan kedua."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Perbezaan dua nombor",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Minit, atau nombor untuk ditolak."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Subtrahend, atau nombor untuk ditolak daripada `nilai1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Hasil darab dua nombor",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Darab pertama."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Darab kedua."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Satu nombor dibahagikan dengan nombor lain",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Nombor yang perlu dibahagikan."
+        },
+        "divisor": {
+          "name": "pembahagi",
+          "detail": "Nombor untuk dibahagi dengan."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Penyatuan dua nilai",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang `nilai2` akan dilampirkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai untuk ditambahkan pada `nilai1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Nilai ditafsirkan sebagai peratusan.",
+      "parameters": {
+        "percentage": {
+          "name": "peratusan",
+          "detail": "Nilai untuk ditafsirkan sebagai peratusan."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Menambah rentetan antara satu sama lain.",
+      "parameters": {
+        "string1": {
+          "name": "rentetan1",
+          "detail": "Rentetan awal."
+        },
+        "string2": {
+          "name": "rentetan2",
+          "detail": "Lebih banyak rentetan untuk ditambah dalam urutan."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Nilai peta unicode angka bagi aksara.",
+      "parameters": {
+        "string": {
+          "name": "rentetan",
+          "detail": "Rentetan yang nilai peta Unicode aksara pertamanya akan dikembalikan."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Mendapat watak yang dikaitkan dengan nombor.",
+      "parameters": {
+        "table_number": {
+          "name": "nombor_jadual",
+          "detail": "Nombor aksara untuk dicari daripada jadual Unicode semasa dalam format perpuluhan."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Mengira nilai angka roman.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "roman_numeral",
+          "detail": "Angka Rom untuk diformat, yang nilainya mestilah antara 1 dan 3999, termasuk."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Memformat nombor dalam angka Rom.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nombor untuk diformat, antara 1 dan 3999, termasuk."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Mengekstrak subrentetan yang sepadan dengan ungkapan biasa.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks input."
+        },
+        "regular_expression": {
+          "name": "ungkapan_biasa",
+          "detail": "Bahagian pertama `teks` yang sepadan dengan ungkapan ini akan dikembalikan."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Sama ada sekeping teks sepadan dengan ungkapan biasa.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang akan diuji terhadap ungkapan biasa."
+        },
+        "regular_expression": {
+          "name": "ungkapan_biasa",
+          "detail": "Ungkapan biasa untuk menguji teks terhadap."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Menggantikan teks dengan ungkapan biasa.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks, sebahagian daripadanya akan diganti."
+        },
+        "regular_expression": {
+          "name": "ungkapan_biasa",
+          "detail": "Ungkapan biasa.  Semua kejadian yang sepadan dalam `teks` akan diganti."
+        },
+        "replacement": {
+          "name": "penggantian",
+          "detail": "Teks yang akan dimasukkan ke dalam teks asal."
+        }
+      }
+    },
+    "T": {
+      "description": "Hujah rentetan sebagai teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah untuk ditukar kepada teks."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Memformat nombor dengan nombor tetap tempat perpuluhan.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nombor untuk diformat."
+        },
+        "number_of_places": {
+          "name": "bilangan_tempat",
+          "detail": "Bilangan tempat perpuluhan untuk dipaparkan dalam keputusan."
+        },
+        "suppress_separator": {
+          "name": "suppress_separator",
+          "detail": "Sama ada untuk menekan pemisah beribu-ribu yang digunakan di sesetengah tempat (mis. `1,000` menjadi `1000`). Pemisah akan hadir jika nilai ini 0 atau ditinggalkan, dan tidak hadir sebaliknya."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Kedudukan pertama rentetan ditemui dalam teks, sensitif huruf besar-besaran.",
+      "parameters": {
+        "search_for": {
+          "name": "cari_untuk",
+          "detail": "Rentetan untuk dicari dalam `teks_untuk_carian`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "Teks untuk mencari kejadian pertama `cari_untuk`."
+        },
+        "starting_at": {
+          "name": "bermula_pada",
+          "detail": "Watak dalam `teks_untuk_carian` untuk memulakan carian."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Kedudukan di mana rentetan pertama kali ditemui dalam teks (perduaan).",
+      "parameters": {
+        "search_for": {
+          "name": "cari_untuk",
+          "detail": "Rentetan untuk dicari dalam `teks_untuk_carian`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "Teks untuk mencari kejadian pertama `search_for`."
+        },
+        "starting_at": {
+          "name": "bermula_pada",
+          "detail": "Watak dalam `teks_untuk_carian` untuk memulakan carian."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Menggabungkan unsur tatasusunan dengan pembatas.",
+      "parameters": {
+        "delimiter": {
+          "name": "pembatas",
+          "detail": "Aksara atau rentetan untuk diletakkan di antara setiap nilai yang digabungkan."
+        },
+        "value_or_array1": {
+          "name": "nilai_atau_tatasusunan1",
+          "detail": "Nilai atau nilai yang akan ditambahkan menggunakan `pembatas`."
+        },
+        "value_or_array2": {
+          "name": "nilai_atau_tatasusunan2",
+          "detail": "Lebih banyak nilai untuk ditambahkan menggunakan `pembatas`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Subrentetan dari permulaan rentetan yang ditentukan.",
+      "parameters": {
+        "string": {
+          "name": "rentetan",
+          "detail": "Rentetan dari mana bahagian kiri akan dikembalikan."
+        },
+        "number_of_characters": {
+          "name": "bilangan_karakter",
+          "detail": "Bilangan aksara untuk dikembalikan dari sebelah kiri `rentetan`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Subrentetan daripada hujung rentetan yang ditentukan.",
+      "parameters": {
+        "string": {
+          "name": "rentetan",
+          "detail": "Rentetan dari mana bahagian yang betul akan dikembalikan."
+        },
+        "number_of_characters": {
+          "name": "bilangan_aksara",
+          "detail": "Bilangan aksara untuk dikembalikan dari sebelah kanan `rentetan`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Segmen rentetan.",
+      "parameters": {
+        "string": {
+          "name": "rentetan",
+          "detail": "Rentetan untuk mengekstrak segmen daripada."
+        },
+        "starting_at": {
+          "name": "bermula_pada",
+          "detail": "Indeks dari kiri `rentetan` untuk mula mengekstrak. Aksara pertama dalam `rentetan` mempunyai indeks 1."
+        },
+        "extract_length": {
+          "name": "ekstrak_panjang",
+          "detail": "Panjang segmen untuk diekstrak."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Panjang seutas tali.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Rentetan yang panjangnya akan dikembalikan."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Panjang rentetan dalam bait.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Rentetan yang panjangnya akan dikembalikan."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Menukar rentetan yang ditentukan kepada huruf kecil.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Rentetan untuk ditukar kepada huruf kecil."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Menukar rentetan yang ditentukan kepada huruf besar.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Rentetan untuk ditukar kepada huruf besar."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Menguji sama ada dua rentetan adalah sama.",
+      "parameters": {
+        "string1": {
+          "name": "rentetan1",
+          "detail": "Rentetan pertama untuk dibandingkan"
+        },
+        "string2": {
+          "name": "rentetan2",
+          "detail": "Rentetan kedua untuk dibandingkan"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Menggantikan sebahagian daripada rentetan teks dengan teks yang berbeza.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks, sebahagian daripadanya akan diganti."
+        },
+        "position": {
+          "name": "kedudukan",
+          "detail": "Kedudukan di mana penggantian akan bermula (bermula dari 1)."
+        },
+        "length": {
+          "name": "panjang",
+          "detail": "Bilangan aksara dalam teks yang akan diganti."
+        },
+        "new_text": {
+          "name": "teks_baru",
+          "detail": "Teks yang akan dimasukkan ke dalam teks asal."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Teks yang ditentukan diulang beberapa kali.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "teks_untuk_ulang",
+          "detail": "Watak atau rentetan untuk diulang."
+        },
+        "number_of_repetitions": {
+          "name": "bilangan_ulangan",
+          "detail": "Bilangan kali `teks_untuk_ulang` harus muncul dalam nilai yang dikembalikan."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Kedudukan pertama rentetan ditemui dalam teks, mengabaikan huruf besar.",
+      "parameters": {
+        "search_for": {
+          "name": "cari_untuk",
+          "detail": "Rentetan untuk dicari dalam `teks_untuk_carian`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "Teks untuk mencari kejadian pertama `cari_untuk`."
+        },
+        "starting_at": {
+          "name": "bermula_pada",
+          "detail": "Watak dalam `teks_untuk_carian` untuk memulakan carian."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Menggantikan teks sedia ada dengan teks baharu dalam rentetan.",
+      "parameters": {
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "Teks untuk mencari dan menggantikannya."
+        },
+        "search_for": {
+          "name": "cari_untuk",
+          "detail": "Rentetan untuk dicari dalam `teks_untuk_carian`."
+        },
+        "replace_with": {
+          "name": "gantikan_dengan",
+          "detail": "Rentetan yang akan menggantikan `search_for`."
+        },
+        "occurrence_number": {
+          "name": "bilangan_kejadian",
+          "detail": "Contoh `cari_untuk` dalam `teks_untuk_carian` untuk digantikan dengan `gantikan_dengan`. Secara lalai, semua kejadian `search_for` diganti; walau bagaimanapun, jika `nombor_kejadian` ditentukan, hanya contoh `cari_untuk` yang ditunjukkan digantikan."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Mengeluarkan aksara yang tidak boleh dicetak daripada sekeping teks.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang aksaranya tidak boleh dicetak akan dialih keluar."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Memformat nombor menjadi teks.",
+      "parameters": {
+        "number": {
+          "name": "nombor",
+          "detail": "Nombor, tarikh atau masa untuk diformat."
+        },
+        "format": {
+          "name": "format",
+          "detail": "Corak untuk memformat nombor, disertakan dalam tanda petikan."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Mengeluarkan aksara ruang.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks atau rujukan kepada sel yang mengandungi teks untuk dipangkas."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Menukar rentetan tarikh/masa/nombor kepada nombor.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Rentetan yang mengandungi nilai yang hendak ditukar."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Menggunakan huruf besar setiap perkataan dalam rentetan tertentu.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_to_capitalize",
+          "detail": "Teks yang akan dikembalikan dengan huruf pertama setiap perkataan dalam huruf besar dan semua huruf lain dalam huruf kecil."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Penukaran unit untuk nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai berangka dalam `unit_mula` untuk ditukar kepada `unit_akhir`."
+        },
+        "start_unit": {
+          "name": "unit_mula",
+          "detail": "Unit permulaan, unit yang pada masa ini ditetapkan kepada `nilai`."
+        },
+        "end_unit": {
+          "name": "unit_akhir",
+          "detail": "Unit ukuran untuk menukar hujah, `nilai`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Jumlah beza segi empat sama.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Tatasusunan atau julat nilai yang kuasa duanya akan dikurangkan dengan segi empat sama entri yang sepadan dalam `tatasusunan_y` dan ditambah bersama."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Tatasusunan atau julat nilai yang kuasa duanya akan ditolak daripada segi empat sama entri yang sepadan dalam `array_x` dan ditambah bersama."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Jumlah hasil tambah kuasa dua.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Tatasusunan atau julat nilai yang segi empat samanya akan ditambahkan pada segi empat sama entri yang sepadan dalam `tatasusunan_y` dan ditambah bersama."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Tatasusunan atau julat nilai yang segi empat samanya akan ditambahkan pada segi empat sama entri yang sepadan dalam `array_x` dan ditambah bersama."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Jumlah kuasa dua beza.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Tatasusunan atau julat nilai yang akan dikurangkan dengan entri yang sepadan dalam `tatasusunan_y`, kuasa dua dan ditambah bersama."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Tatasusunan atau julat nilai yang akan ditolak daripada entri yang sepadan dalam `tatasusunan_x`, hasil kuasa dua dan semua keputusan tersebut ditambah bersama."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Mengubah baris dan lajur tatasusunan.",
+      "parameters": {
+        "array_or_range": {
+          "name": "array_or_range",
+          "detail": "Tatasusunan atau julat yang baris dan lajurnya akan ditukar."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Sesuai dengan mata kepada aliran linear yang diperoleh melalui kuasa dua terkecil.",
+      "parameters": {
+        "known_data_y": {
+          "name": "diketahui_data_y",
+          "detail": "Tatasusunan atau julat yang mengandungi nilai bersandar (y) yang telah diketahui, digunakan untuk melengkung sesuai dengan aliran linear yang ideal."
+        },
+        "known_data_x": {
+          "name": "data_x yang diketahui",
+          "detail": "Nilai pembolehubah tidak bersandar yang sepadan dengan `data_y` yang diketahui."
+        },
+        "new_data_x": {
+          "name": "new_data_x",
+          "detail": "Data menunjukkan untuk mengembalikan nilai `y` pada padanan lengkung yang ideal."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Memandangkan bentuk linear umum `y = m*x+b` untuk padanan lengkung, mengira `b` jika `TRUE` atau memaksa `b` menjadi `0` dan hanya mengira nilai `m` jika `FALSE`, iaitu memaksa padanan lengkung untuk melalui asalan."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Taburan kekerapan tatasusunan.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Tatasusunan atau julat yang mengandungi nilai yang akan dikira."
+        },
+        "classes": {
+          "name": "kelas",
+          "detail": "Tatasusunan atau julat yang mengandungi set kelas."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Sesuai dengan arah aliran pertumbuhan eksponen.",
+      "parameters": {
+        "known_data_y": {
+          "name": "diketahui_data_y",
+          "detail": "Tatasusunan atau julat yang mengandungi nilai bersandar (y) yang telah diketahui, digunakan untuk melengkung sesuai dengan keluk pertumbuhan eksponen yang ideal."
+        },
+        "known_data_x": {
+          "name": "data_x yang diketahui",
+          "detail": "Nilai pembolehubah tidak bersandar yang sepadan dengan `data_y` yang diketahui."
+        },
+        "new_data_x": {
+          "name": "new_data_x",
+          "detail": "Data menunjukkan untuk mengembalikan nilai `y` pada padanan lengkung yang ideal."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Memandangkan bentuk eksponen umum `y = b*m^x` untuk padanan lengkung, hitung `b` jika `BENAR` atau memaksa `b` menjadi `1` dan hanya mengira nilai `m` jika `SALAH`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Aliran linear paling sesuai melalui kuasa dua terkecil.",
+      "parameters": {
+        "known_data_y": {
+          "name": "diketahui_data_y",
+          "detail": "Tatasusunan atau julat yang mengandungi nilai bersandar (y) yang telah diketahui, digunakan untuk melengkung sesuai dengan aliran linear yang ideal."
+        },
+        "known_data_x": {
+          "name": "data_x yang diketahui",
+          "detail": "Nilai pembolehubah tidak bersandar yang sepadan dengan `data_y yang diketahui`."
+        },
+        "calculate_b": {
+          "name": "kira_b",
+          "detail": "Diberi bentuk linear `y = m*x+b`, kira pintasan-y (`b`) jika `BENAR`. Jika tidak, memaksa `b` menjadi `0` dan hanya mengira nilai `m` jika `FALSE`, iaitu memaksa padanan lengkung untuk melalui asalan."
+        },
+        "verbose": {
+          "name": "bertele-tele",
+          "detail": "Bendera yang menyatakan sama ada untuk mengembalikan statistik regresi tambahan atau hanya pekali linear dan pintasan-y (lalai)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Keluk pertumbuhan eksponen paling sesuai.",
+      "parameters": {
+        "known_data_y": {
+          "name": "diketahui_data_y",
+          "detail": "Tatasusunan atau julat yang mengandungi nilai bersandar (y) yang telah diketahui, digunakan untuk melengkung sesuai dengan keluk pertumbuhan eksponen yang ideal."
+        },
+        "known_data_x": {
+          "name": "data_x yang diketahui",
+          "detail": "Nilai pembolehubah tidak bersandar yang sepadan dengan `data_y yang diketahui`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Memandangkan bentuk eksponen umum `y = b*m^x` untuk padanan lengkung, hitung `b` jika `BENAR` atau memaksa `b` menjadi `1` dan hanya mengira nilai `m` jika `SALAH`."
+        },
+        "verbose": {
+          "name": "bertele-tele",
+          "detail": "Bendera yang menyatakan sama ada untuk mengembalikan statistik regresi tambahan atau hanya pekali dan eksponen yang dikira."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Penentu matriks bagi matriks segi empat sama.",
+      "parameters": {
+        "square_matrix": {
+          "name": "square_matrix",
+          "detail": "Tatasusunan atau julat dengan bilangan baris dan lajur yang sama mewakili matriks yang penentunya akan dikira."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Songsangan darab bagi matriks segi empat sama.",
+      "parameters": {
+        "square_matrix": {
+          "name": "persegi_matriks",
+          "detail": "Tatasusunan atau julat dengan bilangan baris dan lajur yang sama mewakili matriks yang songsang darabnya akan dikira."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Hasil darab matriks dua matriks.",
+      "parameters": {
+        "matrix1": {
+          "name": "matriks1",
+          "detail": "Matriks pertama dalam operasi pendaraban matriks, diwakili sebagai tatasusunan atau julat."
+        },
+        "matrix2": {
+          "name": "matriks2",
+          "detail": "Matriks kedua dalam operasi pendaraban matriks, diwakili sebagai tatasusunan atau julat."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Jumlah hasil darab unsur dalam dua tatasusunan.",
+      "parameters": {
+        "array1": {
+          "name": "tatasusunan1",
+          "detail": "Tatasusunan atau julat pertama yang entrinya akan didarabkan dengan entri yang sepadan dalam tatasusunan atau julat kedua tersebut."
+        },
+        "array2": {
+          "name": "tatasusunan2",
+          "detail": "Tatasusunan atau julat kedua yang entrinya akan didarabkan dengan entri yang sepadan dalam tatasusunan atau julat yang pertama."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Sama ada nilai adalah formula.",
+      "parameters": {
+        "cell": {
+          "name": "sel",
+          "detail": "Sel yang akan disahkan sebagai mengandungi formula."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Mendapat maklumat tentang sel.",
+      "parameters": {
+        "info_type": {
+          "name": "info_type",
+          "detail": "Jenis maklumat yang diminta (lihat artikel untuk jenis yang tersedia)"
+        },
+        "reference": {
+          "name": "rujukan",
+          "detail": "Rujukan kepada sel."
+        }
+      }
+    },
+    "NA": {
+      "description": "Ralat `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Sama ada sel yang dirujuk kosong.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Rujukan kepada sel yang akan diperiksa untuk kekosongan."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Sama ada nilai adalah ralat selain daripada `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai jenis ralat selain daripada `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Sama ada nilai adalah ralat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai jenis ralat."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Sama ada nilai itu `benar` atau `palsu`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai logik `TRUE` atau `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Sama ada nilai ialah ralat `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang hendak dibandingkan dengan nilai ralat `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Sama ada nilai bukan teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang hendak disemak."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Sama ada nilai ialah nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai nombor."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Sama ada nilai adalah rujukan sel yang sah.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai rujukan sel."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Sama ada nilai ialah teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai teks."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Dapatkan jenis nilai.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang jenisnya akan ditentukan."
+        }
+      }
+    },
+    "N": {
+      "description": "Hujah disediakan sebagai nombor.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah untuk ditukar kepada nombor."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Menukar nombor yang diberikan kepada tarikh.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah atau rujukan kepada sel untuk ditukar kepada tarikh."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Menukar sebarang nilai berangka kepada nombor tulen.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah atau rujukan kepada sel untuk ditukar kepada nombor tulen."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Menukar nilai angka yang diberikan kepada nilai teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah atau rujukan kepada sel untuk ditukar kepada teks."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Menukar nombor yang diberikan kepada nilai dolar.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah atau rujukan kepada sel untuk ditukar kepada nilai dolar."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Menukar nombor yang diberikan kepada peratusan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Hujah atau rujukan kepada sel untuk ditukar kepada peratusan."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Nilai tunggal daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Nilai maksimum daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Nilai minimum daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Purata set nilai daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Mengira nilai daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Mengira nilai dan teks daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Produk nilai daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Sisihan piawai sampel populasi daripada jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Sisihan piawai keseluruhan populasi daripada jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Jumlah nilai daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Varians sampel populasi daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Varians populasi daripada julat seperti jadual.",
+      "parameters": {
+        "database": {
+          "name": "pangkalan data",
+          "detail": "Tatasusunan atau julat yang mengandungi data untuk dipertimbangkan, distrukturkan sedemikian rupa sehingga baris pertama mengandungi label untuk setiap nilai lajur."
+        },
+        "field": {
+          "name": "padang",
+          "detail": "Menunjukkan lajur dalam `pangkalan data` yang mengandungi nilai untuk diekstrak dan dikendalikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Tatasusunan atau julat yang mengandungi sifar atau lebih kriteria untuk menapis nilai `pangkalan data` sebelum beroperasi."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Dapatkan jantina berdasarkan nombor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nombor ID",
+          "detail": "Nombor atau julat ID 15 digit atau 18 digit."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Dapatkan wilayah tempat lahir berdasarkan nombor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nombor ID",
+          "detail": "Nombor atau julat ID 15 digit atau 18 digit."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Dapatkan buruj berdasarkan nombor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nombor ID",
+          "detail": "Nombor atau julat ID 15 digit atau 18 digit."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Mengembalikan volum dagangan saham yang sepadan bagi saham A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Kod stok",
+          "detail": "Kod stok 6 digit, diperlukan."
+        },
+        "Date": {
+          "name": "tarikh",
+          "detail": "Hari dagangan saham, lalai ialah hari dagangan terkini"
+        },
+        "Reversion and exclusion": {
+          "name": "Pengembalian dan pengecualian",
+          "detail": "Pilih jenis pemulihan bekas kanan bagi stok, lalai kepada 0 [pembalikan dahulu], 1 [harga asal], 2 [pembalikan pasca]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Sama ada nilai ialah tarikh.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan disahkan sebagai tarikh."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Hasilkan carta garisan sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Line color": {
+          "name": "Warna garisan",
+          "detail": "Warna garis graf garis boleh julat A1, nilai indeks jadual warna atau nilai warna tertentu. Tetapkannya kepada 0 atau palsu untuk tidak memaparkannya. Ia menyokong regx, rgb, rgba, dsb. Lalai #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Ketebalan garisan",
+          "detail": "Ketebalan garisan graf garisan, lalai ialah 1px"
+        },
+        "Auxiliary line": {
+          "name": "Barisan bantu",
+          "detail": "Garis mendatar, yang boleh min, maks, purata, median, julat atau nilai tersuai, lalai 0 tiada"
+        },
+        "Auxiliary line color": {
+          "name": "Warna garisan tambahan",
+          "detail": "Tetapan warna garis tambahan, sama seperti konfigurasi warna garis, lalai #000"
+        },
+        "Maximum mark": {
+          "name": "Markah maksimum",
+          "detail": "Mengenal pasti nilai maksimum graf garisan, konfigurasi warna baris yang sama, lalai 0 tidak dipaparkan"
+        },
+        "Minimum mark": {
+          "name": "Markah minimum",
+          "detail": "Kenal pasti nilai minimum graf garisan, konfigurasi warna baris yang sama, lalai 0 tidak dipaparkan"
+        },
+        "Mark size": {
+          "name": "Tandakan saiz",
+          "detail": "Tetapan saiz markah maksimum dan minimum, lalai ialah 1.5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Hasilkan histogram menegak terkumpul garis percikan",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Stack by column": {
+          "name": "Tindanan mengikut lajur",
+          "detail": "Jika anda perlu menyusun mengikut baris, tetapkan item ini kepada palsu atau 0, lalainya ialah 1"
+        },
+        "Bar interval": {
+          "name": "Selang bar",
+          "detail": "Jarak antara bar, lalai ialah 1"
+        },
+        "Max": {
+          "name": "Maks",
+          "detail": "Nilai maksimum bar terkumpul, digunakan untuk mengawal panjang bar, lalai adalah untuk mengira palsu, auto, batal secara automatik"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna boleh menetapkan warna bar bagi setiap dimensi secara individu, yang boleh ditetapkan kepada julat A1:A10, dsb. Lalai ialah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Hasilkan graf bar mendatar terkumpul garis percikan",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Stack by column": {
+          "name": "Tindanan mengikut lajur",
+          "detail": "Jika anda perlu menyusun mengikut baris, tetapkan item ini kepada palsu atau 0, lalainya ialah 1"
+        },
+        "Bar interval": {
+          "name": "Selang bar",
+          "detail": "Jarak antara bar, lalai ialah 1"
+        },
+        "Max": {
+          "name": "Maks",
+          "detail": "Nilai maksimum bar terkumpul, digunakan untuk mengawal panjang bar, lalai adalah untuk mengira palsu, auto, batal secara automatik"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna boleh menetapkan warna bar bagi setiap dimensi secara individu, yang boleh ditetapkan kepada julat A1:A10, dsb. Lalai ialah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Hasilkan graf diskret garis percikan",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Segmentation threshold": {
+          "name": "Ambang pembahagian",
+          "detail": "Pembezaan warna lajur graf diskret, contohnya: jika nilai ialah 0, biru lebih besar daripada 0, merah kurang daripada 0 dan lalai ialah 0"
+        },
+        "Above threshold color": {
+          "name": "Warna di atas ambang",
+          "detail": "Warna garis graf garis boleh julat A1, nilai indeks jadual warna atau nilai warna tertentu. Tetapkannya kepada 0 atau palsu untuk tidak memaparkannya. Ia menyokong regx, rgb, rgba, dsb. Lalai #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Warna di bawah ambang",
+          "detail": "Tetapan warna bar di bawah ambang, sama seperti warna di atas ambang, lalai #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Hasilkan garis percikan graf tiga keadaan",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Bar interval": {
+          "name": "Selang bar",
+          "detail": "Jarak antara bar, lalai ialah 1"
+        },
+        "Bar color": {
+          "name": "Warna bar",
+          "detail": "Warna garis graf garis boleh julat A1, nilai indeks jadual warna atau nilai warna tertentu. Tetapkannya kepada 0 atau palsu untuk tidak memaparkannya. Ia menyokong regx, rgb, rgba, dsb. Lalai #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Warna bar negatif",
+          "detail": "Tetapan warna bar negatif, mewakili warna nilai negatif, sama seperti konfigurasi warna bar, lalai #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Warna bar nilai sifar",
+          "detail": "Tetapan warna bar nilai sifar, mewakili warna nilai 0, konfigurasi warna bar yang sama, lalai #999"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna boleh menetapkan warna setiap bar secara individu, berbilang tetapan boleh ditetapkan dan dua format disokong: 1 warna seperti #000, yang bermaksud bahawa warna bar pertama adalah hitam; 2 julat nilai: warna, seperti -2:# 000 menunjukkan bahawa bar dengan nilai -2 adalah hitam, 0:5:#000 menunjukkan bahawa bar dengan nilai 0-5 adalah hitam, dan lalainya kosong."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Hasilkan carta pai sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Julat",
+          "detail": "Julat，Nilai boleh dikira dengan berkesan, seperti A1:A20, {1,2,3,4,5}, dsb."
+        },
+        "Rotation angle": {
+          "name": "Sudut putaran",
+          "detail": "Sudut putaran carta pai, lalai ialah 0"
+        },
+        "border": {
+          "name": "sempadan",
+          "detail": "Saiz sempadan carta pai, lalai ialah tiada 0"
+        },
+        "Border color": {
+          "name": "Warna sempadan",
+          "detail": "Warna sempadan carta pai, lalai ialah #000"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Warna kepingan boleh ditetapkan dalam palet, yang boleh ditetapkan kepada julat A1:A10, dsb. Lalai ialah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Menghasilkan peluru sparklines",
+      "parameters": {
+        "Target": {
+          "name": "Sasaran",
+          "detail": "Nilai berangka boleh dikira dengan berkesan untuk nilai sasaran yang dicapai, seperti A1, 100, dsb."
+        },
+        "achieved": {
+          "name": "dicapai",
+          "detail": "Hanya apabila nilai selesai barulah nilai dikira dengan berkesan, seperti A1, 100, dsb."
+        },
+        "Contrast": {
+          "name": "Berbeza",
+          "detail": "Nilai perbandingan, seperti lebihan, minimum dan garis bawah untuk anugerah, boleh dikira dengan berkesan, seperti A1, 100, dsb. Anda boleh menyediakan sehingga 9 nilai perbandingan"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Gabungkan graf garis percikan ke dalam satu sel",
+      "parameters": {
+        "config": {
+          "name": "konfigurasi",
+          "detail": "Tetapan carta Sparklines, seperti A1:A20, carta pai yang lengkap, tetapan carta garisan, dsb."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Isih baris julat mengikut lajur yang ditentukan.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Data yang hendak diisih."
+        },
+        "sort_column": {
+          "name": "lajur_isih",
+          "detail": "Indeks lajur dalam `julat` atau julat di luar `julat` yang mengandungi nilai untuk diisih."
+        },
+        "is_ascending": {
+          "name": "sedang_menaik",
+          "detail": "`BETUL` atau `SALAH` yang menunjukkan sama ada hendak mengisih `lajur_isih` dalam tertib menaik. `SALAH` diisih dalam tertib menurun."
+        },
+        "sort_column2": {
+          "name": "lajur_isih2",
+          "detail": "Lajur tambahan."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Menapis julat berdasarkan syarat yang disediakan.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Data yang akan ditapis."
+        },
+        "condition1": {
+          "name": "syarat1",
+          "detail": "Lajur atau baris yang mengandungi nilai benar atau salah yang sepadan dengan lajur atau baris pertama `julat`, atau formula tatasusunan yang menilai kepada benar atau palsu."
+        },
+        "condition2": {
+          "name": "syarat2",
+          "detail": "Baris atau lajur tambahan yang mengandungi nilai boolean `TRUE` atau `FALSE` yang menunjukkan sama ada baris atau lajur yang sepadan dalam `julat` harus melalui `FILTER`. Juga boleh mengandungi ungkapan formula tatasusunan yang menilai kepada baris atau lajur tersebut. Semua syarat mestilah daripada jenis yang sama (baris atau lajur). Mencampurkan keadaan baris dan keadaan lajur tidak dibenarkan."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Baris unik dalam julat sumber yang disediakan.",
+      "parameters": {
+        "range": {
+          "name": "julat",
+          "detail": "Data untuk ditapis mengikut entri unik."
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[Pilihan] - Nilai logik, menunjukkan cara membandingkan; mengikut baris = FALSE() atau ditinggalkan; mengikut lajur = TRUE()."
+        },
+        "occurs_once": {
+          "name": "berlaku_sekali",
+          "detail": "[Pilihan] - Nilai logik, hanya satu kejadian dalam nilai unik dikembalikan = TRUE(); termasuk semua nilai unik = FALSE() atau ditinggalkan."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Mengembalikan grid nombor rawak.",
+      "parameters": {
+        "rows": {
+          "name": "barisan",
+          "detail": "Bilangan baris untuk diisi dengan nombor rawak."
+        },
+        "columns": {
+          "name": "lajur",
+          "detail": "Bilangan lajur untuk diisi dengan nombor rawak."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Mengembalikan grid nombor berjujukan.",
+      "parameters": {
+        "rows": {
+          "name": "barisan",
+          "detail": "Bilangan baris dalam grid terhasil fungsi."
+        },
+        "columns": {
+          "name": "lajur",
+          "detail": "Bilangan lajur dalam grid terhasil fungsi. Jika diabaikan, grid hasil akan mempunyai 1 lajur."
+        },
+        "start": {
+          "name": "mulakan",
+          "detail": "Nombor, di mana untuk memulakan urutan. Jika ditinggalkan, urutan akan bermula pada 1."
+        },
+        "step": {
+          "name": "langkah",
+          "detail": "Amaun setiap nilai dalam jujukan akan berbeza mengikut. Jika ditinggalkan, setiap nilai akan berbeza sebanyak 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Menilai mengikut formula atau ungkapan tersurat.",
+      "parameters": {
+        "expression": {
+          "name": "ungkapan",
+          "detail": "Formula atau ungkapan"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Memanggil fungsi pada pelayan/API hujung belakang jauh.",
+      "parameters": {
+        "remote_expression": {
+          "name": "ungkapan_jauh",
+          "detail": "Formula"
+        }
+      }
+    }
   }
 }

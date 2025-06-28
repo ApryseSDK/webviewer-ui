@@ -27,6 +27,8 @@ import './OutlinesPanel.scss';
 import { OutlinesDragLayer } from './OutlinesDragLayer';
 import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
+import Spinner from 'components/Spinner';
+import useDocumentLoadState from 'hooks/useDocumentLoadState';
 
 const OutlinesPanel = ({ isTest = false }) => {
   const [
@@ -53,7 +55,9 @@ const OutlinesPanel = ({ isTest = false }) => {
   const defaultDestText = 'Full Page';
   const areaDestinationText = 'Area Selection';
   const defaultDestCoord = { x: 0, y: 0 };
+  const outlinesNotLoaded = outlines === null;
 
+  const documentLoaded = useDocumentLoadState();
   const [currentDestText, setCurrentDestText] = useState(defaultDestText);
   const [currentDestCoord, setCurrentDestCoord] = useState(defaultDestCoord);
   const [currentDestPage, setCurrentDestPage] = useState(currentPage);
@@ -73,6 +77,14 @@ const OutlinesPanel = ({ isTest = false }) => {
   const tool = core.getTool(TOOL_NAME);
   const panelRef = useRef();
 
+  useEffect(() => {
+    if (outlinesNotLoaded && documentLoaded) {
+      core.getOutlines((outlines) => {
+        dispatch(actions.setOutlines(outlines));
+      });
+    }
+  }, [outlinesNotLoaded, documentLoaded]);
+
   useLayoutEffect(() => {
     setAddingNewOutline(false);
 
@@ -81,14 +93,20 @@ const OutlinesPanel = ({ isTest = false }) => {
       nextPathRef.current = null;
     }
 
-    const shouldResetMultiSelectedMode = outlines.length === 0;
+    const shouldResetMultiSelectedMode = !outlines || outlines.length === 0;
     if (shouldResetMultiSelectedMode) {
       setMultiSelectMode(false);
     }
   }, [outlines]);
 
   useEffect(() => {
-    const evaluateOutlineEditable = () => core.isFullPDFEnabled() && getType() !== workerTypes.OFFICE && outlineEditingEnabled;
+    const workerType = getType();
+    const isSupportedType = (
+      workerType === workerTypes.PDF ||
+      workerType === workerTypes.IMAGE
+    );
+
+    const evaluateOutlineEditable = () => core.isFullPDFEnabled() && isSupportedType && outlineEditingEnabled;
 
     setOutlineEditable(evaluateOutlineEditable());
 
@@ -309,7 +327,7 @@ const OutlinesPanel = ({ isTest = false }) => {
               className="bookmark-outline-control-button"
               dataElement={DataElements.OUTLINE_MULTI_SELECT}
               label={t('option.bookmarkOutlineControls.edit')}
-              disabled={isAddingNewOutline || outlines.length === 0}
+              disabled={isAddingNewOutline || outlinesNotLoaded || outlines.length === 0}
               onClick={() => {
                 setMultiSelectMode(true);
                 setSelectedOutlines([]);
@@ -319,103 +337,107 @@ const OutlinesPanel = ({ isTest = false }) => {
           )
         }
       </div>
-      <OutlineContext.Provider
-        value={{
-          currentDestPage: pageLabels[currentDestPage - 1],
-          currentDestText,
-          setActiveOutlinePath,
-          activeOutlinePath,
-          isOutlineActive: (outline) => getPath(outline) === activeOutlinePath,
-          setAddingNewOutline,
-          isAddingNewOutline,
-          setEditingOutlines,
-          editingOutlines,
-          selectedOutlines,
-          isAnyOutlineRenaming,
-          isMultiSelectMode,
-          shouldAutoExpandOutlines,
-          isOutlineEditable,
-          addNewOutline,
-          updateOutlines,
-          renameOutline,
-          updateOutlineDest,
-          removeOutlines,
-        }}
-      >
-        <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
-          <OutlinesDragLayer />
+      {outlinesNotLoaded && documentLoaded ? (
+        <Spinner inPanel width={'40px'} height={'40px'} />
+      ) : (
+        <OutlineContext.Provider
+          value={{
+            currentDestPage: pageLabels[currentDestPage - 1],
+            currentDestText,
+            setActiveOutlinePath,
+            activeOutlinePath,
+            isOutlineActive: (outline) => getPath(outline) === activeOutlinePath,
+            setAddingNewOutline,
+            isAddingNewOutline,
+            setEditingOutlines,
+            editingOutlines,
+            selectedOutlines,
+            isAnyOutlineRenaming,
+            isMultiSelectMode,
+            shouldAutoExpandOutlines,
+            isOutlineEditable,
+            addNewOutline,
+            updateOutlines,
+            renameOutline,
+            updateOutlineDest,
+            removeOutlines,
+          }}
+        >
+          <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
+            <OutlinesDragLayer/>
 
-          <div className="bookmark-outline-row">
-            {!isAddingNewOutline && outlines.length === 0 &&
-              <div className="msg msg-no-bookmark-outline">{t('message.noOutlines')}</div>
-            }
-            <Virtuoso data={outlines} itemContent={(index, outline) => (
-              <Outline
-                key={outlineUtils.getOutlineId(outline)}
-                outline={outline}
-                setMultiSelected={(path, value) => {
-                  if (selectedOutlines.find((outline) => outline === path)) {
-                    if (!value) {
-                      setSelectedOutlines(selectedOutlines.filter((outline) => outline !== path));
+            <div className="bookmark-outline-row">
+              {!isAddingNewOutline && (outlinesNotLoaded || outlines.length === 0) &&
+                <div className="msg msg-no-bookmark-outline">{t('message.noOutlines')}</div>
+              }
+              <Virtuoso data={outlines || []} itemContent={(index, outline) => (
+                <Outline
+                  key={outlineUtils.getOutlineId(outline)}
+                  outline={outline}
+                  setMultiSelected={(path, value) => {
+                    if (selectedOutlines.find((outline) => outline === path)) {
+                      if (!value) {
+                        setSelectedOutlines(selectedOutlines.filter((outline) => outline !== path));
+                      }
+                    } else {
+                      if (value) {
+                        setSelectedOutlines([...selectedOutlines, path]);
+                      }
                     }
-                  } else {
-                    if (value) {
-                      setSelectedOutlines([...selectedOutlines, path]);
-                    }
-                  }
-                }}
-                moveOutlineInward={moveOutlineInward}
-                moveOutlineBeforeTarget={moveOutlineBeforeTarget}
-                moveOutlineAfterTarget={moveOutlineAfterTarget}
-              />
-            )} initialItemCount={isTest ? outlines.length : undefined}/>
-            {isAddingNewOutline && activeOutlinePath === null && (
-              <DataElementWrapper className="bookmark-outline-single-container editing">
-                <OutlineContent
-                  isAdding={true}
-                  text={''}
-                  onCancel={() => setAddingNewOutline(false)}
+                  }}
+                  moveOutlineInward={moveOutlineInward}
+                  moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+                  moveOutlineAfterTarget={moveOutlineAfterTarget}
                 />
-              </DataElementWrapper>
-            )}
-          </div>
-        </DndProvider>
+              )} initialItemCount={isTest ? outlines?.length : undefined}/>
+              {isAddingNewOutline && activeOutlinePath === null && (
+                <DataElementWrapper className="bookmark-outline-single-container editing">
+                  <OutlineContent
+                    isAdding={true}
+                    text={''}
+                    onCancel={() => setAddingNewOutline(false)}
+                  />
+                </DataElementWrapper>
+              )}
+            </div>
+          </DndProvider>
 
-        {isOutlineEditable &&
-          <DataElementWrapper
-            className="bookmark-outline-footer"
-            dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON_CONTAINER}
-          >
-            {isMultiSelectMode ?
-              <>
-                <Button
-                  className="multi-selection-button"
+          {isOutlineEditable &&
+            <DataElementWrapper
+              className="bookmark-outline-footer"
+              dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON_CONTAINER}
+            >
+              {isMultiSelectMode ?
+                <>
+                  <Button
+                    className="multi-selection-button"
+                    img="icon-menu-add"
+                    ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
+                    disabled={selectedOutlines.length > 0 || isAddingNewOutline || isAnyOutlineRenaming}
+                    onClick={() => setAddingNewOutline(true)}
+                  />
+                  <Button
+                    className="multi-selection-button"
+                    img="icon-delete-line"
+                    disabled={selectedOutlines.length === 0 || isAnyOutlineRenaming}
+                    onClick={() => removeOutlines(selectedOutlines)}
+                  />
+                </>
+                :
+                <TextButton
+                  className="bookmark-outline-control-button add-new-button"
                   img="icon-menu-add"
-                  ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
-                  disabled={selectedOutlines.length > 0 || isAddingNewOutline || isAnyOutlineRenaming}
+                  dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON}
+                  disabled={isAddingNewOutline || isAnyOutlineRenaming}
+                  label={`${t('action.add')} ${t('component.outlinePanel')}`}
                   onClick={() => setAddingNewOutline(true)}
+                  ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
                 />
-                <Button
-                  className="multi-selection-button"
-                  img="icon-delete-line"
-                  disabled={selectedOutlines.length === 0 || isAnyOutlineRenaming}
-                  onClick={() => removeOutlines(selectedOutlines)}
-                />
-              </>
-              :
-              <TextButton
-                className="bookmark-outline-control-button add-new-button"
-                img="icon-menu-add"
-                dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON}
-                disabled={isAddingNewOutline || isAnyOutlineRenaming}
-                label={`${t('action.add')} ${t('component.outlinePanel')}`}
-                onClick={() => setAddingNewOutline(true)}
-                ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
-              />
-            }
-          </DataElementWrapper>
-        }
-      </OutlineContext.Provider>
+              }
+            </DataElementWrapper>
+          }
+        </OutlineContext.Provider>
+      )}
     </div>
   );
 };

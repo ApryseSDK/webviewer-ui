@@ -1252,6 +1252,11 @@ export default (initialState) => (state = initialState, action) => {
         genericPanels: [...panels],
       };
     }
+
+    case 'SET_ACCESSIBLE_MODE': {
+      return { ...state, isAccessibleMode: payload.isAccessibleMode };
+    }
+
     case 'SET_SHOULD_ADD_A11Y_CONTENT':
       return { ...state, shouldAddA11yContentToDOM: payload.shouldAddA11yContentToDOM };
     case 'SET_UI_CONFIGURATION':

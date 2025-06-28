@@ -25,7 +25,7 @@ export function ModeChangingDropdown() {
 ModeChangingDropdown.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // open the dropdown and check the active item
-  const dropdown = canvas.getByRole('combobox', { name: '' });
+  const dropdown = canvas.getByRole('combobox', { name: 'Edit mode selection' });
   await userEvent.click(dropdown);
   const viewingOption = canvas.getByRole('option', { name: 'Viewing View only' });
   expect(viewingOption).toBeInTheDocument();

@@ -9,11 +9,13 @@ import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { workerTypes } from '../../constants/types';
 
 export default {
   title: 'Components/OutlinesPanel',
   component: OutlinesPanel,
 };
+
 core.isFullPDFEnabled = () => true;
 
 const MockApp = ({ initialState, width, height }) => {
@@ -43,6 +45,13 @@ const Template = (args) => {
   const initialStateX = argsX.initialState || {};
   const argsViewer = initialStateX.viewer || {};
   const argsDocument = initialStateX.document || {};
+
+  core.getDocumentViewer = () => ({
+    getDocument: () => ({
+      getType: () => workerTypes.PDF,
+      getBookmarks: async () => null,
+    }),
+  });
 
   const stateWithHeaders = {
     ...initialState,
@@ -110,5 +119,13 @@ export const NoOutlines = createTemplate({
     document: {
       outlines: [],
     },
+  }
+});
+
+export const LoadingOutlines = createTemplate({
+  initialState: {
+    document: {
+      outlines: null,
+    }
   }
 });

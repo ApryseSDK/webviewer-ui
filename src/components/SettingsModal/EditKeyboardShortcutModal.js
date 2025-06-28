@@ -122,7 +122,7 @@ const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandS
 
   return (
     <div className="Modal EditKeyboardShortcutModal open">
-      <ModalWrapper isOpen={true} title='option.settings.editKeyboardShorcut' onCloseClick={finishEditing}>
+      <ModalWrapper isOpen={true} title='option.settings.editKeyboardShortcut' onCloseClick={finishEditing}>
         <div className="body">
           <div className={classNames({
             'keyboard-shortcut': true,

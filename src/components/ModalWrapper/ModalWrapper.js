@@ -35,7 +35,7 @@ SwipeableWrapper.propTypes = {
   children: PropTypes.node,
 };
 
-const ModalWrapper = (props) => {
+const ModalWrapper = React.forwardRef((props, ref) => {
   const [t] = useTranslation();
   const onCloseHandler = useFocusOnClose(props.onCloseClick);
 
@@ -87,7 +87,7 @@ const ModalWrapper = (props) => {
   const accessibleLabel = props.accessibleLabel ? t(props.accessibleLabel) : t(props.title);
 
   return (
-    <FocusTrap locked={props.isOpen}>
+    <FocusTrap locked={props.isOpen} ref={ref}>
       <div
         className="modal-container"
         onClick={props.containerOnClick}
@@ -105,7 +105,7 @@ const ModalWrapper = (props) => {
       </div>
     </FocusTrap>
   );
-};
+});
 
 ModalWrapper.propTypes = {
   title: PropTypes.string,
@@ -121,4 +121,5 @@ ModalWrapper.propTypes = {
   onSwipedDown: PropTypes.func,
 };
 
+ModalWrapper.displayName = 'ModalWrapper';
 export default ModalWrapper;

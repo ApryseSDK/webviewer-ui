@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "选择 AnnotationCreateTextHighlight 工具",
       "selectCreateTextStrikeoutTool": "选择 AnnotationCreateTextStrikeout 工具",
       "selectCreateTextUnderlineTool": "选择 AnnotationCreateTextUnderline 工具",
-      "editKeyboardShorcut": "编辑快捷键",
+      "editKeyboardShortcut": "编辑快捷键",
       "setShortcut": "设置快捷方式",
       "editShortcut": "编辑快捷方式",
       "shortcutAlreadyExists": "上面的键盘快捷键已经存在。",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "没有任何",
-      "solid": "坚硬的",
+      "thin": "坚硬的",
       "dashed": "虚线",
       "dotted": "虚线"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "编辑警告",
       "message": "您确实要删除该工作表吗？"
+    },
+    "officeEditorPageLayout": {
+      "title": "页面布局",
+      "columnsMessage": "在某些部分中，您选择的列间距设置对于页面宽度来说太大。",
+      "marginsMessage": "在某些部分中，您选择的边距设置对于页面宽度来说太大。"
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "正确的",
     "customMargins": "自定义边距",
     "customMarginsDescription": "定义自定义边距",
+    "column": "柱子",
+    "columns": "列",
+    "singleColumn": "1 列",
+    "twoColumn": "2 列",
+    "threeColumn": "3 列",
+    "customColumn": "自定义列",
+    "customColumnDescription": "定义自定义列",
+    "unitMeasurement": "单位测量",
     "header": {
       "0": "标头",
       "1": "首页页眉",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "不同的偶数页和奇数页",
         "differentFirstEvenOddPages": "不同的首页、偶数页和奇数页"
       }
+    },
+    "columnsModal": {
+      "title": "自定义列调整",
+      "columnAmount": "列数",
+      "columnNumber": "列号",
+      "width": "宽度",
+      "spacing": "间距",
+      "widthAndSpacing": "宽度和间距",
+      "equalColumns": "等宽列"
     },
     "marginsModal": {
       "title": "自定义边距调整",
@@ -1416,6 +1438,7 @@
     "viewOnly": "查看",
     "editingDescription": "編輯文檔",
     "viewOnlyDescription": "仅查看",
+    "editModeDropdown": "编辑模式选择",
     "bold": "大胆的",
     "italic": "斜体",
     "underline": "强调",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "删除单元格并上移",
     "deleteColumnShiftLeft": "删除单元格并左移",
     "clearBorder": "清除边框",
-    "cellBorderAll": "所有边界",
-    "cellBorderInside": "边界内",
-    "cellBorderOutside": "境外",
-    "cellBorderTop": "顶部边框",
-    "cellBorderBottom": "下边框",
-    "cellBorderLeft": "左边框",
-    "cellBorderRight": "右边框",
-    "cellBorderVertical": "垂直边框",
-    "cellBorderHorizontal": "水平边框",
-    "cellBorderNone": "无边界",
+    "all": "所有边界",
+    "inside": "边界内",
+    "outside": "境外",
+    "top": "顶部边框",
+    "bottom": "下边框",
+    "left": "左边框",
+    "right": "右边框",
+    "vertical": "垂直边框",
+    "horizontal": "水平边框",
+    "none": "无边界",
     "borders": "边界",
     "fontSize": {
       "dropdownLabel": "字体大小"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "公式栏",
     "range": "范围",
-    "formulas": "公式",
-    "sumif": "跨范围的条件和",
-    "sumsq": "返回某个范围的平方和",
-    "sum": "将某个范围内的所有数字相加",
-    "asinh": "返回数字的反双曲正弦值",
-    "acos": "返回数字的反余弦（以弧度为单位）",
-    "cosh": "返回数字的双曲余弦",
-    "iseven": "检查数字是否为偶数",
-    "isodd": "检查数字是否为奇数"
+    "formulas": "公式"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "跨范围的条件总和。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "根据“标准”进行测试的范围。"
+        },
+        "criterion": {
+          "name": "标准",
+          "detail": "应用于“范围”的模式或测试。"
+        },
+        "sum_range": {
+          "name": "总和范围",
+          "detail": "如果与“范围”不同，则为要求和的范围。"
+        }
+      }
+    },
+    "TAN": {
+      "description": "以弧度表示的角度的正切。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "需要求正切的角度，以弧度为单位。"
+        }
+      }
+    },
+    "TANH": {
+      "description": "任何实数的双曲正切。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算双曲正切的任何实值。"
+        }
+      }
+    },
+    "CEILING": {
+      "description": "将数字向上舍入为最接近的因数的倍数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要向上舍入为“因子”最接近的整数倍的值。"
+        },
+        "factor": {
+          "name": "因素",
+          "detail": "将把“值”四舍五入为该数字的倍数。"
+        }
+      }
+    },
+    "ATAN": {
+      "description": "值的反正切，以弧度为单位。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反正切的值。"
+        }
+      }
+    },
+    "ASINH": {
+      "description": "一个数的反双曲正弦。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反双曲正弦的值。"
+        }
+      }
+    },
+    "ABS": {
+      "description": "数字的绝对值。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "返回其中数字的绝对值。"
+        }
+      }
+    },
+    "ACOS": {
+      "description": "值的反余弦，以弧度为单位。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反余弦值的数值。必须介于 `-1` 和 `1` 之间（含 -1 和 1）。"
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "一个数的反双曲余弦。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反双曲余弦的值。必须大于或等于“1”。"
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "多项分布函数。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "需要考虑的附加值或范围。"
+        }
+      }
+    },
+    "ATANH": {
+      "description": "一个数的反双曲正切。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反双曲正切的值。必须介于 -1 和 1 之间（不含 -1）。"
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "某个值的反正切。",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "要计算与 x 轴的角度的线段端点的 x 坐标。"
+        },
+        "y": {
+          "name": "和",
+          "detail": "要计算与 x 轴的角度的线段端点的 y 坐标。"
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "空值的数量。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要计算空白数量的第一个值或范围。"
+        }
+      }
+    },
+    "COSH": {
+      "description": "任何实数的双曲余弦。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算双曲余弦的任何实值。"
+        }
+      }
+    },
+    "INT": {
+      "description": "将数字向下舍入为最接近的整数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要向下舍入为最接近的整数的值。"
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "提供的值是否为偶数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "需要验证是否为偶数的值。"
+        }
+      }
+    },
+    "ISODD": {
+      "description": "提供的值是否为奇数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "需要验证的值是否为奇数。"
+        }
+      }
+    },
+    "LCM": {
+      "description": "一个或多个整数的最小公倍数。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "在计算中要考虑其因素以找到最小公倍数的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "需要考虑其因素以找到最小公倍数的附加值或范围。"
+        }
+      }
+    },
+    "LN": {
+      "description": "以 e（欧拉数）为底的数的对数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算以 e 为底的对数的值。"
+        }
+      }
+    },
+    "LOG": {
+      "description": "一个数关于底数的对数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算对数的值。"
+        },
+        "base": {
+          "name": "根据",
+          "detail": "用于计算对数的底数。"
+        }
+      }
+    },
+    "LOG10": {
+      "description": "以 10 为底的数的对数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算以 10 为底的对数的值。"
+        }
+      }
+    },
+    "MOD": {
+      "description": "模数（余数）运算符。",
+      "parameters": {
+        "dividend": {
+          "name": "股利",
+          "detail": "要除以求余数的数字。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "要除以的数字。"
+        }
+      }
+    },
+    "MROUND": {
+      "description": "将数字四舍五入为最接近的整数倍。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要四舍五入为另一个数字的最接近的整数倍数的数字。"
+        },
+        "factor": {
+          "name": "因素",
+          "detail": "将把“值”四舍五入为该数字的倍数。"
+        }
+      }
+    },
+    "ODD": {
+      "description": "将数字向上舍入为最接近的奇数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要舍入到下一个最大奇数的值。"
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "平方和。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "第一个需要将其平方相加的数字或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要将其平方添加到“value1”的平方中的附加数字或范围。"
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "一组对象的组合数。",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "可供选择的对象池的大小。"
+        },
+        "k": {
+          "name": "千",
+          "detail": "要选择的对象的数量。"
+        }
+      }
+    },
+    "SUM": {
+      "description": "一系列数字和/或单元格的总和。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "第一个要相加的数字或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要添加到“value1”的附加数字或范围。"
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "使用特定函数对某个范围进行小计。",
+      "parameters": {
+        "function_code": {
+          "name": "功能代码",
+          "detail": "小计聚合中使用的函数。"
+        },
+        "range1": {
+          "name": "范围1",
+          "detail": "计算小计的第一个范围。"
+        },
+        "range2": {
+          "name": "范围2",
+          "detail": "计算小计的附加范围。"
+        }
+      }
+    },
+    "ASIN": {
+      "description": "值的反正弦，以弧度为单位。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算反正弦值的数值。必须介于 `-1` 和 `1` 之间（含 -1 和 1）。"
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "跨范围的条件计数。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "根据“标准”进行测试的范围。"
+        },
+        "criterion": {
+          "name": "标准",
+          "detail": "应用于“范围”的模式或测试。"
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "将角度值（以度为单位）转换为弧度。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "从度数转换为弧度的角度。"
+        }
+      }
+    },
+    "RAND": {
+      "description": "介于 0 和 1 之间的随机数（含 0 和 1）。"
+    },
+    "COUNTUNIQUE": {
+      "description": "计算范围内唯一值的数量。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要考虑唯一性的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "为确保唯一性而需要考虑的附加值或范围。"
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "将弧度的角度值转换为度数。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "从弧度转换为度的角度。"
+        }
+      }
+    },
+    "ERFC": {
+      "description": "一个值的互补高斯误差函数。",
+      "parameters": {
+        "z": {
+          "name": "和",
+          "detail": "要计算互补高斯误差函数的数字。"
+        }
+      }
+    },
+    "EVEN": {
+      "description": "将数字向上舍入为最接近的偶数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要四舍五入为下一个最大偶数的值。"
+        }
+      }
+    },
+    "EXP": {
+      "description": "欧拉常数，e（~2.718）的幂。",
+      "parameters": {
+        "exponent": {
+          "name": "指数",
+          "detail": "将 e 提升至的指数。"
+        }
+      }
+    },
+    "FACT": {
+      "description": "一个数的阶乘。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "将计算并返回其阶乘的数字或数字的引用。"
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "一个数字的“双阶乘”。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "将计算并返回其双精度阶乘的数字或数字引用。"
+        }
+      }
+    },
+    "PI": {
+      "description": "数字 π。"
+    },
+    "GCD": {
+      "description": "一个或多个整数的最大公约数。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "在计算最大公约数时要考虑其因素的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "寻找最大公约数时需要考虑的附加值或范围的因素。"
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "两个值之间的随机整数（含）。",
+      "parameters": {
+        "low": {
+          "name": "低的",
+          "detail": "随机范围的低端。"
+        },
+        "high": {
+          "name": "高的",
+          "detail": "随机范围的高端。"
+        }
+      }
+    },
+    "ROUND": {
+      "description": "根据标准规则对数字进行四舍五入。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要四舍五入到“位”数的值。"
+        },
+        "places": {
+          "name": "地方",
+          "detail": "要四舍五入的小数位数。"
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "将数字向下舍入。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要四舍五入到“位”数的值，始终向下四舍五入。"
+        },
+        "places": {
+          "name": "地方",
+          "detail": "要四舍五入的小数位数。"
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "将数字向上舍入。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要四舍五入到“位”数的值，始终向上四舍五入。"
+        },
+        "places": {
+          "name": "地方",
+          "detail": "要四舍五入的小数位数。"
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "幂级数之和。",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "幂级数的输入。根据近似值的类型而变化，可能是角度、指数或其他值。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "在幂级数中对“x”进行提升的初始幂。"
+        },
+        "m": {
+          "name": "米",
+          "detail": "增加“x”的附加增量。"
+        },
+        "a": {
+          "name": "一个",
+          "detail": "包含幂级数系数的数组或范围。"
+        }
+      }
+    },
+    "SIGN": {
+      "description": "提供的数字的符号 (+/-/0)。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "需要评估其符号的值。"
+        }
+      }
+    },
+    "SIN": {
+      "description": "以弧度为单位的角度的正弦。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "要求正弦值的角度，以弧度为单位。"
+        }
+      }
+    },
+    "SINH": {
+      "description": "任何实数的双曲正弦。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算双曲正弦的任何实值。"
+        }
+      }
+    },
+    "SQRT": {
+      "description": "正数的正平方根。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算正平方根的数字。"
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "π 与数字乘积的平方根。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "将与 Pi 相乘并返回乘积平方根的数字"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "伽马函数的对数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "Gamma 函数的输入。将返回 Gamma(`value`) 的自然对数。"
+        }
+      }
+    },
+    "COS": {
+      "description": "以弧度为单位的角度的余弦。",
+      "parameters": {
+        "angle": {
+          "name": "角度",
+          "detail": "要计算余弦的角度，以弧度为单位。"
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "截断一个数字。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要截断的值。"
+        },
+        "places": {
+          "name": "地方",
+          "detail": "小数点右边保留的有效数字的位数。"
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "一个数除以另一个数。",
+      "parameters": {
+        "dividend": {
+          "name": "股利",
+          "detail": "待除数。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "要除以的数字。"
+        }
+      }
+    },
+    "POWER": {
+      "description": "数字的幂。",
+      "parameters": {
+        "base": {
+          "name": "根据",
+          "detail": "要进行“指数”幂计算的数字。"
+        },
+        "exponent": {
+          "name": "指数",
+          "detail": "将“底数”提升至的指数。"
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "根据多个标准对范围求和。",
+      "parameters": {
+        "sum_range": {
+          "name": "总和范围",
+          "detail": "要求和的范围。"
+        },
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "要根据标准 1 进行检查的范围。"
+        },
+        "criterion1": {
+          "name": "标准1",
+          "detail": "应用于 criteria_range1 的模式或测试。"
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "要检查的附加范围。"
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "根据多个标准计算值。",
+      "parameters": {
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "根据“criterion1”进行检查的范围。"
+        },
+        "criterion1": {
+          "name": "标准1",
+          "detail": "应用于“criteria_range1”的模式或测试。"
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "要检查的附加范围。"
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "将一系列数字相乘的结果。",
+      "parameters": {
+        "factor1": {
+          "name": "因素1",
+          "detail": "要计算乘积的第一个数字或范围。"
+        },
+        "factor2": {
+          "name": "因素2",
+          "detail": "需要计算产品更多的数字或范围。"
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "数据集的调和平均值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "人口的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要纳入总体的附加值或范围。"
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "超几何分布概率。",
+      "parameters": {
+        "num_successes": {
+          "name": "成功次数",
+          "detail": "期望的成功次数。"
+        },
+        "num_draws": {
+          "name": "抽奖次数",
+          "detail": "允许抽奖的次数。"
+        },
+        "successes_in_pop": {
+          "name": "成功率",
+          "detail": "总体中成功的总数。"
+        },
+        "pop_size": {
+          "name": "弹出大小",
+          "detail": "人口总量"
+        },
+        "cumulative": {
+          "name": "累积",
+          "detail": "确定函数形式的逻辑值。\n\n如果cumulative()为TRUE()，HYPGEOM.DIST返回累积分布函数；\n\n如果cumulative()为FALSE()，则返回概率密度函数。"
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "通过线性回归得出的直线 Y 截距。",
+      "parameters": {
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "KURT": {
+      "description": "数据集的峰度。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "数据集的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "数据集中要包含的附加值或范围。"
+        }
+      }
+    },
+    "LARGE": {
+      "description": "数据集中第 N 个最大元素。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要考虑的数据集的数组或范围。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "返回元素从大到小的排名。"
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "样本的标准差（文本为 0）。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "样本的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "样本中要包含的附加值或范围。"
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "整个人口的标准差。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "人口的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要纳入总体的附加值或范围。"
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "数据集的几何平均值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "人口的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要纳入总体的附加值或范围。"
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "百分比排名（百分位数）从 0 到 1（含）。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要考虑的数据集的数组或范围。"
+        },
+        "value": {
+          "name": "价值",
+          "detail": "将确定其百分比等级的值。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "计算中使用的有效数字位数。默认值为 3。"
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "基于线性回归的预期 y 值。",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "要预测的 x 轴上的值。"
+        },
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "指定值的逆费希尔变换。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算逆 Fisher 变换的值。"
+        }
+      }
+    },
+    "FISHER": {
+      "description": "指定值的 Fisher 变换。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要计算 Fisher 变换的值。"
+        }
+      }
+    },
+    "COUNT": {
+      "description": "数据集中的数值数量。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计数时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计数时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "数据集中的值的数量。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计数时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计数时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "数据集中的数值平均值，忽略文本。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算平均值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算平均值时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "二项分布概率。",
+      "parameters": {
+        "num_successes": {
+          "name": "成功次数",
+          "detail": "用于计算“num_trials”次试验中成功概率的次数。"
+        },
+        "num_trials": {
+          "name": "试验次数",
+          "detail": "独立试验的次数。"
+        },
+        "prob_success": {
+          "name": "成功概率",
+          "detail": "任何给定试验的成功概率。"
+        },
+        "cumulative": {
+          "name": "累积",
+          "detail": "是否使用二项累积分布。"
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "基于样本的偏差平方和。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "样本的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "样本中要包含的附加值或范围。"
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "根据标准计算出的平均值。",
+      "parameters": {
+        "criteria_range": {
+          "name": "criteria_range",
+          "detail": "根据“标准”进行检查的范围。"
+        },
+        "criterion": {
+          "name": "标准",
+          "detail": "应用于“criteria_range”的模式或测试。"
+        },
+        "average_range": {
+          "name": "平均范围",
+          "detail": "需要计算平均值的范围。如果未包含，则使用“criteria_range”来计算平均值。"
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "根据多个标准计算平均值。",
+      "parameters": {
+        "average_range": {
+          "name": "平均范围",
+          "detail": "平均范围。"
+        },
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "根据“criterion1”进行检查的范围。"
+        },
+        "criterion1": {
+          "name": "标准1",
+          "detail": "应用于“criteria_range1”的模式或测试。"
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "要检查的附加范围。"
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "来自多个对象的排列数。",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "可供选择的对象池的大小。"
+        },
+        "k": {
+          "name": "千",
+          "detail": "要选择的对象的数量。"
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "数据集的平均值（不包括高端/低端）。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要考虑的数据集的数组或范围。"
+        },
+        "exclude_proportion": {
+          "name": "排除比例",
+          "detail": "从集合的极端中排除的数据集的比例。"
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "皮尔逊积差相关系数。",
+      "parameters": {
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "MINA": {
+      "description": "数据集中的最小数值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算最小值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算最小值时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "MIN": {
+      "description": "数值数据集中的最小值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算最小值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算最小值时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "数值数据集中的中值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算中值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算中值时要考虑的其他值或范围。"
+        }
+      }
+    },
+    "MAXA": {
+      "description": "数据集中的最大数值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算最大值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算最大值时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "MAX": {
+      "description": "数值数据集中的最大值。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "计算最大值时要考虑的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "计算最大值时要考虑的附加值或范围。"
+        }
+      }
+    },
+    "PROB": {
+      "description": "概率值位于一个范围内。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要考虑的数据集的数组或范围。"
+        },
+        "probabilities": {
+          "name": "概率",
+          "detail": "包含与“数据”对应的概率的数组或范围。"
+        },
+        "low_limit": {
+          "name": "低限",
+          "detail": "计算概率的值范围的下限。"
+        },
+        "high_limit": {
+          "name": "上限",
+          "detail": "计算概率的值范围的上限。"
+        }
+      }
+    },
+    "RSQ": {
+      "description": "相关系数的平方。",
+      "parameters": {
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "VARA": {
+      "description": "样本的方差（文本为 0）。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "样本的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "样本中要包含的附加值或范围。"
+        }
+      }
+    },
+    "VARPA": {
+      "description": "整个人口的方差（文本为 0）。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "人口的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要纳入总体的附加值或范围。"
+        }
+      }
+    },
+    "STEYX": {
+      "description": "回归中预测 y 值的标准误差。",
+      "parameters": {
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "随机变量的标准化等价物。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要规范化的随机变量的值。"
+        },
+        "mean": {
+          "name": "意思是",
+          "detail": "分布的平均值。"
+        },
+        "standard_deviation": {
+          "name": "标准差",
+          "detail": "分布的标准差。"
+        }
+      }
+    },
+    "SMALL": {
+      "description": "数据集中第 N 个最小元素。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要考虑的数据集的数组或范围。"
+        },
+        "n": {
+          "name": "n",
+          "detail": "返回元素从小到大的排名。"
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "数据线性回归的直线斜率。",
+      "parameters": {
+        "data_y": {
+          "name": "数据",
+          "detail": "表示相关数据数组或矩阵的范围。"
+        },
+        "data_x": {
+          "name": "数据_x",
+          "detail": "表示独立数据数组或矩阵的范围。"
+        }
+      }
+    },
+    "SKEW": {
+      "description": "数据集的偏度。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "数据集的第一个值或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "数据集中要包含的附加值或范围。"
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "垂直查找。",
+      "parameters": {
+        "search_key": {
+          "name": "搜索键",
+          "detail": "要搜索的值。例如，“42”、“Cats”或“I24”。"
+        },
+        "range": {
+          "name": "范围",
+          "detail": "搜索时要考虑的范围。将在该范围的第一列中搜索“search_key”中指定的键。"
+        },
+        "index": {
+          "name": "指数",
+          "detail": "要返回的值的列索引，其中“范围”中的第一列编号为 1。"
+        },
+        "is_sorted": {
+          "name": "已排序",
+          "detail": "指示要搜索的列（指定范围的第一列）是否已排序，在这种情况下将返回与“search_key”最接近的匹配项。"
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "水平查找",
+      "parameters": {
+        "search_key": {
+          "name": "搜索键",
+          "detail": "要搜索的值。例如，“42”、“Cats”或“I24”。"
+        },
+        "range": {
+          "name": "范围",
+          "detail": "搜索时要考虑的范围。系统会在该范围的第一行中搜索“search_key”中指定的键。"
+        },
+        "index": {
+          "name": "指数",
+          "detail": "要返回的值的行索引，其中“范围”中的第一行编号为 1。"
+        },
+        "is_sorted": {
+          "name": "已排序",
+          "detail": "指示要搜索的行（指定范围的第一行）是否已排序。"
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "查找一个值。",
+      "parameters": {
+        "search_key": {
+          "name": "搜索键",
+          "detail": "要在行或列中搜索的值。例如，“42”、“Cats”或“I24”。"
+        },
+        "search_range|search_result_array": {
+          "name": "搜索范围|搜索结果数组",
+          "detail": "使用此函数的一种方法是提供一个已排序的行或列“search_range”，并在其中查找“search_key”，并使用第二个参数“result_range”。另一种方法是将这两个参数合并为一个“search_result_array”，其中搜索第一行或第一列，并返回数组中最后一行或最后一列的值。如果未找到“search_key”，则可能会返回非精确匹配项。"
+        },
+        "result_range": {
+          "name": "结果范围",
+          "detail": "返回结果的范围。返回的值对应于“search_key”在“search_range”中的位置。此范围必须仅为一行或一列，并且如果使用“search_result_array”方法则不应使用此范围。"
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "单元格引用作为字符串。",
+      "parameters": {
+        "row": {
+          "name": "排",
+          "detail": "单元格引用的行号"
+        },
+        "column": {
+          "name": "柱子",
+          "detail": "单元格引用的列号（不是名称）。“A”表示列号“1”。"
+        },
+        "absolute_relative_mode": {
+          "name": "绝对相对模式",
+          "detail": "指示引用是否为行/列绝对。`1` 表示行和列绝对（例如 $A$1），`2` 表示行绝对、列相对（例如 A$1），`3` 表示行相对、列绝对（例如 $A1），`4` 表示行和列相对（例如 A1）。"
+        },
+        "use_a1_notation": {
+          "name": "使用_a1_符号",
+          "detail": "一个布尔值，指示是否使用 `A1` 样式符号 (TRUE) 或 `R1C1` 样式符号 (FALSE)。"
+        },
+        "sheet": {
+          "name": "床单",
+          "detail": "指示地址指向的工作表的名称的文本。"
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "由字符串指定的单元格引用。",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cell_reference_as_string",
+          "detail": "单元格引用，以字符串形式写，并用引号引起来。"
+        },
+        "is_A1_notation": {
+          "name": "是_A1_符号",
+          "detail": "指示单元格引用是否采用 A1 符号（TRUE）或 R1C1 符号（FALSE）。"
+        }
+      }
+    },
+    "ROW": {
+      "description": "指定单元格的行号。",
+      "parameters": {
+        "cell_reference": {
+          "name": "单元格引用",
+          "detail": "将返回其行号的单元格。"
+        }
+      }
+    },
+    "ROWS": {
+      "description": "指定数组或范围中的行数。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "将返回行数的范围。"
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "指定单元格的列号。",
+      "parameters": {
+        "cell_reference": {
+          "name": "单元格引用",
+          "detail": "返回列号的单元格。“A”列对应“1”。"
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "指定数组或范围中的列数。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "将返回其列数的范围。"
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "相对于单元格的范围参考偏移量。",
+      "parameters": {
+        "cell_reference": {
+          "name": "单元格引用",
+          "detail": "计算偏移行和偏移列的起点。"
+        },
+        "offset_rows": {
+          "name": "偏移行数",
+          "detail": "要偏移的行数。"
+        },
+        "offset_columns": {
+          "name": "偏移列",
+          "detail": "要偏移的列数。"
+        },
+        "height": {
+          "name": "高度",
+          "detail": "从偏移目标开始返回的范围的高度。"
+        },
+        "width": {
+          "name": "宽度",
+          "detail": "从偏移目标开始返回的范围的宽度。"
+        }
+      }
+    },
+    "MATCH": {
+      "description": "范围内与值匹配的项目的位置。",
+      "parameters": {
+        "search_key": {
+          "name": "搜索键",
+          "detail": "要搜索的值。例如，“42”、“Cats”或“I24”。"
+        },
+        "range": {
+          "name": "范围",
+          "detail": "要搜索的一维数组。"
+        },
+        "search_type": {
+          "name": "搜索类型",
+          "detail": "搜索方法。`1`（默认）在 `range` 按升序排序时查找小于或等于 `search_key` 的最大值。`0` 在 `range` 未排序时查找精确值。`-1` 在 `range` 按降序排序时查找大于或等于 `search_key` 的最小值。"
+        }
+      }
+    },
+    "INDEX": {
+      "description": "由行和列偏移指定的单元格内容。",
+      "parameters": {
+        "reference": {
+          "name": "参考",
+          "detail": "要偏移的单元格数组。"
+        },
+        "row": {
+          "name": "排",
+          "detail": "偏移行的数量。"
+        },
+        "column": {
+          "name": "柱子",
+          "detail": "偏移列的数量。"
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "从数据透视表中提取与指定行和列标题相对应的聚合值。",
+      "parameters": {
+        "value_name": {
+          "name": "值名称",
+          "detail": "您想要获取数据的数据透视表中的值的名称。"
+        },
+        "any_pivot_table_cell": {
+          "name": "任何数据透视表单元格",
+          "detail": "对所需数据透视表中单元格的任何引用（建议使用顶角）。"
+        },
+        "original_column": {
+          "name": "原始列",
+          "detail": "原始数据集（不是数据透视表）中的列的名称。"
+        },
+        "pivot_item": {
+          "name": "枢轴项目",
+          "detail": "您想要检索的 *original_column* 对应的数据透视表中显示的行或列的名称。"
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "根据索引选择列表中的元素。",
+      "parameters": {
+        "index": {
+          "name": "指数",
+          "detail": "返回哪个选项（最多提供 30 个）。"
+        },
+        "choice1": {
+          "name": "选择1",
+          "detail": "要返回的潜在值。必填。可以是对单元格或单个值的引用。"
+        },
+        "choice2": {
+          "name": "选择2",
+          "detail": "可供选择的附加值。"
+        }
+      }
+    },
+    "TIME": {
+      "description": "将小时/分钟/秒转换为时间。",
+      "parameters": {
+        "hour": {
+          "name": "小时",
+          "detail": "时间的小时部分。"
+        },
+        "minute": {
+          "name": "分钟",
+          "detail": "时间的分钟部分。"
+        },
+        "second": {
+          "name": "第二",
+          "detail": "时间的第二个组成部分。"
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "将时间字符串转换为其序列号表示形式。",
+      "parameters": {
+        "time_string": {
+          "name": "时间字符串",
+          "detail": "保存时间表示的字符串。"
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "某个日期之前或之后一个月的最后一天。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算结果的日期。"
+        },
+        "months": {
+          "name": "个月",
+          "detail": "要考虑的“start_date”之前（负数）或之后（正数）的月份数。"
+        }
+      }
+    },
+    "EDATE": {
+      "description": "日期为另一个日期之前/之后的几个月。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算结果的日期。"
+        },
+        "months": {
+          "name": "个月",
+          "detail": "要计算的“start_date”之前（负数）或之后（正数）的月份数。"
+        }
+      }
+    },
+    "SECOND": {
+      "description": "特定时间的第二个组成部分。",
+      "parameters": {
+        "time": {
+          "name": "时间",
+          "detail": "计算第二个分量的时间"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "特定时间的分钟部分。",
+      "parameters": {
+        "time": {
+          "name": "时间",
+          "detail": "计算分钟部分的时间。"
+        }
+      }
+    },
+    "HOUR": {
+      "description": "特定时间的小时部分。",
+      "parameters": {
+        "time": {
+          "name": "时间",
+          "detail": "计算小时部分的时间。"
+        }
+      }
+    },
+    "NOW": {
+      "description": "当前日期和时间作为日期值。"
+    },
+    "NETWORKDAYS": {
+      "description": "两个给定日期之间的净工作日。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算净工作日数的期间的开始日期。"
+        },
+        "end_date": {
+          "name": "结束日期",
+          "detail": "计算净工作日数的期间的结束日期。"
+        },
+        "holidays": {
+          "name": "假期",
+          "detail": "包含考虑假期的日期序列号的范围或数组常量。"
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "ISO 一年中的周数。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "用于确定 ISO 周数的日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "一年中的周数。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "用于确定周数的日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "type": {
+          "name": "类型",
+          "detail": "表示一周开始日期的数字。星期日 = 1。"
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "所提供日期的星期几（以数字形式）。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "用于确定星期几的日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "type": {
+          "name": "类型",
+          "detail": "一个数字，指示使用哪种计数系统来表示工作日。默认情况下，从星期日开始计数 = 1。"
+        }
+      }
+    },
+    "DAY": {
+      "description": "特定日期所在的月份日期。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "要提取日期的日期。"
+        }
+      }
+    },
+    "DAYS": {
+      "description": "两个日期之间的天数。",
+      "parameters": {
+        "end_date": {
+          "name": "结束日期",
+          "detail": "日期范围的结束。"
+        },
+        "start_date": {
+          "name": "开始日期",
+          "detail": "日期范围的开始。"
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "一年 360 天中两个日期之间的天数。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算中要考虑的开始日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "end_date": {
+          "name": "结束日期",
+          "detail": "计算中要考虑的结束日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "method": {
+          "name": "方法",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "DATE": {
+      "description": "将年/月/日转换为日期。",
+      "parameters": {
+        "year": {
+          "name": "年",
+          "detail": "日期的年份部分。"
+        },
+        "month": {
+          "name": "月",
+          "detail": "日期的月份部分。"
+        },
+        "day": {
+          "name": "天",
+          "detail": "日期的星期部分。"
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "将日期字符串转换为日期值。",
+      "parameters": {
+        "date_string": {
+          "name": "日期字符串",
+          "detail": "代表日期的字符串。"
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "日期差异。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算中要考虑的开始日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "end_date": {
+          "name": "结束日期",
+          "detail": "计算中要考虑的结束日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "unit": {
+          "name": "单元",
+          "detail": "时间单位的字符串缩写。例如，“M”表示月份。可接受的值为“Y”、“M”、“D”、“MD”、“YM”、“YD”。"
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "自开始日期起的工作日数。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "开始计数的日期。"
+        },
+        "num_days": {
+          "name": "天数",
+          "detail": "从 `start_date` 开始向前推进的工作日数。如果为负数，则倒数。"
+        },
+        "holidays": {
+          "name": "假期",
+          "detail": "包含要考虑假期的日期的范围或数组常量。"
+        }
+      }
+    },
+    "YEAR": {
+      "description": "给定日期指定的年份。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "从中提取年份的日期。"
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "两个日期之间的确切年数。",
+      "parameters": {
+        "start_date": {
+          "name": "开始日期",
+          "detail": "计算中要考虑的开始日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "end_date": {
+          "name": "结束日期",
+          "detail": "计算中要考虑的结束日期。必须引用包含日期的单元格、返回日期类型的函数或数字。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "TODAY": {
+      "description": "当前日期作为日期值。"
+    },
+    "MONTH": {
+      "description": "特定日期所属的月份。",
+      "parameters": {
+        "date": {
+          "name": "日期",
+          "detail": "从中提取月份的日期。"
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "年实际利率。",
+      "parameters": {
+        "nominal_rate": {
+          "name": "名义利率",
+          "detail": "每年名义利率。"
+        },
+        "periods_per_year": {
+          "name": "每年期间",
+          "detail": "每年复利期数。"
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "将数字格式化为特定于电子表格区域设置的货币。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要格式化的值。"
+        },
+        "number_of_places": {
+          "name": "位置数量",
+          "detail": "要显示的小数位数。"
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "将小数部分转换为十进制值。",
+      "parameters": {
+        "fractional_price": {
+          "name": "fractional_price",
+          "detail": "使用小数部分约定给出的报价。"
+        },
+        "unit": {
+          "name": "单元",
+          "detail": "分数的单位，例如 `8` 表示 1/8，`32` 表示 1/32。"
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "将十进制值转换为十进制分数。",
+      "parameters": {
+        "decimal_price": {
+          "name": "十进制价格",
+          "detail": "以十进制值给出的价格报价。"
+        },
+        "unit": {
+          "name": "单元",
+          "detail": "所需分数的单位，例如 `8` 表示 1/8 分之一，或 `32` 表示 1/32 分之一。"
+        }
+      }
+    },
+    "DB": {
+      "description": "采用余额递减法计提折旧。",
+      "parameters": {
+        "cost": {
+          "name": "成本",
+          "detail": "资产的初始成本。"
+        },
+        "salvage": {
+          "name": "打捞",
+          "detail": "折旧结束时资产的价值。"
+        },
+        "life": {
+          "name": "生活",
+          "detail": "资产折旧的期间数。"
+        },
+        "period": {
+          "name": "时期",
+          "detail": "“寿命”内计算折旧的单个期间。"
+        },
+        "month": {
+          "name": "月",
+          "detail": "折旧第一年的月份数。"
+        }
+      }
+    },
+    "DDB": {
+      "description": "采用双倍余额递减法计提折旧。",
+      "parameters": {
+        "cost": {
+          "name": "成本",
+          "detail": "资产的初始成本。"
+        },
+        "salvage": {
+          "name": "打捞",
+          "detail": "折旧结束时资产的价值。"
+        },
+        "life": {
+          "name": "生活",
+          "detail": "资产折旧的期间数。"
+        },
+        "period": {
+          "name": "时期",
+          "detail": "“寿命”内计算折旧的单个期间。"
+        },
+        "factor": {
+          "name": "因素",
+          "detail": "折旧减少的因素。"
+        }
+      }
+    },
+    "RATE": {
+      "description": "年金投资的利率。",
+      "parameters": {
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "payment_per_period": {
+          "name": "每期付款",
+          "detail": "每期需支付的金额。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        },
+        "rate_guess": {
+          "name": "猜测速率",
+          "detail": "对利率的估计。"
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "一系列期间内支付的累计本金。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "first_period": {
+          "name": "第一期",
+          "detail": "开始累计计算的付款期数。"
+        },
+        "last_period": {
+          "name": "上一周期",
+          "detail": "结束累计计算的付款期数。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "结算与到期之间的息票数量。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "SYD": {
+      "description": "采用年数总和法计提折旧。",
+      "parameters": {
+        "cost": {
+          "name": "成本",
+          "detail": "资产的初始成本。"
+        },
+        "salvage": {
+          "name": "打捞",
+          "detail": "折旧结束时资产的价值。"
+        },
+        "life": {
+          "name": "生活",
+          "detail": "资产折旧的期间数。"
+        },
+        "period": {
+          "name": "时期",
+          "detail": "“寿命”内计算折旧的单个期间。"
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "相当于国库券的收益率。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "discount": {
+          "name": "折扣",
+          "detail": "购买时账单的折扣率。"
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "基于价格的美国国库券收益率。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "price": {
+          "name": "价格",
+          "detail": "每 100 票面价值的证券购买价格。"
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "美国国库券的价格。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "discount": {
+          "name": "折扣",
+          "detail": "购买时账单的折扣率。"
+        }
+      }
+    },
+    "PV": {
+      "description": "年金投资的现值。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "payment_amount": {
+          "name": "付款金额",
+          "detail": "每期需支付的金额。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "从第一张息票到结算的天数。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "包含结算日期的息票期天数。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "FV": {
+      "description": "年金投资的未来价值。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "payment_amount": {
+          "name": "付款金额",
+          "detail": "每期需支付的金额。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "根据一系列利率计算出的本金未来价值。",
+      "parameters": {
+        "principal": {
+          "name": "主要的",
+          "detail": "用于复利的初始资本或价值的数额。"
+        },
+        "rate_schedule": {
+          "name": "费率表",
+          "detail": "一系列与“本金”复利的利率。"
+        }
+      }
+    },
+    "YIELD": {
+      "description": "支付定期利息的证券的年收益率。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "rate": {
+          "name": "速度",
+          "detail": "年利率。"
+        },
+        "price": {
+          "name": "价格",
+          "detail": "每 100 票面价值的证券购买价格。"
+        },
+        "redemption": {
+          "name": "赎回",
+          "detail": "每 100 张票面价值或票面金额的赎回金额。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "折扣证券的年收益率。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "price": {
+          "name": "价格",
+          "detail": "每 100 票面价值的证券购买价格。"
+        },
+        "redemption": {
+          "name": "赎回",
+          "detail": "每 100 张票面价值或票面金额的赎回金额。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "年名义利率。",
+      "parameters": {
+        "effective_rate": {
+          "name": "有效利率",
+          "detail": "年实际利率。"
+        },
+        "periods_per_year": {
+          "name": "每年期间",
+          "detail": "每年复利期数。"
+        }
+      }
+    },
+    "XIRR": {
+      "description": "给定非定期现金流的内部收益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "现金流金额",
+          "detail": "包含与投资相关的收入或付款的数组或范围。"
+        },
+        "cashflow_dates": {
+          "name": "现金流日期",
+          "detail": "与“cashflow_amounts”中的现金流对应的日期数组或范围。"
+        },
+        "rate_guess": {
+          "name": "猜测速率",
+          "detail": "对内部收益率的估计。"
+        }
+      }
+    },
+    "MIRR": {
+      "description": "修正内部收益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "现金流金额",
+          "detail": "包含与投资相关的收入或付款的数组或范围。"
+        },
+        "financing_rate": {
+          "name": "融资利率",
+          "detail": "投资资金支付的利率。"
+        },
+        "reinvestment_return_rate": {
+          "name": "再投资回报率",
+          "detail": "投资所得收入再投资所获得的回报（以百分比表示）。"
+        }
+      }
+    },
+    "IRR": {
+      "description": "给定定期现金流的内部收益率。",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "现金流金额",
+          "detail": "包含与投资相关的收入或付款的数组或范围。"
+        },
+        "rate_guess": {
+          "name": "猜测速率",
+          "detail": "对内部收益率的估计。"
+        }
+      }
+    },
+    "NPV": {
+      "description": "基于一系列定期现金流和折现率的投资净现值。",
+      "parameters": {
+        "discount": {
+          "name": "折扣",
+          "detail": "一段时期内投资的折现率。"
+        },
+        "cashflow1": {
+          "name": "现金流1",
+          "detail": "第一个未来现金流。"
+        },
+        "cashflow2": {
+          "name": "现金流2",
+          "detail": "额外的未来现金流。"
+        }
+      }
+    },
+    "XNPV": {
+      "description": "给定非定期现金流的净现值。",
+      "parameters": {
+        "discount": {
+          "name": "折扣",
+          "detail": "一段时期内投资的折现率。"
+        },
+        "cashflow_amounts": {
+          "name": "现金流金额",
+          "detail": "包含与投资相关的收入或付款的单元格范围。"
+        },
+        "cashflow_dates": {
+          "name": "现金流日期",
+          "detail": "具有与“cashflow_amounts”中的现金流相对应的日期的单元格范围。"
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "一系列期间内支付的累计利息。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "first_period": {
+          "name": "第一期",
+          "detail": "开始累计计算的付款期数。"
+        },
+        "last_period": {
+          "name": "上一周期",
+          "detail": "结束累计计算的付款期数。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "PMT": {
+      "description": "年金投资的定期付款。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "IPMT": {
+      "description": "支付投资利息。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "period": {
+          "name": "时期",
+          "detail": "摊销期，以期数表示。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "PPMT": {
+      "description": "支付投资本金。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "period": {
+          "name": "时期",
+          "detail": "摊销期，以期数表示。"
+        },
+        "number_of_periods": {
+          "name": "周期数",
+          "detail": "需要付款的次数。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "计算实际利率。",
+      "parameters": {
+        "buy_date": {
+          "name": "购买日期",
+          "detail": "投资的购买日期。"
+        },
+        "sell_date": {
+          "name": "出售日期",
+          "detail": "投资出售日期。"
+        },
+        "buy_price": {
+          "name": "购买价格",
+          "detail": "购买投资的价格。"
+        },
+        "sell_price": {
+          "name": "售价",
+          "detail": "投资出售的价格。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "PRICE": {
+      "description": "支付定期利息的证券的价格。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "rate": {
+          "name": "速度",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "屈服",
+          "detail": "该证券的预期年收益率。"
+        },
+        "redemption": {
+          "name": "赎回",
+          "detail": "每 100 张票面价值或票面金额的赎回金额。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "折扣证券的价格。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "discount": {
+          "name": "折扣",
+          "detail": "购买时证券的折扣率。"
+        },
+        "redemption": {
+          "name": "赎回",
+          "detail": "每 100 张票面价值或票面金额的赎回金额。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "到期支付利息的证券的价格。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "issue": {
+          "name": "问题",
+          "detail": "证券首次发行的日期。"
+        },
+        "rate": {
+          "name": "速度",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "屈服",
+          "detail": "该证券的预期年收益率。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "证券到期时收到的金额。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "investment": {
+          "name": "投资",
+          "detail": "投资金额（不论每张证券的面值）。"
+        },
+        "discount": {
+          "name": "折扣",
+          "detail": "所投资证券的折现率。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "DISC": {
+      "description": "基于价格的证券折扣率。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "price": {
+          "name": "价格",
+          "detail": "每 100 票面价值的证券购买价格。"
+        },
+        "redemption": {
+          "name": "赎回",
+          "detail": "每 100 张票面价值或票面金额的赎回金额。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "NPER": {
+      "description": "投资的付款期数。",
+      "parameters": {
+        "rate": {
+          "name": "速度",
+          "detail": "利率。"
+        },
+        "payment_amount": {
+          "name": "付款金额",
+          "detail": "每次付款的金额。"
+        },
+        "present_value": {
+          "name": "现值",
+          "detail": "年金的当前价值。"
+        },
+        "future_value": {
+          "name": "未来价值",
+          "detail": "最终付款后剩余的未来价值。"
+        },
+        "end_or_beginning": {
+          "name": "结束或开始",
+          "detail": "付款是否在每个期间结束时（“0”）或开始时（“1”）。"
+        }
+      }
+    },
+    "SLN": {
+      "description": "采用直线法计提资产折旧。",
+      "parameters": {
+        "cost": {
+          "name": "成本",
+          "detail": "资产的初始成本。"
+        },
+        "salvage": {
+          "name": "打捞",
+          "detail": "折旧结束时资产的价值。"
+        },
+        "life": {
+          "name": "生活",
+          "detail": "资产折旧的期间数。"
+        }
+      }
+    },
+    "DURATION": {
+      "description": "投资达到某一价值所需的期间数。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "rate": {
+          "name": "速度",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "屈服",
+          "detail": "该证券的预期年收益率。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "修正的麦考利久期。",
+      "parameters": {
+        "settlement": {
+          "name": "沉降",
+          "detail": "证券的结算日，即证券发行后交付给买方的日期。"
+        },
+        "maturity": {
+          "name": "到期",
+          "detail": "证券的到期日或终止日，可按票面价值赎回。"
+        },
+        "rate": {
+          "name": "速度",
+          "detail": "年利率。"
+        },
+        "yield": {
+          "name": "屈服",
+          "detail": "该证券的预期年收益率。"
+        },
+        "frequency": {
+          "name": "频率",
+          "detail": "每年利息或息票支付的次数（1、2 或 4）。"
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "指示使用哪种天数计算方法。"
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "将有符号的二进制数转换为十进制格式。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "有符号二进制数",
+          "detail": "要转换为十进制的有符号的 10 位二进制值，以字符串形式提供。"
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "将二进制数转换为十六进制。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "有符号二进制数",
+          "detail": "要转换为有符号十六进制的有符号 10 位二进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "将二进制数转换为八进制。",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "有符号二进制数",
+          "detail": "要转换为有符号八进制的有符号 10 位二进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "将十进制数转换为有符号的二进制格式。",
+      "parameters": {
+        "decimal_number": {
+          "name": "十进制数",
+          "detail": "要转换为有符号二进制的十进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "将十进制数转换为十六进制。",
+      "parameters": {
+        "decimal_number": {
+          "name": "十进制数",
+          "detail": "要转换为有符号十六进制的十进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "将十进制数转换为有符号的八进制格式。",
+      "parameters": {
+        "decimal_number": {
+          "name": "十进制数",
+          "detail": "要转换为有符号八进制的十进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "将十六进制数转换为二进制。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "有符号十六进制数",
+          "detail": "要转换为有符号二进制的有符号 40 位十六进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "将十六进制数转换为十进制。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "有符号十六进制数",
+          "detail": "要转换为十进制的有符号的 40 位十六进制值，以字符串形式提供。"
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "将十六进制数转换为八进制。",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "有符号十六进制数",
+          "detail": "要转换为有符号八进制的有符号 40 位十六进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "将八进制数转换为二进制。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "有符号八进制数",
+          "detail": "要转换为有符号二进制的有符号 30 位八进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "将有符号的八进制数转换为十进制格式。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "有符号八进制数",
+          "detail": "要转换为十进制的有符号的 30 位八进制值，以字符串形式提供。"
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "将八进制数转换为十六进制。",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "有符号八进制数",
+          "detail": "要转换为有符号十六进制的有符号 30 位八进制值，以字符串形式提供。"
+        },
+        "significant_digits": {
+          "name": "有效数字",
+          "detail": "要确保结果中的有效数字的位数。"
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "创建一个复数。",
+      "parameters": {
+        "real_part": {
+          "name": "实部",
+          "detail": "真实系数。"
+        },
+        "imaginary_part": {
+          "name": "虚部",
+          "detail": "虚数系数。"
+        },
+        "suffix": {
+          "name": "后缀",
+          "detail": "虚部系数的后缀只能为 'i' 或 'j'。如果省略，则使用 'i'。"
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "复数的实系数。",
+      "parameters": {
+        "complex_number": {
+          "name": "复数",
+          "detail": "复数，格式为 a+bi 或 a+bj。"
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "复数的虚部系数。",
+      "parameters": {
+        "complex_number": {
+          "name": "复数",
+          "detail": "复数，格式为 a+bi 或 a+bj。"
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "一个数的复共轭。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要计算共轭的复数。"
+        }
+      }
+    },
+    "IMABS": {
+      "description": "复数的绝对值。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要计算绝对值的复数。"
+        }
+      }
+    },
+    "DELTA": {
+      "description": "比较两个数值。",
+      "parameters": {
+        "number1": {
+          "name": "号码1",
+          "detail": "要比较的第一个数字。"
+        },
+        "number2": {
+          "name": "数字2",
+          "detail": "要比较的第二个数字。"
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "一系列复数的总和。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要相加的第一个复数或范围。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要添加到“value1”的额外复数或范围。"
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "两个复数之间的差。",
+      "parameters": {
+        "first_number": {
+          "name": "第一个号码",
+          "detail": "要从中减去 second_number 的复数。"
+        },
+        "second_number": {
+          "name": "第二个数字",
+          "detail": "要从 first_number 中减去的复数。"
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "将一系列复数相乘的结果。",
+      "parameters": {
+        "factor1": {
+          "name": "因素1",
+          "detail": "要计算乘积的第一个数字或范围。"
+        },
+        "factor2": {
+          "name": "因素2",
+          "detail": "要计算乘积的附加复数或范围。"
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "一个复数除以另一个复数。",
+      "parameters": {
+        "dividend": {
+          "name": "股利",
+          "detail": "要除的复数。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "要除的复数。"
+        }
+      }
+    },
+    "NOT": {
+      "description": "返回所提供的逻辑值的反面。",
+      "parameters": {
+        "logical_expression": {
+          "name": "逻辑表达式",
+          "detail": "表达式或对包含代表某些逻辑值的表达式的单元格的引用。"
+        }
+      }
+    },
+    "TRUE": {
+      "description": "逻辑值“true”。"
+    },
+    "FALSE": {
+      "description": "逻辑值“false”。"
+    },
+    "AND": {
+      "description": "逻辑“与”运算符。",
+      "parameters": {
+        "logical_expression1": {
+          "name": "逻辑表达式1",
+          "detail": "表达式或对包含表示某些逻辑值（即“TRUE”或“FALSE”）的表达式的单元格的引用，或者可以强制转换为逻辑值的表达式。"
+        },
+        "logical_expression2": {
+          "name": "逻辑表达式2",
+          "detail": "更多代表逻辑值的表达式。"
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "如果不是错误则为值，否则为第二个参数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "如果“值”本身不是错误，则返回的值。"
+        },
+        "value_if_error": {
+          "name": "错误时的值",
+          "detail": "如果“值”有错误，则函数返回的值。"
+        }
+      }
+    },
+    "IF": {
+      "description": "根据逻辑表达式返回值。",
+      "parameters": {
+        "logical_expression": {
+          "name": "逻辑表达式",
+          "detail": "包含表示某些逻辑值（即“TRUE”或“FALSE”）的表达式的单元格的表达式或引用。"
+        },
+        "value_if_true": {
+          "name": "如果为真则为值",
+          "detail": "如果“逻辑表达式”为“TRUE”，则函数返回的值。"
+        },
+        "value_if_false": {
+          "name": "如果为假则为值",
+          "detail": "如果“logical_expression”为“FALSE”，则函数返回的值。"
+        }
+      }
+    },
+    "OR": {
+      "description": "逻辑“或”运算符。",
+      "parameters": {
+        "logical_expression1": {
+          "name": "逻辑表达式1",
+          "detail": "表达式或对包含表示某些逻辑值（即“TRUE”或“FALSE”）的表达式的单元格的引用，或者可以强制转换为逻辑值的表达式。"
+        },
+        "logical_expression2": {
+          "name": "逻辑表达式2",
+          "detail": "更多可计算逻辑值的表达式。"
+        }
+      }
+    },
+    "NE": {
+      "description": "不相等。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "第一个值。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "与“value1”测试不相等的值。"
+        }
+      }
+    },
+    "EQ": {
+      "description": "平等的。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "第一个值。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "与“value1”测试是否相等的值。"
+        }
+      }
+    },
+    "GT": {
+      "description": "严格大于。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要测试的值是否大于“value2”。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "第二个值。"
+        }
+      }
+    },
+    "GTE": {
+      "description": "大于或等于。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要测试的值是否大于或等于“value2”。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "第二个值。"
+        }
+      }
+    },
+    "LT": {
+      "description": "少于。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要测试的值是否小于“value2”。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "第二个值。"
+        }
+      }
+    },
+    "LTE": {
+      "description": "小于或等于。",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "要测试的值是否小于或等于“value2”。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "第二个值。"
+        }
+      }
+    },
+    "ADD": {
+      "description": "两个数字之和",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "第一个加数。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "第二个加数。"
+        }
+      }
+    },
+    "MINUS": {
+      "description": "两个数的差",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "被减数，或者说要减去的数字。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "减数，即从“value1”中减去的数字。"
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "两个数的乘积",
+      "parameters": {
+        "factor1": {
+          "name": "因素1",
+          "detail": "第一个被乘数。"
+        },
+        "factor2": {
+          "name": "因素2",
+          "detail": "第二个被乘数。"
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "一个数除以另一个数",
+      "parameters": {
+        "dividend": {
+          "name": "股利",
+          "detail": "待除数。"
+        },
+        "divisor": {
+          "name": "除数",
+          "detail": "要除以的数字。"
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "两个值的串联",
+      "parameters": {
+        "value1": {
+          "name": "值1",
+          "detail": "将附加“value2”的值。"
+        },
+        "value2": {
+          "name": "值2",
+          "detail": "要附加到“value1”的值。"
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "以百分比形式解释的值。",
+      "parameters": {
+        "percentage": {
+          "name": "百分比",
+          "detail": "以百分比形式解释的值。"
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "将字符串附加到另一个字符串。",
+      "parameters": {
+        "string1": {
+          "name": "字符串1",
+          "detail": "初始字符串。"
+        },
+        "string2": {
+          "name": "字符串2",
+          "detail": "按顺序附加更多字符串。"
+        }
+      }
+    },
+    "CODE": {
+      "description": "字符的数字 Unicode 映射值。",
+      "parameters": {
+        "string": {
+          "name": "细绳",
+          "detail": "将返回其第一个字符的 Unicode 映射值的字符串。"
+        }
+      }
+    },
+    "CHAR": {
+      "description": "获取与数字关联的字符。",
+      "parameters": {
+        "table_number": {
+          "name": "桌号",
+          "detail": "以十进制格式从当前 Unicode 表中查找的字符编号。"
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "计算罗马数字的值。",
+      "parameters": {
+        "roman_numeral": {
+          "name": "罗马数字",
+          "detail": "要格式化的罗马数字，其值必须介于 1 到 3999 之间（含 1 和 3999）。"
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "将数字格式化为罗马数字。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要格式化的数字，介于 1 到 3999 之间（含）。"
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "使用正则表达式提取匹配的子字符串。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "输入文本。"
+        },
+        "regular_expression": {
+          "name": "正则表达式",
+          "detail": "将返回与该表达式匹配的“文本”的第一部分。"
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "一段文本是否与正则表达式匹配。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "要根据正则表达式进行测试的文本。"
+        },
+        "regular_expression": {
+          "name": "正则表达式",
+          "detail": "用于测试文本的正则表达式。"
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "用正则表达式替换文本。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "文本的一部分将被替换。"
+        },
+        "regular_expression": {
+          "name": "正则表达式",
+          "detail": "正则表达式。“text”中所有匹配的实例都将被替换。"
+        },
+        "replacement": {
+          "name": "替代品",
+          "detail": "将插入到原始文本中的文本。"
+        }
+      }
+    },
+    "T": {
+      "description": "字符串参数作为文本。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为文本的参数。"
+        }
+      }
+    },
+    "FIXED": {
+      "description": "格式化具有固定小数位数的数字。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要格式化的数字。"
+        },
+        "number_of_places": {
+          "name": "位置数量",
+          "detail": "结果中显示的小数位数。"
+        },
+        "suppress_separator": {
+          "name": "抑制分隔符",
+          "detail": "是否隐藏某些语言环境中使用的千位分隔符（例如，将“1,000”替换为“1000”）。如果此值为 0 或省略，则显示分隔符，否则不显示。"
+        }
+      }
+    },
+    "FIND": {
+      "description": "文本中找到的字符串的第一个位置，区分大小写。",
+      "parameters": {
+        "search_for": {
+          "name": "搜索",
+          "detail": "在“text_to_search”中查找的字符串。"
+        },
+        "text_to_search": {
+          "name": "要搜索的文本",
+          "detail": "用于搜索第一次出现的“search_for”的文本。"
+        },
+        "starting_at": {
+          "name": "起始时间",
+          "detail": "“text_to_search” 中开始搜索的字符。"
+        }
+      }
+    },
+    "FINDB": {
+      "description": "在文本（二进制）中首次找到字符串的位置。",
+      "parameters": {
+        "search_for": {
+          "name": "搜索",
+          "detail": "在“text_to_search”中查找的字符串。"
+        },
+        "text_to_search": {
+          "name": "要搜索的文本",
+          "detail": "用于搜索第一次出现的“search_for”的文本。"
+        },
+        "starting_at": {
+          "name": "起始时间",
+          "detail": "“text_to_search” 中开始搜索的字符。"
+        }
+      }
+    },
+    "JOIN": {
+      "description": "使用分隔符连接数组元素。",
+      "parameters": {
+        "delimiter": {
+          "name": "分隔符",
+          "detail": "放置在每个连接值之间的字符或字符串。"
+        },
+        "value_or_array1": {
+          "name": "值或数组1",
+          "detail": "使用“分隔符”附加一个或多个值。"
+        },
+        "value_or_array2": {
+          "name": "值或数组2",
+          "detail": "使用“分隔符”附加更多值。"
+        }
+      }
+    },
+    "LEFT": {
+      "description": "从指定字符串的开头开始的子字符串。",
+      "parameters": {
+        "string": {
+          "name": "细绳",
+          "detail": "将返回左侧部分的字符串。"
+        },
+        "number_of_characters": {
+          "name": "字符数",
+          "detail": "从“字符串”左侧返回的字符数。"
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "指定字符串末尾的子字符串。",
+      "parameters": {
+        "string": {
+          "name": "细绳",
+          "detail": "将返回正确部分的字符串。"
+        },
+        "number_of_characters": {
+          "name": "字符数",
+          "detail": "从“字符串”右侧返回的字符数。"
+        }
+      }
+    },
+    "MID": {
+      "description": "字符串的一段。",
+      "parameters": {
+        "string": {
+          "name": "细绳",
+          "detail": "要从中提取片段的字符串。"
+        },
+        "starting_at": {
+          "name": "起始时间",
+          "detail": "从 `string` 左侧开始提取的索引。`string` 中第一个字符的索引为 1。"
+        },
+        "extract_length": {
+          "name": "提取长度",
+          "detail": "要提取的段的长度。"
+        }
+      }
+    },
+    "LEN": {
+      "description": "字符串的长度。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "将返回其长度的字符串。"
+        }
+      }
+    },
+    "LENB": {
+      "description": "字符串的长度（以字节为单位）。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "将返回其长度的字符串。"
+        }
+      }
+    },
+    "LOWER": {
+      "description": "将指定的字符串转换为小写。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "要转换为小写的字符串。"
+        }
+      }
+    },
+    "UPPER": {
+      "description": "将指定的字符串转换为大写。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "要转换为大写的字符串。"
+        }
+      }
+    },
+    "EXACT": {
+      "description": "测试两个字符串是否相同。",
+      "parameters": {
+        "string1": {
+          "name": "字符串1",
+          "detail": "要比较的第一个字符串"
+        },
+        "string2": {
+          "name": "字符串2",
+          "detail": "要比较的第二个字符串"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "用不同的文本替换部分文本字符串。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "文本的一部分将被替换。"
+        },
+        "position": {
+          "name": "位置",
+          "detail": "替换开始的位置（从 1 开始）。"
+        },
+        "length": {
+          "name": "长度",
+          "detail": "文本中要替换的字符数。"
+        },
+        "new_text": {
+          "name": "新文本",
+          "detail": "将插入到原始文本中的文本。"
+        }
+      }
+    },
+    "REPT": {
+      "description": "指定的文本重复多次。",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "重复文本",
+          "detail": "要重复的字符或字符串。"
+        },
+        "number_of_repetitions": {
+          "name": "重复次数",
+          "detail": "返回值中应出现“text_to_repeat”的次数。"
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "文本中找到的字符串的第一个位置，忽略大小写。",
+      "parameters": {
+        "search_for": {
+          "name": "搜索",
+          "detail": "在“text_to_search”中查找的字符串。"
+        },
+        "text_to_search": {
+          "name": "要搜索的文本",
+          "detail": "用于搜索第一次出现的“search_for”的文本。"
+        },
+        "starting_at": {
+          "name": "起始时间",
+          "detail": "“text_to_search” 中开始搜索的字符。"
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "用字符串中的新文本替换现有文本。",
+      "parameters": {
+        "text_to_search": {
+          "name": "要搜索的文本",
+          "detail": "要搜索和替换的文本。"
+        },
+        "search_for": {
+          "name": "搜索",
+          "detail": "要在“text_to_search”中搜索的字符串。"
+        },
+        "replace_with": {
+          "name": "替换为",
+          "detail": "将替换“search_for”的字符串。"
+        },
+        "occurrence_number": {
+          "name": "发生次数",
+          "detail": "在“待搜索文本”中，指定要替换为“替换内容”的“搜索条件”实例。默认情况下，所有出现的“搜索条件”都会被替换；但是，如果指定了“出现次数”，则仅替换指定的“搜索条件”实例。"
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "从一段文本中删除不可打印的字符。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "要删除不可打印字符的文本。"
+        }
+      }
+    },
+    "TEXT": {
+      "description": "将数字格式化为文本。",
+      "parameters": {
+        "number": {
+          "name": "数字",
+          "detail": "要格式化的数字、日期或时间。"
+        },
+        "format": {
+          "name": "格式",
+          "detail": "格式化数字的模式，用引号引起来。"
+        }
+      }
+    },
+    "TRIM": {
+      "description": "删除空格字符。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "包含要修剪的文本的单元格的文本或引用。"
+        }
+      }
+    },
+    "VALUE": {
+      "description": "将日期/时间/数字字符串转换为数字。",
+      "parameters": {
+        "text": {
+          "name": "文本",
+          "detail": "包含要转换的值的字符串。"
+        }
+      }
+    },
+    "PROPER": {
+      "description": "将指定字符串中的每个单词大写。",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "文本大写",
+          "detail": "返回的文本中每个单词的首字母大写，其他所有字母小写。"
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "数字的单位转换。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "将 `start_unit` 中的数值转换为 `end_unit`。"
+        },
+        "start_unit": {
+          "name": "起始单元",
+          "detail": "起始单位，即当前分配给“value”的单位。"
+        },
+        "end_unit": {
+          "name": "结束单元",
+          "detail": "将参数“值”转换为的度量单位。"
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "平方差之和。",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "数组或数值范围，其平方将除以“array_y”中相应条目的平方，然后相加。"
+        },
+        "array_y": {
+          "name": "数组",
+          "detail": "将从 `array_x` 中相应条目的平方中减去该数组或值范围，然后再将其相加。"
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "平方和之和。",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "数组或数值范围，其平方将被添加到“array_y”中相应条目的平方，然后相加。"
+        },
+        "array_y": {
+          "name": "数组",
+          "detail": "数组或值的平方将添加到 `array_x` 中相应条目的平方，然后相加。"
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "差值的平方和。",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "将通过“array_y”中的相应条目减少、求平方并相加的数组或值范围。"
+        },
+        "array_y": {
+          "name": "数组",
+          "detail": "将从 `array_x` 中的相应条目中减去的值的数组或范围，将结果平方，然后将所有这些结果加在一起。"
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "转置数组的行和列。",
+      "parameters": {
+        "array_or_range": {
+          "name": "数组或范围",
+          "detail": "将交换行和列的数组或范围。"
+        }
+      }
+    },
+    "TREND": {
+      "description": "将点与通过最小二乘法得出的线性趋势相匹配。",
+      "parameters": {
+        "known_data_y": {
+          "name": "已知数据",
+          "detail": "包含已知依赖（y）值的数组或范围，用于曲线拟合理想的线性趋势。"
+        },
+        "known_data_x": {
+          "name": "已知数据",
+          "detail": "与“known_data_y”对应的独立变量的值。"
+        },
+        "new_data_x": {
+          "name": "新数据",
+          "detail": "数据点返回理想曲线拟合的“y”值。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "给定曲线拟合的一般线性形式 `y = m*x+b`，如果为 `TRUE`，则计算 `b`，如果为 `FALSE`，则强制 `b` 为 `0`，仅计算 `m` 值，即强制曲线拟合通过原点。"
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "阵列的频率分布。",
+      "parameters": {
+        "data": {
+          "name": "数据",
+          "detail": "包含要计数的值的数组或范围。"
+        },
+        "classes": {
+          "name": "课程",
+          "detail": "包含类集的数组或范围。"
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "适合指数增长趋势。",
+      "parameters": {
+        "known_data_y": {
+          "name": "已知数据",
+          "detail": "包含已知依赖（y）值的数组或范围，用于曲线拟合理想的指数增长曲线。"
+        },
+        "known_data_x": {
+          "name": "已知数据",
+          "detail": "与“known_data_y”对应的独立变量的值。"
+        },
+        "new_data_x": {
+          "name": "新数据",
+          "detail": "数据点返回理想曲线拟合的“y”值。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "给定曲线拟合的一般指数形式 `y = b*m^x`，如果为 `TRUE`，则计算 `b`，如果为 `FALSE`，则强制 `b` 为 `1`，并且仅计算 `m` 值。"
+        }
+      }
+    },
+    "LINEST": {
+      "description": "通过最小二乘法得到最佳拟合线性趋势。",
+      "parameters": {
+        "known_data_y": {
+          "name": "已知数据",
+          "detail": "包含已知依赖（y）值的数组或范围，用于曲线拟合理想的线性趋势。"
+        },
+        "known_data_x": {
+          "name": "已知数据",
+          "detail": "与“known_data_y”对应的独立变量的值。"
+        },
+        "calculate_b": {
+          "name": "计算_b",
+          "detail": "给定 `y = m*x+b` 的线性形式，如果为 `TRUE`，则计算 y 轴截距 (`b`)。否则，如果为 `FALSE`，则强制 `b` 为 `0`，并且仅计算 `m` 值，即强制曲线拟合通过原点。"
+        },
+        "verbose": {
+          "name": "冗长的",
+          "detail": "指定是否返回附加回归统计数据或仅返回线性系数和 y 截距（默认）的标志。"
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "最佳拟合指数增长曲线。",
+      "parameters": {
+        "known_data_y": {
+          "name": "已知数据",
+          "detail": "包含已知依赖（y）值的数组或范围，用于曲线拟合理想的指数增长曲线。"
+        },
+        "known_data_x": {
+          "name": "已知数据",
+          "detail": "与“known_data_y”对应的独立变量的值。"
+        },
+        "b": {
+          "name": "b",
+          "detail": "给定曲线拟合的一般指数形式 `y = b*m^x`，如果为 `TRUE`，则计算 `b`，如果为 `FALSE`，则强制 `b` 为 `1`，并且仅计算 `m` 值。"
+        },
+        "verbose": {
+          "name": "冗长的",
+          "detail": "指定是否返回附加回归统计数据或仅返回计算出的系数和指数的标志。"
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "方阵的矩阵行列式。",
+      "parameters": {
+        "square_matrix": {
+          "name": "方阵",
+          "detail": "具有相等行数和列数的数组或范围，表示将计算行列式的矩阵。"
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "方阵的乘法逆元。",
+      "parameters": {
+        "square_matrix": {
+          "name": "方阵",
+          "detail": "具有相等行数和列数的数组或范围，表示将计算其乘法逆元的矩阵。"
+        }
+      }
+    },
+    "MMULT": {
+      "description": "两个矩阵的矩阵积。",
+      "parameters": {
+        "matrix1": {
+          "name": "矩阵1",
+          "detail": "矩阵乘法运算中的第一个矩阵，表示为数组或范围。"
+        },
+        "matrix2": {
+          "name": "矩阵2",
+          "detail": "矩阵乘法运算中的第二个矩阵，表示为数组或范围。"
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "两个数组中元素的乘积之和。",
+      "parameters": {
+        "array1": {
+          "name": "数组1",
+          "detail": "第一个数组或范围的条目将与第二个数组或范围中的相应条目相乘。"
+        },
+        "array2": {
+          "name": "数组2",
+          "detail": "第二个数组或范围的条目将与第一个这样的数组或范围中的相应条目相乘。"
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "一个值是否是一个公式。",
+      "parameters": {
+        "cell": {
+          "name": "细胞",
+          "detail": "要验证是否包含公式的单元格。"
+        }
+      }
+    },
+    "CELL": {
+      "description": "获取有关单元格的信息。",
+      "parameters": {
+        "info_type": {
+          "name": "信息类型",
+          "detail": "所请求的信息类型（请参阅文章了解可用类型）"
+        },
+        "reference": {
+          "name": "参考",
+          "detail": "对单元格的引用。"
+        }
+      }
+    },
+    "NA": {
+      "description": "`#N/A` 错误。"
+    },
+    "ISBLANK": {
+      "description": "引用的单元格是否为空。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "引用将被检查是否为空的单元格。"
+        }
+      }
+    },
+    "ISERR": {
+      "description": "某个值是否为除“#n/a”之外的错误。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证的值是否为除“#N/A”之外的错误类型。"
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "某个值是否错误。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证为错误类型的值。"
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "值是“真”还是“假”。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证的值为逻辑“TRUE”或“FALSE”。"
+        }
+      }
+    },
+    "ISNA": {
+      "description": "一个值是否为错误“#n/a”。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要与错误值“#N/A”进行比较的值。"
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "值是否为非文本。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要检查的值。"
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "值是否为数字。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "需要验证的值是否为数字。"
+        }
+      }
+    },
+    "ISREF": {
+      "description": "值是否为有效的单元格引用。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证作为单元格引用的值。"
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "值是否为文本。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证的值是否为文本。"
+        }
+      }
+    },
+    "TYPE": {
+      "description": "获取值的类型。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "需要确定其类型的值。"
+        }
+      }
+    },
+    "N": {
+      "description": "以数字形式提供的参数。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为数字的参数。"
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "将提供的数字转换为日期。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为日期的单元格的参数或引用。"
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "将任何数值转换为纯数字。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为纯数字的单元格的参数或引用。"
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "将提供的数字值转换为文本值。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为文本的单元格的参数或引用。"
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "将提供的数字转换为美元价值。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为美元值的单元格的参数或引用。"
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "将提供的数字转换为百分比。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要转换为百分比的单元格的参数或引用。"
+        }
+      }
+    },
+    "DGET": {
+      "description": "来自表格范围的单个值。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DMAX": {
+      "description": "表格范围内的最大值。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DMIN": {
+      "description": "表格范围中的最小值。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "表格范围内的一组值的平均值。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "从类似表格的范围内计算值。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "计算表格范围内的值和文本。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "表格范围内的值的乘积。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "表中总体样本的标准差。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "表中整个人口的标准差。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DSUM": {
+      "description": "表格范围内的值的总和。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DVAR": {
+      "description": "与表格范围相比的总体样本的方差。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "DVARP": {
+      "description": "总体与表格范围的差异。",
+      "parameters": {
+        "database": {
+          "name": "数据库",
+          "detail": "包含要考虑的数据的数组或范围，其结构为第一行包含每列值的标签。"
+        },
+        "field": {
+          "name": "场地",
+          "detail": "指示“数据库”中的哪一列包含要提取和操作的值。"
+        },
+        "criteria": {
+          "name": "标准",
+          "detail": "包含零个或多个条件的数组或范围，用于在操作之前过滤“数据库”值。"
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "根据身份证号码获取性别。",
+      "parameters": {
+        "ID number": {
+          "name": "身份证号码",
+          "detail": "15 位或 18 位 ID 号码或范围。"
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "根据身份证号码获取出生省份。",
+      "parameters": {
+        "ID number": {
+          "name": "身份证号码",
+          "detail": "15 位或 18 位 ID 号码或范围。"
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "根据ID号获取星座。",
+      "parameters": {
+        "ID number": {
+          "name": "身份证号码",
+          "detail": "15 位或 18 位 ID 号码或范围。"
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "返回A股对应的股票交易量。",
+      "parameters": {
+        "Stock code": {
+          "name": "股票代码",
+          "detail": "6位股票代码，必填。"
+        },
+        "Date": {
+          "name": "日期",
+          "detail": "股票的交易日，默认为最新交易日"
+        },
+        "Reversion and exclusion": {
+          "name": "复归和排除",
+          "detail": "选择股票除权恢复类型，默认0[恢复前]、1[恢复原价]、2[恢复后]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "值是否为日期。",
+      "parameters": {
+        "value": {
+          "name": "价值",
+          "detail": "要验证的值是否为日期。"
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "生成迷你图折线图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Line color": {
+          "name": "线条颜色",
+          "detail": "折线图的线条颜色可以是范围 A1、颜色表索引值或特定颜色值。设置为 0 或 false 则不显示。支持 regx、rgb、rgba 等。默认值为 #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "线粗细",
+          "detail": "折线图的线条粗细，默认为1px"
+        },
+        "Auxiliary line": {
+          "name": "辅助线",
+          "detail": "水平线，可以是最小值、最大值、平均值、中值、范围或自定义值，默认 0 无"
+        },
+        "Auxiliary line color": {
+          "name": "辅助线颜色",
+          "detail": "辅助线颜色设置，同线条颜色配置，默认#000"
+        },
+        "Maximum mark": {
+          "name": "最高分",
+          "detail": "标识折线图的最大值，同线条颜色配置，默认0不显示"
+        },
+        "Minimum mark": {
+          "name": "最低分数",
+          "detail": "标识折线图的最小值，同线条颜色配置，默认0不显示"
+        },
+        "Mark size": {
+          "name": "标记尺寸",
+          "detail": "最大和最小标记尺寸设置，默认为1.5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "生成迷你图累积垂直直方图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Stack by column": {
+          "name": "按列堆叠",
+          "detail": "如果需要按行堆叠，则设置此项为false或0，默认为1"
+        },
+        "Bar interval": {
+          "name": "条形间隔",
+          "detail": "条形之间的距离，默认为1"
+        },
+        "Max": {
+          "name": "最大限度",
+          "detail": "累计条形的最大值，用于调节条形的长度，默认为自动计算false,auto,null"
+        },
+        "Color palette": {
+          "name": "调色板",
+          "detail": "调色板可以单独设置各个维度的条形颜色，可以设置为A1:A10等范围，默认为#2ec7c9、#fc5c5c、#5ab1ef、#ffb980……"
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "生成迷你图累积水平条形图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Stack by column": {
+          "name": "按列堆叠",
+          "detail": "如果需要按行堆叠，则设置此项为false或0，默认为1"
+        },
+        "Bar interval": {
+          "name": "条形间隔",
+          "detail": "条形之间的距离，默认为1"
+        },
+        "Max": {
+          "name": "最大限度",
+          "detail": "累计条形的最大值，用于调节条形的长度，默认为自动计算false,auto,null"
+        },
+        "Color palette": {
+          "name": "调色板",
+          "detail": "调色板可以单独设置各个维度的条形颜色，可以设置为A1:A10等范围，默认为#2ec7c9、#fc5c5c、#5ab1ef、#ffb980……"
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "生成迷你图离散图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Segmentation threshold": {
+          "name": "分割阈值",
+          "detail": "离散图列颜色区分，例如：值为0时，蓝色大于0，红色小于0，默认为0"
+        },
+        "Above threshold color": {
+          "name": "高于阈值的颜色",
+          "detail": "折线图的线条颜色可以是范围 A1、颜色表索引值或特定颜色值。设置为 0 或 false 则不显示。支持 regx、rgb、rgba 等。默认值为 #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "低于阈值颜色",
+          "detail": "阈值以下的条形颜色设置，与阈值以上颜色相同，默认#fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "生成迷你图三状态图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Bar interval": {
+          "name": "条形间隔",
+          "detail": "条形之间的距离，默认为1"
+        },
+        "Bar color": {
+          "name": "条形颜色",
+          "detail": "折线图的线条颜色可以是范围 A1、颜色表索引值或特定颜色值。设置为 0 或 false 则不显示。支持 regx、rgb、rgba 等。默认 #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "负条颜色",
+          "detail": "负数条形颜色设置，代表负值的颜色，与条形颜色配置相同，默认#97b552"
+        },
+        "Zero value bar color": {
+          "name": "零值条颜色",
+          "detail": "零值条形颜色设置，代表0值颜色，与条形颜色配置相同，默认#999"
+        },
+        "Color palette": {
+          "name": "调色板",
+          "detail": "调色板可以单独设置每个bar的颜色，可以设置多种设置，支持两种格式：1颜色如#000，表示第一个bar的颜色为黑色；2取值范围：颜色，如-2:#000表示值为-2的bar为黑色，0:5:#000表示值为0-5的bar为黑色，默认为空"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "生成迷你图饼图",
+      "parameters": {
+        "Range": {
+          "name": "范围",
+          "detail": "范围，可以有效地计算数值，例如 A1:A20，{1,2,3,4,5} 等。"
+        },
+        "Rotation angle": {
+          "name": "旋转角度",
+          "detail": "饼图的旋转角度，默认为0"
+        },
+        "border": {
+          "name": "边界",
+          "detail": "饼图边框大小，默认为无0"
+        },
+        "Border color": {
+          "name": "边框颜色",
+          "detail": "饼图边框颜色，默认为#000"
+        },
+        "Color palette": {
+          "name": "调色板",
+          "detail": "切片的颜色可以在调色板中设置，可以设置为A1:A10等范围，默认为#2ec7c9、#fc5c5c、#5ab1ef、#ffb980……"
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "生成迷你图项目符号",
+      "parameters": {
+        "Target": {
+          "name": "目标",
+          "detail": "对于达到的目标值可以进行有效的数值计算，例如A1、100等。"
+        },
+        "achieved": {
+          "name": "已实现",
+          "detail": "只有数值完整，数值才有效计算，如A1，100等。"
+        },
+        "Contrast": {
+          "name": "对比",
+          "detail": "可以有效计算比较值，例如超额、最低和奖励底线，例如A1、100等。最多可以设置9个比较值"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "将迷你图合并到一个单元格中",
+      "parameters": {
+        "config": {
+          "name": "配置",
+          "detail": "迷你图设置，例如 A1:A20、完成的饼图、折线图设置等。"
+        }
+      }
+    },
+    "SORT": {
+      "description": "按指定列对范围的行进行排序。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "要排序的数据。"
+        },
+        "sort_column": {
+          "name": "排序列",
+          "detail": "“范围”内或“范围”外的范围内的列的索引，包含要按其排序的值。"
+        },
+        "is_ascending": {
+          "name": "升序",
+          "detail": "`TRUE` 或 `FALSE` 表示是否按升序对 `sort_column` 进行排序。`FALSE` 表示按降序排序。"
+        },
+        "sort_column2": {
+          "name": "排序列2",
+          "detail": "附加列。"
+        }
+      }
+    },
+    "FILTER": {
+      "description": "根据提供的条件过滤范围。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "要过滤的数据。"
+        },
+        "condition1": {
+          "name": "条件1",
+          "detail": "包含与“范围”的第一列或第一行对应的真值或假值的列或行，或计算结果为真或假的数组公式。"
+        },
+        "condition2": {
+          "name": "条件2",
+          "detail": "包含布尔值“TRUE”或“FALSE”的附加行或列，指示“范围”中相应的行或列是否应通过“筛选”。也可以包含计算结果为此类行或列的数组公式表达式。所有条件必须属于同一类型（行或列）。不允许混合使用行条件和列条件。"
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "提供的源范围内的唯一行。",
+      "parameters": {
+        "range": {
+          "name": "范围",
+          "detail": "按唯一条目过滤的数据。"
+        },
+        "by_col": {
+          "name": "按列",
+          "detail": "[选项] - 逻辑值，指示如何比较；按行 = FALSE() 或省略；按列 = TRUE()。"
+        },
+        "occurs_once": {
+          "name": "发生一次",
+          "detail": "[选项] - 逻辑值，仅返回唯一值中一次出现 = TRUE()；包括所有唯一值 = FALSE() 或省略。"
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "返回随机数网格。",
+      "parameters": {
+        "rows": {
+          "name": "行",
+          "detail": "用随机数填充的行数。"
+        },
+        "columns": {
+          "name": "列",
+          "detail": "用随机数填充的列数。"
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "返回连续数字的网格。",
+      "parameters": {
+        "rows": {
+          "name": "行",
+          "detail": "函数结果网格中的行数。"
+        },
+        "columns": {
+          "name": "列",
+          "detail": "函数结果网格的列数。如果省略，结果网格将只有 1 列。"
+        },
+        "start": {
+          "name": "开始",
+          "detail": "序列的起始数字。如果省略，序列将从 1 开始。"
+        },
+        "step": {
+          "name": "步",
+          "detail": "序列中每个值的差异量。如果省略，则每个值的差异量为 1。"
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "根据文字公式或表达式进行评估。",
+      "parameters": {
+        "expression": {
+          "name": "表达",
+          "detail": "公式或表达式"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "调用远程后端服务器/API 上的函数。",
+      "parameters": {
+        "remote_expression": {
+          "name": "远程_表达式",
+          "detail": "公式"
+        }
+      }
+    }
   }
 }

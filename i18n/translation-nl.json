@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Selecteer het hulpmiddel AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Selecteer de tool AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Selecteer het hulpmiddel AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Sneltoets bewerken",
+      "editKeyboardShortcut": "Sneltoets bewerken",
       "setShortcut": "Snelkoppeling instellen",
       "editShortcut": "Snelkoppeling bewerken",
       "shortcutAlreadyExists": "De sneltoets hierboven bestaat al.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Geen",
-      "solid": "Stevig",
+      "thin": "Stevig",
       "dashed": "Gestreept",
       "dotted": "Gestippeld"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Bewerken Waarschuwing",
       "message": "Weet u zeker dat u dit blad wilt verwijderen?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Pagina-indeling",
+      "columnsMessage": "De instellingen die u voor de kolomafstand hebt gekozen, zijn in sommige secties te groot voor de paginabreedte.",
+      "marginsMessage": "De instellingen die u voor de marges hebt gekozen, zijn in sommige secties te groot voor de paginabreedte."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Rechts",
     "customMargins": "Aangepaste marges",
     "customMarginsDescription": "Aangepaste marges definiëren",
+    "column": "Kolom",
+    "columns": "Kolommen",
+    "singleColumn": "1 kolom",
+    "twoColumn": "2 kolommen",
+    "threeColumn": "3 kolommen",
+    "customColumn": "Aangepaste kolommen",
+    "customColumnDescription": "Aangepaste kolommen definiëren",
+    "unitMeasurement": "Eenheidsmeting",
     "header": {
       "0": "Koptekst",
       "1": "Koptekst eerste pagina",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Verschillende even en oneven pagina's",
         "differentFirstEvenOddPages": "Verschillende eerste, even en oneven pagina's"
       }
+    },
+    "columnsModal": {
+      "title": "Aangepaste kolomaanpassing",
+      "columnAmount": "Aantal kolommen",
+      "columnNumber": "Kolomnummer",
+      "width": "Breedte",
+      "spacing": "Afstand",
+      "widthAndSpacing": "Breedte en afstand",
+      "equalColumns": "Gelijke kolombreedte"
     },
     "marginsModal": {
       "title": "Aangepaste marge-aanpassing",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Bekijken",
     "editingDescription": "Document bewerken",
     "viewOnlyDescription": "Alleen bekijken",
+    "editModeDropdown": "Selectie van de bewerkingsmodus",
     "bold": "Vetgedrukt",
     "italic": "Cursief",
     "underline": "Onderstrepen",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Cellen verwijderen en omhoog schuiven",
     "deleteColumnShiftLeft": "Cellen verwijderen en naar links verschuiven",
     "clearBorder": "Duidelijke grens",
-    "cellBorderAll": "Alle grenzen",
-    "cellBorderInside": "Binnengrenzen",
-    "cellBorderOutside": "Buitengrenzen",
-    "cellBorderTop": "Bovenste rand",
-    "cellBorderBottom": "Onderste rand",
-    "cellBorderLeft": "Linker rand",
-    "cellBorderRight": "Rechter rand",
-    "cellBorderVertical": "Verticale rand",
-    "cellBorderHorizontal": "Horizontale rand",
-    "cellBorderNone": "Geen grenzen",
+    "all": "Alle grenzen",
+    "inside": "Binnengrenzen",
+    "outside": "Buitengrenzen",
+    "top": "Bovenste rand",
+    "bottom": "Onderste rand",
+    "left": "Linker rand",
+    "right": "Rechter rand",
+    "vertical": "Verticale rand",
+    "horizontal": "Horizontale rand",
+    "none": "Geen grenzen",
     "borders": "Grenzen",
     "fontSize": {
       "dropdownLabel": "Lettergrootte"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formulebalk",
     "range": "Bereik",
-    "formulas": "Formules",
-    "sumif": "Een voorwaardelijke som over een bereik",
-    "sumsq": "Retourneert de som van de kwadraten van een bereik",
-    "sum": "Telt alle getallen in een bereik bij elkaar op",
-    "asinh": "Retourneert de inverse hyperbolische sinus van een getal",
-    "acos": "Retourneert de arccosinus van een getal, in radialen",
-    "cosh": "Retourneert de hyperbolische cosinus van een getal",
-    "iseven": "Controleert of een getal even is",
-    "isodd": "Controleert of een getal oneven is"
+    "formulas": "Formules"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Een voorwaardelijke som over een bereik.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik dat wordt getoetst aan `criterium`."
+        },
+        "criterion": {
+          "name": "criterium",
+          "detail": "Het patroon of de test die op het `bereik` moet worden toegepast."
+        },
+        "sum_range": {
+          "name": "som_bereik",
+          "detail": "Het bereik dat moet worden opgeteld, als dit verschilt van `bereik`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangens van een hoek, uitgedrukt in radialen.",
+      "parameters": {
+        "angle": {
+          "name": "hoek",
+          "detail": "De hoek waarvan de tangens moet worden bepaald, in radialen."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Hyperbolische tangens van een reëel getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Een reële waarde waarvan de hyperbolische tangens kan worden berekend."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Rondt een getal af naar het dichtstbijzijnde veelvoud van een factor.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die moet worden afgerond naar het dichtstbijzijnde gehele veelvoud van `factor`."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "Het getal waarvan de veelvouden van de `waarde` worden afgerond."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Omgekeerde tangens van een waarde, in radialen.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de inverse tangens moet worden berekend."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Omgekeerde hyperbolische sinus van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de inverse hyperbolische sinus wordt berekend."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Absolute waarde van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het aantal waarvan de absolute waarde moet worden geretourneerd."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Inverse cosinus van een waarde, in radialen.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de inverse cosinus moet worden berekend. Moet tussen `-1` en `1` liggen, inclusief."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Inverse hyperbolische cosinus van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de inverse hyperbolische cosinus moet worden berekend. Moet groter dan of gelijk zijn aan `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Multinominale verdelingsfunctie.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waar u rekening mee moet houden."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken om te overwegen."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Omgekeerde hyperbolische tangens van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvoor de inverse hyperbolische tangens moet worden berekend. Moet tussen -1 en 1 liggen, exclusief."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Boogtangens van een waarde.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "De x-coördinaat van het eindpunt van het lijnsegment waarvan de hoek ten opzichte van de x-as moet worden berekend."
+        },
+        "y": {
+          "name": "En",
+          "detail": "De y-coördinaat van het eindpunt van het lijnsegment waarvan de hoek ten opzichte van de x-as moet worden berekend."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Aantal lege waarden.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarin het aantal blanco's moet worden geteld."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Hyperbolische cosinus van een reëel getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Een reële waarde waarvan de hyperbolische cosinus kan worden berekend."
+        }
+      }
+    },
+    "INT": {
+      "description": "Rondt een getal af naar het dichtstbijzijnde gehele getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die naar beneden moet worden afgerond naar het dichtstbijzijnde gehele getal."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Of de opgegeven waarde even is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan geverifieerd moet worden of deze even is."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Of de opgegeven waarde oneven is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan geverifieerd moet worden of deze oneven is."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Kleinste gemeenschappelijke veelvoud van een of meer gehele getallen.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarvan de factoren in een berekening in aanmerking worden genomen om het kleinste gemene veelvoud te vinden."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken waarvan u rekening moet houden met factoren om het kleinste gemene veelvoud te vinden."
+        }
+      }
+    },
+    "LN": {
+      "description": "De logaritme van een getal met grondtal e (getal van Euler).",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de logaritme, grondtal e, moet worden berekend."
+        }
+      }
+    },
+    "LOG": {
+      "description": "De logaritme van een getal ten opzichte van een grondtal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de logaritme moet worden berekend."
+        },
+        "base": {
+          "name": "baseren",
+          "detail": "De basis die gebruikt wordt voor de berekening van de logaritme."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "De logaritme van een getal met grondtal 10.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de logaritme, grondtal 10, wordt berekend."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Modulo (rest) operator.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Het getal dat gedeeld moet worden om de rest te vinden."
+        },
+        "divisor": {
+          "name": "deler",
+          "detail": "Het getal waardoor gedeeld moet worden."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Rondt een getal af op het dichtstbijzijnde gehele veelvoud.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het getal dat afgerond moet worden naar het dichtstbijzijnde gehele veelvoud van een ander getal."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "Het getal waarvan de veelvouden van de `waarde` worden afgerond."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Rondt een getal af naar het dichtstbijzijnde oneven gehele getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die afgerond moet worden naar het eerstvolgende hoogste oneven getal."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Som van de kwadraten.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "Het eerste getal of bereik waarvan de kwadraten bij elkaar opgeteld moeten worden."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra getallen of bereiken waarvan de kwadraten bij het/de kwadraat(en) van `waarde1` moeten worden opgeteld."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Aantal combinaties uit een set objecten.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "De grootte van de pool met objecten waaruit u kunt kiezen."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Het aantal objecten dat u kunt kiezen."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Som van een reeks getallen en/of cellen.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "Het eerste getal of bereik dat bij elkaar opgeteld wordt."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra getallen of bereiken om toe te voegen aan `waarde1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Subtotaal voor een bereik met behulp van een specifieke functie.",
+      "parameters": {
+        "function_code": {
+          "name": "functie_code",
+          "detail": "De functie die gebruikt moet worden bij subtotaal-aggregatie."
+        },
+        "range1": {
+          "name": "bereik1",
+          "detail": "Het eerste bereik waarover een subtotaal wordt berekend."
+        },
+        "range2": {
+          "name": "bereik2",
+          "detail": "Aanvullende bereiken waarover subtotalen worden berekend."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Inverse sinus van een waarde, in radialen.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de inverse sinus moet worden berekend. Moet tussen `-1` en `1` liggen, inclusief."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Een voorwaardelijke telling over een bereik.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik dat wordt getoetst aan `criterium`."
+        },
+        "criterion": {
+          "name": "criterium",
+          "detail": "Het patroon of de test die op het `bereik` moet worden toegepast."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Converteert een hoekwaarde in graden naar radialen.",
+      "parameters": {
+        "angle": {
+          "name": "hoek",
+          "detail": "De hoek om van graden naar radialen om te rekenen."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Een willekeurig getal tussen 0 inclusief en 1 exclusief."
+    },
+    "COUNTUNIQUE": {
+      "description": "Telt het aantal unieke waarden in een bereik.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik dat in aanmerking moet worden genomen voor uniciteit."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij uniciteit."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Converteert een hoekwaarde in radialen naar graden.",
+      "parameters": {
+        "angle": {
+          "name": "hoek",
+          "detail": "De hoek om van radialen naar graden om te rekenen."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Complementaire gaussfoutfunctie van een waarde.",
+      "parameters": {
+        "z": {
+          "name": "Met",
+          "detail": "Het getal waarvoor de complementaire Gauss-foutfunctie moet worden berekend."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Rondt een getal af naar het dichtstbijzijnde even gehele getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die afgerond moet worden naar het eerstvolgende hogere even getal."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Het getal van Euler, e (~2,718), verheven tot een macht.",
+      "parameters": {
+        "exponent": {
+          "name": "exponent",
+          "detail": "De exponent waarmee e wordt verheven."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Faculteit van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het getal of de verwijzing naar een getal waarvan de faculteit wordt berekend en geretourneerd."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"dubbele faculteit\" van een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het getal of de verwijzing naar een getal waarvan de dubbele faculteit wordt berekend en geretourneerd."
+        }
+      }
+    },
+    "PI": {
+      "description": "Het getal pi."
+    },
+    "GCD": {
+      "description": "Grootste gemene deler van één of meer gehele getallen.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarvan de factoren in een berekening in overweging moeten worden genomen om de grootste gemene deler te vinden."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken waarvan u rekening moet houden met de factoren om de grootste gemene deler te vinden."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Willekeurig geheel getal tussen twee waarden, inclusief.",
+      "parameters": {
+        "low": {
+          "name": "laag",
+          "detail": "Het laagste uiteinde van het willekeurige bereik."
+        },
+        "high": {
+          "name": "hoog",
+          "detail": "Het hoogste uiteinde van het willekeurige bereik."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Rondt een getal af volgens standaardregels.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die afgerond moet worden naar het aantal plaatsen."
+        },
+        "places": {
+          "name": "plaatsen",
+          "detail": "Het aantal decimalen waarop afgerond moet worden."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Rondt een getal naar beneden af.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die afgerond moet worden op het aantal decimalen, altijd naar beneden afgerond."
+        },
+        "places": {
+          "name": "plaatsen",
+          "detail": "Het aantal decimalen waarop afgerond moet worden."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Rondt een getal naar boven af.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die afgerond moet worden op het aantal decimalen, altijd naar boven afgerond."
+        },
+        "places": {
+          "name": "plaatsen",
+          "detail": "Het aantal decimalen waarop afgerond moet worden."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Som van een machtreeks.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "De invoer voor de machtreeks. Varieert afhankelijk van het type benadering; kan een hoek, exponent of een andere waarde zijn."
+        },
+        "n": {
+          "name": "N",
+          "detail": "De beginmacht waartoe `x` in de machtreeks moet worden verheven."
+        },
+        "m": {
+          "name": "M",
+          "detail": "De additieve stap waarmee `x` moet worden verhoogd."
+        },
+        "a": {
+          "name": "A",
+          "detail": "De matrix of het bereik met de coëfficiënten van de machtreeks."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Teken van een opgegeven getal (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan het teken wordt geëvalueerd."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus van een hoek in radialen.",
+      "parameters": {
+        "angle": {
+          "name": "hoek",
+          "detail": "De hoek waarvan de sinus moet worden gevonden, in radialen."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Hyperbolische sinus van een reëel getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Een reële waarde waarvan de hyperbolische sinus kan worden berekend."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Positieve vierkantswortel van een positief getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het getal waarvan de positieve vierkantswortel moet worden berekend."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Vierkantswortel van het product van pi en getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het getal dat met Pi wordt vermenigvuldigd en waarvan de vierkantswortel als resultaat wordt gegeven"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritme van de gammafunctie.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De invoer voor de Gamma-functie. De natuurlijke logaritme van Gamma(`waarde`) wordt geretourneerd."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosinus van een hoek in radialen.",
+      "parameters": {
+        "angle": {
+          "name": "hoek",
+          "detail": "De hoek waarvan de cosinus moet worden gevonden, in radialen."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Kapt een getal af.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die moet worden afgekapt."
+        },
+        "places": {
+          "name": "plaatsen",
+          "detail": "Het aantal significante cijfers rechts van de decimale komma dat behouden moet blijven."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Één getal gedeeld door een ander.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Het getal dat gedeeld moet worden."
+        },
+        "divisor": {
+          "name": "deler",
+          "detail": "Het getal waardoor gedeeld moet worden."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Een getal tot een macht verheven.",
+      "parameters": {
+        "base": {
+          "name": "baseren",
+          "detail": "Het getal dat tot de macht `exponent` verheven moet worden."
+        },
+        "exponent": {
+          "name": "exponent",
+          "detail": "De exponent waarnaar `basis` moet worden verheven."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Berekent de som van een bereik, afhankelijk van meerdere criteria.",
+      "parameters": {
+        "sum_range": {
+          "name": "som_bereik",
+          "detail": "Het bereik om op te tellen."
+        },
+        "criteria_range1": {
+          "name": "criteria_bereik1",
+          "detail": "Het bereik waarmee u toetst aan criterium 1."
+        },
+        "criterion1": {
+          "name": "criterium1",
+          "detail": "Het patroon of de test die moet worden toegepast op criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "criteria_bereik2",
+          "detail": "Extra bereiken om te controleren."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Tel waarden op basis van meerdere criteria.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "criteria_bereik1",
+          "detail": "Het bereik dat moet worden gecontroleerd met `criterium1`."
+        },
+        "criterion1": {
+          "name": "criterium1",
+          "detail": "Het patroon of de test die moet worden toegepast op `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "criteria_bereik2",
+          "detail": "Extra bereiken om te controleren."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Resultaat van het vermenigvuldigen van een reeks getallen.",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "Het eerste getal of bereik dat voor het product moet worden berekend."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Meer getallen of bereiken om voor het product te berekenen."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Het harmonisch gemiddelde van een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de populatie."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken om op te nemen in de populatie."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hypergeometrische verdelingswaarschijnlijkheid.",
+      "parameters": {
+        "num_successes": {
+          "name": "aantal_successen",
+          "detail": "Het gewenste aantal successen."
+        },
+        "num_draws": {
+          "name": "num_draws",
+          "detail": "Het aantal toegestane trekkingen."
+        },
+        "successes_in_pop": {
+          "name": "successen_in_pop",
+          "detail": "Het totale aantal successen in de populatie."
+        },
+        "pop_size": {
+          "name": "pop_formaat",
+          "detail": "De totale omvang van de bevolking"
+        },
+        "cumulative": {
+          "name": "cumulatief",
+          "detail": "Bepaal de logische waarde van de functievorm.\n\nAls cumulatief TRUE() is, retourneert HYPGEOM.DIST de cumulatieve verdelingsfunctie;\n\nals FALSE() is, retourneert het de kansdichtheidsfunctie."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Y-intercept van de lijn afgeleid via lineaire regressie.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens weergeeft."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosis van een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de dataset."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken die u in de dataset wilt opnemen."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Het op één na grootste element uit een dataset.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "Array of bereik met de te overwegen dataset."
+        },
+        "n": {
+          "name": "N",
+          "detail": "De rangschikking van het element dat geretourneerd moet worden, van groot naar klein."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Standaardafwijking van de steekproef (tekst als 0).",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van het monster."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken om op te nemen in de steekproef."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Standaardafwijking van een gehele populatie.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de populatie."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken om op te nemen in de populatie."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Het geometrisch gemiddelde van een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de populatie."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken om op te nemen in de populatie."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Percentagerang (percentiel) van 0 tot en met 1.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "De matrix of het bereik met de dataset die in aanmerking moet worden genomen."
+        },
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan de procentuele rang wordt bepaald."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in de berekening wordt gebruikt. De standaardwaarde is 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Verwachte y-waarde op basis van lineaire regressie.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "De waarde op de x-as die moet worden voorspeld."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens vertegenwoordigt."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Inverse Fisher-transformatie van een opgegeven waarde.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvoor de inverse Fisher-transformatie moet worden berekend."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Fisher-transformatie van een opgegeven waarde.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvoor de Fisher-transformatie moet worden berekend."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Het aantal numerieke waarden in de dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee u rekening moet houden bij het tellen."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het tellen."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Het aantal waarden in een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee u rekening moet houden bij het tellen."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het tellen."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Numerieke gemiddelde waarde in een dataset, waarbij tekst buiten beschouwing wordt gelaten.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de gemiddelde waarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de gemiddelde waarde."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binominale verdelingswaarschijnlijkheid.",
+      "parameters": {
+        "num_successes": {
+          "name": "aantal_successen",
+          "detail": "Het aantal successen waarvoor de waarschijnlijkheid in `num_trials`-proeven moet worden berekend."
+        },
+        "num_trials": {
+          "name": "aantal_pogingen",
+          "detail": "Het aantal onafhankelijke onderzoeken."
+        },
+        "prob_success": {
+          "name": "prob_success",
+          "detail": "De kans op succes bij een bepaalde proef."
+        },
+        "cumulative": {
+          "name": "cumulatief",
+          "detail": "Of de binominale cumulatieve verdeling moet worden gebruikt."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "De som van de kwadraten van afwijkingen op basis van een steekproef.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van het monster."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken om op te nemen in de steekproef."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Gemiddelde van waarden afhankelijk van criteria.",
+      "parameters": {
+        "criteria_range": {
+          "name": "criteria_bereik",
+          "detail": "Het bereik waaraan u wilt toetsen aan `criterium`."
+        },
+        "criterion": {
+          "name": "criterium",
+          "detail": "Het patroon of de test die op `criteria_range` moet worden toegepast."
+        },
+        "average_range": {
+          "name": "gemiddeld_bereik",
+          "detail": "Het bereik voor het gemiddelde. Indien niet opgenomen, wordt 'criteria_range' gebruikt voor het gemiddelde."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Gemiddelde van waarden afhankelijk van meerdere criteria.",
+      "parameters": {
+        "average_range": {
+          "name": "gemiddeld_bereik",
+          "detail": "Het bereik tot het gemiddelde."
+        },
+        "criteria_range1": {
+          "name": "criteria_bereik1",
+          "detail": "Het bereik dat moet worden gecontroleerd met `criterium1`."
+        },
+        "criterion1": {
+          "name": "criterium1",
+          "detail": "Het patroon of de test die moet worden toegepast op `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "criteria_bereik2",
+          "detail": "Extra bereiken om te controleren."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Aantal permutaties van een aantal objecten.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "De grootte van de pool met objecten waaruit u kunt kiezen."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Het aantal objecten dat u kunt kiezen."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Gemiddelde van een dataset exclusief hoog-/laaggrenzen.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "Array of bereik met de te overwegen dataset."
+        },
+        "exclude_proportion": {
+          "name": "uitsluiten_proportion",
+          "detail": "Het deel van de dataset dat moet worden uitgesloten van de uiteinden van de set."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearson product-moment correlatiecoëfficiënt.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens vertegenwoordigt."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minimale numerieke waarde in een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de minimumwaarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de minimumwaarde."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimumwaarde in een numerieke dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de minimumwaarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de minimumwaarde."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Mediaanwaarde in een numerieke dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de mediaanwaarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de mediaanwaarde."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maximale numerieke waarde in een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de maximumwaarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de maximumwaarde."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maximale waarde in een numerieke dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik waarmee rekening moet worden gehouden bij het berekenen van de maximumwaarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken waarmee u rekening moet houden bij het berekenen van de maximumwaarde."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Waarschijnlijkheidswaarden liggen binnen een bereik.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "Array of bereik met de te overwegen dataset."
+        },
+        "probabilities": {
+          "name": "waarschijnlijkheden",
+          "detail": "Array of bereik met waarschijnlijkheden die overeenkomen met `data`."
+        },
+        "low_limit": {
+          "name": "lage_limiet",
+          "detail": "De ondergrens van het waardebereik waarvoor de waarschijnlijkheid moet worden berekend."
+        },
+        "high_limit": {
+          "name": "hoge_limiet",
+          "detail": "De bovengrens van het waardebereik waarvoor de waarschijnlijkheid moet worden berekend."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Kwadraat van de correlatiecoëfficiënt.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens vertegenwoordigt."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Variantie van de steekproef (tekst als 0).",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van het monster."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Aanvullende waarden of bereiken om op te nemen in de steekproef."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Variantie van de gehele populatie (tekst als 0).",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de populatie."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken om op te nemen in de populatie."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Standaardfout van voorspelde y-waarden bij regressie.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens weergeeft."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Genormaliseerd equivalent van een stochastische variabele.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde van de stochastische variabele die genormaliseerd moet worden."
+        },
+        "mean": {
+          "name": "gemeen",
+          "detail": "Het gemiddelde van de verdeling."
+        },
+        "standard_deviation": {
+          "name": "standaarddeviatie",
+          "detail": "De standaardafwijking van de verdeling."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Het N-de kleinste element in een dataset.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "De matrix of het bereik met de dataset die in aanmerking moet worden genomen."
+        },
+        "n": {
+          "name": "N",
+          "detail": "De rangschikking van kleinste naar grootste van het element dat geretourneerd moet worden."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Helling van de lijn uit lineaire regressie van gegevens.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Het bereik dat de matrix of matrix van afhankelijke gegevens weergeeft."
+        },
+        "data_x": {
+          "name": "gegevens_x",
+          "detail": "Het bereik dat de matrix of matrix van onafhankelijke gegevens weergeeft."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Scheefheid van een dataset.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde of het eerste bereik van de dataset."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra waarden of bereiken die u in de dataset wilt opnemen."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Verticaal opzoeken.",
+      "parameters": {
+        "search_key": {
+          "name": "zoeksleutel",
+          "detail": "De waarde waarnaar moet worden gezocht. Bijvoorbeeld `42`, `\"Cats\"` of `I24`."
+        },
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik dat voor de zoekopdracht in aanmerking komt. De eerste kolom in het bereik wordt doorzocht op de sleutel die is opgegeven in 'search_key'."
+        },
+        "index": {
+          "name": "index",
+          "detail": "De kolomindex van de waarde die moet worden geretourneerd, waarbij de eerste kolom in `bereik` het nummer 1 heeft."
+        },
+        "is_sorted": {
+          "name": "is_gesorteerd",
+          "detail": "Geeft aan of de te doorzoeken kolom (de eerste kolom van het opgegeven bereik) gesorteerd is. In dat geval wordt de dichtstbijzijnde overeenkomst voor `zoeksleutel` geretourneerd."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Horizontale opzoekactie",
+      "parameters": {
+        "search_key": {
+          "name": "zoeksleutel",
+          "detail": "De waarde waarnaar moet worden gezocht. Bijvoorbeeld `42`, `\"Cats\"` of `I24`."
+        },
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik dat voor de zoekopdracht in aanmerking komt. De eerste rij in het bereik wordt doorzocht op de sleutel die is opgegeven in 'search_key'."
+        },
+        "index": {
+          "name": "index",
+          "detail": "De rijindex van de waarde die moet worden geretourneerd, waarbij de eerste rij in `bereik` het nummer 1 heeft."
+        },
+        "is_sorted": {
+          "name": "is_gesorteerd",
+          "detail": "Geeft aan of de te doorzoeken rij (de eerste rij van het opgegeven bereik) gesorteerd is."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Zoek een waarde op.",
+      "parameters": {
+        "search_key": {
+          "name": "zoeksleutel",
+          "detail": "De waarde waarnaar in de rij of kolom moet worden gezocht. Bijvoorbeeld `42`, `\"Cats\"` of `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "zoekbereik|zoekresultaatreeks",
+          "detail": "Eén manier om deze functie te gebruiken is om één gesorteerde rij of kolom ('search_range') te gebruiken om te zoeken naar de 'search_key' met een tweede argument ('result_range'). Een andere manier is om deze twee argumenten te combineren tot één 'search_result_array', waarbij de eerste rij of kolom wordt doorzocht en een waarde wordt geretourneerd uit de laatste rij of kolom in de array. Als 'search_key' niet wordt gevonden, kan een niet-exacte match worden geretourneerd."
+        },
+        "result_range": {
+          "name": "resultaatbereik",
+          "detail": "Het bereik waaruit een resultaat moet worden geretourneerd. De geretourneerde waarde komt overeen met de locatie waar `search_key` zich bevindt in `search_range`. Dit bereik mag slechts één rij of kolom zijn en mag niet worden gebruikt bij gebruik van de `search_result_array`-methode."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Celverwijzing als een tekenreeks.",
+      "parameters": {
+        "row": {
+          "name": "rij",
+          "detail": "Het rijnummer van de celverwijzing"
+        },
+        "column": {
+          "name": "kolom",
+          "detail": "Het kolomnummer (niet de naam) van de celverwijzing. `A` is kolomnummer `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "absolute_relatieve_modus",
+          "detail": "Een indicatie of de referentie rij-/kolomabsoluut is. `1` is rij- en kolomabsoluut (bijv. $A$1), `2` is rij-absoluut en kolomrelatief (bijv. A$1), `3` is rij-absoluut en kolomabsoluut (bijv. $A1) en `4` is rij- en kolomrelatief (bijv. A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_notatie",
+          "detail": "Een Booleaanse waarde die aangeeft of de notatie in `A1`-stijl (TRUE) of `R1C1`-stijl (FALSE) moet worden gebruikt."
+        },
+        "sheet": {
+          "name": "laken",
+          "detail": "Tekst die de naam van het blad aangeeft waarnaar het adres verwijst."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Een celverwijzing gespecificeerd door een tekenreeks.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "celverwijzing_als_tekenreeks",
+          "detail": "Een celverwijzing, geschreven als een tekenreeks tussen aanhalingstekens."
+        },
+        "is_A1_notation": {
+          "name": "is_A1_notatie",
+          "detail": "Geeft aan of de celverwijzing in A1-notatie (TRUE) of R1C1-notatie (FALSE) is."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Rijnummer van een opgegeven cel.",
+      "parameters": {
+        "cell_reference": {
+          "name": "celverwijzing",
+          "detail": "De cel waarvan het rijnummer wordt geretourneerd."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Aantal rijen in een opgegeven matrix of bereik.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik waarvan het aantal rijen wordt geretourneerd."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Kolomnummer van een opgegeven cel.",
+      "parameters": {
+        "cell_reference": {
+          "name": "celverwijzing",
+          "detail": "De cel waarvan het kolomnummer wordt geretourneerd. Kolom `A` komt overeen met `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Aantal kolommen in een opgegeven matrix of bereik.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "Het bereik waarvan het aantal kolommen wordt geretourneerd."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Een bereikreferentie-offset ten opzichte van een cel.",
+      "parameters": {
+        "cell_reference": {
+          "name": "celverwijzing",
+          "detail": "Het startpunt voor het tellen van de verschoven rijen en kolommen."
+        },
+        "offset_rows": {
+          "name": "offset_rijen",
+          "detail": "Het aantal rijen waarmee de offset moet worden aangepast."
+        },
+        "offset_columns": {
+          "name": "offset_kolommen",
+          "detail": "Het aantal kolommen dat moet worden verschoven."
+        },
+        "height": {
+          "name": "hoogte",
+          "detail": "De hoogte van het bereik waarnaar moet worden teruggekeerd vanaf het offsetdoel."
+        },
+        "width": {
+          "name": "breedte",
+          "detail": "De breedte van het bereik waarin moet worden teruggekeerd vanaf het offsetdoel."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Positie van het item in het bereik dat overeenkomt met de waarde.",
+      "parameters": {
+        "search_key": {
+          "name": "zoeksleutel",
+          "detail": "De waarde waarnaar moet worden gezocht. Bijvoorbeeld `42`, `\"Cats\"` of `I24`."
+        },
+        "range": {
+          "name": "bereik",
+          "detail": "De eendimensionale matrix die doorzocht moet worden."
+        },
+        "search_type": {
+          "name": "zoektype",
+          "detail": "De zoekmethode `1` (standaard) vindt de grootste waarde kleiner dan of gelijk aan `search_key` wanneer `range` in oplopende volgorde is gesorteerd. `0` vindt de exacte waarde wanneer `range` niet is gesorteerd. `-1` vindt de kleinste waarde groter dan of gelijk aan `search_key` wanneer `range` in aflopende volgorde is gesorteerd."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Inhoud van de cel gespecificeerd door rij- en kolomoffset.",
+      "parameters": {
+        "reference": {
+          "name": "referentie",
+          "detail": "De matrix van cellen waarin de offset moet worden toegepast."
+        },
+        "row": {
+          "name": "rij",
+          "detail": "Het aantal offsetrijen."
+        },
+        "column": {
+          "name": "kolom",
+          "detail": "Het aantal offsetkolommen."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Haalt een samengevoegde waarde uit een draaitabel die overeenkomt met de opgegeven rij- en kolomkoppen.",
+      "parameters": {
+        "value_name": {
+          "name": "waarde_naam",
+          "detail": "De naam van de waarde in de draaitabel waarvoor u gegevens wilt ophalen."
+        },
+        "any_pivot_table_cell": {
+          "name": "elke_draaitabel_cel",
+          "detail": "Een verwijzing naar een cel in de gewenste draaitabel (bij voorkeur in de bovenhoek)."
+        },
+        "original_column": {
+          "name": "originele_kolom",
+          "detail": "De naam van de kolom in de oorspronkelijke gegevensset (niet de draaitabel)."
+        },
+        "pivot_item": {
+          "name": "draaipunt_item",
+          "detail": "De naam van de rij of kolom die in de draaitabel wordt weergegeven en die overeenkomt met *originele_kolom* en die u wilt ophalen."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Een element uit een lijst met keuzes op basis van de index.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Welke keuze (uit maximaal 30) moet ik retourneren?"
+        },
+        "choice1": {
+          "name": "keuze1",
+          "detail": "Een mogelijke waarde om te retourneren. Verplicht. Kan een verwijzing naar een cel of een individuele waarde zijn."
+        },
+        "choice2": {
+          "name": "keuze2",
+          "detail": "Extra waarden waaruit u kunt kiezen."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Converteert uren/minuten/seconden naar een tijd.",
+      "parameters": {
+        "hour": {
+          "name": "uur",
+          "detail": "Het uurgedeelte van de tijd."
+        },
+        "minute": {
+          "name": "minuut",
+          "detail": "Het minutengedeelte van de tijd."
+        },
+        "second": {
+          "name": "seconde",
+          "detail": "Het tweede onderdeel van de tijd."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Zet een tijdstring om in een serienummer.",
+      "parameters": {
+        "time_string": {
+          "name": "tijdreeks",
+          "detail": "De tekenreeks die de tijdsrepresentatie bevat."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Laatste dag van een maand vóór of na een datum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De datum vanaf waaraf het resultaat wordt berekend."
+        },
+        "months": {
+          "name": "maanden",
+          "detail": "Het aantal maanden vóór (negatief) of na (positief) de 'start_date' dat in aanmerking moet worden genomen."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Geef een aantal maanden voor/na een andere datum aan.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De datum vanaf waaraf het resultaat wordt berekend."
+        },
+        "months": {
+          "name": "maanden",
+          "detail": "Het aantal maanden vóór (negatief) of na (positief) de 'start_date' dat moet worden berekend."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Tweede onderdeel van een specifieke tijd.",
+      "parameters": {
+        "time": {
+          "name": "tijd",
+          "detail": "Het tijdstip vanaf waar de tweede component moet worden berekend"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Klein onderdeel van een specifieke tijd.",
+      "parameters": {
+        "time": {
+          "name": "tijd",
+          "detail": "Het tijdstip waarvan de minuutcomponent wordt berekend."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Uurcomponent van een specifieke tijd.",
+      "parameters": {
+        "time": {
+          "name": "tijd",
+          "detail": "Het tijdstip waarvan de uurcomponent wordt berekend."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Huidige datum en tijd als datumwaarde."
+    },
+    "NETWORKDAYS": {
+      "description": "Netto werkdagen tussen twee opgegeven dagen.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Begindatum van de periode waarvan het aantal netto werkdagen wordt berekend."
+        },
+        "end_date": {
+          "name": "einddatum",
+          "detail": "De einddatum van de periode waarvan het aantal netto werkdagen wordt berekend."
+        },
+        "holidays": {
+          "name": "vakantie",
+          "detail": "Een bereik of matrixconstante die de serienummers van de datum bevat om rekening te houden met feestdagen."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "ISO-weeknummer van het jaar.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waarvan het ISO-weeknummer moet worden bepaald. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Weeknummer van het jaar.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waarvan het weeknummer moet worden bepaald. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "type": {
+          "name": "type",
+          "detail": "Een getal dat de dag aangeeft waarop de week begint. Zondag = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Dag van de week van de opgegeven datum (als nummer).",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waarvan de dag van de week wordt bepaald. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "type": {
+          "name": "type",
+          "detail": "Een getal dat aangeeft welk talstelsel gebruikt moet worden om weekdagen weer te geven. Standaard begint de telling met zondag = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Dag van de maand waarop een specifieke datum valt.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waaruit de dag moet worden gehaald."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Aantal dagen tussen twee data.",
+      "parameters": {
+        "end_date": {
+          "name": "einddatum",
+          "detail": "Het einde van het datumbereik."
+        },
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Het begin van het datumbereik."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Dagen tussen twee data in een jaar van 360 dagen.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De startdatum die in de berekening moet worden meegenomen. Moet verwijzen naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "end_date": {
+          "name": "einddatum",
+          "detail": "De einddatum die in de berekening moet worden meegenomen. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "method": {
+          "name": "methode",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Converteert jaar/maand/dag naar een datum.",
+      "parameters": {
+        "year": {
+          "name": "jaar",
+          "detail": "Het jaartal van de datum."
+        },
+        "month": {
+          "name": "maand",
+          "detail": "Het maandgedeelte van de datum."
+        },
+        "day": {
+          "name": "dag",
+          "detail": "Het daggedeelte van de datum."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Converteert een datumstring naar een datumwaarde.",
+      "parameters": {
+        "date_string": {
+          "name": "datum_string",
+          "detail": "De tekenreeks die de datum weergeeft."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Datumverschil.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De startdatum die in de berekening moet worden meegenomen. Moet verwijzen naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "end_date": {
+          "name": "einddatum",
+          "detail": "De einddatum die in de berekening moet worden meegenomen. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "unit": {
+          "name": "eenheid",
+          "detail": "Een tekenreeksafkorting voor een tijdseenheid. Bijvoorbeeld \"M\" voor maand. Geaccepteerde waarden zijn \"J\", \"M\", \"D\", \"MD\", \"JM\", \"JD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Aantal werkdagen vanaf de startdatum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De datum vanaf wanneer de telling begint."
+        },
+        "num_days": {
+          "name": "aantal_dagen",
+          "detail": "Het aantal werkdagen dat verstrijkt vanaf de startdatum. Indien negatief, wordt er teruggeteld."
+        },
+        "holidays": {
+          "name": "vakantie",
+          "detail": "Een bereik of matrixconstante die de datums bevat waarvoor feestdagen gelden."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Jaar aangegeven door een bepaalde datum.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waaruit het jaartal moet worden gehaald."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Het exacte aantal jaren tussen twee data.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "De startdatum die in de berekening moet worden meegenomen. Moet verwijzen naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "end_date": {
+          "name": "einddatum",
+          "detail": "De einddatum die in de berekening moet worden meegenomen. Moet een verwijzing zijn naar een cel met een datum, een functie die een datumtype retourneert, of een getal."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Huidige datum als datumwaarde."
+    },
+    "MONTH": {
+      "description": "Maand van het jaar waarin een bepaalde datum valt.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "De datum waarvan de maand moet worden afgeleid."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Jaarlijkse effectieve rentevoet.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "nominaal_tarief",
+          "detail": "Het nominale rentepercentage per jaar."
+        },
+        "periods_per_year": {
+          "name": "perioden_per_jaar",
+          "detail": "Het aantal rentevergoedingsperiodes per jaar."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Maakt een getal op als een valuta die specifiek is voor de landinstellingen van uw spreadsheet.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "De waarde die moet worden opgemaakt."
+        },
+        "number_of_places": {
+          "name": "aantal_plaatsen",
+          "detail": "Het aantal decimalen dat wordt weergegeven."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Converteert een decimale breuk naar een decimale waarde.",
+      "parameters": {
+        "fractional_price": {
+          "name": "fractionele_prijs",
+          "detail": "De prijsopgave is gebaseerd op het decimale breukprincipe."
+        },
+        "unit": {
+          "name": "eenheid",
+          "detail": "De eenheden van de breuk, bijvoorbeeld `8` voor 1/8e of `32` voor 1/32e."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Converteert een decimale waarde naar een decimale breuk.",
+      "parameters": {
+        "decimal_price": {
+          "name": "decimale_prijs",
+          "detail": "De prijsopgave wordt weergegeven als decimale waarde."
+        },
+        "unit": {
+          "name": "eenheid",
+          "detail": "De eenheden van de gewenste breuk, bijvoorbeeld `8` voor 1/8e of `32` voor 1/32e."
+        }
+      }
+    },
+    "DB": {
+      "description": "Afschrijving via degressieve afschrijvingsmethode.",
+      "parameters": {
+        "cost": {
+          "name": "kosten",
+          "detail": "De initiële kosten van het actief."
+        },
+        "salvage": {
+          "name": "redden",
+          "detail": "De waarde van de activa aan het einde van de afschrijving."
+        },
+        "life": {
+          "name": "leven",
+          "detail": "Het aantal perioden waarover de activa worden afgeschreven."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "De enkele periode binnen de `levensduur` waarvoor de afschrijving wordt berekend."
+        },
+        "month": {
+          "name": "maand",
+          "detail": "Het aantal maanden in het eerste afschrijvingsjaar."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Afschrijving via de dubbele degressieve afschrijvingsmethode.",
+      "parameters": {
+        "cost": {
+          "name": "kosten",
+          "detail": "De initiële kosten van het actief."
+        },
+        "salvage": {
+          "name": "redden",
+          "detail": "De waarde van de activa aan het einde van de afschrijving."
+        },
+        "life": {
+          "name": "leven",
+          "detail": "Het aantal perioden waarover de activa worden afgeschreven."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "De enkele periode binnen de `levensduur` waarvoor de afschrijving wordt berekend."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "De factor waarmee de afschrijving afneemt."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Rentepercentage van een lijfrentebelegging.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "payment_per_period": {
+          "name": "betaling_per_periode",
+          "detail": "Het per periode te betalen bedrag."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "Een schatting van de rente."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Cumulatief hoofdbedrag betaald over een reeks perioden.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "first_period": {
+          "name": "eerste_periode",
+          "detail": "Het nummer van de betalingsperiode waarop de cumulatieve berekening begint."
+        },
+        "last_period": {
+          "name": "laatste_periode",
+          "detail": "Het nummer van de betalingsperiode waarmee de cumulatieve berekening wordt beëindigd."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Aantal coupons tussen afwikkeling en vervaldatum.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Afschrijving via de som van de jaren-cijfers-methode.",
+      "parameters": {
+        "cost": {
+          "name": "kosten",
+          "detail": "De initiële kosten van het actief."
+        },
+        "salvage": {
+          "name": "redden",
+          "detail": "De waarde van de activa aan het einde van de afschrijving."
+        },
+        "life": {
+          "name": "leven",
+          "detail": "Het aantal perioden waarover de activa worden afgeschreven."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "De enkele periode binnen de `levensduur` waarvoor de afschrijving wordt berekend."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Equivalent rendement voor een schatkistpapier.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde kan worden afgelost."
+        },
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van de rekening op het moment van aankoop."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Het rendement van een Amerikaans schatkistpapier op basis van de prijs.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "price": {
+          "name": "prijs",
+          "detail": "De prijs waartegen het effect wordt gekocht per 100 nominale waarde."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Prijs van Amerikaans schatkistpapier.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van de rekening op het moment van aankoop."
+        }
+      }
+    },
+    "PV": {
+      "description": "Huidige waarde van een lijfrentebelegging.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "payment_amount": {
+          "name": "betalingsbedrag",
+          "detail": "Het per periode te betalen bedrag."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Aantal dagen vanaf de eerste coupon tot aan de afwikkeling.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_tel_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Dagen in de couponperiode die de afwikkelingsdatum bevatten.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "FV": {
+      "description": "Toekomstige waarde van een lijfrentebelegging.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "payment_amount": {
+          "name": "betalingsbedrag",
+          "detail": "Het per periode te betalen bedrag."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Toekomstige waarde van het kapitaal uit een reeks rentetarieven.",
+      "parameters": {
+        "principal": {
+          "name": "voornaam",
+          "detail": "Het bedrag aan startkapitaal of de waarde waarop de samenstelling betrekking heeft."
+        },
+        "rate_schedule": {
+          "name": "tariefschema",
+          "detail": "Een reeks rentetarieven die worden samengesteld op basis van de 'hoofdsom'."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Jaarlijkse opbrengst van een waardepapier dat periodiek rente oplevert.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "rate": {
+          "name": "tarief",
+          "detail": "Het geannualiseerde rentepercentage."
+        },
+        "price": {
+          "name": "prijs",
+          "detail": "De prijs waartegen het effect wordt gekocht per 100 nominale waarde."
+        },
+        "redemption": {
+          "name": "aflossing",
+          "detail": "Het aflossingsbedrag per 100 nominale waarde, of pari."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Jaarlijks rendement van een disconto-effect.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde kan worden afgelost."
+        },
+        "price": {
+          "name": "prijs",
+          "detail": "De prijs waartegen het effect wordt gekocht per 100 nominale waarde."
+        },
+        "redemption": {
+          "name": "aflossing",
+          "detail": "Het aflossingsbedrag per 100 nominale waarde, of pari."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Jaarlijkse nominale rentevoet.",
+      "parameters": {
+        "effective_rate": {
+          "name": "effectieve_ratio",
+          "detail": "Het effectieve rentepercentage per jaar."
+        },
+        "periods_per_year": {
+          "name": "perioden_per_jaar",
+          "detail": "Het aantal rentevergoedingsperiodes per jaar."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Intern rendement bij niet-periodieke kasstromen.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kasstroombedragen",
+          "detail": "Een matrix of bereik met de inkomsten of betalingen die verband houden met de investering."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_data",
+          "detail": "Een matrix of bereik met datums die overeenkomen met de kasstromen in `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "Een schatting van het interne rendement."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Gewijzigd intern rendement.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kasstroombedragen",
+          "detail": "Een matrix of bereik met de inkomsten of betalingen die verband houden met de investering."
+        },
+        "financing_rate": {
+          "name": "financieringsrente",
+          "detail": "De rente die wordt betaald over geïnvesteerde gelden."
+        },
+        "reinvestment_return_rate": {
+          "name": "herinvesteringsrendement",
+          "detail": "Het rendement (als percentage) dat wordt verdiend bij herinvestering van de inkomsten uit de investering."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Intern rendement bij periodieke kasstromen.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kasstroombedragen",
+          "detail": "Een matrix of bereik met de inkomsten of betalingen die verband houden met de investering."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "Een schatting van het interne rendement."
+        }
+      }
+    },
+    "NPV": {
+      "description": "De netto contante waarde van een investering, gebaseerd op een reeks periodieke kasstromen en een discontopercentage.",
+      "parameters": {
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van de investering over één periode."
+        },
+        "cashflow1": {
+          "name": "kasstroom1",
+          "detail": "De eerste toekomstige kasstroom."
+        },
+        "cashflow2": {
+          "name": "kasstroom2",
+          "detail": "Extra toekomstige kasstromen."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Netto contante waarde gegeven niet-periodieke kasstromen.",
+      "parameters": {
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van de investering over één periode."
+        },
+        "cashflow_amounts": {
+          "name": "kasstroombedragen",
+          "detail": "Een cellenbereik met de inkomsten of betalingen die verband houden met de investering."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_data",
+          "detail": "Een cellenbereik met datums die overeenkomen met de kasstromen in `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Cumulatieve rente betaald over een reeks perioden.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "first_period": {
+          "name": "eerste_periode",
+          "detail": "Het nummer van de betalingsperiode waarop de cumulatieve berekening begint."
+        },
+        "last_period": {
+          "name": "laatste_periode",
+          "detail": "Het nummer van de betalingsperiode waarmee de cumulatieve berekening wordt beëindigd."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Periodieke betaling voor een lijfrentebelegging.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Betaling van rente over een investering.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "De afschrijvingsperiode, uitgedrukt in aantal perioden."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Betaling van de hoofdsom van een belegging.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "De afschrijvingsperiode, uitgedrukt in aantal perioden."
+        },
+        "number_of_periods": {
+          "name": "aantal_perioden",
+          "detail": "Het aantal betalingen dat moet worden gedaan."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Bereken de effectieve rentevoet.",
+      "parameters": {
+        "buy_date": {
+          "name": "koopdatum",
+          "detail": "De datum van aankoop van de belegging."
+        },
+        "sell_date": {
+          "name": "verkoopdatum",
+          "detail": "De datum van verkoop van de investering."
+        },
+        "buy_price": {
+          "name": "koopprijs",
+          "detail": "De prijs waarvoor de investering is gekocht."
+        },
+        "sell_price": {
+          "name": "verkoopprijs",
+          "detail": "De prijs waartegen de belegging is verkocht."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Prijs van een effect dat periodiek rente oplevert.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde kan worden afgelost."
+        },
+        "rate": {
+          "name": "tarief",
+          "detail": "Het geannualiseerde rentepercentage."
+        },
+        "yield": {
+          "name": "opbrengst",
+          "detail": "Het verwachte jaarlijkse rendement van het effect."
+        },
+        "redemption": {
+          "name": "aflossing",
+          "detail": "Het aflossingsbedrag per 100 nominale waarde, of pari."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Prijs van een disconto-effect.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van het effect op het moment van aankoop."
+        },
+        "redemption": {
+          "name": "aflossing",
+          "detail": "Het aflossingsbedrag per 100 nominale waarde, of pari."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Prijs van het effect waarover bij de vervaldatum rente wordt betaald.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde kan worden afgelost."
+        },
+        "issue": {
+          "name": "probleem",
+          "detail": "De datum waarop het effect oorspronkelijk werd uitgegeven."
+        },
+        "rate": {
+          "name": "tarief",
+          "detail": "Het geannualiseerde rentepercentage."
+        },
+        "yield": {
+          "name": "opbrengst",
+          "detail": "Het verwachte jaarlijkse rendement van het effect."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Ontvangen bedrag bij vervaldatum voor een effect.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "investment": {
+          "name": "investering",
+          "detail": "Het geïnvesteerde bedrag (ongeacht de nominale waarde van elk effect)."
+        },
+        "discount": {
+          "name": "korting",
+          "detail": "Het discontopercentage van het belegde effect."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Het discontopercentage van een effect, gebaseerd op de prijs.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "price": {
+          "name": "prijs",
+          "detail": "De prijs waartegen het effect wordt gekocht per 100 nominale waarde."
+        },
+        "redemption": {
+          "name": "aflossing",
+          "detail": "Het aflossingsbedrag per 100 nominale waarde, of pari."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Aantal betalingstermijnen voor een investering.",
+      "parameters": {
+        "rate": {
+          "name": "tarief",
+          "detail": "De rente."
+        },
+        "payment_amount": {
+          "name": "betalingsbedrag",
+          "detail": "Het bedrag van elke gedane betaling."
+        },
+        "present_value": {
+          "name": "huidige_waarde",
+          "detail": "De huidige waarde van de lijfrente."
+        },
+        "future_value": {
+          "name": "toekomstige_waarde",
+          "detail": "De toekomstige waarde die overblijft nadat de laatste betaling is gedaan."
+        },
+        "end_or_beginning": {
+          "name": "einde_of_begin",
+          "detail": "Of betalingen aan het einde (`0`) of het begin (`1`) van elke periode verschuldigd zijn."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Afschrijving van activa volgens de lineaire methode.",
+      "parameters": {
+        "cost": {
+          "name": "kosten",
+          "detail": "De initiële kosten van het actief."
+        },
+        "salvage": {
+          "name": "redden",
+          "detail": "De waarde van de activa aan het einde van de afschrijving."
+        },
+        "life": {
+          "name": "leven",
+          "detail": "Het aantal perioden waarover de activa worden afgeschreven."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Aantal perioden waarin een investering een bepaalde waarde bereikt.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde kan worden afgelost."
+        },
+        "rate": {
+          "name": "tarief",
+          "detail": "Het geannualiseerde rentepercentage."
+        },
+        "yield": {
+          "name": "opbrengst",
+          "detail": "Het verwachte jaarlijkse rendement van het effect."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Gewijzigde Macaulay-duur.",
+      "parameters": {
+        "settlement": {
+          "name": "schikking",
+          "detail": "De datum waarop het effect wordt afgewikkeld. Dit is de datum na uitgifte waarop het effect aan de koper wordt geleverd."
+        },
+        "maturity": {
+          "name": "volwassenheid",
+          "detail": "De vervaldatum of einddatum van het effect, wanneer het tegen nominale waarde of nominale waarde kan worden afgelost."
+        },
+        "rate": {
+          "name": "tarief",
+          "detail": "Het geannualiseerde rentepercentage."
+        },
+        "yield": {
+          "name": "opbrengst",
+          "detail": "Het verwachte jaarlijkse rendement van het effect."
+        },
+        "frequency": {
+          "name": "frequentie",
+          "detail": "Het aantal rente- of couponbetalingen per jaar (1, 2 of 4)."
+        },
+        "day_count_convention": {
+          "name": "dag_telling_conventie",
+          "detail": "Een indicatie van welke dagtelmethode gebruikt moet worden."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Converteert een getekend binair getal naar een decimaal formaat.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "ondertekend_binair_getal",
+          "detail": "De signed 10-bits binaire waarde die moet worden omgezet naar decimaal, aangeleverd als een tekenreeks."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Converteert een binair getal naar hexadecimaal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "ondertekend_binair_getal",
+          "detail": "De signed 10-bits binaire waarde die moet worden omgezet naar signed hexadecimaal, aangeleverd als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Converteert een binair getal naar een octaal getal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "getekend_binair_getal",
+          "detail": "De signed 10-bits binaire waarde die moet worden omgezet naar signed octaal, aangeleverd als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Converteert een decimaal getal naar een signed binair formaat.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaal_getal",
+          "detail": "De decimale waarde die moet worden omgezet naar een signed binair getal, aangeleverd als een string."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Converteert een decimaal getal naar een hexadecimaal getal.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaal_getal",
+          "detail": "De decimale waarde die moet worden omgezet naar hexadecimaal teken, opgegeven als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Converteert een decimaal getal naar een getekend octaal formaat.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaal_getal",
+          "detail": "De decimale waarde die moet worden omgezet naar een getekend octaal getal, opgegeven als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Converteert een hexadecimaal getal naar binair.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "getekend_hexadecimaal_getal",
+          "detail": "De signed 40-bits hexadecimale waarde die moet worden omgezet naar signed binair, aangeleverd als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Converteert een hexadecimaal getal naar een decimaal getal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "getekend_hexadecimaal_getal",
+          "detail": "De signed 40-bits hexadecimale waarde die moet worden omgezet naar decimaal, aangeleverd als een tekenreeks."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Converteert een hexadecimaal getal naar een octaal getal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "getekend_hexadecimaal_getal",
+          "detail": "De signed 40-bits hexadecimale waarde die moet worden omgezet naar signed octaal, aangeleverd als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Converteert een octaal getal naar een binair getal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "getekend_octaal_getal",
+          "detail": "De signed 30-bits octale waarde die moet worden omgezet naar signed binair, aangeleverd als een string."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Converteert een getekend octaal getal naar een decimaal getal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "getekend_octaal_getal",
+          "detail": "De signed 30-bit octale waarde die moet worden omgezet naar decimaal, aangeleverd als een tekenreeks."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Converteert een octaal getal naar een hexadecimaal getal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "getekend_octaal_getal",
+          "detail": "De signed 30-bits octale waarde die moet worden omgezet naar signed hexadecimaal, aangeleverd als een tekenreeks."
+        },
+        "significant_digits": {
+          "name": "significante cijfers",
+          "detail": "Het aantal significante cijfers dat in het resultaat moet worden gegarandeerd."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Creëert een complex getal.",
+      "parameters": {
+        "real_part": {
+          "name": "reëel_deel",
+          "detail": "De werkelijke coëfficiënt."
+        },
+        "imaginary_part": {
+          "name": "denkbeeldig_deel",
+          "detail": "De imaginaire coëfficiënt."
+        },
+        "suffix": {
+          "name": "achtervoegsel",
+          "detail": "Het achtervoegsel voor de imaginaire coëfficiënt kan alleen 'i' of 'j' zijn. Indien weggelaten, wordt 'i' gebruikt."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "De reële coëfficiënt van een complex getal.",
+      "parameters": {
+        "complex_number": {
+          "name": "complex_getal",
+          "detail": "Het complexe getal, in het a+bi of a+bj formaat."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "De imaginaire coëfficiënt van een complex getal.",
+      "parameters": {
+        "complex_number": {
+          "name": "complex_getal",
+          "detail": "Het complexe getal, in het a+bi of a+bj formaat."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Het complex toegevoegde getal van een getal.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "Het complexe getal waarvan het geconjugeerde getal moet worden berekend."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "De absolute waarde van een complex getal.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "Het complexe getal waarvan de absolute waarde moet worden berekend."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Twee numerieke waarden vergelijken.",
+      "parameters": {
+        "number1": {
+          "name": "nummer 1",
+          "detail": "Het eerste nummer om te vergelijken."
+        },
+        "number2": {
+          "name": "nummer 2",
+          "detail": "Het tweede getal om te vergelijken."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Som van een reeks complexe getallen.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "Het eerste complexe getal of bereik dat bij elkaar opgeteld wordt."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Extra complexe getallen of bereiken die aan `waarde1` moeten worden toegevoegd."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Het verschil tussen twee complexe getallen.",
+      "parameters": {
+        "first_number": {
+          "name": "eerste_nummer",
+          "detail": "Het complexe getal waarvan second_number moet worden afgetrokken."
+        },
+        "second_number": {
+          "name": "tweede_nummer",
+          "detail": "Het complexe getal dat van first_number moet worden afgetrokken."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Resultaat van het vermenigvuldigen van een reeks complexe getallen.",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "Het eerste getal of bereik dat voor het product moet worden berekend."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Extra complexe getallen of bereiken om voor het product te berekenen."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Één complex getal gedeeld door een ander.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Het complexe getal dat gedeeld moet worden."
+        },
+        "divisor": {
+          "name": "deler",
+          "detail": "Het complexe getal waardoor gedeeld moet worden."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Retourneert het tegenovergestelde van de opgegeven logische waarde.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logische_expressie",
+          "detail": "Een expressie of verwijzing naar een cel die een expressie bevat die een logische waarde vertegenwoordigt."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Logische waarde `true`."
+    },
+    "FALSE": {
+      "description": "Logische waarde `false`."
+    },
+    "AND": {
+      "description": "Logische `en`-operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logische_expressie1",
+          "detail": "Een expressie of verwijzing naar een cel die een expressie bevat die een logische waarde vertegenwoordigt, bijvoorbeeld 'WAAR' of 'ONWAAR', of een expressie die kan worden afgedwongen tot een logische waarde."
+        },
+        "logical_expression2": {
+          "name": "logische_expressie2",
+          "detail": "Meer uitdrukkingen die logische waarden representeren."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Waarde als er geen fout is, anders 2e argument.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die moet worden geretourneerd als `value` zelf geen fout is."
+        },
+        "value_if_error": {
+          "name": "waarde_als_fout",
+          "detail": "De waarde die de functie retourneert als `value` een fout is."
+        }
+      }
+    },
+    "IF": {
+      "description": "Retourneert een waarde afhankelijk van de logische expressie.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logische_expressie",
+          "detail": "Een expressie of verwijzing naar een cel die een expressie bevat die een logische waarde vertegenwoordigt, bijvoorbeeld 'WAAR' of 'ONWAAR'."
+        },
+        "value_if_true": {
+          "name": "waarde_indien_waar",
+          "detail": "De waarde die de functie retourneert als `logische_expressie` `WAAR` is."
+        },
+        "value_if_false": {
+          "name": "waarde_indien_onwaar",
+          "detail": "De waarde die de functie retourneert als `logische_expressie` `FALSE` is."
+        }
+      }
+    },
+    "OR": {
+      "description": "Logische `of`-operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logische_expressie1",
+          "detail": "Een expressie of verwijzing naar een cel die een expressie bevat die een logische waarde vertegenwoordigt, bijvoorbeeld 'WAAR' of 'ONWAAR', of een expressie die kan worden afgedwongen tot een logische waarde."
+        },
+        "logical_expression2": {
+          "name": "logische_expressie2",
+          "detail": "Meer expressies die geëvalueerd worden naar logische waarden."
+        }
+      }
+    },
+    "NE": {
+      "description": "Niet gelijk.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De waarde die moet worden getoetst aan `waarde1` op ongelijkheid."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Gelijkwaardig.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De eerste waarde."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De waarde waarmee vergeleken wordt met `waarde1` op gelijkheid."
+        }
+      }
+    },
+    "GT": {
+      "description": "Strikt groter dan.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De te testen waarde is groter dan `waarde2`."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De tweede waarde."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Groter dan of gelijk aan.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De te testen waarde is groter dan of gelijk aan `waarde2`."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De tweede waarde."
+        }
+      }
+    },
+    "LT": {
+      "description": "Minder dan.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De te testen waarde is kleiner dan `waarde2`."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De tweede waarde."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Kleiner dan of gelijk aan.",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De te testen waarde is kleiner dan of gelijk aan `waarde2`."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De tweede waarde."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Som van twee getallen",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "Het eerste addendum."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "Het tweede addendum."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Verschil van twee getallen",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "Het minuend, het getal waarvan moet worden afgetrokken."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De aftrekker, of het getal dat van `waarde1` moet worden afgetrokken."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Product van twee getallen",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "Het eerste vermenigvuldigtal."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Het tweede vermenigvuldigtal."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Eén getal gedeeld door een ander",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Het getal dat gedeeld moet worden."
+        },
+        "divisor": {
+          "name": "deler",
+          "detail": "Het getal waardoor gedeeld moet worden."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Samenvoeging van twee waarden",
+      "parameters": {
+        "value1": {
+          "name": "waarde1",
+          "detail": "De waarde waaraan `value2` wordt toegevoegd."
+        },
+        "value2": {
+          "name": "waarde2",
+          "detail": "De waarde die aan `value1` moet worden toegevoegd."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Waarde geïnterpreteerd als percentage.",
+      "parameters": {
+        "percentage": {
+          "name": "percentage",
+          "detail": "De waarde die als percentage moet worden geïnterpreteerd."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Voegt strings aan elkaar toe.",
+      "parameters": {
+        "string1": {
+          "name": "tekenreeks1",
+          "detail": "De beginstring."
+        },
+        "string2": {
+          "name": "tekenreeks2",
+          "detail": "Er moeten meer strings in volgorde worden toegevoegd."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Numerieke Unicode-kaartwaarde van een teken.",
+      "parameters": {
+        "string": {
+          "name": "snaar",
+          "detail": "De tekenreeks waarvan de Unicode-mapwaarde van het eerste teken wordt geretourneerd."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Geeft het karakter dat aan het nummer is gekoppeld.",
+      "parameters": {
+        "table_number": {
+          "name": "tabelnummer",
+          "detail": "Het nummer van het teken dat in de huidige Unicode-tabel moet worden opgezocht in decimaal formaat."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Bereken de waarde van een Romeins cijfer.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "romeins_cijfer",
+          "detail": "Het Romeinse cijfer voor de opmaak, waarvan de waarde tussen 1 en 3999 moet liggen."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Maakt een getal op in Romeinse cijfers.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "Het te formatteren getal, tussen 1 en 3999, inclusief."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Haalt overeenkomende substrings op met behulp van reguliere expressies.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De invoertekst."
+        },
+        "regular_expression": {
+          "name": "reguliere_expressie",
+          "detail": "Het eerste deel van `text` dat overeenkomt met deze expressie wordt geretourneerd."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Of een stuk tekst overeenkomt met een reguliere expressie.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekst die moet worden getest tegen de reguliere expressie."
+        },
+        "regular_expression": {
+          "name": "reguliere_expressie",
+          "detail": "De reguliere expressie waarmee de tekst wordt getest."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Vervangt tekst door reguliere expressies.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekst, waarvan een deel zal worden vervangen."
+        },
+        "regular_expression": {
+          "name": "reguliere_expressie",
+          "detail": "De reguliere expressie. Alle overeenkomende exemplaren in `text` worden vervangen."
+        },
+        "replacement": {
+          "name": "vervanging",
+          "detail": "De tekst die in de originele tekst wordt ingevoegd."
+        }
+      }
+    },
+    "T": {
+      "description": "String-argumenten als tekst.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument dat naar tekst moet worden omgezet."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formatteert getallen met een vast aantal decimalen.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "Het te formatteren getal."
+        },
+        "number_of_places": {
+          "name": "aantal_plaatsen",
+          "detail": "Het aantal decimalen dat in het resultaat wordt weergegeven."
+        },
+        "suppress_separator": {
+          "name": "onderdruk_scheidingsteken",
+          "detail": "Of het scheidingsteken voor duizendtallen dat in sommige landinstellingen wordt gebruikt, moet worden onderdrukt (bijvoorbeeld '1.000' wordt '1000'). Scheidingstekens zijn aanwezig als deze waarde 0 is of wordt weggelaten, en ontbreken anders."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Eerste positie van de tekenreeks die in de tekst wordt gevonden, hoofdlettergevoelig.",
+      "parameters": {
+        "search_for": {
+          "name": "zoeken_naar",
+          "detail": "De tekenreeks waarnaar moet worden gezocht in `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_om_te_zoeken",
+          "detail": "De tekst waarin naar de eerste instantie van `search_for` wordt gezocht."
+        },
+        "starting_at": {
+          "name": "beginnend bij",
+          "detail": "Het teken in `text_to_search` waarmee de zoekopdracht moet beginnen."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Positie waar een string voor het eerst in een tekst wordt gevonden (binair).",
+      "parameters": {
+        "search_for": {
+          "name": "zoeken_naar",
+          "detail": "De tekenreeks waarnaar moet worden gezocht in `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_om_te_zoeken",
+          "detail": "De tekst waarin naar de eerste instantie van `search_for` wordt gezocht."
+        },
+        "starting_at": {
+          "name": "beginnend bij",
+          "detail": "Het teken in `text_to_search` waarmee de zoekopdracht moet beginnen."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Voegt elementen van arrays samen met een scheidingsteken.",
+      "parameters": {
+        "delimiter": {
+          "name": "scheidingsteken",
+          "detail": "Het teken of de tekenreeks die tussen elke aaneengeschakelde waarde moet worden geplaatst."
+        },
+        "value_or_array1": {
+          "name": "waarde_of_matrix1",
+          "detail": "De waarde of waarden die moeten worden toegevoegd met behulp van `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "waarde_of_matrix2",
+          "detail": "Er moeten meer waarden worden toegevoegd met behulp van `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Substring vanaf het begin van de opgegeven string.",
+      "parameters": {
+        "string": {
+          "name": "snaar",
+          "detail": "De tekenreeks waarvan het linkerdeel wordt geretourneerd."
+        },
+        "number_of_characters": {
+          "name": "aantal_tekens",
+          "detail": "Het aantal tekens dat vanaf de linkerkant van de `string` moet worden geretourneerd."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Een substring vanaf het einde van een opgegeven string.",
+      "parameters": {
+        "string": {
+          "name": "snaar",
+          "detail": "De tekenreeks waarvan het juiste gedeelte wordt geretourneerd."
+        },
+        "number_of_characters": {
+          "name": "aantal_tekens",
+          "detail": "Het aantal tekens dat vanaf de rechterkant van `string` moet worden geretourneerd."
+        }
+      }
+    },
+    "MID": {
+      "description": "Een stuk van een touw.",
+      "parameters": {
+        "string": {
+          "name": "snaar",
+          "detail": "De tekenreeks waaruit een segment moet worden geëxtraheerd."
+        },
+        "starting_at": {
+          "name": "beginnend bij",
+          "detail": "De index vanaf de linkerkant van `string` waar het extraheren begint. Het eerste teken in `string` heeft index 1."
+        },
+        "extract_length": {
+          "name": "extract_lengte",
+          "detail": "De lengte van het te extraheren segment."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Lengte van een snaar.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekenreeks waarvan de lengte wordt geretourneerd."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Lengte van een tekenreeks in bytes.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekenreeks waarvan de lengte wordt geretourneerd."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Converteert een opgegeven tekenreeks naar kleine letters.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekenreeks die naar kleine letters moet worden omgezet."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Converteert een opgegeven tekenreeks naar hoofdletters.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekenreeks die naar hoofdletters moet worden omgezet."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Test of twee strings identiek zijn.",
+      "parameters": {
+        "string1": {
+          "name": "tekenreeks1",
+          "detail": "De eerste string om te vergelijken"
+        },
+        "string2": {
+          "name": "tekenreeks2",
+          "detail": "De tweede string om te vergelijken"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Vervangt een deel van een tekstreeks door andere tekst.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekst, waarvan een deel zal worden vervangen."
+        },
+        "position": {
+          "name": "positie",
+          "detail": "De positie waar de vervanging begint (beginnend bij 1)."
+        },
+        "length": {
+          "name": "lengte",
+          "detail": "Het aantal tekens in de tekst dat vervangen moet worden."
+        },
+        "new_text": {
+          "name": "nieuwe_tekst",
+          "detail": "De tekst die in de originele tekst wordt ingevoegd."
+        }
+      }
+    },
+    "REPT": {
+      "description": "De opgegeven tekst wordt een aantal keer herhaald.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "te_herhalen_tekst",
+          "detail": "Het teken of de tekenreeks die herhaald moet worden."
+        },
+        "number_of_repetitions": {
+          "name": "aantal_herhalingen",
+          "detail": "Het aantal keren dat `text_to_repeat` in de geretourneerde waarde moet voorkomen."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Eerste positie van de tekenreeks die in de tekst is gevonden, waarbij hoofdlettergevoelig wordt genegeerd.",
+      "parameters": {
+        "search_for": {
+          "name": "zoeken_naar",
+          "detail": "De tekenreeks waarnaar moet worden gezocht in `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "tekst_om_te_zoeken",
+          "detail": "De tekst waarin naar de eerste instantie van `search_for` wordt gezocht."
+        },
+        "starting_at": {
+          "name": "beginnend bij",
+          "detail": "Het teken in `text_to_search` waarmee de zoekopdracht moet beginnen."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Vervangt bestaande tekst door nieuwe tekst in een tekenreeks.",
+      "parameters": {
+        "text_to_search": {
+          "name": "tekst_om_te_zoeken",
+          "detail": "De tekst waarin gezocht en vervangen moet worden."
+        },
+        "search_for": {
+          "name": "zoeken_naar",
+          "detail": "De tekenreeks waarnaar moet worden gezocht in `text_to_search`."
+        },
+        "replace_with": {
+          "name": "vervangen_door",
+          "detail": "De tekenreeks die `search_for` zal vervangen."
+        },
+        "occurrence_number": {
+          "name": "voorvalnummer",
+          "detail": "Het exemplaar van 'search_for' binnen 'text_to_search' dat moet worden vervangen door 'replace_with'. Standaard worden alle exemplaren van 'search_for' vervangen; als 'occurrence_number' echter is opgegeven, wordt alleen het aangegeven exemplaar van 'search_for' vervangen."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Verwijdert niet-afdrukbare tekens uit een tekststuk.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekst waarvan de niet-afdrukbare tekens moeten worden verwijderd."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Zet een getal om in tekst.",
+      "parameters": {
+        "number": {
+          "name": "nummer",
+          "detail": "Het getal, de datum of de tijd die moet worden opgemaakt."
+        },
+        "format": {
+          "name": "formaat",
+          "detail": "Het patroon waarmee het getal tussen aanhalingstekens wordt opgemaakt."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Verwijdert spaties.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekst of verwijzing naar een cel met tekst die moet worden bijgesneden."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Converteert een datum/tijd/getalreeks naar een getal.",
+      "parameters": {
+        "text": {
+          "name": "tekst",
+          "detail": "De tekenreeks die de waarde bevat die moet worden geconverteerd."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Elk woord in een opgegeven tekenreeks krijgt een hoofdletter.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "tekst_met_hoofdletters",
+          "detail": "De tekst die wordt geretourneerd waarbij de eerste letter van elk woord een hoofdletter is en alle andere letters een kleine letter."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Eenhedenconversie voor getallen.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De numerieke waarde in `start_unit` die naar `end_unit` moet worden geconverteerd."
+        },
+        "start_unit": {
+          "name": "start_eenheid",
+          "detail": "De starteenheid, de eenheid die momenteel is toegewezen aan `waarde`."
+        },
+        "end_unit": {
+          "name": "eindeenheid",
+          "detail": "De maateenheid waarin het argument moet worden omgezet, 'waarde'."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Som van de verschillen van de kwadraten.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "De matrix of het bereik van waarden waarvan de kwadraten worden verminderd met de kwadraten van de overeenkomstige items in `array_y` en bij elkaar worden opgeteld."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "De matrix of het bereik van waarden waarvan de kwadraten worden afgetrokken van de kwadraten van de overeenkomstige waarden in `array_x` en bij elkaar worden opgeteld."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Som van de sommen van de kwadraten.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "De matrix of het bereik van waarden waarvan de kwadraten worden opgeteld bij de kwadraten van de overeenkomstige items in `array_y` en bij elkaar worden opgeteld."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "De matrix of het bereik van waarden waarvan de kwadraten worden opgeteld bij de kwadraten van de overeenkomstige items in `array_x` en bij elkaar worden opgeteld."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Som van de kwadraten van de verschillen.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "De matrix of het bereik van waarden die worden verminderd met de overeenkomstige items in `array_y`, in het kwadraat worden gebracht en bij elkaar worden opgeteld."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "De matrix of het bereik van waarden die worden afgetrokken van de overeenkomstige items in `array_x`, waarvan het resultaat in het kwadraat wordt gebracht en die alle resultaten bij elkaar worden opgeteld."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transponeert de rijen en kolommen van een array.",
+      "parameters": {
+        "array_or_range": {
+          "name": "array_of_bereik",
+          "detail": "De matrix of het bereik waarvan de rijen en kolommen worden omgewisseld."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Past punten aan een lineaire trend aan die is afgeleid via kleinste kwadraten.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bekende_gegevens_y",
+          "detail": "De matrix of het bereik met afhankelijke (y)-waarden die al bekend zijn en die worden gebruikt om een ideale lineaire trend te bepalen."
+        },
+        "known_data_x": {
+          "name": "bekende_gegevens_x",
+          "detail": "De waarden van de onafhankelijke variabele(n) die overeenkomen met `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "nieuwe_gegevens_x",
+          "detail": "De datapunten retourneren de `y`-waarden voor de ideale curve."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Gegeven een algemene lineaire vorm van `y = m*x+b` voor een krommeaanpassing, berekent `b` indien `TRUE` of dwingt `b` om `0` te zijn en berekent alleen de `m`-waarden indien `FALSE`, d.w.z. dwingt de krommeaanpassing om door de oorsprong te gaan."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "De frequentieverdeling van de array.",
+      "parameters": {
+        "data": {
+          "name": "gegevens",
+          "detail": "De matrix of het bereik met de waarden die geteld moeten worden."
+        },
+        "classes": {
+          "name": "klassen",
+          "detail": "De matrix of het bereik dat de set klassen bevat."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Past punten aan bij een exponentiële groeitrend.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bekende_gegevens_y",
+          "detail": "De matrix of het bereik met afhankelijke (y)-waarden die al bekend zijn en die worden gebruikt om een ideale exponentiële groeicurve te bepalen."
+        },
+        "known_data_x": {
+          "name": "bekende_gegevens_x",
+          "detail": "De waarden van de onafhankelijke variabele(n) die overeenkomen met `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "nieuwe_gegevens_x",
+          "detail": "De datapunten retourneren de `y`-waarden voor de ideale curve."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Gegeven een algemene exponentiële vorm van `y = b*m^x` voor een curve-aanpassing, berekent `b` indien `TRUE` of dwingt `b` tot `1` en berekent alleen de `m`-waarden indien `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Best passende lineaire trend via kleinste kwadraten.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bekende_gegevens_y",
+          "detail": "De matrix of het bereik met afhankelijke (y)-waarden die al bekend zijn en die worden gebruikt om een ideale lineaire trend te bepalen."
+        },
+        "known_data_x": {
+          "name": "bekende_gegevens_x",
+          "detail": "De waarden van de onafhankelijke variabele(n) die overeenkomen met `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "bereken_b",
+          "detail": "Gegeven een lineaire vorm van `y = m*x+b`, berekent de y-intercept (`b`) indien `TRUE`. Anders wordt `b` geforceerd tot `0` en worden de `m`-waarden alleen berekend indien `FALSE`, d.w.z. dat de curve fit door de oorsprong gaat."
+        },
+        "verbose": {
+          "name": "breedsprakig",
+          "detail": "Een vlag die aangeeft of aanvullende regressiestatistieken moeten worden geretourneerd of alleen de lineaire coëfficiënten en de y-intercept (standaard)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Best passende exponentiële groeicurve.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bekende_gegevens_y",
+          "detail": "De matrix of het bereik met afhankelijke (y)-waarden die al bekend zijn en die worden gebruikt om een ideale exponentiële groeicurve te bepalen."
+        },
+        "known_data_x": {
+          "name": "bekende_gegevens_x",
+          "detail": "De waarden van de onafhankelijke variabele(n) die overeenkomen met `known_data_y`."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Gegeven een algemene exponentiële vorm van `y = b*m^x` voor een curve-aanpassing, berekent `b` indien `TRUE` of dwingt `b` tot `1` en berekent alleen de `m`-waarden indien `FALSE`."
+        },
+        "verbose": {
+          "name": "breedsprakig",
+          "detail": "Een vlag die aangeeft of aanvullende regressiestatistieken moeten worden geretourneerd of alleen de berekende coëfficiënt en exponenten."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Matrixdeterminant van een vierkante matrix.",
+      "parameters": {
+        "square_matrix": {
+          "name": "vierkante_matrix",
+          "detail": "Een matrix of bereik met een gelijk aantal rijen en kolommen, waarvan de determinant wordt berekend."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Multiplicatieve inverse van vierkante matrix.",
+      "parameters": {
+        "square_matrix": {
+          "name": "vierkante_matrix",
+          "detail": "Een matrix of bereik met een gelijk aantal rijen en kolommen, waarvan de multiplicatieve inverse wordt berekend."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Het matrixproduct van twee matrices.",
+      "parameters": {
+        "matrix1": {
+          "name": "matrix1",
+          "detail": "De eerste matrix in de matrixvermenigvuldigingsbewerking, weergegeven als een array of bereik."
+        },
+        "matrix2": {
+          "name": "matrix2",
+          "detail": "De tweede matrix in de matrixvermenigvuldigingsbewerking, weergegeven als een array of bereik."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Som van producten van elementen in twee arrays.",
+      "parameters": {
+        "array1": {
+          "name": "array1",
+          "detail": "De eerste matrix of het eerste bereik waarvan de items worden vermenigvuldigd met de overeenkomstige items in de tweede matrix of het tweede bereik."
+        },
+        "array2": {
+          "name": "array2",
+          "detail": "De tweede matrix of het tweede bereik waarvan de items worden vermenigvuldigd met de overeenkomstige items in de eerste matrix of het eerste bereik."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Of een waarde een formule is.",
+      "parameters": {
+        "cell": {
+          "name": "cel",
+          "detail": "De cel waarvan u wilt verifiëren of deze een formule bevat."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Haalt informatie op over een cel.",
+      "parameters": {
+        "info_type": {
+          "name": "info_type",
+          "detail": "Het type gevraagde informatie (zie artikel voor beschikbare typen)"
+        },
+        "reference": {
+          "name": "referentie",
+          "detail": "De verwijzing naar de cel."
+        }
+      }
+    },
+    "NA": {
+      "description": "De `#N/A`-fout."
+    },
+    "ISBLANK": {
+      "description": "Of de gerefereerde cel leeg is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Verwijzing naar de cel waarvan gecontroleerd wordt of deze leeg is."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Of een waarde een fout is, anders dan `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan geverifieerd moet worden of het een ander fouttype is dan `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Of een waarde een fout is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan het fouttype geverifieerd moet worden."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Of een waarde `true` of `false` is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan geverifieerd moet worden of deze logische `TRUE` of `FALSE` is."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Of een waarde de fout `#n/a` is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die moet worden vergeleken met de foutwaarde `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Of een waarde niet-tekstueel is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De te controleren waarde."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Of een waarde een getal is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die geverifieerd moet worden als een getal."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Of een waarde een geldige celverwijzing is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die geverifieerd moet worden als celreferentie."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Of een waarde tekst is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die als tekst geverifieerd moet worden."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Het type van een waarde ophalen.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde waarvan het type bepaald moet worden."
+        }
+      }
+    },
+    "N": {
+      "description": "Argument weergegeven als een getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument dat naar een getal moet worden omgezet."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Converteert een opgegeven getal naar een datum.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument of de verwijzing naar een cel die naar een datum moet worden omgezet."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Converteert elke numerieke waarde naar een zuiver getal.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument of de verwijzing naar een cel die moet worden omgezet in een zuiver getal."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Converteert een opgegeven numerieke waarde naar een tekstwaarde.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument of de verwijzing naar een cel die naar tekst moet worden omgezet."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Converteert een opgegeven getal naar een dollarbedrag.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument of de verwijzing naar een cel die moet worden omgezet naar een dollarwaarde."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Converteert een opgegeven getal naar een percentage.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "Het argument of de verwijzing naar een cel die naar een percentage moet worden omgezet."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Enkele waarde uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maximum van waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minimum aantal waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Gemiddelde van een reeks waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Telt waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Telt waarden en tekst uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Product van waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Standaardafwijking van de steekproef uit de populatie uit de tabel.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Standaardafwijking van de gehele populatie uit de tabel.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Som van waarden uit een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Variantie van de populatiesteekproef ten opzichte van het tabelachtige bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Variantie van een populatie ten opzichte van een tabelachtig bereik.",
+      "parameters": {
+        "database": {
+          "name": "databank",
+          "detail": "De matrix of het bereik met de te overwegen gegevens, zodanig gestructureerd dat de eerste rij de labels voor de waarden van elke kolom bevat."
+        },
+        "field": {
+          "name": "veld",
+          "detail": "Geeft aan welke kolom in de `database` de waarden bevat die moeten worden geëxtraheerd en bewerkt."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "Een matrix of bereik met nul of meer criteria waarop de databasewaarden moeten worden gefilterd voordat er een bewerking wordt uitgevoerd."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Bepaal het geslacht op basis van het ID-nummer.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-cijferig of 18-cijferig ID-nummer of -bereik."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Bepaal de provincie van uw geboorteplaats op basis van het ID-nummer.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-cijferig of 18-cijferig ID-nummer of -bereik."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Bepaal het sterrenbeeld op basis van het ID-nummer.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-cijferig of 18-cijferig ID-nummer of -bereik."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Retourneert het overeenkomstige handelsvolume van aandelen A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Voorraadcode",
+          "detail": "6-cijferige aandelencode vereist."
+        },
+        "Date": {
+          "name": "Datum",
+          "detail": "De handelsdag van het aandeel, de standaard is de laatste handelsdag"
+        },
+        "Reversion and exclusion": {
+          "name": "Terugkeer en uitsluiting",
+          "detail": "Selecteer het type ex-right restauratie van de voorraad, standaard 0 [voormalige terugzetting], 1 [oorspronkelijke prijs], 2 [post terugzetting]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Of een waarde een datum is.",
+      "parameters": {
+        "value": {
+          "name": "waarde",
+          "detail": "De waarde die als datum geverifieerd moet worden."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Sparklines-lijndiagram genereren",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Line color": {
+          "name": "Lijnkleur",
+          "detail": "De lijnkleur van de lijngrafiek kan variëren van A1, de indexwaarde van de kleurentabel tot een specifieke kleurwaarde. Stel deze in op 0 of false om de kleur niet weer te geven. Het ondersteunt regx, rgb, rgba, enz. Standaard #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Lijndikte",
+          "detail": "Lijndikte van de lijngrafiek, de standaard is 1px"
+        },
+        "Auxiliary line": {
+          "name": "Hulplijn",
+          "detail": "Een horizontale lijn, die min, max, gemiddeld, mediaan, bereik of aangepaste waarde kan zijn, standaard 0 geen"
+        },
+        "Auxiliary line color": {
+          "name": "Hulplijnkleur",
+          "detail": "Kleurinstelling van de hulplijn, hetzelfde als de lijnkleurconfiguratie, standaard #000"
+        },
+        "Maximum mark": {
+          "name": "Maximale markering",
+          "detail": "Identificeert de maximale waarde van de lijngrafiek, dezelfde lijnkleurconfiguratie, standaard 0 wordt niet weergegeven"
+        },
+        "Minimum mark": {
+          "name": "Minimumcijfer",
+          "detail": "Identificeer de minimumwaarde van de lijngrafiek, dezelfde lijnkleurconfiguratie, standaard 0 wordt niet weergegeven"
+        },
+        "Mark size": {
+          "name": "Markeermaat",
+          "detail": "De instellingen voor de maximale en minimale markeringsgrootte, de standaardwaarde is 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Sparklines cumulatief verticaal histogram genereren",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Stack by column": {
+          "name": "Stapelen per kolom",
+          "detail": "Als u per rij wilt stapelen, stelt u dit item in op false of 0; de standaardwaarde is 1"
+        },
+        "Bar interval": {
+          "name": "Maatstrepen",
+          "detail": "De afstand tussen de balken, de standaardwaarde is 1"
+        },
+        "Max": {
+          "name": "Maximaal",
+          "detail": "De maximale waarde van de cumulatieve balk, die wordt gebruikt om de lengte van de balk te regelen. Standaard worden false, auto en null automatisch berekend."
+        },
+        "Color palette": {
+          "name": "Kleurenpalet",
+          "detail": "Met het kleurenpalet kunt u de balkkleur van elke dimensie afzonderlijk instellen, waarbij u kunt kiezen uit het bereik A1:A10, enz. De standaardwaarde is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Sparklines cumulatieve horizontale staafdiagram genereren",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Stack by column": {
+          "name": "Stapelen per kolom",
+          "detail": "Als u per rij wilt stapelen, stelt u dit item in op false of 0; de standaardwaarde is 1"
+        },
+        "Bar interval": {
+          "name": "Maatstrepen",
+          "detail": "De afstand tussen de balken, de standaardwaarde is 1"
+        },
+        "Max": {
+          "name": "Maximaal",
+          "detail": "De maximale waarde van de cumulatieve balk, die wordt gebruikt om de lengte van de balk te regelen. Standaard worden false, auto en null automatisch berekend."
+        },
+        "Color palette": {
+          "name": "Kleurenpalet",
+          "detail": "Met het kleurenpalet kunt u de balkkleur van elke dimensie afzonderlijk instellen, waarbij u kunt kiezen uit het bereik A1:A10, enz. De standaardwaarde is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Genereer sparklines discrete grafiek",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Segmentation threshold": {
+          "name": "Segmentatiedrempel",
+          "detail": "Kleuronderscheid van discrete grafiekkolommen, bijvoorbeeld: als de waarde 0 is, is blauw groter dan 0, rood kleiner dan 0 en de standaardwaarde is 0"
+        },
+        "Above threshold color": {
+          "name": "Boven drempelkleur",
+          "detail": "De lijnkleur van de lijngrafiek kan variëren van A1, de indexwaarde van de kleurentabel tot een specifieke kleurwaarde. Stel deze in op 0 of false om de kleur niet weer te geven. Het ondersteunt regx, rgb, rgba, enz. Standaard #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Kleur onder de drempelwaarde",
+          "detail": "De kleurinstelling van de balk onder de drempelwaarde is dezelfde als de kleur boven de drempelwaarde, standaard #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Sparklines-grafiek met drie toestanden genereren",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Bar interval": {
+          "name": "Maatstrepen",
+          "detail": "De afstand tussen de balken, de standaardwaarde is 1"
+        },
+        "Bar color": {
+          "name": "Balkkleur",
+          "detail": "De lijnkleur van de lijngrafiek kan bereik A1, indexwaarde van de kleurentabel of specifieke kleurwaarde zijn. Stel deze in op 0 of false om deze niet weer te geven. Het ondersteunt regx, rgb, rgba, enz. Standaard #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Negatieve balkkleur",
+          "detail": "Instelling voor negatieve balkkleur, die de kleur van een negatieve waarde weergeeft, hetzelfde als de balkkleurconfiguratie, standaard #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Kleur van de nulwaardebalk",
+          "detail": "Kleurinstelling voor de nulwaardebalk, die de waarde 0 vertegenwoordigt, dezelfde kleurconfiguratie van de balk, standaard #999"
+        },
+        "Color palette": {
+          "name": "Kleurenpalet",
+          "detail": "Met het kleurenpalet kunt u de kleur van elke balk afzonderlijk instellen. Er kunnen meerdere instellingen worden gemaakt en er worden twee formaten ondersteund: 1 kleur, zoals #000, wat betekent dat de kleur van de eerste balk zwart is; 2 waardebereiken: kleur, zoals -2:#000 geeft aan dat de balk met een waarde van -2 zwart is, 0:5:#000 geeft aan dat de balk met een waarde van 0-5 zwart is en de standaardwaarde is leeg"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Sparklines-cirkeldiagram genereren",
+      "parameters": {
+        "Range": {
+          "name": "Bereik",
+          "detail": "Bereik: Waarden kunnen effectief worden berekend, zoals A1:A20, {1,2,3,4,5}, enz."
+        },
+        "Rotation angle": {
+          "name": "Rotatiehoek",
+          "detail": "De rotatiehoek van het cirkeldiagram, de standaardwaarde is 0"
+        },
+        "border": {
+          "name": "grens",
+          "detail": "Randgrootte van cirkeldiagram, standaard is geen 0"
+        },
+        "Border color": {
+          "name": "Randkleur",
+          "detail": "De randkleur van het cirkeldiagram, de standaardwaarde is #000"
+        },
+        "Color palette": {
+          "name": "Kleurenpalet",
+          "detail": "De kleur van de snede kan worden ingesteld in het palet, dat kan variëren van A1:A10, enz. De standaardwaarde is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Sparklines-bullet genereren",
+      "parameters": {
+        "Target": {
+          "name": "Doel",
+          "detail": "De numerieke waarde kan effectief worden berekend voor de behaalde streefwaarde, bijvoorbeeld A1, 100, enz."
+        },
+        "achieved": {
+          "name": "bereikt",
+          "detail": "Pas als de waarde compleet is, kan deze effectief berekend worden, bijvoorbeeld A1, 100, etc."
+        },
+        "Contrast": {
+          "name": "Contrast",
+          "detail": "Vergelijkende waarden, zoals overschot, minimum en ondergrens voor awards, kunnen effectief worden berekend, zoals A1, 100, enz. U kunt maximaal 9 vergelijkingswaarden instellen"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Sparklines-grafieken combineren in één cel",
+      "parameters": {
+        "config": {
+          "name": "configuratie",
+          "detail": "Instellingen voor sparklines-diagrammen, zoals A1:A20, een voltooid cirkeldiagram, instellingen voor lijndiagrammen, enzovoort."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sorteert rijen van een bereik op de opgegeven kolom.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "De te sorteren gegevens."
+        },
+        "sort_column": {
+          "name": "sorteerkolom",
+          "detail": "De index van de kolom in `bereik` of een bereik buiten `bereik` dat de waarden bevat waarop gesorteerd moet worden."
+        },
+        "is_ascending": {
+          "name": "is_oplopend",
+          "detail": "`TRUE` of `FALSE` geeft aan of `sort_column` in oplopende volgorde moet worden gesorteerd. `FALSE` sorteert in aflopende volgorde."
+        },
+        "sort_column2": {
+          "name": "sort_column2",
+          "detail": "Extra kolommen."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filtert een bereik op basis van de opgegeven voorwaarden.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "De te filteren gegevens."
+        },
+        "condition1": {
+          "name": "conditie1",
+          "detail": "Een kolom of rij met waarden die waar of onwaar zijn en die overeenkomen met de eerste kolom of rij van 'bereik', of een matrixformule die als waar of onwaar wordt geëvalueerd."
+        },
+        "condition2": {
+          "name": "conditie2",
+          "detail": "Extra rijen of kolommen met de Booleaanse waarden 'TRUE' of 'FALSE' die aangeven of de corresponderende rij of kolom in 'range' door 'FILTER' moet. Kan ook matrixformule-expressies bevatten die naar dergelijke rijen of kolommen worden geëvalueerd. Alle voorwaarden moeten van hetzelfde type zijn (rij of kolom). Het combineren van rij- en kolomvoorwaarden is niet toegestaan."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Unieke rijen in het opgegeven bronbereik.",
+      "parameters": {
+        "range": {
+          "name": "bereik",
+          "detail": "De gegevens waarop u wilt filteren op unieke vermeldingen."
+        },
+        "by_col": {
+          "name": "bij_kleur",
+          "detail": "[Optie] - Logische waarde die aangeeft hoe te vergelijken; per rij = FALSE() of weggelaten; per kolom = TRUE()."
+        },
+        "occurs_once": {
+          "name": "komt_eenmaal voor",
+          "detail": "[Optie] - Logische waarde, er wordt slechts één exemplaar van de unieke waarde geretourneerd = TRUE(); inclusief alle unieke waarden = FALSE() of weggelaten."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Retourneert een raster met willekeurige getallen.",
+      "parameters": {
+        "rows": {
+          "name": "rijen",
+          "detail": "Het aantal rijen dat met een willekeurig getal moet worden gevuld."
+        },
+        "columns": {
+          "name": "kolommen",
+          "detail": "Het aantal kolommen dat met een willekeurig getal moet worden gevuld."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Retourneert een raster met opeenvolgende getallen.",
+      "parameters": {
+        "rows": {
+          "name": "rijen",
+          "detail": "Het aantal rijen in het resulterende raster van de functie."
+        },
+        "columns": {
+          "name": "kolommen",
+          "detail": "Het aantal kolommen in het resulterende raster van de functie. Indien weggelaten, bevat het resulterende raster 1 kolom."
+        },
+        "start": {
+          "name": "begin",
+          "detail": "Het nummer waarmee de reeks begint. Indien weggelaten, begint de reeks bij 1."
+        },
+        "step": {
+          "name": "stap",
+          "detail": "Het verschil tussen elke waarde in de reeks. Indien weggelaten, zal elke waarde met 1 verschillen."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Evalueer volgens een letterlijke formule of uitdrukking.",
+      "parameters": {
+        "expression": {
+          "name": "uitdrukking",
+          "detail": "Formule of uitdrukking"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Roept een functie aan op een externe back-endserver/API.",
+      "parameters": {
+        "remote_expression": {
+          "name": "externe_expressie",
+          "detail": "Formule"
+        }
+      }
+    }
   }
 }

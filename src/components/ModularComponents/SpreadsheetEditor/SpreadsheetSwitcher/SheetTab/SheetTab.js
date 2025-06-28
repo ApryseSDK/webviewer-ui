@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import TabOptions from '../TabOptionsButton';
 import { useTranslation } from 'react-i18next';
 import './SheetTab.scss';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 
 const propTypes = {
   sheet: PropTypes.any.isRequired,
@@ -104,9 +105,11 @@ const SheetTab = ({
     setInputValue('');
   };
 
+  const handleInputBlurWithFocusTransfer = useFocusOnClose(onInputBlur, 'addTabButton');
+
   const onKeyDown = (e) => {
     if (e.key === 'Enter' && !isInputError) {
-      onInputBlur();
+      handleInputBlurWithFocusTransfer();
     }
   };
 

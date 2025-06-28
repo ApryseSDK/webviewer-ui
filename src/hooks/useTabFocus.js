@@ -6,9 +6,7 @@ import getRootNode from 'helpers/getRootNode';
 import core from 'core';
 
 export default function useTabFocus() {
-  const [pageNumber] = useSelector((state) => [
-    selectors.getCurrentPage(state),
-  ]);
+  const pageNumber = useSelector(selectors.getCurrentPage);
 
   useEffect(() => {
     const getNextFocusableElement = (currentElement, direction) => {

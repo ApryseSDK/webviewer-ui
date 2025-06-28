@@ -102,6 +102,7 @@ const defaultModularComponents = {
     label: 'action.openFile',
     icon: 'icon-header-file-picker-line',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.FILE_PICKER,
   },
   downloadButton: {
     dataElement: 'downloadButton',
@@ -109,6 +110,7 @@ const defaultModularComponents = {
     label: 'action.download',
     icon: 'icon-download',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.DOWNLOAD,
   },
   saveAsButton: {
     dataElement: 'saveAsButton',
@@ -117,6 +119,7 @@ const defaultModularComponents = {
     label: 'saveModal.saveAs',
     icon: 'icon-save',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.SAVE_AS,
   },
   printButton: {
     dataElement: 'printButton',
@@ -125,6 +128,7 @@ const defaultModularComponents = {
     label: 'action.print',
     icon: 'icon-header-print-line',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.PRINT,
   },
   undefined: {},
   createPortfolioButton: {
@@ -134,6 +138,7 @@ const defaultModularComponents = {
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
   },
   settingsButton: {
     dataElement: 'settingsButton',
@@ -142,6 +147,7 @@ const defaultModularComponents = {
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
     type: 'presetButton',
+    buttonType: PRESET_BUTTON_TYPES.SETTINGS,
   },
   'divider-0.1': {
     dataElement: 'divider-0.1',

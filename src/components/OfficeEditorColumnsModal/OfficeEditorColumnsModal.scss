@@ -1,0 +1,51 @@
+@import '../../constants/officeEditor.scss';
+
+.OfficeEditorColumnsModal {
+  @include oe-modal;
+
+  .input-container .ui__input {
+    input[type=number].column-amount-input {
+      -moz-appearance: auto;
+      padding-right: 8px;
+    }
+
+    input.column-amount-input::-webkit-inner-spin-button,
+    input.column-amount-input::-webkit-outer-spin-button {
+      -webkit-appearance: auto ;
+    }
+  }
+
+  .section {
+    width: 100%;
+    border-top: 1px solid var(--gray-5);
+
+    .section-label {
+      font-weight: var(--font-weight-bold);
+      padding: 2px 0;
+      margin: 16px 0;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &.columns-headers {
+        padding: 2px 0;
+        margin-bottom: 8px;
+      }
+    }
+
+    .columns-container {
+      height: 156px;
+      background-color: var(--gray-2);
+      overflow: auto;
+      border: 1px solid var(--gray-5);
+
+      .row {
+        background-color: var(--gray-0);
+        padding: 7px;
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@ export const shouldHideStrokeDropdowns = (toolName) => {
     Tools.FreeHandHighlightCreateTool,
     Tools.ArcCreateTool,
     Tools.ArcMeasurementCreateTool,
+    Tools.TextAnnotationCreateTool,
   ];
 
   return toolsWithNoStrokeDropdowns.some((tool) => core.getTool(toolName) instanceof tool);
@@ -212,7 +213,7 @@ export const parseToolType = (selectedAnnotations, currentTool) => {
   const isStamp = annotationTypes?.includes(ToolNames.STAMP) || toolName === ToolNames.STAMP;
   const isWidget = selectedAnnotations.some((annotation) => annotation instanceof Annotations.WidgetAnnotation) || shouldRenderWidgetLayout(currentTool.name);
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
-  const isFreeText = toolName === ToolNames.FREE_TEXT;
+  const isFreeText = toolName === ToolNames.FREETEXT;
 
   return {
     toolName,

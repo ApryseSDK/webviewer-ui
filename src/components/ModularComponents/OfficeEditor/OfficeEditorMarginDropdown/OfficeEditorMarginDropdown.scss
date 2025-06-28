@@ -6,21 +6,13 @@
   .Dropdown__item {
     padding-left: 32px;
     padding-right: 24px;
+
+    &.selected:not(:hover) {
+      transition: none;
+    }
   }
 
   .Dropdown__item-description {
     font-size: 13px;
-  }
-
-  &.modular-ui.flyout-item {
-    @include oe-modular-flyout-dropdown;
-  }
-}
-
-.Flyout .FlyoutContainer .flyout-item-container:hover:not(.disabled) {
-  .flyout-item[data-element="officeEditorMarginDropdown"] {
-    .Icon svg * {
-      fill: none;
-    }
   }
 }

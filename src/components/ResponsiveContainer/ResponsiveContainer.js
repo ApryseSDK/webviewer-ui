@@ -62,7 +62,9 @@ const ResponsiveContainer = ({
           retry = true;
         }
       } catch (e) {
-        console.error(e);
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(e);
+        }
       } finally {
         isResizingRef.current = false;
         if (retry) {

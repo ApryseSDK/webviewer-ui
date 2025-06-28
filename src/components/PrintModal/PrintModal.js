@@ -16,6 +16,7 @@ import DataElementWrapper from '../DataElementWrapper';
 import Dropdown from '../Dropdown';
 import PageNumberInput from '../PageReplacementModal/PageNumberInput';
 import useFocusHandler from 'hooks/useFocusHandler';
+import useFocusOnClose from 'hooks/useFocusOnClose';
 import './PrintModal.scss';
 import Button from '../Button';
 
@@ -236,6 +237,10 @@ const PrintModal = ({
     }
   });
 
+  const submitWatermarkModalOptions = useFocusOnClose((value) => {
+    dispatch(actions.setWatermarkModalOptions(value));
+  }, 'applyWatermark');
+
   return isDisabled ? null : (
     <>
       <WatermarkModal
@@ -243,7 +248,7 @@ const PrintModal = ({
         // pageIndex starts at index 0 and getCurrPage number starts at index 1
         pageIndexToView={currentPage - 1}
         modalClosed={setWatermarkModalVisibility}
-        formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
+        formSubmitted={submitWatermarkModalOptions}
         watermarkLocations={watermarkModalOptions}
         isCustomizableUI={customizableUI}
       />
@@ -403,14 +408,14 @@ const PrintModal = ({
             {!isApplyWatermarkDisabled && (
               <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
                 <div className="section-label">{t('option.watermark.title')}</div>
-                <button
-                  data-element="applyWatermark"
+                <Button
+                  dataElement="applyWatermark"
                   className="apply-watermark"
                   disabled={isPrinting}
                   onClick={openWaterMarkModalWithFocusTransfer}
                 >
                   {t('option.watermark.addNew')}
-                </button>
+                </Button>
               </DataElementWrapper>
             )}
           </div>

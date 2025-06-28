@@ -73,6 +73,17 @@ const RibbonItem = forwardRef((props, ref) => {
     }
   }, [activeCustomRibbon, groupedItems]);
 
+  useEffect(() => {
+    const hasNoActiveAndAssignedGroupedItems = activeGroupedItems.length === 0 && groupedItems.length === 0;
+    const areAllRibbonGroupedItemsActive = groupedItems.length > 0 && groupedItems.every((item) => activeGroupedItems.includes(item));
+
+    if (areAllRibbonGroupedItemsActive || hasNoActiveAndAssignedGroupedItems) {
+      setIsActive(true);
+      return;
+    }
+    setIsActive(false);
+  }, [activeGroupedItems]);
+
   const onClick = useCallback(() => {
     if (groupedItems.length < 1) {
       core.setToolMode(defaultTool);
@@ -135,7 +146,7 @@ const RibbonItem = forwardRef((props, ref) => {
           useI18String={false}
           onClick={onClick}
           disabled={disabled}
-          ariaCurrent={ariaCurrent}
+          ariaCurrent={ariaCurrent || isActive}
           style={style}
           className={className}
         >

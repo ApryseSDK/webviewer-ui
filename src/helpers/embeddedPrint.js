@@ -4,11 +4,11 @@ import { workerTypes } from 'constants/types';
 import {
   prepareAnnotations,
   applyWatermark,
-  createDocumentWithVisibleLayers,
   getPageArray,
   createCleanDocumentCopy,
   processStandardDocument,
   processColorAnnotations,
+  createLayerDocument
 } from './embeddedPrintHelper';
 import core from 'core';
 
@@ -114,9 +114,9 @@ export const createEmbeddedPrintPages = async (
   try {
     const { isAlwaysPrintAnnotationsInColorEnabled } = printingOptions;
     const processedBaseDoc = await createCleanDocumentCopy(document, pagesToPrint);
-    const processedDocWithVisibleLayers = await createDocumentWithVisibleLayers(document, processedBaseDoc);
+    const layerDocument = await createLayerDocument(document, processedBaseDoc);
     const xfdfString = await prepareAnnotations(annotationManager, pagesToPrint, printingOptions);
-    const watermarkedDoc = await applyWatermark(processedDocWithVisibleLayers, watermarkModalOptions);
+    const watermarkedDoc = await applyWatermark(layerDocument, watermarkModalOptions);
     return isAlwaysPrintAnnotationsInColorEnabled
       ? await processColorAnnotations(document, watermarkedDoc, xfdfString, printingOptions, pagesToPrint)
       : await processStandardDocument(document, watermarkedDoc, xfdfString, printingOptions, pagesToPrint);

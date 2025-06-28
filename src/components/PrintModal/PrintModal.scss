@@ -211,23 +211,14 @@
     }
 
     .apply-watermark {
-      @include button-reset;
-      cursor: pointer;
+      @extend %secondary-button-selected;
       margin-top: 10px;
-      background: none;
-      border: 1px solid var(--secondary-button-text);
-      border-radius: 4px;
-      color: var(--secondary-button-text);
+      width: auto;
       padding: 6px 16px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
 
-      &:hover {
-        color: var(--secondary-button-hover);
+        &:hover {
+          @extend %secondary-button-hover;
+        }
       }
     }
-  }
 }

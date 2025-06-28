@@ -1,7 +1,7 @@
 /**
- * Set the number of signatures that can be stored in the WebViewer UI (default is 4)
+ * Set the number of signatures that can be stored in the WebViewer UI (default is 10)
  * @method UI.setMaxSignaturesCount
- * @param {number} [maxSignaturesCount=4] Number of signature webViewer can store
+ * @param {number} [maxSignaturesCount=10] Number of signature webViewer can store
  * @example
 WebViewer(...)
   .then(function(instance) {

@@ -4,6 +4,9 @@ import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import { userEvent, within, waitFor, expect } from '@storybook/test';
 import core from 'core';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import Panel from 'components/Panel';
 
 export default {
   title: 'Components/LayersPanel',
@@ -22,7 +25,7 @@ const layers = [
   {
     'name': 'Layer 3',
     'id': 'layer3',
-  }
+  },
 ];
 
 export function Basic(args, context) {
@@ -39,11 +42,13 @@ export function Basic(args, context) {
       ...initialState.viewer,
       toolbarGroup: 'toolbarGroup-Annotate',
       isInDesktopOnlyMode: false,
-      genericPanels: [{
-        dataElement: 'panel1',
-        render: 'layersPanel',
-        location: 'left',
-      }],
+      genericPanels: [
+        {
+          dataElement: 'panel1',
+          render: 'layersPanel',
+          location: 'left',
+        },
+      ],
       openElements: {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
@@ -72,7 +77,6 @@ export function Basic(args, context) {
 
 Basic.parameters = { layout: 'fullscreen' };
 
-
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
@@ -89,11 +93,11 @@ Basic.play = async ({ canvasElement }) => {
   await userEvent.click(settingsButton);
 
   await waitFor(() => {
-    const btn = canvas.queryByRole('button', { name: 'Advanced Setting' });
+    const btn = canvas.queryByRole('button', { name: 'Advanced Settings' });
     expect(btn).toBeInTheDocument();
   });
 
-  const settingsAdvancedButton = await canvas.queryByRole('button', { name: 'Advanced Setting' });
+  const settingsAdvancedButton = await canvas.queryByRole('button', { name: 'Advanced Settings' });
   expect(settingsAdvancedButton).toBeInTheDocument();
   await userEvent.click(settingsAdvancedButton);
 
@@ -123,7 +127,7 @@ export const RightSide = (args, context) => {
           dataElement: 'panel1',
           render: 'layersPanel',
           location: 'right',
-        }
+        },
       ],
       openElements: {
         ...initialState.viewer.openElements,
@@ -160,7 +164,7 @@ export const Empty = (args, context) => {
           dataElement: 'panel1',
           render: 'layersPanel',
           location: 'left',
-        }
+        },
       ],
       openElements: {
         ...initialState.viewer.openElements,
@@ -187,3 +191,28 @@ export const Empty = (args, context) => {
 };
 
 Empty.parameters = { layout: 'fullscreen' };
+
+
+const stateLoading = {
+  ...initialState,
+  viewer: {
+    ...initialState.viewer,
+    openElements: {
+      ...initialState.viewer.openElements,
+      panel1: true,
+    },
+  },
+  document: {
+    ...initialState.document,
+    layers: null,
+  },
+};
+const store = configureStore({ reducer: () => stateLoading });
+
+export const Loading = () => {
+  return <Provider store={store}>
+    <Panel location="left" dataElement="panel1">
+      <LayersPanel />
+    </Panel>
+  </Provider>;
+};

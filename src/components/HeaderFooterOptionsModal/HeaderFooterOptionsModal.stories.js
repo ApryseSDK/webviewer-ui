@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { OEModularUIMockState } from 'helpers/storybookHelper';
 
 export default {
   title: 'Components/HeaderFooterOptionsModal',
@@ -11,6 +12,7 @@ export default {
 };
 
 const initialState = {
+  ...OEModularUIMockState,
   viewer: {
     openElements: { [DataElements.HEADER_FOOTER_OPTIONS_MODAL]: true },
     disabledElements: {},
@@ -40,12 +42,12 @@ Basic.play = async ({ canvasElement }) => {
 
     // Test lower limit of input
     await userEvent.clear(input);
-    await userEvent.type(input, '-9');
+    await userEvent.type(input, '-9[Tab]');
     expect(input.value).toBe('0');
 
     // Test upper limit of input. 9.31 is 1/3 of page height in CM
     await userEvent.clear(input);
-    await userEvent.type(input, '999');
+    await userEvent.type(input, '999[Tab]');
     expect(input.value).toBe('9.31');
   }
 

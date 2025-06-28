@@ -1,7 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { availableFontFaces, cssFontValues } from 'src/constants/officeEditorFonts';
+import { cssFontValues } from 'src/constants/fonts/fonts';
+import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
 import { OfficeEditorEditMode } from 'src/constants/officeEditor';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
@@ -24,7 +25,7 @@ const initialState = {
     selectionProperties: {
       paragraphProperties: {},
     },
-    availableFontFaces,
+    availableFontFaces: availableOfficeEditorFonts,
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING
   },

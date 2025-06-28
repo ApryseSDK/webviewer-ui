@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dropdown from 'components/Dropdown';
 import { defaultCellBorderStyles } from 'constants/cellBorderStyleIcons';
 import Icon from 'components/Icon';
@@ -6,16 +6,20 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import DataElements from 'constants/dataElement';
+import { useDispatch, useSelector } from 'react-redux';
+import selectors from 'selectors';
+import actions from 'actions';
 
 import './CellBorderStyleDropdown.scss';
 
 const CellBorderStyleDropdown = (props) => {
   const { isFlyoutItem, onKeyDownHandler, disabled = false, labelledById } = props;
   const [t] = useTranslation();
-  const [borderStyle, setBorderStyle] = useState(defaultCellBorderStyles[0].key);
+  const selectedBorderStyleListOption = useSelector((state)=> selectors.getSelectedBorderStyleListOption(state));
+  const dispatch = useDispatch();
 
   const onClickBorderStyle = (key) => {
-    setBorderStyle(key);
+    dispatch(actions.setSelectedBorderStyleListOption(key));
   };
 
   const translationPrefix = 'option.cellBorderStyle.';
@@ -24,9 +28,9 @@ const CellBorderStyleDropdown = (props) => {
     return (
       <div
         className='cellBorderStyleDropdownItem'
-        aria-label={t(`${translationPrefix}${item.key}`)}
+        aria-label={t(`${translationPrefix}${item.key.toLowerCase()}`)}
       >
-        {item.src ? <Icon className='cellBorderStyle-image' glyph={item.src} /> : t(`${translationPrefix}${item.key}`)}
+        {item.src ? <Icon className='cellBorderStyle-image' glyph={item.src} /> : t(`${translationPrefix}${item.key.toLowerCase()}`)}
       </div>
     );
   };
@@ -46,7 +50,7 @@ const CellBorderStyleDropdown = (props) => {
       renderItem={renderItem}
       renderSelectedItem={renderItem}
       onClickItem={onClickBorderStyle}
-      currentSelectionKey={borderStyle}
+      currentSelectionKey={selectedBorderStyleListOption}
       isFlyoutItem={isFlyoutItem}
       onKeyDownHandler={onKeyDownHandler}
       labelledById={labelledById}

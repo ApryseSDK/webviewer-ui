@@ -20,3 +20,11 @@ export const Basic = () => {
     </Provider>
   );
 };
+
+// export const Expanded = () => <Basic />;
+// Expanded.play = async ({ canvasElement }) => {
+//   const canvas = within(canvasElement);
+//   const marginButton = await canvas.findByRole('button', { name: 'Margins' });
+//   await userEvent.click(marginButton);
+//   await expect(marginButton).toHaveAttribute('aria-expanded', 'true');
+// };

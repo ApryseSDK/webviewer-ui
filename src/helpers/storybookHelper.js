@@ -8,8 +8,9 @@ import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
-import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { DEFAULT_POINT_SIZE, EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { cssFontValues } from 'src/constants/fonts/fonts';
+import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
+import { DEFAULT_POINT_SIZE, EditingStreamType, MARGIN_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 const noop = () => { };
@@ -189,10 +190,11 @@ export const OEModularUIMockState = {
     selectionProperties: {
       paragraphProperties: {},
     },
-    availableFontFaces,
+    availableFontFaces: availableOfficeEditorFonts,
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING,
     stream: EditingStreamType.BODY,
+    unitMeasurement: MARGIN_UNITS.CM,
   },
   viewer: {
     uiConfiguration: VIEWER_CONFIGURATIONS.DOCX_EDITOR,
@@ -241,3 +243,29 @@ export const oePartialState = {
 };
 
 export const string280Chars = 'very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_';
+
+export const defaultSpreadSheetEditorState = {
+  editMode: 'editing',
+  cellProperties: {
+    canCopy: true,
+    canPaste: true,
+    canCut: true,
+    styles: {
+      verticalAlignment: 'middle',
+      horizontalAlignment: 'left',
+      formatType: 'currencyRoundedFormat',
+      font: {
+        fontFace: 'Arial',
+        pointSize: 8,
+        bold: true,
+        italic: false,
+        underline: true,
+        strikeout: false,
+      },
+      'border': {
+        // eslint-disable-next-line custom/no-hex-colors
+        'top': { type: 'Top', style: 'Thin', color: '#000000' },
+      },
+    }
+  }
+};

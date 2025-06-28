@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Välj verktyget AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Välj verktyget AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Välj verktyget AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Redigera tangentbordsgenväg",
+      "editKeyboardShortcut": "Redigera tangentbordsgenväg",
       "setShortcut": "Ställ in genväg",
       "editShortcut": "Redigera genväg",
       "shortcutAlreadyExists": "Kortkommandot ovan finns redan.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Ingen",
-      "solid": "Fast",
+      "thin": "Fast",
       "dashed": "Streckad",
       "dotted": "Prickad"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Redigera varning",
       "message": "Är du säker på att du vill ta bort det här bladet?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Sidlayout",
+      "columnsMessage": "Inställningarna du valt för kolumnavstånd är för stora för sidbredden i vissa avsnitt.",
+      "marginsMessage": "Inställningarna du valt för marginaler är för stora för sidbredden i vissa avsnitt."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Rätt",
     "customMargins": "Anpassade marginaler",
     "customMarginsDescription": "Definiera anpassade marginaler",
+    "column": "Kolumn",
+    "columns": "Kolumner",
+    "singleColumn": "1 kolumn",
+    "twoColumn": "2 kolumner",
+    "threeColumn": "3 kolumner",
+    "customColumn": "Anpassade kolumner",
+    "customColumnDescription": "Definiera anpassade kolumner",
+    "unitMeasurement": "Enhetsmått",
     "header": {
       "0": "Rubrik",
       "1": "Första sidans rubrik",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Olika jämna och udda sidor",
         "differentFirstEvenOddPages": "Olika första, jämna och udda sidor"
       }
+    },
+    "columnsModal": {
+      "title": "Anpassad kolumnjustering",
+      "columnAmount": "Antal kolumner",
+      "columnNumber": "Kolumnnummer",
+      "width": "Bredd",
+      "spacing": "Mellanrum",
+      "widthAndSpacing": "Bredd och avstånd",
+      "equalColumns": "Lika kolumnbredd"
     },
     "marginsModal": {
       "title": "Anpassad marginaljustering",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Visning",
     "editingDescription": "Redigera dokument",
     "viewOnlyDescription": "Endast visning",
+    "editModeDropdown": "Val av redigeringsläge",
     "bold": "Djärv",
     "italic": "Kursiv",
     "underline": "Betona",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Ta bort celler och flytta uppåt",
     "deleteColumnShiftLeft": "Ta bort celler och flytta åt vänster",
     "clearBorder": "Rensa gränsen",
-    "cellBorderAll": "Alla gränser",
-    "cellBorderInside": "Inuti gränserna",
-    "cellBorderOutside": "Utanför gränserna",
-    "cellBorderTop": "Top Border",
-    "cellBorderBottom": "Nedre kant",
-    "cellBorderLeft": "Vänster gräns",
-    "cellBorderRight": "Höger gräns",
-    "cellBorderVertical": "Vertikal kant",
-    "cellBorderHorizontal": "Horisontell kant",
-    "cellBorderNone": "Inga gränser",
+    "all": "Alla gränser",
+    "inside": "Inuti gränserna",
+    "outside": "Utanför gränserna",
+    "top": "Top Border",
+    "bottom": "Nedre kant",
+    "left": "Vänster gräns",
+    "right": "Höger gräns",
+    "vertical": "Vertikal kant",
+    "horizontal": "Horisontell kant",
+    "none": "Inga gränser",
     "borders": "Gränser",
     "fontSize": {
       "dropdownLabel": "Fontstorlek"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formelbar",
     "range": "Räckvidd",
-    "formulas": "Formler",
-    "sumif": "En villkorad summa över ett intervall",
-    "sumsq": "Returnerar summan av kvadraterna i ett område",
-    "sum": "Lägger till alla siffror i ett intervall",
-    "asinh": "Returnerar invers hyperbolisk sinus för ett tal",
-    "acos": "Returnerar arccosinus för ett tal, i radianer",
-    "cosh": "Returnerar hyperbolisk cosinus för ett tal",
-    "iseven": "Kontrollerar om ett nummer är jämnt",
-    "isodd": "Kontrollerar om ett nummer är udda"
+    "formulas": "Formler"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "En villkorlig summa över ett intervall.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Det intervall som testas mot `kriterium`."
+        },
+        "criterion": {
+          "name": "kriterium",
+          "detail": "Mönstret eller testet som ska tillämpas på `intervall`."
+        },
+        "sum_range": {
+          "name": "sum_range",
+          "detail": "Intervallet som ska summeras, om det skiljer sig från `range`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangens till en vinkel angiven i radianer.",
+      "parameters": {
+        "angle": {
+          "name": "vinkel",
+          "detail": "Vinkeln att hitta tangenten till, i radianer."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Hyperbolisk tangens för ett reellt tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Valfritt reellt värde att beräkna den hyperboliska tangenten av."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Avrundar talet uppåt till närmaste multipel av en faktor.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas uppåt till närmaste heltalsmultipel av `faktor`."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Talet till vars multiplar `värde` ska avrundas."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Invers tangens av ett värde, i radianer.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket den inversa tangenten ska beräknas."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Invers hyperbolisk sinus av ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket den inversa hyperboliska sinusen ska beräknas."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Absolutvärdet av ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Det tal som absolutvärdet ska returneras för."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Invers cosinus för ett värde, i radianer.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket invers cosinus ska beräknas. Måste vara mellan -1 och 1."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Invers hyperbolisk cosinus för ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket den inversa hyperboliska cosinusen ska beräknas. Måste vara större än eller lika med `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Multinomial fördelningsfunktion.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Invers hyperbolisk tangens av ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket den inversa hyperboliska tangenten ska beräknas. Måste vara mellan -1 och 1, exklusive värde."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arkutangenten till ett värde.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "X-koordinaten för ändpunkten på linjesegmentet för vilket vinkeln ska beräknas från x-axeln."
+        },
+        "y": {
+          "name": "och",
+          "detail": "Y-koordinaten för ändpunkten på linjesegmentet för vilket vinkeln ska beräknas från x-axeln."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Antal tomma värden.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet där antalet blanka tecken ska räknas."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Hyperbolisk cosinus för ett reellt tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Vilket reellt värde som helst att beräkna hyperbolisk cosinus av."
+        }
+      }
+    },
+    "INT": {
+      "description": "Avrundar talet nedåt till närmaste heltal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas nedåt till närmaste heltal."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Huruvida det angivna värdet är jämnt.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som jämnt."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Om det angivna värdet är udda.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som udda."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Minsta gemensamma multipel av ett eller flera heltal.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet vars faktorer ska beaktas i en beräkning för att hitta den minsta gemensamma multipeln."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall vars faktorer ska beaktas för att hitta den minsta gemensamma multipeln."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logaritmen för ett tal, basen e (Eulers tal).",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket logaritmen ska beräknas, basen e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logaritmen för ett tal i förhållande till en bas.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket logaritmen ska beräknas."
+        },
+        "base": {
+          "name": "bas",
+          "detail": "Basen som ska användas för beräkning av logaritmen."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logaritmen för ett tal, med basen 10.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket logaritmen ska beräknas, basen 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Modulo-operatorn (restoperatorn).",
+      "parameters": {
+        "dividend": {
+          "name": "utdelning",
+          "detail": "Talet som ska divideras för att hitta resten."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "Talet att dividera med."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Avrundar ett tal till närmaste heltalsmultipel.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Talet som ska avrundas till närmaste heltalsmultipel av ett annat."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Talet till vars multiplar `värde` ska avrundas."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Avrundar ett tal uppåt till närmaste udda heltal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas till nästa största udda tal."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Summa av kvadrater.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första talet eller intervallet vars kvadrater ska adderas."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare tal eller intervall vars kvadrater ska läggas till kvadraten/kvadraten av `value1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Antal kombinationer från en uppsättning objekt.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Storleken på poolen av objekt att välja från."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Antalet objekt att välja."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Summan av en serie tal och/eller celler.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första talet eller intervallet som ska adderas."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare tal eller intervall att lägga till i `value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Delsumma för ett intervall med en specifik funktion.",
+      "parameters": {
+        "function_code": {
+          "name": "funktionskod",
+          "detail": "Funktionen som ska användas vid delsummaggregering."
+        },
+        "range1": {
+          "name": "intervall1",
+          "detail": "Det första intervallet över vilket en delsumma ska beräknas."
+        },
+        "range2": {
+          "name": "intervall2",
+          "detail": "Ytterligare intervall för att beräkna delsummor."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Invers sinus av ett värde, i radianer.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket invers sinus ska beräknas. Måste vara mellan -1 och 1."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Ett villkorligt antal över ett intervall.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Det intervall som testas mot `kriterium`."
+        },
+        "criterion": {
+          "name": "kriterium",
+          "detail": "Mönstret eller testet som ska tillämpas på `intervall`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Konverterar ett vinkelvärde i grader till radianer.",
+      "parameters": {
+        "angle": {
+          "name": "vinkel",
+          "detail": "Vinkeln som ska konverteras från grader till radianer."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Ett slumptal mellan 0 inklusive och 1 exklusive."
+    },
+    "COUNTUNIQUE": {
+      "description": "Räknar antalet unika värden i ett intervall.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta för unikhet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta för unikhet."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Konverterar ett vinkelvärde i radianer till grader.",
+      "parameters": {
+        "angle": {
+          "name": "vinkel",
+          "detail": "Vinkeln som ska konverteras från radianer till grader."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Komplementär gaussfelfunktion för ett värde.",
+      "parameters": {
+        "z": {
+          "name": "Med",
+          "detail": "Det tal för vilket den komplementära Gauss-felfunktionen ska beräknas."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Avrundar ett tal uppåt till närmaste jämna heltal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas till nästa största jämna tal."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Eulers tal, e (~2,718) upphöjt till en potens.",
+      "parameters": {
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponenten att upphöja e till."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Faktorial av ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Talet eller referensen till ett tal vars faktorial kommer att beräknas och returneras."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"dubbelfaktor\" av ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Talet eller referensen till ett tal vars dubbla faktorial kommer att beräknas och returneras."
+        }
+      }
+    },
+    "PI": {
+      "description": "Talet pi."
+    },
+    "GCD": {
+      "description": "Största gemensamma delare av ett eller flera heltal.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet vars faktorer ska beaktas i en beräkning för att hitta den största gemensamma delaren."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall vars faktorer ska beaktas för att hitta den största gemensamma delaren."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Slumpmässigt heltal mellan två värden, inklusive.",
+      "parameters": {
+        "low": {
+          "name": "låg",
+          "detail": "Den lägre delen av det slumpmässiga intervallet."
+        },
+        "high": {
+          "name": "hög",
+          "detail": "Den övre delen av det slumpmässiga intervallet."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Avrundar ett tal enligt standardregler.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas till antalet decimaler med `decimaler`."
+        },
+        "places": {
+          "name": "platser",
+          "detail": "Antalet decimaler som ska avrundas till."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Avrundar nedåt ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas till antalet decimaler med `decimaler`, alltid avrundning nedåt."
+        },
+        "places": {
+          "name": "platser",
+          "detail": "Antalet decimaler som ska avrundas till."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Avrundar ett tal uppåt.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avrundas till antalet decimaler, alltid avrundning uppåt."
+        },
+        "places": {
+          "name": "platser",
+          "detail": "Antalet decimaler som ska avrundas till."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Summa av en potensserie.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Indata till potensserien. Varierar beroende på typ av approximation, kan vara vinkel, exponent eller något annat värde."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Den initiala potensen att upphöja `x` till i potensserien."
+        },
+        "m": {
+          "name": "m",
+          "detail": "Det additiva steg med vilket `x` ska ökas."
+        },
+        "a": {
+          "name": "en",
+          "detail": "Matrisen eller området som innehåller koefficienterna för potensserien."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Tecken för ett angivet tal (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Det värde vars tecken kommer att utvärderas."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus till en vinkel angiven i radianer.",
+      "parameters": {
+        "angle": {
+          "name": "vinkel",
+          "detail": "Vinkeln att hitta sinus för, i radianer."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Hyperbolisk sinus för vilket reellt tal som helst.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Vilket reellt värde som helst att beräkna den hyperboliska sinusen för."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Positiv kvadratrot ur ett positivt tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Det tal som den positiva kvadratroten ska beräknas för."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Kvadratroten ur produkten av pi och talet.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Talet som multipliceras med pi och produktens kvadratrot returneras"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritmen för gammafunktionen.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Indata till Gamma-funktionen. Den naturliga logaritmen av Gamma(`value`) returneras."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosinus för en vinkel angiven i radianer.",
+      "parameters": {
+        "angle": {
+          "name": "vinkel",
+          "detail": "Vinkeln att hitta cosinus för, i radianer."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Avkortar ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska avkortas."
+        },
+        "places": {
+          "name": "platser",
+          "detail": "Antalet signifikanta siffror till höger om decimaltecknet som ska behållas."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Ett tal dividerat med ett annat.",
+      "parameters": {
+        "dividend": {
+          "name": "utdelning",
+          "detail": "Talet som ska divideras."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "Talet att dividera med."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Ett tal upphöjt till en potens.",
+      "parameters": {
+        "base": {
+          "name": "bas",
+          "detail": "Talet som ska upphöjas till exponentpotensen."
+        },
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponenten att upphöja `bas` till."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Summerar ett intervall beroende på flera kriterier.",
+      "parameters": {
+        "sum_range": {
+          "name": "sum_range",
+          "detail": "Intervallet att summera."
+        },
+        "criteria_range1": {
+          "name": "kriterieintervall1",
+          "detail": "Intervallet som ska kontrolleras mot kriterium 1."
+        },
+        "criterion1": {
+          "name": "kriterium 1",
+          "detail": "Mönstret eller testet som ska tillämpas på kriterieområde1."
+        },
+        "criteria_range2": {
+          "name": "kriterieintervall2",
+          "detail": "Ytterligare intervall att kontrollera."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Räkna värden beroende på flera kriterier.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "kriterieintervall1",
+          "detail": "Intervallet som ska kontrolleras mot `kriterium1`."
+        },
+        "criterion1": {
+          "name": "kriterium 1",
+          "detail": "Mönstret eller testet som ska tillämpas på `kriterieintervall1`."
+        },
+        "criteria_range2": {
+          "name": "kriterieintervall2",
+          "detail": "Ytterligare intervall att kontrollera."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Resultatet av att multiplicera en serie tal med varandra.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Det första talet eller intervallet som ska beräknas för produkten."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Fler tal eller intervall att beräkna för produkten."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Det harmoniska medelvärdet av en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Populationens första värde eller intervall."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i populationen."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hypergeometrisk fördelningssannolikhet.",
+      "parameters": {
+        "num_successes": {
+          "name": "antal_framgångar",
+          "detail": "Det önskade antalet framgångar."
+        },
+        "num_draws": {
+          "name": "antal_dragningar",
+          "detail": "Antalet tillåtna dragningar."
+        },
+        "successes_in_pop": {
+          "name": "framgångar_i_pop",
+          "detail": "Det totala antalet framgångar i populationen."
+        },
+        "pop_size": {
+          "name": "pop_size",
+          "detail": "Befolkningens totala storlek"
+        },
+        "cumulative": {
+          "name": "kumulativ",
+          "detail": "Bestäm funktionens logiska värde.\n\nOm kumulativ är TRUE(), returnerar HYPGEOM.DIST den kumulativa fördelningsfunktionen;\n\nOm FALSE(), returnerar den sannolikhetstäthetsfunktionen."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Y-interceptet för linjen härlett via linjär regression.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosis av en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet i datasetet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall som ska inkluderas i datasetet."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "N:te största elementet från en datamängd.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matris eller område som innehåller den datauppsättning som ska beaktas."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Rangordningen från största till minsta för det element som ska returneras."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Standardavvikelse för urvalet (text som 0).",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet i urvalet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i urvalet."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Standardavvikelse för en hel population.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Populationens första värde eller intervall."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i populationen."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Det geometriska medelvärdet av en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Populationens första värde eller intervall."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i populationen."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Procentuell rangordning (percentil) från 0 till och med 1.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matrisen eller området som innehåller den datauppsättning som ska beaktas."
+        },
+        "value": {
+          "name": "värde",
+          "detail": "Det värde vars procentuella rangordning kommer att bestämmas."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska användas i beräkningen. Standardvärdet är 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Förväntat y-värde baserat på linjär regression.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Värdet på x-axeln som ska prognostiseras."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Invers Fisher-transformation av ett angivet värde.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket den inversa Fisher-transformationen ska beräknas."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Fisher-transformation av ett angivet värde.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet för vilket Fisher-transformationen ska beräknas."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Antalet numeriska värden i datamängden.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid räkning."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid räkning."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Antalet värden i en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid räkning."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid räkning."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Numeriskt medelvärde i en datauppsättning, utan text.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av medelvärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av medelvärdet."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binomialfördelningssannolikhet.",
+      "parameters": {
+        "num_successes": {
+          "name": "antal_framgångar",
+          "detail": "Antalet lyckade försök för vilka sannolikheten ska beräknas i `num_trials`-försök."
+        },
+        "num_trials": {
+          "name": "antal_försök",
+          "detail": "Antalet oberoende försök."
+        },
+        "prob_success": {
+          "name": "prob_success",
+          "detail": "Sannolikheten för framgång i ett givet försök."
+        },
+        "cumulative": {
+          "name": "kumulativ",
+          "detail": "Huruvida den binomiala kumulativa fördelningen ska användas."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Summan av kvadraterna av avvikelserna baserat på ett urval.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet i urvalet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i urvalet."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Genomsnitt av värden beroende på kriterier.",
+      "parameters": {
+        "criteria_range": {
+          "name": "kriterieintervall",
+          "detail": "Intervallet som ska kontrolleras mot `kriterium`."
+        },
+        "criterion": {
+          "name": "kriterium",
+          "detail": "Mönstret eller testet som ska tillämpas på `kriterieintervall`."
+        },
+        "average_range": {
+          "name": "genomsnittligt_intervall",
+          "detail": "Intervallet som ska beräknas som medelvärde. Om det inte inkluderas används `kriterieintervall` istället för medelvärdet."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Genomsnitt av värden beroende på flera kriterier.",
+      "parameters": {
+        "average_range": {
+          "name": "genomsnittligt_intervall",
+          "detail": "Intervallet att medelvärdesberäkna."
+        },
+        "criteria_range1": {
+          "name": "kriterieintervall1",
+          "detail": "Intervallet som ska kontrolleras mot `kriterium1`."
+        },
+        "criterion1": {
+          "name": "kriterium 1",
+          "detail": "Mönstret eller testet som ska tillämpas på `kriterieintervall1`."
+        },
+        "criteria_range2": {
+          "name": "kriterieintervall2",
+          "detail": "Ytterligare intervall att kontrollera."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Antal permutationer från ett antal objekt.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Storleken på poolen av objekt att välja från."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Antalet objekt att välja."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Medelvärdet av en datauppsättning exklusive högsta/lägsta värden.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matris eller område som innehåller den datauppsättning som ska beaktas."
+        },
+        "exclude_proportion": {
+          "name": "uteslut_proportion",
+          "detail": "Andelen av datamängden som ska exkluderas, från mängdens extremiteter."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearson produkt-moment korrelationskoefficient.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minsta numeriska värde i en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av minimivärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av minimivärdet."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimivärde i en numerisk datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av minimivärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av minimivärdet."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Medianvärde i en numerisk datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av medianvärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av medianvärdet."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maximalt numeriskt värde i en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av maxvärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av maxvärdet."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maximalt värde i en numerisk datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet att beakta vid beräkning av maxvärdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att beakta vid beräkning av maxvärdet."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Sannolikhetsvärdena ligger inom ett intervall.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matris eller område som innehåller den datauppsättning som ska beaktas."
+        },
+        "probabilities": {
+          "name": "sannolikheter",
+          "detail": "Matris eller område som innehåller sannolikheter motsvarande `data`."
+        },
+        "low_limit": {
+          "name": "låg_gräns",
+          "detail": "Den nedre gränsen för värdeintervallet för vilket sannolikheten ska beräknas."
+        },
+        "high_limit": {
+          "name": "hög_gräns",
+          "detail": "Den övre gränsen för värdeintervallet för vilket sannolikheten ska beräknas."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Kvadraten av korrelationskoefficienten.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Varians av urvalet (text som 0).",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet i urvalet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i urvalet."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Varians för hela populationen (text som 0).",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Populationens första värde eller intervall."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall att inkludera i populationen."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Standardfelet för predikterade y-värden i regression.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Normaliserad motsvarighet till en slumpmässig variabel.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet på den slumpmässiga variabeln som ska normaliseras."
+        },
+        "mean": {
+          "name": "betyda",
+          "detail": "Medelvärdet av fördelningen."
+        },
+        "standard_deviation": {
+          "name": "standardavvikelse",
+          "detail": "Standardavvikelsen för fördelningen."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Det N:te minsta elementet i en datamängd.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matrisen eller området som innehåller den datauppsättning som ska beaktas."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Rangordningen från minsta till största för det element som ska returneras."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Linjens lutning från linjär regression av data.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Det område som representerar arrayen eller matrisen av beroende data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Det område som representerar arrayen eller matrisen av oberoende data."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Snedhet i en datauppsättning.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet eller intervallet i datasetet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare värden eller intervall som ska inkluderas i datasetet."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Vertikal uppslagning.",
+      "parameters": {
+        "search_key": {
+          "name": "söknyckel",
+          "detail": "Värdet att söka efter. Till exempel `42`, `\"Katter\"` eller `I24`."
+        },
+        "range": {
+          "name": "räckvidd",
+          "detail": "Det område som ska användas för sökningen. Den första kolumnen i området genomsöks efter nyckeln som anges i `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Kolumnindexet för värdet som ska returneras, där den första kolumnen i `range` är numrerad 1."
+        },
+        "is_sorted": {
+          "name": "är_sorterad",
+          "detail": "Anger om kolumnen som ska genomsökas (den första kolumnen i det angivna intervallet) är sorterad, i vilket fall den närmaste matchningen för `search_key` returneras."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Horisontell uppslagning",
+      "parameters": {
+        "search_key": {
+          "name": "söknyckel",
+          "detail": "Värdet att söka efter. Till exempel `42`, `\"Katter\"` eller `I24`."
+        },
+        "range": {
+          "name": "räckvidd",
+          "detail": "Området som ska användas för sökningen. Den första raden i området genomsöks efter nyckeln som anges i `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Radindexet för värdet som ska returneras, där den första raden i `range` är numrerad 1."
+        },
+        "is_sorted": {
+          "name": "är_sorterad",
+          "detail": "Anger om raden som ska genomsökas (den första raden i det angivna intervallet) är sorterad."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Slå upp ett värde.",
+      "parameters": {
+        "search_key": {
+          "name": "söknyckel",
+          "detail": "Värdet som ska sökas efter i raden eller kolumnen. Till exempel `42`, `\"Katter\"` eller `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "sökområde|sökresultatsmatris",
+          "detail": "En metod för att använda den här funktionen är att tillhandahålla en enda sorterad rad eller kolumn `search_range` att söka igenom efter `search_key` med ett andra argument `result_range`. Det andra sättet är att kombinera dessa två argument till en `search_result_array` där den första raden eller kolumnen söks igenom och ett värde returneras från den sista raden eller kolumnen i arrayen. Om `search_key` inte hittas kan en icke-exakt matchning returneras."
+        },
+        "result_range": {
+          "name": "resultatintervall",
+          "detail": "Det område från vilket ett resultat ska returneras. Det returnerade värdet motsvarar den plats där `search_key` finns i `search_range`. Detta område får endast bestå av en enda rad eller kolumn och bör inte användas om metoden `search_result_array` används."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Cellreferens som en sträng.",
+      "parameters": {
+        "row": {
+          "name": "rad",
+          "detail": "Radnumret för cellreferensen"
+        },
+        "column": {
+          "name": "kolumn",
+          "detail": "Kolumnnumret (inte namnet) för cellreferensen. `A` är kolumnnummer `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "absolut_relativt_läge",
+          "detail": "En indikator på om referensen är absolut rad/kolumn. `1` är absolut rad och kolumn (t.ex. $A$1), `2` är absolut rad och relativt kolumn (t.ex. A$1), `3` är relativt rad och absolut kolumn (t.ex. $A1) och `4` är relativt rad och kolumn (t.ex. A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_notation",
+          "detail": "Ett booleskt värde som anger om notationen `A1` (SANT) eller `R1C1` (FALSKT) ska användas."
+        },
+        "sheet": {
+          "name": "ark",
+          "detail": "Text som anger namnet på det ark som adressen pekar på."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "En cellreferens som anges av en sträng.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cellreferens_som_sträng",
+          "detail": "En cellreferens, skriven som en sträng med omgivande citattecken."
+        },
+        "is_A1_notation": {
+          "name": "är_A1_notation",
+          "detail": "Anger om cellreferensen är i A1-notationen (SANT) eller R1C1-notationen (FALSKT)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Radnummer för en angiven cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cellreferens",
+          "detail": "Cellen vars radnummer ska returneras."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Antal rader i en angiven array eller ett angivet område.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Det område vars radantal ska returneras."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Kolumnnummer för en angiven cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cellreferens",
+          "detail": "Cellen vars kolumnnummer returneras. Kolumnen `A` motsvarar `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Antal kolumner i en angiven array eller ett angivet område.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Det område vars kolumnantal ska returneras."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "En intervallreferensförskjutning i förhållande till en cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cellreferens",
+          "detail": "Startpunkten från vilken förskjutningsrader och -kolumner ska räknas."
+        },
+        "offset_rows": {
+          "name": "offset_rows",
+          "detail": "Antalet rader att förskjuta med."
+        },
+        "offset_columns": {
+          "name": "offset_columns",
+          "detail": "Antalet kolumner som ska förskjutas med."
+        },
+        "height": {
+          "name": "höjd",
+          "detail": "Höjden på det område som ska returneras med början vid offset-målet."
+        },
+        "width": {
+          "name": "bredd",
+          "detail": "Bredden på det intervall som ska returneras med början vid offset-målet."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Position för objekt i intervallet som matchar värde.",
+      "parameters": {
+        "search_key": {
+          "name": "söknyckel",
+          "detail": "Värdet att söka efter. Till exempel `42`, `\"Katter\"` eller `I24`."
+        },
+        "range": {
+          "name": "räckvidd",
+          "detail": "Den endimensionella array som ska sökas i."
+        },
+        "search_type": {
+          "name": "söktyp",
+          "detail": "Sökmetoden. `1` (standard) hittar det största värdet som är mindre än eller lika med `search_key` när `range` sorteras i stigande ordning. `0` hittar det exakta värdet när `range` är osorterat. `-1` hittar det minsta värdet som är större än eller lika med `search_key` när `range` sorteras i fallande ordning."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Cellinnehåll angivet av rad- och kolumnförskjutning.",
+      "parameters": {
+        "reference": {
+          "name": "hänvisning",
+          "detail": "Matrisen med celler som ska förskjutas till."
+        },
+        "row": {
+          "name": "rad",
+          "detail": "Antalet förskjutna rader."
+        },
+        "column": {
+          "name": "kolumn",
+          "detail": "Antalet förskjutna kolumner."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Extraherar ett aggregerat värde från en pivottabell som motsvarar de angivna rad- och kolumnrubrikerna.",
+      "parameters": {
+        "value_name": {
+          "name": "värdenamn",
+          "detail": "Namnet på värdet i pivottabellen som du vill hämta data för."
+        },
+        "any_pivot_table_cell": {
+          "name": "valfri_pivottabellcell",
+          "detail": "Varje referens till en cell i önskad pivottabell (övre hörnet rekommenderas)."
+        },
+        "original_column": {
+          "name": "original_kolumn",
+          "detail": "Namnet på kolumnen i den ursprungliga datamängden (inte pivottabellen)."
+        },
+        "pivot_item": {
+          "name": "pivot_item",
+          "detail": "Namnet på raden eller kolumnen som visas i pivottabellen och som motsvarar *original_column* och som du vill hämta."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Ett element från en lista med val baserat på index.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Vilket alternativ (av de upp till 30 som anges) som ska returneras."
+        },
+        "choice1": {
+          "name": "val1",
+          "detail": "Ett potentiellt värde att returnera. Obligatoriskt. Kan vara en referens till en cell eller ett enskilt värde."
+        },
+        "choice2": {
+          "name": "val2",
+          "detail": "Ytterligare värden att välja mellan."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Omvandlar timme/minut/sekund till tid.",
+      "parameters": {
+        "hour": {
+          "name": "timme",
+          "detail": "Timkomponenten av tiden."
+        },
+        "minute": {
+          "name": "minut",
+          "detail": "Minutkomponenten av tiden."
+        },
+        "second": {
+          "name": "andra",
+          "detail": "Tidens andra komponent."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Konverterar en tidssträng till dess serienummerrepresentation.",
+      "parameters": {
+        "time_string": {
+          "name": "tidssträng",
+          "detail": "Strängen som innehåller tidsrepresentationen."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Sista dagen i månaden före eller efter ett datum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Datumet från vilket resultatet ska beräknas."
+        },
+        "months": {
+          "name": "månader",
+          "detail": "Antalet månader före (negativt) eller efter (positivt) 'startdatum' som ska beaktas."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Datum ett antal månader före/efter ett annat datum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Datumet från vilket resultatet ska beräknas."
+        },
+        "months": {
+          "name": "månader",
+          "detail": "Antalet månader före (negativt) eller efter (positivt) 'startdatum' som ska beräknas."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Den andra komponenten av en specifik tid.",
+      "parameters": {
+        "time": {
+          "name": "tid",
+          "detail": "Tidpunkten från vilken den andra komponenten ska beräknas"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Minutkomponenten av en specifik tid.",
+      "parameters": {
+        "time": {
+          "name": "tid",
+          "detail": "Tidpunkten från vilken minutkomponenten ska beräknas."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Timkomponenten i en specifik tid.",
+      "parameters": {
+        "time": {
+          "name": "tid",
+          "detail": "Tidpunkten från vilken timkomponenten ska beräknas."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Aktuellt datum och tid som ett datumvärde."
+    },
+    "NETWORKDAYS": {
+      "description": "Nettoarbetsdagar mellan två angivna dagar.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Startdatumet för den period från vilken antalet nettoarbetsdagar ska beräknas."
+        },
+        "end_date": {
+          "name": "slutdatum",
+          "detail": "Slutdatumet för den period från vilken antalet nettoarbetsdagar ska beräknas."
+        },
+        "holidays": {
+          "name": "helgdagar",
+          "detail": "En intervall- eller matriskonstant som innehåller datumserienumren för att betrakta helgdagar."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "ISO-veckonummer för året.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet för vilket ISO-veckonumret ska bestämmas. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Årets veckonummer.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet för vilket veckonumret ska bestämmas. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Ett tal som representerar den dag en vecka börjar på. Söndag = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Veckodag för det angivna datumet (som nummer).",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet för vilket veckodagen ska bestämmas. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Ett tal som anger vilket numreringssystem som ska användas för att representera veckodagar. Som standard är räkningar som börjar med söndag = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Den dag i månaden då ett specifikt datum infaller.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet från vilket dagen ska extraheras."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Antal dagar mellan två datum.",
+      "parameters": {
+        "end_date": {
+          "name": "slutdatum",
+          "detail": "Slutet av datumintervallet."
+        },
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Början av datumintervallet."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Dagar mellan två datum på ett 360-dagarsår.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Startdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "end_date": {
+          "name": "slutdatum",
+          "detail": "Slutdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "method": {
+          "name": "metod",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Konverterar år/månad/dag till ett datum.",
+      "parameters": {
+        "year": {
+          "name": "år",
+          "detail": "Årskomponenten i datumet."
+        },
+        "month": {
+          "name": "månad",
+          "detail": "Månadskomponenten i datumet."
+        },
+        "day": {
+          "name": "dag",
+          "detail": "Dagskomponenten av datumet."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Konverterar en datumsträng till ett datumvärde.",
+      "parameters": {
+        "date_string": {
+          "name": "datumsträng",
+          "detail": "Strängen som representerar datumet."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Datumskillnad.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Startdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "end_date": {
+          "name": "slutdatum",
+          "detail": "Slutdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "unit": {
+          "name": "enhet",
+          "detail": "En strängförkortning för tidsenhet. Till exempel \"M\" för månad. Godkända värden är \"Å\", \"M\", \"D\", \"MD\", \"ÅM\", \"ÅD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Antal arbetsdagar från startdatum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Datumet från vilket man ska börja räkna."
+        },
+        "num_days": {
+          "name": "antal_dagar",
+          "detail": "Antalet arbetsdagar som ska gå från `start_date`. Om negativt räknas bakåt."
+        },
+        "holidays": {
+          "name": "helgdagar",
+          "detail": "En intervall- eller matriskonstant som innehåller de datum som ska betraktas som helgdagar."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "År angivet med ett givet datum.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet från vilket året ska extraheras."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Exakt antal år mellan två datum.",
+      "parameters": {
+        "start_date": {
+          "name": "startdatum",
+          "detail": "Startdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "end_date": {
+          "name": "slutdatum",
+          "detail": "Slutdatumet som ska beaktas i beräkningen. Måste vara en referens till en cell som innehåller ett datum, en funktion som returnerar en datumtyp eller ett tal."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Aktuellt datum som ett datumvärde."
+    },
+    "MONTH": {
+      "description": "Månad på året ett specifikt datum infaller.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datumet från vilket månaden ska extraheras."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Årlig effektiv ränta.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "nominell_ränta",
+          "detail": "Den nominella räntan per år."
+        },
+        "periods_per_year": {
+          "name": "perioder_per_år",
+          "detail": "Antalet sammansatta ränteperioder per år."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Formaterar ett tal som en valuta som är specifik för ditt kalkylblads språkinställning.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Värdet som ska formateras."
+        },
+        "number_of_places": {
+          "name": "antal_platser",
+          "detail": "Antalet decimaler som ska visas."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Omvandlar ett decimalt bråk till ett decimaltal.",
+      "parameters": {
+        "fractional_price": {
+          "name": "fraktionspris",
+          "detail": "Prisofferten ges med hjälp av bråkdecimalkonventioner."
+        },
+        "unit": {
+          "name": "enhet",
+          "detail": "Bråkets enheter, t.ex. `8` för 1/8-delar eller `32` för 1/32-delar."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Konverterar ett decimaltal till ett decimalbråk.",
+      "parameters": {
+        "decimal_price": {
+          "name": "decimalpris",
+          "detail": "Prisofferten anges som ett decimalvärde."
+        },
+        "unit": {
+          "name": "enhet",
+          "detail": "Enheterna för det önskade bråket, t.ex. `8` för 1/8-delar eller `32` för 1/32-delar."
+        }
+      }
+    },
+    "DB": {
+      "description": "Avskrivningar via degressiv saldometoden.",
+      "parameters": {
+        "cost": {
+          "name": "kosta",
+          "detail": "Tillgångens initiala kostnad."
+        },
+        "salvage": {
+          "name": "rädda",
+          "detail": "Tillgångens värde vid slutet av avskrivningen."
+        },
+        "life": {
+          "name": "liv",
+          "detail": "Antalet perioder under vilka tillgången avskrivs."
+        },
+        "period": {
+          "name": "period",
+          "detail": "Den enskilda period inom `livslängd` för vilken avskrivning ska beräknas."
+        },
+        "month": {
+          "name": "månad",
+          "detail": "Antalet månader under det första avskrivningsåret."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Avskrivningar via dubbel degressiv metod.",
+      "parameters": {
+        "cost": {
+          "name": "kosta",
+          "detail": "Tillgångens initiala kostnad."
+        },
+        "salvage": {
+          "name": "rädda",
+          "detail": "Tillgångens värde vid slutet av avskrivningen."
+        },
+        "life": {
+          "name": "liv",
+          "detail": "Antalet perioder under vilka tillgången avskrivs."
+        },
+        "period": {
+          "name": "period",
+          "detail": "Den enskilda period inom `livslängd` för vilken avskrivning ska beräknas."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Den faktor med vilken avskrivningen minskar."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Ränta på en annuitetsinvestering.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "payment_per_period": {
+          "name": "betalning_per_period",
+          "detail": "Beloppet som ska betalas per period."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        },
+        "rate_guess": {
+          "name": "gissning_ränta",
+          "detail": "En uppskattning av vad räntan kommer att bli."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Kumulativt kapitalbelopp som betalats över en given period.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "first_period": {
+          "name": "första_perioden",
+          "detail": "Numret på den betalningsperioden för att påbörja den kumulativa beräkningen."
+        },
+        "last_period": {
+          "name": "sista_perioden",
+          "detail": "Numret på den betalningsperioden som den kumulativa beräkningen ska avsluta."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Antal kuponger mellan avveckling och förfall.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Avskrivningar med hjälp av årssummans siffror.",
+      "parameters": {
+        "cost": {
+          "name": "kosta",
+          "detail": "Tillgångens initiala kostnad."
+        },
+        "salvage": {
+          "name": "rädda",
+          "detail": "Tillgångens värde vid slutet av avskrivningen."
+        },
+        "life": {
+          "name": "liv",
+          "detail": "Antalet perioder under vilka tillgången avskrivs."
+        },
+        "period": {
+          "name": "period",
+          "detail": "Den enskilda period inom `livslängd` för vilken avskrivning ska beräknas."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Motsvarande avkastning för en statsskuldväxel.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan på fakturan vid köptillfället."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Avkastningen på en amerikansk statsskuldväxel baserat på pris.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "price": {
+          "name": "pris",
+          "detail": "Det pris till vilket värdepappret köps per 100 nominellt värde."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Priset på amerikanska statsskuldväxlar.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan på fakturan vid köptillfället."
+        }
+      }
+    },
+    "PV": {
+      "description": "Nuvärdet av en annuitetsinvestering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "payment_amount": {
+          "name": "betalningsbelopp",
+          "detail": "Beloppet som ska betalas per period."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Antal dagar från första kupong till avveckling.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Dagar i kupongperioden som innehåller likviddatum.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "FV": {
+      "description": "Framtida värde av en annuitetsinvestering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "payment_amount": {
+          "name": "betalningsbelopp",
+          "detail": "Beloppet som ska betalas per period."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Framtida värde av kapitalbeloppet från en serie av räntor.",
+      "parameters": {
+        "principal": {
+          "name": "rektor",
+          "detail": "Beloppet av initialt kapital eller värde att summera mot."
+        },
+        "rate_schedule": {
+          "name": "rate_schedule",
+          "detail": "En serie räntor som ska räknas mot \"kapitalbeloppet\"."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Årlig avkastning på ett värdepapper som betalar periodisk ränta.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "rate": {
+          "name": "hastighet",
+          "detail": "Den årliga räntan."
+        },
+        "price": {
+          "name": "pris",
+          "detail": "Det pris till vilket värdepappret köps per 100 nominellt värde."
+        },
+        "redemption": {
+          "name": "inlösen",
+          "detail": "Inlösenbeloppet per 100 nominellt värde, eller parivärde."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Årlig avkastning på ett diskonterat värdepapper.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "price": {
+          "name": "pris",
+          "detail": "Det pris till vilket värdepappret köps per 100 nominellt värde."
+        },
+        "redemption": {
+          "name": "inlösen",
+          "detail": "Inlösenbeloppet per 100 nominellt värde, eller parivärde."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Årlig nominell ränta.",
+      "parameters": {
+        "effective_rate": {
+          "name": "effektiv_ränta",
+          "detail": "Den effektiva räntan per år."
+        },
+        "periods_per_year": {
+          "name": "perioder_per_år",
+          "detail": "Antalet sammansatta ränteperioder per år."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Internränta givet icke-periodiska kassaflöden.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kassaflödesbelopp",
+          "detail": "En matris eller ett intervall som innehåller inkomster eller betalningar kopplade till investeringen."
+        },
+        "cashflow_dates": {
+          "name": "kassaflödesdatum",
+          "detail": "En array eller ett intervall med datum som motsvarar kassaflödena i `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "gissning_ränta",
+          "detail": "En uppskattning av vad den interna avkastningen kommer att bli."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Modifierad internränta.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kassaflödesbelopp",
+          "detail": "En matris eller ett intervall som innehåller inkomster eller betalningar kopplade till investeringen."
+        },
+        "financing_rate": {
+          "name": "finansieringsränta",
+          "detail": "Räntan som betalas på investerade medel."
+        },
+        "reinvestment_return_rate": {
+          "name": "återinvesteringsavkastningsgrad",
+          "detail": "Avkastningen (i procent) som erhålls vid återinvestering av inkomst från investeringen."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Internränta givet periodiska kassaflöden.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "kassaflödesbelopp",
+          "detail": "En matris eller ett intervall som innehåller inkomster eller betalningar kopplade till investeringen."
+        },
+        "rate_guess": {
+          "name": "gissning_ränta",
+          "detail": "En uppskattning av vad den interna avkastningen kommer att bli."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Nuvärdet av en investering baserat på en serie periodiska kassaflöden och en diskonteringsränta.",
+      "parameters": {
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan för investeringen över en period."
+        },
+        "cashflow1": {
+          "name": "kassaflöde1",
+          "detail": "Det första framtida kassaflödet."
+        },
+        "cashflow2": {
+          "name": "kassaflöde2",
+          "detail": "Ytterligare framtida kassaflöden."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Nettonuvärde givet icke-periodiska kassaflöden.",
+      "parameters": {
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan för investeringen över en period."
+        },
+        "cashflow_amounts": {
+          "name": "kassaflödesbelopp",
+          "detail": "Ett cellintervall som innehåller inkomster eller betalningar kopplade till investeringen."
+        },
+        "cashflow_dates": {
+          "name": "kassaflödesdatum",
+          "detail": "Ett cellområde med datum som motsvarar kassaflödena i `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Kumulativ ränta som betalats över en given period.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "first_period": {
+          "name": "första_perioden",
+          "detail": "Numret på den betalningsperioden för att påbörja den kumulativa beräkningen."
+        },
+        "last_period": {
+          "name": "sista_perioden",
+          "detail": "Numret på den betalningsperioden som den kumulativa beräkningen ska avsluta."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Periodisk betalning för en annuitetsinvestering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Räntebetalning för en investering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "period": {
+          "name": "period",
+          "detail": "Amorteringsperioden, uttryckt i antal perioder."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Betalning på kapitalbeloppet av en investering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "period": {
+          "name": "period",
+          "detail": "Amorteringsperioden, uttryckt i antal perioder."
+        },
+        "number_of_periods": {
+          "name": "antal_perioder",
+          "detail": "Antalet betalningar som ska göras."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Beräknar effektiv ränta.",
+      "parameters": {
+        "buy_date": {
+          "name": "köpdatum",
+          "detail": "Investeringens köpdatum."
+        },
+        "sell_date": {
+          "name": "säljdatum",
+          "detail": "Datum för försäljning av investeringen."
+        },
+        "buy_price": {
+          "name": "köppris",
+          "detail": "Det pris till vilket investeringen köptes."
+        },
+        "sell_price": {
+          "name": "säljpris",
+          "detail": "Det pris till vilket investeringen såldes."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Priset på ett värdepapper som betalar periodisk ränta.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "rate": {
+          "name": "hastighet",
+          "detail": "Den årliga räntan."
+        },
+        "yield": {
+          "name": "avkastning",
+          "detail": "Värdepapperets förväntade årliga avkastning."
+        },
+        "redemption": {
+          "name": "inlösen",
+          "detail": "Inlösenbeloppet per 100 nominellt värde, eller parivärde."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Priset för ett värdepapper med rabatt.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan för värdepappret vid köptillfället."
+        },
+        "redemption": {
+          "name": "inlösen",
+          "detail": "Inlösenbeloppet per 100 nominellt värde, eller parivärde."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Priset på värdepapper som betalar ränta vid förfall.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "issue": {
+          "name": "utfärda",
+          "detail": "Datumet då värdepapperet ursprungligen utfärdades."
+        },
+        "rate": {
+          "name": "hastighet",
+          "detail": "Den årliga räntan."
+        },
+        "yield": {
+          "name": "avkastning",
+          "detail": "Värdepapperets förväntade årliga avkastning."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Belopp som erhållits vid förfall för ett värdepapper.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "investment": {
+          "name": "investering",
+          "detail": "Det investerade beloppet (oavsett nominellt värde för varje värdepapper)."
+        },
+        "discount": {
+          "name": "rabatt",
+          "detail": "Diskonteringsräntan för det värdepapper som investerats i."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Diskonteringsräntan för ett värdepapper baserad på priset.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "price": {
+          "name": "pris",
+          "detail": "Det pris till vilket värdepappret köps per 100 nominellt värde."
+        },
+        "redemption": {
+          "name": "inlösen",
+          "detail": "Inlösenbeloppet per 100 nominellt värde, eller parivärde."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Antal betalningsperioder för en investering.",
+      "parameters": {
+        "rate": {
+          "name": "hastighet",
+          "detail": "Räntan."
+        },
+        "payment_amount": {
+          "name": "betalningsbelopp",
+          "detail": "Beloppet för varje betalning som gjorts."
+        },
+        "present_value": {
+          "name": "nuvärde",
+          "detail": "Annuitetens nuvarande värde."
+        },
+        "future_value": {
+          "name": "framtida_värde",
+          "detail": "Det framtida värde som återstår efter att den slutliga betalningen har gjorts."
+        },
+        "end_or_beginning": {
+          "name": "slut_eller_början",
+          "detail": "Om betalningar förfaller i slutet (`0`) eller början (`1`) av varje period."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Avskrivning av tillgångar med linjär metod.",
+      "parameters": {
+        "cost": {
+          "name": "kosta",
+          "detail": "Tillgångens initiala kostnad."
+        },
+        "salvage": {
+          "name": "rädda",
+          "detail": "Tillgångens värde vid slutet av avskrivningen."
+        },
+        "life": {
+          "name": "liv",
+          "detail": "Antalet perioder under vilka tillgången avskrivs."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Antal perioder för en investering att nå ett värde.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "rate": {
+          "name": "hastighet",
+          "detail": "Den årliga räntan."
+        },
+        "yield": {
+          "name": "avkastning",
+          "detail": "Värdepapperets förväntade årliga avkastning."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Modifierad Macaulay-varaktighet.",
+      "parameters": {
+        "settlement": {
+          "name": "lösning",
+          "detail": "Värdepapperets likviddag, dagen efter utfärdandet då värdepapperet levereras till köparen."
+        },
+        "maturity": {
+          "name": "mognad",
+          "detail": "Värdepapperets förfallodatum eller slutdatum, när det kan lösas in till nominellt värde eller nominellt värde."
+        },
+        "rate": {
+          "name": "hastighet",
+          "detail": "Den årliga räntan."
+        },
+        "yield": {
+          "name": "avkastning",
+          "detail": "Värdepapperets förväntade årliga avkastning."
+        },
+        "frequency": {
+          "name": "frekvens",
+          "detail": "Antalet ränte- eller kupongbetalningar per år (1, 2 eller 4)."
+        },
+        "day_count_convention": {
+          "name": "dagräkningskonvention",
+          "detail": "En indikator på vilken dagräkningsmetod som ska användas."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Konverterar ett binärt tal med förtecken till decimalformat.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signerat_binärt_nummer",
+          "detail": "Det signerade 10-bitars binära värdet som ska konverteras till decimalt, angivet som en sträng."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Konverterar ett binärt tal till hexadecimalt.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signerat_binärt_nummer",
+          "detail": "Det teckenförtecknade 10-bitars binära värdet som ska konverteras till teckenförtecknat hexademiskt värde, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Konverterar ett binärt tal till ett oktalt tal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signerat_binärt_nummer",
+          "detail": "Det signerade 10-bitars binära värdet som ska konverteras till signerad oktal, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Konverterar ett decimaltal till signerat binärt format.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaltal",
+          "detail": "Det decimalvärde som ska konverteras till signerad binär, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Konverterar ett decimaltal till hexadecimalt.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaltal",
+          "detail": "Det decimalvärde som ska konverteras till hexadecimalt värde med tecken, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Konverterar ett decimaltal till signerat oktalt format.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimaltal",
+          "detail": "Det decimalvärde som ska konverteras till oktalt värde med tecken, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Konverterar ett hexadecimalt tal till binärt.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signerad_hexadecimal_nummer",
+          "detail": "Det signerade 40-bitars hexadecimala värdet som ska konverteras till signerad binär, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Konverterar ett hexadecimalt tal till ett decimaltal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signerad_hexadecimal_nummer",
+          "detail": "Det hexadecimala 40-bitarsvärdet med tecken som ska konverteras till decimalt värde, angivet som en sträng."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Konverterar ett hexadecimalt tal till ett oktalt tal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signerad_hexadecimal_nummer",
+          "detail": "Det hexadecimala 40-bitarsvärdet med tecken som ska konverteras till oktalt värde med tecken, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Konverterar ett oktalt tal till binärt.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signerad_oktal_nummer",
+          "detail": "Det signerade 30-bitars oktala värdet som ska konverteras till signerad binär, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Konverterar ett oktaltal med tecken till decimalformat.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signerad_oktal_nummer",
+          "detail": "Det teckenförtecknade 30-bitars oktalvärdet som ska konverteras till decimalt, angivet som en sträng."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Konverterar ett oktalt tal till hexadecimalt.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signerad_oktal_nummer",
+          "detail": "Det 30-bitars oktala värdet med tecken som ska konverteras till hexadecimalt med tecken, angivet som en sträng."
+        },
+        "significant_digits": {
+          "name": "signifikanta_siffror",
+          "detail": "Antalet signifikanta siffror som ska säkerställas i resultatet."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Skapar ett komplext tal.",
+      "parameters": {
+        "real_part": {
+          "name": "verklig_del",
+          "detail": "Den verkliga koefficienten."
+        },
+        "imaginary_part": {
+          "name": "imaginär_del",
+          "detail": "Den imaginära koefficienten."
+        },
+        "suffix": {
+          "name": "ändelse",
+          "detail": "Suffixet för den imaginära koefficienten kan bara vara 'i' eller 'j'. Om det utelämnas kommer 'i' att användas."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Den reella koefficienten för ett komplext tal.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplext_tal",
+          "detail": "Det komplexa talet, i formatet a+bi eller a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Den imaginära koefficienten för ett komplext tal.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplext_tal",
+          "detail": "Det komplexa talet, i formatet a+bi eller a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Den komplexa konjugatet av ett tal.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Det komplexa talet att beräkna konjugatet för."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Det absoluta värdet av ett komplext tal.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Det komplexa talet att beräkna absolutvärdet av."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Jämför två numeriska värden.",
+      "parameters": {
+        "number1": {
+          "name": "nummer 1",
+          "detail": "Det första numret att jämföra."
+        },
+        "number2": {
+          "name": "nummer 2",
+          "detail": "Det andra numret att jämföra."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Summan av en serie komplexa tal.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första komplexa talet eller intervallet att addera."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Ytterligare komplexa tal eller intervall att lägga till till `value1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Skillnaden mellan två komplexa tal.",
+      "parameters": {
+        "first_number": {
+          "name": "första_nummer",
+          "detail": "Det komplexa talet att subtrahera andra_talet från."
+        },
+        "second_number": {
+          "name": "andra_nummer",
+          "detail": "Det komplexa talet som ska subtraheras från första_talet."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Resultatet av att multiplicera en serie komplexa tal med varandra.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Det första talet eller intervallet som ska beräknas för produkten."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Ytterligare komplexa tal eller intervall att beräkna för produkten."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Ett komplext tal dividerat med ett annat.",
+      "parameters": {
+        "dividend": {
+          "name": "utdelning",
+          "detail": "Det komplexa talet som ska divideras."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "Det komplexa talet att dividera med."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Returnerar motsatsen till det angivna logiska värdet.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logiskt_uttryck",
+          "detail": "Ett uttryck eller en referens till en cell som innehåller ett uttryck som representerar ett logiskt värde."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Logiskt värde `sant`."
+    },
+    "FALSE": {
+      "description": "Logiskt värde `falskt`."
+    },
+    "AND": {
+      "description": "Logisk `och`-operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logiskt_uttryck1",
+          "detail": "Ett uttryck eller en referens till en cell som innehåller ett uttryck som representerar ett logiskt värde, t.ex. `TRUE` eller `FALSE`, eller ett uttryck som kan tvingas till ett logiskt värde."
+        },
+        "logical_expression2": {
+          "name": "logiskt_uttryck2",
+          "detail": "Fler uttryck som representerar logiska värden."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Värde om det inte är ett fel, annars andra argumentet.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska returneras om `value` i sig inte är ett fel."
+        },
+        "value_if_error": {
+          "name": "värde_om_fel",
+          "detail": "Värdet som funktionen returnerar om `value` är ett fel."
+        }
+      }
+    },
+    "IF": {
+      "description": "Returnerar värde beroende på logiskt uttryck.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logiskt_uttryck",
+          "detail": "Ett uttryck eller en referens till en cell som innehåller ett uttryck som representerar ett logiskt värde, t.ex. `TRUE` eller `FALSE`."
+        },
+        "value_if_true": {
+          "name": "värde_om_sant",
+          "detail": "Värdet som funktionen returnerar om `logiskt_uttryck` är `SANT`."
+        },
+        "value_if_false": {
+          "name": "värde_om_falskt",
+          "detail": "Värdet som funktionen returnerar om `logiskt_uttryck` är `FALSKT`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Logisk `eller`-operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logiskt_uttryck1",
+          "detail": "Ett uttryck eller en referens till en cell som innehåller ett uttryck som representerar ett logiskt värde, t.ex. `TRUE` eller `FALSE`, eller ett uttryck som kan tvingas till ett logiskt värde."
+        },
+        "logical_expression2": {
+          "name": "logiskt_uttryck2",
+          "detail": "Fler uttryck som utvärderas till logiska värden."
+        }
+      }
+    },
+    "NE": {
+      "description": "Inte lika.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Värdet som ska testas mot `value1` för olikhet."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Lika.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första värdet."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Värdet som ska testas mot `value1` för likhet."
+        }
+      }
+    },
+    "GT": {
+      "description": "Strikt större än.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Värdet som ska testas som större än `value2`."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Det andra värdet."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Större än eller lika med.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Värdet som ska testas som större än eller lika med `value2`."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Det andra värdet."
+        }
+      }
+    },
+    "LT": {
+      "description": "Mindre än.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Värdet som ska testas som mindre än `value2`."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Det andra värdet."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Mindre än eller lika med.",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Värdet som ska testas som mindre än eller lika med `value2`."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Det andra värdet."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Summan av två tal",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Det första tillägget."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Det andra tillägget."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Skillnaden mellan två tal",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Minuenden, eller talet som ska subtraheras från."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Subtrahenden, eller talet som ska subtraheras från `värde1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Produkten av två tal",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Den första multiplikanden."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Den andra multiplikanden."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Ett tal dividerat med ett annat",
+      "parameters": {
+        "dividend": {
+          "name": "utdelning",
+          "detail": "Talet som ska divideras."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "Talet att dividera med."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Sammanfogning av två värden",
+      "parameters": {
+        "value1": {
+          "name": "värde1",
+          "detail": "Värdet som `value2` ska läggas till."
+        },
+        "value2": {
+          "name": "värde2",
+          "detail": "Värdet som ska läggas till i `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Värde tolkat som en procentandel.",
+      "parameters": {
+        "percentage": {
+          "name": "procentsats",
+          "detail": "Värdet som ska tolkas som en procentandel."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Lägger till strängar till varandra.",
+      "parameters": {
+        "string1": {
+          "name": "sträng1",
+          "detail": "Den initiala strängen."
+        },
+        "string2": {
+          "name": "sträng2",
+          "detail": "Fler strängar att lägga till i sekvens."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Numeriskt Unicode-mappvärde för tecken.",
+      "parameters": {
+        "string": {
+          "name": "sträng",
+          "detail": "Strängen vars första teckens Unicode-mappvärde kommer att returneras."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Hämtar tecken associerat med nummer.",
+      "parameters": {
+        "table_number": {
+          "name": "tabellnummer",
+          "detail": "Numret på tecknet som ska slås upp från den aktuella Unicode-tabellen i decimalformat."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Beräknar värdet av en romersk siffra.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "romersk_siffra",
+          "detail": "Den romerska siffran som ska formateras, vars värde måste vara mellan 1 och 3999."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Formaterar ett tal i romerska siffror.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Talet som ska formateras, mellan 1 och 3999."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Extraherar matchande delsträngar med reguljärt uttryck.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Inmatningstexten."
+        },
+        "regular_expression": {
+          "name": "reguljärt_uttryck",
+          "detail": "Den första delen av `text` som matchar detta uttryck kommer att returneras."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Om en textdel matchar reguljära uttryck.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Texten som ska testas mot det reguljära uttrycket."
+        },
+        "regular_expression": {
+          "name": "reguljärt_uttryck",
+          "detail": "Det reguljära uttrycket att testa texten mot."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Ersätter text med reguljära uttryck.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Texten, vars delar kommer att ersättas."
+        },
+        "regular_expression": {
+          "name": "reguljärt_uttryck",
+          "detail": "Det reguljära uttrycket. Alla matchande instanser i `text` kommer att ersättas."
+        },
+        "replacement": {
+          "name": "ersättning",
+          "detail": "Den text som ska infogas i originaltexten."
+        }
+      }
+    },
+    "T": {
+      "description": "Strängargument som text.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet som ska konverteras till text."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formaterar tal med ett fast antal decimaler.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Numret som ska formateras."
+        },
+        "number_of_places": {
+          "name": "antal_platser",
+          "detail": "Antalet decimaler som ska visas i resultatet."
+        },
+        "suppress_separator": {
+          "name": "undertrycksseparator",
+          "detail": "Huruvida tusentalsavgränsaren som används i vissa språkinställningar ska undertryckas eller inte (t.ex. blir `1 000` `1 000`). Avgränsare kommer att finnas om detta värde är 0 eller utelämnas, och saknas annars."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Första positionen av strängen som hittats i texten, skiftlägeskänsligt.",
+      "parameters": {
+        "search_for": {
+          "name": "sök_efter",
+          "detail": "Strängen att leta efter i `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_att_söka",
+          "detail": "Texten att söka efter vid första förekomsten av `search_for`."
+        },
+        "starting_at": {
+          "name": "start_at",
+          "detail": "Tecknet i `text_to_search` där sökningen ska starta."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Position där en sträng först hittas i texten (binär).",
+      "parameters": {
+        "search_for": {
+          "name": "sök_efter",
+          "detail": "Strängen att leta efter i `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_att_söka",
+          "detail": "Texten att söka efter vid första förekomsten av `search_for`."
+        },
+        "starting_at": {
+          "name": "start_at",
+          "detail": "Tecknet i `text_to_search` där sökningen ska starta."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Sammanfogar element i arrayer med avgränsare.",
+      "parameters": {
+        "delimiter": {
+          "name": "avgränsare",
+          "detail": "Tecknet eller strängen som ska placeras mellan varje sammanfogat värde."
+        },
+        "value_or_array1": {
+          "name": "värde_eller_matris1",
+          "detail": "Det eller de värden som ska läggas till med hjälp av `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "värde_eller_matris2",
+          "detail": "Fler värden ska läggas till med hjälp av `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Delsträng från början av angiven sträng.",
+      "parameters": {
+        "string": {
+          "name": "sträng",
+          "detail": "Strängen från vilken den vänstra delen ska returneras."
+        },
+        "number_of_characters": {
+          "name": "antal_tecken",
+          "detail": "Antalet tecken som ska returneras från vänster sida av `sträng`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "En delsträng från slutet av en angiven sträng.",
+      "parameters": {
+        "string": {
+          "name": "sträng",
+          "detail": "Strängen från vilken den högra delen ska returneras."
+        },
+        "number_of_characters": {
+          "name": "antal_tecken",
+          "detail": "Antalet tecken som ska returneras från höger sida av `sträng`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Ett segment av en sträng.",
+      "parameters": {
+        "string": {
+          "name": "sträng",
+          "detail": "Strängen att extrahera ett segment från."
+        },
+        "starting_at": {
+          "name": "start_at",
+          "detail": "Indexet från vänster om `sträng` från vilket extraheringen ska börja. Det första tecknet i `sträng` har index 1."
+        },
+        "extract_length": {
+          "name": "extraktlängd",
+          "detail": "Längden på segmentet som ska extraheras."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Längden på en sträng.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Strängen vars längd ska returneras."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Längden på en sträng i byte.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Strängen vars längd ska returneras."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Konverterar en angiven sträng till gemener.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Strängen som ska konverteras till gemener."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Konverterar en angiven sträng till versaler.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Strängen som ska konverteras till versaler."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Testar om två strängar är identiska.",
+      "parameters": {
+        "string1": {
+          "name": "sträng1",
+          "detail": "Den första strängen att jämföra"
+        },
+        "string2": {
+          "name": "sträng2",
+          "detail": "Den andra strängen att jämföra"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Ersätter en del av en textsträng med annan text.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Texten, vars delar kommer att ersättas."
+        },
+        "position": {
+          "name": "placera",
+          "detail": "Positionen där ersättningen ska börja (från och med 1)."
+        },
+        "length": {
+          "name": "längd",
+          "detail": "Antalet tecken i texten som ska ersättas."
+        },
+        "new_text": {
+          "name": "ny_text",
+          "detail": "Den text som ska infogas i originaltexten."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Angiven text upprepas ett antal gånger.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "text_att_upprepa",
+          "detail": "Tecknet eller strängen som ska upprepas."
+        },
+        "number_of_repetitions": {
+          "name": "antal_upprepningar",
+          "detail": "Antalet gånger `text_to_repeat` ska förekomma i det returnerade värdet."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Första positionen av strängen hittades i texten, skiftläge ignoreras.",
+      "parameters": {
+        "search_for": {
+          "name": "sök_efter",
+          "detail": "Strängen att leta efter i `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_att_söka",
+          "detail": "Texten att söka efter vid första förekomsten av `search_for`."
+        },
+        "starting_at": {
+          "name": "start_at",
+          "detail": "Tecknet i `text_to_search` där sökningen ska starta."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Ersätter befintlig text med ny text i en sträng.",
+      "parameters": {
+        "text_to_search": {
+          "name": "text_att_söka",
+          "detail": "Texten som ska sökas och ersättas i."
+        },
+        "search_for": {
+          "name": "sök_efter",
+          "detail": "Strängen att söka efter i `text_to_search`."
+        },
+        "replace_with": {
+          "name": "ersätt_med",
+          "detail": "Strängen som ska ersätta `search_for`."
+        },
+        "occurrence_number": {
+          "name": "förekomstnummer",
+          "detail": "Förekomsten av `search_for` inom `text_to_search` som ska ersättas med `replace_with`. Som standard ersätts alla förekomster av `search_for`; om dock `occurrence_number` anges ersätts endast den angivna förekomsten av `search_for`."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Tar bort tecken som inte kan skrivas ut från en textstycke.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Den text vars icke-utskrivbara tecken ska tas bort."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Formaterar ett tal till text.",
+      "parameters": {
+        "number": {
+          "name": "antal",
+          "detail": "Numret, datumet eller tiden som ska formateras."
+        },
+        "format": {
+          "name": "formatera",
+          "detail": "Mönstret som talet ska formateras med, inom citattecken."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Tar bort mellanslagstecken.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Texten eller referensen till en cell som innehåller text som ska trimmas."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Konverterar en datum-/tids-/nummersträng till ett tal.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Strängen som innehåller värdet som ska konverteras."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Skriver varje ord i en angiven sträng med versal.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_att_skriva_med_versal",
+          "detail": "Texten som returneras med den första bokstaven i varje ord i versal och alla andra bokstäver i gemener."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Enhetskonvertering för tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Det numeriska värdet i `start_unit` som ska konverteras till `end_unit`."
+        },
+        "start_unit": {
+          "name": "start_enhet",
+          "detail": "Startenheten, den enhet som för närvarande är tilldelad `värde`."
+        },
+        "end_unit": {
+          "name": "slutenhet",
+          "detail": "Måttenheten som argumentet, `värde`, ska konverteras till."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Summan av skillnaderna mellan kvadraterna.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Matrisen eller intervallet av värden vars kvadrater kommer att minskas med kvadraterna av motsvarande poster i `array_y` och adderas."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Matrisen eller intervallet av värden vars kvadrater kommer att subtraheras från kvadraterna för motsvarande poster i `array_x` och adderas."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Summan av summorna av kvadrater.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Matrisen eller intervallet av värden vars kvadrater kommer att läggas till kvadraterna för motsvarande poster i `array_y` och adderas ihop."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Matrisen eller intervallet av värden vars kvadrater kommer att läggas till kvadraterna för motsvarande poster i `array_x` och adderas ihop."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Summan av kvadraterna av skillnaderna.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "Matrisen eller intervallet av värden som kommer att reduceras med motsvarande poster i `array_y`, kvadreras och adderas."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "Matrisen eller intervallet av värden som kommer att subtraheras från motsvarande poster i `array_x`, resultatet kvadreras och alla sådana resultat läggs samman."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transponerar raderna och kolumnerna i en array.",
+      "parameters": {
+        "array_or_range": {
+          "name": "array_eller_range",
+          "detail": "Den array eller det område vars rader och kolumner kommer att bytas."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Anpassar punkter till en linjär trend härledd via minstakvadratmetoden.",
+      "parameters": {
+        "known_data_y": {
+          "name": "kända_data_y",
+          "detail": "Matrisen eller området som innehåller beroende (y) värden som redan är kända, och som används för att kurvanpassa en ideal linjär trend."
+        },
+        "known_data_x": {
+          "name": "kända_data_x",
+          "detail": "Värdena för den/de oberoende variabeln/variablerna som motsvarar `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "ny_data_x",
+          "detail": "Datapunkterna för att returnera `y`-värdena vid den ideala kurvanpassningen."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Givet en generell linjär form av `y = m*x+b` för en kurvanpassning, beräknar `b` om `SANT` eller tvingar `b` att vara `0` och beräknar endast `m`-värdena om `FALSKT`, d.v.s. tvingar kurvanpassningen att passera genom origo."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Frekvensfördelningen för arrayen.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Matrisen eller området som innehåller de värden som ska räknas."
+        },
+        "classes": {
+          "name": "klasser",
+          "detail": "Matrisen eller området som innehåller uppsättningen klasser."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Anpassar punkter till exponentiell tillväxttrend.",
+      "parameters": {
+        "known_data_y": {
+          "name": "kända_data_y",
+          "detail": "Matrisen eller området som innehåller beroende (y) värden som redan är kända, och som används för att kurvanpassa en ideal exponentiell tillväxtkurva."
+        },
+        "known_data_x": {
+          "name": "kända_data_x",
+          "detail": "Värdena för den/de oberoende variabeln/variablerna som motsvarar `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "ny_data_x",
+          "detail": "Datapunkterna för att returnera `y`-värdena vid den ideala kurvanpassningen."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Givet en generell exponentiell form av `y = b*m^x` för en kurvanpassning, beräknar `b` om `TRUE` eller tvingar `b` att vara `1` och beräknar endast `m`-värdena om `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Bäst anpassade linjära trend via minstakvadratmetoden.",
+      "parameters": {
+        "known_data_y": {
+          "name": "kända_data_y",
+          "detail": "Matrisen eller området som innehåller beroende (y) värden som redan är kända, och som används för att kurvanpassa en ideal linjär trend."
+        },
+        "known_data_x": {
+          "name": "kända_data_x",
+          "detail": "Värdena för den/de oberoende variabeln/variablerna som motsvarar `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "beräkna_b",
+          "detail": "Givet en linjär form av `y = m*x+b`, beräknas y-interceptet (`b`) om `TRUE`. Annars tvingas `b` att vara `0` och beräknar endast `m`-värdena om `FALSE`, d.v.s. tvingas kurvanpassningen att passera genom origo."
+        },
+        "verbose": {
+          "name": "mångordig",
+          "detail": "En flagga som anger om ytterligare regressionsstatistik eller endast de linjära koefficienterna och y-interceptet (standard) ska returneras."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Bäst anpassade exponentiella tillväxtkurva.",
+      "parameters": {
+        "known_data_y": {
+          "name": "kända_data_y",
+          "detail": "Matrisen eller området som innehåller beroende (y) värden som redan är kända, och som används för att kurvanpassa en ideal exponentiell tillväxtkurva."
+        },
+        "known_data_x": {
+          "name": "kända_data_x",
+          "detail": "Värdena för den/de oberoende variabeln/variablerna som motsvarar `known_data_y`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Givet en generell exponentiell form av `y = b*m^x` för en kurvanpassning, beräknar `b` om `TRUE` eller tvingar `b` att vara `1` och beräknar endast `m`-värdena om `FALSE`."
+        },
+        "verbose": {
+          "name": "mångordig",
+          "detail": "En flagga som anger om ytterligare regressionsstatistik eller endast den beräknade koefficienten och exponenterna ska returneras."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Matrisdeterminanten för en kvadratisk matris.",
+      "parameters": {
+        "square_matrix": {
+          "name": "kvadratmatris",
+          "detail": "En array eller ett område med lika många rader och kolumner som representerar en matris vars determinant kommer att beräknas."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Multiplikativ invers av kvadratmatris.",
+      "parameters": {
+        "square_matrix": {
+          "name": "kvadratmatris",
+          "detail": "En array eller ett område med lika många rader och kolumner som representerar en matris vars multiplikativa invers kommer att beräknas."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Matrisprodukten av två matriser.",
+      "parameters": {
+        "matrix1": {
+          "name": "matris1",
+          "detail": "Den första matrisen i matrismultiplikationsoperationen, representerad som en array eller ett område."
+        },
+        "matrix2": {
+          "name": "matris2",
+          "detail": "Den andra matrisen i matrismultiplikationsoperationen, representerad som en array eller ett område."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Summan av produkterna av elementen i två matriser.",
+      "parameters": {
+        "array1": {
+          "name": "matris1",
+          "detail": "Den första arrayen eller området vars poster kommer att multipliceras med motsvarande poster i den andra sådana arrayen eller området."
+        },
+        "array2": {
+          "name": "array2",
+          "detail": "Den andra arrayen eller området vars poster kommer att multipliceras med motsvarande poster i den första sådana arrayen eller området."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Om ett värde är en formel.",
+      "parameters": {
+        "cell": {
+          "name": "cell",
+          "detail": "Cellen som ska verifieras som innehållande en formel."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Hämtar information om en cell.",
+      "parameters": {
+        "info_type": {
+          "name": "info_typ",
+          "detail": "Den typ av information som begärs (se artikeln för tillgängliga typer)"
+        },
+        "reference": {
+          "name": "hänvisning",
+          "detail": "Referensen till cellen."
+        }
+      }
+    },
+    "NA": {
+      "description": "Felet `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Om den refererade cellen är tom.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Referens till den cell som ska kontrolleras för tomhet."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Om ett värde är ett annat fel än `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som en annan feltyp än `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Huruvida ett värde är ett fel.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som en feltyp."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Om ett värde är \"sant\" eller \"falskt\".",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som ett logiskt `TRUE` eller `FALSKT`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Om ett värde är felet `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska jämföras med felvärdet `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Om ett värde är icke-textuellt.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska kontrolleras."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Huruvida ett värde är ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som ett tal."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Om ett värde är en giltig cellreferens.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som en cellreferens."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Om ett värde är text.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som text."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Hämta typen av ett värde.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Det värde vars typ ska bestämmas."
+        }
+      }
+    },
+    "N": {
+      "description": "Argument angivet som ett tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet som ska konverteras till ett tal."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Konverterar ett angivet tal till ett datum.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet eller referensen till en cell som ska konverteras till ett datum."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Konverterar valfritt numeriskt värde till ett rent tal.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet eller referensen till en cell som ska konverteras till ett rent tal."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Konverterar ett angivet numeriskt värde till ett textvärde.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet eller referensen till en cell som ska konverteras till text."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Konverterar ett angivet tal till ett dollarvärde.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet eller referensen till en cell som ska konverteras till ett dollarvärde."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Konverterar ett angivet tal till en procentandel.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Argumentet eller referensen till en cell som ska konverteras till en procentandel."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Enskilt värde från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maximalt antal värden från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minsta antal värden från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Medelvärdet av en uppsättning värden från ett tabellliknande intervall.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Räknar värden från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Räknar värden och text från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Produkten av värden från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Standardavvikelse för populationsurvalet från tabellen.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Standardavvikelse för hela populationen från tabellen.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Summa av värden från ett tabellliknande område.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Varians av populationsurval från tabellliknande intervall.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Variansen för en population från ett tabellliknande intervall.",
+      "parameters": {
+        "database": {
+          "name": "databas",
+          "detail": "Matrisen eller området som innehåller de data som ska beaktas, strukturerat på ett sådant sätt att den första raden innehåller etiketterna för varje kolumns värden."
+        },
+        "field": {
+          "name": "fält",
+          "detail": "Anger vilken kolumn i `database` som innehåller de värden som ska extraheras och bearbetas."
+        },
+        "criteria": {
+          "name": "kriterier",
+          "detail": "En array eller ett område som innehåller noll eller fler kriterier att filtrera `database`-värdena efter innan operation."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Få kön baserat på ID-nummer.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-siffrigt eller 18-siffrigt ID-nummer eller intervall."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Hämta födelseprovinsen baserat på ID-numret.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-siffrigt eller 18-siffrigt ID-nummer eller intervall."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Hämta konstellationen baserat på ID-numret.",
+      "parameters": {
+        "ID number": {
+          "name": "ID-nummer",
+          "detail": "15-siffrigt eller 18-siffrigt ID-nummer eller intervall."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Returnerar motsvarande handelsvolym för A-aktier.",
+      "parameters": {
+        "Stock code": {
+          "name": "Lagerkod",
+          "detail": "6-siffrig lagerkod, obligatorisk."
+        },
+        "Date": {
+          "name": "Datum",
+          "detail": "Aktiens handelsdag, standardvärdet är den senaste handelsdagen"
+        },
+        "Reversion and exclusion": {
+          "name": "Återgång och uteslutning",
+          "detail": "Välj restaureringstyp för materialet, standardinställning 0 [tidigare återgång], 1 [ursprungligt pris], 2 [efter återgång]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Om ett värde är ett datum.",
+      "parameters": {
+        "value": {
+          "name": "värde",
+          "detail": "Värdet som ska verifieras som ett datum."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Generera miniatyrdiagram",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Line color": {
+          "name": "Linjefärg",
+          "detail": "Linjefärgen för linjegrafen kan vara område A1, färgtabellens indexvärde eller ett specifikt färgvärde. Sätt den till 0 eller falskt för att inte visa den. Den stöder regx, rgb, rgba, etc. Standard #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Linjetjocklek",
+          "detail": "Linjetjockleken på linjediagrammet, standardvärdet är 1px"
+        },
+        "Auxiliary line": {
+          "name": "Hjälpledning",
+          "detail": "En horisontell linje, som kan vara min, max, medelvärde, median, intervall eller anpassat värde, standard 0 ingen"
+        },
+        "Auxiliary line color": {
+          "name": "Färg på hjälplinjen",
+          "detail": "Färginställning för hjälplinje, samma som linjefärgskonfiguration, standard #000"
+        },
+        "Maximum mark": {
+          "name": "Maximal poäng",
+          "detail": "Identifierar det maximala värdet för linjediagrammet, samma linjefärgskonfiguration, standard 0 visas inte"
+        },
+        "Minimum mark": {
+          "name": "Minimipoäng",
+          "detail": "Identifiera minimivärdet för linjediagrammet, samma linjefärgskonfiguration, standard 0 visas inte"
+        },
+        "Mark size": {
+          "name": "Markeringsstorlek",
+          "detail": "Inställningarna för maximal och minimal markeringsstorlek, standardinställningen är 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Generera kumulativt vertikalt histogram för sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Stack by column": {
+          "name": "Stapla kolumn för kolumn",
+          "detail": "Om du behöver stapla radvis, sätt det här alternativet till falskt eller 0, standardvärdet är 1."
+        },
+        "Bar interval": {
+          "name": "Stapelintervall",
+          "detail": "Avståndet mellan staplarna, standardinställningen är 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "Det maximala värdet för den kumulativa stapeln, som används för att reglera stapelns längd, standardvärdet är att automatiskt beräkna falskt, auto, null"
+        },
+        "Color palette": {
+          "name": "Färgpalett",
+          "detail": "Färgpaletten kan individuellt ställa in stapelfärgen för varje dimension, vilket kan ställas in på intervallet A1:A10, etc. Standardinställningen är #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Generera kumulativt horisontellt stapeldiagram för miniatyrdiagram",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Stack by column": {
+          "name": "Stapla kolumn för kolumn",
+          "detail": "Om du behöver stapla radvis, sätt det här alternativet till falskt eller 0, standardvärdet är 1."
+        },
+        "Bar interval": {
+          "name": "Stapelintervall",
+          "detail": "Avståndet mellan staplarna, standardinställningen är 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "Det maximala värdet för den kumulativa stapeln, som används för att reglera stapelns längd, standardvärdet är att automatiskt beräkna falskt, auto, null"
+        },
+        "Color palette": {
+          "name": "Färgpalett",
+          "detail": "Färgpaletten kan individuellt ställa in stapelfärgen för varje dimension, vilket kan ställas in på intervallet A1:A10, etc. Standardinställningen är #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Generera miniatyrdiagram (sparklines)",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Segmentation threshold": {
+          "name": "Segmenteringströskel",
+          "detail": "Färgskillnad i diskreta grafkolumner, till exempel: om värdet är 0 är blått större än 0, rött är mindre än 0 och standardvärdet är 0"
+        },
+        "Above threshold color": {
+          "name": "Färg över tröskeln",
+          "detail": "Linjefärgen för linjegrafen kan vara område A1, färgtabellens indexvärde eller ett specifikt färgvärde. Sätt den till 0 eller falskt för att inte visa den. Den stöder regx, rgb, rgba, etc. Standard #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Färg under tröskeln",
+          "detail": "Färginställningen för stapeln under tröskeln, samma som färgen ovanför tröskeln, standard #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Generera sparklines med tre tillstånd",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Bar interval": {
+          "name": "Stapelintervall",
+          "detail": "Avståndet mellan staplarna, standardinställningen är 1"
+        },
+        "Bar color": {
+          "name": "Stapelfärg",
+          "detail": "Linjefärgen för linjegrafen kan vara område A1, färgtabellens indexvärde eller ett specifikt färgvärde. Ställ in det på 0 eller falskt för att inte visa det. Det stöder regx, rgb, rgba, etc. Standard #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Negativ stapelfärg",
+          "detail": "Inställning för negativ stapelfärg, som representerar färgen på negativt värde, samma som stapelfärgskonfigurationen, standard #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Färg på nollvärdesstapeln",
+          "detail": "Nollvärdesstapelfärginställning, representerar 0-värdesfärg, samma färgkonfiguration som stapeln, standard #999"
+        },
+        "Color palette": {
+          "name": "Färgpalett",
+          "detail": "Färgpaletten kan ställa in färgen på varje stapel individuellt, flera inställningar kan ställas in och två format stöds: 1 färg som #000, vilket innebär att färgen på den första stapeln är svart; 2 värdeintervall: färg, som -2:# 000 indikerar att stapeln med värdet -2 är svart, 0:5:#000 indikerar att stapeln med värdet 0-5 är svart, och standardvärdet är tomt."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Generera miniatyrdiagram",
+      "parameters": {
+        "Range": {
+          "name": "Räckvidd",
+          "detail": "Intervall, Värden kan beräknas effektivt, såsom A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Rotation angle": {
+          "name": "Rotationsvinkel",
+          "detail": "Rotationsvinkeln för cirkeldiagrammet, standardinställningen är 0"
+        },
+        "border": {
+          "name": "gräns",
+          "detail": "Kantstorlek för cirkeldiagram, standard är ingen 0"
+        },
+        "Border color": {
+          "name": "Kantfärg",
+          "detail": "Kantfärgen för cirkeldiagrammet, standardinställningen är #000"
+        },
+        "Color palette": {
+          "name": "Färgpalett",
+          "detail": "Färgen på segmentet kan ställas in i paletten, som kan ställas in på intervallet A1:A10, etc. Standardinställningen är #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Generera miniatyrdiagram",
+      "parameters": {
+        "Target": {
+          "name": "Mål",
+          "detail": "Det numeriska värdet kan beräknas effektivt för det uppnådda målvärdet, såsom A1, 100, etc."
+        },
+        "achieved": {
+          "name": "uppnått",
+          "detail": "Först när värdet är ifyllt kan värdet beräknas effektivt, såsom A1, 100, etc."
+        },
+        "Contrast": {
+          "name": "Kontrast",
+          "detail": "Jämförelsevärden, såsom överskott, minimum och slutresultat för belöningar, kan beräknas effektivt, såsom A1, 100, etc. Du kan ställa in upp till 9 jämförelsevärden."
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Kombinera miniatyrdiagram i en cell",
+      "parameters": {
+        "config": {
+          "name": "konfiguration",
+          "detail": "Inställningar för miniatyrdiagram, till exempel A1:A20, ett färdigt cirkeldiagram, inställningar för linjediagram etc."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sorterar rader i intervallet efter angiven kolumn.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Data som ska sorteras."
+        },
+        "sort_column": {
+          "name": "sorterings_kolumn",
+          "detail": "Indexet för kolumnen i `range` eller ett område utanför `range` som innehåller de värden som sorteringen ska göras efter."
+        },
+        "is_ascending": {
+          "name": "är_stigande",
+          "detail": "`TRUE` eller `FALSE` anger om `sort_column` ska sorteras i stigande ordning. `FALSE` sorterar i fallande ordning."
+        },
+        "sort_column2": {
+          "name": "sorteringskolumn2",
+          "detail": "Ytterligare kolumner."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filtrerar ett intervall baserat på angivna villkor.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Data som ska filtreras."
+        },
+        "condition1": {
+          "name": "villkor1",
+          "detail": "En kolumn eller rad som innehåller sanna eller falska värden som motsvarar den första kolumnen eller raden i `range`, eller en arrayformel som utvärderas till sant eller falskt."
+        },
+        "condition2": {
+          "name": "villkor2",
+          "detail": "Ytterligare rader eller kolumner som innehåller booleska värden `TRUE` eller `FALSE` som anger om motsvarande rad eller kolumn i `range` ska passera genom `FILTER`. Kan också innehålla matrisformeluttryck som utvärderas till sådana rader eller kolumner. Alla villkor måste vara av samma typ (rad eller kolumn). Det är inte tillåtet att blanda radvillkor och kolumnvillkor."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Unika rader i det angivna källintervallet.",
+      "parameters": {
+        "range": {
+          "name": "räckvidd",
+          "detail": "Data som ska filtreras efter unika poster."
+        },
+        "by_col": {
+          "name": "av_kol",
+          "detail": "[Alternativ] - Logiskt värde, som anger hur jämförelse ska ske; med rad = FALSKT() eller utelämnad; med kolumn = SANT()."
+        },
+        "occurs_once": {
+          "name": "inträffar_en_gång",
+          "detail": "[Alternativ] - Logiskt värde, endast en förekomst i det unika värdet returneras = TRUE(); inklusive alla unika värden = FALSE() eller utelämnas."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Returnerar ett rutnät med slumptal.",
+      "parameters": {
+        "rows": {
+          "name": "rader",
+          "detail": "Antalet rader som ska fyllas med ett slumptal."
+        },
+        "columns": {
+          "name": "kolumner",
+          "detail": "Antalet kolumner som ska fyllas med ett slumptal."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Returnerar ett rutnät med sekventiella tal.",
+      "parameters": {
+        "rows": {
+          "name": "rader",
+          "detail": "Antalet rader i funktionens resulterande rutnät."
+        },
+        "columns": {
+          "name": "kolumner",
+          "detail": "Antalet kolumner i funktionens resulterande rutnät. Om det utelämnas kommer resultatrutnätet att ha 1 kolumn."
+        },
+        "start": {
+          "name": "start",
+          "detail": "Talet där sekvensen ska börja. Om det utelämnas börjar sekvensen på 1."
+        },
+        "step": {
+          "name": "steg",
+          "detail": "Det belopp som varje värde i sekvensen kommer att skilja sig med. Om det utelämnas kommer varje värde att skilja sig med 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Utvärdera enligt en bokstavlig formel eller ett uttryck.",
+      "parameters": {
+        "expression": {
+          "name": "uttryck",
+          "detail": "Formel eller uttryck"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Anropar en funktion på en fjärrserver/API.",
+      "parameters": {
+        "remote_expression": {
+          "name": "fjärruttryck",
+          "detail": "Formel"
+        }
+      }
+    }
   }
 }

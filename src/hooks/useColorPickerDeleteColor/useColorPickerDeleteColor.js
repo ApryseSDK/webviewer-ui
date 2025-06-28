@@ -17,7 +17,7 @@ const useColorPickerDeleteColor = ({
     const indexToDelete = newColors.indexOf(color);
 
     if (indexToDelete > -1) {
-      const nextIndex = indexToDelete === newColors.length - 1 ? 0 : indexToDelete + 1;
+      const nextIndex = indexToDelete === newColors.length - 1 ? indexToDelete - 1 : indexToDelete + 1;
       const nextColor = transformFn(newColors[nextIndex]);
 
       if (setSelectedColor) {

@@ -3,6 +3,7 @@ import core from 'core';
 import SpreadsheetSwitcher from './SpreadsheetSwitcher';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 import { useTranslation } from 'react-i18next';
+import useFocusOnClose from 'src/hooks/useFocusOnClose';
 
 const ERROR = 'SpreadsheetEditorDocument is not loaded';
 let NEW_SPREADSHEET_NUMBER = 2;
@@ -70,7 +71,7 @@ function SpreadsheetSwitcherContainer(props) {
     workbook.createSheet(newName);
   };
 
-  const deleteSheet = (name) => {
+  const deleteSheet = useFocusOnClose((name) => {
     const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
     if (!workbook) {
       return console.error(ERROR);
@@ -80,7 +81,7 @@ function SpreadsheetSwitcherContainer(props) {
       workbook.removeSheet(name);
     }
     setSheets(getSheetsFromWorkbook(workbook));
-  };
+  }, 'addTabButton');
 
   const renameSheet = (oldName, newName) => {
     const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();

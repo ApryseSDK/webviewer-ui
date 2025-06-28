@@ -130,9 +130,6 @@ export default (store) => {
         'signatureOptionsDropdown',
         'savedSignatureAndInitialsTabs',
       ] : [
-        // disable layersPanel by default, it will be enabled in onDocumentLoaded.js
-        'layersPanel',
-        'layersPanelButton',
         'bookmarksPanel',
         'bookmarksPanelButton',
         'wildCardSearchOption',

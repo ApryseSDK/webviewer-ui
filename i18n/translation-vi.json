@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Chọn công cụ AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Chọn công cụ AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Chọn công cụ AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Chỉnh sửa phím tắt",
+      "editKeyboardShortcut": "Chỉnh sửa phím tắt",
       "setShortcut": "Đặt phím tắt",
       "editShortcut": "Chỉnh sửa phím tắt",
       "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Không có",
-      "solid": "Chất rắn",
+      "thin": "Chất rắn",
       "dashed": "Đứt nét",
       "dotted": "Say mê"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Chỉnh sửa cảnh báo",
       "message": "Bạn có chắc chắn muốn xóa trang tính này không?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Bố cục trang",
+      "columnsMessage": "Cài đặt khoảng cách cột bạn chọn quá lớn so với chiều rộng trang ở một số phần.",
+      "marginsMessage": "Cài đặt lề bạn chọn quá lớn so với chiều rộng trang ở một số phần."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Bên phải",
     "customMargins": "Lề tùy chỉnh",
     "customMarginsDescription": "Thiết đặt lề tùy chỉnh",
+    "column": "Cột",
+    "columns": "Cột",
+    "singleColumn": "1 Cột",
+    "twoColumn": "2 Cột",
+    "threeColumn": "3 Cột",
+    "customColumn": "Cột tùy chỉnh",
+    "customColumnDescription": "Thiết đặt cột tùy chỉnh",
+    "unitMeasurement": "Đơn vị đo lường",
     "header": {
       "0": "Tiêu đề",
       "1": "Tiêu đề trang đầu tiên",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Các trang chẵn và lẻ khác nhau",
         "differentFirstEvenOddPages": "Các trang đầu tiên, trang chẵn và trang lẻ khác nhau"
       }
+    },
+    "columnsModal": {
+      "title": "Điều chỉnh cột tùy chỉnh",
+      "columnAmount": "Số lượng cột",
+      "columnNumber": "Cột số",
+      "width": "Độ rộng",
+      "spacing": "Dãn cách",
+      "widthAndSpacing": "Độ rộng và dãn cách",
+      "equalColumns": "Độ rộng cột bằng nhau"
     },
     "marginsModal": {
       "title": "Điều chỉnh lề tùy chỉnh",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Xem",
     "editingDescription": "Chỉnh sửa tài liệu",
     "viewOnlyDescription": "Chỉ xem",
+    "editModeDropdown": "Chọn chế độ chỉnh sửa",
     "bold": "In đậm",
     "italic": "nghiêng",
     "underline": "Gạch chân",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Xóa ô và dịch chuyển lên",
     "deleteColumnShiftLeft": "Xóa ô và dịch chuyển sang trái",
     "clearBorder": "Đường viền rõ ràng",
-    "cellBorderAll": "Tất cả các đường viền",
-    "cellBorderInside": "Bên trong biên giới",
-    "cellBorderOutside": "Bên ngoài biên giới",
-    "cellBorderTop": "Đường viền trên cùng",
-    "cellBorderBottom": "Đường viền dưới",
-    "cellBorderLeft": "Đường viền trái",
-    "cellBorderRight": "Đường viền bên phải",
-    "cellBorderVertical": "Đường viền dọc",
-    "cellBorderHorizontal": "Đường viền ngang",
-    "cellBorderNone": "Không có biên giới",
+    "all": "Tất cả các đường viền",
+    "inside": "Bên trong biên giới",
+    "outside": "Bên ngoài biên giới",
+    "top": "Đường viền trên cùng",
+    "bottom": "Đường viền dưới",
+    "left": "Đường viền trái",
+    "right": "Đường viền bên phải",
+    "vertical": "Đường viền dọc",
+    "horizontal": "Đường viền ngang",
+    "none": "Không có biên giới",
     "borders": "Đường viền",
     "fontSize": {
       "dropdownLabel": "Kích thước phông chữ"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Thanh công thức",
     "range": "Phạm vi",
-    "formulas": "Công thức",
-    "sumif": "Tổng có điều kiện trên một phạm vi",
-    "sumsq": "Trả về tổng các bình phương của một phạm vi",
-    "sum": "Thêm tất cả các số trong một phạm vi",
-    "asinh": "Trả về sin hyperbolic nghịch đảo của một số",
-    "acos": "Trả về arccosine của một số, tính bằng radian",
-    "cosh": "Trả về cosin hyperbolic của một số",
-    "iseven": "Kiểm tra xem một số có chẵn không",
-    "isodd": "Kiểm tra xem một số có phải là số lẻ không"
+    "formulas": "Công thức"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Tổng có điều kiện trong một phạm vi.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi được thử nghiệm theo `tiêu chí`."
+        },
+        "criterion": {
+          "name": "tiêu chuẩn",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho `phạm vi`."
+        },
+        "sum_range": {
+          "name": "tổng_phạm_số",
+          "detail": "Phạm vi cần tính tổng, nếu khác với `phạm vi`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tang của một góc được tính bằng radian.",
+      "parameters": {
+        "angle": {
+          "name": "góc",
+          "detail": "Góc cần tìm tang của, tính bằng radian."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Tang hyperbolic của bất kỳ số thực nào.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Bất kỳ giá trị thực nào để tính tan hyperbolic."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Làm tròn số lên đến bội số gần nhất của một thừa số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn lên bội số nguyên gần nhất của `factor`."
+        },
+        "factor": {
+          "name": "nhân tố",
+          "detail": "Số mà bội số của nó sẽ được làm tròn tới `giá trị` nào đó."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Tang nghịch đảo của một giá trị, tính bằng radian.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính tan nghịch đảo."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Sin hyperbolic nghịch đảo của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính sin hyperbolic nghịch đảo."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Giá trị tuyệt đối của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số lượng trả về giá trị tuyệt đối."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Cosin nghịch đảo của một giá trị, tính bằng radian.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính toán cosin nghịch đảo. Phải nằm trong khoảng từ `-1` đến `1`, bao gồm cả hai giá trị."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Cosin hyperbolic nghịch đảo của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính cosin hyperbolic nghịch đảo. Phải lớn hơn hoặc bằng `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Hàm phân phối đa thức.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Tang hyperbolic nghịch đảo của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính toán tang hyperbolic nghịch đảo. Phải nằm giữa -1 và 1, loại trừ nhau."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arctang của một giá trị.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Tọa độ x của điểm cuối của đoạn thẳng dùng để tính góc từ trục x."
+        },
+        "y": {
+          "name": "Và",
+          "detail": "Tọa độ y của điểm cuối của đoạn thẳng dùng để tính góc từ trục x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Số lượng giá trị rỗng.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên để đếm số ô trống."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Cosin hyperbolic của bất kỳ số thực nào.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Bất kỳ giá trị thực nào để tính cosin hyperbolic."
+        }
+      }
+    },
+    "INT": {
+      "description": "Làm tròn số xuống số nguyên gần nhất.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn xuống số nguyên gần nhất."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Giá trị được cung cấp có chẵn không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là chẵn."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Giá trị được cung cấp có phải là số lẻ không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là lẻ."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Bội chung nhỏ nhất của một hoặc nhiều số nguyên.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên mà các thừa số cần xem xét trong phép tính để tìm bội chung nhỏ nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung có các thừa số cần xem xét để tìm bội chung nhỏ nhất."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logarit của một số, cơ số e (số Euler).",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính logarit, cơ số e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logarit của một số theo cơ số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính logarit."
+        },
+        "base": {
+          "name": "căn cứ",
+          "detail": "Cơ số sử dụng để tính logarit."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logarit của một số, cơ số 10.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính logarit, cơ số 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Toán tử modulo (phần dư).",
+      "parameters": {
+        "dividend": {
+          "name": "cổ tức",
+          "detail": "Số cần chia để tìm số dư."
+        },
+        "divisor": {
+          "name": "số chia",
+          "detail": "Số để chia."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Làm tròn số đến bội số nguyên gần nhất.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số làm tròn đến bội số nguyên gần nhất của một số khác."
+        },
+        "factor": {
+          "name": "nhân tố",
+          "detail": "Số mà bội số của nó sẽ được làm tròn tới `giá trị` nào đó."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Làm tròn một số lên đến số nguyên lẻ gần nhất.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn đến số lẻ lớn nhất tiếp theo."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Tổng bình phương.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Số hoặc dãy số đầu tiên mà bình phương của nó được cộng lại với nhau."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các số hoặc phạm vi bổ sung có bình phương cần thêm vào bình phương của `giá trị1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Số lượng tổ hợp từ một tập hợp các đối tượng.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Kích thước của nhóm đối tượng để lựa chọn."
+        },
+        "k": {
+          "name": "tôi",
+          "detail": "Số lượng đối tượng để lựa chọn."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Tổng của một dãy số và/hoặc ô.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Số hoặc dãy số đầu tiên cần cộng lại."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các số hoặc phạm vi bổ sung để thêm vào `value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Tổng phụ cho một phạm vi bằng cách sử dụng một hàm cụ thể.",
+      "parameters": {
+        "function_code": {
+          "name": "mã_hàm",
+          "detail": "Hàm sử dụng trong tổng hợp tổng phụ."
+        },
+        "range1": {
+          "name": "phạm vi1",
+          "detail": "Phạm vi đầu tiên để tính tổng phụ."
+        },
+        "range2": {
+          "name": "phạm vi2",
+          "detail": "Các phạm vi bổ sung để tính tổng phụ."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Sin nghịch đảo của một giá trị, tính bằng radian.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính sin nghịch đảo. Phải nằm giữa `-1` và `1`, bao gồm cả hai giá trị."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Đếm có điều kiện trong một phạm vi.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi được thử nghiệm theo `tiêu chí`."
+        },
+        "criterion": {
+          "name": "tiêu chuẩn",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho `phạm vi`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Chuyển đổi giá trị góc theo độ sang radian.",
+      "parameters": {
+        "angle": {
+          "name": "góc",
+          "detail": "Góc chuyển đổi từ độ sang radian."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Một số ngẫu nhiên giữa 0 bao gồm và 1 không bao gồm."
+    },
+    "COUNTUNIQUE": {
+      "description": "Đếm số giá trị duy nhất trong một phạm vi.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét để đảm bảo tính duy nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét để đảm bảo tính duy nhất."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Chuyển đổi giá trị góc tính bằng radian sang độ.",
+      "parameters": {
+        "angle": {
+          "name": "góc",
+          "detail": "Góc chuyển đổi từ radian sang độ."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Hàm lỗi Gauss bổ sung của một giá trị.",
+      "parameters": {
+        "z": {
+          "name": "Với",
+          "detail": "Số để tính hàm lỗi Gauss bổ sung."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Làm tròn một số lên số nguyên chẵn gần nhất.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn đến số chẵn lớn nhất tiếp theo."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Số Euler, e (~2,718) được nâng lên lũy thừa.",
+      "parameters": {
+        "exponent": {
+          "name": "số mũ",
+          "detail": "Số mũ để nâng e lên."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Giai thừa của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số hoặc tham chiếu đến một số mà giai thừa của nó sẽ được tính toán và trả về."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"giai thừa kép\" của một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số hoặc tham chiếu đến một số mà giai thừa kép của nó sẽ được tính toán và trả về."
+        }
+      }
+    },
+    "PI": {
+      "description": "Số pi."
+    },
+    "GCD": {
+      "description": "Ước chung lớn nhất của một hoặc nhiều số nguyên.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên mà các thừa số cần xem xét trong phép tính để tìm ước chung lớn nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung có các thừa số cần xem xét để tìm ước chung lớn nhất."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Số nguyên ngẫu nhiên giữa hai giá trị, bao gồm cả hai.",
+      "parameters": {
+        "low": {
+          "name": "thấp",
+          "detail": "Mức thấp nhất của phạm vi ngẫu nhiên."
+        },
+        "high": {
+          "name": "cao",
+          "detail": "Đầu trên của phạm vi ngẫu nhiên."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Làm tròn số theo quy tắc chuẩn.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn thành số vị trí `places`."
+        },
+        "places": {
+          "name": "địa điểm",
+          "detail": "Số chữ số thập phân cần làm tròn."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Làm tròn xuống một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn đến số vị trí `places`, luôn làm tròn xuống."
+        },
+        "places": {
+          "name": "địa điểm",
+          "detail": "Số chữ số thập phân cần làm tròn."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Làm tròn một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị làm tròn thành số vị trí `places`, luôn làm tròn lên."
+        },
+        "places": {
+          "name": "địa điểm",
+          "detail": "Số chữ số thập phân cần làm tròn."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Tổng của một chuỗi lũy thừa.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Đầu vào cho chuỗi lũy thừa. Thay đổi tùy thuộc vào loại xấp xỉ, có thể là góc, số mũ hoặc một số giá trị khác."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Lũy thừa ban đầu để nâng `x` trong chuỗi lũy thừa."
+        },
+        "m": {
+          "name": "tôi",
+          "detail": "Gia số cộng dùng để tăng `x`."
+        },
+        "a": {
+          "name": "Một",
+          "detail": "Mảng hoặc phạm vi chứa các hệ số của chuỗi lũy thừa."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Dấu của một số được cung cấp (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị mà dấu của nó sẽ được đánh giá."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sin của một góc được tính bằng radian.",
+      "parameters": {
+        "angle": {
+          "name": "góc",
+          "detail": "Góc cần tìm sin, tính bằng radian."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Sin hyperbolic của bất kỳ số thực nào.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Bất kỳ giá trị thực nào để tính sin hyperbolic."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Căn bậc hai dương của một số dương.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số để tính căn bậc hai dương."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Căn bậc hai của tích số pi và số đó.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Số sẽ được nhân với Pi và có căn bậc hai của tích được trả về"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logarit của hàm gamma.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đầu vào cho hàm Gamma. Logarit tự nhiên của Gamma(`value`) sẽ được trả về."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosin của một góc được tính bằng radian.",
+      "parameters": {
+        "angle": {
+          "name": "góc",
+          "detail": "Góc cần tìm cosin, tính bằng radian."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Cắt bớt một số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị bị cắt bớt."
+        },
+        "places": {
+          "name": "địa điểm",
+          "detail": "Số chữ số có nghĩa bên phải dấu thập phân cần giữ lại."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Một số chia cho một số khác.",
+      "parameters": {
+        "dividend": {
+          "name": "cổ tức",
+          "detail": "Số bị chia."
+        },
+        "divisor": {
+          "name": "số chia",
+          "detail": "Số để chia."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Một con số lũy thừa.",
+      "parameters": {
+        "base": {
+          "name": "căn cứ",
+          "detail": "Số cần nâng lên lũy thừa `mũ`."
+        },
+        "exponent": {
+          "name": "số mũ",
+          "detail": "Số mũ để nâng `cơ số` lên."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Tính tổng một phạm vi dựa trên nhiều tiêu chí.",
+      "parameters": {
+        "sum_range": {
+          "name": "tổng_phạm_số",
+          "detail": "Phạm vi để tính tổng."
+        },
+        "criteria_range1": {
+          "name": "tiêu chí_phạm vi1",
+          "detail": "Phạm vi kiểm tra theo tiêu chí 1."
+        },
+        "criterion1": {
+          "name": "tiêu chuẩn 1",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "tiêu chí_phạm vi2",
+          "detail": "Các phạm vi bổ sung cần kiểm tra."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Đếm các giá trị dựa trên nhiều tiêu chí.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "tiêu chí_phạm vi1",
+          "detail": "Phạm vi kiểm tra theo `criterion1`."
+        },
+        "criterion1": {
+          "name": "tiêu chuẩn 1",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "tiêu chí_phạm vi2",
+          "detail": "Các phạm vi bổ sung cần kiểm tra."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Kết quả của việc nhân một dãy số với nhau.",
+      "parameters": {
+        "factor1": {
+          "name": "yếu tố 1",
+          "detail": "Số hoặc phạm vi đầu tiên để tính tích."
+        },
+        "factor2": {
+          "name": "yếu tố 2",
+          "detail": "Thêm số hoặc phạm vi để tính toán cho tích."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Giá trị trung bình hài hòa của một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của dân số."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tổng thể."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Xác suất phân phối siêu hình học.",
+      "parameters": {
+        "num_successes": {
+          "name": "số_thành_công",
+          "detail": "Số lượng thành công mong muốn."
+        },
+        "num_draws": {
+          "name": "số lượng bản vẽ",
+          "detail": "Số lần rút thăm được phép."
+        },
+        "successes_in_pop": {
+          "name": "thành công_trong_pop",
+          "detail": "Tổng số thành công trong dân số."
+        },
+        "pop_size": {
+          "name": "kích thước pop",
+          "detail": "Tổng quy mô dân số"
+        },
+        "cumulative": {
+          "name": "tích lũy",
+          "detail": "Xác định giá trị logic của dạng hàm. \n\nNếu tích lũy là TRUE(), HYPGEOM.DIST trả về hàm phân phối tích lũy;\n\nnếu FALSE(), nó trả về hàm mật độ xác suất."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Giao điểm Y của đường thẳng được suy ra thông qua hồi quy tuyến tính.",
+      "parameters": {
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Độ nhọn của một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của tập dữ liệu."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tập dữ liệu."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Phần tử lớn thứ n trong tập dữ liệu.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa tập dữ liệu cần xem xét."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Xếp hạng từ lớn nhất đến nhỏ nhất của phần tử cần trả về."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Độ lệch chuẩn của mẫu (văn bản là 0).",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của mẫu."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào mẫu."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Độ lệch chuẩn của toàn bộ dân số.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của dân số."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tổng thể."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Giá trị trung bình hình học của một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của dân số."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tổng thể."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Xếp hạng phần trăm (phần trăm) từ 0 đến 1.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa tập dữ liệu cần xem xét."
+        },
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị có thứ hạng phần trăm sẽ được xác định."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa được sử dụng trong phép tính. Mặc định là 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Giá trị y mong đợi dựa trên hồi quy tuyến tính.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Giá trị trên trục x để dự báo."
+        },
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Biến đổi ngược Fisher của một giá trị xác định.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính toán phép biến đổi Fisher nghịch đảo."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Biến đổi Fisher của một giá trị xác định.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị để tính toán phép biến đổi Fisher."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Số lượng giá trị số trong tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi đếm."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi đếm."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Số lượng giá trị trong một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi đếm."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi đếm."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Giá trị trung bình số trong một tập dữ liệu, bỏ qua văn bản.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị trung bình."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị trung bình."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Xác suất phân phối nhị thức.",
+      "parameters": {
+        "num_successes": {
+          "name": "số_thành_công",
+          "detail": "Số lần thành công để tính toán xác suất trong các lần thử `num_trials`."
+        },
+        "num_trials": {
+          "name": "số_thử_nghiệm",
+          "detail": "Số lượng các thử nghiệm độc lập."
+        },
+        "prob_success": {
+          "name": "khả năng thành công",
+          "detail": "Xác suất thành công trong bất kỳ thử nghiệm nào."
+        },
+        "cumulative": {
+          "name": "tích lũy",
+          "detail": "Có nên sử dụng phân phối tích lũy nhị thức không."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Tổng bình phương độ lệch dựa trên mẫu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của mẫu."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào mẫu."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Giá trị trung bình tùy thuộc vào tiêu chí.",
+      "parameters": {
+        "criteria_range": {
+          "name": "phạm vi tiêu chí",
+          "detail": "Phạm vi kiểm tra theo `tiêu chí`."
+        },
+        "criterion": {
+          "name": "tiêu chuẩn",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho `criteria_range`."
+        },
+        "average_range": {
+          "name": "phạm vi trung bình",
+          "detail": "Phạm vi để tính trung bình. Nếu không bao gồm, `criteria_range` sẽ được sử dụng cho giá trị trung bình thay thế."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Giá trị trung bình phụ thuộc vào nhiều tiêu chí.",
+      "parameters": {
+        "average_range": {
+          "name": "phạm vi trung bình",
+          "detail": "Phạm vi trung bình."
+        },
+        "criteria_range1": {
+          "name": "tiêu chí_phạm vi1",
+          "detail": "Phạm vi kiểm tra theo `criterion1`."
+        },
+        "criterion1": {
+          "name": "tiêu chuẩn 1",
+          "detail": "Mẫu hoặc bài kiểm tra áp dụng cho `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "tiêu chí_phạm vi2",
+          "detail": "Các phạm vi bổ sung cần kiểm tra."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Số lượng hoán vị từ một số đối tượng.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Kích thước của nhóm đối tượng để lựa chọn."
+        },
+        "k": {
+          "name": "tôi",
+          "detail": "Số lượng đối tượng để lựa chọn."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Giá trị trung bình của một tập dữ liệu không bao gồm giá trị cao/thấp.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa tập dữ liệu cần xem xét."
+        },
+        "exclude_proportion": {
+          "name": "loại trừ_tỷ_lệ",
+          "detail": "Tỷ lệ của tập dữ liệu cần loại trừ khỏi các điểm cực trị của tập hợp."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Hệ số tương quan tích-mô men Pearson.",
+      "parameters": {
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Giá trị số nhỏ nhất trong một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị nhỏ nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị nhỏ nhất."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Giá trị nhỏ nhất trong một tập dữ liệu số.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị nhỏ nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị nhỏ nhất."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Giá trị trung bình trong một tập dữ liệu số.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị trung vị."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị trung vị."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Giá trị số lớn nhất trong một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị lớn nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị tối đa."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Giá trị lớn nhất trong một tập dữ liệu số.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên cần xem xét khi tính giá trị lớn nhất."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần xem xét khi tính giá trị tối đa."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Giá trị xác suất nằm trong một phạm vi.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa tập dữ liệu cần xem xét."
+        },
+        "probabilities": {
+          "name": "xác suất",
+          "detail": "Mảng hoặc phạm vi chứa các xác suất tương ứng với `dữ liệu`."
+        },
+        "low_limit": {
+          "name": "giới hạn thấp",
+          "detail": "Giới hạn dưới của phạm vi giá trị để tính toán xác suất."
+        },
+        "high_limit": {
+          "name": "giới hạn cao",
+          "detail": "Giới hạn trên của phạm vi giá trị để tính toán xác suất."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Bình phương của hệ số tương quan.",
+      "parameters": {
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Độ lệch của mẫu (văn bản là 0).",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của mẫu."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào mẫu."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Phương sai của toàn bộ dân số (văn bản là 0).",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của dân số."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tổng thể."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Lỗi chuẩn của giá trị y dự đoán trong hồi quy.",
+      "parameters": {
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Tương đương chuẩn hóa của biến ngẫu nhiên.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị của biến ngẫu nhiên cần chuẩn hóa."
+        },
+        "mean": {
+          "name": "nghĩa là",
+          "detail": "Giá trị trung bình của phân phối."
+        },
+        "standard_deviation": {
+          "name": "độ lệch chuẩn",
+          "detail": "Độ lệch chuẩn của phân phối."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Phần tử nhỏ thứ n trong một tập dữ liệu.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa tập dữ liệu cần xem xét."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Xếp hạng từ nhỏ nhất đến lớn nhất của phần tử cần trả về."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Độ dốc của đường hồi quy tuyến tính của dữ liệu.",
+      "parameters": {
+        "data_y": {
+          "name": "dữ liệu_y",
+          "detail": "Phạm vi biểu diễn mảng hoặc ma trận dữ liệu phụ thuộc."
+        },
+        "data_x": {
+          "name": "dữ liệu_x",
+          "detail": "Phạm vi biểu thị mảng hoặc ma trận dữ liệu độc lập."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Độ lệch của một tập dữ liệu.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị hoặc phạm vi đầu tiên của tập dữ liệu."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các giá trị hoặc phạm vi bổ sung cần đưa vào tập dữ liệu."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Tra cứu theo chiều dọc.",
+      "parameters": {
+        "search_key": {
+          "name": "tìm kiếm_khóa",
+          "detail": "Giá trị cần tìm kiếm. Ví dụ: `42`, `\"Cats\"` hoặc `I24`."
+        },
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi cần xem xét để tìm kiếm. Cột đầu tiên trong phạm vi được tìm kiếm theo khóa được chỉ định trong `search_key`."
+        },
+        "index": {
+          "name": "chỉ số",
+          "detail": "Chỉ số cột của giá trị được trả về, trong đó cột đầu tiên trong `range` được đánh số 1."
+        },
+        "is_sorted": {
+          "name": "được sắp xếp",
+          "detail": "Chỉ ra liệu cột cần tìm kiếm (cột đầu tiên của phạm vi được chỉ định) có được sắp xếp hay không, trong trường hợp đó, kết quả khớp gần nhất với `search_key` sẽ được trả về."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Tra cứu theo chiều ngang",
+      "parameters": {
+        "search_key": {
+          "name": "tìm kiếm_khóa",
+          "detail": "Giá trị cần tìm kiếm. Ví dụ: `42`, `\"Cats\"` hoặc `I24`."
+        },
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi cần xem xét để tìm kiếm. Hàng đầu tiên trong phạm vi được tìm kiếm cho khóa được chỉ định trong `search_key`."
+        },
+        "index": {
+          "name": "chỉ số",
+          "detail": "Chỉ số hàng của giá trị được trả về, trong đó hàng đầu tiên trong `range` được đánh số 1."
+        },
+        "is_sorted": {
+          "name": "được sắp xếp",
+          "detail": "Chỉ ra liệu hàng cần tìm kiếm (hàng đầu tiên của phạm vi được chỉ định) có được sắp xếp hay không."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Tra cứu một giá trị.",
+      "parameters": {
+        "search_key": {
+          "name": "tìm kiếm_khóa",
+          "detail": "Giá trị cần tìm kiếm trong hàng hoặc cột. Ví dụ: `42`, `\"Cats\"` hoặc `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "phạm vi tìm kiếm|mảng kết quả tìm kiếm",
+          "detail": "Một phương pháp sử dụng hàm này là cung cấp một hàng hoặc cột được sắp xếp duy nhất `search_range` để tìm kiếm `search_key` với đối số thứ hai `result_range`. Cách khác là kết hợp hai đối số này thành một `search_result_array` trong đó hàng hoặc cột đầu tiên được tìm kiếm và một giá trị được trả về từ hàng hoặc cột cuối cùng trong mảng. Nếu không tìm thấy `search_key`, có thể trả về một kết quả không khớp chính xác."
+        },
+        "result_range": {
+          "name": "phạm vi kết quả",
+          "detail": "Phạm vi để trả về kết quả. Giá trị trả về tương ứng với vị trí tìm thấy `search_key` trong `search_range`. Phạm vi này chỉ được là một hàng hoặc một cột và không được sử dụng nếu sử dụng phương thức `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Tham chiếu ô dưới dạng chuỗi.",
+      "parameters": {
+        "row": {
+          "name": "hàng ngang",
+          "detail": "Số hàng của tham chiếu ô"
+        },
+        "column": {
+          "name": "cột",
+          "detail": "Số cột (không phải tên) của tham chiếu ô. `A` là số cột `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "chế độ tương đối tuyệt đối",
+          "detail": "Chỉ báo cho biết tham chiếu có phải là hàng/cột tuyệt đối hay không. `1` là hàng và cột tuyệt đối (ví dụ: $A$1), `2` là hàng tuyệt đối và cột tương đối (ví dụ: A$1), `3` là hàng tương đối và cột tuyệt đối (ví dụ: $A1) và `4` là hàng và cột tương đối (ví dụ: A1)."
+        },
+        "use_a1_notation": {
+          "name": "sử dụng_ký_hiệu_a1",
+          "detail": "Giá trị boolean cho biết liệu sử dụng ký hiệu kiểu `A1` (TRUE) hay ký hiệu kiểu `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "tờ giấy",
+          "detail": "Văn bản chỉ ra tên của trang tính mà địa chỉ trỏ tới."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Một tham chiếu ô được chỉ định bởi một chuỗi.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cell_reference_as_string",
+          "detail": "Tham chiếu ô, được viết dưới dạng chuỗi với dấu ngoặc kép bao quanh."
+        },
+        "is_A1_notation": {
+          "name": "ký hiệu is_A1",
+          "detail": "Chỉ ra nếu tham chiếu ô ở dạng ký hiệu A1 (TRUE) hay ký hiệu R1C1 (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Số hàng của một ô được chỉ định.",
+      "parameters": {
+        "cell_reference": {
+          "name": "tham chiếu ô",
+          "detail": "Ô có số hàng sẽ được trả về."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Số lượng hàng trong một mảng hoặc phạm vi được chỉ định.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi số lượng hàng sẽ được trả về."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Số cột của một ô được chỉ định.",
+      "parameters": {
+        "cell_reference": {
+          "name": "tham chiếu ô",
+          "detail": "Ô có số cột sẽ được trả về. Cột `A` tương ứng với `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Số cột trong một mảng hoặc phạm vi được chỉ định.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Phạm vi có số cột sẽ được trả về."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Độ lệch tham chiếu phạm vi so với một ô.",
+      "parameters": {
+        "cell_reference": {
+          "name": "tham chiếu ô",
+          "detail": "Điểm bắt đầu để đếm các hàng và cột bù trừ."
+        },
+        "offset_rows": {
+          "name": "hàng bù trừ",
+          "detail": "Số lượng hàng cần bù trừ."
+        },
+        "offset_columns": {
+          "name": "offset_columns",
+          "detail": "Số lượng cột cần bù trừ."
+        },
+        "height": {
+          "name": "chiều cao",
+          "detail": "Chiều cao của phạm vi trả về bắt đầu từ mục tiêu bù trừ."
+        },
+        "width": {
+          "name": "chiều rộng",
+          "detail": "Chiều rộng của phạm vi trả về bắt đầu từ mục tiêu bù trừ."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Vị trí của mục trong phạm vi khớp với giá trị.",
+      "parameters": {
+        "search_key": {
+          "name": "tìm kiếm_khóa",
+          "detail": "Giá trị cần tìm kiếm. Ví dụ: `42`, `\"Cats\"` hoặc `I24`."
+        },
+        "range": {
+          "name": "phạm vi",
+          "detail": "Mảng một chiều cần tìm kiếm."
+        },
+        "search_type": {
+          "name": "loại tìm kiếm",
+          "detail": "Phương pháp tìm kiếm. `1` (mặc định) tìm giá trị lớn nhất nhỏ hơn hoặc bằng `search_key` khi `range` được sắp xếp theo thứ tự tăng dần. `0` tìm giá trị chính xác khi `range` không được sắp xếp. `-1` tìm giá trị nhỏ nhất lớn hơn hoặc bằng `search_key` khi `range` được sắp xếp theo thứ tự giảm dần."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Nội dung của ô được xác định theo độ lệch hàng và cột.",
+      "parameters": {
+        "reference": {
+          "name": "thẩm quyền giải quyết",
+          "detail": "Mảng các ô sẽ được bù vào."
+        },
+        "row": {
+          "name": "hàng ngang",
+          "detail": "Số lượng hàng bù trừ."
+        },
+        "column": {
+          "name": "cột",
+          "detail": "Số lượng cột bù trừ."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Trích xuất giá trị tổng hợp từ bảng trục tương ứng với tiêu đề hàng và cột được chỉ định.",
+      "parameters": {
+        "value_name": {
+          "name": "giá trị_tên",
+          "detail": "Tên của giá trị trong bảng trục mà bạn muốn lấy dữ liệu."
+        },
+        "any_pivot_table_cell": {
+          "name": "bất kỳ_ô_bảng_trục_nào",
+          "detail": "Bất kỳ tham chiếu nào đến một ô trong bảng trục mong muốn (khuyến khích ở góc trên cùng)."
+        },
+        "original_column": {
+          "name": "gốc_cột",
+          "detail": "Tên của cột trong tập dữ liệu gốc (không phải bảng tổng hợp)."
+        },
+        "pivot_item": {
+          "name": "mục trục",
+          "detail": "Tên của hàng hoặc cột được hiển thị trong bảng trục tương ứng với *original_column* mà bạn muốn lấy."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Một phần tử trong danh sách các lựa chọn dựa trên chỉ mục.",
+      "parameters": {
+        "index": {
+          "name": "chỉ số",
+          "detail": "Lựa chọn nào (trong số 30 lựa chọn được cung cấp) để trả về?"
+        },
+        "choice1": {
+          "name": "lựa chọn1",
+          "detail": "Giá trị tiềm năng để trả về. Bắt buộc. Có thể là tham chiếu đến một ô hoặc một giá trị riêng lẻ."
+        },
+        "choice2": {
+          "name": "lựa chọn2",
+          "detail": "Các giá trị bổ sung để lựa chọn."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Chuyển đổi giờ/phút/giây thành thời gian.",
+      "parameters": {
+        "hour": {
+          "name": "giờ",
+          "detail": "Thành phần giờ của thời gian."
+        },
+        "minute": {
+          "name": "phút",
+          "detail": "Thành phần phút của thời gian."
+        },
+        "second": {
+          "name": "thứ hai",
+          "detail": "Thành phần thứ hai của thời gian."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Chuyển đổi chuỗi thời gian thành dạng số sê-ri của chuỗi đó.",
+      "parameters": {
+        "time_string": {
+          "name": "chuỗi_thời_gian",
+          "detail": "Chuỗi chứa biểu diễn thời gian."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Ngày cuối cùng của tháng trước hoặc sau một ngày nào đó.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày tính kết quả."
+        },
+        "months": {
+          "name": "tháng",
+          "detail": "Số tháng trước (âm) hoặc sau (dương) 'ngày bắt đầu' cần xem xét."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Ngày tháng trước/sau một ngày tháng khác một số tháng.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày tính kết quả."
+        },
+        "months": {
+          "name": "tháng",
+          "detail": "Số tháng trước (âm) hoặc sau (dương) 'start_date' để tính toán."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Thành phần thứ hai của một thời điểm cụ thể.",
+      "parameters": {
+        "time": {
+          "name": "thời gian",
+          "detail": "Thời gian để tính toán thành phần thứ hai"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Thành phần phút của một thời điểm cụ thể.",
+      "parameters": {
+        "time": {
+          "name": "thời gian",
+          "detail": "Thời gian để tính thành phần phút."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Thành phần giờ của một thời gian cụ thể.",
+      "parameters": {
+        "time": {
+          "name": "thời gian",
+          "detail": "Thời gian để tính thành phần giờ."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Ngày và giờ hiện tại dưới dạng giá trị ngày tháng."
+    },
+    "NETWORKDAYS": {
+      "description": "Số ngày làm việc thực tế giữa hai ngày được cung cấp.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày bắt đầu của khoảng thời gian để tính số ngày làm việc ròng."
+        },
+        "end_date": {
+          "name": "ngày kết thúc",
+          "detail": "Ngày kết thúc của kỳ tính số ngày làm việc ròng."
+        },
+        "holidays": {
+          "name": "ngày lễ",
+          "detail": "Một phạm vi hoặc mảng hằng số chứa số sê-ri ngày tháng để xem xét các ngày lễ."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Số tuần ISO trong năm.",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để xác định số tuần ISO. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Số tuần trong năm.",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để xác định số tuần. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "type": {
+          "name": "kiểu",
+          "detail": "Một con số biểu thị ngày bắt đầu của một tuần. Chủ Nhật = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Ngày trong tuần của ngày được cung cấp (dưới dạng số).",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để xác định ngày trong tuần. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "type": {
+          "name": "kiểu",
+          "detail": "Một số cho biết hệ thống đánh số nào được sử dụng để biểu diễn các ngày trong tuần. Theo mặc định, số đếm bắt đầu từ Chủ Nhật = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Ngày trong tháng có một ngày cụ thể.",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để trích xuất ngày."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Số ngày giữa hai ngày.",
+      "parameters": {
+        "end_date": {
+          "name": "ngày kết thúc",
+          "detail": "Kết thúc phạm vi ngày."
+        },
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Bắt đầu phạm vi ngày."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Số ngày giữa hai ngày trong một năm có 360 ngày.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày bắt đầu cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "end_date": {
+          "name": "ngày kết thúc",
+          "detail": "Ngày kết thúc cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "method": {
+          "name": "phương pháp",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Chuyển đổi năm/tháng/ngày thành ngày.",
+      "parameters": {
+        "year": {
+          "name": "năm",
+          "detail": "Thành phần năm của ngày."
+        },
+        "month": {
+          "name": "tháng",
+          "detail": "Thành phần tháng của ngày."
+        },
+        "day": {
+          "name": "ngày",
+          "detail": "Thành phần ngày của ngày tháng."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Chuyển đổi chuỗi ngày thành giá trị ngày.",
+      "parameters": {
+        "date_string": {
+          "name": "chuỗi_ngày",
+          "detail": "Chuỗi biểu diễn ngày."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Chênh lệch ngày tháng.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày bắt đầu cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "end_date": {
+          "name": "ngày kết thúc",
+          "detail": "Ngày kết thúc cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "unit": {
+          "name": "đơn vị",
+          "detail": "Một chuỗi viết tắt cho đơn vị thời gian. Ví dụ, \"M\" cho tháng. Các giá trị được chấp nhận là \"Y\", \"M\", \"D\", \"MD\", \"YM\", \"YD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Số ngày làm việc kể từ ngày bắt đầu.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày bắt đầu đếm."
+        },
+        "num_days": {
+          "name": "số_ngày",
+          "detail": "Số ngày làm việc tính từ `start_date`. Nếu số âm, đếm ngược lại."
+        },
+        "holidays": {
+          "name": "ngày lễ",
+          "detail": "Một phạm vi hoặc hằng số mảng chứa các ngày được coi là ngày lễ."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Năm được xác định bằng một ngày cụ thể.",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để trích xuất năm."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Số năm chính xác giữa hai ngày.",
+      "parameters": {
+        "start_date": {
+          "name": "ngày bắt đầu",
+          "detail": "Ngày bắt đầu cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "end_date": {
+          "name": "ngày kết thúc",
+          "detail": "Ngày kết thúc cần xem xét trong phép tính. Phải là tham chiếu đến ô chứa ngày, hàm trả về kiểu ngày hoặc số."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Ngày hiện tại dưới dạng giá trị ngày tháng."
+    },
+    "MONTH": {
+      "description": "Tháng trong năm có ngày cụ thể rơi vào.",
+      "parameters": {
+        "date": {
+          "name": "ngày",
+          "detail": "Ngày để trích xuất tháng."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Lãi suất thực tế hàng năm.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "tỷ lệ danh nghĩa",
+          "detail": "Lãi suất danh nghĩa hàng năm."
+        },
+        "periods_per_year": {
+          "name": "kỳ_kỳ_mỗi_năm",
+          "detail": "Số kỳ tính lãi kép trong một năm."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Định dạng số theo đơn vị tiền tệ cụ thể cho bảng tính của bạn.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Giá trị cần định dạng."
+        },
+        "number_of_places": {
+          "name": "số_nơi_đất",
+          "detail": "Số chữ số thập phân cần hiển thị."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Chuyển đổi phân số thập phân sang giá trị thập phân.",
+      "parameters": {
+        "fractional_price": {
+          "name": "giá phân số",
+          "detail": "Báo giá được đưa ra sử dụng quy ước thập phân phân số."
+        },
+        "unit": {
+          "name": "đơn vị",
+          "detail": "Đơn vị của phân số, ví dụ: `8` cho 1/8 hoặc `32` cho 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Chuyển đổi giá trị thập phân sang phân số thập phân.",
+      "parameters": {
+        "decimal_price": {
+          "name": "giá_thập_số",
+          "detail": "Báo giá được đưa ra dưới dạng giá trị thập phân."
+        },
+        "unit": {
+          "name": "đơn vị",
+          "detail": "Đơn vị của phân số mong muốn, ví dụ: `8` cho 1/8 hoặc `32` cho 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Khấu hao theo phương pháp số dư giảm dần.",
+      "parameters": {
+        "cost": {
+          "name": "trị giá",
+          "detail": "Chi phí ban đầu của tài sản."
+        },
+        "salvage": {
+          "name": "cứu hộ",
+          "detail": "Giá trị của tài sản khi kết thúc khấu hao."
+        },
+        "life": {
+          "name": "mạng sống",
+          "detail": "Số kỳ khấu hao tài sản."
+        },
+        "period": {
+          "name": "Giai đoạn",
+          "detail": "Khoảng thời gian duy nhất trong `vòng đời` để tính khấu hao."
+        },
+        "month": {
+          "name": "tháng",
+          "detail": "Số tháng trong năm khấu hao đầu tiên."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Khấu hao theo phương pháp số dư giảm dần kép.",
+      "parameters": {
+        "cost": {
+          "name": "trị giá",
+          "detail": "Chi phí ban đầu của tài sản."
+        },
+        "salvage": {
+          "name": "cứu hộ",
+          "detail": "Giá trị của tài sản khi kết thúc khấu hao."
+        },
+        "life": {
+          "name": "mạng sống",
+          "detail": "Số kỳ khấu hao tài sản."
+        },
+        "period": {
+          "name": "Giai đoạn",
+          "detail": "Khoảng thời gian duy nhất trong `vòng đời` để tính khấu hao."
+        },
+        "factor": {
+          "name": "nhân tố",
+          "detail": "Yếu tố làm giảm khấu hao."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Lãi suất đầu tư niên kim.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "payment_per_period": {
+          "name": "thanh toán theo kỳ",
+          "detail": "Số tiền phải trả cho mỗi kỳ."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        },
+        "rate_guess": {
+          "name": "tỷ lệ_đoán",
+          "detail": "Ước tính lãi suất sẽ là bao nhiêu."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Tổng số tiền gốc được trả trong một khoảng thời gian nhất định.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "first_period": {
+          "name": "kỳ_đầu_tiên",
+          "detail": "Số kỳ thanh toán bắt đầu tính toán tích lũy."
+        },
+        "last_period": {
+          "name": "kỳ_cuối",
+          "detail": "Số kỳ thanh toán để kết thúc tính toán tích lũy."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Số lượng phiếu giảm giá giữa thời điểm thanh toán và ngày đáo hạn.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Khấu hao theo phương pháp tổng số năm.",
+      "parameters": {
+        "cost": {
+          "name": "trị giá",
+          "detail": "Chi phí ban đầu của tài sản."
+        },
+        "salvage": {
+          "name": "cứu hộ",
+          "detail": "Giá trị của tài sản khi kết thúc khấu hao."
+        },
+        "life": {
+          "name": "mạng sống",
+          "detail": "Số kỳ khấu hao tài sản."
+        },
+        "period": {
+          "name": "Giai đoạn",
+          "detail": "Khoảng thời gian duy nhất trong `vòng đời` để tính khấu hao."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Tỷ lệ lợi nhuận tương đương của trái phiếu kho bạc.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Mức chiết khấu của hóa đơn tại thời điểm mua hàng."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Lợi suất trái phiếu kho bạc Hoa Kỳ dựa trên giá.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "price": {
+          "name": "giá ",
+          "detail": "Giá mua chứng khoán theo mệnh giá 100."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Giá trái phiếu kho bạc Hoa Kỳ.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Mức chiết khấu của hóa đơn tại thời điểm mua hàng."
+        }
+      }
+    },
+    "PV": {
+      "description": "Giá trị hiện tại của khoản đầu tư niên kim.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "payment_amount": {
+          "name": "số tiền thanh toán",
+          "detail": "Số tiền phải trả cho mỗi kỳ."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Số ngày từ ngày nhận phiếu đầu tiên đến ngày thanh toán.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Số ngày trong thời hạn phiếu giảm giá có chứa ngày thanh toán.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "FV": {
+      "description": "Giá trị tương lai của khoản đầu tư niên kim.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "payment_amount": {
+          "name": "số tiền thanh toán",
+          "detail": "Số tiền phải trả cho mỗi kỳ."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Giá trị tương lai của vốn từ chuỗi lãi suất.",
+      "parameters": {
+        "principal": {
+          "name": "hiệu trưởng",
+          "detail": "Số vốn ban đầu hoặc giá trị gộp lại."
+        },
+        "rate_schedule": {
+          "name": "tỷ lệ_lịch trình",
+          "detail": "Một loạt các mức lãi suất gộp vào `tiền gốc`."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Lợi tức hàng năm của một chứng khoán trả lãi định kỳ.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất hàng năm."
+        },
+        "price": {
+          "name": "giá ",
+          "detail": "Giá mua chứng khoán theo mệnh giá 100."
+        },
+        "redemption": {
+          "name": "sự cứu chuộc",
+          "detail": "Số tiền chuộc lại trên 100 mệnh giá hoặc mệnh giá."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Lợi tức hàng năm của chứng khoán chiết khấu.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "price": {
+          "name": "giá ",
+          "detail": "Giá mua chứng khoán theo mệnh giá 100."
+        },
+        "redemption": {
+          "name": "sự cứu chuộc",
+          "detail": "Số tiền chuộc lại trên 100 mệnh giá hoặc mệnh giá."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Lãi suất danh nghĩa hàng năm.",
+      "parameters": {
+        "effective_rate": {
+          "name": "tỷ lệ hiệu quả",
+          "detail": "Lãi suất thực tế hàng năm."
+        },
+        "periods_per_year": {
+          "name": "kỳ_kỳ_mỗi_năm",
+          "detail": "Số kỳ tính lãi kép trong một năm."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Tỷ lệ hoàn vốn nội bộ cho dòng tiền không theo định kỳ.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "dòng_tiền_tiền",
+          "detail": "Một mảng hoặc phạm vi chứa thu nhập hoặc khoản thanh toán liên quan đến khoản đầu tư."
+        },
+        "cashflow_dates": {
+          "name": "ngày_lưu_tiền",
+          "detail": "Một mảng hoặc phạm vi có ngày tương ứng với dòng tiền trong `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "tỷ lệ_đoán",
+          "detail": "Ước tính tỷ lệ hoàn vốn nội bộ sẽ là bao nhiêu."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Tỷ lệ hoàn vốn nội bộ đã sửa đổi.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "dòng_tiền_tiền",
+          "detail": "Một mảng hoặc phạm vi chứa thu nhập hoặc khoản thanh toán liên quan đến khoản đầu tư."
+        },
+        "financing_rate": {
+          "name": "tỷ lệ tài chính",
+          "detail": "Lãi suất phải trả cho số tiền đầu tư."
+        },
+        "reinvestment_return_rate": {
+          "name": "tỷ lệ hoàn vốn tái đầu tư",
+          "detail": "Lợi nhuận (tính theo phần trăm) kiếm được khi tái đầu tư thu nhập nhận được từ khoản đầu tư."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Tỷ lệ hoàn vốn nội bộ cho dòng tiền định kỳ.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "dòng_tiền_tiền",
+          "detail": "Một mảng hoặc phạm vi chứa thu nhập hoặc khoản thanh toán liên quan đến khoản đầu tư."
+        },
+        "rate_guess": {
+          "name": "tỷ lệ_đoán",
+          "detail": "Ước tính tỷ lệ hoàn vốn nội bộ sẽ là bao nhiêu."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Giá trị hiện tại ròng của một khoản đầu tư dựa trên một loạt các dòng tiền định kỳ và tỷ lệ chiết khấu.",
+      "parameters": {
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Tỷ lệ chiết khấu của khoản đầu tư trong một thời kỳ."
+        },
+        "cashflow1": {
+          "name": "dòng tiền1",
+          "detail": "Dòng tiền tương lai đầu tiên."
+        },
+        "cashflow2": {
+          "name": "dòng tiền2",
+          "detail": "Dòng tiền bổ sung trong tương lai."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Giá trị hiện tại ròng cho dòng tiền không theo định kỳ.",
+      "parameters": {
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Tỷ lệ chiết khấu của khoản đầu tư trong một thời kỳ."
+        },
+        "cashflow_amounts": {
+          "name": "dòng_tiền_tiền",
+          "detail": "Một dãy ô chứa thu nhập hoặc khoản thanh toán liên quan đến khoản đầu tư."
+        },
+        "cashflow_dates": {
+          "name": "ngày_lưu_tiền",
+          "detail": "Một dãy ô có ngày tương ứng với dòng tiền trong `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Lãi suất tích lũy được trả trong một khoảng thời gian nhất định.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "first_period": {
+          "name": "kỳ_đầu_tiên",
+          "detail": "Số kỳ thanh toán bắt đầu tính toán tích lũy."
+        },
+        "last_period": {
+          "name": "kỳ_cuối",
+          "detail": "Số kỳ thanh toán để kết thúc tính toán tích lũy."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Khoản thanh toán định kỳ cho khoản đầu tư niên kim.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Thanh toán lãi cho một khoản đầu tư.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "period": {
+          "name": "Giai đoạn",
+          "detail": "Thời gian khấu hao, tính theo số kỳ."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Thanh toán tiền gốc của một khoản đầu tư.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "period": {
+          "name": "Giai đoạn",
+          "detail": "Thời gian khấu hao, tính theo số kỳ."
+        },
+        "number_of_periods": {
+          "name": "số_kỳ_kỳ",
+          "detail": "Số lượng thanh toán cần thực hiện."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Tính lãi suất thực tế.",
+      "parameters": {
+        "buy_date": {
+          "name": "ngày mua",
+          "detail": "Ngày mua khoản đầu tư."
+        },
+        "sell_date": {
+          "name": "ngày bán",
+          "detail": "Ngày bán khoản đầu tư."
+        },
+        "buy_price": {
+          "name": "giá mua",
+          "detail": "Giá mua khoản đầu tư."
+        },
+        "sell_price": {
+          "name": "giá bán",
+          "detail": "Giá bán của khoản đầu tư."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Giá của một chứng khoán trả lãi định kỳ.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất hàng năm."
+        },
+        "yield": {
+          "name": "năng suất",
+          "detail": "Lợi suất hàng năm dự kiến của chứng khoán."
+        },
+        "redemption": {
+          "name": "sự cứu chuộc",
+          "detail": "Số tiền chuộc lại trên 100 mệnh giá hoặc mệnh giá."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Giá của một chứng khoán chiết khấu.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Tỷ lệ chiết khấu của chứng khoán tại thời điểm mua."
+        },
+        "redemption": {
+          "name": "sự cứu chuộc",
+          "detail": "Số tiền chuộc lại trên 100 mệnh giá hoặc mệnh giá."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Giá của chứng khoán trả lãi khi đáo hạn.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "issue": {
+          "name": "vấn đề",
+          "detail": "Ngày phát hành chứng khoán ban đầu."
+        },
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất hàng năm."
+        },
+        "yield": {
+          "name": "năng suất",
+          "detail": "Lợi suất hàng năm dự kiến của chứng khoán."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Số tiền nhận được khi đáo hạn cho một chứng khoán.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "investment": {
+          "name": "sự đầu tư",
+          "detail": "Số tiền đầu tư (bất kể giá trị thực của mỗi chứng khoán)."
+        },
+        "discount": {
+          "name": "giảm giá",
+          "detail": "Tỷ lệ chiết khấu của chứng khoán được đầu tư vào."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Tỷ lệ chiết khấu của chứng khoán dựa trên giá.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "price": {
+          "name": "giá ",
+          "detail": "Giá mua chứng khoán theo mệnh giá 100."
+        },
+        "redemption": {
+          "name": "sự cứu chuộc",
+          "detail": "Số tiền chuộc lại trên 100 mệnh giá hoặc mệnh giá."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Số kỳ thanh toán cho một khoản đầu tư.",
+      "parameters": {
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất."
+        },
+        "payment_amount": {
+          "name": "số tiền thanh toán",
+          "detail": "Số tiền của mỗi lần thanh toán."
+        },
+        "present_value": {
+          "name": "giá trị hiện tại",
+          "detail": "Giá trị hiện tại của tiền trợ cấp."
+        },
+        "future_value": {
+          "name": "giá trị tương lai",
+          "detail": "Giá trị tương lai còn lại sau khi khoản thanh toán cuối cùng được thực hiện."
+        },
+        "end_or_beginning": {
+          "name": "kết thúc hoặc bắt đầu",
+          "detail": "Cho dù các khoản thanh toán phải được thực hiện vào cuối (`0`) hay đầu (`1`) của mỗi kỳ."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Khấu hao tài sản theo phương pháp đường thẳng.",
+      "parameters": {
+        "cost": {
+          "name": "trị giá",
+          "detail": "Chi phí ban đầu của tài sản."
+        },
+        "salvage": {
+          "name": "cứu hộ",
+          "detail": "Giá trị của tài sản khi kết thúc khấu hao."
+        },
+        "life": {
+          "name": "mạng sống",
+          "detail": "Số kỳ khấu hao tài sản."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Số kỳ hạn để đầu tư đạt được giá trị.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất hàng năm."
+        },
+        "yield": {
+          "name": "năng suất",
+          "detail": "Lợi suất hàng năm dự kiến của chứng khoán."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Thời lượng Macaulay đã được sửa đổi.",
+      "parameters": {
+        "settlement": {
+          "name": "giải quyết",
+          "detail": "Ngày thanh toán chứng khoán, ngày sau khi phát hành khi chứng khoán được chuyển giao cho người mua."
+        },
+        "maturity": {
+          "name": "sự trưởng thành",
+          "detail": "Ngày đáo hạn hoặc ngày kết thúc của chứng khoán, khi nó có thể được mua lại theo giá trị thực tế hoặc mệnh giá."
+        },
+        "rate": {
+          "name": "tỷ lệ",
+          "detail": "Lãi suất hàng năm."
+        },
+        "yield": {
+          "name": "năng suất",
+          "detail": "Lợi suất hàng năm dự kiến của chứng khoán."
+        },
+        "frequency": {
+          "name": "Tính thường xuyên",
+          "detail": "Số lần thanh toán lãi hoặc phiếu giảm giá mỗi năm (1, 2 hoặc 4)."
+        },
+        "day_count_convention": {
+          "name": "quy ước đếm ngày",
+          "detail": "Một chỉ báo về phương pháp đếm ngày cần sử dụng."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Chuyển đổi số nhị phân có dấu sang định dạng thập phân.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "số_nhị_phân_có_dấu",
+          "detail": "Giá trị nhị phân 10 bit có dấu sẽ được chuyển đổi thành số thập phân, được cung cấp dưới dạng chuỗi."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Chuyển đổi số nhị phân sang số thập lục phân.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "số_nhị_phân_có_dấu",
+          "detail": "Giá trị nhị phân 10 bit có dấu sẽ được chuyển đổi thành giá trị thập lục phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Chuyển đổi số nhị phân sang số bát phân.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "số_nhị_phân_có_dấu",
+          "detail": "Giá trị nhị phân 10 bit có dấu sẽ được chuyển đổi sang hệ bát phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Chuyển đổi số thập phân sang định dạng nhị phân có dấu.",
+      "parameters": {
+        "decimal_number": {
+          "name": "số thập phân",
+          "detail": "Giá trị thập phân được chuyển đổi thành nhị phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Chuyển đổi số thập phân sang số thập lục phân.",
+      "parameters": {
+        "decimal_number": {
+          "name": "số thập phân",
+          "detail": "Giá trị thập phân được chuyển đổi thành số thập lục phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Chuyển đổi số thập phân sang định dạng bát phân có dấu.",
+      "parameters": {
+        "decimal_number": {
+          "name": "số thập phân",
+          "detail": "Giá trị thập phân được chuyển đổi sang hệ bát phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Chuyển đổi số thập lục phân sang số nhị phân.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "số_thập_sáu_có_dấu",
+          "detail": "Giá trị thập lục phân 40 bit có dấu sẽ được chuyển đổi thành nhị phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Chuyển đổi số thập lục phân sang số thập phân.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "số_thập_sáu_có_dấu",
+          "detail": "Giá trị thập lục phân 40 bit có dấu sẽ được chuyển đổi thành thập phân, được cung cấp dưới dạng chuỗi."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Chuyển đổi số thập lục phân sang số bát phân.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "số_thập_sáu_có_dấu",
+          "detail": "Giá trị thập lục phân 40 bit có dấu sẽ được chuyển đổi thành bát phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Chuyển đổi số bát phân sang nhị phân.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "số_bát_thừa_có_dấu",
+          "detail": "Giá trị bát phân 30 bit có dấu sẽ được chuyển đổi thành nhị phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Chuyển đổi số bát phân có dấu sang định dạng thập phân.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "số_bát_thừa_có_dấu",
+          "detail": "Giá trị bát phân 30 bit có dấu sẽ được chuyển đổi thành thập phân, được cung cấp dưới dạng chuỗi."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Chuyển đổi số bát phân sang số thập lục phân.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "số_bát_thừa_có_dấu",
+          "detail": "Giá trị bát phân 30 bit có dấu sẽ được chuyển đổi thành thập lục phân có dấu, được cung cấp dưới dạng chuỗi."
+        },
+        "significant_digits": {
+          "name": "chữ số có nghĩa",
+          "detail": "Số lượng chữ số có nghĩa cần đảm bảo trong kết quả."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Tạo ra một số phức tạp.",
+      "parameters": {
+        "real_part": {
+          "name": "phần thực tế",
+          "detail": "Hệ số thực."
+        },
+        "imaginary_part": {
+          "name": "phần tưởng tượng",
+          "detail": "Hệ số ảo."
+        },
+        "suffix": {
+          "name": "hậu tố",
+          "detail": "Hậu tố cho hệ số ảo chỉ có thể là 'i' hoặc 'j'. Nếu bỏ qua, 'i' sẽ được sử dụng."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Hệ số thực của một số phức.",
+      "parameters": {
+        "complex_number": {
+          "name": "số phức tạp",
+          "detail": "Số phức, ở dạng a+bi hoặc a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Hệ số ảo của một số phức.",
+      "parameters": {
+        "complex_number": {
+          "name": "số phức tạp",
+          "detail": "Số phức, ở dạng a+bi hoặc a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Số phức liên hợp của một số.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Số phức để tính số liên hợp."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Giá trị tuyệt đối của một số phức.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Số phức để tính giá trị tuyệt đối của."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "So sánh hai giá trị số.",
+      "parameters": {
+        "number1": {
+          "name": "số 1",
+          "detail": "Số đầu tiên cần so sánh."
+        },
+        "number2": {
+          "name": "số 2",
+          "detail": "Số thứ hai cần so sánh."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Tổng của một dãy số phức.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Số phức hoặc dãy số đầu tiên cần cộng lại."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Các số phức hoặc phạm vi bổ sung để thêm vào `value1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Sự khác biệt giữa hai số phức.",
+      "parameters": {
+        "first_number": {
+          "name": "số_đầu_tiên",
+          "detail": "Số phức để trừ second_number."
+        },
+        "second_number": {
+          "name": "số thứ hai",
+          "detail": "Số phức để trừ khỏi first_number."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Kết quả của việc nhân một chuỗi số phức với nhau.",
+      "parameters": {
+        "factor1": {
+          "name": "yếu tố 1",
+          "detail": "Số hoặc phạm vi đầu tiên để tính tích."
+        },
+        "factor2": {
+          "name": "yếu tố 2",
+          "detail": "Các số phức hoặc phạm vi bổ sung để tính tích."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Một số phức chia cho một số phức khác.",
+      "parameters": {
+        "dividend": {
+          "name": "cổ tức",
+          "detail": "Số phức bị chia."
+        },
+        "divisor": {
+          "name": "số chia",
+          "detail": "Số phức để chia."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Trả về giá trị ngược lại với giá trị logic được cung cấp.",
+      "parameters": {
+        "logical_expression": {
+          "name": "biểu thức logic",
+          "detail": "Một biểu thức hoặc tham chiếu đến một ô chứa biểu thức biểu diễn một giá trị logic nào đó."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Giá trị logic `true`."
+    },
+    "FALSE": {
+      "description": "Giá trị logic `false`."
+    },
+    "AND": {
+      "description": "Toán tử logic `and`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "biểu_thức_logic1",
+          "detail": "Một biểu thức hoặc tham chiếu đến một ô chứa một biểu thức biểu diễn một giá trị logic nào đó, tức là `TRUE` hoặc `FALSE`, hoặc một biểu thức có thể bị ép buộc thành một giá trị logic."
+        },
+        "logical_expression2": {
+          "name": "biểu_thức_logic2",
+          "detail": "Nhiều biểu thức biểu diễn các giá trị logic hơn."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Giá trị nếu không phải là lỗi, nếu không thì là đối số thứ 2.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị trả về nếu bản thân `giá trị` không phải là lỗi."
+        },
+        "value_if_error": {
+          "name": "giá trị_nếu_lỗi",
+          "detail": "Giá trị mà hàm trả về nếu `giá trị` là lỗi."
+        }
+      }
+    },
+    "IF": {
+      "description": "Trả về giá trị tùy thuộc vào biểu thức logic.",
+      "parameters": {
+        "logical_expression": {
+          "name": "biểu thức logic",
+          "detail": "Một biểu thức hoặc tham chiếu đến một ô chứa biểu thức biểu diễn một giá trị logic nào đó, tức là `TRUE` hoặc `FALSE`."
+        },
+        "value_if_true": {
+          "name": "giá trị_nếu_đúng",
+          "detail": "Giá trị mà hàm trả về nếu `logical_expression` là `TRUE`."
+        },
+        "value_if_false": {
+          "name": "giá trị_nếu_sai",
+          "detail": "Giá trị mà hàm trả về nếu `logical_expression` là `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Toán tử logic `or`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "biểu_thức_logic1",
+          "detail": "Một biểu thức hoặc tham chiếu đến một ô chứa một biểu thức biểu diễn một giá trị logic nào đó, tức là `TRUE` hoặc `FALSE`, hoặc một biểu thức có thể bị ép buộc thành một giá trị logic."
+        },
+        "logical_expression2": {
+          "name": "biểu_thức_logic2",
+          "detail": "Nhiều biểu thức đánh giá thành giá trị logic hơn."
+        }
+      }
+    },
+    "NE": {
+      "description": "Không bằng nhau.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị đầu tiên."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị để kiểm tra xem có bất đẳng thức nào không so với `value1`."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Bình đẳng.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị đầu tiên."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị để kiểm tra xem có bằng nhau không với `value1`."
+        }
+      }
+    },
+    "GT": {
+      "description": "Lớn hơn hẳn.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị cần kiểm tra phải lớn hơn `value2`."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị thứ hai."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Lớn hơn hoặc bằng.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị cần kiểm tra có lớn hơn hoặc bằng `value2` không."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị thứ hai."
+        }
+      }
+    },
+    "LT": {
+      "description": "Ít hơn.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị cần kiểm tra phải nhỏ hơn `value2`."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị thứ hai."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Nhỏ hơn hoặc bằng.",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị cần kiểm tra có nhỏ hơn hoặc bằng `value2` không."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị thứ hai."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Tổng của hai số",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Số hạng đầu tiên."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Số hạng thứ hai."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Sự khác biệt của hai số",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Số bị trừ hoặc số bị trừ đi."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Số trừ hoặc số để trừ khỏi `giá trị1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Tích của hai số",
+      "parameters": {
+        "factor1": {
+          "name": "yếu tố 1",
+          "detail": "Số bị nhân đầu tiên."
+        },
+        "factor2": {
+          "name": "yếu tố 2",
+          "detail": "Số bị nhân thứ hai."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Một số chia cho một số khác",
+      "parameters": {
+        "dividend": {
+          "name": "cổ tức",
+          "detail": "Số bị chia."
+        },
+        "divisor": {
+          "name": "số chia",
+          "detail": "Số để chia."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Sự nối kết của hai giá trị",
+      "parameters": {
+        "value1": {
+          "name": "giá trị1",
+          "detail": "Giá trị mà `value2` sẽ được thêm vào."
+        },
+        "value2": {
+          "name": "giá trị2",
+          "detail": "Giá trị để thêm vào `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Giá trị được hiểu theo phần trăm.",
+      "parameters": {
+        "percentage": {
+          "name": "phần trăm",
+          "detail": "Giá trị được diễn giải theo phần trăm."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Nối các chuỗi với nhau.",
+      "parameters": {
+        "string1": {
+          "name": "chuỗi1",
+          "detail": "Chuỗi ban đầu."
+        },
+        "string2": {
+          "name": "chuỗi2",
+          "detail": "Thêm nhiều chuỗi vào theo trình tự."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Giá trị bản đồ unicode số của ký tự.",
+      "parameters": {
+        "string": {
+          "name": "sợi dây",
+          "detail": "Chuỗi có giá trị bản đồ Unicode của ký tự đầu tiên sẽ được trả về."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Lấy ký tự liên quan đến số.",
+      "parameters": {
+        "table_number": {
+          "name": "số_bảng",
+          "detail": "Số ký tự cần tra cứu từ bảng Unicode hiện tại theo định dạng thập phân."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Tính giá trị của một số La Mã.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "số la mã",
+          "detail": "Số La Mã để định dạng, có giá trị từ 1 đến 3999, bao gồm cả 1 và 3999."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Định dạng số theo số La Mã.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Số cần định dạng, từ 1 đến 3999, bao gồm cả 1 và 3999."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Trích xuất các chuỗi con khớp với biểu thức chính quy.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Văn bản đầu vào."
+        },
+        "regular_expression": {
+          "name": "biểu thức chính quy",
+          "detail": "Phần đầu tiên của `text` khớp với biểu thức này sẽ được trả về."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Liệu một đoạn văn bản có khớp với biểu thức chính quy không.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Văn bản cần được kiểm tra so với biểu thức chính quy."
+        },
+        "regular_expression": {
+          "name": "biểu thức chính quy",
+          "detail": "Biểu thức chính quy để kiểm tra văn bản."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Thay thế văn bản bằng biểu thức chính quy.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Một phần văn bản sẽ được thay thế."
+        },
+        "regular_expression": {
+          "name": "biểu thức chính quy",
+          "detail": "Biểu thức chính quy. Tất cả các trường hợp khớp trong `text` sẽ được thay thế."
+        },
+        "replacement": {
+          "name": "thay thế",
+          "detail": "Văn bản sẽ được chèn vào văn bản gốc."
+        }
+      }
+    },
+    "T": {
+      "description": "Chuỗi đối số dưới dạng văn bản.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số sẽ được chuyển đổi thành văn bản."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Định dạng số với số chữ số thập phân cố định.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Số cần định dạng."
+        },
+        "number_of_places": {
+          "name": "số_nơi_đất",
+          "detail": "Số chữ số thập phân hiển thị trong kết quả."
+        },
+        "suppress_separator": {
+          "name": "ngăn chặn_phân_cách",
+          "detail": "Có nên bỏ dấu phân cách hàng nghìn được sử dụng ở một số ngôn ngữ hay không (ví dụ: `1,000` trở thành `1000`). Dấu phân cách sẽ có nếu giá trị này là 0 hoặc bị bỏ qua, còn nếu không thì không có."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Vị trí đầu tiên của chuỗi được tìm thấy trong văn bản, phân biệt chữ hoa chữ thường.",
+      "parameters": {
+        "search_for": {
+          "name": "tìm kiếm_cho",
+          "detail": "Chuỗi ký tự cần tìm kiếm trong `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "văn bản cần tìm kiếm",
+          "detail": "Văn bản để tìm kiếm lần xuất hiện đầu tiên của `search_for`."
+        },
+        "starting_at": {
+          "name": "bắt đầu_tại",
+          "detail": "Ký tự trong `text_to_search` để bắt đầu tìm kiếm."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Vị trí mà chuỗi đầu tiên được tìm thấy trong văn bản (nhị phân).",
+      "parameters": {
+        "search_for": {
+          "name": "tìm kiếm_cho",
+          "detail": "Chuỗi ký tự cần tìm kiếm trong `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "văn bản cần tìm kiếm",
+          "detail": "Văn bản để tìm kiếm lần xuất hiện đầu tiên của `search_for`."
+        },
+        "starting_at": {
+          "name": "bắt đầu_tại",
+          "detail": "Ký tự trong `text_to_search` để bắt đầu tìm kiếm."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Nối các phần tử của mảng bằng dấu phân cách.",
+      "parameters": {
+        "delimiter": {
+          "name": "dấu phân cách",
+          "detail": "Ký tự hoặc chuỗi được đặt giữa mỗi giá trị được nối."
+        },
+        "value_or_array1": {
+          "name": "giá_trị_hoặc_mảng1",
+          "detail": "Giá trị hoặc các giá trị sẽ được thêm vào bằng cách sử dụng `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "giá_trị_hoặc_mảng2",
+          "detail": "Thêm nhiều giá trị hơn bằng cách sử dụng `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Chuỗi con từ đầu chuỗi đã chỉ định.",
+      "parameters": {
+        "string": {
+          "name": "sợi dây",
+          "detail": "Chuỗi mà phần bên trái sẽ được trả về."
+        },
+        "number_of_characters": {
+          "name": "số_ký_tự",
+          "detail": "Số ký tự trả về từ phía bên trái của `chuỗi`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Một chuỗi con từ phần cuối của một chuỗi đã chỉ định.",
+      "parameters": {
+        "string": {
+          "name": "sợi dây",
+          "detail": "Chuỗi mà phần bên phải sẽ được trả về."
+        },
+        "number_of_characters": {
+          "name": "số_ký_tự",
+          "detail": "Số ký tự trả về từ phía bên phải của `chuỗi`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Một đoạn của dây.",
+      "parameters": {
+        "string": {
+          "name": "sợi dây",
+          "detail": "Chuỗi để trích xuất một đoạn văn."
+        },
+        "starting_at": {
+          "name": "bắt đầu_tại",
+          "detail": "Chỉ mục từ bên trái của `string` để bắt đầu trích xuất. Ký tự đầu tiên trong `string` có chỉ mục là 1."
+        },
+        "extract_length": {
+          "name": "trích xuất_chiều dài",
+          "detail": "Độ dài của đoạn trích cần trích xuất."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Độ dài của một sợi dây.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Chuỗi có độ dài sẽ được trả về."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Độ dài của một chuỗi tính bằng byte.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Chuỗi có độ dài sẽ được trả về."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Chuyển đổi một chuỗi ký tự được chỉ định thành chữ thường.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Chuỗi ký tự cần chuyển thành chữ thường."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Chuyển đổi một chuỗi ký tự được chỉ định thành chữ hoa.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Chuỗi ký tự cần chuyển thành chữ hoa."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Kiểm tra xem hai chuỗi có giống hệt nhau không.",
+      "parameters": {
+        "string1": {
+          "name": "chuỗi1",
+          "detail": "Chuỗi đầu tiên để so sánh"
+        },
+        "string2": {
+          "name": "chuỗi2",
+          "detail": "Chuỗi thứ hai để so sánh"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Thay thế một phần chuỗi văn bản bằng văn bản khác.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Một phần văn bản sẽ được thay thế."
+        },
+        "position": {
+          "name": "chức vụ",
+          "detail": "Vị trí mà sự thay thế sẽ bắt đầu (bắt đầu từ 1)."
+        },
+        "length": {
+          "name": "chiều dài",
+          "detail": "Số lượng ký tự trong văn bản cần thay thế."
+        },
+        "new_text": {
+          "name": "văn bản mới",
+          "detail": "Văn bản sẽ được chèn vào văn bản gốc."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Văn bản được chỉ định lặp lại nhiều lần.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "văn bản_cần_lặp_lại",
+          "detail": "Ký tự hoặc chuỗi ký tự lặp lại."
+        },
+        "number_of_repetitions": {
+          "name": "số_lặp_lặp_lại",
+          "detail": "Số lần `text_to_repeat` xuất hiện trong giá trị trả về."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Tìm thấy vị trí đầu tiên của chuỗi trong văn bản, không phân biệt chữ hoa chữ thường.",
+      "parameters": {
+        "search_for": {
+          "name": "tìm kiếm_cho",
+          "detail": "Chuỗi ký tự cần tìm kiếm trong `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "văn bản cần tìm kiếm",
+          "detail": "Văn bản để tìm kiếm lần xuất hiện đầu tiên của `search_for`."
+        },
+        "starting_at": {
+          "name": "bắt đầu_tại",
+          "detail": "Ký tự trong `text_to_search` để bắt đầu tìm kiếm."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Thay thế văn bản hiện có bằng văn bản mới trong một chuỗi.",
+      "parameters": {
+        "text_to_search": {
+          "name": "văn bản cần tìm kiếm",
+          "detail": "Văn bản cần tìm kiếm và thay thế."
+        },
+        "search_for": {
+          "name": "tìm kiếm_cho",
+          "detail": "Chuỗi ký tự cần tìm kiếm trong `text_to_search`."
+        },
+        "replace_with": {
+          "name": "thay thế bằng",
+          "detail": "Chuỗi sẽ thay thế `search_for`."
+        },
+        "occurrence_number": {
+          "name": "số lần xuất hiện",
+          "detail": "Trường hợp `search_for` trong `text_to_search` để thay thế bằng `replace_with`. Theo mặc định, tất cả các lần xuất hiện của `search_for` đều được thay thế; tuy nhiên, nếu `occurrence_number` được chỉ định, chỉ trường hợp được chỉ định của `search_for` được thay thế."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Xóa các ký tự không in được khỏi một đoạn văn bản.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Văn bản có các ký tự không in được cần phải được loại bỏ."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Định dạng số thành văn bản.",
+      "parameters": {
+        "number": {
+          "name": "con số",
+          "detail": "Số, ngày tháng hoặc thời gian để định dạng."
+        },
+        "format": {
+          "name": "định dạng",
+          "detail": "Mẫu định dạng số, được đặt trong dấu ngoặc kép."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Xóa ký tự khoảng trắng.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Văn bản hoặc tham chiếu đến ô chứa văn bản cần cắt bớt."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Chuyển đổi chuỗi ngày/giờ/số thành số.",
+      "parameters": {
+        "text": {
+          "name": "chữ",
+          "detail": "Chuỗi chứa giá trị cần chuyển đổi."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Viết hoa mỗi từ trong chuỗi đã chỉ định.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_to_capitalize",
+          "detail": "Văn bản trả về sẽ có chữ cái đầu tiên của mỗi từ viết hoa và tất cả các chữ cái còn lại viết thường."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Chuyển đổi đơn vị cho số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị số trong `start_unit` sẽ được chuyển đổi thành `end_unit`."
+        },
+        "start_unit": {
+          "name": "đơn vị bắt đầu",
+          "detail": "Đơn vị bắt đầu, đơn vị hiện được gán cho `giá trị`."
+        },
+        "end_unit": {
+          "name": "đơn vị kết thúc",
+          "detail": "Đơn vị đo lường để chuyển đổi đối số, `giá trị`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Tổng các hiệu bình phương.",
+      "parameters": {
+        "array_x": {
+          "name": "mảng_x",
+          "detail": "Mảng hoặc phạm vi giá trị mà bình phương của chúng sẽ được giảm đi theo bình phương của các mục tương ứng trong `array_y` và cộng lại với nhau."
+        },
+        "array_y": {
+          "name": "mảng_y",
+          "detail": "Mảng hoặc phạm vi giá trị mà bình phương của chúng sẽ được trừ khỏi bình phương của các mục tương ứng trong `array_x` và cộng lại với nhau."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Tổng các tổng bình phương.",
+      "parameters": {
+        "array_x": {
+          "name": "mảng_x",
+          "detail": "Mảng hoặc phạm vi giá trị mà bình phương của chúng sẽ được cộng vào bình phương của các mục tương ứng trong `array_y` và cộng lại với nhau."
+        },
+        "array_y": {
+          "name": "mảng_y",
+          "detail": "Mảng hoặc phạm vi giá trị mà bình phương của chúng sẽ được thêm vào bình phương của các mục tương ứng trong `array_x` và cộng lại với nhau."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Tổng bình phương của các hiệu.",
+      "parameters": {
+        "array_x": {
+          "name": "mảng_x",
+          "detail": "Mảng hoặc phạm vi giá trị sẽ được giảm đi theo các mục tương ứng trong `array_y`, bình phương và cộng lại với nhau."
+        },
+        "array_y": {
+          "name": "mảng_y",
+          "detail": "Mảng hoặc phạm vi giá trị sẽ được trừ khỏi các mục tương ứng trong `array_x`, kết quả bình phương và tất cả các kết quả đó được cộng lại với nhau."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Hoán đổi các hàng và cột của một mảng.",
+      "parameters": {
+        "array_or_range": {
+          "name": "mảng_hoặc_phạm_vi",
+          "detail": "Mảng hoặc phạm vi có các hàng và cột sẽ được hoán đổi."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Phù hợp với các điểm theo xu hướng tuyến tính được suy ra thông qua phương pháp bình phương nhỏ nhất.",
+      "parameters": {
+        "known_data_y": {
+          "name": "dữ liệu đã biết",
+          "detail": "Mảng hoặc phạm vi chứa các giá trị phụ thuộc (y) đã biết, được sử dụng để tạo đường cong phù hợp với xu hướng tuyến tính lý tưởng."
+        },
+        "known_data_x": {
+          "name": "dữ liệu đã biết_x",
+          "detail": "Giá trị của biến độc lập tương ứng với `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "dữ liệu mới_x",
+          "detail": "Các điểm dữ liệu trả về giá trị `y` cho đường cong phù hợp lý tưởng."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Cho dạng tuyến tính tổng quát của `y = m*x+b` để khớp đường cong, tính toán `b` nếu `TRUE` hoặc buộc `b` bằng `0` và chỉ tính toán các giá trị `m` nếu `FALSE`, tức là buộc đường cong khớp phải đi qua gốc tọa độ."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Phân bố tần số của mảng.",
+      "parameters": {
+        "data": {
+          "name": "dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa các giá trị cần đếm."
+        },
+        "classes": {
+          "name": "lớp học",
+          "detail": "Mảng hoặc phạm vi chứa tập hợp các lớp."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Phù hợp với xu hướng tăng trưởng theo cấp số nhân.",
+      "parameters": {
+        "known_data_y": {
+          "name": "dữ liệu đã biết",
+          "detail": "Mảng hoặc phạm vi chứa các giá trị phụ thuộc (y) đã biết, được sử dụng để tạo đường cong phù hợp với đường cong tăng trưởng theo cấp số nhân lý tưởng."
+        },
+        "known_data_x": {
+          "name": "dữ liệu đã biết_x",
+          "detail": "Giá trị của biến độc lập tương ứng với `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "dữ liệu mới_x",
+          "detail": "Các điểm dữ liệu trả về giá trị `y` cho đường cong phù hợp lý tưởng."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Cho dạng hàm mũ tổng quát của `y = b*m^x` để phù hợp với đường cong, tính toán `b` nếu `TRUE` hoặc buộc `b` bằng `1` và chỉ tính toán các giá trị `m` nếu `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Xu hướng tuyến tính phù hợp nhất thông qua phương pháp bình phương nhỏ nhất.",
+      "parameters": {
+        "known_data_y": {
+          "name": "dữ liệu đã biết",
+          "detail": "Mảng hoặc phạm vi chứa các giá trị phụ thuộc (y) đã biết, được sử dụng để tạo đường cong phù hợp với xu hướng tuyến tính lý tưởng."
+        },
+        "known_data_x": {
+          "name": "dữ liệu đã biết_x",
+          "detail": "Giá trị của biến độc lập tương ứng với `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "tính_b",
+          "detail": "Với dạng tuyến tính `y = m*x+b`, tính toán giao điểm gốc y (`b`) nếu `TRUE`. Nếu không, buộc `b` bằng `0` và chỉ tính toán các giá trị `m` nếu `FALSE`, tức là buộc đường cong phải đi qua gốc tọa độ."
+        },
+        "verbose": {
+          "name": "dài dòng",
+          "detail": "Cờ chỉ định liệu có trả về số liệu thống kê hồi quy bổ sung hay chỉ trả về hệ số tuyến tính và giá trị cắt y (mặc định)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Đường cong tăng trưởng theo cấp số nhân phù hợp nhất.",
+      "parameters": {
+        "known_data_y": {
+          "name": "dữ liệu đã biết",
+          "detail": "Mảng hoặc phạm vi chứa các giá trị phụ thuộc (y) đã biết, được sử dụng để tạo đường cong phù hợp với đường cong tăng trưởng theo cấp số nhân lý tưởng."
+        },
+        "known_data_x": {
+          "name": "dữ liệu đã biết_x",
+          "detail": "Giá trị của biến độc lập tương ứng với `known_data_y`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Cho dạng hàm mũ tổng quát của `y = b*m^x` để phù hợp với đường cong, tính toán `b` nếu `TRUE` hoặc buộc `b` bằng `1` và chỉ tính toán các giá trị `m` nếu `FALSE`."
+        },
+        "verbose": {
+          "name": "dài dòng",
+          "detail": "Cờ chỉ định liệu có trả về số liệu thống kê hồi quy bổ sung hay chỉ trả về hệ số và số mũ đã tính toán."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Định thức ma trận của ma trận vuông.",
+      "parameters": {
+        "square_matrix": {
+          "name": "ma trận vuông",
+          "detail": "Một mảng hoặc phạm vi có số hàng và số cột bằng nhau biểu diễn một ma trận có định thức sẽ được tính toán."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Ma trận nghịch đảo của phép nhân ma trận vuông.",
+      "parameters": {
+        "square_matrix": {
+          "name": "ma trận vuông",
+          "detail": "Một mảng hoặc phạm vi có số hàng và số cột bằng nhau biểu diễn một ma trận có nghịch đảo nhân sẽ được tính toán."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Tích ma trận của hai ma trận.",
+      "parameters": {
+        "matrix1": {
+          "name": "ma trận1",
+          "detail": "Ma trận đầu tiên trong phép nhân ma trận, được biểu diễn dưới dạng một mảng hoặc phạm vi."
+        },
+        "matrix2": {
+          "name": "ma trận2",
+          "detail": "Ma trận thứ hai trong phép nhân ma trận, được biểu diễn dưới dạng một mảng hoặc phạm vi."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Tổng các tích của các phần tử trong hai mảng.",
+      "parameters": {
+        "array1": {
+          "name": "mảng1",
+          "detail": "Mảng hoặc phạm vi đầu tiên có các mục sẽ được nhân với các mục tương ứng trong mảng hoặc phạm vi thứ hai."
+        },
+        "array2": {
+          "name": "mảng2",
+          "detail": "Mảng hoặc phạm vi thứ hai có các mục sẽ được nhân với các mục tương ứng trong mảng hoặc phạm vi đầu tiên đó."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Giá trị có phải là công thức không.",
+      "parameters": {
+        "cell": {
+          "name": "tế bào",
+          "detail": "Ô cần xác minh có chứa công thức hay không."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Lấy thông tin về một tế bào.",
+      "parameters": {
+        "info_type": {
+          "name": "loại thông tin",
+          "detail": "Loại thông tin được yêu cầu (xem bài viết để biết các loại thông tin có sẵn)"
+        },
+        "reference": {
+          "name": "thẩm quyền giải quyết",
+          "detail": "Tham chiếu đến ô."
+        }
+      }
+    },
+    "NA": {
+      "description": "Lỗi `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Ô được tham chiếu có trống không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Tham chiếu đến ô sẽ được kiểm tra xem có trống không."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Giá trị có phải là lỗi không, ngoài lỗi `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là loại lỗi khác với `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Giá trị có phải là lỗi không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là loại lỗi."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Giá trị là `true` hay `false`.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là giá trị logic `TRUE` hoặc `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Giá trị có phải là lỗi `#n/a` không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị được so sánh với giá trị lỗi `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Giá trị có phải là giá trị không phải văn bản hay không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần kiểm tra."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Giá trị có phải là một con số không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh dưới dạng số."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Giá trị có phải là tham chiếu ô hợp lệ hay không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là tham chiếu ô."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Giá trị có phải là văn bản không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh dưới dạng văn bản."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Lấy kiểu của giá trị.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác định loại."
+        }
+      }
+    },
+    "N": {
+      "description": "Đối số được cung cấp dưới dạng số.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số cần được chuyển đổi thành số."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Chuyển đổi một số được cung cấp thành một ngày.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số hoặc tham chiếu đến một ô sẽ được chuyển đổi thành ngày."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Chuyển đổi bất kỳ giá trị số nào thành số thuần túy.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số hoặc tham chiếu đến một ô sẽ được chuyển đổi thành số nguyên."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Chuyển đổi giá trị số được cung cấp thành giá trị văn bản.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số hoặc tham chiếu đến ô cần chuyển đổi thành văn bản."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Chuyển đổi một số được cung cấp thành giá trị đô la.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số hoặc tham chiếu đến một ô sẽ được chuyển đổi thành giá trị đô la."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Chuyển đổi một số được cung cấp thành phần trăm.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Đối số hoặc tham chiếu đến một ô sẽ được chuyển đổi thành phần trăm."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Giá trị đơn lẻ từ một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Giá trị lớn nhất trong phạm vi giống bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Giá trị tối thiểu trong phạm vi giống bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Giá trị trung bình của một tập hợp các giá trị trong một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Đếm các giá trị từ một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Đếm các giá trị và văn bản từ một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Tích của các giá trị trong một phạm vi giống bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Độ lệch chuẩn của mẫu quần thể từ bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Độ lệch chuẩn của toàn bộ dân số từ bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Tổng các giá trị từ một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Độ lệch của mẫu quần thể so với phạm vi dạng bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Độ biến thiên của một quần thể từ một phạm vi giống như bảng.",
+      "parameters": {
+        "database": {
+          "name": "cơ sở dữ liệu",
+          "detail": "Mảng hoặc phạm vi chứa dữ liệu cần xem xét, được cấu trúc theo cách mà hàng đầu tiên chứa nhãn cho giá trị của mỗi cột."
+        },
+        "field": {
+          "name": "cánh đồng",
+          "detail": "Chỉ ra cột nào trong `cơ sở dữ liệu` chứa các giá trị cần trích xuất và vận hành."
+        },
+        "criteria": {
+          "name": "tiêu chuẩn",
+          "detail": "Một mảng hoặc phạm vi chứa không hoặc nhiều tiêu chí để lọc các giá trị `cơ sở dữ liệu` trước khi vận hành."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Nhận giới tính dựa trên số CMND.",
+      "parameters": {
+        "ID number": {
+          "name": "Số CMND",
+          "detail": "Số ID gồm 15 chữ số hoặc 18 chữ số hoặc dãy số."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Tìm tỉnh nơi sinh dựa trên số CMND.",
+      "parameters": {
+        "ID number": {
+          "name": "Số CMND",
+          "detail": "Số ID gồm 15 chữ số hoặc 18 chữ số hoặc dãy số."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Nhận chòm sao dựa trên số ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Số CMND",
+          "detail": "Số ID gồm 15 chữ số hoặc 18 chữ số hoặc dãy số."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Trả về khối lượng giao dịch cổ phiếu tương ứng của cổ phiếu A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Mã chứng khoán",
+          "detail": "Mã chứng khoán gồm 6 chữ số, là bắt buộc."
+        },
+        "Date": {
+          "name": "Ngày",
+          "detail": "Ngày giao dịch của cổ phiếu, mặc định là ngày giao dịch gần nhất"
+        },
+        "Reversion and exclusion": {
+          "name": "Sự đảo ngược và loại trừ",
+          "detail": "Chọn loại khôi phục bên phải của cổ phiếu, mặc định là 0 [hoàn nguyên trước], 1 [giá gốc], 2 [hoàn nguyên sau]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Giá trị có phải là ngày tháng không.",
+      "parameters": {
+        "value": {
+          "name": "giá trị",
+          "detail": "Giá trị cần xác minh là ngày tháng."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Tạo biểu đồ đường tia lửa",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Line color": {
+          "name": "Màu đường kẻ",
+          "detail": "Màu đường của biểu đồ đường có thể là phạm vi A1, giá trị chỉ mục bảng màu hoặc giá trị màu cụ thể. Đặt thành 0 hoặc false để không hiển thị. Nó hỗ trợ regx, rgb, rgba, v.v. Mặc định #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Độ dày của đường",
+          "detail": "Độ dày đường của biểu đồ đường, mặc định là 1px"
+        },
+        "Auxiliary line": {
+          "name": "Đường dây phụ trợ",
+          "detail": "Một đường ngang, có thể là giá trị min, max, avg, median, range hoặc giá trị tùy chỉnh, mặc định là 0 không có"
+        },
+        "Auxiliary line color": {
+          "name": "Màu đường phụ trợ",
+          "detail": "Cài đặt màu của đường phụ, giống như cấu hình màu đường, mặc định là #000"
+        },
+        "Maximum mark": {
+          "name": "Điểm tối đa",
+          "detail": "Xác định giá trị lớn nhất của đồ thị đường, cấu hình màu đường giống nhau, mặc định 0 không hiển thị"
+        },
+        "Minimum mark": {
+          "name": "Điểm tối thiểu",
+          "detail": "Xác định giá trị nhỏ nhất của đồ thị đường, cấu hình màu đường giống nhau, mặc định 0 không hiển thị"
+        },
+        "Mark size": {
+          "name": "Kích thước dấu",
+          "detail": "Cài đặt kích thước dấu tối đa và tối thiểu, mặc định là 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Tạo biểu đồ tia tích lũy theo chiều dọc",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Stack by column": {
+          "name": "Xếp chồng theo cột",
+          "detail": "Nếu bạn cần xếp chồng theo hàng, hãy đặt mục này thành false hoặc 0, mặc định là 1"
+        },
+        "Bar interval": {
+          "name": "Khoảng cách thanh",
+          "detail": "Khoảng cách giữa các thanh, mặc định là 1"
+        },
+        "Max": {
+          "name": "Tối đa",
+          "detail": "Giá trị lớn nhất của thanh tích lũy, được sử dụng để điều chỉnh độ dài của thanh, mặc định là tự động tính toán false, auto, null"
+        },
+        "Color palette": {
+          "name": "Bảng màu",
+          "detail": "Bảng màu có thể thiết lập riêng màu thanh của từng chiều, có thể thiết lập trong phạm vi A1:A10, v.v. Mặc định là #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Tạo biểu đồ thanh ngang tích lũy dạng tia lửa",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Stack by column": {
+          "name": "Xếp chồng theo cột",
+          "detail": "Nếu bạn cần xếp chồng theo hàng, hãy đặt mục này thành false hoặc 0, mặc định là 1"
+        },
+        "Bar interval": {
+          "name": "Khoảng cách thanh",
+          "detail": "Khoảng cách giữa các thanh, mặc định là 1"
+        },
+        "Max": {
+          "name": "Tối đa",
+          "detail": "Giá trị lớn nhất của thanh tích lũy, được sử dụng để điều chỉnh độ dài của thanh, mặc định là tự động tính toán false, auto, null"
+        },
+        "Color palette": {
+          "name": "Bảng màu",
+          "detail": "Bảng màu có thể thiết lập riêng màu thanh của từng chiều, có thể thiết lập trong phạm vi A1:A10, v.v. Mặc định là #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Tạo biểu đồ rời rạc dạng tia lửa",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Segmentation threshold": {
+          "name": "Ngưỡng phân đoạn",
+          "detail": "Phân biệt màu cột đồ thị rời rạc, ví dụ: nếu giá trị là 0, màu xanh lớn hơn 0, màu đỏ nhỏ hơn 0 và mặc định là 0"
+        },
+        "Above threshold color": {
+          "name": "Màu sắc trên ngưỡng",
+          "detail": "Màu đường của biểu đồ đường có thể là phạm vi A1, giá trị chỉ mục bảng màu hoặc giá trị màu cụ thể. Đặt thành 0 hoặc false để không hiển thị. Nó hỗ trợ regx, rgb, rgba, v.v. Mặc định #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Màu dưới ngưỡng",
+          "detail": "Cài đặt màu của thanh bên dưới ngưỡng, giống với màu bên trên ngưỡng, mặc định là #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Tạo biểu đồ ba trạng thái dạng tia lửa",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Bar interval": {
+          "name": "Khoảng cách thanh",
+          "detail": "Khoảng cách giữa các thanh, mặc định là 1"
+        },
+        "Bar color": {
+          "name": "Màu thanh",
+          "detail": "Màu đường của biểu đồ đường có thể là phạm vi A1, giá trị chỉ mục bảng màu hoặc giá trị màu cụ thể. Đặt thành 0 hoặc false để không hiển thị. Nó hỗ trợ regx, rgb, rgba, v.v. Mặc định #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Màu thanh âm",
+          "detail": "Thiết lập màu thanh âm, biểu thị màu của giá trị âm, giống như cấu hình màu thanh, mặc định là #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Màu thanh giá trị bằng không",
+          "detail": "Thiết lập màu thanh giá trị bằng 0, biểu thị màu giá trị 0, cấu hình màu giống với thanh, mặc định là #999"
+        },
+        "Color palette": {
+          "name": "Bảng màu",
+          "detail": "Bảng màu có thể thiết lập màu cho từng thanh riêng lẻ, có thể thiết lập nhiều cài đặt và hỗ trợ hai định dạng: 1 màu như #000, nghĩa là màu của thanh đầu tiên là màu đen; 2 phạm vi giá trị: màu, như -2:#000 biểu thị thanh có giá trị -2 là màu đen, 0:5:#000 biểu thị thanh có giá trị 0-5 là màu đen và mặc định là trống."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Tạo biểu đồ hình tròn Sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Phạm vi",
+          "detail": "Phạm vi，Các giá trị có thể được tính toán hiệu quả, chẳng hạn như A1:A20, {1,2,3,4,5}, v.v."
+        },
+        "Rotation angle": {
+          "name": "Góc quay",
+          "detail": "Góc quay của biểu đồ hình tròn, mặc định là 0"
+        },
+        "border": {
+          "name": "ranh giới",
+          "detail": "Kích thước đường viền biểu đồ hình tròn, mặc định là không có 0"
+        },
+        "Border color": {
+          "name": "Màu viền",
+          "detail": "Màu viền của biểu đồ hình tròn, mặc định là #000"
+        },
+        "Color palette": {
+          "name": "Bảng màu",
+          "detail": "Màu sắc của lát cắt có thể được thiết lập trong bảng màu, có thể được thiết lập trong phạm vi A1:A10, v.v. Mặc định là #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Tạo biểu đồ tia lửa",
+      "parameters": {
+        "Target": {
+          "name": "Mục tiêu",
+          "detail": "Giá trị số có thể được tính toán hiệu quả cho giá trị mục tiêu đạt được, chẳng hạn như A1, 100, v.v."
+        },
+        "achieved": {
+          "name": "đạt được",
+          "detail": "Chỉ khi giá trị được hoàn thành thì giá trị mới có thể được tính toán hiệu quả, chẳng hạn như A1, 100, v.v."
+        },
+        "Contrast": {
+          "name": "Sự tương phản",
+          "detail": "Các giá trị so sánh, chẳng hạn như vượt mức, tối thiểu và dòng cuối cùng cho giải thưởng, có thể được tính toán hiệu quả, chẳng hạn như A1, 100, v.v. Bạn có thể thiết lập tối đa 9 giá trị so sánh"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Kết hợp biểu đồ sparklines vào một ô",
+      "parameters": {
+        "config": {
+          "name": "cấu hình",
+          "detail": "Cài đặt biểu đồ Sparklines, chẳng hạn như A1:A20, biểu đồ hình tròn hoàn chỉnh, cài đặt biểu đồ đường, v.v."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sắp xếp các hàng trong phạm vi theo cột được chỉ định.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Dữ liệu cần được sắp xếp."
+        },
+        "sort_column": {
+          "name": "sắp xếp_cột",
+          "detail": "Chỉ mục của cột trong `range` hoặc một phạm vi bên ngoài `range` chứa các giá trị để sắp xếp."
+        },
+        "is_ascending": {
+          "name": "đang_tăng_tốc",
+          "detail": "`TRUE` hoặc `FALSE` cho biết liệu có sắp xếp `sort_column` theo thứ tự tăng dần hay không. `FALSE` sắp xếp theo thứ tự giảm dần."
+        },
+        "sort_column2": {
+          "name": "sắp xếp_cột2",
+          "detail": "Các cột bổ sung."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Lọc một phạm vi dựa trên các điều kiện được cung cấp.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Dữ liệu cần lọc."
+        },
+        "condition1": {
+          "name": "điều kiện1",
+          "detail": "Một cột hoặc hàng chứa các giá trị đúng hoặc sai tương ứng với cột hoặc hàng đầu tiên của `range`, hoặc một công thức mảng đánh giá là đúng hoặc sai."
+        },
+        "condition2": {
+          "name": "điều kiện2",
+          "detail": "Các hàng hoặc cột bổ sung chứa các giá trị boolean `TRUE` hoặc `FALSE` cho biết liệu hàng hoặc cột tương ứng trong `range` có nên đi qua `FILTER` hay không. Cũng có thể chứa các biểu thức công thức mảng đánh giá thành các hàng hoặc cột đó. Tất cả các điều kiện phải cùng loại (hàng hoặc cột). Không được phép trộn lẫn các điều kiện hàng và điều kiện cột."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Các hàng duy nhất trong phạm vi nguồn được cung cấp.",
+      "parameters": {
+        "range": {
+          "name": "phạm vi",
+          "detail": "Dữ liệu để lọc theo các mục nhập duy nhất."
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[Tùy chọn] - Giá trị logic, chỉ ra cách so sánh; theo hàng = FALSE() hoặc bỏ qua; theo cột = TRUE()."
+        },
+        "occurs_once": {
+          "name": "xảy ra một lần",
+          "detail": "[Tùy chọn] - Giá trị logic, chỉ có một lần xuất hiện trong giá trị duy nhất được trả về = TRUE(); bao gồm tất cả các giá trị duy nhất = FALSE() hoặc bị bỏ qua."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Trả về một lưới các số ngẫu nhiên.",
+      "parameters": {
+        "rows": {
+          "name": "hàng",
+          "detail": "Số hàng cần điền số ngẫu nhiên."
+        },
+        "columns": {
+          "name": "cột",
+          "detail": "Số lượng cột cần điền số ngẫu nhiên."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Trả về một lưới các số tuần tự.",
+      "parameters": {
+        "rows": {
+          "name": "hàng",
+          "detail": "Số lượng hàng trong lưới kết quả của hàm."
+        },
+        "columns": {
+          "name": "cột",
+          "detail": "Số cột trong lưới kết quả của hàm. Nếu bỏ qua, lưới kết quả sẽ có 1 cột."
+        },
+        "start": {
+          "name": "bắt đầu",
+          "detail": "Số bắt đầu chuỗi. Nếu bỏ qua, chuỗi sẽ bắt đầu từ 1."
+        },
+        "step": {
+          "name": "bước chân",
+          "detail": "Số lượng mỗi giá trị trong chuỗi sẽ khác nhau. Nếu bỏ qua, mỗi giá trị sẽ khác nhau 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Đánh giá theo công thức hoặc biểu thức theo nghĩa đen.",
+      "parameters": {
+        "expression": {
+          "name": "sự biểu lộ",
+          "detail": "Công thức hoặc biểu thức"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Gọi một hàm trên máy chủ/API từ xa.",
+      "parameters": {
+        "remote_expression": {
+          "name": "biểu thức từ xa",
+          "detail": "Công thức"
+        }
+      }
+    }
   }
 }

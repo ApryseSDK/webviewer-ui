@@ -18,6 +18,7 @@ jest.mock('selectors', () => ({
   getCustomSettings: jest.fn().mockReturnValue([]),
   isToolDefaultStyleUpdateFromAnnotationPopupEnabled: jest.fn().mockReturnValue(false),
   isWidgetHighlightingEnabled: jest.fn().mockReturnValue(true),
+  getUIConfiguration: jest.fn().mockReturnValue('default'),
 }));
 jest.mock('react-i18next', () => ({
   useTranslation: () => [
@@ -100,6 +101,7 @@ describe('AdvancedTab Component', () => {
       isThumbnailSelectingPages: false,
       isToolDefaultStyleUpdateFromAnnotationPopupEnabled: false,
       isWidgetHighlightingEnabled: true,
+      getUIConfiguration: 'default',
       ...overrides.viewer
     },
     search: {

@@ -5,6 +5,7 @@
   padding: 8px;
   gap: 8px;
   border-bottom: 1px solid #e0e0e0;
+  position: relative;
 
   .RangeInput {
     padding: 6px 8px;
@@ -24,14 +25,50 @@
     border-radius: 4px;
     background-color: var(--component-background);
     padding-left: 30px;
-    
+
+    .FormulaInput {
+      position: relative;
+      z-index: 1;
+      flex-grow: 1;
+      width: 100%;
+      padding: 6px 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      background-color: transparent;
+
+      &.hasFormula {
+        color: transparent;
+        caret-color: var(--gray-13);
+      }
+    }
+
+    .FormulaOverlay {
+      // padding-left of .Formula + padding-left of .FormulaInput
+      transform: translateX(30px + 8px);
+      transform-origin: left top;
+    }
+
     &.readOnly {
       border-color: var(--lighter-border);
     }
-  }
 
-  .Formula:not(.readOnly):focus-within {
-    outline: var(--focus-visible-outline) !important;
+    &:focus-within {
+      outline: var(--focus-visible-outline) !important;
+    }
+
+    .FormulaInputMask {
+      position: absolute;
+      top: 0px;
+      padding: 6px 8px;
+      color: transparent;
+      pointer-events: none;
+      white-space: pre-wrap;
+      width: 100%;
+      padding-left: 8px;
+      font-size: 14px;
+      z-index: 0;
+    }
   }
 
   .FormulaIcon {
@@ -49,7 +86,6 @@
     padding: 6px 8px;
     border: none;
     outline: none;
-    font-size: 14px;
     background-color: transparent;
   }
 }

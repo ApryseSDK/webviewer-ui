@@ -8,7 +8,7 @@ import {
   defaultStartLineStyles,
   defaultStrokeStyles,
   defaultEndLineStyles,
-  cloudyStrokeStyle
+  cloudyStrokeStyle,
 } from 'constants/strokeStyleIcons';
 import { stylePanelSectionTitles } from 'helpers/stylePanelHelper';
 
@@ -78,8 +78,7 @@ const StrokePanelSection = ({
                     <Dropdown
                       id="middleLineStyleDropdown"
                       translationPrefix={middleLineSegmentLabel}
-                      className={`StylePicker-StrokeLineStyleDropdown${!!strokeStyle && !showLineStyleOptions ? ' StyleOptions' : ''
-                      }`}
+                      className={`StylePicker-StrokeLineStyleDropdown${!!strokeStyle && !showLineStyleOptions ? ' StyleOptions' : ''}`}
                       dataElement="middleLineStyleDropdown"
                       images={showLineStyleOptions || hideCloudyLineStyle ? defaultStrokeStyles : withCloudyStyle}
                       onClickItem={onStrokeStyleChange}

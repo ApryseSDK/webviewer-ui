@@ -10,9 +10,14 @@ import {
   MARGIN_SIDES,
   MARGIN_UNITS,
   CM_PER_INCH,
+  MM_PER_CM,
+  MINIMUM_COLUMN_WIDTH_IN_INCHES,
+  DEFAULT_COLUMN_SPACING_IN_INCHES,
+  PAGE_LAYOUT_WARNING_TYPE
 } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { rgbaToHex } from 'helpers/color';
+import DataElements from 'constants/dataElement';
 
 export function shouldBeDisabledInOfficeEditor(dataElement) {
   return ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR.includes(dataElement);
@@ -151,9 +156,14 @@ export const PAGE_SECTION_BREAK_OPTIONS = [
   },
 ];
 
-async function applyMargins() {
-  // const { top, left, bottom, right } = this;
-  // core.getOfficeEditor().setMargins({ top, left, bottom, right });
+async function applyMargins(dispatch, actions) {
+  const { top, left, bottom, right } = this;
+  try {
+    await core.getOfficeEditor().setSectionMargins({ top, bottom, left, right }, MARGIN_UNITS.CM);
+  } catch (error) {
+    console.error('Error applying margins:', error);
+    showPageLayoutWarning(dispatch, actions, PAGE_LAYOUT_WARNING_TYPE.MARGIN);
+  }
 }
 
 export const MARGIN_OPTIONS = [
@@ -197,22 +207,167 @@ export const MARGIN_OPTIONS = [
     key: 'customMargins',
     label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customMargins`,
     description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customMarginsDescription`,
-    onClick: () => {},
+    onClick: (dispatch, actions) => {
+      dispatch(actions.openElement(DataElements.OFFICE_EDITOR_MARGINS_MODAL));
+    }
+  }
+];
+
+async function setEqualSectionColumns(dispatch, actions) {
+  const { numberOfColumns } = this;
+  try {
+    await core.getOfficeEditor().setEqualSectionColumns(numberOfColumns);
+  } catch (error) {
+    console.error(`Error setting equal section columns to ${numberOfColumns}:`, error);
+    showPageLayoutWarning(dispatch, actions, PAGE_LAYOUT_WARNING_TYPE.COLUMN);
+  }
+}
+
+export const COLUMN_OPTIONS = [
+  {
+    key: 'singleColumn',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}singleColumn`,
+    numberOfColumns: 1,
+    onClick: setEqualSectionColumns,
+  },
+  {
+    key: 'twoColumn',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}twoColumn`,
+    numberOfColumns: 2,
+    onClick: setEqualSectionColumns,
+  },
+  {
+    key: 'threeColumn',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}threeColumn`,
+    numberOfColumns: 3,
+    onClick: setEqualSectionColumns,
+  },
+  {
+    key: 'customColumn',
+    label: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customColumn`,
+    description: `${OFFICE_EDITOR_TRANSLATION_PREFIX}customColumnDescription`,
+    onClick: (dispatch, actions) => {
+      dispatch(actions.openElement(DataElements.OFFICE_EDITOR_COLUMNS_MODAL));
+    },
   },
 ];
 
-export const validateMarginInput = (input, maxMarginInInches, currentUnit) => {
-  let maxMarginConverted = maxMarginInInches;
-  if (currentUnit === MARGIN_UNITS.CM) {
-    maxMarginConverted = maxMarginInInches * CM_PER_INCH;
+export const showPageLayoutWarning = (dispatch, actions, type) => {
+  const confirmBtnTxt = 'action.ok';
+  const title = 'warning.officeEditorPageLayout.title';
+  let message;
+  switch (type) {
+    case PAGE_LAYOUT_WARNING_TYPE.COLUMN:
+      message = 'warning.officeEditorPageLayout.columnsMessage';
+      break;
+    case PAGE_LAYOUT_WARNING_TYPE.MARGIN:
+      message = 'warning.officeEditorPageLayout.marginsMessage';
+      break;
+    default:
+      message = '';
+      break;
   }
-  if (input && input <= 0) {
+
+  const warning = {
+    message,
+    title,
+    confirmBtnTxt
+  };
+  dispatch(actions.showWarningMessage(warning));
+};
+
+export const convertMeasurementUnit = (value, fromUnit, toUnit) => {
+  if (fromUnit === toUnit) {
+    return value;
+  }
+
+  // Convert value to inch
+  let valueInInch;
+  switch (fromUnit) {
+    case MARGIN_UNITS.CM:
+      valueInInch = value / CM_PER_INCH;
+      break;
+    case MARGIN_UNITS.MM:
+      valueInInch = value / (CM_PER_INCH * MM_PER_CM);
+      break;
+    case MARGIN_UNITS.INCH:
+    default:
+      valueInInch = value;
+      break;
+  }
+
+  // Convert from inch to target unit
+  switch (toUnit) {
+    case MARGIN_UNITS.CM:
+      return valueInInch * CM_PER_INCH;
+    case MARGIN_UNITS.MM:
+      return valueInInch * CM_PER_INCH * MM_PER_CM;
+    case MARGIN_UNITS.INCH:
+    default:
+      return valueInInch;
+  }
+};
+
+export const getMinimumColumnWidth = (unit) => {
+  return convertMeasurementUnit(MINIMUM_COLUMN_WIDTH_IN_INCHES, MARGIN_UNITS.INCH, unit);
+};
+
+export const getDefaultColumnSpacing = (unit) => {
+  return convertMeasurementUnit(DEFAULT_COLUMN_SPACING_IN_INCHES, MARGIN_UNITS.INCH, unit);
+};
+
+/**
+ * @ignore
+ * Formats a number to a string with a specified number of decimal places, removing unnecessary trailing zeros. Returns '0' for null, undefined, NaN, or zero input.
+ * @param {number} value - The value to format.
+ * @param {number} [decimals=2] - The number of decimal places to round to (default is 2).
+ * @returns {string} The formatted number as a string, with trailing zeros removed.
+ */
+export const formatToDecimalString = (value, decimals = 2) => {
+  if (value == null || isNaN(value) || value === 0) {
     return '0';
   }
-  // Removes leading zero unless it is followed by a decimal
-  const validatedInput = input.replace(/^0+(?!\.)/, '');
-  if (parseFloat(validatedInput) > maxMarginConverted) {
-    return maxMarginConverted.toFixed(2);
+  return parseFloat(value.toFixed(decimals)).toString();
+};
+
+/**
+ * @ignore
+ * Floors a number to a specified number of decimal places.
+ * @param {number} value - The value to floor.
+ * @param {number} [decimals=4] - The number of decimal places to keep (default is 3).
+ * @returns {number} The floored number with the specified decimal precision.
+ */
+export const floorNumberToDecimals = (value, decimals = 4) => {
+  if (value == null || isNaN(value)) {
+    return 0;
   }
-  return validatedInput;
+  const factor = Math.pow(10, decimals);
+  return Math.floor(value * factor) / factor;
+};
+
+/**
+ * @ignore
+ * Validates a margin value to ensure it is within bounds
+ * @param {number} input - The margin value to validate.
+ * @param {number} maxMargin - The maximum allowed value for the margin.
+ * @returns {number} The validated margin value:
+ *   - Returns 0 if the input is NaN or less than or equal to zero.
+ *   - Returns maxMargin (rounded to two decimals) if value exceeds maxMargin.
+ *   - Otherwise, returns the original value.
+ */
+export const validateMarginInput = (input, maxMargin) => {
+  if (isNaN(input) || input <= 0) {
+    return 0;
+  }
+  maxMargin = maxMargin < 0 ? 0 : maxMargin;
+  if (input > maxMargin) {
+    return parseFloat(maxMargin.toFixed(2));
+  }
+  return input;
+};
+
+export const focusContent = () => {
+  setTimeout(() => {
+    core.getOfficeEditor().focusContent();
+  }, 0);
 };

@@ -1,5 +1,18 @@
+const colorSetters = {
+  'SET_CELL_BACKGROUND_COLORS': 'cellBackgroundColors',
+  'SET_TEXT_COLORS': 'textColors',
+  'SET_BORDER_COLORS': 'borderColors',
+};
+
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
+
+  if (type in colorSetters) {
+    return {
+      ...state,
+      [colorSetters[type]]: [...payload.colors],
+    };
+  }
 
   switch (type) {
     case 'SET_ACTIVE_CELL_RANGE': {
@@ -34,13 +47,18 @@ export default (initialState) => (state = initialState, action) => {
         },
       };
     }
-    case 'SET_CELL_STYLE_COLORS': {
-      const { cellStyleColors } = payload;
+    case 'SET_SELECTED_BORDER_COLOR_OPTION': {
+      const { selectedBorderColorOption } = payload;
       return {
         ...state,
-        cellStyleColors: [
-          ...cellStyleColors,
-        ],
+        selectedBorderColorOption,
+      };
+    }
+    case 'SET_SELECTED_BORDER_STYLE_OPTION': {
+      const { selectedBorderStyleListOption } = payload;
+      return {
+        ...state,
+        selectedBorderStyleListOption,
       };
     }
     default:

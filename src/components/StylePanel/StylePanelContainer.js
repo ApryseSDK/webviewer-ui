@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import core from 'core';
@@ -6,9 +6,8 @@ import { getStylePanelComponent } from './StylePanelFactory';
 import DataElementWrapper from '../DataElementWrapper';
 import NoToolStylePanel from './panels/NoToolStylePanel';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
-import {
-  shouldShowNoStyles
-} from 'helpers/stylePanelHelper';
+import { shouldShowNoStyles } from 'helpers/stylePanelHelper';
+import debounce from 'lodash/debounce';
 
 import './StylePanel.scss';
 
@@ -20,26 +19,15 @@ const StylePanelContainer = () => {
 
   const [selectedAnnotations, setSelectedAnnotations] = useState(core.getSelectedAnnotations());
   const [currentTool, setCurrentTool] = useState(core.getToolMode());
-  const [showStyles, setShowStyles] = useState(false);
 
   const filteredTypes = [Annotations.PushButtonWidgetAnnotation];
 
-  const handleAnnotationDeselected = () => {
-    const latestTool = core.getToolMode();
-    if (latestTool instanceof window.Core.Tools.AnnotationEditTool || window.Core.Tools.TextSelectTool) {
-      setShowStyles(false);
-    }
-    setSelectedAnnotations([]);
-    handleToolModeChange(latestTool);
-    core.setToolMode(latestTool.name);
-  };
-
-  const handleAnnotationSelected = (annotations, action) => {
+  const handleChange = debounce(() => {
     const annotationManager = core.getAnnotationManager();
-    const allSelectedAnnotations = new Set();
+    const tool = core.getToolMode();
+    const annotations = core.getSelectedAnnotations();
 
-    annotations.forEach((annotation) => allSelectedAnnotations.add(annotation));
-
+    const allSelectedAnnotations = new Set(annotations);
     annotations.forEach((annotation) => {
       if (annotation.isGrouped()) {
         const groupedAnnotations = annotationManager.getGroupAnnotations(annotation);
@@ -48,67 +36,45 @@ const StylePanelContainer = () => {
         annotation.getGroupedChildren().forEach((child) => allSelectedAnnotations.add(child));
       }
     });
-
     const selectedAnnotations = Array.from(allSelectedAnnotations);
 
-    if (action === 'selected') {
-      if (shouldShowNoStyles(selectedAnnotations, filteredTypes)) {
-        setShowStyles(false);
-        return;
-      }
-      setSelectedAnnotations(selectedAnnotations);
-      setShowStyles(true);
-    } else if (action === 'deselected') {
-      handleAnnotationDeselected();
-    }
-  };
-
-  const handleToolModeChange = (newTool) => {
-    setCurrentTool(newTool);
-    setSelectedAnnotations([]);
-
-    const toolName = newTool?.name;
-    if (annotationCreateToolNames.includes(toolName)) {
-      setShowStyles(true);
-    } else {
-      setShowStyles(false);
-    }
-  };
+    setSelectedAnnotations(selectedAnnotations);
+    setCurrentTool(tool);
+  }, 150, { leading: false, trailing: true });
 
   useEffect(() => {
     if (isPanelOpen) {
-      const annotations = core.getSelectedAnnotations();
-      if (annotations.length > 0) {
-        setSelectedAnnotations(annotations);
-        setShowStyles(true);
-      } else {
-        const tool = core.getToolMode();
-        handleToolModeChange(tool);
-      }
+      handleChange();
     }
   }, [isPanelOpen]);
 
   useEffect(() => {
-    core.addEventListener('annotationSelected', handleAnnotationSelected);
-    core.addEventListener('toolModeUpdated', handleToolModeChange);
+    core.addEventListener('annotationSelected', handleChange);
+    core.addEventListener('toolModeUpdated', handleChange);
 
     return () => {
-      core.removeEventListener('annotationSelected', handleAnnotationSelected);
-      core.removeEventListener('toolModeUpdated', handleToolModeChange);
+      core.removeEventListener('annotationSelected', handleChange);
+      core.removeEventListener('toolModeUpdated', handleChange);
     };
   }, []);
 
-  const StylePanelComponent = useMemo(() => {
-    if (!showStyles) {
+  const getComponent = () => {
+    const hideStyles = selectedAnnotations.length > 0 ?
+      shouldShowNoStyles(selectedAnnotations, filteredTypes) :
+      !annotationCreateToolNames.includes(currentTool?.name);
+
+    if (hideStyles) {
       return NoToolStylePanel;
     }
 
     return getStylePanelComponent(currentTool, selectedAnnotations);
-  }, [showStyles, currentTool, selectedAnnotations]);
+  };
 
   if (!isPanelOpen) {
     return null;
   }
+
+  const StylePanelComponent = getComponent();
 
   return (
     <DataElementWrapper dataElement="stylePanel" className="Panel StylePanel">

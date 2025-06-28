@@ -1,4 +1,4 @@
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import {
   defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorHeaders,
@@ -31,36 +31,19 @@ const templateObject = {
       'logoBar': { disabled: true },
     },
   },
-  spreadsheetEditorRedux: {
-    editMode: 'editing',
-    cellProperties: {
-      styles: {
-        verticalAlignment: null,
-        horizontalAlignment: null,
-        font: {
-          bold: true,
-          italic: false,
-          underline: true,
-          strikeout: false,
-        },
-        formatType: null,
-      }
-    }
-  },
+  spreadsheetEditorRedux: defaultSpreadSheetEditorState,
 };
 
 export const FlyoutsInTheApp = createTemplate(templateObject);
 
 FlyoutsInTheApp.parameters = {
   ...FlyoutsInTheApp.parameters,
-  test: {
-    // Workaround for responsive error being thrown even though the test passes.
-    dangerouslyIgnoreUnhandledErrors: true,
-  }
 };
 
 FlyoutsInTheApp.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
+  // eslint-disable-next-line custom/no-hex-colors
+  const newTextColor = 'Text Color #BBCC00';
 
   const cellTextColorToggleButton = await canvas.findByRole('button', { name: 'Text Color' });
   await userEvent.click(cellTextColorToggleButton);
@@ -68,16 +51,23 @@ FlyoutsInTheApp.play = async ({ canvasElement }) => {
   const textColorsFlyout = await canvas.findByRole('button', { name: 'Text Color #000000' });
   expect(textColorsFlyout).toBeInTheDocument();
 
+  // Add a new color button
+  const addColorButton = await canvas.findByRole('button', { name: 'Add New Color from Custom Color Picker' });
+  await userEvent.click(addColorButton);
+  const input = await canvas.findByRole('textbox', { name: /hex/i });
+  await userEvent.clear(input);
+  await userEvent.type(input, 'bbcc00');
+  const okButton = await canvas.findByRole('button', { name: /ok/i });
+  await userEvent.click(okButton);
+  // eslint-disable-next-line custom/no-hex-colors
+  const newTextColorButton = await canvas.findByRole('button', { name: newTextColor });
+  // Check if new text color option is presented in the color picker
+  expect(newTextColorButton).toBeInTheDocument();
+
   const cellAdjustmentButton = await canvas.findByRole('button', { name: 'Cell Adjustment' });
   await userEvent.click(cellAdjustmentButton);
   const buttonInCellAdjustmentFlyout = await canvas.findByRole('button', { name: 'Delete row' });
   expect(buttonInCellAdjustmentFlyout).toBeInTheDocument();
-
-  const cellBorderColorToggleButton = await canvas.findByRole('button', { name: 'Border Color' });
-  await userEvent.click(cellBorderColorToggleButton);
-  // eslint-disable-next-line custom/no-hex-colors
-  const cellBorderColorsFlyout = await canvas.findByRole('button', { name: 'Border Color #000000' });
-  expect(cellBorderColorsFlyout).toBeInTheDocument();
 
   const alignTopButtonInHeader = await canvas.findByRole('button', { name: 'Text Alignment' });
   await userEvent.click(alignTopButtonInHeader);
@@ -90,6 +80,8 @@ FlyoutsInTheApp.play = async ({ canvasElement }) => {
   // eslint-disable-next-line custom/no-hex-colors
   const cellBackgroundColorsFlyout = await canvas.findByRole('button', { name: 'Background Color #000000' });
   expect(cellBackgroundColorsFlyout).toBeInTheDocument();
+  // Color option from text color should not present in the background color picker
+  expect(canvas.queryByRole('button', { name: newTextColor })).toBe(null);
 
   const moreButton = canvas.queryByRole('button', { name: /^More$/i });
   await userEvent.click(moreButton);
@@ -99,7 +91,6 @@ FlyoutsInTheApp.play = async ({ canvasElement }) => {
   expect(buttonInCellFormatFlyout).toBeInTheDocument();
   await userEvent.click(moreButton);
 
-  await userEvent.click(cellFormatMoreOptions);
   const boldButton = await canvas.findByRole('button', { name: 'Bold' });
   await expect(boldButton).toHaveAttribute('aria-current', 'true');
   const italicButton = await canvas.findByRole('button', { name: 'Italic' });
@@ -114,17 +105,17 @@ export const FlyoutWithColorPickerAccessibility = createTemplate(templateObject)
 
 FlyoutWithColorPickerAccessibility.parameters = {
   ...FlyoutsInTheApp.parameters,
-  test: {
-    // Workaround for responsive error being thrown even though the test passes.
-    dangerouslyIgnoreUnhandledErrors: true,
-  }
 };
 
 FlyoutWithColorPickerAccessibility.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
+  const toolsHeader = await canvas.findByRole('toolbar', { name: 'spreadsheetEditorToolsHeader' });
+  await toolsHeader.focus();
+  for (let i = 0; i < 9; i++) {
+    await userEvent.keyboard('{ArrowRight}');
+  }
   const cellTextColorToggleButton = await canvas.findByRole('button', { name: 'Text Color' });
-  await cellTextColorToggleButton.focus();
   await userEvent.keyboard('[Enter]');
   const resetToDefaultButton = await canvas.findByRole('button', { name: 'Reset to default' });
   expect(resetToDefaultButton).toHaveFocus();

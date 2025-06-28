@@ -23,20 +23,18 @@ const PageControlsInput = forwardRef((props, ref) => {
   const totalPages = useSelector(selectors.getTotalPages);
   const pageLabels = useSelector(selectors.getPageLabels, shallowEqual);
   const allowPageNavigation = useSelector(selectors.getAllowPageNavigation);
-  const currentPage = useSelector(selectors.getCurrentPage);
+  const currentPageLabel = useSelector(selectors.getCurrentPageLabel);
 
   const [isFocused, setIsFocused] = useState(false);
-  const [input, setInput] = useState(pageLabels?.[currentPage - 1] ?? '');
+  const [input, setInput] = useState(currentPageLabel);
   const [inputWidth, setInputWidth] = useState(0);
 
   const { t } = useTranslation();
   const isMobile = isMobileSize();
 
   useDidUpdate(() => {
-    if (pageLabels) {
-      setInput(pageLabels[currentPage - 1]);
-    }
-  }, [pageLabels, currentPage]);
+    setInput(currentPageLabel);
+  }, [currentPageLabel]);
 
   useEffect(() => {
     // Mark the component as mounted
@@ -65,7 +63,7 @@ const PageControlsInput = forwardRef((props, ref) => {
   };
 
   const onBlur = () => {
-    setInput(pageLabels[currentPage - 1]);
+    setInput(currentPageLabel);
     setIsFocused(false);
   };
 

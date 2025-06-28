@@ -8,7 +8,6 @@ import DataElements from 'constants/dataElement';
 import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_XLSX_EXTENSIONS } from 'constants/customizationVariables';
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
-  core.closeDocument(documentViewerKey);
   options = { ...getDefaultOptions(), ...options };
 
   options.docId = options.docId || options.documentId || null;

@@ -16,22 +16,22 @@ const scales = [
     '_worldScale': { 'value': 10, 'unit': 'mm' },
     'pageScale': { 'value': 1, 'unit': 'mm' },
     'worldScale': { 'value': 10, 'unit': 'mm' },
-    toString: () => '1 mm = 10 mm'
+    toString: () => '1 mm = 10 mm',
   },
   {
     '_pageScale': { 'value': 1, 'unit': 'in' },
     '_worldScale': { 'value': 50, 'unit': 'in' },
     'pageScale': { 'value': 1, 'unit': 'in' },
     'worldScale': { 'value': 50, 'unit': 'in' },
-    toString: () => '1 in = 50 in'
+    toString: () => '1 in = 50 in',
   },
   {
     '_pageScale': { 'value': 1, 'unit': 'cm' },
     '_worldScale': { 'value': 25, 'unit': 'cm' },
     'pageScale': { 'value': 1, 'unit': 'cm' },
     'worldScale': { 'value': 25, 'unit': 'cm' },
-    toString: () => '1 cm = 25 cm'
-  }
+    toString: () => '1 cm = 25 cm',
+  },
 ];
 
 const coreScales = {
@@ -45,8 +45,8 @@ let presetScales = ['1 mm = 10 mm'];
 const initialState = {
   viewer: {
     currentPage: 1,
-    isDocumentReadOnly: false
-  }
+    isDocumentReadOnly: false,
+  },
 };
 
 export function Basic() {
@@ -64,7 +64,7 @@ export function Basic() {
             onScaleSelected={(currentScale, selectedScale) => {
               setSelectedScales([selectedScale]);
             }}
-            onAddingNewScale={() => { }}
+            onAddingNewScale={() => {}}
           />
         </div>
       </div>
@@ -87,7 +87,30 @@ export function NotModifiable() {
             onScaleSelected={(currentScale, selectedScale) => {
               setSelectedScales([selectedScale]);
             }}
-            onAddingNewScale={() => { }}
+            onAddingNewScale={() => {}}
+          />
+        </div>
+      </div>
+    </ReduxProvider>
+  );
+}
+
+export function UndefinedCoreScales() {
+  const [selectedScales, setSelectedScales] = useState(presetScales);
+  core.getScalePrecision = () => 0.1;
+  core.canModify = () => true;
+  core.getScales = () => ({ '1 mm = 10 mm': undefined });
+  return (
+    <ReduxProvider store={configureStore({ reducer: () => initialState })}>
+      <div className='ScaleOverlay'>
+        <div className='scale-overlay-header'>
+          <ScaleSelector
+            scales={scales}
+            selectedScales={selectedScales}
+            onScaleSelected={(currentScale, selectedScale) => {
+              setSelectedScales([selectedScale]);
+            }}
+            onAddingNewScale={() => {}}
           />
         </div>
       </div>

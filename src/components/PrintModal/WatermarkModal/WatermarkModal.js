@@ -530,8 +530,8 @@ class WatermarkModal extends React.PureComponent {
                         onClick={() => this.handleInputChange(
                           FORM_FIELD_KEYS.isBolded,
                           !formInfo[FORM_FIELD_KEYS.isBolded],
-                        )
-                        }
+                        )}
+                        ariaLabel={t('option.richText.bold')}
                       />
                       <Button
                         dataElement="italicizeText"
@@ -540,8 +540,8 @@ class WatermarkModal extends React.PureComponent {
                         onClick={() => this.handleInputChange(
                           FORM_FIELD_KEYS.isItalic,
                           !formInfo[FORM_FIELD_KEYS.isItalic],
-                        )
-                        }
+                        )}
+                        ariaLabel={t('option.richText.italic')}
                       />
                       <Button
                         dataElement="underlineText"
@@ -550,8 +550,8 @@ class WatermarkModal extends React.PureComponent {
                         onClick={() => this.handleInputChange(
                           FORM_FIELD_KEYS.isUnderlined,
                           !formInfo[FORM_FIELD_KEYS.isUnderlined],
-                        )
-                        }
+                        )}
+                        ariaLabel={t('option.richText.underline')}
                       />
                     </div>
                   </div>
@@ -587,13 +587,13 @@ class WatermarkModal extends React.PureComponent {
             >
               {t('option.watermark.resetAllSettings')}
             </button>
-            <button
-              className="ok button"
+            <Button
+              className="add-watermark button"
               id="submit"
               onClick={this.onOkPressed}
             >
               {t('action.add')}
-            </button>
+            </Button>
           </div>
         </ModalWrapper>
       </DataElementWrapper>

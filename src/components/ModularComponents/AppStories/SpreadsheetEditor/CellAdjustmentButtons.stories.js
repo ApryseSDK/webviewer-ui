@@ -1,6 +1,6 @@
 import App from 'components/App';
 import { fn, within, expect } from '@storybook/test';
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import { VIEWER_CONFIGURATIONS, CELL_ADJUSTMENT_FLYOUT_ITEMS } from 'src/constants/customizationVariables';
 import {
   defaultSpreadsheetEditorComponents,
@@ -12,30 +12,6 @@ import core from 'core';
 export default {
   title: 'SpreadsheetEditor/App/CellAdjustmentButtons',
   component: App,
-};
-
-const initialRedux = {
-  'activeCellRange': 'A1',
-  'cellProperties': {
-    'cellType': 3,
-    'stringCellValue': '[Company Name]',
-    'topLeftRow': 0,
-    'topLeftColumn': 0,
-    'bottomRightRow': 0,
-    'bottomRightColumn': 0,
-    'styles': {
-      'verticalAlignment': 'middle',
-      'horizontalAlignment': 'left',
-      'formatType': 'currencyRoundedFormat',
-      'font': {
-        'bold': true,
-        'italic': false,
-        'underline': false,
-        'strikeout': false,
-      },
-    },
-  },
-  editMode: 'editing',
 };
 
 export const CellAdjustmentItems = createTemplate({
@@ -59,7 +35,7 @@ export const CellAdjustmentItems = createTemplate({
       'logoBar': { disabled: true },
     },
   },
-  spreadsheetEditorRedux: initialRedux,
+  spreadsheetEditorRedux: defaultSpreadSheetEditorState,
 });
 
 CellAdjustmentItems.play = async ({ canvasElement }) => {
@@ -78,7 +54,7 @@ CellAdjustmentItems.play = async ({ canvasElement }) => {
   });
   const mockFunctions = {
     createColumns: fn().mockName('createColumns'),
-    createRow: fn().mockName('createRow'),
+    createRows: fn().mockName('createRows'),
     removeRows: fn().mockName('removeRows'),
     removeColumns: fn().mockName('removeColumns'),
   };
@@ -103,11 +79,11 @@ CellAdjustmentItems.play = async ({ canvasElement }) => {
 
   // Insert row at index 1
   await canvas.getByRole('button', { name: /Insert row above/gi }).click();
-  await expect(mockFunctions.createRow.mock.lastCall[0]).toBe(1);
+  await expect(mockFunctions.createRows.mock.lastCall[0]).toBe(1);
 
   // Insert row at index 4
   await canvas.getByRole('button', { name: /Insert row below/gi }).click();
-  await expect(mockFunctions.createRow.mock.lastCall[0]).toBe(4);
+  await expect(mockFunctions.createRows.mock.lastCall[0]).toBe(4);
 
   // Delete column at index 1-3
   await canvas.getByRole('button', { name: /Delete column/gi }).click();

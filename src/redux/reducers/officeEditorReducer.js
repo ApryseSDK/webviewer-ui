@@ -50,6 +50,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         stream: payload.stream,
       };
+    case 'SET_OFFICE_EDITOR_UNIT_MEASUREMENT':
+      return {
+        ...state,
+        unitMeasurement: payload.unitMeasurement,
+      };
     default:
       return state;
   }

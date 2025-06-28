@@ -72,6 +72,7 @@ const initialState = {
     },
     customPanels: [],
     genericPanels: [],
+    activeGroupedItems: [],
     canUndo: {
       1: false,
       2: false,

@@ -277,6 +277,7 @@ import closeTooltip from './closeToolTip';
 import startTextComparison from './startTextComparison';
 import stopTextComparison from './stopTextComparison';
 import setActiveTabInPanel from './setActiveTabInPanel';
+import setActiveGroupedItems from './setActiveGroupedItems';
 import CustomElement from 'src/apis/ModularComponents/customElement';
 
 export default (store) => {
@@ -406,6 +407,7 @@ export default (store) => {
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
     setActiveTabInPanel: setActiveTabInPanel(store),
+    setActiveGroupedItems: setActiveGroupedItems(store),
 
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
 

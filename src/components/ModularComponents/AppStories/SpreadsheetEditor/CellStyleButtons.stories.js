@@ -1,9 +1,10 @@
 import App from 'components/App';
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
-import { defaultSpreadsheetEditorComponents,
+import {
+  defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorHeaders,
-  defaultSpreadsheetFlyoutMap
+  defaultSpreadsheetFlyoutMap,
 } from 'src/redux/spreadsheetEditorComponents';
 import { userEvent, within, expect } from '@storybook/test';
 
@@ -12,29 +13,7 @@ export default {
   component: App,
 };
 
-const initialRedux = {
-  'activeCellRange': 'A1',
-  'cellProperties': {
-    'cellType': 3,
-    'stringCellValue': '[Company Name]',
-    'topLeftRow': 0,
-    'topLeftColumn': 0,
-    'bottomRightRow': 0,
-    'bottomRightColumn': 0,
-    'styles': {
-      'verticalAlignment': 'middle',
-      'horizontalAlignment': 'left',
-      'formatType': 'currencyRoundedFormat',
-      'font': {
-        'bold': true,
-        'italic': false,
-        'underline': false,
-        'strikeout': false,
-      },
-    }
-  },
-  editMode: 'editing',
-};
+const initialRedux = defaultSpreadSheetEditorState;
 
 const createTemplateWithSpreadsheetState = (initialState = initialRedux) => {
   return createTemplate({
@@ -72,10 +51,6 @@ export const CellFormats = createTemplateWithSpreadsheetState({
 });
 CellFormats.parameters ={
   ...CellFormats.parameters,
-  test: {
-    // Workaround for responsive error being thrown even though the test passes.
-    dangerouslyIgnoreUnhandledErrors: true,
-  }
 };
 
 CellAlignments.play = async ({ canvasElement }) => {
@@ -115,7 +90,7 @@ CellAlignments.play = async ({ canvasElement }) => {
 CellFormats.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const moreOptions = await canvas.findByRole('button', { name: /^More$/i });
+  const moreOptions = canvas.queryByRole('button', { name: 'More' });
   await userEvent.click(moreOptions);
 
   // Seven buttons and one label should be visible

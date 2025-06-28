@@ -57,7 +57,7 @@ import onDocumentLoaded, {
   setServerProperties,
   checkDocumentForTools,
   updateOutlines,
-  updatePortfolioAndLayers,
+  updatePortfolio,
   configureOfficeEditor,
 } from './onDocumentLoaded';
 import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
@@ -127,7 +127,7 @@ export {
   setServerProperties,
   checkDocumentForTools,
   updateOutlines,
-  updatePortfolioAndLayers,
+  updatePortfolio,
   configureOfficeEditor,
   onSpreadsheetEditorSelectionChanged,
   onSpreadsheetEditorEditModeChanged,

@@ -36,7 +36,7 @@ export default (alignmentType) => {
 
   const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
   const { alignment, alignmentValue } = getAlignmentProperties(alignmentType);
-  spreadsheetEditorManager.setSelectedCellRangeStyle({
+  spreadsheetEditorManager.setSelectedCellsStyle({
     [alignment]: alignmentValue,
   });
 };
