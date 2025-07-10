@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import core from 'core';
 import { configureStore } from '@reduxjs/toolkit';
 import Flyout from './Flyout';
 import { Provider } from 'react-redux';
@@ -9,11 +10,16 @@ import { defaultSpreadsheetFlyoutMap } from '../../../redux/spreadsheetEditorCom
 import { oePartialState } from 'helpers/storybookHelper';
 import { within } from '@storybook/test';
 import { fireEvent } from '@testing-library/react';
+import initialState from 'src/redux/initialState';
 
-export default {
-  title: 'SpreadsheetEditor/Flyouts',
-  component: Flyout,
-};
+const originalCoreGetDocumentViewer = core.getDocumentViewer;
+
+const createMockDocumentViewer = (getSelectedCellRange, cells) => () => ({
+  getSpreadsheetEditorManager: () => ({
+    getSelectedCellRange,
+    getSelectedCells: () => cells,
+  }),
+});
 
 const createInitialState = (activeFlyout, openElement) => ({
   ...oePartialState,
@@ -55,7 +61,6 @@ const createInitialState = (activeFlyout, openElement) => ({
       [DataElements.CELL_BORDER_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_BORDER_FLYOUT],
       [DataElements.CELL_ADJUSTMENT_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_ADJUSTMENT_FLYOUT],
       [DataElements.CELL_TEXT_ALIGNMENT_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_TEXT_ALIGNMENT_FLYOUT],
-      [DataElements.CELL_BORDER_FLYOUT]: defaultSpreadsheetFlyoutMap[DataElements.CELL_BORDER_FLYOUT],
     },
     modularComponents: {},
     flyoutPosition: { x: 0, y: 0 },
@@ -73,6 +78,7 @@ const createInitialState = (activeFlyout, openElement) => ({
     customizableUI: true,
   },
   spreadsheetEditor: {
+    ...initialState.spreadsheetEditor,
     'activeCellRange': 'A1',
     'cellProperties': {
       'cellType': 3,
@@ -81,10 +87,16 @@ const createInitialState = (activeFlyout, openElement) => ({
       'topLeftColumn': 0,
       'bottomRightRow': 0,
       'bottomRightColumn': 0,
+      'isSingleCell': true,
       'styles': {
         'verticalAlignment': 'middle',
         'horizontalAlignment': 'left',
         'formatType': 'currencyRoundedFormat',
+        'isCellRangeMerged': false,
+        'border': {
+          // eslint-disable-next-line custom/no-hex-colors
+          'top': { type: 'Top', style: 'Thin', color: '#000000' }
+        }
       }
     },
     editMode: 'editing',
@@ -96,61 +108,55 @@ const createStore = (activeFlyout, openElement) => {
   return configureStore({ reducer: () => initialState });
 };
 
-export const MainMenuFlyout = () => {
-  const store = createStore(DataElements.MAIN_MENU, DataElements.MAIN_MENU);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
+const WithResetCoreViewer = ({ children }) => {
+  useEffect(() => {
+    return () => {
+      core.getDocumentViewer = originalCoreGetDocumentViewer;
+    };
+  }, []);
+  return children;
 };
 
-export const CellFormatFlyout = () => {
-  const store = createStore(DataElements.CELL_FORMAT_MORE_FLYOUT, DataElements.CELL_FORMAT_MORE_FLYOUT);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
+const withStoreAndMockedCore = (activeFlyout, openElement) => {
+  const decorator = (Story) => {
+    core.getDocumentViewer = createMockDocumentViewer(
+      () => ({ firstRow: 0, lastRow: 1, firstColumn: 0, lastColumn: 1 }),
+      [1, 2]
+    );
+    const store = createStore(activeFlyout, openElement);
+    return (
+      <Provider store={store}>
+        <WithResetCoreViewer>
+          <Story />
+        </WithResetCoreViewer>
+      </Provider>
+    );
+  };
+  decorator.displayName = `withStoreAndMockedCore(${activeFlyout})`;
+  return decorator;
 };
 
-export const CellAdjustmentFlyout = () => {
-  const store = createStore(DataElements.CELL_ADJUSTMENT_FLYOUT, DataElements.CELL_ADJUSTMENT_FLYOUT);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
+export default {
+  title: 'SpreadsheetEditor/Flyouts',
+  component: Flyout,
 };
 
-export const CellBorderFlyout = () => {
-  const store = createStore(DataElements.CELL_BORDER_FLYOUT, DataElements.CELL_BORDER_FLYOUT);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
-};
+export const MainMenuFlyout = () => <Flyout />;
+MainMenuFlyout.decorators = [withStoreAndMockedCore(DataElements.MAIN_MENU, DataElements.MAIN_MENU)];
 
-export const CellBorderFlyoutWithDropdown = () => {
-  const store = createStore(DataElements.CELL_BORDER_FLYOUT, DataElements.CELL_BORDER_FLYOUT);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
-};
+export const CellFormatFlyout = () => <Flyout />;
+CellFormatFlyout.decorators = [withStoreAndMockedCore(DataElements.CELL_FORMAT_MORE_FLYOUT, DataElements.CELL_FORMAT_MORE_FLYOUT)];
+
+export const CellAdjustmentFlyout = () => <Flyout />;
+CellAdjustmentFlyout.decorators = [withStoreAndMockedCore(DataElements.CELL_ADJUSTMENT_FLYOUT, DataElements.CELL_ADJUSTMENT_FLYOUT)];
+
+export const CellBorderFlyoutWithDropdown = () => <Flyout />;
+CellBorderFlyoutWithDropdown.decorators = [withStoreAndMockedCore(DataElements.CELL_BORDER_FLYOUT, DataElements.CELL_BORDER_FLYOUT)];
 CellBorderFlyoutWithDropdown.play = async ({ canvasElement }) => {
-  const canvas = await within(canvasElement);
+  const canvas = within(canvasElement);
   const dropdown = canvas.getByRole('combobox');
   fireEvent.mouseDown(dropdown);
 };
 
-export const CellTextAlignmentFlyout = () => {
-  const store = createStore(DataElements.CELL_TEXT_ALIGNMENT_FLYOUT, DataElements.CELL_TEXT_ALIGNMENT_FLYOUT);
-  return (
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
-  );
-};
+export const CellTextAlignmentFlyout = () => <Flyout />;
+CellTextAlignmentFlyout.decorators = [withStoreAndMockedCore(DataElements.CELL_TEXT_ALIGNMENT_FLYOUT, DataElements.CELL_TEXT_ALIGNMENT_FLYOUT)];

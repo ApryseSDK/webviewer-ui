@@ -250,10 +250,15 @@ const DataElements = {
   OFFICE_EDITOR_REVIEW_PANEL: 'officeEditorReviewPanel',
   HEADER_FOOTER_OPTIONS_MODAL: 'headerFooterOptionsModal',
   OFFICE_EDITOR_MARGINS_MODAL: 'officeEditorMarginsModal',
+  OFFICE_EDITOR_COLUMNS_MODAL: 'officeEditorColumnsModal',
   HEADER_FOOTER_CONTROLS_OVERLAY: 'headerFooterControlsOverlay',
   TRACK_CHANGE_DROPDOWN: 'trackChangeDropdown',
   OFFICE_EDITOR_MARGIN_DROPDOWN_TOGGLE: 'officeEditorMarginDropdownToggle',
   OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
+  OFFICE_EDITOR_MARGIN_UNIT: 'officeEditorMarginUnit',
+  OFFICE_EDITOR_COLUMN_DROPDOWN_TOGGLE: 'officeEditorColumnDropdownToggle',
+  OFFICE_EDITOR_COLUMN_DROPDOWN: 'officeEditorColumnDropdown',
+  OFFICE_EDITOR_COLUMN_UNIT: 'officeEditorColumnUnit',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
@@ -362,6 +367,7 @@ const DataElements = {
 
   // Sheets Editor
   FORMULA_BAR: 'formulaBar',
+  FORMULA_OVERLAY: 'formulaOverlay',
   SPREADSHEET_SWITCHER: 'spreadsheetSwitcher'
 };
 

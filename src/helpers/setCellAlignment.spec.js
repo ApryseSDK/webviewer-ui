@@ -24,7 +24,7 @@ jest.mock('core', () => ({
   getDocumentViewer: jest.fn(() => ({
     getSpreadsheetEditorManager: jest.fn(() => ({
       getSelectedCellRange: jest.fn(),
-      getCellsFromSelectedCellRange: jest.fn(),
+      getSelectedCells: jest.fn(),
     })),
   })),
 }));
@@ -47,7 +47,7 @@ describe('setCellAlignment', () => {
 
     mockSpreadsheetEditorManager = {
       getSelectedCellRange: jest.fn(),
-      getCellsFromSelectedCellRange: jest.fn(() => mockCells),
+      getSelectedCells: jest.fn(() => mockCells),
     };
 
     core.getDocumentViewer.mockReturnValue({
@@ -99,6 +99,6 @@ describe('setCellAlignment', () => {
     setCellAlignment();
 
     expect(mockSpreadsheetEditorManager.getSelectedCellRange).not.toHaveBeenCalled();
-    expect(mockSpreadsheetEditorManager.getCellsFromSelectedCellRange).not.toHaveBeenCalled();
+    expect(mockSpreadsheetEditorManager.getSelectedCells).not.toHaveBeenCalled();
   });
 });

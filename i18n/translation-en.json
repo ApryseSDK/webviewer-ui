@@ -728,7 +728,7 @@
       "theme": "Theme",
       "darkMode": "Dark mode",
       "lightMode": "Light mode",
-      "advancedSetting": "Advanced Setting",
+      "advancedSetting": "Advanced Settings",
       "viewing": "Viewing",
       "disableFadePageNavigationComponent": "Disable Fade Page Navigation Component",
       "disableFadePageNavigationComponentDesc": "Always keep the Page Navigation Component on screen. Default behaviour is to fade it after certain period of inactivity.",
@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Select the AnnotationCreateTextHighlight tool",
       "selectCreateTextStrikeoutTool": "Select the AnnotationCreateTextStrikeout tool",
       "selectCreateTextUnderlineTool": "Select the AnnotationCreateTextUnderline tool",
-      "editKeyboardShorcut": "Edit Keyboard Shorcut",
+      "editKeyboardShortcut": "Edit Keyboard Shortcut",
       "setShortcut": "Set Shortcut",
       "editShortcut": "Edit Shortcut",
       "shortcutAlreadyExists": "The keyboard shortcut above already exists.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "None",
-      "solid": "Solid",
+      "thin": "Solid",
       "dashed": "Dashed",
       "dotted": "Dotted"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Edit Warning",
       "message": "Are you sure you want to delete this sheet?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Page Layout",
+      "columnsMessage": "Settings you chose for column spacing are too large for the page width in some sections.",
+      "marginsMessage": "Settings you chose for margins are too large for the page width in some sections."
     }
   },
   "shortcut": {
@@ -1340,19 +1345,27 @@
     "right": "Right",
     "customMargins": "Custom Margins",
     "customMarginsDescription": "Define custom margins",
+    "column": "Column",
+    "columns": "Columns",
+    "singleColumn": "1 Column",
+    "twoColumn": "2 Columns",
+    "threeColumn": "3 Columns",
+    "customColumn": "Custom Columns",
+    "customColumnDescription": "Define custom columns",
+    "unitMeasurement": "Unit Measurement",
     "header": {
-      "-1": "Invalid Header",
       "0": "Header",
       "1": "First Page Header",
       "2": "Even Page Header",
-      "3": "Odd Page Header"
+      "3": "Odd Page Header",
+      "-1": "Invalid Header"
     },
     "footer": {
-      "-1": "Invalid Footer",
       "0": "Footer",
       "1": "First Page Footer",
       "2": "Even Page Footer",
-      "3": "Odd Page Footer"
+      "3": "Odd Page Footer",
+      "-1": "Invalid Footer"
     },
     "options": "Options",
     "pageOptions": "Page Options",
@@ -1370,6 +1383,15 @@
         "differentFirstEvenOddPages": "Different First, Even, and Odd Pages"
       }
     },
+    "columnsModal": {
+      "title": "Custom Column Adjustment",
+      "columnAmount": "Number of Columns",
+      "columnNumber": "Column Number",
+      "width": "Width",
+      "spacing": "Spacing",
+      "widthAndSpacing": "Width and Spacing",
+      "equalColumns": "Equal Column Width"
+    },
     "marginsModal": {
       "title": "Custom Margin Adjustment",
       "leftMargin": "Left Margin",
@@ -1378,28 +1400,28 @@
       "bottomMargin": "Bottom Margin"
     },
     "lineSpacingOptions": {
-      "single": "Single",
-      "115": "1.15",
       "15": "1.5",
+      "115": "1.15",
+      "single": "Single",
       "double": "Double",
       "custom": "Custom"
     },
     "numberDropdown": {
-      "dropdownLabel": "Numbering Presets",
       "6": "Number Latin Roman 1",
       "7": "Number Decimal",
       "8": "Number Latin Roman 2",
       "10": "Latin Roman",
-      "11": "Roman Latin Number"
+      "11": "Roman Latin Number",
+      "dropdownLabel": "Numbering Presets"
     },
     "bulletDropdown": {
-      "dropdownLabel": "Bullet Presets",
       "0": "Bullet",
       "1": "Bullet Square",
       "2": "Square Bullet",
       "3": "Diamond",
       "4": "Check",
-      "5": "Arrow"
+      "5": "Arrow",
+      "dropdownLabel": "Bullet Presets"
     },
     "fontSize": {
       "dropdownLabel": "Font Size"
@@ -1416,6 +1438,7 @@
     "viewOnly": "Viewing",
     "editingDescription": "Edit document",
     "viewOnlyDescription": "View only",
+    "editModeDropdown": "Edit mode selection",
     "bold": "Bold",
     "italic": "Italic",
     "underline": "Underline",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Delete cells and shift up",
     "deleteColumnShiftLeft": "Delete cells and shift left",
     "clearBorder": "Clear Borders",
-    "cellBorderAll": "All Borders",
-    "cellBorderInside": "Inside Borders",
-    "cellBorderOutside": "Outside Borders",
-    "cellBorderTop": "Top Border",
-    "cellBorderBottom": "Bottom Border",
-    "cellBorderLeft": "Left Border",
-    "cellBorderRight": "Right Border",
-    "cellBorderVertical": "Vertical Border",
-    "cellBorderHorizontal": "Horizontal Border",
-    "cellBorderNone": "No Borders",
+    "all": "All Borders",
+    "inside": "Inside Borders",
+    "outside": "Outside Borders",
+    "top": "Top Border",
+    "bottom": "Bottom Border",
+    "left": "Left Border",
+    "right": "Right Border",
+    "vertical": "Vertical Border",
+    "horizontal": "Horizontal Border",
+    "none": "No Borders",
     "borders": "Borders",
     "fontSize": {
       "dropdownLabel": "Font Size"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formula Bar",
     "range": "Range",
-    "formulas": "Formulas",
-    "sumif": "A conditional sum across a range",
-    "sumsq": "Returns the sum of the squares of a range",
-    "sum": "Adds all the numbers in a range",
-    "asinh": "Returns the inverse hyperbolic sine of a number",
-    "acos": "Returns the arccosine of a number, in radians",
-    "cosh": "Returns the hyperbolic cosine of a number",
-    "iseven": "Checks if a number is even",
-    "isodd": "Checks if a number is odd"
+    "formulas": "Formulas"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "A conditional sum across a range.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The range which is tested against `criterion`."
+        },
+        "criterion": {
+          "name": "criterion",
+          "detail": "The pattern or test to apply to `range`."
+        },
+        "sum_range": {
+          "name": "sum_range",
+          "detail": "The range to be summed, if different from `range`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangent of an angle provided in radians.",
+      "parameters": {
+        "angle": {
+          "name": "angle",
+          "detail": "The angle to find the tangent of, in radians."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Hyperbolic tangent of any real number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "Any real value to calculate the hyperbolic tangent of."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Rounds number up to nearest multiple of a factor.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round up to the nearest integer multiple of `factor`."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "The number to whose multiples `value` will be rounded."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Inverse tangent of a value, in radians.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse tangent."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Inverse hyperbolic sine of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse hyperbolic sine."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Absolute value of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number of which to return the absolute value."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Inverse cosine of a value, in radians.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse cosine. Must be between `-1` and `1`, inclusive."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Inverse hyperbolic cosine of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse hyperbolic cosine. Must be greater than or equal to `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Multinomial distribution function.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Inverse hyperbolic tangent of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse hyperbolic tangent. Must be between -1 and 1, exclusive."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arctangent of a value.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "The x coordinate of the endpoint of the line segment for which to calculate the angle from the x-axis."
+        },
+        "y": {
+          "name": "y",
+          "detail": "The y coordinate of the endpoint of the line segment for which to calculate the angle from the x-axis."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Number of empty values.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range in which to count the number of blanks."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Hyperbolic cosine of any real number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "Any real value to calculate the hyperbolic cosine of."
+        }
+      }
+    },
+    "INT": {
+      "description": "Rounds number down to nearest integer.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round down to the nearest integer."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Whether the provided value is even.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as even."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Whether the provided value is odd.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as odd."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Least common multiple of one or more integers.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range whose factors to consider in a calculation to find the least common multiple."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges whose factors to consider to find the least common multiple."
+        }
+      }
+    },
+    "LN": {
+      "description": "The logarithm of a number, base e (euler's number).",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the logarithm, base e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "The logarithm of a number with respect to a base.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the logarithm."
+        },
+        "base": {
+          "name": "base",
+          "detail": "The base to use for calculation of the logarithm."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "The logarithm of a number, base 10.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the logarithm, base 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Modulo (remainder) operator.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "The number to be divided to find the remainder."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "The number to divide by."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Rounds a number to the nearest integer multiple.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number to round to the nearest integer multiple of another."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "The number to whose multiples `value` will be rounded."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Rounds a number up to the nearest odd integer.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round to the next greatest odd number."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Sum of squares.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first number or range whose squares to add together."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional numbers or ranges whose squares to add to the square(s) of `value1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Number of combinations from a set of objects.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "The size of the pool of objects to choose from."
+        },
+        "k": {
+          "name": "k",
+          "detail": "The number of objects to choose."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Sum of a series of numbers and/or cells.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first number or range to add together."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional numbers or ranges to add to `value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Subtotal for a range using a specific function.",
+      "parameters": {
+        "function_code": {
+          "name": "function_code",
+          "detail": "The function to use in subtotal aggregation."
+        },
+        "range1": {
+          "name": "range1",
+          "detail": "The first range over which to calculate a subtotal."
+        },
+        "range2": {
+          "name": "range2",
+          "detail": "Additional ranges over which to calculate subtotals."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Inverse sine of a value, in radians.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse sine. Must be between `-1` and `1`, inclusive."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "A conditional count across a range.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The range that is tested against `criterion`."
+        },
+        "criterion": {
+          "name": "criterion",
+          "detail": "The pattern or test to apply to `range`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Converts an angle value in degrees to radians.",
+      "parameters": {
+        "angle": {
+          "name": "angle",
+          "detail": "The angle to convert from degrees to radians."
+        }
+      }
+    },
+    "RAND": {
+      "description": "A random number between 0 inclusive and 1 exclusive."
+    },
+    "COUNTUNIQUE": {
+      "description": "Counts number of unique values in a range.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider for uniqueness."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider for uniqueness."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Converts an angle value in radians to degrees.",
+      "parameters": {
+        "angle": {
+          "name": "angle",
+          "detail": "The angle to convert from radians to degrees."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Complementary gauss error function of a value.",
+      "parameters": {
+        "z": {
+          "name": "z",
+          "detail": "The number for which to calculate the complementary Gauss error function."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Rounds a number up to the nearest even integer.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round to the next greatest even number."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Euler's number, e (~2.718) raised to a power.",
+      "parameters": {
+        "exponent": {
+          "name": "exponent",
+          "detail": "The exponent to raise e to."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Factorial of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number or reference to a number whose factorial will be calculated and returned."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"double factorial\" of a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number or reference to a number whose double factorial will be calculated and returned."
+        }
+      }
+    },
+    "PI": {
+      "description": "The number pi."
+    },
+    "GCD": {
+      "description": "Greatest common divisor of one or more integers.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range whose factors to consider in a calculation to find the greatest common divisor."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges whose factors to consider to find the greatest common divisor."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Random integer between two values, inclusive.",
+      "parameters": {
+        "low": {
+          "name": "low",
+          "detail": "The low end of the random range."
+        },
+        "high": {
+          "name": "high",
+          "detail": "The high end of the random range."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Rounds a number according to standard rules.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round to `places` number of places."
+        },
+        "places": {
+          "name": "places",
+          "detail": "The number of decimal places to which to round."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Rounds down a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round to `places` number of places, always rounding down."
+        },
+        "places": {
+          "name": "places",
+          "detail": "The number of decimal places to which to round."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Rounds up a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to round to `places` number of places, always rounding up."
+        },
+        "places": {
+          "name": "places",
+          "detail": "The number of decimal places to which to round."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Sum of a power series.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "The input to the power series. Varies depending on the type of approximation, may be angle, exponent, or some other value."
+        },
+        "n": {
+          "name": "n",
+          "detail": "The initial power to which to raise `x` in the power series."
+        },
+        "m": {
+          "name": "m",
+          "detail": "The additive increment by which to increase `x`."
+        },
+        "a": {
+          "name": "a",
+          "detail": "The array or range containing the coefficients of the power series."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Sign of a provided number (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value whose sign will be evaluated."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sine of an angle provided in radians.",
+      "parameters": {
+        "angle": {
+          "name": "angle",
+          "detail": "The angle to find the sine of, in radians."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Hyperbolic sine of any real number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "Any real value to calculate the hyperbolic sine of."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Positive square root of a positive number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number for which to calculate the positive square root."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Square root of the product of pi and number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The number which will be multiplied by Pi and have the product's square root returned"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logarithm of gamma function.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The input to the Gamma function. The natural logarithm of Gamma(`value`) will be returned."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosine of an angle provided in radians.",
+      "parameters": {
+        "angle": {
+          "name": "angle",
+          "detail": "The angle to find the cosine of, in radians."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Truncates a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be truncated."
+        },
+        "places": {
+          "name": "places",
+          "detail": "The number of significant digits to the right of the decimal point to retain."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "One number divided by another.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "The number to be divided."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "The number to divide by."
+        }
+      }
+    },
+    "POWER": {
+      "description": "A number raised to a power.",
+      "parameters": {
+        "base": {
+          "name": "base",
+          "detail": "The number to raise to the `exponent` power."
+        },
+        "exponent": {
+          "name": "exponent",
+          "detail": "The exponent to raise `base` to."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Sums a range depending on multiple criteria.",
+      "parameters": {
+        "sum_range": {
+          "name": "sum_range",
+          "detail": "The range to sum."
+        },
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "The range to check against criterion1."
+        },
+        "criterion1": {
+          "name": "criterion1",
+          "detail": "The pattern or test to apply to criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "Additional ranges to check."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Count values depending on multiple criteria.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "The range to check against `criterion1`."
+        },
+        "criterion1": {
+          "name": "criterion1",
+          "detail": "The pattern or test to apply to `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "Additional ranges to check."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Result of multiplying a series of numbers together.",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "The first number or range to calculate for the product."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "More numbers or ranges to calculate for the product."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "The harmonic mean of a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the population."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the population."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hypergeometric distribution probability.",
+      "parameters": {
+        "num_successes": {
+          "name": "num_successes",
+          "detail": "The desired number of successes."
+        },
+        "num_draws": {
+          "name": "num_draws",
+          "detail": "The number of permitted draws."
+        },
+        "successes_in_pop": {
+          "name": "successes_in_pop",
+          "detail": "The total number of successes in the population."
+        },
+        "pop_size": {
+          "name": "pop_size",
+          "detail": "The total size of the population"
+        },
+        "cumulative": {
+          "name": "cumulative",
+          "detail": "Determine the logical value of the function form. \n\nIf cumulative is TRUE(), HYPGEOM.DIST returns the cumulative distribution function;\n\nif FALSE(), it returns the probability density function."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Y-intercept of line derived via linear regression.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosis of a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the dataset."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the dataset."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Nth largest element from a data set.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Array or range containing the dataset to consider."
+        },
+        "n": {
+          "name": "n",
+          "detail": "The rank from largest to smallest of the element to return."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Standard deviation of sample (text as 0).",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the sample."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the sample."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Standard deviation of an entire population.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the population."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the population."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "The geometric mean of a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the population."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the population."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Percentage rank (percentile) from 0 to 1 inclusive.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "The array or range containing the dataset to consider."
+        },
+        "value": {
+          "name": "value",
+          "detail": "The value whose percentage rank will be determined."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant figures to use in the calculation. Default is 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Expected y-value based of linear regression.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "The value on the x-axis to forecast."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Inverse fisher transformation of a specified value.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the inverse Fisher transformation."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Fisher transformation of a specified value.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value for which to calculate the Fisher transformation."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "The number of numeric values in dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when counting."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when counting."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "The number of values in a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when counting."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when counting."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Numerical average value in a dataset, ignoring text.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the average value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the average value."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binomial distribution probability.",
+      "parameters": {
+        "num_successes": {
+          "name": "num_successes",
+          "detail": "The number of successes for which to calculate the probability in `num_trials` trials."
+        },
+        "num_trials": {
+          "name": "num_trials",
+          "detail": "The number of independent trials."
+        },
+        "prob_success": {
+          "name": "prob_success",
+          "detail": "The probability of success in any given trial."
+        },
+        "cumulative": {
+          "name": "cumulative",
+          "detail": "Whether to use the binomial cumulative distribution."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "The sum of squares of deviations based on a sample.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the sample."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the sample."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Average of values depending on criteria.",
+      "parameters": {
+        "criteria_range": {
+          "name": "criteria_range",
+          "detail": "The range to check against `criterion`."
+        },
+        "criterion": {
+          "name": "criterion",
+          "detail": "The pattern or test to apply to `criteria_range`."
+        },
+        "average_range": {
+          "name": "average_range",
+          "detail": "The range to average. If not included, `criteria_range` is used for the average instead."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Average of values depending on multiple criteria.",
+      "parameters": {
+        "average_range": {
+          "name": "average_range",
+          "detail": "The range to average."
+        },
+        "criteria_range1": {
+          "name": "criteria_range1",
+          "detail": "The range to check against `criterion1`."
+        },
+        "criterion1": {
+          "name": "criterion1",
+          "detail": "The pattern or test to apply to `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "criteria_range2",
+          "detail": "Additional ranges to check."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Number of permutations from a number of objects.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "The size of the pool of objects to choose from."
+        },
+        "k": {
+          "name": "k",
+          "detail": "The number of objects to choose."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Mean of a dataset excluding high/low ends.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Array or range containing the dataset to consider."
+        },
+        "exclude_proportion": {
+          "name": "exclude_proportion",
+          "detail": "The proportion of the dataset to exclude, from the extremities of the set."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearson Product-Moment Correlation Coefficient.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minimum numeric value in a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the minimum value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the minimum value."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimum value in a numeric dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the minimum value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the minimum value."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Median value in a numeric dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the median value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the median value."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maximum numeric value in a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the maximum value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the maximum value."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maximum value in a numeric dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range to consider when calculating the maximum value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to consider when calculating the maximum value."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Probability values lie in a range.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Array or range containing the dataset to consider."
+        },
+        "probabilities": {
+          "name": "probabilities",
+          "detail": "Array or range containing probabilities corresponding to `data`."
+        },
+        "low_limit": {
+          "name": "low_limit",
+          "detail": "The lower bound on the value range for which to calculate the probability."
+        },
+        "high_limit": {
+          "name": "high_limit",
+          "detail": "The upper bound on the value range for which to calculate the probability."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Square of the correlation coefficient.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Variance of sample (text as 0).",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the sample."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the sample."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Variance of entire population (text as 0).",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the population."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the population."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Standard error of predicted y-values in regression.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Normalized equivalent of a random variable.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value of the random variable to normalize."
+        },
+        "mean": {
+          "name": "mean",
+          "detail": "The mean of the distribution."
+        },
+        "standard_deviation": {
+          "name": "standard_deviation",
+          "detail": "The standard deviation of the distribution."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Nth smallest element in a data set.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "The array or range containing the dataset to consider."
+        },
+        "n": {
+          "name": "n",
+          "detail": "The rank from smallest to largest of the element to return."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Slope of line from linear regression of data.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "The range representing the array or matrix of dependent data."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "The range representing the array or matrix of independent data."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Skewness of a dataset.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value or range of the dataset."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional values or ranges to include in the dataset."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Vertical lookup.",
+      "parameters": {
+        "search_key": {
+          "name": "search_key",
+          "detail": "The value to search for. For example, `42`, `\"Cats\"`, or `I24`."
+        },
+        "range": {
+          "name": "range",
+          "detail": "The range to consider for the search. The first column in the range is searched for the key specified in `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "The column index of the value to be returned, where the first column in `range` is numbered 1."
+        },
+        "is_sorted": {
+          "name": "is_sorted",
+          "detail": "Indicates whether the column to be searched (the first column of the specified range) is sorted, in which case the closest match for `search_key` will be returned."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Horizontal lookup",
+      "parameters": {
+        "search_key": {
+          "name": "search_key",
+          "detail": "The value to search for. For example, `42`, `\"Cats\"`, or `I24`."
+        },
+        "range": {
+          "name": "range",
+          "detail": "The range to consider for the search. The first row in the range is searched for the key specified in `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "The row index of the value to be returned, where the first row in `range` is numbered 1."
+        },
+        "is_sorted": {
+          "name": "is_sorted",
+          "detail": "Indicates whether the row to be searched (the first row of the specified range) is sorted."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Look up a value.",
+      "parameters": {
+        "search_key": {
+          "name": "search_key",
+          "detail": "The value to search for in the row or column. For example, `42`, `\"Cats\"`, or `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "search_range|search_result_array",
+          "detail": "One method of using this function is to provide a single sorted row or column `search_range` to look through for the `search_key` with a second argument `result_range`. The other way is to combine these two arguments into one `search_result_array` where the first row or column is searched and a value is returned from the last row or column in the array. If `search_key` is not found, a non-exact match may be returned."
+        },
+        "result_range": {
+          "name": "result_range",
+          "detail": "The range from which to return a result. The value returned corresponds to the location where `search_key` is found in `search_range`. This range must be only a single row or column and should not be used if using the `search_result_array` method."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Cell reference as a string.",
+      "parameters": {
+        "row": {
+          "name": "row",
+          "detail": "The row number of the cell reference"
+        },
+        "column": {
+          "name": "column",
+          "detail": "The column number (not name) of the cell reference. `A` is column number `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "absolute_relative_mode",
+          "detail": "An indicator of whether the reference is row/column absolute. `1` is row and column absolute (e.g. $A$1), `2` is row absolute and column relative (e.g. A$1), `3` is row relative and column absolute (e.g. $A1), and `4` is row and column relative (e.g. A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_notation",
+          "detail": "A boolean indicating whether to use `A1` style notation (TRUE) or `R1C1` style notation (FALSE)."
+        },
+        "sheet": {
+          "name": "sheet",
+          "detail": "Text indicating the name of the sheet into which the address points."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "A cell reference specified by a string.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cell_reference_as_string",
+          "detail": "A cell reference, written as a string with surrounding quotation marks."
+        },
+        "is_A1_notation": {
+          "name": "is_A1_notation",
+          "detail": "Indicates if the cell reference is in A1 notation (TRUE) or R1C1 notation (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Row number of a specified cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cell_reference",
+          "detail": "The cell whose row number will be returned."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Number of rows in a specified array or range.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The range whose row count will be returned."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Column number of a specified cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cell_reference",
+          "detail": "The cell whose column number will be returned. Column `A` corresponds to `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Number of columns in a specified array or range.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The range whose column count will be returned."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "A range reference offset relative to a cell.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cell_reference",
+          "detail": "The starting point from which to count the offset rows and columns."
+        },
+        "offset_rows": {
+          "name": "offset_rows",
+          "detail": "The number of rows to offset by."
+        },
+        "offset_columns": {
+          "name": "offset_columns",
+          "detail": "The number of columns to offset by."
+        },
+        "height": {
+          "name": "height",
+          "detail": "The height of the range to return starting at the offset target."
+        },
+        "width": {
+          "name": "width",
+          "detail": "The width of the range to return starting at the offset target."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Position of item in range that matches value.",
+      "parameters": {
+        "search_key": {
+          "name": "search_key",
+          "detail": "The value to search for. For example, `42`, `\"Cats\"`, or `I24`."
+        },
+        "range": {
+          "name": "range",
+          "detail": "The one-dimensional array to be searched."
+        },
+        "search_type": {
+          "name": "search_type",
+          "detail": "The search method. `1` (default) finds the largest value less than or equal to `search_key` when `range` is sorted in ascending order. `0` finds the exact value when `range` is unsorted. `-1` finds the smallest value greater than or equal to `search_key` when `range` is sorted in descending order."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Content of cell specified by row and column offset.",
+      "parameters": {
+        "reference": {
+          "name": "reference",
+          "detail": "The array of cells to be offset into."
+        },
+        "row": {
+          "name": "row",
+          "detail": "The number of offset rows."
+        },
+        "column": {
+          "name": "column",
+          "detail": "The number of offset columns."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Extracts an aggregated value from a pivot table that corresponds to the specified row and column headings.",
+      "parameters": {
+        "value_name": {
+          "name": "value_name",
+          "detail": "The name of the value in the pivot table for which you want to get data."
+        },
+        "any_pivot_table_cell": {
+          "name": "any_pivot_table_cell",
+          "detail": "Any reference to a cell in the desired pivot table (top corner recommended)."
+        },
+        "original_column": {
+          "name": "original_column",
+          "detail": "The name of the column in the original data set (not the pivot table)."
+        },
+        "pivot_item": {
+          "name": "pivot_item",
+          "detail": "The name of the row or column shown in the pivot table corresponding to *original_column* that you want to retrieve."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "An element from a list of choices based on index.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Which choice (of the up to 30 provided) to return."
+        },
+        "choice1": {
+          "name": "choice1",
+          "detail": "A potential value to return. Required. May be a reference to a cell or an individual value."
+        },
+        "choice2": {
+          "name": "choice2",
+          "detail": "Additional values among which to choose."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Converts hour/minute/second into a time.",
+      "parameters": {
+        "hour": {
+          "name": "hour",
+          "detail": "The hour component of the time."
+        },
+        "minute": {
+          "name": "minute",
+          "detail": "The minute component of the time."
+        },
+        "second": {
+          "name": "second",
+          "detail": "The second component of the time."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Converts a time string into its serial number representation.",
+      "parameters": {
+        "time_string": {
+          "name": "time_string",
+          "detail": "The string that holds the time representation."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Last day of a month before or after a date.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The date from which to calculate the result."
+        },
+        "months": {
+          "name": "months",
+          "detail": "The number of months before (negative) or after (positive) 'start_date' to consider."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Date a number of months before/after another date.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The date from which to calculate the result."
+        },
+        "months": {
+          "name": "months",
+          "detail": "The number of months before (negative) or after (positive) 'start_date' to calculate."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Second component of a specific time.",
+      "parameters": {
+        "time": {
+          "name": "time",
+          "detail": "The time from which to calculate the second component"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Minute component of a specific time.",
+      "parameters": {
+        "time": {
+          "name": "time",
+          "detail": "The time from which to calculate the minute component."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Hour component of a specific time.",
+      "parameters": {
+        "time": {
+          "name": "time",
+          "detail": "The time from which to calculate the hour component."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Current date and time as a date value."
+    },
+    "NETWORKDAYS": {
+      "description": "Net working days between two provided days.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The start date of the period from which to calculate the number of net working days."
+        },
+        "end_date": {
+          "name": "end_date",
+          "detail": "The end date of the period from which to calculate the number of net working days."
+        },
+        "holidays": {
+          "name": "holidays",
+          "detail": "A range or array constant containing the date serial numbers to consider holidays."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "ISO week number of the year.",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date for which to determine the ISO week number. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Week number of the year.",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date for which to determine the week number. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "type": {
+          "name": "type",
+          "detail": "A number representing the day that a week starts on. Sunday = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Day of the week of the date provided (as number).",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date for which to determine the day of the week. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "type": {
+          "name": "type",
+          "detail": "A number indicating which numbering system to use to represent weekdays. By default, counts starting with Sunday = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Day of the month that a specific date falls on.",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date from which to extract the day."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Number of days between two dates.",
+      "parameters": {
+        "end_date": {
+          "name": "end_date",
+          "detail": "The end of the date range."
+        },
+        "start_date": {
+          "name": "start_date",
+          "detail": "The start of the date range."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Days between two dates on a 360-day year.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The start date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "end_date": {
+          "name": "end_date",
+          "detail": "The end date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "method": {
+          "name": "method",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Converts year/month/day into a date.",
+      "parameters": {
+        "year": {
+          "name": "year",
+          "detail": "The year component of the date."
+        },
+        "month": {
+          "name": "month",
+          "detail": "The month component of the date."
+        },
+        "day": {
+          "name": "day",
+          "detail": "The day component of the date."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Converts a date string to a date value.",
+      "parameters": {
+        "date_string": {
+          "name": "date_string",
+          "detail": "The string representing the date."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Date Difference.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The start date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "end_date": {
+          "name": "end_date",
+          "detail": "The end date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "A string abbreviation for unit of time. For example, \"M\" for month. Accepted values are \"Y\",\"M\",\"D\",\"MD\",\"YM\",\"YD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Number of working days from start date.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The date from which to begin counting."
+        },
+        "num_days": {
+          "name": "num_days",
+          "detail": "The number of working days to advance from `start_date`. If negative, counts backwards."
+        },
+        "holidays": {
+          "name": "holidays",
+          "detail": "A range or array constant containing the dates to consider holidays."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Year specified by a given date.",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date from which to extract the year."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Exact number of years between two dates.",
+      "parameters": {
+        "start_date": {
+          "name": "start_date",
+          "detail": "The start date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "end_date": {
+          "name": "end_date",
+          "detail": "The end date to consider in the calculation. Must be a reference to a cell containing a date, a function returning a date type, or a number."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Current date as a date value."
+    },
+    "MONTH": {
+      "description": "Month of the year a specific date falls in.",
+      "parameters": {
+        "date": {
+          "name": "date",
+          "detail": "The date from which to extract the month."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Annual effective interest rate.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "nominal_rate",
+          "detail": "The nominal interest rate per year."
+        },
+        "periods_per_year": {
+          "name": "periods_per_year",
+          "detail": "The number of compounding periods per year."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Formats a number as currency specific to your spreadsheet locale.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The value to be formatted."
+        },
+        "number_of_places": {
+          "name": "number_of_places",
+          "detail": "The number of decimal places to display."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Converts a decimal fraction to decimal value.",
+      "parameters": {
+        "fractional_price": {
+          "name": "fractional_price",
+          "detail": "The price quotation given using fractional decimal conventions."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "The units of the fraction, e.g. `8` for 1/8ths or `32` for 1/32nds."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Converts a decimal value to decimal fraction.",
+      "parameters": {
+        "decimal_price": {
+          "name": "decimal_price",
+          "detail": "The price quotation given as a decimal value."
+        },
+        "unit": {
+          "name": "unit",
+          "detail": "The units of the desired fraction, e.g. `8` for 1/8ths or `32` for 1/32nds."
+        }
+      }
+    },
+    "DB": {
+      "description": "Depreciation via declining balance method.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "The initial cost of the asset."
+        },
+        "salvage": {
+          "name": "salvage",
+          "detail": "The value of the asset at the end of depreciation."
+        },
+        "life": {
+          "name": "life",
+          "detail": "The number of periods over which the asset is depreciated."
+        },
+        "period": {
+          "name": "period",
+          "detail": "The single period within `life` for which to calculate depreciation."
+        },
+        "month": {
+          "name": "month",
+          "detail": "The number of months in the first year of depreciation."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Depreciation via double-declining balance method.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "The initial cost of the asset."
+        },
+        "salvage": {
+          "name": "salvage",
+          "detail": "The value of the asset at the end of depreciation."
+        },
+        "life": {
+          "name": "life",
+          "detail": "The number of periods over which the asset is depreciated."
+        },
+        "period": {
+          "name": "period",
+          "detail": "The single period within `life` for which to calculate depreciation."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "The factor by which depreciation decreases."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Interest rate of an annuity investment.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "payment_per_period": {
+          "name": "payment_per_period",
+          "detail": "The amount per period to be paid."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "An estimate for what the interest rate will be."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Cumulative principal paid over a set of periods.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "first_period": {
+          "name": "first_period",
+          "detail": "The number of the payment period to begin the cumulative calculation."
+        },
+        "last_period": {
+          "name": "last_period",
+          "detail": "The number of the payment period to end the cumulative calculation."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Number of coupons between settlement and maturity.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Depreciation via sum of years digits method.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "The initial cost of the asset."
+        },
+        "salvage": {
+          "name": "salvage",
+          "detail": "The value of the asset at the end of depreciation."
+        },
+        "life": {
+          "name": "life",
+          "detail": "The number of periods over which the asset is depreciated."
+        },
+        "period": {
+          "name": "period",
+          "detail": "The single period within `life` for which to calculate depreciation."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Equivalent rate of return for a Treasury bill.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the bill at time of purchase."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "The yield of a us treasury bill based on price.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "price": {
+          "name": "price",
+          "detail": "The price at which the security is bought per 100 face value."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Price of US treasury bill.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the bill at time of purchase."
+        }
+      }
+    },
+    "PV": {
+      "description": "Present value of an annuity investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "payment_amount": {
+          "name": "payment_amount",
+          "detail": "The amount per period to be paid."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Number of days from first coupon to settlement.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Days in coupon period containing settlement date.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "FV": {
+      "description": "Future value of an annuity investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "payment_amount": {
+          "name": "payment_amount",
+          "detail": "The amount per period to be paid."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Future value of principal from series of rates.",
+      "parameters": {
+        "principal": {
+          "name": "principal",
+          "detail": "The amount of initial capital or value to compound against."
+        },
+        "rate_schedule": {
+          "name": "rate_schedule",
+          "detail": "A series of interest rates to compound against the `principal`."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Annual yield of a security paying periodic interest.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "rate": {
+          "name": "rate",
+          "detail": "The annualized rate of interest."
+        },
+        "price": {
+          "name": "price",
+          "detail": "The price at which the security is bought per 100 face value."
+        },
+        "redemption": {
+          "name": "redemption",
+          "detail": "The redemption amount per 100 face value, or par."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Annual yield of a discount security.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "price": {
+          "name": "price",
+          "detail": "The price at which the security is bought per 100 face value."
+        },
+        "redemption": {
+          "name": "redemption",
+          "detail": "The redemption amount per 100 face value, or par."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Annual nominal interest rate.",
+      "parameters": {
+        "effective_rate": {
+          "name": "effective_rate",
+          "detail": "The effective interest rate per year."
+        },
+        "periods_per_year": {
+          "name": "periods_per_year",
+          "detail": "The number of compounding periods per year."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Internal rate of return given non-periodic cashflows.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "cashflow_amounts",
+          "detail": "An array or range containing the income or payments associated with the investment."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_dates",
+          "detail": "An array or range with dates corresponding to the cash flows in `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "An estimate for what the internal rate of return will be."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Modified internal rate of return.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "cashflow_amounts",
+          "detail": "An array or range containing the income or payments associated with the investment."
+        },
+        "financing_rate": {
+          "name": "financing_rate",
+          "detail": "The interest rate paid on funds invested."
+        },
+        "reinvestment_return_rate": {
+          "name": "reinvestment_return_rate",
+          "detail": "The return (as a percentage) earned on reinvestment of income received from the investment."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Internal rate of return given periodic cashflows.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "cashflow_amounts",
+          "detail": "An array or range containing the income or payments associated with the investment."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "An estimate for what the internal rate of return will be."
+        }
+      }
+    },
+    "NPV": {
+      "description": "The net present value of an investment based on a series of periodic cash flows and a discount rate.",
+      "parameters": {
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the investment over one period."
+        },
+        "cashflow1": {
+          "name": "cashflow1",
+          "detail": "The first future cash flow."
+        },
+        "cashflow2": {
+          "name": "cashflow2",
+          "detail": "Additional future cash flows."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Net present value given non-periodic cashflows.",
+      "parameters": {
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the investment over one period."
+        },
+        "cashflow_amounts": {
+          "name": "cashflow_amounts",
+          "detail": "A range of cells containing the income or payments associated with the investment."
+        },
+        "cashflow_dates": {
+          "name": "cashflow_dates",
+          "detail": "A range of cells with dates corresponding to the cash flows in `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Cumulative interest paid over a set of periods.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "first_period": {
+          "name": "first_period",
+          "detail": "The number of the payment period to begin the cumulative calculation."
+        },
+        "last_period": {
+          "name": "last_period",
+          "detail": "The number of the payment period to end the cumulative calculation."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Periodic payment for an annuity investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Payment on interest for an investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "period": {
+          "name": "period",
+          "detail": "The amortization period, in terms of number of periods."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Payment on the principal of an investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "period": {
+          "name": "period",
+          "detail": "The amortization period, in terms of number of periods."
+        },
+        "number_of_periods": {
+          "name": "number_of_periods",
+          "detail": "The number of payments to be made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Calculates effective interest rate.",
+      "parameters": {
+        "buy_date": {
+          "name": "buy_date",
+          "detail": "The date of purchase of the investment."
+        },
+        "sell_date": {
+          "name": "sell_date",
+          "detail": "The date of sale of the investment."
+        },
+        "buy_price": {
+          "name": "buy_price",
+          "detail": "The price at which the investment was purchased."
+        },
+        "sell_price": {
+          "name": "sell_price",
+          "detail": "The price at which the investment was sold."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Price of a security paying periodic interest.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "rate": {
+          "name": "rate",
+          "detail": "The annualized rate of interest."
+        },
+        "yield": {
+          "name": "yield",
+          "detail": "The expected annual yield of the security."
+        },
+        "redemption": {
+          "name": "redemption",
+          "detail": "The redemption amount per 100 face value, or par."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Price of a discount security.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the security at time of purchase."
+        },
+        "redemption": {
+          "name": "redemption",
+          "detail": "The redemption amount per 100 face value, or par."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Price of security paying interest at maturity.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "issue": {
+          "name": "issue",
+          "detail": "The date the security was initially issued."
+        },
+        "rate": {
+          "name": "rate",
+          "detail": "The annualized rate of interest."
+        },
+        "yield": {
+          "name": "yield",
+          "detail": "The expected annual yield of the security."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Amount received at maturity for a security.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "investment": {
+          "name": "investment",
+          "detail": "The amount invested (irrespective of face value of each security)."
+        },
+        "discount": {
+          "name": "discount",
+          "detail": "The discount rate of the security invested in."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "DISC": {
+      "description": "The discount rate of a security based on price.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "price": {
+          "name": "price",
+          "detail": "The price at which the security is bought per 100 face value."
+        },
+        "redemption": {
+          "name": "redemption",
+          "detail": "The redemption amount per 100 face value, or par."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Number of payment periods for an investment.",
+      "parameters": {
+        "rate": {
+          "name": "rate",
+          "detail": "The interest rate."
+        },
+        "payment_amount": {
+          "name": "payment_amount",
+          "detail": "The amount of each payment made."
+        },
+        "present_value": {
+          "name": "present_value",
+          "detail": "The current value of the annuity."
+        },
+        "future_value": {
+          "name": "future_value",
+          "detail": "The future value remaining after the final payment has been made."
+        },
+        "end_or_beginning": {
+          "name": "end_or_beginning",
+          "detail": "Whether payments are due at the end (`0`) or beginning (`1`) of each period."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Depreciation of asset using the straight-line method.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "The initial cost of the asset."
+        },
+        "salvage": {
+          "name": "salvage",
+          "detail": "The value of the asset at the end of depreciation."
+        },
+        "life": {
+          "name": "life",
+          "detail": "The number of periods over which the asset is depreciated."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Number of periods for an investment to reach a value.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "rate": {
+          "name": "rate",
+          "detail": "The annualized rate of interest."
+        },
+        "yield": {
+          "name": "yield",
+          "detail": "The expected annual yield of the security."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Modified Macaulay duration.",
+      "parameters": {
+        "settlement": {
+          "name": "settlement",
+          "detail": "The settlement date of the security, the date after issuance when the security is delivered to the buyer."
+        },
+        "maturity": {
+          "name": "maturity",
+          "detail": "The maturity or end date of the security, when it can be redeemed at face, or par value."
+        },
+        "rate": {
+          "name": "rate",
+          "detail": "The annualized rate of interest."
+        },
+        "yield": {
+          "name": "yield",
+          "detail": "The expected annual yield of the security."
+        },
+        "frequency": {
+          "name": "frequency",
+          "detail": "The number of interest or coupon payments per year (1, 2, or 4)."
+        },
+        "day_count_convention": {
+          "name": "day_count_convention",
+          "detail": "An indicator of what day count method to use."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Converts a signed binary number to decimal format.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signed_binary_number",
+          "detail": "The signed 10-bit binary value to be converted to decimal, provided as a string."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Converts a binary number to hexadecimal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signed_binary_number",
+          "detail": "The signed 10-bit binary value to be converted to signed hexademical, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Converts a binary number to octal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "signed_binary_number",
+          "detail": "The signed 10-bit binary value to be converted to signed octal, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Converts a decimal number to signed binary format.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimal_number",
+          "detail": "The decimal value to be converted to signed binary, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Converts a decimal number to hexadecimal.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimal_number",
+          "detail": "The decimal value to be converted to signed hexadecimal, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Converts a decimal number to signed octal format.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimal_number",
+          "detail": "The decimal value to be converted to signed octal, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Converts a hexadecimal number to binary.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signed_hexadecimal_number",
+          "detail": "The signed 40-bit hexadecimal value to be converted to signed binary, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Converts a hexadecimal number to decimal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signed_hexadecimal_number",
+          "detail": "The signed 40-bit hexadecimal value to be converted to decimal, provided as a string."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Converts a hexadecimal number to octal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "signed_hexadecimal_number",
+          "detail": "The signed 40-bit hexadecimal value to be converted to signed octal, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Converts an octal number to binary.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signed_octal_number",
+          "detail": "The signed 30-bit octal value to be converted to signed binary, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Converts a signed octal number to decimal format.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signed_octal_number",
+          "detail": "The signed 30-bit octal value to be converted to decimal, provided as a string."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Converts an octal number to hexadecimal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "signed_octal_number",
+          "detail": "The signed 30-bit octal value to be converted to signed hexadecimal, provided as a string."
+        },
+        "significant_digits": {
+          "name": "significant_digits",
+          "detail": "The number of significant digits to ensure in the result."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Creates a complex number.",
+      "parameters": {
+        "real_part": {
+          "name": "real_part",
+          "detail": "The real coefficient."
+        },
+        "imaginary_part": {
+          "name": "imaginary_part",
+          "detail": "The imaginary coefficient."
+        },
+        "suffix": {
+          "name": "suffix",
+          "detail": "The suffix for the imaginary coefficient, can only be 'i' or 'j'. If omitted, 'i' will be used."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "The real coefficient of a complex number.",
+      "parameters": {
+        "complex_number": {
+          "name": "complex_number",
+          "detail": "The complex number, in the a+bi or a+bj format."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "The imaginary coefficient of a complex number.",
+      "parameters": {
+        "complex_number": {
+          "name": "complex_number",
+          "detail": "The complex number, in the a+bi or a+bj format."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "The complex conjugate of a number.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The complex number to calculate the conjugate for."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "The absolute value of a complex number.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The complex number to calculate the absolute value of."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Compare two numeric values.",
+      "parameters": {
+        "number1": {
+          "name": "number1",
+          "detail": "The first number to compare."
+        },
+        "number2": {
+          "name": "number2",
+          "detail": "The second number to compare."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Sum of a series of complex numbers.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first complex number or range to add together."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "Additional complex numbers or ranges to add to `value1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "The difference between two complex numbers.",
+      "parameters": {
+        "first_number": {
+          "name": "first_number",
+          "detail": "The complex number to subtract second_number from."
+        },
+        "second_number": {
+          "name": "second_number",
+          "detail": "The complex number to subtract from first_number."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Result of multiplying a series of complex numbers together.",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "The first number or range to calculate for the product."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Additional complex numbers or ranges to calculate for the product."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "One complex number divided by another.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "The complex number to be divided."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "The complex number to divide by."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Returns opposite of provided logical value.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logical_expression",
+          "detail": "An expression or reference to a cell holding an expression that represents some logical value."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Logical value `true`."
+    },
+    "FALSE": {
+      "description": "Logical value `false`."
+    },
+    "AND": {
+      "description": "Logical `and` operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logical_expression1",
+          "detail": "An expression or reference to a cell containing an expression that represents some logical value, i.e. `TRUE` or `FALSE`, or an expression that can be coerced to a logical value."
+        },
+        "logical_expression2": {
+          "name": "logical_expression2",
+          "detail": "More expressions that represent logical values."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Value if it is not an error, otherwise 2nd argument.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to return if `value` itself is not an error."
+        },
+        "value_if_error": {
+          "name": "value_if_error",
+          "detail": "The value the function returns if `value` is an error."
+        }
+      }
+    },
+    "IF": {
+      "description": "Returns value depending on logical expression.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logical_expression",
+          "detail": "An expression or reference to a cell containing an expression that represents some logical value, i.e. `TRUE` or `FALSE`."
+        },
+        "value_if_true": {
+          "name": "value_if_true",
+          "detail": "The value the function returns if `logical_expression` is `TRUE`."
+        },
+        "value_if_false": {
+          "name": "value_if_false",
+          "detail": "The value the function returns if `logical_expression` is `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Logical `or` operator.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logical_expression1",
+          "detail": "An expression or reference to a cell containing an expression that represents some logical value, i.e. `TRUE` or `FALSE`, or an expression that can be coerced to a logical value."
+        },
+        "logical_expression2": {
+          "name": "logical_expression2",
+          "detail": "More expressions that evaluate to logical values."
+        }
+      }
+    },
+    "NE": {
+      "description": "Not equal.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The value to test against `value1` for inequality."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Equal.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first value."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The value to test against `value1` for equality."
+        }
+      }
+    },
+    "GT": {
+      "description": "Strictly greater than.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The value to test as being greater than `value2`."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The second value."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Greater than or equal to.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The value to test as being greater than or equal to `value2`."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The second value."
+        }
+      }
+    },
+    "LT": {
+      "description": "Less than.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The value to test as being less than `value2`."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The second value."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Less than or equal to.",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The value to test as being less than or equal to `value2`."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The second value."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Sum of two numbers",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The first addend."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The second addend."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Difference of two numbers",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The minuend, or number to be subtracted from."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The subtrahend, or number to subtract from `value1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Product of two numbers",
+      "parameters": {
+        "factor1": {
+          "name": "factor1",
+          "detail": "The first multiplicand."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "The second multiplicand."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "One number divided by another",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "The number to be divided."
+        },
+        "divisor": {
+          "name": "divisor",
+          "detail": "The number to divide by."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Concatenation of two values",
+      "parameters": {
+        "value1": {
+          "name": "value1",
+          "detail": "The value to which `value2` will be appended."
+        },
+        "value2": {
+          "name": "value2",
+          "detail": "The value to append to `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Value interpreted as a percentage.",
+      "parameters": {
+        "percentage": {
+          "name": "percentage",
+          "detail": "The value to interpret as a percentage."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Appends strings to one another.",
+      "parameters": {
+        "string1": {
+          "name": "string1",
+          "detail": "The initial string."
+        },
+        "string2": {
+          "name": "string2",
+          "detail": "More strings to append in sequence."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Numeric unicode map value of character.",
+      "parameters": {
+        "string": {
+          "name": "string",
+          "detail": "The string whose first character's Unicode map value will be returned."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Gets character associated with number.",
+      "parameters": {
+        "table_number": {
+          "name": "table_number",
+          "detail": "The number of the character to look up from the current Unicode table in decimal format."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Computes the value of a roman numeral.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "roman_numeral",
+          "detail": "The Roman numeral to format, whose value must be between 1 and 3999, inclusive."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Formats a number in Roman numerals.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The number to format, between 1 and 3999, inclusive."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Extracts matching substrings with regular expression.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The input text."
+        },
+        "regular_expression": {
+          "name": "regular_expression",
+          "detail": "The first part of `text` that matches this expression will be returned."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Whether a piece of text matches regular expression.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The text to be tested against the regular expression."
+        },
+        "regular_expression": {
+          "name": "regular_expression",
+          "detail": "The regular expression to test the text against."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Replaces text with regular expressions.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The text, a part of which will be replaced."
+        },
+        "regular_expression": {
+          "name": "regular_expression",
+          "detail": "The regular expression.  All matching instances in `text` will be replaced."
+        },
+        "replacement": {
+          "name": "replacement",
+          "detail": "The text which will be inserted into the original text."
+        }
+      }
+    },
+    "T": {
+      "description": "String arguments as text.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument to be converted to text."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formats number with fixed number of decimal places.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The number to format."
+        },
+        "number_of_places": {
+          "name": "number_of_places",
+          "detail": "The number of decimal places to display in the result."
+        },
+        "suppress_separator": {
+          "name": "suppress_separator",
+          "detail": "Whether or not to suppress the thousands separator used in some locales (e.g. `1,000` becomes `1000`). Separators will be present if this value is 0 or omitted, and absent otherwise."
+        }
+      }
+    },
+    "FIND": {
+      "description": "First position of string found in text, case-sensitive.",
+      "parameters": {
+        "search_for": {
+          "name": "search_for",
+          "detail": "The string to look for within `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "The text to search for the first occurrence of `search_for`."
+        },
+        "starting_at": {
+          "name": "starting_at",
+          "detail": "The character within `text_to_search` at which to start the search."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Position at which a string is first found within text (binary).",
+      "parameters": {
+        "search_for": {
+          "name": "search_for",
+          "detail": "The string to look for within `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "The text to search for the first occurrence of `search_for`."
+        },
+        "starting_at": {
+          "name": "starting_at",
+          "detail": "The character within `text_to_search` at which to start the search."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Concatenates elements of arrays with delimiter.",
+      "parameters": {
+        "delimiter": {
+          "name": "delimiter",
+          "detail": "The character or string to place between each concatenated value."
+        },
+        "value_or_array1": {
+          "name": "value_or_array1",
+          "detail": "The value or values to be appended using `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "value_or_array2",
+          "detail": "More values to be appended using `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Substring from beginning of specified string.",
+      "parameters": {
+        "string": {
+          "name": "string",
+          "detail": "The string from which the left portion will be returned."
+        },
+        "number_of_characters": {
+          "name": "number_of_characters",
+          "detail": "The number of characters to return from the left side of `string`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "A substring from the end of a specified string.",
+      "parameters": {
+        "string": {
+          "name": "string",
+          "detail": "The string from which the right portion will be returned."
+        },
+        "number_of_characters": {
+          "name": "number_of_characters",
+          "detail": "The number of characters to return from the right side of `string`."
+        }
+      }
+    },
+    "MID": {
+      "description": "A segment of a string.",
+      "parameters": {
+        "string": {
+          "name": "string",
+          "detail": "The string to extract a segment from."
+        },
+        "starting_at": {
+          "name": "starting_at",
+          "detail": "The index from the left of `string` from which to begin extracting. The first character in `string` has the index 1."
+        },
+        "extract_length": {
+          "name": "extract_length",
+          "detail": "The length of the segment to extract."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Length of a string.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The string whose length will be returned."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Length of a string in bytes.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The string whose length will be returned."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Converts a specified string to lowercase.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The string to convert to lowercase."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Converts a specified string to uppercase.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The string to convert to uppercase."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Tests whether two strings are identical.",
+      "parameters": {
+        "string1": {
+          "name": "string1",
+          "detail": "The first string to compare"
+        },
+        "string2": {
+          "name": "string2",
+          "detail": "The second string to compare"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Replaces part of a text string with different text.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The text, a part of which will be replaced."
+        },
+        "position": {
+          "name": "position",
+          "detail": "The position where the replacement will begin (starting from 1)."
+        },
+        "length": {
+          "name": "length",
+          "detail": "The number of characters in the text to be replaced."
+        },
+        "new_text": {
+          "name": "new_text",
+          "detail": "The text which will be inserted into the original text."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Specified text repeated a number of times.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "text_to_repeat",
+          "detail": "The character or string to repeat."
+        },
+        "number_of_repetitions": {
+          "name": "number_of_repetitions",
+          "detail": "The number of times `text_to_repeat` should appear in the value returned."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "First position of string found in text, ignoring case.",
+      "parameters": {
+        "search_for": {
+          "name": "search_for",
+          "detail": "The string to look for within `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "The text to search for the first occurrence of `search_for`."
+        },
+        "starting_at": {
+          "name": "starting_at",
+          "detail": "The character within `text_to_search` at which to start the search."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Replaces existing text with new text in a string.",
+      "parameters": {
+        "text_to_search": {
+          "name": "text_to_search",
+          "detail": "The text within which to search and replace."
+        },
+        "search_for": {
+          "name": "search_for",
+          "detail": "The string to search for within `text_to_search`."
+        },
+        "replace_with": {
+          "name": "replace_with",
+          "detail": "The string that will replace `search_for`."
+        },
+        "occurrence_number": {
+          "name": "occurrence_number",
+          "detail": "The instance of `search_for` within `text_to_search` to replace with `replace_with`. By default, all occurrences of `search_for` are replaced; however, if `occurrence_number` is specified, only the indicated instance of `search_for` is replaced."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Removes non-printable characters from a piece of text.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The text whose non-printable characters are to be removed."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Formats a number into text.",
+      "parameters": {
+        "number": {
+          "name": "number",
+          "detail": "The number, date, or time to format."
+        },
+        "format": {
+          "name": "format",
+          "detail": "The pattern by which to format the number, enclosed in quotation marks."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Removes space characters.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The text or reference to a cell containing text to be trimmed."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Converts a date/time/number string into a number.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "The string containing the value to be converted."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Capitalizes each word in a specified string.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_to_capitalize",
+          "detail": "The text which will be returned with the first letter of each word in uppercase and all other letters in lowercase."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Unit conversion for numbers.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The numeric value in `start_unit` to convert to `end_unit`."
+        },
+        "start_unit": {
+          "name": "start_unit",
+          "detail": "The starting unit, the unit currently assigned to `value`."
+        },
+        "end_unit": {
+          "name": "end_unit",
+          "detail": "The unit of measure into which to convert the argument, `value`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Sum of the differences of squares.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "The array or range of values whose squares will be reduced by the squares of corresponding entries in `array_y` and added together."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "The array or range of values whose squares will be subtracted from the squares of corresponding entries in `array_x` and added together."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Sum of the sums of squares.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "The array or range of values whose squares will be added to the squares of corresponding entries in `array_y` and added together."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "The array or range of values whose squares will be added to the squares of corresponding entries in `array_x` and added together."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Sum of the squares of differences.",
+      "parameters": {
+        "array_x": {
+          "name": "array_x",
+          "detail": "The array or range of values that will be reduced by corresponding entries in `array_y`, squared, and added together."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "The array or range of values that will be subtracted from corresponding entries in `array_x`, the result squared, and all such results added together."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transposes the rows and columns of an array.",
+      "parameters": {
+        "array_or_range": {
+          "name": "array_or_range",
+          "detail": "The array or range whose rows and columns will be swapped."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Fits points to linear trend derived via least-squares.",
+      "parameters": {
+        "known_data_y": {
+          "name": "known_data_y",
+          "detail": "The array or range containing dependent (y) values that are already known, used to curve fit an ideal linear trend."
+        },
+        "known_data_x": {
+          "name": "known_data_x",
+          "detail": "The values of the independent variable(s) corresponding with `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "new_data_x",
+          "detail": "The data points to return the `y` values for on the ideal curve fit."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Given a general linear form of `y = m*x+b` for a curve fit, calculates `b` if `TRUE` or forces `b` to be `0` and only calculates the `m` values if `FALSE`, i.e. forces the curve fit to pass through the origin."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "The frequency distribution of array.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "The array or range containing the values to be counted."
+        },
+        "classes": {
+          "name": "classes",
+          "detail": "The array or range containing the set of classes."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Fits points to exponential growth trend.",
+      "parameters": {
+        "known_data_y": {
+          "name": "known_data_y",
+          "detail": "The array or range containing dependent (y) values that are already known, used to curve fit an ideal exponential growth curve."
+        },
+        "known_data_x": {
+          "name": "known_data_x",
+          "detail": "The values of the independent variable(s) corresponding with `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "new_data_x",
+          "detail": "The data points to return the `y` values for on the ideal curve fit."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Given a general exponential form of `y = b*m^x` for a curve fit, calculates `b` if `TRUE` or forces `b` to be `1` and only calculates the `m` values if `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Best-fit linear trend via least-squares.",
+      "parameters": {
+        "known_data_y": {
+          "name": "known_data_y",
+          "detail": "The array or range containing dependent (y) values that are already known, used to curve fit an ideal linear trend."
+        },
+        "known_data_x": {
+          "name": "known_data_x",
+          "detail": "The values of the independent variable(s) corresponding with `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "calculate_b",
+          "detail": "Given a linear form of `y = m*x+b`, calculates the y-intercept (`b`) if `TRUE`. Otherwise, forces `b` to be `0` and only calculates the `m` values if `FALSE`, i.e. forces the curve fit to pass through the origin."
+        },
+        "verbose": {
+          "name": "verbose",
+          "detail": "A flag specifying whether to return additional regression statistics or only the linear coefficients and the y-intercept (default)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Best-fit exponential growth curve.",
+      "parameters": {
+        "known_data_y": {
+          "name": "known_data_y",
+          "detail": "The array or range containing dependent (y) values that are already known, used to curve fit an ideal exponential growth curve."
+        },
+        "known_data_x": {
+          "name": "known_data_x",
+          "detail": "The values of the independent variable(s) corresponding with `known_data_y`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Given a general exponential form of `y = b*m^x` for a curve fit, calculates `b` if `TRUE` or forces `b` to be `1` and only calculates the `m` values if `FALSE`."
+        },
+        "verbose": {
+          "name": "verbose",
+          "detail": "A flag specifying whether to return additional regression statistics or only the calculated coefficient and exponents."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Matrix determinant of a square matrix.",
+      "parameters": {
+        "square_matrix": {
+          "name": "square_matrix",
+          "detail": "An array or range with an equal number of rows and columns representing a matrix whose determinant will be calculated."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Multiplicative inverse of square matrix.",
+      "parameters": {
+        "square_matrix": {
+          "name": "square_matrix",
+          "detail": "An array or range with an equal number of rows and columns representing a matrix whose multiplicative inverse will be calculated."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "The matrix product of two matrices.",
+      "parameters": {
+        "matrix1": {
+          "name": "matrix1",
+          "detail": "The first matrix in the matrix multiplication operation, represented as an array or range."
+        },
+        "matrix2": {
+          "name": "matrix2",
+          "detail": "The second matrix in the matrix multiplication operation, represented as an array or range."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Sum of products of elements in two arrays.",
+      "parameters": {
+        "array1": {
+          "name": "array1",
+          "detail": "The first array or range whose entries will be multiplied with corresponding entries in the second such array or range."
+        },
+        "array2": {
+          "name": "array2",
+          "detail": "The second array or range whose entries will be multiplied with corresponding entries in the first such array or range."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Whether a value is a formula.",
+      "parameters": {
+        "cell": {
+          "name": "cell",
+          "detail": "The cell to be verified as containing a formula."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Gets information about a cell.",
+      "parameters": {
+        "info_type": {
+          "name": "info_type",
+          "detail": "The type of information requested (see article for available types)"
+        },
+        "reference": {
+          "name": "reference",
+          "detail": "The reference to the cell."
+        }
+      }
+    },
+    "NA": {
+      "description": "The `#N/A` error."
+    },
+    "ISBLANK": {
+      "description": "Whether the referenced cell is empty.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "Reference to the cell that will be checked for emptiness."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Whether a value is an error other than `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as an error type other than `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Whether a value is an error.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as an error type."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Whether a value is `true` or `false`.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as a logical `TRUE` or `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Whether a value is the error `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be compared with the error value `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Whether a value is non-textual.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be checked."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Whether a value is a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as a number."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Whether a value is a valid cell reference.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as a cell reference."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Whether a value is text.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as text."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Get the type of a value.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value whose type is to be determined."
+        }
+      }
+    },
+    "N": {
+      "description": "Argument provided as a number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument to be converted to a number."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Converts a provided number to a date.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument or reference to a cell to be converted to a date."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Converts any numeric value to a pure number.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument or reference to a cell to be converted to a pure number."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Converts a provided numeric value to a text value.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument or reference to a cell to be converted to text."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Converts a provided number to a dollar value.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument or reference to a cell to be converted to a dollar value."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Converts a provided number to a percentage.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The argument or reference to a cell to be converted to a percentage."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Single value from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maximum of values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minimum of values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Average of a set of values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Counts values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Counts values and text from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Product of values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Standard deviation of population sample from table.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Standard deviation of entire population from table.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Sum of values from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Variance of population sample from table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Variance of a population from a table-like range.",
+      "parameters": {
+        "database": {
+          "name": "database",
+          "detail": "The array or range containing the data to consider, structured in such a way that the first row contains the labels for each column's values."
+        },
+        "field": {
+          "name": "field",
+          "detail": "Indicates which column in `database` contains the values to be extracted and operated on."
+        },
+        "criteria": {
+          "name": "criteria",
+          "detail": "An array or range containing zero or more criteria to filter the `database` values by before operating."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Get gender based on ID number.",
+      "parameters": {
+        "ID number": {
+          "name": "ID number",
+          "detail": "15-digit or 18-digit ID number or range."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Get the province of birthplace based on the ID number.",
+      "parameters": {
+        "ID number": {
+          "name": "ID number",
+          "detail": "15-digit or 18-digit ID number or range."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Get the constellation based on the ID number.",
+      "parameters": {
+        "ID number": {
+          "name": "ID number",
+          "detail": "15-digit or 18-digit ID number or range."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Returns the corresponding stock trading volume of A shares.",
+      "parameters": {
+        "Stock code": {
+          "name": "Stock code",
+          "detail": "6-digit stock code, required."
+        },
+        "Date": {
+          "name": "Date",
+          "detail": "The trading day of the stock, the default is the latest trading day"
+        },
+        "Reversion and exclusion": {
+          "name": "Reversion and exclusion",
+          "detail": "Select the ex right restoration type of the stock, default to 0 [former reversion], 1 [original price], 2 [post reversion]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Whether a value is a date.",
+      "parameters": {
+        "value": {
+          "name": "value",
+          "detail": "The value to be verified as a date."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Generate sparklines line chart",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Line color": {
+          "name": "Line color",
+          "detail": "The line color of the line graph can be range A1, color table index value or specific color value. Set it to 0 or false to not display it. It supports regx, rgb, rgba, etc. Default #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Line thickness",
+          "detail": "Line thickness of the line graph, the default is 1px"
+        },
+        "Auxiliary line": {
+          "name": "Auxiliary line",
+          "detail": "A horizontal line, which can be min, max, avg, median, range or custom value, default 0 none"
+        },
+        "Auxiliary line color": {
+          "name": "Auxiliary line color",
+          "detail": "Color setting of auxiliary line, same as line color configuration, default #000"
+        },
+        "Maximum mark": {
+          "name": "Maximum mark",
+          "detail": "Identifies the maximum value of the line graph, the same line color configuration, default 0 does not display"
+        },
+        "Minimum mark": {
+          "name": "Minimum mark",
+          "detail": "Identify the minimum value of the line graph, the same line color configuration, default 0 does not display"
+        },
+        "Mark size": {
+          "name": "Mark size",
+          "detail": "The maximum and minimum mark size settings, the default is 1.5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Generate sparklines cumulative vertical histogram",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Stack by column": {
+          "name": "Stack by column",
+          "detail": "If you need to stack by row, set this item to false or 0, the default is 1"
+        },
+        "Bar interval": {
+          "name": "Bar interval",
+          "detail": "The distance between bars, the default is 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "The maximum value of the cumulative bar, used to regulate the length of the bar, the default is to automatically calculate false, auto, null"
+        },
+        "Color palette": {
+          "name": "Color palette",
+          "detail": "The color palette can individually set the bar color of each dimension, which can be set to the range of A1:A10, etc. The default is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Generate sparklines cumulative horizontal bar graph",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Stack by column": {
+          "name": "Stack by column",
+          "detail": "If you need to stack by row, set this item to false or 0, the default is 1"
+        },
+        "Bar interval": {
+          "name": "Bar interval",
+          "detail": "The distance between bars, the default is 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "The maximum value of the cumulative bar, used to regulate the length of the bar, the default is to automatically calculate false, auto, null"
+        },
+        "Color palette": {
+          "name": "Color palette",
+          "detail": "The color palette can individually set the bar color of each dimension, which can be set to the range of A1:A10, etc. The default is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Generate sparklines discrete graph",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Segmentation threshold": {
+          "name": "Segmentation threshold",
+          "detail": "Discrete graph column color distinction, for example: if the value is 0, blue is greater than 0, red is less than 0, and the default is 0"
+        },
+        "Above threshold color": {
+          "name": "Above threshold color",
+          "detail": "The line color of the line graph can be range A1, color table index value or specific color value. Set it to 0 or false to not display it. It supports regx, rgb, rgba, etc. Default #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Below threshold color",
+          "detail": "The color setting of the bar below the threshold, the same as the color above the threshold, default #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Generate sparklines three-state graph",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Bar interval": {
+          "name": "Bar interval",
+          "detail": "The distance between bars, the default is 1"
+        },
+        "Bar color": {
+          "name": "Bar color",
+          "detail": "The line color of the line graph can be range A1, color table index value or specific color value. Set it to 0 or false to not display it. It supports regx, rgb, rgba, etc. Default #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Negative bar color",
+          "detail": "Negative bar color setting, representing the color of negative value, same as the bar color configuration, default #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Zero value bar color",
+          "detail": "Zero value bar color setting, representing 0 value color, the same color configuration of the bar, default #999"
+        },
+        "Color palette": {
+          "name": "Color palette",
+          "detail": "The color palette can set the color of each bar individually, multiple settings can be set, and two formats are supported: 1 color such as #000, which means that the color of the first bar is black; 2 value range: color, such as -2:# 000 indicates that the bar with a value of -2 is black, 0:5:#000 indicates that the bar with a value of 0-5 is black, and the default is empty"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Generate sparklines pie chart",
+      "parameters": {
+        "Range": {
+          "name": "Range",
+          "detail": "Range，Values can be calculated effectively, such as A1:A20, {1,2,3,4,5}, etc."
+        },
+        "Rotation angle": {
+          "name": "Rotation angle",
+          "detail": "The rotation angle of the pie chart, the default is 0"
+        },
+        "border": {
+          "name": "border",
+          "detail": "Pie chart border size, default is none 0"
+        },
+        "Border color": {
+          "name": "Border color",
+          "detail": "The border color of the pie chart, the default is #000"
+        },
+        "Color palette": {
+          "name": "Color palette",
+          "detail": "The color of the slice can be set in the palette, which can be set to the range of A1:A10, etc. The default is #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Generating sparklines bullets",
+      "parameters": {
+        "Target": {
+          "name": "Target",
+          "detail": "The numerical value can be calculated effectively for the achieved target value, such as A1, 100, etc."
+        },
+        "achieved": {
+          "name": "achieved",
+          "detail": "Only when the value is completed can the value be calculated effectively, such as A1, 100, etc."
+        },
+        "Contrast": {
+          "name": "Contrast",
+          "detail": "Comparative values, such as excess, minimum, and bottom line for awards, can be effectively calculated, such as A1, 100, etc. You can set up to 9 comparison values"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Combine sparklines graphs into one cell",
+      "parameters": {
+        "config": {
+          "name": "config",
+          "detail": "Sparklines chart settings, such as A1:A20, a completed pie chart, line chart settings, etc."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sorts rows of range by specified column.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The data to be sorted."
+        },
+        "sort_column": {
+          "name": "sort_column",
+          "detail": "The index of the column in `range` or a range outside of `range` containing the values by which to sort."
+        },
+        "is_ascending": {
+          "name": "is_ascending",
+          "detail": "`TRUE` or `FALSE` indicating whether to sort `sort_column` in ascending order. `FALSE` sorts in descending order."
+        },
+        "sort_column2": {
+          "name": "sort_column2",
+          "detail": "Additional columns."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filters a range based off provided conditions.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The data to be filtered."
+        },
+        "condition1": {
+          "name": "condition1",
+          "detail": "A column or row containing true or false values corresponding to the first column or row of `range`, or an array formula evaluating to true or false."
+        },
+        "condition2": {
+          "name": "condition2",
+          "detail": "Additional rows or columns containing boolean values `TRUE` or `FALSE` indicating whether the corresponding row or column in `range` should pass through `FILTER`. Can also contain array formula expressions which evaluate to such rows or columns. All conditions must be of the same type (row or column). Mixing row conditions and column conditions is not permitted."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Unique rows in the provided source range.",
+      "parameters": {
+        "range": {
+          "name": "range",
+          "detail": "The data to filter by unique entries."
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[Option] - Logical value, indicating how to compare; by row = FALSE() or omitted; by column = TRUE()."
+        },
+        "occurs_once": {
+          "name": "occurs_once",
+          "detail": "[Option] - Logical value, only one occurrence in the unique value is returned = TRUE(); including all unique values = FALSE() or omitted."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Returns a grid of random numbers.",
+      "parameters": {
+        "rows": {
+          "name": "rows",
+          "detail": "The number of rows to populate with a random number."
+        },
+        "columns": {
+          "name": "columns",
+          "detail": "The number of columns to populate with a random number."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Returns a grid of sequential numbers.",
+      "parameters": {
+        "rows": {
+          "name": "rows",
+          "detail": "The number of rows in the function's resulting grid."
+        },
+        "columns": {
+          "name": "columns",
+          "detail": "The number of columns in the function's resulting grid. If omitted, the result grid will have 1 column."
+        },
+        "start": {
+          "name": "start",
+          "detail": "The number, at which to start the sequence. If omitted, the sequence will start at 1."
+        },
+        "step": {
+          "name": "step",
+          "detail": "The amount each value in the sequence will differ by. If omitted, each value will differ by 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Evaluate according to literal formula or expression.",
+      "parameters": {
+        "expression": {
+          "name": "expression",
+          "detail": "Formula or expression"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Calls a function on a remote back end server/API.",
+      "parameters": {
+        "remote_expression": {
+          "name": "remote_expression",
+          "detail": "Formula"
+        }
+      }
+    }
   }
 }

@@ -163,6 +163,15 @@ const App = ({ removeEventHandlers }) => {
     }
 
     dispatch(actions.setUIConfiguration(finalMode));
+
+    if (isAccessibleMode) {
+      if (finalMode === VIEWER_CONFIGURATIONS.DEFAULT) {
+        dispatch(actions.setShouldAddA11yContentToDOM(true));
+      } else {
+        console.warn('Accessibility mode is not compatible with this mode:', finalMode);
+        dispatch(actions.setAccessibleMode(false));
+      }
+    }
   }, []);
 
   const loadSpreadsheetEditorUI = () => {
@@ -702,6 +711,14 @@ const App = ({ removeEventHandlers }) => {
             <LazyLoadWrapper
               Component={LazyLoadComponents.HeaderFooterOptionsModal}
               dataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
+            />
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.OfficeEditorMarginsModal}
+              dataElement={DataElements.OFFICE_EDITOR_MARGINS_MODAL}
+            />
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.OfficeEditorColumnsModal}
+              dataElement={DataElements.OFFICE_EDITOR_COLUMNS_MODAL}
             />
           </>
         )}

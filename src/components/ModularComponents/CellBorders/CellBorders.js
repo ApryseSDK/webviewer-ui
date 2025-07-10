@@ -3,23 +3,39 @@ import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { CELL_BORDER_BUTTONS } from 'constants/customizationVariables';
 import { getPresetButtonDOM } from '../Helpers/menuItems';
 import ToggleElementButton from '../ToggleElementButton';
+import setCellBorder from 'src/helpers/setCellBorder';
+import getButtonDisplay from 'src/helpers/getBorderDisplayButton';
+import selectors from 'selectors';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './CellBorders.scss';
 
 const CellBorders = (props) => {
   const { isFlyoutItem, dataElement, disabled } = props;
+  const selectedBorderStyleListOption = useSelector((state)=> selectors.getSelectedBorderStyleListOption(state));
+  const selectedBorderColorOption = useSelector((state)=> selectors.getSelectedBorderColorOption(state));
 
   const { t } = useTranslation();
 
-  const borderButtons = CELL_BORDER_BUTTONS.map((button) => {
-    return getPresetButtonDOM({
-      buttonType: button,
-    });
-  });
+  const onClick = (e)=> {
+    const borderType = e.target.dataset.element;
+    const border = {
+      type: borderType,
+      style: selectedBorderStyleListOption,
+      color: selectedBorderColorOption
+    };
+    setCellBorder(border);
+  };
+
+  const buttonDisplay = getButtonDisplay();
+  const borderButtons = Object.keys(buttonDisplay).flatMap((borderType) =>
+    buttonDisplay[borderType]
+      ? [getPresetButtonDOM({ buttonType: borderType, onClick })]
+      : []
+  );
 
   return ( isFlyoutItem ?
     <div data-element={dataElement} className={classNames({
@@ -27,6 +43,7 @@ const CellBorders = (props) => {
       'flyout-item': isFlyoutItem
     })}>
       <Button
+        onClick={()=>setCellBorder({ type: 'All', style: 'None', color: null })}
         className={classNames({
           clearBorderButton: true,
         })}

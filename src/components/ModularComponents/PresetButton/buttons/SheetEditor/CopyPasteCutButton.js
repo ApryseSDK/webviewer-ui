@@ -5,6 +5,9 @@ import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { CELL_ACTION_OPTIONS } from 'constants/spreadsheetEditor';
 import capitalize from 'helpers/capitalize';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import performClipboardActionOnCells from 'src/helpers/performClipboardActionOnCells';
 
 const propTypes = {
   actionType: PropTypes.oneOf(Object.values(CELL_ACTION_OPTIONS)).isRequired,
@@ -16,12 +19,20 @@ const propTypes = {
 const CopyPasteCutButton = forwardRef((props, ref) => {
   const { isFlyoutItem, actionType, style, className } = props;
   const isActive = false;
+  const isEnabled = useSelector((state) => {
+    const selectorName = `getCan${capitalize(actionType)}`;
+    const selector = selectors[selectorName];
+    if (!selector) {
+      return false;
+    }
+    return selector(state);
+  });
 
   const buttonSelector = `cell${capitalize(actionType)}`;
   const { dataElement, icon, title } = menuItems[buttonSelector];
 
   const handleClick = () => {
-    // handle button click
+    performClipboardActionOnCells(actionType);
   };
 
   return (
@@ -34,6 +45,7 @@ const CopyPasteCutButton = forwardRef((props, ref) => {
       />
       : (
         <ActionButton
+          disabled={!isEnabled}
           key={actionType}
           isActive={isActive}
           onClick={handleClick}

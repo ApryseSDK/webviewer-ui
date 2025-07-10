@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Selectați instrumentul AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Selectați instrumentul AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Selectați instrumentul AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Editați comanda rapidă de la tastatură",
+      "editKeyboardShortcut": "Editați comanda rapidă de la tastatură",
       "setShortcut": "Setați comanda rapidă",
       "editShortcut": "Editați comanda rapidă",
       "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Nici unul",
-      "solid": "Solid",
+      "thin": "Solid",
       "dashed": "întreruptă",
       "dotted": "Punctat"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Editare avertisment",
       "message": "Sigur doriți să ștergeți această foaie?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Aspectul paginii",
+      "columnsMessage": "Setările alese pentru spațierea dintre coloane sunt prea mari pentru lățimea paginii în unele secțiuni.",
+      "marginsMessage": "Setările alese pentru margini sunt prea mari pentru lățimea paginii în unele secțiuni."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Corect",
     "customMargins": "Margini personalizate",
     "customMarginsDescription": "Definiți margini personalizate",
+    "column": "Coloană",
+    "columns": "Coloane",
+    "singleColumn": "1 coloană",
+    "twoColumn": "2 coloane",
+    "threeColumn": "3 coloane",
+    "customColumn": "Coloane personalizate",
+    "customColumnDescription": "Definiți coloane personalizate",
+    "unitMeasurement": "Unitate de măsură",
     "header": {
       "0": "Antet",
       "1": "Antet prima pagină",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Pagini pare și impare diferite",
         "differentFirstEvenOddPages": "Pagini prima, pare și impare diferite"
       }
+    },
+    "columnsModal": {
+      "title": "Ajustare personalizată a coloanei",
+      "columnAmount": "Număr de coloane",
+      "columnNumber": "Număr coloană",
+      "width": "Lăţime",
+      "spacing": "Spațiere",
+      "widthAndSpacing": "Lățime și spațiere",
+      "equalColumns": "Lățime egală a coloanei"
     },
     "marginsModal": {
       "title": "Ajustare personalizată a marginii",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Vizionare",
     "editingDescription": "Editați documentul",
     "viewOnlyDescription": "Numai vizualizare",
+    "editModeDropdown": "Selectarea modului de editare",
     "bold": "Îndrăzneţ",
     "italic": "Cursiv",
     "underline": "Subliniați",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Ștergeți celulele și treceți în sus",
     "deleteColumnShiftLeft": "Ștergeți celulele și comutați la stânga",
     "clearBorder": "Ștergeți chenarul",
-    "cellBorderAll": "Toate Granițele",
-    "cellBorderInside": "În interiorul granițelor",
-    "cellBorderOutside": "În afara granițelor",
-    "cellBorderTop": "Chenar de sus",
-    "cellBorderBottom": "Chenar de jos",
-    "cellBorderLeft": "Chenarul din stânga",
-    "cellBorderRight": "Chenarul din dreapta",
-    "cellBorderVertical": "Chenar vertical",
-    "cellBorderHorizontal": "Frontieră orizontală",
-    "cellBorderNone": "Fără Frontiere",
+    "all": "Toate Granițele",
+    "inside": "În interiorul granițelor",
+    "outside": "În afara granițelor",
+    "top": "Chenar de sus",
+    "bottom": "Chenar de jos",
+    "left": "Chenarul din stânga",
+    "right": "Chenarul din dreapta",
+    "vertical": "Chenar vertical",
+    "horizontal": "Frontieră orizontală",
+    "none": "Fără Frontiere",
     "borders": "Frontiere",
     "fontSize": {
       "dropdownLabel": "Dimensiunea fontului"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Barul de formule",
     "range": "Gamă",
-    "formulas": "Formule",
-    "sumif": "O sumă condiționată dintr-un interval",
-    "sumsq": "Returnează suma pătratelor unui interval",
-    "sum": "Adaugă toate numerele dintr-un interval",
-    "asinh": "Returnează sinusul hiperbolic invers al unui număr",
-    "acos": "Returnează arccosinusul unui număr, în radiani",
-    "cosh": "Returnează cosinusul hiperbolic al unui număr",
-    "iseven": "Verifică dacă un număr este par",
-    "isodd": "Verifică dacă un număr este impar"
+    "formulas": "Formule"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "O sumă condiționată într-un interval.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul care este testat în funcție de „criteriu”."
+        },
+        "criterion": {
+          "name": "criteriu",
+          "detail": "Modelul sau testul care va fi aplicat lui `interval`."
+        },
+        "sum_range": {
+          "name": "interval_sumă",
+          "detail": "Intervalul care va fi însumat, dacă este diferit de „interval”."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangenta unui unghi exprimată în radiani.",
+      "parameters": {
+        "angle": {
+          "name": "unghi",
+          "detail": "Unghiul pentru care se calculează tangenta, în radiani."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Tangenta hiperbolică a oricărui număr real.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Orice valoare reală pentru a cărei tangentă hiperbolică este calculată."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Rotunjește numărul în sus la cel mai apropiat multiplu al unui factor.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la cel mai apropiat multiplu întreg al lui `factor`."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "Numărul la ai cărui multipli va fi rotunjită „valoare”."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Tangenta inversă a unei valori, în radiani.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează tangenta inversă."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Sinusul hiperbolic invers al unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează sinusul hiperbolic invers."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Valoarea absolută a unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul pentru care se returnează valoarea absolută."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Inversul cosinusului unei valori, în radiani.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează cosinusul invers. Trebuie să fie între „-1” și „1”, inclusiv."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Inversul cosinusului hiperbolic al unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează cosinusul hiperbolic invers. Trebuie să fie mai mare sau egală cu „1”."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Funcție de distribuție multinomială.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Inversul tangentei hiperbolice a unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează tangenta hiperbolică inversă. Trebuie să fie între -1 și 1, exclusiv."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arctangenta unei valori.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Coordonata x a punctului de capăt al segmentului de linie pentru care se calculează unghiul față de axa x."
+        },
+        "y": {
+          "name": "şi",
+          "detail": "Coordonata y a punctului final al segmentului de linie pentru care se calculează unghiul față de axa x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Numărul de valori goale.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval în care se numără spațiile libere."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Cosinusul hiperbolic al oricărui număr real.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Orice valoare reală pentru care se calculează cosinusul hiperbolic."
+        }
+      }
+    },
+    "INT": {
+      "description": "Rotunjește numărul în jos la cel mai apropiat număr întreg.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit în jos la cel mai apropiat număr întreg."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Dacă valoarea furnizată este pară.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca fiind pară."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Dacă valoarea furnizată este impară.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca fiind impară."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Cel mai mic multiplu comun al unuia sau mai multor numere întregi.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval ai cărui factori trebuie luați în considerare într-un calcul pentru a găsi cel mai mic multiplu comun."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare ai căror factori trebuie luați în considerare pentru a găsi cel mai mic multiplu comun."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logaritmul unui număr în baza e (numărul lui Euler).",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează logaritmul, baza e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logaritmul unui număr în raport cu o bază.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează logaritmul."
+        },
+        "base": {
+          "name": "baza",
+          "detail": "Baza de utilizat pentru calculul logaritmului."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logaritmul unui număr în baza 10.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează logaritmul, baza 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Operator modulo (restul).",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Numărul care trebuie împărțit pentru a afla restul."
+        },
+        "divisor": {
+          "name": "divizor",
+          "detail": "Numărul la care se împarte."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Rotunjește un număr la cel mai apropiat multiplu întreg.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul de rotunjit la cel mai apropiat multiplu întreg al altuia."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "Numărul la ai cărui multipli va fi rotunjită „valoare”."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Rotunjește un număr în sus la cel mai apropiat număr întreg impar.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la următorul număr impar mai mare."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Suma pătratelor.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Primul număr sau interval ale cărui pătrate trebuie adunate."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Numere sau intervale suplimentare ale căror pătrate să fie adunate la pătratul/pătratele lui „valoare1”."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Numărul de combinații dintr-un set de obiecte.",
+      "parameters": {
+        "n": {
+          "name": "n.",
+          "detail": "Dimensiunea setului de obiecte din care se poate alege."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Numărul de obiecte de ales."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Suma unei serii de numere și/sau celule.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Primul număr sau interval de adunat."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Numere sau intervale suplimentare de adăugat la `valoare1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Subtotal pentru un interval folosind o funcție specifică.",
+      "parameters": {
+        "function_code": {
+          "name": "cod_funcție",
+          "detail": "Funcția de utilizat în agregarea subtotalurilor."
+        },
+        "range1": {
+          "name": "interval1",
+          "detail": "Primul interval pentru care se calculează un subtotal."
+        },
+        "range2": {
+          "name": "interval2",
+          "detail": "Intervale suplimentare pentru care se calculează subtotaluri."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Inversul sinusului unei valori, în radiani.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează sinusul invers. Trebuie să fie între „-1” și „1” inclusiv."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "O numărătoare condiționată într-un interval.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul care este testat în funcție de „criteriu”."
+        },
+        "criterion": {
+          "name": "criteriu",
+          "detail": "Modelul sau testul care va fi aplicat lui `interval`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Convertește valoarea unui unghi, exprimată în grade, în radiani.",
+      "parameters": {
+        "angle": {
+          "name": "unghi",
+          "detail": "Unghiul de convertit din grade în radiani."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Un număr aleator între 0 inclusiv și 1 exclusiv."
+    },
+    "COUNTUNIQUE": {
+      "description": "Numără numărul de valori unice dintr-un interval.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare pentru unicitate."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare pentru unicitate."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Convertește valoarea unui unghi, exprimată în radiani, în grade.",
+      "parameters": {
+        "angle": {
+          "name": "unghi",
+          "detail": "Unghiul de convertit din radiani în grade."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Funcție de eroare Gauss complementară a unei valori.",
+      "parameters": {
+        "z": {
+          "name": "Cu",
+          "detail": "Numărul pentru care se calculează funcția de eroare Gauss complementară."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Rotunjește un număr în sus la cel mai apropiat număr întreg par.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la următorul număr par mai mare."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Numărul lui Euler, e (~2,718) ridicat la o putere.",
+      "parameters": {
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponentul la care trebuie ridicat e."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Factorialul unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul sau referința la un număr al cărui factorial va fi calculat și returnat."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "„factorial dublu” al unui număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul sau referința la un număr al cărui factorial dublu va fi calculat și returnat."
+        }
+      }
+    },
+    "PI": {
+      "description": "Numărul pi."
+    },
+    "GCD": {
+      "description": "Cel mai mare divizor comun al unuia sau mai multor numere întregi.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval ai cărui factori trebuie luați în considerare într-un calcul pentru a găsi cel mai mare divizor comun."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare ai căror factori trebuie luați în considerare pentru a găsi cel mai mare divizor comun."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Număr întreg aleatoriu cuprins între două valori, inclusiv.",
+      "parameters": {
+        "low": {
+          "name": "scăzut",
+          "detail": "Limita inferioară a intervalului aleatoriu."
+        },
+        "high": {
+          "name": "ridicat",
+          "detail": "Capătul superior al intervalului aleatoriu."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Rotunjește un număr conform regulilor standard.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la numărul de poziții din „locuri”."
+        },
+        "places": {
+          "name": "locuri",
+          "detail": "Numărul de zecimale la care se rotunjește."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Rotunjește un număr în jos.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la numărul de poziții din „locuri”, rotunjind întotdeauna în jos."
+        },
+        "places": {
+          "name": "locuri",
+          "detail": "Numărul de zecimale la care se rotunjește."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Rotunjește un număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de rotunjit la numărul de poziții din „locuri”, rotunjind întotdeauna în sus."
+        },
+        "places": {
+          "name": "locuri",
+          "detail": "Numărul de zecimale la care se rotunjește."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Suma unei serii de puteri.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Intrarea în seria de puteri. Variază în funcție de tipul de aproximare, poate fi un unghi, un exponent sau o altă valoare."
+        },
+        "n": {
+          "name": "n.",
+          "detail": "Puterea inițială la care se ridică „x” în seria de puteri."
+        },
+        "m": {
+          "name": "m.",
+          "detail": "Incrementul aditiv cu care se mărește `x`."
+        },
+        "a": {
+          "name": "o",
+          "detail": "Matricea sau intervalul care conține coeficienții seriei de puteri."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Semnul unui număr furnizat (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea al cărei semn va fi evaluat."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinusul unui unghi exprimat în radiani.",
+      "parameters": {
+        "angle": {
+          "name": "unghi",
+          "detail": "Unghiul pentru care se calculează sinusul, în radiani."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Sinusul hiperbolic al oricărui număr real.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Orice valoare reală pentru a se calcula sinusul hiperbolic."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Rădăcina pătrată pozitivă a unui număr pozitiv.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul pentru care se calculează rădăcina pătrată pozitivă."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Rădăcina pătrată a produsului dintre pi și număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Numărul care va fi înmulțit cu Pi și va primi rădăcina pătrată a produsului."
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritmul funcției gamma.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Intrarea în funcția Gamma. Va fi returnat logaritmul natural al lui Gamma(`value`)."
+        }
+      }
+    },
+    "COS": {
+      "description": "Cosinusul unui unghi exprimat în radiani.",
+      "parameters": {
+        "angle": {
+          "name": "unghi",
+          "detail": "Unghiul pentru care se calculează cosinusul, în radiani."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Trunchiază un număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care va fi trunchiată."
+        },
+        "places": {
+          "name": "locuri",
+          "detail": "Numărul de cifre semnificative de păstrat la dreapta virgulei zecimale."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Un număr împărțit la altul.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Numărul care trebuie împărțit."
+        },
+        "divisor": {
+          "name": "divizor",
+          "detail": "Numărul la care se împarte."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Un număr ridicat la o putere.",
+      "parameters": {
+        "base": {
+          "name": "baza",
+          "detail": "Numărul care trebuie ridicat la puterea „exponent”."
+        },
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponentul la care se ridică `baza`."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Însumează un interval în funcție de mai multe criterii.",
+      "parameters": {
+        "sum_range": {
+          "name": "interval_sumă",
+          "detail": "Intervalul de însumat."
+        },
+        "criteria_range1": {
+          "name": "interval_criterii1",
+          "detail": "Intervalul de verificare în raport cu criteriul 1."
+        },
+        "criterion1": {
+          "name": "criteriul 1",
+          "detail": "Modelul sau testul care va fi aplicat la intervalul_criteria1."
+        },
+        "criteria_range2": {
+          "name": "interval_criterii2",
+          "detail": "Intervale suplimentare de verificat."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Numără valori în funcție de mai multe criterii.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "interval_criterii1",
+          "detail": "Intervalul de verificare în raport cu `criterion1`."
+        },
+        "criterion1": {
+          "name": "criteriul 1",
+          "detail": "Modelul sau testul care va fi aplicat lui `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "interval_criterii2",
+          "detail": "Intervale suplimentare de verificat."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Rezultatul înmulțirii unei serii de numere.",
+      "parameters": {
+        "factor1": {
+          "name": "factorul 1",
+          "detail": "Primul număr sau interval de calculat pentru produs."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Mai multe numere sau intervale de calculat pentru produs."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Media armonică a unui set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al populației."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în populație."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Probabilitatea distribuției hipergeometrice.",
+      "parameters": {
+        "num_successes": {
+          "name": "număr_succese",
+          "detail": "Numărul dorit de succese."
+        },
+        "num_draws": {
+          "name": "num_draws",
+          "detail": "Numărul de extrageri permise."
+        },
+        "successes_in_pop": {
+          "name": "succese_în_popular",
+          "detail": "Numărul total de succese în populație."
+        },
+        "pop_size": {
+          "name": "dimensiune_pop",
+          "detail": "Mărimea totală a populației"
+        },
+        "cumulative": {
+          "name": "cumulativ",
+          "detail": "Determinați valoarea logică a formei funcției.\n\nDacă funcția cumulativă este TRUE(), HYPGEOM.DIST returnează funcția de distribuție cumulativă;\n\ndacă este FALSE(), returnează funcția densității de probabilitate."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Intersecția cu axa Y a liniei derivate prin regresie liniară.",
+      "parameters": {
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtoza unui set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al setului de date."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în setul de date."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Al N-lea cel mai mare element dintr-un set de date.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matrice sau interval care conține setul de date de luat în considerare."
+        },
+        "n": {
+          "name": "n.",
+          "detail": "Rangul de la cel mai mare la cel mai mic al elementului de returnat."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Abaterea standard a eșantionului (textul este 0).",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al eșantionului."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în eșantion."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Abaterea standard a unei populații întregi.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al populației."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în populație."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Media geometrică a unui set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al populației."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în populație."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Rang procentual (percentilă) de la 0 la 1 inclusiv.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matricea sau intervalul care conține setul de date de luat în considerare."
+        },
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea al cărei rang procentual va fi determinat."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de utilizat în calcul. Implicit este 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Valoarea y așteptată bazată pe regresia liniară.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Valoarea de pe axa x de prognozat."
+        },
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Transformarea inversă Fisher a unei valori specificate.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează transformarea inversă Fisher."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Transformarea Fisher a unei valori specificate.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea pentru care se calculează transformarea Fisher."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Numărul de valori numerice din setul de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la numărare."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la numărare."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Numărul de valori dintr-un set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la numărare."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la numărare."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Valoare medie numerică dintr-un set de date, ignorând textul.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii medii."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii medii."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Probabilitatea distribuției binomiale.",
+      "parameters": {
+        "num_successes": {
+          "name": "număr_succese",
+          "detail": "Numărul de succese pentru care se calculează probabilitatea în încercările cu funcția `num_trials`."
+        },
+        "num_trials": {
+          "name": "num_trials",
+          "detail": "Numărul de încercări independente."
+        },
+        "prob_success": {
+          "name": "probabilitate_succes",
+          "detail": "Probabilitatea de succes în orice încercare dată."
+        },
+        "cumulative": {
+          "name": "cumulativ",
+          "detail": "Dacă se utilizează distribuția cumulativă binomială."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Suma pătratelor abaterilor pe baza unui eșantion.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al eșantionului."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în eșantion."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Media valorilor în funcție de criterii.",
+      "parameters": {
+        "criteria_range": {
+          "name": "interval_criterii",
+          "detail": "Intervalul de verificare în raport cu „criteriu”."
+        },
+        "criterion": {
+          "name": "criteriu",
+          "detail": "Modelul sau testul care va fi aplicat lui `criteria_range`."
+        },
+        "average_range": {
+          "name": "interval_mediu",
+          "detail": "Intervalul pentru medie. Dacă nu este inclus, se folosește `criteria_range` pentru medie."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Media valorilor în funcție de mai multe criterii.",
+      "parameters": {
+        "average_range": {
+          "name": "interval_mediu",
+          "detail": "Intervalul pentru medie."
+        },
+        "criteria_range1": {
+          "name": "interval_criterii1",
+          "detail": "Intervalul de verificare în raport cu `criterion1`."
+        },
+        "criterion1": {
+          "name": "criteriul 1",
+          "detail": "Modelul sau testul care va fi aplicat lui `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "interval_criterii2",
+          "detail": "Intervale suplimentare de verificat."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Numărul de permutări dintr-un număr de obiecte.",
+      "parameters": {
+        "n": {
+          "name": "n.",
+          "detail": "Dimensiunea setului de obiecte din care se poate alege."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Numărul de obiecte de ales."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Media unui set de date, excluzând limitele superioare/inferioare.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matrice sau interval care conține setul de date de luat în considerare."
+        },
+        "exclude_proportion": {
+          "name": "exclude_proportion",
+          "detail": "Proporția setului de date care trebuie exclusă, din extremitățile setului."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Coeficientul de corelație produs-moment Pearson.",
+      "parameters": {
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Valoare numerică minimă într-un set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii minime."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii minime."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Valoare minimă într-un set de date numerice.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii minime."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii minime."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Valoarea mediană într-un set de date numerice.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii mediane."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii mediane."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Valoare numerică maximă dintr-un set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii maxime."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii maxime."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Valoarea maximă dintr-un set de date numerice.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval de luat în considerare la calcularea valorii maxime."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de luat în considerare la calcularea valorii maxime."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Valorile probabilității se află într-un interval.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matrice sau interval care conține setul de date de luat în considerare."
+        },
+        "probabilities": {
+          "name": "probabilități",
+          "detail": "Matrice sau interval care conține probabilitățile corespunzătoare lui „date”."
+        },
+        "low_limit": {
+          "name": "limită_inferioară",
+          "detail": "Limita inferioară a intervalului de valori pentru care se calculează probabilitatea."
+        },
+        "high_limit": {
+          "name": "limită_înaltă",
+          "detail": "Limita superioară a intervalului de valori pentru care se calculează probabilitatea."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Pătratul coeficientului de corelație.",
+      "parameters": {
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Varianța eșantionului (textul este 0).",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al eșantionului."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în eșantion."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Varianța întregii populații (textul este 0).",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al populației."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în populație."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Eroarea standard a valorilor y prezise în regresie.",
+      "parameters": {
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Echivalentul normalizat al unei variabile aleatoare.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea variabilei aleatoare de normalizat."
+        },
+        "mean": {
+          "name": "medie",
+          "detail": "Media distribuției."
+        },
+        "standard_deviation": {
+          "name": "abatere_standard",
+          "detail": "Abaterea standard a distribuției."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Al N-lea cel mai mic element dintr-un set de date.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matricea sau intervalul care conține setul de date de luat în considerare."
+        },
+        "n": {
+          "name": "n.",
+          "detail": "Rangul de la cel mai mic la cel mai mare al elementului de returnat."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Panta liniei din regresia liniară a datelor.",
+      "parameters": {
+        "data_y": {
+          "name": "date_y",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date dependente."
+        },
+        "data_x": {
+          "name": "date_x",
+          "detail": "Intervalul care reprezintă matricea sau tabloul de date independente."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Asimetria unui set de date.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare sau interval al setului de date."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valori sau intervale suplimentare de inclus în setul de date."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Căutare verticală.",
+      "parameters": {
+        "search_key": {
+          "name": "cheie_de_căutare",
+          "detail": "Valoarea de căutat. De exemplu, `42`, `\"Cats\"` sau `I24`."
+        },
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul de luat în considerare pentru căutare. Prima coloană din interval este căutată pentru cheia specificată în `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Indexul coloanei valorii care trebuie returnată, unde prima coloană din „interval” este numerotată cu 1."
+        },
+        "is_sorted": {
+          "name": "este_sortat",
+          "detail": "Indică dacă coloana în care se va căuta (prima coloană din intervalul specificat) este sortată, caz în care se va returna cea mai apropiată potrivire pentru `search_key`."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Căutare orizontală",
+      "parameters": {
+        "search_key": {
+          "name": "cheie_de_căutare",
+          "detail": "Valoarea de căutat. De exemplu, `42`, `\"Cats\"` sau `I24`."
+        },
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul de luat în considerare pentru căutare. Primul rând din interval este căutat pentru cheia specificată în `search_key`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Indexul rândului valorii care trebuie returnată, unde primul rând din „interval” este numerotat cu 1."
+        },
+        "is_sorted": {
+          "name": "este_sortat",
+          "detail": "Indică dacă rândul în care se va căuta (primul rând din intervalul specificat) este sortat."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Caută o valoare.",
+      "parameters": {
+        "search_key": {
+          "name": "cheie_de_căutare",
+          "detail": "Valoarea de căutat în rând sau coloană. De exemplu, `42`, `\"Cats\"` sau `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "interval_căutare|matrice_rezultate_căutare",
+          "detail": "O metodă de utilizare a acestei funcții este de a furniza un singur rând sau o singură coloană sortată, `search_range`, pentru a căuta `search_key`, cu un al doilea argument `result_range`. Cealaltă modalitate este de a combina aceste două argumente într-un singur `search_result_array`, unde se caută primul rând sau coloană și se returnează o valoare din ultimul rând sau coloană din matrice. Dacă nu se găsește `search_key`, se poate returna o potrivire neexactă."
+        },
+        "result_range": {
+          "name": "interval_rezultat",
+          "detail": "Intervalul din care se returnează un rezultat. Valoarea returnată corespunde locației în care se găsește `search_key` în `search_range`. Acest interval trebuie să fie format dintr-un singur rând sau o singură coloană și nu ar trebui utilizat dacă se utilizează metoda `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Referință de celulă ca șir de caractere.",
+      "parameters": {
+        "row": {
+          "name": "rând",
+          "detail": "Numărul rândului referinței celulei"
+        },
+        "column": {
+          "name": "coloană",
+          "detail": "Numărul coloanei (nu numele) referinței celulei. „A” este coloana cu numărul „1”."
+        },
+        "absolute_relative_mode": {
+          "name": "mod_absolut_relativ",
+          "detail": "Un indicator care indică dacă referința este absolută la nivel de rând/coloană. `1` este absolută la nivel de rând și coloană (de exemplu, $A$1), `2` este absolută la nivel de rând și relativă la nivel de coloană (de exemplu, A$1), `3` este relativă la nivel de rând și absolută la nivel de coloană (de exemplu, $A1), iar `4` este relativă la nivel de rând și coloană (de exemplu, A1)."
+        },
+        "use_a1_notation": {
+          "name": "utilizare_notație_a1",
+          "detail": "O valoare booleană care indică dacă se utilizează notația în stilul „A1” (TRUE) sau notația în stilul „R1C1” (FALSE)."
+        },
+        "sheet": {
+          "name": "foaie",
+          "detail": "Text care indică numele foii la care indică adresa."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "O referință de celulă specificată de un șir de caractere.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "referință_celulă_ca_șir",
+          "detail": "O referință de celulă, scrisă ca un șir de caractere înconjurat de ghilimele."
+        },
+        "is_A1_notation": {
+          "name": "notația_is_A1",
+          "detail": "Indică dacă referința celulei este în notația A1 (TRUE) sau R1C1 (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Numărul rândului unei celule specificate.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referință_celulă",
+          "detail": "Celula al cărei număr de rând va fi returnat."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Numărul de rânduri dintr-o matrice sau un interval specificat.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul al cărui număr de rânduri va fi returnat."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Numărul coloanei unei celule specificate.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referință_celulă",
+          "detail": "Celula al cărei număr de coloană va fi returnat. Coloana „A” corespunde lui „1”."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Numărul de coloane dintr-o matrice sau un interval specificat.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Intervalul al cărui număr de coloane va fi returnat."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "O decalaj de referință pentru interval în raport cu o celulă.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referință_celulă",
+          "detail": "Punctul de pornire de la care se numără rândurile și coloanele decalate."
+        },
+        "offset_rows": {
+          "name": "rânduri_deplasate",
+          "detail": "Numărul de rânduri cu care se face offset."
+        },
+        "offset_columns": {
+          "name": "coloane_de_compensare",
+          "detail": "Numărul de coloane cu care se va face offset."
+        },
+        "height": {
+          "name": "înălţime",
+          "detail": "Înălțimea intervalului de returnare începând de la ținta de offset."
+        },
+        "width": {
+          "name": "lăţime",
+          "detail": "Lățimea intervalului de returnat începând de la ținta de offset."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Poziția elementului în intervalul care corespunde valorii.",
+      "parameters": {
+        "search_key": {
+          "name": "cheie_de_căutare",
+          "detail": "Valoarea de căutat. De exemplu, `42`, `\"Cats\"` sau `I24`."
+        },
+        "range": {
+          "name": "gamă",
+          "detail": "Matricea unidimensională în care se va căuta."
+        },
+        "search_type": {
+          "name": "tip_căutare",
+          "detail": "Metoda de căutare. `1` (implicit) găsește cea mai mare valoare mai mică sau egală cu `search_key` atunci când `range` este sortat în ordine crescătoare. `0` găsește valoarea exactă atunci când `range` este nesortat. `-1` găsește cea mai mică valoare mai mare sau egală cu `search_key` atunci când `range` este sortat în ordine descrescătoare."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Conținutul celulei specificat prin decalajul rândului și al coloanei.",
+      "parameters": {
+        "reference": {
+          "name": "referinţă",
+          "detail": "Matricea de celule în care se va face offset."
+        },
+        "row": {
+          "name": "rând",
+          "detail": "Numărul de rânduri decalate."
+        },
+        "column": {
+          "name": "coloană",
+          "detail": "Numărul de coloane decalate."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Extrage o valoare agregată dintr-un tabel pivot care corespunde titlurilor de rând și coloană specificate.",
+      "parameters": {
+        "value_name": {
+          "name": "nume_valoare",
+          "detail": "Numele valorii din tabelul pivot pentru care doriți să obțineți date."
+        },
+        "any_pivot_table_cell": {
+          "name": "orice_celulă_din_tabel_pivot",
+          "detail": "Orice referință la o celulă din tabelul pivot dorit (se recomandă colțul de sus)."
+        },
+        "original_column": {
+          "name": "coloană_originală",
+          "detail": "Numele coloanei din setul de date original (nu din tabelul pivot)."
+        },
+        "pivot_item": {
+          "name": "element_pivot",
+          "detail": "Numele rândului sau coloanei afișate în tabelul pivot corespunzător lui *coloana_originală* pe care doriți să o recuperați."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Un element dintr-o listă de opțiuni bazate pe index.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Ce opțiune (dintre cele până la 30 oferite) să fie returnată."
+        },
+        "choice1": {
+          "name": "alegere1",
+          "detail": "O valoare potențială de returnat. Obligatoriu. Poate fi o referință la o celulă sau o valoare individuală."
+        },
+        "choice2": {
+          "name": "alegere2",
+          "detail": "Valori suplimentare dintre care se poate alege."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Convertește oră/minut/secundă într-un timp.",
+      "parameters": {
+        "hour": {
+          "name": "oră",
+          "detail": "Componenta orară a timpului."
+        },
+        "minute": {
+          "name": "minut",
+          "detail": "Componenta minutală a timpului."
+        },
+        "second": {
+          "name": "doilea",
+          "detail": "A doua componentă a timpului."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Convertește un șir de timp în reprezentarea sa ca număr de serie.",
+      "parameters": {
+        "time_string": {
+          "name": "șir_de_timp",
+          "detail": "Șirul care conține reprezentarea timpului."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Ultima zi a lunii înainte sau după o întâlnire.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de la care se calculează rezultatul."
+        },
+        "months": {
+          "name": "luni",
+          "detail": "Numărul de luni înainte (negativ) sau după (pozitiv) „data_de_începere” de luat în considerare."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Datează cu câteva luni înainte/după o altă dată.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de la care se calculează rezultatul."
+        },
+        "months": {
+          "name": "luni",
+          "detail": "Numărul de luni înainte (negativ) sau după (pozitiv) „data_de_începere” de calculat."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "A doua componentă a unui anumit timp.",
+      "parameters": {
+        "time": {
+          "name": "timp",
+          "detail": "Momentul de la care se calculează a doua componentă"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Componentă minută a unui anumit timp.",
+      "parameters": {
+        "time": {
+          "name": "timp",
+          "detail": "Momentul de la care se calculează componenta minut."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Componentă orară a unei anumite ore.",
+      "parameters": {
+        "time": {
+          "name": "timp",
+          "detail": "Momentul de la care se calculează componenta orară."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Data și ora curente ca valoare de dată."
+    },
+    "NETWORKDAYS": {
+      "description": "Zile lucrătoare nete între două zile furnizate.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de început a perioadei de la care se calculează numărul de zile lucrătoare nete."
+        },
+        "end_date": {
+          "name": "dată_de_sfârșit",
+          "detail": "Data de sfârșit a perioadei de la care se calculează numărul de zile lucrătoare nete."
+        },
+        "holidays": {
+          "name": "sărbători",
+          "detail": "O constantă de tip interval sau matrice care conține numerele de serie ale datei pentru a se lua în considerare sărbătorile."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Numărul ISO al săptămânii din an.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data pentru care se determină numărul ISO al săptămânii. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Numărul săptămânii din an.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data pentru care se determină numărul săptămânii. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "type": {
+          "name": "tip",
+          "detail": "Un număr care reprezintă ziua în care începe o săptămână. Duminică = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Ziua din săptămână a datei furnizate (ca număr).",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data pentru care se determină ziua săptămânii. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "type": {
+          "name": "tip",
+          "detail": "Un număr care indică sistemul de numerotare de utilizat pentru a reprezenta zilele lucrătoare. În mod implicit, numărătoarea începe cu duminica = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Ziua din lună în care cade o anumită dată.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data din care se extrage ziua."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Numărul de zile dintre două date.",
+      "parameters": {
+        "end_date": {
+          "name": "dată_de_sfârșit",
+          "detail": "Sfârșitul intervalului de date."
+        },
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Începutul intervalului de date."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Zilele dintre două date dintr-un an de 360 de zile.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de început care trebuie luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "end_date": {
+          "name": "dată_de_sfârșit",
+          "detail": "Data de sfârșit care va fi luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "method": {
+          "name": "metodă",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Convertește anul/luna/ziua într-o dată.",
+      "parameters": {
+        "year": {
+          "name": "an",
+          "detail": "Componenta de an a datei."
+        },
+        "month": {
+          "name": "lună",
+          "detail": "Componenta lunii a datei."
+        },
+        "day": {
+          "name": "zi",
+          "detail": "Componenta zilei a datei."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Convertește un șir de date într-o valoare de dată.",
+      "parameters": {
+        "date_string": {
+          "name": "șir_dată",
+          "detail": "Șirul de caractere care reprezintă data."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Diferența de dată.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de început care trebuie luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "end_date": {
+          "name": "dată_de_sfârșit",
+          "detail": "Data de sfârșit care va fi luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "unit": {
+          "name": "unitate",
+          "detail": "O abreviere de tip șir de caractere pentru unitatea de timp. De exemplu, „M” pentru lună. Valorile acceptate sunt „A”, „L”, „Z”, „MD”, „YM”, „YZ”."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Numărul de zile lucrătoare de la data începerii.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de la care se începe numărarea."
+        },
+        "num_days": {
+          "name": "număr_zile",
+          "detail": "Numărul de zile lucrătoare de avansat de la `start_date`. Dacă este negativ, se numără invers."
+        },
+        "holidays": {
+          "name": "sărbători",
+          "detail": "O constantă de tip interval sau matrice care conține datele care trebuie luate în considerare ca sărbători."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Anul specificat de o anumită dată.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data din care se extrage anul."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Numărul exact de ani dintre două date.",
+      "parameters": {
+        "start_date": {
+          "name": "dată_începere",
+          "detail": "Data de început care trebuie luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "end_date": {
+          "name": "dată_de_sfârșit",
+          "detail": "Data de sfârșit care va fi luată în considerare în calcul. Trebuie să fie o referință la o celulă care conține o dată, o funcție care returnează un tip de dată sau un număr."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Data curentă ca valoare de dată."
+    },
+    "MONTH": {
+      "description": "Luna anului în care cade o anumită dată.",
+      "parameters": {
+        "date": {
+          "name": "data",
+          "detail": "Data de la care se extrage luna."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Rata anuală a dobânzii efective.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "rată_nominală",
+          "detail": "Rata nominală a dobânzii pe an."
+        },
+        "periods_per_year": {
+          "name": "perioade_pe_an",
+          "detail": "Numărul de perioade de compunere pe an."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Formatează un număr ca monedă specifică setărilor regionale ale foii de calcul.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Valoarea care va fi formatată."
+        },
+        "number_of_places": {
+          "name": "număr_de_locuri",
+          "detail": "Numărul de zecimale de afișat."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Convertește o fracție zecimală într-o valoare zecimală.",
+      "parameters": {
+        "fractional_price": {
+          "name": "preț_fracțional",
+          "detail": "Cotația de preț este dată folosind convențiile zecimale fracționare."
+        },
+        "unit": {
+          "name": "unitate",
+          "detail": "Unitățile fracției, de exemplu, „8” pentru 1/8 sau „32” pentru 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Convertește o valoare zecimală în fracție zecimală.",
+      "parameters": {
+        "decimal_price": {
+          "name": "preț_zecimal",
+          "detail": "Cotația de preț este dată ca valoare zecimală."
+        },
+        "unit": {
+          "name": "unitate",
+          "detail": "Unitățile fracției dorite, de exemplu, „8” pentru 1/8 sau „32” pentru 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Amortizarea prin metoda bilanțului degresiv.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "Costul inițial al activului."
+        },
+        "salvage": {
+          "name": "salvare",
+          "detail": "Valoarea activului la sfârșitul amortizării."
+        },
+        "life": {
+          "name": "viaţă",
+          "detail": "Numărul de perioade pe parcursul cărora activul este amortizat."
+        },
+        "period": {
+          "name": "perioadă",
+          "detail": "Singura perioadă din cadrul „duratei de viață” pentru care se calculează amortizarea."
+        },
+        "month": {
+          "name": "lună",
+          "detail": "Numărul de luni din primul an de amortizare."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Amortizarea prin metoda bilanțului dublu decrescător.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "Costul inițial al activului."
+        },
+        "salvage": {
+          "name": "salvare",
+          "detail": "Valoarea activului la sfârșitul amortizării."
+        },
+        "life": {
+          "name": "viaţă",
+          "detail": "Numărul de perioade pe parcursul cărora activul este amortizat."
+        },
+        "period": {
+          "name": "perioadă",
+          "detail": "Singura perioadă din cadrul „duratei de viață” pentru care se calculează amortizarea."
+        },
+        "factor": {
+          "name": "factor",
+          "detail": "Factorul prin care scade amortizarea."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Rata dobânzii la o investiție în anuitate.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "payment_per_period": {
+          "name": "plată_pe_perioadă",
+          "detail": "Suma care trebuie plătită pe perioadă."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "O estimare a ratei dobânzii."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Principalul cumulativ plătit pe parcursul unui set de perioade.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "first_period": {
+          "name": "prima_perioadă",
+          "detail": "Numărul perioadei de plată pentru începerea calculului cumulativ."
+        },
+        "last_period": {
+          "name": "ultima_perioadă",
+          "detail": "Numărul perioadei de plată pentru încheierea calculului cumulativ."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Numărul de cupoane între decontare și scadență.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Amortizarea prin metoda sumei cifrelor anilor.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "Costul inițial al activului."
+        },
+        "salvage": {
+          "name": "salvare",
+          "detail": "Valoarea activului la sfârșitul amortizării."
+        },
+        "life": {
+          "name": "viaţă",
+          "detail": "Numărul de perioade pe parcursul cărora activul este amortizat."
+        },
+        "period": {
+          "name": "perioadă",
+          "detail": "Singura perioadă din cadrul „duratei de viață” pentru care se calculează amortizarea."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Rata echivalentă a rentabilității unui titlu de trezorerie.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de reducere a facturii la momentul achiziției."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Randamentul unui bon de trezorerie american în funcție de preț.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "price": {
+          "name": "preţ",
+          "detail": "Prețul la care este cumpărată valoarea de valoare per 100 din valoarea nominală."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Prețul bonului de trezorerie al SUA.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de reducere a facturii la momentul achiziției."
+        }
+      }
+    },
+    "PV": {
+      "description": "Valoarea actualizată a unei investiții într-o anuitate.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "payment_amount": {
+          "name": "sumă_plată",
+          "detail": "Suma care trebuie plătită pe perioadă."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Numărul de zile de la primul cupon până la decontare.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Zile din perioada cuponului care conțin data decontării.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "FV": {
+      "description": "Valoarea viitoare a unei investiții în anuități.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "payment_amount": {
+          "name": "sumă_plată",
+          "detail": "Suma care trebuie plătită pe perioadă."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Valoarea viitoare a principalului dintr-o serie de rate.",
+      "parameters": {
+        "principal": {
+          "name": "principal",
+          "detail": "Suma capitalului sau a valorii inițiale pentru care se compună dobânda."
+        },
+        "rate_schedule": {
+          "name": "program_tarif",
+          "detail": "O serie de rate ale dobânzii care se compun în raport cu „principalul”."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Randamentul anual al unui titlu de valoare care plătește dobândă periodică.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "rate": {
+          "name": "rată",
+          "detail": "Rata anualizată a dobânzii."
+        },
+        "price": {
+          "name": "preţ",
+          "detail": "Prețul la care este cumpărată valoarea de valoare per 100 din valoarea nominală."
+        },
+        "redemption": {
+          "name": "răscumpărare",
+          "detail": "Suma de răscumpărare per 100 de valori nominale sau par."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Randamentul anual al unui titlu de valoare cu discount.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "price": {
+          "name": "preţ",
+          "detail": "Prețul la care este cumpărată valoarea de valoare per 100 din valoarea nominală."
+        },
+        "redemption": {
+          "name": "răscumpărare",
+          "detail": "Suma de răscumpărare per 100 de valori nominale sau par."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Rata anuală nominală a dobânzii.",
+      "parameters": {
+        "effective_rate": {
+          "name": "rată_efectivă",
+          "detail": "Rata dobânzii efective pe an."
+        },
+        "periods_per_year": {
+          "name": "perioade_pe_an",
+          "detail": "Numărul de perioade de compunere pe an."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Rata internă de rentabilitate în funcție de fluxurile de numerar neperiodice.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "sume_flux_de_cash",
+          "detail": "O matrice sau un interval care conține veniturile sau plățile asociate investiției."
+        },
+        "cashflow_dates": {
+          "name": "date_flux_de_cash",
+          "detail": "O matrice sau un interval cu date corespunzătoare fluxurilor de numerar din `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "O estimare a ratei interne de rentabilitate."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Rata internă de rentabilitate modificată.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "sume_flux_de_cash",
+          "detail": "O matrice sau un interval care conține veniturile sau plățile asociate investiției."
+        },
+        "financing_rate": {
+          "name": "rată_de_finanțare",
+          "detail": "Rata dobânzii plătite pentru fondurile investite."
+        },
+        "reinvestment_return_rate": {
+          "name": "rată_de_rentabilitate_a_reinvestiției",
+          "detail": "Randamentul (ca procent) obținut din reinvestirea veniturilor primite din investiție."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Rata internă de rentabilitate dată de fluxurile de numerar periodice.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "sume_flux_de_cash",
+          "detail": "O matrice sau un interval care conține veniturile sau plățile asociate investiției."
+        },
+        "rate_guess": {
+          "name": "rate_guess",
+          "detail": "O estimare a ratei interne de rentabilitate."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Valoarea netă actualizată a unei investiții bazată pe o serie de fluxuri de numerar periodice și o rată de actualizare.",
+      "parameters": {
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de actualizare a investiției pe o perioadă."
+        },
+        "cashflow1": {
+          "name": "flux de numerar1",
+          "detail": "Primul flux de numerar viitor."
+        },
+        "cashflow2": {
+          "name": "flux de numerar2",
+          "detail": "Fluxuri de numerar viitoare suplimentare."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Valoare actualizată netă, date fiind fluxuri de numerar neperiodice.",
+      "parameters": {
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de actualizare a investiției pe o perioadă."
+        },
+        "cashflow_amounts": {
+          "name": "sume_flux_de_cash",
+          "detail": "O gamă de celule care conține veniturile sau plățile asociate investiției."
+        },
+        "cashflow_dates": {
+          "name": "date_flux_de_cash",
+          "detail": "Un interval de celule cu date corespunzătoare fluxurilor de numerar din `cash_flow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Dobânda cumulată plătită pe parcursul unui set de perioade.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "first_period": {
+          "name": "prima_perioadă",
+          "detail": "Numărul perioadei de plată pentru începerea calculului cumulativ."
+        },
+        "last_period": {
+          "name": "ultima_perioadă",
+          "detail": "Numărul perioadei de plată pentru încheierea calculului cumulativ."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Plată periodică pentru o investiție într-o anuitate.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Plata dobânzii pentru o investiție.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "period": {
+          "name": "perioadă",
+          "detail": "Perioada de amortizare, exprimată în numărul de perioade."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Plata principalului unei investiții.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "period": {
+          "name": "perioadă",
+          "detail": "Perioada de amortizare, exprimată în numărul de perioade."
+        },
+        "number_of_periods": {
+          "name": "număr_de_perioade",
+          "detail": "Numărul de plăți care trebuie efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Calculează rata dobânzii efective.",
+      "parameters": {
+        "buy_date": {
+          "name": "data_cumpărării",
+          "detail": "Data achiziționării investiției."
+        },
+        "sell_date": {
+          "name": "data_vânzării",
+          "detail": "Data vânzării investiției."
+        },
+        "buy_price": {
+          "name": "preț_de_cumpărare",
+          "detail": "Prețul la care a fost achiziționată investiția."
+        },
+        "sell_price": {
+          "name": "preț_de_vânzare",
+          "detail": "Prețul la care a fost vândută investiția."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Prețul unei valori mobiliare care plătește dobândă periodică.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "rate": {
+          "name": "rată",
+          "detail": "Rata anualizată a dobânzii."
+        },
+        "yield": {
+          "name": "Randament",
+          "detail": "Randamentul anual așteptat al titlului de valoare."
+        },
+        "redemption": {
+          "name": "răscumpărare",
+          "detail": "Suma de răscumpărare per 100 de valori nominale sau par."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Prețul unui titlu de valoare cu discount.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de actualizare a titlului de valoare la momentul achiziției."
+        },
+        "redemption": {
+          "name": "răscumpărare",
+          "detail": "Suma de răscumpărare per 100 de valori nominale sau par."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Prețul titlului de valoare care plătește dobândă la scadență.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "issue": {
+          "name": "emisiune",
+          "detail": "Data la care a fost emisă inițial valoarea de valoare."
+        },
+        "rate": {
+          "name": "rată",
+          "detail": "Rata anualizată a dobânzii."
+        },
+        "yield": {
+          "name": "Randament",
+          "detail": "Randamentul anual așteptat al titlului de valoare."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Sumă primită la scadență pentru un titlu de valoare.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "investment": {
+          "name": "investiție",
+          "detail": "Suma investită (indiferent de valoarea nominală a fiecărui titlu de valoare)."
+        },
+        "discount": {
+          "name": "reducere",
+          "detail": "Rata de actualizare a titlului de valoare în care s-a investit."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Rata de actualizare a unei valori mobiliare în funcție de preț.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "price": {
+          "name": "preţ",
+          "detail": "Prețul la care este cumpărată valoarea de valoare per 100 din valoarea nominală."
+        },
+        "redemption": {
+          "name": "răscumpărare",
+          "detail": "Suma de răscumpărare per 100 de valori nominale sau par."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Numărul de perioade de plată pentru o investiție.",
+      "parameters": {
+        "rate": {
+          "name": "rată",
+          "detail": "Rata dobânzii."
+        },
+        "payment_amount": {
+          "name": "sumă_plată",
+          "detail": "Suma fiecărei plăți efectuate."
+        },
+        "present_value": {
+          "name": "valoare_prezentă",
+          "detail": "Valoarea curentă a anuității."
+        },
+        "future_value": {
+          "name": "valoare_viitoare",
+          "detail": "Valoarea viitoare rămasă după efectuarea plății finale."
+        },
+        "end_or_beginning": {
+          "name": "sfârșit_sau_început",
+          "detail": "Dacă plățile sunt scadente la sfârșitul (`0`) sau la începutul (`1`) fiecărei perioade."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Amortizarea activelor folosind metoda liniară.",
+      "parameters": {
+        "cost": {
+          "name": "cost",
+          "detail": "Costul inițial al activului."
+        },
+        "salvage": {
+          "name": "salvare",
+          "detail": "Valoarea activului la sfârșitul amortizării."
+        },
+        "life": {
+          "name": "viaţă",
+          "detail": "Numărul de perioade pe parcursul cărora activul este amortizat."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Numărul de perioade în care o investiție atinge o anumită valoare.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "rate": {
+          "name": "rată",
+          "detail": "Rata anualizată a dobânzii."
+        },
+        "yield": {
+          "name": "Randament",
+          "detail": "Randamentul anual așteptat al titlului de valoare."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Durata Macaulay modificată.",
+      "parameters": {
+        "settlement": {
+          "name": "așezare",
+          "detail": "Data decontării titlului de valoare, data ulterioară emiterii la care titlul de valoare este livrat cumpărătorului."
+        },
+        "maturity": {
+          "name": "maturitate",
+          "detail": "Data scadenței sau a încheierii titlului de valoare, când acesta poate fi răscumpărat la valoarea nominală."
+        },
+        "rate": {
+          "name": "rată",
+          "detail": "Rata anualizată a dobânzii."
+        },
+        "yield": {
+          "name": "Randament",
+          "detail": "Randamentul anual așteptat al titlului de valoare."
+        },
+        "frequency": {
+          "name": "frecvenţă",
+          "detail": "Numărul de plăți de dobânzi sau cupoane pe an (1, 2 sau 4)."
+        },
+        "day_count_convention": {
+          "name": "convenție_de_număr_zile",
+          "detail": "Un indicator al metodei de numărare a zilelor care trebuie utilizată."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Convertește un număr binar cu semn în format zecimal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "număr_binar_semnat",
+          "detail": "Valoarea binară pe 10 biți cu semn care va fi convertită în zecimal, furnizată ca șir de caractere."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Convertește un număr binar în hexazecimal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "număr_binar_semnat",
+          "detail": "Valoarea binară cu semn pe 10 biți care va fi convertită în hexadecimal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Convertește un număr binar în octal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "număr_binar_semnat",
+          "detail": "Valoarea binară cu semn pe 10 biți care va fi convertită în octal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Convertește un număr zecimal în format binar cu semn.",
+      "parameters": {
+        "decimal_number": {
+          "name": "număr_zecimal",
+          "detail": "Valoarea zecimală care va fi convertită în binar cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Convertește un număr zecimal în hexazecimal.",
+      "parameters": {
+        "decimal_number": {
+          "name": "număr_zecimal",
+          "detail": "Valoarea zecimală care va fi convertită în hexazecimal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Convertește un număr zecimal în format octal cu semn.",
+      "parameters": {
+        "decimal_number": {
+          "name": "număr_zecimal",
+          "detail": "Valoarea zecimală care va fi convertită în octal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Convertește un număr hexazecimal în binar.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "număr_hexazecimal_cu_semn",
+          "detail": "Valoarea hexazecimală cu semn pe 40 de biți care va fi convertită în binar cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Convertește un număr hexazecimal în zecimal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "număr_hexazecimal_cu_semn",
+          "detail": "Valoarea hexazecimală cu semn pe 40 de biți care va fi convertită în zecimal, furnizată ca șir de caractere."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Convertește un număr hexazecimal în octal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "număr_hexazecimal_cu_semn",
+          "detail": "Valoarea hexazecimală cu semn pe 40 de biți care va fi convertită în octal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Convertește un număr octal în binar.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "număr_octal_semnat",
+          "detail": "Valoarea octală cu semn pe 30 de biți care va fi convertită în binar cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Convertește un număr octal cu semn în format zecimal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "număr_octal_semnat",
+          "detail": "Valoarea octală pe 30 de biți cu semn care va fi convertită în zecimal, furnizată ca șir de caractere."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Convertește un număr octal în hexazecimal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "număr_octal_semnat",
+          "detail": "Valoarea octală cu semn pe 30 de biți care va fi convertită în hexazecimal cu semn, furnizată ca șir de caractere."
+        },
+        "significant_digits": {
+          "name": "cifre_semnificative",
+          "detail": "Numărul de cifre semnificative de asigurat în rezultat."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Creează un număr complex.",
+      "parameters": {
+        "real_part": {
+          "name": "piesă_reală",
+          "detail": "Coeficientul real."
+        },
+        "imaginary_part": {
+          "name": "partea_imaginară",
+          "detail": "Coeficientul imaginar."
+        },
+        "suffix": {
+          "name": "sufix",
+          "detail": "Sufixul pentru coeficientul imaginar poate fi doar „i” sau „j”. Dacă este omis, se va folosi „i”."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Coeficientul real al unui număr complex.",
+      "parameters": {
+        "complex_number": {
+          "name": "număr_complex",
+          "detail": "Numărul complex, în formatul a+bi sau a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Coeficientul imaginar al unui număr complex.",
+      "parameters": {
+        "complex_number": {
+          "name": "număr_complex",
+          "detail": "Numărul complex, în formatul a+bi sau a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Conjugatul complex al unui număr.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Numărul complex pentru care se calculează conjugatul."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Valoarea absolută a unui număr complex.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Numărul complex pentru care se calculează valoarea absolută."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Comparați două valori numerice.",
+      "parameters": {
+        "number1": {
+          "name": "numărul 1",
+          "detail": "Primul număr de comparat."
+        },
+        "number2": {
+          "name": "numărul 2",
+          "detail": "Al doilea număr de comparat."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Suma unei serii de numere complexe.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Primul număr complex sau interval de adunat."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Numere complexe sau intervale suplimentare de adăugat la `valoare1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Diferența dintre două numere complexe.",
+      "parameters": {
+        "first_number": {
+          "name": "primul_număr",
+          "detail": "Numărul complex din care se scade al doilea_număr."
+        },
+        "second_number": {
+          "name": "al doilea_număr",
+          "detail": "Numărul complex de scăzut din primul_număr."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Rezultatul înmulțirii unei serii de numere complexe.",
+      "parameters": {
+        "factor1": {
+          "name": "factorul 1",
+          "detail": "Primul număr sau interval de calculat pentru produs."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Numere complexe suplimentare sau intervale de calculat pentru produs."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Un număr complex împărțit la altul.",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Numărul complex care trebuie împărțit."
+        },
+        "divisor": {
+          "name": "divizor",
+          "detail": "Numărul complex la care se împarte."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Returnează opusul valorii logice furnizate.",
+      "parameters": {
+        "logical_expression": {
+          "name": "expresie_logică",
+          "detail": "O expresie sau o referință la o celulă care conține o expresie ce reprezintă o anumită valoare logică."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Valoarea logică „adevărat”."
+    },
+    "FALSE": {
+      "description": "Valoarea logică „false”."
+    },
+    "AND": {
+      "description": "Operatorul logic `și`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "expresie_logică1",
+          "detail": "O expresie sau o referință la o celulă care conține o expresie ce reprezintă o valoare logică, de exemplu „TRUE” sau „FALSE”, sau o expresie care poate fi forțată să devină o valoare logică."
+        },
+        "logical_expression2": {
+          "name": "expresie_logică2",
+          "detail": "Mai multe expresii care reprezintă valori logice."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Valoare dacă nu este o eroare, altfel al doilea argument.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea de returnat dacă `value` în sine nu este o eroare."
+        },
+        "value_if_error": {
+          "name": "valoare_dacă_eroare",
+          "detail": "Valoarea returnată de funcție dacă `value` este o eroare."
+        }
+      }
+    },
+    "IF": {
+      "description": "Returnează o valoare în funcție de expresia logică.",
+      "parameters": {
+        "logical_expression": {
+          "name": "expresie_logică",
+          "detail": "O expresie sau o referință la o celulă care conține o expresie ce reprezintă o valoare logică, de exemplu „ADEVĂRAT” sau „FALS”."
+        },
+        "value_if_true": {
+          "name": "valoare_dacă_adevărat",
+          "detail": "Valoarea returnată de funcție dacă `expresie_logică` este `TRUE`."
+        },
+        "value_if_false": {
+          "name": "valoare_dacă_fals",
+          "detail": "Valoarea returnată de funcție dacă `expresie_logică` este `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Operatorul logic `sau`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "expresie_logică1",
+          "detail": "O expresie sau o referință la o celulă care conține o expresie ce reprezintă o valoare logică, de exemplu „TRUE” sau „FALSE”, sau o expresie care poate fi forțată să devină o valoare logică."
+        },
+        "logical_expression2": {
+          "name": "expresie_logică2",
+          "detail": "Mai multe expresii care se evaluează ca valori logice."
+        }
+      }
+    },
+    "NE": {
+      "description": "Nu egal.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valoarea de testat în raport cu „valoare1” pentru inegalitate."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Egal.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Prima valoare."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valoarea de testat pentru egalitate în raport cu „valoare1”."
+        }
+      }
+    },
+    "GT": {
+      "description": "Strict mai mare decât.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Valoarea de testat ca fiind mai mare decât „valoare2”."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "A doua valoare."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Mai mare sau egal cu.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Valoarea de testat ca fiind mai mare sau egală cu „value2”."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "A doua valoare."
+        }
+      }
+    },
+    "LT": {
+      "description": "Mai puțin decât.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Valoarea de testat ca fiind mai mică decât „valoare2”."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "A doua valoare."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Mai mic sau egal cu.",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Valoarea de testat ca fiind mai mică sau egală cu „valoare2”."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "A doua valoare."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Suma a două numere",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Primul adend."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Al doilea adend."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Diferența dintre două numere",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Minuendul sau numărul din care se scade."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Scăderea sau numărul de scăzut din „valoare1”."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Produsul a două numere",
+      "parameters": {
+        "factor1": {
+          "name": "factorul 1",
+          "detail": "Primul înmulțitor."
+        },
+        "factor2": {
+          "name": "factor2",
+          "detail": "Al doilea înmulțitor."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Un număr împărțit la altul",
+      "parameters": {
+        "dividend": {
+          "name": "dividend",
+          "detail": "Numărul care trebuie împărțit."
+        },
+        "divisor": {
+          "name": "divizor",
+          "detail": "Numărul la care se împarte."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Concatenarea a două valori",
+      "parameters": {
+        "value1": {
+          "name": "valoare1",
+          "detail": "Valoarea la care se va adăuga `value2`."
+        },
+        "value2": {
+          "name": "valoare2",
+          "detail": "Valoarea care va fi adăugată la `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Valoare interpretată ca procent.",
+      "parameters": {
+        "percentage": {
+          "name": "procent",
+          "detail": "Valoarea de interpretat ca procent."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Adaugă șiruri de caractere unele la altele.",
+      "parameters": {
+        "string1": {
+          "name": "șir1",
+          "detail": "Șirul inițial."
+        },
+        "string2": {
+          "name": "șir2",
+          "detail": "Mai multe șiruri de adăugat în secvență."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Valoarea numerică a caracterului în harta Unicode.",
+      "parameters": {
+        "string": {
+          "name": "şir",
+          "detail": "Șirul de caractere al cărui prim caracter va fi returnată valoarea hărții Unicode."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Obține caracterul asociat cu numărul.",
+      "parameters": {
+        "table_number": {
+          "name": "număr_tabel",
+          "detail": "Numărul caracterului care trebuie căutat în tabelul Unicode curent în format zecimal."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Calculează valoarea unui număr roman.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "cifră_romană",
+          "detail": "Cifra romană de formatat, a cărei valoare trebuie să fie între 1 și 3999, inclusiv."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Formatează un număr în cifre romane.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Numărul de formatat, între 1 și 3999, inclusiv."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Extrage subșiruri corespondente cu expresii regulate.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul de introducere."
+        },
+        "regular_expression": {
+          "name": "expresie_regulată",
+          "detail": "Prima parte a argumentului `text` care corespunde acestei expresii va fi returnată."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Dacă un fragment de text corespunde unei expresii regulate.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul care va fi testat în raport cu expresia regulată."
+        },
+        "regular_expression": {
+          "name": "expresie_regulată",
+          "detail": "Expresia regulată față de care se testează textul."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Înlocuiește textul cu expresii regulate.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul, din care o parte va fi înlocuită."
+        },
+        "regular_expression": {
+          "name": "expresie_regulată",
+          "detail": "Expresia regulată. Toate instanțele corespondente din `text` vor fi înlocuite."
+        },
+        "replacement": {
+          "name": "înlocuire",
+          "detail": "Textul care va fi inserat în textul original."
+        }
+      }
+    },
+    "T": {
+      "description": "Argumente de tip șir de caractere ca text.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul care va fi convertit în text."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formatează numărul cu un număr fix de zecimale.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Numărul de formatat."
+        },
+        "number_of_places": {
+          "name": "număr_de_locuri",
+          "detail": "Numărul de zecimale care vor fi afișate în rezultat."
+        },
+        "suppress_separator": {
+          "name": "separator_suprimare",
+          "detail": "Dacă se va suprima sau nu separatorul de mii utilizat în anumite setări regionale (de exemplu, „1.000” devine „1000”). Separatorii vor fi prezenți dacă această valoare este 0 sau omisă, iar în caz contrar vor fi absenți."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Prima poziție a șirului de caractere găsită în text, ține cont de majuscule/minuscule.",
+      "parameters": {
+        "search_for": {
+          "name": "caută",
+          "detail": "Șirul de caractere care trebuie căutat în `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_de_căutare",
+          "detail": "Textul în care se va căuta prima apariție a cuvântului `search_for`."
+        },
+        "starting_at": {
+          "name": "începând_la",
+          "detail": "Caracterul din `text_to_search` de la care să înceapă căutarea."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Poziția la care un șir de caractere este găsit pentru prima dată în text (binar).",
+      "parameters": {
+        "search_for": {
+          "name": "caută",
+          "detail": "Șirul de caractere care trebuie căutat în `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_de_căutare",
+          "detail": "Textul în care se va căuta prima apariție a cuvântului `search_for`."
+        },
+        "starting_at": {
+          "name": "începând_la",
+          "detail": "Caracterul din `text_to_search` de la care să înceapă căutarea."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Concatenează elementele tablourilor cu delimitator.",
+      "parameters": {
+        "delimiter": {
+          "name": "delimitator",
+          "detail": "Caracterul sau șirul de caractere care trebuie plasat între fiecare valoare concatenată."
+        },
+        "value_or_array1": {
+          "name": "valoare_sau_matrice1",
+          "detail": "Valoarea sau valorile care vor fi adăugate folosind `delimitator`."
+        },
+        "value_or_array2": {
+          "name": "valoare_sau_matrice2",
+          "detail": "Mai multe valori vor fi adăugate folosind `delimitator`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Subșir de la începutul șirului specificat.",
+      "parameters": {
+        "string": {
+          "name": "şir",
+          "detail": "Șirul de caractere din care va fi returnată porțiunea din stânga."
+        },
+        "number_of_characters": {
+          "name": "număr_de_caractere",
+          "detail": "Numărul de caractere care trebuie returnate din partea stângă a lui `șir`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Un subșir de la sfârșitul unui șir specificat.",
+      "parameters": {
+        "string": {
+          "name": "şir",
+          "detail": "Șirul de caractere din care va fi returnată porțiunea din dreapta."
+        },
+        "number_of_characters": {
+          "name": "număr_de_caractere",
+          "detail": "Numărul de caractere care trebuie returnate din partea dreaptă a lui `șir`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Un segment al unui șir de caractere.",
+      "parameters": {
+        "string": {
+          "name": "şir",
+          "detail": "Șirul din care se extrage un segment."
+        },
+        "starting_at": {
+          "name": "începând_la",
+          "detail": "Indexul din stânga lui `string` din care se începe extragerea. Primul caracter din `string` are indexul 1."
+        },
+        "extract_length": {
+          "name": "lungime_extragere",
+          "detail": "Lungimea segmentului de extras."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Lungimea unui șir de caractere.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Șirul de caractere a cărui lungime va fi returnată."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Lungimea unui șir de caractere în octeți.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Șirul de caractere a cărui lungime va fi returnată."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Convertește un șir specificat în litere mici.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Șirul de caractere care va fi convertit în litere mici."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Convertește un șir specificat în majuscule.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Șirul de caractere care va fi convertit în majuscule."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Testează dacă două șiruri de caractere sunt identice.",
+      "parameters": {
+        "string1": {
+          "name": "șir1",
+          "detail": "Primul șir de caractere de comparat"
+        },
+        "string2": {
+          "name": "șir2",
+          "detail": "Al doilea șir de comparat"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Înlocuiește o parte a unui șir de text cu text diferit.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul, din care o parte va fi înlocuită."
+        },
+        "position": {
+          "name": "poziţie",
+          "detail": "Poziția în care va începe înlocuirea (începând de la 1)."
+        },
+        "length": {
+          "name": "lungime",
+          "detail": "Numărul de caractere din text care trebuie înlocuite."
+        },
+        "new_text": {
+          "name": "text_nou",
+          "detail": "Textul care va fi inserat în textul original."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Text specificat repetat de mai multe ori.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "text_de_repetat",
+          "detail": "Caracterul sau șirul de caractere care trebuie repetat."
+        },
+        "number_of_repetitions": {
+          "name": "număr_de_repetiții",
+          "detail": "Numărul de apariții ale argumentului `text_to_repeat` în valoarea returnată."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Prima poziție a șirului de caractere găsită în text, ignorând majusculele/minusculele.",
+      "parameters": {
+        "search_for": {
+          "name": "caută",
+          "detail": "Șirul de caractere care trebuie căutat în `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "text_de_căutare",
+          "detail": "Textul în care se va căuta prima apariție a cuvântului `search_for`."
+        },
+        "starting_at": {
+          "name": "începând_la",
+          "detail": "Caracterul din `text_to_search` de la care să înceapă căutarea."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Înlocuiește textul existent cu text nou într-un șir de caractere.",
+      "parameters": {
+        "text_to_search": {
+          "name": "text_de_căutare",
+          "detail": "Textul în care se va căuta și înlocui."
+        },
+        "search_for": {
+          "name": "caută",
+          "detail": "Șirul de caractere care trebuie căutat în `text_to_search`."
+        },
+        "replace_with": {
+          "name": "înlocuire_cu",
+          "detail": "Șirul care va înlocui `search_for`."
+        },
+        "occurrence_number": {
+          "name": "număr_ocurență",
+          "detail": "Instanța lui `search_for` din `text_to_search` care va fi înlocuită cu `replace_with`. În mod implicit, toate aparițiile lui `search_for` sunt înlocuite; totuși, dacă este specificat `occurrence_number`, se înlocuiește doar instanța indicată a lui `search_for`."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Elimină caracterele neimprimabile dintr-un fragment de text.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul ale cărui caractere neimprimabile trebuie eliminate."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Formatează un număr în text.",
+      "parameters": {
+        "number": {
+          "name": "număr",
+          "detail": "Numărul, data sau ora de formatat."
+        },
+        "format": {
+          "name": "format",
+          "detail": "Modelul după care se formatează numărul, între ghilimele."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Elimină caracterele spațioase.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Textul sau referința la o celulă care conține textul care trebuie decupat."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Convertește un șir de caractere dată/oră/număr într-un număr.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Șirul de caractere care conține valoarea care trebuie convertită."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Scrie cu majusculă fiecare cuvânt dintr-un șir specificat.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_cu_majusculă",
+          "detail": "Textul care va fi returnat cu prima literă a fiecărui cuvânt scrisă cu majusculă și toate celelalte litere scrise cu litere mici."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Conversia unităților pentru numere.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea numerică din `start_unit` care va fi convertită în `end_unit`."
+        },
+        "start_unit": {
+          "name": "unitate_de_începere",
+          "detail": "Unitatea de pornire, unitatea atribuită în prezent lui `value`."
+        },
+        "end_unit": {
+          "name": "unitate_de_sfârșit",
+          "detail": "Unitatea de măsură în care se convertește argumentul, „valoare”."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Suma diferențelor de pătrate.",
+      "parameters": {
+        "array_x": {
+          "name": "matrice_x",
+          "detail": "Matricea sau intervalul de valori ale căror pătrate vor fi reduse cu pătratele intrărilor corespunzătoare din `array_y` și adunate."
+        },
+        "array_y": {
+          "name": "matrice_y",
+          "detail": "Matricea sau intervalul de valori ale căror pătrate vor fi scăzute din pătratele intrărilor corespondente din `array_x` și adunate."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Suma sumelor pătratelor.",
+      "parameters": {
+        "array_x": {
+          "name": "matrice_x",
+          "detail": "Matricea sau intervalul de valori ale căror pătrate vor fi adunate cu pătratele intrărilor corespondente din `array_y` și apoi adunate."
+        },
+        "array_y": {
+          "name": "matrice_y",
+          "detail": "Matricea sau intervalul de valori ale căror pătrate vor fi adunate cu pătratele intrărilor corespondente din `array_x` și apoi adunate."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Suma pătratelor diferențelor.",
+      "parameters": {
+        "array_x": {
+          "name": "matrice_x",
+          "detail": "Matricea sau intervalul de valori care vor fi reduse cu intrările corespunzătoare din `array_y`, ridicate la pătrat și adunate."
+        },
+        "array_y": {
+          "name": "matrice_y",
+          "detail": "Matricea sau intervalul de valori care vor fi scăzute din intrările corespunzătoare din `array_x`, rezultatul ridicat la pătrat și toate aceste rezultate adunate."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transpune rândurile și coloanele unei matrice.",
+      "parameters": {
+        "array_or_range": {
+          "name": "matrice_sau_interval",
+          "detail": "Matricea sau intervalul ale cărui rânduri și coloane vor fi schimbate."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Ajustează punctele la tendința liniară derivată prin metoda celor mai mici pătrate.",
+      "parameters": {
+        "known_data_y": {
+          "name": "date_cunoscute_y",
+          "detail": "Matricea sau intervalul care conține valori dependente (y) deja cunoscute, utilizate pentru ajustarea curbei unei tendințe liniare ideale."
+        },
+        "known_data_x": {
+          "name": "date_cunoscute_x",
+          "detail": "Valorile variabilei (variabilelor) independente corespunzătoare cu `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "date_noi_x",
+          "detail": "Punctele de date care returnează valorile „y” pentru curba ideală de ajustare."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Având în vedere o formă liniară generală a lui `y = m*x+b` pentru o ajustare a curbei, calculează `b` dacă este `TRUE` sau forțează `b` să fie `0` și calculează doar valorile `m` dacă este `FALSE`, adică forțează ajustarea curbei să treacă prin origine."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Distribuția de frecvență a matricei.",
+      "parameters": {
+        "data": {
+          "name": "date",
+          "detail": "Matricea sau intervalul care conține valorile care vor fi numărate."
+        },
+        "classes": {
+          "name": "clase",
+          "detail": "Matricea sau intervalul care conține setul de clase."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Punctele se potrivesc cu tendința de creștere exponențială.",
+      "parameters": {
+        "known_data_y": {
+          "name": "date_cunoscute_y",
+          "detail": "Matricea sau intervalul care conține valori dependente (y) deja cunoscute, utilizate pentru ajustarea unei curbe ideale de creștere exponențială."
+        },
+        "known_data_x": {
+          "name": "date_cunoscute_x",
+          "detail": "Valorile variabilei (variabilelor) independente corespunzătoare cu `known_data_y`."
+        },
+        "new_data_x": {
+          "name": "date_noi_x",
+          "detail": "Punctele de date care returnează valorile „y” pentru curba ideală de ajustare."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Având în vedere o formă exponențială generală a lui `y = b*m^x` pentru o ajustare a curbei, calculează `b` dacă este `TRUE` sau forțează `b` să fie `1` și calculează doar valorile `m` dacă este `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Tendință liniară de cea mai bună ajustare prin metoda celor mai mici pătrate.",
+      "parameters": {
+        "known_data_y": {
+          "name": "date_cunoscute_y",
+          "detail": "Matricea sau intervalul care conține valori dependente (y) deja cunoscute, utilizate pentru ajustarea curbei unei tendințe liniare ideale."
+        },
+        "known_data_x": {
+          "name": "date_cunoscute_x",
+          "detail": "Valorile variabilei (variabilelor) independente corespunzătoare cu `known_data_y`."
+        },
+        "calculate_b": {
+          "name": "calcula_b",
+          "detail": "Având în vedere o formă liniară a axei `y = m*x+b`, calculează intersecția cu axa y (`b`) dacă este `TRUE`. În caz contrar, forțează `b` să fie `0` și calculează valorile `m` doar dacă este `FALSE`, adică forțează ajustarea curbei să treacă prin origine."
+        },
+        "verbose": {
+          "name": "verbos",
+          "detail": "Un steguleț care specifică dacă se returnează statistici de regresie suplimentare sau doar coeficienții liniari și intersecția cu axa y (implicit)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Curba de creștere exponențială cea mai potrivită.",
+      "parameters": {
+        "known_data_y": {
+          "name": "date_cunoscute_y",
+          "detail": "Matricea sau intervalul care conține valori dependente (y) deja cunoscute, utilizate pentru ajustarea unei curbe ideale de creștere exponențială."
+        },
+        "known_data_x": {
+          "name": "date_cunoscute_x",
+          "detail": "Valorile variabilei (variabilelor) independente corespunzătoare cu `known_data_y`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Având în vedere o formă exponențială generală a lui `y = b*m^x` pentru o ajustare a curbei, calculează `b` dacă este `TRUE` sau forțează `b` să fie `1` și calculează doar valorile `m` dacă este `FALSE`."
+        },
+        "verbose": {
+          "name": "verbos",
+          "detail": "Un steag care specifică dacă se returnează statistici de regresie suplimentare sau doar coeficientul și exponenții calculați."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Determinantul matriceal al unei matrice pătrate.",
+      "parameters": {
+        "square_matrix": {
+          "name": "matrice_pătrată",
+          "detail": "O matrice sau un interval cu un număr egal de rânduri și coloane care reprezintă o matrice al cărei determinant va fi calculat."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Inversa multiplicativă a matricei pătrate.",
+      "parameters": {
+        "square_matrix": {
+          "name": "matrice_pătrată",
+          "detail": "O matrice sau un interval cu un număr egal de rânduri și coloane care reprezintă o matrice a cărei invers multiplicativ va fi calculat."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Produsul matricial a două matrici.",
+      "parameters": {
+        "matrix1": {
+          "name": "matrice1",
+          "detail": "Prima matrice din operația de înmulțire a matricelor, reprezentată ca o matrice sau un interval."
+        },
+        "matrix2": {
+          "name": "matrice2",
+          "detail": "A doua matrice din operația de înmulțire a matricelor, reprezentată ca o matrice sau un interval."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Suma produselor elementelor din două tablouri.",
+      "parameters": {
+        "array1": {
+          "name": "matrice1",
+          "detail": "Prima matrice sau interval ale cărui intrări vor fi înmulțite cu intrările corespunzătoare din a doua matrice sau interval de acest fel."
+        },
+        "array2": {
+          "name": "matrice2",
+          "detail": "A doua matrice sau a doua gamă ale cărei intrări vor fi înmulțite cu intrările corespunzătoare din prima astfel de matrice sau gamă."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Dacă o valoare este o formulă.",
+      "parameters": {
+        "cell": {
+          "name": "celulă",
+          "detail": "Celula care trebuie verificată ca conținând o formulă."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Obține informații despre o celulă.",
+      "parameters": {
+        "info_type": {
+          "name": "tip_informații",
+          "detail": "Tipul de informații solicitate (consultați articolul pentru tipurile disponibile)"
+        },
+        "reference": {
+          "name": "referinţă",
+          "detail": "Referința la celulă."
+        }
+      }
+    },
+    "NA": {
+      "description": "Eroarea „#N/A”."
+    },
+    "ISBLANK": {
+      "description": "Dacă celula la care se face referire este goală.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Referință la celula care va fi verificată pentru golire."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Dacă o valoare este o eroare alta decât „#n/a”.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca fiind un tip de eroare diferit de „#N/A”."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Dacă o valoare este o eroare.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca tip de eroare."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Dacă o valoare este „adevărată” sau „falsă”.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca fiind logică „TRUE” sau „FALSE”."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Dacă o valoare este eroarea `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie comparată cu valoarea de eroare `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Dacă o valoare este non-textuală.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Dacă o valoare este un număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca număr."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Dacă o valoare este o referință de celulă validă.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca referință de celulă."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Dacă o valoare este text.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca text."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Obțineți tipul unei valori.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea al cărei tip trebuie determinat."
+        }
+      }
+    },
+    "N": {
+      "description": "Argumentul este furnizat ca număr.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul care trebuie convertit într-un număr."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Convertește un număr furnizat într-o dată.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul sau referința la o celulă care va fi convertită într-o dată."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Convertește orice valoare numerică într-un număr pur.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul sau referința la o celulă care trebuie convertită într-un număr pur."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Convertește o valoare numerică furnizată într-o valoare text.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul sau referința la o celulă care va fi convertită în text."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Convertește un număr furnizat într-o valoare în dolari.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul sau referința la o celulă care va fi convertită într-o valoare în dolari."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Convertește un număr furnizat într-un procent.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Argumentul sau referința la o celulă care va fi convertită într-un procent."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Valoare unică dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maximul de valori dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minimul de valori dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Media unui set de valori dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Numără valori dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Numără valori și text dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Produsul valorilor dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Abaterea standard a eșantionului populației din tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Abaterea standard a întregii populații din tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Suma valorilor dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Varianța eșantionului populației dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Varianța unei populații dintr-un interval de tip tabel.",
+      "parameters": {
+        "database": {
+          "name": "bază de date",
+          "detail": "Matricea sau intervalul care conține datele de luat în considerare, structurat astfel încât primul rând conține etichetele pentru valorile fiecărei coloane."
+        },
+        "field": {
+          "name": "domeniu",
+          "detail": "Indică ce coloană din `database` conține valorile care vor fi extrase și asupra cărora se vor opera."
+        },
+        "criteria": {
+          "name": "criterii",
+          "detail": "O matrice sau un interval care conține zero sau mai multe criterii după care se filtrează valorile `database` înainte de operare."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Obțineți sexul pe baza numărului de identificare.",
+      "parameters": {
+        "ID number": {
+          "name": "Număr de identificare",
+          "detail": "Număr sau interval de identificare de 15 sau 18 cifre."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Obțineți provincia locului de naștere pe baza numărului de identificare.",
+      "parameters": {
+        "ID number": {
+          "name": "Număr de identificare",
+          "detail": "Număr sau interval de identificare de 15 sau 18 cifre."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Obțineți constelația pe baza numărului de identificare.",
+      "parameters": {
+        "ID number": {
+          "name": "Număr de identificare",
+          "detail": "Număr sau interval de identificare de 15 sau 18 cifre."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Returnează volumul corespunzător tranzacțiilor cu acțiuni A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Cod stoc",
+          "detail": "Cod de stoc din 6 cifre, obligatoriu."
+        },
+        "Date": {
+          "name": "Data",
+          "detail": "Ziua de tranzacționare a acțiunii, implicit este cea mai recentă zi de tranzacționare"
+        },
+        "Reversion and exclusion": {
+          "name": "Reversiune și excludere",
+          "detail": "Selectați tipul de restaurare ex right al stocului, implicit 0 [revenire anterioară], 1 [preț original], 2 [post-revenire]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Dacă o valoare este o dată.",
+      "parameters": {
+        "value": {
+          "name": "valoare",
+          "detail": "Valoarea care trebuie verificată ca dată."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Generați o diagramă cu linii sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Line color": {
+          "name": "Culoarea liniei",
+          "detail": "Culoarea liniei graficului liniar poate fi intervalul A1, valoarea indexului tabelului de culori sau o valoare specifică a culorii. Setați la 0 sau fals pentru a nu o afișa. Acceptă regx, rgb, rgba etc. Implicit #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Grosimea liniei",
+          "detail": "Grosimea liniei graficului liniar, implicită este 1px"
+        },
+        "Auxiliary line": {
+          "name": "Linie auxiliară",
+          "detail": "O linie orizontală, care poate fi min., max., medie, mediană, interval sau valoare personalizată, implicit 0, niciuna"
+        },
+        "Auxiliary line color": {
+          "name": "Culoarea liniei auxiliare",
+          "detail": "Setarea culorii liniei auxiliare, aceeași ca și configurația culorii liniei, implicit #000"
+        },
+        "Maximum mark": {
+          "name": "Nota maximă",
+          "detail": "Identifică valoarea maximă a graficului liniar, aceeași configurație de culoare a liniei, implicit 0 nu se afișează"
+        },
+        "Minimum mark": {
+          "name": "Nota minimă",
+          "detail": "Identificați valoarea minimă a graficului liniar, aceeași configurație a culorii liniei, implicit 0 nu se afișează"
+        },
+        "Mark size": {
+          "name": "Dimensiunea marcajului",
+          "detail": "Setările dimensiunii maxime și minime a marcajului, implicită fiind 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Generați o histogramă verticală cumulativă cu sparkline-uri",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Stack by column": {
+          "name": "Stivuire pe coloană",
+          "detail": "Dacă trebuie să stivuiți pe rânduri, setați acest element la fals sau 0, valoarea implicită fiind 1."
+        },
+        "Bar interval": {
+          "name": "Interval de bară",
+          "detail": "Distanța dintre bare, implicită este 1"
+        },
+        "Max": {
+          "name": "Maxim",
+          "detail": "Valoarea maximă a barei cumulative, utilizată pentru a regla lungimea barei, implicită fiind calcularea automată fals, auto, nul"
+        },
+        "Color palette": {
+          "name": "Paletă de culori",
+          "detail": "Paleta de culori poate seta individual culoarea barei pentru fiecare dimensiune, care poate fi setată în intervalul A1:A10 etc. Implicit este #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Generați grafice sparkline cumulative cu bare orizontale",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Stack by column": {
+          "name": "Stivuire pe coloană",
+          "detail": "Dacă trebuie să stivuiți pe rânduri, setați acest element la fals sau 0, valoarea implicită fiind 1."
+        },
+        "Bar interval": {
+          "name": "Interval de bară",
+          "detail": "Distanța dintre bare, implicită este 1"
+        },
+        "Max": {
+          "name": "Maxim",
+          "detail": "Valoarea maximă a barei cumulative, utilizată pentru a regla lungimea barei, implicită fiind calcularea automată fals, auto, nul"
+        },
+        "Color palette": {
+          "name": "Paletă de culori",
+          "detail": "Paleta de culori poate seta individual culoarea barei pentru fiecare dimensiune, care poate fi setată în intervalul A1:A10 etc. Valoarea implicită este #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Generați grafice discrete sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Segmentation threshold": {
+          "name": "Pragul de segmentare",
+          "detail": "Distincție de culoare pentru coloanele grafice discrete, de exemplu: dacă valoarea este 0, albastrul este mai mare decât 0, roșul este mai mic decât 0, iar valoarea implicită este 0"
+        },
+        "Above threshold color": {
+          "name": "Culoare peste prag",
+          "detail": "Culoarea liniei graficului liniar poate fi intervalul A1, valoarea indexului tabelului de culori sau o valoare specifică a culorii. Setați la 0 sau fals pentru a nu o afișa. Acceptă regx, rgb, rgba etc. Implicit #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Culoare sub prag",
+          "detail": "Setarea culorii barei de sub prag, aceeași cu culoarea de deasupra pragului, implicit #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Generați grafice sparkline cu trei stări",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Bar interval": {
+          "name": "Interval de bară",
+          "detail": "Distanța dintre bare, implicită este 1"
+        },
+        "Bar color": {
+          "name": "Culoarea barei",
+          "detail": "Culoarea liniei graficului liniar poate fi intervalul A1, valoarea indexului tabelului de culori sau o valoare specifică a culorii. Setați la 0 sau fals pentru a nu o afișa. Acceptă regx, rgb, rgba etc. Implicit #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Culoare bară negativă",
+          "detail": "Setarea culorii barei negative, reprezentând culoarea valorii negative, aceeași cu configurația culorii barei, implicită #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Culoarea barei cu valoare zero",
+          "detail": "Setarea culorii barei cu valoare zero, reprezentând culoarea cu valoare 0, aceeași configurație de culoare ca bara, implicit #999"
+        },
+        "Color palette": {
+          "name": "Paletă de culori",
+          "detail": "Paleta de culori poate seta culoarea fiecărei bare individual, pot fi configurate mai multe setări și sunt acceptate două formate: 1 culoare, cum ar fi #000, ceea ce înseamnă că prima bară este neagră; 2 interval de valori: culoare, cum ar fi -2:#000 indică faptul că bara cu valoarea -2 este neagră, 0:5:#000 indică faptul că bara cu valoarea 0-5 este neagră, iar valoarea implicită este goală."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Generați o diagramă circulară sparkline",
+      "parameters": {
+        "Range": {
+          "name": "Gamă",
+          "detail": "Interval, valorile pot fi calculate eficient, cum ar fi A1:A20, {1,2,3,4,5} etc."
+        },
+        "Rotation angle": {
+          "name": "Unghiul de rotație",
+          "detail": "Unghiul de rotație al graficului circular, implicit este 0"
+        },
+        "border": {
+          "name": "frontieră",
+          "detail": "Dimensiunea bordurii diagramei circulare, implicită: 0"
+        },
+        "Border color": {
+          "name": "Culoarea bordurii",
+          "detail": "Culoarea chenarului diagramei circulare, implicită este #000"
+        },
+        "Color palette": {
+          "name": "Paletă de culori",
+          "detail": "Culoarea feliei poate fi setată în paletă, care poate fi setată în intervalul A1:A10 etc. Valoarea implicită este #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Generarea de marcatori sparkline",
+      "parameters": {
+        "Target": {
+          "name": "Ţintă",
+          "detail": "Valoarea numerică poate fi calculată eficient pentru valoarea țintă atinsă, cum ar fi A1, 100 etc."
+        },
+        "achieved": {
+          "name": "realizat",
+          "detail": "Numai atunci când valoarea este completă, aceasta poate fi calculată eficient, cum ar fi A1, 100 etc."
+        },
+        "Contrast": {
+          "name": "Contrast",
+          "detail": "Valorile comparative, cum ar fi excesul, minimul și valoarea finală pentru premii, pot fi calculate eficient, cum ar fi A1, 100 etc. Puteți seta până la 9 valori comparative."
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Combinați graficele sparkline într-o singură celulă",
+      "parameters": {
+        "config": {
+          "name": "configurație",
+          "detail": "Setări pentru diagrame sparkline, cum ar fi A1:A20, o diagramă circulară completată, setări pentru diagrame liniare etc."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Sortează rândurile dintr-un interval după coloana specificată.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Datele care trebuie sortate."
+        },
+        "sort_column": {
+          "name": "sortare_coloană",
+          "detail": "Indexul coloanei din `range` sau al unui interval din afara `range` care conține valorile după care se sortează."
+        },
+        "is_ascending": {
+          "name": "este_ascendent",
+          "detail": "`TRUE` sau `FALSE` indică dacă `sort_column` se sortează în ordine crescătoare. `FALSE` sortează în ordine descrescătoare."
+        },
+        "sort_column2": {
+          "name": "sortare_coloană2",
+          "detail": "Coloane suplimentare."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filtrează un interval pe baza condițiilor furnizate.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Datele care trebuie filtrate."
+        },
+        "condition1": {
+          "name": "condiție1",
+          "detail": "O coloană sau un rând care conține valori adevărate sau false corespunzătoare primei coloane sau rânduri a lui `interval` sau o formulă matrice care se evaluează ca adevărat sau fals."
+        },
+        "condition2": {
+          "name": "condiția 2",
+          "detail": "Rânduri sau coloane suplimentare care conțin valori booleene `TRUE` sau `FALSE` care indică dacă rândul sau coloana corespunzătoare din `range` ar trebui să treacă prin `FILTER`. Pot conține, de asemenea, expresii de formulă matrice care se evaluează ca astfel de rânduri sau coloane. Toate condițiile trebuie să fie de același tip (rând sau coloană). Nu este permisă combinarea condițiilor de rând și a condițiilor de coloană."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Rânduri unice în intervalul sursă furnizat.",
+      "parameters": {
+        "range": {
+          "name": "gamă",
+          "detail": "Datele de filtrat după intrări unice."
+        },
+        "by_col": {
+          "name": "de_col",
+          "detail": "[Opțiune] - Valoare logică, indicând modul de comparare; pe rând = FALSE() sau omis; pe coloană = TRUE()."
+        },
+        "occurs_once": {
+          "name": "apare_once",
+          "detail": "[Opțiune] - Valoare logică, se returnează o singură apariție a valorii unice = TRUE(); inclusiv toate valorile unice = FALSE() sau omisă."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Returnează o grilă de numere aleatorii.",
+      "parameters": {
+        "rows": {
+          "name": "rânduri",
+          "detail": "Numărul de rânduri care vor fi populate cu un număr aleatoriu."
+        },
+        "columns": {
+          "name": "coloane",
+          "detail": "Numărul de coloane care vor fi populate cu un număr aleatoriu."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Returnează o grilă de numere secvențiale.",
+      "parameters": {
+        "rows": {
+          "name": "rânduri",
+          "detail": "Numărul de rânduri din grila rezultată a funcției."
+        },
+        "columns": {
+          "name": "coloane",
+          "detail": "Numărul de coloane din grila rezultată a funcției. Dacă este omis, grila rezultată va avea o coloană."
+        },
+        "start": {
+          "name": "început",
+          "detail": "Numărul de la care să înceapă secvența. Dacă este omis, secvența va începe de la 1."
+        },
+        "step": {
+          "name": "pas",
+          "detail": "Valoarea cu care va diferi fiecare valoare din secvență. Dacă este omisă, fiecare valoare va diferi cu 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Evaluează conform unei formule sau expresii literale.",
+      "parameters": {
+        "expression": {
+          "name": "expresie",
+          "detail": "Formulă sau expresie"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Apelează o funcție pe un server/API backend la distanță.",
+      "parameters": {
+        "remote_expression": {
+          "name": "expresie_la_distanță",
+          "detail": "Formulă"
+        }
+      }
+    }
   }
 }

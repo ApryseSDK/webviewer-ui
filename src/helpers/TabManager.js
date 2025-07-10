@@ -12,6 +12,10 @@ import isString from 'lodash/isString';
 import DataElements from 'constants/dataElement';
 import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
+const FILE_DATA_OPTIONS = {
+  flags: window.Core.SaveOptions.INCREMENTAL,
+};
+
 export const enableMultiTab = () => (dispatch, getState) => {
   const state = getState();
   // if already in multi-tab mode do not recreate TabManager
@@ -50,7 +54,7 @@ export const enableMultiTab = () => (dispatch, getState) => {
     const tabs = selectors.getTabs(state);
     const exist = tabs.some((item) => item.options?.filename === doc.filename);
     if (!exist) {
-      doc.getFileData().then((data) => {
+      doc.getFileData(FILE_DATA_OPTIONS).then((data) => {
         try {
           tabManager.addTab(new File([data], doc.getFilename()));
         } catch (error) {
@@ -175,7 +179,7 @@ export default class TabManager {
       const documentType = await core.getDocument().getType();
 
       if (documentType === workerTypes.PDF || documentType === workerTypes.OFFICE) {
-        await writeToDB(this.db, await core.getDocument().getFileData(), currentTab.id);
+        await writeToDB(this.db, await core.getDocument().getFileData(FILE_DATA_OPTIONS), currentTab.id);
         const nextUntitledDocumentNumber = getNextNumberForUntitledDocument(tabs);
         currentTab.options['filename'] = core.getDocument().getFilename() || `untitled-${nextUntitledDocumentNumber}`;
         const refreshedTab = new Tab(
@@ -531,8 +535,8 @@ export class Tab {
     const xfdfString = await core.exportAnnotations();
     const data = await document.getFileData({
       xfdfString,
-      flags: window.Core.SaveOptions.LINEARIZED,
       finishedWithDocument: true,
+      ...FILE_DATA_OPTIONS,
     });
     this.saveData.docInDB = true;
     await writeToDB(db, data, this.id);

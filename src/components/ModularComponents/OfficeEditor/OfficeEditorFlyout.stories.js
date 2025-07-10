@@ -9,7 +9,8 @@ import { expect, within } from '@storybook/test';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
-import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
+import { cssFontValues } from 'src/constants/fonts/fonts';
+import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 export default {
@@ -158,7 +159,7 @@ const initialState = {
     selectionProperties: {
       paragraphProperties: {},
     },
-    availableFontFaces,
+    availableFontFaces: availableOfficeEditorFonts,
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING,
     stream: EditingStreamType.BODY,

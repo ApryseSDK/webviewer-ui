@@ -1,6 +1,6 @@
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents, mockLeftHeader } from './mockAppState';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from '@storybook/test';
 import { defaultModularComponents, defaultModularHeaders } from 'src/redux/modularComponents';
 import { createTemplate } from 'helpers/storybookHelper';
 
@@ -15,6 +15,16 @@ DefaultUI.play = async ({ canvasElement }) => {
   const canvas = await within(canvasElement);
   const documentContainer = canvas.getByRole('tabpanel');
   expect(documentContainer).not.toHaveAttribute('aria-labelledby');
+
+  // Setting the Ribbon using setActiveGroupedItems API
+  window.instance.UI.setActiveGroupedItems('shapesGroupedItems');
+  const shapesRibbon = await canvas.findByRole('button', { name: /Shapes/i });
+  waitFor(() => {
+    expect(shapesRibbon).toHaveAttribute('aria-current', 'true');
+  });
+  window.instance.UI.setActiveGroupedItems('annotateGroupedItems');
+  const annotateRibbon = await canvas.findByRole('button', { name: /Annotate/i });
+  await expect(annotateRibbon).toHaveAttribute('aria-current', 'true');
 };
 
 const headersWithLeftHeader = {
@@ -101,12 +111,6 @@ ActiveGroupHeaderTest.play = async ({ canvasElement }) => {
   // the underline button should not be visible anymore as the header is hidden
   expect(viewRibbon.classList.contains('active')).toBe(true);
   expect(await canvas.queryByRole('button', { name: 'Underline' })).toBeNull();
-};
-
-ActiveGroupHeaderTest.parameters = {
-  test: {
-    dangerouslyIgnoreUnhandledErrors: true,
-  },
 };
 
 const customHeaders = {
@@ -259,12 +263,6 @@ HeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   await expect(commentsButton).toHaveFocus();
 };
 
-HeaderKeyboardNavigationTest.parameters = {
-  test: {
-    dangerouslyIgnoreUnhandledErrors: true,
-  },
-};
-
 export const VerticalHeaderKeyboardNavigationTest = createTemplate({
   headers: mockLeftHeader.modularHeaders,
   components: mockLeftHeader.modularComponents,
@@ -333,8 +331,26 @@ VerticalHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   await expect(shapesButton).toHaveFocus();
 };
 
-VerticalHeaderKeyboardNavigationTest.parameters = {
-  test: {
-    dangerouslyIgnoreUnhandledErrors: true,
-  },
+export const UIWithoutRibbons = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
+
+UIWithoutRibbons.play = async ({ canvasElement }) => {
+  const canvas = await within(canvasElement);
+  const dataElementItems = [
+    'toolbarGroup-View',
+    'toolbarGroup-Annotate',
+    'toolbarGroup-Shapes',
+    'toolbarGroup-Insert',
+    'toolbarGroup-Edit',
+    'toolbarGroup-Forms',
+    'toolbarGroup-FillAndSign'
+  ];
+  window.instance.UI.disableElements(dataElementItems);
+
+  window.instance.UI.setActiveGroupedItems('shapesGroupedItems');
+  const ellipseTool = canvas.getByRole('button', { name: 'Ellipse' });
+  expect(ellipseTool).toBeInTheDocument();
+
+  window.instance.UI.setActiveGroupedItems('insertGroupedItems');
+  const rubberStampTool = canvas.getByRole('button', { name: 'Rubber Stamp' });
+  expect(rubberStampTool).toBeInTheDocument();
 };

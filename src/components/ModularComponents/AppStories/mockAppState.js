@@ -178,8 +178,7 @@ export const mockModularComponents = {
     title: 'Forms',
     type: 'ribbonItem',
     label: 'Forms',
-    groupedItems: [
-    ],
+    groupedItems: ['defaultAnnotationUtilities'],
     toolbarGroup: 'toolbarGroup-Forms'
   },
   'default-ribbon-group': {

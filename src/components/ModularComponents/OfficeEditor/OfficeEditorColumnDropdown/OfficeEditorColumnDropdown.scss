@@ -1,0 +1,18 @@
+@import '../../../../constants/officeEditor.scss';
+
+.office-editor-column-dropdown {
+  @include oe-modular-custom-dropdown;
+
+  .Dropdown__item {
+    padding-left: 32px;
+    padding-right: 24px;
+
+    &.selected:not(:hover) {
+      transition: none;
+    }
+  }
+
+  .Dropdown__item-description {
+    font-size: 13px;
+  }
+}

@@ -1162,6 +1162,11 @@ export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, 
   });
 };
 
+export const setAccessibleMode = (isAccessibleMode) => ({
+  type: 'SET_ACCESSIBLE_MODE',
+  payload: { isAccessibleMode },
+});
+
 export const setShouldAddA11yContentToDOM = (shouldAddA11yContentToDOM) => ({
   type: 'SET_SHOULD_ADD_A11Y_CONTENT',
   payload: { shouldAddA11yContentToDOM },
@@ -1179,7 +1184,15 @@ export const disableWidgetHighlighting = () => ({
   type: 'DISABLE_WIDGET_HIGHLIGHTING',
 });
 
-export const setCellStyleColors = (cellStyleColors) => ({
-  type: 'SET_CELL_STYLE_COLORS',
-  payload: { cellStyleColors },
+export const setCellBackgroundColors = (colors) => ({
+  type: 'SET_CELL_BACKGROUND_COLORS',
+  payload: { colors },
+});
+export const setTextColors = (colors) => ({
+  type: 'SET_TEXT_COLORS',
+  payload: { colors },
+});
+export const setBorderColors = (colors) => ({
+  type: 'SET_BORDER_COLORS',
+  payload: { colors },
 });

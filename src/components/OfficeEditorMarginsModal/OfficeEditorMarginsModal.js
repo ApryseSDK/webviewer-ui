@@ -1,160 +1,191 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import selectors from 'selectors';
 import actions from 'actions';
+import core from 'core';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
+import Dropdown from 'components/Dropdown';
 import { Input } from '@pdftron/webviewer-react-toolkit';
-import core from 'core';
+import mapObjectKeys from 'helpers/mapObjectKeys';
 import {
+  OFFICE_EDITOR_TRANSLATION_PREFIX,
   MARGIN_UNITS,
+  MARGIN_SIDES,
   PIXELS_PER_INCH,
-  MARGIN_TOP_AND_BOTTOM_MAX_PERCENTAGE,
-  MINIMUM_COLUMN_WIDTH_IN_INCHES,
-  CM_PER_INCH
+  VERTICAL_MARGIN_LIMIT,
+  PAGE_LAYOUT_WARNING_TYPE,
 } from 'constants/officeEditor';
-import { validateMarginInput } from 'helpers/officeEditor';
+import { validateMarginInput, focusContent, convertMeasurementUnit, getMinimumColumnWidth, formatToDecimalString, showPageLayoutWarning } from 'helpers/officeEditor';
 
 import './OfficeEditorMarginsModal.scss';
+
+// SIDES must be listed in this order for HTML inputs
+const SIDES = [MARGIN_SIDES.LEFT, MARGIN_SIDES.RIGHT, MARGIN_SIDES.TOP, MARGIN_SIDES.BOTTOM];
 
 const OfficeEditorMarginsModal = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [leftMargin, setLeftMargin] = useState('');
-  const [rightMargin, setRightMargin] = useState('');
-  const [topMargin, setTopMargin] = useState('');
-  const [bottomMargin, setBottomMargin] = useState('');
-  const [marginsOnOpen, setMarginsOnOpen] = useState({ left: '', right: '', top: '', bottom: '' });
-  const [maxLeftMarginInInches, setMaxLeftMarginInInches] = useState(0);
-  const [maxRightMarginInInches, setMaxRightMarginInInches] = useState(0);
-  const [maxTopAndBottomMarginsInInches, setMaxTopAndBottomMarginsInInches] = useState(0);
+  const currentUnit = useSelector(selectors.getOfficeEditorUnitMeasurement);
+  const [initialUnit, setInitialUnit] = useState(currentUnit);
+  const [initialMargins, setInitialMargins] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
+  const [numericMargins, setNumericMargins] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
+  const [inputMargins, setInputMargins] = useState({ left: '0', right: '0', top: '0', bottom: '0' });
+  const [maxMargins, setMaxMargins] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
   const [pageWidth, setPageWidth] = useState(0);
-  const [currentUnit, setCurrentUnit] = useState(MARGIN_UNITS.CM);
+  const [pageHeight, setPageHeight] = useState(0);
 
-  useEffect(async () => {
-    setCurrentUnit(MARGIN_UNITS.CM);
-    const pageNumber = await core.getOfficeEditor().getEditingPageNumber();
-    const pageHeight = core.getDocumentViewer().getPageHeight(pageNumber) / PIXELS_PER_INCH;
+  const handleUnitChange = (unit) => dispatch(actions.setOfficeEditorUnitMeasurement(unit));
 
-    setPageWidth(core.getDocumentViewer().getPageWidth(pageNumber) / PIXELS_PER_INCH);
-    setMaxTopAndBottomMarginsInInches(pageHeight * MARGIN_TOP_AND_BOTTOM_MAX_PERCENTAGE);
+  const areMarginsEqual = (a, b) => SIDES.every((side) => a[side] === b[side]);
 
-    const margins = await core.getOfficeEditor().getSectionMargins(currentUnit);
-    const convertedMargins = {
-      left: (margins.left).toFixed(2),
-      right: (margins.right).toFixed(2),
-      top: (margins.top).toFixed(2),
-      bottom: (margins.bottom).toFixed(2)
-    };
-
-    setLeftMargin(convertedMargins.left);
-    setRightMargin(convertedMargins.right);
-    setTopMargin(convertedMargins.top);
-    setBottomMargin(convertedMargins.bottom);
-    setMarginsOnOpen(convertedMargins);
-  }, []);
-
-  useEffect(() => {
-    updateMaxHorizontalMargins();
-  }, [pageWidth, leftMargin, rightMargin]);
-
-  const calculateMaxHorizontalMargin = (pageWidth, oppositeMarginWidth) => {
-    const maxWidth = pageWidth - oppositeMarginWidth - MINIMUM_COLUMN_WIDTH_IN_INCHES;
+  const calculateMaxHorizontalMargins = (pageWidth, oppositeMarginWidth, unit) => {
+    const maxWidth = pageWidth - oppositeMarginWidth - getMinimumColumnWidth(unit);
     return maxWidth;
   };
 
-  const updateMaxHorizontalMargins = () => {
-    const convertedMargins = {
-      left: (currentUnit === MARGIN_UNITS.CM) ? leftMargin / CM_PER_INCH : leftMargin,
-      right: (currentUnit === MARGIN_UNITS.CM) ? rightMargin / CM_PER_INCH : rightMargin,
+  const calculateAllMaxMargins = (pageWidth, pageHeight, margins, unit) => {
+    const maxTopAndBottom = pageHeight * VERTICAL_MARGIN_LIMIT;
+    return {
+      top: maxTopAndBottom,
+      bottom: maxTopAndBottom,
+      left: calculateMaxHorizontalMargins(pageWidth, margins.right, unit),
+      right: calculateMaxHorizontalMargins(pageWidth, margins.left, unit),
     };
-    const maxLeftMargin = calculateMaxHorizontalMargin(pageWidth, convertedMargins.right);
-    const maxRightMargin = calculateMaxHorizontalMargin(pageWidth, convertedMargins.left);
-
-    setMaxLeftMarginInInches(maxLeftMargin);
-    setMaxRightMarginInInches(maxRightMargin);
   };
 
-  const onInputBlur = (e, updateMarginCallback) => {
-    if (e.target.value === '') {
-      updateMarginCallback('0');
-    }
-  };
-
-  const onMarginChange = (e, updateMarginCallback, maxMarginInInches) => {
-    const val = validateMarginInput(e.target.value, maxMarginInInches, currentUnit);
-    updateMarginCallback(val);
-  };
-
-  const onApply = () => {
-    dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_MARGINS_MODAL));
-    const marginsChanged = leftMargin !== marginsOnOpen.left || rightMargin !== marginsOnOpen.right || topMargin !== marginsOnOpen.top || bottomMargin !== marginsOnOpen.bottom;
-    if (!marginsChanged) {
+  const handleBlur = (value, side, maxMargin) => {
+    const validated = validateMarginInput(value, maxMargin);
+    if (numericMargins[side] === validated && inputMargins[side] === validated.toString()) {
       return;
     }
-    const margins = {
-      left: leftMargin,
-      right: rightMargin,
-      top: topMargin,
-      bottom: bottomMargin,
-    };
-    return core.getOfficeEditor().setSectionMargins(margins, currentUnit);
+    setNumericMargins((previous) => ({ ...previous, [side]: validated }));
+    setInputMargins((previous) => ({ ...previous, [side]: validated.toString() }));
+  };
+
+  const handleChange = (value, side) => {
+    setInputMargins((previous) => ({ ...previous, [side]: value }));
+  };
+
+  const onApply = async () => {
+    if (areMarginsEqual(numericMargins, initialMargins)) {
+      closeModalAndFocus();
+      return;
+    }
+    try {
+      await core.getOfficeEditor().setSectionMargins(numericMargins, currentUnit);
+      closeModal();
+    } catch (e) {
+      console.error('Error applying margins:', e);
+      showPageLayoutWarning(dispatch, actions, PAGE_LAYOUT_WARNING_TYPE.MARGIN);
+    }
+
   };
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_MARGINS_MODAL));
-
-    setTimeout(() => {
-      core.getOfficeEditor().focusContent();
-    }, 0);
   };
 
-  const inputElements = [
-    {
-      id: 'leftMarginInput',
-      label: t('officeEditor.marginsModal.leftMargin'),
-      value: leftMargin,
-      onChange: (e) => onMarginChange(e, setLeftMargin, maxLeftMarginInInches),
-      onBlur: (e) => onInputBlur(e, setLeftMargin),
-    },
-    {
-      id: 'rightMarginInput',
-      label: t('officeEditor.marginsModal.rightMargin'),
-      value: rightMargin,
-      onChange: (e) => onMarginChange(e, setRightMargin, maxRightMarginInInches),
-      onBlur: (e) => onInputBlur(e, setRightMargin),
-    },
-    {
-      id: 'topMarginInput',
-      label: t('officeEditor.marginsModal.topMargin'),
-      value: topMargin,
-      onChange: (e) => onMarginChange(e, setTopMargin, maxTopAndBottomMarginsInInches),
-      onBlur: (e) => onInputBlur(e, setTopMargin),
-    },
-    {
-      id: 'bottomMarginInput',
-      label: t('officeEditor.marginsModal.bottomMargin'),
-      value: bottomMargin,
-      onChange: (e) => onMarginChange(e, setBottomMargin, maxTopAndBottomMarginsInInches),
-      onBlur: (e) => onInputBlur(e, setBottomMargin),
+  const closeModalAndFocus = () => {
+    closeModal();
+    focusContent();
+  };
+
+  const inputElements = SIDES.map((side) => ({
+    id: `${side}MarginInput`,
+    label: t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}marginsModal.${side}Margin`),
+    value: inputMargins[side],
+    onChange: (e) => handleChange(e.target.value, side),
+    onBlur: (e) => handleBlur(e.target.valueAsNumber, side, maxMargins[side]),
+  }));
+
+  useEffect(() => {
+    const setInitialData = async () => {
+      const pageNumber = await core.getOfficeEditor().getEditingPageNumber();
+      const margins = await core.getOfficeEditor().getSectionMargins(currentUnit);
+      const pageWidthInInch = core.getPageWidth(pageNumber) / PIXELS_PER_INCH;
+      const pageHeightInInch = core.getPageHeight(pageNumber) / PIXELS_PER_INCH;
+      const pageWidthInCurrentUnit = convertMeasurementUnit(pageWidthInInch, MARGIN_UNITS.INCH, currentUnit);
+      const pageHeightInCurrentUnit = convertMeasurementUnit(pageHeightInInch, MARGIN_UNITS.INCH, currentUnit);
+
+      setPageWidth(pageWidthInCurrentUnit);
+      setPageHeight(pageHeightInCurrentUnit);
+      setInitialUnit(currentUnit);
+      setInitialMargins(margins);
+      setNumericMargins(margins);
+      setInputMargins(mapObjectKeys(SIDES, (side) => formatToDecimalString(margins[side])));
+      setMaxMargins(calculateAllMaxMargins(pageWidthInCurrentUnit, pageHeightInCurrentUnit, margins, currentUnit));
+    };
+    setInitialData();
+  }, []);
+
+  useEffect(() => {
+    setMaxMargins((previous) => ({
+      ...previous,
+      left: calculateMaxHorizontalMargins(pageWidth, numericMargins.right, currentUnit),
+      right: calculateMaxHorizontalMargins(pageWidth, numericMargins.left, currentUnit),
+    }));
+  }, [pageWidth, numericMargins.left, numericMargins.right]);
+
+  useEffect(() => {
+    if (currentUnit === initialUnit) {
+      return;
     }
-  ];
+    setInitialUnit(currentUnit);
+
+    const pageWidthInCurrentUnit = convertMeasurementUnit(pageWidth, initialUnit, currentUnit);
+    const pageHeightInCurrentUnit = convertMeasurementUnit(pageHeight, initialUnit, currentUnit);
+    setPageWidth(pageWidthInCurrentUnit);
+    setPageHeight(pageHeightInCurrentUnit);
+
+    const initialMarginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertMeasurementUnit(initialMargins[side], initialUnit, currentUnit));
+    const marginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertMeasurementUnit(numericMargins[side], initialUnit, currentUnit));
+    const maxMarginsInCurrentUnit = calculateAllMaxMargins(pageWidthInCurrentUnit, pageHeightInCurrentUnit, marginsInCurrentUnit, currentUnit);
+
+    // validate margins here because of rounding from conversion
+    const validatedMargins = mapObjectKeys(SIDES, (side) => validateMarginInput(marginsInCurrentUnit[side], maxMarginsInCurrentUnit[side]));
+    setInitialMargins(initialMarginsInCurrentUnit);
+    setMaxMargins(maxMarginsInCurrentUnit);
+    setNumericMargins(validatedMargins);
+    setInputMargins(mapObjectKeys(SIDES, (side) => formatToDecimalString(validatedMargins[side])));
+  }, [currentUnit, initialUnit]);
 
   return (
     <div className='OfficeEditorMarginsModal' data-element={DataElements.OFFICE_EDITOR_MARGINS_MODAL}>
       <ModalWrapper
-        title={t('officeEditor.marginsModal.title')}
-        closehandler={closeModal}
-        onCloseClick={closeModal}
+        title={t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}marginsModal.title`)}
+        closehandler={closeModalAndFocus}
+        onCloseClick={closeModalAndFocus}
         swipeToClose
         isOpen
       >
         <div className='modal-body'>
+          <div className='input-container flex-full'>
+            <label
+              id='office-editor-margin-unit-label'
+              className='modal-label'
+            >
+              {t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}unitMeasurement`)}
+            </label>
+            <Dropdown
+              id='office-editor-margin-unit'
+              dataElement={DataElements.OFFICE_EDITOR_MARGIN_UNIT}
+              labelledById='office-editor-margin-unit-label'
+              className={'unit-dropdown'}
+              items={Object.values(MARGIN_UNITS)}
+              onClickItem={handleUnitChange}
+              getKey={(item) => item}
+              currentSelectionKey={currentUnit}
+              width={'auto'}
+            />
+          </div>
+
           {inputElements.map((input) => (
-            <div key={input.id} className='input-container'>
-              <label htmlFor={input.id} className='label'>{input.label}</label>
+            <div key={input.id} className='input-container flex-half'>
+              <label htmlFor={input.id} className='modal-label'>{input.label}</label>
               <Input
                 type='number'
                 id={input.id}
@@ -162,7 +193,7 @@ const OfficeEditorMarginsModal = () => {
                 onBlur={input.onBlur}
                 value={input.value}
                 min='0'
-                step='any'
+                step='0.1'
               />
             </div>
           ))}

@@ -7,6 +7,7 @@ import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
 import { SearchWrapper } from './SearchWrapper';
 import core from 'core';
+import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 
 import './AdvancedTab.scss';
 
@@ -25,6 +26,7 @@ const AdvancedTab = () => {
     customSettings,
     isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
     isWidgetHighlightingEnabled,
+    uiConfiguration,
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
     selectors.isNoteSubmissionWithEnterEnabled(state),
@@ -37,6 +39,7 @@ const AdvancedTab = () => {
     selectors.getCustomSettings(state),
     selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state),
     selectors.isWidgetHighlightingEnabled(state),
+    selectors.getUIConfiguration(state),
   ]);
 
   const [t] = useTranslation();
@@ -116,14 +119,15 @@ const AdvancedTab = () => {
     )
   ];
 
-  const searchItems = [
+  const searchItems = uiConfiguration !== VIEWER_CONFIGURATIONS.DOCX_EDITOR ? [
     createItem(
       t('option.settings.disableClearSearchOnPanelClose'),
       t('option.settings.disableClearSearchOnPanelCloseDesc'),
       !shouldClearSearchPanelOnClose,
       (enable) => dispatch(actions.setClearSearchOnPanelClose(!enable))
     )
-  ];
+  ] :
+    [];
 
   const pageManipulationItems = [
     createItem(

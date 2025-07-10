@@ -1,4 +1,4 @@
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import {
   defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorHeaders,
@@ -54,20 +54,5 @@ export const PresetButtonsInTheApp = createTemplate({
       'logoBar': { disabled: true },
     },
   },
-  spreadsheetEditorRedux: {
-    editMode: 'editing',
-    cellProperties: {
-      styles: {
-        verticalAlignment: null,
-        horizontalAlignment: null,
-        font: {
-          bold: true,
-          italic: false,
-          underline: true,
-          strikeout: false,
-        },
-        formatType: null,
-      }
-    }
-  },
+  spreadsheetEditorRedux: defaultSpreadSheetEditorState,
 });

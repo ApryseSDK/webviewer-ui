@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Válassza az AnnotationCreateTextHighlight eszközt",
       "selectCreateTextStrikeoutTool": "Válassza az AnnotationCreateTextStrikeout eszközt",
       "selectCreateTextUnderlineTool": "Válassza az AnnotationCreateTextUnderline eszközt",
-      "editKeyboardShorcut": "Billentyűparancs szerkesztése",
+      "editKeyboardShortcut": "Billentyűparancs szerkesztése",
       "setShortcut": "Parancsikon beállítása",
       "editShortcut": "Parancsikon szerkesztése",
       "shortcutAlreadyExists": "A fenti billentyűparancs már létezik.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Egyik sem",
-      "solid": "Szilárd",
+      "thin": "Szilárd",
       "dashed": "Szaggatott",
       "dotted": "Pontozott"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Figyelmeztetés szerkesztése",
       "message": "Biztosan törli ezt a lapot?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Oldalelrendezés",
+      "columnsMessage": "A hasábközökre kiválasztott beállítások egyes szakaszokban túl nagyok az oldal szélességéhez képest.",
+      "marginsMessage": "A margókhoz kiválasztott beállítások egyes szakaszokban túl nagyok az oldal szélességéhez képest."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Jobbra",
     "customMargins": "Egyéni margók",
     "customMarginsDescription": "Egyéni margók meghatározása",
+    "column": "Oszlop",
+    "columns": "Oszlopok",
+    "singleColumn": "1 oszlop",
+    "twoColumn": "2 oszlop",
+    "threeColumn": "3 oszlop",
+    "customColumn": "Egyéni oszlopok",
+    "customColumnDescription": "Egyéni oszlopok definiálása",
+    "unitMeasurement": "Mértékegység",
     "header": {
       "0": "Fejléc",
       "1": "Első oldal fejléce",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Különböző páros és páratlan oldalak",
         "differentFirstEvenOddPages": "Különböző első, páros és páratlan oldalak"
       }
+    },
+    "columnsModal": {
+      "title": "Egyéni oszlopbeállítás",
+      "columnAmount": "Oszlopok száma",
+      "columnNumber": "Oszlopszám",
+      "width": "Szélesség",
+      "spacing": "Térköz",
+      "widthAndSpacing": "Szélesség és térköz",
+      "equalColumns": "Egyenlő oszlopszélesség"
     },
     "marginsModal": {
       "title": "Egyéni margóbeállítás",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Megtekintés",
     "editingDescription": "Dokumentum szerkesztése",
     "viewOnlyDescription": "Csak megtekintés",
+    "editModeDropdown": "Szerkesztési mód kiválasztása",
     "bold": "Bátor",
     "italic": "Dőlt",
     "underline": "Aláhúzás",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Törölje a cellákat és tolja felfelé",
     "deleteColumnShiftLeft": "Törölje a cellákat és tolja balra",
     "clearBorder": "Tiszta határ",
-    "cellBorderAll": "Minden határ",
-    "cellBorderInside": "A határokon belül",
-    "cellBorderOutside": "Határokon kívül",
-    "cellBorderTop": "Felső szegély",
-    "cellBorderBottom": "Alsó szegély",
-    "cellBorderLeft": "Bal határ",
-    "cellBorderRight": "Jobb határ",
-    "cellBorderVertical": "Függőleges szegély",
-    "cellBorderHorizontal": "Vízszintes határ",
-    "cellBorderNone": "Nincs határ",
+    "all": "Minden határ",
+    "inside": "A határokon belül",
+    "outside": "Határokon kívül",
+    "top": "Felső szegély",
+    "bottom": "Alsó szegély",
+    "left": "Bal határ",
+    "right": "Jobb határ",
+    "vertical": "Függőleges szegély",
+    "horizontal": "Vízszintes határ",
+    "none": "Nincs határ",
     "borders": "Határok",
     "fontSize": {
       "dropdownLabel": "Betűméret"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formula bár",
     "range": "Hatótávolság",
-    "formulas": "Képletek",
-    "sumif": "Egy tartományon belüli feltételes összeg",
-    "sumsq": "Egy tartomány négyzeteinek összegét adja eredményül",
-    "sum": "Összeadja egy tartomány összes számát",
-    "asinh": "Egy szám inverz hiperbolikus szinuszát adja eredményül",
-    "acos": "Egy szám arckoszinuszát adja vissza radiánban",
-    "cosh": "Egy szám hiperbolikus koszinuszát adja eredményül",
-    "iseven": "Ellenőrzi, hogy egy szám páros-e",
-    "isodd": "Ellenőrzi, hogy egy szám páratlan-e"
+    "formulas": "Képletek"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Feltételes összeg egy tartományon belül.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A `kritérium` alapján tesztelt tartomány."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "A `tartomány`-ra alkalmazandó minta vagy teszt."
+        },
+        "sum_range": {
+          "name": "összegtartomány",
+          "detail": "Az összegzendő tartomány, ha eltér a `tartomány`-tól."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Radiánban megadott szög tangense.",
+      "parameters": {
+        "angle": {
+          "name": "szög",
+          "detail": "A szög radiánban, amelynek tangensét meg kell határozni."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Tetszőleges valós szám hiperbolikus tangense.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Bármely valós érték, amelynek a hiperbolikus tangensét ki kell számítani."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Felkerekíti a számot egy tényező legközelebbi többszörösére.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet a `tényező` legközelebbi egész többszörösére kell felfelé kerekíteni."
+        },
+        "factor": {
+          "name": "tényező",
+          "detail": "Az a szám, amelynek többszöröseire a `value` argumentumot kerekíteni kell."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Egy érték inverz tangense radiánban.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez az inverz tangenst ki kell számítani."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Egy szám inverz hiperbolikus szinuszát.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez az inverz hiperbolikus szinuszt ki kell számítani."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Egy szám abszolút értéke.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám, amelynek abszolút értékét vissza kell adni."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Egy érték inverz koszinusza radiánban.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelynek inverz koszinuszát ki kell számítani. `-1` és `1` között kell lennie, a határértékeket is beleértve."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Egy szám inverz hiperbolikus koszinusza.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez az inverz hiperbolikus koszinuszt ki kell számítani. Nagyobbnak vagy egyenlőnek kell lennie, mint `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Multinomiális eloszlásfüggvény.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az elsőként figyelembe veendő érték vagy tartomány."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További figyelembe veendő értékek vagy tartományok."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Egy szám inverz hiperbolikus tangense.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez az inverz hiperbolikus tangenst ki kell számítani. -1 és 1 között kell lennie, a két érték kivételével."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Egy érték arkusz tangense.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Az x tengelyhez tartozó szög kiszámításához szükséges szakasz végpontjának x koordinátája."
+        },
+        "y": {
+          "name": "és",
+          "detail": "Azon szakasz végpontjának y koordinátája, amelyhez az x tengelytől való szöget ki kell számítani."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Üres értékek száma.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyben az üres karakterek számát meg kell számolni."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Tetszőleges valós szám hiperbolikus koszinusza.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Bármely valós érték, amelynek a hiperbolikus koszinuszát ki kell számítani."
+        }
+      }
+    },
+    "INT": {
+      "description": "Lefelé kerekíti a számot a legközelebbi egész számra.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A legközelebbi egész számra lefelé kerekítendő érték."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Azt jelzi, hogy a megadott érték páros szám-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyről ellenőrizni kell, hogy páros-e."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Azt jelzi, hogy a megadott érték páratlan-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet páratlanként kell ellenőrizni."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Egy vagy több egész szám legkisebb közös többszöröse.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelynek tényezőit figyelembe kell venni a legkisebb közös többszörös megtalálásához szükséges számítás során."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyek tényezőit figyelembe kell venni a legkisebb közös többszörös megtalálásához."
+        }
+      }
+    },
+    "LN": {
+      "description": "Egy szám logaritmusa, e alapú (euler-szám).",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelynek a logaritmusát ki kell számítani, e alapú."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Egy szám logaritmusa egy adott számrendszerhez képest.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez a logaritmust ki kell számítani."
+        },
+        "base": {
+          "name": "bázis",
+          "detail": "A logaritmus kiszámításához használandó alap."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Egy szám logaritmusa, 10-es alapú.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez a 10-es alapú logaritmust ki kell számítani."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Modulo (maradék) operátor.",
+      "parameters": {
+        "dividend": {
+          "name": "osztalék",
+          "detail": "Az a szám, amelyet el kell osztani a maradék megtalálásához."
+        },
+        "divisor": {
+          "name": "osztó",
+          "detail": "Az osztandó szám."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Egy számot a legközelebbi egész többszörösre kerekít.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám, amelyet egy másik legközelebbi egész többszörösére kell kerekíteni."
+        },
+        "factor": {
+          "name": "tényező",
+          "detail": "Az a szám, amelynek többszöröseire a `value` argumentum kerekítve lesz."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Egy számot felfelé kerekít a legközelebbi páratlan egész számra.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet a következő legnagyobb páratlan számra kell kerekíteni."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Négyzetösszeg.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első szám vagy tartomány, amelynek négyzeteit össze kell adni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További számok vagy tartományok, amelyek négyzeteit hozzá kell adni az `value1` négyzetéhez/négyzeteihez."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Objektumok egy halmazából származó kombinációk száma.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "A választható objektumkészlet mérete."
+        },
+        "k": {
+          "name": "k",
+          "detail": "A kiválasztható objektumok száma."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Számok és/vagy cellák sorozatának összege.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első összeadandó szám vagy tartomány."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További számok vagy tartományok, amelyeket hozzá kell adni az `value1`-hez."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Egy adott függvény használatával kiszámított tartomány részösszege.",
+      "parameters": {
+        "function_code": {
+          "name": "függvénykód",
+          "detail": "A részösszeg-aggregációban használandó függvény."
+        },
+        "range1": {
+          "name": "tartomány1",
+          "detail": "Az első tartomány, amelyre vonatkozóan a részösszeget kiszámítjuk."
+        },
+        "range2": {
+          "name": "2. tartomány",
+          "detail": "További tartományok, amelyeken belül a részösszegeket ki kell számítani."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Egy érték inverz szinuszának értéke radiánban.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyhez az inverz szinusz kiszámításra kerül. `-1` és `1` között kell lennie, a határértékeket is beleértve."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Feltételes számlálás egy tartományon belül.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A `kritérium` alapján tesztelt tartomány."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "A `tartomány`-ra alkalmazandó minta vagy teszt."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Egy fokban megadott szögértéket radiánba konvertál.",
+      "parameters": {
+        "angle": {
+          "name": "szög",
+          "detail": "A fokból radiánba átszámítandó szög."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Egy véletlenszerű szám 0 és 1 között."
+    },
+    "COUNTUNIQUE": {
+      "description": "Megszámolja az egyedi értékek számát egy tartományban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az egyediség szempontjából elsőként figyelembe veendő érték vagy tartomány."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket az egyediség szempontjából figyelembe kell venni."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Radiánban megadott szögértéket konvertál fokokká.",
+      "parameters": {
+        "angle": {
+          "name": "szög",
+          "detail": "A radiánból fokba átszámítandó szög."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Egy érték komplementer Gauss-hibafüggvénye.",
+      "parameters": {
+        "z": {
+          "name": "Vel",
+          "detail": "Az a szám, amelyre a komplementer Gauss-hibafüggvényt ki kell számítani."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Egy számot felfelé kerekít a legközelebbi páros egész számra.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet a következő legnagyobb páros számra kell kerekíteni."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Euler-szám, az e (~2,718) hatványozva.",
+      "parameters": {
+        "exponent": {
+          "name": "kitevő",
+          "detail": "Az a kitevő, amelyre az e-t emelni kell."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Egy szám faktoriálisa.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám vagy egy számra való hivatkozás, amelynek faktoriálisát ki kell számítani és vissza kell adni."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "egy szám „kettős faktoriálisa”.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám vagy egy számra való hivatkozás, amelynek dupla faktoriálisát ki kell számítani és vissza kell adni."
+        }
+      }
+    },
+    "PI": {
+      "description": "A pi szám."
+    },
+    "GCD": {
+      "description": "Egy vagy több egész szám legnagyobb közös osztója.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelynek tényezőit figyelembe kell venni a legnagyobb közös osztó megtalálásához szükséges számítás során."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyek tényezőit figyelembe kell venni a legnagyobb közös osztó megtalálásához."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Két érték közötti véletlenszerű egész szám, a két értéket is beleértve.",
+      "parameters": {
+        "low": {
+          "name": "alacsony",
+          "detail": "A véletlenszerű tartomány alsó vége."
+        },
+        "high": {
+          "name": "magas",
+          "detail": "A véletlenszerű tartomány felső határa."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Egy számot kerekít a szabványos szabályok szerint.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet `hely(ek)` számjegyére kell kerekíteni."
+        },
+        "places": {
+          "name": "helyek",
+          "detail": "A tizedesjegyek száma, amelyre kerekíteni kell."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Lefelé kerekít egy számot.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet `hely` megadásával kell kerekíteni, mindig lefelé kerekítve."
+        },
+        "places": {
+          "name": "helyek",
+          "detail": "A tizedesjegyek száma, amelyre kerekíteni kell."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Felfelé kerekít egy számot.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet `hely` megadásával kell kerekíteni, mindig felfelé kerekítve."
+        },
+        "places": {
+          "name": "helyek",
+          "detail": "A tizedesjegyek száma, amelyre kerekíteni kell."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Hatványsor összege.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "A hatványsor bemenete. A közelítés típusától függően változik, lehet szög, kitevő vagy valamilyen más érték."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Az a kezdeti hatvány, amelyre az `x`-et emeljük a hatványsorban."
+        },
+        "m": {
+          "name": "m",
+          "detail": "Az az additív növekmény, amellyel az `x` értékét növelni kell."
+        },
+        "a": {
+          "name": "egy",
+          "detail": "A hatványsor együtthatóit tartalmazó tömb vagy tartomány."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Egy megadott szám előjele (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelynek az előjelét kiértékelni fogják."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Radiánban megadott szög szinuszát.",
+      "parameters": {
+        "angle": {
+          "name": "szög",
+          "detail": "A szög radiánban, amelynek a szinuszát meg kell határozni."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Tetszőleges valós szám hiperbolikus szinuszát.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Bármely valós érték, amelynek a hiperbolikus szinuszát ki kell számítani."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Pozitív szám pozitív négyzetgyöke.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám, amelyre a pozitív négyzetgyököt ki kell számítani."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "A π és a szám szorzatának négyzetgyöke.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a szám, amelyet megszorozunk a Pi-vel, és amelynek négyzetgyökét visszaadjuk."
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "A gammafüggvény logaritmusa.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A Gamma függvény bemenete. A Gamma(`value`) természetes logaritmusa lesz visszaadva."
+        }
+      }
+    },
+    "COS": {
+      "description": "Radiánban megadott szög koszinusza.",
+      "parameters": {
+        "angle": {
+          "name": "szög",
+          "detail": "A szög radiánban, amelynek koszinuszát meg kell határozni."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Csonkol egy számot.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A csonkolandó érték."
+        },
+        "places": {
+          "name": "helyek",
+          "detail": "A tizedesvesszőtől jobbra eső értékes számjegyek száma, amelyeket meg kell tartani."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Egy szám osztva egy másikkal.",
+      "parameters": {
+        "dividend": {
+          "name": "osztalék",
+          "detail": "Az osztandó szám."
+        },
+        "divisor": {
+          "name": "osztó",
+          "detail": "Az osztandó szám."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Egy szám adott hatványon.",
+      "parameters": {
+        "base": {
+          "name": "bázis",
+          "detail": "Az a szám, amelyet a „kitevő” hatványára kell emelni."
+        },
+        "exponent": {
+          "name": "kitevő",
+          "detail": "Az a kitevő, amelyre az `alap`-ot emelni kell."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Egy tartományt összegez több kritérium alapján.",
+      "parameters": {
+        "sum_range": {
+          "name": "összegtartomány",
+          "detail": "Az összegzendő tartomány."
+        },
+        "criteria_range1": {
+          "name": "kritériumtartomány1",
+          "detail": "Az 1. kritériummal szemben ellenőrizendő tartomány."
+        },
+        "criterion1": {
+          "name": "kritérium1",
+          "detail": "A criteria_range1-re alkalmazandó minta vagy teszt."
+        },
+        "criteria_range2": {
+          "name": "kritériumtartomány2",
+          "detail": "További ellenőrizendő tartományok."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Értékek számlálása több kritérium alapján.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "kritériumtartomány1",
+          "detail": "A `kritérium1` alapján ellenőrizendő tartomány."
+        },
+        "criterion1": {
+          "name": "kritérium1",
+          "detail": "A `kritériumtartomány1`-re alkalmazandó minta vagy teszt."
+        },
+        "criteria_range2": {
+          "name": "kritériumtartomány2",
+          "detail": "További ellenőrizendő tartományok."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Egy számsorozat szorzásának eredménye.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "A szorzat kiszámításához szükséges első szám vagy tartomány."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "További számok vagy tartományok a szorzat kiszámításához."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Egy adathalmaz harmonikus átlaga.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A sokaság első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a populációba kell foglalni."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hipergeometrikus eloszlás valószínűsége.",
+      "parameters": {
+        "num_successes": {
+          "name": "sikerek_száma",
+          "detail": "A sikerek kívánt száma."
+        },
+        "num_draws": {
+          "name": "húzások_száma",
+          "detail": "Az engedélyezett húzások száma."
+        },
+        "successes_in_pop": {
+          "name": "sikerek_a_népszerűségben",
+          "detail": "A sikeres kísérletek teljes száma a populációban."
+        },
+        "pop_size": {
+          "name": "pop_size",
+          "detail": "A populáció teljes mérete"
+        },
+        "cumulative": {
+          "name": "halmozott",
+          "detail": "Határozza meg a függvény alakjának logikai értékét.\n\nHa a kumuláv függvény értéke IGAZ(), akkor a HYPGEOM.DIST függvény a kumulatív eloszlásfüggvényt adja vissza;\n\nha HAMIS(), akkor a valószínűségi sűrűségfüggvényt adja vissza."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Lineáris regresszióval származtatott egyenes Y-metszet.",
+      "parameters": {
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Egy adathalmaz kurtosisa.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az adathalmaz első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket az adathalmazba kell foglalni."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Egy adathalmaz N-edik legnagyobb eleme.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A figyelembe veendő adathalmazt tartalmazó tömb vagy tartomány."
+        },
+        "n": {
+          "name": "n",
+          "detail": "A visszaadandó elem rangsorolása a legnagyobbtól a legkisebbig."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "A minta szórása (szöveg 0).",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A minta első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a mintába bele kell foglalni."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Egy teljes populáció szórása.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A sokaság első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a populációba kell foglalni."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Egy adathalmaz geometriai átlaga.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A sokaság első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a populációba kell foglalni."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Százalékos rangsor (percentilis) 0-tól 1-ig.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A figyelembe veendő adathalmazt tartalmazó tömb vagy tartomány."
+        },
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelynek százalékos rangsorát meg kell határozni."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "A számításban használandó értékes jegyek száma. Az alapértelmezett érték 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "A várható y-érték lineáris regresszió alapján.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Az x tengelyen előrejelzendő érték."
+        },
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Egy megadott érték inverz Fisher-transzformációja.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyre az inverz Fisher-transzformációt ki kell számítani."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Adott értékű Fisher-transzformáció.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyre a Fisher-transzformációt ki kell számítani."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "A numerikus értékek száma az adathalmazban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a számláláskor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket figyelembe kell venni a számlálás során."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Az adathalmazban található értékek száma.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a számláláskor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket figyelembe kell venni a számlálás során."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Numerikus átlagérték egy adathalmazban, szöveg figyelmen kívül hagyásával.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az átlagérték kiszámításakor figyelembe veendő első érték vagy tartomány."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket figyelembe kell venni az átlagérték kiszámításakor."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binomiális eloszlás valószínűsége.",
+      "parameters": {
+        "num_successes": {
+          "name": "sikerek_száma",
+          "detail": "A sikeres kísérletek száma, amelyek valószínűségét a `próbálkozások_száma` argumentumban ki kell számítani."
+        },
+        "num_trials": {
+          "name": "próbálkozások_száma",
+          "detail": "A független kísérletek száma."
+        },
+        "prob_success": {
+          "name": "siker_valószínűsége",
+          "detail": "A siker valószínűsége bármely adott kísérletben."
+        },
+        "cumulative": {
+          "name": "halmozott",
+          "detail": "Binomiális kumulatív eloszlást kell-e használni."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "A mintán alapuló eltérések négyzetösszege.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A minta első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a mintába bele kell foglalni."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Az értékek átlaga a kritériumoktól függően.",
+      "parameters": {
+        "criteria_range": {
+          "name": "kritériumtartomány",
+          "detail": "A `kritérium` alapján ellenőrizendő tartomány."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "A `kritériumtartomány`-ra alkalmazandó minta vagy teszt."
+        },
+        "average_range": {
+          "name": "átlagtartomány",
+          "detail": "Az átlag tartománya. Ha nincs megadva, akkor a `kritériumtartomány` kerül felhasználásra az átlaghoz."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Több kritériumtól függő értékek átlaga.",
+      "parameters": {
+        "average_range": {
+          "name": "átlagtartomány",
+          "detail": "Az átlagolás tartománya."
+        },
+        "criteria_range1": {
+          "name": "kritériumtartomány1",
+          "detail": "A `kritérium1` alapján ellenőrizendő tartomány."
+        },
+        "criterion1": {
+          "name": "kritérium1",
+          "detail": "A `kritériumtartomány1`-re alkalmazandó minta vagy teszt."
+        },
+        "criteria_range2": {
+          "name": "kritériumtartomány2",
+          "detail": "További ellenőrizendő tartományok."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Több objektumból álló permutációk száma.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "A választható objektumkészlet mérete."
+        },
+        "k": {
+          "name": "k",
+          "detail": "A kiválasztható objektumok száma."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Egy adathalmaz átlaga a felső/alsó határok nélkül.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A figyelembe veendő adathalmazt tartalmazó tömb vagy tartomány."
+        },
+        "exclude_proportion": {
+          "name": "kizárási_arány",
+          "detail": "Az adathalmaz azon hányada, amelyet a halmaz szélsőségeiből ki kell zárni."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearson-féle szorzatmomentum-korrelációs együttható.",
+      "parameters": {
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minimális numerikus érték egy adathalmazban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a minimális érték kiszámításakor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a minimális érték kiszámításakor figyelembe kell venni."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimális érték egy numerikus adathalmazban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a minimális érték kiszámításakor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a minimális érték kiszámításakor figyelembe kell venni."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Numerikus adathalmaz medián értéke.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a mediánérték kiszámításakor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket figyelembe kell venni a mediánérték kiszámításakor."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maximális numerikus érték egy adathalmazban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a maximális érték kiszámításakor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a maximális érték kiszámításakor figyelembe kell venni."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maximális érték egy numerikus adathalmazban.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték vagy tartomány, amelyet a maximális érték kiszámításakor figyelembe kell venni."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket figyelembe kell venni a maximális érték kiszámításakor."
+        }
+      }
+    },
+    "PROB": {
+      "description": "A valószínűségi értékek egy tartományon belül helyezkednek el.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A figyelembe veendő adathalmazt tartalmazó tömb vagy tartomány."
+        },
+        "probabilities": {
+          "name": "valószínűségek",
+          "detail": "A `data`-nak megfelelő valószínűségeket tartalmazó tömb vagy tartomány."
+        },
+        "low_limit": {
+          "name": "alsó_határ",
+          "detail": "Az értéktartomány alsó korlátja, amelyre a valószínűséget ki kell számítani."
+        },
+        "high_limit": {
+          "name": "felső_határ",
+          "detail": "Az értéktartomány felső határa, amelyre a valószínűséget ki kell számítani."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "A korrelációs együttható négyzete.",
+      "parameters": {
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "VARA": {
+      "description": "A minta varianciája (szöveg 0).",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A minta első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a mintába bele kell foglalni."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "A teljes populáció varianciája (szöveg 0).",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A sokaság első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket a populációba kell foglalni."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "A regresszióban előrejelzett y-értékek standard hibája.",
+      "parameters": {
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Egy véletlen változó normalizált megfelelője.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A normalizálandó véletlen változó értéke."
+        },
+        "mean": {
+          "name": "átlagos",
+          "detail": "Az eloszlás átlaga."
+        },
+        "standard_deviation": {
+          "name": "szórás",
+          "detail": "Az eloszlás szórása."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Az adathalmaz n-edik legkisebb eleme.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A figyelembe veendő adathalmazt tartalmazó tömb vagy tartomány."
+        },
+        "n": {
+          "name": "n",
+          "detail": "A visszaadandó elem rangsorolása a legkisebbtől a legnagyobbig."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Az adatok lineáris regressziójából származó egyenes meredeksége.",
+      "parameters": {
+        "data_y": {
+          "name": "adatok_y",
+          "detail": "A függő adatok tömbjét vagy mátrixát képviselő tartomány."
+        },
+        "data_x": {
+          "name": "adat_x",
+          "detail": "A független adatok tömbjét vagy mátrixát reprezentáló tartomány."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Egy adathalmaz ferdesége.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az adathalmaz első értéke vagy tartománya."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További értékek vagy tartományok, amelyeket az adathalmazba kell foglalni."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Függőleges keresés.",
+      "parameters": {
+        "search_key": {
+          "name": "keresési_kulcs",
+          "detail": "A keresendő érték. Például: `42`, `\"Macskák\"` vagy `I24`."
+        },
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A kereséshez figyelembe veendő tartomány. A tartomány első oszlopában keressük a `search_key`-ben megadott kulcsot."
+        },
+        "index": {
+          "name": "index",
+          "detail": "A visszaadandó érték oszlopindexe, ahol a `tartomány` első oszlopának száma 1."
+        },
+        "is_sorted": {
+          "name": "rendezett",
+          "detail": "Azt jelzi, hogy a keresendő oszlop (a megadott tartomány első oszlopa) rendezett-e, amely esetben a `search_key` legközelebbi találatát adja vissza."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Vízszintes keresés",
+      "parameters": {
+        "search_key": {
+          "name": "keresési_kulcs",
+          "detail": "A keresendő érték. Például: `42`, `\"Macskák\"` vagy `I24`."
+        },
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A kereséshez figyelembe veendő tartomány. A tartomány első sorában keressük a `search_key`-ben megadott kulcsot."
+        },
+        "index": {
+          "name": "index",
+          "detail": "A visszaadandó érték sorindexe, ahol a `tartomány` első sora 1-es számmal van jelölve."
+        },
+        "is_sorted": {
+          "name": "rendezett",
+          "detail": "Azt jelzi, hogy a keresendő sor (a megadott tartomány első sora) rendezett-e."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Keressen egy értéket.",
+      "parameters": {
+        "search_key": {
+          "name": "keresési_kulcs",
+          "detail": "A sorban vagy oszlopban keresendő érték. Például: `42`, `\"Macskák\"` vagy `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "keresési_tartomány|keresési_eredmény_tömb",
+          "detail": "A függvény egyik használati módja, hogy egyetlen rendezett sort vagy oszlopot, a `search_range`-t adjuk meg a `search_key` kereséséhez, egy második argumentummal, a `result_range`-szal. A másik módszer, ha ezt a két argumentumot egyetlen `search_result_array`-vé egyesítjük, ahol az első sorban vagy oszlopban keresünk, és a tömb utolsó sorából vagy oszlopából adunk vissza értéket. Ha a `search_key` nem található, akkor nem pontos egyezést adhat vissza."
+        },
+        "result_range": {
+          "name": "eredménytartomány",
+          "detail": "Az a tartomány, amelyből az eredményt vissza kell adni. A visszaadott érték megfelel annak a helynek, ahol a `search_key` található a `search_range`-ben. Ez a tartomány csak egyetlen sorból vagy oszlopból állhat, és nem szabad használni, ha a `search_result_array` metódust használja."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Cellahivatkozás karakterláncként.",
+      "parameters": {
+        "row": {
+          "name": "sor",
+          "detail": "A cellahivatkozás sorszáma"
+        },
+        "column": {
+          "name": "oszlop",
+          "detail": "A cellahivatkozás oszlopszáma (nem neve). Az „A” az „1” oszlopszámot jelöli."
+        },
+        "absolute_relative_mode": {
+          "name": "abszolút_relatív_mód",
+          "detail": "Annak jelzője, hogy a hivatkozás sor/oszlop abszolút-e. Az „1” a sor és oszlop abszolút értékét jelenti (pl. $A$1), a „2” a sor abszolút és az oszlop relatív értékét (pl. A$1), a „3” a sor relatív és az oszlop abszolút értékét jelenti (pl. $A1), a „4” pedig a sor és oszlop relatív értékét jelenti (pl. A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_jelölés",
+          "detail": "Egy logikai érték, amely jelzi, hogy az `A1` stílusú jelölést (IGAZ) vagy az `R1C1` stílusú jelölést (HAMIS) kell-e használni."
+        },
+        "sheet": {
+          "name": "lap",
+          "detail": "Szöveg, amely a címzett munkalapjának nevét jelzi."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Karakterlánc által megadott cellahivatkozás.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cella_hivatkozás_karakterláncként",
+          "detail": "Cellahivatkozás, idézőjelek közé tett karakterláncként írva."
+        },
+        "is_A1_notation": {
+          "name": "is_A1_jelölés",
+          "detail": "Azt jelzi, hogy a cellahivatkozás A1 (IGAZ) vagy R1C1 (HAMIS) jelölésű."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Egy megadott cella sorszáma.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cella_hivatkozás",
+          "detail": "A cella, amelynek sorszámát vissza kell adni."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Sorok száma egy megadott tömbben vagy tartományban.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "Az a tartomány, amelynek sorszámát vissza kell adni."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Egy megadott cella oszlopszáma.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cella_hivatkozás",
+          "detail": "A cella, amelynek oszlopszámát vissza kell adni. Az `A` oszlop `1`-nek felel meg."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Oszlopok száma egy megadott tömbben vagy tartományban.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "Az a tartomány, amelynek oszlopszámát vissza kell adni."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Egy cellához viszonyított tartományhivatkozás-eltolás.",
+      "parameters": {
+        "cell_reference": {
+          "name": "cella_hivatkozás",
+          "detail": "A kiindulópont, amelytől az eltolt sorok és oszlopok számlálását meg kell kezdeni."
+        },
+        "offset_rows": {
+          "name": "eltolás_sorok",
+          "detail": "Az eltolásban használandó sorok száma."
+        },
+        "offset_columns": {
+          "name": "eltolás_oszlopok",
+          "detail": "Az eltolás oszlopainak száma."
+        },
+        "height": {
+          "name": "magasság",
+          "detail": "Az eltolási céltól kezdődően visszaadandó tartomány magassága."
+        },
+        "width": {
+          "name": "szélesség",
+          "detail": "Az eltolási céltól kezdődően visszaadandó tartomány szélessége."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Az elem helye a tartományon belül, amely megegyezik az értékkel.",
+      "parameters": {
+        "search_key": {
+          "name": "keresési_kulcs",
+          "detail": "A keresendő érték. Például: `42`, `\"Macskák\"` vagy `I24`."
+        },
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A keresendő egydimenziós tömb."
+        },
+        "search_type": {
+          "name": "keresési_típus",
+          "detail": "A keresési metódus. Az „1” (alapértelmezett) a `keresési_kulcs`-nál kisebb vagy azzal egyenlő legnagyobb értéket keresi, ha a `tartomány` növekvő sorrendben van rendezve. A `0` a pontos értéket keresi, ha a `tartomány` nincs rendezve. A `-1` a `keresési_kulcs`-nál nagyobb vagy azzal egyenlő legkisebb értéket keresi, ha a `tartomány` csökkenő sorrendben van rendezve."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "A cella tartalmát sor- és oszlopeltolás határozza meg.",
+      "parameters": {
+        "reference": {
+          "name": "referencia",
+          "detail": "Az eltolás alá helyezendő cellák tömbje."
+        },
+        "row": {
+          "name": "sor",
+          "detail": "Az eltolt sorok száma."
+        },
+        "column": {
+          "name": "oszlop",
+          "detail": "Az eltolt oszlopok száma."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Egy kimutatástáblázatból egy összesített értéket nyer ki, amely megfelel a megadott sor- és oszlopfejléceknek.",
+      "parameters": {
+        "value_name": {
+          "name": "érték_neve",
+          "detail": "A kimutatástáblázatban lévő érték neve, amelyhez adatokat szeretne lekérni."
+        },
+        "any_pivot_table_cell": {
+          "name": "bármely_pivot_tábla_cellája",
+          "detail": "Bármely hivatkozás a kívánt kimutatástáblázat egy cellájára (ajánlott a felső sarok)."
+        },
+        "original_column": {
+          "name": "eredeti_oszlop",
+          "detail": "Az oszlop neve az eredeti adathalmazban (nem a kimutatástáblában)."
+        },
+        "pivot_item": {
+          "name": "pivot_elem",
+          "detail": "A kimutatástáblázatban az *eredeti_oszlop*-nak megfelelő, lekérni kívánt sor vagy oszlop neve."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Egy elem egy indexen alapuló választási lehetőségek listájából.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Melyik választási lehetőséget (a megadott legfeljebb 30 közül) kell visszaadni."
+        },
+        "choice1": {
+          "name": "1. választás",
+          "detail": "Egy lehetséges visszaadandó érték. Kötelező. Lehet egy cellára való hivatkozás vagy egy egyedi érték."
+        },
+        "choice2": {
+          "name": "2. választás",
+          "detail": "További értékek, amelyek közül választhat."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Az órát/percet/másodpercet időértékké alakítja.",
+      "parameters": {
+        "hour": {
+          "name": "óra",
+          "detail": "Az idő óra összetevője."
+        },
+        "minute": {
+          "name": "perc",
+          "detail": "Az idő perc összetevője."
+        },
+        "second": {
+          "name": "második",
+          "detail": "Az idő második összetevője."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Egy időkarakterláncot sorszám-megjelenítésűvé alakít.",
+      "parameters": {
+        "time_string": {
+          "name": "időkarakterlánc",
+          "detail": "Az időreprezentációt tároló karakterlánc."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Egy adott dátum előtti vagy utáni hónap utolsó napja.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "Az a dátum, amelytől az eredményt számítani kell."
+        },
+        "months": {
+          "name": "hónapok",
+          "detail": "A figyelembe veendő „start_date” előtti (negatív) vagy utáni (pozitív) hónapok száma."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Dátum néhány hónappal korábban/után egy másik dátum.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "Az a dátum, amelytől az eredményt számítani kell."
+        },
+        "months": {
+          "name": "hónapok",
+          "detail": "A kiszámítandó „start_date” előtti (negatív) vagy utáni (pozitív) hónapok száma."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Egy adott idő második összetevője.",
+      "parameters": {
+        "time": {
+          "name": "idő",
+          "detail": "Az az időpont, amelyből a második komponenst ki kell számítani"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Egy adott idő perckomponense.",
+      "parameters": {
+        "time": {
+          "name": "idő",
+          "detail": "Az az időpont, amelyből a perckomponenst ki kell számítani."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Egy adott idő órakomponense.",
+      "parameters": {
+        "time": {
+          "name": "idő",
+          "detail": "Az az időpont, amelyből az órakomponenst ki kell számítani."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Aktuális dátum és idő dátumértékként."
+    },
+    "NETWORKDAYS": {
+      "description": "Nettó munkanapok két megadott nap között.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "Az időszak kezdő dátuma, amelytől a nettó munkanapok számát számítani kell."
+        },
+        "end_date": {
+          "name": "befejező_dátum",
+          "detail": "Az időszak végdátuma, amelytől a nettó munkanapok számát számítani kell."
+        },
+        "holidays": {
+          "name": "ünnepek",
+          "detail": "Egy tartomány vagy tömbállandó, amely a munkaszüneti napok figyelembevételéhez szükséges dátumsorszámokat tartalmazza."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Az év ISO-hetének száma.",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "Az a dátum, amelyre vonatkozóan meg kell határozni az ISO-hét számát. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Az év hetének száma.",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "Az a dátum, amelyhez a hét számát meg kell határozni. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "type": {
+          "name": "típus",
+          "detail": "Egy szám, amely a hét kezdetét jelöli. Vasárnap = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "A megadott dátum hétnek a napja (számként).",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "Az a dátum, amelyhez a hét napját meg kell határozni. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "type": {
+          "name": "típus",
+          "detail": "Egy szám, amely jelzi, hogy melyik számozási rendszert kell használni a hétköznapok jelölésére. Alapértelmezés szerint a vasárnappal kezdődő számolás = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "A hónap azon napja, amelyre egy adott dátum esik.",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "A dátum, amelyből a napot kinyerni kell."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Két dátum között eltelt napok száma.",
+      "parameters": {
+        "end_date": {
+          "name": "befejező_dátum",
+          "detail": "A dátumtartomány vége."
+        },
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "A dátumtartomány kezdete."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Két dátum közötti napok száma egy 360 napos évben.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "A számításban figyelembe veendő kezdő dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "end_date": {
+          "name": "befejező_dátum",
+          "detail": "A számításban figyelembe veendő befejezési dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "method": {
+          "name": "módszer",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Az évet/hónapot/napot dátummá alakítja.",
+      "parameters": {
+        "year": {
+          "name": "év",
+          "detail": "A dátum év összetevője."
+        },
+        "month": {
+          "name": "hónap",
+          "detail": "A dátum hónap összetevője."
+        },
+        "day": {
+          "name": "nap",
+          "detail": "A dátum nap összetevője."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Dátum karakterláncot dátumértékké alakít.",
+      "parameters": {
+        "date_string": {
+          "name": "dátumkarakterlánc",
+          "detail": "A dátumot jelölő karakterlánc."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Dátumkülönbség.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "A számításban figyelembe veendő kezdő dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "end_date": {
+          "name": "befejező_dátum",
+          "detail": "A számításban figyelembe veendő befejezési dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "unit": {
+          "name": "egység",
+          "detail": "Az időegység karakterlánc rövidítése. Például \"M\" a hónapot jelöli. Az elfogadott értékek: \"É\", \"H\", \"N\", \"HN\", \"ÉÉH\", \"ÉNÉ\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "A munkanapok száma a kezdő dátumtól számítva.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "A dátum, amelytől a számlálás elkezdődik."
+        },
+        "num_days": {
+          "name": "napok_száma",
+          "detail": "A `kezdő_dátum`-tól kezdődően előrelépendő munkanapok száma. Ha negatív, akkor visszafelé számol."
+        },
+        "holidays": {
+          "name": "ünnepek",
+          "detail": "Egy tartomány vagy tömbállandó, amely tartalmazza az ünnepnapoknak tekintett dátumokat."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Egy adott dátum által meghatározott év.",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "Az év kinyerésének dátuma."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Két dátum között eltelt évek pontos száma.",
+      "parameters": {
+        "start_date": {
+          "name": "kezdési_dátum",
+          "detail": "A számításban figyelembe veendő kezdő dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "end_date": {
+          "name": "befejező_dátum",
+          "detail": "A számításban figyelembe veendő befejezési dátum. Hivatkozásnak kell lennie egy dátumot tartalmazó cellára, egy dátumtípust visszaadó függvényre vagy egy számra."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Aktuális dátum dátumértékként."
+    },
+    "MONTH": {
+      "description": "Az év azon hónapja, amelybe egy adott dátum esik.",
+      "parameters": {
+        "date": {
+          "name": "dátum",
+          "detail": "A dátum, amelyből a hónapot kinyerni kell."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Éves effektív kamatláb.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "névleges_kamatláb",
+          "detail": "Az éves nominális kamatláb."
+        },
+        "periods_per_year": {
+          "name": "évenkénti_időszakok",
+          "detail": "Az éves kamatos kamatozási időszakok száma."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "A táblázat területi beállításainak megfelelő pénznemként formáz egy számot.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "A formázandó érték."
+        },
+        "number_of_places": {
+          "name": "helyek_száma",
+          "detail": "A megjelenítendő tizedesjegyek száma."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Tizedes törtet decimális értékké alakít.",
+      "parameters": {
+        "fractional_price": {
+          "name": "tört_ár",
+          "detail": "Az árajánlat tört tizedesjegyekkel megadott."
+        },
+        "unit": {
+          "name": "egység",
+          "detail": "A tört mértékegységei, pl. „8” az 1/8-adokhoz vagy „32” az 1/32-edekhez."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Tizedes értéket tizedes törtté alakít.",
+      "parameters": {
+        "decimal_price": {
+          "name": "decimális_ár",
+          "detail": "Az árajánlat decimális értékként van megadva."
+        },
+        "unit": {
+          "name": "egység",
+          "detail": "A kívánt tört mértékegységei, pl. „8” az 1/8-adokhoz vagy „32” az 1/32-edekhez."
+        }
+      }
+    },
+    "DB": {
+      "description": "Degresszív értékcsökkenési leírás.",
+      "parameters": {
+        "cost": {
+          "name": "költség",
+          "detail": "Az eszköz kezdeti költsége."
+        },
+        "salvage": {
+          "name": "mentés",
+          "detail": "Az eszköz értéke az értékcsökkenés végén."
+        },
+        "life": {
+          "name": "élet",
+          "detail": "Az eszköz értékcsökkenésének időszakai száma."
+        },
+        "period": {
+          "name": "időszak",
+          "detail": "Az „élettartamon” belüli egyetlen időszak, amelyre vonatkozóan az értékcsökkenést ki kell számítani."
+        },
+        "month": {
+          "name": "hónap",
+          "detail": "Az értékcsökkenés első évében eltelt hónapok száma."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Értékcsökkenés kétszeresen degresszív módszerrel.",
+      "parameters": {
+        "cost": {
+          "name": "költség",
+          "detail": "Az eszköz kezdeti költsége."
+        },
+        "salvage": {
+          "name": "mentés",
+          "detail": "Az eszköz értéke az értékcsökkenés végén."
+        },
+        "life": {
+          "name": "élet",
+          "detail": "Az eszköz értékcsökkenésének időszakai száma."
+        },
+        "period": {
+          "name": "időszak",
+          "detail": "Az „élettartamon” belüli egyetlen időszak, amelyre vonatkozóan az értékcsökkenést ki kell számítani."
+        },
+        "factor": {
+          "name": "tényező",
+          "detail": "Az értékcsökkenés csökkenésének tényezője."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Annuitásos befektetés kamatlába.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "payment_per_period": {
+          "name": "fizetési_időszak",
+          "detail": "A fizetendő összeg időszakonként."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        },
+        "rate_guess": {
+          "name": "ráta_találat",
+          "detail": "Becslés arról, hogy mekkora lesz a kamatláb."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Egy meghatározott időszak alatt kifizetett kumulatív tőke.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "first_period": {
+          "name": "első_időszak",
+          "detail": "A kumulatív számítás megkezdéséhez szükséges fizetési időszak száma."
+        },
+        "last_period": {
+          "name": "utolsó_időszak",
+          "detail": "A kumulatív számítást befejező fizetési időszak száma."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "A kuponok száma a kiegyenlítés és a lejárat között.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Értékcsökkenés az évek összegzésével számított számjegyek módszerével.",
+      "parameters": {
+        "cost": {
+          "name": "költség",
+          "detail": "Az eszköz kezdeti költsége."
+        },
+        "salvage": {
+          "name": "mentés",
+          "detail": "Az eszköz értéke az értékcsökkenés végén."
+        },
+        "life": {
+          "name": "élet",
+          "detail": "Az eszköz értékcsökkenésének időszakai száma."
+        },
+        "period": {
+          "name": "időszak",
+          "detail": "Az „élettartamon” belüli egyetlen időszak, amelyre vonatkozóan az értékcsökkenést ki kell számítani."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Egy kincstárjegy ekvivalens hozamrátája.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "A számla diszkontráta a vásárlás időpontjában."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Az amerikai kincstárjegy hozama az árfolyam alapján.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "price": {
+          "name": "ár",
+          "detail": "Az az ár, amelyen az értékpapírt 100 névértékre vetítve vásárolják."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Az amerikai kincstárjegy ára.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "A számla diszkontráta a vásárlás időpontjában."
+        }
+      }
+    },
+    "PV": {
+      "description": "Egy annuitásos befektetés jelenértéke.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "payment_amount": {
+          "name": "fizetési_összeg",
+          "detail": "A fizetendő összeg időszakonként."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Az első kupontól a kifizetésig eltelt napok száma.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "A kuponidőszakban lévő napok száma, amely tartalmazza az elszámolási dátumot.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "FV": {
+      "description": "Egy annuitásos befektetés jövőbeli értéke.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "payment_amount": {
+          "name": "fizetési_összeg",
+          "detail": "A fizetendő összeg időszakonként."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "A tőke jövőbeli értéke kamatlábak sorozatából.",
+      "parameters": {
+        "principal": {
+          "name": "fő",
+          "detail": "Az indulótőke vagy érték összege, amelyre kamatosítandó."
+        },
+        "rate_schedule": {
+          "name": "díjszabás",
+          "detail": "Kamatlábak sorozata, amelyet a „tőkével” szemben kell elszámolni."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Időszakos kamatot fizető értékpapír éves hozama.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "rate": {
+          "name": "arány",
+          "detail": "Az évesített kamatláb."
+        },
+        "price": {
+          "name": "ár",
+          "detail": "Az az ár, amelyen az értékpapírt 100 névértékre vetítve vásárolják."
+        },
+        "redemption": {
+          "name": "megváltás",
+          "detail": "A visszaváltási összeg 100 névértékre, vagy par-ra vetítve."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Diszkont értékpapír éves hozama.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "price": {
+          "name": "ár",
+          "detail": "Az az ár, amelyen az értékpapírt 100 névértékre vetítve vásárolják."
+        },
+        "redemption": {
+          "name": "megváltás",
+          "detail": "A visszaváltási összeg 100 névértékre, vagy par-ra vetítve."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Éves nominális kamatláb.",
+      "parameters": {
+        "effective_rate": {
+          "name": "effektív_kamatláb",
+          "detail": "Az éves effektív kamatláb."
+        },
+        "periods_per_year": {
+          "name": "évenkénti_időszakok",
+          "detail": "Az éves kamatos kamatozási időszakok száma."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Belső megtérülési ráta nem periodikus pénzáramlások esetén.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "pénzáramlási_összegek",
+          "detail": "A befektetéshez kapcsolódó jövedelmet vagy kifizetéseket tartalmazó tömb vagy tartomány."
+        },
+        "cashflow_dates": {
+          "name": "pénzáramlási_dátumok",
+          "detail": "Egy tömb vagy tartomány, amelynek dátumai megfelelnek a `cashflow_amounts`-ban szereplő pénzáramlásoknak."
+        },
+        "rate_guess": {
+          "name": "ráta_találat",
+          "detail": "Egy becslés arra vonatkozóan, hogy mekkora lesz a belső megtérülési ráta."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Módosított belső megtérülési ráta.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "pénzáramlási_összegek",
+          "detail": "A befektetéshez kapcsolódó jövedelmet vagy kifizetéseket tartalmazó tömb vagy tartomány."
+        },
+        "financing_rate": {
+          "name": "finanszírozási_kamatláb",
+          "detail": "A befektetett pénzeszközökre fizetett kamatláb."
+        },
+        "reinvestment_return_rate": {
+          "name": "újrabefektetési_hozam_ráta",
+          "detail": "A befektetésből származó jövedelem újrabefektetéséből származó hozam (százalékban)."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Belső megtérülési ráta adott periodikus pénzáramlások mellett.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "pénzáramlási_összegek",
+          "detail": "A befektetéshez kapcsolódó jövedelmet vagy kifizetéseket tartalmazó tömb vagy tartomány."
+        },
+        "rate_guess": {
+          "name": "ráta_tipp",
+          "detail": "Egy becslés arra vonatkozóan, hogy mekkora lesz a belső megtérülési ráta."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Egy befektetés nettó jelenértéke, amely periodikus pénzáramlások sorozatán és egy diszkontrátán alapul.",
+      "parameters": {
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "A befektetés diszkontrátája egy időszak alatt."
+        },
+        "cashflow1": {
+          "name": "pénzáramlás1",
+          "detail": "Az első jövőbeli pénzáramlás."
+        },
+        "cashflow2": {
+          "name": "pénzáramlás2",
+          "detail": "További jövőbeli pénzáramlások."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Nettó jelenérték nem periodikus pénzáramlások esetén.",
+      "parameters": {
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "A befektetés diszkontrátája egy időszak alatt."
+        },
+        "cashflow_amounts": {
+          "name": "pénzáramlási_összegek",
+          "detail": "A befektetéshez kapcsolódó jövedelmet vagy kifizetéseket tartalmazó cellatartomány."
+        },
+        "cashflow_dates": {
+          "name": "pénzáramlási_dátumok",
+          "detail": "A `cashflow_amounts` argumentumban szereplő pénzáramlásoknak megfelelő dátumokkal rendelkező cellatartomány."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Egy meghatározott időszak alatt fizetett kumulatív kamat.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "first_period": {
+          "name": "első_időszak",
+          "detail": "A kumulatív számítás megkezdéséhez szükséges fizetési időszak száma."
+        },
+        "last_period": {
+          "name": "utolsó_időszak",
+          "detail": "A kumulatív számítást befejező fizetési időszak száma."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Időszakos kifizetés járadékbefektetés esetén.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Kamatfizetés egy befektetés után.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "period": {
+          "name": "időszak",
+          "detail": "Az amortizációs időszak, időszakok számában kifejezve."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Befektetési tőke kifizetése.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "period": {
+          "name": "időszak",
+          "detail": "Az amortizációs időszak, időszakok számában kifejezve."
+        },
+        "number_of_periods": {
+          "name": "időszakok_száma",
+          "detail": "A fizetendő összegek száma."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Kiszámítja az effektív kamatlábat.",
+      "parameters": {
+        "buy_date": {
+          "name": "vásárlás_dátuma",
+          "detail": "A befektetés megvásárlásának dátuma."
+        },
+        "sell_date": {
+          "name": "eladási_dátum",
+          "detail": "A befektetés eladásának dátuma."
+        },
+        "buy_price": {
+          "name": "vételár",
+          "detail": "Az az ár, amelyen a befektetést megvásárolták."
+        },
+        "sell_price": {
+          "name": "eladási_ár",
+          "detail": "Az az ár, amelyen a befektetést eladták."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Időszakos kamatot fizető értékpapír ára.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "rate": {
+          "name": "arány",
+          "detail": "Az évesített kamatláb."
+        },
+        "yield": {
+          "name": "hozam",
+          "detail": "Az értékpapír várható éves hozama."
+        },
+        "redemption": {
+          "name": "megváltás",
+          "detail": "A visszaváltási összeg 100 névértékre, vagy par-ra vetítve."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Diszkont értékpapír ára.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "Az értékpapír diszkontráta a vásárlás időpontjában."
+        },
+        "redemption": {
+          "name": "megváltás",
+          "detail": "A visszaváltási összeg 100 névértékre, vagy par-ra vetítve."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Lejáratkor kamatot fizető értékpapír ára.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "issue": {
+          "name": "kérdés",
+          "detail": "Az értékpapír eredeti kibocsátásának dátuma."
+        },
+        "rate": {
+          "name": "arány",
+          "detail": "Az évesített kamatláb."
+        },
+        "yield": {
+          "name": "hozam",
+          "detail": "Az értékpapír várható éves hozama."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Értékpapír lejáratakor kapott összeg.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "investment": {
+          "name": "beruházás",
+          "detail": "A befektetett összeg (függetlenül az egyes értékpapírok névértékétől)."
+        },
+        "discount": {
+          "name": "kedvezmény",
+          "detail": "A befektetés tárgyát képező értékpapír diszkontráta."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Az értékpapír árfolyamon alapuló diszkontráta.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "price": {
+          "name": "ár",
+          "detail": "Az az ár, amelyen az értékpapírt 100 névértékre vetítve vásárolják."
+        },
+        "redemption": {
+          "name": "megváltás",
+          "detail": "A visszaváltási összeg 100 névértékre, vagy par-ra vetítve."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Befektetés fizetési időszakainak száma.",
+      "parameters": {
+        "rate": {
+          "name": "arány",
+          "detail": "A kamatláb."
+        },
+        "payment_amount": {
+          "name": "fizetési_összeg",
+          "detail": "Az egyes befizetések összege."
+        },
+        "present_value": {
+          "name": "jelenérték",
+          "detail": "A járadék jelenlegi értéke."
+        },
+        "future_value": {
+          "name": "jövőbeli_érték",
+          "detail": "A végső kifizetés után fennmaradó jövőbeli érték."
+        },
+        "end_or_beginning": {
+          "name": "vége_vagy_kezdete",
+          "detail": "Azt jelzi, hogy a fizetések az egyes időszakok végén (`0`) vagy elején (`1`) esedékesek."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Eszközök értékcsökkenése lineáris módszerrel.",
+      "parameters": {
+        "cost": {
+          "name": "költség",
+          "detail": "Az eszköz kezdeti költsége."
+        },
+        "salvage": {
+          "name": "mentés",
+          "detail": "Az eszköz értéke az értékcsökkenés végén."
+        },
+        "life": {
+          "name": "élet",
+          "detail": "Az eszköz értékcsökkenésének időszakai száma."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Az az időszakok száma, amelyek alatt egy befektetés eléri az adott értéket.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "rate": {
+          "name": "arány",
+          "detail": "Az évesített kamatláb."
+        },
+        "yield": {
+          "name": "hozam",
+          "detail": "Az értékpapír várható éves hozama."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Módosított Macaulay időtartam.",
+      "parameters": {
+        "settlement": {
+          "name": "település",
+          "detail": "Az értékpapír elszámolási dátuma, az értékpapír kibocsátás utáni dátuma, amikor a vevő megkapja az értékpapírt."
+        },
+        "maturity": {
+          "name": "érettség",
+          "detail": "Az értékpapír lejárata vagy végdátuma, amikor névértéken vagy névértéken visszaváltható."
+        },
+        "rate": {
+          "name": "arány",
+          "detail": "Az évesített kamatláb."
+        },
+        "yield": {
+          "name": "hozam",
+          "detail": "Az értékpapír várható éves hozama."
+        },
+        "frequency": {
+          "name": "frekvencia",
+          "detail": "Az éves kamat- vagy kuponfizetések száma (1, 2 vagy 4)."
+        },
+        "day_count_convention": {
+          "name": "napok_számlálási_konvenciója",
+          "detail": "A használandó napszámlálási módszer jelzője."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Előjeles bináris számot decimális formátumba konvertál.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "előjeles bináris szám",
+          "detail": "Az előjeles 10 bites bináris érték, amelyet decimális számrendszerré kell alakítani, karakterláncként megadva."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Bináris számot hexadecimális számmá alakít.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "előjeles bináris szám",
+          "detail": "Az előjeles hexadémikus értékké alakítandó előjeles 10 bites bináris érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Bináris számot oktális számmá alakít.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "előjeles bináris_szám",
+          "detail": "Az előjeles 10 bites bináris érték, amelyet előjeles oktális számrendszerré kell alakítani, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Egy decimális számot előjeles bináris formátumba konvertál.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimális_szám",
+          "detail": "Az előjeles bináris számmá alakítandó decimális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Decimális számot hexadecimális számmá alakít.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimális_szám",
+          "detail": "Az előjeles hexadecimális számmá alakítandó decimális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Egy decimális számot előjeles oktális formátumba konvertál.",
+      "parameters": {
+        "decimal_number": {
+          "name": "decimális_szám",
+          "detail": "Az előjeles oktális számmá alakítandó decimális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Hexadecimális számot bináris számmá alakít.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "előjeles_hexadecimális_szám",
+          "detail": "Az előjeles bináris számmá alakítandó előjeles 40 bites hexadecimális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Hexadecimális számot decimális számmá alakít.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "előjeles_hexadecimális_szám",
+          "detail": "Az előjeles 40 bites hexadecimális érték, amelyet decimális számrendszerré kell alakítani, karakterláncként megadva."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Hexadecimális számot oktális számmá alakít.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "előjeles_hexadecimális_szám",
+          "detail": "Az előjeles 40 bites hexadecimális érték, amelyet előjeles oktálissá kell alakítani, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Oktális számot bináris számmá alakít.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "előjeles_oktális_szám",
+          "detail": "Az előjeles bináris számmá alakítandó előjeles 30 bites oktális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Előjeles oktális számot decimális formátumba konvertál.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "előjeles_oktális_szám",
+          "detail": "Az előjeles 30 bites oktális érték, amelyet decimális számrendszerbe kell konvertálni, karakterláncként megadva."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Oktális számot hexadecimális számmá alakít.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "előjeles_oktális_szám",
+          "detail": "Az előjeles hexadecimális számmá alakítandó előjeles 30 bites oktális érték, karakterláncként megadva."
+        },
+        "significant_digits": {
+          "name": "jelentős_számjegyek",
+          "detail": "Az eredményben biztosítandó értékes számjegyek száma."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Komplex számot hoz létre.",
+      "parameters": {
+        "real_part": {
+          "name": "valós_rész",
+          "detail": "A valódi együttható."
+        },
+        "imaginary_part": {
+          "name": "képzeletbeli_rész",
+          "detail": "A képzetes együttható."
+        },
+        "suffix": {
+          "name": "utótag",
+          "detail": "A képzetes együttható utótagja csak „i” vagy „j” lehet. Ha elhagyjuk, akkor az „i” lesz használva."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Egy komplex szám valós együtthatója.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplex_szám",
+          "detail": "A komplex szám a+bi vagy a+bj formátumban."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Egy komplex szám képzetes együtthatója.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplex_szám",
+          "detail": "A komplex szám a+bi vagy a+bj formátumban."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Egy szám komplex konjugáltja.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "Az a komplex szám, amelynek a konjugáltját ki kell számítani."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Egy komplex szám abszolút értéke.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "Az a komplex szám, amelynek abszolút értékét ki kell számítani."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Hasonlítson össze két numerikus értéket.",
+      "parameters": {
+        "number1": {
+          "name": "1. számú",
+          "detail": "Az első összehasonlítandó szám."
+        },
+        "number2": {
+          "name": "2. számú",
+          "detail": "A második összehasonlítandó szám."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Komplex számok sorozatának összege.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első összeadandó komplex szám vagy tartomány."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "További komplex számok vagy tartományok, amelyeket hozzá kell adni az `value1`-hez."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Két komplex szám különbsége.",
+      "parameters": {
+        "first_number": {
+          "name": "első_szám",
+          "detail": "Az a komplex szám, amelyből a második_számot ki kell vonni."
+        },
+        "second_number": {
+          "name": "második_szám",
+          "detail": "Az első_számból kivonandó komplex szám."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Komplex számok sorozatának szorzatának eredménye.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "A szorzat kiszámításához szükséges első szám vagy tartomány."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "További komplex számok vagy tartományok, amelyeket a szorzathoz kell kiszámítani."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Egy komplex szám osztva egy másikkal.",
+      "parameters": {
+        "dividend": {
+          "name": "osztalék",
+          "detail": "Az osztandó komplex szám."
+        },
+        "divisor": {
+          "name": "osztó",
+          "detail": "Az osztandó komplex szám."
+        }
+      }
+    },
+    "NOT": {
+      "description": "A megadott logikai érték ellentétes értékét adja vissza.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logikai_kifejezés",
+          "detail": "Egy logikai értéket képviselő kifejezést tartalmazó cellára mutató kifejezés vagy hivatkozás."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Logikai érték: `true`."
+    },
+    "FALSE": {
+      "description": "Logikai érték: `false`."
+    },
+    "AND": {
+      "description": "Logikai `és` operátor.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logikai_kifejezés1",
+          "detail": "Egy kifejezés vagy egy olyan cellára való hivatkozás, amely egy logikai értéket reprezentáló kifejezést tartalmaz, azaz `TRUE` vagy `FALSE`, vagy egy olyan kifejezést, amely logikai értékké alakítható."
+        },
+        "logical_expression2": {
+          "name": "logikai_kifejezés2",
+          "detail": "További kifejezések, amelyek logikai értékeket képviselnek."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Érték, ha nem hiba, egyébként a 2. argumentum.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet akkor kell visszaadni, ha a `value` maga nem hiba."
+        },
+        "value_if_error": {
+          "name": "érték_ha_hiba",
+          "detail": "Az az érték, amelyet a függvény visszaad, ha a `value` hiba."
+        }
+      }
+    },
+    "IF": {
+      "description": "Logikai kifejezéstől függő értéket ad vissza.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logikai_kifejezés",
+          "detail": "Egy kifejezés vagy egy olyan cellára való hivatkozás, amely egy logikai értéket reprezentáló kifejezést tartalmaz, azaz `TRUE` vagy `FALSE`."
+        },
+        "value_if_true": {
+          "name": "érték_ha_igaz",
+          "detail": "Az az érték, amelyet a függvény visszaad, ha a `logikai_kifejezés` értéke `IGAZ`."
+        },
+        "value_if_false": {
+          "name": "érték_ha_hamis",
+          "detail": "Az az érték, amelyet a függvény visszaad, ha a `logikai_kifejezés` értéke `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Logikai `vagy` operátor.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logikai_kifejezés1",
+          "detail": "Egy kifejezés vagy egy olyan cellára való hivatkozás, amely egy logikai értéket képviselő kifejezést tartalmaz, azaz `TRUE` vagy `FALSE`, vagy egy olyan kifejezést, amely logikai értékké alakítható."
+        },
+        "logical_expression2": {
+          "name": "logikai_kifejezés2",
+          "detail": "További kifejezések, amelyek logikai értékeket adnak ki."
+        }
+      }
+    },
+    "NE": {
+      "description": "Nem egyenlő.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "Az az érték, amelyet az `value1`-gyel szemben egyenlőtlenség szempontjából ellenőrizni kell."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Egyenlő.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első érték."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "Az az érték, amelyet az `value1`-gyel szemben egyenlőség szempontjából ellenőrizni kell."
+        }
+      }
+    },
+    "GT": {
+      "description": "Szigorúan nagyobb, mint.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az az érték, amelyet ellenőrizni kell, hogy nagyobb-e, mint a `value2`."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A második érték."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Nagyobb vagy egyenlő, mint.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az az érték, amelyet ellenőrizni kell, hogy nagyobb vagy egyenlő-e a `value2`-vel."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A második érték."
+        }
+      }
+    },
+    "LT": {
+      "description": "Kevesebb, mint.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az az érték, amelyet ellenőrizni kell, hogy kisebb-e, mint a `value2`."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A második érték."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Kisebb vagy egyenlő.",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az az érték, amelyet ellenőrizni kell, hogy kisebb vagy egyenlő-e a `value2`-vel."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A második érték."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Két szám összege",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az első összeadandó."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A második összeadandó."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Két szám különbsége",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "A kisebbítendő szám, vagyis a kivonandó szám."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "A kivonandó, vagyis a `value1`-ből kivonandó szám."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Két szám szorzata",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "Az első szorzó."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "A második szorzó."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Egy szám osztva egy másikkal",
+      "parameters": {
+        "dividend": {
+          "name": "osztalék",
+          "detail": "Az osztandó szám."
+        },
+        "divisor": {
+          "name": "osztó",
+          "detail": "Az osztandó szám."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Két érték összefűzése",
+      "parameters": {
+        "value1": {
+          "name": "érték1",
+          "detail": "Az az érték, amelyhez a `value2` paraméter hozzá lesz fűzve."
+        },
+        "value2": {
+          "name": "érték2",
+          "detail": "Az `value1`-hez hozzáfűzendő érték."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Az érték százalékban értelmezve.",
+      "parameters": {
+        "percentage": {
+          "name": "százalék",
+          "detail": "A százalékként értelmezendő érték."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Karakterláncokat fűz egymáshoz.",
+      "parameters": {
+        "string1": {
+          "name": "karakterlánc1",
+          "detail": "A kezdeti karakterlánc."
+        },
+        "string2": {
+          "name": "karakterlánc2",
+          "detail": "További karakterláncok hozzáfűzése sorrendben."
+        }
+      }
+    },
+    "CODE": {
+      "description": "A karakter numerikus unicode map értéke.",
+      "parameters": {
+        "string": {
+          "name": "húr",
+          "detail": "Az a karakterlánc, amelynek első karakterének Unicode map értékét vissza kell adni."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "A számhoz társított karaktert adja vissza.",
+      "parameters": {
+        "table_number": {
+          "name": "tábla_száma",
+          "detail": "A jelenlegi Unicode táblázatban keresendő karakter száma decimális formátumban."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Kiszámítja egy római szám értékét.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "római_szám",
+          "detail": "A formázandó római szám, amelynek értékének 1 és 3999 között kell lennie."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Római számokkal formáz egy számot.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "A formázandó szám 1 és 3999 között, a határokat is beleértve."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Reguláris kifejezéssel egyező részkarakterláncokat nyer ki.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A bemeneti szöveg."
+        },
+        "regular_expression": {
+          "name": "reguláris_kifejezés",
+          "detail": "A `text` első, erre a kifejezésre illeszkedő részét adja vissza."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Hogy egy szövegrészlet egyezik-e a reguláris kifejezéssel.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A reguláris kifejezéssel szemben tesztelendő szöveg."
+        },
+        "regular_expression": {
+          "name": "reguláris_kifejezés",
+          "detail": "A szöveg teszteléséhez szükséges reguláris kifejezés."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "A szöveget reguláris kifejezésekkel helyettesíti.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A szöveg, amelynek egy részét kicseréljük."
+        },
+        "regular_expression": {
+          "name": "reguláris_kifejezés",
+          "detail": "A reguláris kifejezés. A `text` összes egyező előfordulása lecserélődik."
+        },
+        "replacement": {
+          "name": "csere",
+          "detail": "A szöveg, amely be lesz illesztve az eredeti szövegbe."
+        }
+      }
+    },
+    "T": {
+      "description": "Argumentumok szövegként való sztringelése.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A szöveggé alakítandó argumentum."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Fix számú tizedesjegyből álló számot formáz.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "A formázandó szám."
+        },
+        "number_of_places": {
+          "name": "helyek_száma",
+          "detail": "Az eredményben megjelenítendő tizedesjegyek száma."
+        },
+        "suppress_separator": {
+          "name": "elválasztó_elnyomása",
+          "detail": "Azt jelzi, hogy megjelenjen-e az egyes területi beállításokban használt ezreselválasztó (pl. az „1000” helyett „1000”). Az elválasztók akkor jelennek meg, ha az érték 0 vagy hiányzik, egyébként pedig hiányoznak."
+        }
+      }
+    },
+    "FIND": {
+      "description": "A szövegben található karakterlánc első pozíciója, kis- és nagybetűérzékeny.",
+      "parameters": {
+        "search_for": {
+          "name": "keresés",
+          "detail": "A `keresendő_szöveg`-en belül keresendő karakterlánc."
+        },
+        "text_to_search": {
+          "name": "keresendő_szöveg",
+          "detail": "A `search_for` első előfordulását kereső szöveg."
+        },
+        "starting_at": {
+          "name": "kezdő_időpont",
+          "detail": "A `keresendő_szöveg` karaktere, amelynél a keresés elkezdődik."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Az a pozíció, ahol egy karakterlánc először található a szövegben (bináris).",
+      "parameters": {
+        "search_for": {
+          "name": "keresés",
+          "detail": "A `keresendő_szöveg`-en belül keresendő karakterlánc."
+        },
+        "text_to_search": {
+          "name": "keresendő_szöveg",
+          "detail": "A `search_for` első előfordulását kereső szöveg."
+        },
+        "starting_at": {
+          "name": "kezdő_időpont",
+          "detail": "A `keresendő_szöveg` karaktere, amelynél a keresés elkezdődik."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Tömbök elemeit elválasztó karakterekkel fűzi össze.",
+      "parameters": {
+        "delimiter": {
+          "name": "elválasztójel",
+          "detail": "Az egyes összefűzött értékek közé helyezendő karakter vagy karakterlánc."
+        },
+        "value_or_array1": {
+          "name": "érték_vagy_tömb1",
+          "detail": "Az elválasztójellel hozzáfűzendő érték vagy értékek."
+        },
+        "value_or_array2": {
+          "name": "érték_vagy_tömb2",
+          "detail": "További értékek hozzáfűzése `elválasztó` használatával."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "A megadott karakterlánc elejétől számított részkarakterlánc.",
+      "parameters": {
+        "string": {
+          "name": "húr",
+          "detail": "Az a karakterlánc, amelyből a bal oldali rész visszaadásra kerül."
+        },
+        "number_of_characters": {
+          "name": "karakterek_száma",
+          "detail": "A `karakterlánc` bal oldaláról visszaadandó karakterek száma."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Egy megadott karakterlánc végétől számított részkarakterlánc.",
+      "parameters": {
+        "string": {
+          "name": "húr",
+          "detail": "Az a karakterlánc, amelyből a jobb oldali rész visszaadásra kerül."
+        },
+        "number_of_characters": {
+          "name": "karakterek_száma",
+          "detail": "A `karakterlánc` jobb oldaláról visszaadandó karakterek száma."
+        }
+      }
+    },
+    "MID": {
+      "description": "Egy karakterlánc egy szegmense.",
+      "parameters": {
+        "string": {
+          "name": "húr",
+          "detail": "A szegmens kinyeréséhez szükséges karakterlánc."
+        },
+        "starting_at": {
+          "name": "kezdő_időpont",
+          "detail": "A `karakterlánc` bal oldali indexe, amelytől a kinyerés elkezdődik. A `karakterlánc` első karakterének indexe 1."
+        },
+        "extract_length": {
+          "name": "kivonat_hossza",
+          "detail": "A kinyerendő szegmens hossza."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Egy karakterlánc hossza.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A karakterlánc, amelynek a hosszát vissza kell adni."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Egy karakterlánc hossza bájtban.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A karakterlánc, amelynek a hosszát vissza kell adni."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Kisbetűs karakterláncot alakít át egy megadott karakterláncra.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A kisbetűssé alakítandó karakterlánc."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Nagybetűssé alakítja a megadott karakterláncot.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A nagybetűssé alakítandó karakterlánc."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Azt vizsgálja, hogy két karakterlánc azonos-e.",
+      "parameters": {
+        "string1": {
+          "name": "karakterlánc1",
+          "detail": "Az első összehasonlítandó karakterlánc"
+        },
+        "string2": {
+          "name": "karakterlánc2",
+          "detail": "A második összehasonlítandó karakterlánc"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Egy szöveges karakterlánc egy részét más szöveggel cseréli le.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A szöveg, amelynek egy részét kicseréljük."
+        },
+        "position": {
+          "name": "pozíció",
+          "detail": "A pozíció, ahol a csere elkezdődik (1-től kezdve)."
+        },
+        "length": {
+          "name": "hossz",
+          "detail": "A szövegben lecserélendő karakterek száma."
+        },
+        "new_text": {
+          "name": "új_szöveg",
+          "detail": "A szöveg, amely be lesz illesztve az eredeti szövegbe."
+        }
+      }
+    },
+    "REPT": {
+      "description": "A megadott szöveg többször ismétlődik.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "ismétlődő_szöveg",
+          "detail": "Az ismétlődő karakter vagy karakterlánc."
+        },
+        "number_of_repetitions": {
+          "name": "ismétlések_száma",
+          "detail": "Az ismétlődő_szöveg (text_to_repeat) függvény előfordulásainak száma a visszaadott értékben."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "A karakterlánc első pozíciója a szövegben, kis- és nagybetűk figyelmen kívül hagyásával.",
+      "parameters": {
+        "search_for": {
+          "name": "keresés",
+          "detail": "A `keresendő_szöveg`-en belül keresendő karakterlánc."
+        },
+        "text_to_search": {
+          "name": "keresendő_szöveg",
+          "detail": "A `search_for` első előfordulását kereső szöveg."
+        },
+        "starting_at": {
+          "name": "kezdő_időpont",
+          "detail": "A `keresendő_szöveg` karaktere, amelynél a keresés elkezdődik."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Lecseréli a meglévő szöveget új szöveggel egy karakterláncban.",
+      "parameters": {
+        "text_to_search": {
+          "name": "keresendő_szöveg",
+          "detail": "A szöveg, amelyen belül keresni és cserélni kell."
+        },
+        "search_for": {
+          "name": "keresés",
+          "detail": "A keresendő karakterlánc a `keresendő_szöveg` függvényen belül."
+        },
+        "replace_with": {
+          "name": "replace_this",
+          "detail": "A `search_for` karakterláncot lecserélő karakterlánc."
+        },
+        "occurrence_number": {
+          "name": "előfordulás_száma",
+          "detail": "A `keresendő_szöveg`-en belüli `keresendő_szó` előfordulása, amelyet a `csere_ideje`-re kell cserélni. Alapértelmezés szerint a `keresendő_szó` összes előfordulása lecserélődik; azonban ha az `előfordulás_száma` van megadva, akkor csak a `keresendő_szó` jelzett előfordulása cserélődik le."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Eltávolítja a nem nyomtatható karaktereket egy szövegből.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A szöveg, amelynek nem nyomtatható karaktereit el kell távolítani."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Szöveggé formáz egy számot.",
+      "parameters": {
+        "number": {
+          "name": "szám",
+          "detail": "A formázandó szám, dátum vagy időpont."
+        },
+        "format": {
+          "name": "formátum",
+          "detail": "A szám formázásának mintája idézőjelek között."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Eltávolítja a szóközöket.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "A vágandó szöveget tartalmazó cellára mutató szöveg vagy hivatkozás."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Dátum/idő/szám karakterláncot számmá alakít.",
+      "parameters": {
+        "text": {
+          "name": "szöveg",
+          "detail": "Az átalakítandó értéket tartalmazó karakterlánc."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Nagybetűsíti a megadott karakterlánc minden szavát.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "nagybetűs_szöveg",
+          "detail": "A szöveg, amelynek első betűje nagybetűs, az összes többi betű pedig kisbetűs lesz."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Számok mértékegység-átváltása.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A `start_unit` numerikus értéke, amelyet `end_unit`-tá kell konvertálni."
+        },
+        "start_unit": {
+          "name": "kezdő_egység",
+          "detail": "A kezdő mértékegység, az `value`-hoz jelenleg rendelt mértékegység."
+        },
+        "end_unit": {
+          "name": "végegység",
+          "detail": "Az argumentum, a `value` mértékegysége, amelyre át kell alakítani."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "A négyzetek különbségeinek összege.",
+      "parameters": {
+        "array_x": {
+          "name": "tömb_x",
+          "detail": "Azok az értékek, amelyek négyzetét csökkentjük az `array_y` tömbben lévő megfelelő elemek négyzetével, majd összeadjuk."
+        },
+        "array_y": {
+          "name": "y tömb",
+          "detail": "Az `array_x` tömbben lévő megfelelő elemek négyzetéből kivonandó, majd összeadandó értékek."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "A négyzetösszegek összege.",
+      "parameters": {
+        "array_x": {
+          "name": "tömb_x",
+          "detail": "Azok az értékek, amelyek négyzeteit hozzáadjuk az `array_y` tömbben lévő megfelelő elemek négyzetéhez, majd összeadjuk."
+        },
+        "array_y": {
+          "name": "y tömb",
+          "detail": "Az az értéktömb vagy tartomány, amelynek négyzeteit hozzáadjuk az `array_x` tömb megfelelő elemeinek négyzeteihez, majd összeadjuk."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "A különbségek négyzetösszege.",
+      "parameters": {
+        "array_x": {
+          "name": "tömb_x",
+          "detail": "Az `y_tömb` megfelelő elemeivel csökkentendő, négyzetre emelendő és összeadandó értékek tömbje vagy tartománya."
+        },
+        "array_y": {
+          "name": "y tömb",
+          "detail": "Az `array_x` tömb megfelelő elemeiből kivonandó értékek tömbje vagy tartománya, az eredményt négyzetre kell emelni, majd az összes ilyen eredményt össze kell adni."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Felcseréli egy tömb sorait és oszlopait.",
+      "parameters": {
+        "array_or_range": {
+          "name": "tömb_vagy_tartomány",
+          "detail": "Az a tömb vagy tartomány, amelynek sorai és oszlopai felcserélődnek."
+        }
+      }
+    },
+    "TREND": {
+      "description": "A pontokat a legkisebb négyzetek módszerével származtatott lineáris trendhez illeszti.",
+      "parameters": {
+        "known_data_y": {
+          "name": "ismert_adatok_y",
+          "detail": "Az ideális lineáris trend görbéjének illesztéséhez használt, már ismert függő (y) értékeket tartalmazó tömb vagy tartomány."
+        },
+        "known_data_x": {
+          "name": "ismert_adatok_x",
+          "detail": "A `known_data_y`-nak megfelelő független változó(k) értékei."
+        },
+        "new_data_x": {
+          "name": "új_adatok_x",
+          "detail": "Az ideális görbeillesztés `y` értékeit visszaadó adatpontok."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Egy görbeillesztésre adott általános lineáris `y = m*x+b` alak esetén a függvény kiszámítja a `b` értékét, ha `TRUE`, vagy `b` értékét `0`-ra kényszeríti, és csak az `m` értékeket számítja ki, ha `FALSE`, azaz a görbeillesztést át kell haladnia az origón."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "A tömb gyakorisági eloszlása.",
+      "parameters": {
+        "data": {
+          "name": "adat",
+          "detail": "A megszámlálandó értékeket tartalmazó tömb vagy tartomány."
+        },
+        "classes": {
+          "name": "osztályok",
+          "detail": "Az osztályok halmazát tartalmazó tömb vagy tartomány."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Az exponenciális növekedési trendhez illeszti a pontokat.",
+      "parameters": {
+        "known_data_y": {
+          "name": "ismert_adatok_y",
+          "detail": "Az ideális exponenciális növekedési görbe illesztéséhez használt, már ismert függő (y) értékeket tartalmazó tömb vagy tartomány."
+        },
+        "known_data_x": {
+          "name": "ismert_adatok_x",
+          "detail": "A `known_data_y`-nak megfelelő független változó(k) értékei."
+        },
+        "new_data_x": {
+          "name": "új_adatok_x",
+          "detail": "Az ideális görbeillesztés `y` értékeit visszaadó adatpontok."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Egy görbeillesztés esetén az `y = b*m^x` általános exponenciális alakja esetén a függvény kiszámolja a `b` értékét, ha `TRUE`, vagy `b` értékét `1`-re kényszeríti, és csak az `m` értékeket számítja ki, ha `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Legjobban illeszkedő lineáris trend a legkisebb négyzetek módszerével.",
+      "parameters": {
+        "known_data_y": {
+          "name": "ismert_adatok_y",
+          "detail": "Az ideális lineáris trend görbéjének illesztéséhez használt, már ismert függő (y) értékeket tartalmazó tömb vagy tartomány."
+        },
+        "known_data_x": {
+          "name": "ismert_adatok_x",
+          "detail": "A `known_data_y`-nak megfelelő független változó(k) értékei."
+        },
+        "calculate_b": {
+          "name": "kiszámít_b",
+          "detail": "Egy `y = m*x+b` lineáris alakja esetén a függvény kiszámítja az y tengelymetszést (`b`), ha az érték `IGAZ`. Egyébként a `b` értékét `0`-ra kényszeríti, és csak az `m` értékeket számítja ki, ha az érték `HAMIS`, azaz a görbeillesztést az origón keresztül kényszeríti ki."
+        },
+        "verbose": {
+          "name": "bőbeszédű",
+          "detail": "Egy jelző, amely meghatározza, hogy további regressziós statisztikákat adjon-e vissza, vagy csak a lineáris együtthatókat és az y tengelymetszést (alapértelmezett)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Legjobban illeszkedő exponenciális növekedési görbe.",
+      "parameters": {
+        "known_data_y": {
+          "name": "ismert_adatok_y",
+          "detail": "Az ideális exponenciális növekedési görbe illesztéséhez használt, már ismert függő (y) értékeket tartalmazó tömb vagy tartomány."
+        },
+        "known_data_x": {
+          "name": "ismert_adatok_x",
+          "detail": "A `known_data_y`-nak megfelelő független változó(k) értékei."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Egy görbeillesztés esetén az `y = b*m^x` általános exponenciális alakja esetén a függvény kiszámolja a `b` értékét, ha `TRUE`, vagy `b` értékét `1`-re kényszeríti, és csak az `m` értékeket számítja ki, ha `FALSE`."
+        },
+        "verbose": {
+          "name": "bőbeszédű",
+          "detail": "Egy jelző, amely meghatározza, hogy további regressziós statisztikákat vagy csak a kiszámított együtthatót és kitevőket kell-e visszaadni."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Négyzetes mátrix mátrixdeterminánsa.",
+      "parameters": {
+        "square_matrix": {
+          "name": "négyzetes_mátrix",
+          "detail": "Egyenlő számú sorból és oszlopból álló tömb vagy tartomány, amely egy olyan mátrixot ábrázol, amelynek determinánsát ki kell számítani."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Négyzetes mátrix multiplikatív inverze.",
+      "parameters": {
+        "square_matrix": {
+          "name": "négyzetes_mátrix",
+          "detail": "Egyenlő számú sorból és oszlopból álló tömb vagy tartomány, amely egy olyan mátrixot ábrázol, amelynek multiplikatív inverzét ki kell számítani."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Két mátrix mátrixszorzata.",
+      "parameters": {
+        "matrix1": {
+          "name": "mátrix1",
+          "detail": "A mátrixszorzási művelet első mátrixa, tömbként vagy tartománnyal ábrázolva."
+        },
+        "matrix2": {
+          "name": "mátrix2",
+          "detail": "A mátrixszorzási művelet második mátrixa, tömbként vagy tartománnyal ábrázolva."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Két tömb elemeinek szorzatainak összege.",
+      "parameters": {
+        "array1": {
+          "name": "tömb1",
+          "detail": "Az első tömb vagy tartomány, amelynek elemeit megszorozza a második ilyen tömb vagy tartomány megfelelő elemeivel."
+        },
+        "array2": {
+          "name": "tömb2",
+          "detail": "A második tömb vagy tartomány, amelynek elemeit megszorozza az első ilyen tömb vagy tartomány megfelelő elemeivel."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Azt jelzi, hogy egy érték képlet-e.",
+      "parameters": {
+        "cell": {
+          "name": "sejt",
+          "detail": "A cella, amelyről ellenőrizni kell, hogy képletet tartalmaz-e."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Információkat kap egy celláról.",
+      "parameters": {
+        "info_type": {
+          "name": "info_type",
+          "detail": "A kért információ típusa (a rendelkezésre álló típusokat lásd a cikkben)"
+        },
+        "reference": {
+          "name": "referencia",
+          "detail": "A cellára való hivatkozás."
+        }
+      }
+    },
+    "NA": {
+      "description": "A `#N/A` hiba."
+    },
+    "ISBLANK": {
+      "description": "Azt jelzi, hogy a hivatkozott cella üres-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Hivatkozás arra a cellára, amelynek ürességét ellenőrizni fogják."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Azt adja meg, hogy egy érték hiba-e, nem `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet `#N/A`-tól eltérő hibatípusként kell ellenőrizni."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Azt jelzi, hogy egy érték hiba-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A hibatípusként ellenőrizendő érték."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Azt jelzi, hogy egy érték „igaz” vagy „hamis”.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelyet logikailag IGAZ vagy HAMIS értékűnek kell ellenőrizni."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Azt adja meg, hogy egy érték a `#n/a` hiba.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az a érték, amelyet össze kell hasonlítani a `#N/A` hibaértékkel."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Azt jelzi, hogy egy érték nem szöveges-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az ellenőrizendő érték."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Azt határozza meg, hogy egy érték szám-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A számként ellenőrizendő érték."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Azt jelzi, hogy egy érték érvényes cellahivatkozás-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A cellahivatkozásként ellenőrizendő érték."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Azt jelzi, hogy egy érték szöveg-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A szövegként ellenőrizendő érték."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Szerezd meg egy érték típusát.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az az érték, amelynek típusát meg kell határozni."
+        }
+      }
+    },
+    "N": {
+      "description": "Az argumentum számként van megadva.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A számmá alakítandó argumentum."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Egy megadott számot dátummá alakít.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az argumentum vagy hivatkozás egy dátummá alakítandó cellára."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Bármely numerikus értéket tiszta számmá alakít.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az argumentum vagy hivatkozás egy cellára, amelyet tiszta számmá kell alakítani."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Egy megadott numerikus értéket szöveges értékké alakít.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az argumentum vagy a szöveggé alakítandó cellára mutató hivatkozás."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Egy megadott számot dollárértékké alakít át.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az argumentum vagy hivatkozás egy cellára, amelyet dollárértékké kell konvertálni."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Egy megadott számot százalékos értékké alakít át.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "Az argumentum vagy egy cellára mutató hivatkozás, amelyet százalékos értékké kell alakítani."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Egyetlen érték egy táblázatszerű tartományból.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Egy táblázatszerű tartomány értékeinek maximuma.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Egy táblázatszerű tartomány minimális értékei.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Egy táblázatszerű tartomány értékhalmazának átlaga.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Egy táblázatszerű tartomány értékeit számolja meg.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Értékeket és szöveget számol egy táblázatszerű tartományból.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Egy táblázatszerű tartomány értékeinek szorzata.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "A populációs minta szórása a táblázattól.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "A teljes populáció szórása a táblázatból.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Egy táblázatszerű tartomány értékeinek összege.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és kezelendő értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "A populációs minta varianciája táblázatszerű tartományból.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Egy populáció varianciája egy táblázatszerű tartományból.",
+      "parameters": {
+        "database": {
+          "name": "adatbázis",
+          "detail": "A figyelembe veendő adatokat tartalmazó tömb vagy tartomány, amely úgy van strukturálva, hogy az első sor tartalmazza az egyes oszlopok értékeinek címkéit."
+        },
+        "field": {
+          "name": "mező",
+          "detail": "Azt jelzi, hogy az `adatbázis` melyik oszlopa tartalmazza a kinyerendő és a műveletek alá vonandó értékeket."
+        },
+        "criteria": {
+          "name": "kritériumok",
+          "detail": "Egy tömb vagy tartomány, amely nulla vagy több kritériumot tartalmaz az `adatbázis` értékeinek szűréséhez a művelet végrehajtása előtt."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Nem meghatározása személyi igazolványszám alapján.",
+      "parameters": {
+        "ID number": {
+          "name": "azonosító szám",
+          "detail": "15 vagy 18 számjegyű azonosítószám vagy számtartomány."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "A születési hely megyéjének meghatározása a személyazonosító szám alapján.",
+      "parameters": {
+        "ID number": {
+          "name": "azonosító szám",
+          "detail": "15 vagy 18 számjegyű azonosítószám vagy számtartomány."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Szerezd meg a konstellációt az azonosítószám alapján.",
+      "parameters": {
+        "ID number": {
+          "name": "azonosító szám",
+          "detail": "15 vagy 18 számjegyű azonosítószám vagy számtartomány."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Az A részvények megfelelő kereskedési volumenét adja vissza.",
+      "parameters": {
+        "Stock code": {
+          "name": "Készletkód",
+          "detail": "6 jegyű részvénykód, kötelező."
+        },
+        "Date": {
+          "name": "Dátum",
+          "detail": "A részvény kereskedési napja, az alapértelmezett érték a legutóbbi kereskedési nap."
+        },
+        "Reversion and exclusion": {
+          "name": "Visszafordítás és kizárás",
+          "detail": "Válassza ki a részvény eredeti, visszaállítási típusát, alapértelmezett érték: 0 [korábbi visszaállítás], 1 [eredeti ár], 2 [visszaállítás utáni ár]."
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Azt jelzi, hogy egy érték dátum-e.",
+      "parameters": {
+        "value": {
+          "name": "érték",
+          "detail": "A dátumként ellenőrizendő érték."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Sparkline vonaldiagram generálása",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Line color": {
+          "name": "Vonal színe",
+          "detail": "A vonaldiagram vonalszíne lehet az A1 tartomány, a színtábla indexértéke vagy egy adott színérték. Állítsa 0-ra vagy hamisra, ha nem szeretné megjeleníteni. Támogatja a regx, rgb, rgba stb. színmélységeket. Alapértelmezett: #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Vonalvastagság",
+          "detail": "A vonaldiagram vonalvastagsága, az alapértelmezett érték 1px"
+        },
+        "Auxiliary line": {
+          "name": "Segédvezeték",
+          "detail": "Egy vízszintes vonal, amely lehet min, max, avg, medián, tartomány vagy egyéni érték, alapértelmezett érték 0, nincs"
+        },
+        "Auxiliary line color": {
+          "name": "Segédvonal színe",
+          "detail": "A segédvonal színbeállítása megegyezik a vonalszín konfigurációjával, alapértelmezett #000"
+        },
+        "Maximum mark": {
+          "name": "Maximális pontszám",
+          "detail": "A vonaldiagram maximális értékét azonosítja, ugyanaz a vonalszín-konfiguráció, az alapértelmezett 0 nem jelenik meg."
+        },
+        "Minimum mark": {
+          "name": "Minimum pontszám",
+          "detail": "A vonaldiagram minimális értékének azonosítása, ugyanaz a vonalszín-konfiguráció, az alapértelmezett 0 nem jelenik meg"
+        },
+        "Mark size": {
+          "name": "Jelölés mérete",
+          "detail": "A maximális és minimális jelméret beállításai, az alapértelmezett érték 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Sparkline-ok generálása kumulatív függőleges hisztogramként",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Stack by column": {
+          "name": "Oszloponkénti halmozás",
+          "detail": "Ha soronként kell egymásra rakni, állítsa ezt az elemet hamisra vagy 0-ra, az alapértelmezett érték 1."
+        },
+        "Bar interval": {
+          "name": "Ütemköz",
+          "detail": "A sávok közötti távolság, az alapértelmezett érték 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "A kumulatív sáv maximális értéke, amely a sáv hosszának szabályozására szolgál, az alapértelmezett érték a hamis, auto és null értékek automatikus kiszámítása."
+        },
+        "Color palette": {
+          "name": "Színpaletta",
+          "detail": "A színpaletta egyenként beállíthatja az egyes dimenziók sávszínét, amely az A1:A10 stb. tartományba állítható. Az alapértelmezett érték #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Sparkline-ok generálása kumulatív vízszintes oszlopdiagramon",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Stack by column": {
+          "name": "Oszloponkénti halmozás",
+          "detail": "Ha soronként kell egymásra rakni, állítsa ezt az elemet hamisra vagy 0-ra, az alapértelmezett érték 1."
+        },
+        "Bar interval": {
+          "name": "Ütemköz",
+          "detail": "A sávok közötti távolság, az alapértelmezett érték 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "A kumulatív sáv maximális értéke, amely a sáv hosszának szabályozására szolgál, az alapértelmezett érték a hamis, auto és null értékek automatikus kiszámítása."
+        },
+        "Color palette": {
+          "name": "Színpaletta",
+          "detail": "A színpaletta egyenként beállíthatja az egyes dimenziók sávszínét, amely az A1:A10 stb. tartományba állítható. Az alapértelmezett érték #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Sparkline-ok generálása diszkrét gráfként",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Segmentation threshold": {
+          "name": "Szegmentációs küszöbérték",
+          "detail": "Diszkrét gráf oszlopainak színmegkülönböztetése, például: ha az érték 0, akkor a kék nagyobb, mint 0, a piros kisebb, mint 0, és az alapértelmezett érték 0."
+        },
+        "Above threshold color": {
+          "name": "Küszöbérték feletti szín",
+          "detail": "A vonaldiagram vonalszíne lehet az A1 tartomány, a színtábla indexértéke vagy egy adott színérték. Állítsa 0-ra vagy hamisra, ha nem szeretné megjeleníteni. Támogatja a regx, rgb, rgba stb. színmélységeket. Alapértelmezett: #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Küszöbérték alatti szín",
+          "detail": "A küszöbérték alatti sáv színbeállítása megegyezik a küszöbérték feletti színnel, alapértelmezett #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Sparkline-ok generálása háromállapotú gráfon",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Bar interval": {
+          "name": "Ütemköz",
+          "detail": "A sávok közötti távolság, az alapértelmezett érték 1"
+        },
+        "Bar color": {
+          "name": "Sáv színe",
+          "detail": "A vonaldiagram vonalszíne lehet az A1 tartomány, a színtábla indexértéke vagy egy adott színérték. Állítsa 0-ra vagy hamisra, ha nem szeretné megjeleníteni. Támogatja a regx, rgb, rgba stb. színmélységeket. Alapértelmezett: #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Negatív sáv színe",
+          "detail": "Negatív sáv színbeállítása, amely a negatív érték színét jelöli, megegyezik a sáv színkonfigurációjával, alapértelmezett #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Nulla érték sáv színe",
+          "detail": "Nulla értékű sáv színbeállítása, amely a 0 értékű színt jelöli, a sáv színkonfigurációjával megegyező, alapértelmezett #999"
+        },
+        "Color palette": {
+          "name": "Színpaletta",
+          "detail": "A színpaletta minden egyes sáv színét külön-külön beállíthatja, több beállítás is megadható, és két formátum támogatott: 1. szín, például #000, ami azt jelenti, hogy az első sáv színe fekete; 2. értéktartomány: a szín, például -2:# 000 azt jelzi, hogy a -2 értékű sáv fekete, a 0:5:#000 azt jelzi, hogy a 0-5 értékű sáv fekete, az alapértelmezett érték pedig üres."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Sparkline kördiagram generálása",
+      "parameters": {
+        "Range": {
+          "name": "Hatótávolság",
+          "detail": "Tartomány, az értékek hatékonyan kiszámíthatók, például A1:A20, {1,2,3,4,5} stb."
+        },
+        "Rotation angle": {
+          "name": "Forgási szög",
+          "detail": "A kördiagram elforgatási szöge, az alapértelmezett érték 0"
+        },
+        "border": {
+          "name": "határ",
+          "detail": "Kördiagram szegélymérete, az alapértelmezett érték nincs 0"
+        },
+        "Border color": {
+          "name": "Szegély színe",
+          "detail": "A kördiagram szegélyének színe, az alapértelmezett #000"
+        },
+        "Color palette": {
+          "name": "Színpaletta",
+          "detail": "A szelet színe a palettán állítható be, amely A1:A10 stb. tartományba állítható. Az alapértelmezett érték #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Sparkline-ok létrehozása felsorolásjelekkel",
+      "parameters": {
+        "Target": {
+          "name": "Cél",
+          "detail": "A numerikus érték hatékonyan kiszámítható az elért célértékhez, például A1, 100 stb."
+        },
+        "achieved": {
+          "name": "elért",
+          "detail": "Csak akkor lehet az értéket hatékonyan kiszámítani, ha az kitöltött, például A1, 100 stb."
+        },
+        "Contrast": {
+          "name": "Kontraszt",
+          "detail": "Az összehasonlító értékek, mint például a díjak önrésze, minimuma és végeredménye, hatékonyan kiszámíthatók, például A1, 100 stb. Legfeljebb 9 összehasonlító értéket állíthat be."
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Sparkline diagramok egyesítése egyetlen cellába",
+      "parameters": {
+        "config": {
+          "name": "konfiguráció",
+          "detail": "Sparkline diagram beállításai, például A1:A20, egy kész kördiagram, vonaldiagram beállításai stb."
+        }
+      }
+    },
+    "SORT": {
+      "description": "A tartomány sorait a megadott oszlop szerint rendezi.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A rendezendő adatok."
+        },
+        "sort_column": {
+          "name": "rendezési_oszlop",
+          "detail": "A `tartomány` oszlopának indexe, vagy egy, a `tartomány`-on kívüli tartományé, amely a rendezés alapjául szolgáló értékeket tartalmazza."
+        },
+        "is_ascending": {
+          "name": "növekvő",
+          "detail": "A `TRUE` vagy `FALSE` azt jelzi, hogy a `sort_column` oszlop növekvő sorrendben legyen-e rendezve. A `FALSE` érték csökkenő sorrendben rendez."
+        },
+        "sort_column2": {
+          "name": "rendezés_oszlop2",
+          "detail": "További oszlopok."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "A megadott feltételek alapján szűr egy tartományt.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "A szűrendő adatok."
+        },
+        "condition1": {
+          "name": "feltétel1",
+          "detail": "Egy oszlop vagy sor, amely a `tartomány` első oszlopának vagy sorának megfelelő igaz vagy hamis értékeket tartalmaz, vagy egy tömbképlet, amely igaz vagy hamis értéket ad ki."
+        },
+        "condition2": {
+          "name": "feltétel2",
+          "detail": "További sorok vagy oszlopok, amelyek logikai értékeket tartalmaznak (TRUE vagy FALSE), és jelzik, hogy a `tartomány` megfelelő sorának vagy oszlopának át kell-e mennie a `SZŰRŐ` függvényen. Tartalmazhatnak tömbképlet-kifejezéseket is, amelyek ilyen sorokat vagy oszlopokat adnak ki. Minden feltételnek azonos típusúnak kell lennie (sor vagy oszlop). A sorfeltételek és az oszlopfeltételek keverése nem megengedett."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Egyedi sorok a megadott forrástartományban.",
+      "parameters": {
+        "range": {
+          "name": "hatótávolság",
+          "detail": "Az egyedi bejegyzések alapján szűrendő adatok."
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[Opcionális] – Logikai érték, amely az összehasonlítás módját jelzi; soronként = FALSE() vagy kihagyva; oszloponként = TRUE()."
+        },
+        "occurs_once": {
+          "name": "egyszer fordul elő",
+          "detail": "[Opcionális] - Logikai érték, az egyedi értékben csak egyetlen előfordulás kerül visszaadásra = TRUE(); az összes egyedi értéket beleértve = FALSE() vagy kihagyva."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Véletlenszerű számok rácsát adja vissza.",
+      "parameters": {
+        "rows": {
+          "name": "sorok",
+          "detail": "A véletlenszerű számmal feltöltendő sorok száma."
+        },
+        "columns": {
+          "name": "oszlopok",
+          "detail": "A véletlenszerű számmal feltöltendő oszlopok száma."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Egy egymást követő számokból álló rácsot ad vissza.",
+      "parameters": {
+        "rows": {
+          "name": "sorok",
+          "detail": "A függvény eredményrácsának sorainak száma."
+        },
+        "columns": {
+          "name": "oszlopok",
+          "detail": "A függvény eredményrácsának oszlopainak száma. Ha kihagyjuk, az eredményrács 1 oszlopból fog állni."
+        },
+        "start": {
+          "name": "indul",
+          "detail": "Az a szám, amelynél a sorozat kezdődjön. Ha elhagyjuk, a sorozat 1-gyel kezdődik."
+        },
+        "step": {
+          "name": "lépés",
+          "detail": "Az a mennyiség, amennyivel a sorozatban lévő egyes értékek eltérőek lesznek. Ha elhagyjuk, akkor az egyes értékek 1-gyel fognak eltérni."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Értékeld ki literál képlet vagy kifejezés alapján.",
+      "parameters": {
+        "expression": {
+          "name": "kifejezés",
+          "detail": "Képlet vagy kifejezés"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Meghív egy függvényt egy távoli háttérszerveren/API-n.",
+      "parameters": {
+        "remote_expression": {
+          "name": "távoli_kifejezés",
+          "detail": "Képlet"
+        }
+      }
+    }
   }
 }

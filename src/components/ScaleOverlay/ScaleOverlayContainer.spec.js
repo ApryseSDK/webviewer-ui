@@ -47,7 +47,7 @@ jest.mock('core', () => ({
   getViewerElement: () => {},
   getScrollViewElement: () => {},
   getScales: () => ({
-    '1 in = 1 in': [],
+    '1 in = 1 in': [{}],
   }),
   getScalePrecision: () => 0.1,
   addEventListener: () => {},

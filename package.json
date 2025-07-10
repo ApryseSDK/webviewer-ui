@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "Apryse Software Inc.",
-  "version": "11.5.0",
+  "version": "11.6.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "canvas2pdf": "git+https://github.com/PDFTron/canvas2pdf.git",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.19",
-    "dompurify": "^3.2.5",
+    "dompurify": "^3.2.6",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
     "hotkeys-js": "^3.10.0",
     "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",

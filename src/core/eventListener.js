@@ -116,5 +116,9 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     spreadsheetEditorLoaded: spreadsheetEditorManager,
     spreadsheetEditorReady: spreadsheetEditorManager,
     selectedRangeStyleChanged: spreadsheetEditorManager,
+    formulaSearchEvent: spreadsheetEditorManager,
+    formulaHelpEvent: spreadsheetEditorManager,
+    formulaBarTextChangedEvent: spreadsheetEditorManager,
+    formulaBarSelectionChangedEvent: spreadsheetEditorManager,
   };
 };

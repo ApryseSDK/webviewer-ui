@@ -25,11 +25,16 @@ jest.mock('core', () => ({
         selectCellRange: jest.fn(),
       })),
     })),
+    getSpreadsheetEditorManager: jest.fn(() => ({
+      getFormulaBarProvider: jest.fn(),
+    })),
   })),
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
 }));
 
 
-describe.only('Formula Bar Test', () => {
+describe('Formula Bar Range Input Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -37,7 +42,7 @@ describe.only('Formula Bar Test', () => {
   it('When I enter a valid range the UI reflects it', async () => {
     render(<FormulaBarDefaultComponent />);
 
-    const  getCellRangeSpy = jest.spyOn(core, 'getCellRange');
+    const getCellRangeSpy = jest.spyOn(core, 'getCellRange');
     const rangeInput = screen.getByRole('textbox', { name: 'Range' });
     userEvent.clear(rangeInput);
     userEvent.type(rangeInput, 'A2:B2');
@@ -50,7 +55,7 @@ describe.only('Formula Bar Test', () => {
   it('When I enter an invalid range, the UI does not update and an error is throw by the API', async () => {
     render(<FormulaBarDefaultComponent />);
 
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
     const getCellRangeSpy = jest.spyOn(core, 'getCellRange').mockImplementation(() => {
       throw new Error('Invalid range format');
     });

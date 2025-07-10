@@ -1,13 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import { AVAILABLE_FONT_SIZES } from 'constants/spreadsheetEditor';
-import classNames from 'classnames';
+import setCellFontStyle from 'src/helpers/setCellFontStyle';
 import './SpreadsheetFontSizeDropdown.scss';
-import PropTypes from 'prop-types';
 
 const SpreadsheetFontSizeDropdown = (props) => {
-
   const { isFlyoutItem, onKeyDownHandler } = props;
+  const fontSize = useSelector((state) => selectors.getActiveCellRangeFontStyle(state, 'pointSize'));
+
+  const handleFontSizeChange = (size) => {
+    setCellFontStyle({ pointSize: parseInt(size) });
+  };
 
   return (
     <Dropdown
@@ -18,8 +25,8 @@ const SpreadsheetFontSizeDropdown = (props) => {
         'flyout-item': isFlyoutItem,
       })}
       items={AVAILABLE_FONT_SIZES}
-      onClickItem={() => {}}
-      currentSelectionKey={'8'}
+      onClickItem={handleFontSizeChange}
+      currentSelectionKey={fontSize?.toString()}
       width={100}
       dataElement="spreadsheet-editor-font-size"
       hasInput

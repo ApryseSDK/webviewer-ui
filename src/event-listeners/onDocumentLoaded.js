@@ -7,7 +7,6 @@ import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
-import onLayersUpdated from './onLayersUpdated';
 import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
 import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'helpers/hotkeysManager';
@@ -16,7 +15,6 @@ import { isOfficeEditorMode, isSpreadsheetEditorDocument } from 'helpers/officeE
 import DataElements from 'constants/dataElement';
 import { panelNames } from 'constants/panel';
 import { getPortfolioFiles } from 'helpers/portfolio';
-import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 import {
   OFFICE_EDITOR_SCOPE,
   OfficeEditorEditMode,
@@ -24,8 +22,10 @@ import {
   ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
   ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
 } from 'constants/officeEditor';
+import { SPREADSHEET_EDITOR_SCOPE, ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR } from 'src/constants/spreadsheetEditor';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FeatureFlags from 'constants/featureFlags';
+import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 let notesInLeftPanel;
 
@@ -62,6 +62,18 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
     const documentUnloadedHandler = () => {
       isDocumentClosed = true;
     };
+    const createPageRenderPromise = (resolved = false) => {
+      const promiseCapability = {};
+      promiseCapability.promise = new Promise((resolve, reject) => {
+        promiseCapability.resolve = resolve;
+        promiseCapability.reject = reject;
+        resolved && resolve();
+      });
+      return promiseCapability;
+    };
+    let pageRenderPromiseCapability = createPageRenderPromise(true);
+    docViewer.addEventListener('beginRendering', () => pageRenderPromiseCapability = createPageRenderPromise());
+    docViewer.addEventListener('finishedRendering', () => pageRenderPromiseCapability.resolve());
 
     const checkIfDocumentClosed = () => {
       if (isDocumentClosed) {
@@ -77,13 +89,14 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
       return;
     }
 
-    PDFNet.initialize().then(() => {
-      const main = async () => {
+    PDFNet.initialize().then(async () => {
+      let totalPageCount;
+      const pageLabels = [];
+      const getPageCount = async () => {
         try {
           checkIfDocumentClosed();
-          const totalPageCount = await pdfDoc.getPageCount();
+          totalPageCount = await pdfDoc.getPageCount();
           const displayedPageCount = core.getTotalPages();
-          const pageLabels = [];
           if (totalPageCount !== displayedPageCount) {
             const errorLoadingDocument = i18next.t('message.errorLoadingDocument', {
               totalPageCount,
@@ -92,27 +105,35 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
             dispatch(actions.showErrorMessage(errorLoadingDocument));
             throw new Error(`pdfDoc.getPageCount() returns ${totalPageCount} and this does not match with documentViewer.getPageCount() which returns ${displayedPageCount}.`);
           }
+        } catch (e) {
+          console.warn(e);
+        }
+      };
+      await pageRenderPromiseCapability.promise;
+      await PDFNet.runWithCleanup(getPageCount);
 
-          for (let i = 1; i <= totalPageCount; i++) {
+      for (let i = 1; i <= totalPageCount; i++) {
+        const main = async () => {
+          try {
             checkIfDocumentClosed();
             const pageLabel = await pdfDoc.getPageLabel(i);
             checkIfDocumentClosed();
             const label = await pageLabel.getLabelTitle(i);
             pageLabels.push(label.length > 0 ? label : i.toString());
+          } catch (e) {
+            console.warn(e);
           }
+        };
+        await pageRenderPromiseCapability.promise;
+        await PDFNet.runWithCleanup(main);
+      }
 
-          checkIfDocumentClosed();
-          const defaultPageLabels = getDefaultPageLabels(totalPageCount);
-          const newPageLabels = selectors.getPageLabels(getState());
-          if (newPageLabels.every((newLabel, index) => newLabel === defaultPageLabels[index])) {
-            dispatch(actions.setPageLabels(pageLabels));
-          }
-        } catch (e) {
-          console.warn(e);
-        }
-      };
-
-      PDFNet.runWithCleanup(main);
+      checkIfDocumentClosed();
+      const defaultPageLabels = getDefaultPageLabels(totalPageCount);
+      const newPageLabels = selectors.getPageLabels(getState());
+      if (newPageLabels.every((newLabel, index) => newLabel === defaultPageLabels[index])) {
+        dispatch(actions.setPageLabels(pageLabels));
+      }
     });
   }
 };
@@ -186,67 +207,42 @@ export const checkDocumentForTools = (dispatch) => () => {
 };
 
 export const updateOutlines = (dispatch, documentViewerKey) => () => {
-  core.getOutlines((outlines) => {
-    dispatch(actions.setOutlines(outlines));
-  }, documentViewerKey);
   const doc = core.getDocument(documentViewerKey);
   doc.addEventListener('bookmarksUpdated', () => core.getOutlines((outlines) => dispatch(actions.setOutlines(outlines)), documentViewerKey));
   outlineUtils.setDoc(core.getDocument(documentViewerKey));
 };
 
-export const updatePortfolioAndLayers = (store) => async () => {
-  const { getState, dispatch } = store;
-  const doc = core.getDocument();
+export const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel, store) => {
+  const { dispatch } = store;
+  const state = store.getState();
+  const { customizableUI } = state.featureFlags;
+  let activeLeftPanel;
 
-  const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel) => {
-    const state = getState();
-    const { customizableUI } = state.featureFlags;
-    let activeLeftPanel;
+  if (customizableUI) {
+    activeLeftPanel = selectors.getActiveTabInPanel(state, panelNames.TABS);
+  } else {
+    activeLeftPanel = selectors.getActiveLeftPanel(state);
+  }
 
+  if (activeLeftPanel === currentActivePanel) {
+    // set the active left panel to another one that's not disabled so that users don't see a blank left panel
+    const nextActivePanel = getLeftPanelDataElements(state).find(
+      (dataElement) => !selectors.isElementDisabled(state, dataElement),
+    );
     if (customizableUI) {
-      activeLeftPanel = selectors.getActiveTabInPanel(state, panelNames.TABS);
+      dispatch(actions.setActiveTabInPanel(nextActivePanel, panelNames.TABS));
     } else {
-      activeLeftPanel = selectors.getActiveLeftPanel(state);
+      dispatch(actions.setActiveLeftPanel(nextActivePanel));
     }
+  }
+};
 
-    if (activeLeftPanel === currentActivePanel) {
-      // set the active left panel to another one that's not disabled so that users don't see a blank left panel
-      const nextActivePanel = getLeftPanelDataElements(state).find(
-        (dataElement) => !selectors.isElementDisabled(state, dataElement),
-      );
-      if (customizableUI) {
-        dispatch(actions.setActiveTabInPanel(nextActivePanel, panelNames.TABS));
-      } else {
-        dispatch(actions.setActiveLeftPanel(nextActivePanel));
-      }
-    }
-  };
-
+export const updatePortfolio = (store) => async () => {
+  const { dispatch } = store;
   const portfolio = await getPortfolioFiles();
   dispatch(actions.setPortfolio(portfolio));
   if (portfolio.length === 0) {
-    setNextActivePanelDueToEmptyCurrentPanel(DataElements.PORTFOLIO_PANEL);
-  }
-
-  if (!doc.isWebViewerServerDocument()) {
-    doc.addEventListener('layersUpdated', async () => {
-      const newLayers = await doc.getLayersArray();
-      const currentLayers = selectors.getLayers(getState());
-      onLayersUpdated(newLayers, currentLayers, dispatch);
-    });
-    doc.getLayersArray().then((layers) => {
-      if (layers.length === 0) {
-        if (!getIsCustomUIEnabled(store)) {
-          dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
-          dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
-        }
-        setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
-      } else {
-        dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));
-        dispatch(actions.enableElement('layersPanelButton', PRIORITY_ONE));
-        onLayersUpdated(layers, undefined, dispatch);
-      }
-    });
+    setNextActivePanelDueToEmptyCurrentPanel(DataElements.PORTFOLIO_PANEL, store);
   }
 };
 
@@ -276,7 +272,7 @@ export const configureOfficeEditor = (store) => () => {
     }
   };
 
-  const updateActiveSteam = (stream) => {
+  const updateActiveStream = (stream) => {
     dispatch(actions.setOfficeEditorActiveStream(stream));
   };
 
@@ -329,8 +325,8 @@ export const configureOfficeEditor = (store) => () => {
     doc.getOfficeEditor().setEditMode(onLoadEditMode);
     updateEditMode(onLoadEditMode);
     doc.addEventListener('editModeUpdated', updateEditMode);
-    updateActiveSteam(EditingStreamType.BODY);
-    contentSelectTool.addEventListener('activeStreamChanged', updateActiveSteam);
+    updateActiveStream(EditingStreamType.BODY);
+    contentSelectTool.addEventListener('activeStreamChanged', updateActiveStream);
     doc.addEventListener('editOperationStarted', () => {
       core.getOfficeEditor().setEditMode('viewOnly');
       dispatch(actions.openElement('loadingModal'));
@@ -343,12 +339,18 @@ export const configureOfficeEditor = (store) => () => {
     core.zoomTo(1, 0, 0);
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
+    dispatch(actions.setClearSearchOnPanelClose(true));
   } else if (isSpreadsheetEditorDocument()) {
     if (!isCustomUIEnabled) {
       console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
     swapUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR);
+    dispatch(actions.disableElements(
+      ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
+    ));
+    hotkeys.unbind('*', SPREADSHEET_EDITOR_SCOPE);
+    hotkeys.setScope(SPREADSHEET_EDITOR_SCOPE);
     dispatch(actions.enableSpreadsheetEditorMode());
     dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
   } else {
@@ -360,7 +362,7 @@ export const configureOfficeEditor = (store) => () => {
     const panels = getIsCustomUIEnabled(store) ? currentGenericPanels : [];
     dispatch(actions.setGenericPanels(panels));
     doc.removeEventListener('editModeUpdated', updateEditMode);
-    contentSelectTool.removeEventListener('activeStreamChanged', updateActiveSteam);
+    contentSelectTool.removeEventListener('activeStreamChanged', updateActiveStream);
     hotkeys.setScope(defaultHotkeysScope);
     dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));

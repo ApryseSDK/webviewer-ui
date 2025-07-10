@@ -44,9 +44,32 @@ const initialTextColors = [
   '#597ce2',
   '#c544ce'
 ];
+const defaultBackgroundColor = '#FFFFFF00'; // White transparent hex
+const defaultTextColor = '#000000'; // Default text color
+const defaultBorderColor = '#000000';
 /* eslint-enable custom/no-hex-colors */
+
+const defaultCellStyle = {
+  verticalAlignment: 2,
+  horizontalAlignment: 1,
+  font: {
+    fontFace: 'Arial',
+    pointSize: 8,
+    bold: false,
+    italic: false,
+    underline: false,
+    strikeout: false,
+    color: defaultTextColor
+  },
+  backgroundColor: null,
+  getCellBorder: () => ({})
+};
 
 export {
   initialColors,
   initialTextColors,
+  defaultBackgroundColor,
+  defaultTextColor,
+  defaultBorderColor,
+  defaultCellStyle,
 };

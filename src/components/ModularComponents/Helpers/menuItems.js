@@ -342,19 +342,18 @@ export const menuItems = {
     return acc;
   }, {}),
 
-  ...CELL_BORDER_BUTTONS.reduce((acc, item) => {
+  ...Object.keys(CELL_BORDER_BUTTONS).reduce((acc, item) => {
     if (item === 'divider') {
       return acc;
     }
-
-    const icon = item.replace(/cellBorder([A-Z])/g, (match, p1) => `border-${p1.toLowerCase()}`);
+    const localeAndFileKey = item.toLowerCase();
 
     acc[`${item}`] = {
       dataElement: `${item}`,
       presetDataElement: `${item}`,
-      icon: `ic-${icon}`,
-      label: `spreadsheetEditor.${item}`,
-      title: `spreadsheetEditor.${item}`,
+      icon: `ic-border-${localeAndFileKey}`,
+      label: `spreadsheetEditor.${localeAndFileKey}`,
+      title: `spreadsheetEditor.${localeAndFileKey}`,
       isActive: false,
     };
     return acc;

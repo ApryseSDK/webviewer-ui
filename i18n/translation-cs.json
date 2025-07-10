@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Vyberte nástroj AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Vyberte nástroj AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Vyberte nástroj AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Upravit klávesovou zkratku",
+      "editKeyboardShortcut": "Upravit klávesovou zkratku",
       "setShortcut": "Nastavit zástupce",
       "editShortcut": "Upravit zástupce",
       "shortcutAlreadyExists": "Výše uvedená klávesová zkratka již existuje.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Žádný",
-      "solid": "Solidní",
+      "thin": "Solidní",
       "dashed": "čárkovaná",
       "dotted": "Tečkovaný"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Upravit upozornění",
       "message": "Opravdu chcete tento list smazat?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Rozvržení stránky",
+      "columnsMessage": "Nastavení mezer mezi sloupci je v některých částech příliš velké vzhledem k šířce stránky.",
+      "marginsMessage": "Nastavení okrajů, která jste zvolili, je v některých částech příliš velké vzhledem k šířce stránky."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Právo",
     "customMargins": "Vlastní okraje",
     "customMarginsDescription": "Definování vlastních okrajů",
+    "column": "Sloupec",
+    "columns": "Sloupce",
+    "singleColumn": "1 sloupec",
+    "twoColumn": "2 sloupce",
+    "threeColumn": "3 sloupce",
+    "customColumn": "Vlastní sloupce",
+    "customColumnDescription": "Definování vlastních sloupců",
+    "unitMeasurement": "Jednotka měření",
     "header": {
       "0": "Záhlaví",
       "1": "Záhlaví první stránky",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Různé sudé a liché stránky",
         "differentFirstEvenOddPages": "Různé první, sudé a liché stránky"
       }
+    },
+    "columnsModal": {
+      "title": "Úprava vlastního sloupce",
+      "columnAmount": "Počet sloupců",
+      "columnNumber": "Číslo sloupce",
+      "width": "Šířka",
+      "spacing": "Vzdálenost",
+      "widthAndSpacing": "Šířka a rozteč",
+      "equalColumns": "Stejná šířka sloupců"
     },
     "marginsModal": {
       "title": "Vlastní úprava okrajů",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Prohlížení",
     "editingDescription": "Upravit dokument",
     "viewOnlyDescription": "Pouze zobrazení",
+    "editModeDropdown": "Výběr režimu úprav",
     "bold": "Tučné",
     "italic": "kurzíva",
     "underline": "Zdůraznit",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Smažte buňky a posuňte se nahoru",
     "deleteColumnShiftLeft": "Smažte buňky a posuňte se doleva",
     "clearBorder": "Jasné ohraničení",
-    "cellBorderAll": "Všechny hranice",
-    "cellBorderInside": "Uvnitř hranic",
-    "cellBorderOutside": "Mimo hranice",
-    "cellBorderTop": "Horní okraj",
-    "cellBorderBottom": "Dolní okraj",
-    "cellBorderLeft": "Levá hranice",
-    "cellBorderRight": "Pravá hranice",
-    "cellBorderVertical": "Vertikální ohraničení",
-    "cellBorderHorizontal": "Horizontální hranice",
-    "cellBorderNone": "Žádné hranice",
+    "all": "Všechny hranice",
+    "inside": "Uvnitř hranic",
+    "outside": "Mimo hranice",
+    "top": "Horní okraj",
+    "bottom": "Dolní okraj",
+    "left": "Levá hranice",
+    "right": "Pravá hranice",
+    "vertical": "Vertikální ohraničení",
+    "horizontal": "Horizontální hranice",
+    "none": "Žádné hranice",
     "borders": "Hranice",
     "fontSize": {
       "dropdownLabel": "Velikost písma"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formule bar",
     "range": "Rozsah",
-    "formulas": "Vzorce",
-    "sumif": "Podmíněný součet v celém rozsahu",
-    "sumsq": "Vrátí součet druhých mocnin rozsahu",
-    "sum": "Sečte všechna čísla v rozsahu",
-    "asinh": "Vrátí inverzní hyperbolický sinus čísla",
-    "acos": "Vrátí arckosinus čísla v radiánech",
-    "cosh": "Vrátí hyperbolický kosinus čísla",
-    "iseven": "Kontroluje, zda je číslo sudé",
-    "isodd": "Kontroluje, zda je číslo liché"
+    "formulas": "Vzorce"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Podmíněný součet v daném rozsahu.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, který je testován podle `kritéria`."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "Vzor nebo test, který se má použít na `rozsah`."
+        },
+        "sum_range": {
+          "name": "rozsah_součtu",
+          "detail": "Rozsah, který má být sečten, pokud se liší od argumentu „rozsah“."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangens úhlu v radiánech.",
+      "parameters": {
+        "angle": {
+          "name": "úhel",
+          "detail": "Úhel, jehož tangens se má najít, v radiánech."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Hyperbolický tangens libovolného reálného čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Libovolná reálná hodnota, pro kterou se má vypočítat hyperbolický tangens."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Zaokrouhlí číslo nahoru na nejbližší násobek činitele.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit nahoru na nejbližší celočíselný násobek argumentu „faktor“."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Číslo, na jehož násobky bude zaokrouhlena `hodnota`."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Inverzní tangens hodnoty v radiánech.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní tangens."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Inverzní hyperbolický sinus čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní hyperbolický sinus."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Absolutní hodnota čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo, jehož absolutní hodnota se má vrátit."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Inverzní kosinus hodnoty v radiánech.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní kosinus. Musí být mezi '-1' a '1' včetně."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Inverzní hyperbolický kosinus čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní hyperbolický kosinus. Musí být větší nebo rovna 1."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Multinomická distribuční funkce.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba zvážit."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Inverzní hyperbolický tangens čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní hyperbolický tangens. Musí být v rozsahu od -1 do 1 (nepočítaje v tomto pořadí)."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arkustangens hodnoty.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Souřadnice x koncového bodu úsečky, pro kterou se má vypočítat úhel od osy x."
+        },
+        "y": {
+          "name": "a",
+          "detail": "Souřadnice y koncového bodu úsečky, pro kterou se má vypočítat úhel od osy x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Počet prázdných hodnot.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, ve kterém se má spočítat počet mezer."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Hyperbolický kosinus libovolného reálného čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Libovolná reálná hodnota, pro kterou se má vypočítat hyperbolický kosinus."
+        }
+      }
+    },
+    "INT": {
+      "description": "Zaokrouhlí číslo dolů na nejbližší celé číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit dolů na nejbližší celé číslo."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Zda je zadaná hodnota sudá.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako sudá."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Zda je zadaná hodnota lichá.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako lichá."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Nejmenší společný násobek jednoho nebo více celých čísel.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, jehož činitelé se mají zohlednit ve výpočtu pro nalezení nejmenšího společného násobku."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, jejichž činitelé se mají zvážit pro nalezení nejmenšího společného násobku."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logaritmus čísla o základu e (Eulerovo číslo).",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat logaritmus o základu e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logaritmus čísla vzhledem k danému základu.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat logaritmus."
+        },
+        "base": {
+          "name": "báze",
+          "detail": "Základ, který se má použít pro výpočet logaritmu."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logaritmus čísla o základu 10.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat logaritmus o základu 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Operátor modulo (zbytek).",
+      "parameters": {
+        "dividend": {
+          "name": "dividenda",
+          "detail": "Číslo, které má být děleno, aby se našel zbytek."
+        },
+        "divisor": {
+          "name": "dělitel",
+          "detail": "Číslo, kterým se má dělit."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Zaokrouhlí číslo na nejbližší celočíselný násobek.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo, které se má zaokrouhlit na nejbližší celočíselný násobek jiného čísla."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Číslo, na jehož násobky bude zaokrouhlena `hodnota`."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Zaokrouhlí číslo nahoru na nejbližší liché celé číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit na nejbližší největší liché číslo."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Součet čtverců.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První číslo nebo rozsah, jehož druhé mocniny se mají sečíst."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další čísla nebo rozsahy, jejichž druhé mocniny se mají přičíst k druhé mocnině (druhým mocninám) argumentu „hodnota1“."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Počet kombinací z množiny objektů.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Velikost skupiny objektů, ze kterých si můžete vybrat."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Počet objektů, které je třeba vybrat."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Součet řady čísel a/nebo buněk.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První číslo nebo rozsah, které se mají sečíst."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další čísla nebo rozsahy, které se mají přidat k argumentu `value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Mezisoučet pro rozsah pomocí specifické funkce.",
+      "parameters": {
+        "function_code": {
+          "name": "funkční_kód",
+          "detail": "Funkce, která se má použít při agregaci mezisoučtů."
+        },
+        "range1": {
+          "name": "rozsah1",
+          "detail": "První rozsah, ve kterém se má vypočítat mezisoučet."
+        },
+        "range2": {
+          "name": "rozsah2",
+          "detail": "Další rozsahy, pro které se mají vypočítat mezisoučty."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Inverzní sinus hodnoty v radiánech.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní sinus. Musí být mezi `-1` a `1` včetně."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Podmíněný počet v rámci rozsahu.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, který je testován podle `kritéria`."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "Vzor nebo test, který se má použít na `rozsah`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Převede hodnotu úhlu ve stupních na radiány.",
+      "parameters": {
+        "angle": {
+          "name": "úhel",
+          "detail": "Úhel, který se má převést ze stupňů na radiány."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Náhodné číslo mezi 0 včetně a 1 bez ní."
+    },
+    "COUNTUNIQUE": {
+      "description": "Počítá počet jedinečných hodnot v rozsahu.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který se má zvážit z hlediska jedinečnosti."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit pro jedinečnost."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Převede hodnotu úhlu v radiánech na stupně.",
+      "parameters": {
+        "angle": {
+          "name": "úhel",
+          "detail": "Úhel, který se má převést z radiánů na stupně."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Doplňková Gaussova chybová funkce hodnoty.",
+      "parameters": {
+        "z": {
+          "name": "S",
+          "detail": "Číslo, pro které se má vypočítat doplňková Gaussova chybová funkce."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Zaokrouhlí číslo nahoru na nejbližší sudé celé číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit na nejbližší větší sudé číslo."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Eulerovo číslo, e (~2,718) umocněné.",
+      "parameters": {
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponent, na který se má umocnit e."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Faktoriál čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo nebo odkaz na číslo, jehož faktoriál bude vypočítán a vrácen."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "„dvojitý faktoriál“ čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo nebo odkaz na číslo, jehož dvojitý faktoriál bude vypočítán a vrácen."
+        }
+      }
+    },
+    "PI": {
+      "description": "Číslo pí."
+    },
+    "GCD": {
+      "description": "Největší společný dělitel jednoho nebo více celých čísel.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, jehož činitelé se mají zohlednit ve výpočtu pro nalezení největšího společného dělitele."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, jejichž činitelé se mají zvážit pro nalezení největšího společného dělitele."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Náhodné celé číslo mezi dvěma hodnotami včetně.",
+      "parameters": {
+        "low": {
+          "name": "nízký",
+          "detail": "Spodní hranice náhodného rozsahu."
+        },
+        "high": {
+          "name": "vysoký",
+          "detail": "Horní hranice náhodného rozsahu."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Zaokrouhlí číslo podle standardních pravidel.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit na počet míst v argumentu „místa“."
+        },
+        "places": {
+          "name": "místa",
+          "detail": "Počet desetinných míst, na která se má zaokrouhlit."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Zaokrouhlí číslo dolů.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit na počet míst uvedený v `místech`, vždy se zaokrouhluje dolů."
+        },
+        "places": {
+          "name": "místa",
+          "detail": "Počet desetinných míst, na která se má zaokrouhlit."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Zaokrouhlí číslo nahoru.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má zaokrouhlit na počet míst uvedenou v `místech`, vždy se zaokrouhluje nahoru."
+        },
+        "places": {
+          "name": "místa",
+          "detail": "Počet desetinných míst, na která se má zaokrouhlit."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Součet mocninné řady.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Vstupní hodnota pro mocninnou řadu. Liší se v závislosti na typu aproximace, může to být úhel, exponent nebo nějaká jiná hodnota."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Počáteční mocnina, na kterou se má umocnit `x` v mocninné řadě."
+        },
+        "m": {
+          "name": "m",
+          "detail": "Aditivní přírůstek, o který se má zvýšit `x`."
+        },
+        "a": {
+          "name": "A",
+          "detail": "Pole nebo rozsah obsahující koeficienty mocninné řady."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Znaménko zadaného čísla (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, jejíž znaménko bude vyhodnoceno."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus úhlu v radiánech.",
+      "parameters": {
+        "angle": {
+          "name": "úhel",
+          "detail": "Úhel, jehož sinus se má vypočítat, v radiánech."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Hyperbolický sinus libovolného reálného čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Libovolná reálná hodnota pro výpočet hyperbolického sinu."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Kladná druhá odmocnina z kladného čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo, pro které se má vypočítat kladná druhá odmocnina."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Druhá odmocnina součinu čísla pí a čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číslo, které bude vynásobeno číslem pí a jehož součin bude vrácena druhá odmocnina."
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritmus gama funkce.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Vstup pro funkci Gamma. Bude vrácen přirozený logaritmus funkce Gamma(`hodnota`)."
+        }
+      }
+    },
+    "COS": {
+      "description": "Kosinus úhlu v radiánech.",
+      "parameters": {
+        "angle": {
+          "name": "úhel",
+          "detail": "Úhel, jehož kosinus se má vypočítat, v radiánech."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Zkrátí číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být zkrácena."
+        },
+        "places": {
+          "name": "místa",
+          "detail": "Počet platných číslic napravo od desetinné čárky, které se mají zachovat."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Jedno číslo dělené druhým.",
+      "parameters": {
+        "dividend": {
+          "name": "dividenda",
+          "detail": "Číslo, které má být děleno."
+        },
+        "divisor": {
+          "name": "dělitel",
+          "detail": "Číslo, kterým se má dělit."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Číslo umocněné na určitou mocninu.",
+      "parameters": {
+        "base": {
+          "name": "báze",
+          "detail": "Číslo, které se má umocnit na „exponent“."
+        },
+        "exponent": {
+          "name": "exponent",
+          "detail": "Exponent, na který se má umocnit „základ“."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Sečte rozsah v závislosti na více kritériích.",
+      "parameters": {
+        "sum_range": {
+          "name": "rozsah_součtu",
+          "detail": "Rozsah, který se má sečíst."
+        },
+        "criteria_range1": {
+          "name": "rozsah_kritérií1",
+          "detail": "Rozsah, který se má porovnat s kritériem 1."
+        },
+        "criterion1": {
+          "name": "kritérium 1",
+          "detail": "Vzor nebo test, který se má použít pro rozsah_kritérií1."
+        },
+        "criteria_range2": {
+          "name": "rozsah_kritérií2",
+          "detail": "Další rozsahy ke kontrole."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Počítání hodnot v závislosti na více kritériích.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "rozsah_kritérií1",
+          "detail": "Rozsah, který se má porovnat s `kritériem1`."
+        },
+        "criterion1": {
+          "name": "kritérium 1",
+          "detail": "Vzor nebo test, který se má použít pro `kritéria_rozsah1`."
+        },
+        "criteria_range2": {
+          "name": "rozsah_kritérií2",
+          "detail": "Další rozsahy ke kontrole."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Výsledek vynásobení řady čísel.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "První číslo nebo rozsah, ze kterého se má vypočítat součin."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Další čísla nebo rozsahy pro výpočet součinu."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Harmonický průměr datové sady.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah populace."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do populace."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hypergeometrické rozdělení pravděpodobnosti.",
+      "parameters": {
+        "num_successes": {
+          "name": "počet_úspěchů",
+          "detail": "Požadovaný počet úspěchů."
+        },
+        "num_draws": {
+          "name": "počet_tahů",
+          "detail": "Počet povolených losování."
+        },
+        "successes_in_pop": {
+          "name": "úspěchy_v_popu",
+          "detail": "Celkový počet úspěchů v populaci."
+        },
+        "pop_size": {
+          "name": "pop_size",
+          "detail": "Celková velikost populace"
+        },
+        "cumulative": {
+          "name": "kumulativní",
+          "detail": "Určete logickou hodnotu funkčního tvaru.\n\nPokud je kumulativní TRUE(), HYPGEOM.DIST vrátí kumulativní distribuční funkci;\n\nPokud je FALSE(), vrátí funkci hustoty pravděpodobnosti."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Průsečík s osou y odvozený pomocí lineární regrese.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosa datové sady.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah datové sady."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do datové sady."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "N-tý největší prvek z datové sady.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující datovou sadu, která se má zvážit."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Pořadí prvku, který se má vrátit, od největšího po nejmenší."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Směrodatná odchylka vzorku (text jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah vzorku."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do vzorku."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Směrodatná odchylka celé populace.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah populace."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do populace."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Geometrický průměr datové sady.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah populace."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do populace."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Procentuální pořadí (percentil) od 0 do 1 včetně.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující datovou sadu, která se má zvážit."
+        },
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, jejíž procentuální pořadí bude určeno."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají použít ve výpočtu. Výchozí hodnota je 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Očekávaná hodnota y založená na lineární regresi.",
+      "parameters": {
+        "x": {
+          "name": "x",
+          "detail": "Hodnota na ose x, která se má předpovědět."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Inverzní Fisherova transformace zadané hodnoty.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat inverzní Fisherova transformace."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Fisherova transformace zadané hodnoty.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, pro kterou se má vypočítat Fisherova transformace."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Počet číselných hodnot v datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba zvážit při počítání."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba při počítání zvážit."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Počet hodnot v datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba zvážit při počítání."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba při počítání zvážit."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Číselný průměr v datové sadě, ignoruje text.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba vzít v úvahu při výpočtu průměrné hodnoty."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu průměrné hodnoty."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binomické rozdělení pravděpodobnosti.",
+      "parameters": {
+        "num_successes": {
+          "name": "počet_úspěchů",
+          "detail": "Počet úspěchů, pro které se má vypočítat pravděpodobnost v pokusech s argumentem „počet_pokusů“."
+        },
+        "num_trials": {
+          "name": "počet_pokusů",
+          "detail": "Počet nezávislých pokusů."
+        },
+        "prob_success": {
+          "name": "pravděpodobný_úspěch",
+          "detail": "Pravděpodobnost úspěchu v daném pokusu."
+        },
+        "cumulative": {
+          "name": "kumulativní",
+          "detail": "Zda použít binomické kumulativní rozdělení."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Součet druhých mocnin odchylek na základě vzorku.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah vzorku."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do vzorku."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Průměr hodnot v závislosti na kritériích.",
+      "parameters": {
+        "criteria_range": {
+          "name": "rozsah_kritérií",
+          "detail": "Rozsah, který se má porovnat s argumentem „kritérium“."
+        },
+        "criterion": {
+          "name": "kritérium",
+          "detail": "Vzor nebo test, který se má použít pro `kritériový_rozsah`."
+        },
+        "average_range": {
+          "name": "průměrný_rozsah",
+          "detail": "Rozsah pro průměrování. Pokud není zahrnut, použije se pro průměr místo něj argument „rozsah_kritérií“."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Průměr hodnot v závislosti na více kritériích.",
+      "parameters": {
+        "average_range": {
+          "name": "průměrný_rozsah",
+          "detail": "Rozsah, který se má průměrovat."
+        },
+        "criteria_range1": {
+          "name": "rozsah_kritérií1",
+          "detail": "Rozsah, který se má porovnat s `kritériem1`."
+        },
+        "criterion1": {
+          "name": "kritérium 1",
+          "detail": "Vzor nebo test, který se má použít pro `kritéria_rozsah1`."
+        },
+        "criteria_range2": {
+          "name": "rozsah_kritérií2",
+          "detail": "Další rozsahy ke kontrole."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Počet permutací z určitého počtu objektů.",
+      "parameters": {
+        "n": {
+          "name": "n",
+          "detail": "Velikost skupiny objektů, ze kterých si můžete vybrat."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Počet objektů, které je třeba vybrat."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Průměr datové sady bez horních/dolních hranic.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující datovou sadu, která se má zvážit."
+        },
+        "exclude_proportion": {
+          "name": "vyloučit_poměr",
+          "detail": "Část datové sady, která má být vyloučena z okrajů sady."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearsonův korelační koeficient součinu momentů.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Minimální číselná hodnota v datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba vzít v úvahu při výpočtu minimální hodnoty."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu minimální hodnoty."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Minimální hodnota v číselné datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba vzít v úvahu při výpočtu minimální hodnoty."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu minimální hodnoty."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Mediánová hodnota v numerické datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který se má zohlednit při výpočtu mediánu."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu mediánu."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Maximální číselná hodnota v datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba vzít v úvahu při výpočtu maximální hodnoty."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu maximální hodnoty."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Maximální hodnota v číselné datové sadě.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah, který je třeba vzít v úvahu při výpočtu maximální hodnoty."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které je třeba zvážit při výpočtu maximální hodnoty."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Hodnoty pravděpodobnosti leží v určitém rozsahu.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující datovou sadu, která se má zvážit."
+        },
+        "probabilities": {
+          "name": "pravděpodobnosti",
+          "detail": "Pole nebo rozsah obsahující pravděpodobnosti odpovídající argumentu „data“."
+        },
+        "low_limit": {
+          "name": "dolní_limit",
+          "detail": "Dolní hranice rozsahu hodnot, pro který se má vypočítat pravděpodobnost."
+        },
+        "high_limit": {
+          "name": "horní_limit",
+          "detail": "Horní hranice rozsahu hodnot, pro který se má vypočítat pravděpodobnost."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Druhá mocnina korelačního koeficientu.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Rozptyl vzorku (text jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah vzorku."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do vzorku."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Rozptyl celé populace (text jako 0).",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah populace."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do populace."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Standardní chyba predikovaných hodnot y v regresi.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Normalizovaný ekvivalent náhodné proměnné.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota náhodné proměnné, která má být normalizována."
+        },
+        "mean": {
+          "name": "střední",
+          "detail": "Průměr rozdělení."
+        },
+        "standard_deviation": {
+          "name": "směrodatná odchylka",
+          "detail": "Směrodatná odchylka rozdělení."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "N-tý nejmenší prvek v datové sadě.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující datovou sadu, která se má zvážit."
+        },
+        "n": {
+          "name": "n",
+          "detail": "Pořadí prvku, který se má vrátit, od nejmenšího po největší."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Sklon přímky z lineární regrese dat.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rozsah představující pole nebo matici závislých dat."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rozsah představující pole nebo matici nezávislých dat."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Šikmost datové sady.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota nebo rozsah datové sady."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další hodnoty nebo rozsahy, které mají být zahrnuty do datové sady."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Vertikální vyhledávání.",
+      "parameters": {
+        "search_key": {
+          "name": "klíč_hledání",
+          "detail": "Hodnota, která se má vyhledat. Například `42`, `\"Kočky\"` nebo `I24`."
+        },
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, který se má zvážit pro vyhledávání. V prvním sloupci rozsahu se hledá klíč zadaný v argumentu `hledaný_klíč`."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Index sloupce vrácené hodnoty, kde první sloupec v argumentu „rozsah“ má číslo 1."
+        },
+        "is_sorted": {
+          "name": "je_seřazeno",
+          "detail": "Určuje, zda je sloupec, který se má prohledávat (první sloupec zadaného rozsahu), seřazen. V takovém případě bude vrácena nejbližší shoda pro `hledaný_klíč`."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Horizontální vyhledávání",
+      "parameters": {
+        "search_key": {
+          "name": "klíč_hledání",
+          "detail": "Hodnota, která se má vyhledat. Například `42`, `\"Kočky\"` nebo `I24`."
+        },
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, který se má zvážit pro vyhledávání. V prvním řádku rozsahu se hledá klíč uvedený v argumentu „hledaný_klíč“."
+        },
+        "index": {
+          "name": "index",
+          "detail": "Index řádku vrácené hodnoty, kde první řádek v argumentu „rozsah“ má číslo 1."
+        },
+        "is_sorted": {
+          "name": "je_seřazeno",
+          "detail": "Označuje, zda je řádek, který se má prohledávat (první řádek zadaného rozsahu), seřazený."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Vyhledejte hodnotu.",
+      "parameters": {
+        "search_key": {
+          "name": "klíč_hledání",
+          "detail": "Hodnota, která se má vyhledat v řádku nebo sloupci. Například `42`, `\"Kočky\"` nebo `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "rozsah_hledání|pole_výsledků_hledání",
+          "detail": "Jednou z metod použití této funkce je poskytnout jeden seřazený řádek nebo sloupec `search_range` pro hledání `search_key` s druhým argumentem `result_range`. Druhou možností je sloučit tyto dva argumenty do jednoho `search_result_array`, kde se prohledává první řádek nebo sloupec a hodnota se vrací z posledního řádku nebo sloupce v poli. Pokud `search_key` není nalezen, může být vrácena nepřesná shoda."
+        },
+        "result_range": {
+          "name": "rozsah_výsledků",
+          "detail": "Rozsah, ze kterého se má vrátit výsledek. Vrácená hodnota odpovídá umístění, kde se nachází argument `search_key` v argumentu `search_range`. Tento rozsah musí být pouze jeden řádek nebo sloupec a neměl by se používat, pokud se používá metoda `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Odkaz na buňku jako řetězec.",
+      "parameters": {
+        "row": {
+          "name": "řádek",
+          "detail": "Číslo řádku odkazu na buňku"
+        },
+        "column": {
+          "name": "sloupec",
+          "detail": "Číslo sloupce (ne název) odkazu na buňku. `A` je číslo sloupce `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "absolutní_relativní_režim",
+          "detail": "Indikátor, zda je odkaz absolutní vzhledem k řádku/sloupci. `1` je absolutní vzhledem k řádku a sloupci (např. $A$1), `2` je absolutní vzhledem k řádku a sloupci relativní (např. A$1), `3` je relativní vzhledem k řádku a absolutní vzhledem k sloupci (např. $A1) a `4` je relativní vzhledem k řádku a sloupci (např. A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_notation",
+          "detail": "Logická hodnota označující, zda se má použít notace ve stylu `A1` (TRUE) nebo `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "list",
+          "detail": "Text označující název listu, na který adresa odkazuje."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Odkaz na buňku určený řetězcem.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "cell_reference_as_string",
+          "detail": "Odkaz na buňku zapsaný jako řetězec v uvozovkách."
+        },
+        "is_A1_notation": {
+          "name": "notace_je_A1",
+          "detail": "Označuje, zda je odkaz na buňku v notaci A1 (TRUE) nebo R1C1 (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Číslo řádku zadané buňky.",
+      "parameters": {
+        "cell_reference": {
+          "name": "reference_buňky",
+          "detail": "Buňka, jejíž číslo řádku bude vráceno."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Počet řádků v zadaném poli nebo rozsahu.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, jehož počet řádků bude vrácen."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Číslo sloupce zadané buňky.",
+      "parameters": {
+        "cell_reference": {
+          "name": "reference_buňky",
+          "detail": "Buňka, jejíž číslo sloupce bude vráceno. Sloupec „A“ odpovídá „1“."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Počet sloupců v zadaném poli nebo rozsahu.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Rozsah, jehož počet sloupců bude vrácen."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Posun odkazu na rozsah vzhledem k buňce.",
+      "parameters": {
+        "cell_reference": {
+          "name": "reference_buňky",
+          "detail": "Výchozí bod, od kterého se mají počítat odsazené řádky a sloupce."
+        },
+        "offset_rows": {
+          "name": "offset_rows",
+          "detail": "Počet řádků, o které se má provést odsazení."
+        },
+        "offset_columns": {
+          "name": "offset_columns",
+          "detail": "Počet sloupců, o které se má provést odsazení."
+        },
+        "height": {
+          "name": "výška",
+          "detail": "Výška rozsahu, která se má vrátit počínaje cílovým posunem."
+        },
+        "width": {
+          "name": "šířka",
+          "detail": "Šířka rozsahu, která se má vrátit počínaje cílovým posunem."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Pozice položky v rozsahu, která odpovídá hodnotě.",
+      "parameters": {
+        "search_key": {
+          "name": "klíč_hledání",
+          "detail": "Hodnota, která se má vyhledat. Například `42`, `\"Kočky\"` nebo `I24`."
+        },
+        "range": {
+          "name": "rozsah",
+          "detail": "Jednorozměrné pole, které se má prohledat."
+        },
+        "search_type": {
+          "name": "typ_hledání",
+          "detail": "Metoda vyhledávání. `1` (výchozí) vyhledá největší hodnotu menší nebo rovnou `search_key`, pokud je `range` seřazeno vzestupně. `0` vyhledá přesnou hodnotu, pokud je `range` neseřazen. `-1` vyhledá nejmenší hodnotu větší nebo rovnou `search_key`, pokud je `range` seřazeno sestupně."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Obsah buňky určený posunem řádku a sloupce.",
+      "parameters": {
+        "reference": {
+          "name": "odkaz",
+          "detail": "Pole buněk, do kterého se má provést odsazení."
+        },
+        "row": {
+          "name": "řádek",
+          "detail": "Počet odsazených řádků."
+        },
+        "column": {
+          "name": "sloupec",
+          "detail": "Počet odsazených sloupců."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Extrahuje agregovanou hodnotu z kontingenční tabulky, která odpovídá zadaným záhlavím řádků a sloupců.",
+      "parameters": {
+        "value_name": {
+          "name": "název_hodnoty",
+          "detail": "Název hodnoty v kontingenční tabulce, pro kterou chcete získat data."
+        },
+        "any_pivot_table_cell": {
+          "name": "libovolná_buňka_kontingenční_tabulky",
+          "detail": "Jakýkoli odkaz na buňku v požadované kontingenční tabulce (doporučeno horní roh)."
+        },
+        "original_column": {
+          "name": "původní_sloupec",
+          "detail": "Název sloupce v původní datové sadě (ne v kontingenční tabulce)."
+        },
+        "pivot_item": {
+          "name": "pivot_item",
+          "detail": "Název řádku nebo sloupce zobrazeného v kontingenční tabulce odpovídajícího *original_column*, který chcete načíst."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Prvek ze seznamu voleb na základě indexu.",
+      "parameters": {
+        "index": {
+          "name": "index",
+          "detail": "Kterou možnost (z maximálně 30 poskytnutých) vrátit."
+        },
+        "choice1": {
+          "name": "volba1",
+          "detail": "Potenciální hodnota, která se má vrátit. Povinná. Může se jednat o odkaz na buňku nebo o jednotlivou hodnotu."
+        },
+        "choice2": {
+          "name": "volba2",
+          "detail": "Další hodnoty, mezi kterými si můžete vybrat."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Převede hodiny/minuty/sekundy na čas.",
+      "parameters": {
+        "hour": {
+          "name": "hodina",
+          "detail": "Hodinová složka času."
+        },
+        "minute": {
+          "name": "minuta",
+          "detail": "Minutová složka času."
+        },
+        "second": {
+          "name": "druhý",
+          "detail": "Druhá složka času."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Převede časový řetězec na jeho reprezentaci pořadovým číslem.",
+      "parameters": {
+        "time_string": {
+          "name": "time_string",
+          "detail": "Řetězec, který obsahuje časovou reprezentaci."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Poslední den v měsíci před nebo po datu.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Datum, od kterého se má výsledek vypočítat."
+        },
+        "months": {
+          "name": "měsíce",
+          "detail": "Počet měsíců před (záporné) nebo po (kladné) hodnotě 'start_date', které se mají zvážit."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Datum několik měsíců před/po jiném datu.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Datum, od kterého se má výsledek vypočítat."
+        },
+        "months": {
+          "name": "měsíce",
+          "detail": "Počet měsíců před (záporné) nebo po (kladné) hodnotě 'start_date', který se má vypočítat."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Druhá složka určitého času.",
+      "parameters": {
+        "time": {
+          "name": "čas",
+          "detail": "Čas, ze kterého se má vypočítat druhá složka"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Minutová složka určitého času.",
+      "parameters": {
+        "time": {
+          "name": "čas",
+          "detail": "Čas, ze kterého se má vypočítat minutová složka."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Hodinová složka určitého času.",
+      "parameters": {
+        "time": {
+          "name": "čas",
+          "detail": "Čas, ze kterého se má vypočítat hodinová složka."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Aktuální datum a čas jako hodnota data."
+    },
+    "NETWORKDAYS": {
+      "description": "Čistý počet pracovních dnů mezi dvěma uvedenými dny.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Počáteční datum období, od kterého se má vypočítat počet čistých pracovních dnů."
+        },
+        "end_date": {
+          "name": "datum_ukončení",
+          "detail": "Konečné datum období, ze kterého se má vypočítat počet čistých pracovních dnů."
+        },
+        "holidays": {
+          "name": "dovolená",
+          "detail": "Rozsah nebo maticová konstanta obsahující pořadová čísla dat, která se mají brát v úvahu jako svátky."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Číslo týdne v roce podle normy ISO.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, pro které se má určit číslo týdne podle normy ISO. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Číslo týdne v roce.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, pro které se má určit číslo týdne. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Číslo představující den, kterým začíná týden. Neděle = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Den v týdnu od zadaného data (jako číslo).",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, pro které se má určit den v týdnu. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "type": {
+          "name": "typ",
+          "detail": "Číslo označující, který číselný systém se má použít k vyjádření dnů v týdnu. Ve výchozím nastavení se počítá od neděle = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Den v měsíci, na který připadá konkrétní datum.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, ze kterého se má den extrahovat."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Počet dní mezi dvěma daty.",
+      "parameters": {
+        "end_date": {
+          "name": "datum_ukončení",
+          "detail": "Konec datového období."
+        },
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Začátek datového období."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Počet dnů mezi dvěma daty v 360denním roce.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Počáteční datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "end_date": {
+          "name": "datum_ukončení",
+          "detail": "Konečné datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "method": {
+          "name": "metoda",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Převede rok/měsíc/den na datum.",
+      "parameters": {
+        "year": {
+          "name": "rok",
+          "detail": "Rok, který je součástí data."
+        },
+        "month": {
+          "name": "měsíc",
+          "detail": "Měsíční složka data."
+        },
+        "day": {
+          "name": "den",
+          "detail": "Denní složka data."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Převede řetězec data na hodnotu data.",
+      "parameters": {
+        "date_string": {
+          "name": "řetězec_data",
+          "detail": "Řetězec představující datum."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Rozdíl v datu.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Počáteční datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "end_date": {
+          "name": "datum_ukončení",
+          "detail": "Konečné datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "unit": {
+          "name": "jednotka",
+          "detail": "Zkratka řetězce pro jednotku času. Například „M“ pro měsíc. Akceptované hodnoty jsou „R“, „M“, „D“, „MD“, „RM“, „RD“."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Počet pracovních dnů od data zahájení.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Datum, od kterého se má začít počítat."
+        },
+        "num_days": {
+          "name": "počet_dní",
+          "detail": "Počet pracovních dnů, o který se má upřesnit hodnota „start_date“. Pokud je hodnota záporná, počítá se pozpátku."
+        },
+        "holidays": {
+          "name": "dovolená",
+          "detail": "Rozsah nebo maticová konstanta obsahující data, která se mají považovat za svátky."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Rok určený daným datem.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, ze kterého se má rok extrahovat."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Přesný počet let mezi dvěma daty.",
+      "parameters": {
+        "start_date": {
+          "name": "počáteční_datum",
+          "detail": "Počáteční datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "end_date": {
+          "name": "datum_ukončení",
+          "detail": "Konečné datum, které se má při výpočtu zohlednit. Musí se jednat o odkaz na buňku obsahující datum, funkci vracející typ data nebo číslo."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Aktuální datum jako hodnota data."
+    },
+    "MONTH": {
+      "description": "Měsíc v roce, do kterého spadá konkrétní datum.",
+      "parameters": {
+        "date": {
+          "name": "datum",
+          "detail": "Datum, ze kterého se má extrahovat měsíc."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Roční efektivní úroková sazba.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "nominální_sazba",
+          "detail": "Nominální úroková sazba za rok."
+        },
+        "periods_per_year": {
+          "name": "období_za_rok",
+          "detail": "Počet období úročení za rok."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Formátuje číslo jako měnu specifickou pro národní prostředí vaší tabulky.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Hodnota, která má být formátována."
+        },
+        "number_of_places": {
+          "name": "počet_míst",
+          "detail": "Počet desetinných míst, která se mají zobrazit."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Převede desetinný zlomek na desetinnou hodnotu.",
+      "parameters": {
+        "fractional_price": {
+          "name": "zlomková_cena",
+          "detail": "Cenová nabídka uvedená s použitím konvence desetinného čísla."
+        },
+        "unit": {
+          "name": "jednotka",
+          "detail": "Jednotky zlomku, např. „8“ pro 1/8 nebo „32“ pro 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Převede desetinnou hodnotu na desetinný zlomek.",
+      "parameters": {
+        "decimal_price": {
+          "name": "decimal_price",
+          "detail": "Cenová nabídka uvedená jako desetinná hodnota."
+        },
+        "unit": {
+          "name": "jednotka",
+          "detail": "Jednotky požadovaného zlomku, např. „8“ pro 1/8 nebo „32“ pro 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Odpisy metodou klesajícího zůstatku.",
+      "parameters": {
+        "cost": {
+          "name": "náklady",
+          "detail": "Počáteční cena aktiva."
+        },
+        "salvage": {
+          "name": "zachránit",
+          "detail": "Hodnota aktiva na konci odpisování."
+        },
+        "life": {
+          "name": "život",
+          "detail": "Počet období, během kterých je aktivum odepisováno."
+        },
+        "period": {
+          "name": "období",
+          "detail": "Jedno období v rámci „životnosti“, pro které se mají vypočítat odpisy."
+        },
+        "month": {
+          "name": "měsíc",
+          "detail": "Počet měsíců v prvním roce odpisování."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Odpisování metodou dvojnásobně klesajícího zůstatku.",
+      "parameters": {
+        "cost": {
+          "name": "náklady",
+          "detail": "Počáteční cena aktiva."
+        },
+        "salvage": {
+          "name": "zachránit",
+          "detail": "Hodnota aktiva na konci odpisování."
+        },
+        "life": {
+          "name": "život",
+          "detail": "Počet období, během kterých je aktivum odepisováno."
+        },
+        "period": {
+          "name": "období",
+          "detail": "Jedno období v rámci „životnosti“, pro které se mají vypočítat odpisy."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Faktor, o který se snižuje odpisování."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Úroková sazba anuitní investice.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "payment_per_period": {
+          "name": "platba_za_období",
+          "detail": "Částka, která má být zaplacena za období."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        },
+        "rate_guess": {
+          "name": "odhad_rate",
+          "detail": "Odhad, jaká bude úroková sazba."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Kumulativní jistina splacená během určitého období.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "first_period": {
+          "name": "první_období",
+          "detail": "Číslo platebního období, ve kterém se má zahájit kumulativní výpočet."
+        },
+        "last_period": {
+          "name": "poslední_období",
+          "detail": "Číslo platebního období pro ukončení kumulativního výpočtu."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Počet kupónů mezi vypořádáním a splatností.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Odpisy metodou součtu číslic let.",
+      "parameters": {
+        "cost": {
+          "name": "náklady",
+          "detail": "Počáteční cena aktiva."
+        },
+        "salvage": {
+          "name": "zachránit",
+          "detail": "Hodnota aktiva na konci odpisování."
+        },
+        "life": {
+          "name": "život",
+          "detail": "Počet období, během kterých je aktivum odepisováno."
+        },
+        "period": {
+          "name": "období",
+          "detail": "Jedno období v rámci „životnosti“, pro které se mají vypočítat odpisy."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Ekvivalentní míra výnosu pro státní pokladniční poukázku.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba směnky v době nákupu."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Výnos amerického státního dluhopisu na základě ceny.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, za kterou je cenný papír kupován za 100 nominální hodnoty."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Cena americké státní pokladniční poukázky.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba směnky v době nákupu."
+        }
+      }
+    },
+    "PV": {
+      "description": "Současná hodnota anuitní investice.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "payment_amount": {
+          "name": "částka_platby",
+          "detail": "Částka, která má být zaplacena za období."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Počet dní od prvního kupónu do vypořádání.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Počet dní v kupónovém období zahrnujícím datum vypořádání.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "FV": {
+      "description": "Budoucí hodnota anuitní investice.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "payment_amount": {
+          "name": "částka_platby",
+          "detail": "Částka, která má být zaplacena za období."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Budoucí hodnota jistiny z řady sazeb.",
+      "parameters": {
+        "principal": {
+          "name": "hlavní",
+          "detail": "Výše počátečního kapitálu nebo hodnoty, na kterou se má spoléhat."
+        },
+        "rate_schedule": {
+          "name": "sazební_harmonogram",
+          "detail": "Řada úrokových sazeb, které se mají složitě spočítat oproti jistině."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Roční výnos cenného papíru s pravidelným úrokem.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Roční úroková sazba."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, za kterou je cenný papír kupován za 100 nominální hodnoty."
+        },
+        "redemption": {
+          "name": "vykoupení",
+          "detail": "Částka k odkupu na 100 nominální hodnoty neboli par."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Roční výnos diskontního cenného papíru.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, za kterou je cenný papír kupován za 100 nominální hodnoty."
+        },
+        "redemption": {
+          "name": "vykoupení",
+          "detail": "Částka k odkupu na 100 nominální hodnoty neboli par."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Roční nominální úroková sazba.",
+      "parameters": {
+        "effective_rate": {
+          "name": "efektivní_sazba",
+          "detail": "Efektivní úroková sazba za rok."
+        },
+        "periods_per_year": {
+          "name": "období_za_rok",
+          "detail": "Počet období úročení za rok."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Vnitřní míra návratnosti při daných neperiodických peněžních tocích.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "částky_peněžních_toků",
+          "detail": "Pole nebo rozsah obsahující příjem nebo platby spojené s investicí."
+        },
+        "cashflow_dates": {
+          "name": "data_peněžních_toků",
+          "detail": "Pole nebo rozsah s daty odpovídajícími peněžním tokům v argumentu „částky_peněžních_toků“."
+        },
+        "rate_guess": {
+          "name": "odhad_rate",
+          "detail": "Odhad, jaká bude vnitřní míra návratnosti."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Modifikovaná vnitřní míra návratnosti.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "částky_peněžních_toků",
+          "detail": "Pole nebo rozsah obsahující příjem nebo platby spojené s investicí."
+        },
+        "financing_rate": {
+          "name": "sazba_financování",
+          "detail": "Úroková sazba placená z investovaných prostředků."
+        },
+        "reinvestment_return_rate": {
+          "name": "míra_výnosu_z_reinvestic",
+          "detail": "Výnos (v procentech) z reinvestice příjmů z investice."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Vnitřní míra návratnosti při daných periodických peněžních tocích.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "částky_peněžních_toků",
+          "detail": "Pole nebo rozsah obsahující příjem nebo platby spojené s investicí."
+        },
+        "rate_guess": {
+          "name": "odhad_rate",
+          "detail": "Odhad, jaká bude vnitřní míra návratnosti."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Čistá současná hodnota investice založená na sérii periodických peněžních toků a diskontní sazbě.",
+      "parameters": {
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba investice za jedno období."
+        },
+        "cashflow1": {
+          "name": "peněžní tok1",
+          "detail": "První budoucí peněžní tok."
+        },
+        "cashflow2": {
+          "name": "peněžní tok2",
+          "detail": "Dodatečné budoucí peněžní toky."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Čistá současná hodnota při daných neperiodických peněžních tocích.",
+      "parameters": {
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba investice za jedno období."
+        },
+        "cashflow_amounts": {
+          "name": "částky_peněžních_toků",
+          "detail": "Rozsah buněk obsahujících příjem nebo platby spojené s investicí."
+        },
+        "cashflow_dates": {
+          "name": "data_peněžních_toků",
+          "detail": "Rozsah buněk s daty odpovídajícími peněžním tokům v argumentu „částky_peněžních_toků“."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Kumulativní úrok vyplácený za určitý počet období.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "first_period": {
+          "name": "první_období",
+          "detail": "Číslo platebního období, ve kterém se má zahájit kumulativní výpočet."
+        },
+        "last_period": {
+          "name": "poslední_období",
+          "detail": "Číslo platebního období pro ukončení kumulativního výpočtu."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Pravidelná platba za anuitní investici.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Platba úroků z investice.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "period": {
+          "name": "období",
+          "detail": "Doba amortizace vyjádřená počtem období."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Platba z jistiny investice.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "period": {
+          "name": "období",
+          "detail": "Doba amortizace vyjádřená počtem období."
+        },
+        "number_of_periods": {
+          "name": "počet_období",
+          "detail": "Počet plateb, které mají být provedeny."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Vypočítá efektivní úrokovou sazbu.",
+      "parameters": {
+        "buy_date": {
+          "name": "datum_koupě",
+          "detail": "Datum nákupu investice."
+        },
+        "sell_date": {
+          "name": "datum_prodeje",
+          "detail": "Datum prodeje investice."
+        },
+        "buy_price": {
+          "name": "nákupní_cena",
+          "detail": "Cena, za kterou byla investice pořízena."
+        },
+        "sell_price": {
+          "name": "prodejní_cena",
+          "detail": "Cena, za kterou byla investice prodána."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Cena cenného papíru s pravidelným úrokem.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Roční úroková sazba."
+        },
+        "yield": {
+          "name": "výtěžek",
+          "detail": "Očekávaný roční výnos cenného papíru."
+        },
+        "redemption": {
+          "name": "vykoupení",
+          "detail": "Částka k odkupu na 100 nominální hodnoty neboli par."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Cena diskontního cenného papíru.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba cenného papíru v době nákupu."
+        },
+        "redemption": {
+          "name": "vykoupení",
+          "detail": "Částka k odkupu na 100 nominální hodnoty neboli par."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Cena cenného papíru, který vyplácí úrok v době splatnosti.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "issue": {
+          "name": "problém",
+          "detail": "Datum, kdy byl cenný papír původně vydán."
+        },
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Roční úroková sazba."
+        },
+        "yield": {
+          "name": "výtěžek",
+          "detail": "Očekávaný roční výnos cenného papíru."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Částka přijatá v době splatnosti za cenný papír.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "investment": {
+          "name": "investice",
+          "detail": "Investovaná částka (bez ohledu na nominální hodnotu každého cenného papíru)."
+        },
+        "discount": {
+          "name": "sleva",
+          "detail": "Diskontní sazba investovaného cenného papíru."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Diskontní sazba cenného papíru založená na ceně.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "price": {
+          "name": "cena",
+          "detail": "Cena, za kterou je cenný papír kupován za 100 nominální hodnoty."
+        },
+        "redemption": {
+          "name": "vykoupení",
+          "detail": "Částka k odkupu na 100 nominální hodnoty neboli par."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Počet platebních období pro investici.",
+      "parameters": {
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Úroková sazba."
+        },
+        "payment_amount": {
+          "name": "částka_platby",
+          "detail": "Výše každé provedené platby."
+        },
+        "present_value": {
+          "name": "současná_hodnota",
+          "detail": "Aktuální hodnota anuity."
+        },
+        "future_value": {
+          "name": "budoucí_hodnota",
+          "detail": "Budoucí hodnota zbývající po provedení poslední platby."
+        },
+        "end_or_beginning": {
+          "name": "konec_nebo_začátek",
+          "detail": "Zda jsou platby splatné na konci („0“) nebo na začátku („1“) každého období."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Odepisování majetku lineární metodou.",
+      "parameters": {
+        "cost": {
+          "name": "náklady",
+          "detail": "Počáteční cena aktiva."
+        },
+        "salvage": {
+          "name": "zachránit",
+          "detail": "Hodnota aktiva na konci odpisování."
+        },
+        "life": {
+          "name": "život",
+          "detail": "Počet období, během kterých je aktivum odepisováno."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Počet období, během nichž investice dosáhne určité hodnoty.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Roční úroková sazba."
+        },
+        "yield": {
+          "name": "výtěžek",
+          "detail": "Očekávaný roční výnos cenného papíru."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Modifikovaná Macaulayova délka.",
+      "parameters": {
+        "settlement": {
+          "name": "vyrovnání",
+          "detail": "Datum vypořádání cenného papíru, datum po vydání, kdy je cenný papír dodán kupujícímu."
+        },
+        "maturity": {
+          "name": "splatnost",
+          "detail": "Datum splatnosti nebo datum ukončení platnosti cenného papíru, kdy jej lze splatit za nominální hodnotu."
+        },
+        "rate": {
+          "name": "hodnotit",
+          "detail": "Roční úroková sazba."
+        },
+        "yield": {
+          "name": "výtěžek",
+          "detail": "Očekávaný roční výnos cenného papíru."
+        },
+        "frequency": {
+          "name": "frekvence",
+          "detail": "Počet úrokových nebo kupónových plateb za rok (1, 2 nebo 4)."
+        },
+        "day_count_convention": {
+          "name": "konvence_počítání_dnů",
+          "detail": "Indikátor, jakou metodu počítání dnů použít."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Převede binární číslo se znaménkem do desítkového formátu.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "binární_číslo_se_znaménkem",
+          "detail": "Znaménkovou 10bitovou binární hodnotu, která má být převedena na desítkovou, zadanou jako řetězec."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Převede binární číslo na hexadecimální.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "binární_číslo_se_znaménkem",
+          "detail": "10bitová binární hodnota se znaménkem, která má být převedena na hexademickou hodnotu se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Převede binární číslo na oktální.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "binární_číslo_se_znaménkem",
+          "detail": "10bitová binární hodnota se znaménkem, která má být převedena na oktální hodnotu se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Převede desetinné číslo do binárního formátu se znaménkem.",
+      "parameters": {
+        "decimal_number": {
+          "name": "desetinné_číslo",
+          "detail": "Desetinná hodnota, která má být převedena na binární číslo se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Převede desetinné číslo na šestnáctkové.",
+      "parameters": {
+        "decimal_number": {
+          "name": "desetinné_číslo",
+          "detail": "Desetinná hodnota, která má být převedena na šestnáctkovou soustavu se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Převede desetinné číslo do osmičkového formátu se znaménkem.",
+      "parameters": {
+        "decimal_number": {
+          "name": "desetinné_číslo",
+          "detail": "Desetinná hodnota, která má být převedena na osmičkové číslo se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Převede hexadecimální číslo na binární.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "hexadecimální_číslo_se_znaménkem",
+          "detail": "40bitová hexadecimální hodnota se znaménkem, která má být převedena na binární číslo se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "platné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Převede hexadecimální číslo na desítkové.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "hexadecimální_číslo_se_znaménkem",
+          "detail": "Znaménkovou 40bitovou hexadecimální hodnotu, která má být převedena na desítkovou, zadanou jako řetězec."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Převede hexadecimální číslo na oktální.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "hexadecimální_číslo_se_znaménkem",
+          "detail": "40bitová hexadecimální hodnota se znaménkem, která má být převedena na oktální hodnotu se znaménkem, zadaná jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Převede oktální číslo na binární.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "číslo_s_znaménkem_oktální_číslo",
+          "detail": "Znaménkovou 30bitovou oktální hodnotu, která má být převedena na znaménkovou binární hodnotu, zadanou jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Převede oktální číslo se znaménkem do desítkového formátu.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "osmičkové číslo_s_znaménkem",
+          "detail": "Znaménkovou 30bitovou oktální hodnotu, která má být převedena na desítkovou, zadanou jako řetězec."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Převede osmičkové číslo na šestnáctkové.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "číslo_s_znaménkem_oktální_číslo",
+          "detail": "Znaménkovou 30bitovou oktální hodnotu, která má být převedena na znaménkovou hexadecimální hodnotu, zadanou jako řetězec."
+        },
+        "significant_digits": {
+          "name": "významné_číslice",
+          "detail": "Počet platných číslic, které se mají ve výsledku objevit."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Vytvoří komplexní číslo.",
+      "parameters": {
+        "real_part": {
+          "name": "skutečná_část",
+          "detail": "Skutečný koeficient."
+        },
+        "imaginary_part": {
+          "name": "imaginární_část",
+          "detail": "Imaginární koeficient."
+        },
+        "suffix": {
+          "name": "přípona",
+          "detail": "Přípona imaginárního koeficientu může být pouze 'i' nebo 'j'. Pokud se vynechá, použije se 'i'."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Reálný koeficient komplexního čísla.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplexní_číslo",
+          "detail": "Komplexní číslo ve formátu a+bi nebo a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Imaginární koeficient komplexního čísla.",
+      "parameters": {
+        "complex_number": {
+          "name": "komplexní_číslo",
+          "detail": "Komplexní číslo ve formátu a+bi nebo a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Komplexní konjugát čísla.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Komplexní číslo, pro které se má vypočítat konjugát."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Absolutní hodnota komplexního čísla.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Komplexní číslo, jehož absolutní hodnota se má vypočítat."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Porovnejte dvě číselné hodnoty.",
+      "parameters": {
+        "number1": {
+          "name": "číslo 1",
+          "detail": "První číslo k porovnání."
+        },
+        "number2": {
+          "name": "číslo2",
+          "detail": "Druhé číslo k porovnání."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Součet řady komplexních čísel.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První komplexní číslo nebo rozsah, které se mají sečíst."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Další komplexní čísla nebo rozsahy, které se mají přičíst k argumentu `hodnota1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Rozdíl mezi dvěma komplexními čísly.",
+      "parameters": {
+        "first_number": {
+          "name": "první_číslo",
+          "detail": "Komplexní číslo, od kterého se má odečíst druhé_číslo."
+        },
+        "second_number": {
+          "name": "druhé_číslo",
+          "detail": "Komplexní číslo, které se má odečíst od argumentu první_číslo."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Výsledek vynásobení řady komplexních čísel.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "První číslo nebo rozsah, ze kterého se má vypočítat součin."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Další komplexní čísla nebo rozsahy, které se mají vypočítat pro součin."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Jedno komplexní číslo dělené jiným.",
+      "parameters": {
+        "dividend": {
+          "name": "dividenda",
+          "detail": "Komplexní číslo, které má být děleno."
+        },
+        "divisor": {
+          "name": "dělitel",
+          "detail": "Komplexní číslo, kterým se má dělit."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Vrací opačnou hodnotu než zadaná logická hodnota.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logický_výraz",
+          "detail": "Výraz nebo odkaz na buňku obsahující výraz představující nějakou logickou hodnotu."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Logická hodnota `true`."
+    },
+    "FALSE": {
+      "description": "Logická hodnota `false`."
+    },
+    "AND": {
+      "description": "Logický operátor `and`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logický_výraz1",
+          "detail": "Výraz nebo odkaz na buňku obsahující výraz, který představuje nějakou logickou hodnotu, tj. `TRUE` nebo `FALSE`, nebo výraz, který lze převést na logickou hodnotu."
+        },
+        "logical_expression2": {
+          "name": "logický_výraz2",
+          "detail": "Více výrazů, které představují logické hodnoty."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Hodnota, pokud se nejedná o chybu, jinak druhý argument.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která se má vrátit, pokud argument `value` sám o sobě není chybou."
+        },
+        "value_if_error": {
+          "name": "hodnota_pokud_chyba",
+          "detail": "Hodnota, kterou funkce vrací, pokud je `value` chyba."
+        }
+      }
+    },
+    "IF": {
+      "description": "Vrací hodnotu závislou na logickém výrazu.",
+      "parameters": {
+        "logical_expression": {
+          "name": "logický_výraz",
+          "detail": "Výraz nebo odkaz na buňku obsahující výraz, který představuje nějakou logickou hodnotu, tj. `TRUE` nebo `FALSE`."
+        },
+        "value_if_true": {
+          "name": "hodnota_pokud_pravda",
+          "detail": "Hodnota, kterou funkce vrací, pokud je argument `logický_výraz` rovný `TRUE`."
+        },
+        "value_if_false": {
+          "name": "hodnota_pokud_nepravda",
+          "detail": "Hodnota, kterou funkce vrací, pokud je argument `logický_výraz` nastaven na `NEPRAVDA`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Logický operátor `nebo`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "logický_výraz1",
+          "detail": "Výraz nebo odkaz na buňku obsahující výraz, který představuje nějakou logickou hodnotu, tj. `TRUE` nebo `FALSE`, nebo výraz, který lze převést na logickou hodnotu."
+        },
+        "logical_expression2": {
+          "name": "logický_výraz2",
+          "detail": "Více výrazů, které se vyhodnocují jako logické hodnoty."
+        }
+      }
+    },
+    "NE": {
+      "description": "Nerovná se.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Hodnota, která se má ověřovat oproti argumentu „hodnota1“ na nerovnost."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Rovné.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První hodnota."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Hodnota, která se má ověřovat na shodu s argumentem „hodnota1“."
+        }
+      }
+    },
+    "GT": {
+      "description": "Přísně větší než.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Hodnota, u které se má testovat, zda je větší než `hodnota2`."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Druhá hodnota."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Větší nebo rovno.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Hodnota, u které se má testovat, zda je větší nebo rovna argumentu „hodnota2“."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Druhá hodnota."
+        }
+      }
+    },
+    "LT": {
+      "description": "Méně než.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Hodnota, u které se má testovat, zda je menší než `hodnota2`."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Druhá hodnota."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Menší nebo rovno.",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Hodnota, u které se má testovat, zda je menší nebo rovna argumentu „hodnota2“."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Druhá hodnota."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Součet dvou čísel",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "První sčítanec."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Druhý sčítanec."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Rozdíl dvou čísel",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Minuend nebo číslo, od kterého se má odečíst."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Odčítač nebo číslo, které se má odečíst od argumentu „hodnota1“."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Součin dvou čísel",
+      "parameters": {
+        "factor1": {
+          "name": "faktor1",
+          "detail": "První násobek."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Druhý násobek."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Jedno číslo dělené druhým",
+      "parameters": {
+        "dividend": {
+          "name": "dividenda",
+          "detail": "Číslo, které má být děleno."
+        },
+        "divisor": {
+          "name": "dělitel",
+          "detail": "Číslo, kterým se má dělit."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Zřetězení dvou hodnot",
+      "parameters": {
+        "value1": {
+          "name": "hodnota1",
+          "detail": "Hodnota, ke které bude připojena argument „hodnota2“."
+        },
+        "value2": {
+          "name": "hodnota2",
+          "detail": "Hodnota, která se má připojit k argumentu `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Hodnota interpretovaná jako procento.",
+      "parameters": {
+        "percentage": {
+          "name": "procento",
+          "detail": "Hodnota, která má být interpretována jako procento."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Připojuje řetězce k sobě navzájem.",
+      "parameters": {
+        "string1": {
+          "name": "řetězec1",
+          "detail": "Počáteční řetězec."
+        },
+        "string2": {
+          "name": "řetězec2",
+          "detail": "Další řetězce k připojení v sekvenci."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Číselná hodnota znaku v mapě Unicode.",
+      "parameters": {
+        "string": {
+          "name": "řetězec",
+          "detail": "Řetězec, jehož první znak v mapě Unicode bude vrácena hodnota."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Získá znak přidružený k číslu.",
+      "parameters": {
+        "table_number": {
+          "name": "číslo_tabulky",
+          "detail": "Číslo znaku, který se má vyhledat v aktuální tabulce Unicode v desítkovém formátu."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Vypočítá hodnotu římské číslice.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "římské_číslice",
+          "detail": "Římská číslice, která se má formátovat, jejíž hodnota musí být v rozsahu od 1 do 3999 včetně."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Formátuje číslo římskými číslicemi.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Číslo, které se má formátovat, v rozsahu od 1 do 3999 včetně."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Extrahuje odpovídající podřetězce pomocí regulárního výrazu.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Vstupní text."
+        },
+        "regular_expression": {
+          "name": "regulární_výraz",
+          "detail": "Bude vrácena první část argumentu `text`, která odpovídá tomuto výrazu."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Zda část textu odpovídá regulárnímu výrazu.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Text, který má být testován s ohledem na regulární výraz."
+        },
+        "regular_expression": {
+          "name": "regulární_výraz",
+          "detail": "Regulární výraz, proti kterému se má text porovnat."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Nahradí text regulárními výrazy.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Text, jehož část bude nahrazena."
+        },
+        "regular_expression": {
+          "name": "regulární_výraz",
+          "detail": "Regulární výraz. Všechny odpovídající výskyty v `text` budou nahrazeny."
+        },
+        "replacement": {
+          "name": "nahrazení",
+          "detail": "Text, který bude vložen do původního textu."
+        }
+      }
+    },
+    "T": {
+      "description": "Řetězcové argumenty jako text.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument, který má být převeden na text."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Formátuje číslo s pevným počtem desetinných míst.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Číslo, které se má formátovat."
+        },
+        "number_of_places": {
+          "name": "počet_míst",
+          "detail": "Počet desetinných míst, která se mají zobrazit ve výsledku."
+        },
+        "suppress_separator": {
+          "name": "potlačit_oddělovač",
+          "detail": "Zda potlačit oddělovač tisíců používaný v některých národních prostředích (např. „1 000“ se změní na „1000“). Oddělovače budou přítomny, pokud je tato hodnota 0 nebo vynechána, a jinak nebudou."
+        }
+      }
+    },
+    "FIND": {
+      "description": "První pozice řetězce nalezeného v textu, rozlišují se velká a malá písmena.",
+      "parameters": {
+        "search_for": {
+          "name": "hledat_pro",
+          "detail": "Řetězec, který se má hledat v „textu_k_hledání“."
+        },
+        "text_to_search": {
+          "name": "text_pro_vyhledávání",
+          "detail": "Text, ve kterém se má vyhledat první výskyt argumentu „hledané_předměty“."
+        },
+        "starting_at": {
+          "name": "začíná_na",
+          "detail": "Znak v „textu_k_hledání“, od kterého se má začít vyhledávání."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Pozice, na které se řetězec v textu (binární).",
+      "parameters": {
+        "search_for": {
+          "name": "hledat_pro",
+          "detail": "Řetězec, který se má hledat v „textu_k_hledání“."
+        },
+        "text_to_search": {
+          "name": "text_pro_vyhledávání",
+          "detail": "Text, ve kterém se má vyhledat první výskyt argumentu „hledané_předměty“."
+        },
+        "starting_at": {
+          "name": "začíná_na",
+          "detail": "Znak v „textu_k_hledání“, od kterého se má začít vyhledávání."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Zřetězí prvky polí pomocí oddělovače.",
+      "parameters": {
+        "delimiter": {
+          "name": "oddělovač",
+          "detail": "Znak nebo řetězec, který se má umístit mezi jednotlivé zřetězené hodnoty."
+        },
+        "value_or_array1": {
+          "name": "hodnota_nebo_pole1",
+          "detail": "Hodnota nebo hodnoty, které mají být připojeny pomocí oddělovače."
+        },
+        "value_or_array2": {
+          "name": "hodnota_nebo_pole2",
+          "detail": "Další hodnoty, které mají být připojeny pomocí `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Podřetězec od začátku zadaného řetězce.",
+      "parameters": {
+        "string": {
+          "name": "řetězec",
+          "detail": "Řetězec, ze kterého bude vrácena levá část."
+        },
+        "number_of_characters": {
+          "name": "počet_znaků",
+          "detail": "Počet znaků, které se mají vrátit z levé strany řetězce „řetězec“."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Podřetězec z konce zadaného řetězce.",
+      "parameters": {
+        "string": {
+          "name": "řetězec",
+          "detail": "Řetězec, ze kterého bude vrácena pravá část."
+        },
+        "number_of_characters": {
+          "name": "počet_znaků",
+          "detail": "Počet znaků, které se mají vrátit z pravé strany argumentu „řetězec“."
+        }
+      }
+    },
+    "MID": {
+      "description": "Segment řetězce.",
+      "parameters": {
+        "string": {
+          "name": "řetězec",
+          "detail": "Řetězec, ze kterého se má extrahovat segment."
+        },
+        "starting_at": {
+          "name": "začíná_na",
+          "detail": "Index zleva od řetězce `string`, ze kterého se má začít extrahovat. První znak v `string` má index 1."
+        },
+        "extract_length": {
+          "name": "délka_výtahu",
+          "detail": "Délka segmentu, který má být extrahován."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Délka řetězce.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Řetězec, jehož délka bude vrácena."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Délka řetězce v bajtech.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Řetězec, jehož délka bude vrácena."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Převede zadaný řetězec na malá písmena.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Řetězec, který se má převést na malá písmena."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Převede zadaný řetězec na velká písmena.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Řetězec, který se má převést na velká písmena."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Testuje, zda jsou dva řetězce identické.",
+      "parameters": {
+        "string1": {
+          "name": "řetězec1",
+          "detail": "První řetězec pro porovnání"
+        },
+        "string2": {
+          "name": "řetězec2",
+          "detail": "Druhý řetězec pro porovnání"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Nahradí část textového řetězce jiným textem.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Text, jehož část bude nahrazena."
+        },
+        "position": {
+          "name": "pozice",
+          "detail": "Pozice, kde začne nahrazování (počínaje od 1)."
+        },
+        "length": {
+          "name": "délka",
+          "detail": "Počet znaků v textu, které mají být nahrazeny."
+        },
+        "new_text": {
+          "name": "nový_text",
+          "detail": "Text, který bude vložen do původního textu."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Zadaný text opakovaný několikrát.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "text_k_opakování",
+          "detail": "Znak nebo řetězec, který se má opakovat."
+        },
+        "number_of_repetitions": {
+          "name": "počet_opakování",
+          "detail": "Počet výskytů argumentu „text_k_opakování“ ve vrácené hodnotě."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "První pozice řetězce nalezeného v textu, bez ohledu na velká a malá písmena.",
+      "parameters": {
+        "search_for": {
+          "name": "hledat_pro",
+          "detail": "Řetězec, který se má hledat v „textu_k_hledání“."
+        },
+        "text_to_search": {
+          "name": "text_pro_vyhledávání",
+          "detail": "Text, ve kterém se má vyhledat první výskyt argumentu „hledané_předměty“."
+        },
+        "starting_at": {
+          "name": "začíná_na",
+          "detail": "Znak v „textu_k_hledání“, od kterého se má začít vyhledávání."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Nahradí existující text novým textem v řetězci.",
+      "parameters": {
+        "text_to_search": {
+          "name": "text_pro_vyhledávání",
+          "detail": "Text, ve kterém se má hledat a nahrazovat."
+        },
+        "search_for": {
+          "name": "hledat_pro",
+          "detail": "Řetězec, který se má vyhledat v „textu_k_hledání“."
+        },
+        "replace_with": {
+          "name": "nahradit_za",
+          "detail": "Řetězec, který nahradí `search_for`."
+        },
+        "occurrence_number": {
+          "name": "číslo_occurrence",
+          "detail": "Instance argumentu `search_for` v rámci `textu_k_hledání`, která má být nahrazena argumentem `replace_with`. Ve výchozím nastavení jsou nahrazeny všechny výskyty argumentu `search_for`; pokud je však zadán argument `occurrence_number`, nahradí se pouze uvedený výskyt argumentu `search_for`."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Odstraní netisknutelné znaky z textu.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Text, jehož netisknutelné znaky mají být odstraněny."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Naformátuje číslo do textu.",
+      "parameters": {
+        "number": {
+          "name": "číslo",
+          "detail": "Číslo, datum nebo čas, které se má formátovat."
+        },
+        "format": {
+          "name": "formát",
+          "detail": "Vzor, podle kterého se má číslo formátovat, uzavřený v uvozovkách."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Odstraní mezery.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Text nebo odkaz na buňku obsahující text, který má být oříznut."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Převede řetězec data/času/čísla na číslo.",
+      "parameters": {
+        "text": {
+          "name": "text",
+          "detail": "Řetězec obsahující hodnotu, která má být převedena."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Změní každé slovo v zadaném řetězci na velké písmeno.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "text_na_velká_čísla",
+          "detail": "Text, který bude vrácen s prvním písmenem každého slova velkým a všemi ostatními písmeny malými."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Převod jednotek pro čísla.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Číselná hodnota v argumentu „start_unit“, která se má převést na argument „end_unit“."
+        },
+        "start_unit": {
+          "name": "počáteční_jednotka",
+          "detail": "Počáteční jednotka, jednotka aktuálně přiřazená argumentu `value`."
+        },
+        "end_unit": {
+          "name": "koncová_jednotka",
+          "detail": "Měrná jednotka, na kterou se má převést argument „hodnota“."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Součet rozdílů druhých mocnin.",
+      "parameters": {
+        "array_x": {
+          "name": "pole_x",
+          "detail": "Pole nebo rozsah hodnot, jejichž druhé mocniny budou sníženy o druhé mocniny odpovídajících položek v argumentu „pole_y“ a sečteny."
+        },
+        "array_y": {
+          "name": "pole_y",
+          "detail": "Pole nebo rozsah hodnot, jejichž druhé mocniny budou odečteny od druhých mocnin odpovídajících položek v argumentu „pole_x“ a sečteny."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Součet součtů druhých mocnin.",
+      "parameters": {
+        "array_x": {
+          "name": "pole_x",
+          "detail": "Pole nebo rozsah hodnot, jejichž druhé mocniny budou sečteny s druhými mocninami odpovídajících položek v argumentu „pole_y“ a následně sečteny."
+        },
+        "array_y": {
+          "name": "pole_y",
+          "detail": "Pole nebo rozsah hodnot, jejichž druhé mocniny budou sečteny s druhými mocninami odpovídajících položek v argumentu „pole_x“ a následně sečteny."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Součet druhých mocnin rozdílů.",
+      "parameters": {
+        "array_x": {
+          "name": "pole_x",
+          "detail": "Pole nebo rozsah hodnot, které budou zmenšeny o odpovídající položky v argumentu „pole_y“, umocněny na druhou a sečteny."
+        },
+        "array_y": {
+          "name": "pole_y",
+          "detail": "Pole nebo rozsah hodnot, které budou odečteny od odpovídajících položek v argumentu „pole_x“, výsledek umocněn na druhou a všechny tyto výsledky sečten."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Transponuje řádky a sloupce pole.",
+      "parameters": {
+        "array_or_range": {
+          "name": "pole_nebo_rozsah",
+          "detail": "Pole nebo oblast, jejíž řádky a sloupce budou prohozeny."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Proloží body lineárním trendem odvozeným metodou nejmenších čtverců.",
+      "parameters": {
+        "known_data_y": {
+          "name": "známá_data_y",
+          "detail": "Pole nebo rozsah obsahující závislé hodnoty (y), které jsou již známé a které se používají k aproximaci křivky ideálního lineárního trendu."
+        },
+        "known_data_x": {
+          "name": "známá_data_x",
+          "detail": "Hodnoty nezávislé proměnné (proměnných) odpovídající argumentu `známá_data_y`."
+        },
+        "new_data_x": {
+          "name": "nová_data_x",
+          "detail": "Datové body, pro které se mají vrátit hodnoty „y“ na ideální křivce."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Pro daný obecný lineární tvar `y = m*x+b` pro aproximaci křivky vypočítá `b`, pokud je `TRUE`, nebo vynutí, aby `b` bylo `0`, a vypočítá pouze hodnoty `m`, pokud je `FALSE`, tj. vynutí, aby aproximace křivky procházela počátkem."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Frekvenční rozložení pole.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Pole nebo rozsah obsahující hodnoty, které mají být sčítány."
+        },
+        "classes": {
+          "name": "třídy",
+          "detail": "Pole nebo rozsah obsahující sadu tříd."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Přizpůsobuje body exponenciálnímu růstovému trendu.",
+      "parameters": {
+        "known_data_y": {
+          "name": "známá_data_y",
+          "detail": "Pole nebo rozsah obsahující závislé hodnoty (y), které jsou již známé a které se používají k aproximaci ideální exponenciální růstové křivky."
+        },
+        "known_data_x": {
+          "name": "známá_data_x",
+          "detail": "Hodnoty nezávislé proměnné (proměnných) odpovídající argumentu `známá_data_y`."
+        },
+        "new_data_x": {
+          "name": "nová_data_x",
+          "detail": "Datové body, pro které se mají vrátit hodnoty „y“ na ideální křivce."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Pro danou obecnou exponenciální formu `y = b*m^x` pro aproximaci křivky vypočítá `b`, pokud je `TRUE`, nebo vynutí `b` na `1` a vypočítá pouze hodnoty `m`, pokud je `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Lineární trend nejlépe odpovídající metodě nejmenších čtverců.",
+      "parameters": {
+        "known_data_y": {
+          "name": "známá_data_y",
+          "detail": "Pole nebo rozsah obsahující závislé hodnoty (y), které jsou již známé a které se používají k aproximaci křivky ideálního lineárního trendu."
+        },
+        "known_data_x": {
+          "name": "známá_data_x",
+          "detail": "Hodnoty nezávislé proměnné (proměnných) odpovídající argumentu `známá_data_y`."
+        },
+        "calculate_b": {
+          "name": "vypočítat_b",
+          "detail": "Pro lineární tvar `y = m*x+b` vypočítá průsečík s osou y (`b`), pokud je hodnota `TRUE`. V opačném případě vynutí, aby `b` bylo `0` a vypočítá pouze hodnoty `m`, pokud je hodnota `FALSE`, tj. vynutí průchod křivky počátkem."
+        },
+        "verbose": {
+          "name": "podrobný",
+          "detail": "Příznak určující, zda se mají vrátit další regresní statistiky, nebo pouze lineární koeficienty a průsečík s osou y (výchozí)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Nejlépe odpovídající exponenciální růstová křivka.",
+      "parameters": {
+        "known_data_y": {
+          "name": "známá_data_y",
+          "detail": "Pole nebo rozsah obsahující závislé hodnoty (y), které jsou již známé a které se používají k aproximaci ideální exponenciální růstové křivky."
+        },
+        "known_data_x": {
+          "name": "známá_data_x",
+          "detail": "Hodnoty nezávislé proměnné (proměnných) odpovídající argumentu `známá_data_y`."
+        },
+        "b": {
+          "name": "b",
+          "detail": "Pro danou obecnou exponenciální formu `y = b*m^x` pro aproximaci křivky vypočítá `b`, pokud je `TRUE`, nebo vynutí `b` na `1` a vypočítá pouze hodnoty `m`, pokud je `FALSE`."
+        },
+        "verbose": {
+          "name": "podrobný",
+          "detail": "Příznak určující, zda se mají vrátit další regresní statistiky nebo pouze vypočítaný koeficient a exponenty."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Determinant matice čtvercové matice.",
+      "parameters": {
+        "square_matrix": {
+          "name": "čtvercová_matice",
+          "detail": "Pole nebo oblast se stejným počtem řádků a sloupců představující matici, jejíž determinant bude vypočítán."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Multiplikativní inverze čtvercové matice.",
+      "parameters": {
+        "square_matrix": {
+          "name": "čtvercová_matice",
+          "detail": "Pole nebo oblast se stejným počtem řádků a sloupců představující matici, jejíž multiplikativní inverze bude vypočítána."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Maticový součin dvou matic.",
+      "parameters": {
+        "matrix1": {
+          "name": "matice1",
+          "detail": "První matice v operaci násobení matic, reprezentovaná jako pole nebo oblast."
+        },
+        "matrix2": {
+          "name": "matice2",
+          "detail": "Druhá matice v operaci násobení matic, reprezentovaná jako pole nebo oblast."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Součet součinů prvků ve dvou polích.",
+      "parameters": {
+        "array1": {
+          "name": "pole1",
+          "detail": "První pole nebo rozsah, jehož položky budou vynásobeny odpovídajícími položkami v druhém takovém poli nebo rozsahu."
+        },
+        "array2": {
+          "name": "pole2",
+          "detail": "Druhé pole nebo rozsah, jehož položky budou vynásobeny odpovídajícími položkami v prvním takovém poli nebo rozsahu."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Zda je hodnota vzorec.",
+      "parameters": {
+        "cell": {
+          "name": "buňka",
+          "detail": "Buňka, u které se má ověřit, zda obsahuje vzorec."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Získá informace o buňce.",
+      "parameters": {
+        "info_type": {
+          "name": "typ_informace",
+          "detail": "Typ požadovaných informací (dostupné typy naleznete v článku)"
+        },
+        "reference": {
+          "name": "odkaz",
+          "detail": "Odkaz na buňku."
+        }
+      }
+    },
+    "NA": {
+      "description": "Chyba `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Zda je odkazovaná buňka prázdná.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Odkaz na buňku, u které bude kontrolována prázdnota."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Zda je hodnota chybou jinou než `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako typ chyby jiný než `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Zda je hodnota chyba.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako typ chyby."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Zda je hodnota „true“ nebo „false“.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako logická `TRUE` nebo `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Zda je hodnota chybou `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být porovnána s chybovou hodnotou `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Zda je hodnota netextová.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být zkontrolována."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Zda je hodnota číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako číslo."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Zda je hodnota platným odkazem na buňku.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako odkaz na buňku."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Zda je hodnota text.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako text."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Získá typ hodnoty.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, jejíž typ má být určen."
+        }
+      }
+    },
+    "N": {
+      "description": "Argument zadaný jako číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument, který má být převeden na číslo."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Převede zadané číslo na datum.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument nebo odkaz na buňku, která má být převedena na datum."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Převede libovolnou číselnou hodnotu na čisté číslo.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument nebo odkaz na buňku, která má být převedena na čisté číslo."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Převede zadanou číselnou hodnotu na textovou hodnotu.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument nebo odkaz na buňku, která má být převedena na text."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Převede zadané číslo na hodnotu v dolarech.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument nebo odkaz na buňku, která má být převedena na hodnotu v dolarech."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Převede zadané číslo na procento.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Argument nebo odkaz na buňku, která má být převedena na procento."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Jedna hodnota z rozsahu podobného tabulce.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Maximální počet hodnot z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Minimální hodnota z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Průměr sady hodnot z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Počítá hodnoty z rozsahu podobného tabulce.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Počítá hodnoty a text z oblasti podobné tabulce.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Součin hodnot z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Směrodatná odchylka vzorku populace z tabulky.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Směrodatná odchylka celé populace z tabulky.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Součet hodnot z rozsahu podobného tabulce.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Rozptyl vzorku populace z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Rozptyl populace z tabulkového rozsahu.",
+      "parameters": {
+        "database": {
+          "name": "databáze",
+          "detail": "Pole nebo oblast obsahující data, která se mají zvážit, strukturovaná tak, že první řádek obsahuje popisky hodnot každého sloupce."
+        },
+        "field": {
+          "name": "pole",
+          "detail": "Označuje, který sloupec v `databázi` obsahuje hodnoty, které mají být extrahovány a s nimiž má být provedena operace."
+        },
+        "criteria": {
+          "name": "kritéria",
+          "detail": "Pole nebo rozsah obsahující nula nebo více kritérií pro filtrování hodnot v databázi před operací."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Zjistěte pohlaví na základě čísla průkazu totožnosti.",
+      "parameters": {
+        "ID number": {
+          "name": "Číslo průkazu totožnosti",
+          "detail": "15místné nebo 18místné identifikační číslo nebo rozsah."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Získejte provincii narození na základě čísla průkazu totožnosti.",
+      "parameters": {
+        "ID number": {
+          "name": "Číslo průkazu totožnosti",
+          "detail": "15místné nebo 18místné identifikační číslo nebo rozsah."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Získejte souhvězdí na základě identifikačního čísla.",
+      "parameters": {
+        "ID number": {
+          "name": "Číslo průkazu totožnosti",
+          "detail": "15místné nebo 18místné identifikační číslo nebo rozsah."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Vrátí odpovídající objem obchodování s akciemi třídy A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Kód skladu",
+          "detail": "6místný kód skladu, povinný."
+        },
+        "Date": {
+          "name": "Datum",
+          "detail": "Obchodní den akcie, výchozí hodnota je poslední obchodní den"
+        },
+        "Reversion and exclusion": {
+          "name": "Návrat a vyloučení",
+          "detail": "Vyberte typ obnovení původní pravé hodnoty akcie, výchozí nastavení je 0 [dřívější reverze], 1 [původní cena], 2 [po reverzi]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Zda je hodnota datum.",
+      "parameters": {
+        "value": {
+          "name": "hodnota",
+          "detail": "Hodnota, která má být ověřena jako datum."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Generování spojnicového grafu s jiskrovými čarami",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Line color": {
+          "name": "Barva čáry",
+          "detail": "Barva čáry čárového grafu může být z rozsahu A1, hodnoty indexu tabulky barev nebo specifické hodnoty barvy. Nastavením hodnoty na 0 nebo false se barva nezobrazuje. Podporuje regx, rgb, rgba atd. Výchozí hodnota je #2ec7c9."
+        },
+        "Line thickness": {
+          "name": "Tloušťka čáry",
+          "detail": "Tloušťka čáry čárového grafu, výchozí hodnota je 1px"
+        },
+        "Auxiliary line": {
+          "name": "Pomocné vedení",
+          "detail": "Vodorovná čára, která může být min., max., průměr., medián. rozsah nebo vlastní hodnota. Výchozí hodnota 0, žádná."
+        },
+        "Auxiliary line color": {
+          "name": "Barva pomocné čáry",
+          "detail": "Nastavení barvy pomocné čáry, stejné jako v konfiguraci barvy čáry, výchozí nastavení #000"
+        },
+        "Maximum mark": {
+          "name": "Maximální známka",
+          "detail": "Určuje maximální hodnotu čárového grafu, stejná konfigurace barev čáry, výchozí hodnota 0 se nezobrazuje."
+        },
+        "Minimum mark": {
+          "name": "Minimální známka",
+          "detail": "Určete minimální hodnotu čárového grafu, stejnou konfiguraci barev čáry, výchozí hodnota 0 se nezobrazuje."
+        },
+        "Mark size": {
+          "name": "Velikost značky",
+          "detail": "Nastavení maximální a minimální velikosti značky, výchozí hodnota je 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Generování kumulativního vertikálního histogramu jisker",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Stack by column": {
+          "name": "Stohovat po sloupcích",
+          "detail": "Pokud potřebujete stohovat po řádcích, nastavte tuto položku na hodnotu false nebo 0, výchozí hodnota je 1."
+        },
+        "Bar interval": {
+          "name": "Interval sloupce",
+          "detail": "Vzdálenost mezi sloupci, výchozí hodnota je 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "Maximální hodnota kumulativního sloupce, používaná k regulaci délky sloupce, výchozí nastavení je automatický výpočet false, auto, null"
+        },
+        "Color palette": {
+          "name": "Barevná paleta",
+          "detail": "Barevná paleta umožňuje individuálně nastavit barvu sloupce pro každou kótu, kterou lze nastavit na rozsah A1:A10 atd. Výchozí hodnota je #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Generování kumulativního horizontálního sloupcového grafu s jiskrovými čarami",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Stack by column": {
+          "name": "Stohovat po sloupcích",
+          "detail": "Pokud potřebujete stohovat po řádcích, nastavte tuto položku na hodnotu false nebo 0, výchozí hodnota je 1."
+        },
+        "Bar interval": {
+          "name": "Interval sloupce",
+          "detail": "Vzdálenost mezi sloupci, výchozí hodnota je 1"
+        },
+        "Max": {
+          "name": "Max",
+          "detail": "Maximální hodnota kumulativního sloupce, používaná k regulaci délky sloupce, výchozí nastavení je automatický výpočet false, auto, null"
+        },
+        "Color palette": {
+          "name": "Barevná paleta",
+          "detail": "Barevná paleta umožňuje individuálně nastavit barvu sloupce pro každou kótu, kterou lze nastavit na rozsah A1:A10 atd. Výchozí hodnota je #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Generování diskrétního grafu jisker",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Segmentation threshold": {
+          "name": "Prahová hodnota segmentace",
+          "detail": "Rozlišování barev sloupců diskrétního grafu, například: pokud je hodnota 0, modrá je větší než 0, červená je menší než 0 a výchozí hodnota je 0"
+        },
+        "Above threshold color": {
+          "name": "Barva nad prahovou hodnotou",
+          "detail": "Barva čáry čárového grafu může být z rozsahu A1, hodnoty indexu tabulky barev nebo specifické hodnoty barvy. Nastavením hodnoty na 0 nebo false se barva nezobrazuje. Podporuje regx, rgb, rgba atd. Výchozí hodnota je #2ec7c9."
+        },
+        "Below threshold color": {
+          "name": "Barva pod prahovou hodnotou",
+          "detail": "Nastavení barvy sloupce pod prahovou hodnotou, stejné jako barva nad prahovou hodnotou, výchozí #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Generování třístavového grafu sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Bar interval": {
+          "name": "Interval sloupce",
+          "detail": "Vzdálenost mezi sloupci, výchozí hodnota je 1"
+        },
+        "Bar color": {
+          "name": "Barva sloupce",
+          "detail": "Barva čáry čárového grafu může být z rozsahu A1, hodnoty indexu tabulky barev nebo specifické hodnoty barvy. Nastavením hodnoty na 0 nebo false se barva nezobrazuje. Podporuje regx, rgb, rgba atd. Výchozí hodnota je #fc5c5c."
+        },
+        "Negative bar color": {
+          "name": "Barva negativního pruhu",
+          "detail": "Nastavení barvy záporného sloupce, představující barvu záporné hodnoty, stejné jako konfigurace barvy sloupce, výchozí nastavení #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Barva sloupce s nulovou hodnotou",
+          "detail": "Nastavení barvy sloupce s nulovou hodnotou, představuje barvu s nulovou hodnotou, stejná barevná konfigurace sloupce, výchozí nastavení #999"
+        },
+        "Color palette": {
+          "name": "Barevná paleta",
+          "detail": "Barevná paleta umožňuje nastavit barvu každého sloupce jednotlivě, lze nastavit více nastavení a jsou podporovány dva formáty: 1 barva, například #000, což znamená, že barva prvního sloupce je černá; 2 rozsah hodnot: barva, například -2:# 000 označuje, že sloupec s hodnotou -2 je černý, 0:5:#000 označuje, že sloupec s hodnotou 0-5 je černý a výchozí hodnota je prázdná."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Generování koláčového grafu s jiskrovými čarami",
+      "parameters": {
+        "Range": {
+          "name": "Rozsah",
+          "detail": "Rozsah, hodnoty lze efektivně vypočítat, například A1:A20, {1,2,3,4,5} atd."
+        },
+        "Rotation angle": {
+          "name": "Úhel natočení",
+          "detail": "Úhel natočení koláčového grafu, výchozí hodnota je 0"
+        },
+        "border": {
+          "name": "pohraniční",
+          "detail": "Velikost okraje koláčového grafu, výchozí je žádná 0"
+        },
+        "Border color": {
+          "name": "Barva okraje",
+          "detail": "Barva ohraničení koláčového grafu, výchozí hodnota je #000"
+        },
+        "Color palette": {
+          "name": "Barevná paleta",
+          "detail": "Barvu řezu lze nastavit v paletě, která může být nastavena na rozsah A1:A10 atd. Výchozí hodnota je #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Generování odrážek sparklines",
+      "parameters": {
+        "Target": {
+          "name": "Cíl",
+          "detail": "Číselnou hodnotu lze efektivně vypočítat pro dosaženou cílovou hodnotu, například A1, 100 atd."
+        },
+        "achieved": {
+          "name": "dosaženo",
+          "detail": "Teprve po zadání hodnoty lze tuto hodnotu efektivně vypočítat, například A1, 100 atd."
+        },
+        "Contrast": {
+          "name": "Kontrast",
+          "detail": "Porovnávací hodnoty, jako je přebytek, minimum a konečný výsledek pro ocenění, lze efektivně vypočítat, například A1, 100 atd. Můžete nastavit až 9 porovnávacích hodnot."
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Sloučení grafů jisker do jedné buňky",
+      "parameters": {
+        "config": {
+          "name": "konfigurace",
+          "detail": "Nastavení minigrafů, například A1:A20, dokončený koláčový graf, nastavení spojnicového grafu atd."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Seřadí řádky rozsahu podle zadaného sloupce.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Data, která mají být seřazena."
+        },
+        "sort_column": {
+          "name": "třídící_sloupec",
+          "detail": "Index sloupce v argumentu „range“ nebo rozsah mimo argument „range“ obsahující hodnoty, podle kterých se mají seřadit."
+        },
+        "is_ascending": {
+          "name": "je_vzestupně",
+          "detail": "Hodnota `TRUE` nebo `FALSE` určuje, zda se má `sort_column` seřadit vzestupně. `FALSE` seřadí sestupně."
+        },
+        "sort_column2": {
+          "name": "třídící_sloupec2",
+          "detail": "Další sloupce."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Filtruje rozsah na základě zadaných podmínek.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Data, která mají být filtrována."
+        },
+        "condition1": {
+          "name": "podmínka1",
+          "detail": "Sloupec nebo řádek obsahující hodnoty true nebo false odpovídající prvnímu sloupci nebo řádku argumentu „rozsah“, nebo maticový vzorec, který se vyhodnotí jako true nebo false."
+        },
+        "condition2": {
+          "name": "podmínka2",
+          "detail": "Další řádky nebo sloupce obsahující booleovské hodnoty `TRUE` nebo `FALSE`, které označují, zda má odpovídající řádek nebo sloupec v `range` projít filtrem `FILTER`. Může také obsahovat výrazy maticových vzorců, které se vyhodnocují jako takové řádky nebo sloupce. Všechny podmínky musí být stejného typu (řádek nebo sloupec). Míchání podmínek řádků a sloupců není povoleno."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Unikátní řádky v zadaném zdrojovém rozsahu.",
+      "parameters": {
+        "range": {
+          "name": "rozsah",
+          "detail": "Data, která se mají filtrovat podle jedinečných položek."
+        },
+        "by_col": {
+          "name": "podle_sloupce",
+          "detail": "[Možnost] – Logická hodnota, která určuje, jak se má porovnávat; podle řádku = FALSE() nebo vynecháno; podle sloupce = TRUE()."
+        },
+        "occurs_once": {
+          "name": "occurs_once",
+          "detail": "[Volba] – Logická hodnota, vrací se pouze jeden výskyt v jedinečné hodnotě = TRUE(); včetně všech jedinečných hodnot = FALSE() nebo vynecháno."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Vrátí mřížku náhodných čísel.",
+      "parameters": {
+        "rows": {
+          "name": "řádky",
+          "detail": "Počet řádků, které se mají naplnit náhodným číslem."
+        },
+        "columns": {
+          "name": "sloupy",
+          "detail": "Počet sloupců, které se mají naplnit náhodným číslem."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Vrátí mřížku po sobě jdoucích čísel.",
+      "parameters": {
+        "rows": {
+          "name": "řádky",
+          "detail": "Počet řádků ve výsledné mřížce funkce."
+        },
+        "columns": {
+          "name": "sloupy",
+          "detail": "Počet sloupců ve výsledné mřížce funkce. Pokud je vynechán, výsledná mřížka bude mít 1 sloupec."
+        },
+        "start": {
+          "name": "start",
+          "detail": "Číslo, od kterého má sekvence začít. Pokud je vynecháno, sekvence bude začínat na 1."
+        },
+        "step": {
+          "name": "krok",
+          "detail": "Částka, o kterou se bude každá hodnota v posloupnosti lišit. Pokud je vynechán, každá hodnota se bude lišit o 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Vyhodnoťte podle doslovného vzorce nebo výrazu.",
+      "parameters": {
+        "expression": {
+          "name": "výraz",
+          "detail": "Vzorec nebo výraz"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Volá funkci na vzdáleném back-endovém serveru/API.",
+      "parameters": {
+        "remote_expression": {
+          "name": "vzdálený_výraz",
+          "detail": "Vzorec"
+        }
+      }
+    }
   }
 }

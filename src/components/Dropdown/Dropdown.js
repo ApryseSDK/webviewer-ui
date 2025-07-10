@@ -57,6 +57,7 @@ const propTypes = {
   onKeyDownHandler: PropTypes.func,
   onFocus: PropTypes.func,
   stopPropagationOnMouseDown: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };
 
 // Save a list of named combobox actions, for future readability
@@ -98,6 +99,7 @@ function Dropdown({
   getKey = (item) => item,
   getDisplayValue = (item) => item,
   className = '',
+  ariaLabel,
   hasInput = false,
   displayButton = null,
   customDataValidator = () => true,
@@ -720,6 +722,7 @@ function Dropdown({
           aria-expanded={isOpen}
           aria-activedescendant={isOpen ? activeDescendantId : null}
           aria-labelledby={labelledById}
+          aria-label={ariaLabel}
           aria-controls={`${id}-dropdown`}
           style={comboBoxStyle}
           onMouseDown={onToggle}

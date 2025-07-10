@@ -4,18 +4,7 @@ import PropTypes from 'prop-types';
 import DataElements from 'src/constants/dataElement';
 import actions from 'actions';
 import selectors from 'selectors';
-
-const createFlyoutItem = (option, dataElement) => ({
-  label: `action.${option.toLowerCase()}`,
-  title: `action.${option.toLowerCase()}`,
-  option,
-  dataElement,
-});
-
-export const sheetTabOptionsFlyoutItems = [
-  createFlyoutItem('Rename', 'sheetTabRenameOption'),
-  createFlyoutItem('Delete', 'sheetTabDeleteOption'),
-];
+import useFocusHandler from 'hooks/useFocusHandler';
 
 const TabOptionsFlyout = (props) => {
   const {
@@ -29,18 +18,30 @@ const TabOptionsFlyout = (props) => {
   const flyoutSelector = `${DataElements.SHEET_TAB_OPTIONS_FLYOUT}-${sheetId}`;
   const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
 
+  const handleRenameWithFocus = useFocusHandler((e) => handleClick('Rename', e));
+  const handleDeleteWithFocus = useFocusHandler((e) => handleClick('Delete', e));
+
   useLayoutEffect(() => {
     const noteStateFlyout = {
       dataElement: flyoutSelector,
       className: 'TabOptionsFlyout',
-      items: sheetTabOptionsFlyoutItems.map((item) => {
-        let isDisabled = (item.option === 'Delete' && sheetCount === 1) || disabled;
-        return {
-          ...item,
-          onClick: () => handleClick(item.option),
-          disabled: isDisabled,
-        };
-      }),
+      items: [
+        {
+          label: 'action.rename',
+          title: 'action.rename',
+          option: 'Rename',
+          dataElement: 'sheetTabRenameOption',
+          onClick: handleRenameWithFocus,
+        },
+        {
+          label: 'action.delete',
+          title: 'action.delete',
+          option: 'Delete',
+          dataElement: 'sheetTabDeleteOption',
+          onClick: handleDeleteWithFocus,
+          disabled: (sheetCount === 1 || disabled),
+        }
+      ]
     };
 
     if (!currentFlyout) {

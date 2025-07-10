@@ -4,17 +4,6 @@ import selectors from 'selectors';
 import FormulaBar from './FormulaBar';
 import core from 'core';
 
-const formulaOptions = [
-  { value: '=SUMIF', label: 'SUMIF', description: 'formulaBar.sumif' },
-  { value: '=SUMSQ', label: 'SUMSQ', description: 'formulaBar.sumsq' },
-  { value: '=SUM', label: 'SUM', description: 'formulaBar.sum' },
-  { value: '=ASINH', label: 'ASINH', description: 'formulaBar.asinh' },
-  { value: '=ACOS', label: 'ACOS', description: 'formulaBar.acos' },
-  { value: '=COSH', label: 'COSH', description: 'formulaBar.cosh' },
-  { value: '=ISEVEN', label: 'ISEVEN', description: 'formulaBar.iseven' },
-  { value: '=ISODD', label: 'ISODD', description: 'formulaBar.isodd' },
-];
-
 const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
 export const FormulaBarContainer = () => {
@@ -53,7 +42,6 @@ export const FormulaBarContainer = () => {
   return (
     <FormulaBar
       isReadOnly={isReadOnlyMode}
-      formulaOptions={formulaOptions}
       activeCellRange={rangeInputValue}
       cellFormula={cellFormula}
       stringCellValue={stringCellValue}

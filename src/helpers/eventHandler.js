@@ -22,14 +22,14 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const setServerProperties = eventListeners.setServerProperties();
   const checkDocumentForTools = eventListeners.checkDocumentForTools(dispatch);
   const updateOutlines = eventListeners.updateOutlines(dispatch, documentViewerKey);
-  const updatePortfolioAndLayers = eventListeners.updatePortfolioAndLayers(store);
+  const updatePortfolio = eventListeners.updatePortfolio(store);
   const configureOfficeEditor = eventListeners.configureOfficeEditor(store);
   const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch, store, documentViewerKey);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
   const onToolUpdated = eventListeners.onToolUpdated(dispatch);
   const onToolModeUpdated = eventListeners.onToolModeUpdated(dispatch, store);
-  const onZoomUpdated = eventListeners.onZoomUpdated(dispatch, documentViewerKey);
+  const onZoomUpdated = eventListeners.onZoomUpdated(dispatch, documentViewerKey, store);
   const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch);
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
   const onAnnotationChanged = eventListeners.onAnnotationChanged(documentViewerKey);
@@ -82,7 +82,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('documentLoaded', addPageLabelsToRedux, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', checkDocumentForTools, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', updateOutlines, undefined, documentViewerKey);
-        core.addEventListener('documentLoaded', updatePortfolioAndLayers, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', updatePortfolio, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', configureOfficeEditor, undefined, documentViewerKey);
         core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged, undefined, documentViewerKey);
         core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
@@ -167,7 +167,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('documentLoaded', addPageLabelsToRedux, documentViewerKey);
         core.removeEventListener('documentLoaded', checkDocumentForTools, documentViewerKey);
         core.removeEventListener('documentLoaded', updateOutlines, documentViewerKey);
-        core.removeEventListener('documentLoaded', updatePortfolioAndLayers, documentViewerKey);
+        core.removeEventListener('documentLoaded', updatePortfolio, documentViewerKey);
         core.removeEventListener('documentLoaded', configureOfficeEditor, documentViewerKey);
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);

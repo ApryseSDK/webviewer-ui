@@ -27,7 +27,8 @@ const focusableElementDomString = [
  */
 export default function useFocusTrap(locked = false, options = {}) {
   const focusLastOnUnlock = options.focusLastOnUnlock;
-  const focusRef = useRef(null);
+  const internalRef = useRef(null);
+  const focusRef = options.overrideRef ?? internalRef;
   // Get the focusable elements. Assumes that focusRef exists. DON'T CALL if
   // you haven't asserted existance of focusRef.current.
   const getFocusableElements = useCallback(() => {
@@ -116,9 +117,13 @@ export default function useFocusTrap(locked = false, options = {}) {
     if (!focusableElements.length) {
       return target?.blur();
     }
+
     // Focus initial element if focused outside.
     const focusedItemIndex = findFocusableIndex(focusableElements, target);
-    if (focusedItemIndex === -1) {
+    const focusedItemWasFound = focusedItemIndex !== -1;
+    const eventIsFromWithinApp = event && focusRef.current.contains(target);
+
+    if (!focusedItemWasFound && eventIsFromWithinApp) {
       return focusableElements[0].focus();
     }
   }, [getFocusableElements, locked]);

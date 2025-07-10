@@ -261,6 +261,10 @@ $container-margin: 16px;
         right: auto;
         width: 100% !important;
       }
+
+      .Dropdown__items.hide {
+        height: 0px;
+      }
     }
 
     .hover-icon {

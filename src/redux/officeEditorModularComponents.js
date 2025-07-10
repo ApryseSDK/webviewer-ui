@@ -118,6 +118,12 @@ const defaultOfficeEditorModularComponents = {
     icon: 'icon-office-editor-margin',
     title: 'officeEditor.margins',
   },
+  officeEditorColumnDropdown: {
+    dataElement: DataElements.OFFICE_EDITOR_COLUMN_DROPDOWN,
+    type: ITEM_TYPE.OFFICE_EDITOR_COLUMN_DROPDOWN,
+    icon: 'icon-office-editor-column',
+    title: 'officeEditor.columns',
+  },
   officeEditorBreakDropdown: {
     dataElement: DataElements.OFFICE_EDITOR_BREAK_DROPDOWN,
     type: ITEM_TYPE.OFFICE_EDITOR_BREAK_DROPDOWN,
@@ -395,6 +401,7 @@ const defaultOfficeEditorModularComponents = {
     dataElement: 'officeEditorLayoutGroupedItems',
     items: [
       ITEM_TYPE.OFFICE_EDITOR_MARGIN_DROPDOWN,
+      ITEM_TYPE.OFFICE_EDITOR_COLUMN_DROPDOWN,
       'divider-1.0',
       'undoButton',
       'redoButton',

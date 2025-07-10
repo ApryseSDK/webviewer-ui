@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
@@ -20,6 +20,16 @@ const propTypes = {
   isActive: PropTypes.bool,
 };
 
+const MOUSE_EVENTS_TYPES = [
+  'click',
+  'mousedown',
+  'mouseup',
+  'mousemove',
+  'mouseenter',
+  'mouseleave',
+  'contextmenu',
+];
+
 const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -34,12 +44,19 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   const [headerType, setHeaderType] = useState(0); // 0 is default for header type all
   const [footerType, setFooterType] = useState(0); // 0 is default for footer type all
   const [optionsDisabled, setOptionsDisabled] = useState(false);
+  const [showHeaderBar, setShowHeaderBar] = useState(false);
+  const [showFooterBar, setShowFooterBar] = useState(false);
 
-  const barClassName = classNames(
-    'header-footer-edit-ui',
-    `${type}-edit-ui`,
-    { 'active': isActive }
-  );
+  const barClassName = useMemo(() => {
+    const showBar = type === 'header' ? showHeaderBar : showFooterBar;
+    return classNames(
+      'header-footer-edit-ui',
+      `${type}-edit-ui`,
+      {
+        'active': isActive && showBar,
+      }
+    );
+  }, [type, isActive, showHeaderBar, showFooterBar]);
 
   const getHeaderFooterTop = () => {
     const heightOfBar = blockerRef.current?.clientHeight || 0;
@@ -58,7 +75,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     setSectionNumber(sectionNumber);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     // This stops the cursor from moving when the user clicks on the bar
     const onBarClick = (event) => {
       if (event.type === 'mousedown') {
@@ -67,18 +84,16 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
       event.stopPropagation();
     };
 
-    ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
+    MOUSE_EVENTS_TYPES.forEach((eventType) => {
       blockerRef.current.addEventListener(eventType, onBarClick);
     });
 
     const onHeaderFooterUpdated = () => {
-      if (isActive) {
-        updateHeaderFooterTop();
-        updateHeaderFooterSectionNumber();
-      }
+      updateHeaderFooterTop();
+      updateHeaderFooterSectionNumber();
     };
 
-    const updateHeaderFooterTop = async () => {
+    const updateHeaderFooterTop = () => {
       const top = getHeaderFooterTop();
       if (top > 0) {
         // Sometimes the headerTop is 0 when the data isn't loaded.
@@ -103,7 +118,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     setContainerStyle(getInitialHeaderFooterStyle());
 
     return () => {
-      ['click', 'mousedown', 'mouseup', 'mousemove', 'mouseenter', 'mouseleave', 'contextmenu'].forEach((eventType) => {
+      MOUSE_EVENTS_TYPES.forEach((eventType) => {
         blockerRef.current?.removeEventListener(eventType, onBarClick);
       });
 
@@ -117,10 +132,16 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
       if (e.source !== 'headerFooter') {
         return;
       }
-      const headerType = core.getOfficeEditor().getHeaderPageType(pageNumber);
-      const footerType = core.getOfficeEditor().getFooterPageType(pageNumber);
-      headerType != -1 && setHeaderType(headerType);
-      footerType != -1 && setFooterType(footerType);
+      const headerType = officeEditor.getHeaderPageType(pageNumber);
+      const footerType = officeEditor.getFooterPageType(pageNumber);
+      if (headerType !== -1) {
+        setShowHeaderBar(true);
+        setHeaderType(headerType);
+      }
+      if (footerType !== -1) {
+        setShowFooterBar(true);
+        setFooterType(footerType);
+      }
     };
     doc.addEventListener('officeDocumentEdited', onLayoutChange);
     return () => {
@@ -129,11 +150,17 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   }, [pageNumber]);
 
   useEffect(() => {
+    updateHeaderFooterSectionNumber();
     const headerType = officeEditor.getHeaderPageType(pageNumber);
     const footerType = officeEditor.getFooterPageType(pageNumber);
-    headerType != -1 && setHeaderType(headerType);
-    footerType != -1 && setFooterType(footerType);
-    updateHeaderFooterSectionNumber();
+    if (headerType !== -1) {
+      setShowHeaderBar(true);
+      setHeaderType(headerType);
+    }
+    if (footerType !== -1) {
+      setShowFooterBar(true);
+      setFooterType(footerType);
+    }
   }, [isActive, pageNumber]);
 
   const handlePageOptionsClick = async () => {

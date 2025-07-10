@@ -78,7 +78,7 @@ const defaultSpreadsheetEditorComponents = {
   spreadsheetEditorEditModeDropdown: {
     dataElement: 'spreadsheetEditorEditModeDropdown',
     type: 'spreadsheetEditorEditModeDropdown',
-    disabled: true,
+    disabled: false,
   },
   editorDropdown: {
     dataElement: 'editorDropdown',
@@ -254,10 +254,6 @@ const defaultSpreadsheetEditorComponents = {
     title: 'spreadsheetEditor.cellBorderStyle',
     toggleElement: DataElements.CELL_BORDER_FLYOUT,
     type: 'toggleButton',
-  },
-  cellBorderColorElement: {
-    dataElement: 'cellBorderColorElement',
-    type: 'cellBorderColor',
   },
 
   mergeToggleButton: {
@@ -459,6 +455,11 @@ const defaultSpreadsheetFlyoutMap = {
       {
         'dataElement': 'cellBorderButtons',
         'type': 'cellBorders',
+      },
+      'divider',
+      {
+        'dataElement': 'cellBorderColor',
+        'type': 'cellBorderColor',
       },
       'divider',
       {

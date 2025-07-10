@@ -38,10 +38,10 @@ const CellAdjustmentButton = forwardRef((props, ref) => {
         activeSheet.createColumns(selectedCellRange.lastColumn + 1, 1);
         return;
       case CELL_ADJUSTMENT_BUTTONS.INSERT_ROW_TOP:
-        activeSheet.createRow(selectedCellRange.firstRow);
+        activeSheet.createRows(selectedCellRange.firstRow, 1);
         return;
       case CELL_ADJUSTMENT_BUTTONS.INSERT_ROW_BOTTOM:
-        activeSheet.createRow(selectedCellRange.lastRow + 1);
+        activeSheet.createRows(selectedCellRange.lastRow + 1, 1);
         return;
       case CELL_ADJUSTMENT_BUTTONS.INSERT_COLUMN_SHIFT_DOWN:
         // Finish once leadtools api is implemented

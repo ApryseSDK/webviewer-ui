@@ -33,7 +33,7 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
       return;
     }
 
-    const scalesInfo = getScalesInfo(scales);
+    const scalesInfo = getScalesInfo(scales || []);
     setScalesInfo(scalesInfo);
   }, [scales]);
 
@@ -44,8 +44,19 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
     const scalesInfo = [];
     const coreScales = core.getScales();
 
+    if (!scales || scales.length === 0 || !coreScales || Object.keys(coreScales).length === 0) {
+      return scalesInfo;
+    }
+
     scales.forEach((scale) => {
-      const scaleData = coreScales[scale.toString()];
+      const coreScaleKey = scale.toString();
+      const scaleData = coreScales[coreScaleKey];
+
+      if (!scaleData || scaleData.length === 0) {
+        console.warn(`No measurements found for scale ${coreScaleKey}`);
+        return;
+      }
+
       const measurements = [];
       const relatedPages = new Set();
       let canDelete = true;
@@ -65,8 +76,16 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
         }
       });
 
+      const scalesInfoAlreadyHasScale = scalesInfo.some(
+        (info) => info.title === coreScaleKey,
+      );
+
+      if (scalesInfoAlreadyHasScale) {
+        return;
+      }
+
       scalesInfo.push({
-        scale: scale,
+        scale,
         title: scale.toString(),
         measurementsNum: measurements.length,
         pages: [...relatedPages],

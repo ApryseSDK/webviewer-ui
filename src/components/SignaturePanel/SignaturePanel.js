@@ -7,7 +7,7 @@ import core from 'core';
 import selectors from 'selectors';
 import setVerificationResult from 'helpers/setVerificationResult';
 
-import Spinner from './Spinner';
+import Spinner from 'components/Spinner';
 import WidgetInfo from './WidgetInfo';
 
 import './SignaturePanel.scss';
@@ -160,7 +160,7 @@ const SignaturePanel = () => {
   const renderLoadingOrErrors = () => {
     let result;
     if (showSpinner) {
-      result = <Spinner />;
+      result = <Spinner inPanel width={'40px'} height={'40px'}/>;
     } else if (certificateErrorMessage === 'Error reading the local certificate') {
       result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {

@@ -47,6 +47,12 @@ const searchPersistConfig = {
   whitelist: ['clearSearchPanelOnClose']
 };
 
+const officeEditorPersistConfig = {
+  key: `office-editor-${instanceId}`,
+  storage,
+  whitelist: ['unitMeasurement']
+};
+
 export default combineReducers({
   viewer: persistReducer(viewerPersistConfig, viewerReducer(initialState.viewer)),
   search: persistReducer(searchPersistConfig, searchReducer(initialState.search)),
@@ -56,7 +62,7 @@ export default combineReducers({
   advanced: () => initialState.advanced,
   featureFlags: featureFlagsReducer(initialState.featureFlags),
   wv3dPropertiesPanel: wv3dPropertiesPanelReducer(initialState.wv3dPropertiesPanel),
-  officeEditor: officeEditorReducer(initialState.officeEditor),
+  officeEditor: persistReducer(officeEditorPersistConfig, officeEditorReducer(initialState.officeEditor)),
   digitalSignatureValidation: digitalSignatureValidationReducer(initialState.digitalSignatureValidation),
   spreadsheetEditor: spreadsheetEditorReducer(initialState.spreadsheetEditor)
 });

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useWindowDimensions from 'helpers/useWindowsDimensions';
@@ -12,6 +12,7 @@ import SheetTab from './SheetTab/SheetTab';
 import './SpreadsheetSwitcher.scss';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
+import useTabKeyboardNavigation from 'hooks/useArrowNavigation';
 
 const SpreadsheetSwitcher = (props) => {
   const {
@@ -49,7 +50,12 @@ const SpreadsheetSwitcher = (props) => {
     return [tabs.slice(0, breakpoint), tabs.slice(breakpoint)];
   }, [tabs, breakpoint]);
 
-  const tabElements = slicedTabs.map((item) => (
+  const tabListRef = useRef();
+  const {
+    currentFocusIndex,
+  } = useTabKeyboardNavigation(tabListRef, [slicedTabs, labelBeingEdited]);
+
+  const tabElements = slicedTabs.map((item, i) => (
     <SheetTab
       key={item.sheetIndex}
       sheet={item}
@@ -65,6 +71,7 @@ const SpreadsheetSwitcher = (props) => {
       validateName={validateName}
       isReadOnlyMode={isReadOnlyMode}
       skipDeleteWarning={skipDeleteWarning}
+      tabIndex={currentFocusIndex === i ? 0 : -1}
     />
   ));
 
@@ -74,7 +81,7 @@ const SpreadsheetSwitcher = (props) => {
 
   return (
     <div className="SpreadsheetSwitcher ModularHeader BottomHeader stroke start">
-      <div className={'GenericFileTab'} role='tablist'>
+      <div className={'GenericFileTab'} role='tablist' ref={tabListRef}>
         {tabElements}
         {
           (flyoutTabs?.length > 0) ?

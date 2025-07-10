@@ -2,6 +2,8 @@ import actions from 'actions';
 
 /**
  * Sets the current active toolbar group.
+ * If you are using the Modular UI and ribbon items are not present in the header,
+ * use [setActiveGroupedItems]{@link UI.setActiveGroupedItems} instead.
  * @method UI.setToolbarGroup
  * @param {string} groupDataElement The groups dataElement. Default values are: toolbarGroup-View, toolbarGroup-Annotate,
  * toolbarGroup-Shapes, toolbarGroup-Insert, toolbarGroup-Measure, toolbarGroup-Edit, toolbarGroup-Forms

@@ -68,6 +68,7 @@ const SpreadsheetEditorEditModeDropdown = (props) => {
         className="text-left"
         isFlyoutItem={isFlyoutItem}
         onKeyDownHandler={onKeyDownHandler}
+        ariaLabel={t('spreadsheetEditor.editModeDropdown')}
       />
     </div>
   );

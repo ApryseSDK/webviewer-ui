@@ -1,5 +1,9 @@
 @import '../../../constants/styles.scss';
 
+.Flyout .FlyoutContainer {
+  overflow: inherit;
+}
+
 .CellBorders {
   &.flyout-item {
     max-width: 248px;

@@ -191,6 +191,9 @@ const TextSignature = ({
       setFullSiganture(currentUser);
       setInitials(parseInitialsFromFullSignature(currentUser));
       setSignature();
+      if (fullSignature?.length > 0 && (!isInitialsModeEnabled || initials)) {
+        enableCreateButton();
+      }
     }
   }, [isModalOpen, isTabPanelSelected]);
 

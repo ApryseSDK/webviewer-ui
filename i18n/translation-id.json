@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "Pilih alat AnnotationCreateTextHighlight",
       "selectCreateTextStrikeoutTool": "Pilih alat AnnotationCreateTextStrikeout",
       "selectCreateTextUnderlineTool": "Pilih alat AnnotationCreateTextUnderline",
-      "editKeyboardShorcut": "Edit Pintasan Keyboard",
+      "editKeyboardShortcut": "Edit Pintasan Keyboard",
       "setShortcut": "Atur Pintasan",
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan keyboard di atas sudah ada.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Tidak ada",
-      "solid": "Padat",
+      "thin": "Padat",
       "dashed": "putus-putus",
       "dotted": "Burik"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Edit Peringatan",
       "message": "Apakah Anda yakin ingin menghapus lembar ini?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Tata Letak Halaman",
+      "columnsMessage": "Pengaturan yang Anda pilih untuk spasi kolom terlalu besar untuk lebar halaman di beberapa bagian.",
+      "marginsMessage": "Pengaturan yang Anda pilih untuk margin terlalu besar untuk lebar halaman di beberapa bagian."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Benar",
     "customMargins": "Margin Kustom",
     "customMarginsDescription": "Tentukan margin khusus",
+    "column": "Kolom",
+    "columns": "Kolom",
+    "singleColumn": "1 Kolom",
+    "twoColumn": "2 Kolom",
+    "threeColumn": "3 Kolom",
+    "customColumn": "Kolom Kustom",
+    "customColumnDescription": "Tentukan kolom kustom",
+    "unitMeasurement": "Pengukuran Satuan",
     "header": {
       "0": "Judul",
       "1": "Header Halaman Pertama",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Halaman Genap & Ganjil yang Berbeda",
         "differentFirstEvenOddPages": "Halaman Pertama, Genap, dan Ganjil yang Berbeda"
       }
+    },
+    "columnsModal": {
+      "title": "Penyesuaian Kolom Kustom",
+      "columnAmount": "Jumlah Kolom",
+      "columnNumber": "Nomor Kolom",
+      "width": "Lebar",
+      "spacing": "Jarak",
+      "widthAndSpacing": "Lebar dan Jarak",
+      "equalColumns": "Lebar Kolom Sama"
     },
     "marginsModal": {
       "title": "Penyesuaian Margin Kustom",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Melihat",
     "editingDescription": "Edit dokumen",
     "viewOnlyDescription": "Lihat saja",
+    "editModeDropdown": "Pemilihan mode edit",
     "bold": "Berani",
     "italic": "Miring",
     "underline": "Menggarisbawahi",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Hapus sel dan geser ke atas",
     "deleteColumnShiftLeft": "Hapus sel dan geser ke kiri",
     "clearBorder": "Batas yang jelas",
-    "cellBorderAll": "Semua Perbatasan",
-    "cellBorderInside": "Di Dalam Perbatasan",
-    "cellBorderOutside": "Di Luar Batas",
-    "cellBorderTop": "Batas Atas",
-    "cellBorderBottom": "Batas Bawah",
-    "cellBorderLeft": "Batas Kiri",
-    "cellBorderRight": "Batas Kanan",
-    "cellBorderVertical": "Batas Vertikal",
-    "cellBorderHorizontal": "Batas Horisontal",
-    "cellBorderNone": "Tidak Ada Batas",
+    "all": "Semua Perbatasan",
+    "inside": "Di Dalam Perbatasan",
+    "outside": "Di Luar Batas",
+    "top": "Batas Atas",
+    "bottom": "Batas Bawah",
+    "left": "Batas Kiri",
+    "right": "Batas Kanan",
+    "vertical": "Batas Vertikal",
+    "horizontal": "Batas Horisontal",
+    "none": "Tidak Ada Batas",
     "borders": "Perbatasan",
     "fontSize": {
       "dropdownLabel": "Ukuran Font"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Bilah Rumus",
     "range": "Jangkauan",
-    "formulas": "Rumus",
-    "sumif": "Jumlah bersyarat di seluruh rentang",
-    "sumsq": "Mengembalikan jumlah kuadrat suatu rentang",
-    "sum": "Menambahkan semua angka dalam suatu rentang",
-    "asinh": "Mengembalikan sinus hiperbolik invers dari suatu angka",
-    "acos": "Mengembalikan arccosine dari suatu angka, dalam radian",
-    "cosh": "Mengembalikan kosinus hiperbolik suatu angka",
-    "iseven": "Memeriksa apakah suatu angka genap",
-    "isodd": "Memeriksa apakah suatu angka ganjil"
+    "formulas": "Rumus"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Jumlah bersyarat pada suatu rentang.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang diuji terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Pola atau pengujian yang diterapkan pada `rentang`."
+        },
+        "sum_range": {
+          "name": "jumlah_rentang",
+          "detail": "Rentang yang akan dijumlahkan, jika berbeda dari `rentang`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Tangen suatu sudut diberikan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut yang dicari tangennya, dalam radian."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Tangen hiperbolik dari sembarang bilangan riil.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai riil apa pun untuk menghitung tangen hiperbolik."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Membulatkan angka ke atas ke kelipatan faktor terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibulatkan ke kelipatan bilangan bulat terdekat dari `faktor`."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Angka yang kelipatannya `nilai` akan dibulatkan."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Tangen invers suatu nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung tangen invers."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Sinus hiperbolik invers suatu bilangan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung sinus hiperbolik invers."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Nilai mutlak suatu angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Jumlah yang akan mengembalikan nilai absolut."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Kosinus invers suatu nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang digunakan untuk menghitung kosinus invers. Harus berada di antara `-1` dan `1`, inklusif."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Kosinus hiperbolik invers suatu bilangan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang digunakan untuk menghitung kosinus hiperbolik terbalik. Harus lebih besar dari atau sama dengan `1`."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Fungsi distribusi multinomial.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Tangen hiperbolik invers suatu bilangan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung tangen hiperbolik invers. Harus antara -1 dan 1, tidak termasuk."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Arktangen suatu nilai.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Koordinat x dari titik akhir ruas garis yang akan dihitung sudutnya dari sumbu x."
+        },
+        "y": {
+          "name": "Dan",
+          "detail": "Koordinat y dari titik akhir ruas garis yang akan dihitung sudutnya dari sumbu x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Jumlah nilai kosong.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama untuk menghitung jumlah kosong."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Kosinus hiperbolik dari sembarang bilangan riil.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai riil apa pun untuk menghitung kosinus hiperbolik."
+        }
+      }
+    },
+    "INT": {
+      "description": "Membulatkan angka ke bawah ke bilangan bulat terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibulatkan ke bawah ke bilangan bulat terdekat."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Apakah nilai yang diberikan genap.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai genap."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Apakah nilai yang diberikan ganjil.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai ganjil."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Kelipatan persekutuan terkecil dari satu atau lebih bilangan bulat.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang faktor-faktornya harus dipertimbangkan dalam perhitungan untuk menemukan kelipatan persekutuan terkecil."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang faktor-faktornya perlu dipertimbangkan untuk menemukan kelipatan persekutuan terkecil."
+        }
+      }
+    },
+    "LN": {
+      "description": "Logaritma suatu bilangan, basis e (bilangan Euler).",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung logaritma, basis e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Logaritma suatu bilangan terhadap basis.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung logaritma."
+        },
+        "base": {
+          "name": "basis",
+          "detail": "Basis yang digunakan untuk perhitungan logaritma."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Logaritma suatu bilangan, basis 10.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung logaritma, basis 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Operator modulo (sisa).",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Angka yang akan dibagi untuk mencari sisanya."
+        },
+        "divisor": {
+          "name": "pembagi",
+          "detail": "Angka yang akan dibagi."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Membulatkan angka ke kelipatan bilangan bulat terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Angka yang akan dibulatkan ke kelipatan bilangan bulat terdekat dari angka lainnya."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Angka yang kelipatannya `nilai` akan dibulatkan."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Membulatkan angka ke atas ke bilangan bulat ganjil terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibulatkan ke angka ganjil terbesar berikutnya."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Jumlah kuadrat.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Angka atau rentang pertama yang kuadratnya akan dijumlahkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Angka atau rentang tambahan yang kuadratnya akan ditambahkan ke kuadrat `nilai1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Jumlah kombinasi dari sekumpulan objek.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Ukuran kumpulan objek yang dapat dipilih."
+        },
+        "k": {
+          "name": "aku",
+          "detail": "Jumlah objek yang akan dipilih."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Jumlah serangkaian angka dan/atau sel.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Angka atau rentang pertama yang akan dijumlahkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Angka atau rentang tambahan untuk ditambahkan ke `nilai1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Subtotal untuk rentang menggunakan fungsi tertentu.",
+      "parameters": {
+        "function_code": {
+          "name": "fungsi_kode",
+          "detail": "Fungsi yang digunakan dalam agregasi subtotal."
+        },
+        "range1": {
+          "name": "kisaran 1",
+          "detail": "Rentang pertama untuk menghitung subtotal."
+        },
+        "range2": {
+          "name": "kisaran2",
+          "detail": "Rentang tambahan untuk menghitung subtotal."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Sinus invers suatu nilai, dalam radian.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung invers sinus. Harus berada di antara `-1` dan `1`, inklusif."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Hitungan bersyarat di suatu rentang.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang diuji terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Pola atau pengujian yang diterapkan pada `rentang`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Mengonversi nilai sudut dalam derajat ke radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut yang akan dikonversi dari derajat ke radian."
+        }
+      }
+    },
+    "RAND": {
+      "description": "Angka acak antara 0 inklusif dan 1 eksklusif."
+    },
+    "COUNTUNIQUE": {
+      "description": "Menghitung jumlah nilai unik dalam suatu rentang.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan untuk keunikan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan untuk keunikan."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Mengubah nilai sudut dalam radian ke derajat.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut yang akan dikonversi dari radian ke derajat."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Fungsi kesalahan gauss komplementer dari suatu nilai.",
+      "parameters": {
+        "z": {
+          "name": "Dengan",
+          "detail": "Angka untuk menghitung fungsi kesalahan Gauss komplementer."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Membulatkan angka ke atas ke bilangan bulat genap terdekat.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibulatkan ke angka genap terbesar berikutnya."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Bilangan Euler, e (~2,718) dipangkatkan.",
+      "parameters": {
+        "exponent": {
+          "name": "eksponen",
+          "detail": "Eksponen untuk menaikkan e ke."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Faktorial suatu bilangan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Angka atau referensi ke angka yang faktorialnya akan dihitung dan dikembalikan."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"faktorial ganda\" suatu angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Angka atau referensi ke angka yang faktorial gandanya akan dihitung dan dikembalikan."
+        }
+      }
+    },
+    "PI": {
+      "description": "Angka pi."
+    },
+    "GCD": {
+      "description": "Pembagi persekutuan terbesar dari satu atau lebih bilangan bulat.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang faktor-faktornya harus dipertimbangkan dalam perhitungan untuk menemukan pembagi persekutuan terbesar."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang faktor-faktornya perlu dipertimbangkan untuk menemukan pembagi persekutuan terbesar."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "Bilangan bulat acak antara dua nilai, inklusif.",
+      "parameters": {
+        "low": {
+          "name": "rendah",
+          "detail": "Batas bawah rentang acak."
+        },
+        "high": {
+          "name": "tinggi",
+          "detail": "Batas atas rentang acak."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Membulatkan angka menurut aturan standar.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai akan dibulatkan ke jumlah tempat `places`."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Jumlah tempat desimal untuk pembulatan."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Membulatkan angka ke bawah.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibulatkan ke sejumlah `places`, selalu dibulatkan ke bawah."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Jumlah tempat desimal untuk pembulatan."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Membulatkan suatu angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai akan dibulatkan ke sejumlah `places`, selalu dibulatkan ke atas."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Jumlah tempat desimal untuk pembulatan."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Jumlah deret pangkat.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Input untuk deret pangkat. Bervariasi tergantung pada jenis aproksimasi, bisa berupa sudut, eksponen, atau nilai lainnya."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Pangkat awal untuk menaikkan `x` dalam deret pangkat."
+        },
+        "m": {
+          "name": "M",
+          "detail": "Peningkatan aditif yang digunakan untuk meningkatkan `x`."
+        },
+        "a": {
+          "name": "A",
+          "detail": "Susunan atau rentang yang berisi koefisien deret pangkat."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Tanda angka yang diberikan (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang tandanya akan dievaluasi."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Sinus suatu sudut diberikan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut untuk mencari sinus, dalam radian."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Sinus hiperbolik dari sembarang bilangan riil.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai riil apa pun untuk menghitung sinus hiperbolik."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Akar kuadrat positif dari bilangan positif.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Angka untuk menghitung akar kuadrat positif."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Akar kuadrat dari hasil perkalian pi dan angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Angka yang akan dikalikan dengan Pi dan akan menghasilkan akar kuadrat produknya"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Logaritma fungsi gamma.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Input ke fungsi Gamma. Logaritma natural Gamma(`nilai`) akan dikembalikan."
+        }
+      }
+    },
+    "COS": {
+      "description": "Kosinus suatu sudut diberikan dalam radian.",
+      "parameters": {
+        "angle": {
+          "name": "sudut",
+          "detail": "Sudut yang dicari kosinusnya, dalam radian."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Memotong angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dipotong."
+        },
+        "places": {
+          "name": "tempat",
+          "detail": "Jumlah digit penting di sebelah kanan titik desimal yang harus dipertahankan."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Satu angka dibagi dengan angka lainnya.",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Angka yang akan dibagi."
+        },
+        "divisor": {
+          "name": "pembagi",
+          "detail": "Angka yang akan dibagi."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Suatu angka yang dipangkatkan.",
+      "parameters": {
+        "base": {
+          "name": "basis",
+          "detail": "Angka yang akan dipangkatkan dengan `eksponen`."
+        },
+        "exponent": {
+          "name": "eksponen",
+          "detail": "Eksponen untuk menaikkan `basis`."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Menjumlahkan suatu rentang tergantung pada beberapa kriteria.",
+      "parameters": {
+        "sum_range": {
+          "name": "jumlah_rentang",
+          "detail": "Rentang yang akan dijumlahkan."
+        },
+        "criteria_range1": {
+          "name": "kriteria_rentang1",
+          "detail": "Rentang yang akan diperiksa berdasarkan kriteria 1."
+        },
+        "criterion1": {
+          "name": "kriteria 1",
+          "detail": "Pola atau pengujian yang diterapkan pada criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "kriteria_rentang2",
+          "detail": "Rentang tambahan untuk diperiksa."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Hitung nilai tergantung pada beberapa kriteria.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "kriteria_rentang1",
+          "detail": "Rentang yang akan diperiksa terhadap `kriteria1`."
+        },
+        "criterion1": {
+          "name": "kriteria 1",
+          "detail": "Pola atau pengujian yang diterapkan pada `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "kriteria_rentang2",
+          "detail": "Rentang tambahan untuk diperiksa."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Hasil perkalian serangkaian angka.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor 1",
+          "detail": "Angka atau rentang pertama yang akan dihitung untuk produk."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Lebih banyak angka atau rentang yang harus dihitung untuk produk."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Rata-rata harmonik suatu himpunan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam populasi."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Probabilitas distribusi hipergeometrik.",
+      "parameters": {
+        "num_successes": {
+          "name": "jumlah_keberhasilan",
+          "detail": "Jumlah keberhasilan yang diinginkan."
+        },
+        "num_draws": {
+          "name": "jumlah_gambar",
+          "detail": "Jumlah pengundian yang diizinkan."
+        },
+        "successes_in_pop": {
+          "name": "kesuksesan_di_pop",
+          "detail": "Jumlah total keberhasilan dalam populasi."
+        },
+        "pop_size": {
+          "name": "ukuran pop",
+          "detail": "Jumlah total populasi"
+        },
+        "cumulative": {
+          "name": "kumulatif",
+          "detail": "Tentukan nilai logika dari bentuk fungsi. \n\nJika kumulatif adalah TRUE(), HYPGEOM.DIST mengembalikan fungsi distribusi kumulatif;\n\njika FALSE(), mengembalikan fungsi kerapatan probabilitas."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Y-intercept garis yang diperoleh melalui regresi linier.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Kurtosis suatu himpunan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari kumpulan data."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam kumpulan data."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Elemen terbesar ke-n dari kumpulan data.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang yang berisi himpunan data yang perlu dipertimbangkan."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Peringkat dari yang terbesar ke yang terkecil dari elemen yang akan dikembalikan."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Simpangan baku sampel (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Simpangan baku dari keseluruhan populasi.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam populasi."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Rata-rata geometrik suatu himpunan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam populasi."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Peringkat persentase (persentil) dari 0 hingga 1 inklusif.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang berisi himpunan data yang perlu dipertimbangkan."
+        },
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang peringkat persentasenya akan ditentukan."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah angka penting yang akan digunakan dalam perhitungan. Nilai default adalah 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Nilai y yang diharapkan berdasarkan regresi linier.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Nilai pada sumbu x untuk diramalkan."
+        },
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Transformasi Fisher terbalik dari nilai yang ditentukan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung transformasi Fisher invers."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Transformasi Fisher dari nilai yang ditentukan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai untuk menghitung transformasi Fisher."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Jumlah nilai numerik dalam kumpulan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Jumlah nilai dalam suatu kumpulan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Nilai rata-rata numerik dalam kumpulan data, mengabaikan teks.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai rata-rata."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai rata-rata."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Probabilitas distribusi binomial.",
+      "parameters": {
+        "num_successes": {
+          "name": "jumlah_keberhasilan",
+          "detail": "Jumlah keberhasilan untuk menghitung probabilitas dalam percobaan `num_trials`."
+        },
+        "num_trials": {
+          "name": "jumlah_percobaan",
+          "detail": "Jumlah uji coba independen."
+        },
+        "prob_success": {
+          "name": "kemungkinan_berhasil",
+          "detail": "Kemungkinan keberhasilan dalam suatu percobaan."
+        },
+        "cumulative": {
+          "name": "kumulatif",
+          "detail": "Apakah akan menggunakan distribusi kumulatif binomial."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Jumlah kuadrat deviasi berdasarkan sampel.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Rata-rata nilai tergantung pada kriteria.",
+      "parameters": {
+        "criteria_range": {
+          "name": "kriteria_rentang",
+          "detail": "Rentang yang akan diperiksa terhadap `kriteria`."
+        },
+        "criterion": {
+          "name": "kriteria",
+          "detail": "Pola atau pengujian yang diterapkan pada `criteria_range`."
+        },
+        "average_range": {
+          "name": "kisaran rata-rata",
+          "detail": "Rentang untuk rata-rata. Jika tidak disertakan, `criteria_range` digunakan sebagai rata-rata."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Rata-rata nilai tergantung pada beberapa kriteria.",
+      "parameters": {
+        "average_range": {
+          "name": "kisaran rata-rata",
+          "detail": "Rentang rata-rata."
+        },
+        "criteria_range1": {
+          "name": "kriteria_rentang1",
+          "detail": "Rentang yang akan diperiksa terhadap `kriteria1`."
+        },
+        "criterion1": {
+          "name": "kriteria 1",
+          "detail": "Pola atau pengujian yang diterapkan pada `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "kriteria_rentang2",
+          "detail": "Rentang tambahan untuk diperiksa."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Jumlah permutasi dari sejumlah objek.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Ukuran kumpulan objek yang dapat dipilih."
+        },
+        "k": {
+          "name": "aku",
+          "detail": "Jumlah objek yang akan dipilih."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Rata-rata himpunan data, tidak termasuk nilai tinggi/rendah.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang yang berisi himpunan data yang perlu dipertimbangkan."
+        },
+        "exclude_proportion": {
+          "name": "mengecualikan_proporsi",
+          "detail": "Proporsi himpunan data yang akan dikecualikan, dari ujung himpunan."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Koefisien Korelasi Momen Produk Pearson.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Nilai numerik minimum dalam suatu kumpulan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai minimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai minimum."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Nilai minimum dalam kumpulan data numerik.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai minimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai minimum."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Nilai median dalam kumpulan data numerik.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai median."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai median."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Nilai numerik maksimum dalam suatu kumpulan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai maksimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai maksimum."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Nilai maksimum dalam kumpulan data numerik.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama yang perlu dipertimbangkan saat menghitung nilai maksimum."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang perlu dipertimbangkan saat menghitung nilai maksimum."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Nilai probabilitas berada dalam suatu rentang.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang yang berisi himpunan data yang perlu dipertimbangkan."
+        },
+        "probabilities": {
+          "name": "kemungkinan",
+          "detail": "Susunan atau rentang yang berisi probabilitas yang sesuai dengan `data`."
+        },
+        "low_limit": {
+          "name": "batas_rendah",
+          "detail": "Batas bawah rentang nilai untuk menghitung probabilitas."
+        },
+        "high_limit": {
+          "name": "batas_tinggi",
+          "detail": "Batas atas rentang nilai untuk menghitung probabilitas."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Kuadrat koefisien korelasi.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Varians sampel (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama sampel."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan untuk disertakan dalam sampel."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Varians keseluruhan populasi (teks sebagai 0).",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari populasi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam populasi."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Kesalahan standar nilai-y yang diprediksi dalam regresi.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Setara dengan variabel acak yang dinormalisasi.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai variabel acak yang akan dinormalisasi."
+        },
+        "mean": {
+          "name": "berarti",
+          "detail": "Rata-rata distribusi."
+        },
+        "standard_deviation": {
+          "name": "simpangan baku",
+          "detail": "Simpangan baku distribusi."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Elemen terkecil ke-n dalam kumpulan data.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang berisi himpunan data yang perlu dipertimbangkan."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Peringkat dari yang terkecil hingga terbesar dari elemen yang akan dikembalikan."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Kemiringan garis dari regresi linear data.",
+      "parameters": {
+        "data_y": {
+          "name": "data_y",
+          "detail": "Rentang yang mewakili susunan atau matriks data dependen."
+        },
+        "data_x": {
+          "name": "data_x",
+          "detail": "Rentang yang mewakili susunan atau matriks data independen."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Kemiringan suatu himpunan data.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai atau rentang pertama dari kumpulan data."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai atau rentang tambahan yang akan disertakan dalam kumpulan data."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Pencarian vertikal.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci pencarian",
+          "detail": "Nilai yang dicari. Misalnya, `42`, `\"Cats\"`, atau `I24`."
+        },
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang perlu dipertimbangkan untuk pencarian. Kolom pertama dalam rentang tersebut dicari berdasarkan kunci yang ditentukan dalam `search_key`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks kolom dari nilai yang akan dikembalikan, di mana kolom pertama dalam `range` diberi nomor 1."
+        },
+        "is_sorted": {
+          "name": "sudah diurutkan",
+          "detail": "Menunjukkan apakah kolom yang akan dicari (kolom pertama dalam rentang yang ditentukan) diurutkan, dalam hal ini kecocokan terdekat untuk `search_key` akan dikembalikan."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Pencarian horizontal",
+      "parameters": {
+        "search_key": {
+          "name": "kunci pencarian",
+          "detail": "Nilai yang dicari. Misalnya, `42`, `\"Cats\"`, atau `I24`."
+        },
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang perlu dipertimbangkan untuk pencarian. Baris pertama dalam rentang tersebut dicari berdasarkan kunci yang ditentukan dalam `search_key`."
+        },
+        "index": {
+          "name": "indeks",
+          "detail": "Indeks baris dari nilai yang akan dikembalikan, di mana baris pertama dalam `range` diberi nomor 1."
+        },
+        "is_sorted": {
+          "name": "sudah diurutkan",
+          "detail": "Menunjukkan apakah baris yang akan dicari (baris pertama dari rentang yang ditentukan) diurutkan."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Carilah suatu nilai.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci pencarian",
+          "detail": "Nilai yang dicari dalam baris atau kolom. Misalnya, `42`, `\"Kucing\"`, atau `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "rentang_pencarian|array_hasil_pencarian",
+          "detail": "Salah satu metode penggunaan fungsi ini adalah dengan menyediakan satu baris atau kolom yang diurutkan `search_range` untuk mencari `search_key` dengan argumen kedua `result_range`. Cara lainnya adalah dengan menggabungkan kedua argumen ini menjadi satu `search_result_array`, di mana baris atau kolom pertama dicari dan nilai dikembalikan dari baris atau kolom terakhir dalam array. Jika `search_key` tidak ditemukan, kecocokan yang tidak tepat mungkin dikembalikan."
+        },
+        "result_range": {
+          "name": "rentang_hasil",
+          "detail": "Rentang untuk mengembalikan hasil. Nilai yang dikembalikan sesuai dengan lokasi tempat `search_key` ditemukan dalam `search_range`. Rentang ini hanya boleh berupa satu baris atau kolom dan tidak boleh digunakan jika menggunakan metode `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Referensi sel sebagai string.",
+      "parameters": {
+        "row": {
+          "name": "baris",
+          "detail": "Nomor baris referensi sel"
+        },
+        "column": {
+          "name": "kolom",
+          "detail": "Nomor kolom (bukan nama) referensi sel. `A` adalah nomor kolom `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "mode_relatif_absolut",
+          "detail": "Indikator apakah rujukan tersebut absolut baris/kolom. `1` adalah absolut baris dan kolom (misalnya $A$1), `2` adalah absolut baris dan kolom relatif (misalnya A$1), `3` adalah absolut baris dan kolom (misalnya $A1), dan `4` adalah relatif baris dan kolom (misalnya A1)."
+        },
+        "use_a1_notation": {
+          "name": "gunakan_notasi_a1",
+          "detail": "Boolean yang menunjukkan apakah akan menggunakan notasi gaya `A1` (TRUE) atau notasi gaya `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "lembaran",
+          "detail": "Teks yang menunjukkan nama lembar tempat alamat tersebut ditujukan."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Referensi sel yang ditentukan oleh string.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "referensi_sel_sebagai_string",
+          "detail": "Referensi sel, ditulis sebagai string dengan tanda kutip di sekelilingnya."
+        },
+        "is_A1_notation": {
+          "name": "adalah_notasi_A1",
+          "detail": "Menunjukkan apakah referensi sel dalam notasi A1 (BENAR) atau notasi R1C1 (SALAH)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Nomor baris sel yang ditentukan.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referensi_sel",
+          "detail": "Sel yang nomor barisnya akan dikembalikan."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Jumlah baris dalam array atau rentang tertentu.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang jumlah barisnya akan dikembalikan."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Nomor kolom sel yang ditentukan.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referensi_sel",
+          "detail": "Sel yang nomor kolomnya akan dikembalikan. Kolom `A` sesuai dengan `1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Jumlah kolom dalam array atau rentang tertentu.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Rentang yang jumlah kolomnya akan dikembalikan."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Sebuah offset referensi rentang relatif terhadap suatu sel.",
+      "parameters": {
+        "cell_reference": {
+          "name": "referensi_sel",
+          "detail": "Titik awal untuk menghitung baris dan kolom offset."
+        },
+        "offset_rows": {
+          "name": "offset_baris",
+          "detail": "Jumlah baris yang akan diimbangi."
+        },
+        "offset_columns": {
+          "name": "kolom_offset",
+          "detail": "Jumlah kolom yang akan diimbangi."
+        },
+        "height": {
+          "name": "tinggi",
+          "detail": "Ketinggian rentang yang akan dikembalikan mulai dari target offset."
+        },
+        "width": {
+          "name": "lebar",
+          "detail": "Lebar rentang yang akan dikembalikan mulai dari target offset."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Posisi item dalam rentang yang sesuai dengan nilai.",
+      "parameters": {
+        "search_key": {
+          "name": "kunci pencarian",
+          "detail": "Nilai yang dicari. Misalnya, `42`, `\"Cats\"`, atau `I24`."
+        },
+        "range": {
+          "name": "jangkauan",
+          "detail": "Array satu dimensi yang akan dicari."
+        },
+        "search_type": {
+          "name": "jenis_pencarian",
+          "detail": "Metode pencarian. `1` (default) mencari nilai terbesar yang kurang dari atau sama dengan `search_key` ketika `range` diurutkan dalam urutan menaik. `0` mencari nilai yang tepat ketika `range` tidak diurutkan. `-1` mencari nilai terkecil yang lebih besar dari atau sama dengan `search_key` ketika `range` diurutkan dalam urutan menurun."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Konten sel ditentukan berdasarkan offset baris dan kolom.",
+      "parameters": {
+        "reference": {
+          "name": "referensi",
+          "detail": "Susunan sel yang akan diberi offset."
+        },
+        "row": {
+          "name": "baris",
+          "detail": "Jumlah baris offset."
+        },
+        "column": {
+          "name": "kolom",
+          "detail": "Jumlah kolom offset."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Mengekstrak nilai agregat dari tabel pivot yang sesuai dengan judul baris dan kolom yang ditentukan.",
+      "parameters": {
+        "value_name": {
+          "name": "nama_nilai",
+          "detail": "Nama nilai dalam tabel pivot yang datanya ingin Anda dapatkan."
+        },
+        "any_pivot_table_cell": {
+          "name": "sel tabel pivot apa pun",
+          "detail": "Referensi apa pun ke sel dalam tabel pivot yang diinginkan (disarankan di sudut atas)."
+        },
+        "original_column": {
+          "name": "kolom_asli",
+          "detail": "Nama kolom dalam kumpulan data asli (bukan tabel pivot)."
+        },
+        "pivot_item": {
+          "name": "item_poros",
+          "detail": "Nama baris atau kolom yang ditampilkan dalam tabel pivot yang sesuai dengan *original_column* yang ingin Anda ambil."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "Elemen dari daftar pilihan berdasarkan indeks.",
+      "parameters": {
+        "index": {
+          "name": "indeks",
+          "detail": "Pilihan mana (dari hingga 30 yang disediakan) untuk dikembalikan."
+        },
+        "choice1": {
+          "name": "pilihan1",
+          "detail": "Nilai potensial yang akan dikembalikan. Diperlukan. Bisa berupa referensi ke sel atau nilai individual."
+        },
+        "choice2": {
+          "name": "pilihan2",
+          "detail": "Nilai-nilai tambahan yang dapat dipilih."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Mengubah jam/menit/detik menjadi waktu.",
+      "parameters": {
+        "hour": {
+          "name": "jam",
+          "detail": "Komponen jam dari waktu."
+        },
+        "minute": {
+          "name": "menit",
+          "detail": "Komponen menit dari waktu."
+        },
+        "second": {
+          "name": "Kedua",
+          "detail": "Komponen kedua dari waktu."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Mengubah rangkaian waktu menjadi representasi nomor serinya.",
+      "parameters": {
+        "time_string": {
+          "name": "rangkaian waktu",
+          "detail": "Tali yang menyimpan representasi waktu."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Hari terakhir suatu bulan sebelum atau sesudah suatu tanggal.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal untuk menghitung hasil."
+        },
+        "months": {
+          "name": "bulan",
+          "detail": "Jumlah bulan sebelum (negatif) atau sesudah (positif) 'start_date' yang perlu dipertimbangkan."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Berikan tanggal beberapa bulan sebelum/sesudah tanggal lainnya.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal untuk menghitung hasil."
+        },
+        "months": {
+          "name": "bulan",
+          "detail": "Jumlah bulan sebelum (negatif) atau sesudah (positif) 'start_date' yang akan dihitung."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Komponen kedua dari waktu tertentu.",
+      "parameters": {
+        "time": {
+          "name": "waktu",
+          "detail": "Waktu untuk menghitung komponen kedua"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Komponen menit dari waktu tertentu.",
+      "parameters": {
+        "time": {
+          "name": "waktu",
+          "detail": "Waktu untuk menghitung komponen menit."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Komponen jam dari waktu tertentu.",
+      "parameters": {
+        "time": {
+          "name": "waktu",
+          "detail": "Waktu untuk menghitung komponen jam."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Tanggal dan waktu saat ini sebagai nilai tanggal."
+    },
+    "NETWORKDAYS": {
+      "description": "Jumlah hari kerja bersih antara dua hari yang diberikan.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal awal periode untuk menghitung jumlah hari kerja bersih."
+        },
+        "end_date": {
+          "name": "tanggal_akhir",
+          "detail": "Tanggal akhir periode untuk menghitung jumlah hari kerja bersih."
+        },
+        "holidays": {
+          "name": "hari libur",
+          "detail": "Konstanta rentang atau array yang berisi nomor seri tanggal untuk mempertimbangkan hari libur."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Nomor minggu ISO dalam setahun.",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk menentukan nomor minggu ISO. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Nomor minggu dalam setahun.",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk menentukan nomor minggu. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "type": {
+          "name": "jenis",
+          "detail": "Angka yang menunjukkan hari dimulainya suatu minggu. Minggu = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Hari dalam seminggu pada tanggal yang diberikan (sebagai angka).",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk menentukan hari dalam seminggu. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "type": {
+          "name": "jenis",
+          "detail": "Angka yang menunjukkan sistem penomoran yang digunakan untuk mewakili hari dalam seminggu. Secara default, hitungan dimulai dari hari Minggu = 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Hari dalam bulan ketika tanggal tertentu jatuh pada.",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk mengekstrak hari."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "Jumlah hari antara dua tanggal.",
+      "parameters": {
+        "end_date": {
+          "name": "tanggal_akhir",
+          "detail": "Akhir rentang tanggal."
+        },
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Awal rentang tanggal."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "Hari di antara dua tanggal dalam setahun berdurasi 360 hari.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal awal yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "end_date": {
+          "name": "tanggal_akhir",
+          "detail": "Tanggal akhir yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "method": {
+          "name": "metode",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Mengubah tahun/bulan/hari menjadi tanggal.",
+      "parameters": {
+        "year": {
+          "name": "tahun",
+          "detail": "Komponen tahun dari tanggal."
+        },
+        "month": {
+          "name": "bulan",
+          "detail": "Komponen bulan dari tanggal."
+        },
+        "day": {
+          "name": "hari",
+          "detail": "Komponen hari dari tanggal."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Mengonversi string tanggal menjadi nilai tanggal.",
+      "parameters": {
+        "date_string": {
+          "name": "string_tanggal",
+          "detail": "Rangkaian yang mewakili tanggal."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Perbedaan Tanggal.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal awal yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "end_date": {
+          "name": "tanggal_akhir",
+          "detail": "Tanggal akhir yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "unit": {
+          "name": "satuan",
+          "detail": "Singkatan string untuk satuan waktu. Misalnya, \"M\" untuk bulan. Nilai yang diterima adalah \"Y\", \"M\", \"D\", \"MD\", \"YM\", \"YD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Jumlah hari kerja sejak tanggal mulai.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal untuk mulai menghitung."
+        },
+        "num_days": {
+          "name": "jumlah_hari",
+          "detail": "Jumlah hari kerja yang akan dimajukan dari `start_date`. Jika negatif, akan dihitung mundur."
+        },
+        "holidays": {
+          "name": "hari libur",
+          "detail": "Konstanta rentang atau larik yang berisi tanggal untuk mempertimbangkan hari libur."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Tahun ditentukan oleh tanggal tertentu.",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk mengekstrak tahun."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "Jumlah tahun yang tepat antara dua tanggal.",
+      "parameters": {
+        "start_date": {
+          "name": "tanggal_mulai",
+          "detail": "Tanggal awal yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "end_date": {
+          "name": "tanggal_akhir",
+          "detail": "Tanggal akhir yang perlu dipertimbangkan dalam perhitungan. Harus berupa referensi ke sel yang berisi tanggal, fungsi yang mengembalikan tipe tanggal, atau angka."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Tanggal saat ini sebagai nilai tanggal."
+    },
+    "MONTH": {
+      "description": "Bulan dalam setahun jatuh pada tanggal tertentu.",
+      "parameters": {
+        "date": {
+          "name": "tanggal",
+          "detail": "Tanggal untuk mengekstrak bulan."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Suku bunga efektif tahunan.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "tarif_nominal",
+          "detail": "Tingkat bunga nominal per tahun."
+        },
+        "periods_per_year": {
+          "name": "periode_per_tahun",
+          "detail": "Jumlah periode peracikan per tahun."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Memformat angka sebagai mata uang khusus untuk lokal spreadsheet Anda.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Nilai yang akan diformat."
+        },
+        "number_of_places": {
+          "name": "jumlah_tempat",
+          "detail": "Jumlah tempat desimal yang akan ditampilkan."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Mengonversi pecahan desimal ke nilai desimal.",
+      "parameters": {
+        "fractional_price": {
+          "name": "harga pecahan",
+          "detail": "Kutipan harga diberikan dengan menggunakan konvensi desimal pecahan."
+        },
+        "unit": {
+          "name": "satuan",
+          "detail": "Satuan pecahan, misalnya `8` untuk 1/8 atau `32` untuk 1/32."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Mengonversi nilai desimal ke pecahan desimal.",
+      "parameters": {
+        "decimal_price": {
+          "name": "harga desimal",
+          "detail": "Kutipan harga diberikan sebagai nilai desimal."
+        },
+        "unit": {
+          "name": "satuan",
+          "detail": "Satuan pecahan yang diinginkan, misalnya `8` untuk 1/8 atau `32` untuk 1/32."
+        }
+      }
+    },
+    "DB": {
+      "description": "Penyusutan melalui metode saldo menurun.",
+      "parameters": {
+        "cost": {
+          "name": "biaya",
+          "detail": "Biaya awal aset."
+        },
+        "salvage": {
+          "name": "menyelamatkan",
+          "detail": "Nilai aset pada akhir penyusutan."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Jumlah periode di mana aset disusutkan."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "Periode tunggal dalam `masa pakai` untuk menghitung penyusutan."
+        },
+        "month": {
+          "name": "bulan",
+          "detail": "Jumlah bulan pada tahun pertama penyusutan."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Penyusutan melalui metode saldo menurun ganda.",
+      "parameters": {
+        "cost": {
+          "name": "biaya",
+          "detail": "Biaya awal aset."
+        },
+        "salvage": {
+          "name": "menyelamatkan",
+          "detail": "Nilai aset pada akhir penyusutan."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Jumlah periode di mana aset disusutkan."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "Periode tunggal dalam `masa pakai` untuk menghitung penyusutan."
+        },
+        "factor": {
+          "name": "faktor",
+          "detail": "Faktor yang menyebabkan penurunan depresiasi."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Suku bunga investasi anuitas.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "payment_per_period": {
+          "name": "pembayaran_per_periode",
+          "detail": "Jumlah yang harus dibayarkan per periode."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        },
+        "rate_guess": {
+          "name": "tingkat_tebakan",
+          "detail": "Perkiraan berapa tingkat suku bunganya."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Pokok kumulatif yang dibayarkan selama serangkaian periode.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "first_period": {
+          "name": "periode_pertama",
+          "detail": "Jumlah periode pembayaran untuk memulai perhitungan kumulatif."
+        },
+        "last_period": {
+          "name": "periode_terakhir",
+          "detail": "Jumlah periode pembayaran untuk mengakhiri perhitungan kumulatif."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Jumlah kupon antara penyelesaian dan jatuh tempo.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Penyusutan melalui metode jumlah digit tahun.",
+      "parameters": {
+        "cost": {
+          "name": "biaya",
+          "detail": "Biaya awal aset."
+        },
+        "salvage": {
+          "name": "menyelamatkan",
+          "detail": "Nilai aset pada akhir penyusutan."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Jumlah periode di mana aset disusutkan."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "Periode tunggal dalam `masa pakai` untuk menghitung penyusutan."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Tingkat pengembalian yang setara untuk surat berharga negara.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto tagihan pada saat pembelian."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Hasil obligasi pemerintah AS berdasarkan harga.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga di mana sekuritas dibeli per 100 nilai nominal."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "Harga surat utang negara AS.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto tagihan pada saat pembelian."
+        }
+      }
+    },
+    "PV": {
+      "description": "Nilai sekarang dari investasi anuitas.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "payment_amount": {
+          "name": "jumlah_pembayaran",
+          "detail": "Jumlah yang harus dibayarkan per periode."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "Jumlah hari dari kupon pertama sampai penyelesaian.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Hari dalam periode kupon yang berisi tanggal penyelesaian.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "FV": {
+      "description": "Nilai masa depan dari investasi anuitas.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "payment_amount": {
+          "name": "jumlah_pembayaran",
+          "detail": "Jumlah yang harus dibayarkan per periode."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Nilai pokok masa depan dari serangkaian suku bunga.",
+      "parameters": {
+        "principal": {
+          "name": "kepala sekolah",
+          "detail": "Jumlah modal awal atau nilai yang akan dihimpun."
+        },
+        "rate_schedule": {
+          "name": "jadwal_tarif",
+          "detail": "Serangkaian suku bunga yang dibebankan pada `pokok`."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Hasil tahunan dari suatu sekuritas yang membayar bunga berkala.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Tingkat bunga tahunan."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga di mana sekuritas dibeli per 100 nilai nominal."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Jumlah penebusan per 100 nilai nominal, atau par."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "Hasil tahunan dari sekuritas diskonto.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga di mana sekuritas dibeli per 100 nilai nominal."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Jumlah penebusan per 100 nilai nominal, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Tingkat bunga nominal tahunan.",
+      "parameters": {
+        "effective_rate": {
+          "name": "tingkat_efektif",
+          "detail": "Suku bunga efektif per tahun."
+        },
+        "periods_per_year": {
+          "name": "periode_per_tahun",
+          "detail": "Jumlah periode peracikan per tahun."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Tingkat pengembalian internal yang diberikan arus kas non-periodik.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_arus_kas",
+          "detail": "Suatu rangkaian atau rentang yang memuat pendapatan atau pembayaran yang terkait dengan investasi."
+        },
+        "cashflow_dates": {
+          "name": "tanggal_arus_kas",
+          "detail": "Suatu susunan atau rentang dengan tanggal yang sesuai dengan arus kas dalam `cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "tingkat_tebakan",
+          "detail": "Perkiraan tentang berapa tingkat pengembalian internal nantinya."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Tingkat pengembalian internal yang dimodifikasi.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_arus_kas",
+          "detail": "Suatu rangkaian atau rentang yang memuat pendapatan atau pembayaran yang terkait dengan investasi."
+        },
+        "financing_rate": {
+          "name": "tingkat_pembiayaan",
+          "detail": "Suku bunga yang dibayarkan atas dana yang diinvestasikan."
+        },
+        "reinvestment_return_rate": {
+          "name": "tingkat pengembalian investasi ulang",
+          "detail": "Pengembalian (sebagai persentase) yang diperoleh dari menginvestasikan kembali pendapatan yang diterima dari investasi."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Tingkat pengembalian internal yang diberikan arus kas periodik.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "jumlah_arus_kas",
+          "detail": "Suatu rangkaian atau rentang yang memuat pendapatan atau pembayaran yang terkait dengan investasi."
+        },
+        "rate_guess": {
+          "name": "tingkat_tebakan",
+          "detail": "Perkiraan tentang berapa tingkat pengembalian internal nantinya."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Nilai sekarang bersih dari suatu investasi berdasarkan serangkaian arus kas periodik dan tingkat diskonto.",
+      "parameters": {
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto investasi selama satu periode."
+        },
+        "cashflow1": {
+          "name": "arus kas1",
+          "detail": "Arus kas masa depan yang pertama."
+        },
+        "cashflow2": {
+          "name": "arus kas2",
+          "detail": "Arus kas masa depan tambahan."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Nilai sekarang bersih yang diberikan arus kas non-periodik.",
+      "parameters": {
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto investasi selama satu periode."
+        },
+        "cashflow_amounts": {
+          "name": "jumlah_arus_kas",
+          "detail": "Rentang sel yang berisi pendapatan atau pembayaran yang terkait dengan investasi."
+        },
+        "cashflow_dates": {
+          "name": "tanggal_arus_kas",
+          "detail": "Rentang sel dengan tanggal yang sesuai dengan arus kas dalam `cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Bunga kumulatif yang dibayarkan selama serangkaian periode.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "first_period": {
+          "name": "periode_pertama",
+          "detail": "Jumlah periode pembayaran untuk memulai perhitungan kumulatif."
+        },
+        "last_period": {
+          "name": "periode_terakhir",
+          "detail": "Jumlah periode pembayaran untuk mengakhiri perhitungan kumulatif."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Pembayaran berkala untuk investasi anuitas.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Pembayaran bunga untuk investasi.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "Periode amortisasi, dalam hal jumlah periode."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Pembayaran pokok investasi.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "period": {
+          "name": "periode",
+          "detail": "Periode amortisasi, dalam hal jumlah periode."
+        },
+        "number_of_periods": {
+          "name": "jumlah_periode",
+          "detail": "Jumlah pembayaran yang harus dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Menghitung suku bunga efektif.",
+      "parameters": {
+        "buy_date": {
+          "name": "tanggal_pembelian",
+          "detail": "Tanggal pembelian investasi."
+        },
+        "sell_date": {
+          "name": "tanggal_penjualan",
+          "detail": "Tanggal penjualan investasi."
+        },
+        "buy_price": {
+          "name": "beli_harga",
+          "detail": "Harga pada saat investasi tersebut dibeli."
+        },
+        "sell_price": {
+          "name": "harga jual",
+          "detail": "Harga di mana investasi tersebut dijual."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Harga sekuritas yang membayar bunga berkala.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Tingkat bunga tahunan."
+        },
+        "yield": {
+          "name": "menghasilkan",
+          "detail": "Hasil tahunan yang diharapkan dari sekuritas."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Jumlah penebusan per 100 nilai nominal, atau par."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "Harga sekuritas diskon.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto sekuritas pada saat pembelian."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Jumlah penebusan per 100 nilai nominal, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Harga sekuritas yang membayar bunga pada saat jatuh tempo.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "issue": {
+          "name": "masalah",
+          "detail": "Tanggal sekuritas pertama kali diterbitkan."
+        },
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Tingkat bunga tahunan."
+        },
+        "yield": {
+          "name": "menghasilkan",
+          "detail": "Hasil tahunan yang diharapkan dari sekuritas."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Jumlah yang diterima pada saat jatuh tempo suatu sekuritas.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "investment": {
+          "name": "investasi",
+          "detail": "Jumlah yang diinvestasikan (tanpa mempedulikan nilai nominal setiap sekuritas)."
+        },
+        "discount": {
+          "name": "diskon",
+          "detail": "Tingkat diskonto sekuritas yang diinvestasikan."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Tingkat diskonto suatu sekuritas berdasarkan harga.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "price": {
+          "name": "harga",
+          "detail": "Harga di mana sekuritas dibeli per 100 nilai nominal."
+        },
+        "redemption": {
+          "name": "penebusan",
+          "detail": "Jumlah penebusan per 100 nilai nominal, atau par."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Jumlah periode pembayaran untuk investasi.",
+      "parameters": {
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Suku bunga."
+        },
+        "payment_amount": {
+          "name": "jumlah_pembayaran",
+          "detail": "Jumlah setiap pembayaran yang dilakukan."
+        },
+        "present_value": {
+          "name": "nilai sekarang",
+          "detail": "Nilai anuitas saat ini."
+        },
+        "future_value": {
+          "name": "nilai_masa_depan",
+          "detail": "Nilai masa depan yang tersisa setelah pembayaran terakhir dilakukan."
+        },
+        "end_or_beginning": {
+          "name": "akhir_atau_awal",
+          "detail": "Apakah pembayaran jatuh tempo pada akhir (`0`) atau awal (`1`) setiap periode."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Penyusutan aset menggunakan metode garis lurus.",
+      "parameters": {
+        "cost": {
+          "name": "biaya",
+          "detail": "Biaya awal aset."
+        },
+        "salvage": {
+          "name": "menyelamatkan",
+          "detail": "Nilai aset pada akhir penyusutan."
+        },
+        "life": {
+          "name": "kehidupan",
+          "detail": "Jumlah periode di mana aset disusutkan."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Jumlah periode bagi suatu investasi untuk mencapai suatu nilai.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Tingkat bunga tahunan."
+        },
+        "yield": {
+          "name": "menghasilkan",
+          "detail": "Hasil tahunan yang diharapkan dari sekuritas."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Durasi Macaulay yang dimodifikasi.",
+      "parameters": {
+        "settlement": {
+          "name": "hunian",
+          "detail": "Tanggal penyelesaian sekuritas, tanggal setelah penerbitan saat sekuritas diserahkan kepada pembeli."
+        },
+        "maturity": {
+          "name": "kematangan",
+          "detail": "Tanggal jatuh tempo atau akhir sekuritas, saat sekuritas dapat ditebus pada nilai nominal, atau nilai nominal."
+        },
+        "rate": {
+          "name": "kecepatan",
+          "detail": "Tingkat bunga tahunan."
+        },
+        "yield": {
+          "name": "menghasilkan",
+          "detail": "Hasil tahunan yang diharapkan dari sekuritas."
+        },
+        "frequency": {
+          "name": "frekuensi",
+          "detail": "Jumlah pembayaran bunga atau kupon per tahun (1, 2, atau 4)."
+        },
+        "day_count_convention": {
+          "name": "konvensi_hitungan_hari",
+          "detail": "Indikator metode penghitungan hari yang akan digunakan."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "Mengonversi bilangan biner bertanda ke format desimal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "angka_biner_yang_ditandatangani",
+          "detail": "Nilai biner 10-bit bertanda yang akan dikonversi ke desimal, disediakan sebagai string."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "Mengonversi bilangan biner ke heksadesimal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "angka_biner_yang_ditandatangani",
+          "detail": "Nilai biner 10-bit bertanda yang akan dikonversi ke heksadesimal bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "Mengonversi bilangan biner ke oktal.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "angka_biner_yang_ditandatangani",
+          "detail": "Nilai biner 10-bit bertanda yang akan dikonversi ke oktal bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Mengonversi angka desimal ke format biner bertanda.",
+      "parameters": {
+        "decimal_number": {
+          "name": "angka desimal",
+          "detail": "Nilai desimal yang akan dikonversi ke biner bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Mengonversi angka desimal ke heksadesimal.",
+      "parameters": {
+        "decimal_number": {
+          "name": "angka desimal",
+          "detail": "Nilai desimal yang akan dikonversi ke heksadesimal bertanda, diberikan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Mengonversi angka desimal ke format oktal bertanda.",
+      "parameters": {
+        "decimal_number": {
+          "name": "angka desimal",
+          "detail": "Nilai desimal yang akan dikonversi ke oktal bertanda, diberikan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Mengonversi bilangan heksadesimal ke biner.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "angka_heksadesimal_yang_ditandatangani",
+          "detail": "Nilai heksadesimal 40-bit bertanda yang akan dikonversi ke biner bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Mengonversi bilangan heksadesimal ke desimal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "angka_heksadesimal_yang_ditandatangani",
+          "detail": "Nilai heksadesimal 40-bit bertanda yang akan dikonversi ke desimal, disediakan sebagai string."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Mengonversi bilangan heksadesimal ke oktal.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "angka_heksadesimal_yang_ditandatangani",
+          "detail": "Nilai heksadesimal 40-bit bertanda yang akan dikonversi ke oktal bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Mengonversi bilangan oktal ke biner.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "bilangan_oktal_yang_ditandatangani",
+          "detail": "Nilai oktal 30-bit bertanda yang akan dikonversi ke biner bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "Mengonversi bilangan oktal bertanda ke format desimal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "bilangan_oktal_yang_ditandatangani",
+          "detail": "Nilai oktal 30-bit bertanda yang akan dikonversi ke desimal, disediakan sebagai string."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Mengonversi bilangan oktal ke heksadesimal.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "bilangan_oktal_yang_ditandatangani",
+          "detail": "Nilai oktal 30-bit bertanda yang akan dikonversi ke heksadesimal bertanda, disediakan sebagai string."
+        },
+        "significant_digits": {
+          "name": "angka_penting",
+          "detail": "Jumlah digit penting yang harus dipastikan dalam hasil."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Menciptakan bilangan kompleks.",
+      "parameters": {
+        "real_part": {
+          "name": "bagian_nyata",
+          "detail": "Koefisien sebenarnya."
+        },
+        "imaginary_part": {
+          "name": "bagian_imajiner",
+          "detail": "Koefisien imajiner."
+        },
+        "suffix": {
+          "name": "akhiran",
+          "detail": "Akhiran untuk koefisien imajiner hanya dapat berupa 'i' atau 'j'. Jika dihilangkan, 'i' akan digunakan."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Koefisien riil suatu bilangan kompleks.",
+      "parameters": {
+        "complex_number": {
+          "name": "bilangan kompleks",
+          "detail": "Bilangan kompleks, dalam format a+bi atau a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Koefisien imajiner suatu bilangan kompleks.",
+      "parameters": {
+        "complex_number": {
+          "name": "bilangan kompleks",
+          "detail": "Bilangan kompleks, dalam format a+bi atau a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Konjugat kompleks suatu angka.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Bilangan kompleks untuk menghitung konjugatnya."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Nilai absolut dari bilangan kompleks.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Angka kompleks untuk menghitung nilai absolut."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "Bandingkan dua nilai numerik.",
+      "parameters": {
+        "number1": {
+          "name": "nomor 1",
+          "detail": "Angka pertama yang akan dibandingkan."
+        },
+        "number2": {
+          "name": "nomor2",
+          "detail": "Angka kedua untuk dibandingkan."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Jumlah serangkaian bilangan kompleks.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Angka kompleks atau rentang pertama yang akan dijumlahkan."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Angka kompleks atau rentang tambahan untuk ditambahkan ke `nilai1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "Perbedaan antara dua bilangan kompleks.",
+      "parameters": {
+        "first_number": {
+          "name": "nomor_pertama",
+          "detail": "Angka kompleks yang akan dikurangi second_number."
+        },
+        "second_number": {
+          "name": "angka_kedua",
+          "detail": "Angka kompleks yang akan dikurangi dari first_number."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Hasil perkalian serangkaian angka kompleks.",
+      "parameters": {
+        "factor1": {
+          "name": "faktor 1",
+          "detail": "Angka atau rentang pertama yang akan dihitung untuk produk."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Angka kompleks atau rentang tambahan yang harus dihitung untuk produk."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Satu bilangan kompleks dibagi dengan bilangan kompleks lainnya.",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Angka kompleks yang akan dibagi."
+        },
+        "divisor": {
+          "name": "pembagi",
+          "detail": "Angka kompleks yang akan dibagi."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Mengembalikan kebalikan dari nilai logika yang diberikan.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ekspresi_logika",
+          "detail": "Suatu ekspresi atau referensi ke sel yang memuat ekspresi yang merepresentasikan suatu nilai logika."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Nilai logika `benar`."
+    },
+    "FALSE": {
+      "description": "Nilai logika `salah`."
+    },
+    "AND": {
+      "description": "Operator logika `dan`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ekspresi_logika1",
+          "detail": "Ekspresi atau referensi ke sel yang berisi ekspresi yang menyatakan suatu nilai logika, misalnya `TRUE` atau `FALSE`, atau ekspresi yang dapat dipaksa menjadi nilai logika."
+        },
+        "logical_expression2": {
+          "name": "ekspresi_logika2",
+          "detail": "Lebih banyak ekspresi yang mewakili nilai logika."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Nilai jika bukan kesalahan, jika tidak argumen ke-2.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dikembalikan jika `nilai` itu sendiri bukan kesalahan."
+        },
+        "value_if_error": {
+          "name": "nilai_jika_kesalahan",
+          "detail": "Nilai yang dikembalikan fungsi jika `nilai` adalah kesalahan."
+        }
+      }
+    },
+    "IF": {
+      "description": "Mengembalikan nilai tergantung pada ekspresi logika.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ekspresi_logika",
+          "detail": "Ekspresi atau referensi ke sel yang berisi ekspresi yang mewakili beberapa nilai logika, yaitu `TRUE` atau `FALSE`."
+        },
+        "value_if_true": {
+          "name": "nilai_jika_benar",
+          "detail": "Nilai yang dikembalikan fungsi jika `logical_expression` adalah `TRUE`."
+        },
+        "value_if_false": {
+          "name": "nilai_jika_salah",
+          "detail": "Nilai yang dikembalikan fungsi jika `logical_expression` adalah `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "Operator logika `atau`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ekspresi_logika1",
+          "detail": "Ekspresi atau referensi ke sel yang berisi ekspresi yang menyatakan suatu nilai logika, misalnya `TRUE` atau `FALSE`, atau ekspresi yang dapat dipaksa menjadi nilai logika."
+        },
+        "logical_expression2": {
+          "name": "ekspresi_logika2",
+          "detail": "Lebih banyak ekspresi yang mengevaluasi ke nilai logika."
+        }
+      }
+    },
+    "NE": {
+      "description": "Tidak setara.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai yang akan diuji terhadap `nilai1` untuk ketidaksetaraan."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Setara.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai yang akan diuji terhadap `value1` untuk kesetaraan."
+        }
+      }
+    },
+    "GT": {
+      "description": "Benar-benar lebih besar dari.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang akan diuji harus lebih besar dari `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Lebih besar dari atau sama dengan.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang akan diuji apakah lebih besar dari atau sama dengan `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "LT": {
+      "description": "Kurang dari.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang akan diuji adalah kurang dari `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Kurang dari atau sama dengan.",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang akan diuji adalah kurang dari atau sama dengan `nilai2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai kedua."
+        }
+      }
+    },
+    "ADD": {
+      "description": "Jumlah dua angka",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Penambahan pertama."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Penambahan kedua."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "Perbedaan dua angka",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang dikurangi, atau angka yang akan dikurangi."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Pengurang, atau angka yang akan dikurangkan dari `nilai1`."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "Hasil dari dua angka",
+      "parameters": {
+        "factor1": {
+          "name": "faktor 1",
+          "detail": "Perkalian pertama."
+        },
+        "factor2": {
+          "name": "faktor2",
+          "detail": "Perkalian kedua."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Satu angka dibagi dengan angka lainnya",
+      "parameters": {
+        "dividend": {
+          "name": "dividen",
+          "detail": "Angka yang akan dibagi."
+        },
+        "divisor": {
+          "name": "pembagi",
+          "detail": "Angka yang akan dibagi."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "Penggabungan dua nilai",
+      "parameters": {
+        "value1": {
+          "name": "nilai1",
+          "detail": "Nilai yang akan ditambahkan `value2`."
+        },
+        "value2": {
+          "name": "nilai2",
+          "detail": "Nilai yang akan ditambahkan ke `value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Nilai diartikan sebagai persentase.",
+      "parameters": {
+        "percentage": {
+          "name": "persentase",
+          "detail": "Nilai yang akan ditafsirkan sebagai persentase."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Menambahkan string satu sama lain.",
+      "parameters": {
+        "string1": {
+          "name": "rangkaian 1",
+          "detail": "Tali awal."
+        },
+        "string2": {
+          "name": "tali2",
+          "detail": "Lebih banyak string yang ditambahkan secara berurutan."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Nilai peta unicode numerik karakter.",
+      "parameters": {
+        "string": {
+          "name": "rangkaian",
+          "detail": "String yang nilai peta Unicode karakter pertamanya akan dikembalikan."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Mendapatkan karakter yang dikaitkan dengan angka.",
+      "parameters": {
+        "table_number": {
+          "name": "nomor_tabel",
+          "detail": "Jumlah karakter yang akan dicari dari tabel Unicode saat ini dalam format desimal."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Menghitung nilai angka romawi.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "angka_romawi",
+          "detail": "Angka Romawi untuk format, yang nilainya harus antara 1 dan 3999, inklusif."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Memformat angka dalam angka Romawi.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Angka yang akan diformat, antara 1 dan 3999, inklusif."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Mengekstrak sub-string yang cocok dengan ekspresi reguler.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks masukan."
+        },
+        "regular_expression": {
+          "name": "ekspresi_reguler",
+          "detail": "Bagian pertama dari `teks` yang cocok dengan ekspresi ini akan dikembalikan."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Apakah suatu teks cocok dengan ekspresi reguler.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang akan diuji terhadap ekspresi reguler."
+        },
+        "regular_expression": {
+          "name": "ekspresi_reguler",
+          "detail": "Ekspresi reguler untuk menguji teks."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Mengganti teks dengan ekspresi reguler.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang sebagiannya akan diganti."
+        },
+        "regular_expression": {
+          "name": "ekspresi_reguler",
+          "detail": "Ekspresi reguler. Semua contoh yang cocok dalam `teks` akan diganti."
+        },
+        "replacement": {
+          "name": "penggantian",
+          "detail": "Teks yang akan disisipkan ke dalam teks asli."
+        }
+      }
+    },
+    "T": {
+      "description": "Argumen string sebagai teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen yang akan diubah menjadi teks."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Memformat angka dengan jumlah tempat desimal yang tetap.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Angka yang akan diformat."
+        },
+        "number_of_places": {
+          "name": "jumlah_tempat",
+          "detail": "Jumlah tempat desimal yang akan ditampilkan dalam hasil."
+        },
+        "suppress_separator": {
+          "name": "pemisah_tekan",
+          "detail": "Apakah pemisah ribuan yang digunakan di beberapa lokal akan dihilangkan atau tidak (misalnya `1.000` menjadi `1000`). Pemisah akan ada jika nilai ini 0 atau dihilangkan, dan tidak ada jika tidak."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Posisi pertama string yang ditemukan dalam teks, peka huruf besar/kecil.",
+      "parameters": {
+        "search_for": {
+          "name": "mencari_untuk",
+          "detail": "String yang dicari dalam `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "teks_untuk_dicari",
+          "detail": "Teks yang akan dicari kemunculan pertama `search_for`."
+        },
+        "starting_at": {
+          "name": "mulai_pada",
+          "detail": "Karakter dalam `text_to_search` untuk memulai pencarian."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Posisi di mana string pertama kali ditemukan dalam teks (biner).",
+      "parameters": {
+        "search_for": {
+          "name": "mencari_untuk",
+          "detail": "String yang dicari dalam `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "teks_untuk_dicari",
+          "detail": "Teks yang akan dicari kemunculan pertama `search_for`."
+        },
+        "starting_at": {
+          "name": "mulai_pada",
+          "detail": "Karakter dalam `text_to_search` untuk memulai pencarian."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Menggabungkan elemen-elemen array dengan pembatas.",
+      "parameters": {
+        "delimiter": {
+          "name": "pembatas",
+          "detail": "Karakter atau string yang akan ditempatkan di antara setiap nilai yang dirangkai."
+        },
+        "value_or_array1": {
+          "name": "nilai_atau_array1",
+          "detail": "Nilai atau nilai-nilai yang akan ditambahkan menggunakan `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "nilai_atau_array2",
+          "detail": "Lebih banyak nilai yang akan ditambahkan menggunakan `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Substring dari awal string yang ditentukan.",
+      "parameters": {
+        "string": {
+          "name": "rangkaian",
+          "detail": "String dari mana bagian kiri akan dikembalikan."
+        },
+        "number_of_characters": {
+          "name": "jumlah_karakter",
+          "detail": "Jumlah karakter yang akan dikembalikan dari sisi kiri `string`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Sub-string dari akhir string yang ditentukan.",
+      "parameters": {
+        "string": {
+          "name": "rangkaian",
+          "detail": "String dari mana bagian yang benar akan dikembalikan."
+        },
+        "number_of_characters": {
+          "name": "jumlah_karakter",
+          "detail": "Jumlah karakter yang akan dikembalikan dari sisi kanan `string`."
+        }
+      }
+    },
+    "MID": {
+      "description": "Suatu segmen tali.",
+      "parameters": {
+        "string": {
+          "name": "rangkaian",
+          "detail": "String untuk mengekstrak segmen."
+        },
+        "starting_at": {
+          "name": "mulai_pada",
+          "detail": "Indeks di sebelah kiri `string` untuk memulai ekstraksi. Karakter pertama dalam `string` memiliki indeks 1."
+        },
+        "extract_length": {
+          "name": "ekstrak_panjang",
+          "detail": "Panjang segmen yang akan diekstrak."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Panjang sebuah tali.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "String yang panjangnya akan dikembalikan."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Panjang string dalam byte.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "String yang panjangnya akan dikembalikan."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Mengubah string tertentu menjadi huruf kecil.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "String yang akan diubah menjadi huruf kecil."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Mengubah string tertentu menjadi huruf besar.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "String yang akan diubah ke huruf besar."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "Menguji apakah dua string identik.",
+      "parameters": {
+        "string1": {
+          "name": "rangkaian 1",
+          "detail": "String pertama yang dibandingkan"
+        },
+        "string2": {
+          "name": "tali2",
+          "detail": "String kedua untuk dibandingkan"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Mengganti bagian rangkaian teks dengan teks yang berbeda.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang sebagiannya akan diganti."
+        },
+        "position": {
+          "name": "posisi",
+          "detail": "Posisi di mana penggantian akan dimulai (dimulai dari 1)."
+        },
+        "length": {
+          "name": "panjang",
+          "detail": "Jumlah karakter dalam teks yang akan diganti."
+        },
+        "new_text": {
+          "name": "teks_baru",
+          "detail": "Teks yang akan disisipkan ke dalam teks asli."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Teks yang ditentukan diulang sejumlah kali.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "teks_yang_akan_diulang",
+          "detail": "Karakter atau string yang akan diulang."
+        },
+        "number_of_repetitions": {
+          "name": "jumlah_pengulangan",
+          "detail": "Jumlah kali `text_to_repeat` akan muncul dalam nilai yang dikembalikan."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Posisi pertama string ditemukan dalam teks, mengabaikan huruf besar/kecil.",
+      "parameters": {
+        "search_for": {
+          "name": "mencari_untuk",
+          "detail": "String yang dicari dalam `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "teks_untuk_dicari",
+          "detail": "Teks yang akan dicari kemunculan pertama `search_for`."
+        },
+        "starting_at": {
+          "name": "mulai_pada",
+          "detail": "Karakter dalam `text_to_search` untuk memulai pencarian."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Mengganti teks yang ada dengan teks baru dalam suatu string.",
+      "parameters": {
+        "text_to_search": {
+          "name": "teks_untuk_dicari",
+          "detail": "Teks yang hendak dicari dan diganti."
+        },
+        "search_for": {
+          "name": "mencari_untuk",
+          "detail": "String yang dicari dalam `text_to_search`."
+        },
+        "replace_with": {
+          "name": "mengganti_dengan",
+          "detail": "String yang akan menggantikan `search_for`."
+        },
+        "occurrence_number": {
+          "name": "nomor_kejadian",
+          "detail": "Contoh `search_for` dalam `text_to_search` yang akan diganti dengan `replace_with`. Secara default, semua kemunculan `search_for` akan diganti; namun, jika `occurrence_number` ditentukan, hanya contoh `search_for` yang ditunjukkan yang akan diganti."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Menghapus karakter yang tidak dapat dicetak dari sepotong teks.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks yang karakternya yang tidak dapat dicetak harus dihapus."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Memformat angka menjadi teks.",
+      "parameters": {
+        "number": {
+          "name": "nomor",
+          "detail": "Angka, tanggal, atau waktu yang akan diformat."
+        },
+        "format": {
+          "name": "format",
+          "detail": "Pola yang digunakan untuk memformat angka, diapit dalam tanda kutip."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Menghapus karakter spasi.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "Teks atau referensi ke sel yang berisi teks yang akan dipangkas."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Mengonversi string tanggal/waktu/angka menjadi angka.",
+      "parameters": {
+        "text": {
+          "name": "teks",
+          "detail": "String yang berisi nilai yang akan dikonversi."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Menjadikan setiap kata dalam string tertentu menjadi kapital.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "teks_yang_dibuat_dengan_kapitalisasi",
+          "detail": "Teks yang akan dikembalikan dengan huruf pertama setiap kata dalam huruf besar dan semua huruf lainnya dalam huruf kecil."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Konversi satuan untuk angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai numerik dalam `start_unit` yang akan dikonversi ke `end_unit`."
+        },
+        "start_unit": {
+          "name": "mulai_unit",
+          "detail": "Unit awal, unit yang saat ini ditetapkan ke `nilai`."
+        },
+        "end_unit": {
+          "name": "akhir_unit",
+          "detail": "Satuan ukuran untuk mengkonversi argumen, `nilai`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Jumlah selisih kuadrat.",
+      "parameters": {
+        "array_x": {
+          "name": "susunan_x",
+          "detail": "Susunan atau rentang nilai yang kuadratnya akan dikurangi dengan kuadrat entri yang bersesuaian dalam `array_y` dan dijumlahkan."
+        },
+        "array_y": {
+          "name": "susunan_y",
+          "detail": "Rangkaian atau rentang nilai yang kuadratnya akan dikurangi dari kuadrat entri yang bersesuaian dalam `array_x` dan dijumlahkan."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Jumlah dari jumlah kuadrat.",
+      "parameters": {
+        "array_x": {
+          "name": "susunan_x",
+          "detail": "Susunan atau rentang nilai yang kuadratnya akan ditambahkan ke kuadrat entri yang sesuai dalam `array_y` dan dijumlahkan."
+        },
+        "array_y": {
+          "name": "susunan_y",
+          "detail": "Susunan atau rentang nilai yang kuadratnya akan ditambahkan ke kuadrat entri yang sesuai dalam `array_x` dan dijumlahkan."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Jumlah kuadrat perbedaan.",
+      "parameters": {
+        "array_x": {
+          "name": "susunan_x",
+          "detail": "Rangkaian atau rentang nilai yang akan dikurangi dengan entri yang bersesuaian dalam `array_y`, dikuadratkan, dan dijumlahkan."
+        },
+        "array_y": {
+          "name": "susunan_y",
+          "detail": "Rangkaian atau rentang nilai yang akan dikurangi dari entri terkait dalam `array_x`, hasilnya dikuadratkan, dan semua hasil tersebut dijumlahkan."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Mengubah baris dan kolom suatu array.",
+      "parameters": {
+        "array_or_range": {
+          "name": "array_atau_rentang",
+          "detail": "Susunan atau rentang yang baris dan kolomnya akan ditukar."
+        }
+      }
+    },
+    "TREND": {
+      "description": "Menyesuaikan titik dengan tren linier yang diperoleh melalui kuadrat terkecil.",
+      "parameters": {
+        "known_data_y": {
+          "name": "data_yang_diketahui_y",
+          "detail": "Susunan atau rentang yang memuat nilai-nilai dependen (y) yang sudah diketahui, digunakan untuk menyesuaikan kurva dengan tren linier ideal."
+        },
+        "known_data_x": {
+          "name": "data_yang_diketahui_x",
+          "detail": "Nilai variabel independen yang sesuai dengan `data_yang_diketahui_y`."
+        },
+        "new_data_x": {
+          "name": "data_baru_x",
+          "detail": "Titik data untuk mengembalikan nilai `y` pada kurva ideal yang sesuai."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Diberi bentuk linear umum `y = m*x+b` untuk suatu kurva yang sesuai, menghitung `b` jika `BENAR` atau memaksa `b` menjadi `0` dan hanya menghitung nilai `m` jika `SALAH`, yaitu memaksa kurva yang sesuai melewati titik asal."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Distribusi frekuensi array.",
+      "parameters": {
+        "data": {
+          "name": "data",
+          "detail": "Susunan atau rentang yang berisi nilai yang akan dihitung."
+        },
+        "classes": {
+          "name": "kelas",
+          "detail": "Susunan atau rentang yang berisi kumpulan kelas."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Menyesuaikan poin dengan tren pertumbuhan eksponensial.",
+      "parameters": {
+        "known_data_y": {
+          "name": "data_yang_diketahui_y",
+          "detail": "Susunan atau rentang yang memuat nilai-nilai dependen (y) yang sudah diketahui, digunakan untuk menyesuaikan kurva pertumbuhan eksponensial ideal."
+        },
+        "known_data_x": {
+          "name": "data_yang_diketahui_x",
+          "detail": "Nilai variabel independen yang sesuai dengan `data_yang_diketahui_y`."
+        },
+        "new_data_x": {
+          "name": "data_baru_x",
+          "detail": "Titik data untuk mengembalikan nilai `y` pada kurva ideal yang sesuai."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Diberikan bentuk eksponensial umum `y = b*m^x` untuk kurva yang sesuai, hitung `b` jika `BENAR` atau paksa `b` menjadi `1` dan hanya hitung nilai `m` jika `SALAH`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "Tren linier paling sesuai melalui kuadrat terkecil.",
+      "parameters": {
+        "known_data_y": {
+          "name": "data_yang_diketahui_y",
+          "detail": "Susunan atau rentang yang memuat nilai-nilai dependen (y) yang sudah diketahui, digunakan untuk menyesuaikan kurva dengan tren linier ideal."
+        },
+        "known_data_x": {
+          "name": "data_yang_diketahui_x",
+          "detail": "Nilai variabel independen yang sesuai dengan `data_yang_diketahui_y`."
+        },
+        "calculate_b": {
+          "name": "hitung_b",
+          "detail": "Diberikan bentuk linear `y = m*x+b`, hitung titik potong y (`b`) jika `BENAR`. Jika tidak, paksa `b` menjadi `0` dan hanya hitung nilai `m` jika `SALAH`, yaitu memaksa kurva yang sesuai melewati titik asal."
+        },
+        "verbose": {
+          "name": "bertele-tele",
+          "detail": "Bendera yang menentukan apakah akan mengembalikan statistik regresi tambahan atau hanya koefisien linear dan intersep y (default)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "Kurva pertumbuhan eksponensial yang paling sesuai.",
+      "parameters": {
+        "known_data_y": {
+          "name": "data_yang_diketahui_y",
+          "detail": "Susunan atau rentang yang memuat nilai-nilai dependen (y) yang sudah diketahui, digunakan untuk menyesuaikan kurva pertumbuhan eksponensial ideal."
+        },
+        "known_data_x": {
+          "name": "data_yang_diketahui_x",
+          "detail": "Nilai variabel independen yang sesuai dengan `data_yang_diketahui_y`."
+        },
+        "b": {
+          "name": "B",
+          "detail": "Diberikan bentuk eksponensial umum `y = b*m^x` untuk kurva yang sesuai, hitung `b` jika `BENAR` atau paksa `b` menjadi `1` dan hanya hitung nilai `m` jika `SALAH`."
+        },
+        "verbose": {
+          "name": "bertele-tele",
+          "detail": "Bendera yang menentukan apakah akan mengembalikan statistik regresi tambahan atau hanya koefisien dan eksponen yang dihitung."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Determinan matriks dari matriks persegi.",
+      "parameters": {
+        "square_matrix": {
+          "name": "matriks_persegi",
+          "detail": "Suatu susunan atau rentang dengan jumlah baris dan kolom yang sama yang mewakili suatu matriks yang determinannya akan dihitung."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Invers perkalian matriks persegi.",
+      "parameters": {
+        "square_matrix": {
+          "name": "matriks_persegi",
+          "detail": "Suatu susunan atau rentang dengan jumlah baris dan kolom yang sama yang mewakili suatu matriks yang invers perkaliannya akan dihitung."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "Produk matriks dari dua matriks.",
+      "parameters": {
+        "matrix1": {
+          "name": "matriks1",
+          "detail": "Matriks pertama dalam operasi perkalian matriks, direpresentasikan sebagai array atau range."
+        },
+        "matrix2": {
+          "name": "matriks2",
+          "detail": "Matriks kedua dalam operasi perkalian matriks, direpresentasikan sebagai array atau range."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "Jumlah perkalian elemen-elemen dalam dua larik.",
+      "parameters": {
+        "array1": {
+          "name": "susunan1",
+          "detail": "Susunan atau rentang pertama yang entri-entrinya akan dikalikan dengan entri-entri terkait pada susunan atau rentang kedua."
+        },
+        "array2": {
+          "name": "susunan2",
+          "detail": "Susunan atau rentang kedua yang entri-entrinya akan dikalikan dengan entri-entri terkait pada susunan atau rentang pertama tersebut."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Apakah suatu nilai merupakan rumus.",
+      "parameters": {
+        "cell": {
+          "name": "sel",
+          "detail": "Sel yang akan diverifikasi apakah berisi rumus."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Mendapatkan informasi tentang sel.",
+      "parameters": {
+        "info_type": {
+          "name": "info_jenis",
+          "detail": "Jenis informasi yang diminta (lihat artikel untuk jenis yang tersedia)"
+        },
+        "reference": {
+          "name": "referensi",
+          "detail": "Referensi ke sel."
+        }
+      }
+    },
+    "NA": {
+      "description": "Kesalahan `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "Apakah sel yang direferensikan kosong.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Referensi ke sel yang akan diperiksa kekosongannya."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Apakah suatu nilai merupakan kesalahan selain `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai jenis kesalahan selain `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Apakah suatu nilai merupakan kesalahan.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai jenis kesalahan."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Apakah suatu nilai `benar` atau `salah`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai logika `TRUE` atau `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Apakah suatu nilai merupakan kesalahan `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan dibandingkan dengan nilai kesalahan `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Apakah suatu nilai bersifat non-tekstual.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diperiksa."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Apakah suatu nilai merupakan angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai angka."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Apakah suatu nilai merupakan referensi sel yang valid.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai referensi sel."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Apakah suatu nilai berupa teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai teks."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Dapatkan jenis suatu nilai.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang jenisnya akan ditentukan."
+        }
+      }
+    },
+    "N": {
+      "description": "Argumen diberikan sebagai angka.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen yang akan diubah menjadi angka."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Mengonversi angka yang diberikan menjadi tanggal.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen atau referensi ke sel yang akan diubah menjadi tanggal."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Mengonversi nilai numerik apa pun menjadi angka murni.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen atau referensi ke sel yang akan diubah menjadi angka murni."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Mengonversi nilai numerik yang diberikan menjadi nilai teks.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen atau referensi ke sel yang akan diubah menjadi teks."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Mengonversi angka yang diberikan ke nilai dolar.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen atau referensi ke sel yang akan dikonversi ke nilai dolar."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Mengonversi angka yang diberikan menjadi persentase.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Argumen atau referensi ke sel yang akan diubah menjadi persentase."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Nilai tunggal dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Nilai maksimum dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Nilai minimum dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Rata-rata sekumpulan nilai dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Menghitung nilai dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Menghitung nilai dan teks dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Produk nilai dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Simpangan baku sampel populasi dari tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Simpangan baku seluruh populasi dari tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Jumlah nilai dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Varians sampel populasi dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Varians suatu populasi dari rentang seperti tabel.",
+      "parameters": {
+        "database": {
+          "name": "basis data",
+          "detail": "Susunan atau rentang yang berisi data yang akan dipertimbangkan, terstruktur sedemikian rupa sehingga baris pertama berisi label untuk nilai setiap kolom."
+        },
+        "field": {
+          "name": "bidang",
+          "detail": "Menunjukkan kolom mana dalam `database` yang berisi nilai yang akan diekstraksi dan dioperasikan."
+        },
+        "criteria": {
+          "name": "kriteria",
+          "detail": "Suatu susunan atau rentang yang memuat nol atau lebih kriteria untuk memfilter nilai-nilai `database` sebelum beroperasi."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Dapatkan jenis kelamin berdasarkan nomor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nomor ID",
+          "detail": "Nomor ID atau rentang 15 digit atau 18 digit."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Dapatkan provinsi tempat lahir berdasarkan nomor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nomor ID",
+          "detail": "Nomor ID atau rentang 15 digit atau 18 digit."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Dapatkan konstelasi berdasarkan nomor ID.",
+      "parameters": {
+        "ID number": {
+          "name": "Nomor ID",
+          "detail": "Nomor ID atau rentang 15 digit atau 18 digit."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "Mengembalikan volume perdagangan saham yang sesuai dari saham A.",
+      "parameters": {
+        "Stock code": {
+          "name": "Kode saham",
+          "detail": "Kode saham 6 digit, wajib diisi."
+        },
+        "Date": {
+          "name": "Tanggal",
+          "detail": "Hari perdagangan saham, defaultnya adalah hari perdagangan terakhir"
+        },
+        "Reversion and exclusion": {
+          "name": "Pembalikan dan pengecualian",
+          "detail": "Pilih jenis restorasi saham yang paling tepat, default ke 0 [pembalikan sebelumnya], 1 [harga asli], 2 [pembalikan pasca]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Apakah suatu nilai merupakan tanggal.",
+      "parameters": {
+        "value": {
+          "name": "nilai",
+          "detail": "Nilai yang akan diverifikasi sebagai tanggal."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Hasilkan grafik garis sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Line color": {
+          "name": "Warna garis",
+          "detail": "Warna garis pada grafik garis dapat berupa rentang A1, nilai indeks tabel warna, atau nilai warna tertentu. Atur ke 0 atau false untuk tidak menampilkannya. Mendukung regx, rgb, rgba, dll. Default #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Ketebalan garis",
+          "detail": "Ketebalan garis grafik garis, defaultnya adalah 1px"
+        },
+        "Auxiliary line": {
+          "name": "Garis bantu",
+          "detail": "Garis horizontal, yang bisa berupa nilai minimum, maksimum, rata-rata, median, rentang atau nilai khusus, default 0 tidak ada"
+        },
+        "Auxiliary line color": {
+          "name": "Warna garis bantu",
+          "detail": "Pengaturan warna garis bantu, sama dengan konfigurasi warna garis, default #000"
+        },
+        "Maximum mark": {
+          "name": "Nilai maksimum",
+          "detail": "Mengidentifikasi nilai maksimum grafik garis, konfigurasi warna garis yang sama, default 0 tidak ditampilkan"
+        },
+        "Minimum mark": {
+          "name": "Nilai minimum",
+          "detail": "Identifikasi nilai minimum grafik garis, konfigurasi warna garis yang sama, default 0 tidak ditampilkan"
+        },
+        "Mark size": {
+          "name": "Ukuran tanda",
+          "detail": "Pengaturan ukuran tanda maksimum dan minimum, defaultnya adalah 1,5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Hasilkan grafik garis percikan histogram vertikal kumulatif",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Stack by column": {
+          "name": "Tumpuk berdasarkan kolom",
+          "detail": "Jika Anda perlu menumpuk berdasarkan baris, atur item ini ke false atau 0, defaultnya adalah 1"
+        },
+        "Bar interval": {
+          "name": "Interval batang",
+          "detail": "Jarak antar batang, defaultnya adalah 1"
+        },
+        "Max": {
+          "name": "Maksimal",
+          "detail": "Nilai maksimum dari bar kumulatif, digunakan untuk mengatur panjang bar, defaultnya adalah menghitung secara otomatis salah, otomatis, nol"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna dapat mengatur warna batang masing-masing dimensi secara individual, yang dapat diatur ke rentang A1:A10, dst. Nilai defaultnya adalah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Hasilkan grafik batang horizontal kumulatif sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Stack by column": {
+          "name": "Susun berdasarkan kolom",
+          "detail": "Jika Anda perlu menumpuk berdasarkan baris, atur item ini ke false atau 0, defaultnya adalah 1"
+        },
+        "Bar interval": {
+          "name": "Interval batang",
+          "detail": "Jarak antar batang, defaultnya adalah 1"
+        },
+        "Max": {
+          "name": "Maksimal",
+          "detail": "Nilai maksimum dari bar kumulatif, digunakan untuk mengatur panjang bar, defaultnya adalah menghitung secara otomatis salah, otomatis, nol"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna dapat mengatur warna batang masing-masing dimensi secara individual, yang dapat diatur ke rentang A1:A10, dst. Nilai defaultnya adalah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Hasilkan grafik percikan grafik diskrit",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Segmentation threshold": {
+          "name": "Ambang batas segmentasi",
+          "detail": "Perbedaan warna kolom grafik diskrit, misalnya: jika nilainya 0, biru lebih besar dari 0, merah kurang dari 0, dan defaultnya adalah 0"
+        },
+        "Above threshold color": {
+          "name": "Di atas warna ambang batas",
+          "detail": "Warna garis pada grafik garis dapat berupa rentang A1, nilai indeks tabel warna, atau nilai warna tertentu. Atur ke 0 atau false untuk tidak menampilkannya. Mendukung regx, rgb, rgba, dll. Default #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Di bawah warna ambang batas",
+          "detail": "Pengaturan warna bilah di bawah ambang batas, sama dengan warna di atas ambang batas, default #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Hasilkan grafik tiga keadaan sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Bar interval": {
+          "name": "Interval batang",
+          "detail": "Jarak antar batang, defaultnya adalah 1"
+        },
+        "Bar color": {
+          "name": "Warna batang",
+          "detail": "Warna garis pada grafik garis dapat berupa rentang A1, nilai indeks tabel warna, atau nilai warna tertentu. Atur ke 0 atau false untuk tidak menampilkannya. Mendukung regx, rgb, rgba, dll. Default #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Warna batang negatif",
+          "detail": "Pengaturan warna batang negatif, mewakili warna nilai negatif, sama seperti konfigurasi warna batang, default #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Warna batang nilai nol",
+          "detail": "Pengaturan warna batang nilai nol, mewakili warna nilai 0, konfigurasi warna batang yang sama, default #999"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Palet warna dapat mengatur warna setiap batang secara individual, beberapa pengaturan dapat diatur, dan dua format didukung: 1 warna seperti #000, yang berarti warna batang pertama berwarna hitam; 2 rentang nilai: warna, seperti -2:#000 menunjukkan bahwa batang dengan nilai -2 berwarna hitam, 0:5:#000 menunjukkan bahwa batang dengan nilai 0-5 berwarna hitam, dan defaultnya kosong"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Hasilkan diagram pai sparklines",
+      "parameters": {
+        "Range": {
+          "name": "Jangkauan",
+          "detail": "Rentang, Nilai dapat dihitung secara efektif, seperti A1:A20, {1,2,3,4,5}, dll."
+        },
+        "Rotation angle": {
+          "name": "Sudut rotasi",
+          "detail": "Sudut rotasi diagram lingkaran, defaultnya adalah 0"
+        },
+        "border": {
+          "name": "berbatasan",
+          "detail": "Ukuran batas diagram pai, defaultnya tidak ada 0"
+        },
+        "Border color": {
+          "name": "Warna batas",
+          "detail": "Warna batas diagram lingkaran, defaultnya adalah #000"
+        },
+        "Color palette": {
+          "name": "Palet warna",
+          "detail": "Warna irisan dapat diatur dalam palet, yang dapat diatur ke rentang A1:A10, dst. Nilai defaultnya adalah #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Membuat poin-poin sparkline",
+      "parameters": {
+        "Target": {
+          "name": "Target",
+          "detail": "Nilai numerik dapat dihitung secara efektif untuk nilai target yang dicapai, seperti A1, 100, dst."
+        },
+        "achieved": {
+          "name": "tercapai",
+          "detail": "Hanya jika nilai sudah lengkap maka nilainya dapat dihitung secara efektif, seperti A1, 100, dan seterusnya."
+        },
+        "Contrast": {
+          "name": "Kontras",
+          "detail": "Nilai perbandingan, seperti kelebihan, minimum, dan batas bawah untuk penghargaan, dapat dihitung secara efektif, seperti A1, 100, dll. Anda dapat mengatur hingga 9 nilai perbandingan"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Gabungkan grafik sparklines ke dalam satu sel",
+      "parameters": {
+        "config": {
+          "name": "konfigurasi",
+          "detail": "Pengaturan bagan Sparklines, seperti A1:A20, bagan pai yang sudah lengkap, pengaturan bagan garis, dsb."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Mengurutkan baris rentang berdasarkan kolom yang ditentukan.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Data yang akan diurutkan."
+        },
+        "sort_column": {
+          "name": "urutkan_kolom",
+          "detail": "Indeks kolom dalam `range` atau rentang di luar `range` yang berisi nilai yang akan diurutkan."
+        },
+        "is_ascending": {
+          "name": "sedang_naik",
+          "detail": "`TRUE` atau `FALSE` menunjukkan apakah akan mengurutkan `sort_column` dalam urutan menaik. `FALSE` mengurutkan dalam urutan menurun."
+        },
+        "sort_column2": {
+          "name": "urutkan_kolom2",
+          "detail": "Kolom tambahan."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Memfilter rentang berdasarkan kondisi yang disediakan.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Data yang akan disaring."
+        },
+        "condition1": {
+          "name": "kondisi1",
+          "detail": "Kolom atau baris yang berisi nilai benar atau salah yang sesuai dengan kolom atau baris pertama `rentang`, atau rumus array yang mengevaluasi ke benar atau salah."
+        },
+        "condition2": {
+          "name": "kondisi2",
+          "detail": "Baris atau kolom tambahan yang berisi nilai boolean `TRUE` atau `FALSE` yang menunjukkan apakah baris atau kolom terkait dalam `range` harus melewati `FILTER`. Dapat juga berisi ekspresi rumus array yang mengevaluasi ke baris atau kolom tersebut. Semua kondisi harus bertipe sama (baris atau kolom). Mencampur kondisi baris dan kondisi kolom tidak diizinkan."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Baris unik dalam rentang sumber yang disediakan.",
+      "parameters": {
+        "range": {
+          "name": "jangkauan",
+          "detail": "Data yang akan difilter berdasarkan entri unik."
+        },
+        "by_col": {
+          "name": "oleh_col",
+          "detail": "[Opsi] - Nilai logika, menunjukkan cara membandingkan; berdasarkan baris = FALSE() atau dihilangkan; berdasarkan kolom = TRUE()."
+        },
+        "occurs_once": {
+          "name": "terjadi_sekali",
+          "detail": "[Opsi] - Nilai logika, hanya satu kemunculan dalam nilai unik yang dikembalikan = TRUE(); termasuk semua nilai unik = FALSE() atau dihilangkan."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Mengembalikan kisi angka acak.",
+      "parameters": {
+        "rows": {
+          "name": "baris",
+          "detail": "Jumlah baris yang akan diisi dengan angka acak."
+        },
+        "columns": {
+          "name": "kolom",
+          "detail": "Jumlah kolom yang akan diisi dengan angka acak."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Mengembalikan kisi nomor urut.",
+      "parameters": {
+        "rows": {
+          "name": "baris",
+          "detail": "Jumlah baris pada kisi fungsi yang dihasilkan."
+        },
+        "columns": {
+          "name": "kolom",
+          "detail": "Jumlah kolom dalam kisi hasil fungsi. Jika dihilangkan, kisi hasil akan memiliki 1 kolom."
+        },
+        "start": {
+          "name": "awal",
+          "detail": "Angka yang digunakan untuk memulai urutan. Jika dihilangkan, urutan akan dimulai dari 1."
+        },
+        "step": {
+          "name": "melangkah",
+          "detail": "Jumlah perbedaan setiap nilai dalam urutan. Jika dihilangkan, setiap nilai akan berbeda sebesar 1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Mengevaluasi berdasarkan rumus atau ekspresi literal.",
+      "parameters": {
+        "expression": {
+          "name": "ekspresi",
+          "detail": "Rumus atau ekspresi"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Memanggil fungsi pada server/API back-end jarak jauh.",
+      "parameters": {
+        "remote_expression": {
+          "name": "ekspresi_jarak_jauh",
+          "detail": "Rumus"
+        }
+      }
+    }
   }
 }

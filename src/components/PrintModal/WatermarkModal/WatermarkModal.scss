@@ -336,24 +336,14 @@
     padding: 16px;
 
     .button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 6px 18px;
       width: auto;
-      width: fit-content;
-      border-radius: 4px;
-      border: 0px;
-      height: 32px;
-      cursor: pointer;
-      font-size: 13px;
 
-      &.ok {
-        color: var(--primary-button-text);
-        background: var(--primary-button);
+      &.add-watermark {
+        @extend %default-button-selected;
 
         &:hover {
-          background: var(--primary-button-hover);
+          @extend %default-button-hover;
         }
 
         @include mobile {
@@ -371,11 +361,12 @@
       }
     }
 
-    .reset-settings {
+     .reset-settings {
       @include button-reset;
       cursor: pointer;
       background: none;
       border: 0;
+      border-radius: 4px;
       color: var(--secondary-button-text);
       display: flex;
       font-size: 13px;
@@ -383,6 +374,10 @@
 
       &:hover {
         color: var(--secondary-button-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--focus-visible-outline) !important;
       }
 
       @include mobile {

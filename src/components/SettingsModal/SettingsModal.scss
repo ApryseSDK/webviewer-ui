@@ -136,26 +136,27 @@
       width: 100%;
       background: var(--divider);
     }
+  }
 
-    @include mobile {
+  @include mobile {
+    .container {
+      width: 100%;
       height: 100%;
-
+    
       .body {
         flex-direction: column;
 
         .settings-tabs-container {
           width: 100%;
-          position: fixed;
 
           .settings-tabs {
             display: flex;
 
             .settings-tab {
               flex: 1;
-              height: 32px;
+              height: 48px;
               margin-top: 0px;
               justify-content: center;
-              white-space: nowrap;
               min-width: 0;
 
               &.selected {
@@ -167,7 +168,7 @@
         }
 
         .settings-content {
-          margin-top: 32px;
+          margin-top: 16px;
 
           &.KeyboardShortcutTab {
             overflow-x: scroll;

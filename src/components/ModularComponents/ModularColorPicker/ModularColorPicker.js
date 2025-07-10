@@ -8,6 +8,7 @@ import Label from 'components/ModularComponents/Label';
 import ToggleElementButton from '../ToggleElementButton';
 import ColorPickerContainer from 'components/StylePicker/ColorPickerContainer';
 import { parseColor } from 'src/helpers/colorPickerHelper';
+import { defaultBackgroundColor } from 'src/helpers/initialColorStates';
 
 const ModularColorPicker = (props) => {
   const {
@@ -29,6 +30,10 @@ const ModularColorPicker = (props) => {
 
   const { t } = useTranslation();
 
+  const handleSetDefaultColor = () => {
+    onColorChange(defaultColor);
+  };
+
 
   return (isFlyoutItem ? (
     <div data-element={dataElement} className={classNames({
@@ -46,9 +51,7 @@ const ModularColorPicker = (props) => {
           label={t('action.resetDefault')}
           ariaLabel={t('action.resetDefault')}
           title={t('action.resetDefault')}
-          onClick={() => {
-            onColorChange(defaultColor);
-          }}
+          onClick={handleSetDefaultColor}
           onKeyDownHandler={onKeyDownHandler}
         />
         <ColorPickerContainer
@@ -65,7 +68,9 @@ const ModularColorPicker = (props) => {
       </div>
     </div>
   ) : (
-    <div>
+    <div className={classNames({
+      'CellBackgroundToggle': true,
+    })}>
       <ToggleElementButton
         dataElement={dataElement}
         className={className}
@@ -73,7 +78,7 @@ const ModularColorPicker = (props) => {
         img={icon}
         title={t(label)}
         toggleElement={toggleElement}
-        color={parseColor(color)}
+        color={parseColor(color) || defaultBackgroundColor}
       />
     </div>
   ));

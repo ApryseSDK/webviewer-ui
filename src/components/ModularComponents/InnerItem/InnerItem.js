@@ -25,9 +25,9 @@ import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertIma
 import PageSectionBreakDropdown from '../OfficeEditor/PageSectionBreakDropdown';
 import ListToggleButton from '../OfficeEditor/ListToggleButton';
 import OfficeEditorMarginDropdown from '../OfficeEditor/OfficeEditorMarginDropdown';
+import OfficeEditorColumnDropdown from '../OfficeEditor/OfficeEditorColumnDropdown';
 import CustomElement from 'components/CustomElement';
 import CellTextColor from '../SpreadsheetEditor/CellTextColor';
-import CellBorderColor from '../SpreadsheetEditor/CellBorderColor';
 import CellBackgroundColor from '../SpreadsheetEditor/CellBackgroundColor';
 import FontSizeDropdownContainer from '../EditorSwitchers/FontSizeDropdown/FontSizeDropdownContainer';
 import FontFamilyDropdownContainer from '../EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
@@ -75,6 +75,8 @@ const InnerItem = (props) => {
       return <StylePresetDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_MARGIN_DROPDOWN:
       return <OfficeEditorMarginDropdown key={key} {...props} />;
+    case ITEM_TYPE.OFFICE_EDITOR_COLUMN_DROPDOWN:
+      return <OfficeEditorColumnDropdown key={key} {...props} />;
     case ITEM_TYPE.CREATE_TABLE_DROPDOWN:
       return <CreateTableDropdown key={key} {...props} />;
     case ITEM_TYPE.OFFICE_EDITOR_INSERT_IMAGE_BUTTON:
@@ -95,8 +97,6 @@ const InnerItem = (props) => {
       return <SpreadsheetEditorEditModeDropdown key={key} {...props} />;
     case ITEM_TYPE.CELL_TEXT_COLOR:
       return <CellTextColor key={key} {...props} />;
-    case ITEM_TYPE.CELL_BORDER_COLOR:
-      return <CellBorderColor key={key} {...props} />;
     case ITEM_TYPE.CELL_BACKGROUND_COLOR:
       return <CellBackgroundColor key={key} {...props} />;
     case ITEM_TYPE.CELL_BORDER_STYLE_DROPDOWN:

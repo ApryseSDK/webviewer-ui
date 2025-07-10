@@ -1,7 +1,4 @@
 import { getCurrentViewRect } from './printCurrentViewHelper';
-import {
-  extractLayersFromDocument
-} from './layersHelper';
 import { convertToGrayscaleDocument } from './grayScaleHelper';
 import core from 'core';
 
@@ -31,24 +28,6 @@ export const FORMAT_DOCUMENT_FOR_PRINT_OPTION = {
 export const createCleanDocumentCopy = async (document) => {
   const copyDocument = await document.getFileData({ includeAnnotations: false });
   return window.Core.createDocument(copyDocument, { extension: 'pdf' });
-};
-
-/**
- * Prepare a base document that can handle deselected layers option for printing.
- * This function will check if the document has layers and if the user has selected
- * to print only the visible layers. If so, it will create a copy of the document
- * and extract the visible layers from it. Otherwise, it will return the original document.
- * @param {window.Core.Document} document Document object
- * @returns {window.Core.Document} Document object with the visible layers extracted
- * @ignore
- */
-export const createDocumentWithVisibleLayers = async (document, copiedDocument) => {
-  const layers = await document.getLayersArray();
-  const documentHasHiddenLayers = layers.some((layer) => !layer.visible);
-  if (core.isFullPDFEnabled() && documentHasHiddenLayers) {
-    return extractLayersFromDocument(copiedDocument, layers);
-  }
-  return copiedDocument;
 };
 
 /**
@@ -133,11 +112,53 @@ export const formatFinalDocument = async (document, printingOptions) => {
   if (includeAnnotations) {
     return formattedDoc;
   }
-
   const commentPagesArray = getPageArray(formattedDoc.getPageCount());
   const data = await formattedDoc.extractPages(commentPagesArray);
-
   return await window.Core.createDocument(data, { extension: 'pdf' });
+};
+
+/**
+ * Creates a document with the original document layers applied.
+ * @param {window.Core.Document} baseDocument Original Document
+ * @param {window.Core.Document} document Formatted Print Document
+ * @returns {window.Core.Document} Document object with the layers applied
+ * @ignore
+ */
+export const createLayerDocument = async (baseDocument, document) => {
+  const pageArray = getPageArray(document.getPageCount());
+  const [baseDocumentLayers, documentLayers] = await Promise.all([
+    baseDocument.getLayersArray(),
+    document.getLayersArray(),
+  ]);
+  const layer = syncLayersVisibility(baseDocumentLayers, documentLayers);
+
+  return document.formatDocumentForPrint(
+    pageArray,
+    FORMAT_DOCUMENT_FOR_PRINT_OPTION.DocumentAnnotationsAndComments,
+    layer
+  );
+};
+
+/**
+ * Sync the altered layers of visible layers from the base document to the formatted print document.
+ * We need to maintain the associated ids of each layer in order for formatDocumentForPrint to
+ * remove the layers that are not visible.
+ * @param {window.Core.Document.LayerContext[]} sourceLayers Original Document Layers
+ * @param {window.Core.Document.LayerContext[]} targetLayers Formatted Print Document Layers
+ * @returns {window.Core.Document.LayerContext[]} Array of layers with their visibility synced
+ * @ignore
+ */
+export const syncLayersVisibility = (sourceLayers, targetLayers) => {
+  const sourceMapLayers = new Map(
+    sourceLayers.map((layer) => [layer.name, layer.visible])
+  );
+
+  targetLayers.forEach((layer) => {
+    if (layer?.name && sourceMapLayers.has(layer.name)) {
+      layer.visible = sourceMapLayers.get(layer.name);
+    }
+  });
+  return targetLayers;
 };
 
 /**
@@ -349,7 +370,7 @@ export const processColorAnnotations = async (document, modifiedDoc, xfdfString,
  * @returns {Promise<window.Core.Document>} document with applied print options
  * @ignore
  */
-const applyPrintOptions = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+export const applyPrintOptions = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
   let processedDoc = await extractPagesWithMergedAnnotations(
     document,
     modifiedDoc,

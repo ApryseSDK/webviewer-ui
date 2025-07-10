@@ -9,6 +9,10 @@
     margin-top: 0;
   }
 
+  .spinner {
+    align-self: center;
+  }
+
   @include mobile {
     width: auto;
     margin: 16px;

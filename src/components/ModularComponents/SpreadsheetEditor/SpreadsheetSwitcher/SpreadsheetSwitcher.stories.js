@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import SpreadsheetSwitcher from 'components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher/SpreadsheetSwitcher';
+import SpreadsheetSwitcher
+  from 'components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher/SpreadsheetSwitcher';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { within, expect, userEvent } from '@storybook/test';
@@ -31,7 +32,7 @@ export default {
     test: {
       // For some flyout errors that might happen but are unrelated
       dangerouslyIgnoreUnhandledErrors: true,
-    }
+    },
   },
 };
 
@@ -68,7 +69,7 @@ export const Basic = () => {
 
         ]}
         activeSheetIndex={activeSheetIndex}
-        setActiveSheet ={(name, index) => {
+        setActiveSheet={(name, index) => {
           setActiveSheetIndex(index);
         }}
         />
@@ -95,6 +96,42 @@ Basic.play = async ({ canvasElement }) => {
   await sheet3.click(sheet2);
   await expect(sheet3).toHaveAttribute('aria-selected', 'true');
 };
+
+export const KeyboardNavigation = Basic.bind({});
+KeyboardNavigation.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // Tab to the sheet switcher
+  await userEvent.tab();
+  const firstTab = canvas.getByRole('tab', { name: /Sheet 1/ });
+  await expect(firstTab).toHaveFocus();
+
+  await userEvent.keyboard('{ArrowRight}');
+  const firstTabMoreButton = canvas.getByRole('button', { name: /More options Sheet 1/ });
+  await expect(firstTabMoreButton).toHaveFocus();
+
+  for (let i = 0; i < 7; i++) {
+    await userEvent.keyboard('{ArrowRight}');
+  }
+
+  const moreTabsButton = canvas.getByRole('button', { name: /Show More/ });
+  await expect(moreTabsButton).toHaveFocus();
+
+  await userEvent.keyboard('{Home}');
+  await expect(firstTab).toHaveFocus();
+
+  await userEvent.keyboard('{End}');
+  const addSheetButton = canvas.getByRole('button', { name: /Add Sheet/ });
+  await expect(addSheetButton).toHaveFocus();
+
+  // tab away from the sheet switcher
+  await userEvent.tab({ shift: true });
+  await expect(addSheetButton).not.toHaveFocus();
+
+  // tab back to the sheet switcher, should focus back on the last focused element
+  await userEvent.tab();
+  await expect(addSheetButton).toHaveFocus();
+};
+
 
 const editStore = configureStore({ reducer: rootReducer });
 editStore.dispatch(actions.setSpreadsheetEditorEditMode(true));
@@ -136,8 +173,8 @@ export const Edit = () => {
           setActiveSheet={setActiveSheet} deleteSheet={deleteTab} renameSheet={renameSheet}
           createNewSheet={addSheet} skipDeleteWarning validateName={validateName}
         />
-        <WarningModal/>
-        <FlyoutContainer/>
+        <WarningModal />
+        <FlyoutContainer />
       </div>
     </Provider>
   );

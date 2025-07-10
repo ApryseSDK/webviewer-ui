@@ -190,3 +190,6 @@ TabbingTest.play = async ({ canvasElement }) => {
   const editShortcutButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Edit Shortcut/i });
   await expect(editShortcutButton).toHaveFocus();
 };
+
+export const KeyboardShortcutInMobile = () => KeyboardShortcut();
+KeyboardShortcutInMobile.parameters = window.storybook?.MobileParameters;

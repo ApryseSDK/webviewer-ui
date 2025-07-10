@@ -8,8 +8,9 @@ import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
-import { MockDocumentContainer, oePartialState } from 'helpers/storybookHelper';
-import { expect } from '@storybook/test';
+import { MockDocumentContainer, oePartialState, createStore } from 'helpers/storybookHelper';
+import { expect, within, userEvent } from '@storybook/test';
+import PropTypes from 'prop-types';
 
 const leftChevron = {
   onClick: () => { },
@@ -88,7 +89,7 @@ const initialState = {
     }
   },
   document: {
-    totalPages: { 1: 9, 2: 0 }
+    totalPages: { 1: 9 },
   },
   featureFlags: {
     customizableUI: true,
@@ -125,7 +126,7 @@ const props = {
   onChange,
 };
 
-export const Basic = (storyProps) => {
+const PageControlsStory = ({ store, storyProps }) => {
   const pageControlsTools = {
     dataElement: 'PageNavigationTool',
     type: 'pageControls',
@@ -144,6 +145,15 @@ export const Basic = (storyProps) => {
       <MockDocumentContainer width='90%' height='90%' />
     </Provider>
   );
+};
+
+PageControlsStory.propTypes = {
+  store: PropTypes.object.isRequired,
+  storyProps: PropTypes.object.isRequired,
+};
+
+export const Basic = (storyProps) => {
+  return <PageControlsStory store={store} storyProps={storyProps} />;
 };
 
 export const PageControlsInHeader = (storyProps) => {
@@ -186,4 +196,37 @@ export const PageControlsInFlyout = () => {
       <Flyout />
     </Provider>
   );
+};
+
+const docxStore = createStore(initialState);
+
+export const PageControlsInputDocx = (storyProps) => {
+  return <PageControlsStory store={docxStore} storyProps={storyProps} />;
+};
+
+/**
+ * This story demonstrates the functionality of the PageControlsInput component
+ * within the context of a document viewer and Office viewer. Office Document
+ * doesn't receive all the pages on load, so we simulate adding a page
+ * to the viewer and document state.
+ */
+PageControlsInputDocx.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const input = await canvas.findByRole('textbox', { name: /page number input/i });
+  expect(input).toBeInTheDocument();
+
+  await userEvent.click(input);
+  await userEvent.clear(input);
+  await userEvent.type(input, '5');
+
+  docxStore.dispatch({
+    type: 'SET_PAGE_LABELS',
+    payload: { pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
+  });
+  docxStore.dispatch({
+    type: 'SET_TOTAL_PAGES',
+    payload: { totalPages: 10, documentViewerKey: 1 },
+  });
+
+  expect(input).toHaveValue('5');
 };

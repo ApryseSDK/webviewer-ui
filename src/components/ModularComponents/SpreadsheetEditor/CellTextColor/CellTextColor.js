@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import ModularColorPicker from '../../ModularColorPicker/ModularColorPicker';
 import DataElements from 'constants/dataElement';
 import { FLYOUT_ITEM_TYPES } from 'constants/customizationVariables';
 import { getColorFromHex } from 'helpers/colorPickerHelper';
+import setCellFontStyle from 'helpers/setCellFontStyle';
+import selectors from 'selectors';
+import { defaultTextColor } from 'src/helpers/initialColorStates';
 
 const CellTextColor = (props) => {
-  // eslint-disable-next-line custom/no-hex-colors
-  const { isFlyoutItem, dataElement = 'cell-text-color', defaultColor='#000000', disabled, onKeyDownHandler } = props;
+  const { isFlyoutItem, dataElement = 'cell-text-color', defaultColor = defaultTextColor, disabled, onKeyDownHandler } = props;
   const dispatch = useDispatch();
 
   const defaultRGBAColor = getColorFromHex(defaultColor);
-  const [selectedColor, setSelectedColor] = useState(defaultRGBAColor);
+  const currentTextColor = useSelector((state) => selectors.getActiveCellRangeFontStyle(state, 'color'));
+  const currentRGBColor = getColorFromHex(currentTextColor) || defaultRGBAColor;
 
   useEffect(() => {
     const flyout = {
@@ -32,7 +35,9 @@ const CellTextColor = (props) => {
   }, [isFlyoutItem]);
 
   const handleColorChange = (color) => {
-    setSelectedColor(color);
+    setCellFontStyle({
+      color: color
+    });
   };
 
   return (
@@ -45,7 +50,7 @@ const CellTextColor = (props) => {
       toggleElement={DataElements.CELL_TEXT_COLOR_FLYOUT}
       property='TextColor'
       defaultColor={defaultRGBAColor}
-      color={selectedColor}
+      color={currentRGBColor}
       disabled={disabled}
       ariaTypeLabel={'spreadsheetEditor.textLabel'}
       labelKey={'spreadsheetEditor.textColor'}

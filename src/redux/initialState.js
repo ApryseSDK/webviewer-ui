@@ -22,8 +22,10 @@ import presetNewPageDimensions from 'constants/presetNewPageDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
-import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { cssFontValues } from 'src/constants/fonts/fonts';
+import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
+import { availableSpreadsheetEditorFonts } from 'src/constants/fonts/spreadsheetEditorFonts';
+import { EditingStreamType, MARGIN_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import defaultToolsWithInlineComment from 'constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -32,7 +34,7 @@ import { ShortcutKeys } from 'helpers/hotkeysManager';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { getInstanceID } from 'helpers/getRootNode';
-import { initialColors, initialTextColors } from 'helpers/initialColorStates';
+import { defaultBackgroundColor, initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels } from './modularComponents';
 
 const { ToolNames } = window.Core.Tools;
@@ -2026,7 +2028,7 @@ export default {
     },
     zoomList: defaultZoomList,
     isAccessibleMode: getHashParameters('accessibleMode', false),
-    shouldAddA11yContentToDOM: getHashParameters('accessibleMode', false),
+    shouldAddA11yContentToDOM: false,
     disabledFeaturesInAccessibleReadingMode: {},
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
@@ -2193,10 +2195,10 @@ export default {
       1: 0,
       2: 0,
     },
-    outlines: [],
+    outlines: null,
     bookmarks: {},
     portfolio: [],
-    layers: [],
+    layers: null,
     printQuality: 1,
     passwordAttempts: -1,
     maxPasswordAttempts: 3,
@@ -2247,10 +2249,11 @@ export default {
     selectionProperties: {
       paragraphProperties: {},
     },
-    availableFontFaces,
+    availableFontFaces: availableOfficeEditorFonts,
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING,
     stream: EditingStreamType.BODY,
+    unitMeasurement: MARGIN_UNITS.CM,
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',
@@ -2262,6 +2265,7 @@ export default {
   },
   spreadsheetEditor: {
     activeCellRange: '',
+    isSingleCell: true,
     cellProperties: {
       cellType: null,
       cellFormula: null,
@@ -2270,19 +2274,40 @@ export default {
       topLeftColumn: null,
       bottomRightRow: null,
       bottomRightColumn: null,
+      canCopy: false,
+      canPaste: false,
+      canCut: false,
       styles: {
         verticalAlignment: null,
         horizontalAlignment: null,
         font: {
+          fontFace: null,
+          pointSize: null,
           bold: false,
           italic: false,
           underline: false,
           strikeout: false,
+          color: null,
         },
         formatType: null,
+        isCellRangeMerged: false,
+        backgroundColor: defaultBackgroundColor,
+        border: {
+          top: { color: null, style: 'None' },
+          right: { color: null, style: 'None' },
+          bottom: { color: null, style: 'None' },
+          left: { color: null, style: 'None' },
+        },
       }
     },
-    cellStyleColors: initialTextColors,
+    selectedBorderStyleListOption: 'Thin',
+    // eslint-disable-next-line custom/no-hex-colors
+    selectedBorderColorOption: '#000000',
+    textColors: structuredClone(initialTextColors),
+    borderColors: structuredClone(initialTextColors),
+    cellBackgroundColors: structuredClone(initialTextColors),
     editMode: SpreadsheetEditorEditMode['VIEW_ONLY'],
+    availableFontFaces: availableSpreadsheetEditorFonts,
+    cssFontValues: cssFontValues,
   }
 };

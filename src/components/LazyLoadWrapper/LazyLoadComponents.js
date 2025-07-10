@@ -52,6 +52,7 @@ const CustomModal = lazy(() => import('components/CustomModal'));
 const CreatePortfolioModal = lazy(() => import('components/CreatePortfolioModal'));
 const HeaderFooterOptionsModal = lazy(() => import('components/HeaderFooterOptionsModal'));
 const OfficeEditorMarginsModal = lazy(() => import('components/OfficeEditorMarginsModal'));
+const OfficeEditorColumnsModal = lazy(() => import('components/OfficeEditorColumnsModal'));
 
 // Panels
 const OutlinesPanel = lazy(() => import('components/OutlinesPanel'));
@@ -142,6 +143,7 @@ const LazyLoadComponents = {
   FormFieldPanel,
   HeaderFooterOptionsModal,
   OfficeEditorMarginsModal,
+  OfficeEditorColumnsModal,
   FormulaBar,
   SpreadsheetSwitcher,
 };

@@ -57,6 +57,7 @@ const ITEM_TYPE = {
   STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
   PAGE_NAVIGATION_BUTTON: 'pageNavigationButton',
   OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
+  OFFICE_EDITOR_COLUMN_DROPDOWN: 'officeEditorColumnDropdown',
   CREATE_TABLE_DROPDOWN: 'createTableDropdown',
   OFFICE_EDITOR_INSERT_IMAGE_BUTTON: 'officeEditorInsertImageButton',
   OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
@@ -96,6 +97,7 @@ const FLYOUT_ITEM_TYPES = {
   FONT_FAMILY_DROPDOWN: 'fontFamilyDropdown',
   STYLE_PRESET_DROPDOWN: 'stylePresetDropdown',
   OFFICE_EDITOR_MARGIN_DROPDOWN: 'officeEditorMarginDropdown',
+  OFFICE_EDITOR_COLUMN_DROPDOWN: 'officeEditorColumnDropdown',
   OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_MODE_DROPDOWN: 'officeEditorModeDropdown',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
@@ -255,16 +257,16 @@ const PRESET_BUTTON_TYPES = {
 
   // Cell Border Style
   CELL_BORDER_STYLE: 'cellBorderStyle',
-  CELL_BORDER_ALL: 'cellBorderAll',
-  CELL_BORDER_OUTSIDE: 'cellBorderOutside',
-  CELL_BORDER_INSIDE: 'cellBorderInside',
-  CELL_BORDER_HORIZONTAL: 'cellBorderHorizontal',
-  CELL_BORDER_VERTICAL: 'cellBorderVertical',
-  CELL_BORDER_TOP: 'cellBorderTop',
-  CELL_BORDER_BOTTOM: 'cellBorderBottom',
-  CELL_BORDER_LEFT: 'cellBorderLeft',
-  CELL_BORDER_RIGHT: 'cellBorder vRight',
-  CELL_BORDER_NONE: 'cellBorderNone',
+  CELL_BORDER_ALL: 'All',
+  CELL_BORDER_OUTSIDE: 'Outside',
+  CELL_BORDER_INSIDE: 'Inside',
+  CELL_BORDER_HORIZONTAL: 'Horizontal',
+  CELL_BORDER_VERTICAL: 'Vertical',
+  CELL_BORDER_TOP: 'Top',
+  CELL_BORDER_BOTTOM: 'Bottom',
+  CELL_BORDER_LEFT: 'Left',
+  CELL_BORDER_RIGHT: 'Right',
+  CELL_BORDER_NONE: 'None',
 
   CELL_COPY: 'cellCopy',
   CELL_PASTE: 'cellPaste',
@@ -317,18 +319,18 @@ const CELL_ADJUSTMENT_FLYOUT_ITEMS = [
 
 ];
 
-const CELL_BORDER_BUTTONS = [
-  'cellBorderNone',
-  'cellBorderAll',
-  'cellBorderOutside',
-  'cellBorderInside',
-  'cellBorderVertical',
-  'cellBorderHorizontal',
-  'cellBorderTop',
-  'cellBorderBottom',
-  'cellBorderLeft',
-  'cellBorderRight',
-];
+const CELL_BORDER_BUTTONS = {
+  'None': 'alwaysShow',
+  'All':  'showForMultipleCells',
+  'Top': 'alwaysShow',
+  'Left': 'alwaysShow',
+  'Right': 'alwaysShow',
+  'Bottom':  'alwaysShow',
+  'Outside': 'alwaysShow',
+  'Inside': 'showForMultipleCells',
+  'Vertical':  'showForMultipleCells',
+  'Horizontal':  'showForMultipleCells',
+};
 
 const CELL_FORMAT_BUTTONS = [
   { label: 'automaticFormat' },

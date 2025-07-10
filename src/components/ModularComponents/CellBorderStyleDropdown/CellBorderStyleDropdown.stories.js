@@ -33,12 +33,12 @@ Open.play = async ({ canvasElement }) => {
   const cellBorderStyleDropdown = canvas.getByRole('combobox');
   await userEvent.click(cellBorderStyleDropdown);
 
-  const noneOption = canvas.getByRole('option', { name: 'None' });
-
-  expect(noneOption.classList.contains('active')).toBe(true);
+  const noneOption = canvas.queryByRole('option', { name: 'None' });
+  expect(noneOption).toBeNull();
 
   const solidOption = canvas.getByRole('option', { name: 'Solid' });
   expect(solidOption).toBeInTheDocument();
+  expect(solidOption.classList.contains('active')).toBe(true);
 
   const dashedOption = canvas.getByRole('option', { name: 'Dashed' });
   expect(dashedOption).toBeInTheDocument();

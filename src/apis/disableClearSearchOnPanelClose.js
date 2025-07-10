@@ -1,4 +1,5 @@
 import actions from 'actions';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 
 /**
  * Disable clearing search results when user closes search panel. When disabled, search results are kept even if user
@@ -13,6 +14,10 @@ import actions from 'actions';
   });
  */
 const disableClearSearchOnPanelCloseClosure = (store) => () => {
+  if (isOfficeEditorMode()) {
+    console.warn('disableClearSearchOnPanelClose is not supported in Office Editor');
+    return;
+  }
   store.dispatch(actions.setClearSearchOnPanelClose(false));
 };
 

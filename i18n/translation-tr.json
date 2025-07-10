@@ -799,7 +799,7 @@
       "selectCreateTextHighlightTool": "AnnotationCreateTextHighlight aracını seçin",
       "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout aracını seçin",
       "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline aracını seçin",
-      "editKeyboardShorcut": "Klavye Kısayolunu Düzenle",
+      "editKeyboardShortcut": "Klavye Kısayolunu Düzenle",
       "setShortcut": "Kısayol Ayarla",
       "editShortcut": "Kısayolu Düzenle",
       "shortcutAlreadyExists": "Yukarıdaki klavye kısayolu zaten var.",
@@ -807,7 +807,7 @@
     },
     "cellBorderStyle": {
       "none": "Hiçbiri",
-      "solid": "Sağlam",
+      "thin": "Sağlam",
       "dashed": "Kesik kesik",
       "dotted": "Noktalı"
     }
@@ -871,6 +871,11 @@
     "sheetTabDeleteMessage": {
       "title": "Düzenleme Uyarısı",
       "message": "Bu sayfayı silmek istediğinizden emin misiniz?"
+    },
+    "officeEditorPageLayout": {
+      "title": "Sayfa Düzeni",
+      "columnsMessage": "Bazı bölümlerde sütun aralığı için seçtiğiniz ayarlar sayfa genişliğine göre çok büyük.",
+      "marginsMessage": "Bazı bölümlerde seçtiğiniz kenar boşlukları ayarları sayfa genişliğine göre çok büyük."
     }
   },
   "shortcut": {
@@ -1340,6 +1345,14 @@
     "right": "Sağ",
     "customMargins": "Özel Kenar Boşlukları",
     "customMarginsDescription": "Özel kenar boşluklarını tanımlayın",
+    "column": "Kolon",
+    "columns": "Sütunlar",
+    "singleColumn": "1 Sütun",
+    "twoColumn": "2 Sütun",
+    "threeColumn": "3 Sütun",
+    "customColumn": "Özel Sütunlar",
+    "customColumnDescription": "Özel sütunları tanımlayın",
+    "unitMeasurement": "Birim Ölçümü",
     "header": {
       "0": "Başlık",
       "1": "İlk Sayfa Başlığı",
@@ -1369,6 +1382,15 @@
         "differentEvenOddPages": "Farklı Çift ve Tek Sayfalar",
         "differentFirstEvenOddPages": "Farklı İlk, Çift ve Tek Sayfalar"
       }
+    },
+    "columnsModal": {
+      "title": "Özel Sütun Ayarlaması",
+      "columnAmount": "Sütun Sayısı",
+      "columnNumber": "Sütun Numarası",
+      "width": "Genişlik",
+      "spacing": "Aralık",
+      "widthAndSpacing": "Genişlik ve Aralık",
+      "equalColumns": "Eşit Sütun Genişliği"
     },
     "marginsModal": {
       "title": "Özel Marj Ayarlaması",
@@ -1416,6 +1438,7 @@
     "viewOnly": "Görüntüleme",
     "editingDescription": "Belgeyi düzenle",
     "viewOnlyDescription": "Sadece görüntüle",
+    "editModeDropdown": "Düzenleme modu seçimi",
     "bold": "Gözü pek",
     "italic": "İtalik",
     "underline": "Altı çizili",
@@ -1465,16 +1488,16 @@
     "deleteColumnShiftUp": "Hücreleri sil ve yukarı kaydır",
     "deleteColumnShiftLeft": "Hücreleri sil ve sola kaydır",
     "clearBorder": "Sınırı Temizle",
-    "cellBorderAll": "Tüm Sınırlar",
-    "cellBorderInside": "Sınırların İçinde",
-    "cellBorderOutside": "Dış Sınırlar",
-    "cellBorderTop": "Üst Sınır",
-    "cellBorderBottom": "Alt Sınır",
-    "cellBorderLeft": "Sol Sınır",
-    "cellBorderRight": "Sağ Sınır",
-    "cellBorderVertical": "Dikey Kenarlık",
-    "cellBorderHorizontal": "Yatay Kenarlık",
-    "cellBorderNone": "Sınır Yok",
+    "all": "Tüm Sınırlar",
+    "inside": "Sınırların İçinde",
+    "outside": "Dış Sınırlar",
+    "top": "Üst Sınır",
+    "bottom": "Alt Sınır",
+    "left": "Sol Sınır",
+    "right": "Sağ Sınır",
+    "vertical": "Dikey Kenarlık",
+    "horizontal": "Yatay Kenarlık",
+    "none": "Sınır Yok",
     "borders": "Sınırlar",
     "fontSize": {
       "dropdownLabel": "Yazı Tipi Boyutu"
@@ -1646,14 +1669,4350 @@
   "formulaBar": {
     "label": "Formül Çubuğu",
     "range": "Menzil",
-    "formulas": "Formüller",
-    "sumif": "Bir aralıktaki koşullu toplam",
-    "sumsq": "Bir aralığın karelerinin toplamını döndürür",
-    "sum": "Bir aralıktaki tüm sayıları toplar",
-    "asinh": "Bir sayının ters hiperbolik sinüsünü döndürür",
-    "acos": "Bir sayının ark kosinüsünü radyan cinsinden döndürür",
-    "cosh": "Bir sayının hiperbolik kosinüsünü döndürür",
-    "iseven": "Bir sayının çift olup olmadığını kontrol eder",
-    "isodd": "Bir sayının tek olup olmadığını kontrol eder"
+    "formulas": "Formüller"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "Bir aralıktaki koşullu toplam.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "`Kriter`e göre test edilen aralık."
+        },
+        "criterion": {
+          "name": "kriter",
+          "detail": "`Aralık`a uygulanacak desen veya test."
+        },
+        "sum_range": {
+          "name": "toplam_aralığı",
+          "detail": "Toplanacak aralık, `aralık`tan farklıysa."
+        }
+      }
+    },
+    "TAN": {
+      "description": "Bir açının radyan cinsinden tanjantı.",
+      "parameters": {
+        "angle": {
+          "name": "açı",
+          "detail": "Tanjantı bulunacak açı, radyan cinsinden."
+        }
+      }
+    },
+    "TANH": {
+      "description": "Herhangi bir reel sayının hiperbolik tanjantı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Hiperbolik tanjantını hesaplamak için herhangi bir gerçek değer."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "Sayıyı bir çarpanın en yakın katına yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`faktör`ün en yakın tam sayı katına yuvarlanacak değer."
+        },
+        "factor": {
+          "name": "faktör",
+          "detail": "`değer` ifadesinin katlarına yuvarlanacağı sayı."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "Bir değerin radyan cinsinden ters tanjantı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters tanjantın hesaplanacağı değer."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "Bir sayının ters hiperbolik sinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters hiperbolik sinüsün hesaplanacağı değer."
+        }
+      }
+    },
+    "ABS": {
+      "description": "Bir sayının mutlak değeri.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Mutlak değeri döndürülecek sayı."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "Bir değerin radyan cinsinden ters kosinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters kosinüsünün hesaplanacağı değer. `-1` ile `1` arasında (dahil) olmalıdır."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "Bir sayının ters hiperbolik kosinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters hiperbolik kosinüsün hesaplanacağı değer. `1`'den büyük veya ona eşit olmalıdır."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "Çok terimli dağılım fonksiyonu.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Dikkate alınması gereken ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "Bir sayının ters hiperbolik tanjantı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters hiperbolik tanjantın hesaplanacağı değer. -1 ile 1 arasında olmalıdır, hariç."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "Bir değerin ark tanjantı.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "X eksenine göre açısı hesaplanacak doğru parçasının uç noktasının x koordinatı."
+        },
+        "y": {
+          "name": "Ve",
+          "detail": "X eksenine göre açısı hesaplanacak doğru parçasının uç noktasının y koordinatı."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "Boş değerlerin sayısı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Boşlukların sayısını saymak için ilk değer veya aralık."
+        }
+      }
+    },
+    "COSH": {
+      "description": "Herhangi bir reel sayının hiperbolik kosinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Hiperbolik kosinüsünü hesaplamak için herhangi bir gerçek değer."
+        }
+      }
+    },
+    "INT": {
+      "description": "Sayıyı en yakın tam sayıya yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "En yakın tam sayıya yuvarlanacak değer."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "Verilen değerin çift olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Çift olarak doğrulanması gereken değer."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "Verilen değerin tek olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Tek olduğu doğrulanacak değer."
+        }
+      }
+    },
+    "LCM": {
+      "description": "Bir veya daha fazla tam sayının en küçük ortak katı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "En küçük ortak katı bulmak için bir hesaplamada faktörleri dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "En küçük ortak katı bulmak için faktörleri dikkate alınacak ek değerler veya aralıklar."
+        }
+      }
+    },
+    "LN": {
+      "description": "Bir sayının e tabanındaki logaritması (Euler sayısı).",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "e tabanında logaritmasının hesaplanacağı değer."
+        }
+      }
+    },
+    "LOG": {
+      "description": "Bir sayının bir tabana göre logaritması.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Logaritmasının hesaplanacağı değer."
+        },
+        "base": {
+          "name": "temel",
+          "detail": "Logaritmanın hesaplanmasında kullanılacak taban."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "Bir sayının 10 tabanındaki logaritması.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Logaritmasının 10 tabanında hesaplanacağı değer."
+        }
+      }
+    },
+    "MOD": {
+      "description": "Modulo (kalan) operatörü.",
+      "parameters": {
+        "dividend": {
+          "name": "temettü",
+          "detail": "Kalanı bulmak için bölünmesi gereken sayı."
+        },
+        "divisor": {
+          "name": "bölen",
+          "detail": "Bölünecek sayı."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "Bir sayıyı en yakın tam sayı katına yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Bir sayının en yakın tam sayı katına yuvarlanacak sayı."
+        },
+        "factor": {
+          "name": "faktör",
+          "detail": "`değer` ifadesinin katlarına yuvarlanacağı sayı."
+        }
+      }
+    },
+    "ODD": {
+      "description": "Bir sayıyı en yakın tek tam sayıya yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Bir sonraki en büyük tek sayıya yuvarlanacak değer."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "Kareler toplamı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Kareleri toplanacak ilk sayı veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1`'in karesine eklenecek karelere sahip ek sayılar veya aralıklar."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "Bir nesne kümesinden oluşan kombinasyonların sayısı.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Seçilebilecek nesne havuzunun boyutu."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Seçilecek nesne sayısı."
+        }
+      }
+    },
+    "SUM": {
+      "description": "Bir dizi sayı ve/veya hücrenin toplamı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Toplanacak ilk sayı veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1`'e eklenecek ek sayılar veya aralıklar."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "Belirli bir fonksiyonu kullanarak bir aralık için ara toplam.",
+      "parameters": {
+        "function_code": {
+          "name": "fonksiyon_kodu",
+          "detail": "Ara toplam toplamada kullanılacak fonksiyon."
+        },
+        "range1": {
+          "name": "aralık1",
+          "detail": "Ara toplamın hesaplanacağı ilk aralık."
+        },
+        "range2": {
+          "name": "aralık2",
+          "detail": "Ara toplamların hesaplanacağı ek aralıklar."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "Bir değerin radyan cinsinden ters sinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters sinüsü hesaplanacak değer. `-1` ile `1` arasında (dahil) olmalıdır."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "Bir aralıktaki koşullu sayım.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "`Kriter`e göre test edilen aralık."
+        },
+        "criterion": {
+          "name": "kriter",
+          "detail": "`Aralık`a uygulanacak desen veya test."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "Derece cinsinden açı değerini radyana dönüştürür.",
+      "parameters": {
+        "angle": {
+          "name": "açı",
+          "detail": "Dereceyi radyana dönüştürecek açı."
+        }
+      }
+    },
+    "RAND": {
+      "description": "0 dahil ve 1 hariç olmak üzere rastgele bir sayı."
+    },
+    "COUNTUNIQUE": {
+      "description": "Bir aralıktaki benzersiz değerlerin sayısını sayar.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Benzersizliğin dikkate alınması gereken ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Benzersizliğin dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "Radyan cinsinden açı değerini dereceye dönüştürür.",
+      "parameters": {
+        "angle": {
+          "name": "açı",
+          "detail": "Radyandan dereceye dönüştürülecek açı."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "Bir değerin tamamlayıcı gauss hata fonksiyonu.",
+      "parameters": {
+        "z": {
+          "name": "İle",
+          "detail": "Tamamlayıcı Gauss hata fonksiyonunun hesaplanacağı sayı."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "Bir sayıyı en yakın çift tam sayıya yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Bir sonraki en büyük çift sayıya yuvarlanacak değer."
+        }
+      }
+    },
+    "EXP": {
+      "description": "Euler sayısı, e (~2.718)'in bir kuvveti.",
+      "parameters": {
+        "exponent": {
+          "name": "üs",
+          "detail": "e'yi yükseltecek üs."
+        }
+      }
+    },
+    "FACT": {
+      "description": "Bir sayının faktöriyeli.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Faktöriyeli hesaplanıp döndürülecek sayı veya sayıya yapılan başvuru."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "Bir sayının \"çift faktöriyeli\".",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Çift faktöriyeli hesaplanıp döndürülecek sayı veya sayıya yapılan başvuru."
+        }
+      }
+    },
+    "PI": {
+      "description": "Pi sayısı."
+    },
+    "GCD": {
+      "description": "Bir veya daha fazla tam sayının en büyük ortak böleni.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "En büyük ortak böleni bulmak için bir hesaplamada faktörleri dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "En büyük ortak böleni bulmak için faktörleri dikkate alınacak ek değerler veya aralıklar."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "İki değer arasındaki rastgele tam sayı.",
+      "parameters": {
+        "low": {
+          "name": "Düşük",
+          "detail": "Rastgele aralığın alt ucu."
+        },
+        "high": {
+          "name": "yüksek",
+          "detail": "Rastgele aralığın en üst ucu."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "Bir sayıyı standart kurallara göre yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`places` basamak sayısına yuvarlanacak değer."
+        },
+        "places": {
+          "name": "yer",
+          "detail": "Yuvarlanacak ondalık basamak sayısı."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "Bir sayıyı aşağı yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`places` basamak sayısına yuvarlanacak değer, her zaman aşağı yuvarlanır."
+        },
+        "places": {
+          "name": "yer",
+          "detail": "Yuvarlanacak ondalık basamak sayısı."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "Bir sayıyı yuvarlar.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`places` basamak sayısına yuvarlanacak değer, her zaman yukarı yuvarlanır."
+        },
+        "places": {
+          "name": "yer",
+          "detail": "Yuvarlanacak ondalık basamak sayısı."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "Bir kuvvet serisinin toplamı.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Güç serisinin girişi. Yaklaşım türüne bağlı olarak değişir, açı, üs veya başka bir değer olabilir."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Kuvvet serisinde `x`'in alınacağı başlangıç kuvveti."
+        },
+        "m": {
+          "name": "M",
+          "detail": "`x`'i artırmak için gereken eklemeli artış."
+        },
+        "a": {
+          "name": "A",
+          "detail": "Kuvvet serisinin katsayılarını içeren dizi veya aralık."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "Verilen sayının işareti (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "İşareti değerlendirilecek değer."
+        }
+      }
+    },
+    "SIN": {
+      "description": "Bir açının radyan cinsinden sinüsü.",
+      "parameters": {
+        "angle": {
+          "name": "açı",
+          "detail": "Sinüsünü bulmak için gereken açı, radyan cinsinden."
+        }
+      }
+    },
+    "SINH": {
+      "description": "Herhangi bir reel sayının hiperbolik sinüsü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Hiperbolik sinüsünü hesaplamak için herhangi bir gerçek değer."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "Pozitif bir sayının pozitif karekökü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Pozitif karekökü hesaplanacak sayı."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "Pi sayısı ile sayının çarpımının karekökü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Pi ile çarpılacak ve çarpımının karekökü döndürülecek sayı"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "Gama fonksiyonunun logaritması.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Gamma fonksiyonunun girdisi. Gamma(`value`)'nin doğal logaritması döndürülecektir."
+        }
+      }
+    },
+    "COS": {
+      "description": "Bir açının radyan cinsinden kosinüsü.",
+      "parameters": {
+        "angle": {
+          "name": "açı",
+          "detail": "Radyan cinsinden kosinüsünü bulmak istediğiniz açı."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "Bir sayıyı keser.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Kesilecek değer."
+        },
+        "places": {
+          "name": "yer",
+          "detail": "Ondalık noktasının sağında saklanacak anlamlı basamak sayısı."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "Bir sayının başka bir sayıya bölümü.",
+      "parameters": {
+        "dividend": {
+          "name": "temettü",
+          "detail": "Bölünecek sayı."
+        },
+        "divisor": {
+          "name": "bölen",
+          "detail": "Bölünecek sayı."
+        }
+      }
+    },
+    "POWER": {
+      "description": "Bir sayının üs olarak alınması.",
+      "parameters": {
+        "base": {
+          "name": "temel",
+          "detail": "`Üs` kuvvetine yükseltilecek sayı."
+        },
+        "exponent": {
+          "name": "üs",
+          "detail": "`Taban`ın yükseltileceği üs."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "Birden fazla kritere bağlı olarak bir aralığı toplar.",
+      "parameters": {
+        "sum_range": {
+          "name": "toplam_aralığı",
+          "detail": "Toplanacak aralık."
+        },
+        "criteria_range1": {
+          "name": "kriter_aralığı1",
+          "detail": "Kriter 1'e göre kontrol edilecek aralık."
+        },
+        "criterion1": {
+          "name": "kriter1",
+          "detail": "Criteria_range1'e uygulanacak desen veya test."
+        },
+        "criteria_range2": {
+          "name": "kriter_aralığı2",
+          "detail": "Kontrol edilecek ek aralıklar."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "Birden fazla kritere bağlı olarak değerleri sayın.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "kriter_aralığı1",
+          "detail": "`criterion1` ile karşılaştırılacak aralık."
+        },
+        "criterion1": {
+          "name": "kriter1",
+          "detail": "`criteria_range1`'e uygulanacak desen veya test."
+        },
+        "criteria_range2": {
+          "name": "kriter_aralığı2",
+          "detail": "Kontrol edilecek ek aralıklar."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "Bir dizi sayının birbiriyle çarpılmasının sonucu.",
+      "parameters": {
+        "factor1": {
+          "name": "faktör1",
+          "detail": "Ürün için hesaplanacak ilk sayı veya aralık."
+        },
+        "factor2": {
+          "name": "faktör2",
+          "detail": "Ürün için hesaplanacak daha fazla sayı veya aralık."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "Bir veri kümesinin harmonik ortalaması.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Nüfusun ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Popülasyona dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "Hipergeometrik dağılım olasılığı.",
+      "parameters": {
+        "num_successes": {
+          "name": "başarı_sayısı",
+          "detail": "İstenilen başarı sayısı."
+        },
+        "num_draws": {
+          "name": "çizim_sayısı",
+          "detail": "İzin verilen çekiliş sayısı."
+        },
+        "successes_in_pop": {
+          "name": "pop_içindeki_başarılar",
+          "detail": "Nüfus içerisindeki toplam başarı sayısı."
+        },
+        "pop_size": {
+          "name": "pop_boyutu",
+          "detail": "Nüfusun toplam büyüklüğü"
+        },
+        "cumulative": {
+          "name": "kümülatif",
+          "detail": "Fonksiyon formunun mantıksal değerini belirleyin. \n\nEğer kümülatif TRUE() ise, HYPGEOM.DIST kümülatif dağılım fonksiyonunu döndürür;\n\neğer FALSE() ise, olasılık yoğunluk fonksiyonunu döndürür."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "Doğrusal regresyonla elde edilen doğrunun Y-kesişimi.",
+      "parameters": {
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "KURT": {
+      "description": "Bir veri kümesinin basıklığı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Veri kümesinin ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Veri setine dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "Bir veri kümesindeki en büyük n'inci eleman.",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Dikkate alınacak veri kümesini içeren dizi veya aralık."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Döndürülecek öğenin en büyükten en küçüğe doğru sıralaması."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "Örneklemin standart sapması (metin 0 olarak).",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Örneğin ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Örneğe dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "Tüm bir popülasyonun standart sapması.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Nüfusun ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Popülasyona dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "Bir veri kümesinin geometrik ortalaması.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Nüfusun ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Popülasyona dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "Yüzde sıralaması (yüzdelik değer) 0'dan 1'e kadar (dahil).",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Dikkate alınacak veri kümesini içeren dizi veya aralık."
+        },
+        "value": {
+          "name": "değer",
+          "detail": "Yüzdelik sıralaması belirlenecek değer."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Hesaplamada kullanılacak anlamlı rakam sayısı. Varsayılan 3'tür."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "Doğrusal regresyona dayalı beklenen y değeri.",
+      "parameters": {
+        "x": {
+          "name": "X",
+          "detail": "Tahmin edilecek x eksenindeki değer."
+        },
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "Belirtilen bir değerin ters fisher dönüşümü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Ters Fisher dönüşümünün hesaplanacağı değer."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "Belirtilen bir değerin Fisher dönüşümü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Fisher dönüşümünün hesaplanacağı değer."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "Veri kümesindeki sayısal değerlerin sayısı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Sayarken dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Sayım sırasında dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "Bir veri kümesindeki değerlerin sayısı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Sayarken dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Sayım sırasında dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "Bir veri kümesindeki metin hariç, sayısal ortalama değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Ortalama değeri hesaplanırken dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Ortalama değeri hesaplamak için dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "Binom dağılım olasılığı.",
+      "parameters": {
+        "num_successes": {
+          "name": "başarı_sayısı",
+          "detail": "`num_trials` denemelerinde olasılığı hesaplanacak başarı sayısı."
+        },
+        "num_trials": {
+          "name": "deneme_sayısı",
+          "detail": "Bağımsız denemelerin sayısı."
+        },
+        "prob_success": {
+          "name": "olasılık_başarısı",
+          "detail": "Herhangi bir denemede başarı olasılığı."
+        },
+        "cumulative": {
+          "name": "kümülatif",
+          "detail": "Binom kümülatif dağılımının kullanılıp kullanılmayacağı."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "Bir örneklem esas alınarak sapmaların karelerinin toplamı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Örneğin ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Örneğe dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "Kriterlere bağlı değerlerin ortalaması.",
+      "parameters": {
+        "criteria_range": {
+          "name": "kriter_aralığı",
+          "detail": "`Kriter`e göre kontrol edilecek aralık."
+        },
+        "criterion": {
+          "name": "kriter",
+          "detail": "`criteria_range`'e uygulanacak desen veya test."
+        },
+        "average_range": {
+          "name": "ortalama_aralık",
+          "detail": "Ortalamaya göre aralık. Dahil edilmediyse, ortalama için `criteria_range` kullanılır."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "Birden fazla kritere bağlı değerlerin ortalaması.",
+      "parameters": {
+        "average_range": {
+          "name": "ortalama_aralık",
+          "detail": "Ortalamaya olan aralık."
+        },
+        "criteria_range1": {
+          "name": "kriter_aralığı1",
+          "detail": "`criterion1` ile karşılaştırılacak aralık."
+        },
+        "criterion1": {
+          "name": "kriter1",
+          "detail": "`criteria_range1`'e uygulanacak desen veya test."
+        },
+        "criteria_range2": {
+          "name": "kriter_aralığı2",
+          "detail": "Kontrol edilecek ek aralıklar."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "Bir dizi nesneden oluşan permütasyonların sayısı.",
+      "parameters": {
+        "n": {
+          "name": "N",
+          "detail": "Seçilebilecek nesne havuzunun boyutu."
+        },
+        "k": {
+          "name": "k",
+          "detail": "Seçilecek nesne sayısı."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "Yüksek/düşük uçları hariç tutan bir veri setinin ortalaması.",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Dikkate alınacak veri kümesini içeren dizi veya aralık."
+        },
+        "exclude_proportion": {
+          "name": "dışlama_oran",
+          "detail": "Veri kümesinin, kümenin uç noktalarından hariç tutulacak oranı."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "Pearson Ürün-Moment Korelasyon Katsayısı.",
+      "parameters": {
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "MINA": {
+      "description": "Bir veri kümesindeki en küçük sayısal değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Minimum değeri hesaplamak için dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Minimum değer hesaplanırken dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "MIN": {
+      "description": "Sayısal bir veri kümesindeki en düşük değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Minimum değeri hesaplamak için dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Minimum değer hesaplanırken dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "Sayısal bir veri kümesindeki medyan değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Ortanca değeri hesaplanırken dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Medyan değerini hesaplamada dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "Bir veri kümesindeki maksimum sayısal değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Maksimum değeri hesaplamak için dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Maksimum değeri hesaplamak için dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "MAX": {
+      "description": "Sayısal bir veri kümesindeki maksimum değer.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Maksimum değeri hesaplamak için dikkate alınacak ilk değer veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Maksimum değeri hesaplamak için dikkate alınması gereken ek değerler veya aralıklar."
+        }
+      }
+    },
+    "PROB": {
+      "description": "Olasılık değerleri bir aralıkta yer alır.",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Dikkate alınacak veri kümesini içeren dizi veya aralık."
+        },
+        "probabilities": {
+          "name": "olasılıklar",
+          "detail": "`data` ile ilgili olasılıkları içeren dizi veya aralık."
+        },
+        "low_limit": {
+          "name": "düşük_sınır",
+          "detail": "Olasılığın hesaplanacağı değer aralığının alt sınırı."
+        },
+        "high_limit": {
+          "name": "yüksek_limit",
+          "detail": "Olasılığın hesaplanacağı değer aralığının üst sınırı."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "Korelasyon katsayısının karesi.",
+      "parameters": {
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "VARA": {
+      "description": "Örneklemin varyansı (metin 0 olarak).",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Örneğin ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Örneğe dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "Tüm popülasyonun varyansı (metin 0 olarak).",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Nüfusun ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Popülasyona dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "Regresyonda tahmin edilen y değerlerinin standart hatası.",
+      "parameters": {
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "Bir rastgele değişkenin normalize edilmiş eşdeğeri.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Normalleştirilecek rastgele değişkenin değeri."
+        },
+        "mean": {
+          "name": "Anlam",
+          "detail": "Dağılımın ortalaması."
+        },
+        "standard_deviation": {
+          "name": "standart_sapma",
+          "detail": "Dağılımın standart sapması."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "Bir veri kümesindeki en küçük n'inci eleman.",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Dikkate alınacak veri kümesini içeren dizi veya aralık."
+        },
+        "n": {
+          "name": "N",
+          "detail": "Döndürülecek öğenin en küçüğünden en büyüğüne doğru sıralaması."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "Verilerin doğrusal regresyonundan elde edilen doğrunun eğimi.",
+      "parameters": {
+        "data_y": {
+          "name": "veri_y",
+          "detail": "Bağımlı verilerin dizisini veya matrisini temsil eden aralık."
+        },
+        "data_x": {
+          "name": "veri_x",
+          "detail": "Bağımsız verilerin dizisini veya matrisini temsil eden aralık."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "Bir veri kümesinin çarpıklığı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Veri kümesinin ilk değeri veya aralığı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Veri setine dahil edilecek ek değerler veya aralıklar."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "Dikey arama.",
+      "parameters": {
+        "search_key": {
+          "name": "arama_anahtarı",
+          "detail": "Aranacak değer. Örneğin, `42`, `\"Cats\"`, veya `I24`."
+        },
+        "range": {
+          "name": "menzil",
+          "detail": "Arama için dikkate alınacak aralık. Aralıktaki ilk sütun `search_key` içinde belirtilen anahtar için aranır."
+        },
+        "index": {
+          "name": "dizin",
+          "detail": "Döndürülecek değerin sütun indeksi, `aralık` içindeki ilk sütun 1 olarak numaralandırılır."
+        },
+        "is_sorted": {
+          "name": "sıralanmış",
+          "detail": "Aranacak sütunun (belirtilen aralığın ilk sütunu) sıralı olup olmadığını belirtir; bu durumda `search_key` için en yakın eşleşme döndürülür."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "Yatay arama",
+      "parameters": {
+        "search_key": {
+          "name": "arama_anahtarı",
+          "detail": "Aranacak değer. Örneğin, `42`, `\"Cats\"`, veya `I24`."
+        },
+        "range": {
+          "name": "menzil",
+          "detail": "Arama için dikkate alınacak aralık. Aralıktaki ilk satır `search_key` içinde belirtilen anahtar için aranır."
+        },
+        "index": {
+          "name": "dizin",
+          "detail": "Döndürülecek değerin satır indeksi, `aralık` içindeki ilk satır 1 olarak numaralandırılır."
+        },
+        "is_sorted": {
+          "name": "sıralanmış",
+          "detail": "Aranacak satırın (belirtilen aralığın ilk satırı) sıralı olup olmadığını belirtir."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "Bir değere bakın.",
+      "parameters": {
+        "search_key": {
+          "name": "arama_anahtarı",
+          "detail": "Satır veya sütunda aranacak değer. Örneğin, `42`, `\"Cats\"` veya `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "arama_aralığı|arama_sonucu_dizisi",
+          "detail": "Bu işlevi kullanmanın bir yöntemi, `search_key` için ikinci bir argüman `result_range` ile bakılacak tek sıralı satır veya sütun `search_range` sağlamaktır. Diğer yol, bu iki argümanı, ilk satır veya sütunun arandığı ve dizideki son satır veya sütundan bir değerin döndürüldüğü tek bir `search_result_array` içinde birleştirmektir. `search_key` bulunamazsa, tam olmayan bir eşleşme döndürülebilir."
+        },
+        "result_range": {
+          "name": "sonuç_aralığı",
+          "detail": "Bir sonucun döndürüleceği aralık. Döndürülen değer, `search_key`'in `search_range`'de bulunduğu konuma karşılık gelir. Bu aralık yalnızca tek bir satır veya sütun olmalıdır ve `search_result_array` yöntemi kullanılıyorsa kullanılmamalıdır."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "Hücre referansı bir dize olarak.",
+      "parameters": {
+        "row": {
+          "name": "sıra",
+          "detail": "Hücre başvurusunun satır numarası"
+        },
+        "column": {
+          "name": "kolon",
+          "detail": "Hücre başvurusunun sütun numarası (adı değil). `A` sütun numarası `1`dir."
+        },
+        "absolute_relative_mode": {
+          "name": "mutlak_göreceli_mod",
+          "detail": "Referansın satır/sütun mutlak olup olmadığının göstergesi. `1` satır ve sütun mutlaktır (örn. $A$1), `2` satır mutlak ve sütun görecelidir (örn. A$1), `3` satır görecelidir ve sütun mutlaktır (örn. $A1) ve `4` satır ve sütun görecelidir (örn. A1)."
+        },
+        "use_a1_notation": {
+          "name": "a1_notasyonunu_kullan",
+          "detail": "`A1` stil gösteriminin (TRUE) veya `R1C1` stil gösteriminin (FALSE) kullanılıp kullanılmayacağını belirten bir Boole değeri."
+        },
+        "sheet": {
+          "name": "çarşaf",
+          "detail": "Adresin işaret ettiği sayfanın adını belirten metin."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "Bir dize tarafından belirtilen hücre başvurusu.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "hücre_başvurusu_dize_olarak",
+          "detail": "Tırnak işaretleri ile çevrelenmiş bir dize olarak yazılan bir hücre başvurusu."
+        },
+        "is_A1_notation": {
+          "name": "is_A1_notasyonu",
+          "detail": "Hücre başvurusunun A1 gösteriminde (TRUE) veya R1C1 gösteriminde (FALSE) olup olmadığını belirtir."
+        }
+      }
+    },
+    "ROW": {
+      "description": "Belirtilen hücrenin satır numarası.",
+      "parameters": {
+        "cell_reference": {
+          "name": "hücre_başvurusu",
+          "detail": "Satır numarası döndürülecek hücre."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "Belirtilen bir dizi veya aralıktaki satır sayısı.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "Satır sayısı döndürülecek aralık."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "Belirtilen hücrenin sütun numarası.",
+      "parameters": {
+        "cell_reference": {
+          "name": "hücre_başvurusu",
+          "detail": "Sütun numarası döndürülecek hücre. `A` sütunu `1`e karşılık gelir."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "Belirtilen dizi veya aralıktaki sütun sayısı.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "Sütun sayısı döndürülecek aralık."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "Bir hücreye göre aralık referans ofseti.",
+      "parameters": {
+        "cell_reference": {
+          "name": "hücre_başvurusu",
+          "detail": "Ofset satır ve sütunların sayılacağı başlangıç noktası."
+        },
+        "offset_rows": {
+          "name": "ofset_satırları",
+          "detail": "Ofsetlenecek satır sayısı."
+        },
+        "offset_columns": {
+          "name": "ofset_sütunları",
+          "detail": "Ofsetlenecek sütun sayısı."
+        },
+        "height": {
+          "name": "yükseklik",
+          "detail": "Hedef ofsetten başlayarak döndürülecek aralığın yüksekliği."
+        },
+        "width": {
+          "name": "Genişlik",
+          "detail": "Hedef ofsetten başlayarak döndürülecek aralığın genişliği."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "Değerle eşleşen aralıktaki öğenin konumu.",
+      "parameters": {
+        "search_key": {
+          "name": "arama_anahtarı",
+          "detail": "Aranacak değer. Örneğin, `42`, `\"Cats\"`, veya `I24`."
+        },
+        "range": {
+          "name": "menzil",
+          "detail": "Aranacak tek boyutlu dizi."
+        },
+        "search_type": {
+          "name": "arama_türü",
+          "detail": "Arama yöntemi. `1` (varsayılan), `aralık` artan düzende sıralandığında `arama_anahtarı`ndan küçük veya ona eşit en büyük değeri bulur. `0`, `aralık` sıralanmamış olduğunda tam değeri bulur. `-1`, `aralık` azalan düzende sıralandığında `arama_anahtarı`ndan büyük veya ona eşit en küçük değeri bulur."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "Satır ve sütun ofsetiyle belirtilen hücrenin içeriği.",
+      "parameters": {
+        "reference": {
+          "name": "referans",
+          "detail": "Ofsetlenecek hücre dizisi."
+        },
+        "row": {
+          "name": "sıra",
+          "detail": "Ofset satırlarının sayısı."
+        },
+        "column": {
+          "name": "kolon",
+          "detail": "Ofset sütun sayısı."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "Belirtilen satır ve sütun başlıklarına karşılık gelen pivot tablodan toplu bir değer çıkarır.",
+      "parameters": {
+        "value_name": {
+          "name": "değer_adı",
+          "detail": "Verilerini almak istediğiniz pivot tablodaki değerin adı."
+        },
+        "any_pivot_table_cell": {
+          "name": "herhangi_pivot_tablo_hücresi",
+          "detail": "İstenilen pivot tablodaki herhangi bir hücreye referans (üst köşe önerilir)."
+        },
+        "original_column": {
+          "name": "orijinal_sütun",
+          "detail": "Orijinal veri kümesindeki sütunun adı (pivot tablo değil)."
+        },
+        "pivot_item": {
+          "name": "pivot_öğe",
+          "detail": "Almak istediğiniz *original_column*'a karşılık gelen pivot tabloda gösterilen satır veya sütunun adı."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "İndeks bazlı bir seçenek listesindeki bir eleman.",
+      "parameters": {
+        "index": {
+          "name": "dizin",
+          "detail": "Hangi seçeneği (sağlanan 30'a kadar) iade edeceğiz."
+        },
+        "choice1": {
+          "name": "seçim1",
+          "detail": "Döndürülecek olası bir değer. Gerekli. Bir hücreye veya bireysel bir değere referans olabilir."
+        },
+        "choice2": {
+          "name": "seçim2",
+          "detail": "Aralarından seçim yapabileceğiniz ek değerler."
+        }
+      }
+    },
+    "TIME": {
+      "description": "Saat/dakika/saniyeyi zamana dönüştürür.",
+      "parameters": {
+        "hour": {
+          "name": "saat",
+          "detail": "Zamanın saat bileşeni."
+        },
+        "minute": {
+          "name": "dakika",
+          "detail": "Zamanın dakika bileşeni."
+        },
+        "second": {
+          "name": "ikinci",
+          "detail": "Zamanın ikinci bileşeni."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "Bir zaman dizesini seri numarası gösterimine dönüştürür.",
+      "parameters": {
+        "time_string": {
+          "name": "zaman_dizesi",
+          "detail": "Zaman gösterimini tutan dize."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "Bir tarihten önceki veya sonraki ayın son günü.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Sonucun hesaplanacağı tarih."
+        },
+        "months": {
+          "name": "aylar",
+          "detail": "'başlangıç_tarihi'nden önceki (negatif) veya sonraki (pozitif) ay sayısı dikkate alınmalıdır."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "Başka bir tarihten belirli bir ay öncesini/sonrasını belirten tarih.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Sonucun hesaplanacağı tarih."
+        },
+        "months": {
+          "name": "aylar",
+          "detail": "Hesaplanacak 'başlangıç_tarihi'nden önceki (negatif) veya sonraki (pozitif) ay sayısı."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "Belirli bir zamanın ikinci bileşeni.",
+      "parameters": {
+        "time": {
+          "name": "zaman",
+          "detail": "İkinci bileşenin hesaplanacağı zaman"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "Belirli bir zamanın dakika bileşeni.",
+      "parameters": {
+        "time": {
+          "name": "zaman",
+          "detail": "Dakika bileşeninin hesaplanacağı zaman."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "Belirli bir zamanın saat bileşeni.",
+      "parameters": {
+        "time": {
+          "name": "zaman",
+          "detail": "Saat bileşeninin hesaplanacağı zaman."
+        }
+      }
+    },
+    "NOW": {
+      "description": "Güncel tarih ve saati tarih değeri olarak."
+    },
+    "NETWORKDAYS": {
+      "description": "Verilen iki gün arasındaki net çalışma günü sayısı.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Net çalışma günü sayısının hesaplanacağı dönemin başlangıç tarihi."
+        },
+        "end_date": {
+          "name": "bitiş_tarihi",
+          "detail": "Net çalışma günü sayısının hesaplanacağı dönemin bitiş tarihi."
+        },
+        "holidays": {
+          "name": "tatiller",
+          "detail": "Tatil günlerinin dikkate alınması gereken tarih seri numaralarını içeren bir aralık veya dizi sabiti."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "Yılın ISO hafta numarası.",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "ISO hafta numarasının belirleneceği tarih. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "Yılın hafta numarası.",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "Hafta numarasının belirleneceği tarih. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        },
+        "type": {
+          "name": "tip",
+          "detail": "Haftanın başladığı günü temsil eden sayı. Pazar = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "Belirtilen tarihin haftanın günü (sayı olarak).",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "Haftanın gününün belirleneceği tarih. Bir tarih içeren bir hücreye, bir tarih türü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        },
+        "type": {
+          "name": "tip",
+          "detail": "Haftanın günlerini temsil etmek için hangi numaralandırma sisteminin kullanılacağını belirten bir sayı. Varsayılan olarak, Pazar ile başlayan sayılar = 1'dir."
+        }
+      }
+    },
+    "DAY": {
+      "description": "Belirli bir tarihin denk geldiği ayın günü.",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "Günün çıkarılacağı tarih."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "İki tarih arasındaki gün sayısı.",
+      "parameters": {
+        "end_date": {
+          "name": "bitiş_tarihi",
+          "detail": "Tarih aralığının sonu."
+        },
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Tarih aralığının başlangıcı."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "360 günlük bir yılda iki tarih arasındaki günler.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Hesaplamada dikkate alınacak başlangıç tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir işleve veya bir sayıya başvuru olmalıdır."
+        },
+        "end_date": {
+          "name": "bitiş_tarihi",
+          "detail": "Hesaplamada dikkate alınacak bitiş tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        },
+        "method": {
+          "name": "yöntem",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "DATE": {
+      "description": "Yıl/ay/gün değerini tarihe dönüştürür.",
+      "parameters": {
+        "year": {
+          "name": "yıl",
+          "detail": "Tarihin yıl bileşeni."
+        },
+        "month": {
+          "name": "ay",
+          "detail": "Tarihin ay bileşeni."
+        },
+        "day": {
+          "name": "gün",
+          "detail": "Tarihin gün bileşeni."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "Bir tarih dizesini tarih değerine dönüştürür.",
+      "parameters": {
+        "date_string": {
+          "name": "tarih_dizesi",
+          "detail": "Tarihi temsil eden dize."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "Tarih Farkı.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Hesaplamada dikkate alınacak başlangıç tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir işleve veya bir sayıya başvuru olmalıdır."
+        },
+        "end_date": {
+          "name": "bitiş_tarihi",
+          "detail": "Hesaplamada dikkate alınacak bitiş tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        },
+        "unit": {
+          "name": "birim",
+          "detail": "Zaman birimi için bir dize kısaltması. Örneğin, ay için \"M\". Kabul edilen değerler \"Y\",\"M\",\"D\",\"MD\",\"YM\",\"YD\"dir."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "Başlangıç tarihinden itibaren iş günü sayısı.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Sayımın başlayacağı tarih."
+        },
+        "num_days": {
+          "name": "gün_sayısı",
+          "detail": "`start_date`'den itibaren ilerlemek için gereken iş günü sayısı. Negatif ise geriye doğru sayar."
+        },
+        "holidays": {
+          "name": "tatiller",
+          "detail": "Tatil olarak değerlendirilecek tarihleri içeren bir aralık veya dizi sabiti."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "Belirli bir tarihle belirtilen yıl.",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "Yılın çıkarılacağı tarih."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "İki tarih arasındaki tam yıl sayısı.",
+      "parameters": {
+        "start_date": {
+          "name": "başlangıç_tarihi",
+          "detail": "Hesaplamada dikkate alınacak başlangıç tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir işleve veya bir sayıya başvuru olmalıdır."
+        },
+        "end_date": {
+          "name": "bitiş_tarihi",
+          "detail": "Hesaplamada dikkate alınacak bitiş tarihi. Bir tarih içeren bir hücreye, bir tarih türünü döndüren bir fonksiyona veya bir sayıya başvuru olmalıdır."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "Güncel tarih, tarih değeri olarak."
+    },
+    "MONTH": {
+      "description": "Belirli bir tarihin denk geldiği yılın ayı.",
+      "parameters": {
+        "date": {
+          "name": "tarih",
+          "detail": "Ayın çıkarılacağı tarih."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "Yıllık efektif faiz oranı.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "nominal_oran",
+          "detail": "Yıllık nominal faiz oranı."
+        },
+        "periods_per_year": {
+          "name": "dönemler_yılda",
+          "detail": "Yıldaki bileşik faiz dönemi sayısı."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "Bir sayıyı, elektronik tablonuzun yerel ayarına özgü para birimi olarak biçimlendirir.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Biçimlendirilecek değer."
+        },
+        "number_of_places": {
+          "name": "yer_sayısı",
+          "detail": "Görüntülenecek ondalık basamak sayısı."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "Ondalık kesri ondalık değere dönüştürür.",
+      "parameters": {
+        "fractional_price": {
+          "name": "kesirli_fiyat",
+          "detail": "Kesirli ondalık sayılar kullanılarak verilen fiyat teklifi."
+        },
+        "unit": {
+          "name": "birim",
+          "detail": "Kesrin birimleri, örneğin 1/8'ler için `8` veya 1/32'ler için `32`."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "Ondalık değeri ondalık kesre dönüştürür.",
+      "parameters": {
+        "decimal_price": {
+          "name": "ondalık_fiyat",
+          "detail": "Ondalık değer olarak verilen fiyat teklifi."
+        },
+        "unit": {
+          "name": "birim",
+          "detail": "İstenilen kesrin birimleri, örneğin 1/8'ler için `8` veya 1/32'ler için `32`."
+        }
+      }
+    },
+    "DB": {
+      "description": "Azalan bakiyeler yöntemiyle amortisman.",
+      "parameters": {
+        "cost": {
+          "name": "maliyet",
+          "detail": "Varlığın ilk maliyeti."
+        },
+        "salvage": {
+          "name": "kurtarma",
+          "detail": "Amortisman sonunda varlığın değeri."
+        },
+        "life": {
+          "name": "hayat",
+          "detail": "Varlığın amortismana tabi tutulduğu dönem sayısı."
+        },
+        "period": {
+          "name": "dönem",
+          "detail": "`Ömür` içinde amortismanın hesaplanacağı tek dönem."
+        },
+        "month": {
+          "name": "ay",
+          "detail": "İlk yıldaki amortisman ay sayısı."
+        }
+      }
+    },
+    "DDB": {
+      "description": "Çift azalan bakiyeler yöntemiyle amortisman.",
+      "parameters": {
+        "cost": {
+          "name": "maliyet",
+          "detail": "Varlığın ilk maliyeti."
+        },
+        "salvage": {
+          "name": "kurtarma",
+          "detail": "Amortisman sonunda varlığın değeri."
+        },
+        "life": {
+          "name": "hayat",
+          "detail": "Varlığın amortismana tabi tutulduğu dönem sayısı."
+        },
+        "period": {
+          "name": "dönem",
+          "detail": "`Ömür` içinde amortismanın hesaplanacağı tek dönem."
+        },
+        "factor": {
+          "name": "faktör",
+          "detail": "Amortismanın azaldığı faktör."
+        }
+      }
+    },
+    "RATE": {
+      "description": "Bir anüite yatırımının faiz oranı.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "payment_per_period": {
+          "name": "ödeme_dönem_başına",
+          "detail": "Dönem başına ödenecek tutar."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        },
+        "rate_guess": {
+          "name": "oran_tahmin",
+          "detail": "Faiz oranının ne olacağına dair bir tahmin."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "Belirli dönemler boyunca ödenen kümülatif anapara.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "first_period": {
+          "name": "ilk_dönem",
+          "detail": "Toplam hesaplamanın başlayacağı ödeme periyodunun numarası."
+        },
+        "last_period": {
+          "name": "son_dönem",
+          "detail": "Toplu hesaplamanın sona ereceği ödeme periyodunun numarası."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "Takas ve vade arasındaki kupon sayısı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "SYD": {
+      "description": "Yılların toplamına göre amortisman yöntemi.",
+      "parameters": {
+        "cost": {
+          "name": "maliyet",
+          "detail": "Varlığın ilk maliyeti."
+        },
+        "salvage": {
+          "name": "kurtarma",
+          "detail": "Amortisman sonunda varlığın değeri."
+        },
+        "life": {
+          "name": "hayat",
+          "detail": "Varlığın amortismana tabi tutulduğu dönem sayısı."
+        },
+        "period": {
+          "name": "dönem",
+          "detail": "`Ömür` içinde amortismanın hesaplanacağı tek dönem."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "Hazine bonosu için eşdeğer getiri oranı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "discount": {
+          "name": "indirim",
+          "detail": "Senetin satın alındığı andaki iskonto oranı."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "Bir ABD hazine bonosunun fiyatına bağlı getirisi.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "price": {
+          "name": "fiyat",
+          "detail": "Menkul kıymetin 100 nominal değer üzerinden satın alındığı fiyat."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "ABD hazine bonosu fiyatı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "discount": {
+          "name": "indirim",
+          "detail": "Senetin satın alındığı andaki iskonto oranı."
+        }
+      }
+    },
+    "PV": {
+      "description": "Bir yıllık gelir yatırımının bugünkü değeri.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "payment_amount": {
+          "name": "ödeme_miktarı",
+          "detail": "Dönem başına ödenecek tutar."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "İlk kupondan ödemeye kadar geçen gün sayısı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "Kupon dönemindeki yerleşim tarihini içeren gün sayısı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "FV": {
+      "description": "Bir yıllık gelir yatırımının gelecekteki değeri.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "payment_amount": {
+          "name": "ödeme_miktarı",
+          "detail": "Dönem başına ödenecek tutar."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "Faiz oranları serisinden anaparanın gelecekteki değeri.",
+      "parameters": {
+        "principal": {
+          "name": "müdür",
+          "detail": "Bileşik faizle hesaplanacak başlangıç sermayesi veya değer miktarı."
+        },
+        "rate_schedule": {
+          "name": "oran_programı",
+          "detail": "`Anapara`ya karşı birleştirilen bir dizi faiz oranı."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "Periyodik faiz ödeyen bir menkul kıymetin yıllık getirisi.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "rate": {
+          "name": "oran",
+          "detail": "Yıllık faiz oranı."
+        },
+        "price": {
+          "name": "fiyat",
+          "detail": "Menkul kıymetin 100 nominal değer üzerinden satın alındığı fiyat."
+        },
+        "redemption": {
+          "name": "kefaret",
+          "detail": "Yüzde yüz nominal değer veya par. başına düşen itfa tutarı."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "İskontolu bir menkul kıymetin yıllık getirisi.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "price": {
+          "name": "fiyat",
+          "detail": "Menkul kıymetin 100 nominal değer üzerinden satın alındığı fiyat."
+        },
+        "redemption": {
+          "name": "kefaret",
+          "detail": "Yüzde yüz nominal değer veya par. başına düşen itfa tutarı."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "Yıllık nominal faiz oranı.",
+      "parameters": {
+        "effective_rate": {
+          "name": "etkili_oran",
+          "detail": "Yıllık efektif faiz oranı."
+        },
+        "periods_per_year": {
+          "name": "dönemler_yılda",
+          "detail": "Yıldaki bileşik faiz dönemi sayısı."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "Periyodik olmayan nakit akışları göz önüne alındığında iç getiri oranı.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "nakit_akış_miktarları",
+          "detail": "Yatırımla ilişkili gelir veya ödemeleri içeren dizi veya aralık."
+        },
+        "cashflow_dates": {
+          "name": "nakit_akış_tarihleri",
+          "detail": "`cashflow_amounts` içindeki nakit akışlarına karşılık gelen tarihlerin bulunduğu bir dizi veya aralık."
+        },
+        "rate_guess": {
+          "name": "oran_tahmin",
+          "detail": "İç getiri oranının ne olacağına dair bir tahmin."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "Değiştirilmiş iç getiri oranı.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "nakit_akış_miktarları",
+          "detail": "Yatırımla ilişkili gelir veya ödemeleri içeren dizi veya aralık."
+        },
+        "financing_rate": {
+          "name": "finansman_oranı",
+          "detail": "Yatırım yapılan fonlara ödenen faiz oranı."
+        },
+        "reinvestment_return_rate": {
+          "name": "yeniden yatırım_getiri_oranı",
+          "detail": "Yatırımdan elde edilen gelirin yeniden yatırıma dönüştürülmesiyle elde edilen getiri (yüzde olarak)."
+        }
+      }
+    },
+    "IRR": {
+      "description": "Periyodik nakit akışları göz önüne alındığında iç getiri oranı.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "nakit_akış_miktarları",
+          "detail": "Yatırımla ilişkili gelir veya ödemeleri içeren dizi veya aralık."
+        },
+        "rate_guess": {
+          "name": "oran_tahmin",
+          "detail": "İç getiri oranının ne olacağına dair bir tahmin."
+        }
+      }
+    },
+    "NPV": {
+      "description": "Bir yatırımın bir dizi periyodik nakit akışı ve bir iskonto oranına dayalı net bugünkü değeri.",
+      "parameters": {
+        "discount": {
+          "name": "indirim",
+          "detail": "Yatırımın bir dönemdeki iskonto oranı."
+        },
+        "cashflow1": {
+          "name": "nakit akışı1",
+          "detail": "İlk gelecekteki nakit akışı."
+        },
+        "cashflow2": {
+          "name": "nakit akışı2",
+          "detail": "Ek gelecekteki nakit akışları."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "Periyodik olmayan nakit akışları göz önüne alındığında net bugünkü değer.",
+      "parameters": {
+        "discount": {
+          "name": "indirim",
+          "detail": "Yatırımın bir dönemdeki iskonto oranı."
+        },
+        "cashflow_amounts": {
+          "name": "nakit_akış_miktarları",
+          "detail": "Yatırımla ilişkili gelir veya ödemeleri içeren hücre aralığı."
+        },
+        "cashflow_dates": {
+          "name": "nakit_akış_tarihleri",
+          "detail": "`cashflow_amounts` içindeki nakit akışlarına karşılık gelen tarihlerin bulunduğu hücre aralığı."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "Belirli dönemler boyunca ödenen kümülatif faiz.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "first_period": {
+          "name": "ilk_dönem",
+          "detail": "Toplam hesaplamanın başlayacağı ödeme periyodunun numarası."
+        },
+        "last_period": {
+          "name": "son_dönem",
+          "detail": "Toplu hesaplamanın sona ereceği ödeme periyodunun numarası."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "PMT": {
+      "description": "Bir annuite yatırımı için periyodik ödeme.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "Bir yatırımın faizinin ödenmesi.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "period": {
+          "name": "dönem",
+          "detail": "Amortisman süresi, dönem sayısı olarak."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "Bir yatırımın anaparasının ödenmesi.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "period": {
+          "name": "dönem",
+          "detail": "Amortisman süresi, dönem sayısı olarak."
+        },
+        "number_of_periods": {
+          "name": "dönem_sayısı",
+          "detail": "Yapılacak ödeme sayısı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "Etkin faiz oranını hesaplar.",
+      "parameters": {
+        "buy_date": {
+          "name": "satın_alma_tarihi",
+          "detail": "Yatırımın satın alındığı tarih."
+        },
+        "sell_date": {
+          "name": "satış_tarihi",
+          "detail": "Yatırımın satış tarihi."
+        },
+        "buy_price": {
+          "name": "satın_alma_fiyatı",
+          "detail": "Yatırımın satın alındığı fiyat."
+        },
+        "sell_price": {
+          "name": "satış_fiyatı",
+          "detail": "Yatırımın satıldığı fiyat."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "Periyodik faiz ödeyen bir menkul kıymetin fiyatı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "rate": {
+          "name": "oran",
+          "detail": "Yıllık faiz oranı."
+        },
+        "yield": {
+          "name": "teslim olmak",
+          "detail": "Menkul kıymetin beklenen yıllık getirisi."
+        },
+        "redemption": {
+          "name": "kefaret",
+          "detail": "Yüzde yüz nominal değer veya par. başına düşen itfa tutarı."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "İndirimli bir menkul kıymetin fiyatı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "discount": {
+          "name": "indirim",
+          "detail": "Menkul kıymetin satın alındığı andaki iskonto oranı."
+        },
+        "redemption": {
+          "name": "kefaret",
+          "detail": "Yüzde yüz nominal değer veya par. başına düşen itfa tutarı."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "Vadesinde faiz ödenen menkul kıymetin fiyatı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "issue": {
+          "name": "sorun",
+          "detail": "Menkul kıymetin ilk olarak ihraç edildiği tarih."
+        },
+        "rate": {
+          "name": "oran",
+          "detail": "Yıllık faiz oranı."
+        },
+        "yield": {
+          "name": "teslim olmak",
+          "detail": "Menkul kıymetin beklenen yıllık getirisi."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "Bir menkul kıymet karşılığında vade sonunda alınan tutar.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "investment": {
+          "name": "yatırım",
+          "detail": "Yatırılan miktar (her bir menkul kıymetin nominal değerinden bağımsız olarak)."
+        },
+        "discount": {
+          "name": "indirim",
+          "detail": "Yatırım yapılan menkul kıymetin iskonto oranı."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "DISC": {
+      "description": "Bir menkul kıymetin fiyatına bağlı iskonto oranı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "price": {
+          "name": "fiyat",
+          "detail": "Menkul kıymetin 100 nominal değer üzerinden satın alındığı fiyat."
+        },
+        "redemption": {
+          "name": "kefaret",
+          "detail": "Yüzde yüz nominal değer veya par. başına düşen itfa tutarı."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "NPER": {
+      "description": "Bir yatırım için ödeme periyotlarının sayısı.",
+      "parameters": {
+        "rate": {
+          "name": "oran",
+          "detail": "Faiz oranı."
+        },
+        "payment_amount": {
+          "name": "ödeme_miktarı",
+          "detail": "Yapılan her ödemenin tutarı."
+        },
+        "present_value": {
+          "name": "mevcut_değer",
+          "detail": "Anüitenin güncel değeri."
+        },
+        "future_value": {
+          "name": "gelecek_değer",
+          "detail": "Son ödeme yapıldıktan sonra kalan gelecekteki değer."
+        },
+        "end_or_beginning": {
+          "name": "son_veya_başlangıç",
+          "detail": "Ödemelerin her dönemin sonunda (`0`) mı yoksa başında (`1`) mı yapılacağı."
+        }
+      }
+    },
+    "SLN": {
+      "description": "Varlığın doğrusal amortisman yöntemi kullanılarak amortismanı.",
+      "parameters": {
+        "cost": {
+          "name": "maliyet",
+          "detail": "Varlığın ilk maliyeti."
+        },
+        "salvage": {
+          "name": "kurtarma",
+          "detail": "Amortisman sonunda varlığın değeri."
+        },
+        "life": {
+          "name": "hayat",
+          "detail": "Varlığın amortismana tabi tutulduğu dönem sayısı."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "Bir yatırımın değere ulaşması için gereken dönem sayısı.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "rate": {
+          "name": "oran",
+          "detail": "Yıllık faiz oranı."
+        },
+        "yield": {
+          "name": "teslim olmak",
+          "detail": "Menkul kıymetin beklenen yıllık getirisi."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "Değiştirilmiş Macaulay süresi.",
+      "parameters": {
+        "settlement": {
+          "name": "yerleşim",
+          "detail": "Menkul kıymetin teslim tarihi, ihraçtan sonra menkul kıymetin alıcıya teslim edildiği tarih."
+        },
+        "maturity": {
+          "name": "olgunluk",
+          "detail": "Menkul kıymetin nominal veya nominal değer üzerinden itfa edilebileceği vade veya bitiş tarihi."
+        },
+        "rate": {
+          "name": "oran",
+          "detail": "Yıllık faiz oranı."
+        },
+        "yield": {
+          "name": "teslim olmak",
+          "detail": "Menkul kıymetin beklenen yıllık getirisi."
+        },
+        "frequency": {
+          "name": "sıklık",
+          "detail": "Yıldaki faiz veya kupon ödemelerinin sayısı (1, 2 veya 4)."
+        },
+        "day_count_convention": {
+          "name": "gün_sayımı_kongresi",
+          "detail": "Hangi gün sayma yönteminin kullanılacağına dair bir gösterge."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "İmzalı ikili sayıyı ondalık biçime dönüştürür.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "imzalanmış_ikili_sayı",
+          "detail": "Ondalığa dönüştürülecek imzalı 10 bitlik ikili değer, bir dize olarak sağlanır."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "İkili sayıyı onaltılık sayıya dönüştürür.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "imzalanmış_ikili_sayı",
+          "detail": "İmzalı onaltılık değere dönüştürülecek imzalı 10 bitlik ikili değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "İkili sayıyı sekizli sayıya dönüştürür.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "imzalanmış_ikili_sayı",
+          "detail": "İmzalı sekizliye dönüştürülecek imzalı 10 bitlik ikili değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "Ondalık sayıyı işaretli ikili biçime dönüştürür.",
+      "parameters": {
+        "decimal_number": {
+          "name": "ondalık_sayı",
+          "detail": "İmzalı ikiliye dönüştürülecek ondalık değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "Ondalık sayıyı onaltılık sayıya dönüştürür.",
+      "parameters": {
+        "decimal_number": {
+          "name": "ondalık_sayı",
+          "detail": "İşaretli onaltılık sayıya dönüştürülecek ondalık değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "Ondalık sayıyı işaretli sekizlik biçime dönüştürür.",
+      "parameters": {
+        "decimal_number": {
+          "name": "ondalık_sayı",
+          "detail": "İşaretli sekizliye dönüştürülecek ondalık değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "Onaltılık bir sayıyı ikiliye dönüştürür.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "imzalı_onaltılık_sayı",
+          "detail": "İmzalı ikiliye dönüştürülecek imzalı 40 bitlik onaltılık değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "Onaltılık bir sayıyı ondalık sayıya dönüştürür.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "imzalı_onaltılık_sayı",
+          "detail": "Ondalığa dönüştürülecek imzalı 40 bitlik onaltılık değer, bir dize olarak sağlanır."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "Onaltılık bir sayıyı sekizli sayıya dönüştürür.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "imzalı_onaltılık_sayı",
+          "detail": "İşaretli sekizliye dönüştürülecek işaretli 40 bitlik onaltılık değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "Sekizli sayıyı ikili sayıya dönüştürür.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "imzalı_sekizli_sayı",
+          "detail": "İmzalı ikiliye dönüştürülecek imzalı 30 bitlik sekizli değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "İşaretli sekizli sayıyı ondalık biçime dönüştürür.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "imzalı_sekizli_sayı",
+          "detail": "Ondalığa dönüştürülecek imzalı 30 bitlik sekizli değer, bir dize olarak sağlanır."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "Sekizli sayıyı onaltılı sayıya dönüştürür.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "imzalı_sekizli_sayı",
+          "detail": "İşaretli onaltılık sayıya dönüştürülecek işaretli 30 bitlik sekizli değer, bir dize olarak sağlanır."
+        },
+        "significant_digits": {
+          "name": "önemli_rakamlar",
+          "detail": "Sonuçta bulunması gereken anlamlı basamak sayısı."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "Karmaşık bir sayı oluşturur.",
+      "parameters": {
+        "real_part": {
+          "name": "gerçek_parça",
+          "detail": "Gerçek katsayı."
+        },
+        "imaginary_part": {
+          "name": "hayali_parça",
+          "detail": "Hayali katsayı."
+        },
+        "suffix": {
+          "name": "ek",
+          "detail": "Sanal katsayı için ek yalnızca 'i' veya 'j' olabilir. Atlanırsa 'i' kullanılacaktır."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "Karmaşık sayının gerçek katsayısı.",
+      "parameters": {
+        "complex_number": {
+          "name": "karmaşık_sayı",
+          "detail": "Karmaşık sayı, a+bi veya a+bj formatında."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "Karmaşık sayının sanal katsayısı.",
+      "parameters": {
+        "complex_number": {
+          "name": "karmaşık_sayı",
+          "detail": "Karmaşık sayı, a+bi veya a+bj formatında."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "Bir sayının karmaşık eşleniği.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Eşleniği hesaplanacak karmaşık sayı."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "Karmaşık bir sayının mutlak değeri.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Mutlak değerini hesaplayacağımız karmaşık sayı."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "İki sayısal değeri karşılaştırın.",
+      "parameters": {
+        "number1": {
+          "name": "sayı1",
+          "detail": "Karşılaştırılacak ilk sayı."
+        },
+        "number2": {
+          "name": "sayı2",
+          "detail": "Karşılaştırılacak ikinci sayı."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "Karmaşık sayı dizisinin toplamı.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Toplanacak ilk karmaşık sayı veya aralık."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1`'e eklenecek ek karmaşık sayılar veya aralıklar."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "İki karmaşık sayı arasındaki fark.",
+      "parameters": {
+        "first_number": {
+          "name": "ilk_sayı",
+          "detail": "İkinci_sayı'nın çıkarılacağı karmaşık sayı."
+        },
+        "second_number": {
+          "name": "ikinci_sayı",
+          "detail": "first_number'dan çıkarılacak karmaşık sayı."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "Bir dizi karmaşık sayının çarpılmasının sonucu.",
+      "parameters": {
+        "factor1": {
+          "name": "faktör1",
+          "detail": "Ürün için hesaplanacak ilk sayı veya aralık."
+        },
+        "factor2": {
+          "name": "faktör2",
+          "detail": "Ürün için hesaplanacak ek karmaşık sayılar veya aralıklar."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "Bir karmaşık sayının başka bir karmaşık sayıya bölümü.",
+      "parameters": {
+        "dividend": {
+          "name": "temettü",
+          "detail": "Bölünecek karmaşık sayı."
+        },
+        "divisor": {
+          "name": "bölen",
+          "detail": "Bölünecek karmaşık sayı."
+        }
+      }
+    },
+    "NOT": {
+      "description": "Verilen mantıksal değerin tersini döndürür.",
+      "parameters": {
+        "logical_expression": {
+          "name": "mantıksal_ifade",
+          "detail": "Mantıksal bir değeri temsil eden bir ifadeyi tutan bir hücreye ait ifade veya başvuru."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "Mantıksal değer `true`."
+    },
+    "FALSE": {
+      "description": "Mantıksal değer `false`."
+    },
+    "AND": {
+      "description": "Mantıksal `ve` operatörü.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "mantıksal_ifade1",
+          "detail": "Mantıksal bir değeri (örneğin `TRUE` veya `FALSE`) temsil eden bir ifadeyi içeren bir ifade veya hücreye başvuru, ya da mantıksal bir değere zorlanabilen bir ifade."
+        },
+        "logical_expression2": {
+          "name": "mantıksal_ifade2",
+          "detail": "Mantıksal değerleri temsil eden daha fazla ifade."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "Hata değilse değer, aksi takdirde 2. argüman.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`value`'nin kendisi bir hata değilse döndürülecek değer."
+        },
+        "value_if_error": {
+          "name": "hata_ise_değeri",
+          "detail": "`value` bir hata ise fonksiyonun döndürdüğü değer."
+        }
+      }
+    },
+    "IF": {
+      "description": "Mantıksal ifadeye bağlı olarak değer döndürür.",
+      "parameters": {
+        "logical_expression": {
+          "name": "mantıksal_ifade",
+          "detail": "Mantıksal bir değeri (ör. `TRUE` veya `FALSE`) temsil eden bir ifadeyi içeren bir ifade veya hücreye başvuru."
+        },
+        "value_if_true": {
+          "name": "doğruysa_değer",
+          "detail": "`logical_expression` `TRUE` ise fonksiyonun döndürdüğü değer."
+        },
+        "value_if_false": {
+          "name": "değer_eğer_yanlışsa",
+          "detail": "`logical_expression` `FALSE` ise fonksiyonun döndürdüğü değer."
+        }
+      }
+    },
+    "OR": {
+      "description": "Mantıksal `veya` operatörü.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "mantıksal_ifade1",
+          "detail": "Mantıksal bir değeri (örneğin `TRUE` veya `FALSE`) temsil eden bir ifadeyi içeren bir ifade veya hücreye başvuru, ya da mantıksal bir değere zorlanabilen bir ifade."
+        },
+        "logical_expression2": {
+          "name": "mantıksal_ifade2",
+          "detail": "Mantıksal değerlere dönüşen daha fazla ifade."
+        }
+      }
+    },
+    "NE": {
+      "description": "Eşit değil.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "İlk değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1` ile eşitsizliği test etmek için kullanılacak değer."
+        }
+      }
+    },
+    "EQ": {
+      "description": "Eşit.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "İlk değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "Eşitlik için `value1` ile karşılaştırılacak değer."
+        }
+      }
+    },
+    "GT": {
+      "description": "Kesinlikle daha büyük.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "`value2` değerinden büyük olup olmadığını test etmek için kullanılacak değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "İkinci değer."
+        }
+      }
+    },
+    "GTE": {
+      "description": "Büyük veya eşit.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "`value2`'den büyük veya eşit olup olmadığını test etmek için kullanılacak değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "İkinci değer."
+        }
+      }
+    },
+    "LT": {
+      "description": "Daha az.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "`value2` değerinden küçük olup olmadığı test edilecek değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "İkinci değer."
+        }
+      }
+    },
+    "LTE": {
+      "description": "Küçük veya eşit.",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "`value2`'den küçük veya eşit olup olmadığını test etmek için kullanılacak değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "İkinci değer."
+        }
+      }
+    },
+    "ADD": {
+      "description": "İki sayının toplamı",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Birinci eklenen."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "İkinci eklenen."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "İki sayının farkı",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "Eksilen veya çıkarılacak sayı."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1`'den çıkarılacak sayı."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "İki sayının çarpımı",
+      "parameters": {
+        "factor1": {
+          "name": "faktör1",
+          "detail": "İlk çarpılan."
+        },
+        "factor2": {
+          "name": "faktör2",
+          "detail": "İkinci çarpılan."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "Bir sayının diğerine bölünmesi",
+      "parameters": {
+        "dividend": {
+          "name": "temettü",
+          "detail": "Bölünecek sayı."
+        },
+        "divisor": {
+          "name": "bölen",
+          "detail": "Bölünecek sayı."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "İki değerin birleştirilmesi",
+      "parameters": {
+        "value1": {
+          "name": "değer1",
+          "detail": "`value2`'nin ekleneceği değer."
+        },
+        "value2": {
+          "name": "değer2",
+          "detail": "`value1`'e eklenecek değer."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "Yüzde olarak yorumlanan değer.",
+      "parameters": {
+        "percentage": {
+          "name": "yüzde",
+          "detail": "Yüzde olarak yorumlanacak değer."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "Dizeleri birbirine ekler.",
+      "parameters": {
+        "string1": {
+          "name": "dize1",
+          "detail": "Başlangıç dizesi."
+        },
+        "string2": {
+          "name": "dize2",
+          "detail": "Sıraya eklenecek daha fazla dize."
+        }
+      }
+    },
+    "CODE": {
+      "description": "Karakterin sayısal unicode harita değeri.",
+      "parameters": {
+        "string": {
+          "name": "sicim",
+          "detail": "İlk karakterinin Unicode harita değerinin döndürüleceği dize."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "Sayı ile ilişkili karakteri alır.",
+      "parameters": {
+        "table_number": {
+          "name": "tablo_numarası",
+          "detail": "Mevcut Unicode tablosundan aranacak karakterin ondalık formattaki sayısı."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "Bir roma rakamının değerini hesaplar.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "roma rakamı",
+          "detail": "Biçimlendirilecek Roma rakamı, değeri 1 ile 3999 (dahil) arasında olmalıdır."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "Sayıyı Roma rakamlarıyla biçimlendirir.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Biçimlendirilecek sayı, 1 ile 3999 arasında (dahil)."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "Düzenli ifade ile eşleşen alt dizeleri çıkarır.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Giriş metni."
+        },
+        "regular_expression": {
+          "name": "düzenli_ifade",
+          "detail": "Bu ifadeyle eşleşen `text`'in ilk kısmı döndürülecektir."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "Bir metin parçasının düzenli ifadeyle eşleşip eşleşmediği.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Düzenli ifadeye göre test edilecek metin."
+        },
+        "regular_expression": {
+          "name": "düzenli_ifade",
+          "detail": "Metnin test edileceği düzenli ifade."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "Metni düzenli ifadelerle değiştirir.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Bir kısmı değiştirilecek olan metin."
+        },
+        "regular_expression": {
+          "name": "düzenli_ifade",
+          "detail": "Düzenli ifade. `text` içindeki tüm eşleşen örnekler değiştirilecektir."
+        },
+        "replacement": {
+          "name": "yenisiyle değiştirme",
+          "detail": "Orijinal metne eklenecek metin."
+        }
+      }
+    },
+    "T": {
+      "description": "Dize argümanları metin olarak.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Metne dönüştürülecek argüman."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "Sayıyı sabit sayıda ondalık basamakla biçimlendirir.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Biçimlendirilecek sayı."
+        },
+        "number_of_places": {
+          "name": "yer_sayısı",
+          "detail": "Sonuçta gösterilecek ondalık basamak sayısı."
+        },
+        "suppress_separator": {
+          "name": "baskılayıcı_ayırıcı",
+          "detail": "Bazı yerel ayarlarda kullanılan binlik ayırıcının bastırılıp bastırılmayacağı (örneğin `1.000` `1000` olur). Bu değer 0 ise veya atlanırsa ayırıcılar mevcut olacak, aksi takdirde olmayacak."
+        }
+      }
+    },
+    "FIND": {
+      "description": "Metinde bulunan dizenin ilk konumu, büyük/küçük harfe duyarlıdır.",
+      "parameters": {
+        "search_for": {
+          "name": "arama_için",
+          "detail": "`text_to_search` içerisinde aranacak dize."
+        },
+        "text_to_search": {
+          "name": "aranacak_metin",
+          "detail": "`search_for` ifadesinin ilk örneğini aramak için kullanılacak metin."
+        },
+        "starting_at": {
+          "name": "başlangıç_noktası",
+          "detail": "Aramanın başlatılacağı `text_to_search` içindeki karakter."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "Bir dizenin metin (ikili) içerisinde ilk bulunduğu konum.",
+      "parameters": {
+        "search_for": {
+          "name": "arama_için",
+          "detail": "`text_to_search` içerisinde aranacak dize."
+        },
+        "text_to_search": {
+          "name": "aranacak_metin",
+          "detail": "`search_for` ifadesinin ilk örneğini aramak için kullanılacak metin."
+        },
+        "starting_at": {
+          "name": "başlangıç_noktası",
+          "detail": "Aramanın başlatılacağı `text_to_search` içindeki karakter."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "Dizi elemanlarını ayırıcı ile birleştirir.",
+      "parameters": {
+        "delimiter": {
+          "name": "ayırıcı",
+          "detail": "Birleştirilmiş her değerin arasına yerleştirilecek karakter veya dize."
+        },
+        "value_or_array1": {
+          "name": "değer_veya_dizi1",
+          "detail": "`delimiter` kullanılarak eklenecek değer veya değerler."
+        },
+        "value_or_array2": {
+          "name": "değer_veya_dizi2",
+          "detail": "`delimiter` kullanılarak eklenecek daha fazla değer."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "Belirtilen dizenin başlangıcından itibaren alt dize.",
+      "parameters": {
+        "string": {
+          "name": "sicim",
+          "detail": "Sol kısmın döndürüleceği dize."
+        },
+        "number_of_characters": {
+          "name": "karakter_sayısı",
+          "detail": "`string`in sol tarafından döndürülecek karakter sayısı."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "Belirtilen bir dizenin sonundan bir alt dize.",
+      "parameters": {
+        "string": {
+          "name": "sicim",
+          "detail": "Doğru kısmının döndürüleceği dize."
+        },
+        "number_of_characters": {
+          "name": "karakter_sayısı",
+          "detail": "`string`in sağ tarafından döndürülecek karakter sayısı."
+        }
+      }
+    },
+    "MID": {
+      "description": "Bir dizenin parçası.",
+      "parameters": {
+        "string": {
+          "name": "sicim",
+          "detail": "Bir parçanın çıkarılacağı dize."
+        },
+        "starting_at": {
+          "name": "başlangıç_noktası",
+          "detail": "`string`'in solundan itibaren ayıklamaya başlanacak dizin. `string`'in ilk karakterinin dizini 1'dir."
+        },
+        "extract_length": {
+          "name": "ayıklama_uzunluğu",
+          "detail": "Çıkarılacak segmentin uzunluğu."
+        }
+      }
+    },
+    "LEN": {
+      "description": "Bir dizenin uzunluğu.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Uzunluğu döndürülecek olan string."
+        }
+      }
+    },
+    "LENB": {
+      "description": "Bir dizenin bayt cinsinden uzunluğu.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Uzunluğu döndürülecek olan string."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "Belirtilen bir dizeyi küçük harfe dönüştürür.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Küçük harfe dönüştürülecek dize."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "Belirtilen bir dizgeyi büyük harfe dönüştürür.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Büyük harfe dönüştürülecek dize."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "İki dizenin aynı olup olmadığını test eder.",
+      "parameters": {
+        "string1": {
+          "name": "dize1",
+          "detail": "Karşılaştırılacak ilk dize"
+        },
+        "string2": {
+          "name": "dize2",
+          "detail": "Karşılaştırılacak ikinci dize"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "Metin dizesinin bir kısmını farklı bir metinle değiştirir.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Bir kısmı değiştirilecek olan metin."
+        },
+        "position": {
+          "name": "konum",
+          "detail": "Değiştirmenin başlayacağı pozisyon (1'den başlayarak)."
+        },
+        "length": {
+          "name": "uzunluk",
+          "detail": "Değiştirilecek metindeki karakter sayısı."
+        },
+        "new_text": {
+          "name": "yeni_metin",
+          "detail": "Orijinal metne eklenecek metin."
+        }
+      }
+    },
+    "REPT": {
+      "description": "Belirtilen metin birkaç kez tekrarlandı.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "tekrarlanacak_metin",
+          "detail": "Tekrarlanacak karakter veya dize."
+        },
+        "number_of_repetitions": {
+          "name": "tekrarların_sayısı",
+          "detail": "Döndürülen değerde `text_to_repeat` ifadesinin kaç kez görünmesi gerektiği."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "Metinde bulunan dizenin ilk konumu, büyük/küçük harf gözetilmeksizin.",
+      "parameters": {
+        "search_for": {
+          "name": "arama_için",
+          "detail": "`text_to_search` içerisinde aranacak dize."
+        },
+        "text_to_search": {
+          "name": "aranacak_metin",
+          "detail": "`search_for` ifadesinin ilk örneğini aramak için kullanılacak metin."
+        },
+        "starting_at": {
+          "name": "başlangıç_noktası",
+          "detail": "Aramanın başlatılacağı `text_to_search` içindeki karakter."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "Bir dizedeki mevcut metni yeni metinle değiştirir.",
+      "parameters": {
+        "text_to_search": {
+          "name": "aranacak_metin",
+          "detail": "İçinde arama ve değiştirme yapılacak metin."
+        },
+        "search_for": {
+          "name": "arama_için",
+          "detail": "`text_to_search` içerisinde aranacak dize."
+        },
+        "replace_with": {
+          "name": "değiştir_ile",
+          "detail": "`search_for` ifadesinin yerini alacak olan dize."
+        },
+        "occurrence_number": {
+          "name": "oluşum_sayısı",
+          "detail": "`replace_with` ile değiştirilecek `text_to_search` içindeki `search_for` örneği. Varsayılan olarak, `search_for`'un tüm örnekleri değiştirilir; ancak `occurrence_number` belirtilirse, yalnızca belirtilen `search_for` örneği değiştirilir."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "Bir metin parçasından yazdırılamayan karakterleri kaldırır.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Yazdırılamayan karakterleri kaldırılacak metin."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "Bir sayıyı metne biçimlendirir.",
+      "parameters": {
+        "number": {
+          "name": "sayı",
+          "detail": "Biçimlendirilecek sayı, tarih veya saat."
+        },
+        "format": {
+          "name": "biçim",
+          "detail": "Sayının biçimlendirileceği desen, tırnak işaretleri arasına alınır."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "Boşluk karakterlerini kaldırır.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Kırpılacak metni içeren hücrenin metni veya başvurusu."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "Bir tarih/saat/sayı dizesini sayıya dönüştürür.",
+      "parameters": {
+        "text": {
+          "name": "metin",
+          "detail": "Dönüştürülecek değeri içeren dize."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "Belirtilen dizedeki her kelimeyi büyük harfle başlatır.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "büyük_harf_oluşturulacak_metin",
+          "detail": "Her kelimenin ilk harfi büyük, diğer harfleri küçük olacak şekilde döndürülecek metin."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "Sayılar için birim dönüşümü.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`start_unit` içindeki `end_unit` e dönüştürülecek sayısal değer."
+        },
+        "start_unit": {
+          "name": "başlangıç_birimi",
+          "detail": "Başlangıç birimi, şu anda `değer`e atanmış birim."
+        },
+        "end_unit": {
+          "name": "son_birim",
+          "detail": "Argümanın dönüştürüleceği ölçü birimi, `değer`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "Kareler farklarının toplamı.",
+      "parameters": {
+        "array_x": {
+          "name": "dizi_x",
+          "detail": "`array_y` içindeki karşılık gelen girdilerin kareleri ile kareleri azaltılacak ve toplanacak değer dizisi veya aralığı."
+        },
+        "array_y": {
+          "name": "dizi_y",
+          "detail": "`array_x`'deki karşılık gelen girdilerin karelerinden kareleri çıkarılıp toplanacak değer dizisi veya aralığı."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "Karelerin toplamlarının toplamı.",
+      "parameters": {
+        "array_x": {
+          "name": "dizi_x",
+          "detail": "`array_y` içindeki karşılık gelen girdilerin karelerine eklenecek ve birlikte toplanacak olan değer dizisi veya aralığı."
+        },
+        "array_y": {
+          "name": "dizi_y",
+          "detail": "`array_x` içindeki karşılık gelen girdilerin karelerine eklenecek ve birlikte toplanacak olan değer dizisi veya aralığı."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "Farkların kareleri toplamı.",
+      "parameters": {
+        "array_x": {
+          "name": "dizi_x",
+          "detail": "`array_y` içindeki karşılık gelen girdilerle azaltılacak, kare alınacak ve toplanacak değer dizisi veya aralığı."
+        },
+        "array_y": {
+          "name": "dizi_y",
+          "detail": "`array_x` içindeki karşılık gelen girdilerden çıkarılacak değer dizisi veya aralığı, sonucun karesi alınır ve tüm bu sonuçlar toplanır."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "Bir dizinin satır ve sütunlarını değiştirir.",
+      "parameters": {
+        "array_or_range": {
+          "name": "dizi_veya_aralık",
+          "detail": "Satırları ve sütunları değiştirilecek dizi veya aralık."
+        }
+      }
+    },
+    "TREND": {
+      "description": "En küçük kareler yöntemiyle türetilen doğrusal eğilimlere noktaları uydurur.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bilinen_veri_y",
+          "detail": "İdeal bir doğrusal eğilimi eğri uydurmak için kullanılan, önceden bilinen bağımlı (y) değerleri içeren dizi veya aralık."
+        },
+        "known_data_x": {
+          "name": "bilinen_veri_x",
+          "detail": "`known_data_y` ile ilişkili bağımsız değişken(ler)in değerleri."
+        },
+        "new_data_x": {
+          "name": "yeni_veri_x",
+          "detail": "İdeal eğri uyumunda `y` değerlerini döndürecek veri noktaları."
+        },
+        "b": {
+          "name": "B",
+          "detail": "`y = m*x+b` için genel bir doğrusal biçim verildiğinde, `TRUE` ise `b`yi hesaplar veya `FALSE` ise `b`yi `0` olmaya zorlar ve yalnızca `m` değerlerini hesaplar, yani eğri uyumunun orijinden geçmesini zorlar."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "Dizinin frekans dağılımı.",
+      "parameters": {
+        "data": {
+          "name": "veri",
+          "detail": "Sayılacak değerleri içeren dizi veya aralık."
+        },
+        "classes": {
+          "name": "sınıflar",
+          "detail": "Sınıf kümesini içeren dizi veya aralık."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "Üstel büyüme eğilimine işaret ediyor.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bilinen_veri_y",
+          "detail": "İdeal bir üstel büyüme eğrisini eğri uydurmak için kullanılan, önceden bilinen bağımlı (y) değerleri içeren dizi veya aralık."
+        },
+        "known_data_x": {
+          "name": "bilinen_veri_x",
+          "detail": "`known_data_y` ile ilişkili bağımsız değişken(ler)in değerleri."
+        },
+        "new_data_x": {
+          "name": "yeni_veri_x",
+          "detail": "İdeal eğri uyumunda `y` değerlerini döndürecek veri noktaları."
+        },
+        "b": {
+          "name": "B",
+          "detail": "`y = b*m^x` için genel bir üstel biçim verildiğinde, `TRUE` ise `b`yi hesaplar veya `FALSE` ise `b`yi `1` olmaya zorlar ve yalnızca `m` değerlerini hesaplar."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "En küçük kareler yöntemiyle en iyi uyan doğrusal eğilim.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bilinen_veri_y",
+          "detail": "İdeal bir doğrusal eğilimi eğri uydurmak için kullanılan, önceden bilinen bağımlı (y) değerleri içeren dizi veya aralık."
+        },
+        "known_data_x": {
+          "name": "bilinen_veri_x",
+          "detail": "`known_data_y` ile ilişkili bağımsız değişken(ler)in değerleri."
+        },
+        "calculate_b": {
+          "name": "hesapla_b",
+          "detail": "`y = m*x+b`'nin doğrusal bir biçimi verildiğinde, `TRUE` ise y-kesişimini (`b`) hesaplar. Aksi takdirde, `FALSE` ise `b`'yi `0` olmaya zorlar ve yalnızca `m` değerlerini hesaplar, yani eğri uyumu orijinden geçmeye zorlar."
+        },
+        "verbose": {
+          "name": "ayrıntılı",
+          "detail": "Ek regresyon istatistiklerinin mi yoksa yalnızca doğrusal katsayıların ve y-kesişiminin mi (varsayılan) döndürüleceğini belirten bir bayrak."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "En uygun üstel büyüme eğrisi.",
+      "parameters": {
+        "known_data_y": {
+          "name": "bilinen_veri_y",
+          "detail": "İdeal bir üstel büyüme eğrisini eğri uydurmak için kullanılan, önceden bilinen bağımlı (y) değerleri içeren dizi veya aralık."
+        },
+        "known_data_x": {
+          "name": "bilinen_veri_x",
+          "detail": "`known_data_y` ile ilişkili bağımsız değişken(ler)in değerleri."
+        },
+        "b": {
+          "name": "B",
+          "detail": "`y = b*m^x` için genel bir üstel biçim verildiğinde, `TRUE` ise `b`yi hesaplar veya `FALSE` ise `b`yi `1` olmaya zorlar ve yalnızca `m` değerlerini hesaplar."
+        },
+        "verbose": {
+          "name": "ayrıntılı",
+          "detail": "Ek regresyon istatistiklerinin mi yoksa yalnızca hesaplanan katsayı ve üslerin mi döndürüleceğini belirten bir bayrak."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "Bir kare matrisin matris determinantı.",
+      "parameters": {
+        "square_matrix": {
+          "name": "kare_matris",
+          "detail": "Determinantı hesaplanacak bir matrisi temsil eden eşit sayıda satır ve sütundan oluşan dizi veya aralık."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "Kare matrisin çarpımsal tersi.",
+      "parameters": {
+        "square_matrix": {
+          "name": "kare_matris",
+          "detail": "Çarpımsal tersinin hesaplanacağı bir matrisi temsil eden eşit sayıda satır ve sütundan oluşan dizi veya aralık."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "İki matrisin matris çarpımı.",
+      "parameters": {
+        "matrix1": {
+          "name": "matris1",
+          "detail": "Matris çarpım işlemindeki ilk matris, bir dizi veya aralık olarak gösterilir."
+        },
+        "matrix2": {
+          "name": "matris2",
+          "detail": "Matris çarpım işlemindeki ikinci matris, dizi veya aralık olarak gösterilir."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "İki dizideki elemanların çarpımlarının toplamı.",
+      "parameters": {
+        "array1": {
+          "name": "dizi1",
+          "detail": "Girişleri ikinci dizi veya aralıktaki karşılık gelen girişlerle çarpılacak olan ilk dizi veya aralık."
+        },
+        "array2": {
+          "name": "dizi2",
+          "detail": "Girişleri, birinci dizi veya aralıktaki karşılık gelen girişlerle çarpılacak olan ikinci dizi veya aralık."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "Bir değerin formül olup olmadığı.",
+      "parameters": {
+        "cell": {
+          "name": "hücre",
+          "detail": "Formül içerdiği doğrulanacak hücre."
+        }
+      }
+    },
+    "CELL": {
+      "description": "Bir hücre hakkında bilgi alır.",
+      "parameters": {
+        "info_type": {
+          "name": "bilgi_türü",
+          "detail": "İstenen bilgi türü (mevcut türler için makaleye bakın)"
+        },
+        "reference": {
+          "name": "referans",
+          "detail": "Hücreye referans."
+        }
+      }
+    },
+    "NA": {
+      "description": "`#N/A` hatası."
+    },
+    "ISBLANK": {
+      "description": "Başvurulan hücrenin boş olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Boş olup olmadığının kontrol edileceği hücreye referans."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "Bir değerin `#n/a` dışında bir hata olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "`#N/A` dışında bir hata türü olarak doğrulanması gereken değer."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "Bir değerin hata olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Hata türü olarak doğrulanacak değer."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "Bir değerin `true` veya `false` olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Mantıksal `TRUE` veya `FALSE` olarak doğrulanması gereken değer."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "Bir değerin `#n/a` hatası olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "#N/A hata değeri ile karşılaştırılacak değer."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "Bir değerin metinsel olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Kontrol edilmesi gereken değer."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "Bir değerin sayı olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Sayı olarak doğrulanması gereken değer."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "Bir değerin geçerli bir hücre başvurusu olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Hücre referansı olarak doğrulanacak değer."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "Bir değerin metin olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Metin olarak doğrulanacak değer."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "Bir değerin türünü al.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Türü belirlenecek değer."
+        }
+      }
+    },
+    "N": {
+      "description": "Argüman sayı olarak sağlandı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Sayıya dönüştürülecek argüman."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "Verilen sayıyı tarihe dönüştürür.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Bir tarihe dönüştürülecek hücrenin argümanı veya başvurusu."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "Herhangi bir sayısal değeri saf sayıya dönüştürür.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Saf sayıya dönüştürülecek hücrenin argümanı veya başvurusu."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "Verilen sayısal değeri metin değerine dönüştürür.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Metne dönüştürülecek hücrenin argümanı veya başvurusu."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "Verilen sayıyı dolar değerine dönüştürür.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Dolar değerine dönüştürülecek hücrenin argümanı veya başvurusu."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "Verilen sayıyı yüzdeye dönüştürür.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Yüzdeye dönüştürülecek hücrenin argümanı veya başvurusu."
+        }
+      }
+    },
+    "DGET": {
+      "description": "Tablo benzeri bir aralıktan tek değer.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "Tablo benzeri bir aralıktaki değerlerin maksimumu.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "Tablo benzeri bir aralıktaki değerlerin minimumu.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "Tablo benzeri bir aralıktaki bir dizi değerin ortalaması.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "Tablo benzeri bir aralıktaki değerleri sayar.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "Tablo benzeri bir aralıktaki değerleri ve metinleri sayar.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "Tablo benzeri bir aralıktaki değerlerin çarpımı.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "Tablodan popülasyon örnekleminin standart sapması.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "Tablodan tüm popülasyonun standart sapması.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "Tablo benzeri bir aralıktaki değerlerin toplamı.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "Tablo benzeri aralıktaki popülasyon örneğinin varyansı.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "Bir popülasyonun tablo benzeri bir aralıktaki varyansı.",
+      "parameters": {
+        "database": {
+          "name": "veritabanı",
+          "detail": "Dikkate alınacak verileri içeren dizi veya aralık, ilk satırın her sütunun değerlerinin etiketlerini içerecek şekilde yapılandırılmıştır."
+        },
+        "field": {
+          "name": "alan",
+          "detail": "`Veritabanı`ndaki hangi sütunun çıkarılıp üzerinde işlem yapılacak değerleri içerdiğini belirtir."
+        },
+        "criteria": {
+          "name": "kriterler",
+          "detail": "İşlemden önce `veritabanı` değerlerini filtrelemek için sıfır veya daha fazla ölçüt içeren bir dizi veya aralık."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "Cinsiyeti TC Kimlik Numarasına Göre Öğrenin.",
+      "parameters": {
+        "ID number": {
+          "name": "Kimlik numarası",
+          "detail": "15 veya 18 haneli kimlik numarası veya aralığı."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "Kimlik numarasına göre doğum yerinin ilini öğrenin.",
+      "parameters": {
+        "ID number": {
+          "name": "Kimlik numarası",
+          "detail": "15 veya 18 haneli kimlik numarası veya aralığı."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "Kimlik numarasına göre takımyıldızını al.",
+      "parameters": {
+        "ID number": {
+          "name": "Kimlik numarası",
+          "detail": "15 veya 18 haneli kimlik numarası veya aralığı."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "A hissesinin karşılık gelen hisse senedi işlem hacmini döndürür.",
+      "parameters": {
+        "Stock code": {
+          "name": "Stok kodu",
+          "detail": "6 haneli stok kodu zorunludur."
+        },
+        "Date": {
+          "name": "Tarih",
+          "detail": "Hisse senedinin işlem günü, varsayılan olarak son işlem günüdür"
+        },
+        "Reversion and exclusion": {
+          "name": "Geri dönüş ve dışlama",
+          "detail": "Stokun eski restorasyon türünü seçin, varsayılan olarak 0 [eski geri dönüş], 1 [orijinal fiyat], 2 [geri dönüş sonrası]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "Bir değerin tarih olup olmadığı.",
+      "parameters": {
+        "value": {
+          "name": "değer",
+          "detail": "Tarih olarak doğrulanması gereken değer."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "Kıvılcım çizgileri çizgi grafiğini oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Line color": {
+          "name": "Çizgi rengi",
+          "detail": "Çizgi grafiğinin çizgi rengi A1 aralığı, renk tablosu endeks değeri veya belirli bir renk değeri olabilir. Görüntülememek için 0 veya false olarak ayarlayın. Regx, rgb, rgba vb. destekler. Varsayılan #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "Çizgi kalınlığı",
+          "detail": "Çizgi grafiğinin çizgi kalınlığı, varsayılan 1px'tir"
+        },
+        "Auxiliary line": {
+          "name": "Yardımcı hat",
+          "detail": "Min, max, avg, median, aralık veya özel değer olabilen yatay bir çizgi, varsayılan 0 hiçbiri"
+        },
+        "Auxiliary line color": {
+          "name": "Yardımcı çizgi rengi",
+          "detail": "Yardımcı hattın renk ayarı, hat renk yapılandırmasıyla aynıdır, varsayılan #000"
+        },
+        "Maximum mark": {
+          "name": "Maksimum not",
+          "detail": "Çizgi grafiğinin maksimum değerini belirler, aynı çizgi rengi yapılandırması, varsayılan 0 görüntülenmez"
+        },
+        "Minimum mark": {
+          "name": "Minimum not",
+          "detail": "Çizgi grafiğinin minimum değerini belirleyin, aynı çizgi rengi yapılandırması, varsayılan 0 görüntülenmiyor"
+        },
+        "Mark size": {
+          "name": "İşaret boyutu",
+          "detail": "Maksimum ve minimum işaret boyutu ayarları, varsayılan 1,5'tir"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "Kümülatif dikey histogram kıvılcım çizgileri oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Stack by column": {
+          "name": "Sütuna göre yığın",
+          "detail": "Satıra göre istiflemeniz gerekiyorsa, bu öğeyi false veya 0 olarak ayarlayın, varsayılan değer 1'dir"
+        },
+        "Bar interval": {
+          "name": "Bar aralığı",
+          "detail": "Çubuklar arasındaki mesafe varsayılan olarak 1'dir"
+        },
+        "Max": {
+          "name": "Maksimum",
+          "detail": "Çubuğun uzunluğunu düzenlemek için kullanılan kümülatif çubuğun maksimum değeri, varsayılan olarak false, auto, null otomatik olarak hesaplanır"
+        },
+        "Color palette": {
+          "name": "Renk paleti",
+          "detail": "Renk paleti, her boyutun çubuk rengini ayrı ayrı ayarlayabilir; bu, A1:A10 vb. aralığına ayarlanabilir. Varsayılan değer #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "Kümülatif yatay çubuk grafikleri kıvılcım çizgileri oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Stack by column": {
+          "name": "Sütuna göre yığın",
+          "detail": "Satıra göre istiflemeniz gerekiyorsa, bu öğeyi false veya 0 olarak ayarlayın, varsayılan değer 1'dir"
+        },
+        "Bar interval": {
+          "name": "Bar aralığı",
+          "detail": "Çubuklar arasındaki mesafe varsayılan olarak 1'dir"
+        },
+        "Max": {
+          "name": "Maksimum",
+          "detail": "Çubuğun uzunluğunu düzenlemek için kullanılan kümülatif çubuğun maksimum değeri, varsayılan olarak false, auto, null otomatik olarak hesaplanır"
+        },
+        "Color palette": {
+          "name": "Renk paleti",
+          "detail": "Renk paleti, her boyutun çubuk rengini ayrı ayrı ayarlayabilir; bu, A1:A10 vb. aralığına ayarlanabilir. Varsayılan değer #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "Kıvılcım çizgileri ayrık grafik oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Segmentation threshold": {
+          "name": "Segmentasyon eşiği",
+          "detail": "Ayrık grafik sütun rengi ayrımı, örneğin: değer 0 ise, mavi 0'dan büyük, kırmızı 0'dan küçük ve varsayılan 0'dır"
+        },
+        "Above threshold color": {
+          "name": "Eşik üstü renk",
+          "detail": "Çizgi grafiğinin çizgi rengi A1 aralığı, renk tablosu endeks değeri veya belirli bir renk değeri olabilir. Görüntülememek için 0 veya false olarak ayarlayın. Regx, rgb, rgba vb. destekler. Varsayılan #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "Eşik değerinin altındaki renk",
+          "detail": "Eşiğin altındaki çubuğun renk ayarı, eşiğin üstündeki renkle aynıdır, varsayılan #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "Üç durumlu grafik kıvılcım çizgileri oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Bar interval": {
+          "name": "Bar aralığı",
+          "detail": "Çubuklar arasındaki mesafe varsayılan olarak 1'dir"
+        },
+        "Bar color": {
+          "name": "Çubuk rengi",
+          "detail": "Çizgi grafiğinin çizgi rengi A1 aralığı, renk tablosu endeks değeri veya belirli bir renk değeri olabilir. Görüntülememek için 0 veya false olarak ayarlayın. Regx, rgb, rgba vb. destekler. Varsayılan #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "Negatif çubuk rengi",
+          "detail": "Negatif çubuk rengi ayarı, negatif değerin rengini temsil eder, çubuk rengi yapılandırmasıyla aynıdır, varsayılan #97b552"
+        },
+        "Zero value bar color": {
+          "name": "Sıfır değer çubuğu rengi",
+          "detail": "Sıfır değer çubuğu renk ayarı, 0 değer rengini temsil eder, çubuğun aynı renk yapılandırması, varsayılan #999"
+        },
+        "Color palette": {
+          "name": "Renk paleti",
+          "detail": "Renk paleti, her çubuğun rengini ayrı ayrı ayarlayabilir, birden fazla ayar yapılabilir ve iki format desteklenir: 1. #000 gibi renk, bu da ilk çubuğun renginin siyah olduğu anlamına gelir; 2. değer aralığı: renk, örneğin -2:# 000, -2 değerine sahip çubuğun siyah olduğunu, 0:5:#000, 0-5 değerine sahip çubuğun siyah olduğunu gösterir ve varsayılan değer boştur"
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "Kıvılcım çizgileri pasta grafiğini oluşturun",
+      "parameters": {
+        "Range": {
+          "name": "Menzil",
+          "detail": "Aralık, Değerler etkili bir şekilde hesaplanabilir, örneğin A1:A20, {1,2,3,4,5}, vb."
+        },
+        "Rotation angle": {
+          "name": "Dönme açısı",
+          "detail": "Pasta grafiğinin dönüş açısı, varsayılan olarak 0'dır"
+        },
+        "border": {
+          "name": "sınır",
+          "detail": "Pasta grafiği kenarlık boyutu, varsayılanı hiçbiri 0"
+        },
+        "Border color": {
+          "name": "Sınır rengi",
+          "detail": "Pasta grafiğinin kenarlık rengi, varsayılan #000'dır"
+        },
+        "Color palette": {
+          "name": "Renk paleti",
+          "detail": "Dilim rengi, A1:A10 vb. aralığına ayarlanabilen paletten ayarlanabilir. Varsayılan renk #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "Kıvılcım çizgileri madde işaretleri oluşturma",
+      "parameters": {
+        "Target": {
+          "name": "Hedef",
+          "detail": "Ulaşılan hedef değer için A1, 100 vb. gibi sayısal değer etkin bir şekilde hesaplanabilir."
+        },
+        "achieved": {
+          "name": "başarıldı",
+          "detail": "Ancak değer tamamlandığında A1, 100 vb. gibi değerler etkin bir şekilde hesaplanabilir."
+        },
+        "Contrast": {
+          "name": "Zıtlık",
+          "detail": "Ödüller için fazlalık, asgari ve alt sınır gibi karşılaştırmalı değerler, A1, 100 vb. gibi etkili bir şekilde hesaplanabilir. 9 adede kadar karşılaştırma değeri ayarlayabilirsiniz"
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "Kıvılcım grafiklerini tek bir hücrede birleştirin",
+      "parameters": {
+        "config": {
+          "name": "yapılandırma",
+          "detail": "Sparkline grafik ayarları, A1:A20, tamamlanmış pasta grafiği, çizgi grafik ayarları vb."
+        }
+      }
+    },
+    "SORT": {
+      "description": "Aralığın satırlarını belirtilen sütuna göre sıralar.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "Sıralanması gereken veriler."
+        },
+        "sort_column": {
+          "name": "sort_column",
+          "detail": "Sıralama yapılacak değerleri içeren `aralık` içindeki veya `aralık` dışındaki bir aralıktaki sütunun indeksi."
+        },
+        "is_ascending": {
+          "name": "artan",
+          "detail": "`TRUE` veya `FALSE`, `sort_column`'un artan düzende sıralanıp sıralanmayacağını belirtir. `FALSE` ise azalan düzende sıralar."
+        },
+        "sort_column2": {
+          "name": "sort_column2",
+          "detail": "Ek sütunlar."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "Sağlanan koşullara göre bir aralığı filtreler.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "Filtrelenecek veriler."
+        },
+        "condition1": {
+          "name": "koşul1",
+          "detail": "`Aralık`ın ilk sütununa veya satırına karşılık gelen doğru veya yanlış değerlerini içeren bir sütun veya satır, ya da doğru veya yanlış olarak değerlendirilen bir dizi formülü."
+        },
+        "condition2": {
+          "name": "koşul2",
+          "detail": "`TRUE` veya `FALSE` boolean değerlerini içeren ve `aralık`taki ilgili satır veya sütunun `FILTER`'dan geçip geçmeyeceğini belirten ek satırlar veya sütunlar. Ayrıca bu tür satır veya sütunları değerlendiren dizi formül ifadeleri de içerebilir. Tüm koşullar aynı türde (satır veya sütun) olmalıdır. Satır koşulları ile sütun koşullarının karıştırılmasına izin verilmez."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "Sağlanan kaynak aralığındaki benzersiz satırlar.",
+      "parameters": {
+        "range": {
+          "name": "menzil",
+          "detail": "Benzersiz girdilere göre filtrelenecek veriler."
+        },
+        "by_col": {
+          "name": "by_col",
+          "detail": "[Seçenek] - Karşılaştırmanın nasıl yapılacağını belirten mantıksal değer; satıra göre = FALSE() veya atlanmış; sütuna göre = TRUE()."
+        },
+        "occurs_once": {
+          "name": "bir kez_oluşur",
+          "detail": "[Seçenek] - Mantıksal değer, benzersiz değerde yalnızca bir oluşum döndürülür = TRUE(); tüm benzersiz değerler dahil = FALSE() veya atlanır."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "Rastgele sayılardan oluşan bir tablo döndürür.",
+      "parameters": {
+        "rows": {
+          "name": "satırlar",
+          "detail": "Rastgele bir sayı ile doldurulacak satır sayısı."
+        },
+        "columns": {
+          "name": "sütunlar",
+          "detail": "Rastgele bir sayı ile doldurulacak sütun sayısı."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "Sıralı sayılardan oluşan bir tablo döndürür.",
+      "parameters": {
+        "rows": {
+          "name": "satırlar",
+          "detail": "Fonksiyonun ortaya çıkardığı ızgaradaki satır sayısı."
+        },
+        "columns": {
+          "name": "sütunlar",
+          "detail": "Fonksiyonun sonuç ızgarasındaki sütun sayısı. Atlanırsa, sonuç ızgarasında 1 sütun olur."
+        },
+        "start": {
+          "name": "başlangıç",
+          "detail": "Dizinin başlayacağı sayı. Atlanırsa, dizi 1'den başlayacaktır."
+        },
+        "step": {
+          "name": "adım",
+          "detail": "Dizideki her değerin ne kadar farklı olacağı. Atlanırsa, her değer 1 farklı olacaktır."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "Kelimenin tam anlamıyla formüle veya ifadeye göre değerlendirin.",
+      "parameters": {
+        "expression": {
+          "name": "ifade",
+          "detail": "Formül veya ifade"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "Uzak bir arka uç sunucusunda/API'de bir fonksiyonu çağırır.",
+      "parameters": {
+        "remote_expression": {
+          "name": "uzak_ifade",
+          "detail": "Formül"
+        }
+      }
+    }
   }
 }

@@ -1,3 +1,5 @@
+import DataElements from './dataElement';
+
 export const SpreadsheetEditorEditMode = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
 export const AVAILABLE_FONT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
@@ -51,6 +53,12 @@ export const formatsMap = {
   'plainTextFormat': '@',
   'automaticFormat': 'General',
 };
+
+export const SPREADSHEET_EDITOR_SCOPE = 'spreadsheet-editor';
+
+export const ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR = [
+  DataElements.CONTEXT_MENU_POPUP
+];
 
 export const getFormatTypeFromFormatString = (formatString) => {
   const formatType = Object.keys(formatsMap).find((key) => {
