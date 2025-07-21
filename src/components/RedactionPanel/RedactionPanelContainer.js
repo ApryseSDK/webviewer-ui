@@ -57,7 +57,7 @@ export const RedactionPanelContainer = (props) => {
   const dispatch = useDispatch();
   const applyAllRedactions = () => {
     const originalApplyRedactions = () => {
-      return Promise((resolve) => {
+      return new Promise((resolve) => {
           dispatch(applyRedactions(redactionAnnotationsList, () => {
             if(isCustomPanel){
               closeRedactionPanel();
