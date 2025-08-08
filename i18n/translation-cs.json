@@ -477,7 +477,7 @@
     },
     "searchPanel": {
       "caseSensitive": "Citlivý na velká písmena",
-      "wholeWordOnly": "Celý svět",
+      "wholeWordOnly": "Celé slovo",
       "wildcard": "Divoká karta",
       "replace": "Nahradit",
       "replaceAll": "Vyměnit vše",

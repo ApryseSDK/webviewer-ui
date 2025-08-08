@@ -477,7 +477,7 @@
     },
     "searchPanel": {
       "caseSensitive": "Rozróżnianie wielkości liter",
-      "wholeWordOnly": "Cały świat",
+      "wholeWordOnly": "Całe słowo",
       "wildcard": "Dzika karta",
       "replace": "Zastąp",
       "replaceAll": "Zastąp wszystko",
