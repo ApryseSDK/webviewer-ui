@@ -1,6 +1,6 @@
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
-import { within, expect } from '@storybook/test';
+import { within, expect } from 'storybook/test';
 import { createTemplate } from 'helpers/storybookHelper';
 
 export default {
@@ -37,4 +37,14 @@ SetActiveTabInPanel.play = async ({ canvasElement }) => {
   // And outlines should not be selected or active
   await expect(outlinesTab.getAttribute('aria-current')).toBe('false');
   await expect(outlinesTab.classList.contains('active')).toBe(false);
+};
+
+export const ThumbnailsPanelRightToLeft = createTemplate({
+  headers: mockHeadersNormalized,
+  components: mockModularComponents
+});
+
+ThumbnailsPanelRightToLeft.play = async ({ canvasElement }) => {
+  window.instance.UI.openElements(['tabPanel']);
+  window.instance.UI.setLanguage('ur');
 };

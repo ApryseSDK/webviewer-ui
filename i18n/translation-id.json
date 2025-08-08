@@ -111,6 +111,7 @@
     "open": "Membuka",
     "deselectAll": "Batalkan Pilihan Semua",
     "select": "Pilih",
+    "buttonPressed": "Tombol {{buttonName}} ditekan",
     "moveToTop": "Pindah ke atas",
     "moveToBottom": "Pindah ke bawah",
     "movePageToTop": "Pindahkan Halaman ke Atas",
@@ -272,7 +273,6 @@
       "close": "Tutup Semua Anotasi"
     },
     "comparePanel": "Bandingkan Panel",
-    "watermarkPanel": "Panel Tanda Air",
     "mainMenu": "Main Menu"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Tidak ada hasil yang ditemukan.",
     "numResultsFound": "hasil ditemukan",
     "loadError": "Terjadi Kesalahan Saat Memuat Dokumen",
+    "urlInputFileLoadError": "Berkas tidak dapat diambil dari URL yang disediakan.",
     "notSupported": "Tipe file tidak didukung.",
     "passwordRequired": "Kata sandi diperlukan",
     "enterPasswordPlaceholder": "Masukkan kata kunci",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Cari komentar",
     "searchDocumentPlaceholder": "Cari dokumen",
     "clearSearchResults": "Hapus hasil pencarian",
+    "toggleReplaceInput": "Beralih ganti masukan",
+    "toggleSearchOptions": "Alihkan opsi pencarian",
     "searchResultsCleared": "Hasil pencarian dihapus",
     "searchSettingsPlaceholder": "Pengaturan pencarian",
     "searchSuggestionsPlaceholder": "Saran pencarian",
@@ -803,7 +806,30 @@
       "setShortcut": "Atur Pintasan",
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan keyboard di atas sudah ada.",
-      "close": "Tutup keterangan alat"
+      "close": "Tutup keterangan alat",
+      "spreadsheetEditor": {
+        "copyText": "Salin teks atau sel yang dipilih",
+        "pasteText": "Tempel teks atau sel",
+        "cutText": "Memotong teks atau sel yang dipilih",
+        "undoChange": "Batalkan perubahan",
+        "redoChange": "Ulangi perubahan",
+        "selectAll": "Pilih semua sel",
+        "moveToEdgeUp": "Lompat ke atas lembar",
+        "moveToEdgeDown": "Lompat ke bagian bawah lembar",
+        "moveToEdgeLeft": "Lompat ke kolom paling kiri",
+        "moveToEdgeRight": "Lompat ke kolom paling kanan",
+        "adjustSelectionUp": "Perluas pilihan ke atas",
+        "adjustSelectionDown": "Perluas pilihan ke bawah",
+        "adjustSelectionLeft": "Perluas pilihan ke kiri",
+        "adjustSelectionRight": "Perluas pilihan ke kanan",
+        "up": "Pindahkan kotak pilihan sel ke atas",
+        "down": "Pindahkan kotak pilihan sel ke bawah",
+        "left": "Pindahkan kotak pilihan sel ke kiri",
+        "right": "Pindahkan kotak pilihan sel ke kanan",
+        "enter": "Edit sel yang dipilih",
+        "tab": "Pindahkan kotak pilihan sel ke kanan",
+        "delete": "Hapus data sel"
+      }
     },
     "cellBorderStyle": {
       "none": "Tidak ada",
@@ -861,12 +887,12 @@
       "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Edit Peringatan",
-      "message": "Nama lembar ini sudah ada. Silakan masukkan nama lain."
+      "title": "Edit Nama Lembar",
+      "message": "Nama ini sudah ada. Silakan masukkan nama lain."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Edit Peringatan",
-      "message": "Nama lembar ini tidak boleh kosong."
+      "title": "Edit Nama Lembar",
+      "message": "Nama lembar tidak boleh kosong. Silakan masukkan nama."
     },
     "sheetTabDeleteMessage": {
       "title": "Edit Peringatan",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Properti",
     "miscValuesHeader": "Semua",
     "emptyPanelMessage": "Pilih elemen untuk melihat propertinya."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Tanda Air Teks",
-    "uploadImage": "Unggah Gambar",
-    "browse": "Jelajahi",
-    "watermarkOptions": "Opsi Tanda Air",
-    "watermarks": "Tanda air"
   },
   "portfolio": {
     "createPDFPortfolio": "Buat Portofolio PDF",

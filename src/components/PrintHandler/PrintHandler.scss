@@ -4,7 +4,6 @@
 }
 
 @media print {
-
   html {
     height: 100%;
   }
@@ -20,10 +19,10 @@
 
     /* workaround for getting safari to print to the whole page */
     &.ios-print {
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      inset-block-start: 0;
+      inset-block-end: 0;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
       position: absolute;
     }
 
@@ -78,9 +77,9 @@
             width: 1.65rem;
             height: 1.65rem;
             margin-top: -0.1rem;
-            margin-right: 0.2rem;
+            margin-inline-end: 0.2rem;
 
-            path:not([fill=none]) {
+            path:not([fill='none']) {
               fill: currentColor;
             }
           }
@@ -88,7 +87,7 @@
 
         .note__root {
           .note__content {
-            margin-left: 0.3rem;
+            margin-inline-start: 0.3rem;
           }
         }
 
@@ -116,7 +115,9 @@
     display: none !important;
   }
 
-  html, body , #app {
+  html,
+  body,
+  #app {
     // Workaround for Printing in newer version (80+) of Firefox adds extra padding/margin on page
     max-width: none !important;
   }

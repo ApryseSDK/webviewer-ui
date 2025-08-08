@@ -15,7 +15,7 @@ import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
 import setCurrentPage from 'helpers/setCurrentPage';
-import { getStep } from 'helpers/zoom';
+import { getStep, zoomIn, zoomOut } from 'helpers/zoom';
 import { removeFileNameExtension } from 'helpers/TabManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import PageNavOverlay from 'components/PageNavOverlay';
@@ -62,6 +62,8 @@ class DocumentContainer extends React.PureComponent {
     currentTabs: PropTypes.array,
     activeTab: PropTypes.number,
     isSpreadsheetEditorModeEnabled: PropTypes.bool,
+    documentContainerRightMargin: PropTypes.number,
+    documentContainerLeftMargin: PropTypes.number,
   };
 
   constructor(props) {
@@ -202,7 +204,11 @@ class DocumentContainer extends React.PureComponent {
   };
 
   wheelToZoom = (e) => {
-    const { zoom: currentZoomFactor, activeDocumentViewerKey } = this.props;
+    const { zoom: currentZoomFactor, activeDocumentViewerKey, isSpreadsheetEditorModeEnabled } = this.props;
+    if (isSpreadsheetEditorModeEnabled) {
+      e.deltaY < 0 ? zoomIn() : zoomOut();
+      return;
+    }
     let newZoomFactor = currentZoomFactor;
     if (e.deltaY < 0) {
       newZoomFactor = Math.min(currentZoomFactor + getStep(currentZoomFactor), getMaxZoomLevel());
@@ -306,6 +312,7 @@ class DocumentContainer extends React.PureComponent {
       bottomHeaderHeight,
       leftHeaderWidth,
       documentContainerLeftMargin,
+      documentContainerRightMargin,
       currentTabs,
       activeTab
     } = this.props;
@@ -315,6 +322,7 @@ class DocumentContainer extends React.PureComponent {
       // we animate with margin-left. For some reason it looks nicer than transform.
       // Using transform makes a clunky animation because the panels are using transform already.
       marginLeft: `${documentContainerLeftMargin}px`,
+      marginRight: `${documentContainerRightMargin}px`,
     };
     const documentContainerClassName = isIE ? getClassNameInIE() : this.getClassName();
     const documentClassName = classNames({
@@ -401,6 +409,7 @@ class DocumentContainer extends React.PureComponent {
 const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   documentContainerLeftMargin: selectors.getDocumentContainerLeftMargin(state),
+  documentContainerRightMargin: selectors.getDocumentContainerRightMargin(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, DataElements.SEARCH_OVERLAY),

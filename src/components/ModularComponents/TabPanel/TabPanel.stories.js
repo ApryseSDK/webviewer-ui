@@ -7,9 +7,7 @@ import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
-import { waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { expect } from '@storybook/test';
+import { expect, waitFor, within , userEvent } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/TabPanel',
@@ -388,6 +386,12 @@ const panelsToCheck = [
   { name: 'Attachments', className: 'fileAttachmentPanel' },
 ];
 
+TabPanelInApplication.parameters = {
+  test: {
+    // For issues with mocks that are unrelated to the test
+    dangerouslyIgnoreUnhandledErrors: true,
+  },
+};
 TabPanelInApplication.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // Wait for the first tab to be rendered before proceeding

@@ -1,6 +1,6 @@
-@import "../../constants/styles";
-@import "../../constants/modal";
-@import "../../constants/tabs";
+@import '../../constants/styles';
+@import '../../constants/modal';
+@import '../../constants/tabs';
 
 .LinkModal {
   @extend %modal;
@@ -18,8 +18,8 @@
     @include mobile {
       padding-top: 24px;
       padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
+      padding-inline-start: 24px;
+      padding-inline-end: 24px;
       width: 100%;
       min-width: 100px;
     }
@@ -38,7 +38,6 @@
 
     @extend %tab-panel;
 
-
     @extend %tab-list;
 
     .linkInput {
@@ -47,14 +46,13 @@
       justify-content: space-between;
     }
 
-
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    input[type=number] {
+    input[type='number'] {
       -moz-appearance: textfield;
     }
 
@@ -81,7 +79,7 @@
         font-weight: 700;
         width: 89.286%;
         margin: 0;
-        margin-right: 16px;
+        margin-inline-end: 16px;
       }
     }
 
@@ -111,7 +109,7 @@
           .inputLabel {
             font-size: 13px;
             line-height: 16px;
-            padding-left: 16px;
+            padding-inline-start: 16px;
             padding-bottom: 8px;
             font-weight: 700;
           }
@@ -127,7 +125,7 @@
             input {
               width: 100%;
               height: 32px;
-              padding-left: 8px;
+              padding-inline-start: 8px;
               font-size: 13px;
               box-sizing: border-box;
             }

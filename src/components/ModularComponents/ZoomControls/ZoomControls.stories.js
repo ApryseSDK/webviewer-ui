@@ -7,7 +7,7 @@ import rootReducer from 'reducers/rootReducer';
 import { MockApp } from 'helpers/storybookHelper';
 import actions from 'actions';
 import initialState from 'src/redux/initialState';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 

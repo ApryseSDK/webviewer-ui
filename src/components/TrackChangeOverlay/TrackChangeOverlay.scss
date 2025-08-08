@@ -1,7 +1,6 @@
 @import '../../constants/officeEditor.scss';
 
 .track-change-overlay {
-
   @include oe-modular-custom-dropdown;
 
   &.modular-ui.flyout-item {

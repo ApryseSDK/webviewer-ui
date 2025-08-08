@@ -5,14 +5,14 @@ import { defaultPanels } from '../modularComponents';
 import {
   defaultOfficeEditorModularHeaders,
   defaultOfficeEditorModularComponents,
-  defaultOfficeEditorPanels
+  defaultOfficeEditorPanels,
 } from '../officeEditorModularComponents';
 
 import {
   defaultSpreadsheetEditorHeaders,
   defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorPanels,
-  defaultSpreadsheetFlyoutMap
+  defaultSpreadsheetFlyoutMap,
 } from '../spreadsheetEditorComponents';
 
 export default (initialState) => (state = initialState, action) => {
@@ -141,14 +141,6 @@ export default (initialState) => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           comparePanel: payload.width,
-        }
-      };
-    case 'SET_WATERMARK_PANEL_WIDTH':
-      return {
-        ...state,
-        panelWidths: {
-          ...state.panelWidths,
-          watermarkPanel: payload.width,
         }
       };
     case 'SET_COMPARISON_OVERLAY_ENABLED':
@@ -496,7 +488,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_CUSTOM_COLORS':
       if (localStorageManager.isLocalStorageEnabled()) {
         const instanceId = getInstanceID();
-        window.localStorage.setItem(`${instanceId}-customColors`, JSON.stringify(payload.customColors));
+        localStorageManager.setItemSynchronous(`${instanceId}-customColors`, JSON.stringify(payload.customColors));
       } else {
         console.error('localStorage is disabled, customColors cannot be restored');
       }
@@ -1002,7 +994,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_HIDE_CONTENT_EDIT_WARNING':
       if (localStorageManager.isLocalStorageEnabled()) {
         const instanceId = getInstanceID();
-        window.localStorage.setItem(`${instanceId}-hideContentEditWarning`, JSON.stringify(payload.hideWarning));
+        localStorageManager.setItemSynchronous(`webviewer-${instanceId}-hideContentEditWarning`, JSON.stringify(payload.hideWarning));
       } else {
         console.error('localStorage is disabled, hideContentEditWarning cannot be restored');
       }
@@ -1189,12 +1181,14 @@ export default (initialState) => (state = initialState, action) => {
       const modularHeaders = { ...state.modularHeaders };
       const modularComponents = { ...state.modularComponents };
       const panels = [...state.genericPanels];
+      const flyoutMap = { ...state.flyoutMap };
       const updatedModularComponentStash = {
         ...state.modularComponentStash,
         [UIMode]: {
           modularHeaders,
           modularComponents,
           panels,
+          flyoutMap,
         }
       };
       return { ...state, modularComponentStash: updatedModularComponentStash };
@@ -1211,6 +1205,7 @@ export default (initialState) => (state = initialState, action) => {
               modularHeaders: { ...initialState.modularHeaders },
               modularComponents: { ...initialState.modularComponents },
               genericPanels: [...initialState.genericPanels],
+              flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
 
           case VIEWER_CONFIGURATIONS.DOCX_EDITOR:
@@ -1219,6 +1214,7 @@ export default (initialState) => (state = initialState, action) => {
               modularHeaders: { ...defaultOfficeEditorModularHeaders },
               modularComponents: { ...defaultOfficeEditorModularComponents },
               genericPanels: [...defaultOfficeEditorPanels],
+              flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
 
           case VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR:
@@ -1235,7 +1231,7 @@ export default (initialState) => (state = initialState, action) => {
         }
       }
 
-      const { modularHeaders, modularComponents, panels } = modularComponentStash[UIMode];
+      const { modularHeaders, modularComponents, panels, flyoutMap } = modularComponentStash[UIMode];
       // Delete the stash after restoring
       const updatedModularComponentStash = Object.keys(modularComponentStash).reduce((result, key) => {
         if (key !== UIMode) {
@@ -1250,6 +1246,7 @@ export default (initialState) => (state = initialState, action) => {
         modularHeaders: { ...modularHeaders },
         modularComponents: { ...modularComponents },
         genericPanels: [...panels],
+        flyoutMap: { ...flyoutMap },
       };
     }
 

@@ -370,7 +370,16 @@ const OutlinesPanel = ({ isTest = false }) => {
               {!isAddingNewOutline && (outlinesNotLoaded || outlines.length === 0) &&
                 <div className="msg msg-no-bookmark-outline">{t('message.noOutlines')}</div>
               }
-              <Virtuoso data={outlines || []} itemContent={(index, outline) => (
+              {isAddingNewOutline && activeOutlinePath === null && (
+                <DataElementWrapper className="bookmark-outline-single-container editing">
+                  <OutlineContent
+                    isAdding={true}
+                    text={''}
+                    onCancel={() => setAddingNewOutline(false)}
+                  />
+                </DataElementWrapper>
+              )}
+              <Virtuoso className={classNames({ 'small-outlines-list': isAddingNewOutline })} data={outlines || []} itemContent={(index, outline) => (
                 <Outline
                   key={outlineUtils.getOutlineId(outline)}
                   outline={outline}
@@ -390,15 +399,6 @@ const OutlinesPanel = ({ isTest = false }) => {
                   moveOutlineAfterTarget={moveOutlineAfterTarget}
                 />
               )} initialItemCount={isTest ? outlines?.length : undefined}/>
-              {isAddingNewOutline && activeOutlinePath === null && (
-                <DataElementWrapper className="bookmark-outline-single-container editing">
-                  <OutlineContent
-                    isAdding={true}
-                    text={''}
-                    onCancel={() => setAddingNewOutline(false)}
-                  />
-                </DataElementWrapper>
-              )}
             </div>
           </DndProvider>
 

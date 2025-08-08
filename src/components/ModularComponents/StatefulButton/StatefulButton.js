@@ -28,9 +28,8 @@ const StatefulButton = forwardRef((props, ref) => {
   const update = (newState) => {
     if (newState) {
       setActiveState(newState);
-    } else {
-      forceUpdate();
     }
+    forceUpdate();
   };
 
   const onClick = () => {

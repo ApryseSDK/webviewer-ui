@@ -1,4 +1,4 @@
-@import "../../constants/styles";
+@import '../../constants/styles';
 
 .shortcut-table-header {
   border: 1px var(--gray-4) solid;
@@ -18,7 +18,7 @@
 
   .shortcut-table-header-action {
     position: absolute;
-    right: 16px;
+    inset-inline-end: 16px;
   }
 }
 
@@ -39,7 +39,7 @@
       width: 220px;
 
       span:not(:last-child) {
-        margin-right: 8px;
+        margin-inline-end: 8px;
       }
     }
 
@@ -49,7 +49,7 @@
 
     button {
       position: absolute;
-      right: 0px;
+      inset-inline-end: 0px;
       height: 32px;
       width: 32px;
       .Icon {

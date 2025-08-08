@@ -26,6 +26,7 @@ import CollapsibleSection from '../CollapsibleSection';
 import StrokePanelSection from './StrokePanelSection/StrokePanelSection';
 import OpacityPanelSection from './OpacityPanelSection';
 import NoSharedStylePanel from '../StylePanel/panels/NoSharedStylePanel';
+import DataElementWrapper from '../DataElementWrapper';
 
 const propTypes = {
   activeType: PropTypes.string,
@@ -237,9 +238,13 @@ const StylePicker = ({
     );
   };
 
-  const renderDivider = () => {
+  const renderDivider = (dataElement) => {
     if (showFillColorAndCollapsablePanelSections) {
-      return <div className="divider" />;
+      return (
+        <DataElementWrapper dataElement={`${dataElement}-divider`}>
+          <div className="divider" />
+        </DataElementWrapper>
+      );
     }
   };
 
@@ -263,7 +268,7 @@ const StylePicker = ({
   return (
     <ParentComponent parentProps={parentProps} hasParentPicker={hasParentPicker}>
       {!hideStrokeStyle && (
-        <div className="PanelSection">
+        <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.STROKE_STYLE_CONTAINER}>
           <StrokePanelSection
             showFillColorAndCollapsablePanelSections={showFillColorAndCollapsablePanelSections}
             isStamp={isStamp}
@@ -290,13 +295,13 @@ const StylePicker = ({
             isStrokeStyleContainerActive={isStrokeStyleContainerActive}
             hideCloudyLineStyle={hideCloudyLineStyle}
           />
-          {renderDivider()}
-        </div>
+          {renderDivider(DataElements.StylePanel.STROKE_STYLE_CONTAINER)}
+        </DataElementWrapper>
       )}
 
       {hideStrokeStyle && !hideStrokeSlider && strokethicknessComponent && (strokethicknessComponent)}
       {showFillColorAndCollapsablePanelSections && !hideFillColorAndCollapsablePanelSections && (
-        <div className="PanelSection">
+        <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.FILL_COLOR_CONTAINER}>
           <CollapsibleSection
             header={t(stylePanelSectionTitles(activeTool, 'FillColor') || 'option.annotationColor.FillColor')}
             headingLevel={2}
@@ -306,6 +311,7 @@ const StylePicker = ({
             <div className="panel-section-wrapper">
               <div className="menu-items">
                 <ColorPicker
+                  dataElement={DataElements.StylePanel.FILL_COLOR_PICKER}
                   onColorChange={onFillColorChange}
                   onStyleChange={onStyleChange}
                   color={fillColor}
@@ -317,30 +323,32 @@ const StylePicker = ({
               </div>
             </div>
           </CollapsibleSection>
-          {!hideOpacitySlider && renderDivider()}
-        </div>
+          {!hideOpacitySlider && renderDivider(DataElements.StylePanel.FILL_COLOR_PICKER)}
+        </DataElementWrapper>
       )}
 
-      <div className="PanelSection">
-        <OpacityPanelSection
-          showFillColorAndCollapsablePanelSections={showFillColorAndCollapsablePanelSections}
-          shouldHideOpacitySlider={hideOpacitySlider}
-          activeTool={activeTool}
-          showLineStyleOptions={showLineStyleOptions}
-          renderSlider={renderSlider}
-          isOpacityContainerActive={isOpacityContainerActive}
-          openOpacityContainer={openOpacityContainer}
-        />
-        {showSnapModeCheckbox && renderDivider()}
-      </div>
+      {!hideOpacitySlider && getSliderProps('opacity') && !showLineStyleOptions && (
+        <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.OPACITY_CONTAINER}>
+          <OpacityPanelSection
+            showFillColorAndCollapsablePanelSections={showFillColorAndCollapsablePanelSections}
+            shouldHideOpacitySlider={hideOpacitySlider}
+            activeTool={activeTool}
+            showLineStyleOptions={showLineStyleOptions}
+            renderSlider={renderSlider}
+            isOpacityContainerActive={isOpacityContainerActive}
+            openOpacityContainer={openOpacityContainer}
+          />
+          {showSnapModeCheckbox && renderDivider(DataElements.StylePanel.OPACITY_CONTAINER)}
+        </DataElementWrapper>
+      )}
 
       {showSnapModeCheckbox && (
         <>
           {/* to avoid inline styling when there's no divider */}
           {!showFillColorAndCollapsablePanelSections && <div className="spacer" />}
-          <div className="PanelSection">
+          <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.SNAP_MODE_CONTAINER}>
             <SnapModeToggle Scale={style.Scale} Precision={style.Precision} isSnapModeEnabled={isSnapModeEnabled} />
-          </div>
+          </DataElementWrapper>
         </>
       )}
     </ParentComponent>

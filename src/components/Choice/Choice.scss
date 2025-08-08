@@ -1,5 +1,5 @@
 .ui__choice__input__icon {
-  top: -6px !important;
+  inset-block-start: -6px !important;
 }
 
 .ui__icon {
@@ -30,7 +30,7 @@
       background-color: var(--checked-option) !important;
 
       .ui__choice__input__toggle {
-        left: 12px !important;
+        inset-inline-start: 12px !important;
       }
     }
 
@@ -42,7 +42,7 @@
       height: 10px !important;
       width: 10px !important;
       background-color: var(--gray-0) !important;
-      left: 2px !important;
+      inset-inline-start: 2px !important;
     }
   }
 

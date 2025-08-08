@@ -3,6 +3,7 @@ import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import localStorageManager from './localStorageManager';
 
 const touchType = {
   TAP: 'tap',
@@ -28,7 +29,7 @@ const TouchEventManager = {
     this.startingScrollTop = null;
     this._useNativeScroll = false;
     try {
-      const val = localStorage.getItem('useNativeScroll');
+      const val = localStorageManager.getItemSynchronous('webviewer-useNativeScroll');
       if (val) {
         this._useNativeScroll = JSON.parse(val);
       }
@@ -449,7 +450,7 @@ const TouchEventManager = {
   set useNativeScroll(val) {
     this._useNativeScroll = val;
     try {
-      localStorage.setItem('useNativeScroll', JSON.stringify(this._useNativeScroll));
+      localStorageManager.setItemSynchronous('webviewer-useNativeScroll', JSON.stringify(this._useNativeScroll));
     } catch (err) {
       console.warn(`localStorage could not be accessed. ${err.message}`);
     }

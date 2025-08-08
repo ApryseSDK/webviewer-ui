@@ -12,7 +12,8 @@ export default {
   component: App,
 };
 
-export const PresetButtonsInTheApp = createTemplate({
+
+const basePresetButtonsConfig = {
   uiConfiguration: VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR,
   headers: defaultSpreadsheetEditorHeaders,
   components: {
@@ -41,7 +42,6 @@ export const PresetButtonsInTheApp = createTemplate({
       type: 'presetButton',
       buttonType: 'insertColumnRight'
     },
-
   },
   flyoutMap: defaultSpreadsheetFlyoutMap,
   viewerRedux: {
@@ -54,5 +54,18 @@ export const PresetButtonsInTheApp = createTemplate({
       'logoBar': { disabled: true },
     },
   },
+};
+
+export const PresetButtonsInTheApp = createTemplate({
+  ...basePresetButtonsConfig,
   spreadsheetEditorRedux: defaultSpreadSheetEditorState,
+});
+
+export const PresetButtonsWithCanUndoAndRedo = createTemplate({
+  ...basePresetButtonsConfig,
+  spreadsheetEditorRedux: {
+    ...defaultSpreadSheetEditorState,
+    canUndo: true,
+    canRedo: true,
+  },
 });

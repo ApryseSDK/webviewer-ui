@@ -13,24 +13,24 @@
     font-size: 13px;
     justify-content: flex-start;
 
-      .scale-overlay-icon {
+    .scale-overlay-icon {
+      width: 24px;
+      height: 24px;
+      margin-inline-end: 12px;
+
+      svg {
         width: 24px;
         height: 24px;
-        margin-right: 12px;
-  
-        svg {
-          width: 24px;
-          height: 24px;
-        }
+      }
     }
-  
+
     .scale-overlay-title {
       color: var(--text-color);
       font-weight: bold;
       font-size: 13px;
-      margin-right: 16px;
+      margin-inline-end: 16px;
     }
-  
+
     .add-new-scale {
       width: 100%;
       padding: var(--padding-small) var(--padding);
@@ -38,8 +38,8 @@
       color: var(--secondary-button-text);
       font-weight: normal;
       border: 1px solid;
-      margin-left: 12px;
-  
+      margin-inline-start: 12px;
+
       span {
         font-size: 13px;
       }
@@ -59,12 +59,13 @@
         color: var(--text-color);
         font-weight: normal;
         font-size: 13px;
-        text-align: left;
+        text-align: start;
         text-overflow: ellipsis;
         white-space: nowrap;
         cursor: pointer;
 
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           .scale-overlay-arrow {
             outline: 1px solid var(--primary-button-hover);
             border-radius: var(--border-radius);
@@ -97,15 +98,15 @@
         width: 176px;
         font-size: 13px;
       }
-      
+
       & ul {
         margin: 0;
         list-style-type: none;
         position: absolute;
         min-width: 157px;
-        left: 0;
-        top: 0;
-        text-align: left;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        text-align: start;
         letter-spacing: 0px;
         display: none;
         border-radius: var(--border-radius);
@@ -113,7 +114,7 @@
         z-index: 1000;
         background-color: var(--component-background);
         box-shadow: 0px 0px 4px var(--box-shadow);
-        padding-left: 0px;
+        padding-inline-start: 0px;
         padding-bottom: var(--padding-small);
       }
 
@@ -150,8 +151,8 @@
         justify-content: space-between;
         height: 32px;
         line-height: 32px;
-        padding-left: var(--padding-small);
-        padding-right: var(--padding-small);
+        padding-inline-start: var(--padding-small);
+        padding-inline-end: var(--padding-small);
         border: 1px solid transparent;
         column-gap: var(--padding-small);
         font-size: 13px;
@@ -181,7 +182,8 @@
       }
 
       & li:not(:last-child):not(:first-child) {
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           background-color: var(--scale-overlay-item-hover);
 
           .options {
@@ -194,7 +196,8 @@
           }
 
           .delete {
-            &:hover, &:focus-within {
+            &:hover,
+            &:focus-within {
               &:not(:disabled) {
                 .Icon {
                   color: var(--icon-color);
@@ -243,7 +246,8 @@
       }
 
       .delete {
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           background-color: var(--popup-button-hover);
         }
       }
@@ -265,11 +269,11 @@
       }
 
       .scale-value {
-        margin-right: 1px;
+        margin-inline-end: 1px;
       }
     }
   }
-  
+
   .scale-overlay-calibrate {
     height: 125px;
     .scale-overlay-header {
@@ -281,28 +285,28 @@
       font-size: 13px;
       font-weight: bold;
     }
-  
+
     .scale-overlay-content {
       font-size: 13px;
       margin-bottom: 8px;
     }
-  
+
     .divider {
       width: calc(100% + 2.375rem);
       height: 1px;
-      margin-left: -1rem;
+      margin-inline-start: -1rem;
       background: var(--gray-5);
       margin-top: 12px;
       margin-bottom: 16px;
     }
-  
+
     .scale-overlay-footer {
       margin-top: var(--padding-medium);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-  
+
       .calibration-cancel {
         @include button-reset;
         border-radius: var(--border-radius);
@@ -313,16 +317,15 @@
         border: none;
         font-size: 13px;
 
-  
         &:enabled:hover {
           color: var(--secondary-button-hover);
         }
-  
+
         &:disabled {
           opacity: 0.5;
         }
       }
-  
+
       .calibration-apply {
         @include button-reset;
         background: var(--primary-button);
@@ -333,11 +336,10 @@
         cursor: pointer;
         font-size: 13px;
 
-  
         &:enabled:hover {
           @extend %default-button-hover;
         }
-  
+
         &:disabled {
           @extend %default-button-disabled;
         }
@@ -370,7 +372,7 @@
     .scale-input {
       width: 70px;
       height: 24px;
-      margin-right: var(--padding-tiny);
+      margin-inline-end: var(--padding-tiny);
       padding: var(--padding-tiny);
       font-size: 13px;
 
@@ -381,7 +383,7 @@
 
     .measurement__detail-container {
       /* icon width 24px + gap 8px */
-      margin-left: var(--padding-huge);
+      margin-inline-start: var(--padding-huge);
 
       .measurement__detail-item {
         display: flex;
@@ -397,7 +399,7 @@
       margin-top: var(--padding-small);
 
       .distance-show {
-        margin-right: var(--padding-small);
+        margin-inline-end: var(--padding-small);
         width: 79px;
         height: 32px;
       }
@@ -405,7 +407,7 @@
 
     .distance-show {
       text-decoration: underline;
-      margin-right: var(--padding-small);
+      margin-inline-end: var(--padding-small);
     }
 
     .angle_input {
@@ -447,7 +449,7 @@
   .divider {
     width: calc(100% + 1.375rem);
     height: 1px;
-    margin-left: -1rem;
+    margin-inline-start: -1rem;
     background: var(--gray-5);
     margin-top: 12px;
   }
@@ -455,13 +457,15 @@
   &:has(.scale-overlay-calibrate) {
     padding: var(--padding-medium) 0;
 
-    .scale-overlay-header, .scale-overlay-content, .scale-overlay-footer {
+    .scale-overlay-header,
+    .scale-overlay-content,
+    .scale-overlay-footer {
       padding: 0 var(--padding-medium);
     }
 
     .divider {
       width: 100%;
-      margin-left: 0;
+      margin-inline-start: 0;
     }
   }
 
@@ -515,12 +519,13 @@
         padding: 0 var(--padding-small);
         color: var(--text-color);
         font-weight: normal;
-        text-align: left;
+        text-align: start;
         text-overflow: ellipsis;
         white-space: nowrap;
         cursor: pointer;
 
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           .scale-overlay-arrow {
             outline: 1px solid var(--primary-button-hover);
             border-radius: var(--border-radius);
@@ -552,15 +557,15 @@
         /* match the border of the button so they line up */
         border-top: solid 1px transparent;
       }
-      
+
       & ul {
         margin: 0;
         list-style-type: none;
         position: absolute;
         min-width: 157px;
-        left: 0;
-        top: 0;
-        text-align: left;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        text-align: start;
         letter-spacing: 0px;
         display: none;
         border-radius: var(--border-radius);
@@ -568,7 +573,7 @@
         z-index: 1000;
         background-color: var(--component-background);
         box-shadow: 0px 0px 4px var(--box-shadow);
-        padding-left: 0px;
+        padding-inline-start: 0px;
         padding-bottom: var(--padding-small);
       }
 
@@ -600,8 +605,8 @@
         justify-content: space-between;
         height: 32px;
         line-height: 32px;
-        padding-left: var(--padding-small);
-        padding-right: var(--padding-small);
+        padding-inline-start: var(--padding-small);
+        padding-inline-end: var(--padding-small);
         border: 1px solid transparent;
         column-gap: var(--padding-small);
       }
@@ -619,7 +624,8 @@
       }
 
       & li:not(:last-child):not(:first-child) {
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           background-color: var(--scale-overlay-item-hover);
 
           .options {
@@ -631,7 +637,8 @@
           }
 
           .delete {
-            &:hover, &:focus-within {
+            &:hover,
+            &:focus-within {
               &:not(:disabled) {
                 .Icon {
                   color: var(--icon-color);
@@ -677,7 +684,8 @@
       }
 
       .delete {
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
           background-color: var(--popup-button-hover);
         }
       }
@@ -698,7 +706,7 @@
       }
 
       .scale-value {
-        margin-right: 1px;
+        margin-inline-end: 1px;
       }
     }
   }
@@ -785,7 +793,7 @@
     .scale-input {
       width: 70px;
       height: 24px;
-      margin-right: var(--padding-tiny);
+      margin-inline-end: var(--padding-tiny);
       padding: var(--padding-tiny);
       @include mobile {
         font-size: 13px;
@@ -797,7 +805,7 @@
 
     .measurement__detail-container {
       /* icon width 24px + gap 8px */
-      margin-left: var(--padding-huge);
+      margin-inline-start: var(--padding-huge);
 
       .measurement__detail-item {
         display: flex;
@@ -813,7 +821,7 @@
       margin-top: var(--padding-small);
 
       .distance-show {
-        margin-right: var(--padding-small);
+        margin-inline-end: var(--padding-small);
 
         @include mobile {
           width: 79px;
@@ -824,7 +832,7 @@
 
     .distance-show {
       text-decoration: underline;
-      margin-right: var(--padding-small);
+      margin-inline-end: var(--padding-small);
     }
 
     .angle_input {

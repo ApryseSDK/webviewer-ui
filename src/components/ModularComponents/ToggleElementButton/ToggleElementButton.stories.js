@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { panelData } from 'src/constants/panel';
 import PropTypes from 'prop-types';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/ToggleElementButton',

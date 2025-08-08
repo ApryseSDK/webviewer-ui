@@ -1,11 +1,24 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import '../Flyout/Flyout.scss';
+import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
+import selectors from 'selectors';
+import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
+import { ITEM_TYPE } from 'constants/customizationVariables';
 
 const FlyoutItemContainer = forwardRef((props, ref) => {
+  let customElementOverrides = useSelector((state) => selectors.getCustomElementOverrides(state, props.dataElement));
+  if (customElementOverrides) {
+    customElementOverrides = { ...customElementOverrides };
+    const newIcon = getIconDOMElement(customElementOverrides);
+    if (newIcon) {
+      customElementOverrides.icon = newIcon;
+    }
+  }
   const {
     label,
     secondaryLabel,
@@ -13,7 +26,6 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     dataElement,
     disabled,
     additionalClass = '',
-    icon,
     ariaKeyshortcuts,
     children,
     index,
@@ -21,7 +33,16 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     elementDOM,
     onKeyDownHandler,
     onClickHandler,
-  } = props;
+  } = { ...props, ...customElementOverrides };
+
+  let icon = customElementOverrides?.icon || customElementOverrides?.img || props.icon;
+
+  if (!customElementOverrides && props.flyoutItem?.type === ITEM_TYPE.PRESET_BUTTON && disabled) {
+    const newIcon = getIconDOMElement(props.flyoutItem, props.allFlyoutItems, disabled);
+    if (newIcon) {
+      icon = newIcon;
+    }
+  }
 
   const { t } = useTranslation();
 
@@ -35,6 +56,11 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
       );
     }
 
+    const onClick = (e) => {
+      getClickMiddleWare()?.(dataElement, { type: ClickedItemTypes.BUTTON });
+      customElementOverrides?.onClick ? customElementOverrides.onClick(e) : onClickHandler(props, isChild, index)(e);
+    };
+
     const flyoutItemLabel = label ?? title;
     const finalLabel = typeof flyoutItemLabel === 'string' ? t(flyoutItemLabel) : flyoutItemLabel;
     const isSelected = props.additionalClass === 'active';
@@ -42,7 +68,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
       <button
         className="flyout-item"
         disabled={disabled}
-        onClick={onClickHandler(props, isChild, index)}
+        onClick={onClick}
         aria-disabled={disabled}
         onKeyDown={onKeyDownHandler}
         data-element={dataElement}
@@ -100,6 +126,8 @@ FlyoutItemContainer.propTypes = {
   draggable: PropTypes.bool,
   onDragStart: PropTypes.func,
   onDragEnd: PropTypes.func,
+  flyoutItem: PropTypes.object,
+  allFlyoutItems: PropTypes.array,
 };
 FlyoutItemContainer.displayName = 'FlyoutItemContainer';
 

@@ -115,21 +115,24 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
 export const HEADER_FOOTER_BAR_DEFAULT_POSITION = 100;
 
 export const CM_PER_INCH = window.Core.Document.OfficeEditor.CM_PER_INCH; // 2.54
-export const PIXELS_PER_INCH = window.Core.Document.OfficeEditor.PIXELS_PER_INCH; // 96
 export const MM_PER_CM = window.Core.Document.OfficeEditor.MM_PER_CM; // 10
+export const POINTS_PER_INCH = window.Core.Document.OfficeEditor.POINTS_PER_INCH; // 72
+export const POINTS_PER_CM = window.Core.Document.OfficeEditor.POINTS_PER_CM; // 28.3464566929133858
 
-export const MARGIN_UNITS = window.Core.Document.OfficeEditor.MarginUnits;
+export const LAYOUT_UNITS = window.Core.Document.OfficeEditor.LayoutUnits;
 
 export const MARGIN_UNIT_LABELS = {
   CM: 'cm',
   MM: 'mm',
   INCH: '"',
+  PHYSICAL_POINT: 'pt',
 };
 
+// MARGIN_VALUES in centimeters
 export const MARGIN_VALUES = {
   NORMAL: 2.54,
   NARROW: 1.27,
-  MODERATE: 1.91,
+  MODERATE: 1.905,
   WIDE: 5.08,
 };
 
@@ -152,8 +155,8 @@ export const PAGE_LAYOUT_WARNING_TYPE = {
 
 export const VERTICAL_MARGIN_LIMIT = window.Core.Document.OfficeEditor.VERTICAL_MARGIN_LIMIT; // 0.4
 
-export const MINIMUM_COLUMN_WIDTH_IN_INCHES = 0.5;
+export const DEFAULT_COLUMN_SPACING_IN_POINTS = window.Core.Document.OfficeEditor.DEFAULT_COLUMN_SPACING_IN_POINTS; // 36
 
-export const DEFAULT_COLUMN_SPACING_IN_INCHES = 0.5;
+export const MINIMUM_COLUMN_WIDTH_IN_POINTS = window.Core.Document.OfficeEditor.MINIMUM_COLUMN_WIDTH_IN_POINTS; // 36
 
 export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';

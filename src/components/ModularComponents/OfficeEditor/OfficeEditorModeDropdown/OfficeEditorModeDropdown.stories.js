@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { OfficeEditorEditMode } from 'src/constants/officeEditor';
 import OfficeEditorModeDropdown from './OfficeEditorModeDropdown';
-import { userEvent, expect } from '@storybook/test';
+import { userEvent, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
 
 export default {

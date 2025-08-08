@@ -4,7 +4,7 @@ import CellBorders from './CellBorders';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
-import { within, expect } from '@storybook/test';
+import { within, expect } from 'storybook/test';
 import i18next from 'i18next';
 
 const createMockDocumentViewer = (getSelectedCellRange, cells) => () => ({

@@ -29,7 +29,7 @@
         padding: 4px 4px 4px 4px;
 
         &::before {
-          left: 4px;
+          inset-inline-start: 4px;
         }
       }
     }
@@ -45,16 +45,14 @@
         @include button-reset;
 
         // for IE only
-        @media all and (-ms-high-contrast: none),
-        (-ms-high-contrast: active) {
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
           width: 80px;
         }
-
-        right: 10px;
-        bottom: 12px;
+        inset-inline-end: 10px;
+        inset-block-end: 12px;
 
         &:hover {
-          background: var(--blue-1)
+          background: var(--blue-1);
         }
 
         &.disabled {

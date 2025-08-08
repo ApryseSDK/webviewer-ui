@@ -18,7 +18,6 @@ const state = {
   ...initialState,
   viewer: {
     openElements: {
-      watermarkPanel: true,
       stylePopup: true,
       stylePanel: true,
       stylePopupTextStyleContainer: true,

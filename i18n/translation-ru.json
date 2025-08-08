@@ -111,6 +111,7 @@
     "open": "Открыть",
     "deselectAll": "Убрать выделение со всего",
     "select": "Выбирать",
+    "buttonPressed": "Кнопка {{buttonName}} нажата",
     "moveToTop": "Наверх",
     "moveToBottom": "Вниз",
     "movePageToTop": "Переместить страницу вверх",
@@ -272,7 +273,6 @@
       "close": "Закрыть все аннотации"
     },
     "comparePanel": "Панель сравнения",
-    "watermarkPanel": "Панель водяных знаков",
     "mainMenu": "Главное меню"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Поиск не вернул результатов.",
     "numResultsFound": "найдены результаты",
     "loadError": "Ошибка загрузки документа",
+    "urlInputFileLoadError": "Не удалось получить файл по указанному URL-адресу.",
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
     "enterPasswordPlaceholder": "Введите пароль",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Поиск комментариев",
     "searchDocumentPlaceholder": "Искать документ",
     "clearSearchResults": "Очистить результаты поиска",
+    "toggleReplaceInput": "Переключить замену ввода",
+    "toggleSearchOptions": "Переключить параметры поиска",
     "searchResultsCleared": "Результаты поиска очищены",
     "searchSettingsPlaceholder": "Настройки поиска",
     "searchSuggestionsPlaceholder": "Поисковые предложения",
@@ -803,7 +806,30 @@
       "setShortcut": "Установить сочетание клавиш",
       "editShortcut": "Редактировать ярлык",
       "shortcutAlreadyExists": "Комбинация клавиш выше уже существует.",
-      "close": "Закрыть подсказку"
+      "close": "Закрыть подсказку",
+      "spreadsheetEditor": {
+        "copyText": "Копировать выделенный текст или ячейки",
+        "pasteText": "Вставить текст или ячейки",
+        "cutText": "Вырезать выделенный текст или ячейки",
+        "undoChange": "Отменить изменение",
+        "redoChange": "Повторить изменение",
+        "selectAll": "Выбрать все ячейки",
+        "moveToEdgeUp": "Перейти к началу листа",
+        "moveToEdgeDown": "Перейти к концу листа",
+        "moveToEdgeLeft": "Перейти к самому левому столбцу",
+        "moveToEdgeRight": "Перейти к самому правому столбцу",
+        "adjustSelectionUp": "Расширить выделение вверх",
+        "adjustSelectionDown": "Расширить выделение вниз",
+        "adjustSelectionLeft": "Расширить выделение влево",
+        "adjustSelectionRight": "Расширить выделение вправо",
+        "up": "Переместить поле выбора ячейки вверх",
+        "down": "Переместить поле выбора ячеек вниз",
+        "left": "Переместить поле выбора ячейки влево",
+        "right": "Переместить поле выбора ячейки вправо",
+        "enter": "Редактировать выбранную ячейку",
+        "tab": "Переместить поле выбора ячейки вправо",
+        "delete": "Очистить данные ячейки"
+      }
     },
     "cellBorderStyle": {
       "none": "Никто",
@@ -861,12 +887,12 @@
       "message": "Этот документ пытается подключиться к:\n\n{{- uri}}\n\n Если вы доверяете этому документу, нажмите «Подтвердить», чтобы открыть его."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Редактировать предупреждение",
-      "message": "Это имя листа уже существует. Введите другое имя."
+      "title": "Изменить имя листа",
+      "message": "Это имя уже существует. Введите другое имя."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Редактировать предупреждение",
-      "message": "Имя этого листа не может быть пустым."
+      "title": "Изменить имя листа",
+      "message": "Имя листа не может быть пустым. Введите имя."
     },
     "sheetTabDeleteMessage": {
       "title": "Редактировать предупреждение",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Свойства",
     "miscValuesHeader": "Все",
     "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Текстовый водяной знак",
-    "uploadImage": "Загрузить изображение",
-    "browse": "Просматривать",
-    "watermarkOptions": "Параметры водяного знака",
-    "watermarks": "Водяные знаки"
   },
   "portfolio": {
     "createPDFPortfolio": "Создать PDF-портфолио",

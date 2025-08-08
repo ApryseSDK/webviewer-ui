@@ -330,6 +330,7 @@ const RichTextStyleEditor = ({
         />
       </div>
       <ColorPicker
+        dataElement={DataElements.StylePanel.TEXT_COLOR_PICKER}
         onColorChange={(color) => {
           handleColorChange('TextColor', new window.Core.Annotations.Color(color));
         }}

@@ -61,6 +61,20 @@ export default (initialState) => (state = initialState, action) => {
         selectedBorderStyleListOption,
       };
     }
+    case 'SET_SPREADSHEET_EDITOR_CAN_UNDO': {
+      const { canUndo } = payload;
+      return {
+        ...state,
+        canUndo,
+      };
+    }
+    case 'SET_SPREADSHEET_EDITOR_CAN_REDO': {
+      const { canRedo } = payload;
+      return {
+        ...state,
+        canRedo,
+      };
+    }
     default:
       return state;
   }

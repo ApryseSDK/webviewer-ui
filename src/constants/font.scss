@@ -2,67 +2,67 @@
 // https://github.com/webpack-contrib/sass-loader#problems-with-url
 
 @font-face {
-  font-family: "Lato";
-  src: url("../../../assets/fonts/Lato-Regular.woff") format("woff");
+  font-family: 'Lato';
+  src: url('../../../assets/fonts/Lato-Regular.woff') format('woff');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Lato";
-  src: url("../../../assets/fonts/Lato-Italic.woff") format("woff");
+  font-family: 'Lato';
+  src: url('../../../assets/fonts/Lato-Italic.woff') format('woff');
   font-style: italic;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Lato";
-  src: url("../../../assets/fonts/Lato-Bold.woff") format("woff");
+  font-family: 'Lato';
+  src: url('../../../assets/fonts/Lato-Bold.woff') format('woff');
   font-style: normal;
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "Lato";
-  src: url("../../../assets/fonts/Lato-BoldItalic.woff") format("woff");
+  font-family: 'Lato';
+  src: url('../../../assets/fonts/Lato-BoldItalic.woff') format('woff');
   font-weight: bold;
   font-style: italic;
 }
 @font-face {
-  font-family: "GreatVibes-Regular";
+  font-family: 'GreatVibes-Regular';
   src:
     // App.scss imports this file so the url should be relative to App.scss
-    // https://github.com/webpack-contrib/sass-loader#problems-with-url
-    url("../../../assets/fonts/GreatVibes-Regular.woff2") format("woff2"),
-    url("../../../assets/fonts/GreatVibes-Regular.woff") format("woff");
+    // https://github.com/webpack-contrib/sass-loader#problems-with-url url('../../../assets/fonts/GreatVibes-Regular.woff2')
+      format('woff2'),
+    url('../../../assets/fonts/GreatVibes-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Satisfy";
-  src: url("../../../assets/fonts/Satisfy.woff") format("woff");
+  font-family: 'Satisfy';
+  src: url('../../../assets/fonts/Satisfy.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Nothing-You-Could-Do";
-  src: url("../../../assets/fonts/Nothing-You-Could-Do.woff") format("woff");
+  font-family: 'Nothing-You-Could-Do';
+  src: url('../../../assets/fonts/Nothing-You-Could-Do.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "La-Belle-Aurore";
-  src: url("../../../assets/fonts/La-Belle-Aurore.woff") format("woff");
+  font-family: 'La-Belle-Aurore';
+  src: url('../../../assets/fonts/La-Belle-Aurore.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Whisper";
-  src: url("../../../assets/fonts/Whisper.woff") format("woff");
+  font-family: 'Whisper';
+  src: url('../../../assets/fonts/Whisper.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

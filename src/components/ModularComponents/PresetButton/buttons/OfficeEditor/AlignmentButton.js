@@ -11,16 +11,26 @@ import { menuItems } from '../../../Helpers/menuItems';
 const propTypes = {
   alignment: PropTypes.oneOf(Object.values(JUSTIFICATION_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
   buttonType: PropTypes.string.isRequired,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const AlignmentButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, alignment, style, className, buttonType } = props;
+  const {
+    isFlyoutItem,
+    alignment,
+    style,
+    className,
+    buttonType,
+    dataElement = menuItems[buttonType].dataElement,
+    img: icon = menuItems[buttonType].icon,
+    title = menuItems[buttonType].title,
+  } = props;
   const isActive = useSelector((state) => selectors.isJustificationButtonActive(state, alignment));
-
-  const { dataElement, icon, title } = menuItems[buttonType];
 
   const handleClick = () => {
     core.getOfficeEditor().updateParagraphStyle({

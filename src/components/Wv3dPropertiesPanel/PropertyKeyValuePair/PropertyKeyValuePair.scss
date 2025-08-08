@@ -1,5 +1,5 @@
 .property-pair {
-  margin-left: 24px;
+  margin-inline-start: 24px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -21,5 +21,5 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex-basis: 300px;
-  padding-left: 20px;
+  padding-inline-start: 20px;
 }

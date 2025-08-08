@@ -4,8 +4,7 @@ import {
   defaultSpreadsheetEditorHeaders,
   defaultSpreadsheetFlyoutMap,
 } from 'src/redux/spreadsheetEditorComponents';
-import { within } from '@testing-library/react';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import App from 'components/App';
 

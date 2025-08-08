@@ -15,13 +15,13 @@
   overflow: hidden;
 
   @include tablet {
-    border-left: 1px solid var(--side-panel-border);
+    border-inline-start: 1px solid var(--side-panel-border);
   }
 
   @include mobile {
     position: fixed;
-    top: 0;
-    right: 0;
+    inset-block-start: 0;
+    inset-inline-end: 0;
     height: 100%;
     width: 100%;
   }
@@ -35,14 +35,13 @@
   // Needed
   // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
-
   .ListSeparator:first-child {
     margin-top: 0px;
   }
 
   @include ie11 {
     .ReactVirtualized__Grid__innerScrollContainer {
-      max-width: 1000px !important
+      max-width: 1000px !important;
     }
   }
 
@@ -59,7 +58,7 @@
       margin-bottom: 8px;
 
       width: 100%;
-      padding-right: 12px;
+      padding-inline-end: 12px;
 
       .close-icon-container {
         @include button-reset;
@@ -82,11 +81,11 @@
       margin-top: 110px !important;
     }
 
-    .ReactVirtualized__List{
+    .ReactVirtualized__List {
       overflow: overlay !important;
-      padding-right: 8px;
+      padding-inline-end: 8px;
 
-      &:focus{
+      &:focus {
         outline: none;
       }
 

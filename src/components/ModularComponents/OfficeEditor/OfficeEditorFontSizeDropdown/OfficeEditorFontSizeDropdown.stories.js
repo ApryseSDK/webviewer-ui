@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { DEFAULT_POINT_SIZE } from 'src/constants/officeEditor';
 import core from 'core';
 import OfficeEditorFontSizeDropdown from './OfficeEditorFontSizeDropdown';
-import { userEvent, expect } from '@storybook/test';
+import { userEvent, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 
 export default {

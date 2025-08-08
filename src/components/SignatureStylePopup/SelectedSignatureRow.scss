@@ -5,13 +5,13 @@
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  padding-left: 8px;
-  padding-right: 4px;
+  padding-inline-start: 8px;
+  padding-inline-end: 4px;
   align-items: center;
 
   @include mobile {
     width: auto;
-    padding-left: 0px;
+    padding-inline-start: 0px;
 
     .add-btn {
       width: 190px;

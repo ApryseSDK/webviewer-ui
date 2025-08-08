@@ -11,6 +11,8 @@ import {
   cloudyStrokeStyle,
 } from 'constants/strokeStyleIcons';
 import { stylePanelSectionTitles } from 'helpers/stylePanelHelper';
+import DataElementWrapper from 'src/components/DataElementWrapper';
+import DataElements from 'src/constants/dataElement';
 
 const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
@@ -49,8 +51,15 @@ const StrokePanelSection = ({
       {!isStamp && (
         <>
           <div className="menu-items">
-            <ColorPicker onColorChange={onStrokeColorChange} onStyleChange={onStyleChange} color={strokeColor}
-              activeTool={activeTool} type={'Stroke'} ariaTypeLabel={t('option.annotationColor.StrokeColor')}/>
+            <ColorPicker
+              dataElement={DataElements.StylePanel.STROKE_COLOR_PICKER}
+              onColorChange={onStrokeColorChange}
+              onStyleChange={onStyleChange}
+              color={strokeColor}
+              activeTool={activeTool}
+              type={'Stroke'}
+              ariaTypeLabel={t('option.annotationColor.StrokeColor')}
+            />
           </div>
           {!hideStrokeSlider && strokethicknessComponent && (strokethicknessComponent)}
           {/*
@@ -59,7 +68,7 @@ const StrokePanelSection = ({
           {showLineStyleOptions && <div className="StyleOption">{renderSlider('opacity')}</div>}
           {!!strokeStyle && !(isInFormFieldCreationMode && !isFreeText) && !hideStrokeDropdowns && (
             <div className="StyleOption">
-              <div className="styles-container lineStyleContainer">
+              <DataElementWrapper dataElement={DataElements.StylePanel.LINE_STYLE_PICKER_CONTAINER} className="styles-container lineStyleContainer">
                 <div className="styles-title">{t('option.styleOption.style')}</div>
                 <div className="StylePicker-LineStyle">
                   {showLineStyleOptions && (
@@ -99,7 +108,7 @@ const StrokePanelSection = ({
                     />
                   )}
                 </div>
-              </div>
+              </DataElementWrapper>
             </div>
           )}
         </>

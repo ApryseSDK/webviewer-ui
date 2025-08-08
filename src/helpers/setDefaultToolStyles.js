@@ -8,8 +8,10 @@ const setDefaultToolStyle = (toolName, documentViewer = undefined) => {
   const toolModeMap = documentViewer ? documentViewer.getToolModeMap() : core.getToolModeMap();
 
   try {
-    const instanceId = getInstanceID();
-    toolStyles = localStorage.getItem(`${instanceId}-toolData-${toolName}`);
+    if (localStorageManager.isLocalStorageEnabled()) {
+      const instanceId = getInstanceID();
+      toolStyles = localStorageManager.getItemSynchronous(`${instanceId}-toolData-${toolName}`);
+    }
   } catch (ex) {
     console.warn('Disabling "localStorage" because it could not be accessed.');
     localStorageManager.disableLocalStorage();

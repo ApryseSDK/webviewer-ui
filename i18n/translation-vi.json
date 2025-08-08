@@ -111,6 +111,7 @@
     "open": "Mở",
     "deselectAll": "Bỏ Chọn Tất Cả",
     "select": "Chọn",
+    "buttonPressed": "Đã nhấn nút {{buttonName}}",
     "moveToTop": "Di chuyển lên trên cùng",
     "moveToBottom": "Di chuyển xuống dưới cùng",
     "movePageToTop": "Di chuyển trang lên đầu",
@@ -272,7 +273,6 @@
       "close": "Đóng tất cả các chú thích"
     },
     "comparePanel": "So sánh bảng điều khiển",
-    "watermarkPanel": "Bảng điều khiển hình mờ",
     "mainMenu": "Thực đơn chính"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Không tìm thấy kết quả nào.",
     "numResultsFound": "kết quả tìm thấy",
     "loadError": "Lỗi tải tài liệu",
+    "urlInputFileLoadError": "Không thể truy xuất tệp từ URL được cung cấp.",
     "notSupported": "Loại tệp đó không được hỗ trợ.",
     "passwordRequired": "Yêu cầu mật khẩu",
     "enterPasswordPlaceholder": "Nhập mật khẩu",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Tìm kiếm bình luận",
     "searchDocumentPlaceholder": "Tìm kiếm tài liệu",
     "clearSearchResults": "Xóa kết quả tìm kiếm",
+    "toggleReplaceInput": "Chuyển đổi đầu vào thay thế",
+    "toggleSearchOptions": "Chuyển đổi tùy chọn tìm kiếm",
     "searchResultsCleared": "Kết quả tìm kiếm đã xóa",
     "searchSettingsPlaceholder": "Cài đặt tìm kiếm",
     "searchSuggestionsPlaceholder": "Tìm kiếm gợi ý",
@@ -803,7 +806,30 @@
       "setShortcut": "Đặt phím tắt",
       "editShortcut": "Chỉnh sửa phím tắt",
       "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại.",
-      "close": "Đóng chú giải công cụ"
+      "close": "Đóng chú giải công cụ",
+      "spreadsheetEditor": {
+        "copyText": "Sao chép văn bản hoặc ô đã chọn",
+        "pasteText": "Dán văn bản hoặc ô",
+        "cutText": "Cắt văn bản hoặc ô đã chọn",
+        "undoChange": "Hoàn tác một thay đổi",
+        "redoChange": "Làm lại một thay đổi",
+        "selectAll": "Chọn tất cả các ô",
+        "moveToEdgeUp": "Nhảy đến đầu trang tính",
+        "moveToEdgeDown": "Nhảy đến cuối trang tính",
+        "moveToEdgeLeft": "Nhảy đến cột ngoài cùng bên trái",
+        "moveToEdgeRight": "Nhảy đến cột ngoài cùng bên phải",
+        "adjustSelectionUp": "Mở rộng lựa chọn lên trên",
+        "adjustSelectionDown": "Mở rộng lựa chọn xuống phía dưới",
+        "adjustSelectionLeft": "Mở rộng lựa chọn sang trái",
+        "adjustSelectionRight": "Mở rộng lựa chọn sang phải",
+        "up": "Di chuyển hộp chọn ô lên trên",
+        "down": "Di chuyển hộp chọn ô xuống dưới",
+        "left": "Di chuyển hộp chọn ô sang trái",
+        "right": "Di chuyển hộp chọn ô sang phải",
+        "enter": "Chỉnh sửa ô đã chọn",
+        "tab": "Di chuyển hộp chọn ô sang bên phải",
+        "delete": "Xóa dữ liệu ô"
+      }
     },
     "cellBorderStyle": {
       "none": "Không có",
@@ -861,12 +887,12 @@
       "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Chỉnh sửa cảnh báo",
-      "message": "Tên trang tính này đã tồn tại. Vui lòng nhập tên khác."
+      "title": "Chỉnh sửa tên trang tính",
+      "message": "Tên này đã tồn tại. Vui lòng nhập tên khác."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Chỉnh sửa cảnh báo",
-      "message": "Tên trang tính này không được để trống."
+      "title": "Chỉnh sửa tên trang tính",
+      "message": "Tên trang tính không được để trống. Vui lòng nhập tên."
     },
     "sheetTabDeleteMessage": {
       "title": "Chỉnh sửa cảnh báo",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Thuộc tính",
     "miscValuesHeader": "Tất cả",
     "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Hình mờ văn bản",
-    "uploadImage": "Tải lên hình ảnh",
-    "browse": "Duyệt qua",
-    "watermarkOptions": "Tùy chọn hình mờ",
-    "watermarks": "Hình mờ"
   },
   "portfolio": {
     "createPDFPortfolio": "Tạo danh mục đầu tư PDF",

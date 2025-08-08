@@ -3,7 +3,7 @@ import Label from './Label';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import rootReducer from 'reducers/rootReducer';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/Label',

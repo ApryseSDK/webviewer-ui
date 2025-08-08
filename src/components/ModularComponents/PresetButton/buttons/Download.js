@@ -17,7 +17,14 @@ import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
  * @memberof UI.Components.PresetButton
  */
 const DownloadButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title,
+  } = props;
   const [documentType, setDocumentType] = useState(null);
   const dispatch = useDispatch();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
@@ -64,16 +71,22 @@ const DownloadButton = forwardRef((props, ref) => {
         isDisabled: !isDownloadSupported,
         buttonType: PRESET_BUTTON_TYPES.DOWNLOAD,
         onClick: handleClick,
+        dataElement,
         className,
         style,
+        icon,
+        title
       })
   );
 });
 
 DownloadButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 DownloadButton.displayName = 'DownloadButton';
 

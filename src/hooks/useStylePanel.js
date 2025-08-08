@@ -137,13 +137,15 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       extraStyles.FontSize = annotation.FontSize;
     }
 
-    setStyle({
-      ...style,
-      StrokeColor: annotation.StrokeColor ?? null,
-      StrokeThickness: annotation.StrokeThickness ?? null,
-      Opacity: annotation.Opacity ?? null,
-      FillColor: annotation.FillColor ?? null,
-      ...extraStyles,
+    setStyle((previousStyle) => {
+      return {
+        ...previousStyle,
+        StrokeColor: annotation.StrokeColor ?? null,
+        StrokeThickness: annotation.StrokeThickness ?? null,
+        Opacity: annotation.Opacity ?? null,
+        FillColor: annotation.FillColor ?? null,
+        ...extraStyles,
+      };
     });
 
     setStartLineStyle(annotation.getStartStyle ? annotation.getStartStyle() : 'None');
@@ -184,8 +186,9 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   }, [selectedAnnotation, currentTool, selectedAnnotations]);
 
   const onStyleChange = (property, value) => {
-    const newStyle = { ...style, [property]: value };
-    setStyle(newStyle);
+    setStyle((previousStyle) => {
+      return { ...previousStyle, [property]: value };
+    });
 
     if (selectedAnnotations.length === 0 && editorInstance && property === 'FillColor') {
       const editor = editorInstance[0];
@@ -312,7 +315,9 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       setToolStyles(currentTool.name, 'RichTextStyle', richTextStyle);
     }
 
-    setStyle({ ...style, RichTextStyle: richTextStyle });
+    setStyle((previousStyle) => {
+      return { ...previousStyle, RichTextStyle: richTextStyle };
+    });
   };
 
   return {

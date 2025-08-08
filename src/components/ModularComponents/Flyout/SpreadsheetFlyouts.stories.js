@@ -8,8 +8,7 @@ import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 import { defaultSpreadsheetFlyoutMap } from '../../../redux/spreadsheetEditorComponents';
 import { oePartialState } from 'helpers/storybookHelper';
-import { within } from '@storybook/test';
-import { fireEvent } from '@testing-library/react';
+import { within, fireEvent } from 'storybook/test';
 import initialState from 'src/redux/initialState';
 
 const originalCoreGetDocumentViewer = core.getDocumentViewer;

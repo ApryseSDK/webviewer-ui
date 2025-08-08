@@ -1,6 +1,12 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+let NodePolyfillPlugin;
+try {
+  NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+} catch (e) {
+  console.warn('node-polyfill-webpack-plugin not installed; skipping polyfill.');
+}
+
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -34,7 +40,7 @@ module.exports = {
         to: '../build/configorigin.txt',
       },
     ]),
-    new NodePolyfillPlugin(),
+    ...(NodePolyfillPlugin ? [new NodePolyfillPlugin()] : []),
     // new MiniCssExtractPlugin({
     //   filename: 'style.css',
     //   chunkFilename: 'chunks/[name].chunk.css'
@@ -44,14 +50,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
+      {
+        test: /\.(js|mjs)$/,
         use: {
           loader: 'babel-loader',
           options: {
             ignore: [
               /\/core-js/,
             ],
-            sourceType: "unambiguous",
+            sourceType: 'unambiguous',
             presets: [
               '@babel/preset-react',
               [
@@ -73,9 +84,10 @@ module.exports = {
           },
         },
         include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
-        exclude: function (modulePath) {
-          return /node_modules/.test(modulePath) && !/node_modules.+react-dnd/.test(modulePath);
-        }
+        exclude: function(modulePath) {
+          return /node_modules/.test(modulePath) &&
+            !(/node_modules[\\/](react-dnd|react-quill-new|quill-mention|quill)[\\/]/.test(modulePath));
+        },
       },
       {
         test: /\.scss$/,
@@ -83,15 +95,15 @@ module.exports = {
           {
             loader: 'style-loader',
             options: {
-              insert: function (styleTag) {
+              insert: function(styleTag) {
                 function findNestedWebComponents(tagName, root = document) {
                   const elements = [];
 
                   // Check direct children
-                  root.querySelectorAll(tagName).forEach(el => elements.push(el));
+                  root.querySelectorAll(tagName).forEach((el) => elements.push(el));
 
                   // Check shadow DOMs
-                  root.querySelectorAll('*').forEach(el => {
+                  root.querySelectorAll('*').forEach((el) => {
                     if (el.shadowRoot) {
                       elements.push(...findNestedWebComponents(tagName, el.shadowRoot));
                     }
@@ -117,7 +129,7 @@ module.exports = {
                   const webComponent = webComponents[i];
                   if (i === 0) {
                     webComponent.shadowRoot.appendChild(styleTag);
-                    styleTag.onload = function () {
+                    styleTag.onload = function() {
                       if (clonedStyleTags.length > 0) {
                         clonedStyleTags.forEach((styleNode) => {
                           // eslint-disable-next-line no-unsanitized/property
@@ -139,9 +151,13 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: loader => [
+              plugins: (loader) => [
                 require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-preset-env')(),
+                require('postcss-preset-env')({
+                  features: {
+                    'logical-properties-and-values': false, // ⛔ disable polyfill!
+                  },
+                }),
                 require('cssnano')(),
               ],
             },

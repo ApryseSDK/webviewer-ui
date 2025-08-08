@@ -6,7 +6,7 @@ import NoteStateFlyout, { noteStateFlyoutItems } from './NoteStateFlyout';
 import Flyout from '../Flyout';
 
 import { createTemplate, oePartialState } from 'helpers/storybookHelper';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 
 export default {

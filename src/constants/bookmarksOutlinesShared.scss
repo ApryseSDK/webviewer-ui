@@ -1,7 +1,7 @@
 .bookmark-outline-panel {
   display: flex;
-  padding-left: var(--padding);
-  padding-right: var(--padding-small);
+  padding-inline-start: var(--padding);
+  padding-inline-end: var(--padding-small);
 }
 
 .bookmark-outline-control-button {
@@ -28,7 +28,6 @@
 
   &:not([disabled]),
   &:not(.disabled) {
-
     &:hover,
     &:active {
       color: var(--secondary-button-hover);
@@ -64,8 +63,8 @@
   flex-flow: row nowrap;
   align-items: flex-start;
   border-radius: 4px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
 
   &.default {
     padding: var(--padding-tiny);
@@ -104,7 +103,6 @@
     }
   }
 
-
   &.preview {
     display: inline-flex;
     margin-top: 0;
@@ -118,7 +116,7 @@
     flex-shrink: 0;
     margin-top: 2px;
     margin-bottom: 2px;
-    margin-right: var(--padding-small);
+    margin-inline-end: var(--padding-small);
   }
 
   .bookmark-outline-label-row {
@@ -142,13 +140,13 @@
   .bookmark-outline-input {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: calc(100% - (16px + 6px)); // more-button width + margin-left
+    flex-basis: calc(100% - (16px + 6px)); // more-button width + margin-inline-start
     margin-top: 2px;
     margin-bottom: 2px;
   }
 
   .bookmark-text-input {
-    margin-left: var(--padding-large);
+    margin-inline-start: var(--padding-large);
   }
 
   .bookmark-outline-input {
@@ -223,7 +221,7 @@
   .bookmark-outline-save-button {
     color: var(--primary-button-text);
     background-color: var(--primary-button);
-    margin-left: var(--padding-tiny);
+    margin-inline-start: var(--padding-tiny);
     border-radius: 4px;
 
     &:hover {
@@ -233,7 +231,7 @@
     &:disabled,
     &.disabled {
       background-color: var(--primary-button) !important;
-      opacity: .5;
+      opacity: 0.5;
 
       span {
         color: var(--primary-button-text);
@@ -254,14 +252,13 @@
     .Icon {
       width: 14px;
       height: 14px;
-      margin-right: var(--padding-tiny);
+      margin-inline-end: var(--padding-tiny);
       color: inherit;
       fill: currentColor;
     }
 
     &[disabled],
     &.disabled {
-
       .Icon.disabled,
       .Icon.disabled path {
         color: inherit;
@@ -280,7 +277,7 @@
     }
 
     &:not(:first-child) {
-      margin-left: var(--padding-tiny);
+      margin-inline-start: var(--padding-tiny);
     }
 
     &:hover {

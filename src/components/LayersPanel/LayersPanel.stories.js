@@ -2,7 +2,7 @@ import React from 'react';
 import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
-import { userEvent, within, waitFor, expect } from '@storybook/test';
+import { userEvent, within, waitFor, expect } from 'storybook/test';
 import core from 'core';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';

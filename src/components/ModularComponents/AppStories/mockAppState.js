@@ -659,7 +659,7 @@ export const uiWithCustomElements = {
     'customPanel': {
       'dataElement': 'customPanel',
       'render': 'customPanelRender',
-      'location': 'left'
+      'location': 'start',
     }
   },
   'flyouts': {

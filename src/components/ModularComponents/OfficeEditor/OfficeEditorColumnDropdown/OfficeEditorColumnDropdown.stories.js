@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { userEvent, within, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 import DataElements from 'constants/dataElement';
 import OfficeEditorColumnDropdown from './OfficeEditorColumnDropdown';
@@ -23,13 +24,13 @@ export const Basic = () => {
   );
 };
 
-// export const Expanded = () => <Basic />;
-// Expanded.play = async ({ canvasElement }) => {
-//   const canvas = within(canvasElement);
-//   const columnButton = await canvas.findByRole('button', { name: 'Columns' });
-//   await userEvent.click(columnButton);
-//   await expect(columnButton).toHaveAttribute('aria-expanded', 'true');
-// };
+export const Expanded = () => <Basic />;
+Expanded.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const columnButton = await canvas.findByRole('button', { name: 'Columns' });
+  await userEvent.click(columnButton);
+  await expect(columnButton).toHaveAttribute('aria-expanded', 'true');
+};
 
 export const ColumnsWarningModal = () => {
   const warning = {

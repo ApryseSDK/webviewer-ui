@@ -14,11 +14,11 @@
     height: 100%;
 
     &:last-child {
-      margin-right: 0px;
+      margin-inline-end: 0px;
     }
 
     &:first-child {
-      margin-left: 0px;
+      margin-inline-start: 0px;
     }
   }
 
@@ -30,9 +30,9 @@
 .ToggleZoomOverlay {
   height: 100%;
   color: var(--text-color);
-  margin-right: 1px;
+  margin-inline-end: 1px;
 
-  .textarea{
+  .textarea {
     resize: none;
     border: none;
     outline: none;
@@ -40,7 +40,7 @@
     background-color: transparent;
     font-weight: bold;
     min-width: 28px;
-    text-align: right;
+    text-align: end;
   }
 
   .Icon {
@@ -66,13 +66,14 @@
   }
 
   // Avoids the child button chevron from overlapping the zoom text
-  .Button.active, .Button:hover {
+  .Button.active,
+  .Button:hover {
     background: none !important;
   }
 
   .toggle-element-button {
     width: 26px;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     margin-top: -2px;
     font-size: 16px; // hack for down arrow being dependent on font-size
     height: 26px;
@@ -83,7 +84,7 @@
   border-radius: 4px;
   display: flex;
   align-items: center;
-  margin-right:-8px;
+  margin-inline-end: -8px;
   font-weight: bold;
   height: 100%;
   text-align: center;

@@ -1,5 +1,5 @@
 .input-container {
-  .input-wrapper{
+  .input-wrapper {
     width: 100%;
     position: relative;
     display: flex;
@@ -7,7 +7,7 @@
 
     .Icon {
       position: absolute;
-      right: 8px;
+      inset-inline-end: 8px;
       color: var(--error-border-color);
     }
 
@@ -15,13 +15,15 @@
       padding: 6px !important;
       width: 100%;
       height: 32px;
-    
+
       &.text-input--error {
-        padding-right: 30px; /* Adjust padding to make space for the error icon */
+        padding-inline-end: 30px;
+        /* Adjust padding to make space for the error icon */
         border-color: var(--error-border-color) !important;
       }
     }
   }
+
   .text-input-error {
     color: var(--error-text-color);
     width: 100%;

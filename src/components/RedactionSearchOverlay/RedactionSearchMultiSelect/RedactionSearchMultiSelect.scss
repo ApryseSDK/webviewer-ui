@@ -2,9 +2,9 @@
 @import '../../../constants/panel';
 
 .redaction-search-multi-select {
-	@include mobile {
-		font-size: 13px;
-	}
+  @include mobile {
+    font-size: 13px;
+  }
 }
 
 .redaction-search-multi-select-search-icon-container {

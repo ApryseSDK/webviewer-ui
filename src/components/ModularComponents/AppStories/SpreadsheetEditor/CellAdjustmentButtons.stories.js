@@ -1,5 +1,5 @@
 import App from 'components/App';
-import { fn, within, expect } from '@storybook/test';
+import { fn, within, expect } from 'storybook/test';
 import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import { VIEWER_CONFIGURATIONS, CELL_ADJUSTMENT_FLYOUT_ITEMS } from 'src/constants/customizationVariables';
 import {

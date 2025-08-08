@@ -20,7 +20,6 @@
   }
 
   .panel-container {
-
     .section {
       display: flex;
       padding-bottom: 16px;
@@ -50,14 +49,14 @@
           height: 32px;
           margin: 0;
         }
-        
+
         .customSelector {
-          margin-left: 0;
-      
+          margin-inline-start: 0;
+
           ul {
             @include mobile {
-              top: auto;
-              bottom: calc(100% + 4px);
+              inset-block-start: auto;
+              inset-block-end: calc(100% + 4px);
             }
           }
 
@@ -67,7 +66,7 @@
             }
           }
         }
-      
+
         select {
           height: 28px;
           width: 100%;
@@ -77,18 +76,18 @@
           height: 32px;
           min-width: 150px;
           width: 100% !important;
-  
+
           .arrow {
             flex: 0 1 auto;
           }
-  
+
           .picked-option .picked-option-text {
-            text-align: left;
+            text-align: start;
           }
         }
-  
+
         .Dropdown__items {
-          top: -52px;
+          inset-block-start: -52px;
           z-index: 80;
           width: 100%;
         }
@@ -110,7 +109,9 @@
       }
 
       @include mobile {
-        .ui__choice__label, input, button {
+        .ui__choice__label,
+        input,
+        button {
           font-size: 13px;
         }
       }
@@ -122,20 +123,21 @@
     }
   }
 }
+
 .incrementNumberInput {
   border: 1px solid var(--border);
   border-radius: 4px;
   display: flex;
   height: 32px;
 
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button {  
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  input[type=number] {
-    -moz-appearance:textfield;
+  input[type='number'] {
+    -moz-appearance: textfield;
   }
 
   .ui__input {
@@ -147,7 +149,6 @@
       height: 100%;
       padding: 6px;
       line-height: normal;
-      
     }
   }
 

@@ -1,11 +1,9 @@
 .MobilePopupWrapper {
   position: sticky;
-  bottom: 0 !important;
+  inset-block-end: 0 !important;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 4px 4px 0px 0px;
-  box-shadow: 
-    0px 4px 16px 0px rgba(134, 142, 150, 0.24),
-    0px 0px 4px 0px rgba(134, 142, 150, 1);
+  box-shadow: 0px 4px 16px 0px rgba(134, 142, 150, 0.24), 0px 0px 4px 0px rgba(134, 142, 150, 1);
   z-index: 99;
 }

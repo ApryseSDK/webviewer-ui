@@ -1,6 +1,6 @@
 @import '../../constants/styles.scss';
 
-// These are for the legacy popup. 
+// These are for the legacy popup.
 .Popup.StylePopup #FontSizeDropdown.Dropdown__wrapper {
   width: 80px;
 
@@ -28,7 +28,7 @@
 
   .Dropdown {
     padding: 3px 4px;
-    text-align: left;
+    text-align: start;
 
     @include mobile {
       width: 100% !important;
@@ -43,7 +43,6 @@
   }
 
   .FontSizeDropdown {
-
     @include mobile {
       width: 100%;
       padding: 0;
@@ -72,19 +71,19 @@
     }
 
     .rich-text-format {
-      float: left;
+      float: inline-start;
     }
 
     .text-horizontal-alignment {
-      float: right;
+      float: inline-end;
 
       &.isRedaction {
-        float: left;
+        float: inline-start;
       }
     }
 
     .text-vertical-alignment {
-      float: left;
+      float: inline-start;
     }
   }
 

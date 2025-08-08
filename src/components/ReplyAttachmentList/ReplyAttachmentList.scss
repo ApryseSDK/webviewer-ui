@@ -34,8 +34,8 @@
         font-size: 11px;
         color: var(--error-text-color);
         position: absolute;
-        bottom: -15px;
-        left: 10px;
+        inset-block-end: -15px;
+        inset-inline-start: 10px;
       }
     }
 
@@ -58,8 +58,8 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-left: 8px;
-        margin-right: 8px;
+        margin-inline-start: 8px;
+        margin-inline-end: 8px;
       }
 
       .attachment-button {

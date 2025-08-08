@@ -111,6 +111,7 @@
     "open": "Aprire",
     "deselectAll": "Deselezionare tutto",
     "select": "Selezionare",
+    "buttonPressed": "Pulsante {{buttonName}} premuto",
     "moveToTop": "Sposta in alto",
     "moveToBottom": "Sposta in basso",
     "movePageToTop": "Sposta la pagina in alto",
@@ -272,7 +273,6 @@
       "close": "Chiudi tutte le annotazioni"
     },
     "comparePanel": "Confronta pannello",
-    "watermarkPanel": "Pannello filigrana",
     "mainMenu": "Menù principale"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
     "loadError": "Errore durante il caricamento del documento",
+    "urlInputFileLoadError": "Non è stato possibile recuperare il file dall'URL fornito.",
     "notSupported": "Quel tipo di file non è supportato.",
     "passwordRequired": "Password richiesta",
     "enterPasswordPlaceholder": "Inserire la password",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Cerca commenti",
     "searchDocumentPlaceholder": "Cerca documento",
     "clearSearchResults": "Cancella i risultati della ricerca",
+    "toggleReplaceInput": "Attiva/disattiva la sostituzione dell'input",
+    "toggleSearchOptions": "Attiva/disattiva le opzioni di ricerca",
     "searchResultsCleared": "Risultati della ricerca cancellati",
     "searchSettingsPlaceholder": "Impostazioni di ricerca",
     "searchSuggestionsPlaceholder": "Suggerimenti per la ricerca",
@@ -803,7 +806,30 @@
       "setShortcut": "Imposta scorciatoia",
       "editShortcut": "Modifica collegamento",
       "shortcutAlreadyExists": "La scorciatoia da tastiera sopra esiste già.",
-      "close": "Chiudi la descrizione comando"
+      "close": "Chiudi la descrizione comando",
+      "spreadsheetEditor": {
+        "copyText": "Copia il testo o le celle selezionate",
+        "pasteText": "Incolla testo o celle",
+        "cutText": "Taglia il testo o le celle selezionate",
+        "undoChange": "Annulla una modifica",
+        "redoChange": "Ripeti una modifica",
+        "selectAll": "Seleziona tutte le celle",
+        "moveToEdgeUp": "Vai all'inizio del foglio",
+        "moveToEdgeDown": "Vai alla fine del foglio",
+        "moveToEdgeLeft": "Vai alla colonna più a sinistra",
+        "moveToEdgeRight": "Vai alla colonna più a destra",
+        "adjustSelectionUp": "Estendi la selezione verso l'alto",
+        "adjustSelectionDown": "Estendi la selezione verso il basso",
+        "adjustSelectionLeft": "Estendi la selezione a sinistra",
+        "adjustSelectionRight": "Estendi la selezione a destra",
+        "up": "Sposta verso l'alto la casella di selezione della cella",
+        "down": "Sposta la casella di selezione della cella verso il basso",
+        "left": "Sposta la casella di selezione della cella a sinistra",
+        "right": "Sposta la casella di selezione della cella a destra",
+        "enter": "Modifica la cella selezionata",
+        "tab": "Sposta la casella di selezione della cella a destra",
+        "delete": "Cancella i dati delle celle"
+      }
     },
     "cellBorderStyle": {
       "none": "Nessuno",
@@ -861,12 +887,12 @@
       "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Modifica avviso",
-      "message": "Questo nome di foglio esiste già. Inserisci un altro nome."
+      "title": "Modifica nome foglio",
+      "message": "Questo nome esiste già. Inserisci un altro nome."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Modifica avviso",
-      "message": "Il nome di questo foglio non può essere vuoto."
+      "title": "Modifica nome foglio",
+      "message": "Il nome del foglio non può essere vuoto. Inserisci un nome."
     },
     "sheetTabDeleteMessage": {
       "title": "Modifica avviso",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Proprietà",
     "miscValuesHeader": "Tutti",
     "emptyPanelMessage": "Seleziona un elemento per visualizzarne le proprietà."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Filigrana di testo",
-    "uploadImage": "Carica immagine",
-    "browse": "Navigare",
-    "watermarkOptions": "Opzioni filigrana",
-    "watermarks": "Filigrane"
   },
   "portfolio": {
     "createPDFPortfolio": "Crea portafoglio PDF",

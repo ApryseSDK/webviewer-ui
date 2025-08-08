@@ -2,10 +2,9 @@
 @import '../../constants/overlay';
 
 .RedactionSearchOverlay {
-  
   @include mobile {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-inline-start: 16px;
+    margin-inline-end: 16px;
   }
 
   input {

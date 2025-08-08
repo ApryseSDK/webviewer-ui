@@ -57,7 +57,6 @@
     align-items: center;
     padding-bottom: var(--padding-tiny);
 
-
     .field-control-button {
       width: auto;
 
@@ -86,7 +85,6 @@
 
       &:not([disabled]),
       &:not(.disabled) {
-
         &:hover,
         &:active,
         &:focus {
@@ -114,7 +112,7 @@
     }
 
     &:not(:first-child) {
-      margin-left: var(--padding-tiny);
+      margin-inline-start: var(--padding-tiny);
     }
 
     &[disabled],
@@ -136,9 +134,9 @@
 
   .IndexPanel {
     width: 100%;
-    padding-left: 0px;
+    padding-inline-start: 0px;
     padding-bottom: 0px;
-    padding-right: 0px;
+    padding-inline-end: 0px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -185,7 +183,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-right: 18px;
+      padding-inline-end: 18px;
 
       .msg {
         @include tablet-and-desktop {
@@ -212,5 +210,4 @@
       }
     }
   }
-
 }

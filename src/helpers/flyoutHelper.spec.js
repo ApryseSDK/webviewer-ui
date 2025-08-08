@@ -167,8 +167,8 @@ describe('FlyoutPosition', () => {
           closestId: null,
           // In this case, the X should be the same as the left of the reference element - container left - left offset
           expectedX: 200,
-          // the Y should be bottom of the reference element - the height of the flyout
-          expectedY: 200,
+          // the Y should be top of the reference element - the height of the flyout - default padding
+          expectedY: 154,
         }
       ]
     }

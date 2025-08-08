@@ -6,7 +6,7 @@ import CollapsibleSection from 'components/CollapsibleSection';
 import { useSelector } from 'react-redux';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { PANEL_SIZES } from 'constants/panel';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import PropTypes from 'prop-types';
 
 const RubberStamp = React.memo(({ imgSrc, annotation, index, onClick, isActive }) => {
@@ -35,7 +35,7 @@ RubberStamp.propTypes = {
   isActive: PropTypes.bool,
 };
 
-const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedRubberStamp }) => {
+const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedRubberStamp, isFlyout }) => {
   const [t] = useTranslation();
   const isMobile = isMobileSize();
 
@@ -55,7 +55,7 @@ const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedR
     const shouldShowOnlyFirstStamp = index === lastStampToShow && isNull(selectedStampIndex);
 
     const shouldRenderStamp = (!isMobile || (isMobile && mobilePanelSize !== PANEL_SIZES.SMALL_SIZE)) ||
-      (isMobile && mobilePanelSize === PANEL_SIZES.SMALL_SIZE && (isStampActive || shouldShowOnlyFirstStamp));
+      (isMobile && mobilePanelSize === PANEL_SIZES.SMALL_SIZE && (isStampActive || shouldShowOnlyFirstStamp)) || isFlyout;
 
     return shouldRenderStamp ? (
       <RubberStamp

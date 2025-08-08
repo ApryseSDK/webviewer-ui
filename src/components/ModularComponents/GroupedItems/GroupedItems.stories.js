@@ -18,7 +18,7 @@ import {
 import rootReducer from 'reducers/rootReducer';
 import actions from 'actions';
 import selectors from 'selectors';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/GroupedItems',

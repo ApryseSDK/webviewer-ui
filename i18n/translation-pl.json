@@ -111,6 +111,7 @@
     "open": "Otwóz",
     "deselectAll": "Odznacz wszystkie",
     "select": "Wybierz",
+    "buttonPressed": "Naciśnięto przycisk {{buttonName}}",
     "moveToTop": "Przejdź na górę",
     "moveToBottom": "Przejdź na dół",
     "movePageToTop": "Przenieś stronę na górę",
@@ -272,7 +273,6 @@
       "close": "Zamknij"
     },
     "comparePanel": "Porównaj",
-    "watermarkPanel": "Panel znaku wodnego",
     "mainMenu": "Menu główne"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Nie znaleziono wyników.",
     "numResultsFound": "Wyniki",
     "loadError": "Błąd podczas ładowania dokumentu",
+    "urlInputFileLoadError": "Nie można pobrać pliku z podanego adresu URL.",
     "notSupported": "Ten typ pliku nie jest obsługiwany.",
     "passwordRequired": "wymagane hasło",
     "enterPasswordPlaceholder": "Wprowadź hasło",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Szukaj komentarzy",
     "searchDocumentPlaceholder": "Wyszukaj dokument",
     "clearSearchResults": "Wyczyść wyniki wyszukiwania",
+    "toggleReplaceInput": "Przełącz zastępowanie danych wejściowych",
+    "toggleSearchOptions": "Przełącz opcje wyszukiwania",
     "searchResultsCleared": "Wyniki wyszukiwania zostały wyczyszczone",
     "searchSettingsPlaceholder": "Ustawienia wyszukiwania",
     "searchSuggestionsPlaceholder": "Wyszukaj sugestie",
@@ -803,7 +806,30 @@
       "setShortcut": "Ustaw skrót",
       "editShortcut": "Edytuj skrót",
       "shortcutAlreadyExists": "Powyższy skrót klawiaturowy już istnieje.",
-      "close": "Zamknij podpowiedź"
+      "close": "Zamknij podpowiedź",
+      "spreadsheetEditor": {
+        "copyText": "Kopiuj zaznaczony tekst lub komórki",
+        "pasteText": "Wklej tekst lub komórki",
+        "cutText": "Wytnij zaznaczony tekst lub komórki",
+        "undoChange": "Cofnij zmianę",
+        "redoChange": "Powtórz zmianę",
+        "selectAll": "Zaznacz wszystkie komórki",
+        "moveToEdgeUp": "Przejdź na górę arkusza",
+        "moveToEdgeDown": "Przejdź na dół arkusza",
+        "moveToEdgeLeft": "Przejdź do lewej kolumny",
+        "moveToEdgeRight": "Przejdź do prawej kolumny",
+        "adjustSelectionUp": "Rozszerz zaznaczenie w górę",
+        "adjustSelectionDown": "Rozszerz zaznaczenie w dół",
+        "adjustSelectionLeft": "Rozszerz zaznaczenie w lewo",
+        "adjustSelectionRight": "Rozszerz zaznaczenie w prawo",
+        "up": "Przesuń pole wyboru komórek w górę",
+        "down": "Przesuń pole wyboru komórek w dół",
+        "left": "Przesuń pole wyboru komórek w lewo",
+        "right": "Przesuń pole wyboru komórek w prawo",
+        "enter": "Edytuj wybraną komórkę",
+        "tab": "Przesuń pole wyboru komórek w prawo",
+        "delete": "Wyczyść dane komórkowe"
+      }
     },
     "cellBorderStyle": {
       "none": "Nic",
@@ -861,12 +887,12 @@
       "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Ostrzeżenie o edycji",
-      "message": "Ta nazwa arkusza już istnieje. Proszę wprowadzić inną nazwę."
+      "title": "Edytuj nazwę arkusza",
+      "message": "Ta nazwa już istnieje. Wprowadź inną nazwę."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Ostrzeżenie o edycji",
-      "message": "Nazwa arkusza nie może być pusta."
+      "title": "Edytuj nazwę arkusza",
+      "message": "Nazwa arkusza nie może być pusta. Proszę podać nazwę."
     },
     "sheetTabDeleteMessage": {
       "title": "Ostrzeżenie o edycji",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Właściwości",
     "miscValuesHeader": "Wszystko",
     "emptyPanelMessage": "Wybierz element, aby wyświetlić jego właściwości"
-  },
-  "watermarkPanel": {
-    "textWatermark": "Tekstowy znak wodny",
-    "uploadImage": "Załaduj obrazek",
-    "browse": "Przeglądaj",
-    "watermarkOptions": "Opcje znaku wodnego",
-    "watermarks": "Znaki wodne"
   },
   "portfolio": {
     "createPDFPortfolio": "Utwórz portfolio PDF",

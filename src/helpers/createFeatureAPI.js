@@ -388,17 +388,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         }
       }
     },
-    [Feature.WatermarkPanel]: {
-      dataElements: [
-        DataElements.WATERMARK_PANEL,
-        DataElements.WATERMARK_PANEL_TOGGLE,
-      ],
-    },
-    [Feature.WatermarkPanelImageTab]: {
-      dataElements: [
-        DataElements.WATERMARK_PANEL_IMAGE_TAB,
-      ],
-    },
     [Feature.LegacyRichTextPopup]: {
       dataElements: [DataElements.LEGACY_RICH_TEXT_POPUP],
     },

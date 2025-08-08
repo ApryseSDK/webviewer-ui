@@ -14,6 +14,8 @@ const { checkTypes, TYPES } = window.Core;
  * @param {string} [properties.dataElement] The data element of the preset button.
  * @param {object} [properties.style] An object defining inline CSS styles for the button, where each key represents a CSS property and its corresponding value.
  * @param {string} [properties.className] String with CSS classes to be applied to the button, allowing additional styling and customization through external stylesheets.
+ * @param {string} [properties.img] The icon of the button (overrides default icon).
+ * @param {string} [properties.title] The title of the button (overrides default title).
  * @example
 const presetButton = new instance.UI.Components.PresetButton({
   buttonType: 'saveAsButton',
@@ -25,11 +27,15 @@ class PresetButton extends Item {
     checkTypes([props], [TYPES.OBJECT({
       buttonType: TYPES.ONE_OF(...Object.values(PRESET_BUTTON_TYPES)),
       dataElement: TYPES.OPTIONAL(TYPES.STRING),
+      img: TYPES.OPTIONAL(TYPES.STRING),
+      title: TYPES.OPTIONAL(TYPES.STRING),
     })], 'Preset Button Constructor');
     super(props);
     this.type = ITEM_TYPE.PRESET_BUTTON;
     this.buttonType = props.buttonType;
     this.dataElement = props.dataElement || this.buttonType;
+    this.img = props.img;
+    this.title = props.title;
   }
 }
 

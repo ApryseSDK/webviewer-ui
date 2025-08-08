@@ -9,7 +9,7 @@ import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
 import { MockDocumentContainer, oePartialState, createStore } from 'helpers/storybookHelper';
-import { expect, within, userEvent } from '@storybook/test';
+import { expect, within, userEvent } from 'storybook/test';
 import PropTypes from 'prop-types';
 
 const leftChevron = {

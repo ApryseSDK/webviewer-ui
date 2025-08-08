@@ -16,7 +16,14 @@ const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
  * @memberof UI.Components.PresetButton
  */
 const NewSpreadsheetButton = React.forwardRef((props, ref) => {
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title
+  } = props;
 
   const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
@@ -46,14 +53,26 @@ const NewSpreadsheetButton = React.forwardRef((props, ref) => {
     isFlyoutItem ?
       <FlyoutItemContainer {...props} ref={ref} onClick={onClick} />
       :
-      getPresetButtonDOM({ buttonType: PRESET_BUTTON_TYPES.NEW_SPREADSHEET, isDisabled, onClick, className, style })
+      getPresetButtonDOM({
+        buttonType: PRESET_BUTTON_TYPES.NEW_SPREADSHEET,
+        isDisabled,
+        onClick,
+        dataElement,
+        className,
+        style,
+        icon,
+        title,
+      })
   );
 });
 
 NewSpreadsheetButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 NewSpreadsheetButton.displayName = 'NewSpreadsheetButton';
 

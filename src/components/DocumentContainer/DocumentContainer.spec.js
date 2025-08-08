@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import DocumentContainer, { UnconnectedDocumentContainer } from './DocumentContainer';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -140,6 +140,22 @@ describe('DocumentContainer', () => {
         const componentInstance = new UnconnectedDocumentContainer(spreadsheetProps);
         const result = componentInstance.getClassName();
         expect(result).toContain('disable-page-scroll');
+      });
+
+      test('should not change document container width', async () => {
+        const { container } = renderWithRedux(<DocumentContainer {...spreadsheetProps} />);
+        const widthBeforeEvent = container.firstElementChild.clientWidth;
+        const wheelEvent = new WheelEvent('wheel', {
+          deltaY: 100,
+          deltaX: 0,
+          ctrlKey: true,
+          metaKey: true,
+          cancelable: true,
+        });
+        container.dispatchEvent(wheelEvent);
+        await waitFor(() => {
+          expect(container.firstElementChild.clientWidth).toBe(widthBeforeEvent);
+        });
       });
     });
 

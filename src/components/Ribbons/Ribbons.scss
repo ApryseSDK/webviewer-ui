@@ -28,10 +28,10 @@
       height: 28px;
 
       position: absolute;
-      left: 50%;
+      inset-inline-start: 50%;
       transform: translateX(-50%);
-      top: 0px; // hack for ie11. centers vertically.
-      bottom: 0px; // hack for ie11. centers vertically.
+      inset-block-start: 0px; // hack for ie11. centers vertically.
+      inset-block-end: 0px; // hack for ie11. centers vertically.
       margin: auto; // hack for ie11. centers vertically.
 
       .ribbon-group {
@@ -52,7 +52,7 @@
         }
       }
 
-      [data-element="exitFormEditingButton"] {
+      [data-element='exitFormEditingButton'] {
         width: 100%;
         padding: 0 5px;
         border: 1px solid var(--border);

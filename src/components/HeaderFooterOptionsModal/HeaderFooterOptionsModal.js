@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
 import core from 'core';
-import { MARGIN_UNITS, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
+import { LAYOUT_UNITS, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
 import { validateMarginInput, focusContent, convertMeasurementUnit, formatToDecimalString } from 'helpers/officeEditor';
 import Dropdown from 'components/Dropdown';
@@ -28,21 +28,21 @@ const HeaderFooterOptionsModal = () => {
   const [footerToBottomInput, setFooterToBottomInput] = useState('');
   const [differentFirstPageEnabled, setDifferentFirstPageEnabled] = useState(false);
   const [oddEvenEnabled, setOddEvenEnabled] = useState(false);
-  const [maxMarginsInInches, setMaxMarginsInInches] = useState(0);
+  const [maxMarginInPoints, setMaxMarginInPoints] = useState(0);
   const currentUnit = useSelector(selectors.getOfficeEditorUnitMeasurement);
   const [initialUnit, setInitialUnit] = useState(currentUnit);
 
   const onClickUnitDropdownItem = (unit) => dispatch(actions.setOfficeEditorUnitMeasurement(unit));
 
   const onHeaderInputBlur = (inputVal) => {
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginsInInches, MARGIN_UNITS.INCH, currentUnit);
+    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const val = validateMarginInput(inputVal, maxMarginsInCurrentUnit);
     setHeaderToTop(val);
     setHeaderToTopInput(formatToDecimalString(val));
   };
 
   const onFooterInputBlur = (inputVal) => {
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginsInInches, MARGIN_UNITS.INCH, currentUnit);
+    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const val = validateMarginInput(inputVal, maxMarginsInCurrentUnit);
     setFooterToBottom(val);
     setFooterToBottomInput(formatToDecimalString(val));
@@ -81,8 +81,8 @@ const HeaderFooterOptionsModal = () => {
       setDifferentFirstPageEnabled(await core.getOfficeEditor().getDifferentFirstPage(pageNumber));
       setOddEvenEnabled(await core.getOfficeEditor().getOddEven());
 
-      const maxMargins = await core.getOfficeEditor().getMaxHeaderFooterDistance(pageNumber);
-      setMaxMarginsInInches(maxMargins);
+      const maxMargins = await core.getOfficeEditor().getMaxHeaderFooterDistance(pageNumber, LAYOUT_UNITS.PHYSICAL_POINT);
+      setMaxMarginInPoints(maxMargins);
     }
   }, [isOpen]);
 
@@ -95,7 +95,7 @@ const HeaderFooterOptionsModal = () => {
     // get and set header and footer distances in the new unit
     const headerDistanceToTopInCurrentUnit = convertMeasurementUnit(headerToTop, initialUnit, currentUnit);
     const footerDistanceToBottomInCurrentUnit = convertMeasurementUnit(footerToBottom, initialUnit, currentUnit);
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginsInInches, MARGIN_UNITS.INCH, currentUnit);
+    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const validatedHeaderDistance = validateMarginInput(headerDistanceToTopInCurrentUnit, maxMarginsInCurrentUnit);
     const validatedFooterDistance = validateMarginInput(footerDistanceToBottomInCurrentUnit, maxMarginsInCurrentUnit);
     setHeaderToTop(validatedHeaderDistance);
@@ -150,7 +150,7 @@ const HeaderFooterOptionsModal = () => {
               dataElement={DataElements.OFFICE_EDITOR_MARGIN_UNIT}
               labelledById='office-editor-margin-unit-label'
               className='margin-unit-dropdown'
-              items={Object.values(MARGIN_UNITS)}
+              items={Object.values(LAYOUT_UNITS)}
               onClickItem={onClickUnitDropdownItem}
               getKey={(item) => item}
               currentSelectionKey={currentUnit}

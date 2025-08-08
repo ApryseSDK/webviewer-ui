@@ -11,11 +11,11 @@
     padding: 0px;
     overflow-y: auto;
   }
-  
+
   .bookmark-switch {
     -webkit-font-smoothing: antialiased;
     margin-top: var(--padding-medium);
-    padding-left: 4px;
+    padding-inline-start: 4px;
   }
 
   .bookmark-outline-single-container {
@@ -47,13 +47,16 @@
     }
   }
 
-  .bookmark-outline-control-button, .bookmark-outline-save-button, .bookmark-outline-cancel-button {
+  .bookmark-outline-control-button,
+  .bookmark-outline-save-button,
+  .bookmark-outline-cancel-button {
     @include mobile {
       font-size: 13px;
     }
   }
 
-  .bookmark-outline-input, .bookmark-text-input {
+  .bookmark-outline-input,
+  .bookmark-text-input {
     @include mobile {
       font-size: 13px;
     }

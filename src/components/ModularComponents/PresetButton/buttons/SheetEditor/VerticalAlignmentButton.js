@@ -6,9 +6,12 @@ import PropTypes from 'prop-types';
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
   alignment: PropTypes.string,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
   alignmentValue: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const VerticalAlignmentButton = (props, ref) => (

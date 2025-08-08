@@ -22,10 +22,10 @@ const SpreadsheetSwitcher = (props) => {
     createNewSheet,
     deleteSheet,
     renameSheet,
-    validateName,
+    checkIsSheetNameDuplicated,
     skipDeleteWarning = false,
   } = props;
-  const activeSheetLabel = tabs[activeSheetIndex]?.name || '';
+  const activeSheetLabel = tabs.find((tab) => tab.sheetIndex === activeSheetIndex)?.name || '';
   const { width } = useWindowDimensions();
   const breakpoint = useMemo(() => Math.floor((width - 80) / 170), [width]);
   const { t } = useTranslation();
@@ -68,7 +68,7 @@ const SpreadsheetSwitcher = (props) => {
       deleteSheet={deleteSheet}
       renameSheet={renameSheet}
       noRightBorder={tabs[item.sheetIndex + 1] && tabs[item.sheetIndex + 1].name === activeSheetLabel}
-      validateName={validateName}
+      checkIsSheetNameDuplicated={checkIsSheetNameDuplicated}
       isReadOnlyMode={isReadOnlyMode}
       skipDeleteWarning={skipDeleteWarning}
       tabIndex={currentFocusIndex === i ? 0 : -1}
@@ -135,7 +135,7 @@ SpreadsheetSwitcher.propTypes = {
   deleteSheet: PropTypes.func,
   renameSheet: PropTypes.func,
   skipDeleteWarning: PropTypes.bool,
-  validateName: PropTypes.func,
+  checkIsSheetNameDuplicated: PropTypes.func,
 };
 
 export default SpreadsheetSwitcher;

@@ -9,8 +9,16 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import classNames from 'classnames';
 
 const OfficeEditorInsertImageButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, style, className } = props;
-  const { dataElement, icon, title, label } = menuItems[PRESET_BUTTON_TYPES.INSERT_IMAGE];
+  const menuItem = menuItems[PRESET_BUTTON_TYPES.INSERT_IMAGE];
+  const {
+    isFlyoutItem,
+    style,
+    className,
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = props.title || menuItem.title,
+  } = props;
+  const { label } = menuItem;
 
   const handleClick = () => {
     openOfficeEditorFilePicker();
@@ -41,8 +49,11 @@ const OfficeEditorInsertImageButton = forwardRef((props, ref) => {
 
 OfficeEditorInsertImageButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 OfficeEditorInsertImageButton.displayName = 'InsertImageButton';
 

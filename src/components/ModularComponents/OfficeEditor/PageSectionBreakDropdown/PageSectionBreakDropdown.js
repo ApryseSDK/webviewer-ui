@@ -10,6 +10,7 @@ import { OFFICE_EDITOR_TRANSLATION_PREFIX, EditingStreamType } from 'constants/o
 import DataElements from 'constants/dataElement';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
+import VisuallyHiddenLabel from 'components/VisuallyHiddenLabel';
 import Icon from 'components/Icon';
 
 import './PageSectionBreakDropdown.scss';
@@ -30,7 +31,12 @@ const ToggleButton = ({ isOpen, disabled }) => {
       <Icon
         className="arrow"
         glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`}
+        ariaHidden={true}
         disabled={disabled}
+      />
+      <VisuallyHiddenLabel
+        id={DataElements.OFFICE_EDITOR_BREAK_DROPDOWN}
+        label={`${OFFICE_EDITOR_TRANSLATION_PREFIX}breaks`}
       />
     </>
   );
@@ -98,6 +104,7 @@ const PageSectionBreakDropdown = (props) => {
     <Dropdown
       id='office-editor-break-dropdown'
       dataElement={DataElements.OFFICE_EDITOR_BREAK_DROPDOWN}
+      labelledById={DataElements.OFFICE_EDITOR_BREAK_DROPDOWN}
       className={classNames({
         'office-editor-break-dropdown': true,
         'dropdown-text-icon': true,

@@ -1,14 +1,14 @@
 .PageNumberInput {
   cursor: default;
-  
-  .input-wrapper{
+
+  .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 
     .Icon {
       position: absolute;
-      right: 8px;
+      inset-inline-end: 8px;
       color: var(--error-border-color);
     }
   }
@@ -17,16 +17,16 @@
     padding: 6px !important;
     width: 108px;
     height: 32px;
-    
+
     &.page-number-input--error {
-      padding-right: 30px; /* Adjust padding to make space for the error icon */
+      padding-inline-end: 30px; /* Adjust padding to make space for the error icon */
       border-color: var(--error-border-color) !important;
     }
   }
-  
+
   .page-number-input::placeholder {
     color: var(--gray-6);
-  
+
     &.error {
       border-color: var(--error-text-color);
     }

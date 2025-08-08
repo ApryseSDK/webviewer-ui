@@ -2,8 +2,8 @@
 
 .documentControlsContainer {
   @include mobile {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-inline-start: 16px;
+    margin-inline-end: 16px;
     margin-bottom: 16px;
   }
 
@@ -19,14 +19,13 @@
 
       .indicator {
         position: absolute;
-        bottom: 1px;
-        right: 1px;
-
+        inset-block-end: 1px;
+        inset-inline-end: 1px;
 
         width: 0;
         height: 0;
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
+        border-inline-start: 4px solid transparent;
+        border-inline-end: 4px solid transparent;
 
         border-top: 4px solid #c4c4c4;
         transform: rotateY(0deg) rotate(315deg);

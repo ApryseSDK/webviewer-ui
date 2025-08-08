@@ -24,7 +24,7 @@
     border: 1px solid var(--border);
     border-radius: 4px;
     background-color: var(--component-background);
-    padding-left: 30px;
+    padding-inline-start: 30px;
 
     .FormulaInput {
       position: relative;
@@ -44,7 +44,7 @@
     }
 
     .FormulaOverlay {
-      // padding-left of .Formula + padding-left of .FormulaInput
+      // padding-inline-start of .Formula + padding-inline-start of .FormulaInput
       transform: translateX(30px + 8px);
       transform-origin: left top;
     }
@@ -59,13 +59,13 @@
 
     .FormulaInputMask {
       position: absolute;
-      top: 0px;
+      inset-block-start: 0px;
       padding: 6px 8px;
       color: transparent;
       pointer-events: none;
       white-space: pre-wrap;
       width: 100%;
-      padding-left: 8px;
+      padding-inline-start: 8px;
       font-size: 14px;
       z-index: 0;
     }
@@ -73,7 +73,7 @@
 
   .FormulaIcon {
     position: absolute;
-    left: 8px;
+    inset-inline-start: 8px;
 
     &.readOnly {
       color: var(--disabled-icon);

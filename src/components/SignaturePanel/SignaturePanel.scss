@@ -22,7 +22,7 @@
 
   .signature-widget-info {
     .title {
-      .arrow { 
+      .arrow {
         @include mobile {
           min-width: auto;
           padding: 3px;

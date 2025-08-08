@@ -8,6 +8,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
+import { getMouseEventPosition } from 'helpers/getPopupPosition';
 
 import './EmbeddedJSPopup.scss';
 
@@ -47,9 +48,11 @@ const EmbeddedJSPopup = () => {
   }, [dispatch, isOpen]);
 
   const onFieldClick = (e) => {
+    const { top, left } = getMouseEventPosition(e);
+
     setPosition({
-      left: `${parseInt(e.x, 10) + 10}px`,
-      top: `${parseInt(e.y, 10)}px`,
+      left: `${left + 10}px`,
+      top: `${top}px`,
     });
   };
 

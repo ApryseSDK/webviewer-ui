@@ -16,7 +16,14 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 const ToggleAccessibilityMode = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const store = useStore();
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title,
+  } = props;
 
   // This value comes from the "accessibleMode" property in the WebViewer constructor
   const isAccessibleMode = useSelector(selectors.isAccessibleMode);
@@ -48,8 +55,11 @@ const ToggleAccessibilityMode = forwardRef((props, ref) => {
           buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
           onClick,
           isActive: shouldAddA11yContentToDOM,
+          dataElement,
           className,
           style,
+          icon,
+          title,
         })
       )
   );
@@ -57,8 +67,11 @@ const ToggleAccessibilityMode = forwardRef((props, ref) => {
 
 ToggleAccessibilityMode.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 ToggleAccessibilityMode.displayName = 'ToggleAccessibilityMode';
 

@@ -106,7 +106,7 @@ class Icon extends React.PureComponent {
 }
 
 Icon.defaultProps = {
-  ariaHidden: false
+  ariaHidden: true
 };
 
 export default Icon;

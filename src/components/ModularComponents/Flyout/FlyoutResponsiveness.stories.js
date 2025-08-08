@@ -1,4 +1,4 @@
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import Flyout from './Flyout';
 import { createMockAppTemplate } from '../AppStories/helpers/appResponsivenessHelpers';
 

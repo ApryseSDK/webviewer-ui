@@ -14,7 +14,7 @@
     .text-editing-panel-heading {
       margin-top: 0px;
       margin-bottom: 0px;
-      font-size:  var(--font-size-default);
+      font-size: var(--font-size-default);
       font-weight: 700;
     }
 
@@ -30,13 +30,14 @@
       .text-editing-panel-menu-items-buttons.undo-redo {
         gap: 12px;
       }
+
       // align font family dropdown items right
       .Dropdown__items {
-        right: auto;
+        inset-inline-end: auto;
       }
 
       .FontSizeDropdown .Dropdown__items {
-        right: 0;
+        inset-inline-end: 0;
       }
 
       .Dropdown__items .Dropdown__item {
@@ -47,7 +48,6 @@
       .Dropdown .picked-option .picked-option-text {
         font-family: var(--font-family);
       }
-
     }
 
     .top-panel {
@@ -81,6 +81,7 @@
       width: 100%;
       margin-top: 8px;
       margin-bottom: 8px;
+
       .Button .Icon {
         width: 32px;
         height: 32px;
@@ -143,11 +144,12 @@
       justify-content: flex-end;
 
       width: 100%;
-      padding-right: 12px;
+      padding-inline-end: 12px;
 
       .close-icon-container {
         z-index: 3;
         cursor: pointer;
+
         .close-icon {
           width: 24px;
           height: 24px;
@@ -156,4 +158,3 @@
     }
   }
 }
-

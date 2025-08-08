@@ -8,7 +8,7 @@ $panel-width: 293px;
 $right-panel-width: 293px;
 $left-panel-width: 219px;
 $left-panel-width: var(--left-panel-width);
-$left-panel-header-margin-left: 16px;
+$left-panel-header-margin-inline-start: 16px;
 $left-header-width: 41px;
 $right-header-width: 41px;
 $logo-bar-height: 24px;
@@ -46,8 +46,7 @@ $pdftron-blue: #00a5e4; // TODO: confirm that this is what we want
 $document-bg-color: $white;
 
 // Shadows
-$md-shadow1: 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
-  0 1px 3px 0 rgba(0, 0, 0, 0.12);
+$md-shadow1: 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
 
 // Screens
 $tablet-width: 900px;
@@ -60,7 +59,7 @@ $signature-modal-shared-color: #e1e1e3;
 $headers-z-index: 72;
 
 // Dark defaults for new ui:
-$gray-3: #343A40;
+$gray-3: #343a40;
 $light-gray: #e7ebee;
 /* stylelint-enable color-no-hex */
 
@@ -76,14 +75,12 @@ $light-gray: #e7ebee;
   }
 }
 
-
 :host {
   display: inline-block;
   container-type: inline-size;
   width: 100%;
   height: 100%;
   overflow: hidden;
-
 }
 
 @mixin webComponent {
@@ -175,9 +172,7 @@ $light-gray: #e7ebee;
 }
 
 @mixin ie11 {
-
-  @media all and (-ms-high-contrast: none),
-  (-ms-high-contrast: active) {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     @content;
   }
 }
@@ -282,7 +277,7 @@ $light-gray: #e7ebee;
   background-color: transparent;
 
   @at-root html:not([data-tabbing='true']) #{&},
-  :host(:not([data-tabbing='true'])) #{&} {
+    :host(:not([data-tabbing='true'])) #{&} {
     outline: none;
 
     // No need to use this if you aren't doing custom focus style.
@@ -297,7 +292,6 @@ $light-gray: #e7ebee;
 // to get an explicit height.
 // https://stackoverflow.com/questions/12070759/make-absolute-positioned-div-expand-parent-div-height
 @mixin panel-height-fix {
-
   height: calc(100% - 40px);
 
   &.logo-bar-enabled {
@@ -356,9 +350,10 @@ $light-gray: #e7ebee;
     height: calc(100% - 37px); // minus the height of the top header;
 
     &.ModularPanel {
-      height: calc(100% - 49px); // minus the height of the top header - in modular UI we change the height of the top header
+      height: calc(
+        100% - 49px
+      ); // minus the height of the top header - in modular UI we change the height of the top header
     }
-
 
     &.logo-bar-enabled {
       height: calc(100% - 37px - $logo-bar-height);
@@ -368,7 +363,9 @@ $light-gray: #e7ebee;
       height: calc(100% - 76px); // minus the height of both headers;
 
       &.ModularPanel {
-        height: calc(100% - 98px); // minus the height of the top header - in modular UI we change the height of the top header
+        height: calc(
+          100% - 98px
+        ); // minus the height of the top header - in modular UI we change the height of the top header
       }
 
       &.logo-bar-enabled {
@@ -377,11 +374,12 @@ $light-gray: #e7ebee;
     }
 
     &.multi-tab-active {
-
       height: calc(100% - 70px);
 
       &.ModularPanel {
-        height: calc(100% - 85px); // minus the height of the top header - in modular UI we change the height of the top header
+        height: calc(
+          100% - 85px
+        ); // minus the height of the top header - in modular UI we change the height of the top header
       }
 
       &.logo-bar-enabled {
@@ -392,7 +390,9 @@ $light-gray: #e7ebee;
         height: calc(100% - 110px); // minus the height of both headers and tabs;
 
         &.ModularPanel {
-          height: calc(100% - 134px); // minus the height of the top header - in modular UI we change the height of the top header
+          height: calc(
+            100% - 134px
+          ); // minus the height of the top header - in modular UI we change the height of the top header
         }
       }
     }
@@ -465,7 +465,7 @@ $light-gray: #e7ebee;
   cursor: default;
   background: var(--disabled-button-color);
   color: var(--primary-button-text);
-  
+
   span {
     color: var(--primary-button-text);
   }
@@ -489,11 +489,11 @@ $light-gray: #e7ebee;
   cursor: default;
   border: none;
   // This is a way to add the border without changing the size of the button
-  box-shadow: inset 0 0 0 1px rgba(43, 115, 171, 0.50);
-  color: rgba(43, 115, 171, 0.50);
+  box-shadow: inset 0 0 0 1px rgba(43, 115, 171, 0.5);
+  color: rgba(43, 115, 171, 0.5);
 
   span {
-    color: rgba(43, 115, 171, 0.50);
+    color: rgba(43, 115, 171, 0.5);
   }
 }
 
@@ -520,10 +520,10 @@ $light-gray: #e7ebee;
 %tertiary-button-disabled {
   cursor: default;
   border: none;
-  color: rgba(43, 115, 171, 0.50);
+  color: rgba(43, 115, 171, 0.5);
 
   .Icon {
-    color: rgba(43, 115, 171, 0.50);
+    color: rgba(43, 115, 171, 0.5);
   }
 }
 
@@ -551,7 +551,7 @@ $light-gray: #e7ebee;
 %icon-button-disabled {
   cursor: default;
   border: none;
-  color: var(--gray-5)
+  color: var(--gray-5);
 }
 
 %swipe-indicator {
@@ -560,11 +560,11 @@ $light-gray: #e7ebee;
   height: 4px;
   width: 38px;
   position: absolute;
-  top: 12px;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
+  inset-block-start: 12px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
 
   @include tablet-and-desktop {
     display: none;

@@ -37,7 +37,7 @@
     white-space: nowrap;
 
     &:hover:not(:disabled) {
-      color: var(--secondary-button-hover)
+      color: var(--secondary-button-hover);
     }
 
     @include mobile {
@@ -52,7 +52,6 @@
       }
     }
   }
-
 }
 
 .redaction-search-results-container {
@@ -60,8 +59,8 @@
   background-color: var(--gray-2);
   color: var(--faded-text);
   font-size: 13px;
-  border-left: 1px solid var(--lighter-border);
-  border-right: 1px solid var(--lighter-border);
+  border-inline-start: 1px solid var(--lighter-border);
+  border-inline-end: 1px solid var(--lighter-border);
   display: flex;
   flex-direction: column;
 
@@ -113,7 +112,7 @@
       color: var(--secondary-button-text);
       border: none;
       cursor: pointer;
-      margin-right: 20px;
+      margin-inline-end: 20px;
 
       &:hover:not(.disabled) {
         span {
@@ -126,7 +125,7 @@
       flex: 1 1 auto;
       border: 1px solid var(--secondary-button-text);
       border-radius: 4px;
-      margin-right: 8px;
+      margin-inline-end: 8px;
 
       span {
         color: var(--secondary-button-text);

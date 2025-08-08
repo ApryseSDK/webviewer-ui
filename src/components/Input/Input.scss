@@ -14,9 +14,10 @@ label.Input {
 
   .icon-container {
     position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    inset-inline-start: -10px;
+    inset-block-start: 50%;
+    transform: translate(-50%, -50%);
+
     svg {
       color: var(--primary-button-text);
     }
@@ -35,8 +36,8 @@ label.Input {
   &:before {
     content: '';
     position: absolute;
-    left: -10px;
-    top: 50%;
+    inset-inline-start: -10px;
+    inset-block-start: 50%;
     transform: translate(-50%, -50%);
     width: 15px;
     height: 15px;
@@ -47,12 +48,11 @@ label.Input {
     background: var(--component-background);
   }
 
-
   &:after {
     content: '';
     position: absolute;
-    left: -10px;
-    top: 50%;
+    inset-inline-start: -10px;
+    inset-block-start: 50%;
     transform: translate(-50%, -50%);
     width: 7px;
     height: 7px;
@@ -62,15 +62,15 @@ label.Input {
   }
 }
 
-input[type=checkbox]:checked + label {
-  &:before{
+input[type='checkbox']:checked + label {
+  &:before {
     background: var(--primary-button);
     border: 1px solid var(--primary-button);
   }
 }
 
-input[type=radio]:checked + label {
-  &:before{
+input[type='radio']:checked + label {
+  &:before {
     background: var(--primary-button);
     border: 1px solid var(--primary-button);
   }

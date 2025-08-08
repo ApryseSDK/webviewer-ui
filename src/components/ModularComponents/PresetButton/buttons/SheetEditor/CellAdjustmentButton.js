@@ -9,18 +9,29 @@ import core from 'core';
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
   buttonType: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const ERROR = 'SpreadsheetEditorDocument is not loaded';
 
 const CellAdjustmentButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, type, style, className, buttonType } = props;
-  const isActive = false;
+  const {
+    isFlyoutItem,
+    type,
+    style,
+    className,
+    buttonType,
+    dataElement = menuItems[buttonType].dataElement,
+    img: icon = menuItems[buttonType].icon,
+    title = menuItems[buttonType].title,
+  } = props;
 
-  const { dataElement, icon, title } = menuItems[buttonType];
+  const isActive = false;
 
   const handleClick = () => {
     const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();

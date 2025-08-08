@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import ReplyAreaMultiSelect from 'components/Note/ReplyArea/ReplyAreaMultiSelect';
-import MultiStylePopup from 'src/components/MultiSelectControls/MultiStylePopup';
+import MultiStylePopup from 'components/MultiSelectControls/MultiStylePopup';
 import NoteContext from 'components/Note/Context';
 import NoteStateFlyout from 'components/ModularComponents/NoteStateFlyout';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
@@ -65,6 +65,7 @@ const MultiSelectControls = ({
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
+  const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
 
   useEffect(() => {
     const handleAnnotationDelete = (annotations) => {
@@ -168,6 +169,14 @@ const MultiSelectControls = ({
     );
   }
 
+  const isMultiStyleButtonDisabled = isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0;
+  const multiStyleButtonProps = {
+    dataElement: DataElements.NOTE_MULTI_STYLE_BUTTON,
+    img: 'icon-menu-style-line',
+    disabled: isMultiStyleButtonDisabled,
+    title: 'action.style'
+  };
+
   return (
     <div className="multi-select-footer">
       <div className="buttons-container">
@@ -191,15 +200,18 @@ const MultiSelectControls = ({
           isMultiSelectMode={true}
           handleStateChange={handleStateChange}
         />
-        <Button
-          dataElement={DataElements.NOTE_MULTI_STYLE_BUTTON}
-          img="icon-menu-style-line"
-          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
-          onClick={() => {
-            setShowMultiStyle(!showMultiStyle);
-          }}
-          title="action.style"
-        />
+        {customizableUI
+          ? <ToggleElementButton
+            {...multiStyleButtonProps}
+            toggleElement={DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT}
+          />
+          : <Button
+            {...multiStyleButtonProps}
+            onClick={() => {
+              setShowMultiStyle(!showMultiStyle);
+            }}
+          />
+        }
         {showMultiStyle &&
           <MultiStylePopup
             annotations={modifiableMultiSelectAnnotations}

@@ -6,13 +6,13 @@
   justify-content: space-between;
 
   &:not(:last-child) {
-    border-bottom: 0px
+    border-bottom: 0px;
   }
 
   .setting-item-info {
     display: flex;
     flex-direction: column;
-    margin-right: 18px;
+    margin-inline-end: 18px;
 
     .setting-item-label {
       font-weight: 700;

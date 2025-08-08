@@ -11,8 +11,8 @@
     user-select: none;
 
     @include ie11 {
-      margin-left: 0 !important;
-      width: 100% !important
+      margin-inline-start: 0 !important;
+      width: 100% !important;
     }
 
     .document {
@@ -29,7 +29,7 @@
       }
 
       .pageSection {
-        &[id*=pageSectionb] {
+        &[id*='pageSectionb'] {
           box-shadow: none;
         }
 

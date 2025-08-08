@@ -1,7 +1,7 @@
 .note-text-preview {
   font-size: 13px;
   color: var(--gray-7);
-  padding-right: var(--note-content-right-padding-width);
+  padding-inline-end: var(--note-content-right-padding-width);
   user-select: text !important;
   cursor: text;
   height: fit-content;

@@ -19,14 +19,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+        use: [],
+      },
+      {
+        test: /\.(js|jsx|mjs)$/,
         use: {
           loader: 'babel-loader',
           options: {
             ignore: [
               /\/core-js/,
             ],
-            sourceType: "unambiguous",
+            sourceType: 'unambiguous',
             presets: [
               '@babel/preset-react',
               [
@@ -48,7 +54,12 @@ module.exports = {
             ],
           },
         },
-        include: [path.resolve(__dirname, 'src')],
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/react-quill-new'),
+          path.resolve(__dirname, 'node_modules/quill-mention'),
+          path.resolve(__dirname, 'node_modules/quill'),
+        ],
       },
       {
         test: /\.scss$/,
@@ -56,15 +67,15 @@ module.exports = {
           {
             loader: 'style-loader',
             options: {
-              insert: function (styleTag) {
+              insert: function(styleTag) {
                 function findNestedWebComponents(tagName, root = document) {
                   const elements = [];
 
                   // Check direct children
-                  root.querySelectorAll(tagName).forEach(el => elements.push(el));
+                  root.querySelectorAll(tagName).forEach((el) => elements.push(el));
 
                   // Check shadow DOMs
-                  root.querySelectorAll('*').forEach(el => {
+                  root.querySelectorAll('*').forEach((el) => {
                     if (el.shadowRoot) {
                       elements.push(...findNestedWebComponents(tagName, el.shadowRoot));
                     }
@@ -91,7 +102,7 @@ module.exports = {
                   const webComponent = webComponents[i];
                   if (i === 0) {
                     webComponent.shadowRoot.appendChild(styleTag);
-                    styleTag.onload = function () {
+                    styleTag.onload = function() {
                       if (clonedStyleTags.length > 0) {
                         clonedStyleTags.forEach((styleNode) => {
                           // eslint-disable-next-line no-unsanitized/property
@@ -115,7 +126,11 @@ module.exports = {
               ident: 'postcss',
               plugins: (loader) => [
                 require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-preset-env')(),
+                require('postcss-preset-env')({
+                  features: {
+                    'logical-properties-and-values': false, // ⛔ disable polyfill!
+                  },
+                }),
                 require('cssnano')(),
               ],
             },

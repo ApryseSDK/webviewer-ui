@@ -3,8 +3,8 @@ import SettingsModal from './SettingsModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
-import hotkeysManager, { ShortcutKeys } from 'helpers/hotkeysManager';
-import { userEvent, within, expect } from '@storybook/test';
+import hotkeysManager, { ShortcutKeys , SHORTCUT_CONFIGS } from 'helpers/hotkeysManager';
+import { userEvent, within, expect } from 'storybook/test';
 
 export default {
   title: 'Components/SettingsModal',
@@ -69,48 +69,9 @@ const getStore = (num) => {
   return createStore(rootReducer);
 };
 
-// General tab
-export function General() {
-  return (
-    <Provider store={getStore(1)}>
-      <SettingsModal />
-    </Provider>
-  );
-}
-
-// Keyboard Shortcut tab
-export function KeyboardShortcut() {
-  const store = getStore(2);
-  hotkeysManager.initialize(store);
-
-  return (
-    <Provider store={getStore(2)}>
-      <SettingsModal />
-    </Provider>
-  );
-}
-
-// Advanced Setting tab
-export function AdvancedSetting() {
-  return (
-    <Provider store={getStore(3)}>
-      <SettingsModal />
-    </Provider>
-  );
-}
-
-// General tab disabled
-export function GeneralDisabled() {
-  return (
-    <Provider store={getStore(4)}>
-      <SettingsModal />
-    </Provider>
-  );
-}
-
-const spreadsheetStore = () => {
-  const store = getStore(1);
-
+// Helper function to create spreadsheet store
+const createSpreadsheetStore = (tabNum = 1) => {
+  const store = getStore(tabNum);
   const originalGetState = store.getState;
   store.getState = () => {
     const state = originalGetState();
@@ -122,13 +83,61 @@ const spreadsheetStore = () => {
       },
     };
   };
-
   return store;
 };
 
-export function SpreadsheetEditor() {
+export function General() {
   return (
-    <Provider store={spreadsheetStore()}>
+    <Provider store={getStore(1)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+export function KeyboardShortcut() {
+  const store = getStore(2);
+  hotkeysManager.initialize(store);
+
+  return (
+    <Provider store={getStore(2)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+export function AdvancedSetting() {
+  return (
+    <Provider store={getStore(3)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+export function GeneralDisabled() {
+  return (
+    <Provider store={getStore(4)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+export function SpreadsheetEditor() {
+  const store = createSpreadsheetStore(1);
+  hotkeysManager.initialize(store);
+
+  return (
+    <Provider store={store}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+export function SpreadsheetKeyboardShortcuts() {
+  const store = createSpreadsheetStore(2);
+  hotkeysManager.initialize(store);
+
+  return (
+    <Provider store={store}>
       <SettingsModal />
     </Provider>
   );
@@ -190,6 +199,22 @@ TabbingTest.play = async ({ canvasElement }) => {
   const editShortcutButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Edit Shortcut/i });
   await expect(editShortcutButton).toHaveFocus();
 };
+
+SpreadsheetKeyboardShortcuts.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const keyboardButton = await canvas.findByRole('button', { name: /Keyboard Shortcut/i });
+  await userEvent.click(keyboardButton);
+
+  const shortcuts = canvasElement.querySelectorAll('.shortcut-table-item');
+  await expect(shortcuts).toHaveLength(SHORTCUT_CONFIGS.spreadsheet.length);
+
+  const editButtons = canvasElement.querySelectorAll('[data-element^="edit-button-"]');
+  for (const button of editButtons) {
+    await expect(button).toBeDisabled();
+  }
+};
+
 
 export const KeyboardShortcutInMobile = () => KeyboardShortcut();
 KeyboardShortcutInMobile.parameters = window.storybook?.MobileParameters;

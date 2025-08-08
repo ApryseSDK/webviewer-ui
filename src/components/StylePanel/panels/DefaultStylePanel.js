@@ -5,6 +5,9 @@ import useStylePanel from 'hooks/useStylePanel';
 import { shouldHideStylePanelOptions, parseToolType, } from 'helpers/stylePanelHelper';
 import Icon from 'src/components/Icon';
 import { useTranslation } from 'react-i18next';
+import DataElementWrapper from 'components/DataElementWrapper';
+import DataElements from 'constants/dataElement';
+import StylePanelHeader from '../StylePanelHeader/StylePanelHeader';
 
 const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
   const [t] = useTranslation();
@@ -25,14 +28,14 @@ const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
 
   return (
     <>
-      <h2 className="style-panel-header">{panelTitle}</h2>
+      <StylePanelHeader title={panelTitle} />
       {shouldHideStylePanelOptions(toolName) ? (
-        <div className="no-tool-selected">
-          <div>
+        <DataElementWrapper dataElement={DataElements.StylePanel.NO_STYLE_CONTAINER} className="no-tool-selected">
+          <DataElementWrapper dataElement={DataElements.StylePanel.NO_STYLE_ICON}>
             <Icon className="empty-icon" glyph="style-panel-no-tool-selected" />
-          </div>
-          <div className="msg">{t('stylePanel.noToolStyle')}</div>
-        </div>
+          </DataElementWrapper>
+          <DataElementWrapper dataElement={DataElements.StylePanel.NO_STYLE_MESSAGE} className="msg">{t('stylePanel.noToolStyle')}</DataElementWrapper>
+        </DataElementWrapper>
       ) : (
         <StylePicker
           {...toolTypeProps}

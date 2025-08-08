@@ -56,7 +56,14 @@ export default (store, documentViewerKey) => async (_, widget) => {
       } else if (widget && isCustomizableUI) {
         core.setToolMode(ToolNames.SIGNATURE);
         const isSignatureListPanelOpen = selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL);
-        if (!isSignatureListPanelOpen) {
+        const signatureListPanelInFlyout = selectors.getIsPanelInFlyout(state, DataElements.SIGNATURE_LIST_PANEL);
+        const isSignatureListFlyoutOpen = selectors.isElementOpen(state, signatureListPanelInFlyout?.dataElement);
+        const shouldOpenSignatureListPanel = !signatureListPanelInFlyout && !isSignatureListPanelOpen;
+        const shouldOpenSignatureListFlyout = signatureListPanelInFlyout && !isSignatureListFlyoutOpen;
+
+        if (shouldOpenSignatureListFlyout) {
+          store.dispatch(actions.openFlyout(signatureListPanelInFlyout.dataElement, ToolNames.SIGNATURE));
+        } else if (shouldOpenSignatureListPanel) {
           store.dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
         } else {
           // Signatures and Initials are considered pairs, so we just need to know one index to know the corresponding one.

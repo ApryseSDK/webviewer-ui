@@ -1,16 +1,16 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.redactHeader{
-  &.inactive{
-    .Icon{
+.redactHeader {
+  &.inactive {
+    .Icon {
       fill: #757575;
       fill: var(--icon-color);
     }
   }
 
-  &.active{
-    .Icon{
+  &.active {
+    .Icon {
       fill: #757575;
       fill: var(--icon-active-color);
     }
@@ -21,16 +21,16 @@
   @extend %overlay;
   position: relative;
 
-  .Button{
-    &.inactive{
-      .Icon{
+  .Button {
+    &.inactive {
+      .Icon {
         fill: #757575;
         fill: var(--icon-color);
       }
     }
 
-    &.active{
-      .Icon{
+    &.active {
+      .Icon {
         fill: #757575;
         fill: var(--icon-active-color);
       }

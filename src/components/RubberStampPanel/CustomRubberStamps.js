@@ -7,7 +7,7 @@ import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { isMobileSize } from 'src/helpers/getDeviceSize';
 import { PANEL_SIZES } from 'src/constants/panel';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
@@ -72,6 +72,7 @@ const CustomRubberStamps = (
     selectedStampIndex,
     setSelectedRubberStamp,
     standardStampsOffset,
+    isFlyout,
   }) => {
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
 
@@ -120,7 +121,7 @@ const CustomRubberStamps = (
     const isStampActive = selectedStampIndex === customStampIndex;
 
     const shouldShowOnlyFirstStamp = isMobileModeSmallSize && ((isNull(selectedStampIndex) && customStamps.length && customStampIndex === lastSelectedStampIndex) || isStampActive);
-    if (!isMobile || isMobileModeWithLargerSize || shouldShowOnlyFirstStamp || (isMobileModeSmallSize && isStampActive)) {
+    if (!isMobile || isMobileModeWithLargerSize || shouldShowOnlyFirstStamp || (isMobileModeSmallSize && isStampActive) || isFlyout) {
       return (
         <CustomRubberStamp
           key={index}
@@ -154,5 +155,6 @@ CustomRubberStamps.propTypes = {
   selectedStampIndex: PropTypes.number,
   setSelectedRubberStamp: PropTypes.func,
   standardStampsOffset: PropTypes.number,
+  isFlyout: PropTypes.bool,
 };
 export default React.memo(CustomRubberStamps);

@@ -11,17 +11,27 @@ const propTypes = {
   formatType: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   secondaryLabel: PropTypes.string,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
   selector: PropTypes.func,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const CellFormatButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, formatType, secondaryLabel, style, className } = props;
+  const {
+    isFlyoutItem,
+    formatType,
+    secondaryLabel,
+    style,
+    className,
+    dataElement = menuItems[formatType].dataElement,
+    img: icon = menuItems[formatType].icon,
+    title = menuItems[formatType].title,
+  } = props;
   const currentFormatType = useSelector((state) => selectors.getActiveCellFormatType(state));
   const isActive = formatType === currentFormatType;
-
-  const { dataElement, icon, title } = menuItems[formatType];
 
   const handleClick = () => {
     setCellFormatString(formatType);

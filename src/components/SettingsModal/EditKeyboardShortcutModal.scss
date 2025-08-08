@@ -1,5 +1,5 @@
-@import "../../constants/styles";
-@import "../../constants/modal";
+@import '../../constants/styles';
+@import '../../constants/modal';
 
 .EditKeyboardShortcutModal.Modal {
   @extend %modal;
@@ -44,7 +44,7 @@
         border-radius: 4px;
 
         span:not(:last-child) {
-          margin-right: 8px;
+          margin-inline-end: 8px;
         }
 
         &.recording {
@@ -54,7 +54,7 @@
 
       .conflict-warning {
         position: absolute;
-        bottom: 50px;
+        inset-block-end: 50px;
         font-size: 13px;
         color: var(--red);
         width: calc(100% - 32px);

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import ToolButton from './ToolButton';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 import core from 'core';
 import actions from 'actions';
 

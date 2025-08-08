@@ -17,6 +17,12 @@ import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import FocusStackManager from 'helpers/focusStackManager';
+import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
+
+export const EditorModes = {
+  DEFAULT: 'viewer',
+  SPREADSHEET: 'spreadsheet',
+};
 
 export const Shortcuts = {
   ROTATE_CLOCKWISE: 'rotateClockwise',
@@ -25,6 +31,7 @@ export const Shortcuts = {
   NUMPAD_ROTATE_COUNTER_CLOCKWISE: 'numpadRotateCounterClockwise',
   COPY: 'copy',
   PASTE: 'paste',
+  CUT: 'cut',
   UNDO: 'undo',
   REDO: 'redo',
   OPEN_FILE: 'openFile',
@@ -63,6 +70,90 @@ export const Shortcuts = {
   HOME: 'home',
   END: 'end',
   CLOSE: 'close',
+  SELECT_ALL: 'selectAll',
+  MOVE_TO_EDGE_UP: 'moveToEdgeUp',
+  MOVE_TO_EDGE_DOWN: 'moveToEdgeDown',
+  MOVE_TO_EDGE_LEFT: 'moveToEdgeLeft',
+  MOVE_TO_EDGE_RIGHT: 'moveToEdgeRight',
+  ADJUST_SELECTION_UP: 'adjustSelectionUp',
+  ADJUST_SELECTION_DOWN: 'adjustSelectionDown',
+  ADJUST_SELECTION_LEFT: 'adjustSelectionLeft',
+  ADJUST_SELECTION_RIGHT: 'adjustSelectionRight',
+  LEFT: 'left',
+  RIGHT: 'right',
+  ENTER: 'enter',
+  TAB: 'tab',
+  DELETE: 'delete',
+};
+
+const PDFViewerConfig = [
+  [Shortcuts.ROTATE_CLOCKWISE, 'option.settings.rotateDocumentClockwise'],
+  [Shortcuts.ROTATE_COUNTER_CLOCKWISE, 'option.settings.rotateDocumentCounterclockwise'],
+  [Shortcuts.COPY, 'option.settings.copyText'],
+  [Shortcuts.PASTE, 'option.settings.pasteText'],
+  [Shortcuts.UNDO, 'option.settings.undoChange'],
+  [Shortcuts.REDO, 'option.settings.redoChange'],
+  [Shortcuts.OPEN_FILE, 'option.settings.openFile'],
+  [Shortcuts.SEARCH, 'option.settings.openSearch'],
+  [Shortcuts.ZOOM_IN, 'option.settings.zoomIn'],
+  [Shortcuts.ZOOM_OUT, 'option.settings.zoomOut'],
+  [Shortcuts.SET_HEADER_FOCUS, 'option.settings.setHeaderFocus'],
+  [Shortcuts.FIT_SCREEN_WIDTH, 'option.settings.fitScreenWidth'],
+  [Shortcuts.PRINT, 'option.settings.print'],
+  [Shortcuts.BOOKMARK, 'option.settings.bookmarkOpenPanel'],
+  [Shortcuts.PREVIOUS_PAGE, 'option.settings.goToPreviousPage'],
+  [Shortcuts.NEXT_PAGE, 'option.settings.goToNextPage'],
+  [Shortcuts.UP, 'option.settings.goToPreviousPageArrowUp'],
+  [Shortcuts.DOWN, 'option.settings.goToNextPageArrowDown'],
+  [Shortcuts.SWITCH_PAN, 'option.settings.holdSwitchPan'],
+  [Shortcuts.SELECT, 'option.settings.selectAnnotationEdit'],
+  [Shortcuts.PAN, 'option.settings.selectPan'],
+  [Shortcuts.ARROW, 'option.settings.selectCreateArrowTool'],
+  [Shortcuts.CALLOUT, 'option.settings.selectCreateCalloutTool'],
+  [Shortcuts.ERASER, 'option.settings.selectEraserTool'],
+  [Shortcuts.FREEHAND, 'option.settings.selectCreateFreeHandTool'],
+  [Shortcuts.IMAGE, 'option.settings.selectCreateStampTool'],
+  [Shortcuts.LINE, 'option.settings.selectCreateLineTool'],
+  [Shortcuts.STICKY_NOTE, 'option.settings.selectCreateStickyTool'],
+  [Shortcuts.ELLIPSE, 'option.settings.selectCreateEllipseTool'],
+  [Shortcuts.RECTANGLE, 'option.settings.selectCreateRectangleTool'],
+  [Shortcuts.RUBBER_STAMP, 'option.settings.selectCreateRubberStampTool'],
+  [Shortcuts.FREETEXT, 'option.settings.selectCreateFreeTextTool'],
+  [Shortcuts.SIGNATURE, 'option.settings.openSignatureModal'],
+  [Shortcuts.SQUIGGLY, 'option.settings.selectCreateTextSquigglyTool'],
+  [Shortcuts.HIGHLIGHT, 'option.settings.selectCreateTextHighlightTool'],
+  [Shortcuts.STRIKEOUT, 'option.settings.selectCreateTextStrikeoutTool'],
+  [Shortcuts.UNDERLINE, 'option.settings.selectCreateTextUnderlineTool'],
+  [Shortcuts.CLOSE, 'option.settings.close'],
+];
+
+const SpreadsheetConfig = [
+  [Shortcuts.COPY, 'option.settings.spreadsheetEditor.copyText'],
+  [Shortcuts.CUT, 'option.settings.spreadsheetEditor.cutText'],
+  [Shortcuts.PASTE, 'option.settings.spreadsheetEditor.pasteText'],
+  [Shortcuts.UNDO, 'option.settings.spreadsheetEditor.undoChange'],
+  [Shortcuts.REDO, 'option.settings.spreadsheetEditor.redoChange'],
+  [Shortcuts.SELECT_ALL, 'option.settings.spreadsheetEditor.selectAll'],
+  [Shortcuts.MOVE_TO_EDGE_UP, 'option.settings.spreadsheetEditor.moveToEdgeUp'],
+  [Shortcuts.MOVE_TO_EDGE_DOWN, 'option.settings.spreadsheetEditor.moveToEdgeDown'],
+  [Shortcuts.MOVE_TO_EDGE_LEFT, 'option.settings.spreadsheetEditor.moveToEdgeLeft'],
+  [Shortcuts.MOVE_TO_EDGE_RIGHT, 'option.settings.spreadsheetEditor.moveToEdgeRight'],
+  [Shortcuts.ADJUST_SELECTION_UP, 'option.settings.spreadsheetEditor.adjustSelectionUp'],
+  [Shortcuts.ADJUST_SELECTION_DOWN, 'option.settings.spreadsheetEditor.adjustSelectionDown'],
+  [Shortcuts.ADJUST_SELECTION_LEFT, 'option.settings.spreadsheetEditor.adjustSelectionLeft'],
+  [Shortcuts.ADJUST_SELECTION_RIGHT, 'option.settings.spreadsheetEditor.adjustSelectionRight'],
+  [Shortcuts.UP, 'option.settings.spreadsheetEditor.up'],
+  [Shortcuts.DOWN, 'option.settings.spreadsheetEditor.down'],
+  [Shortcuts.LEFT, 'option.settings.spreadsheetEditor.left'],
+  [Shortcuts.RIGHT, 'option.settings.spreadsheetEditor.right'],
+  [Shortcuts.ENTER, 'option.settings.spreadsheetEditor.enter'],
+  [Shortcuts.TAB, 'option.settings.spreadsheetEditor.tab'],
+  [Shortcuts.DELETE, 'option.settings.spreadsheetEditor.delete'],
+];
+
+export const SHORTCUT_CONFIGS = {
+  [EditorModes.DEFAULT]: PDFViewerConfig,
+  [EditorModes.SPREADSHEET]: SpreadsheetConfig,
 };
 
 // prettier-ignore
@@ -190,6 +281,8 @@ export const Keys = {
   COMMAND_ALT_SHIFT_M: 'command+alt+shift+m',
   CTRL_C: 'ctrl+c',
   COMMAND_C: 'command+c',
+  CTRL_X: 'ctrl+x',
+  COMMAND_X: 'command+x',
   CTRL_V: 'ctrl+v',
   COMMAND_V: 'command+v',
   CTRL_Z: 'ctrl+z',
@@ -208,6 +301,20 @@ export const Keys = {
   COMMAND_NUM_ADD: 'command+num_add',
   CTRL_NUM_SUBTRACT: 'ctrl+num_subtract',
   COMMAND_NUM_SUBTRACT: 'command+num_subtract',
+  CTRL_UP: 'ctrl+up',
+  COMMAND_UP: 'command+up',
+  CTRL_DOWN: 'ctrl+down',
+  COMMAND_DOWN: 'command+down',
+  CTRL_LEFT: 'ctrl+left',
+  COMMAND_LEFT: 'command+left',
+  CTRL_RIGHT: 'ctrl+right',
+  COMMAND_RIGHT: 'command+right',
+  CTRL_A: 'ctrl+a',
+  COMMAND_A: 'command+a',
+  SHIFT_UP: 'shift+up',
+  SHIFT_DOWN: 'shift+down',
+  SHIFT_LEFT: 'shift+left',
+  SHIFT_RIGHT: 'shift+right',
   CTRL_0: 'ctrl+0',
   COMMAND_0: 'command+0',
   CTRL_P: 'ctrl+p',
@@ -219,10 +326,14 @@ export const Keys = {
   PAGE_DOWN: 'pagedown',
   UP: 'up',
   DOWN: 'down',
+  LEFT: 'left',
+  RIGHT: 'right',
+  TAB: 'tab',
   SPACE: 'space',
   ESCAPE: 'escape',
   HOME: 'home',
   END: 'end',
+  DELETE: 'delete',
   P: 'p',
   A: 'a',
   C: 'c',
@@ -241,6 +352,30 @@ export const Keys = {
   K: 'k',
   U: 'u',
   X: 'x',
+};
+
+export const  SpreadsheetShortcutKeyMap = {
+  [Shortcuts.COPY]: concatKeys(Keys.CTRL_C, Keys.COMMAND_C),
+  [Shortcuts.PASTE]: concatKeys(Keys.CTRL_V, Keys.COMMAND_V),
+  [Shortcuts.CUT]: concatKeys(Keys.CTRL_X, Keys.COMMAND_X),
+  [Shortcuts.UNDO]: concatKeys(Keys.CTRL_Z, Keys.COMMAND_Z),
+  [Shortcuts.REDO]: Keys.CTRL_Y,
+  [Shortcuts.SELECT_ALL]: concatKeys(Keys.CTRL_A, Keys.COMMAND_A),
+  [Shortcuts.MOVE_TO_EDGE_UP]: concatKeys(Keys.CTRL_UP, Keys.COMMAND_UP),
+  [Shortcuts.MOVE_TO_EDGE_DOWN]: concatKeys(Keys.CTRL_DOWN, Keys.COMMAND_DOWN),
+  [Shortcuts.MOVE_TO_EDGE_LEFT]: concatKeys(Keys.CTRL_LEFT, Keys.COMMAND_LEFT),
+  [Shortcuts.MOVE_TO_EDGE_RIGHT]: concatKeys(Keys.CTRL_RIGHT, Keys.COMMAND_RIGHT),
+  [Shortcuts.ADJUST_SELECTION_UP]: Keys.SHIFT_UP,
+  [Shortcuts.ADJUST_SELECTION_DOWN]: Keys.SHIFT_DOWN,
+  [Shortcuts.ADJUST_SELECTION_LEFT]: Keys.SHIFT_LEFT,
+  [Shortcuts.ADJUST_SELECTION_RIGHT]: Keys.SHIFT_RIGHT,
+  [Shortcuts.UP]: Keys.UP,
+  [Shortcuts.DOWN]: Keys.DOWN,
+  [Shortcuts.LEFT]: Keys.LEFT,
+  [Shortcuts.RIGHT]: Keys.RIGHT,
+  [Shortcuts.ENTER]: Keys.ENTER,
+  [Shortcuts.TAB]: Keys.TAB,
+  [Shortcuts.DELETE]: Keys.DELETE
 };
 
 export function concatKeys(...keys) {
@@ -596,11 +731,6 @@ WebViewer(...)
           dispatch(actions.closeElement('wv3dPropertiesPanel'));
         }
 
-        const isWatermarkPanelOpen = selectors.isElementOpen(getState(), 'watermarkPanel');
-        if (isWatermarkPanelOpen) {
-          dispatch(actions.closeElement('watermarkPanel'));
-        }
-
         dispatch(actions.toggleElement('searchPanel'));
       },
       [ShortcutKeys[Shortcuts.ZOOM_IN]]: (e) => {
@@ -751,6 +881,9 @@ WebViewer(...)
 
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 
+        const rubberStampPanelInFlyout = selectors.getIsPanelInFlyout(getState(), ITEM_RENDER_PREFIXES.RUBBER_STAMP_PANEL);
+        const signatureListPanelInFlyout = selectors.getIsPanelInFlyout(getState(), ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL);
+
         dispatch(
           actions.closeElements([
             DataElements.ANNOTATION_POPUP,
@@ -764,7 +897,9 @@ WebViewer(...)
             'rubberStampOverlay',
             DataElements.FILTER_MODAL,
             DataElements.SIGNATURE_LIST_PANEL,
-            DataElements.RUBBER_STAMP_PANEL
+            DataElements.RUBBER_STAMP_PANEL,
+            rubberStampPanelInFlyout?.dataElement,
+            signatureListPanelInFlyout?.dataElement,
           ]),
         );
       },

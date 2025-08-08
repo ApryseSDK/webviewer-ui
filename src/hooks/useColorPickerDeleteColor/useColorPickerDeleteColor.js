@@ -1,5 +1,4 @@
 import { parseColor } from 'helpers/colorPickerHelper';
-import { useDispatch } from 'react-redux';
 
 const useColorPickerDeleteColor = ({
   selectedColor,
@@ -9,8 +8,6 @@ const useColorPickerDeleteColor = ({
   onColorChange,
   updateColorsAction,
 }) => {
-  const dispatch = useDispatch();
-
   const handleDelete = () => {
     const color = parseColor(selectedColor);
     const newColors = [...colors];
@@ -25,7 +22,7 @@ const useColorPickerDeleteColor = ({
       }
       onColorChange(nextColor);
       newColors.splice(indexToDelete, 1);
-      dispatch(updateColorsAction(newColors));
+      updateColorsAction(newColors);
     }
   };
 

@@ -111,6 +111,7 @@
     "open": "Nyisd ki",
     "deselectAll": "Törölje az Összes kijelölését",
     "select": "Válassza ki",
+    "buttonPressed": "{{buttonName}} gomb lenyomva",
     "moveToTop": "Ugrás a tetejére",
     "moveToBottom": "Mozgás lefelé",
     "movePageToTop": "Oldal áthelyezése a tetejére",
@@ -272,7 +273,6 @@
       "close": "Zárja be az összes megjegyzést"
     },
     "comparePanel": "Panel összehasonlítása",
-    "watermarkPanel": "Vízjel panel",
     "mainMenu": "Főmenü"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Nincs találat.",
     "numResultsFound": "eredményeket találtunk",
     "loadError": "Hiba a dokumentum betöltésekor",
+    "urlInputFileLoadError": "A fájl nem kérhető le a megadott URL-címről.",
     "notSupported": "Ez a fájltípus nem támogatott.",
     "passwordRequired": "jelszó szükséges",
     "enterPasswordPlaceholder": "Írd be a jelszót",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Keresés a megjegyzésekben",
     "searchDocumentPlaceholder": "Dokumentum keresése",
     "clearSearchResults": "Keresési eredmények törlése",
+    "toggleReplaceInput": "Csere bemenet ki-/bekapcsolása",
+    "toggleSearchOptions": "Keresési beállítások be-/kikapcsolása",
     "searchResultsCleared": "Keresési eredmények törölve",
     "searchSettingsPlaceholder": "Keresési beállítások",
     "searchSuggestionsPlaceholder": "Keresési javaslatok",
@@ -803,7 +806,30 @@
       "setShortcut": "Parancsikon beállítása",
       "editShortcut": "Parancsikon szerkesztése",
       "shortcutAlreadyExists": "A fenti billentyűparancs már létezik.",
-      "close": "Eszköztipp bezárása"
+      "close": "Eszköztipp bezárása",
+      "spreadsheetEditor": {
+        "copyText": "Kijelölt szöveg vagy cellák másolása",
+        "pasteText": "Szöveg vagy cellák beillesztése",
+        "cutText": "Kijelölt szöveg vagy cellák kivágása",
+        "undoChange": "Változtatás visszavonása",
+        "redoChange": "Változás visszavonása",
+        "selectAll": "Az összes cella kijelölése",
+        "moveToEdgeUp": "Ugrás a lap tetejére",
+        "moveToEdgeDown": "Ugrás a lap aljára",
+        "moveToEdgeLeft": "Ugrás a bal szélső oszlopra",
+        "moveToEdgeRight": "Ugrás a jobb szélső oszlopra",
+        "adjustSelectionUp": "Kijelölés kiterjesztése felfelé",
+        "adjustSelectionDown": "Kijelölés kiterjesztése lefelé",
+        "adjustSelectionLeft": "Kijelölés kiterjesztése balra",
+        "adjustSelectionRight": "Kijelölés kiterjesztése jobbra",
+        "up": "Cella kijelölőmező mozgatása felfelé",
+        "down": "Cella kijelölőmező mozgatása lefelé",
+        "left": "Cella kijelölőmező mozgatása balra",
+        "right": "Cella kijelölőmező mozgatása jobbra",
+        "enter": "Kijelölt cella szerkesztése",
+        "tab": "Cella kijelölőmező áthelyezése jobbra",
+        "delete": "Mobil adatforgalom törlése"
+      }
     },
     "cellBorderStyle": {
       "none": "Egyik sem",
@@ -861,12 +887,12 @@
       "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Figyelmeztetés szerkesztése",
-      "message": "Ez a munkalapnév már létezik. Kérjük, adjon meg egy másik nevet."
+      "title": "Munkalap nevének szerkesztése",
+      "message": "Ez a név már létezik. Kérjük, adjon meg egy másik nevet."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Figyelmeztetés szerkesztése",
-      "message": "A munkalap neve nem lehet üres."
+      "title": "Munkalap nevének szerkesztése",
+      "message": "A munkalap neve nem lehet üres. Kérjük, adjon meg egy nevet."
     },
     "sheetTabDeleteMessage": {
       "title": "Figyelmeztetés szerkesztése",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Tulajdonságok",
     "miscValuesHeader": "Összes",
     "emptyPanelMessage": "Jelöljön ki egy elemet a tulajdonságainak megtekintéséhez"
-  },
-  "watermarkPanel": {
-    "textWatermark": "Szöveges vízjel",
-    "uploadImage": "Kép feltöltése",
-    "browse": "Tallózás",
-    "watermarkOptions": "Vízjel opciók",
-    "watermarks": "Vízjelek"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF-portfólió létrehozása",

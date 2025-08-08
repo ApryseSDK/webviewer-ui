@@ -12,13 +12,13 @@ $border-thickness-adjustment: 2px;
   position: relative;
   box-sizing: border-box;
   list-style-type: none;
-  
+
   ul {
     list-style-type: none;
     margin: 0;
   }
   li::marker {
-    content: "";
+    content: '';
     margin: 0;
   }
 }
@@ -60,13 +60,13 @@ $border-thickness-adjustment: 2px;
   display: contents;
 
   &.with-checkbox {
-    padding-left: $spacing-large;
+    padding-inline-start: $spacing-large;
   }
 
   .checkbox {
     margin: 0;
     position: relative;
-    left: var(--checkbox-left, 0px);
+    inset-inline-start: var(--checkbox-left, 0px);
   }
 
   .chevron-container {
@@ -101,7 +101,6 @@ $border-thickness-adjustment: 2px;
   }
 
   .panel-list-icon-container {
-
     .Icon {
       width: $icon-size;
       height: $icon-size;
@@ -120,7 +119,7 @@ $border-thickness-adjustment: 2px;
       width: 100%;
 
       .set-focus {
-        color: #2c73ab; 
+        color: #2c73ab;
       }
 
       .Button {
@@ -130,8 +129,8 @@ $border-thickness-adjustment: 2px;
         height: 100%;
         padding: 2px 0 2px 4px;
         justify-content: start;
-        
-        &:focus{
+
+        &:focus {
           color: #2c73ab;
         }
 
@@ -158,7 +157,7 @@ $border-thickness-adjustment: 2px;
     grid-area: 1 / -2 / auto / -1;
     display: flex;
     justify-content: flex-end;
-    margin-left: $border-thickness-adjustment;
+    margin-inline-start: $border-thickness-adjustment;
     visibility: hidden; /* Initially hidden */
 
     .Button {
@@ -166,7 +165,7 @@ $border-thickness-adjustment: 2px;
       height: $icon-size;
       min-width: $icon-size;
 
-      &:focus{
+      &:focus {
         color: var(--blue-6);
       }
 
@@ -190,5 +189,5 @@ $border-thickness-adjustment: 2px;
 }
 
 .panel-list-children {
-  padding-left: $spacing-large;
+  padding-inline-start: $spacing-large;
 }

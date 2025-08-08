@@ -89,7 +89,7 @@ const propTypes = {
   onOpenCalibration: PropTypes.func,
 
   customizableUI: PropTypes.bool,
-  openStylePanel: PropTypes.func,
+  toggleStylePanel: PropTypes.func,
   isInReadOnlyMode: PropTypes.bool,
   onOpenAlignmentModal: PropTypes.func,
 };
@@ -165,7 +165,7 @@ const AnnotationPopup = ({
   onOpenCalibration,
 
   customizableUI,
-  openStylePanel,
+  toggleStylePanel,
   isInReadOnlyMode,
   onOpenAlignmentModal,
 }) => {
@@ -314,7 +314,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.style' : ''}
                     title={!isRightClickMenu ? 'action.style' : ''}
                     img="icon-menu-style-line"
-                    onClick={customizableUI ? openStylePanel : openEditStylePopup}
+                    onClick={customizableUI ? toggleStylePanel : openEditStylePopup}
                   />
                 )}
                 {showContentEditButton && (

@@ -20,8 +20,8 @@
   }
 }
 
-[data-element="notesPanelHeader"] {
-  padding-right: 18px;
+[data-element='notesPanelHeader'] {
+  padding-inline-end: 18px;
 
   .buttons-container {
     display: flex;
@@ -64,11 +64,11 @@
       align-self: flex-end;
 
       .label {
-        margin-right: 8px;
+        margin-inline-end: 8px;
       }
 
       .picked-option {
-        text-align: left;
+        text-align: start;
       }
     }
   }
@@ -84,9 +84,9 @@
       border-radius: 4px;
       color: var(--text-color);
       padding-top: 4px;
-      padding-right: 8px;
+      padding-inline-end: 8px;
       padding-bottom: 6px;
-      padding-left: 8px;
+      padding-inline-start: 8px;
     }
 
     &.modular-ui-input {
@@ -104,8 +104,8 @@
       }
 
       input {
-        padding-left: 8px;
-        padding-right: 26px;
+        padding-inline-start: 8px;
+        padding-inline-end: 26px;
         height: 20px;
         border: none;
         background: transparent;
@@ -123,8 +123,8 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: 0px;
-    right: 0px;
+    inset-block-end: 0px;
+    inset-inline-end: 0px;
 
     .Icon {
       width: 20px;

@@ -12,13 +12,13 @@ import featureFlagsReducer from './featureFlagsReducer';
 import spreadsheetEditorReducer from './spreadsheetEditorReducer';
 import { getInstanceID } from 'helpers/getRootNode';
 import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import localStorageManager from '../../helpers/localStorageManager';
 
 const instanceId = getInstanceID();
 
 const viewerPersistConfig = {
-  key: `viewer-${instanceId}`,
-  storage,
+  key: `webviewer-viewer-${instanceId}`,
+  storage: localStorageManager,
   whitelist: [
     'toolbarGroup',
     'lastPickedToolForGroup',
@@ -42,14 +42,14 @@ const viewerPersistConfig = {
 };
 
 const searchPersistConfig = {
-  key: `search-${instanceId}`,
-  storage,
+  key: `webviewer-search-${instanceId}`,
+  storage: localStorageManager,
   whitelist: ['clearSearchPanelOnClose']
 };
 
 const officeEditorPersistConfig = {
-  key: `office-editor-${instanceId}`,
-  storage,
+  key: `webviewer-office-editor-${instanceId}`,
+  storage: localStorageManager,
   whitelist: ['unitMeasurement']
 };
 

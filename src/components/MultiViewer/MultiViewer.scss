@@ -32,13 +32,12 @@
       height: 2px;
       background-color: var(--blue-5);
       position: absolute;
-      bottom: 0;
+      inset-block-end: 0;
       z-index: 41;
 
       &.active {
         visibility: visible;
       }
     }
-
   }
 }

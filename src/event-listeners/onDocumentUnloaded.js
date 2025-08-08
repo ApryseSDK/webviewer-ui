@@ -21,7 +21,6 @@ export default (dispatch, store, documentViewerKey) => () => {
       'redactionPanel',
       'textEditingPanel',
       'wv3dPropertiesPanel',
-      'watermarkPanel',
       ...overlays,
     ]),
   );
@@ -80,6 +79,8 @@ export default (dispatch, store, documentViewerKey) => () => {
     dispatch(actions.enableElements(
       ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
     ));
+    dispatch(actions.setSpreadsheetEditorCanUndo(false));
+    dispatch(actions.setSpreadsheetEditorCanRedo(false));
   }
 
   // TODO Compare: Integrate with panels

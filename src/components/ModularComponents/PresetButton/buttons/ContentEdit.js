@@ -9,6 +9,7 @@ import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
+import { getButtonPressedAnnouncement } from 'helpers/accessibility';
 
 /**
  * A button that toggles Content Edit Mode.
@@ -16,8 +17,14 @@ import classNames from 'classnames';
  * @memberof UI.Components.PresetButton
  */
 const ContentEditButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, style, className } = props;
-  const { presetDataElement, icon, title } = menuItems.contentEditButton;
+  const {
+    isFlyoutItem,
+    style,
+    className,
+    dataElement = menuItems.contentEditButton.dataElement,
+    img: icon = menuItems.contentEditButton.icon,
+    title = menuItems.contentEditButton.title,
+  } = props;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const dispatch = useDispatch();
   const [active, setActive] = useState(core.getContentEditManager().isInContentEditMode());
@@ -60,13 +67,14 @@ const ContentEditButton = forwardRef((props, ref) => {
             contentEditButton: true,
             [className]: true,
           })}
-          dataElement={presetDataElement}
+          dataElement={dataElement}
           title={title}
           img={icon}
           onClick={handleClick}
           isActive={active}
           style={style}
           ariaPressed={active}
+          onClickAnnouncement={getButtonPressedAnnouncement(title)}
         />
       )
   );
@@ -74,8 +82,11 @@ const ContentEditButton = forwardRef((props, ref) => {
 
 ContentEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 ContentEditButton.displayName = 'ContentEditButton';
 

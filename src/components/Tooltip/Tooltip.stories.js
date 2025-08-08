@@ -4,7 +4,7 @@ import { createStore, waitForTimeout } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import hotkeysManager, { getCloseToolTipFunc } from 'helpers/hotkeysManager';
-import { within, userEvent, expect } from '@storybook/test';
+import { within, userEvent, expect } from 'storybook/test';
 
 export default {
   title: 'Components/Tooltip',

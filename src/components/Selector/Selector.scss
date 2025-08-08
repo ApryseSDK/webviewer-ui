@@ -37,9 +37,9 @@
     list-style-type: none;
     position: absolute;
     width: 100%;
-    left: 0;
-    top: 0;
-    text-align: left;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    text-align: start;
     letter-spacing: 0px;
     display: none;
     border-radius: var(--border-radius);
@@ -47,7 +47,7 @@
     z-index: 1000;
     background-color: var(--component-background);
     box-shadow: 0 0 3px 0 var(--box-shadow);
-    padding-left: 0px;
+    padding-inline-start: 0px;
     row-gap: 4px;
 
     &.open {
@@ -64,7 +64,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 0.8rem;
-    padding-left: 0.5rem;
+    padding-inline-start: 0.5rem;
 
     :hover {
       cursor: pointer;
@@ -97,15 +97,15 @@
   & li .options {
     border: none;
     background-color: transparent;
-    padding-right: 0.65rem;
-    padding-left: 0.5rem;
+    padding-inline-end: 0.65rem;
+    padding-inline-start: 0.5rem;
     width: calc(100% + 0.5rem);
-    text-align: left;
+    text-align: start;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    margin-left: -0.5rem;
+    margin-inline-start: -0.5rem;
     z-index: 1;
   }
 

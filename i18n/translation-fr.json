@@ -111,6 +111,7 @@
     "open": "Ouvert",
     "deselectAll": "Tout déselectionner",
     "select": "Sélectionner",
+    "buttonPressed": "Bouton {{buttonName}} enfoncé",
     "moveToTop": "Déplacer vers le haut",
     "moveToBottom": "Déplacer vers le bas",
     "movePageToTop": "Déplacer la page vers le haut",
@@ -272,7 +273,6 @@
       "close": "Fermer toutes les annotations"
     },
     "comparePanel": "Panneau de comparaison",
-    "watermarkPanel": "Panneau Filigrane",
     "mainMenu": "Menu principal"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Aucun résultat trouvé.",
     "numResultsFound": "Résultats trouvés",
     "loadError": "Erreur lors du chargement du document",
+    "urlInputFileLoadError": "Le fichier n'a pas pu être récupéré à partir de l'URL fournie.",
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "enterPasswordPlaceholder": "Entrer le mot de passe",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Rechercher des commentaires",
     "searchDocumentPlaceholder": "Rechercher un document",
     "clearSearchResults": "Effacer les résultats de la recherche",
+    "toggleReplaceInput": "Basculer le remplacement de l'entrée",
+    "toggleSearchOptions": "Activer/désactiver les options de recherche",
     "searchResultsCleared": "Résultats de recherche effacés",
     "searchSettingsPlaceholder": "Paramètres de recherche",
     "searchSuggestionsPlaceholder": "Suggestions de recherche",
@@ -803,7 +806,30 @@
       "setShortcut": "Définir un raccourci",
       "editShortcut": "Modifier le raccourci",
       "shortcutAlreadyExists": "Le raccourci clavier ci-dessus existe déjà.",
-      "close": "Fermer l'info-bulle"
+      "close": "Fermer l'info-bulle",
+      "spreadsheetEditor": {
+        "copyText": "Copier le texte ou les cellules sélectionnés",
+        "pasteText": "Coller du texte ou des cellules",
+        "cutText": "Couper le texte ou les cellules sélectionnés",
+        "undoChange": "Annuler une modification",
+        "redoChange": "Refaire une modification",
+        "selectAll": "Sélectionner toutes les cellules",
+        "moveToEdgeUp": "Aller en haut de la feuille",
+        "moveToEdgeDown": "Aller au bas de la feuille",
+        "moveToEdgeLeft": "Accéder à la colonne la plus à gauche",
+        "moveToEdgeRight": "Accéder à la colonne la plus à droite",
+        "adjustSelectionUp": "Étendre la sélection vers le haut",
+        "adjustSelectionDown": "Étendre la sélection vers le bas",
+        "adjustSelectionLeft": "Étendre la sélection à gauche",
+        "adjustSelectionRight": "Étendre la sélection à droite",
+        "up": "Déplacer la boîte de sélection de cellule vers le haut",
+        "down": "Déplacer la boîte de sélection de cellule vers le bas",
+        "left": "Déplacer la boîte de sélection de cellule vers la gauche",
+        "right": "Déplacer la boîte de sélection de cellule vers la droite",
+        "enter": "Modifier la cellule sélectionnée",
+        "tab": "Déplacer la boîte de sélection de cellule vers la droite",
+        "delete": "Effacer les données de la cellule"
+      }
     },
     "cellBorderStyle": {
       "none": "Aucun",
@@ -861,12 +887,12 @@
       "message": "Ce document tente de se connecter à :\n\n{{- uri}}\n\n Si vous faites confiance à ce document, cliquez sur Confirmer pour l'ouvrir."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Modifier l'avertissement",
-      "message": "Ce nom de feuille existe déjà. Veuillez saisir un autre nom."
+      "title": "Modifier le nom de la feuille",
+      "message": "Ce nom existe déjà. Veuillez en saisir un autre."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Modifier l'avertissement",
-      "message": "Ce nom de feuille ne peut pas être vide."
+      "title": "Modifier le nom de la feuille",
+      "message": "Le nom de la feuille ne peut pas être vide. Veuillez saisir un nom."
     },
     "sheetTabDeleteMessage": {
       "title": "Modifier l'avertissement",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Propriétés",
     "miscValuesHeader": "Tous",
     "emptyPanelMessage": "Sélectionnez un élément pour afficher ses propriétés."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Filigrane de texte",
-    "uploadImage": "Télécharger une image",
-    "browse": "Parcourir",
-    "watermarkOptions": "Options de filigrane",
-    "watermarks": "Filigranes"
   },
   "portfolio": {
     "createPDFPortfolio": "Créer un portfolio PDF",

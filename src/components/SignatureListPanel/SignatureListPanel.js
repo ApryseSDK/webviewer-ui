@@ -19,7 +19,7 @@ import core from 'core';
 import PropTypes from 'prop-types';
 import Events from 'constants/events';
 
-const SignatureListPanel = ({ panelSize }) => {
+const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LIST_PANEL, isFlyout = false }) => {
   const [t] = useTranslation();
   const isMobile = isMobileSize();
 
@@ -148,19 +148,20 @@ const SignatureListPanel = ({ panelSize }) => {
 
 
   return (
-    <DataElementWrapper dataElement={DataElements.SIGNATURE_LIST_PANEL} className={
+    <DataElementWrapper dataElement={dataElement} className={
       classNames({
         'Panel': true,
         'SignatureListPanel': true,
         'hideAddButton': savedSignatures.length && panelSize === PANEL_SIZES.SMALL_SIZE,
         [panelSize]: true,
+        'isFlyout': isFlyout,
       })
     }>
       <h2 className='signature-list-panel-header'>
         {t('signatureListPanel.header')}
       </h2>
       <SignatureAddButton isDisabled={savedSignaturesAndInitials.length >= maxSignaturesCount} />
-      <Divider />
+      { savedSignaturesAndInitials.length > 0 && <Divider /> }
       <SavedSignatures
         savedSignatures={savedSignaturesAndInitials}
         onFullSignatureSetHandler={setSignature}
@@ -176,6 +177,8 @@ const SignatureListPanel = ({ panelSize }) => {
 
 SignatureListPanel.propTypes = {
   panelSize: PropTypes.oneOf(Object.values(PANEL_SIZES)),
+  dataElement: PropTypes.string,
+  isFlyout: PropTypes.bool,
 };
 
 export default SignatureListPanel;

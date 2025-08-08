@@ -111,6 +111,7 @@
     "open": "Açık",
     "deselectAll": "Hiçbirini seçme",
     "select": "Seçme",
+    "buttonPressed": "{{buttonName}} düğmesine basıldı",
     "moveToTop": "En üste taşı",
     "moveToBottom": "Aşağıya taşı",
     "movePageToTop": "Sayfayı En Üste Taşı",
@@ -272,7 +273,6 @@
       "close": "Tüm Ek Açıklamaları Kapat"
     },
     "comparePanel": "Karşılaştır Paneli",
-    "watermarkPanel": "Filigran Paneli",
     "mainMenu": "Ana Menü"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Sonuç bulunamadı.",
     "numResultsFound": "sonuçlar bulundu",
     "loadError": "Belge Yükleme Hatası",
+    "urlInputFileLoadError": "Sağlanan URL'den dosya alınamadı.",
     "notSupported": "Bu dosya tipi desteklenmiyor.",
     "passwordRequired": "şifre gerekli",
     "enterPasswordPlaceholder": "Parolanı Gir",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Yorum ara",
     "searchDocumentPlaceholder": "Belge ara",
     "clearSearchResults": "Arama sonuçlarını temizle",
+    "toggleReplaceInput": "Girişi değiştirmeyi aç/kapat",
+    "toggleSearchOptions": "Arama seçeneklerini değiştir",
     "searchResultsCleared": "Arama sonuçları temizlendi",
     "searchSettingsPlaceholder": "Arama ayarları",
     "searchSuggestionsPlaceholder": "Önerileri ara",
@@ -803,7 +806,30 @@
       "setShortcut": "Kısayol Ayarla",
       "editShortcut": "Kısayolu Düzenle",
       "shortcutAlreadyExists": "Yukarıdaki klavye kısayolu zaten var.",
-      "close": "İpucunu kapat"
+      "close": "İpucunu kapat",
+      "spreadsheetEditor": {
+        "copyText": "Seçili metni veya hücreleri kopyala",
+        "pasteText": "Metni veya hücreleri yapıştır",
+        "cutText": "Seçili metni veya hücreleri kes",
+        "undoChange": "Bir değişikliği geri al",
+        "redoChange": "Bir değişikliği yeniden yap",
+        "selectAll": "Tüm hücreleri seç",
+        "moveToEdgeUp": "Sayfanın başına git",
+        "moveToEdgeDown": "Sayfanın en altına atla",
+        "moveToEdgeLeft": "En soldaki sütuna atla",
+        "moveToEdgeRight": "En sağdaki sütuna atla",
+        "adjustSelectionUp": "Seçimi yukarıya doğru genişlet",
+        "adjustSelectionDown": "Seçimi aşağıya doğru genişlet",
+        "adjustSelectionLeft": "Seçimi sola doğru genişlet",
+        "adjustSelectionRight": "Seçimi sağa doğru genişlet",
+        "up": "Hücre seçim kutusunu yukarı taşı",
+        "down": "Hücre seçim kutusunu aşağı doğru taşı",
+        "left": "Hücre seçim kutusunu sola taşı",
+        "right": "Hücre seçim kutusunu sağa taşı",
+        "enter": "Seçili hücreyi düzenle",
+        "tab": "Hücre seçim kutusunu sağa taşı",
+        "delete": "Hücre verilerini temizle"
+      }
     },
     "cellBorderStyle": {
       "none": "Hiçbiri",
@@ -861,12 +887,12 @@
       "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Düzenleme Uyarısı",
-      "message": "Bu sayfa adı zaten var. Lütfen başka bir ad girin."
+      "title": "Sayfa Adını Düzenle",
+      "message": "Bu isim zaten mevcut. Lütfen başka bir isim girin."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Düzenleme Uyarısı",
-      "message": "Bu sayfa adı boş olamaz."
+      "title": "Sayfa Adını Düzenle",
+      "message": "Sayfa adı boş olamaz. Lütfen bir ad girin."
     },
     "sheetTabDeleteMessage": {
       "title": "Düzenleme Uyarısı",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Özellikler",
     "miscValuesHeader": "Tümü",
     "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Metin Filigranı",
-    "uploadImage": "Fotoğraf yükleniyor",
-    "browse": "Araştır",
-    "watermarkOptions": "Filigran Seçenekleri",
-    "watermarks": "filigranlar"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF Portföyü Oluştur",

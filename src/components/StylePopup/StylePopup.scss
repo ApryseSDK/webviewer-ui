@@ -12,8 +12,8 @@
   }
 
   .sliders-container {
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-inline-start: 6px;
+    padding-inline-end: 6px;
     margin-top: 4px;
   }
 
@@ -25,7 +25,7 @@
     align-items: center;
 
     .menu-title {
-      padding-left: 4px;
+      padding-inline-start: 4px;
       padding-top: 6px;
       padding-bottom: 6px;
       font-weight: bold;
@@ -34,7 +34,7 @@
 
     .Icon {
       position: absolute;
-      right: 0;
+      inset-inline-end: 0;
 
       height: 18px;
       width: 18px;
@@ -58,6 +58,6 @@
 
   .snapping-option {
     margin-top: 10px;
-    margin-left: 2px;
+    margin-inline-start: 2px;
   }
 }

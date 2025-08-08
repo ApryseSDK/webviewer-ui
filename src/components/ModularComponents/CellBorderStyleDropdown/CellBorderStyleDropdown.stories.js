@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import CellBorderStyleDropdown from './CellBorderStyleDropdown';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 
 export default {
   title: 'SpreadsheetEditor/CellBorderStyleDropdown',

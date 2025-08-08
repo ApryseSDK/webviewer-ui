@@ -27,6 +27,13 @@ const DIRECTION = {
   COLUMN: 'column',
 };
 
+const PANEL_LOCATION = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  START: 'start',
+  END: 'end',
+};
+
 export const STYLE_TOGGLE_OPTIONS = {
   Bold: 'bold',
   Italic: 'italic',
@@ -280,6 +287,12 @@ const PRESET_BUTTONS_MODAL_TOGGLES = [
   PRESET_BUTTON_TYPES.SETTINGS,
 ];
 
+const ITEM_RENDER_PREFIXES = {
+  STYLE_PANEL: 'stylePanel',
+  RUBBER_STAMP_PANEL: 'rubberStampPanel',
+  SIGNATURE_LIST_PANEL: 'signatureListPanel',
+};
+
 const DEFAULT_GAP = 12;
 
 const VIEWER_CONFIGURATIONS = {
@@ -369,6 +382,7 @@ export {
   BUTTON_TYPES,
   FLYOUT_ITEM_TYPES,
   PRESET_BUTTONS_MODAL_TOGGLES,
+  ITEM_RENDER_PREFIXES,
   VIEWER_CONFIGURATIONS,
   CELL_ADJUSTMENT_FLYOUT_ITEMS,
   CELL_BORDER_BUTTONS,
@@ -376,4 +390,5 @@ export {
   VALID_DOCX_EXTENSIONS,
   VALID_XLSX_EXTENSIONS,
   CELL_ADJUSTMENT_BUTTONS,
+  PANEL_LOCATION,
 };

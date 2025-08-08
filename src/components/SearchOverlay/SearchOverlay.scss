@@ -5,7 +5,7 @@
   position: static;
   display: flex;
   flex-direction: column;
-  padding-right: 8px;
+  padding-inline-end: 8px;
   flex-wrap: nowrap;
   border: 0px;
   border-radius: 0px;
@@ -13,10 +13,43 @@
   visibility: visible !important;
   flex-grow: 0;
 
-  .search-and-replace-title {
-    @include mobile {
-      margin: 8px 0;
+  .search-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .search-options-button {
+    height: 32px;
+    width: 32px;
+
+    .Icon {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+
+        .dot {
+          fill: var(--blue-5);
+        }
+
+        .filter {
+          fill: var(--gray-6);
+        }
+      }
     }
+  }
+
+  .replace-icon {
+    .Icon {
+      svg {
+        fill: var(--gray-6);
+        color: var(--gray-6)
+      }
+    }
+    margin: 0 8px 0 0;
   }
 
   .input-container {
@@ -25,24 +58,34 @@
     box-sizing: border-box;
     border: 1px solid var(--border);
     border-radius: 4px;
-    height: 28px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     color: var(--text-color);
-    padding: 6px 2px 6px 6px;
+    padding: 4px 8px;
     background: var(--component-background);
+    flex: 1;
+
+    &.with-replace-icon {
+      justify-content: flex-start;
+    }
 
     input {
       width: 100%;
-      padding-right: 26px;
-      height: 20px;
+      padding-inline-end: 26px;
+      height: 24px;
       border: none;
       background: transparent;
+      padding: 0;
 
       @include mobile {
         font-size: 13px;
       }
+    }
+
+    &.with-replace-icon input {
+      padding-inline-end: 0;
     }
 
     input::placeholder {
@@ -74,7 +117,13 @@
     }
   }
 
-  .divider{
+  .search-option-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .divider {
     height: 1px;
     width: 100%;
     background: var(--divider);
@@ -88,7 +137,7 @@
 
     // toolkit choice component
     > span {
-      margin-right: 16px;
+      margin-inline-end: 16px;
       // label of toolkit choice component
       > label {
         white-space: nowrap;
@@ -100,6 +149,8 @@
   }
 
   .replace-options {
+    margin-top: 8px;
+    
     .replace-buttons {
       display: flex;
       flex-direction: row;
@@ -108,7 +159,7 @@
       .spinner {
         margin: 0;
         position: absolute;
-        left: 30px;
+        inset-inline-start: 30px;
       }
       .btn-replace {
         display: flex;
@@ -142,9 +193,9 @@
         width: fit-content;
         height: 32px;
         cursor: pointer;
-        margin-right: 5px;
+        margin-inline-end: 5px;
 
-        &:hover:not(:disabled) {   
+        &:hover:not(:disabled) {
           color: var(--blue-6);
         }
         @include mobile {
@@ -161,27 +212,6 @@
     }
   }
 
-  .extra-options {
-    margin-top: 8px;
-    button.Button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--blue-5);
-      width: auto;
-      cursor: pointer;
-      margin-right: 5px;
-      font-weight: 500;
-      height: 25px;
-
-      .Icon {
-        color: var(--blue-5);
-        width: 14px;
-        margin-top: 10px;
-        margin-left: 6px;
-      }
-    }
-  }
   .footer {
     display: flex;
     align-items: center;
@@ -190,8 +220,8 @@
     margin-bottom: 16px;
 
     .spinner {
-      height:25px !important;
-      width:25px !important;
+      height: 25px !important;
+      width: 25px !important;
       margin: 0px;
     }
 
@@ -200,7 +230,7 @@
       flex-direction: row;
       align-self: flex-end;
       justify-content: space-evenly;
-      margin-left: auto;
+      margin-inline-start: auto;
       width: 64px;
       height: 28px;
 
@@ -219,7 +249,7 @@
         }
 
         &:hover {
-          background-color: var(--blue-1)
+          background-color: var(--blue-1);
         }
       }
 
@@ -252,7 +282,7 @@
       }
     }
 
-    .input-container { 
+    .input-container {
       &:focus-within {
         outline: none;
         border: 1px solid var(--focus-border);
@@ -265,23 +295,7 @@
       }
 
       .search-panel-input {
-        padding-left: 8px;
-
-        @include mobile {
-          font-size: 13px;
-        }
-      }
-    }
-
-    .extra-options {
-      .Button {
-        &:hover {
-          @extend %tertiary-button-hover;
-  
-          .Icon {
-            color: var(--blue-6);
-          }
-        }
+        padding-inline-start: 8px;
 
         @include mobile {
           font-size: 13px;

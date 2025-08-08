@@ -22,6 +22,7 @@ import fireEvent from 'helpers/fireEvent';
 import './ThumbnailsPanel.scss';
 import getRootNode from 'helpers/getRootNode';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -52,6 +53,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
 
   const [t] = useTranslation();
+  const isRightToLeft = i18next.dir() === 'rtl';
 
   const listRef = useRef();
   const pendingThumbs = useRef([]);
@@ -225,7 +227,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     const { width, height } = getThumbnailSize(pageWidth, pageHeight);
 
     const annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
-    annotCanvas.className = 'annotation-image';
+    annotCanvas.className = `annotation-image ${isRightToLeft ? 'right-to-left' : ''}`;
     annotCanvas.role = 'img';
     annotCanvas.ariaLabel = `${t('action.page')} ${pageNumber}`;
     annotCanvas.style.maxWidth = `${thumbnailSize}px`;
@@ -640,6 +642,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                   thumbnailSize={thumbnailSize}
                   panelSelector={panelSelector}
                   parentKeyListener={(e) => handleThumbnailKeyDown(e, thumbIndex)}
+                  isRightToLeft={isRightToLeft}
                 />
               </td>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
@@ -699,7 +702,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
             min={0}
             max={1}
             step={0.01}
-            value={thumbnailSize/1000}
+            value={thumbnailSize / 1000}
             getDisplayValue={() => thumbnailSize}
             onSliderChange={onSliderChange}
             onStyleChange={onSliderChange}
@@ -757,7 +760,10 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                 rowCount={Math.ceil(pageCount / numberOfColumns)}
                 rowRenderer={renderThumbnails}
                 overscanRowCount={3}
-                className={'thumbnailsList'}
+                className={classNames({
+                  'thumbnailsList': true,
+                  'right-to-left': isRightToLeft,
+                })}
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
                 role='grid'

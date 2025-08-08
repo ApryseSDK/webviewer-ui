@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import StylePresetDropdown from './StylePresetDropdown';
-import { userEvent, expect } from '@storybook/test';
+import { userEvent, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
 
 export default {

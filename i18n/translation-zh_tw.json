@@ -111,6 +111,7 @@
     "open": "打開",
     "deselectAll": "取消全選",
     "select": "選擇",
+    "buttonPressed": "已按下 {{buttonName}} 按鈕",
     "moveToTop": "移到頂部",
     "moveToBottom": "移到底部",
     "movePageToTop": "將頁面移至頂部",
@@ -272,7 +273,6 @@
       "close": "關閉所有註釋"
     },
     "comparePanel": "比較面板",
-    "watermarkPanel": "水印面板",
     "mainMenu": "主選單"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "沒有找到結果。",
     "numResultsFound": "找到結果",
     "loadError": "載入文檔時出錯",
+    "urlInputFileLoadError": "無法從提供的 URL 檢索文件。",
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "enterPasswordPlaceholder": "輸入密碼",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "搜索評論",
     "searchDocumentPlaceholder": "搜索文件",
     "clearSearchResults": "清除搜尋結果",
+    "toggleReplaceInput": "切換替換輸入",
+    "toggleSearchOptions": "切換搜尋選項",
     "searchResultsCleared": "搜尋結果已清除",
     "searchSettingsPlaceholder": "搜尋設定",
     "searchSuggestionsPlaceholder": "搜尋建議",
@@ -803,7 +806,30 @@
       "setShortcut": "設定快捷方式",
       "editShortcut": "編輯快捷方式",
       "shortcutAlreadyExists": "上面的鍵盤快捷鍵已經存在。",
-      "close": "關閉工具提示"
+      "close": "關閉工具提示",
+      "spreadsheetEditor": {
+        "copyText": "複製選取的文字或儲存格",
+        "pasteText": "貼上文字或單元格",
+        "cutText": "剪下選定的文字或儲存格",
+        "undoChange": "撤銷更改",
+        "redoChange": "重做更改",
+        "selectAll": "選取所有儲存格",
+        "moveToEdgeUp": "跳至工作表頂部",
+        "moveToEdgeDown": "跳至工作表底部",
+        "moveToEdgeLeft": "跳到最左邊的列",
+        "moveToEdgeRight": "跳到最右邊的列",
+        "adjustSelectionUp": "向上擴展選擇",
+        "adjustSelectionDown": "向下擴展選擇",
+        "adjustSelectionLeft": "向左擴展選擇",
+        "adjustSelectionRight": "擴大選擇權",
+        "up": "向上移動單元格選擇框",
+        "down": "向下移動單元格選擇框",
+        "left": "向左移動儲存格選擇框",
+        "right": "向右移動單元格選擇框",
+        "enter": "編輯選取的儲存格",
+        "tab": "將儲存格選擇框向右移動",
+        "delete": "清除單元格數據"
+      }
     },
     "cellBorderStyle": {
       "none": "沒有任何",
@@ -861,12 +887,12 @@
       "message": "該文檔正在嘗試連接到：\n\n{{- uri}}\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
     },
     "sheetTabRenameIssueOne": {
-      "title": "編輯警告",
-      "message": "該工作表名稱已存在。請輸入另一個名稱。"
+      "title": "編輯工作表名稱",
+      "message": "此名稱已存在。請輸入其他名稱。"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "編輯警告",
-      "message": "該工作表名稱不能為空。"
+      "title": "編輯工作表名稱",
+      "message": "工作表名稱不能為空。請輸入一個名稱。"
     },
     "sheetTabDeleteMessage": {
       "title": "編輯警告",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "屬性",
     "miscValuesHeader": "全部",
     "emptyPanelMessage": "選擇一個元素來查看它的屬性."
-  },
-  "watermarkPanel": {
-    "textWatermark": "文字水印",
-    "uploadImage": "上傳圖片",
-    "browse": "瀏覽",
-    "watermarkOptions": "水印選項",
-    "watermarks": "水印"
   },
   "portfolio": {
     "createPDFPortfolio": "創建 PDF 包",

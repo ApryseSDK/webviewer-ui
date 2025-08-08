@@ -30,7 +30,7 @@
 
       p {
         max-width: 130px;
-        padding-left: 4px;
+        padding-inline-start: 4px;
         font-size: var(--font-size-default);
         white-space: nowrap;
         overflow: hidden;
@@ -42,7 +42,7 @@
         cursor: wait;
       }
     }
-     
+
     .hide {
       display: none;
     }
@@ -57,8 +57,8 @@
   .Button {
     margin: 6px;
     height: 24px;
-   
-      .Icon {
+
+    .Icon {
       width: 16px;
       height: 16px;
       flex: inherit;
@@ -69,7 +69,7 @@
     background-color: var(--multi-tab-divider);
     width: 1px;
     height: var(--multi-tab-divider-height);
-    top: var(--multi-tab-divider-top);
+    inset-block-start: var(--multi-tab-divider-top);
     position: absolute;
   }
 
@@ -81,7 +81,8 @@
   &.active {
     border-top-left-radius: var(--multi-tab-border-radius);
     border-top-right-radius: var(--multi-tab-border-radius);
-    box-shadow: inset 0 1px 0 0 var(--multi-tab-divider), inset 1px 0 0 0 var(--multi-tab-divider), inset -1px 0 0 0 var(--multi-tab-divider), 0 0 0 0px;
+    box-shadow: inset 0 1px 0 0 var(--multi-tab-divider), inset 1px 0 0 0 var(--multi-tab-divider),
+      inset -1px 0 0 0 var(--multi-tab-divider), 0 0 0 0px;
     background-color: var(--multi-tab-active-tab-background);
 
     .file-text {
@@ -95,7 +96,6 @@
     .Tab {
       background-color: var(--multi-tab-active-tab-background);
     }
-
   }
 
   &:hover {

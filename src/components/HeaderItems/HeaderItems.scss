@@ -16,11 +16,14 @@
     display: none;
   }
 
-  >.Button, >.toggle-element-button {
+  > .Button,
+  > .toggle-element-button {
     margin: 0 6px;
+
     @include mobile {
       margin: 0 5px;
     }
+
     @include tablet {
       margin: 0 10px;
     }
@@ -28,6 +31,7 @@
 
   .tool-group-button {
     margin: 0 6px;
+
     @include tablet-and-mobile {
       margin: 0 11px;
     }
@@ -38,7 +42,7 @@
     height: 100%;
   }
 
-  >.divider {
+  > .divider {
     width: 1px;
     height: 20px;
     margin: 0 6px;
@@ -67,11 +71,13 @@
     pointer-events: none;
     width: 64px;
     background: var(--tools-header-background);
+
     @include ie11 {
       background: none; // hack for ie11. Gradient does not work
     }
-    top: 0px; // hack for ie11. centers vertically.
-    bottom: 0px; // hack for ie11. centers vertically.
+
+    inset-block-start: 0px; // hack for ie11. centers vertically.
+    inset-block-end: 0px; // hack for ie11. centers vertically.
     margin: auto; // hack for ie11. centers vertically.
 
     .Icon {
@@ -79,30 +85,42 @@
     }
 
     &.left {
-      left: 0px;
-      mask-image: -webkit-gradient(linear, right top, left top,
-      from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-      color-stop(0.6,  rgba(0,0,0,1)));
+      inset-inline-start: 0px;
+      mask-image: -webkit-gradient(
+        linear,
+        right top,
+        left top,
+        from(rgba(0, 0, 0, 0)),
+        to(rgba(0, 0, 0, 1)),
+        color-stop(0.6, rgba(0, 0, 0, 1))
+      );
       justify-content: flex-start;
     }
 
     &.right {
-      right: 0px;
-      mask-image: -webkit-gradient(linear, left top, right top,
-      from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-      color-stop(0.6,  rgba(0,0,0,1)));
+      inset-inline-end: 0px;
+      mask-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(rgba(0, 0, 0, 0)),
+        to(rgba(0, 0, 0, 1)),
+        color-stop(0.6, rgba(0, 0, 0, 1))
+      );
       justify-content: flex-end;
     }
 
     .scroll-edge {
       background: var(--tools-header-background);
       height: 100%;
+
       &.left {
         width: 8px;
       }
 
       &.right {
-        right: 0px;
+        inset-inline-end: 0px;
+
         @include mobile {
           width: 8px;
         }
@@ -136,30 +154,32 @@
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
+    display: none;
+    /* Safari and Chrome */
   }
 
   :last-child {
-    margin-right: 0px;
+    margin-inline-end: 0px;
   }
 }
 
 .HeaderItems {
-  >.divider {
-    margin-left: 0px;
+  > .divider {
+    margin-inline-start: 0px;
+
     @include desktop {
-      margin-left: 16px;
-      margin-right: 16px;
+      margin-inline-start: 16px;
+      margin-inline-end: 16px;
     }
 
     @include tablet {
-      margin-left: 16px;
-      margin-right: 16px;
+      margin-inline-start: 16px;
+      margin-inline-end: 16px;
     }
 
     @include mobile {
-      margin-left: 16px;
-      margin-right: 16px;
+      margin-inline-start: 16px;
+      margin-inline-end: 16px;
     }
   }
 
@@ -167,14 +187,15 @@
     scroll-snap-align: start;
   }
 
-  > .Button , .tool-group-button {
+  > .Button,
+  .tool-group-button {
     width: 32px;
     height: 32px;
   }
 
   .Button {
     &:not(.disabled) {
-      &:hover{
+      &:hover {
         border-radius: 4px;
         background: var(--tools-button-hover);
       }

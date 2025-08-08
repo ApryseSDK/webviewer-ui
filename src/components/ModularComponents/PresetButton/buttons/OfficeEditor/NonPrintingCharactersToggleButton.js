@@ -9,10 +9,18 @@ import { menuItems } from '../../../Helpers/menuItems';
 
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const NonPrintingCharactersToggleButton = forwardRef((props, ref) => {
-  const { isFlyoutItem } = props;
+  const {
+    isFlyoutItem,
+    dataElement = menuItems.officeEditorToggleNonPrintingCharactersButton.dataElement,
+    img: icon = menuItems.officeEditorToggleNonPrintingCharactersButton.icon,
+    title = menuItems.officeEditorToggleNonPrintingCharactersButton.title,
+  } = props;
 
   const handleClick = async () => {
     const doc = core.getDocument();
@@ -20,8 +28,6 @@ const NonPrintingCharactersToggleButton = forwardRef((props, ref) => {
   };
 
   const enableNonPrintingCharacters = useSelector((state) => selectors.isNonPrintingCharactersEnabled(state));
-
-  const { icon, title, dataElement } = menuItems.officeEditorToggleNonPrintingCharactersButton;
 
   return (
     isFlyoutItem

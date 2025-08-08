@@ -21,6 +21,7 @@ import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 
 import './Note.scss';
+import { isAnnotationRenderedInDisplayMode } from 'src/helpers/isAnnotationRenderedInDisplayMode';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -267,6 +268,8 @@ const Note = ({
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
+  const isRenderableInCurrentDisplayMode =  isAnnotationRenderedInDisplayMode(core, annotation);
+  const isRenderingConnectorLine = isSelected && (isInNotesPanel || isCustomPanelOpen) && !shouldHideConnectorLine && isRenderableInCurrentDisplayMode;
 
   return (
     <div
@@ -341,7 +344,7 @@ const Note = ({
           )}
         </>
       )}
-      {isSelected && (isInNotesPanel || isCustomPanelOpen) && !shouldHideConnectorLine && (
+      {isRenderingConnectorLine && (
         <AnnotationNoteConnectorLine
           annotation={annotation}
           noteContainerRef={containerRef}

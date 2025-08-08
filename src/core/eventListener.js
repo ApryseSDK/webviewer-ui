@@ -111,6 +111,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     accessibleReadingOrderModeNoStructure: accessibleReadingOrderManager,
     userBookmarksChanged: documentViewer,
     selectionChanged: spreadsheetEditorManager,
+    sheetChanged: spreadsheetEditorManager,
     spreadsheetEditorEditModeChanged: spreadsheetEditorManager,
     activeSheetChanged: spreadsheetEditorManager,
     spreadsheetEditorLoaded: spreadsheetEditorManager,

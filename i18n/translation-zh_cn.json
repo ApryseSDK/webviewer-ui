@@ -111,6 +111,7 @@
     "open": "打开",
     "deselectAll": "取消全选",
     "select": "选择",
+    "buttonPressed": "已按下 {{buttonName}} 按钮",
     "moveToTop": "移到顶部",
     "moveToBottom": "移到底部",
     "movePageToTop": "将页面移至顶部",
@@ -272,7 +273,6 @@
       "close": "关闭所有注释"
     },
     "comparePanel": "比较面板",
-    "watermarkPanel": "水印面板",
     "mainMenu": "主菜单"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "未找到结果。",
     "numResultsFound": "找到结果",
     "loadError": "加载文档时出错",
+    "urlInputFileLoadError": "无法从提供的 URL 检索文件。",
     "notSupported": "不支持该文件类型。",
     "passwordRequired": "需要输入密码",
     "enterPasswordPlaceholder": "输入密码",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "搜索评论",
     "searchDocumentPlaceholder": "搜索文件",
     "clearSearchResults": "清除搜索结果",
+    "toggleReplaceInput": "切换替换输入",
+    "toggleSearchOptions": "切换搜索选项",
     "searchResultsCleared": "搜索结果已清除",
     "searchSettingsPlaceholder": "搜索设置",
     "searchSuggestionsPlaceholder": "搜索建议",
@@ -803,7 +806,30 @@
       "setShortcut": "设置快捷方式",
       "editShortcut": "编辑快捷方式",
       "shortcutAlreadyExists": "上面的键盘快捷键已经存在。",
-      "close": "关闭工具提示"
+      "close": "关闭工具提示",
+      "spreadsheetEditor": {
+        "copyText": "复制选定的文本或单元格",
+        "pasteText": "粘贴文本或单元格",
+        "cutText": "剪切选定的文本或单元格",
+        "undoChange": "撤消更改",
+        "redoChange": "重做更改",
+        "selectAll": "选择所有单元格",
+        "moveToEdgeUp": "跳至工作表顶部",
+        "moveToEdgeDown": "跳至工作表底部",
+        "moveToEdgeLeft": "跳转到最左边的列",
+        "moveToEdgeRight": "跳转到最右边的列",
+        "adjustSelectionUp": "向上扩展选择",
+        "adjustSelectionDown": "向下扩展选择",
+        "adjustSelectionLeft": "向左扩展选择",
+        "adjustSelectionRight": "扩大选择权",
+        "up": "向上移动单元格选择框",
+        "down": "向下移动单元格选择框",
+        "left": "向左移动单元格选择框",
+        "right": "向右移动单元格选择框",
+        "enter": "编辑选定的单元格",
+        "tab": "将单元格选择框向右移动",
+        "delete": "清除单元格数据"
+      }
     },
     "cellBorderStyle": {
       "none": "没有任何",
@@ -861,12 +887,12 @@
       "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
     },
     "sheetTabRenameIssueOne": {
-      "title": "编辑警告",
-      "message": "此工作表名称已存在。请输入其他名称。"
+      "title": "编辑工作表名称",
+      "message": "此名称已存在。请输入其他名称。"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "编辑警告",
-      "message": "该工作表名称不能为空。"
+      "title": "编辑工作表名称",
+      "message": "工作表名称不能为空。请输入一个名称。"
     },
     "sheetTabDeleteMessage": {
       "title": "编辑警告",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "属性",
     "miscValuesHeader": "全部",
     "emptyPanelMessage": "选择一个元素来查看它的属性."
-  },
-  "watermarkPanel": {
-    "textWatermark": "文字水印",
-    "uploadImage": "上传图片",
-    "browse": "浏览",
-    "watermarkOptions": "水印选项",
-    "watermarks": "水印"
   },
   "portfolio": {
     "createPDFPortfolio": "创建 PDF 包",

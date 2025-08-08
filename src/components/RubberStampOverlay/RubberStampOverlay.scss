@@ -2,14 +2,14 @@
 @import '../../constants/overlay';
 
 .rubber-stamp-overlay {
-  margin-left: 0px;
+  margin-inline-start: 0px;
   margin-bottom: 8px;
-  padding-left: 8px;
-  padding-right: 4px;
+  padding-inline-start: 8px;
+  padding-inline-end: 4px;
 
   @include mobile {
     margin-bottom: 0px;
-    margin-right: 0px;
+    margin-inline-end: 0px;
     padding-top: 12px;
   }
 
@@ -17,7 +17,6 @@
     max-height: 270px;
     overflow: auto;
     margin-bottom: 8px;
-
   }
 
   .standard-stamp-panel {
@@ -37,8 +36,6 @@
       width: 300px;
     }
   }
-
-  .custom-stamp-panel {}
 
   .rubber-stamp {
     @include button-reset;
@@ -99,7 +96,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-right: 8px;
+    margin-inline-end: 8px;
 
     img {
       max-width: 100%;
@@ -138,7 +135,7 @@
 
     @include mobile {
       width: 90%;
-      margin-right: 0px;
+      margin-inline-end: 0px;
     }
   }
 

@@ -49,7 +49,7 @@ const sheets = [
 const tabObject = {
   sheet: { sheetIndex: 0, name: 'SheetName' },
   sheetCount: sheets.length,
-  activeSheetLabel: 'SheetName'
+  activeSheetLabel: 'SheetName',
 };
 export const Basic = () => {
   return (

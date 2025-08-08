@@ -12,9 +12,8 @@ import { Input } from '@pdftron/webviewer-react-toolkit';
 import mapObjectKeys from 'helpers/mapObjectKeys';
 import {
   OFFICE_EDITOR_TRANSLATION_PREFIX,
-  MARGIN_UNITS,
+  LAYOUT_UNITS,
   MARGIN_SIDES,
-  PIXELS_PER_INCH,
   VERTICAL_MARGIN_LIMIT,
   PAGE_LAYOUT_WARNING_TYPE,
 } from 'constants/officeEditor';
@@ -106,10 +105,7 @@ const OfficeEditorMarginsModal = () => {
     const setInitialData = async () => {
       const pageNumber = await core.getOfficeEditor().getEditingPageNumber();
       const margins = await core.getOfficeEditor().getSectionMargins(currentUnit);
-      const pageWidthInInch = core.getPageWidth(pageNumber) / PIXELS_PER_INCH;
-      const pageHeightInInch = core.getPageHeight(pageNumber) / PIXELS_PER_INCH;
-      const pageWidthInCurrentUnit = convertMeasurementUnit(pageWidthInInch, MARGIN_UNITS.INCH, currentUnit);
-      const pageHeightInCurrentUnit = convertMeasurementUnit(pageHeightInInch, MARGIN_UNITS.INCH, currentUnit);
+      const { width: pageWidthInCurrentUnit, height: pageHeightInCurrentUnit } = core.getOfficeEditor().getPageDimensions(pageNumber, currentUnit);
 
       setPageWidth(pageWidthInCurrentUnit);
       setPageHeight(pageHeightInCurrentUnit);
@@ -175,7 +171,7 @@ const OfficeEditorMarginsModal = () => {
               dataElement={DataElements.OFFICE_EDITOR_MARGIN_UNIT}
               labelledById='office-editor-margin-unit-label'
               className={'unit-dropdown'}
-              items={Object.values(MARGIN_UNITS)}
+              items={Object.values(LAYOUT_UNITS)}
               onClickItem={handleUnitChange}
               getKey={(item) => item}
               currentSelectionKey={currentUnit}

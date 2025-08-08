@@ -111,6 +111,7 @@
     "open": "Deschis",
     "deselectAll": "Deselectați Toate",
     "select": "Selectați",
+    "buttonPressed": "Butonul {{buttonName}} a fost apăsat",
     "moveToTop": "Mutați sus",
     "moveToBottom": "Mutați în jos",
     "movePageToTop": "Mutați pagina în sus",
@@ -272,7 +273,6 @@
       "close": "Închideți toate adnotările"
     },
     "comparePanel": "Panoul de comparare",
-    "watermarkPanel": "Panoul filigran",
     "mainMenu": "Meniul principal"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Nici un rezultat gasit.",
     "numResultsFound": "rezultate găsite",
     "loadError": "Eroare la încărcarea documentului",
+    "urlInputFileLoadError": "Fișierul nu a putut fi preluat de la adresa URL furnizată.",
     "notSupported": "Acel tip de fișier nu este suportat.",
     "passwordRequired": "Este necesară parola",
     "enterPasswordPlaceholder": "Introdu parola",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Căutați comentarii",
     "searchDocumentPlaceholder": "Căutați documentul",
     "clearSearchResults": "Ștergeți rezultatele căutării",
+    "toggleReplaceInput": "Comutare înlocuire intrare",
+    "toggleSearchOptions": "Comutare opțiuni de căutare",
     "searchResultsCleared": "Rezultatele căutării au fost șterse",
     "searchSettingsPlaceholder": "Setări de căutare",
     "searchSuggestionsPlaceholder": "Căutați sugestii",
@@ -803,7 +806,30 @@
       "setShortcut": "Setați comanda rapidă",
       "editShortcut": "Editați comanda rapidă",
       "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja.",
-      "close": "Închideți tooltip"
+      "close": "Închideți tooltip",
+      "spreadsheetEditor": {
+        "copyText": "Copiați textul sau celulele selectate",
+        "pasteText": "Lipirea textului sau a celulelor",
+        "cutText": "Decuparea textului sau a celulelor selectate",
+        "undoChange": "Anulați o modificare",
+        "redoChange": "Refaceți o modificare",
+        "selectAll": "Selectați toate celulele",
+        "moveToEdgeUp": "Sari la începutul foii",
+        "moveToEdgeDown": "Sari la sfârșitul foii",
+        "moveToEdgeLeft": "Sari la coloana cea mai din stânga",
+        "moveToEdgeRight": "Sari la coloana din dreapta",
+        "adjustSelectionUp": "Extindeți selecția în sus",
+        "adjustSelectionDown": "Extindeți selecția în jos",
+        "adjustSelectionLeft": "Extindeți selecția la stânga",
+        "adjustSelectionRight": "Extindeți selecția la dreapta",
+        "up": "Mută caseta de selectare a celulelor în sus",
+        "down": "Mută caseta de selectare a celulelor în jos",
+        "left": "Mută caseta de selectare a celulelor la stânga",
+        "right": "Mută caseta de selectare a celulelor la dreapta",
+        "enter": "Editați celula selectată",
+        "tab": "Mută caseta de selectare a celulelor la dreapta",
+        "delete": "Ștergeți datele celulare"
+      }
     },
     "cellBorderStyle": {
       "none": "Nici unul",
@@ -861,12 +887,12 @@
       "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Editare avertisment",
-      "message": "Acest nume de foaie există deja. Vă rugăm să introduceți un alt nume."
+      "title": "Editați numele foii",
+      "message": "Acest nume există deja. Vă rugăm să introduceți un alt nume."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Editare avertisment",
-      "message": "Numele acestei foi nu poate fi gol."
+      "title": "Editați numele foii",
+      "message": "Numele foii nu poate fi gol. Vă rugăm să introduceți un nume."
     },
     "sheetTabDeleteMessage": {
       "title": "Editare avertisment",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Proprietăți",
     "miscValuesHeader": "Toate",
     "emptyPanelMessage": "Selectați un element pentru a-i vedea proprietățile"
-  },
-  "watermarkPanel": {
-    "textWatermark": "Filigran text",
-    "uploadImage": "Incarca imaginea",
-    "browse": "Naviga",
-    "watermarkOptions": "Opțiuni filigran",
-    "watermarks": "Filigrane"
   },
   "portfolio": {
     "createPDFPortfolio": "Creați portofoliu PDF",

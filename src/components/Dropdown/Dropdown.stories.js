@@ -1,8 +1,10 @@
 import React from 'react';
 import { createStore } from 'redux';
+import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import Dropdown from './Dropdown';
 import { DEFAULT_POINT_SIZE, FONT_SIZE, AVAILABLE_POINT_SIZES } from 'constants/officeEditor';
+import VisuallyHiddenLabel from '../VisuallyHiddenLabel';
 
 
 export default {
@@ -183,7 +185,7 @@ export function DropdownWithInputAndNoSearch() {
 
 }
 
-export function DropdownWithCustomDisplay() {
+export function DropdownWithCustomDisplay({ disabled = false }) {
   const translationPrefix = 'option.notesOrder';
   const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
   const [currentSelectionKey, setCurrentSelectionKey] = React.useState(items[0]);
@@ -193,13 +195,16 @@ export function DropdownWithCustomDisplay() {
   return (
     <ReduxProvider store={createStore((state = {}) => state)}>
       <div style={{ width: 100 }}>
+        <VisuallyHiddenLabel id="notesSortLabel" label='Sort' />
         <Dropdown
           onClickItem={onClickItem}
           items={items}
+          labelledById='notesSortLabel'
           translationPrefix={translationPrefix}
           currentSelectionKey={currentSelectionKey}
-          displayButton={(isOpen) => (
-            <button>
+          disabled={disabled}
+          displayButton={() => (
+            <button disabled={disabled}>
               Test display
             </button>
           )}
@@ -208,32 +213,12 @@ export function DropdownWithCustomDisplay() {
     </ReduxProvider>
   );
 }
+DropdownWithCustomDisplay.propTypes = {
+  disabled: PropTypes.bool,
+};
 
 export function DropdownWithCustomDisplayAndDisabled() {
-  const translationPrefix = 'option.notesOrder';
-  const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
-  const [currentSelectionKey, setCurrentSelectionKey] = React.useState(items[0]);
-  function onClickItem(key) {
-    setCurrentSelectionKey(key);
-  }
-  return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
-      <div style={{ width: 100 }}>
-        <Dropdown
-          onClickItem={onClickItem}
-          items={items}
-          translationPrefix={translationPrefix}
-          currentSelectionKey={currentSelectionKey}
-          disabled
-          displayButton={() => (
-            <button disabled>
-              Test display
-            </button>
-          )}
-        />
-      </div>
-    </ReduxProvider>
-  );
+  return <DropdownWithCustomDisplay disabled={true} />;
 }
 
 export function DropdownWithNoItems() {

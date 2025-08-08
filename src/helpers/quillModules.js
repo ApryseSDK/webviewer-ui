@@ -1,4 +1,4 @@
-import { Quill } from 'react-quill';
+import { Quill } from 'react-quill-new';
 
 // Overriding clipboard module to fix cursor issue after pasting text
 const Clipboard = Quill.import('modules/clipboard');

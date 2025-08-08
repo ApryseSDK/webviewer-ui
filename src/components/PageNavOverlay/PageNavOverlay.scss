@@ -17,18 +17,18 @@
   opacity: 0.85;
 
   position: relative;
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
-  top: auto;
-  margin-left: auto;
-  margin-right: auto;
+  inset-block-start: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
   background: var(--gray-8);
   border-radius: 4px;
   z-index: 0;
-  bottom: 20px;
+  inset-block-end: 20px;
 
   &.logo-bar-enabled {
-    bottom: 20px + $logo-bar-height;
+    inset-block-end: 20px + $logo-bar-height;
   }
 
   .side-arrow-container {
@@ -64,7 +64,7 @@
     align-items: center;
 
     form {
-      top: -1px;
+      inset-block-start: -1px;
       position: relative;
       color: var(--gray-0);
       margin-bottom: 0;
@@ -73,7 +73,7 @@
         min-width: 8px;
         padding: 0;
         border: none;
-        text-align: right;
+        text-align: end;
         font-family: 'Lato';
         font-weight: bold;
         background: transparent;
@@ -90,5 +90,5 @@
 
 .FadeOut {
   opacity: 0;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }

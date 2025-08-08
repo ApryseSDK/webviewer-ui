@@ -2,12 +2,14 @@ import actions from 'actions';
 import {
   verticalAlignmentLabels,
   horizontalAlignmentLabels,
-  getFormatTypeFromFormatString,
 } from 'constants/spreadsheetEditor';
 import { defaultCellStyle, defaultTextColor } from 'src/helpers/initialColorStates';
+import getFormatTypeFromFormatString from 'src/helpers/getFormatTypeFromFormatString';
+import core from 'core';
 
 export default (dispatch) => (event) => {
-
+  const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
+  const spreadsheetEditorHistoryManager = spreadsheetEditorManager.getSpreadsheetEditorHistoryManager();
   const activeCellRange = event.getSelectionRangeDisplayValue();
   const clipboard = event.getClipboard();
   // Get cellRange returns the top-left and bottom-right cell of the current selection
@@ -50,6 +52,8 @@ export default (dispatch) => (event) => {
   };
 
   const formatType = getFormatTypeFromFormatString(formatString);
+  const canUndo = spreadsheetEditorHistoryManager.canUndo();
+  const canRedo = spreadsheetEditorHistoryManager.canRedo();
 
   dispatch(actions.setActiveCellRange({
     activeCellRange,
@@ -76,4 +80,6 @@ export default (dispatch) => (event) => {
       },
     }
   }));
+  dispatch(actions.setSpreadsheetEditorCanUndo(canUndo));
+  dispatch(actions.setSpreadsheetEditorCanRedo(canRedo));
 };

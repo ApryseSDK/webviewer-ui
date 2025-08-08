@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SearchPanelContainer from './SearchPanelContainer';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -7,7 +7,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import { default as mockAppInitialState } from 'src/redux/initialState';
-import { within, expect } from '@storybook/test';
+import { within, expect } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/SearchPanel',
@@ -25,6 +25,14 @@ const initialState = {
     panelWidths: { panel: 300 },
     modularHeaders: {},
     pageLabels: [1,2,3],
+    flyoutMap: {
+      searchOptionsFlyout: {
+        dataElement: 'searchOptionsFlyout',
+        items: [],
+      }
+    },
+    flyoutPosition: null,
+    openFlyout: null,
   },
   search: {},
   featureFlags: {
@@ -35,12 +43,6 @@ const initialState = {
 const store = configureStore({ reducer: () => initialState });
 
 export function SearchPanelLeft() {
-
-  useEffect(() => {
-    // test focus style for a11y
-    const div = document.querySelector('.ui__choice__input__check ');
-    div.classList.add('ui__choice__input__check--focus');
-  }, []);
   return (
     <Provider store={store}>
       <Panel location={'left'} dataElement={'panel'}>
@@ -49,6 +51,15 @@ export function SearchPanelLeft() {
     </Provider>
   );
 }
+
+SearchPanelLeft.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const searchInput = await canvas.findByRole('textbox', { name: 'Search document' });
+  expect(searchInput).toBeInTheDocument();
+
+  const replaceToggleButton = canvas.getByRole('button', { name: 'Toggle replace input' });
+  await replaceToggleButton.click();
+};
 
 export function SearchPanelRight() {
   const stateWithSearchValue = {
@@ -72,6 +83,9 @@ SearchPanelRight.play = async ({ canvasElement }) => {
   expect(searchInput).toBeInTheDocument();
   const clearSearchButton = await canvas.findByRole('button', { name: 'Clear search results' });
   expect(clearSearchButton).toBeInTheDocument();
+
+  const replaceToggleButton = canvas.getByRole('button', { name: 'Toggle replace input' });
+  await replaceToggleButton.click();
 };
 const SearchPanelInApp = (context, location, panelSize) => {
   const mockState = {
@@ -93,6 +107,14 @@ const SearchPanelInApp = (context, location, panelSize) => {
         searchPanel: true,
       },
       activeTheme: context.globals.theme,
+      flyoutMap: {
+        searchOptionsFlyout: {
+          dataElement: 'searchOptionsFlyout',
+          items: [],
+        }
+      },
+      flyoutPosition: null,
+      openFlyout: null,
     },
     featureFlags: {
       customizableUI: true,

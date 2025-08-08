@@ -14,6 +14,7 @@ export default (annotation, setAutoSizeFont, isAutoSizeFont) => {
   } else {
     freeTextAnnot.switchToAutoFontSize();
   }
+  core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
 
   setAutoSizeFont(!isAutoSizeFont);
   core.getAnnotationManager().redrawAnnotation(freeTextAnnot);

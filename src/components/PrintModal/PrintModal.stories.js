@@ -2,7 +2,7 @@ import React from 'react';
 import PrintModalComponent from './PrintModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import { copyMapWithDataProperties } from 'constants/map';
 
 const NOOP = () => { };

@@ -10,7 +10,6 @@
   gap: 16px;
   flex-direction: column;
 
-
   @include small-browser-height {
     height: 192px;
   }
@@ -38,7 +37,7 @@
         height: 16px;
       }
 
-      input[type="radio"]:checked {
+      input[type='radio']:checked {
         accent-color: var(--blue-5);
       }
 
@@ -92,7 +91,7 @@
     .labelContainer {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      padding-left: 28px;
+      padding-inline-start: 28px;
       color: var(--gray-7);
     }
 
@@ -101,7 +100,6 @@
         grid-template-columns: 1fr 2fr;
       }
     }
-
   }
 
   .emptyListContainer {

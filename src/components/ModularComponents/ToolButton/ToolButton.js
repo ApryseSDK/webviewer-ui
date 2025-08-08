@@ -16,6 +16,7 @@ import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
+import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -49,6 +50,8 @@ const ToolButton = forwardRef((props, ref) => {
     (state) => selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
     shallowEqual
   );
+  const rubberStampPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.RUBBER_STAMP_PANEL));
+  const signatureListPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL));
 
   const dispatch = useDispatch();
 
@@ -76,13 +79,6 @@ const ToolButton = forwardRef((props, ref) => {
     return false;
   };
 
-  const checkIfNeedsToOpenAPanel = (toolName) => {
-    if (toolName === ToolNames.SIGNATURE) {
-      dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
-    } else if (toolName === ToolNames.RUBBER_STAMP) {
-      dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
-    }
-  };
 
   useEffect(() => {
     const handleToolModeChange = (tool) => {
@@ -104,6 +100,37 @@ const ToolButton = forwardRef((props, ref) => {
   }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
 
 
+  const handlePanels = (toolName, action) => {
+    let elementToHandle;
+    let isPanelInFlyout = false;
+
+    if (toolName === ToolNames.SIGNATURE) {
+      if (signatureListPanelInFlyout) {
+        elementToHandle = signatureListPanelInFlyout.dataElement;
+        isPanelInFlyout = true;
+      } else {
+        elementToHandle = DataElements.SIGNATURE_LIST_PANEL;
+      }
+    } else if (toolName === ToolNames.RUBBER_STAMP) {
+      if (rubberStampPanelInFlyout) {
+        elementToHandle = rubberStampPanelInFlyout.dataElement;
+        isPanelInFlyout = true;
+      } else {
+        elementToHandle = DataElements.RUBBER_STAMP_PANEL;
+      }
+    }
+
+    if (action === 'open') {
+      if (isPanelInFlyout) {
+        dispatch(actions.openFlyout(elementToHandle, dataElement));
+        return;
+      }
+      dispatch(actions.openElement(elementToHandle));
+    } else if (action === 'close') {
+      dispatch(actions.closeElement(elementToHandle));
+    }
+  };
+
   const handleClick = () => {
     if (groupedItem) {
       // The tool can be in a grouped item and not be related to a ribbon, so we keep both
@@ -115,16 +142,10 @@ const ToolButton = forwardRef((props, ref) => {
 
     if (isButtonActive) {
       setIsButtonActive(false);
-
-      if (toolName === ToolNames.SIGNATURE) {
-        dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
-      } else if (toolName === ToolNames.RUBBER_STAMP) {
-        dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
-      }
-
+      handlePanels(toolName, 'close');
       core.setToolMode(defaultTool);
     } else {
-      checkIfNeedsToOpenAPanel(toolName);
+      handlePanels(toolName, 'open');
       core.setToolMode(toolName);
     }
   };
@@ -193,15 +214,21 @@ const ToolButton = forwardRef((props, ref) => {
       fillColor={fillColor}
       strokeColor={strokeColor}
       ariaCurrent={isButtonActive}
+      ariaPressed={isButtonActive}
       style={style}
     />
   );
 });
 
 ToolButton.propTypes = {
+  toolName: PropTypes.string.isRequired,
   dataElement: PropTypes.string,
   title: PropTypes.string,
   label: PropTypes.string,
+  className: PropTypes.string,
+  preset: PropTypes.string,
+  headerPlacement: PropTypes.string,
+  isFlyoutItem: PropTypes.bool,
   img: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
@@ -209,6 +236,7 @@ ToolButton.propTypes = {
   allFlyoutItems: PropTypes.array,
   style: PropTypes.object,
 };
+
 ToolButton.displayName = 'ToolButton';
 
 export default ToolButton;

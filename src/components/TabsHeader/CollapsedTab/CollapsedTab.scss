@@ -2,7 +2,6 @@
   height: 32px;
   width: 100%;
 
-
   &:hover {
     background-color: var(--multi-tab-flyout-hover);
     color: var(--multi-tab-flyout-hover-text);
@@ -24,7 +23,7 @@
 
   .file-text {
     max-width: calc(100% - 30px);
-    padding-left: 8px;
+    padding-inline-start: 8px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -45,7 +44,7 @@
   .Button {
     height: 24px;
     width: 24px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
 
     &.hidden-button {
       display: none;

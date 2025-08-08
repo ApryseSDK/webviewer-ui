@@ -12,12 +12,21 @@ import performClipboardActionOnCells from 'src/helpers/performClipboardActionOnC
 const propTypes = {
   actionType: PropTypes.oneOf(Object.values(CELL_ACTION_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const CopyPasteCutButton = forwardRef((props, ref) => {
   const { isFlyoutItem, actionType, style, className } = props;
+  const buttonSelector = `cell${capitalize(actionType)}`;
+  const {
+    dataElement = menuItems[buttonSelector].dataElement,
+    img: icon = menuItems[buttonSelector].icon,
+    title = menuItems[buttonSelector].title,
+  } = props;
   const isActive = false;
   const isEnabled = useSelector((state) => {
     const selectorName = `getCan${capitalize(actionType)}`;
@@ -27,9 +36,6 @@ const CopyPasteCutButton = forwardRef((props, ref) => {
     }
     return selector(state);
   });
-
-  const buttonSelector = `cell${capitalize(actionType)}`;
-  const { dataElement, icon, title } = menuItems[buttonSelector];
 
   const handleClick = () => {
     performClipboardActionOnCells(actionType);
@@ -42,6 +48,7 @@ const CopyPasteCutButton = forwardRef((props, ref) => {
         ref={ref}
         onClick={handleClick}
         additionalClass={isActive ? 'active' : ''}
+        disabled={!isEnabled}
       />
       : (
         <ActionButton

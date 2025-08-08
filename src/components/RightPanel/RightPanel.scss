@@ -2,8 +2,8 @@
 
 .right-panel {
   position: fixed;
-  right: 0px;
-  transition: transform .3s ease-in-out;
+  inset-inline-end: 0px;
+  transition: transform 0.3s ease-in-out;
   @include panel-height-fix;
   max-width: calc(100% - 16px);
   @include mobile {
@@ -24,13 +24,13 @@
   overflow: hidden;
 
   @include tablet {
-    border-left: 1px solid var(--side-panel-border);
+    border-inline-start: 1px solid var(--side-panel-border);
   }
 
   @include mobile {
     position: fixed;
-    top: 0;
-    right: 0;
+    inset-block-start: 0;
+    inset-inline-end: 0;
     height: 100%;
     width: 100%;
   }

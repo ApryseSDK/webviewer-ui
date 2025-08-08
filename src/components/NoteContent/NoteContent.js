@@ -13,6 +13,7 @@ import NoteContext from 'components/Note/Context';
 import NoteHeader from 'components/NoteHeader';
 import NoteTextPreview from 'components/NoteTextPreview';
 import ReplyAttachmentList from 'components/ReplyAttachmentList';
+import getLinkDestination from 'helpers/getLinkDestination';
 
 import mentionsManager from 'helpers/MentionsManager';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
@@ -63,7 +64,7 @@ const NoteContent = ({
   isMultiSelectMode,
   handleMultiSelect,
   isGroupMember,
-  handleNoteClick,
+  handleNoteClick = () => {},
 }) => {
 
   const noteDateFormat = useSelector((state) => selectors.getNoteDateFormat(state));
@@ -270,7 +271,9 @@ const NoteContent = ({
   let contents = customData?.contents || annotation.getContents();
   contents = sanitizeContent(contents);
 
-  const contentsToRender = annotation.getContents();
+  // for link annotations we want to get their URL. We are unable to use "getContents" to get that data, need to use "getLinkDestination" instead
+  const contentsToRender = annotation instanceof window.Core.Annotations.Link ? getLinkDestination(annotation) : annotation.getContents();
+
   const richTextStyle = annotation.getRichTextStyle();
   let textColor = annotation['TextColor'];
 

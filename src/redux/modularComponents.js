@@ -155,7 +155,7 @@ const defaultModularComponents = {
   },
   'leftPanelButton': {
     dataElement: DataElements.LEFT_PANEL_BUTTON,
-    title: 'Left Panel',
+    title: 'component.leftPanel',
     type: 'toggleButton',
     img: 'icon-header-sidebar-line',
     toggleElement: 'tabPanel'
@@ -887,72 +887,72 @@ const defaultPanels = [
   {
     dataElement: 'comparePanel',
     render: panelNames.CHANGE_LIST,
-    location: 'right',
+    location: 'end',
   },
   {
     dataElement: 'stylePanel',
     render: 'stylePanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'thumbnailsPanel',
     render: 'thumbnailsPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'outlinesPanel',
     render: 'outlinesPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'bookmarksPanel',
     render: 'bookmarksPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: DataElements.FORM_FIELD_PANEL,
     render: 'formFieldPanel',
-    location: 'right'
+    location: 'end'
   },
   {
     dataElement: DataElements.INDEX_PANEL,
     render: 'indexPanel',
-    location: 'right'
+    location: 'end'
   },
   {
     dataElement: 'layersPanel',
     render: 'layersPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'signatureListPanel',
     render: 'signatureListPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'fileAttachmentPanel',
     render: 'fileAttachmentPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'rubberStampPanel',
     render: 'rubberStampPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'textEditingPanel',
     render: 'textEditingPanel',
-    location: 'right'
+    location: 'end'
   },
   {
     dataElement: 'signaturePanel',
     render: 'signaturePanel',
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'portfolioPanel',
     render: 'portfolioPanel',
-    location: 'left'
+    location: 'start'
   },
   {
     render: 'tabPanel',
@@ -980,22 +980,22 @@ const defaultPanels = [
         render: 'portfolioPanel'
       }
     ],
-    location: 'left'
+    location: 'start'
   },
   {
     dataElement: 'notesPanel',
     render: 'notesPanel',
-    location: 'right'
+    location: 'end'
   },
   {
     dataElement: 'searchPanel',
     render: 'searchPanel',
-    location: 'right'
+    location: 'end'
   },
   {
     dataElement: 'redactionPanel',
     render: 'redactionPanel',
-    location: 'right'
+    location: 'end'
   }
 ];
 

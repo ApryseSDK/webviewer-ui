@@ -7,6 +7,7 @@ import actions from 'actions';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
 import core from 'core';
+import './SpreadsheetEditorEditModeDropdown.scss';
 
 
 const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
@@ -52,6 +53,7 @@ const SpreadsheetEditorEditModeDropdown = (props) => {
     <div className={classNames({
       'track-change-overlay': true,
       'flyout-item': isFlyoutItem,
+      'header-item': !isFlyoutItem,
     })}>
       <Dropdown
         id={'spreadsheetEditor'}

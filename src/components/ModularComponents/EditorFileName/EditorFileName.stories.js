@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
-import { userEvent, expect, within } from '@storybook/test';
+import { userEvent, expect, within } from 'storybook/test';
 import EditorFileName from './EditorFileName';
 import { OEModularUIMockState, string280Chars } from 'helpers/storybookHelper';
 import { FILESAVERJS_MAX_NAME_LENTH } from 'constants/fileName';

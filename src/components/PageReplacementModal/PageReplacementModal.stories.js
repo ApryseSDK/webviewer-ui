@@ -2,6 +2,7 @@ import React from 'react';
 import PageReplacementModal from './PageReplacementModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { expect, userEvent } from 'storybook/test';
 
 export default {
   title: 'Components/PageReplacementModal',
@@ -15,8 +16,8 @@ const initialState = {
     customElementOverrides: {},
     tab: {
       pageReplacementModal: 'urlInputPanelButton',
-    }
-  }
+    },
+  },
 };
 
 function rootReducer(state = initialState) {
@@ -42,6 +43,31 @@ export function ReplaceURL() {
   );
 }
 
+ReplaceURL.play = async () => {
+  window.Core = {};
+  window.Core.createDocument = async (file, options) => {
+    throw new Error('File could not be retrieved from the provided URL.');
+  };
+
+  window.Core.getAllowedFileExtensions = () => {
+    return ['pdf', 'docx', 'txt'];
+  };
+
+  const fileInput = document.getElementById('urlInput');
+  expect(fileInput).toBeInTheDocument();
+
+  await userEvent.click(fileInput);
+  await userEvent.type(fileInput, 'https://example.com/documents/document.a', { delay: 100 });
+
+  const button = document.querySelector('.modal-btn');
+  expect(button).toBeInTheDocument();
+  await userEvent.click(button);
+
+  const errorMessageDiv = document.querySelector('.no-margin');
+  expect(errorMessageDiv).toBeInTheDocument();
+  expect(errorMessageDiv.innerText).toBe('File could not be retrieved from the provided URL.');
+};
+
 const initialStateTwo = {
   viewer: {
     openElements: { pageReplacementModal: true },
@@ -49,8 +75,8 @@ const initialStateTwo = {
     customElementOverrides: {},
     tab: {
       pageReplacementModal: 'filePickerPanelButton',
-    }
-  }
+    },
+  },
 };
 
 function rootReducerTwo(state = initialStateTwo) {
@@ -80,8 +106,8 @@ const initialStateThree = {
     customElementOverrides: {},
     tab: {
       pageReplacementModal: 'customFileListPanelButton',
-    }
-  }
+    },
+  },
 };
 
 function rootReducerThree(state = initialStateThree) {

@@ -5,14 +5,15 @@
     background: var(--tools-button-hover);
   }
 
-  &.formFieldEditButton, &.contentEditButton {
+  &.formFieldEditButton,
+  &.contentEditButton {
     &.active {
       background: var(--tools-button-active);
       color: var(--view-header-icon-active-fill);
       cursor: default;
 
       .Icon {
-        color: var(--view-header-icon-active-fill)
+        color: var(--view-header-icon-active-fill);
       }
     }
   }

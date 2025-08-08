@@ -1,6 +1,6 @@
-@import "../../constants/styles";
-@import "../../constants/modal";
-@import "../../constants/tabs";
+@import '../../constants/styles';
+@import '../../constants/modal';
+@import '../../constants/tabs';
 
 .CreatePortfolioModal {
   @extend %modal;
@@ -90,8 +90,8 @@
           height: 1px;
           visibility: hidden;
           position: absolute;
-          left: 100px;
-          top: 30px;
+          inset-inline-start: 100px;
+          inset-block-start: 30px;
         }
       }
 
@@ -117,7 +117,6 @@
   }
 
   &.is-editing .content-container {
-
     .header {
       margin-bottom: 20px;
     }
@@ -131,7 +130,7 @@
         .Icon {
           width: 16px;
           height: 16px;
-          margin-right: 4px;
+          margin-inline-end: 4px;
         }
       }
     }

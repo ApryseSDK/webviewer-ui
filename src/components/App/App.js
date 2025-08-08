@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,7 +17,6 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import TextEditingPanel from 'components/TextEditingPanel';
-import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import SnippingToolPopup from '../SnippingToolPopup';
@@ -26,7 +25,6 @@ import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import MultiViewer from 'components/MultiViewer';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
-import WatermarkPanel from 'components/WatermarkPanel';
 import CustomElement from 'components/CustomElement';
 import Panel from 'components/Panel';
 import LeftHeader from 'components/ModularComponents/LeftHeader';
@@ -36,6 +34,7 @@ import TopHeader from 'components/ModularComponents/TopHeader';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
 import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
+import StylePanelFlyout from 'components/ModularComponents/StylePanelFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import useOnTextSelected from 'hooks/useOnTextSelected';
@@ -67,9 +66,7 @@ import overlays from 'constants/overlays';
 import { panelNames } from 'constants/panel';
 import DataElements from 'constants/dataElement';
 import { defaultPanels } from '../../redux/modularComponents';
-import {
-  defaultOfficeEditorPanels,
-} from '../../redux/officeEditorModularComponents';
+import { defaultOfficeEditorPanels } from '../../redux/officeEditorModularComponents';
 
 import setLanguage from 'src/apis/setLanguage';
 import { loadDefaultFonts } from 'src/helpers/loadFont';
@@ -84,6 +81,7 @@ import useCloseOnWindowResize from 'hooks/useCloseOnWindowResize';
 import PageManipulationFlyout from 'components/ModularComponents/PageManipulationFlyout';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 import useWidgetHighlightingSync from 'hooks/useWidgetHighlightingSync';
+import i18next from 'i18next';
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
@@ -96,6 +94,7 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
+  const [direction, setDirection] = useState('ltr');
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const genericPanels = useSelector(selectors.getGenericPanels, shallowEqual);
@@ -361,9 +360,15 @@ const App = ({ removeEventHandlers }) => {
 
   // These need to be done here to wait for the persisted values loaded in redux
   useEffect(() => {
+    const onLanguageChange = () => setDirection(i18next.dir());
+    i18next.on('languageChanged', onLanguageChange);
     setLanguage(store)(store.getState().viewer.currentLanguage);
     hotkeysManager.initialize(store);
     setDefaultDisabledElements(store);
+
+    return () => {
+      i18next.off('languageChanged', onLanguageChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -489,12 +494,13 @@ const App = ({ removeEventHandlers }) => {
           'App': true,
           'is-in-desktop-only-mode': isInDesktopOnlyMode,
           'is-web-component': window.isApryseWebViewerWebComponent,
-        })}
+        })} dir={direction}
       >
         <FlyoutContainer />
         <RibbonOverflowFlyout />
         <ViewControlsFlyout />
         <PageManipulationFlyout />
+        <StylePanelFlyout />
         <Accessibility />
         <Header />
         {isOfficeEditorMode && !customizableUI && (
@@ -533,15 +539,15 @@ const App = ({ removeEventHandlers }) => {
               dataElement={DataElements.REDACTION_PANEL}
               redactionAnnotationsList={redactionAnnotationsList} />
           </RightPanel>}
-          <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
-            <WatermarkPanel />
-          </RightPanel>
-          <RightPanel
-            dataElement="wv3dPropertiesPanel"
+          {!customizableUI && <RightPanel
+            dataElement={DataElements.WV3D_PROPERTIES_PANEL}
             onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
           >
-            <Wv3dPropertiesPanel />
-          </RightPanel>
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.Wv3dPropertiesPanel}
+              dataElement={DataElements.WV3D_PROPERTIES_PANEL}
+            />
+          </RightPanel>}
           <MultiTabEmptyPage />
           {!customizableUI && <RightPanel
             dataElement="textEditingPanel"

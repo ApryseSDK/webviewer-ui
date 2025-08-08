@@ -2,11 +2,17 @@ import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
-import { disableElements, enableElements, setActiveFlyout } from 'actions/internalActions';
+import { disableElements, enableElements, setActiveFlyout, setFlyoutToggleElement } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getGenericPanels, getOpenGenericPanel, getEnabledRibbonItems } from 'selectors/exposedSelectors';
+import { getOpenGenericPanel,
+  getEnabledRibbonItems,
+  getGenericPanelsOnTheSameLocation,
+  isElementOpen,
+  getIsCustomUIEnabled,
+  getGenericPanels
+} from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import { OPACITY_LEVELS } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
@@ -154,11 +160,9 @@ const stashEnabledRibbons = (ribbonItems) => (
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
   // Set default toolbar group to View
   dispatch(setToolbarGroup('toolbarGroup-View'));
-  const state = getState();
-  const featureFlags = selectors.getFeatureFlags(state);
-  const { customizableUI } = featureFlags;
   let toolbarGroupsToDisable;
-  if (customizableUI) {
+  const state = getState();
+  if (getIsCustomUIEnabled(state)) {
     // we must remember these toolbar groups to re-enable them when we exit read-only mode
     toolbarGroupsToDisable = getEnabledRibbonItems(state).filter((item) => item !== 'toolbarGroup-View');
     dispatch(stashEnabledRibbons(toolbarGroupsToDisable));
@@ -177,13 +181,11 @@ export const enableRibbons = () => (dispatch, getState) => {
   // the active toolbarGroup as what is in the current state and Forms, as redux hasnt dispatched the update to the Forms tool bar yet.
   // We double check here if we are in form mode and set the correct tool bar group
   // We enable ribbons when going into form mode, as we temporarily elevate the user's permissions
-  const featureFlags = selectors.getFeatureFlags(getState());
-  const { customizableUI } = featureFlags;
-
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
   const toolbarGroup = isInFormFieldCreationMode ? DataElements.FORMS_TOOLBAR_GROUP : state.viewer.toolbarGroup;
   let toolbarGroupsToEnable;
-  if (!customizableUI) {
+  const isCustomUIDisabled = !getIsCustomUIEnabled(state);
+  if (isCustomUIDisabled) {
     dispatch(setToolbarGroup(toolbarGroup || DataElements.ANNOTATE_TOOLBAR_GROUP));
     toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter((key) => key.includes('toolbarGroup-'));
   } else {
@@ -372,10 +374,6 @@ export const setTextEditingPanelWidth = (width) => ({
   type: 'SET_TEXT_EDITING_PANEL_WIDTH',
   payload: { width },
 });
-export const setWatermarkPanelWidth = (width) => ({
-  type: 'SET_WATERMARK_PANEL_WIDTH',
-  payload: { width },
-});
 export const setWv3dPropertiesPanelWidth = (width) => ({
   type: 'SET_WV3D_PROPERTIES_PANEL_WIDTH',
   payload: { width },
@@ -475,6 +473,16 @@ export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
 });
+
+const closeOtherOpenPanelsInSameLocation = (state, dispatch, dataElement) => {
+  const genericPanelsInSameLocation = getGenericPanelsOnTheSameLocation(state, dataElement);
+  genericPanelsInSameLocation.forEach(({ dataElement: panelElement }) => {
+    if (panelElement !== dataElement && isElementOpen(state, panelElement)) {
+      dispatch(closeElement(panelElement));
+    }
+  });
+};
+
 export const openElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
@@ -493,16 +501,13 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     return;
   }
 
-  const genericPanel = state.viewer.genericPanels.find((item) => dataElement === item.dataElement);
-  if (genericPanel?.location === 'left' || genericPanel?.location === 'right') {
-    const keys = genericPanel.location === 'left' ? ['leftPanel'] : [...rightPanelList];
-    const genericPanelsInSameLocation = state.viewer.genericPanels.filter((item) => item.location === genericPanel?.location && item.dataElement !== genericPanel?.dataElement);
-    genericPanelsInSameLocation.forEach((item) => keys.push(item.dataElement));
-    dispatch(closeElements(keys));
+  const isGenericPanel = getGenericPanels(state).find((item) => dataElement === item.dataElement);
+  if (isGenericPanel) {
+    closeOtherOpenPanelsInSameLocation(state, dispatch, dataElement);
   }
 
   // In the mobile UI, we can have only one panel open at a time
-  if (genericPanel && isMobile()) {
+  if (isGenericPanel && isMobile()) {
     const openGenericPanel = getOpenGenericPanel(state);
     if (openGenericPanel) {
       dispatch(closeElement(openGenericPanel));
@@ -591,20 +596,22 @@ export const closeElements = (dataElements) => (dispatch) => {
   }
 };
 
-const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
+const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
-  const rightGenericPanels = getGenericPanels(state, 'right');
-  const allPanelsOnTheRight = [...rightPanelList, ...rightGenericPanels.map((item) => item.dataElement)];
 
-  if (state.viewer.disabledElements[dataElement]?.disabled) {
+  if (isElementDisabled(state, dataElement)) {
     return;
   }
 
-  // hack for new ui
+  if (getIsCustomUIEnabled(state)) {
+    const isGenericPanel = getGenericPanels(state).find((item) => dataElement === item.dataElement);
+    isGenericPanel && closeOtherOpenPanelsInSameLocation(state, dispatch, dataElement);
+  }
+
   if (!state.viewer.notesInLeftPanel) {
-    if (allPanelsOnTheRight.includes(dataElement)) {
-      for (const panel of allPanelsOnTheRight) {
+    if (rightPanelList.includes(dataElement)) {
+      for (const panel of rightPanelList) {
         if (panel !== dataElement) {
           dispatch(closeElement(panel));
         }
@@ -747,6 +754,34 @@ export const setFlyouts = (flyouts) => (dispatch) => {
     type: 'SET_FLYOUTS',
     payload: { flyouts }
   });
+};
+
+export const openFlyout = (dataElement, toggleElement) => (dispatch, getState) => {
+  const state = getState();
+  const isElementDisabled = state.viewer.disabledElements[dataElement]?.disabled;
+  const isToggleElementDisabled = state.viewer.disabledElements[toggleElement]?.disabled;
+  const flyoutElement = state.viewer.flyoutMap?.[dataElement];
+  if (isElementDisabled || !flyoutElement || isToggleElementDisabled) {
+    return;
+  }
+
+  const toggleComponent = toggleElement ?? flyoutElement?.toggleElement;
+
+  if (toggleComponent) {
+    const ribbonAssociatedWithToggleButton = selectors.getRibbonAssociatedWithToggleButton(state, toggleComponent);
+    const activeCustomRibbon = selectors.getActiveCustomRibbon(state);
+    if (
+      ribbonAssociatedWithToggleButton &&
+      activeCustomRibbon !== ribbonAssociatedWithToggleButton
+    ) {
+      dispatch(setActiveCustomRibbon(ribbonAssociatedWithToggleButton));
+    }
+
+    dispatch(setFlyoutToggleElement(toggleComponent));
+    dispatch(openElement(dataElement));
+  } else {
+    console.warn(`No toggle element provided for flyout ${dataElement}. Please provide a toggle element to open the flyout.`);
+  }
 };
 
 export const resetModularUIState = () => ({

@@ -74,6 +74,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch, store);
   const onWidgetHighlightingChanged = eventListeners.onWidgetHighlightingChanged(dispatch, store);
   const onSelectedRangeStyleChanged = eventListeners.onSelectedRangeStyleChanged(dispatch);
+  const initializeLayersVisibility = eventListeners.initializeLayersVisibility(store, documentViewerKey);
 
   return {
     addEventHandlers: () => {
@@ -134,6 +135,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).addEventListener('annotationAdded', onCaretAnnotationAdded);
       }
       core.addEventListener('documentLoaded', handlePasswordModal, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', initializeLayersVisibility, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', showProgressModal, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', setPrintHandler, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', toggleAnnotations, undefined, documentViewerKey);
@@ -167,6 +169,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('documentLoaded', addPageLabelsToRedux, documentViewerKey);
         core.removeEventListener('documentLoaded', checkDocumentForTools, documentViewerKey);
         core.removeEventListener('documentLoaded', updateOutlines, documentViewerKey);
+        core.removeEventListener('documentLoaded', initializeLayersVisibility, documentViewerKey);
         core.removeEventListener('documentLoaded', updatePortfolio, documentViewerKey);
         core.removeEventListener('documentLoaded', configureOfficeEditor, documentViewerKey);
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);

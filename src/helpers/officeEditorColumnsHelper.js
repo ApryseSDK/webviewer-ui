@@ -1,6 +1,6 @@
 import { floorNumberToDecimals, getMinimumColumnWidth } from 'helpers/officeEditor';
 import {
-  MARGIN_UNITS,
+  LAYOUT_UNITS,
   COLUMN_INPUT_TYPES,
 } from 'constants/officeEditor';
 
@@ -19,7 +19,7 @@ const calculateNewExcessAmounts = ({ newValue, minimumValue, excessAmount, exces
 
 const getMinimumValue = (type) => {
   if (type === COLUMN_INPUT_TYPES.WIDTH) {
-    return getMinimumColumnWidth(MARGIN_UNITS.CM);
+    return getMinimumColumnWidth(LAYOUT_UNITS.CM);
   }
   return 0;
 };

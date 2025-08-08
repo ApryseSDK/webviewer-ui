@@ -5,7 +5,7 @@ import PresetButton from '../../PresetButton';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
-import { expect } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 
 export default {
@@ -134,7 +134,9 @@ export function ColorPickerButton() {
 
 ColorPickerButton.play = async ({ canvasElement }) => {
   // check color picker button active state
-  const colorPickerButtonIcon = canvasElement.querySelector('[data-element="textColorButton"] > .Icon');
+  const canvas = within(canvasElement);
+  const colorPickerButton = canvas.getByRole('button');
+  const colorPickerButtonIcon = colorPickerButton.querySelector('.Icon');
   expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
 };
 

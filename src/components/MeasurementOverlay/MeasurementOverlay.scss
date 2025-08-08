@@ -4,15 +4,15 @@
 .MeasurementOverlay {
   @extend %overlay;
   flex-direction: column;
-  bottom: 60px;
-  right: 14px;
+  inset-block-end: 60px;
+  inset-inline-end: 14px;
   font-size: 16px;
   min-width: 215px;
   padding: 6px;
 
   @include mobile {
-    bottom: 8px;
-    right: 8px;
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
     padding: 8px;
     font-size: 14px;
   }
@@ -26,18 +26,20 @@
     pointer-events: none;
   }
 }
+
 .measurement__value {
   display: flex;
   flex-direction: row;
+
   .distance-show {
-    margin-left: 3px;
+    margin-inline-start: 3px;
     cursor: pointer;
   }
 }
 
 .measurement__title {
   .measurement__icon {
-    margin-right: 5px;
+    margin-inline-end: 5px;
   }
 
   display: flex;
@@ -47,12 +49,12 @@
 
 .measurement__deltas {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .lineMeasurementInput {
   width: 50px;
-  margin-left: 4px;
+  margin-inline-start: 4px;
 }
 
 .length_input {
@@ -66,4 +68,3 @@
     width: 65px;
   }
 }
-

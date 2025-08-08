@@ -99,7 +99,7 @@ const SpreadsheetColorPicker = ({
     colors: palette,
     onColorChange,
     transformFn: getColorFromHex,
-    updateColorsAction: actions[setterName],
+    updateColorsAction: (newColors) => dispatch(actions[setterName](newColors))
   });
 
   const handleCopyColor = () => {

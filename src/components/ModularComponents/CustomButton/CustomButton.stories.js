@@ -3,7 +3,7 @@ import CustomButton from './CustomButton';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'Components/CustomButton',

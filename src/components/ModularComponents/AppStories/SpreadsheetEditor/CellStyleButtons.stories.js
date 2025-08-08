@@ -6,7 +6,7 @@ import {
   defaultSpreadsheetEditorHeaders,
   defaultSpreadsheetFlyoutMap,
 } from 'src/redux/spreadsheetEditorComponents';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 
 export default {
   title: 'SpreadsheetEditor/App/CellStyleButtons',

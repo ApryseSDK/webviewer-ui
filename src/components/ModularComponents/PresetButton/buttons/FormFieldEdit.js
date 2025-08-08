@@ -5,6 +5,7 @@ import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
+import { getButtonPressedAnnouncement } from 'helpers/accessibility';
 
 /**
  * A button that toggles form field edit mode.
@@ -12,8 +13,14 @@ import classNames from 'classnames';
  * @memberof UI.Components.PresetButton
  */
 const FormFieldEditButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, dataElement, style, className } = props;
-  const { icon, title } = menuItems.formFieldEditButton;
+  const {
+    isFlyoutItem,
+    style,
+    className,
+    dataElement = menuItems.formFieldEditButton.dataElement,
+    img: icon = menuItems.formFieldEditButton.icon,
+    title = menuItems.formFieldEditButton.title,
+  } = props;
   const [active, setActive] = useState(core.getFormFieldCreationManager().isInFormFieldCreationMode());
 
   useEffect(() => {
@@ -56,6 +63,7 @@ const FormFieldEditButton = forwardRef((props, ref) => {
           isActive={active}
           style={style}
           ariaPressed={active}
+          onClickAnnouncement={getButtonPressedAnnouncement(title)}
         />
       )
   );
@@ -66,6 +74,8 @@ FormFieldEditButton.propTypes = {
   dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 FormFieldEditButton.displayName = 'FormFieldEditButton';
 

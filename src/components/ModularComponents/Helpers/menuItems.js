@@ -8,6 +8,7 @@ import {
 } from 'constants/customizationVariables';
 import Button from 'components/Button';
 import classNames from 'classnames';
+import { getButtonPressedAnnouncement } from 'helpers/accessibility';
 
 const baseMenuItems = {
   [PRESET_BUTTON_TYPES.UNDO]: {
@@ -384,12 +385,14 @@ export const menuItems = {
 
 export const getPresetButtonDOM = (presetButtonProperties) => {
   const { buttonType, isDisabled, onClick, isFullScreen, isActive, style, className } = presetButtonProperties;
-  let { dataElement, presetDataElement, icon, title } = menuItems[buttonType];
-
+  const menuItem = { ...menuItems[buttonType] };
   if (buttonType === PRESET_BUTTON_TYPES.FULLSCREEN) {
-    icon = isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen';
-    title = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
+    menuItem.icon = isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen';
+    menuItem.title = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
   }
+  const dataElement = presetButtonProperties.dataElement || menuItem.presetDataElement;
+  const icon = presetButtonProperties.icon || menuItem.icon;
+  const title = presetButtonProperties.title || menuItem.title;
 
   return (
     <Button
@@ -398,13 +401,14 @@ export const getPresetButtonDOM = (presetButtonProperties) => {
         [dataElement]: true,
         [className]: true,
       })}
-      dataElement={presetDataElement}
+      dataElement={dataElement}
       img={icon}
       title={title}
       onClick={onClick}
       disabled={isDisabled}
       isActive={isActive}
       style={style}
+      onClickAnnouncement={getButtonPressedAnnouncement(title)}
     />
   );
 };

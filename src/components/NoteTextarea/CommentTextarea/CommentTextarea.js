@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactQuill, { Quill } from 'react-quill';
-import 'quill-mention';
+import ReactQuill, { Quill } from 'react-quill-new';
+import { Mention, MentionBlot } from 'quill-mention';
 import mentionsManager from 'helpers/MentionsManager';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
@@ -43,6 +43,11 @@ const formats = [
 Quill.register('modules/keyboard', CustomKeyboard, true);
 Quill.register('modules/clipboard', QuillPasteExtra, true);
 Quill.register('modules/blurInput', BlurInputModule);
+// Register quill-mention manually so the "mention" format is available
+Quill.register({
+  'modules/mention': Mention,
+  'blots/mention': MentionBlot,
+});
 
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {

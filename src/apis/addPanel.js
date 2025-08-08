@@ -1,6 +1,7 @@
 import actions from 'actions';
 import { panelNames } from 'constants/panel';
 import { Panel } from 'src/apis/getPanels';
+import { PANEL_LOCATION } from 'constants/customizationVariables';
 
 /**
  * @typedef {Object} PanelProperties
@@ -48,7 +49,7 @@ WebViewer(...)
 const { TYPES } = window.Core;
 const PANEL_TYPE = TYPES.MULTI_TYPE(TYPES.OBJECT({
   dataElement: TYPES.STRING,
-  location: TYPES.ONE_OF('left', 'right'),
+  location: TYPES.ONE_OF(Object.values(PANEL_LOCATION)),
   render: TYPES.MULTI_TYPE(TYPES.ONE_OF(...Object.values(panelNames)), TYPES.FUNCTION)
 }), TYPES.OBJECT(Panel));
 

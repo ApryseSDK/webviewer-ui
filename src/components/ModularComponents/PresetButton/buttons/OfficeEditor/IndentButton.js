@@ -9,12 +9,21 @@ import classNames from 'classnames';
 const propTypes = {
   isIncreaseIndent: PropTypes.bool.isRequired,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const IndentButton = forwardRef((props, ref) => {
   const { isFlyoutItem, isIncreaseIndent, style, className } = props;
+  const menuItem = isIncreaseIndent ? menuItems.increaseIndentButton : menuItems.decreaseIndentButton;
+  const {
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = menuItem.title,
+  } = props;
   const indentType = isIncreaseIndent ? 'increase' : 'decrease';
 
   const handleClick = async () => {
@@ -22,8 +31,6 @@ const IndentButton = forwardRef((props, ref) => {
       ? await core.getOfficeEditor().increaseIndent()
       : await core.getOfficeEditor().decreaseIndent();
   };
-
-  const { dataElement, icon, title } = isIncreaseIndent ? menuItems.increaseIndentButton : menuItems.decreaseIndentButton;
 
   return (
     isFlyoutItem ?

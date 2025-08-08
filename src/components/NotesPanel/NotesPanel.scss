@@ -17,19 +17,19 @@
   overflow-y: visible;
 
   @include tablet {
-    border-left: 1px solid var(--side-panel-border);
+    border-inline-start: 1px solid var(--side-panel-border);
   }
 
   @include mobile {
-    top: 0;
-    right: 0;
+    inset-block-start: 0;
+    inset-inline-end: 0;
     height: 100%;
     width: 100%;
   }
 
   .NotesPanel {
     width: 100%;
-    padding-left: 16px;
+    padding-inline-start: 16px;
     padding-bottom: 0px;
     display: flex;
     flex-direction: column;
@@ -42,7 +42,7 @@
 
       @include mobile {
         height: 28px;
-        padding-right: 16px;
+        padding-inline-end: 16px;
         margin-bottom: 8px;
       }
 
@@ -68,14 +68,14 @@
       flex-direction: column;
       justify-content: center;
       position: relative;
-      margin-right: 16px;
+      margin-inline-end: 16px;
 
       .divider {
         height: 1px;
         width: 100%;
         background: var(--divider);
         position: absolute;
-        top: 0px;
+        inset-block-start: 0px;
       }
     }
 
@@ -85,7 +85,6 @@
         width: 28px;
       }
     }
-
 
     padding-top: 16px;
 
@@ -129,12 +128,11 @@
       }
     }
 
-
     .virtualized-notes-container,
     .normal-notes-container {
       margin-top: 10px;
       flex: 1;
-      padding-right: 18px;
+      padding-inline-end: 18px;
     }
 
     .virtualized-notes-container {
@@ -157,7 +155,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-right: 18px;
+      padding-inline-end: 18px;
 
       .msg {
         @include tablet-and-desktop {
@@ -184,5 +182,4 @@
       }
     }
   }
-
 }

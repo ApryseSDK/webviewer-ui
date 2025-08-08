@@ -14,7 +14,7 @@
   .tool-button-arrow-container {
     width: 13px;
     height: 100%;
-    margin-right: 2px;
+    margin-inline-end: 2px;
 
     .tool-button-arrow-inner-container {
       font-size: 13px; // chevron position depends on font-size. mobile changes it to 16.
@@ -23,7 +23,8 @@
       height: 100%;
       cursor: pointer;
 
-      .tool-button-arrow-down, .tool-button-arrow-up {
+      .tool-button-arrow-down,
+      .tool-button-arrow-up {
         width: 13px;
         height: 13px;
       }
@@ -39,7 +40,7 @@
     flex-direction: row;
     align-items: center;
     border-radius: 4px;
-    margin-right: 1px;
+    margin-inline-end: 1px;
 
     &.Button {
       width: 26px;

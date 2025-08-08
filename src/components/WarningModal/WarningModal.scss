@@ -39,8 +39,8 @@
 
     .Button {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      inset-block-start: 10px;
+      inset-inline-end: 10px;
 
       .Icon {
         height: 22px;

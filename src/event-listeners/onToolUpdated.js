@@ -6,7 +6,7 @@ import { getInstanceID } from 'helpers/getRootNode';
 export default (dispatch) => (tool) => {
   const toolName = tool.name;
   const toolStyles = tool.defaults;
-  if (toolStyles && localStorageManager.isLocalStorageEnabled()) {
+  if (toolStyles) {
     storeStyle(toolName, toolStyles);
   }
 
@@ -25,7 +25,7 @@ export default (dispatch) => (tool) => {
 const storeStyle = (toolName, toolStyles) => {
   try {
     const instanceId = getInstanceID();
-    localStorage.setItem(`${instanceId}-toolData-${toolName}`, JSON.stringify(toolStyles));
+    localStorageManager.setItemSynchronous(`${instanceId}-toolData-${toolName}`, JSON.stringify(toolStyles));
   } catch (err) {
     console.warn(`localStorage could not be accessed. ${err.message}`);
   }

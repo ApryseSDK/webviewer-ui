@@ -7,7 +7,7 @@
   flex-direction: row;
   align-items: center;
   padding: 2px 6px;
-  padding-right: 19px;
+  padding-inline-end: 19px;
   cursor: pointer;
   width: 100%;
 
@@ -23,7 +23,7 @@
     margin: 4px 8px 4px 4px;
   }
 
-  Button {
+  button {
     height: auto;
   }
 

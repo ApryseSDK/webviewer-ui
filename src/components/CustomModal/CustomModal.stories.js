@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import CustomModal from './CustomModal';
-import { within, expect, waitFor } from '@storybook/test';
+import { within, expect, waitFor } from 'storybook/test';
 import App from 'components/App';
 import { createTemplate } from 'helpers/storybookHelper';
 import { mockCustomModal } from 'helpers/mockCustomModal';

@@ -1,30 +1,30 @@
 :root {
   /* stylelint-disable color-no-hex */
   --blue-1: #192530;
-  --blue-2: #1B2B3A;
+  --blue-2: #1b2b3a;
   --blue-3: #334250;
   --blue-4: #334758;
-  --blue-5: #72A9DA;
-  --blue-6: #3183C8;
+  --blue-5: #72a9da;
+  --blue-6: #3183c8;
 
   --gray-0: #000000;
-  --gray-1: #16181C;
-  --gray-2: #21242A;
-  --gray-3: #343A40;
+  --gray-1: #16181c;
+  --gray-2: #21242a;
+  --gray-3: #343a40;
   --gray-4: #485056;
-  --gray-5: #868E96;
-  --gray-6: #ADB5BD;
-  --gray-7: #CFD4DA;
-  --gray-8: #DEE2E6;
-  --gray-9: #E7EBEE;
-  --gray-10: #F1F3F5;
-  --gray-11: #F8F9FA;
-  --gray-12: #FFFFFF;
-  --gray-13: #FFFFFF;
+  --gray-5: #868e96;
+  --gray-6: #adb5bd;
+  --gray-7: #cfd4da;
+  --gray-8: #dee2e6;
+  --gray-9: #e7ebee;
+  --gray-10: #f1f3f5;
+  --gray-11: #f8f9fa;
+  --gray-12: #ffffff;
+  --gray-13: #ffffff;
 
-  --yellow-1: #FACE0080;
-  --red: #D52A2A;
-  --green: #006D41;
+  --yellow-1: #face0080;
+  --red: #d52a2a;
+  --green: #006d41;
   /* stylelint-enable color-no-hex */
 
   --component-background: var(--gray-0);
@@ -38,6 +38,7 @@
   --error-border-color: var(--red);
 
   --panel-background: var(--gray-0);
+  --panel-list-item: var(--gray-2);
 
   --slider-filled: var(--gray-9);
   --slider-background: var(--gray-6);
@@ -166,7 +167,7 @@
   --tab-footer-button-color: var(--gray-0);
   --x-button-hover-color: var(--gray-2);
 
-  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, .7));
+  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, 0.7));
   --style-icon-color: var(--icon-color);
   --cell-border-size: 30px;
   --cell-outer-border-size: 30px;
@@ -180,8 +181,8 @@
 
   --focus-visible-outline: 2px solid var(--gray-10);
 
-  --change-list-old-bg: #FFF2F2;
-  --change-list-new-bg: #E8FAF3;
+  --change-list-old-bg: #fff2f2;
+  --change-list-new-bg: #e8faf3;
   --swipe-indicator-bg: var(--gray-7);
 
   --slider-height: 5px;

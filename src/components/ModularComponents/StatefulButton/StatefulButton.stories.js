@@ -2,7 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import StatefulButtonComponent from './StatefulButton';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 const initialState = {
   viewer: {

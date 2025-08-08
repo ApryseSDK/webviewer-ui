@@ -15,7 +15,8 @@
     align-items: center;
   }
 
-  span.current-time, span.duration {
+  span.current-time,
+  span.duration {
     padding: 0 5px;
   }
 }
@@ -26,6 +27,6 @@
   box-shadow: 0 0 3px 0 var(--document-box-shadow);
   background: var(--component-background);
   width: 325px;
-  top: 90%;
-  left: calc(50% - 150px);
+  inset-block-start: 90%;
+  inset-inline-start: calc(50% - 150px);
 }

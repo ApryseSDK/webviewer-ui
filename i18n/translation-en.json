@@ -111,6 +111,7 @@
     "open": "Open",
     "deselectAll": "Deselect All",
     "select": "Select",
+    "buttonPressed": "{{buttonName}} button pressed",
     "moveToTop": "Move to Top",
     "moveToBottom": "Move to Bottom",
     "movePageToTop": "Move Page to Top",
@@ -272,7 +273,6 @@
       "close": "Close All Annotations"
     },
     "comparePanel": "Compare Panel",
-    "watermarkPanel": "Watermark Panel",
     "mainMenu": "Main Menu"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "No results found.",
     "numResultsFound": "results found",
     "loadError": "Error Loading Document",
+    "urlInputFileLoadError": "File could not be retrieved from the provided URL.",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "enterPasswordPlaceholder": "Enter password",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Search comments",
     "searchDocumentPlaceholder": "Search document",
     "clearSearchResults": "Clear search results",
+    "toggleReplaceInput": "Toggle replace input",
+    "toggleSearchOptions": "Toggle search options",
     "searchResultsCleared": "Search results cleared",
     "searchSettingsPlaceholder": "Search settings",
     "searchSuggestionsPlaceholder": "Search suggestions",
@@ -757,7 +760,7 @@
       "disableMultiselect": "Disable Multiselect",
       "disableMultiselectDesc": "Disable multi select in the left thumbnail panel",
       "miscellaneous": "Miscellaneous",
-      "keyboardShortcut": "Keyboard Shortcut",
+      "keyboardShortcut": "Keyboard Shortcuts",
       "command": "Command",
       "description": "Description",
       "action": "Action",
@@ -803,7 +806,30 @@
       "setShortcut": "Set Shortcut",
       "editShortcut": "Edit Shortcut",
       "shortcutAlreadyExists": "The keyboard shortcut above already exists.",
-      "close": "Close tooltip"
+      "close": "Close tooltip",
+      "spreadsheetEditor": {
+        "copyText": "Copy selected text or cells",
+        "pasteText": "Paste text or cells",
+        "cutText": "Cut selected text or cells",
+        "undoChange": "Undo a change",
+        "redoChange": "Redo a change",
+        "selectAll": "Select all cells",
+        "moveToEdgeUp": "Jump to top of sheet",
+        "moveToEdgeDown": "Jump to bottom of sheet",
+        "moveToEdgeLeft": "Jump to leftmost column",
+        "moveToEdgeRight": "Jump to rightmost column",
+        "adjustSelectionUp": "Extend selection upward",
+        "adjustSelectionDown": "Extend selection downward",
+        "adjustSelectionLeft": "Extend selection left",
+        "adjustSelectionRight": "Extend selection right",
+        "up": "Move cell selection box upward",
+        "down": "Move cell selection box downward",
+        "left": "Move cell selection box left",
+        "right": "Move cell selection box right",
+        "enter": "Edit selected cell",
+        "tab": "Move cell selection box to the right",
+        "delete": "Clear cell data"
+      }
     },
     "cellBorderStyle": {
       "none": "None",
@@ -861,12 +887,12 @@
       "message": "This document is trying to connect to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to open it."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Edit Warning",
+      "title": "Edit Sheet Name",
       "message": "This name already exists. Please enter another name."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Edit Warning",
-      "message": "The sheet name cannot be empty."
+      "title": "Edit Sheet Name",
+      "message": "The sheet name cannot be empty. Please enter a name."
     },
     "sheetTabDeleteMessage": {
       "title": "Edit Warning",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Properties",
     "miscValuesHeader": "All",
     "emptyPanelMessage": "Select an element to view its properties."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Text Watermark",
-    "uploadImage": "Upload Image",
-    "browse": "Browse",
-    "watermarkOptions": "Watermark Options",
-    "watermarks": "Watermarks"
   },
   "portfolio": {
     "createPDFPortfolio": "Create PDF Portfolio",
