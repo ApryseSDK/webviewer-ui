@@ -147,11 +147,12 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   const fileNameButton = canvas.getByRole('button', { name: /^Edit File Name/ });
   expect(fileNameButton).toHaveFocus();
 
-  const searchToggle = canvas.getByRole('button', { name: 'Search' });
-  await userEvent.click(searchToggle);
-  expect(searchToggle).toHaveFocus();
-  const searchPanel = canvasElement.querySelector('[data-element="searchPanel"]');
-  expect(searchPanel).toBeInTheDocument();
+  // TODO: uncomment when search panel is enabled
+  // const searchToggle = canvas.getByRole('button', { name: 'Search' });
+  // await userEvent.click(searchToggle);
+  // expect(searchToggle).toHaveFocus();
+  // const searchPanel = canvasElement.querySelector('[data-element="searchPanel"]');
+  // expect(searchPanel).toBeInTheDocument();
 };
 
 export const ViewOnlyUI = createTemplate({

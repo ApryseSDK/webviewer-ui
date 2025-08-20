@@ -19,8 +19,8 @@ const defaultSpreadsheetEditorHeaders = {
     items: [
       'groupedLeftHeaderButtons',
       'editorDropdown',
-      'divider-0.1',
-      'searchPanelToggle'
+      //'divider-0.1', TODO: unhide this with OCT release
+      //'searchPanelToggle' TODO: unhide this with OCT release
     ]
   },
   'tools-header': {
