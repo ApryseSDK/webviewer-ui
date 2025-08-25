@@ -2,11 +2,11 @@ import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents, mockLeftHeader } from './mockAppState';
 import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { defaultModularComponents, defaultModularHeaders } from 'src/redux/modularComponents';
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import actions from 'actions';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
-
+import React from 'react';
 export default {
   title: 'ModularComponents/App',
   component: App,
@@ -451,4 +451,28 @@ AppStashSwitchStory.play = async ({ canvasElement }) => {
   storeRef.current.dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DEFAULT));
   const newItem = await canvas.findByRole('button', { name: newName });
   await expect(newItem).toBeInTheDocument();
+};
+
+export const AppFlyoutResponsiveTest = (args, context) => {
+  return (
+    <MockApp initialState={initialState} width={500} height={800} />
+  );
+};
+
+AppFlyoutResponsiveTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const zoomToggleButton = await canvas.findByRole('button', { name: 'Zoom Options' });
+  await userEvent.click(zoomToggleButton);
+  const flyout = await canvas.findByRole('button', { name: /Zoom: 100%/ });
+  await expect(flyout).toBeVisible();
+};
+
+AppFlyoutResponsiveTest.parameters = {
+  layout: 'fullscreen',
+  chromatic: {
+    delay: 2000,
+    modes: {
+      'Light theme RTL': { disable: true },
+    },
+  }
 };

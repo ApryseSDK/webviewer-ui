@@ -19,7 +19,6 @@ import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
 import getAppRect from 'helpers/getAppRect';
-import debounce from 'lodash/debounce';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -68,64 +67,73 @@ const Flyout = () => {
 
   useLayoutEffect(() => {
     const tempRefElement = getElementDOMRef(toggleElement);
-    const appRect = getAppRect();
-    const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
-    setMaxHeightValue(maxHeightValue);
 
-    // Check if the element is in the dom or invisible
+    // Check if the element is in the DOM or invisible
     if (tempRefElement && tempRefElement.offsetParent === null) {
       return;
     }
 
-    const calculateAndSetPosition = () => {
-      const tempRefElement = getElementDOMRef(toggleElement);
-      const appRect = getAppRect();
-      const correctedPosition = { x: position.x, y: position.y };
-      // Check if toggleElement is not null
-      if (toggleElement && tempRefElement) {
+    const calculateAndMaybeSetPosition = () => {
+      const refEl = getElementDOMRef(toggleElement);
+      const app = getAppRect();
+      // Keep max height in sync with the exact app rect used for positioning
+      setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
+      const next = { x: position.x, y: position.y };
+
+      if (toggleElement && refEl) {
         const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
-        correctedPosition.x = x;
-        correctedPosition.y = y;
+        next.x = x;
+        next.y = y;
       }
+
       const flyoutRect = flyoutRef.current?.getBoundingClientRect();
-      if (flyoutRect) {
+      if (flyoutRect && app) {
         const PADDING = 5;
-        const widthOverflow = correctedPosition.x + flyoutRect.width + PADDING - appRect.right;
-        const heightOverflow = correctedPosition.y + flyoutRect.height + PADDING - appRect.bottom;
+        const widthOverflow = next.x + flyoutRect.width + PADDING - app.right;
+        const heightOverflow = next.y + flyoutRect.height + PADDING - app.bottom;
         if (widthOverflow > 0) {
-          correctedPosition.x -= widthOverflow;
+          next.x -= widthOverflow;
         }
         if (heightOverflow > 0) {
-          correctedPosition.y -= heightOverflow;
+          next.y -= heightOverflow;
         }
-        if (correctedPosition.x < PADDING) {
-          correctedPosition.x = PADDING;
+        if (next.x < PADDING) {
+          next.x = PADDING;
         }
-        if (correctedPosition.y < PADDING) {
-          correctedPosition.y = PADDING;
+        if (next.y < PADDING) {
+          next.y = PADDING;
         }
       }
-      setCorrectedPosition(correctedPosition);
+
+      setCorrectedPosition((prev) => {
+        if (!prev || prev.x !== next.x || prev.y !== next.y) {
+          return next;
+        }
+        return prev;
+      });
     };
 
-    // Wait for flyout to render all items before calculating position
+    // Run once now and once on the next frame to catch late layout
     if (flyoutRef.current) {
-      let observer;
-      const disconnect = debounce(
-        () => observer.disconnect(),
-        100, { leading: false, trailing: true });
-      const setPosition = () => {
-        calculateAndSetPosition();
-        disconnect();
-      };
-      // Set position at multiple stages to minimize flickering
-      observer = new MutationObserver(setPosition);
-      observer.observe(flyoutRef.current, { attributes: true, childList: true, subtree: true });
-      setPosition();
-      requestAnimationFrame(setPosition);
-      return () => observer.disconnect();
+      calculateAndMaybeSetPosition();
+      requestAnimationFrame(calculateAndMaybeSetPosition);
     }
-  }, [activeItem, position, items, inputValue]);
+
+    let resizeObserver;
+
+    if (typeof ResizeObserver !== 'undefined' && flyoutRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        calculateAndMaybeSetPosition();
+      });
+      resizeObserver.observe(flyoutRef.current);
+    }
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, [activePath, position, items, inputValue, isFlyoutOpen]);
 
   useLayoutEffect(() => {
     const appRect = getAppRect();
