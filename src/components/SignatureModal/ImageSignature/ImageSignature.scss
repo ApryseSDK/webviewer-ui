@@ -18,11 +18,10 @@
     position: absolute;
     width: 100%;
     height: 480px;
-    top: -100px;
     background: transparent;
     z-index: 9999;
-    left: 0;
-    top: -100px;
+    inset-inline-start: 0;
+    inset-block-start: -100px;
   }
 
   &-image-container {
@@ -47,8 +46,8 @@
 
     .Button {
       position: absolute;
-      bottom: 0px;
-      right: 0px;
+      inset-block-end: 0px;
+      inset-inline-end: 0px;
     }
   }
 
@@ -80,7 +79,7 @@
   }
 
   &-upload {
-    input[type="file"] {
+    input[type='file'] {
       display: none;
     }
 
@@ -112,8 +111,8 @@
   &-error {
     position: absolute;
     color: red;
-    bottom: 0px;
-    right: 0px;
+    inset-block-end: 0px;
+    inset-inline-end: 0px;
     margin: 0px 5px 5px 0px;
   }
 }

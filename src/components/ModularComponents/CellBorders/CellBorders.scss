@@ -15,14 +15,14 @@
     color: var(--blue-5);
     border: solid 1px var(--blue-5);
     border-radius: 4px;
-  
+
     &:hover {
       color: var(--primary-button-hover);
       border-color: var(--primary-button-hover);
     }
   }
 
-  .icon-grid {   
+  .icon-grid {
     .row {
       flex-wrap: wrap;
 

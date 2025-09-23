@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import PresetButton from './PresetButton';
 import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_BUTTONS } from 'src/constants/customizationVariables';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 import core from 'core';
 
 export default {

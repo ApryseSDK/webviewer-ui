@@ -28,6 +28,7 @@ const PageReplacementModal = ({
 }) => {
   const [t] = useTranslation();
   const [source, setSource] = useState({});
+  const [error, setError] = useState(null);
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [selectedTabInternal, setSelectedTabInternal] = useState(null);
@@ -67,16 +68,25 @@ const PageReplacementModal = ({
 
   const srcString = source[selectedTabInternal];
   const handleSelection = async () => {
-    setIsFileSelected(true);
     let document;
     if (srcString && selectedTabInternal === 'customFileListPanelButton') {
       if (srcString.onSelect) {
         document = await srcString.onSelect();
         setSelectedDoc(document);
       }
+
+      setIsFileSelected(true);
     } else if (srcString) {
-      document = await core.createDocument(srcString, options);
-      setSelectedDoc(document);
+      try {
+        document = await core.createDocument(srcString, options);
+
+        setSelectedDoc(document);
+        setIsFileSelected(true);
+      } catch (error) {
+        setError(t('message.urlInputFileLoadError'));
+        setIsFileSelected(false);
+        console.error('Error loading file from URL:', error);
+      }
     }
   };
 
@@ -133,11 +143,11 @@ const PageReplacementModal = ({
           <div className="swipe-indicator" />
           <Tabs className="page-replacement-tabs" id="pageReplacementModal">
             <div className="tabs-header-container">
-              <div className="tab-list">
+              <div role="tablist" className="tab-list">
                 {isFilePanelEnabled &&
                   <>
                     <Tab dataElement="customFileListPanelButton">
-                      <button className="tab-options-button">
+                      <button role="tab" className="tab-options-button">
                         {t('option.pageReplacementModal.yourFiles')}
                       </button>
                     </Tab>
@@ -145,13 +155,13 @@ const PageReplacementModal = ({
                   </>
                 }
                 <Tab dataElement="urlInputPanelButton">
-                  <button className="tab-options-button">
+                  <button role="tab" className="tab-options-button">
                     {t('link.url')}
                   </button>
                 </Tab>
                 <div className="tab-options-divider" />
                 <Tab dataElement="filePickerPanelButton">
-                  <button className="tab-options-button">
+                  <button role="tab" className="tab-options-button">
                     {t('option.pageReplacementModal.localFile')}
                   </button>
                 </Tab>
@@ -171,6 +181,7 @@ const PageReplacementModal = ({
             <TabPanel dataElement="urlInputPanel">
               <div className="panel-body">
                 <FileInputPanel
+                  error={error}
                   onFileSelect={(url) => {
                     setSource({ [selectedTabInternal]: url });
                   }}

@@ -21,8 +21,8 @@
     @include mobile {
       padding-top: 24px;
       padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
+      padding-inline-start: 24px;
+      padding-inline-end: 24px;
     }
 
     .inputWrapper > label {
@@ -40,12 +40,12 @@
       margin-top: 8px;
       width: 100%;
       height: 30px;
-      padding-left: 8px;
+      padding-inline-start: 8px;
       border: 1px solid var(--border);
       border-radius: 4px;
       color: var(--text-color);
       padding-bottom: 6px;
-      padding-right: 42px;
+      padding-inline-end: 42px;
       padding-top: 4px;
 
       &:focus {
@@ -64,7 +64,7 @@
       margin: 0;
     }
 
-    input[type=number] {
+    input[type='number'] {
       -moz-appearance: textfield;
     }
 
@@ -72,7 +72,7 @@
       width: 100%;
     }
 
-    .error{
+    .error {
       width: 100%;
       color: red;
       margin: 5px 0;
@@ -86,7 +86,7 @@
       font-weight: 600;
       padding: 6px 18px;
       margin-top: 8px;
-      margin-left: 5px;
+      margin-inline-start: 5px;
       width: auto;
       width: fit-content;
       background: var(--primary-button);
@@ -104,11 +104,10 @@
         cursor: not-allowed;
       }
     }
-
   }
 }
 
-.model-3D-btn{
+.model-3D-btn {
   @include button-reset;
   border: 1px solid var(--icon-color);
   width: 162px;
@@ -118,7 +117,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-right: 8px;
+  margin-inline-end: 8px;
 
   img {
     max-width: 100%;
@@ -141,10 +140,9 @@
   &.add-btn {
     @include mobile {
       width: auto;
-      padding-left: 0px;
+      padding-inline-start: 0px;
       width: 190px;
       height: 30px;
     }
   }
-
 }

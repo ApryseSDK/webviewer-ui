@@ -13,11 +13,11 @@
   pointer-events: none;
 }
 .ql-clipboard {
-  left: -100000px;
+  inset-inline-start: -100000px;
   height: 1px;
   overflow-y: hidden;
   position: absolute;
-  top: 50%;
+  inset-block-start: 50%;
 }
 
 .ql-clipboard p {
@@ -34,7 +34,7 @@
   padding: 12px 15px;
   tab-size: 4;
   -moz-tab-size: 4;
-  text-align: left;
+  text-align: start;
   white-space: pre-wrap;
   word-wrap: break-word;
   user-select: text;
@@ -62,7 +62,7 @@
 }
 .ql-editor ol,
 .ql-editor ul {
-  padding-left: 1.5em;
+  padding-inline-start: 1.5em;
 }
 .ql-editor ol > li,
 .ql-editor ul > li {
@@ -97,21 +97,21 @@
   width: 1.2em;
 }
 .ql-editor li:not(.ql-direction-rtl)::before {
-  margin-left: -1.5em;
-  margin-right: 0.3em;
-  text-align: right;
+  margin-inline-start: -1.5em;
+  margin-inline-end: 0.3em;
+  text-align: end;
 }
 .ql-editor li.ql-direction-rtl::before {
-  margin-left: 0.3em;
-  margin-right: -1.5em;
+  margin-inline-start: 0.3em;
+  margin-inline-end: -1.5em;
 }
 .ql-editor ol li:not(.ql-direction-rtl),
 .ql-editor ul li:not(.ql-direction-rtl) {
-  padding-left: 1.5em;
+  padding-inline-start: 1.5em;
 }
 .ql-editor ol li.ql-direction-rtl,
 .ql-editor ul li.ql-direction-rtl {
-  padding-right: 1.5em;
+  padding-inline-end: 1.5em;
 }
 .ql-editor ol li {
   counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
@@ -199,112 +199,112 @@
   content: counter(list-9, decimal) '. ';
 }
 .ql-editor .ql-indent-1:not(.ql-direction-rtl) {
-  padding-left: 3em;
+  padding-inline-start: 3em;
 }
 .ql-editor li.ql-indent-1:not(.ql-direction-rtl) {
-  padding-left: 4.5em;
+  padding-inline-start: 4.5em;
 }
 .ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {
-  padding-right: 3em;
+  padding-inline-end: 3em;
 }
 .ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {
-  padding-right: 4.5em;
+  padding-inline-end: 4.5em;
 }
 .ql-editor .ql-indent-2:not(.ql-direction-rtl) {
-  padding-left: 6em;
+  padding-inline-start: 6em;
 }
 .ql-editor li.ql-indent-2:not(.ql-direction-rtl) {
-  padding-left: 7.5em;
+  padding-inline-start: 7.5em;
 }
 .ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {
-  padding-right: 6em;
+  padding-inline-end: 6em;
 }
 .ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {
-  padding-right: 7.5em;
+  padding-inline-end: 7.5em;
 }
 .ql-editor .ql-indent-3:not(.ql-direction-rtl) {
-  padding-left: 9em;
+  padding-inline-start: 9em;
 }
 .ql-editor li.ql-indent-3:not(.ql-direction-rtl) {
-  padding-left: 10.5em;
+  padding-inline-start: 10.5em;
 }
 .ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {
-  padding-right: 9em;
+  padding-inline-end: 9em;
 }
 .ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {
-  padding-right: 10.5em;
+  padding-inline-end: 10.5em;
 }
 .ql-editor .ql-indent-4:not(.ql-direction-rtl) {
-  padding-left: 12em;
+  padding-inline-start: 12em;
 }
 .ql-editor li.ql-indent-4:not(.ql-direction-rtl) {
-  padding-left: 13.5em;
+  padding-inline-start: 13.5em;
 }
 .ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {
-  padding-right: 12em;
+  padding-inline-end: 12em;
 }
 .ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {
-  padding-right: 13.5em;
+  padding-inline-end: 13.5em;
 }
 .ql-editor .ql-indent-5:not(.ql-direction-rtl) {
-  padding-left: 15em;
+  padding-inline-start: 15em;
 }
 .ql-editor li.ql-indent-5:not(.ql-direction-rtl) {
-  padding-left: 16.5em;
+  padding-inline-start: 16.5em;
 }
 .ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {
-  padding-right: 15em;
+  padding-inline-end: 15em;
 }
 .ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {
-  padding-right: 16.5em;
+  padding-inline-end: 16.5em;
 }
 .ql-editor .ql-indent-6:not(.ql-direction-rtl) {
-  padding-left: 18em;
+  padding-inline-start: 18em;
 }
 .ql-editor li.ql-indent-6:not(.ql-direction-rtl) {
-  padding-left: 19.5em;
+  padding-inline-start: 19.5em;
 }
 .ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {
-  padding-right: 18em;
+  padding-inline-end: 18em;
 }
 .ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {
-  padding-right: 19.5em;
+  padding-inline-end: 19.5em;
 }
 .ql-editor .ql-indent-7:not(.ql-direction-rtl) {
-  padding-left: 21em;
+  padding-inline-start: 21em;
 }
 .ql-editor li.ql-indent-7:not(.ql-direction-rtl) {
-  padding-left: 22.5em;
+  padding-inline-start: 22.5em;
 }
 .ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {
-  padding-right: 21em;
+  padding-inline-end: 21em;
 }
 .ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {
-  padding-right: 22.5em;
+  padding-inline-end: 22.5em;
 }
 .ql-editor .ql-indent-8:not(.ql-direction-rtl) {
-  padding-left: 24em;
+  padding-inline-start: 24em;
 }
 .ql-editor li.ql-indent-8:not(.ql-direction-rtl) {
-  padding-left: 25.5em;
+  padding-inline-start: 25.5em;
 }
 .ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {
-  padding-right: 24em;
+  padding-inline-end: 24em;
 }
 .ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {
-  padding-right: 25.5em;
+  padding-inline-end: 25.5em;
 }
 .ql-editor .ql-indent-9:not(.ql-direction-rtl) {
-  padding-left: 27em;
+  padding-inline-start: 27em;
 }
 .ql-editor li.ql-indent-9:not(.ql-direction-rtl) {
-  padding-left: 28.5em;
+  padding-inline-start: 28.5em;
 }
 .ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {
-  padding-right: 27em;
+  padding-inline-end: 27em;
 }
 .ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {
-  padding-right: 28.5em;
+  padding-inline-end: 28.5em;
 }
 .ql-editor .ql-video {
   display: block;
@@ -384,16 +384,16 @@
   text-align: justify;
 }
 .ql-editor .ql-align-right {
-  text-align: right;
+  text-align: end;
 }
 .ql-editor.ql-blank::before {
   color: rgba(0, 0, 0, 0.6);
   content: attr(data-placeholder);
   font-style: italic;
-  left: 15px;
+  inset-inline-start: 15px;
   pointer-events: none;
   position: absolute;
-  right: 15px;
+  inset-inline-end: 15px;
 }
 .ql-snow.ql-toolbar:after,
 .ql-snow .ql-toolbar:after {
@@ -407,14 +407,14 @@
   border: none;
   cursor: pointer;
   display: inline-block;
-  float: left;
+  float: inline-start;
   height: 24px;
   padding: 3px 5px;
   width: 28px;
 }
 .ql-snow.ql-toolbar button svg,
 .ql-snow .ql-toolbar button svg {
-  float: left;
+  float: inline-start;
   height: 100%;
 }
 .ql-snow.ql-toolbar button:active:hover,
@@ -613,10 +613,10 @@
   text-decoration: underline;
 }
 .ql-snow .ql-editor blockquote {
-  border-left: 4px solid #ccc;
+  border-inline-start: 4px solid #ccc;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 16px;
+  padding-inline-start: 16px;
 }
 .ql-snow .ql-editor code,
 .ql-snow .ql-editor pre {
@@ -644,7 +644,7 @@
 .ql-snow .ql-picker {
   color: #444;
   display: inline-block;
-  float: left;
+  float: inline-start;
   font-size: 14px;
   font-weight: 500;
   height: 24px;
@@ -655,8 +655,8 @@
   cursor: pointer;
   display: inline-block;
   height: 100%;
-  padding-left: 8px;
-  padding-right: 2px;
+  padding-inline-start: 8px;
+  padding-inline-end: 2px;
   position: relative;
   width: 100%;
 }
@@ -691,7 +691,7 @@
 .ql-snow .ql-picker.ql-expanded .ql-picker-options {
   display: block;
   margin-top: -1px;
-  top: 100%;
+  inset-block-start: 100%;
   z-index: 1;
 }
 .ql-snow .ql-color-picker,
@@ -704,7 +704,7 @@
 }
 .ql-snow .ql-color-picker .ql-picker-label svg,
 .ql-snow .ql-icon-picker .ql-picker-label svg {
-  right: 4px;
+  inset-inline-end: 4px;
 }
 .ql-snow .ql-icon-picker .ql-picker-options {
   padding: 4px 0px;
@@ -720,7 +720,7 @@
 }
 .ql-snow .ql-color-picker .ql-picker-item {
   border: 1px solid transparent;
-  float: left;
+  float: inline-start;
   height: 16px;
   margin: 2px;
   padding: 0px;
@@ -729,8 +729,8 @@
 .ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
   position: absolute;
   margin-top: -9px;
-  right: 0;
-  top: 50%;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
   width: 18px;
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-label]:not([data-label=''])::before,
@@ -852,7 +852,7 @@
   padding: 8px;
 }
 .ql-toolbar.ql-snow .ql-formats {
-  margin-right: 15px;
+  margin-inline-end: 15px;
 }
 .ql-toolbar.ql-snow .ql-picker-label {
   border: 1px solid transparent;
@@ -885,7 +885,7 @@
 .ql-snow .ql-tooltip::before {
   content: 'Visit URL:';
   line-height: 26px;
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }
 .ql-snow .ql-tooltip input[type='text'] {
   display: none;
@@ -904,14 +904,14 @@
   vertical-align: top;
 }
 .ql-snow .ql-tooltip a.ql-action::after {
-  border-right: 1px solid #ccc;
+  border-inline-end: 1px solid #ccc;
   content: 'Edit';
-  margin-left: 16px;
-  padding-right: 8px;
+  margin-inline-start: 16px;
+  padding-inline-end: 8px;
 }
 .ql-snow .ql-tooltip a.ql-remove::before {
   content: 'Remove';
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 .ql-snow .ql-tooltip a {
   line-height: 26px;
@@ -924,9 +924,9 @@
   display: inline-block;
 }
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
-  border-right: 0px;
+  border-inline-end: 0px;
   content: 'Save';
-  padding-right: 0px;
+  padding-inline-end: 0px;
 }
 .ql-snow .ql-tooltip[data-mode='link']::before {
   content: 'Enter link:';

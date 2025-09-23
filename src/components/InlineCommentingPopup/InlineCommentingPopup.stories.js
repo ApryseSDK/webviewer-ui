@@ -3,6 +3,8 @@ import InlineCommentingPopup from './InlineCommentingPopup';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { BASIC_PALETTE } from 'constants/commonColors';
+import core from 'core';
+import { setupNotesPanelCoreMocks } from 'src/helpers/storybookHelper';
 
 const noop = () => { };
 
@@ -62,6 +64,7 @@ export const basicProps = {
 };
 
 export const Basic = () => {
+  setupNotesPanelCoreMocks(core, [], []);
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <InlineCommentingPopup {...basicProps} />
@@ -75,6 +78,7 @@ export const mobileProps = {
 };
 
 export const Mobile = () => {
+  setupNotesPanelCoreMocks(core, [], []);
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <InlineCommentingPopup {...mobileProps} />

@@ -8,7 +8,7 @@
   user-select: none;
   width: 100%;
   height: 100%;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   .measurement-container {
     display: flex;
@@ -23,13 +23,13 @@
     .footer {
       pointer-events: none;
       position: absolute;
-      bottom: 0;
-      left: 0;
+      inset-block-end: 0;
+      inset-inline-start: 0;
       z-index: 55;
       width: 100%;
-      transition: all .3s ease;
+      transition: all 0.3s ease;
 
-      &>* {
+      & > * {
         pointer-events: auto;
       }
     }
@@ -49,14 +49,14 @@
   user-select: none;
 
   @include ie11 {
-    margin-left: 0!important;
-    width: 100%!important
+    margin-inline-start: 0 !important;
+    width: 100% !important;
   }
 
   .document {
     margin: auto; // vertical centering when content is smaller than document container
-                  // can't use 'justify-content: center;' due to losing access to content when overflowing
-                  // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
+    // can't use 'justify-content: center;' due to losing access to content when overflowing
+    // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
@@ -65,7 +65,7 @@
     }
 
     .pageSection {
-      &[id*=pageSectionb] {
+      &[id*='pageSectionb'] {
         box-shadow: none;
       }
 
@@ -79,14 +79,26 @@
         }
       }
 
+      .a11y-reader-container {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        width: 100%;
+        height: 100%;
+      }
+
       .a11y-reader-content {
+        position: absolute;
         margin: 0;
         pointer-events: none;
         color: transparent;
         z-index: 40;
 
+        // cut off the text so that screen readers highlight the whole bbox without overflowing
         overflow: hidden;
         word-break: break-all;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       link {
@@ -111,8 +123,8 @@
     z-index: 40;
     width: 20px;
     height: 20px;
-    top: 0;
-    right: 25px;
+    inset-block-start: 0;
+    inset-inline-end: 25px;
     cursor: pointer;
 
     &.filled {
@@ -141,7 +153,6 @@
       svg.unfilled {
         display: inline;
       }
-
     }
   }
 }

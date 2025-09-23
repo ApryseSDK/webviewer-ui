@@ -17,10 +17,11 @@ import StandardRubberStamps from './StandardRubberStamps';
 import CustomRubberStamps from './CustomRubberStamps';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
+import PropTypes from 'prop-types';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
-const RubberStampPanel = () => {
+const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFlyout = false }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
@@ -72,11 +73,12 @@ const RubberStampPanel = () => {
   }, []);
 
   return (
-    <DataElementWrapper dataElement={DataElements.RUBBER_STAMP_PANEL} className={classNames({
+    <DataElementWrapper dataElement={dataElement} className={classNames({
       'Panel': true,
       'RubberStampPanel': true,
       [mobilePanelSize]: isMobile,
       'modular-ui-panel': customizableUI,
+      'isFlyout': isFlyout,
     })}>
       <h1 className='rubber-stamp-panel-header'>
         {t('rubberStampPanel.header')}
@@ -86,21 +88,31 @@ const RubberStampPanel = () => {
         classNames({
           'rubber-stamps-container': true,
           [mobilePanelSize]: isMobile,
+          isFlyout: isFlyout,
         })}>
         <CustomRubberStamps
           selectedStampIndex={selectedStampIndex}
           standardStampsOffset={standardStamps.length}
           setSelectedRubberStamp={setSelectedRubberStamp}
-          customStamps={customStamps} />
+          customStamps={customStamps}
+          isFlyout={isFlyout}
+        />
         <Divider />
         <StandardRubberStamps
           setSelectedRubberStamp={setSelectedRubberStamp}
           standardStamps={standardStamps}
-          selectedStampIndex={selectedStampIndex} />
+          selectedStampIndex={selectedStampIndex}
+          isFlyout={isFlyout}
+        />
       </div>
 
     </DataElementWrapper>
   );
+};
+
+RubberStampPanel.propTypes = {
+  dataElement: PropTypes.string,
+  isFlyout: PropTypes.bool,
 };
 
 export default RubberStampPanel;

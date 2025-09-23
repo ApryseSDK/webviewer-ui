@@ -45,7 +45,8 @@ const Thumbnail = React.forwardRef((props, ref) => {
     thumbnailSelectionMode,
     activeDocumentViewerKey,
     panelSelector,
-    parentKeyListener
+    parentKeyListener,
+    isRightToLeft,
   } = props;
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
@@ -97,7 +98,7 @@ const Thumbnail = React.forwardRef((props, ref) => {
                 thumbnailContainer.removeChild(childElement);
               }
 
-              thumb.className = 'page-image';
+              thumb.className = `page-image ${isRightToLeft ? 'right-to-left' : ''}`;
 
               const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
               thumb.style.width = `${thumb.width * ratio}px`;
@@ -427,6 +428,7 @@ Thumbnail.propTypes = {
   activeDocumentViewerKey: PropTypes.number,
   panelSelector: PropTypes.string,
   parentKeyListener: PropTypes.func,
+  isRightToLeft: PropTypes.bool,
 };
 
 export default Thumbnail;

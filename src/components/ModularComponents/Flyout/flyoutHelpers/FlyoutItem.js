@@ -5,12 +5,18 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import './ZoomText.scss';
-import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
+import { FLYOUT_ITEM_TYPES, ITEM_TYPE, ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { itemToFlyout, getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import { LIST_OPTIONS, OFFICE_BULLET_OPTIONS, OFFICE_NUMBER_OPTIONS, EditingStreamType } from 'constants/officeEditor';
-import { getListTypeFlyoutItems, getLineSpacingFlyoutItems, PAGE_SECTION_BREAK_OPTIONS, MARGIN_OPTIONS, COLUMN_OPTIONS } from 'helpers/officeEditor';
+import {
+  getListTypeFlyoutItems,
+  getLineSpacingFlyoutItems,
+  PAGE_SECTION_BREAK_OPTIONS,
+  MARGIN_OPTIONS,
+  COLUMN_OPTIONS,
+} from 'helpers/officeEditor';
 import RibbonItem from 'components/ModularComponents/RibbonItem';
 import PresetButton from 'components/ModularComponents/PresetButton';
 import ZoomText from 'components/ModularComponents/Flyout/flyoutHelpers/ZoomText';
@@ -29,8 +35,12 @@ import CellBorderColor from '../../SpreadsheetEditor/CellBorderColor';
 import CellBackgroundColor from '../../SpreadsheetEditor/CellBackgroundColor';
 import CellBorders from '../../CellBorders';
 import FontSizeDropdownContainer from 'components/ModularComponents/EditorSwitchers/FontSizeDropdown';
-import FontFamilyDropdownContainer from 'components/ModularComponents/EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
+import FontFamilyDropdownContainer
+  from 'components/ModularComponents/EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
 import SpreadsheetEditorEditModeDropdown from '../../SpreadsheetEditor/SpreadsheetEditorEditModeDropdown';
+import StylePanel from 'components/StylePanel';
+import RubberStampPanel from 'components/RubberStampPanel';
+import SignatureListPanel from 'components/SignatureListPanel';
 
 const propTypes = {
   flyoutItem: PropTypes.oneOfType([
@@ -108,6 +118,28 @@ const StaticItem = React.forwardRef((props, ref) => {
     );
   };
 
+  if (flyoutItem.render) {
+    switch (flyoutItem.render) {
+      case ITEM_RENDER_PREFIXES.STYLE_PANEL: {
+        return (
+          <StylePanel dataElement={flyoutItem.dataElement} isFlyout={true} />
+        );
+      }
+      case ITEM_RENDER_PREFIXES.RUBBER_STAMP_PANEL: {
+        return (
+          <RubberStampPanel dataElement={flyoutItem.dataElement} isFlyout={true} />
+        );
+      }
+      case ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL: {
+        return (
+          <SignatureListPanel dataElement={flyoutItem.dataElement} isFlyout={true} />
+        );
+      }
+      default:
+        console.warn(`Unknown render type: ${flyoutItem.render} for item ${flyoutItem.dataElement}`);
+    }
+  }
+
   switch (type) {
     case FLYOUT_ITEM_TYPES.STATEFUL_BUTTON: {
       return <StatefulButton ref={ref} key={`stateful-button-${index}`} {...allProps} isFlyoutItem/>;
@@ -128,7 +160,7 @@ const StaticItem = React.forwardRef((props, ref) => {
       return <RibbonItem isFlyoutItem={true} {...allProps} ref={ref} icon={icon} />;
     }
     case FLYOUT_ITEM_TYPES.PRESET_BUTTON: {
-      return <PresetButton {...allProps} isFlyoutItem={true} ref={ref} icon={icon} buttonType={allProps.dataElement} />;
+      return <PresetButton {...allProps} isFlyoutItem={true} ref={ref} icon={icon} buttonType={allProps.buttonType || allProps.dataElement} flyoutItem={flyoutItem} allFlyoutItems={itemsToRender} />;
     }
     case FLYOUT_ITEM_TYPES.TOOL_BUTTON: {
       return <ToolButton {...allProps} isFlyoutItem={true} ref={ref} allFlyoutItems={itemsToRender} />;

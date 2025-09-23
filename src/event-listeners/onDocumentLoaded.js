@@ -4,7 +4,7 @@ import { getLeftPanelDataElements } from 'helpers/isDataElementPanel';
 import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
-import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
+import { PRIORITY_ONE, PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 import i18next from 'i18next';
@@ -366,5 +366,22 @@ export const configureOfficeEditor = (store) => () => {
     hotkeys.setScope(defaultHotkeysScope);
     dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
+  }
+};
+
+export const shouldDisableLayersPanel = (doc) => {
+  const documentIsWebViewerServerDocument = doc.isWebViewerServerDocument();
+  const documentTypeIsWebViewerServer = doc.getType() === workerTypes.WEBVIEWER_SERVER;
+  return documentIsWebViewerServerDocument && documentTypeIsWebViewerServer;
+};
+
+export const initializeLayersVisibility = (store, documentViewerKey) => () => {
+  const { dispatch } = store;
+  const docViewer = core.getDocumentViewer(documentViewerKey);
+  const doc = docViewer.getDocument();
+
+  if (shouldDisableLayersPanel(doc)) {
+    dispatch(actions.disableElement(DataElements.LAYERS_PANEL_BUTTON, PRIORITY_THREE));
+    dispatch(actions.disableElement(DataElements.LAYERS_PANEL, PRIORITY_THREE));
   }
 };

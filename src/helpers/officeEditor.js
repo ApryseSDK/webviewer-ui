@@ -8,14 +8,17 @@ import {
   OFFICE_EDITOR_TRANSLATION_PREFIX,
   MARGIN_VALUES,
   MARGIN_SIDES,
-  MARGIN_UNITS,
-  CM_PER_INCH,
+  LAYOUT_UNITS,
+  MARGIN_UNIT_LABELS,
   MM_PER_CM,
-  MINIMUM_COLUMN_WIDTH_IN_INCHES,
-  DEFAULT_COLUMN_SPACING_IN_INCHES,
+  POINTS_PER_INCH,
+  POINTS_PER_CM,
+  MINIMUM_COLUMN_WIDTH_IN_POINTS,
+  DEFAULT_COLUMN_SPACING_IN_POINTS,
   PAGE_LAYOUT_WARNING_TYPE
 } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
+import mapObjectKeys from 'helpers/mapObjectKeys';
 import { rgbaToHex } from 'helpers/color';
 import DataElements from 'constants/dataElement';
 
@@ -159,7 +162,7 @@ export const PAGE_SECTION_BREAK_OPTIONS = [
 async function applyMargins(dispatch, actions) {
   const { top, left, bottom, right } = this;
   try {
-    await core.getOfficeEditor().setSectionMargins({ top, bottom, left, right }, MARGIN_UNITS.CM);
+    await core.getOfficeEditor().setSectionMargins({ top, bottom, left, right }, LAYOUT_UNITS.CM);
   } catch (error) {
     console.error('Error applying margins:', error);
     showPageLayoutWarning(dispatch, actions, PAGE_LAYOUT_WARNING_TYPE.MARGIN);
@@ -212,6 +215,27 @@ export const MARGIN_OPTIONS = [
     }
   }
 ];
+
+export const getConvertedMarginOptions = (unit) => {
+  return MARGIN_OPTIONS.map((option) => {
+    if (option.key === 'customMargins') {
+      return option;
+    }
+
+    return {
+      ...option,
+      ...mapObjectKeys(Object.values(MARGIN_SIDES), (side) => {
+        const convertedValue = convertMeasurementUnit(option[side], LAYOUT_UNITS.CM, unit);
+        return roundNumberToDecimals(convertedValue);
+      }),
+    };
+  });
+};
+
+export const getUnitLabel = (unit) => {
+  const matchKey = Object.keys(LAYOUT_UNITS).find((key) => LAYOUT_UNITS[key] === unit);
+  return MARGIN_UNIT_LABELS[matchKey] || MARGIN_UNIT_LABELS.CM;
+};
 
 async function setEqualSectionColumns(dispatch, actions) {
   const { numberOfColumns } = this;
@@ -280,40 +304,44 @@ export const convertMeasurementUnit = (value, fromUnit, toUnit) => {
   if (fromUnit === toUnit) {
     return value;
   }
-
-  // Convert value to inch
-  let valueInInch;
+  // Convert value to point
+  let valueInPoint;
   switch (fromUnit) {
-    case MARGIN_UNITS.CM:
-      valueInInch = value / CM_PER_INCH;
+    case LAYOUT_UNITS.CM:
+      valueInPoint = value * POINTS_PER_CM;
       break;
-    case MARGIN_UNITS.MM:
-      valueInInch = value / (CM_PER_INCH * MM_PER_CM);
+    case LAYOUT_UNITS.MM:
+      valueInPoint = value * (POINTS_PER_CM / MM_PER_CM);
       break;
-    case MARGIN_UNITS.INCH:
+    case LAYOUT_UNITS.INCH:
+      valueInPoint = value * POINTS_PER_INCH;
+      break;
+    case LAYOUT_UNITS.PHYSICAL_POINT:
     default:
-      valueInInch = value;
+      valueInPoint = value;
       break;
   }
 
-  // Convert from inch to target unit
+  // Convert from point to target unit
   switch (toUnit) {
-    case MARGIN_UNITS.CM:
-      return valueInInch * CM_PER_INCH;
-    case MARGIN_UNITS.MM:
-      return valueInInch * CM_PER_INCH * MM_PER_CM;
-    case MARGIN_UNITS.INCH:
+    case LAYOUT_UNITS.CM:
+      return valueInPoint / POINTS_PER_CM;
+    case LAYOUT_UNITS.MM:
+      return valueInPoint / (POINTS_PER_CM / MM_PER_CM);
+    case LAYOUT_UNITS.INCH:
+      return valueInPoint / POINTS_PER_INCH;
+    case LAYOUT_UNITS.PHYSICAL_POINT:
     default:
-      return valueInInch;
+      return valueInPoint;
   }
 };
 
 export const getMinimumColumnWidth = (unit) => {
-  return convertMeasurementUnit(MINIMUM_COLUMN_WIDTH_IN_INCHES, MARGIN_UNITS.INCH, unit);
+  return convertMeasurementUnit(MINIMUM_COLUMN_WIDTH_IN_POINTS, LAYOUT_UNITS.PHYSICAL_POINT, unit);
 };
 
 export const getDefaultColumnSpacing = (unit) => {
-  return convertMeasurementUnit(DEFAULT_COLUMN_SPACING_IN_INCHES, MARGIN_UNITS.INCH, unit);
+  return convertMeasurementUnit(DEFAULT_COLUMN_SPACING_IN_POINTS, LAYOUT_UNITS.PHYSICAL_POINT, unit);
 };
 
 /**
@@ -334,7 +362,7 @@ export const formatToDecimalString = (value, decimals = 2) => {
  * @ignore
  * Floors a number to a specified number of decimal places.
  * @param {number} value - The value to floor.
- * @param {number} [decimals=4] - The number of decimal places to keep (default is 3).
+ * @param {number} [decimals=4] - The number of decimal places to keep (default is 4).
  * @returns {number} The floored number with the specified decimal precision.
  */
 export const floorNumberToDecimals = (value, decimals = 4) => {
@@ -343,6 +371,21 @@ export const floorNumberToDecimals = (value, decimals = 4) => {
   }
   const factor = Math.pow(10, decimals);
   return Math.floor(value * factor) / factor;
+};
+
+/**
+ * @ignore
+ * Rounds a number to a specified number of decimal places and returns a float.
+ * Uses `toFixed` to avoid floating-point precision issues that can occur with `Math.round()`.
+ * @param value - The value to round.
+ * @param {number} [decimals=2] - The number of decimal places to keep (default is 2).
+ * @returns The rounded number as a float.
+ */
+export const roundNumberToDecimals = (value, decimals = 2) => {
+  if (value == null || isNaN(value)) {
+    return 0;
+  }
+  return parseFloat(value.toFixed(decimals));
 };
 
 /**
@@ -361,7 +404,7 @@ export const validateMarginInput = (input, maxMargin) => {
   }
   maxMargin = maxMargin < 0 ? 0 : maxMargin;
   if (input > maxMargin) {
-    return parseFloat(maxMargin.toFixed(2));
+    return roundNumberToDecimals(maxMargin);
   }
   return input;
 };

@@ -7,7 +7,6 @@
  * @property {Object} panels The map of panels to be used in the UI. Refer to: {@link PanelProperties} for properties of panels
  * @property {Object} flyouts The map of flyouts to be used in the UI.
  * @property {string} flyouts.dataElement A unique string that identifies the flyout.
- * @property {Array<string>} flyouts.items An array of strings that represent the items in the flyout. Each string should be the dataElement of a component in the modularComponents map.
  * @param {object} [functionMap] A map of functions to be used in the components. The keys should match the function names used in the components. The values should be the actual functions to be called.
  * @example
  * WebViewer(...)
@@ -31,7 +30,7 @@
  */
 import actions from 'actions';
 import setPanels from './setPanels';
-import { ITEM_TYPE, PREBUILT_FLYOUTS } from 'constants/customizationVariables';
+import { ITEM_TYPE, PREBUILT_FLYOUTS, ITEM_RENDER_PREFIXES, PANEL_LOCATION } from 'constants/customizationVariables';
 import { PRIORITY_THREE } from 'constants/actionPriority';
 import { panelNames } from 'constants/panel';
 import cloneDeep from 'lodash/cloneDeep';
@@ -108,7 +107,7 @@ const validateHeaders = (headers, components) => {
 const validatePanels = (panels, functionMap = {}) => {
   const normalizedPanel = TYPES.OBJECT({
     dataElement: TYPES.STRING,
-    location: TYPES.ONE_OF('left', 'right'),
+    location: TYPES.ONE_OF(Object.values(PANEL_LOCATION)),
     render: TYPES.MULTI_TYPE(TYPES.ONE_OF(...Object.values(panelNames)), TYPES.FUNCTION)
   });
   const panelKeys = Object.keys(panels);
@@ -127,8 +126,9 @@ const validatePanels = (panels, functionMap = {}) => {
 
 const flyoutItemType = TYPES.OBJECT({
   dataElement: TYPES.STRING,
-  type: TYPES.ONE_OF([ITEM_TYPE.PRESET_BUTTON, ITEM_TYPE.BUTTON, ITEM_TYPE.STATEFUL_BUTTON, ITEM_TYPE.TOGGLE_BUTTON]),
-  children: TYPES.OPTIONAL(TYPES.ARRAY(TYPES.STRING)) // Recursive type reference
+  type: TYPES.OPTIONAL(TYPES.ONE_OF([ITEM_TYPE.PRESET_BUTTON, ITEM_TYPE.BUTTON, ITEM_TYPE.STATEFUL_BUTTON, ITEM_TYPE.TOGGLE_BUTTON])),
+  render: TYPES.OPTIONAL(TYPES.STRING),
+  children: TYPES.OPTIONAL(TYPES.ARRAY(TYPES.MULTI_TYPE(TYPES.STRING, TYPES.OBJECT({})))) // Allow both strings and objects
 });
 
 
@@ -137,15 +137,24 @@ const validateFlyoutItems = (items, components, key) => {
     if (item === ITEM_TYPE.DIVIDER) {
       return; // Skip validation for dividers
     }
-    if (!components[item]) {
-      throw new Error(`Invalid item found in flyout: ${key} - ${item} not found in components`);
-    }
-    checkTypes([components[item]], [flyoutItemType], `UI.importModularComponents.validateFlyouts - ${JSON.stringify(components[item])}`);
-    isElementDisabled(components[item]);
 
-    // Recursively validate children if they exist
-    if (components[item].children && Array.isArray(components[item].children)) {
-      validateFlyoutItems(components[item].children, components, key);
+    let itemToValidate = item;
+
+    if (typeof item === 'object' && item.dataElement) {
+      checkTypes([item], [flyoutItemType], `UI.importModularComponents.validateFlyouts - ${JSON.stringify(item)}`);
+      isElementDisabled(item);
+      itemToValidate = item;
+    } else if (typeof item === 'string') {
+      if (!components[item]) {
+        throw new Error(`Invalid item found in flyout: ${key} - ${item} not found in components`);
+      }
+      checkTypes([components[item]], [flyoutItemType], `UI.importModularComponents.validateFlyouts - ${JSON.stringify(components[item])}`);
+      isElementDisabled(components[item]);
+      itemToValidate = components[item];
+    }
+    // Recursively validate children once for the resolved item
+    if (itemToValidate.children && Array.isArray(itemToValidate.children)) {
+      validateFlyoutItems(itemToValidate.children, components, key);
     }
   });
 };
@@ -154,7 +163,8 @@ const validateFlyoutItems = (items, components, key) => {
 const validateFlyouts = (flyouts, components) => {
   const normalizedFlyout = TYPES.OBJECT({
     dataElement: TYPES.STRING,
-    items: TYPES.ARRAY(TYPES.STRING)
+    items: TYPES.ARRAY(TYPES.MULTI_TYPE(TYPES.STRING, TYPES.OBJECT({}))),
+    toggleElement: TYPES.OPTIONAL(TYPES.STRING),
   });
   const flyoutKeys = Object.keys(flyouts);
   flyoutKeys.forEach((key) => {
@@ -269,11 +279,29 @@ export default (store) => async (components, functions = {}) => {
       if (item === ITEM_TYPE.DIVIDER) {
         return ITEM_TYPE.DIVIDER;
       }
+      // Handle object items (like those with render property)
+      if (typeof item === 'object' && item.dataElement) {
+        const processedItem = { ...item };
+        if (item.render) {
+          const isRenderTypeUnavailable = !Object.values(ITEM_RENDER_PREFIXES).includes(item.render);
+          if (isRenderTypeUnavailable) {
+            console.warn(`Unknown render type: ${item.render} for item ${item.dataElement}`);
+          }
+        }
+        if (item.onClick) {
+          processedItem.onClick = getFunctionFromFunctionMap(item.onClick);
+        }
+        if (item.children) {
+          processedItem.children = mapItems(item.children);
+        }
+        return processedItem;
+      }
+      // Handle string items (references to components)
       if (typeof item === 'string') {
         item = componentMap[item];
       }
       if (item.children) {
-        item.children = mapItems(item.children);
+        return { ...item, children: mapItems(item.children) };
       }
       return item;
     });
@@ -281,8 +309,8 @@ export default (store) => async (components, functions = {}) => {
 
   // Add normalized flyouts
   Object.values(flyouts).forEach((flyout) => {
-    flyout.items = mapItems(flyout.items);
-    store.dispatch(actions.addFlyout(flyout));
+    const flyoutWithMappedItems = { ...flyout, items: mapItems(flyout.items) };
+    store.dispatch(actions.addFlyout(flyoutWithMappedItems));
   });
 
   // add prebuilt flyouts

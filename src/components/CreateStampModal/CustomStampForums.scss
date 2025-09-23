@@ -98,11 +98,11 @@ $container-margin: 16px;
       }
 
       .cell-outer {
-        margin-right: 16px;
+        margin-inline-end: 16px;
 
         &.active {
-          margin-left: -4px;
-          margin-right: 10px;
+          margin-inline-start: -4px;
+          margin-inline-end: 10px;
           width: 28px;
           height: 28px;
         }
@@ -120,8 +120,8 @@ $container-margin: 16px;
       }
 
       .cell-tool {
-        margin-right: 8px;
-        margin-left: -4px;
+        margin-inline-end: 8px;
+        margin-inline-start: -4px;
 
         .cell-outer {
           margin: 4px 4px;
@@ -166,12 +166,12 @@ $container-margin: 16px;
 
     .error-icon {
       position: absolute;
-      right: 8px;
-      top: 28px;
+      inset-inline-end: 8px;
+      inset-block-start: 28px;
       color: var(--error-text-color);
 
       @include mobile {
-        top: 30px;
+        inset-block-start: 30px;
       }
     }
 
@@ -209,12 +209,10 @@ $container-margin: 16px;
         grid-template-columns: 30% 30% 30%;
         height: 100%;
         font-size: 13px;
-
       }
 
       // hack for IE11
-      @media all and (-ms-high-contrast: none),
-      (-ms-high-contrast: active) {
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         .ui__choice {
           display: -ms-inline-flexbox;
           width: 33.33%;
@@ -226,7 +224,7 @@ $container-margin: 16px;
         line-height: 1;
 
         .ui__choice__label {
-          padding-left: 4px;
+          padding-inline-start: 4px;
         }
       }
     }
@@ -243,7 +241,7 @@ $container-margin: 16px;
       .Dropdown {
         height: 32px;
         width: 100% !important;
-        text-align: left;
+        text-align: start;
       }
 
       .arrow {
@@ -256,9 +254,9 @@ $container-margin: 16px;
         }
 
         z-index: 101;
-        top: auto;
-        left: 0;
-        right: auto;
+        inset-block-start: auto;
+        inset-inline-start: 0;
+        inset-inline-end: auto;
         width: 100% !important;
       }
 
@@ -273,13 +271,13 @@ $container-margin: 16px;
         height: 18px;
       }
 
-      margin-left: 2px;
+      margin-inline-start: 2px;
       position: relative;
 
       .date-format-description {
         display: flex;
         flex-direction: column;
-        text-align: left;
+        text-align: start;
         position: absolute;
         background-color: black;
         border-radius: 5px;
@@ -287,15 +285,15 @@ $container-margin: 16px;
         color: white;
         width: 120px;
         z-index: 101;
-        bottom: 100%;
-        top: auto;
-        left: 0;
-        right: auto;
+        inset-block-end: 100%;
+        inset-block-start: auto;
+        inset-inline-start: 0;
+        inset-inline-end: auto;
       }
 
       &:hover {
         .Icon {
-          color: var(--blue-6)
+          color: var(--blue-6);
         }
       }
     }
@@ -321,13 +319,12 @@ $container-margin: 16px;
       @include mobile {
         font-size: 13px;
         height: 16px;
-
       }
     }
 
     .Dropdown__wrapper {
       .Dropdown {
-        margin-right: 4px;
+        margin-inline-end: 4px;
         height: 32px;
         width: 268px !important;
 
@@ -335,7 +332,7 @@ $container-margin: 16px;
           width: 200px !important;
         }
 
-        text-align: left;
+        text-align: start;
       }
 
       .arrow {
@@ -344,14 +341,14 @@ $container-margin: 16px;
 
       .Dropdown__items {
         @include mobile {
-          bottom: auto;
+          inset-block-end: auto;
           height: 200px;
           width: 200px !important;
         }
 
-        top: auto;
-        left: 0;
-        right: auto;
+        inset-block-start: auto;
+        inset-inline-start: 0;
+        inset-inline-end: auto;
         width: 268px !important;
       }
     }
@@ -401,7 +398,7 @@ $container-margin: 16px;
     input {
       display: none;
 
-      &+label:before {
+      & + label:before {
         cursor: pointer;
         content: '';
         margin: 1px 10px 0px 0px;
@@ -413,21 +410,21 @@ $container-margin: 16px;
         border: 1px solid #979797;
       }
 
-      &:checked+label:before {
+      &:checked + label:before {
         background: $pdftron-blue;
         border: 1px solid transparent;
       }
 
-      &:checked+label:after {
+      &:checked + label:after {
         content: '';
         position: absolute;
-        left: 4px;
-        top: 9px;
+        inset-inline-start: 4px;
+        inset-block-start: 9px;
         background: var(--gray-0);
         width: 2px;
         height: 2px;
-        box-shadow: 2px 0 0 var(--gray-0), 4px 0 0 var(--gray-0), 4px -2px 0 var(--gray-0),
-          4px -4px 0 var(--gray-0), 4px -6px 0 var(--gray-0), 4px -8px 0 var(--gray-0);
+        box-shadow: 2px 0 0 var(--gray-0), 4px 0 0 var(--gray-0), 4px -2px 0 var(--gray-0), 4px -4px 0 var(--gray-0),
+          4px -6px 0 var(--gray-0), 4px -8px 0 var(--gray-0);
         transform: rotate(45deg);
       }
     }

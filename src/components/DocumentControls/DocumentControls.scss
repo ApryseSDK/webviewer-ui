@@ -33,8 +33,8 @@
 
       padding-top: 4px;
       padding-bottom: 4px;
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-inline-start: 8px;
+      padding-inline-end: 8px;
 
       @include mobile {
         font-size: 13px;
@@ -53,7 +53,7 @@
     .documentControlsButton {
       display: flex;
       flex-direction: row;
-      padding-left: 2px;
+      padding-inline-start: 2px;
 
       .Button {
         height: 30px;
@@ -86,7 +86,7 @@
 
     .multiSelectExampleLabel {
       color: var(--faded-text);
-      margin-left: 2px;
+      margin-inline-start: 2px;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import "../../../../constants/styles";
+@import '../../../../constants/styles';
 
 .ChangeListItem {
   display: flex;
@@ -9,7 +9,7 @@
   background-color: var(--component-background);
   font-family: var(--font-family);
 
-  .icon-change{
+  .icon-change {
     padding: 14px 0 14px 14px;
     height: 100%;
 
@@ -57,7 +57,7 @@
         background-color: var(--change-list-old-bg);
       }
       &.new {
-        .value-title{
+        .value-title {
           color: var(--green);
         }
         background-color: var(--change-list-new-bg);

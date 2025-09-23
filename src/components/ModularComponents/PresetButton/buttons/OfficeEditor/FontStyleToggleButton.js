@@ -11,15 +11,22 @@ import { STYLE_TOGGLE_OPTIONS } from 'src/constants/customizationVariables';
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const FontStyleToggleButton = forwardRef((props, ref) => {
   const { isFlyoutItem, styleType, style, className } = props;
+  const menuItem = menuItems[`${styleType}Button`];
+  const {
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = menuItem.title,
+  } = props;
   const isActive = useSelector((state) => selectors.isStyleButtonActive(state, styleType));
-
-  const { dataElement, icon, title } = menuItems[`${styleType}Button`];
 
   const handleClick = () => {
     core.getOfficeEditor().updateSelectionAndCursorStyle({ [styleType]: true });

@@ -23,7 +23,6 @@
     @include small-browser-height {
       font-size: 42px !important;
       height: 50px;
-
     }
 
     @include tiny-browser-height {
@@ -71,7 +70,7 @@
   }
 
   .Dropdown__items {
-    top: unset !important;
+    inset-block-start: unset !important;
 
     [data-testid='sig-no-result'] {
       font-size: 13px !important;

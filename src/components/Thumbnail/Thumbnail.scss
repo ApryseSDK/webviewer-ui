@@ -17,7 +17,6 @@
         box-sizing: content-box;
       }
     }
-
   }
 
   .container {
@@ -33,11 +32,17 @@
       box-shadow: 0px 0px 3px 0px var(--box-shadow);
     }
 
-    .annotation-image, .page-image {
+    .annotation-image,
+    .page-image {
       position: absolute;
-      left: 50%;
-      top: 50%;
+      inset-inline-start: 50%;
+      inset-block-start: 50%;
       transform: translate(-50%, -50%);
+
+      &.right-to-left {
+        transform: translate(-15%, -50%);
+        inset-inline-start: 0;
+      }
     }
 
     .checkbox {
@@ -47,13 +52,13 @@
     }
 
     .default {
-      top: 3%;
-      right: 15%;
+      inset-block-start: 3%;
+      inset-inline-end: 15%;
     }
 
     .rotated {
-      top: 15%;
-      right: 3%;
+      inset-block-start: 15%;
+      inset-inline-end: 3%;
     }
   }
 

@@ -6,7 +6,8 @@ import {
   defaultSpreadsheetEditorHeaders,
   defaultSpreadsheetFlyoutMap
 } from 'src/redux/spreadsheetEditorComponents';
-import { within, expect, userEvent } from '@storybook/test';
+import { within, expect, userEvent } from 'storybook/test';
+import initialState from 'src/redux/initialState';
 
 export default {
   title: 'SpreadsheetEditor/App',
@@ -62,6 +63,19 @@ const editingModeTemplate = {
 export const EditingModeUI = createTemplate(editingModeTemplate);
 
 export const EditingModeHeaderKeyboardNavigationTest = createTemplate(editingModeTemplate);
+
+EditingModeUI.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const contentContainer = canvasElement.querySelector('.content');
+  const documentContainer = canvas.getByRole('tabpanel');
+
+  expect(documentContainer).toBeInTheDocument();
+  const containerRect = documentContainer.getBoundingClientRect();
+  const contentRect = contentContainer.getBoundingClientRect();
+  const { bottomHeaders } = initialState.viewer.modularHeadersHeight;
+  expect(containerRect.height + bottomHeaders).toEqual(contentRect.height);
+};
 
 EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -132,6 +146,13 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   await userEvent.tab({ shift: true });
   const fileNameButton = canvas.getByRole('button', { name: /^Edit File Name/ });
   expect(fileNameButton).toHaveFocus();
+
+  // TODO: uncomment when search panel is enabled
+  // const searchToggle = canvas.getByRole('button', { name: 'Search' });
+  // await userEvent.click(searchToggle);
+  // expect(searchToggle).toHaveFocus();
+  // const searchPanel = canvasElement.querySelector('[data-element="searchPanel"]');
+  // expect(searchPanel).toBeInTheDocument();
 };
 
 export const ViewOnlyUI = createTemplate({

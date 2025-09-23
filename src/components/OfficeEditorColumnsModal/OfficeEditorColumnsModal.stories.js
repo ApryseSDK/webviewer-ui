@@ -3,7 +3,7 @@ import rootReducer from 'reducers/rootReducer';
 import OfficeEditorColumnsModal from './OfficeEditorColumnsModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { convertMeasurementUnit } from 'helpers/officeEditor';
 
 export default {
@@ -32,6 +32,31 @@ const getColumnInputs = (canvas, numberOfColums) => {
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const columnAmountInput = canvas.getByLabelText('Number of Columns');
+
+  // allow to clear input or type 0
+  await userEvent.type(columnAmountInput, '{backspace}');
+  expect(columnAmountInput.value).toBe('');
+  await userEvent.type(columnAmountInput, '0');
+  expect(columnAmountInput.value).toBe('0');
+
+  // correct negative input to 1
+  await userEvent.type(columnAmountInput, '{backspace}-9');
+  expect(columnAmountInput.value).toBe('1');
+
+  // once set to 5 columns, if cleared, blur away should reset to 5
+  await userEvent.type(columnAmountInput, '{backspace}5{backspace}{tab}');
+  expect(columnAmountInput.value).toBe('5');
+
+  // once set to 5 columns, if type 0, blur away should reset to 5
+  await userEvent.type(columnAmountInput, '{backspace}0{tab}');
+  expect(columnAmountInput.value).toBe('5');
+};
+
+export const ColumnCalculation = () => <Basic />;
+
+ColumnCalculation.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const columnAmountInput = canvas.getByLabelText('Number of Columns');
   const equalWidthCheckbox = canvas.getByLabelText('Equal Column Width');
 
   await userEvent.click(equalWidthCheckbox);
@@ -40,9 +65,8 @@ Basic.play = async ({ canvasElement }) => {
   // Confirm available page width
   await waitFor(() => expect(canvas.getByLabelText('Column 1 Width').valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM));
 
-  columnAmountInput.focus();
-  columnAmountInput.value = ''; // Need to clear the input programatically to get around validation. Storybook's userEvent.clear doesn't work as expected here.
-  await userEvent.type(columnAmountInput, '5[Tab]');
+  await userEvent.type(columnAmountInput, '{backspace}5');
+  expect(columnAmountInput.value).toBe('5');
 
   const inputs = getColumnInputs(canvas, 5);
 
@@ -63,7 +87,7 @@ Basic.play = async ({ canvasElement }) => {
     await expectInputsToBeWithinLimits();
   }
 
-  await userEvent.clear(columnAmountInput);
+  await userEvent.type(columnAmountInput, '{backspace}1');
   expect(canvas.getByLabelText('Column 1 Width').valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM);
 };
 

@@ -1,30 +1,30 @@
 :root {
   /* stylelint-disable color-no-hex */
-  --blue-1: #E7EDF3;
-  --blue-2: #DDE6EE;
-  --blue-3: #CFD8E0;
-  --blue-4: #C7D2DD;
-  --blue-5: #2B73AB;
-  --blue-6: #1A466B;
+  --blue-1: #e7edf3;
+  --blue-2: #dde6ee;
+  --blue-3: #cfd8e0;
+  --blue-4: #c7d2dd;
+  --blue-5: #2b73ab;
+  --blue-6: #1a466b;
 
-  --gray-0: #FFFFFF;
-  --gray-1: #F8F9FA;
-  --gray-2: #F1F3F5;
-  --gray-3: #E7EBEE;
-  --gray-4: #CFD4DA;
-  --gray-5: #ABB5BD;
-  --gray-6: #818A92;
+  --gray-0: #ffffff;
+  --gray-1: #f8f9fa;
+  --gray-2: #f1f3f5;
+  --gray-3: #e7ebee;
+  --gray-4: #cfd4da;
+  --gray-5: #abb5bd;
+  --gray-6: #818a92;
   --gray-7: #697077;
   --gray-8: #485056;
-  --gray-9: #343A40;
-  --gray-10: #21242A;
-  --gray-11: #16181C;
+  --gray-9: #343a40;
+  --gray-10: #21242a;
+  --gray-11: #16181c;
   --gray-12: #101214;
   --gray-13: #000000;
 
-  --yellow-1: #FACE0080;
-  --red: #D52A2A;
-  --green: #006D41;
+  --yellow-1: #face0080;
+  --red: #d52a2a;
+  --green: #006d41;
   /* stylelint-enable color-no-hex */
 
   --component-background: var(--gray-0);
@@ -38,6 +38,7 @@
   --error-border-color: var(--red);
 
   --panel-background: var(--gray-0);
+  --panel-list-item: var(--gray-0);
 
   --slider-filled: var(--gray-9);
   --slider-background: var(--gray-6);
@@ -166,7 +167,7 @@
   --tab-footer-button-color: var(--gray-0);
   --x-button-hover-color: var(--gray-2);
 
-  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, .7));
+  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, 0.7));
   --style-icon-color: var(--icon-color);
   --cell-border-size: 30px;
   --cell-outer-border-size: 30px;
@@ -180,8 +181,8 @@
 
   --focus-visible-outline: 2px solid var(--gray-10);
 
-  --change-list-old-bg: #FFF2F2;
-  --change-list-new-bg: #E8FAF3;
+  --change-list-old-bg: #fff2f2;
+  --change-list-new-bg: #e8faf3;
   --swipe-indicator-bg: var(--gray-6);
 
   --slider-height: 5px;

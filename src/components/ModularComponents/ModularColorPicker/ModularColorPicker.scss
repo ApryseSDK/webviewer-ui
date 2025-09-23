@@ -11,14 +11,14 @@
   .color-picker-container.flyout-item {
     padding: 0 8px;
   }
-  
+
   .ColorPalette {
     padding-top: 8px;
   }
 
   .palette-controls {
-    padding-right: 12px;
-    padding-left: 2px;
+    padding-inline-end: 12px;
+    padding-inline-start: 2px;
     padding-top: 8px;
     display: flex;
     justify-content: space-between;
@@ -29,8 +29,8 @@
     }
 
     .control-button {
-       cursor: pointer;
-      
+      cursor: pointer;
+
       &.show-more-button {
         @extend %tertiary-button-selected;
         color: var(--ribbon-active-color);
@@ -60,7 +60,6 @@
         outline: var(--focus-visible-outline);
       }
     }
-
   }
 }
 
@@ -69,7 +68,7 @@
     &.active {
       .Icon {
         svg path:not(.no-fill) {
-          fill: currentColor
+          fill: currentColor;
         }
 
         svg path.bucket-outline {

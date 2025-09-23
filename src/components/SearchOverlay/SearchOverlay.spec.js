@@ -1,9 +1,15 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import SearchOverlay from './SearchOverlay';
 import { Basic } from './SearchOverlay.stories';
 import { executeSearch, selectNextResult, selectPreviousResult } from './SearchOverlayContainer';
 import core from 'core';
+import { Provider } from 'react-redux';
+import Flyout from '../ModularComponents/Flyout/Flyout';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import actions from 'actions';
+import { configureStore } from '@reduxjs/toolkit';
+
 
 // To create mocks of something that executeSearch uses we need to first import them
 // and then call jest.mock them.
@@ -29,17 +35,167 @@ jest.mock('helpers/search', () => {
   };
 });
 
-jest.mock('core', () => ({
-  clearSearchResults: () => {},
-  addEventListener: () => {},
-  removeEventListener: () => {},
+jest.mock('helpers/officeEditor', () => ({
+  isOfficeEditorMode: jest.fn(() => false),
+  isSpreadsheetEditorMode: jest.fn(() => false),
 }));
+
+jest.mock('constants/types', () => ({
+  workerTypes: {
+    PDF: 'pdf',
+    OFFICE_EDITOR: 'officeEditor',
+    SPREADSHEET_EDITOR: 'spreadsheetEditor',
+  }
+}));
+
+jest.mock('core', () => {
+  const mockGetDocument = () => {
+    const mockDocument = {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      getType: jest.fn(() => 'pdf'),
+      getOfficeEditor: jest.fn(() => ({
+        updateSearchData: jest.fn(() => Promise.resolve()),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn()
+      }))
+    };
+    return mockDocument;
+  };
+
+  return {
+    clearSearchResults: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    getDocument: mockGetDocument
+  };
+});
+
+const createMockStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+  });
+};
+
+const ConditionalFlyout = ({ store }) => {
+  const [shouldRender, setShouldRender] = React.useState(false);
+
+  React.useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      const activeFlyout = state.viewer.activeFlyout;
+      const flyoutExists = activeFlyout && state.viewer.flyoutMap[activeFlyout];
+      const isElementOpen = state.viewer.openElements[activeFlyout];
+
+      const hasValidItems = flyoutExists &&
+                            flyoutExists.items &&
+                            Array.isArray(flyoutExists.items);
+
+      setShouldRender(!!(flyoutExists && isElementOpen && hasValidItems));
+    });
+
+    const state = store.getState();
+    const activeFlyout = state.viewer.activeFlyout;
+    const flyoutExists = activeFlyout && state.viewer.flyoutMap[activeFlyout];
+    const isElementOpen = state.viewer.openElements[activeFlyout];
+    const hasValidItems = flyoutExists &&
+                          flyoutExists.items &&
+                          Array.isArray(flyoutExists.items);
+
+    setShouldRender(!!(flyoutExists && isElementOpen && hasValidItems));
+
+    return unsubscribe;
+  }, [store]);
+
+  return shouldRender ? <Flyout /> : null;
+};
+
+const createTestSearchOverlayWithStore = () => {
+  const customStore = createMockStore();
+
+  const TestSearchOverlayWithCustomStore = (props) => {
+    const [, setStateUpdate] = React.useState(0);
+
+    const handleStoreChange = React.useCallback(() => {
+      setStateUpdate((prev) => prev + 1);
+    }, []);
+
+    React.useEffect(() => {
+      const unsubscribe = customStore.subscribe(handleStoreChange);
+      return unsubscribe;
+    }, [handleStoreChange]);
+
+    const state = customStore.getState();
+
+    return (
+      <Provider store={customStore}>
+        <div>
+          <SearchOverlay
+            {...props}
+            isCaseSensitive={state.search.isCaseSensitive}
+            isWholeWord={state.search.isWholeWord}
+            isWildcard={state.search.isWildcard}
+          />
+          <ConditionalFlyout store={customStore} />
+        </div>
+      </Provider>
+    );
+  };
+
+  return { TestSearchOverlayWithCustomStore, customStore };
+};
+
+const createMockHandlers = (customStore) => {
+  return {
+    executeSearch: jest.fn(),
+    setCaseSensitive: jest.fn((value) => {
+      customStore.dispatch(actions.setCaseSensitive(value));
+    }),
+    setWholeWord: jest.fn((value) => {
+      customStore.dispatch(actions.setWholeWord(value));
+    }),
+    setWildcard: jest.fn((value) => {
+      customStore.dispatch(actions.setWildcard(value));
+    }),
+    setSearchStatus: jest.fn(),
+  };
+};
 
 describe('SearchOverlay', () => {
   beforeEach(() => {
     searchTextFullFactory.mockReset();
     getOverrideSearchExecution.mockReset();
+
+    jest.clearAllTimers();
   });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.runOnlyPendingTimers();
+  });
+
+  const openFlyoutAndGetCheckbox = async (screen, container, checkboxId) => {
+    const searchOptionsButton = await waitFor(() => {
+      const button = screen.getByRole('button', { name: 'Toggle search options' });
+      expect(button).toBeInTheDocument();
+      return button;
+    });
+
+    fireEvent.click(searchOptionsButton);
+
+    await waitFor(() => {
+      const flyoutContainer = container.querySelector('.FlyoutContainer');
+      expect(flyoutContainer).toBeInTheDocument();
+    });
+
+    const checkbox = await waitFor(() => {
+      const target = screen.getByRole('checkbox', { name: checkboxId });
+      expect(target).toBeInTheDocument();
+      return target;
+    });
+
+    return checkbox;
+  };
 
   describe('Component', () => {
     // It's good practice to test that all stories of current component work without throwing errors.
@@ -70,10 +226,9 @@ describe('SearchOverlay', () => {
       expect(container.querySelector('.SearchPanel')).not.toBeInTheDocument();
     });
 
-    it('Should execute search on input text enter', () => {
-      // Create jest mock function, so we can verify that this function was called after click.
+    it('Should execute search on input text enter', async () => {
       const executeSearch = jest.fn();
-      const { container } = render(
+      render(
         <TestSearchOverlay
           setSearchValue={noop}
           setSearchStatus={noop}
@@ -82,88 +237,71 @@ describe('SearchOverlay', () => {
           setWildcard={noop}
           setReplaceValue={noop}
           executeSearch={executeSearch}
+          setIsSearchInProgress={noop}
+          isPanelOpen={true}
+          isCaseSensitive={false}
+          isWholeWord={false}
+          isWildcard={false}
         />
       );
-      const searchInput = container.querySelector('#SearchPanel__input');
+      const searchInput = screen.getByRole('textbox', { name: 'Search document' });
       expect(searchInput).toBeInTheDocument();
-      fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
-      setTimeout(() => {
+
+      fireEvent.change(searchInput, { target: { value: 'test search' } });
+
+      await waitFor(() => {
         expect(executeSearch).toHaveBeenCalled();
-      }, 1000);
+      });
     });
 
-    it('Should execute search when case sensitive checkbox changed', () => {
-      const executeSearch = jest.fn();
+    // Helper function to test checkbox interactions that trigger search
+    const testCheckboxTriggerSearch = async (checkboxId, additionalValidations = []) => {
+      const { TestSearchOverlayWithCustomStore, customStore } = createTestSearchOverlayWithStore();
+      const handlers = createMockHandlers(customStore);
+
       const searchValue = 'more';
       const { container } = render(
-        <TestSearchOverlay
+        <TestSearchOverlayWithCustomStore
           searchValue={searchValue}
           setSearchValue={noop}
-          setCaseSensitive={noop}
-          setWholeWord={noop}
-          setWildcard={noop}
           setReplaceValue={noop}
-          executeSearch={executeSearch}
+          isPanelOpen={true}
+          {...handlers}
         />
       );
 
-      const checkbox = container.querySelector('#case-sensitive-option');
-      expect(checkbox).toBeInTheDocument();
-      setTimeout(() => {
-        fireEvent.click(checkbox);
-        expect(executeSearch).toBeCalled();
-      }, 1000);
+      const searchInput = screen.getByRole('textbox', { name: 'Search document' });
+      expect(searchInput).toBeInTheDocument();
+      expect(searchInput.value).toBe(searchValue);
+
+      // Wait for the panel to be fully initialized
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      const checkbox = await openFlyoutAndGetCheckbox(screen, container, checkboxId);
+
+      for (const validation of additionalValidations) {
+        await validation(container, checkbox);
+      }
+
+      fireEvent.click(checkbox);
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await waitFor(() => {
+        expect(handlers.executeSearch).toHaveBeenCalled();
+      }, { timeout: 5000 });
+    };
+
+    it('Should execute search when case sensitive checkbox changed', async () => {
+      await testCheckboxTriggerSearch(/Case Sensitive/i);
     });
 
-    it('Should execute search when whole word checkbox changed', () => {
-      const executeSearch = jest.fn();
-      const searchValue = 'more';
-      const { container } = render(
-        <TestSearchOverlay
-          searchValue={searchValue}
-          setSearchValue={noop}
-          setCaseSensitive={noop}
-          setWholeWord={noop}
-          setWildcard={noop}
-          setReplaceValue={noop}
-          executeSearch={executeSearch}
-        />
-      );
-
-      const checkbox = container.querySelector('#whole-word-option');
-      expect(checkbox).toBeInTheDocument();
-
-      setTimeout(() => {
-        fireEvent.click(checkbox);
-        expect(executeSearch).toBeCalled();
-        expect(checkbox).toBeInTheDocument();
-        fireEvent.click(checkbox);
-        expect(executeSearch).toBeCalled();
-      }, 1000);
+    it('Should execute search when whole word checkbox changed', async () => {
+      await testCheckboxTriggerSearch(/Whole word/i);
     });
 
-    it('Should render wild card checkbox and execute search when checkbox changed', () => {
-      const executeSearch = jest.fn();
-      const searchValue = 'more';
-      const { container } = render(
-        <TestSearchOverlay
-          searchValue={searchValue}
-          setSearchValue={noop}
-          setCaseSensitive={noop}
-          setWholeWord={noop}
-          setWildcard={noop}
-          setReplaceValue={noop}
-          executeSearch={executeSearch}
-        />
-      );
-
-      const checkbox = container.querySelector('#wild-card-option');
-      expect(checkbox).toBeInTheDocument();
-
-      setTimeout(() => {
-        fireEvent.click(checkbox);
-        expect(executeSearch).toBeCalled();
-      }, 1000);
+    it('Should render wild card checkbox and execute search when checkbox changed', async () => {
+      await testCheckboxTriggerSearch(/Wildcard/i);
     });
 
     it('Should not be focused on mount', () => {

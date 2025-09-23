@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import './Slider.scss';
+import i18next from 'i18next';
 
 const propTypes = {
   property: PropTypes.string.isRequired,
@@ -52,6 +53,7 @@ function Slider(props) {
   const sliderRef = useRef(null);
   const [t] = useTranslation();
   const [isEditingInputField, setIsEditingInputField] = useState(false);
+  const isRightToLeft = i18next.dir() === 'rtl';
 
   const isThereSteps = steps.length !== 0;
 
@@ -62,9 +64,9 @@ function Slider(props) {
     index = steps.findIndex((i) => i >= value);
     defaultDisplayValue = steps[index];
   }
-  const [position, setPosition] = React.useState(index);
-  const [displayValue, setDisplayValue] = React.useState(defaultDisplayValue);
-  const [inputValue, setInputValue] = React.useState(value);
+  const [position, setPosition] = useState(index);
+  const [displayValue, setDisplayValue] = useState(defaultDisplayValue);
+  const [inputValue, setInputValue] = useState(value);
 
   const updateParent = (text) => {
     const payload = (getLocalValue) ? getLocalValue(text) : text;
@@ -133,8 +135,14 @@ function Slider(props) {
 
   useEffect(() => {
     const percentage = ((position - min) / (max - min)) * 100;
-    sliderRef.current.style.background = `linear-gradient(to right, var(--slider-filled) ${percentage}%, var(--slider-background) ${percentage}%)`;
-  }, [position]);
+    if (sliderRef.current) {
+      sliderRef.current.style.background = isRightToLeft
+        ? `linear-gradient(to left, var(--slider-filled) ${percentage}%, var(--slider-background) ${percentage}%)`
+        : `linear-gradient(to right, var(--slider-filled) ${percentage}%, var(--slider-background) ${percentage}%)`;
+      sliderRef.current.style.direction = isRightToLeft ? 'ltr' : '';
+    }
+  }, [position, isRightToLeft, min, max]);
+
 
   useEffect(() => {
     const targetValue = value;
@@ -183,6 +191,8 @@ function Slider(props) {
     );
   }
 
+  const displayedPosition = isRightToLeft ? max - (position - min) : position;
+
   return (
     <div className="slider" data-element={dataElement}>
       {!shouldHideSliderTitle && (
@@ -201,11 +211,17 @@ function Slider(props) {
             aria-valuenow={displayValue}
             aria-valuetext={`${label} ${getDisplayValue(displayValue)}`}
             type='range'
-            onChange={onChange}
+            onChange={(e) => {
+              let newPosition = parseFloat(e.target.value);
+              if (isRightToLeft) {
+                newPosition = max - (newPosition - min);
+              }
+              onChange({ target: { value: newPosition } });
+            }}
             min={min}
             max={max}
             step={step}
-            value={position}
+            value={displayedPosition}
           />
         </div>
         {!shouldHideSliderValue && (

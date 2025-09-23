@@ -25,6 +25,10 @@
     align-self: center;
   }
 
+  .small-outlines-list {
+    height: calc(100% - 154px) !important; // 154px is the height of the add outline content
+  }
+
   &.modular-ui-panel {
     .bookmark-outline-single-container {
       .panel-list-label-header {
@@ -43,7 +47,7 @@
             background-color: var(--faded-component-background);
           }
 
-          &:focus{
+          &:focus {
             border-radius: 4px;
             box-shadow: inset 0 0 0 1px var(--blue-6);
             color: var(--blue-6);
@@ -76,12 +80,14 @@
       }
 
       .bookmark-outline-input:active {
-        border-color: var(--focus-border)
+        border-color: var(--focus-border);
       }
     }
   }
 
-  .bookmark-outline-control-button, .bookmark-outline-save-button, .bookmark-outline-cancel-button {
+  .bookmark-outline-control-button,
+  .bookmark-outline-save-button,
+  .bookmark-outline-cancel-button {
     @include mobile {
       font-size: 13px;
     }

@@ -13,35 +13,35 @@
     overflow-y: auto;
   }
 
-  .section{
+  .section {
     margin-bottom: 8px;
-    h2.title{
+    h2.title {
       font-weight: 700;
-	    font-size: 13px;
-      padding-left: var(--fileAttachment-title-padding);
+      font-size: 13px;
+      padding-inline-start: var(--fileAttachment-title-padding);
       margin: 12px 0;
     }
-    ul.downloadable{
-      padding-left: var(--fileAttachment-list-padding);
-      &>li{
+    ul.downloadable {
+      padding-inline-start: var(--fileAttachment-list-padding);
+      & > li {
         width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
         padding: 4px 0;
       }
-      &>li>button{
+      & > li > button {
         cursor: pointer;
         color: var(--secondary-button-text);
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
         padding: 4px 0;
-        &:hover{
+        &:hover {
           color: var(--secondary-button-hover);
         }
       }
-      .embedSpinner{
+      .embedSpinner {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -50,9 +50,9 @@
         }
       }
     }
-    ul ul{
-      padding-left: 10px;
-      list-style-type:none;
+    ul ul {
+      padding-inline-start: 10px;
+      list-style-type: none;
     }
   }
 }

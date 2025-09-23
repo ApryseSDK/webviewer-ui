@@ -220,7 +220,7 @@ const defaultOfficeEditorModularComponents = {
   },
   'leftPanelButton': {
     dataElement: DataElements.LEFT_PANEL_BUTTON,
-    title: 'Left Panel',
+    title: 'component.leftPanel',
     type: 'toggleButton',
     img: 'icon-header-sidebar-line',
     toggleElement: 'tabPanel'

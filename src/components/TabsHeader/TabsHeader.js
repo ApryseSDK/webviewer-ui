@@ -235,14 +235,25 @@ const TabsHeader = () => {
     keyActions[e.key]?.();
   }, [currentFocusIndex, focusableElements]);
 
+  // Move tab if activeIndex is out of visible range
+  useEffect(() => {
+    if (!isMultiTab) {
+      return;
+    }
+
+    const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
+
+    if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
+      tabManager.moveTab(activeIndex, breakpoint - 1);
+    }
+    // Only run when currTabs, activeTab, breakpoint, or tabManager changes
+  }, [currTabs, activeTab, breakpoint, tabManager, isMultiTab]);
+
   const [tabs, additionalTabs] = useMemo(() => {
     if (!isMultiTab) {
       return [null, null];
     }
     const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
-    if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
-      tabManager.moveTab(activeIndex, breakpoint - 1);
-    }
     const renderedTabs = currTabs.map((tab, index) => {
       const isActive = tab.id === activeTab;
       const fileName = removeFileNameExtension(tab.options.filename);
@@ -277,7 +288,7 @@ const TabsHeader = () => {
       />;
     });
     return [renderedTabs?.slice(0, breakpoint), renderedTabs?.slice(breakpoint, renderedTabs.length)];
-  }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave]);
+  }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave, isMultiTab, activeTab]);
 
   async function setActiveTab(id) {
     dispatch(actions.closeElement('tabMenu'));

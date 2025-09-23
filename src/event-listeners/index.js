@@ -59,6 +59,7 @@ import onDocumentLoaded, {
   updateOutlines,
   updatePortfolio,
   configureOfficeEditor,
+  initializeLayersVisibility,
 } from './onDocumentLoaded';
 import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
 import onSpreadsheetEditorEditModeChanged from './onSpreadsheetEditorEditModeChanged';
@@ -135,4 +136,5 @@ export {
   closeSpreadsheetEditorLoadingModal,
   onWidgetHighlightingChanged,
   onSelectedRangeStyleChanged,
+  initializeLayersVisibility,
 };

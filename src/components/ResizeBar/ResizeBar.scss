@@ -5,8 +5,8 @@
   cursor: col-resize;
   width: 14px;
   background-color: var(--panel-background);
-  border-right: 1px solid var(--lighter-border);
-  border-left: 1px solid var(--lighter-border);
+  border-inline-end: 1px solid var(--lighter-border);
+  border-inline-start: 1px solid var(--lighter-border);
   z-index: 65;
 
   &[data-element='stylePanelResizeBar'] {

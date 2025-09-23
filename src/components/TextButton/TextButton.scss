@@ -1,8 +1,8 @@
 .TextButton {
   color: var(--secondary-button-text);
   width: fit-content;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-inline-start: 8px;
+  padding-inline-end: 8px;
 
   .Icon {
     display: flex;

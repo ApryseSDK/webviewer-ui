@@ -111,6 +111,7 @@
     "open": "เปิด",
     "deselectAll": "ยกเลิกการเลือกทั้งหมด",
     "select": "เลือก",
+    "buttonPressed": "กดปุ่ม {{buttonName}}",
     "moveToTop": "ย้ายไปด้านบน",
     "moveToBottom": "ย้ายไปด้านล่าง",
     "movePageToTop": "ย้ายเพจไปด้านบน",
@@ -272,7 +273,6 @@
       "close": "ปิดคำอธิบายประกอบทั้งหมด"
     },
     "comparePanel": "เปรียบเทียบแผง",
-    "watermarkPanel": "แผงลายน้ำ",
     "mainMenu": "เมนูหลัก"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "ไม่พบผลลัพธ์.",
     "numResultsFound": "พบผลลัพธ์",
     "loadError": "เกิดข้อผิดพลาดในการโหลดเอกสาร",
+    "urlInputFileLoadError": "ไม่สามารถดึงไฟล์จาก URL ที่ให้มาได้",
     "notSupported": "ไม่รองรับไฟล์ประเภทนั้น",
     "passwordRequired": "ต้องใช้รหัสผ่าน",
     "enterPasswordPlaceholder": "ใส่รหัสผ่าน",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "ค้นหาความคิดเห็น",
     "searchDocumentPlaceholder": "ค้นหาเอกสาร",
     "clearSearchResults": "ล้างผลการค้นหา",
+    "toggleReplaceInput": "สลับการแทนที่อินพุต",
+    "toggleSearchOptions": "สลับตัวเลือกการค้นหา",
     "searchResultsCleared": "ผลลัพธ์การค้นหาถูกล้างแล้ว",
     "searchSettingsPlaceholder": "การตั้งค่าการค้นหา",
     "searchSuggestionsPlaceholder": "คำแนะนำการค้นหา",
@@ -803,7 +806,30 @@
       "setShortcut": "ตั้งค่าทางลัด",
       "editShortcut": "แก้ไขทางลัด",
       "shortcutAlreadyExists": "แป้นพิมพ์ลัดด้านบนมีอยู่แล้ว",
-      "close": "ปิดคำแนะนำเครื่องมือ"
+      "close": "ปิดคำแนะนำเครื่องมือ",
+      "spreadsheetEditor": {
+        "copyText": "คัดลอกข้อความหรือเซลล์ที่เลือก",
+        "pasteText": "วางข้อความหรือเซลล์",
+        "cutText": "ตัดข้อความหรือเซลล์ที่เลือก",
+        "undoChange": "เลิกทำการเปลี่ยนแปลง",
+        "redoChange": "ทำการเปลี่ยนแปลงใหม่",
+        "selectAll": "เลือกเซลล์ทั้งหมด",
+        "moveToEdgeUp": "ข้ามไปที่ด้านบนของแผ่นงาน",
+        "moveToEdgeDown": "ข้ามไปที่ด้านล่างของแผ่นงาน",
+        "moveToEdgeLeft": "ข้ามไปที่คอลัมน์ซ้ายสุด",
+        "moveToEdgeRight": "ข้ามไปที่คอลัมน์ขวาสุด",
+        "adjustSelectionUp": "ขยายการเลือกขึ้นไป",
+        "adjustSelectionDown": "ขยายการเลือกลงด้านล่าง",
+        "adjustSelectionLeft": "ขยายการเลือกไปทางซ้าย",
+        "adjustSelectionRight": "ขยายการเลือกไปทางขวา",
+        "up": "ย้ายกล่องเลือกเซลล์ขึ้นด้านบน",
+        "down": "ย้ายกล่องเลือกเซลล์ลงด้านล่าง",
+        "left": "ย้ายกล่องเลือกเซลล์ไปทางซ้าย",
+        "right": "ย้ายกล่องเลือกเซลล์ไปทางขวา",
+        "enter": "แก้ไขเซลล์ที่เลือก",
+        "tab": "ย้ายกล่องเลือกเซลล์ไปทางขวา",
+        "delete": "ล้างข้อมูลเซลล์"
+      }
     },
     "cellBorderStyle": {
       "none": "ไม่มี",
@@ -861,12 +887,12 @@
       "message": "เอกสารนี้พยายามเชื่อมต่อกับ:\n\n{{- uri}}\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อเปิด"
     },
     "sheetTabRenameIssueOne": {
-      "title": "แก้ไขคำเตือน",
-      "message": "ชื่อชีตนี้มีอยู่แล้ว กรุณาใส่ชื่ออื่น"
+      "title": "แก้ไขชื่อชีต",
+      "message": "ชื่อนี้มีอยู่แล้ว กรุณาใส่ชื่ออื่น"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "แก้ไขคำเตือน",
-      "message": "ชื่อชีตนี้ไม่สามารถว่างเปล่าได้"
+      "title": "แก้ไขชื่อแผ่นงาน",
+      "message": "ชื่อชีตต้องไม่ว่างเปล่า กรุณาใส่ชื่อ"
     },
     "sheetTabDeleteMessage": {
       "title": "แก้ไขคำเตือน",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "คุณสมบัติ",
     "miscValuesHeader": "ทั้งหมด",
     "emptyPanelMessage": "เลือกองค์ประกอบเพื่อดูคุณสมบัติของมัน"
-  },
-  "watermarkPanel": {
-    "textWatermark": "ลายน้ำข้อความ",
-    "uploadImage": "อัพโหลดภาพ",
-    "browse": "เรียกดู",
-    "watermarkOptions": "ตัวเลือกลายน้ำ",
-    "watermarks": "ลายน้ำ"
   },
   "portfolio": {
     "createPDFPortfolio": "สร้างผลงาน PDF",

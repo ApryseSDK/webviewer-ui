@@ -7,6 +7,7 @@ import Icon from 'components/Icon';
 import { getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import DataElements from 'constants/dataElement';
+import classNames from 'classnames';
 
 let store;
 export const setItemToFlyoutStore = (newStore) => {
@@ -113,10 +114,14 @@ export const itemToFlyout = (item, {
       if (!menuItem) {
         menuItem = menuItems[itemProps.dataElement];
       }
-      const { label, dataElement, icon } = menuItem;
+      const dataElement = itemProps.dataElement || menuItem.dataElement;
+      const icon = itemProps.img || menuItem.icon;
+      const title = itemProps.title || menuItem.title;
+      const { label } = menuItem;
       flyoutItem.label = label;
       flyoutItem.dataElement = dataElement;
       flyoutItem.icon = icon;
+      flyoutItem.title = title;
       flyoutItem.type = type;
       break;
     }
@@ -199,7 +204,7 @@ const dataElementToLabel = (dataElement) => {
   }
 };
 
-export const getIconDOMElement = (currentItem, allItems) => {
+export const getIconDOMElement = (currentItem, allItems = [currentItem], disabled = false) => {
   const areAllitemsWithoutIcons = allItems.every((item) => !item.icon && !item.img && !item.toolName);
   const currentItemIconWithoutIcon = !currentItem.icon && !currentItem.img && !currentItem.toolName;
   if (currentItemIconWithoutIcon && areAllitemsWithoutIcons) {
@@ -214,12 +219,12 @@ export const getIconDOMElement = (currentItem, allItems) => {
     iconElement && !isBase64 && (!iconElement.includes('.') || iconElement.startsWith('<svg'));
 
   if (isGlyph) {
-    return <Icon className="menu-icon" glyph={iconElement} />;
+    return <Icon className={classNames({ 'menu-icon': true, 'disabled': disabled })} glyph={iconElement} />;
   }
   if (iconElement && !isGlyph) {
-    return <img className="menu-icon" alt="Flyout item icon" src={iconElement} />;
+    return <img className={classNames({ 'menu-icon': true, 'disabled': disabled })} alt="Flyout item icon" src={iconElement} />;
   }
-  return <div className="menu-icon"></div>;
+  return <div className={classNames({ 'menu-icon': true, 'disabled': disabled })}></div>;
 };
 
 const cleanObject = (object) => {

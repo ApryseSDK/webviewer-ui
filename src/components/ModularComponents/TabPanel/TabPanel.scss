@@ -23,7 +23,7 @@
       height: 28px;
       min-width: min-content;
       border: 1px solid var(--border);
-      margin-left: -1px;
+      margin-inline-start: -1px;
       border-radius: 0px;
       padding: 0 6px;
       gap: 4px;
@@ -37,7 +37,7 @@
       &.lastButton {
         border-bottom-right-radius: 4px;
         border-top-right-radius: 4px;
-        border-right: 1px solid var(--border);
+        border-inline-end: 1px solid var(--border);
       }
 
       &:hover {
@@ -56,8 +56,8 @@
         cursor: default;
 
         .Icon,
-        .Icon svg path:not([class="no-fill"]),
-        &[aria-label="Layers"] .Icon svg path {
+        .Icon svg path:not([class='no-fill']),
+        &[aria-label='Layers'] .Icon svg path {
           color: var(--tab-text-color-selected);
           fill: var(--tab-text-color-selected);
         }
@@ -77,7 +77,6 @@
       }
 
       &.tabPanelButton {
-
         // icon only
         &.hasIcon {
           min-width: 52px;
@@ -93,7 +92,7 @@
           min-width: 98px;
         }
 
-        &[aria-label="Layers"]:not(.active) .Icon {
+        &[aria-label='Layers']:not(.active) .Icon {
           svg path {
             fill: var(--icon-color);
           }
@@ -105,7 +104,7 @@
       padding: 0;
       max-width: 48px;
       min-width: 48px;
-      border-left: none;
+      border-inline-start: none;
 
       &.hidden {
         display: none;
@@ -134,7 +133,7 @@
     display: flex;
     flex-direction: row-reverse;
     margin: 0px 16px 8px 16px;
-  
+
     .tabPanelCloseButton {
       align-self: end;
       z-index: 3;

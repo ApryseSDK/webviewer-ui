@@ -37,7 +37,6 @@ const CellAdjustmentButton = lazy(() => import('./buttons/SheetEditor/CellAdjust
 const MergeToggleButton = lazy(() => import('./buttons/SheetEditor/MergeToggleButton'));
 const CellFormatButton = lazy(() => import('./buttons/SheetEditor/CellFormatButton'));
 const CopyPasteCutButton = lazy(() => import('./buttons/SheetEditor/CopyPasteCutButton'));
-const BorderStyleButton = lazy(() => import('./buttons/SheetEditor/BorderStyleButton'));
 
 const PresetButton = forwardRef((props, ref) => {
   const { buttonType } = props;
@@ -75,26 +74,6 @@ const PresetButton = forwardRef((props, ref) => {
             return <VerticalAlignmentButton {...props} ref={ref} alignment={CELL_ALIGNMENT_OPTIONS.Middle} />;
           case PRESET_BUTTON_TYPES.ALIGN_BOTTOM:
             return <VerticalAlignmentButton {...props} ref={ref} alignment={CELL_ALIGNMENT_OPTIONS.Bottom} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_ALL:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_OUTSIDE:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_INSIDE:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_HORIZONTAL:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_VERTICAL:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_TOP:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_BOTTOM:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_LEFT:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_RIGHT:
-            return <BorderStyleButton {...props} ref={ref} />;
-          case PRESET_BUTTON_TYPES.CELL_BORDER_NONE:
-            return <BorderStyleButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.CELL_MERGE_TOGGLE:
             return <MergeToggleButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.CONTENT_EDIT:

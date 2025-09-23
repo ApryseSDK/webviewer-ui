@@ -77,6 +77,11 @@ class MentionsManager {
         this.handleAnnotationsDeleted(annotations);
       }
     });
+
+    // Listen for annotation ID changes to update the idMentionDataMap
+    annotManager.addEventListener('annotationIdChanged', (annotation, oldId, newId) => {
+      this.handleAnnotationIdChanged(annotation, oldId, newId);
+    });
   }
 
   handleAnnotationsAdded(annotations, imported = false) {
@@ -157,6 +162,28 @@ class MentionsManager {
 
     if (deletedMentions.length) {
       this.trigger('mentionChanged', [deletedMentions, 'delete']);
+    }
+  }
+
+  /**
+   * Handle annotation ID changes by updating the idMentionDataMap
+   * @param {Core.Annotations.Annotation} annotation The annotation whose ID changed
+   * @param {string} oldId The old annotation ID
+   * @param {string} newId The new annotation ID
+   * @ignore
+   */
+  handleAnnotationIdChanged(annotation, oldId, newId) {
+    if (this.idMentionDataMap[oldId]) {
+      const mentionData = this.idMentionDataMap[oldId];
+      delete this.idMentionDataMap[oldId];
+      this.idMentionDataMap[newId] = mentionData;
+
+      // Update the annotId property in each mention
+      if (mentionData.mentions) {
+        mentionData.mentions.forEach((mention) => {
+          mention.annotId = newId;
+        });
+      }
     }
   }
 

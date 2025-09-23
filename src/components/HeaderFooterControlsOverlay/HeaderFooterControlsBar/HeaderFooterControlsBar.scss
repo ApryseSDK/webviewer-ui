@@ -9,11 +9,11 @@
   visibility: hidden;
 
   &.header-edit-ui {
-    top: 143px;
+    inset-block-start: 143px;
   }
 
   &.footer-edit-ui {
-    bottom: 143px;
+    inset-block-end: 143px;
   }
 
   &.active {
@@ -28,8 +28,9 @@
     display: flex;
     align-items: center;
 
-    &:after { // using pseudo element so we can hide the left and right box-shadow
-      content:"";
+    &:after {
+      // using pseudo element so we can hide the left and right box-shadow
+      content: '';
       position: absolute;
       width: 100%;
       height: 40px;
@@ -40,17 +41,16 @@
     }
   }
 
-
   .label {
     color: var(--gray-8);
     font-size: 0.8125rem;
     font-weight: 700;
-    margin-left: 16px;
+    margin-inline-start: 16px;
   }
 
   .options-dropdown-container {
     position: absolute;
-    right: 16px;
+    inset-inline-end: 16px;
 
     .options-button {
       color: var(--blue-5);
@@ -64,14 +64,15 @@
         width: 16px;
         height: 16px;
         position: absolute;
-        right: 9.5px;
-        top: 0;
-        bottom: 0;
+        inset-inline-end: 9.5px;
+        inset-block-start: 0;
+        inset-block-end: 0;
         margin: auto;
         color: var(--blue-5);
       }
 
-      &:hover, &.active {
+      &:hover,
+      &.active {
         color: var(--blue-6);
 
         .Icon {
@@ -85,6 +86,7 @@
         }
       }
     }
+
     .Dropdown__items {
       padding: 4px 0;
       min-width: 157px;
@@ -101,10 +103,10 @@
 
         .Icon {
           position: absolute;
-          left: 10px;
+          inset-inline-start: 10px;
           fill: var(--gray-7);
-          top: 0;
-          bottom: 0;
+          inset-block-start: 0;
+          inset-block-end: 0;
           margin: auto;
         }
       }
@@ -115,8 +117,8 @@
         height: 1px;
         margin: 0;
         position: absolute;
-        bottom: -5px;
-        left: 0;
+        inset-block-end: -5px;
+        inset-inline-start: 0;
       }
     }
   }

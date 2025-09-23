@@ -36,6 +36,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 import './index.scss';
 import importModularComponents from 'src/apis/importModularComponents';
+import localStorageManager from './helpers/localStorageManager';
 
 if (window.isApryseWebViewerWebComponent) {
   if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
@@ -52,7 +53,7 @@ let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
+  const isSpamDisabled = localStorageManager.getItemSynchronous('spamDisabled') === 'true';
   if (!isSpamDisabled) {
     // eslint-disable-next-line global-require
     const { createLogger } = require('redux-logger');
@@ -79,12 +80,12 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
 
 if (process.env.NODE_ENV === 'development') {
   window.disableSpam = () => {
-    localStorage.setItem('spamDisabled', 'true');
+    localStorageManager.setItemSynchronous('spamDisabled', 'true');
     location.reload();
   };
 
   window.enableSpam = () => {
-    localStorage.setItem('spamDisabled', 'false');
+    localStorageManager.setItemSynchronous('spamDisabled', 'false');
     location.reload();
   };
 }

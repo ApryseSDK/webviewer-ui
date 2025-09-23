@@ -7,7 +7,7 @@
   border-radius: var(--border-radius);
   box-shadow: 0 0 3px 0 var(--document-box-shadow);
   background: var(--component-background);
-  top: 0;
+  inset-block-start: 0;
   z-index: max($modal-z-index, $popup-z-index);
 
   .DocumentCropPopup {
@@ -43,7 +43,7 @@
 
     .document-crop-page-input-container {
       margin-top: 12px;
-      margin-left: 23px;
+      margin-inline-start: 23px;
       height: 32px;
       display: flex;
 
@@ -53,7 +53,7 @@
     }
 
     .page-number-input {
-      width: 100%
+      width: 100%;
     }
 
     .extra-space-section {
@@ -66,7 +66,7 @@
       margin: 0;
     }
 
-    .collapsible-page-group-header>button {
+    .collapsible-page-group-header > button {
       font-weight: bold;
       margin: 0;
 
@@ -75,7 +75,7 @@
       }
     }
 
-    .crop-inactive>.collapsible-page-group-header>button {
+    .crop-inactive > .collapsible-page-group-header > button {
       color: var(--gray-6);
       pointer-events: none;
 
@@ -100,7 +100,7 @@
 
     .buttons {
       padding: 12px;
-      text-align: right;
+      text-align: end;
       font-size: 13px;
       display: flex;
       justify-content: space-between;
@@ -147,13 +147,13 @@
         border: 0;
         color: var(--secondary-button-text);
         padding: 6px 16px;
-        margin-right: 4px;
+        margin-inline-end: 4px;
         height: 32px;
         width: fit-content;
 
         @include mobile {
-          margin-right: 0;
-          margin-left: 8px;
+          margin-inline-end: 0;
+          margin-inline-start: 8px;
         }
 
         &:hover {
@@ -228,7 +228,7 @@
         min-width: 64px;
         height: 32px;
         padding: 1px 2px;
-        margin-left: var(--padding-small);
+        margin-inline-start: var(--padding-small);
 
         ::placeholder {
           color: var(--text-color);
@@ -240,9 +240,9 @@
       }
 
       .dimension-input-field {
-        border-left: 0;
-        border-right: 0;
-        margin-right: 0;
+        border-inline-start: 0;
+        border-inline-end: 0;
+        margin-inline-end: 0;
         display: flex;
         align-items: center;
         border: 1px solid var(--border);
@@ -253,9 +253,9 @@
         min-width: 64px;
         height: 32px;
         padding: 1px 2px;
-        margin-left: var(--padding-small);
-        padding-left: 8px;
-        text-align: left;
+        margin-inline-start: var(--padding-small);
+        padding-inline-start: 8px;
+        text-align: start;
 
         ::placeholder {
           color: var(--text-color);
@@ -304,7 +304,7 @@
       }
 
       .dimensions-settings-title {
-        margin-right: var(--padding-small);
+        margin-inline-end: var(--padding-small);
         font-weight: 600;
 
         @include mobile {
@@ -316,7 +316,7 @@
         &.Dropdown {
           width: 100% !important;
           height: 32px;
-          text-align: left;
+          text-align: start;
         }
       }
 
@@ -359,13 +359,13 @@
 
         .picked-option .picked-option-text {
           width: 150px;
-          text-align: left;
+          text-align: start;
           font-size: 13px;
         }
       }
 
       .Dropdown__items {
-        top: -52px;
+        inset-block-start: -52px;
         z-index: max($modal-z-index, $popup-z-index);
         width: 100%;
       }
@@ -375,7 +375,7 @@
       }
 
       .save-button {
-        margin-left: 6px;
+        margin-inline-start: 6px;
         min-width: 75px;
       }
     }
@@ -391,10 +391,10 @@
 
     .document-crop-page-input-container {
       margin-top: 0;
-      margin-left: 6px;
+      margin-inline-start: 6px;
       display: flex;
 
-      Button {
+      button {
         height: 32px;
       }
     }
@@ -407,13 +407,13 @@
     .page-number-error {
       color: var(--color-message-error);
       margin-top: 4px;
-      margin-left: auto;
+      margin-inline-start: auto;
     }
 
     @media (max-width: 430px) {
       .document-crop-page-input-container {
         margin-top: 12px;
-        margin-left: 0;
+        margin-inline-start: 0;
       }
     }
   }

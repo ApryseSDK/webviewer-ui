@@ -18,7 +18,7 @@
       height: 32px;
 
       width: 100%;
-      padding-right: 12px;
+      padding-inline-end: 12px;
 
       .close-icon-container {
         @include button-reset;
@@ -45,8 +45,8 @@
     @include mobile {
       margin-top: 16px;
       margin-bottom: 16px;
-      margin-left: 16px;
-      margin-right: 16px;
+      margin-inline-start: 16px;
+      margin-inline-end: 16px;
       font-size: 16px;
     }
   }
@@ -100,18 +100,18 @@
 
   .redaction-panel-controls {
     flex: 0 0 57px;
-    margin-left: -16px;
+    margin-inline-start: -16px;
     padding-top: 13px;
     border-top: 1px solid var(--divider);
     display: flex;
     background-color: var(--component-background);
     width: inherit;
     justify-content: flex-end;
-    padding-right: 16px;
+    padding-inline-end: 16px;
 
     @include mobile {
-      margin-left: 0px;
-      margin-right: 0px;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
       margin-top: 0px;
       margin-bottom: 16px;
       padding: 16px;
@@ -149,7 +149,7 @@
       border: none;
       height: 32px;
       width: 70px;
-      margin-right: 8px;
+      margin-inline-end: 8px;
       cursor: pointer;
 
       &:hover:not(.disabled) {
@@ -171,7 +171,7 @@
     }
 
     @include mobile {
-      left: 0px;
+      inset-inline-start: 0px;
       margin-bottom: 16px;
     }
   }
@@ -180,7 +180,7 @@
     flex: 1 1 auto;
 
     @include mobile {
-        margin-right: 4px;
+      margin-inline-end: 4px;
     }
   }
 
@@ -191,13 +191,12 @@
   }
 }
 
-
 .ModularPanel-container .RedactionPanel {
   height: 100%;
   padding: unset;
 
   .redaction-panel-controls {
-    margin-right: -16px;
+    margin-inline-end: -16px;
     padding-bottom: 16px;
   }
 }

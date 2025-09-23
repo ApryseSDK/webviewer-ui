@@ -6,7 +6,7 @@ import StylePopup from '.';
 import core from 'core';
 import { createStore } from 'helpers/storybookHelper';
 import '../HeaderItems/HeaderItems.scss';
-import { within, expect, userEvent } from '@storybook/test';
+import { within, expect, userEvent } from 'storybook/test';
 
 export default {
   title: 'Components/StylePopup',
@@ -18,7 +18,6 @@ const state = {
   ...initialState,
   viewer: {
     openElements: {
-      watermarkPanel: true,
       stylePopup: true,
       stylePopupTextStyleContainer: true,
       stylePopupColorsContainer: true,

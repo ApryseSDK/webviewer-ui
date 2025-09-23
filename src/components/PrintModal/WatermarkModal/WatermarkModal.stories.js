@@ -4,7 +4,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider, } from 'react-redux';
 import viewerReducer from 'reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 
 export default {
   title: 'Components/WatermarkModal',

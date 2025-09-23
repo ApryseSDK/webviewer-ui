@@ -45,9 +45,9 @@
         border: 1px solid var(--primary-button);
         color: var(--primary-button);
         padding-top: 2px;
-        padding-right: 20px;
+        padding-inline-end: 20px;
         padding-bottom: 4px;
-        padding-left: 20px;
+        padding-inline-start: 20px;
         cursor: pointer;
 
         &:hover {
@@ -78,8 +78,8 @@
     .file-picker-error {
       position: absolute;
       color: red;
-      bottom: 0px;
-      right: 0px;
+      inset-block-end: 0px;
+      inset-inline-end: 0px;
       margin: 0px 5px 5px 0px;
     }
   }

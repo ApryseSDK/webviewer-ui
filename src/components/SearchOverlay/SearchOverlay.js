@@ -8,11 +8,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import classNames from 'classnames';
+import DataElements from 'constants/dataElement';
 
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import Choice from '../Choice/Choice';
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Spinner from '../Spinner';
+import SearchOptionsFlyout from './SearchOptionsFlyout';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
@@ -48,10 +50,10 @@ function SearchOverlay(props) {
   const { searchStatus, isPanelOpen } = props;
   const [isReplaceBtnDisabled, setReplaceBtnDisabled] = useState(true);
   const [isReplaceAllBtnDisabled, setReplaceAllBtnDisabled] = useState(true);
-  const [isMoreOptionsOpen, setMoreOptionOpen] = useState(true);
   const [showReplaceSpinner, setShowReplaceSpinner] = useState(false);
   const [isReplacementRegexValid, setReplacementRegexValid] = useState(true);
   const [allowInitialSearch, setAllowInitialSearch] = useState(false);
+  const [isReplaceInputActive, setisReplaceInputActive] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const searchTextInputRef = useRef();
@@ -107,7 +109,10 @@ function SearchOverlay(props) {
     };
   });
 
-  const onPagesUpdated = () => {
+  const onPagesUpdated = (e) => {
+    if (e.linearizedUpdate) {
+      return;
+    }
     search(searchValue);
   };
 
@@ -235,9 +240,8 @@ function SearchOverlay(props) {
     [replaceValue]
   );
 
-  const toggleMoreOptionsBtn = () => {
-    window.localStorage.setItem('searchMoreOption', !isMoreOptionsOpen);
-    setMoreOptionOpen(!isMoreOptionsOpen);
+  const toggleReplaceInput = () => {
+    setisReplaceInputActive(!isReplaceInputActive);
   };
 
   const searchAndReplaceOne = useCallback(
@@ -295,103 +299,99 @@ function SearchOverlay(props) {
 
   const isSearchDoneAndNotProcessingResults = searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults;
   const showSpinner = (!isSearchDoneAndNotProcessingResults || isSearchInProgress) ? <Spinner /> : null;
-
-  const searchOptionsComponents = (<div className="options">
-    <Choice
-      dataElement="caseSensitiveSearchOption"
-      id="case-sensitive-option"
-      checked={isCaseSensitive}
-      onChange={caseSensitiveSearchOptionOnChange}
-      label={t('option.searchPanel.caseSensitive')}
-      tabIndex={isPanelOpen ? 0 : -1}
-    />
-    <Choice
-      dataElement="wholeWordSearchOption"
-      id="whole-word-option"
-      checked={isWholeWord}
-      onChange={wholeWordSearchOptionOnChange}
-      label={t('option.searchPanel.wholeWordOnly')}
-      tabIndex={isPanelOpen ? 0 : -1}
-    />
-    <Choice
-      dataElement="wildCardSearchOption"
-      id="wild-card-option"
-      checked={isWildcard}
-      onChange={wildcardOptionOnChange}
-      label={t('option.searchPanel.wildcard')}
-      tabIndex={isPanelOpen ? 0 : -1}
-    />
-  </div>);
-
+  const shouldShowReplaceToggleButton = !isSearchAndReplaceDisabled && isReplacementRegexValid;
+  const shouldShowReplaceInput = shouldShowReplaceToggleButton && isReplaceInputActive;
+  const shouldShowDotOnFilterButton = isCaseSensitive || isWholeWord || isWildcard;
 
   return (
     <div className={classNames({
       'SearchOverlay': true,
       'modular-ui': customizableUI
     })}>
-      <div className='input-container'>
-        {customizableUI && <Icon glyph="icon-header-search" />}
-        <input
-          className='search-panel-input'
-          ref={searchTextInputRef}
-          type="text"
-          autoComplete="off"
-          onChange={textInputOnChange}
-          value={searchValue}
-          placeholder={customizableUI ? '' : t('message.searchDocumentPlaceholder')}
-          aria-label={t('message.searchDocumentPlaceholder')}
-          id="SearchPanel__input"
-          tabIndex={isPanelOpen ? 0 : -1}
-        />
-        {(searchValue !== undefined) && searchValue.length > 0 && (
-          <Button
-            className="clearSearch-button"
-            img="icon-close"
-            onClick={clearSearchResult}
-            title={t('message.clearSearchResults')}
-            ariaLabel={t('message.clearSearchResults')}
-            onClickAnnouncement={t('message.searchResultsCleared')}
+      <div className="search-input-row">
+        <div className='input-container'>
+          {customizableUI && <Icon glyph="icon-header-search" />}
+          <input
+            className='search-panel-input'
+            ref={searchTextInputRef}
+            type="text"
+            autoComplete="off"
+            onChange={textInputOnChange}
+            value={searchValue}
+            placeholder={customizableUI ? '' : t('message.searchDocumentPlaceholder')}
+            aria-label={t('message.searchDocumentPlaceholder')}
+            id="SearchPanel__input"
+            tabIndex={isPanelOpen ? 0 : -1}
           />
-        )
-        }
+          {(searchValue !== undefined) && searchValue.length > 0 && (
+            <Button
+              className="clearSearch-button"
+              img="icon-close"
+              onClick={clearSearchResult}
+              title={t('message.clearSearchResults')}
+              ariaLabel={t('message.clearSearchResults')}
+              onClickAnnouncement={t('message.searchResultsCleared')}
+            />
+          )}
+        </div>
+        <div className="search-option-buttons">
+          <ToggleElementButton
+            dataElement="searchOptionsButton"
+            title={t('message.toggleSearchOptions')}
+            ariaLabel={t('message.toggleSearchOptions')}
+            tabIndex={isPanelOpen ? 0 : -1}
+            img={shouldShowDotOnFilterButton ? 'ic-filter-with-dot' : 'ic-filter-alt'}
+            className={'search-options-button'}
+            toggleElement={DataElements.SEARCH_OPTIONS_FLYOUT}
+          />
+          {
+            shouldShowReplaceToggleButton ?
+              <Button
+                onClick={toggleReplaceInput}
+                title={t('message.toggleReplaceInput')}
+                ariaLabel={t('message.toggleReplaceInput')}
+                tabIndex={isPanelOpen ? 0 : -1}
+                img='ic_replace'
+                className={'search-options-button'}
+                isActive={isReplaceInputActive}
+              /> : null
+          }
+        </div>
       </div>
-      {
-        (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
-          (isMoreOptionsOpen)
-            ? <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up" /></button>
-            </div>
-            : <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down" /></button>
-            </div>
-      }
-      {
-        (!isMoreOptionsOpen) ? searchOptionsComponents :
-          <div>
-            {searchOptionsComponents}
-            {
-              (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
-                <div data-element="searchAndReplace" className='replace-options'>
-                  <p className="search-and-replace-title">{t('option.searchPanel.replace')}</p>
-                  <div className='input-container'>
-                    <input type={'text'}
-                      aria-label={t('option.searchPanel.replace')}
-                      onChange={replaceTextInputOnChange}
-                      value={replaceValue}
-                    />
-                  </div>
-                  <div className='replace-buttons'>
-                    {(showReplaceSpinner) ? <Spinner width={25} height={25} /> : null}
-                    <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
-                      onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
-                    <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
-                      onClick={replaceOneConfirmationWarning}>{t('option.searchPanel.replace')}</button>
-                  </div>
-                </div>
-            }
+      {shouldShowReplaceInput && (
+        <div data-element="searchAndReplace" className="replace-options">
+          <div className="input-container with-replace-icon">
+            <Icon
+              disabled={false}
+              glyph={'ic_replace'}
+              className={'replace-icon'}
+            />
+            <input type={'text'}
+              aria-label={t('option.searchPanel.replace')}
+              onChange={replaceTextInputOnChange}
+              value={replaceValue}
+            />
           </div>
-      }
-
+          <div className='replace-buttons'>
+            {(showReplaceSpinner) ? <Spinner width={25} height={25} /> : null}
+            <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
+              aria-label={t('option.searchPanel.replaceAll')}
+              onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
+            <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
+              aria-label={t('option.searchPanel.replace')}
+              onClick={replaceOneConfirmationWarning}>{t('option.searchPanel.replace')}</button>
+          </div>
+        </div>
+      )}
+      <SearchOptionsFlyout
+        isCaseSensitive={isCaseSensitive}
+        isWholeWord={isWholeWord}
+        isWildcard={isWildcard}
+        isPanelOpen={isPanelOpen}
+        onCaseSensitiveSearchOptionChange={caseSensitiveSearchOptionOnChange}
+        wholeWordSearchOptionOnChange={wholeWordSearchOptionOnChange}
+        wildcardOptionOnChange={wildcardOptionOnChange}
+      />
       <div className="divider" />
       <div className="footer">
         {searchStatus === 'SEARCH_NOT_INITIATED' || '' ? null : showSpinner}

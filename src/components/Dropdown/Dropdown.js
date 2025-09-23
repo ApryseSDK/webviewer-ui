@@ -748,6 +748,11 @@ function Dropdown({
         <div
           ref={buttonRef}
           className='display-button'
+          role='combobox'
+          aria-expanded={isOpen}
+          aria-controls={`${id}-dropdown`}
+          aria-labelledby={labelledById}
+          aria-label={ariaLabel}
           tabIndex={disabled ? -1 : 0}
           aria-activedescendant={isOpen ? activeDescendantId : null}
           onClick={onToggle}

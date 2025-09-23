@@ -16,7 +16,14 @@ import useOnDocumentUnloaded from 'src/hooks/useOnDocumentUnloaded';
  * @memberof UI.Components.PresetButton
  */
 const PrintButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title,
+  } = props;
   const dispatch = useDispatch();
 
   const useClientSidePrint = useSelector(selectors.useClientSidePrint);
@@ -65,16 +72,22 @@ const PrintButton = forwardRef((props, ref) => {
         buttonType: PRESET_BUTTON_TYPES.PRINT,
         onClick: handlePrintButtonClick,
         isDisabled: !document,
+        dataElement,
         className,
         style,
+        icon,
+        title,
       })
   );
 });
 
 PrintButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 PrintButton.displayName = 'PrintButton';
 

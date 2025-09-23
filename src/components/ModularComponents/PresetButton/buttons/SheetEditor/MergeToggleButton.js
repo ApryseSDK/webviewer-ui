@@ -10,15 +10,27 @@ import mergeCellRange from 'src/helpers/mergeCellRange';
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const MergeToggleButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, type, style, className } = props;
   const isMerged = useSelector((state) => selectors.getIsCellRangeMerged(state));
   const isCellRangeMergeDisabled = useSelector((state) => selectors.getIsSingleCell(state));
-  const { dataElement, icon, title } = menuItems[isMerged ? 'cellUnmergeToggle' : 'cellMergeToggle'];
+  const menuItem = menuItems[isMerged ? 'cellUnmergeToggle' : 'cellMergeToggle'];
+
+  const {
+    isFlyoutItem,
+    type,
+    style,
+    className,
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = menuItem.title,
+  } = props;
 
   const handleClick = () => {
     mergeCellRange(!isMerged);
@@ -31,6 +43,7 @@ const MergeToggleButton = forwardRef((props, ref) => {
         ref={ref}
         onClick={handleClick}
         additionalClass={isMerged ? 'active' : ''}
+        disabled={isCellRangeMergeDisabled}
       />
       : (
         <ActionButton

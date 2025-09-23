@@ -111,6 +111,7 @@
     "open": "열기",
     "deselectAll": "모두 선택해제",
     "select": "선택",
+    "buttonPressed": "{{buttonName}} 버튼이 눌렸습니다",
     "moveToTop": "맨 위로 이동",
     "moveToBottom": "맨 아래로 이동",
     "movePageToTop": "페이지를 맨 위로 이동",
@@ -272,7 +273,6 @@
       "close": "모든 주석 닫기"
     },
     "comparePanel": "비교 패널",
-    "watermarkPanel": "워터마크 패널",
     "mainMenu": "메인 메뉴"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "검색 결과가 없습니다.",
     "numResultsFound": "건의 검색결과를 찾았습니다.",
     "loadError": "문서를 로드하는 중에 오류가 발생했습니다.",
+    "urlInputFileLoadError": "제공된 URL에서 파일을 검색할 수 없습니다.",
     "notSupported": "지원하지 않는 유형의 파일입니다.",
     "passwordRequired": "비밀번호를 입력하세요.",
     "enterPasswordPlaceholder": "암호를 입력",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "코멘트 검색",
     "searchDocumentPlaceholder": "문서 검색",
     "clearSearchResults": "검색 결과 지우기",
+    "toggleReplaceInput": "입력 바꾸기 전환",
+    "toggleSearchOptions": "검색 옵션 전환",
     "searchResultsCleared": "검색 결과가 지워졌습니다",
     "searchSettingsPlaceholder": "검색 설정",
     "searchSuggestionsPlaceholder": "검색 제안",
@@ -803,7 +806,30 @@
       "setShortcut": "바로가기 설정",
       "editShortcut": "편집 단축키",
       "shortcutAlreadyExists": "위의 키보드 단축키가 이미 존재합니다.",
-      "close": "툴팁 닫기"
+      "close": "툴팁 닫기",
+      "spreadsheetEditor": {
+        "copyText": "선택한 텍스트 또는 셀 복사",
+        "pasteText": "텍스트 또는 셀 붙여넣기",
+        "cutText": "선택한 텍스트 또는 셀 잘라내기",
+        "undoChange": "변경 사항 실행 취소",
+        "redoChange": "변경 사항을 다시 실행",
+        "selectAll": "모든 셀 선택",
+        "moveToEdgeUp": "시트 상단으로 이동",
+        "moveToEdgeDown": "시트 맨 아래로 이동",
+        "moveToEdgeLeft": "가장 왼쪽 열로 이동",
+        "moveToEdgeRight": "가장 오른쪽 열로 이동",
+        "adjustSelectionUp": "선택 항목을 위쪽으로 확장",
+        "adjustSelectionDown": "선택 항목을 아래로 확장",
+        "adjustSelectionLeft": "선택 영역을 왼쪽으로 확장",
+        "adjustSelectionRight": "선택 영역 오른쪽 확장",
+        "up": "셀 선택 상자를 위로 이동",
+        "down": "셀 선택 상자를 아래로 이동",
+        "left": "셀 선택 상자를 왼쪽으로 이동",
+        "right": "셀 선택 상자를 오른쪽으로 이동",
+        "enter": "선택한 셀 편집",
+        "tab": "셀 선택 상자를 오른쪽으로 이동",
+        "delete": "셀 데이터 지우기"
+      }
     },
     "cellBorderStyle": {
       "none": "없음",
@@ -861,12 +887,12 @@
       "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- uri}}\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
     },
     "sheetTabRenameIssueOne": {
-      "title": "편집 경고",
-      "message": "이 시트 이름은 이미 존재합니다. 다른 이름을 입력하세요."
+      "title": "시트 이름 편집",
+      "message": "이미 존재하는 이름입니다. 다른 이름을 입력하세요."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "편집 경고",
-      "message": "이 시트 이름은 비워둘 수 없습니다."
+      "title": "시트 이름 편집",
+      "message": "시트 이름은 비워둘 수 없습니다. 이름을 입력하세요."
     },
     "sheetTabDeleteMessage": {
       "title": "편집 경고",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "속성",
     "miscValuesHeader": "모두",
     "emptyPanelMessage": "속성을 보려면 요소를 선택하십시오."
-  },
-  "watermarkPanel": {
-    "textWatermark": "텍스트 워터마크",
-    "uploadImage": "이미지 업로드",
-    "browse": "검색",
-    "watermarkOptions": "워터마크 옵션",
-    "watermarks": "워터마크"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF 포트폴리오 만들기",

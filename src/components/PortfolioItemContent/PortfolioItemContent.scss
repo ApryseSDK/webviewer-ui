@@ -8,7 +8,7 @@
       &.editing {
         background-color: var(--faded-component-background);
         padding: var(--padding-medium) 20px;
-    
+
         &:focus-visible {
           outline: var(--focus-visible-outline);
         }
@@ -33,7 +33,7 @@
             box-shadow: none;
           }
 
-          .ui__input__icon svg{
+          .ui__input__icon svg {
             fill: var(--error-border-color);
           }
         }

@@ -71,11 +71,10 @@
       @include mobile {
         padding: 18px;
         height: calc(100vh - 120px - 72px - 72px - 32px);
-        
+
         .thumb-card {
           flex: 0 0 calc(50% - 10px);
           box-sizing: border-box;
-          
         }
 
         .thumb-card-img {
@@ -89,13 +88,13 @@
 
         .thumb-image {
           width: 100%;
-          padding-right: 0px;
+          padding-inline-end: 0px;
         }
 
         .ui__choice__input {
           position: absolute;
-          top: 6px;
-          right: 6px;
+          inset-block-start: 6px;
+          inset-inline-end: 6px;
         }
 
         .ui__choice {
@@ -114,19 +113,19 @@
     margin-bottom: 8px;
     display: flex;
     align-items: baseline;
-  
+
     :first-child {
-      padding-left: 0px;
+      padding-inline-start: 0px;
     }
 
     @include tablet {
       justify-content: space-between;
       :first-child {
-        padding-right: 8px;
-        padding-left: 0;
+        padding-inline-end: 8px;
+        padding-inline-start: 0;
       }
     }
-  
+
     @include mobile {
       display: grid;
       grid-template-columns: auto auto auto;
@@ -140,14 +139,14 @@
       }
     }
   }
-  
+
   .replace-page-input {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
 
     @include tablet {
-      padding-right: 0;
-      padding-left: 4px;
+      padding-inline-end: 0;
+      padding-inline-start: 4px;
 
       .page-replace-doc-name {
         word-break: break-all;
@@ -158,11 +157,11 @@
       display: flex;
       justify-content: left; /* optional */
       align-items: center;
-      padding-left: 0px;
-      padding-right: 0px;
+      padding-inline-start: 0px;
+      padding-inline-end: 0px;
     }
   }
-  
+
   .page-replace-doc-name {
     font-weight: bold;
   }
@@ -179,7 +178,3 @@
     }
   }
 }
-
- 
-    
-    

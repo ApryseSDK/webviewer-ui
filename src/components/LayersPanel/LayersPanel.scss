@@ -3,7 +3,7 @@
 
 .LayersPanel {
   @extend %panel;
-  padding-left: 15px;
+  padding-inline-start: 15px;
   // we don't want to style its recursive subchild
   > .Layer:first-child {
     margin-top: 0;
@@ -16,7 +16,7 @@
   @include mobile {
     width: auto;
     margin: 16px;
-    padding-left: 0px;
+    padding-inline-start: 0px;
     overflow-y: auto;
   }
 }

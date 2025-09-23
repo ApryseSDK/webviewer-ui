@@ -12,8 +12,8 @@
     }
   }
 
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -38,7 +38,7 @@
     text-align: center;
 
     &.is-editing {
-      border-color: var(--focus-border)
+      border-color: var(--focus-border);
     }
 
     @include mobile {
@@ -48,7 +48,7 @@
   }
 
   .slider-property {
-    &:nth-child(n+2) {
+    &:nth-child(n + 2) {
       margin-top: 8px;
     }
     margin-bottom: 4px;
@@ -69,12 +69,12 @@
 
   .slider-input {
     width: 100%;
-    margin-right: 5px;
+    margin-inline-end: 5px;
     position: relative;
 
-    input[type="range"] {
+    input[type='range'] {
       position: absolute;
-      top: 50%;
+      inset-block-start: 50%;
       -webkit-appearance: none;
       appearance: none;
       cursor: pointer;
@@ -86,18 +86,18 @@
     }
 
     /***** Chrome, Safari, Opera, and Edge Chromium *****/
-    input[type="range"]::-webkit-slider-runnable-track {
+    input[type='range']::-webkit-slider-runnable-track {
       height: 5px;
       border-radius: 6px;
     }
 
-    input[type="range"]::-webkit-slider-thumb {
+    input[type='range']::-webkit-slider-thumb {
       /* removing default appearance */
       -webkit-appearance: none;
       appearance: none;
       /* creating a custom design */
-      height: var( --slider-thumb-size);
-      width: var( --slider-thumb-size);
+      height: var(--slider-thumb-size);
+      width: var(--slider-thumb-size);
       background-color: var(--slider-filled);
       border-radius: 50%;
       border: 2px solid var(--slider-filled);
@@ -105,7 +105,7 @@
     }
 
     /******** Firefox ********/
-    input[type="range"]::-moz-range-track {
+    input[type='range']::-moz-range-track {
       background: #053a5f;
       height: 5px;
       border-radius: 4px;
@@ -113,11 +113,11 @@
 
     /***** Focus Styles *****/
     /* Removes default focus */
-    input[type="range"]:focus-visible {
+    input[type='range']:focus-visible {
       outline: none;
     }
     /***** Chrome, Safari, Opera, and Edge Chromium *****/
-    input[type="range"]:focus-visible::-webkit-slider-thumb {
+    input[type='range']:focus-visible::-webkit-slider-thumb {
       outline: var(--focus-visible-outline);
       outline-offset: 0.225rem;
     }
@@ -126,6 +126,12 @@
       margin: 0px;
       border: 0px;
       width: 100%;
+    }
+  }
+
+  [dir="rtl"] .slider-input {
+    input[type='range'] {
+      direction: ltr !important;
     }
   }
 }

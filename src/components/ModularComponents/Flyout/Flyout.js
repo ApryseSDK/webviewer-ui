@@ -6,8 +6,7 @@ import classNames from 'classnames';
 import actions from 'actions';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import useFocusOnClose from 'hooks/useFocusOnClose';
-import { FLYOUT_ITEM_HEIGHT } from 'constants/flyoutConstants';
-import { DEFAULT_GAP, ITEM_TYPE, PRESET_BUTTONS_MODAL_TOGGLES } from 'constants/customizationVariables';
+import { DEFAULT_GAP, ITEM_TYPE, PRESET_BUTTON_TYPES, PRESET_BUTTONS_MODAL_TOGGLES } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 import ZoomText from './flyoutHelpers/ZoomText';
 import getRootNode from 'helpers/getRootNode';
@@ -19,6 +18,7 @@ import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/Flyout
 import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
+import getAppRect from 'helpers/getAppRect';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -67,51 +67,88 @@ const Flyout = () => {
 
   useLayoutEffect(() => {
     const tempRefElement = getElementDOMRef(toggleElement);
-    const correctedPosition = { x: position.x, y: position.y };
-    const appRect = getRootNode().getElementById('app').getBoundingClientRect();
-    const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
-    setMaxHeightValue(maxHeightValue);
 
-    // Check if the element is in the dom or invisible
+    // Check if the element is in the DOM or invisible
     if (tempRefElement && tempRefElement.offsetParent === null) {
       return;
     }
 
-    const calculateAndSetPosition = () => {
-      // Check if toggleElement is not null
-      if (toggleElement && tempRefElement) {
+    const calculateAndMaybeSetPosition = () => {
+      const refEl = getElementDOMRef(toggleElement);
+      const app = getAppRect();
+      // Keep max height in sync with the exact app rect used for positioning
+      setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
+      const next = { x: position.x, y: position.y };
+
+      if (toggleElement && refEl) {
         const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
-        correctedPosition.x = x;
-        correctedPosition.y = y;
-      } else {
-        const correctedPosition = { x: position.x, y: position.y };
-        const widthOverflow = position.x + flyoutRef.current?.offsetWidth - appRect.width;
-        const maxElementHeight = activeItem && activeItem.children.length > items.length ? activeItem.children.length : items.length;
-        const heightOverflow = position.y + maxElementHeight * (FLYOUT_ITEM_HEIGHT + 8) - appRect.height;
+        next.x = x;
+        next.y = y;
+      }
+
+      const flyoutRect = flyoutRef.current?.getBoundingClientRect();
+      if (flyoutRect && app) {
+        const PADDING = 5;
+        const widthOverflow = next.x + flyoutRect.width + PADDING - app.right;
+        const heightOverflow = next.y + flyoutRect.height + PADDING - app.bottom;
         if (widthOverflow > 0) {
-          correctedPosition.x = position.x - widthOverflow;
+          next.x -= widthOverflow;
         }
         if (heightOverflow > 0) {
-          correctedPosition.y = position.y - heightOverflow;
+          next.y -= heightOverflow;
         }
-        if (correctedPosition.x < 0) {
-          correctedPosition.x = 0;
+        if (next.x < PADDING) {
+          next.x = PADDING;
         }
-        if (correctedPosition.y < 0) {
-          correctedPosition.y = 0;
+        if (next.y < PADDING) {
+          next.y = PADDING;
         }
       }
-      setCorrectedPosition(correctedPosition);
+
+      setCorrectedPosition((prev) => {
+        if (!prev || prev.x !== next.x || prev.y !== next.y) {
+          return next;
+        }
+        return prev;
+      });
     };
 
-    // We should wait for the flyout to be rendered before calculating the position
-    requestAnimationFrame(calculateAndSetPosition);
-  }, [activeItem, position, items, inputValue]);
+    // Run once now and once on the next frame to catch late layout
+    if (flyoutRef.current) {
+      calculateAndMaybeSetPosition();
+      requestAnimationFrame(calculateAndMaybeSetPosition);
+    }
+
+    let resizeObserver;
+
+    if (typeof ResizeObserver !== 'undefined' && flyoutRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        calculateAndMaybeSetPosition();
+      });
+      resizeObserver.observe(flyoutRef.current);
+    }
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, [activePath, position, items, inputValue, isFlyoutOpen]);
 
   useLayoutEffect(() => {
-    const appRect = getRootNode()?.getElementById('app')?.getBoundingClientRect();
+    const appRect = getAppRect();
     const flyoutRect = flyoutRef.current?.getBoundingClientRect();
-    setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && flyoutRect.height > appRect.height);
+    let isChildOverflowing = false;
+    const flyoutChildren = flyoutRef?.current?.firstChild?.children;
+    if (flyoutChildren) {
+      for (let child of flyoutChildren) {
+        if (child.getBoundingClientRect().bottom > flyoutRect.bottom) {
+          isChildOverflowing = true;
+          break;
+        }
+      }
+    }
+    setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && (flyoutRect.height > appRect.height || isChildOverflowing));
   }, [activeItem, position, items]);
 
   useEffect(() => {
@@ -151,7 +188,8 @@ const Flyout = () => {
       const menuButton = getElementDOMRef(toggleElement);
       const clickedMenuButton = menuButton?.contains(e.target);
       const isClickingColorPicker = e.target.closest('.ColorPickerOverlay');
-      if (!clickedMenuButton && !isClickingColorPicker) {
+      const isClickingColorModal = e.target.closest('[data-element="ColorPickerModal"]');
+      if (!clickedMenuButton && !isClickingColorPicker && !isClickingColorModal) {
         closeFlyout();
       }
     },
@@ -178,7 +216,8 @@ const Flyout = () => {
       const isModalToggle = PRESET_BUTTONS_MODAL_TOGGLES.includes(flyoutItem.dataElement);
       const shouldCloseFlyoutCases = dataElement !== DataElements.VIEW_CONTROLS_FLYOUT &&
         flyoutItem.type !== ITEM_TYPE.PAGE_NAVIGATION_BUTTON &&
-        flyoutItem.dataElement !== DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER;
+        flyoutItem.dataElement !== DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER &&
+        flyoutItem.buttonType !== PRESET_BUTTON_TYPES.OE_COLOR_PICKER;
 
       if (!flyoutItem.children && shouldCloseFlyoutCases) {
         // keep open if keyboard event and modal toggle so we can transfer focus back and forth
@@ -307,7 +346,7 @@ const Flyout = () => {
   const flyoutStyles = {
     left: correctedPosition.x,
     top: correctedPosition.y,
-    maxHeight: maxHeightValue
+    maxHeight: maxHeightValue - 10, // Subtracting 10px for some padding
   };
 
   if (!activeItem && !itemsToRender.length) {

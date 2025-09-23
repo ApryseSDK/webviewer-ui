@@ -146,8 +146,6 @@ export default (store) => {
 
   disableFeatures([
     Feature.InlineComment,
-    Feature.WatermarkPanel,
-    Feature.WatermarkPanelImageTab,
     Feature.Portfolio,
   ], PRIORITY_ONE);
 

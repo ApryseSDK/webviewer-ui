@@ -7,6 +7,13 @@
   background-color: var(--panel-background);
   padding-bottom: 75px;
 
+  &.isFlyout {
+    padding: 8px;
+    width: 264px;
+    max-height: 233px;
+    overflow-y: scroll;
+  }
+
   .style-panel-header {
     font-size: 16px;
     font-weight: bold;

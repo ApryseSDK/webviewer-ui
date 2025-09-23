@@ -4,7 +4,7 @@ import Panel from 'components/Panel';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import initialState from 'src/redux/initialState';
 import { createStore } from 'src/helpers/storybookHelper';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import rootReducer from 'reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
 

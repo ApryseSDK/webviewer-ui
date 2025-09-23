@@ -27,7 +27,7 @@
       }
 
       &.ql-blank::before {
-        left: 8px;
+        inset-inline-start: 8px;
         list-style-type: none;
         font-style: normal;
         color: var(--placeholder-text);
@@ -38,7 +38,7 @@
         word-break: break-word;
       }
 
-      ul>li::before {
+      ul > li::before {
         content: none !important;
       }
     }
@@ -55,8 +55,8 @@
 
   .add-attachment {
     position: absolute;
-    bottom: 2px;
-    right: 2px;
+    inset-block-end: 2px;
+    inset-inline-end: 2px;
     width: 24px;
     height: 24px;
 
@@ -70,7 +70,7 @@
   }
 }
 
-.ql-editor ul>li::before {
+.ql-editor ul > li::before {
   content: none !important;
 }
 
@@ -94,7 +94,7 @@
       width: 100%;
       font-size: 14px;
       margin-top: 0px;
-      padding-left: 0px !important;
+      padding-inline-start: 0px !important;
       list-style: none;
       word-wrap: break-word;
       border-radius: 4px;
@@ -103,8 +103,8 @@
     &__item {
       background-color: var(--component-background);
       white-space: nowrap;
-      margin-left: 0px;
-      padding-left: 0px;
+      margin-inline-start: 0px;
+      padding-inline-start: 0px;
       text-overflow: clip;
       padding: 7px 5px 1px 5px !important;
       margin: 0px 0px;

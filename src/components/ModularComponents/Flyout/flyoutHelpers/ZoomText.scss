@@ -13,7 +13,7 @@
 
   input {
     @include mobile {
-      font-size : var(--font-size-default);
+      font-size: var(--font-size-default);
     }
   }
 }

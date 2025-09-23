@@ -2,7 +2,7 @@ import React from 'react';
 import HeaderFooterControlsOverlay from './HeaderFooterControlsOverlay';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { userEvent, within, waitFor, expect } from '@storybook/test';
+import { userEvent, within, waitFor, expect } from 'storybook/test';
 import core from 'core';
 
 export default {

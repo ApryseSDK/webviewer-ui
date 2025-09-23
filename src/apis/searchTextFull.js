@@ -30,6 +30,7 @@ import selectors from 'selectors';
 const onResultThrottleTimeout = 100;
 
 let isStillProcessingResults = false;
+let throttleResults = [];
 
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();
@@ -68,7 +69,6 @@ export default (store) => (searchValue, options, isUserTriggered = true) => {
   let doneCallback = () => { };
 
   let hasActiveResultBeenSet = false;
-  let throttleResults = [];
   let resultTimeout;
 
   function onResult(result) {
@@ -150,6 +150,7 @@ export default (store) => (searchValue, options, isUserTriggered = true) => {
   };
 
   const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
+  throttleResults = [];
 
   activeDocumentViewer.clearSearchResults();
   activeDocumentViewer.textSearchInit(searchValue, searchMode, textSearchInitOptions);

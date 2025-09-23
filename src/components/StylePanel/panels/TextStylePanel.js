@@ -16,6 +16,8 @@ import DataElements from 'constants/dataElement';
 import { useDispatch } from 'react-redux';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import actions from 'actions';
+import DataElementWrapper from 'components/DataElementWrapper';
+import StylePanelHeader from '../StylePanelHeader/StylePanelHeader';
 
 const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
   const dispatch = useDispatch();
@@ -66,7 +68,7 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
 
   return (
     <>
-      <h2 className="style-panel-header">{panelTitle}</h2>
+      <StylePanelHeader title={panelTitle} />
       <div className="StylePicker"
         onMouseDown={(e) => {
           if (e.type !== 'touchstart' && e.target.tagName.toUpperCase() !== 'INPUT') {
@@ -74,7 +76,7 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
           }
         }}
       >
-        <div className="PanelSection TextStyle">
+        <DataElementWrapper className="PanelSection TextStyle" dataElement={DataElements.StylePanel.TEXT_STYLE_CONTAINER}>
           <CollapsibleSection
             header={t(stylePanelSectionTitles(activeTool, 'OverlayText') || 'option.stylePopup.textStyle')}
             headingLevel={2}
@@ -83,10 +85,10 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
             onToggle={openTextStyleContainer}>
             <div className="panel-section-wrapper">
               {isRedaction && (
-                <div className="PanelSubsection RedactionTextLabel">
+                <DataElementWrapper dataElement={DataElements.StylePanel.REDACTION_TEXT_LABEL} className="PanelSubsection RedactionTextLabel">
                   <div className="menu-subtitle">{t('stylePanel.headings.redactionTextLabel')}</div>
                   <LabelTextEditor properties={style} onPropertyChange={onStyleChange} placeholderText={' '}/>
-                </div>
+                </DataElementWrapper>
               )}
               <RichTextStyleEditor
                 style={style}
@@ -105,8 +107,10 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
               />
             </div>
           </CollapsibleSection>
-          <div className="divider"/>
-        </div>
+          <DataElementWrapper dataElement={`${DataElements.StylePanel.TEXT_STYLE_CONTAINER}-divider`}>
+            <div className="divider"/>
+          </DataElementWrapper>
+        </DataElementWrapper>
         <StylePicker
           {...toolTypeProps}
           hasParentPicker

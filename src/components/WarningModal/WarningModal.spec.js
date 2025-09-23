@@ -43,13 +43,13 @@ describe('Warning Modal Component', () => {
     expect(buttons[buttons.length - 1]).toHaveFocus();
   });
 
-  it('Should not have aria-hidden={true} in any element', () => {
+  it('Should not have aria-hidden={true} in any element except exit icon', () => {
     const { container } = render(<TestAnnotationPopup />);
 
     // Query all elements that may have aria-hidden attribute using container
     const elementsWithAriaHidden = container.querySelectorAll('[aria-hidden="true"]');
 
-    // Check that no element has aria-hidden="true"
-    expect(elementsWithAriaHidden.length).toBe(0);
+    // Check that no element has aria-hidden="true" (except exit icon since icons are aria-hidden by default)
+    expect(elementsWithAriaHidden.length).toBe(1);
   });
 });

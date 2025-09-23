@@ -33,13 +33,13 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: 0px;
+    inset-block-end: 0px;
     width: 100%;
     z-index: 100;
 
     .close-container {
       margin-top: auto;
-      right: 26px;
+      inset-inline-end: 26px;
       position: absolute;
     }
   }

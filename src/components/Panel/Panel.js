@@ -11,6 +11,8 @@ import ResizeBar from 'components/ResizeBar';
 import { isIE } from 'helpers/device';
 import MobilePanelWrapper from '../ModularComponents/MobilePanelWrapper';
 import PropTypes from 'prop-types';
+import i18next from 'i18next';
+import { isElementOnLeftSide, isElementOnRightSide } from 'src/helpers/rightToLeft';
 
 const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
@@ -30,6 +32,9 @@ const DesktopPanel = ({ children }) => {
   const isMultiTabActive = useSelector(selectors.getIsMultiTab);
   const dispatch = useDispatch();
 
+  const appDirection = i18next.dir();
+  const isRightToLeft = appDirection === 'rtl';
+
   let style = {};
   if (currentWidth && (isInDesktopOnlyMode || !isMobile)) {
     const widthStyle = isCustom ? currentWidth - RESIZE_BAR_WIDTH : currentWidth;
@@ -39,8 +44,8 @@ const DesktopPanel = ({ children }) => {
   }
 
   const isVisible = !(!isOpen || isDisabled);
-  const isLeftSide = !location ? true : location === 'left';
-  const isRightSide = location === 'right';
+  const isPanelOnLeftSide = isElementOnLeftSide(location);
+  const isPanelOnRightSide = isElementOnRightSide(location);
 
   // TODO: For whoever is refactoring the LeftPanel to make it generic, review if this is the best approach
   // Once we move to the new UI we can remove the legacy stuff
@@ -55,7 +60,8 @@ const DesktopPanel = ({ children }) => {
     if (isIE) {
       maxAllowedWidth -= 30;
     }
-    dispatch(actions.setPanelWidth(dataElement, Math.min(_width, maxAllowedWidth)));
+    const newPanelWidth = Math.min(_width, maxAllowedWidth);
+    dispatch(actions.setPanelWidth(dataElement, newPanelWidth));
   };
 
   const onDragOver = (e) => {
@@ -73,18 +79,19 @@ const DesktopPanel = ({ children }) => {
       className={classNames({
         'ModularPanel': true,
         'closed': !isVisible,
-        'left': isLeftSide,
-        'right': isRightSide,
+        'left': isPanelOnLeftSide,
+        'right': isPanelOnRightSide,
         'tools-header-open': customizableUI ? isModularToolsHeaderOpen : legacyToolsHeaderOpen,
         'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 && activeBottomHeaders.length === 0 : legacyAllHeadersHidden,
         'logo-bar-enabled': isLogoBarEnabled,
         'modular-ui-panel': customizableUI,
         'multi-tab-active': isMultiTabActive,
+        'right-to-left': isRightToLeft,
       })}
       data-element={dataElement}
       onDragOver={onDragOver}
     >
-      {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
+      {isCustom && isPanelOnRightSide && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
           leftDirection={true} />}
       <div className={`ModularPanel-container ${dataElement}`} style={style}>
@@ -102,7 +109,7 @@ const DesktopPanel = ({ children }) => {
         )}
         {children}
       </div>
-      {isCustom && location === 'left' && !isInDesktopOnlyMode && !isMobile &&
+      {isCustom && isPanelOnLeftSide && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize} />}
     </div>
   );

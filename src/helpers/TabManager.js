@@ -518,7 +518,9 @@ export class Tab {
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
-    if (this.useDB && (document?.type === workerTypes.PDF && document.arePagesAltered() || this.src instanceof window.Core.Document)) {
+    const isAlteredPDF = document?.type === workerTypes.PDF && document.arePagesAltered();
+    const shouldStoreDocument = this.src instanceof window.Core.Document && this.src.type !== workerTypes.IMAGE;
+    if (this.useDB && (isAlteredPDF || shouldStoreDocument)) {
       await this.saveFileData(db, document);
     } else if (this.changes.annotations) {
       if (this.useDB) {

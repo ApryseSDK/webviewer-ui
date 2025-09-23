@@ -12,6 +12,7 @@ import AdvancedTab from './AdvancedTab';
 import { SearchContext } from './SearchWrapper';
 import Icon from 'components/Icon';
 import ModalWrapper from 'components/ModalWrapper';
+import { EditorModes } from 'src/helpers/hotkeysManager';
 import './SettingsModal.scss';
 
 const TABS_ID = DataElements.SETTINGS_MODAL;
@@ -33,6 +34,15 @@ const SettingsModal = () => {
     [DataElements.SETTINGS_KEYBOARD_BUTTON, t('option.settings.keyboardShortcut')],
     [DataElements.SETTINGS_ADVANCED_BUTTON, t('option.settings.advancedSetting')]
   ];
+
+  const getEditorMode = () => {
+    switch (true) {
+      case isSpreadsheetEditorMode:
+        return EditorModes.SPREADSHEET;
+      default:
+        return EditorModes.DEFAULT;
+    }
+  };
 
   useEffect(() => {
     if (
@@ -97,7 +107,7 @@ const SettingsModal = () => {
                   {tabs
                     .filter(([tab]) => {
                       if (isSpreadsheetEditorMode) {
-                        return tab !== DataElements.SETTINGS_KEYBOARD_BUTTON && tab !== DataElements.SETTINGS_ADVANCED_BUTTON;
+                        return tab !== DataElements.SETTINGS_ADVANCED_BUTTON;
                       }
                       return true;
                     })
@@ -127,7 +137,9 @@ const SettingsModal = () => {
                   <GeneralTab />
                 )}
                 {selectedTab === DataElements.SETTINGS_KEYBOARD_BUTTON && (
-                  <KeyboardShortcutTab />
+                  <KeyboardShortcutTab
+                    editorMode={getEditorMode()}
+                  />
                 )}
                 {selectedTab === DataElements.SETTINGS_ADVANCED_BUTTON && (
                   <AdvancedTab />

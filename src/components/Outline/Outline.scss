@@ -4,7 +4,7 @@
   border-radius: 4px;
 
   &.isNesting {
-    &>.bookmark-outline-single-container {
+    & > .bookmark-outline-single-container {
       background-color: var(--popup-button-active);
       border-color: var(--focus-border);
     }
@@ -14,11 +14,11 @@
 .outline-treeview-toggle {
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: var(--padding-small);
+  margin-inline-end: var(--padding-small);
   margin-top: 2px;
   margin-bottom: 2px;
   min-width: 14px; // Icon width 14px
-  transition: transform .1s ease;
+  transition: transform 0.1s ease;
 
   &.expanded {
     transform: rotate(90deg);
@@ -36,19 +36,19 @@
 }
 
 .outline-drag-line {
-  margin-left: var(--padding);
-  margin-right: var(--padding);
+  margin-inline-start: var(--padding);
+  margin-inline-end: var(--padding);
   border-top: 1px solid var(--focus-border);
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     width: 5px;
     height: 5px;
-    top: -3px;
-    left: 0;
+    inset-block-start: -3px;
+    inset-inline-start: 0;
     background-color: var(--focus-border);
     border-radius: 50%;
   }

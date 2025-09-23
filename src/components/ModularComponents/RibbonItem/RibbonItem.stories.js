@@ -3,7 +3,7 @@ import RibbonItem from './RibbonItem';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { mockModularComponents } from '../AppStories/mockAppState';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/RibbonItem',

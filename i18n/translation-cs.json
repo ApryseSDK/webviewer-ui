@@ -111,6 +111,7 @@
     "open": "OTEVŘENO",
     "deselectAll": "Odznačit vše",
     "select": "Vybrat",
+    "buttonPressed": "stisknuto tlačítko {{buttonName}}",
     "moveToTop": "Přesunout nahoru",
     "moveToBottom": "Přesunout dolů",
     "movePageToTop": "Přesunout stránku nahoru",
@@ -272,7 +273,6 @@
       "close": "Zavřít všechny anotace"
     },
     "comparePanel": "Panel porovnání",
-    "watermarkPanel": "Panel vodoznaku",
     "mainMenu": "Hlavní menu"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Nebyly nalezeny žádné výsledky.",
     "numResultsFound": "nalezeny výsledky",
     "loadError": "Chyba při načítání dokumentu",
+    "urlInputFileLoadError": "Soubor se nepodařilo načíst z poskytnuté adresy URL.",
     "notSupported": "Tento typ souboru není podporován.",
     "passwordRequired": "Je vyžadováno heslo",
     "enterPasswordPlaceholder": "Zadejte heslo",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Hledat komentáře",
     "searchDocumentPlaceholder": "Vyhledat dokument",
     "clearSearchResults": "Vymazat výsledky vyhledávání",
+    "toggleReplaceInput": "Přepnout nahrazování vstupu",
+    "toggleSearchOptions": "Přepnout možnosti vyhledávání",
     "searchResultsCleared": "Výsledky vyhledávání byly vymazány",
     "searchSettingsPlaceholder": "Nastavení vyhledávání",
     "searchSuggestionsPlaceholder": "Návrhy vyhledávání",
@@ -474,7 +477,7 @@
     },
     "searchPanel": {
       "caseSensitive": "Citlivý na velká písmena",
-      "wholeWordOnly": "Celý svět",
+      "wholeWordOnly": "Celé slovo",
       "wildcard": "Divoká karta",
       "replace": "Nahradit",
       "replaceAll": "Vyměnit vše",
@@ -803,7 +806,30 @@
       "setShortcut": "Nastavit zástupce",
       "editShortcut": "Upravit zástupce",
       "shortcutAlreadyExists": "Výše uvedená klávesová zkratka již existuje.",
-      "close": "Zavřít popisek"
+      "close": "Zavřít popisek",
+      "spreadsheetEditor": {
+        "copyText": "Kopírování vybraného textu nebo buněk",
+        "pasteText": "Vložit text nebo buňky",
+        "cutText": "Vyjmout vybraný text nebo buňky",
+        "undoChange": "Vrátit zpět změnu",
+        "redoChange": "Znovu provést změnu",
+        "selectAll": "Vybrat všechny buňky",
+        "moveToEdgeUp": "Přejít na začátek listu",
+        "moveToEdgeDown": "Přejít na konec listu",
+        "moveToEdgeLeft": "Přejít na sloupec úplně vlevo",
+        "moveToEdgeRight": "Přejít na sloupec úplně vpravo",
+        "adjustSelectionUp": "Rozšířit výběr směrem nahoru",
+        "adjustSelectionDown": "Rozšířit výběr dolů",
+        "adjustSelectionLeft": "Rozšířit výběr doleva",
+        "adjustSelectionRight": "Rozšířit výběr doprava",
+        "up": "Přesunout rámeček pro výběr buněk nahoru",
+        "down": "Přesunout rámeček pro výběr buněk dolů",
+        "left": "Přesunout rámeček pro výběr buněk doleva",
+        "right": "Přesunout rámeček pro výběr buněk doprava",
+        "enter": "Upravit vybranou buňku",
+        "tab": "Přesunout rámeček pro výběr buněk doprava",
+        "delete": "Vymazat mobilní data"
+      }
     },
     "cellBorderStyle": {
       "none": "Žádný",
@@ -861,12 +887,12 @@
       "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Upravit upozornění",
-      "message": "Tento název listu již existuje. Zadejte prosím jiné jméno."
+      "title": "Upravit název listu",
+      "message": "Toto jméno již existuje. Zadejte prosím jiné jméno."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Upravit upozornění",
-      "message": "Tento název listu nemůže být prázdný."
+      "title": "Upravit název listu",
+      "message": "Název listu nemůže být prázdný. Zadejte prosím název."
     },
     "sheetTabDeleteMessage": {
       "title": "Upravit upozornění",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Vlastnosti",
     "miscValuesHeader": "Všechno",
     "emptyPanelMessage": "Vyberte prvek pro zobrazení jeho vlastností"
-  },
-  "watermarkPanel": {
-    "textWatermark": "Textový vodoznak",
-    "uploadImage": "Nahrát obrázek",
-    "browse": "Procházet",
-    "watermarkOptions": "Možnosti vodoznaku",
-    "watermarks": "Vodoznaky"
   },
   "portfolio": {
     "createPDFPortfolio": "Vytvořte portfolio PDF",

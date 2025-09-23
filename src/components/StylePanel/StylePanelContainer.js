@@ -8,12 +8,20 @@ import NoToolStylePanel from './panels/NoToolStylePanel';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import { shouldShowNoStyles } from 'helpers/stylePanelHelper';
 import debounce from 'lodash/debounce';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import DataElements from 'constants/dataElement';
 
 import './StylePanel.scss';
 
 const { Annotations } = window.Core;
 
-const StylePanelContainer = () => {
+const propTypes = {
+  dataElement: PropTypes.string,
+  isFlyout: PropTypes.bool,
+};
+
+const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout = false }) => {
   const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'stylePanel'));
   const annotationCreateToolNames = getAnnotationCreateToolNames();
 
@@ -43,10 +51,13 @@ const StylePanelContainer = () => {
   }, 150, { leading: false, trailing: true });
 
   useEffect(() => {
-    if (isPanelOpen) {
+    if (isPanelOpen || isFlyout) {
       handleChange();
     }
-  }, [isPanelOpen]);
+    return () => {
+      handleChange.cancel();
+    };
+  }, [isPanelOpen, isFlyout]);
 
   useEffect(() => {
     core.addEventListener('annotationSelected', handleChange);
@@ -55,6 +66,7 @@ const StylePanelContainer = () => {
     return () => {
       core.removeEventListener('annotationSelected', handleChange);
       core.removeEventListener('toolModeUpdated', handleChange);
+      handleChange.cancel();
     };
   }, []);
 
@@ -70,14 +82,14 @@ const StylePanelContainer = () => {
     return getStylePanelComponent(currentTool, selectedAnnotations);
   };
 
-  if (!isPanelOpen) {
+  if (!isPanelOpen && !isFlyout) {
     return null;
   }
 
   const StylePanelComponent = getComponent();
 
   return (
-    <DataElementWrapper dataElement="stylePanel" className="Panel StylePanel">
+    <DataElementWrapper dataElement={dataElement} className={classNames('Panel', 'StylePanel', { 'isFlyout': isFlyout })}  >
       <StylePanelComponent
         currentTool={currentTool}
         selectedAnnotations={selectedAnnotations}
@@ -85,5 +97,7 @@ const StylePanelContainer = () => {
     </DataElementWrapper>
   );
 };
+
+StylePanelContainer.propTypes = propTypes;
 
 export default StylePanelContainer;

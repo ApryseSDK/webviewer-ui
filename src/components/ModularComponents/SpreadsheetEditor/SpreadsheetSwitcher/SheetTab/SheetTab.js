@@ -19,7 +19,7 @@ const propTypes = {
   deleteSheet: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  validateName: PropTypes.func,
+  checkIsSheetNameDuplicated: PropTypes.func,
   noRightBorder: PropTypes.bool,
   isReadOnlyMode: PropTypes.bool,
   skipDeleteWarning: PropTypes.bool,
@@ -34,7 +34,7 @@ const SheetTab = ({
   setActiveSheet,
   isEditMode,
   noRightBorder,
-  validateName,
+  checkIsSheetNameDuplicated,
   isReadOnlyMode,
   deleteSheet,
   renameSheet,
@@ -58,10 +58,8 @@ const SheetTab = ({
 
   const onInputChange = (e) => {
     const newLabel = e.target.value;
-    const isDuplicate = validateName(label, newLabel);
-    const isEmpty = newLabel.trim() === '';
-
-    setIsInputError(isDuplicate || isEmpty);
+    const isDuplicate = checkIsSheetNameDuplicated(newLabel);
+    setIsInputError(isDuplicate);
     setInputValue(newLabel);
   };
 
@@ -99,6 +97,15 @@ const SheetTab = ({
       inputErrorWarning();
       return;
     }
+    const isInputValueDuplicated = checkIsSheetNameDuplicated(inputValue);
+    const isEmpty = inputValue.trim() === '';
+
+    if (isInputValueDuplicated || isEmpty) {
+      setIsInputError(true);
+      inputErrorWarning();
+      return;
+    }
+
     renameSheet(label, inputValue);
     setLabelBeingEdited(null);
     setIsInputError(false);
@@ -148,6 +155,7 @@ const SheetTab = ({
         onBlur={onInputBlur}
         onKeyDown={onKeyDown}
         aria-invalid={isInputError}
+        aria-label={t('action.rename')}
       />
     );
   } else {
@@ -155,7 +163,7 @@ const SheetTab = ({
       <>
         <Button
           role='tab'
-          ariaControls={'document-container'}
+          // ariaControls={'document-container'}
           ariaSelected={isActive}
           ariaLabel={label}
           className={'sheet-label'}

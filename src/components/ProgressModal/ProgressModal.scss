@@ -9,10 +9,10 @@
     opacity: 1;
     transition: opacity 1s 2s;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     transform: translate(-50%, -50%);
-    z-index:999;
+    z-index: 999;
   }
 
   &.closed {
@@ -25,7 +25,7 @@
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
   }
-  
+
   .progress-ring__circle {
     transition: 0.35s stroke-dashoffset;
     // axis compensation
@@ -45,7 +45,6 @@
       &.progress-ring__circle {
         stroke: var(--slider-filled);
       }
-
     }
   }
 }

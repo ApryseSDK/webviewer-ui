@@ -7,6 +7,8 @@ import Icon from 'components/Icon';
 import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { addSearchListener, removeSearchListener } from 'helpers/search';
+import { isSpreadsheetEditorDocument } from 'src/helpers/officeEditor';
+import getDocument from 'src/core/getDocument';
 
 import './SearchPanel.scss';
 import useSearch from 'hooks/useSearch';
@@ -66,14 +68,34 @@ function SearchPanel(props) {
     setIsSearchInProgress(false);
   };
 
+  const adjustSpreadsheetTableWidth = (isUnmounting) => {
+    if (isSpreadsheetEditorDocument()) {
+      const editorWrapper = document.getElementById('editorWrapper');
+      if (isUnmounting) {
+        editorWrapper.style.removeProperty('width');
+      } else {
+        const newWidth = `${window.innerWidth - (currentWidth)}px`;
+        editorWrapper.style.width = newWidth;
+      }
+      const editor = getDocument().getSpreadsheetEditorDocument().getEditor();
+      editor.onSizeChanged();
+    }
+  };
+
+  React.useEffect(() => {
+    adjustSpreadsheetTableWidth();
+  }, [currentWidth]);
+
   React.useEffect(() => {
     // componentDidMount
+    adjustSpreadsheetTableWidth();
     addSearchListener(searchEventListener);
   }, []);
 
   React.useEffect(() => {
     // componentWillUnmount
     return () => {
+      adjustSpreadsheetTableWidth(true);
       removeSearchListener(searchEventListener);
     };
   }, []);

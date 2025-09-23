@@ -64,5 +64,20 @@ export const getFormatTypeFromFormatString = (formatString) => {
   const formatType = Object.keys(formatsMap).find((key) => {
     return formatsMap[key] === formatString;
   });
-  return formatType || '';
+
+  if (formatType) {
+    return formatType;
+  }
+
+  const numberFormatPatterns = [
+    { key: 'currencyRoundedFormat', pattern: /^\$0$/ }, // Matches exactly $0 (no decimals)
+    { key: 'currencyFormat', pattern: /^\$0\.\d+$/ }, // Matches $0.0, $0.00, $0.000, etc. (with decimals)
+    { key: 'financialFormat', pattern: /^#,##0(\.\d+)?;(\(#,##0(\.\d+)?\))?$/ },
+    { key: 'accountingFormat', pattern: /^_\(\$\* #,##0(\.\d+)?_\);_\(\$\* \(#,##0(\.\d+)?\);$/ },
+    { key: 'numberFormat', pattern: /^#,##0(\.\d+)?$/ },
+    { key: 'percentFormat', pattern: /^0(\.\d+)?%$/ }
+  ];
+
+  const match = numberFormatPatterns.find((pattern) => pattern.pattern.test(formatString));
+  return match ? match.key : '';
 };

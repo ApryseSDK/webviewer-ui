@@ -1,4 +1,5 @@
-.signature-widget-info {  --widget-header-indent: 49px;
+.signature-widget-info {
+  --widget-header-indent: 49px;
   --widget-body-indent: 22px;
   --arrow-width: 12px;
   padding: 4px;
@@ -7,9 +8,9 @@
   flex-direction: column;
   font-size: 13px;
   margin-bottom: 10px;
-  margin-left: 5px;
+  margin-inline-start: 5px;
 
-  p+p {
+  p + p {
     margin: 0px;
     margin-top: 1em;
   }
@@ -71,7 +72,7 @@
     .panel-list-label-header {
       .Button {
         span {
-          text-align: left;
+          text-align: start;
           overflow: visible;
           white-space: normal;
           text-overflow: inherit;
@@ -88,7 +89,7 @@
   }
 
   .title {
-    padding-left: 4px;
+    padding-inline-start: 4px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -101,11 +102,10 @@
     border: 0;
     background-color: transparent;
 
-    div+*,
-    button+* {
-      margin-left: 2px;
+    div + *,
+    button + * {
+      margin-inline-start: 2px;
     }
-
 
     .arrow {
       min-width: var(--arrow-width);
@@ -129,7 +129,7 @@
 
       &.hidden {
         visibility: hidden;
-        // width of signature icon + margin-right + margin-left
+        // width of signature icon + margin-inline-end + margin-inline-start
         padding: 16 + 5 + 2px;
       }
 
@@ -145,7 +145,7 @@
     }
 
     .signature-icon {
-      margin-right: 5px;
+      margin-inline-end: 5px;
     }
 
     &:focus-visible {
@@ -154,19 +154,18 @@
   }
 
   .header {
-    margin-left: 32px;
+    margin-inline-start: 32px;
 
     ul {
-      padding-left: 24px;
+      padding-inline-start: 24px;
     }
 
-
-    .body>div:first-child>p:first-child,
-    .body>p:first-child {
+    .body > div:first-child > p:first-child,
+    .body > p:first-child {
       margin-top: 0.5em;
     }
 
-    .body>div:last-child {
+    .body > div:last-child {
       margin-bottom: 0.5em;
     }
   }
@@ -176,27 +175,26 @@
      * Minus the width off-set created by the arrow, ensuring that the headers
      * align
      */
-    margin-left: 0px;
+    margin-inline-start: 0px;
 
     ul {
       /**
        * Re-add the width offset created by the arrow, ensuring the content of
        * the bodies align
        */
-      margin-left: var(--arrow-width);
+      margin-inline-start: var(--arrow-width);
       li {
-        margin-left: 18px
+        margin-inline-start: 18px;
       }
     }
   }
 
   .panel-list-label-header {
-    Button {
-      font-weight: bold; 
+    button {
+      font-weight: bold;
       font-size: 13px;
     }
   }
-
 
   .signatureDetails,
   .verificationDetails {
@@ -204,6 +202,6 @@
     padding: 0;
     background-color: transparent;
     border: none;
-    text-align: left;
+    text-align: start;
   }
 }

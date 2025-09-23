@@ -1,6 +1,7 @@
 import { ITEM_TYPE, FLYOUT_ITEM_TYPES } from 'constants/customizationVariables';
 import actions from 'actions';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
+import { isValidElement } from 'react';
 
 const validItemTypes = Object.values(FLYOUT_ITEM_TYPES);
 
@@ -26,6 +27,7 @@ export const flyoutItemType = TYPES.MULTI_TYPE(
  * @property {string} [icon] -  Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
  *   {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
  * @property {Array<FlyoutItem | UI.Components.Item | UI.Components.Flyout>} [children] - An array of objects that represents the items in a sub-menu, has the same properties as the parent items property and can be infinitely nested.
+ * @property {string} [render] A preset component to render (e.g., 'stylePanel' to render the StylePanel component, or other component types as supported).
  */
 
 /**
@@ -75,6 +77,7 @@ export class Flyout {
     checkTypes([options], [TYPES.OBJECT({
       dataElement: TYPES.STRING,
       items: TYPES.ARRAY(flyoutItemType),
+      toggleElement: TYPES.OPTIONAL(TYPES.STRING),
     })], 'Flyout Constructor');
     // Validate nested children iteratively rather than recursively to ensure call stack is not exceeded
     const itemsToCheckForChildren = [...options.items];
@@ -91,6 +94,8 @@ export class Flyout {
       const item = options.items[index];
       if (validItemTypes.includes(item?.type)) {
         options.items[index] = itemToFlyout(item, { skipCheck: true });
+      } else if (isValidElement(item)) {
+        options.items[index] = item;
       } else if (item?.type) {
         throw new Error(`Invalid type passed to flyout: ${item.type}`);
       }
@@ -102,6 +107,7 @@ export class Flyout {
     this.type = ITEM_TYPE.FLYOUT;
     this.store = options.store;
     options.store = undefined;
+    this.toggleElement = options.toggleElement;
   }
 
   setItems(items) {

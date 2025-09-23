@@ -14,20 +14,21 @@ const BaseAlignmentButton = forwardRef((props, ref) => {
     alignment,
     selector,
     buttonType,
+    dataElement = menuItems[buttonType].dataElement,
+    img: icon = menuItems[buttonType].icon,
+    title = menuItems[buttonType].title,
     ...rest
   } = props;
 
-
   const currentAlignment = useSelector(selector);
   const isActive = alignment === currentAlignment;
-
-  const { dataElement, icon, title } = menuItems[buttonType];
 
   const handleClick = () => {
     setCellAlignment(alignment);
   };
 
   const commonProps = {
+    dataElement,
     ...rest,
     ref,
     onClick: handleClick,
@@ -53,11 +54,14 @@ BaseAlignmentButton.displayName = 'BaseAlignmentButton';
 
 BaseAlignmentButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
   alignment: PropTypes.string.isRequired,
   selector: PropTypes.func.isRequired,
   buttonType: PropTypes.string.isRequired,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default BaseAlignmentButton;

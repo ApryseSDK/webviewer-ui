@@ -25,7 +25,7 @@
     width: 100%;
 
     li.selected {
-      border: 1px solid #48A4E0;
+      border: 1px solid #48a4e0;
     }
 
     li {
@@ -42,21 +42,21 @@
       cursor: pointer;
 
       &:hover {
-        border: 1px solid #48A4E0;
+        border: 1px solid #48a4e0;
       }
 
       .li-div {
         background: white;
         width: 42px;
         height: 100%;
-        float: left;
+        float: inline-start;
         border-radius: 4px;
         position: relative;
       }
       .li-div-img {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
         transform: translate(0px, -50%) translateX(-50%);
         width: 28px;
       }
@@ -66,7 +66,7 @@
         border: 1px solid var(--blue-1);
       }
       .li-div-txt {
-        margin-left: 10px;
+        margin-inline-start: 10px;
         line-height: 40px;
       }
     }

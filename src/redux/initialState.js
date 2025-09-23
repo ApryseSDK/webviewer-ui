@@ -25,7 +25,7 @@ import { getMeasurementScalePreset, initialScale } from 'constants/measurementSc
 import { cssFontValues } from 'src/constants/fonts/fonts';
 import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
 import { availableSpreadsheetEditorFonts } from 'src/constants/fonts/spreadsheetEditorFonts';
-import { EditingStreamType, MARGIN_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
+import { EditingStreamType, LAYOUT_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import defaultToolsWithInlineComment from 'constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -117,7 +117,6 @@ export default {
       textEditingPanel: 330,
       wv3dPropertiesPanel: 307,
       comparePanel: 330,
-      watermarkPanel: 330,
       stylePanel: 330,
       signatureListPanel: 330,
       rubberStampPanel: 330,
@@ -605,13 +604,6 @@ export default {
           toolGroup: 'contentEditTools',
           dataElement: 'contentEditButton',
           title: 'action.edit',
-        },
-        {
-          type: 'toggleElementButton',
-          img: 'icon-watermark-panel',
-          element: DataElements.WATERMARK_PANEL,
-          dataElement: DataElements.WATERMARK_PANEL_TOGGLE,
-          title: 'component.watermarkPanel',
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
@@ -1976,8 +1968,8 @@ export default {
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
     customColors:
-      localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem(`${instanceId}-customColors`)
-        ? JSON.parse(window.localStorage.getItem(`${instanceId}-customColors`))
+      localStorageManager.isLocalStorageEnabled() && localStorageManager.getItemSynchronous(`${instanceId}-customColors`)
+        ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customColors`))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeTabInPanel: {},
@@ -2253,7 +2245,7 @@ export default {
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING,
     stream: EditingStreamType.BODY,
-    unitMeasurement: MARGIN_UNITS.CM,
+    unitMeasurement: LAYOUT_UNITS.CM,
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',
@@ -2309,5 +2301,7 @@ export default {
     editMode: SpreadsheetEditorEditMode['VIEW_ONLY'],
     availableFontFaces: availableSpreadsheetEditorFonts,
     cssFontValues: cssFontValues,
+    canUndo: false,
+    canRedo: false,
   }
 };

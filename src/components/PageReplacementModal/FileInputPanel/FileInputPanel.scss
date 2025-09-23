@@ -1,4 +1,3 @@
-
 .FileInputPanel {
   display: flex;
   justify-content: center;
@@ -10,13 +9,16 @@
   .url-input-header {
     font-size: 13px;
     line-height: 16px;
-    padding-left: 16px;
+    padding-inline-start: 16px;
     padding-bottom: 8px;
     font-weight: bold;
   }
 
   .url-input {
     padding: 0 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
 
     input:focus {
       border-color: var(--outline-color);
@@ -24,7 +26,32 @@
     input:active {
       border-color: var(--focus-border);
     }
+
+    .Icon {
+      position: absolute;
+      inset-inline-end: 20px;
+      color: var(--error-border-color);
+    }
   }
+  
+  .file-input {
+    padding: 6px;
+    width: 108px;
+    height: 32px;
+
+    &.file-input--error {
+      padding-inline-end: 30px; /* Adjust padding to make space for the error icon */
+      border-color: var(--error-border-color);
+    }
+  }
+
+  .url-input-error {
+    padding: 0 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--error-text-color);
+  }
+
 
   ::placeholder {
     color: var(--placeholder-text);

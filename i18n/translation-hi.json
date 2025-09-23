@@ -111,6 +111,7 @@
     "open": "खुला हुआ",
     "deselectAll": "सबको अचयनित करो",
     "select": "चुनते हैं",
+    "buttonPressed": "{{buttonName}} बटन दबाया गया",
     "moveToTop": "शीर्ष पर जाएं",
     "moveToBottom": "नीचे ले जाएँ",
     "movePageToTop": "पृष्ठ को शीर्ष पर ले जाएँ",
@@ -272,7 +273,6 @@
       "close": "सभी टिप्पणियां बंद करें"
     },
     "comparePanel": "पैनल की तुलना करें",
-    "watermarkPanel": "वॉटरमार्क पैनल",
     "mainMenu": "मुख्य मेन्यू"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "कोई परिणाम नहीं मिला।",
     "numResultsFound": "परिणाम मिले",
     "loadError": "दस्तावेज़ लोड करने में त्रुटि",
+    "urlInputFileLoadError": "फ़ाइल को प्रदान किये गए URL से प्राप्त नहीं किया जा सका.",
     "notSupported": "उस फ़ाइल प्रकार का समर्थन नहीं कर रहा है।",
     "passwordRequired": "पासवर्ड आवश्यक",
     "enterPasswordPlaceholder": "पास वर्ड दर्ज करें",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "टिप्पणियाँ खोजें",
     "searchDocumentPlaceholder": "दस्तावेज़ खोजें",
     "clearSearchResults": "खोज परिणाम साफ़ करें",
+    "toggleReplaceInput": "टॉगल बदलें इनपुट",
+    "toggleSearchOptions": "खोज विकल्प टॉगल करें",
     "searchResultsCleared": "खोज परिणाम साफ़ किए गए",
     "searchSettingsPlaceholder": "खोज सेटिंग",
     "searchSuggestionsPlaceholder": "खोज सुझाव",
@@ -803,7 +806,30 @@
       "setShortcut": "शॉर्टकट सेट करें",
       "editShortcut": "शॉर्टकट संपादित करें",
       "shortcutAlreadyExists": "ऊपर दिया गया कीबोर्ड शॉर्टकट पहले से मौजूद है।",
-      "close": "टूलटिप बंद करें"
+      "close": "टूलटिप बंद करें",
+      "spreadsheetEditor": {
+        "copyText": "चयनित पाठ या कक्षों की प्रतिलिपि बनाएँ",
+        "pasteText": "टेक्स्ट या सेल चिपकाएँ",
+        "cutText": "चयनित पाठ या कक्षों को काटें",
+        "undoChange": "परिवर्तन पूर्ववत करें",
+        "redoChange": "परिवर्तन दोबारा करें",
+        "selectAll": "सभी कक्षों का चयन करें",
+        "moveToEdgeUp": "शीट के शीर्ष पर जाएं",
+        "moveToEdgeDown": "शीट के नीचे जाएं",
+        "moveToEdgeLeft": "सबसे बाएं कॉलम पर जाएं",
+        "moveToEdgeRight": "सबसे दाहिने कॉलम पर जाएं",
+        "adjustSelectionUp": "चयन को ऊपर की ओर बढ़ाएँ",
+        "adjustSelectionDown": "चयन को नीचे की ओर बढ़ाएँ",
+        "adjustSelectionLeft": "चयन को बाईं ओर बढ़ाएँ",
+        "adjustSelectionRight": "चयन अधिकार बढ़ाएँ",
+        "up": "सेल चयन बॉक्स को ऊपर की ओर ले जाएँ",
+        "down": "सेल चयन बॉक्स को नीचे की ओर ले जाएँ",
+        "left": "सेल चयन बॉक्स को बाईं ओर ले जाएँ",
+        "right": "सेल चयन बॉक्स को दाईं ओर ले जाएं",
+        "enter": "चयनित सेल संपादित करें",
+        "tab": "सेल चयन बॉक्स को दाईं ओर ले जाएँ",
+        "delete": "सेल डेटा साफ़ करें"
+      }
     },
     "cellBorderStyle": {
       "none": "कोई नहीं",
@@ -861,12 +887,12 @@
       "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}\n\n यदि आपको इस दस्तावेज़ पर भरोसा है, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
     },
     "sheetTabRenameIssueOne": {
-      "title": "चेतावनी संपादित करें",
-      "message": "यह शीट नाम पहले से मौजूद है। कृपया कोई दूसरा नाम दर्ज करें।"
+      "title": "शीट का नाम संपादित करें",
+      "message": "यह नाम पहले से मौजूद है। कृपया कोई दूसरा नाम दर्ज करें।"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "चेतावनी संपादित करें",
-      "message": "यह शीट नाम रिक्त नहीं रह सकता."
+      "title": "शीट का नाम संपादित करें",
+      "message": "शीट का नाम खाली नहीं छोड़ा जा सकता। कृपया नाम दर्ज करें।"
     },
     "sheetTabDeleteMessage": {
       "title": "चेतावनी संपादित करें",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "गुण",
     "miscValuesHeader": "सभी",
     "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें."
-  },
-  "watermarkPanel": {
-    "textWatermark": "टेक्स्ट वॉटरमार्क",
-    "uploadImage": "तस्विर अपलोड करना",
-    "browse": "ब्राउज़",
-    "watermarkOptions": "वॉटरमार्क विकल्प",
-    "watermarks": "वाटरमार्क"
   },
   "portfolio": {
     "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",

@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
-@import "../../constants/tabs";
+@import '../../constants/tabs';
 
 .SaveModal {
   @extend %modal;
@@ -147,7 +147,7 @@
             display: flex;
             margin-bottom: 8px;
             .specifyPagesExampleLabel {
-              margin-left: 4px;
+              margin-inline-start: 4px;
               color: var(--faded-text);
             }
           }

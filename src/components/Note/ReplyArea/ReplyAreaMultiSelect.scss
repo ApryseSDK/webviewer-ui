@@ -11,7 +11,7 @@
   flex-direction: column;
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  inset-block-end: 0px;
   z-index: 100;
   background: var(--panel-background);
 
@@ -23,7 +23,7 @@
   .reply-area-multi-header {
     display: flex;
     flex-direction: row;
-    margin-left: 16px;
+    margin-inline-start: 16px;
     margin-top: 28px;
     position: relative;
     justify-content: space-between;
@@ -38,10 +38,10 @@
     .close-icon {
       display: flex;
       align-items: center;
-      padding-right: 12px;
+      padding-inline-end: 12px;
       cursor: pointer;
       position: relative;
-      top: 1px;
+      inset-block-start: 1px;
 
       .close-icon {
         width: 22px;
@@ -60,17 +60,16 @@
     width: 28px;
     height: 28px;
     @include button-reset;
-    right: 10px;
-    bottom: 12px;
+    inset-inline-end: 10px;
+    inset-block-end: 12px;
 
     // for IE only
-    @media all and (-ms-high-contrast: none),
-    (-ms-high-contrast: active) {
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       width: 80px;
     }
 
     &:hover {
-      background: var(--blue-1)
+      background: var(--blue-1);
     }
 
     &.disabled {
@@ -94,7 +93,7 @@
       padding: 4px 4px 4px 4px;
 
       &::before {
-        left: 4px;
+        inset-inline-start: 4px;
       }
     }
   }
@@ -115,7 +114,7 @@
     }
 
     .reply-area-multi-header {
-      margin-left: 0px;
+      margin-inline-start: 0px;
       margin-top: 0px;
 
       .close-icon {
@@ -125,18 +124,18 @@
     }
 
     .close-icon {
-      padding-right: 0px;
-      margin-right: 16px;
+      padding-inline-end: 0px;
+      margin-inline-end: 16px;
     }
 
     .reply-button-container {
-      margin-right: 16px;
+      margin-inline-end: 16px;
       margin-bottom: 12px;
     }
 
     .reply-button {
-      left: 0px;
-      right: 0px;
+      inset-inline-start: 0px;
+      inset-inline-end: 0px;
     }
   }
 }

@@ -1,8 +1,9 @@
 import getRootNode from 'helpers/getRootNode';
+import getAppRect from 'helpers/getAppRect';
 
 export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   // Get the container, toggle element, and target elements
-  const appRect = getRootNode().getElementById('app').getBoundingClientRect();
+  const appRect = getAppRect();
   const referenceElement = getRootNode().querySelector(`[data-element="${dataElement}"]`);
   const referenceButtonRect = referenceElement.getBoundingClientRect();
   const parentHeader = referenceElement.closest('.ModularHeader');
@@ -14,9 +15,12 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   const availableSpaceRight = appRect.right - referenceButtonRect.right;
   let flyoutX = referenceButtonRect.left - appRect.left;
 
-  if (parentHeader?.classList.contains('LeftHeader')) {
+  const isRTL = parentHeader?.closest('[dir="rtl"], [dir="ltr"]')?.dir === 'rtl';
+  const shouldOpenRight = parentHeader?.classList.contains(!isRTL ? 'LeftHeader' : 'RightHeader');
+  const shouldOpenLeft = parentHeader?.classList.contains(isRTL ? 'LeftHeader' : 'RightHeader');
+  if (shouldOpenRight) {
     flyoutX += referenceButtonRect.width + defaultOffset;
-  } else if (parentHeader?.classList.contains('RightHeader')) {
+  } else if (shouldOpenLeft) {
     flyoutX -= (targetElement.clientWidth + defaultOffset);
   } else if (availableSpaceLeft >= availableSpaceRight) {
     flyoutX = referenceButtonRect.right - targetElement.clientWidth - appRect.left;
@@ -32,7 +36,11 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   } else if (parentHeader?.classList.contains('BottomHeader')) {
     flyoutY -= (targetElement.clientHeight + defaultOffset);
   } else if (availableSpaceAbove >= availableSpaceBelow) {
-    flyoutY = referenceButtonRect.bottom - targetElement.clientHeight;
+    if (shouldOpenLeft || shouldOpenRight) {
+      flyoutY = referenceButtonRect.bottom - targetElement.clientHeight;
+    } else {
+      flyoutY = referenceButtonRect.top - targetElement.clientHeight - defaultOffset;
+    }
 
     // This case is for flyouts toggled by elements that are not on a header
   } else if (availableSpaceBelow > targetElement.clientHeight && !parentHeader) {

@@ -6,7 +6,7 @@ import { createStore, createTemplate } from 'helpers/storybookHelper';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { defaultPanels } from 'src/redux/modularComponents';
 import initialState from 'src/redux/initialState';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/MultiTab',

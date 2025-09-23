@@ -10,13 +10,13 @@ const baseFile = `${i18nFolder}/translation-en.json`;
 const filesToTranslate = fs
   .readdirSync(i18nFolder)
   // filter out .DS_Store
-  .filter(fileName => fileName.endsWith('.json'))
-  .map(fileName => `${i18nFolder}/${fileName}`)
-  .filter(filePath => filePath !== baseFile);
+  .filter((fileName) => fileName.endsWith('.json'))
+  .map((fileName) => `${i18nFolder}/${fileName}`)
+  .filter((filePath) => filePath !== baseFile);
 
 const runTranslation = () => {
   const baseTranslationData = JSON.parse(fs.readFileSync(baseFile));
-  filesToTranslate.forEach(async file => {
+  filesToTranslate.forEach(async (file) => {
     const translationData = JSON.parse(fs.readFileSync(file));
     const updatedData = {};
     const languageCode = file.match(/translation-(.+?)\.json/i)[1];
@@ -35,7 +35,7 @@ const runTranslation = () => {
   });
 };
 
-const addMissingKey = async(baseTranslationData, translationData, result, languageCode) => {
+const addMissingKey = async (baseTranslationData, translationData, result, languageCode) => {
   const keys = Object.keys(baseTranslationData);
 
   for (const key of keys) {
@@ -67,7 +67,7 @@ const addMissingKey = async(baseTranslationData, translationData, result, langua
   }
 };
 
-const mapI18nCodeToGoogleTranslationCode = code => {
+const mapI18nCodeToGoogleTranslationCode = (code) => {
   // key of the map should be the language code that's after the '-' in the json filename.
   // value of a key should be a language code that's listed in https://cloud.google.com/translate/docs/languages
   const map = {
@@ -95,7 +95,8 @@ const mapI18nCodeToGoogleTranslationCode = code => {
     hu: 'hu',
     th: 'th',
     ro: 'ro',
-    sv: 'sv'
+    sv: 'sv',
+    ur: 'ur',
   };
 
   if (!map[code]) {

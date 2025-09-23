@@ -112,7 +112,7 @@
               .ui__choice__label {
                 width: 100%;
                 position: relative;
-                top: -2px;
+                inset-block-start: -2px;
               }
             }
           }
@@ -121,13 +121,12 @@
             display: flex;
 
             .specifyPagesExampleLabel {
-              margin-left: 4px;
+              margin-inline-start: 4px;
               color: var(--faded-text);
             }
           }
         }
       }
-
     }
 
     .footer {

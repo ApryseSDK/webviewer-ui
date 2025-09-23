@@ -1,8 +1,8 @@
 .bottom-headers-wrapper {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
   pointer-events: none;
   z-index: 73;
 }
@@ -11,6 +11,10 @@
   display: inline-block;
   width: 100%;
   pointer-events: auto;
+
+  &.SpreadsheetSwitcher {
+   display: block;
+  }
 }
 
 .BottomHeader.closed {

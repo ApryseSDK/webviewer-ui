@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
-@import "../../constants/tabs";
+@import '../../constants/tabs';
 
 .SignatureModal {
   @extend %modal;
@@ -23,7 +23,6 @@
       width: 664px;
     }
 
-
     @include mobile {
       border-radius: 0;
       height: 440px;
@@ -33,7 +32,7 @@
       display: grid;
       height: 100%;
       position: fixed;
-      top: 0;
+      inset-block-start: 0;
       grid-template-rows: 100px auto 70px;
       justify-content: normal;
     }
@@ -54,7 +53,7 @@
         font-weight: 700;
         width: calc(100% - 32px);
         margin: 0;
-        margin-right: 16px;
+        margin-inline-end: 16px;
       }
 
       .signatureModalCloseButton {
@@ -105,7 +104,7 @@
         width: 100px;
 
         :not(:last-child) {
-          margin-right: 8px;
+          margin-inline-end: 8px;
         }
 
         .cell-container {
@@ -225,7 +224,7 @@
 
       .divider {
         display: inline-block;
-        border-left: 1px solid var(--modal-stroke-and-border);
+        border-inline-start: 1px solid var(--modal-stroke-and-border);
         margin: auto 8px auto 16px;
         height: 16px;
       }
@@ -235,7 +234,6 @@
         height: 31px;
         margin: auto 0;
       }
-
 
       .Dropdown__wrapper {
         width: 160px;
@@ -247,12 +245,12 @@
         .Dropdown {
           width: 100% !important;
           height: 100%;
-          text-align: left;
+          text-align: start;
         }
 
         .picked-option-text {
-          margin-right: -18px;
-          padding-left: 2px;
+          margin-inline-end: -18px;
+          padding-inline-start: 2px;
           font-size: 13px;
         }
 
@@ -261,13 +259,11 @@
         }
 
         .Dropdown__items {
-
-          bottom: auto;
-          top: 100%;
+          inset-block-end: auto;
+          inset-block-start: 100%;
           width: 100%;
-          left: 0;
-          right: auto;
-
+          inset-inline-start: 0;
+          inset-inline-end: auto;
         }
 
         .Dropdown__items button:nth-child(n) {
@@ -284,11 +280,11 @@
 
         .Dropdown__item {
           display: block;
-          padding-right: 16px;
+          padding-inline-end: 16px;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          text-align: left;
+          text-align: start;
         }
       }
     }
@@ -314,7 +310,6 @@
     &:disabled {
       opacity: 0.5;
     }
-
 
     &:focus-visible {
       outline: var(--focus-visible-outline);

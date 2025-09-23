@@ -10,16 +10,18 @@ const setDefaultToolPositions = (store) => {
 
   Object.keys(toolModeMap).forEach((toolName) => {
     try {
-      const position = parseInt(localStorage.getItem(`${instanceId}-toolPosition-${toolName}`), 10);
-      if (Number.isInteger(position)) {
-        positions.push({ toolName, position });
+      if (localStorageManager.isLocalStorageEnabled()) {
+        const position = parseInt(localStorageManager.getItemSynchronous(`${instanceId}-toolPosition-${toolName}`), 10);
+        if (Number.isInteger(position)) {
+          positions.push({ toolName, position });
+        }
       }
     } catch (ex) {
       console.warn('Disabling "localStorage" because it could not be accessed.');
       localStorageManager.disableLocalStorage();
     }
     // try {
-    //   // const position = localStorage.getItem(`${instanceId}-toolPosition-${toolName}`);
+    //   // const position = localStorageManager.getItem(`${instanceId}-toolPosition-${toolName}`);
     //   positions.push[{ toolName, position: 5 }];
     // } catch (ex) {
     //   console.warn(`Disabling "localStorage" because it could not be accessed.`);

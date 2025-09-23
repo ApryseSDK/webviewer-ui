@@ -1,6 +1,6 @@
 import React from 'react';
 import PageNumberInput from './PageNumberInput';
-import { userEvent, expect } from '@storybook/test';
+import { userEvent, expect } from 'storybook/test';
 
 function noop() { }
 

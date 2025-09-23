@@ -5,6 +5,13 @@
   display: flex;
   flex-direction: column;
 
+  &.isFlyout {
+    padding: 8px;
+    width: 264px;
+    max-height: 296px;
+    overflow-y: scroll;
+  }
+
   .rubber-stamp-panel-header {
     font-size: 16px;
     font-weight: 700;
@@ -53,7 +60,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        background-color: var(--gray-0);
+        background-color: var(--panel-list-item);
         flex-grow: 1;
 
         img {
@@ -102,7 +109,7 @@
       margin: 0 16px 16px 16px;
     }
 
-    [data-element="createRubberStampButtonWrap"] {
+    [data-element='createRubberStampButtonWrap'] {
       padding: 0 16px;
 
       .CreateRubberStampButton {
@@ -110,8 +117,7 @@
       }
     }
 
-    &.small-size {
-
+    &.small-size:not(.isFlyout) {
       .CreateRubberStampButton,
       .Divider,
       .collapsible-page-group-header,
@@ -128,6 +134,11 @@
 
       &.small-size {
         overflow: hidden;
+      }
+
+      &.isFlyout {
+        overflow-y: scroll;
+
       }
 
       .rubber-stamps-list {

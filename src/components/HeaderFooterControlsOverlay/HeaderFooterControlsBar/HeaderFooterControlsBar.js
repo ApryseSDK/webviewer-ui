@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import ActionButton from 'components/ActionButton';
+import VisuallyHiddenLabel from 'components/VisuallyHiddenLabel';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
@@ -208,26 +209,36 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
     await item?.onClick();
   };
 
-  const renderDropdownButton = (isOpen) => (
-    <ActionButton
-      className='options-button'
-      ariaLabelledby={barId}
-      ariaControls={`${dropdownId}-dropdown`}
-      ariaExpanded={isOpen}
-      img={'ic_chevron_down_black_24px'}
-      label={t('officeEditor.options')}
-      isActive={isOpen}
-      disabled={optionsDisabled}
-    />
-  );
+  const sectionType = type === 'header' ? headerType : footerType;
+  const barLabelKey = `officeEditor.${type}.${sectionType}`;
   const sectionLabel = sectionNumber ? ` - ${t('officeEditor.section')} ${sectionNumber}` : '';
+  const barLabel = `${t(barLabelKey)}${sectionLabel}`;
+  const buttonLabel = `${barLabel} ${t('officeEditor.options')}`;
+  const buttonLabelId = `${dropdownId}-label`;
 
-  const layoutType = type === 'header' ? headerType : footerType;
+  const renderDropdownButton = (isOpen) => (
+    <>
+      <ActionButton
+        className='options-button'
+        ariaLabelledby={buttonLabelId}
+        ariaControls={`${dropdownId}-dropdown`}
+        ariaExpanded={isOpen}
+        img={'ic_chevron_down_black_24px'}
+        label={t('officeEditor.options')}
+        isActive={isOpen}
+        disabled={optionsDisabled}
+      />
+      <VisuallyHiddenLabel
+        id={buttonLabelId}
+        label={buttonLabel}
+      />
+    </>
+  );
 
   return (
     <div className={barClassName} id={barId} style={containerStyle}>
       <div className='box-shadow-div' ref={blockerRef}></div>
-      <div className='label'>{t(`officeEditor.${type}.${layoutType}`)}{sectionLabel}</div>
+      <div className='label'>{barLabel}</div>
 
       <Dropdown
         width='auto'
@@ -238,6 +249,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         items={dropdownItems}
         onClickItem={onClickItem}
         displayButton={renderDropdownButton}
+        labelledById={buttonLabelId}
         stopPropagationOnMouseDown={true}
         disabled={optionsDisabled}
       />

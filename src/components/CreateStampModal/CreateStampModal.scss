@@ -17,8 +17,8 @@
     @include mobile {
       width: 100%;
       border-radius: 0;
-      left: 0;
-      bottom: 0;
+      inset-inline-start: 0;
+      inset-block-end: 0;
     }
 
     .header {
@@ -34,7 +34,7 @@
         font-weight: 700;
         width: 89.286%;
         margin: 0;
-        margin-right: 16px;
+        margin-inline-end: 16px;
       }
 
       .Button {
@@ -60,7 +60,7 @@
       flex-direction: row-reverse;
       justify-content: space-between;
       margin: 0;
-      top: 460px;
+      inset-block-start: 460px;
       padding: 16px;
       box-shadow: inset 0px 1px 0px var(--modal-stroke-and-border);
 

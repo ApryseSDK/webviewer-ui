@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { userEvent, within, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 import OfficeEditorMarginDropdown from './OfficeEditorMarginDropdown';
 
@@ -21,10 +22,30 @@ export const Basic = () => {
   );
 };
 
-// export const Expanded = () => <Basic />;
-// Expanded.play = async ({ canvasElement }) => {
-//   const canvas = within(canvasElement);
-//   const marginButton = await canvas.findByRole('button', { name: 'Margins' });
-//   await userEvent.click(marginButton);
-//   await expect(marginButton).toHaveAttribute('aria-expanded', 'true');
-// };
+export const Expanded = () => <Basic />;
+Expanded.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const marginButton = canvas.getByRole('button', { name: 'Margins' });
+  await userEvent.click(marginButton);
+  await expect(marginButton).toHaveAttribute('aria-expanded', 'true');
+  const normalOption = canvas.getByRole('option', { name: /Normal/, });
+  await expect(normalOption).toHaveAttribute('aria-selected', 'true');
+};
+
+export const InInch = () => {
+  initialState.officeEditor.unitMeasurement = 'inch';
+  return <Basic />;
+};
+InInch.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button', { name: 'Margins' }));
+};
+
+export const InMM = () => {
+  initialState.officeEditor.unitMeasurement = 'mm';
+  return <Basic />;
+};
+InMM.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button', { name: 'Margins' }));
+};

@@ -7,6 +7,7 @@ import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 import parseFontSize from 'helpers/parseFontSize';
 import i18next from 'i18next';
+import DataElementWrapper from '../DataElementWrapper';
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -229,6 +230,7 @@ const TextStylePicker = ({
   const renderFontSizeDropdown = () => {
     return (
       <FontSizeDropdown
+        dataElement="freeTextFontSizeDropdown"
         fontSize={fontSizePropsToUpdate}
         key={fontSizePropsToUpdate}
         fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
@@ -258,6 +260,7 @@ const TextStylePicker = ({
           <div className="container-dropdown">
             <Dropdown
               id="free-text-font-family-dropdown"
+              dataElement='freeTextFontFamilyDropdown'
               translationPrefix='officeEditor.fontFamily'
               showLabelInList
               className={'border-color'}
@@ -358,6 +361,7 @@ const TextStylePicker = ({
           {!isRedaction && !isContentEditing && (
             <div className="row text-vertical-alignment">
               <Button
+                dataElement='freeTextAlignTopButton'
                 onClick={() => changeYAlign('top')}
                 img="icon-arrow-to-top"
                 title="option.richText.alignTop"
@@ -366,6 +370,7 @@ const TextStylePicker = ({
                 ariaCurrent={textVerticalAlign === 'top'}
               />
               <Button
+                dataElement='freeTextAlignMiddleButton'
                 onClick={() => changeYAlign('center')}
                 img="icon-arrow-to-middle"
                 title="option.richText.alignMiddle"
@@ -374,6 +379,7 @@ const TextStylePicker = ({
                 ariaCurrent={textVerticalAlign === 'center'}
               />
               <Button
+                dataElement='freeTextAlignBottomButton'
                 onClick={() => changeYAlign('bottom')}
                 img="icon-arrow-to-bottom"
                 title="option.richText.alignBottom"
@@ -382,16 +388,18 @@ const TextStylePicker = ({
                 ariaCurrent={textVerticalAlign === 'bottom'}
               />
             </div>
-          )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">
-            <Choice
-              id="free-text-autosize-font-button"
-              label={i18next?.t('option.freeTextOption.autoSizeFont')}
-              aria-label={i18next.t('option.freeTextOption.autoSizeFont')}
-              checked={isFreeTextAutoSize}
-              onChange={onFreeTextSizeToggle}
-              aria-pressed={isFreeTextAutoSize}
-            />
-          </div>)}
+          )}{isFreeText && (
+            <DataElementWrapper dataElement="freeTextAutoSizeFontCheckbox"
+              className="row text-vertical-alignment auto-size-checkbox">
+              <Choice
+                id="free-text-autosize-font-button"
+                label={i18next?.t('option.freeTextOption.autoSizeFont')}
+                aria-label={i18next.t('option.freeTextOption.autoSizeFont')}
+                checked={isFreeTextAutoSize}
+                onChange={onFreeTextSizeToggle}
+                aria-pressed={isFreeTextAutoSize}
+              />
+            </DataElementWrapper>)}
         </div>
       </>
     );

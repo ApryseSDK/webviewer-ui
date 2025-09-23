@@ -14,7 +14,14 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const FilePickerButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title,
+  } = props;
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.FILE_PICKER_BUTTON));
 
   if (isDisabled) {
@@ -32,16 +39,22 @@ const FilePickerButton = forwardRef((props, ref) => {
         buttonType: PRESET_BUTTON_TYPES.FILE_PICKER,
         isDisabled,
         onClick: openFilePicker,
+        dataElement,
         className,
         style,
+        icon,
+        title,
       })
   );
 });
 
 FilePickerButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 FilePickerButton.displayName = 'FilePickerButton';
 

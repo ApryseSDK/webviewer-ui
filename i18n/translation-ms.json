@@ -111,6 +111,7 @@
     "open": "Buka",
     "deselectAll": "Nyahpilih Semua",
     "select": "Pilih",
+    "buttonPressed": "Butang {{buttonName}} ditekan",
     "moveToTop": "Bergerak ke atas",
     "moveToBottom": "Bergerak ke bawah",
     "movePageToTop": "Alihkan Halaman ke Atas",
@@ -272,7 +273,6 @@
       "close": "Tutup Semua Anotasi"
     },
     "comparePanel": "Bandingkan Panel",
-    "watermarkPanel": "Panel Tera Air",
     "mainMenu": "Menu Utama"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Tiada keputusan dijumpai.",
     "numResultsFound": "keputusan dijumpai",
     "loadError": "Ralat Memuatkan Dokumen",
+    "urlInputFileLoadError": "Fail tidak dapat diambil daripada URL yang disediakan.",
     "notSupported": "Jenis fail itu tidak disokong.",
     "passwordRequired": "kata laluan diperlukan",
     "enterPasswordPlaceholder": "Masukkan kata laluan",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Cari komen",
     "searchDocumentPlaceholder": "Cari dokumen",
     "clearSearchResults": "Kosongkan hasil carian",
+    "toggleReplaceInput": "Togol ganti input",
+    "toggleSearchOptions": "Togol pilihan carian",
     "searchResultsCleared": "Hasil carian dikosongkan",
     "searchSettingsPlaceholder": "Tetapan carian",
     "searchSuggestionsPlaceholder": "Cadangan carian",
@@ -803,7 +806,30 @@
       "setShortcut": "Tetapkan Pintasan",
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud.",
-      "close": "Tutup petua alat"
+      "close": "Tutup petua alat",
+      "spreadsheetEditor": {
+        "copyText": "Salin teks atau sel yang dipilih",
+        "pasteText": "Tampal teks atau sel",
+        "cutText": "Potong teks atau sel yang dipilih",
+        "undoChange": "Buat asal perubahan",
+        "redoChange": "Buat semula perubahan",
+        "selectAll": "Pilih semua sel",
+        "moveToEdgeUp": "Lompat ke atas helaian",
+        "moveToEdgeDown": "Lompat ke bahagian bawah helaian",
+        "moveToEdgeLeft": "Lompat ke lajur paling kiri",
+        "moveToEdgeRight": "Lompat ke lajur paling kanan",
+        "adjustSelectionUp": "Lanjutkan pemilihan ke atas",
+        "adjustSelectionDown": "Panjangkan pilihan ke bawah",
+        "adjustSelectionLeft": "Panjangkan pilihan ke kiri",
+        "adjustSelectionRight": "Panjangkan pilihan dengan betul",
+        "up": "Gerakkan kotak pemilihan sel ke atas",
+        "down": "Gerakkan kotak pemilihan sel ke bawah",
+        "left": "Alihkan kotak pemilihan sel ke kiri",
+        "right": "Alihkan kotak pemilihan sel ke kanan",
+        "enter": "Edit sel yang dipilih",
+        "tab": "Alihkan kotak pemilihan sel ke kanan",
+        "delete": "Kosongkan data sel"
+      }
     },
     "cellBorderStyle": {
       "none": "tiada",
@@ -861,12 +887,12 @@
       "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Edit Amaran",
-      "message": "Nama helaian ini sudah wujud. Sila masukkan nama lain."
+      "title": "Edit Nama Helaian",
+      "message": "Nama ini sudah wujud. Sila masukkan nama lain."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Edit Amaran",
-      "message": "Nama helaian ini tidak boleh kosong."
+      "title": "Edit Nama Helaian",
+      "message": "Nama helaian tidak boleh kosong. Sila masukkan nama."
     },
     "sheetTabDeleteMessage": {
       "title": "Edit Amaran",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Properties",
     "miscValuesHeader": "Semua",
     "emptyPanelMessage": "Pilih elemen untuk melihat sifatnya."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Tanda Air Teks",
-    "uploadImage": "Muat Naik Imej",
-    "browse": "Semak imbas",
-    "watermarkOptions": "Pilihan Tera Air",
-    "watermarks": "Tera air"
   },
   "portfolio": {
     "createPDFPortfolio": "Cipta Portfolio PDF",

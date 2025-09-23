@@ -9,10 +9,10 @@
     width: auto;
 
     .Dropdown {
-      margin-left: 8px;
+      margin-inline-start: 8px;
 
       .picked-option {
-        text-align: left;
+        text-align: start;
       }
     }
 
@@ -23,8 +23,8 @@
 
       .more-tools {
         position: absolute;
-        top: 46px;
-        right: 6px;
+        inset-block-start: 46px;
+        inset-inline-end: 6px;
         width: auto;
         padding: 0;
       }
@@ -42,7 +42,7 @@
   }
 
   .list-style-button {
-    margin-right: 0px !important;
+    margin-inline-end: 0px !important;
   }
 
   .list-style-dropdown {
@@ -50,7 +50,7 @@
     border: none;
     width: 12px !important;
     height: 32px !important;
-    margin-left: 0px !important;
+    margin-inline-start: 0px !important;
     z-index: 0;
 
     &.Dropdown__wrapper:hover {
@@ -73,7 +73,7 @@
     }
 
     .arrow {
-      padding-left: 0px;
+      padding-inline-start: 0px;
     }
 
     .Dropdown__items {

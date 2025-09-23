@@ -17,7 +17,7 @@
       align-items: center;
 
       .ui__input__messageText {
-        margin-left: 8px;
+        margin-inline-start: 8px;
         font-size: 13px;
         font-style: normal;
         font-weight: 400;
@@ -38,7 +38,7 @@
       align-items: flex-start;
       position: relative;
       overflow: hidden;
-      padding-left: var(--padding-large)
+      padding-inline-start: var(--padding-large);
     }
 
     .index-panel-label {
@@ -48,7 +48,7 @@
     }
 
     .type-icon-container {
-      padding-right: 13px;
+      padding-inline-end: 13px;
       align-self: start;
       height: 30px;
       display: flex;
@@ -62,8 +62,8 @@
       flex-shrink: 0;
       width: auto;
       height: auto;
-      margin-left: var(--padding-tiny);
-      margin-right: 0;
+      margin-inline-start: var(--padding-tiny);
+      margin-inline-end: 0;
 
       .Icon {
         width: 14px;
@@ -92,7 +92,7 @@
       &.selected {
         background-color: var(--popup-button-active);
       }
-      
+
       &.selected {
         border: 1px solid var(--blue-5);
       }
@@ -108,13 +108,13 @@
       flex-shrink: 0;
       margin-top: 1px;
       margin-bottom: 0;
-      margin-right: var(--padding-small);
+      margin-inline-end: var(--padding-small);
     }
 
     .index-panel-text {
       background-color: inherit;
       border: none;
-      text-align: left;
+      text-align: start;
       padding: 0;
       margin: 0;
       cursor: pointer;
@@ -130,7 +130,7 @@
     .index-panel-input {
       flex-grow: 1;
       flex-shrink: 1;
-      flex-basis: calc(100% - 18px); // more-button width + margin-left = 18px
+      flex-basis: calc(100% - 18px); // more-button width + margin-inline-start = 18px
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -139,7 +139,7 @@
     .index-panel-outline-input {
       flex-grow: 1;
       flex-shrink: 1;
-      flex-basis: calc(100% - 18px); // more-button width + margin-left = 18px
+      flex-basis: calc(100% - 18px); // more-button width + margin-inline-start = 18px
 
       color: var(--text-color);
       width: calc(100% - var(--padding-large));
@@ -180,7 +180,7 @@
     .index-panel-save-button {
       color: var(--primary-button-text);
       background-color: var(--primary-button);
-      margin-left: var(--padding-tiny);
+      margin-inline-start: var(--padding-tiny);
       border-radius: 4px;
 
       &:hover {
@@ -191,13 +191,12 @@
       &.disabled {
         cursor: not-allowed;
         background-color: var(--blue-5) !important;
-        opacity: .5;
+        opacity: 0.5;
 
         span {
           color: var(--gray-0);
         }
       }
     }
-
   }
 }

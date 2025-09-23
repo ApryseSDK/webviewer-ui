@@ -59,8 +59,8 @@
 
 .signature-style-popup {
   width: 100%;
-  padding-left: 8px;
-  padding-right: 4px;
+  padding-inline-start: 8px;
+  padding-inline-end: 4px;
   max-height: 300px;
   overflow-y: scroll;
 
@@ -95,7 +95,7 @@
   .add-btn {
     margin-bottom: 8px;
     width: 100%;
-    margin-right: 0px;
+    margin-inline-end: 0px;
 
     @include mobile {
       margin: 0;

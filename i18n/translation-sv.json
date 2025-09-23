@@ -111,6 +111,7 @@
     "open": "Öppna",
     "deselectAll": "Avmarkera alla",
     "select": "Välj",
+    "buttonPressed": "{{buttonName}}-knappen nedtryckt",
     "moveToTop": "Flytta till toppen",
     "moveToBottom": "Flytta till botten",
     "movePageToTop": "Flytta sidan till toppen",
@@ -272,7 +273,6 @@
       "close": "Stäng alla anteckningar"
     },
     "comparePanel": "Jämför panel",
-    "watermarkPanel": "Vattenstämpelpanel",
     "mainMenu": "Huvudmeny"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Inga resultat funna.",
     "numResultsFound": "resultat hittades",
     "loadError": "Fel vid inläsning av dokument",
+    "urlInputFileLoadError": "Filen kunde inte hämtas från den angivna URL:en.",
     "notSupported": "Den filtypen stöds inte.",
     "passwordRequired": "Lösenord krävs",
     "enterPasswordPlaceholder": "Skriv in lösenord",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Sök kommentarer",
     "searchDocumentPlaceholder": "Sök dokument",
     "clearSearchResults": "Rensa sökresultat",
+    "toggleReplaceInput": "Växla/byt inmatning",
+    "toggleSearchOptions": "Växla sökalternativ",
     "searchResultsCleared": "Sökresultaten rensade",
     "searchSettingsPlaceholder": "Sökinställningar",
     "searchSuggestionsPlaceholder": "Sökförslag",
@@ -803,7 +806,30 @@
       "setShortcut": "Ställ in genväg",
       "editShortcut": "Redigera genväg",
       "shortcutAlreadyExists": "Kortkommandot ovan finns redan.",
-      "close": "Stäng verktygstips"
+      "close": "Stäng verktygstips",
+      "spreadsheetEditor": {
+        "copyText": "Kopiera markerad text eller celler",
+        "pasteText": "Klistra in text eller celler",
+        "cutText": "Klipp ut markerad text eller celler",
+        "undoChange": "Ångra en ändring",
+        "redoChange": "Gör om en ändring",
+        "selectAll": "Markera alla celler",
+        "moveToEdgeUp": "Hoppa till toppen av arket",
+        "moveToEdgeDown": "Hoppa till botten av arket",
+        "moveToEdgeLeft": "Hoppa till vänsterkolumnen",
+        "moveToEdgeRight": "Hoppa till kolumnen längst till höger",
+        "adjustSelectionUp": "Utöka markeringen uppåt",
+        "adjustSelectionDown": "Utöka markeringen nedåt",
+        "adjustSelectionLeft": "Utöka markeringen åt vänster",
+        "adjustSelectionRight": "Utöka markeringen åt höger",
+        "up": "Flytta cellmarkeringsrutan uppåt",
+        "down": "Flytta cellmarkeringsrutan nedåt",
+        "left": "Flytta cellmarkeringsrutan åt vänster",
+        "right": "Flytta cellmarkeringsrutan åt höger",
+        "enter": "Redigera markerad cell",
+        "tab": "Flytta cellmarkeringsrutan till höger",
+        "delete": "Rensa mobildata"
+      }
     },
     "cellBorderStyle": {
       "none": "Ingen",
@@ -861,12 +887,12 @@
       "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Redigera varning",
-      "message": "Detta arknamn finns redan. Vänligen ange ett annat namn."
+      "title": "Redigera arknamn",
+      "message": "Det här namnet finns redan. Ange ett annat namn."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Redigera varning",
-      "message": "Detta arknamn får inte vara tomt."
+      "title": "Redigera arknamn",
+      "message": "Arknamnet kan inte vara tomt. Ange ett namn."
     },
     "sheetTabDeleteMessage": {
       "title": "Redigera varning",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Egenskaper",
     "miscValuesHeader": "Allt",
     "emptyPanelMessage": "Välj ett element för att se dess egenskaper"
-  },
-  "watermarkPanel": {
-    "textWatermark": "Text vattenstämpel",
-    "uploadImage": "Ladda upp bild",
-    "browse": "Bläddra",
-    "watermarkOptions": "Vattenstämpelalternativ",
-    "watermarks": "Vattenstämplar"
   },
   "portfolio": {
     "createPDFPortfolio": "Skapa PDF-portfölj",

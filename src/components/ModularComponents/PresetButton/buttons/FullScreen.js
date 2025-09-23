@@ -13,7 +13,14 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
  * @memberof UI.Components.PresetButton
  */
 const FullScreenButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, className, style } = props;
+  const {
+    isFlyoutItem,
+    dataElement,
+    className,
+    style,
+    img: icon,
+    title,
+  } = props;
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const label = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
 
@@ -25,16 +32,22 @@ const FullScreenButton = forwardRef((props, ref) => {
         buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
         onClick: toggleFullscreen,
         isFullScreen,
+        dataElement,
         className,
         style,
+        icon,
+        title
       })
   );
 });
 
 FullScreenButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 FullScreenButton.displayName = 'FullScreenButton';
 

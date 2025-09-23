@@ -14,23 +14,21 @@
     }
 
     .styles-title {
-      margin-left: 6px;
+      margin-inline-start: 6px;
     }
 
     .styles-layout {
       display: flex;
-      margin-left: 2px;
+      margin-inline-start: 2px;
       margin-top: 7px;
     }
 
-
-
-    [data-element="borderStylePicker"] {
+    [data-element='borderStylePicker'] {
       width: 80px;
-      margin-left: 2px;
+      margin-inline-start: 2px;
       margin-top: 7px;
       .Dropdown {
-        width: 80px!important;
+        width: 80px !important;
         .picked-option-text svg {
           width: 48px;
           margin-top: 11px;

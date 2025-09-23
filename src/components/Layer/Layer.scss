@@ -12,19 +12,19 @@
     @include vertically-center-content;
     // style some part of the react toolkit checkboxes to match specs
     .ui__choice {
-      margin-right: 0;
+      margin-inline-end: 0;
     }
 
     .ui__choice__label {
-      margin-left: 8px;
-      margin-right: 8px;
+      margin-inline-start: 8px;
+      margin-inline-end: 8px;
       // remove margins / paddings react toolkit has
       padding: 0;
     }
   }
 
   .arrow {
-    margin-right: 4px;
+    margin-inline-end: 4px;
     @include vertically-center-content;
 
     border-radius: 4px;
@@ -43,8 +43,8 @@
     }
   }
 
-  .sub-layers { 
-    padding-left: 25px;
+  .sub-layers {
+    padding-inline-start: 25px;
   }
 
   .lock-icon {
@@ -58,7 +58,6 @@
       path {
         fill: var(--gray-8);
       }
-      
     }
   }
 }

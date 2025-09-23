@@ -111,6 +111,7 @@
     "open": "開ける",
     "deselectAll": "すべての選択を解除",
     "select": "選択する",
+    "buttonPressed": "{{buttonName}} ボタンが押されました",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
     "movePageToTop": "ページを先頭に移動",
@@ -272,7 +273,6 @@
       "close": "すべての注釈を閉じる"
     },
     "comparePanel": "比較パネル",
-    "watermarkPanel": "透かしパネル",
     "mainMenu": "メインメニュー"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "結果が見つかりませんでした。",
     "numResultsFound": "結果が見つかりました",
     "loadError": "ドキュメントの読み込みエラー",
+    "urlInputFileLoadError": "指定された URL からファイルを取得できませんでした。",
     "notSupported": "このファイル形式はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "enterPasswordPlaceholder": "パスワードを入力する",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "コメントを検索",
     "searchDocumentPlaceholder": "ドキュメント内を検索",
     "clearSearchResults": "検索結果をクリア",
+    "toggleReplaceInput": "置換入力を切り替える",
+    "toggleSearchOptions": "検索オプションを切り替える",
     "searchResultsCleared": "検索結果をクリアしました",
     "searchSettingsPlaceholder": "検索設定",
     "searchSuggestionsPlaceholder": "検索候補",
@@ -803,7 +806,30 @@
       "setShortcut": "ショートカットを設定",
       "editShortcut": "ショートカットの編集",
       "shortcutAlreadyExists": "上記のキーボード ショートカットは既に存在します。",
-      "close": "ツールチップを閉じる"
+      "close": "ツールチップを閉じる",
+      "spreadsheetEditor": {
+        "copyText": "選択したテキストまたはセルをコピーする",
+        "pasteText": "テキストまたはセルを貼り付ける",
+        "cutText": "選択したテキストまたはセルを切り取る",
+        "undoChange": "変更を元に戻す",
+        "redoChange": "変更をやり直す",
+        "selectAll": "すべてのセルを選択",
+        "moveToEdgeUp": "シートの先頭へジャンプ",
+        "moveToEdgeDown": "シートの一番下へジャンプ",
+        "moveToEdgeLeft": "左端の列へジャンプ",
+        "moveToEdgeRight": "右端の列へジャンプ",
+        "adjustSelectionUp": "選択範囲を上に拡張",
+        "adjustSelectionDown": "選択範囲を下方向に拡張",
+        "adjustSelectionLeft": "選択範囲を左に拡張",
+        "adjustSelectionRight": "選択範囲を右に拡張",
+        "up": "セル選択ボックスを上に移動",
+        "down": "セル選択ボックスを下に移動",
+        "left": "セル選択ボックスを左に移動",
+        "right": "セル選択ボックスを右に移動",
+        "enter": "選択したセルを編集",
+        "tab": "セル選択ボックスを右に移動",
+        "delete": "クリアセルデータ"
+      }
     },
     "cellBorderStyle": {
       "none": "なし",
@@ -861,12 +887,12 @@
       "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
     },
     "sheetTabRenameIssueOne": {
-      "title": "編集警告",
-      "message": "このシート名は既に存在します。別の名前を入力してください。"
+      "title": "シート名の編集",
+      "message": "この名前は既に存在します。別の名前を入力してください。"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "編集警告",
-      "message": "このシート名は空にできません。"
+      "title": "シート名の編集",
+      "message": "シート名は空欄にできません。名前を入力してください。"
     },
     "sheetTabDeleteMessage": {
       "title": "編集警告",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "プロパティ",
     "miscValuesHeader": "すべて",
     "emptyPanelMessage": "プロパティを表示する要素を選択してください."
-  },
-  "watermarkPanel": {
-    "textWatermark": "テキスト透かし",
-    "uploadImage": "画像をアップロード",
-    "browse": "ブラウズ",
-    "watermarkOptions": "透かしオプション",
-    "watermarks": "透かし"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF ポートフォリオを作成する",

@@ -1,6 +1,6 @@
-@import "../../constants/styles";
-@import "../../constants/modal";
-@import "../../constants/tabs";
+@import '../../constants/styles';
+@import '../../constants/modal';
+@import '../../constants/tabs';
 
 .InsertPageModal {
   @extend %modal;
@@ -24,7 +24,7 @@
       display: grid;
       height: 100%;
       position: fixed;
-      top: 0;
+      inset-block-start: 0;
       grid-template-rows: 100px auto 70px;
       justify-content: normal;
     }
@@ -44,7 +44,7 @@
         font-weight: 700;
         width: 89.286%;
         margin: 0;
-        margin-right: 16px;
+        margin-inline-end: 16px;
       }
 
       .insertPageModalCloseButton {

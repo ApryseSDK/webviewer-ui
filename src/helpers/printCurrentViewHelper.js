@@ -11,11 +11,10 @@ function getCurrentViewRect(pageNumber) {
   const displayMode = core.getDisplayModeObject();
   const containerElement = core.getScrollViewElement();
   const documentElement = core.getViewerElement();
-  const headerElement = getRootNode().querySelector('.Header');
-  const headerItemsElements = getRootNode().querySelector('.HeaderToolsContainer');
+  const documentContainerElement = getRootNode().querySelector('[aria-label="Document Content"]');
   const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
-  let innerWidth = window.innerWidth;
-  let innerHeight = window.innerHeight;
+  let innerWidth = documentContainerElement ? documentContainerElement.clientWidth : window.innerWidth;
+  let innerHeight = documentContainerElement ? documentContainerElement.clientHeight : window.innerHeight;
   let containerScrollLeft = containerElement.scrollLeft;
   let documentElementOffsetLeft = documentElement.offsetLeft;
 
@@ -28,11 +27,10 @@ function getCurrentViewRect(pageNumber) {
   }
 
   const coordinates = [];
-  const headerHeight = (headerElement?.clientHeight + headerItemsElements?.clientHeight) || 0;
 
   coordinates[0] = displayMode.windowToPageNoRotate({
     x: Math.max(containerScrollLeft, documentElementOffsetLeft),
-    y: Math.max(containerElement.scrollTop + headerHeight, 0)
+    y: Math.max(containerElement.scrollTop, 0)
   }, pageNumber);
 
   coordinates[1] = displayMode.windowToPageNoRotate({

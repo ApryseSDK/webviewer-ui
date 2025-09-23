@@ -2,7 +2,7 @@ import React from 'react';
 import rootReducer from 'reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { MARGIN_SIDES } from 'constants/officeEditor';
 import OfficeEditorMarginsModal from './OfficeEditorMarginsModal';
 

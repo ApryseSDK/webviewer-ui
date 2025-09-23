@@ -1,11 +1,10 @@
 .LineStyleOptions {
-
   width: 100%;
   margin-top: 4px;
   margin-bottom: 4px;
 
   .LayoutTitle {
-    margin-left: 6px;
+    margin-inline-start: 6px;
   }
 
   .StyleContainer {
@@ -28,11 +27,11 @@
     width: 45px;
   }
 
-  [data-element="middleLineStyleDropdown"] .linestyle-image.shift-alignment {
+  [data-element='middleLineStyleDropdown'] .linestyle-image.shift-alignment {
     padding-top: 0;
   }
 
-  [data-element="middleLineStyleDropdown"] .Dropdown__items  {
-    top: -197px;
+  [data-element='middleLineStyleDropdown'] .Dropdown__items {
+    inset-block-start: -197px;
   }
 }

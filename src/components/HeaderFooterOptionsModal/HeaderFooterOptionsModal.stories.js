@@ -3,7 +3,7 @@ import HeaderFooterOptionsModal from './HeaderFooterOptionsModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 
 export default {

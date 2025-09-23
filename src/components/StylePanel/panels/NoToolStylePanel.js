@@ -1,18 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
+import DataElementWrapper from 'components/DataElementWrapper';
+import DataElements from 'constants/dataElement';
+import StylePanelHeader from '../StylePanelHeader/StylePanelHeader';
 
 const NoToolStylePanel = () => {
   const [t] = useTranslation();
   return (
     <>
-      <h2 className="style-panel-header">{t('stylePanel.headings.styles')}</h2>
-      <div className="no-tool-selected">
-        <div>
+      <StylePanelHeader title={t('stylePanel.headings.styles')} />
+      <DataElementWrapper dataElement={DataElements.StylePanel.NO_TOOL_SELECTED_CONTAINER} className="no-tool-selected">
+        <DataElementWrapper dataElement={DataElements.StylePanel.NO_TOOL_SELECTED_ICON}>
           <Icon className="empty-icon" glyph="style-panel-no-tool-selected" />
-        </div>
-        <div className="msg">{t('stylePanel.noToolSelected')}</div>
-      </div>
+        </DataElementWrapper>
+        <DataElementWrapper dataElement={DataElements.StylePanel.NO_TOOL_SELECTED_MESSAGE} className="msg">{t('stylePanel.noToolSelected')}</DataElementWrapper>
+      </DataElementWrapper>
     </>
   );
 };

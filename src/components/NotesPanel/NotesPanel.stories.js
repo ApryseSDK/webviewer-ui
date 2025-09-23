@@ -8,9 +8,9 @@ import Panel from 'components/Panel';
 import { default as mockAppState } from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore } from 'helpers/storybookHelper';
+import { MockApp, createStore, setupNotesPanelCoreMocks } from 'helpers/storybookHelper';
 import core from 'core';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from 'storybook/test';
 
 
 export default {
@@ -249,19 +249,11 @@ const createTestAnnotations = () => {
   return { rectangle, widget1, widget2 };
 };
 
-const setupCoreMocks = (annotations, selectedAnnotations) => {
-  core.getAnnotationsList = () => annotations;
-  core.getSelectedAnnotations = () => selectedAnnotations;
-  core.getDisplayModeObject = () => ({
-    pageToWindow: () => ({ x: 0, y: 0 }),
-  });
-};
-
 export function NotesPanelWithNotes(args, context) {
   const { rectangle, widget1, widget2 } = createTestAnnotations();
   const store = createCustomStore(null, context);
 
-  setupCoreMocks([rectangle, widget1, widget2], [rectangle]);
+  setupNotesPanelCoreMocks(core, [rectangle, widget1, widget2], [rectangle]);
 
   return (
     <Provider store={store}>
@@ -310,13 +302,13 @@ export const NotesPanelNotesWithComments = (args, context) => {
   replyAnnot.Listable = true;
   replyAnnot.isReply = () => true;
   replyAnnot.getContents = () => 'Reply comment test';
-  replyAnnot.getRichTextStyle = () => ({ '0':{},'13':{ 'font-weight':'bold' },'18':{} });
+  replyAnnot.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '18': {} });
 
   const annotationsList = window.Core.documentViewer.getAnnotationManager().getAnnotationsList();
   const rectangle = annotationsList.find((item) => item instanceof window.Core.Annotations.RectangleAnnotation);
   rectangle.Listable = true;
   rectangle.getContents = () => 'Test comment https://google.ca test';
-  rectangle.getRichTextStyle = () => ({ '0':{},'13':{ 'font-weight':'bold' },'30':{} });
+  rectangle.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '30': {} });
   rectangle._replies = [replyAnnot];
   rectangle.getReplies = () => [replyAnnot];
   rectangle.getCustomData = (key) => {
@@ -326,7 +318,7 @@ export const NotesPanelNotesWithComments = (args, context) => {
 
     return customData[key];
   };
-
+  setupNotesPanelCoreMocks(core, [], []);
   core.getAnnotationsList = () => [rectangle, replyAnnot];
   core.getSelectedAnnotations = () => [rectangle];
 
@@ -409,7 +401,7 @@ export function NotesPanelWithNotesInFormFieldMode(args, context) {
   const store = createCustomStore(null, context);
   const { rectangle, widget1, widget2 } = createTestAnnotations();
 
-  setupCoreMocks([rectangle, widget1, widget2], [widget1]);
+  setupNotesPanelCoreMocks(core, [rectangle, widget1, widget2], [widget1]);
 
   return shouldRender ? (
     <Provider store={store}>

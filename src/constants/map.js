@@ -249,7 +249,7 @@ const map = {
       annotation.isRectangularPolygon(),
   },
   [annotationMapKeys.AREA_MEASUREMENT]: {
-    icon: 'ic_annotation_area_black_24px',
+    icon: 'icon-tool-measurement-area-polygon-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
     currentStyleTab: 'StrokeColor',

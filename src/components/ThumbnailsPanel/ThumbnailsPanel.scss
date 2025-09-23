@@ -22,7 +22,7 @@
     border: 0px 0px transparent;
   }
 
-  input[type="range"] {
+  input[type='range'] {
     -webkit-appearance: none;
     appearance: none;
     cursor: pointer;
@@ -34,12 +34,12 @@
   }
 
   /***** Chrome, Safari, Opera, and Edge Chromium *****/
-  input[type="range"]::-webkit-slider-runnable-track {
+  input[type='range']::-webkit-slider-runnable-track {
     height: 5px;
     border-radius: 6px;
   }
 
-  input[type="range"]::-webkit-slider-thumb {
+  input[type='range']::-webkit-slider-thumb {
     /* removing default appearance */
     -webkit-appearance: none;
     appearance: none;
@@ -53,12 +53,12 @@
   }
 
   /******** Firefox ********/
-  input[type="range"]::-moz-range-track {
+  input[type='range']::-moz-range-track {
     height: 5px;
     border-radius: 4px;
   }
 
-  Button {
+  button {
     width: 15px;
     height: 15px;
     margin: 2.5px;
@@ -80,7 +80,7 @@
     .slider-element-container {
       @include mobile {
         width: auto;
-        margin-left: auto;
+        margin-inline-start: auto;
       }
     }
   }
@@ -100,8 +100,14 @@
 
   #virtualized-thumbnails-container {
     flex: 1;
-  }
 
+  }
+  .ReactVirtualized__Grid.ReactVirtualized__List.thumbnailsList {
+    &.right-to-left {
+      direction: rtl !important;
+    }
+  }
+  
   .row {
     display: flex;
     justify-content: space-around;
@@ -116,7 +122,7 @@
   }
 
   .columnsOfThumbnails {
-    &.row{
+    &.row {
       display: flex;
       justify-content: left;
       align-items: center;
@@ -144,9 +150,9 @@
   border-radius: 4px;
 }
 
-.thumbnailAutoScrollArea{
+.thumbnailAutoScrollArea {
   position: absolute;
   width: calc(100% - 55px);
   z-index: 10;
-  background:rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0);
 }

@@ -4,8 +4,8 @@
 .FormFieldEditPopup {
   padding-top: 8px;
   padding-bottom: 6px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-inline-start: 12px;
+  padding-inline-end: 12px;
 
   .fields-container {
     margin-bottom: 5px;
@@ -23,12 +23,12 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-areas:
-      "label dropdown"
-      "group-message group-message";
+      'label dropdown'
+      'group-message group-message';
 
     span {
       padding-top: 10px;
-      padding-right: 10px;
+      padding-inline-end: 10px;
       grid-area: label;
     }
   }
@@ -60,6 +60,7 @@
     border-radius: 4px;
     height: 28px;
     cursor: pointer;
+
     &:not(:disabled) {
       background-color: var(--primary-button);
       border: 1px solid var(--primary-button);
@@ -105,7 +106,7 @@
 
   .Button.add-item-button {
     width: 90px;
-    margin-left: 0px;
+    margin-inline-start: 0px;
     justify-content: left;
 
     @include mobile {
@@ -121,8 +122,7 @@
 }
 
 .form-dimension-input {
-  padding-left: 5px;
-
+  padding-inline-start: 5px;
 
   /* Dont show spin buttons */
   /* Chrome, Safari, Edge, Opera */
@@ -133,7 +133,7 @@
   }
 
   /* Firefox */
-  input[type=number] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 
@@ -142,8 +142,6 @@
     height: 28px;
   }
 }
-
-
 
 .FormFieldEditPopupContainer {
   @extend %popup;
@@ -154,7 +152,7 @@
   @include mobile {
     width: 95%;
     position: fixed;
-    left: 1.25% !important;
-    top: 105px !important;
+    inset-inline-start: 1.25% !important;
+    inset-block-start: 105px !important;
   }
 }

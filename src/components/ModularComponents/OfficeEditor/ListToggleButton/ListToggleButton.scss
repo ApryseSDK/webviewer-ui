@@ -28,7 +28,6 @@
     background-color: transparent;
 
     &:not(.disabled) {
-
       .Icon,
       svg * {
         fill: var(--gray-7); // overwriting default white flyout icon hover style
@@ -42,7 +41,7 @@
 
   .Icon,
   .Icon svg {
-    margin-right: 0;
+    margin-inline-end: 0;
     width: 59px;
     height: 73px;
   }

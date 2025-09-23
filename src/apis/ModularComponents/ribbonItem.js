@@ -16,7 +16,7 @@ import Item from './item';
  * @param {string} [properties.toolbarGroup] The group that the item belongs to.
  * @param {object} [properties.style] An object defining inline CSS styles for the ribbon, where each key represents a CSS property and its corresponding value.
  * @param {string} [properties.className] String with CSS classes to be applied to the ribbon, allowing additional styling and customization through external stylesheets.
- * @param {Array<UI.Components.Item>} [properties.groupedItems] Grouped Items to be contained by the RibbonItem.
+ * @param {Array<string>} [properties.groupedItems] Array of strings, where each string is the data element of the Grouped Items related to the Ribbon Item.
  * @example
 const ribbonItem = new instance.UI.Components.RibbonItem({
   dataElement: 'toolbarGroup-Annotate',

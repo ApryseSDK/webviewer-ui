@@ -72,8 +72,25 @@ export const getAnnotationPosition = (annotation, documentViewerKey = 1) => {
   return { topLeft, bottomRight };
 };
 
-const getAnnotationPageCoordinates = (annotation, documentViewerKey = 1) => {
+const getWidgetNormalizedRect = (annotation) => {
   const rect = annotation.getRect();
+  if (annotation instanceof window.Core.Annotations.WidgetAnnotation) {
+    const rotationInDegrees = annotation['rotation'];
+    let width = rect['x2'] - rect['x1'];
+    let height = rect['y2'] - rect['y1'];
+
+    const rotation = rotationInDegrees;
+    if (rotation === 90 || rotation === 270) {
+      [width, height] = [height, width];
+    }
+
+    return new window.Core.Math.Rect(rect['x1'], rect['y1'], rect['x1'] + width, rect['y1'] + height);
+  }
+  return rect;
+};
+
+const getAnnotationPageCoordinates = (annotation, documentViewerKey = 1) => {
+  const rect = getWidgetNormalizedRect(annotation);
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
   const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
@@ -290,3 +307,19 @@ export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) 
 
   return { top, left };
 };
+
+export const getMouseEventPosition = (e) => {
+  let { x, y } = e;
+
+  if (window.isApryseWebViewerWebComponent) {
+    const instanceRect = getRootNode().host.getBoundingClientRect();
+    x -= instanceRect.left;
+    y -= instanceRect.top;
+  }
+
+  return {
+    top: y,
+    left: x,
+  };
+};
+

@@ -59,10 +59,9 @@
     flex: 2 0 0;
   }
 
-  @media all and (-ms-high-contrast: none),
-  (-ms-high-contrast: active) {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     &-sign-here {
-      left: 44.5%;
+      inset-inline-start: 44.5%;
     }
   }
 

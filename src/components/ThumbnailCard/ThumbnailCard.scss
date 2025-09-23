@@ -17,7 +17,6 @@
   @include mobile {
     width: 97px;
     padding: 0px 12px 2px 12px;
-
   }
 
   @include small-mobile {
@@ -37,7 +36,7 @@
 
 .thumb-image {
   padding-top: 12px;
-  padding-right: 5px;
+  padding-inline-end: 5px;
   text-align: center;
 }
 

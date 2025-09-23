@@ -111,6 +111,7 @@
     "open": "খোলা",
     "deselectAll": "সব গুলো অনির্বাচিত কর",
     "select": "নির্বাচন করুন",
+    "buttonPressed": "{{buttonName}} বোতাম টিপেছে",
     "moveToTop": "উপরে সরান",
     "moveToBottom": "নীচে সরান",
     "movePageToTop": "পৃষ্ঠাটি শীর্ষে সরান৷",
@@ -272,7 +273,6 @@
       "close": "সমস্ত টীকা বন্ধ করুন"
     },
     "comparePanel": "প্যানেল তুলনা করুন",
-    "watermarkPanel": "ওয়াটারমার্ক প্যানেল",
     "mainMenu": "প্রধান মেনু"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "কোন ফলাফল পাওয়া যায়নি.",
     "numResultsFound": "ফলাফল পাওয়া গেছে",
     "loadError": "নথি লোড করার সময় ত্রুটি৷",
+    "urlInputFileLoadError": "প্রদত্ত URL থেকে ফাইলটি পুনরুদ্ধার করা যায়নি।",
     "notSupported": "যে ফাইল টাইপ সমর্থিত নয়.",
     "passwordRequired": "পাসওয়ার্ড প্রয়োজন",
     "enterPasswordPlaceholder": "পাসওয়ার্ড লিখুন",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "মন্তব্য অনুসন্ধান করুন",
     "searchDocumentPlaceholder": "নথি অনুসন্ধান করুন",
     "clearSearchResults": "অনুসন্ধান ফলাফল সাফ করুন",
+    "toggleReplaceInput": "প্রতিস্থাপন ইনপুট টগল করুন",
+    "toggleSearchOptions": "অনুসন্ধান বিকল্পগুলি টগল করুন",
     "searchResultsCleared": "অনুসন্ধান ফলাফল সাফ করা হয়েছে",
     "searchSettingsPlaceholder": "অনুসন্ধান সেটিংস",
     "searchSuggestionsPlaceholder": "অনুসন্ধান পরামর্শ",
@@ -803,7 +806,30 @@
       "setShortcut": "শর্টকাট সেট করুন",
       "editShortcut": "শর্টকাট সম্পাদনা করুন",
       "shortcutAlreadyExists": "উপরের কীবোর্ড শর্টকাট ইতিমধ্যেই বিদ্যমান।",
-      "close": "টুলটিপ বন্ধ করুন"
+      "close": "টুলটিপ বন্ধ করুন",
+      "spreadsheetEditor": {
+        "copyText": "নির্বাচিত টেক্সট বা সেল কপি করুন",
+        "pasteText": "টেক্সট বা সেল পেস্ট করুন",
+        "cutText": "নির্বাচিত টেক্সট বা সেল কাটুন",
+        "undoChange": "পরিবর্তনটি পূর্বাবস্থায় ফেরান",
+        "redoChange": "পরিবর্তনটি আবার করুন",
+        "selectAll": "সকল কক্ষ নির্বাচন করুন",
+        "moveToEdgeUp": "শিটের উপরে চলে যান",
+        "moveToEdgeDown": "শিটের নীচে চলে যান",
+        "moveToEdgeLeft": "সবচেয়ে বাম কলামে যান",
+        "moveToEdgeRight": "ডানদিকের কলামে যান",
+        "adjustSelectionUp": "নির্বাচন উপরের দিকে প্রসারিত করুন",
+        "adjustSelectionDown": "নির্বাচন নিচের দিকে প্রসারিত করুন",
+        "adjustSelectionLeft": "নির্বাচন বাম দিকে প্রসারিত করুন",
+        "adjustSelectionRight": "নির্বাচন ডানদিকে প্রসারিত করুন",
+        "up": "ঘর নির্বাচন বাক্সটি উপরের দিকে সরান",
+        "down": "ঘর নির্বাচন বাক্সটি নিচের দিকে সরান",
+        "left": "ঘর নির্বাচন বাক্সটি বামে সরান",
+        "right": "ঘর নির্বাচন বাক্সটি ডানদিকে সরান",
+        "enter": "নির্বাচিত ঘর সম্পাদনা করুন",
+        "tab": "ঘর নির্বাচন বাক্সটি ডানদিকে সরান",
+        "delete": "সেল ডেটা সাফ করুন"
+      }
     },
     "cellBorderStyle": {
       "none": "কোনটিই নয়",
@@ -861,12 +887,12 @@
       "message": "এই নথিতে সংযোগ করার চেষ্টা করছে:\n\n{{- uri}}\n\n আপনি যদি এই নথিতে বিশ্বাস করেন তবে এটি খুলতে নিশ্চিত করুন ক্লিক করুন৷"
     },
     "sheetTabRenameIssueOne": {
-      "title": "সতর্কতা সম্পাদনা করুন",
-      "message": "এই পত্রকের নাম ইতিমধ্যেই বিদ্যমান। অন্য নাম লিখুন."
+      "title": "পত্রকের নাম সম্পাদনা করুন",
+      "message": "এই নামটি ইতিমধ্যেই বিদ্যমান। অনুগ্রহ করে অন্য একটি নাম লিখুন।"
     },
     "sheetTabRenameIssueTwo": {
-      "title": "সতর্কতা সম্পাদনা করুন",
-      "message": "এই শীট নাম খালি হতে পারে না."
+      "title": "পত্রকের নাম সম্পাদনা করুন",
+      "message": "শীটের নাম খালি রাখা যাবে না। অনুগ্রহ করে একটি নাম লিখুন।"
     },
     "sheetTabDeleteMessage": {
       "title": "সতর্কতা সম্পাদনা করুন",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Уласцівасці",
     "miscValuesHeader": "Усе",
     "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці."
-  },
-  "watermarkPanel": {
-    "textWatermark": "টেক্সট ওয়াটারমার্ক",
-    "uploadImage": "চিত্র আপলোড",
-    "browse": "ব্রাউজ করুন",
-    "watermarkOptions": "ওয়াটারমার্ক বিকল্প",
-    "watermarks": "জলছাপ"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF পোর্টফোলিও তৈরি করুন",

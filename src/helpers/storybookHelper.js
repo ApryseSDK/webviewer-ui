@@ -10,7 +10,7 @@ import { defaultPanels } from 'src/redux/modularComponents';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 import { cssFontValues } from 'src/constants/fonts/fonts';
 import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
-import { DEFAULT_POINT_SIZE, EditingStreamType, MARGIN_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
+import { DEFAULT_POINT_SIZE, EditingStreamType, LAYOUT_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 
 const noop = () => { };
@@ -25,8 +25,12 @@ export const createStore = (preloadedState) => {
 
 // isOffset adds a div beside WebViewer, so that it behaves as if it was
 // in Showcase or our samples.
-export const MockApp = ({ initialState, width, height, isOffset }) => {
+export const MockApp = ({ initialState, width, height, isOffset, storeRef = null }) => {
   const [store] = useState(createStore(initialState));
+  if (storeRef) {
+    // This is useful for tests that need to access the store directly
+    storeRef.current = store;
+  }
 
   // We get around the code that sets the UI configuration by querying the hash
   // parameter by delaying this action
@@ -79,6 +83,7 @@ MockApp.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   isOffset: PropTypes.bool,
+  storeRef: PropTypes.object,
 };
 
 const BasicAppTemplate = (args, context) => {
@@ -114,7 +119,7 @@ const BasicAppTemplate = (args, context) => {
       ...args.spreadsheetEditorRedux,
     }
   };
-  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} />;
+  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} storeRef={args.storeRef} />;
 };
 
 export const createTemplate = ({
@@ -127,9 +132,10 @@ export const createTemplate = ({
   spreadsheetEditorRedux = {},
   viewerRedux = {},
   uiConfiguration = VIEWER_CONFIGURATIONS.DEFAULT,
+  storeRef = null,
 }) => {
   const template = BasicAppTemplate.bind({});
-  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux, uiConfiguration };
+  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux, uiConfiguration, storeRef };
   template.parameters = { layout: 'fullscreen' };
   return template;
 };
@@ -194,7 +200,7 @@ export const OEModularUIMockState = {
     cssFontValues,
     editMode: OfficeEditorEditMode.EDITING,
     stream: EditingStreamType.BODY,
-    unitMeasurement: MARGIN_UNITS.CM,
+    unitMeasurement: LAYOUT_UNITS.CM,
   },
   viewer: {
     uiConfiguration: VIEWER_CONFIGURATIONS.DOCX_EDITOR,
@@ -240,6 +246,39 @@ export const oePartialState = {
     },
     stream: EditingStreamType.BODY,
   },
+};
+
+export const setupNotesPanelCoreMocks = (core, annotations, selectedAnnotations) => {
+  core.getAnnotationsList = () => annotations;
+  core.getSelectedAnnotations = () => selectedAnnotations;
+  core.getDisplayModeObject = () => ({
+    pageToWindow: () => ({ x: 0, y: 0 }),
+    getVisiblePages: () => [1],
+  });
+  const documentViewer = {
+    getRotation: () => 0,
+    getPageCount: () => 1,
+    getDocument: () => ({
+      getPageInfo: () => ({
+        width: 200,
+        height: 400
+      })
+    }),
+    getCompleteRotation: () => 0,
+    getAnnotationManager: () => { },
+    getDisplayModeManager: () => ({
+      isVirtualDisplayEnabled: () => true,
+      getDisplayMode: () => ({
+        isContinuous: () => true
+      })
+    })
+  };
+  core.getDocumentViewer = () => documentViewer;
+  core.canModifyContents = () => true;
+  core.canModify = () => true;
+  core.getGroupAnnotations = () => [];
+  core.selectAnnotation = () => undefined;
+  core.jumpToAnnotation = () => noop;
 };
 
 export const string280Chars = 'very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_';

@@ -2,7 +2,7 @@ import React from 'react';
 import SignatureModalComponent from './SignatureModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 export default {
   title: 'Components/SignatureModal',

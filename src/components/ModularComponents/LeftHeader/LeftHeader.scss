@@ -10,12 +10,12 @@
 
 .LeftHeader.closed {
   position: fixed;
-  left: 0;
+  inset-inline-start: 0;
   display: none;
 }
 
 .LeftHeader.stroke {
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: var(--gray-5);
+  border-inline-end-width: 1px;
+  border-inline-end-style: solid;
+  border-inline-end-color: var(--gray-5);
 }

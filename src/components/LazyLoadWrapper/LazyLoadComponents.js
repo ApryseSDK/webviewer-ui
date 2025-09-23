@@ -71,6 +71,7 @@ const RedactionPanel = lazy(() => import('components/RedactionPanel'));
 const PortfolioPanel = lazy(() => import('components/PortfolioPanel'));
 const FormFieldPanel = lazy(() => import('components/FormFieldPanel'));
 const IndexPanel = lazy(() => import('src/components/ModularComponents/IndexPanel'));
+const Wv3dPropertiesPanel = lazy(() => import('components/Wv3dPropertiesPanel'));
 
 // Sheets Editor
 const FormulaBar = lazy(() => import('components/FormulaBar'));
@@ -135,6 +136,7 @@ const LazyLoadComponents = {
   LeftPanel,
   RedactionPanel,
   PortfolioPanel,
+  Wv3dPropertiesPanel,
   OfficeEditorToolsHeader,
   CreatePortfolioModal,
   LinkAnnotationPopup,

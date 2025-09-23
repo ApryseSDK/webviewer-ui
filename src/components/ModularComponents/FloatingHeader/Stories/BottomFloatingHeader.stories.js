@@ -13,7 +13,7 @@ import {
   floatCenterTopHeaderDynamic,
 } from '../../Helpers/mockHeaders';
 import { MockDocumentContainer } from 'helpers/storybookHelper';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/FloatingHeader/BottomHeader',

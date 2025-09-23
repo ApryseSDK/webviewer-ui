@@ -2,8 +2,8 @@
   max-height: 320px;
   width: 320px;
   position: absolute;
-  top: 100%;
-  left: 0;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
   background: var(--component-background);
   z-index: 90;
   list-style: none;
@@ -11,7 +11,7 @@
   padding: var(--padding-tiny) 0;
   box-shadow: 0px 0px 3px 0px var(--box-shadow);
   border-radius: var(--border-radius);
-  overflow-x: hidden;   // necessary so that children respect border-radius on hover
+  overflow-x: hidden; // necessary so that children respect border-radius on hover
   overflow-y: auto;
 
   .formula-label {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -10,7 +10,7 @@ import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/Dropdown';
 import VisuallyHiddenLabel from 'components/VisuallyHiddenLabel';
 import DataElements from 'constants/dataElement';
-import { OFFICE_EDITOR_TRANSLATION_PREFIX, MARGIN_UNITS } from 'constants/officeEditor';
+import { OFFICE_EDITOR_TRANSLATION_PREFIX, LAYOUT_UNITS } from 'constants/officeEditor';
 import { COLUMN_OPTIONS } from 'helpers/officeEditor';
 import { checkEqualColumnWidths } from 'helpers/officeEditorColumnsHelper';
 import renderDropdownItemWithDescription from 'helpers/renderDropdownItemWithDescription';
@@ -48,12 +48,12 @@ const OfficeEditorColumnDropdown = ({
 }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [activeColumnOption, setActiveColumnOption] = React.useState('');
+  const [activeColumnOption, setActiveColumnOption] = useState('');
 
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   const onOpened = async () => {
-    const sectionColumns = await core.getOfficeEditor().getSectionColumns(MARGIN_UNITS.CM);
+    const sectionColumns = await core.getOfficeEditor().getSectionColumns(LAYOUT_UNITS.CM);
     const columnAmount = Math.ceil(sectionColumns.length / 2);
     const allColumnsEqual = checkEqualColumnWidths(sectionColumns);
     const usePresetColumns = allColumnsEqual && columnAmount <= 3;

@@ -53,16 +53,13 @@ const DataElements = {
   INDEX_PANEL: 'indexPanel',
   FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
   FORM_FIELD_PANEL: 'formFieldPanel',
-  WATERMARK_PANEL: 'watermarkPanel',
-  WATERMARK_PANEL_TOGGLE: 'watermarkPanelToggle',
-  WATERMARK_PANEL_IMAGE_TAB: 'watermarkPanelImageTab',
-  WATERMARK_PANEL_TEXT_TAB: 'watermarkPanelTextTab',
   SEARCH_PANEL: 'searchPanel',
   TEXT_EDITING_PANEL: 'textEditingPanel',
   COMPARE_PANEL: 'comparePanel',
   PORTFOLIO_PANEL: 'portfolioPanel',
   PORTFOLIO_PANEL_BUTTON: 'portfolioPanelButton',
   LAYERS_PANEL: 'layersPanel',
+  LAYERS_PANEL_BUTTON: 'layersPanelButton',
   SIGNATURE_PANEL: 'signaturePanel',
   ATTACHMENT_PANEL: 'attachmentPanel',
   MOBILE_PANEL_WRAPPER: 'MobilePanelWrapper',
@@ -75,6 +72,29 @@ const DataElements = {
   PAGE_NAV_FLOATING_HEADER: 'page-nav-floating-header',
   TABS_LIST_MENU: 'tabsListMenu',
   ADDITIONAL_SPREADSHEET_TABS_MENU: 'additionalSpreadsheetTabsMenu',
+
+  StylePanel: {
+    STYLE_PANEL_HEADER_CONTAINER: 'stylePanelHeaderContainer',
+    STROKE_STYLE_CONTAINER: 'stylePanel-strokeStyleContainer',
+    FILL_COLOR_CONTAINER: 'stylePanel-fillColorContainer',
+    OPACITY_CONTAINER: 'stylePanel-opacityContainer',
+    SNAP_MODE_CONTAINER: 'stylePanel-snapModeContainer',
+    TEXT_STYLE_CONTAINER: 'stylePanel-textStyleContainer',
+    LINE_STYLE_PICKER_CONTAINER: 'stylePanel-lineStylePickerContainer',
+    NO_STYLE_CONTAINER: 'stylePanel-noStyleContainer',
+    NO_TOOL_SELECTED_CONTAINER: 'stylePanel-noToolSelectedContainer',
+    NO_SHARED_STYLE_CONTAINER: 'stylePanel-noSharedStyleContainer',
+    REDACTION_TEXT_LABEL: 'stylePanel-redactionTextLabel',
+    TEXT_COLOR_PICKER: 'stylePanel-textColorPicker',
+    STROKE_COLOR_PICKER: 'stylePanel-strokeColorPicker',
+    FILL_COLOR_PICKER: 'stylePanel-fillColorPicker',
+    NO_STYLE_ICON: 'stylePanel-noStyleIcon',
+    NO_STYLE_MESSAGE: 'stylePanel-noStyleMessage',
+    NO_TOOL_SELECTED_ICON: 'stylePanel-noToolSelectedIcon',
+    NO_TOOL_SELECTED_MESSAGE: 'stylePanel-noToolSelectedMessage',
+    NO_SHARED_STYLE_ICON: 'stylePanel-noSharedStyleIcon',
+    NO_SHARED_STYLE_MESSAGE: 'stylePanel-noSharedStyleMessage',
+  },
 
   NotesPanel: {
     DefaultHeader: {
@@ -143,6 +163,7 @@ const DataElements = {
   PAGE_CONTROLS_FLYOUT: 'pageControlsFlyout',
   NOTE_STATE_FLYOUT: 'noteStateFlyout',
   NOTE_POPUP_FLYOUT: 'notePopupFlyout',
+  MULTI_SELECT_STYLE_PANEL_FLYOUT: 'multiSelectStylePanelFlyout',
   SHEET_TAB_OPTIONS_FLYOUT: 'sheetTabOptionsFlyout',
   BOOKMARK_OUTLINE_FLYOUT: 'bookmarkOutlineFlyout',
   BOOKMARK_FLYOUT: 'bookmarkFlyout',
@@ -153,6 +174,7 @@ const DataElements = {
   CELL_BACKGROUND_COLOR_FLYOUT: 'cellBackgroundColorFlyout',
   CELL_BORDER_COLOR_FLYOUT: 'cellBorderColorFlyout',
   CELL_BORDER_BUTTONS_FLYOUT: 'cellBorderButtonsFlyout',
+  SEARCH_OPTIONS_FLYOUT: 'searchOptionsFlyout',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -364,6 +386,11 @@ const DataElements = {
 
   PREVIOUS_PAGE_BUTTON: 'previousPageButton',
   NEXT_PAGE_BUTTON: 'nextPageButton',
+
+  // Search options button
+  CASE_SENSITIVE_SEARCH_OPTION: 'caseSensitiveSearchOption',
+  WHOLE_WORD_SEARCH_OPTION: 'wholeWordSearchOption',
+  WILD_CARD_SEARCH_OPTION: 'wildCardSearchOption',
 
   // Sheets Editor
   FORMULA_BAR: 'formulaBar',

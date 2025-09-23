@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     border-bottom: var(--multi-tab-border);
-    padding-left: var(--multi-tab-add-button-padding);
+    padding-inline-start: var(--multi-tab-add-button-padding);
 
     .Button {
       .Icon {
@@ -37,7 +37,7 @@
       padding: 10px;
 
       .Icon {
-        margin-right: 4px;
+        margin-inline-end: 4px;
       }
     }
 

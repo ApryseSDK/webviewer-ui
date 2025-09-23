@@ -111,6 +111,7 @@
     "open": "Abrir",
     "deselectAll": "Deseleccionar todo",
     "select": "Seleccione",
+    "buttonPressed": "Botón {{buttonName}} presionado",
     "moveToTop": "Mover al principio",
     "moveToBottom": "Mover al final",
     "movePageToTop": "Mover página al principio",
@@ -272,7 +273,6 @@
       "close": "Cerrar todas las anotaciones"
     },
     "comparePanel": "Panel de comparación",
-    "watermarkPanel": "Panel de marca de agua",
     "mainMenu": "Menú principal"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "No se han encontrado resultados.",
     "numResultsFound": "resultados encontrados",
     "loadError": "Error al cargar el documento",
+    "urlInputFileLoadError": "No se pudo recuperar el archivo de la URL proporcionada.",
     "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
     "enterPasswordPlaceholder": "Introducir la contraseña",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Buscar comentarios",
     "searchDocumentPlaceholder": "Buscar documento",
     "clearSearchResults": "Borrar resultados de búsqueda",
+    "toggleReplaceInput": "Activar o desactivar la entrada de reemplazo",
+    "toggleSearchOptions": "Alternar opciones de búsqueda",
     "searchResultsCleared": "Resultados de búsqueda borrados",
     "searchSettingsPlaceholder": "Configuración de búsqueda",
     "searchSuggestionsPlaceholder": "Sugerencias de búsqueda",
@@ -803,7 +806,30 @@
       "setShortcut": "Establecer acceso directo",
       "editShortcut": "Editar acceso directo",
       "shortcutAlreadyExists": "El método abreviado de teclado anterior ya existe.",
-      "close": "Cerrar información sobre herramientas"
+      "close": "Cerrar información sobre herramientas",
+      "spreadsheetEditor": {
+        "copyText": "Copiar texto o celdas seleccionadas",
+        "pasteText": "Pegar texto o celdas",
+        "cutText": "Cortar texto o celdas seleccionadas",
+        "undoChange": "Deshacer un cambio",
+        "redoChange": "Rehacer un cambio",
+        "selectAll": "Seleccionar todas las celdas",
+        "moveToEdgeUp": "Saltar al inicio de la hoja",
+        "moveToEdgeDown": "Saltar al final de la hoja",
+        "moveToEdgeLeft": "Saltar a la columna más a la izquierda",
+        "moveToEdgeRight": "Saltar a la columna más a la derecha",
+        "adjustSelectionUp": "Ampliar la selección hacia arriba",
+        "adjustSelectionDown": "Ampliar la selección hacia abajo",
+        "adjustSelectionLeft": "Ampliar la selección a la izquierda",
+        "adjustSelectionRight": "Ampliar la selección a la derecha",
+        "up": "Mover el cuadro de selección de celda hacia arriba",
+        "down": "Mover el cuadro de selección de celda hacia abajo",
+        "left": "Mover el cuadro de selección de celda a la izquierda",
+        "right": "Mover el cuadro de selección de celda a la derecha",
+        "enter": "Editar celda seleccionada",
+        "tab": "Mover el cuadro de selección de celdas hacia la derecha",
+        "delete": "Borrar datos de celda"
+      }
     },
     "cellBorderStyle": {
       "none": "Ninguno",
@@ -861,12 +887,12 @@
       "message": "Este documento está intentando conectarse a:\n\n{{- uri}}\n\n Si confía en este documento, haga clic en Confirmar para abrirlo."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Advertencia de edición",
-      "message": "Este nombre de hoja ya existe. Por favor, introduzca otro nombre."
+      "title": "Editar nombre de la hoja",
+      "message": "Este nombre ya existe. Por favor, introduzca otro."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Advertencia de edición",
-      "message": "Este nombre de hoja no puede estar vacío."
+      "title": "Editar nombre de la hoja",
+      "message": "El nombre de la hoja no puede estar vacío. Ingrese un nombre."
     },
     "sheetTabDeleteMessage": {
       "title": "Advertencia de edición",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Propiedades",
     "miscValuesHeader": "Todos",
     "emptyPanelMessage": "Selecciona un elemento para ver sus propiedades."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Marca de agua de texto",
-    "uploadImage": "Cargar imagen",
-    "browse": "Navegar",
-    "watermarkOptions": "Opciones de marca de agua",
-    "watermarks": "marcas de agua"
   },
   "portfolio": {
     "createPDFPortfolio": "Crear cartera PDF",

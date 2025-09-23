@@ -18,8 +18,8 @@
   border-radius: 4px;
   height: 28px;
   border: 1px solid var(--border);
-  padding-left: 8px;
-  padding-right: 4px;
+  padding-inline-start: 8px;
+  padding-inline-end: 4px;
   position: relative;
   background: var(--component-background);
 
@@ -58,7 +58,7 @@
 
   &.text-left {
     .picked-option {
-      text-align: left;
+      text-align: start;
     }
   }
 
@@ -83,8 +83,8 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 30px;
-  right: 0px;
+  inset-block-start: 30px;
+  inset-inline-end: 0px;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
@@ -100,12 +100,12 @@
   }
 
   &.dropdown-items-with-custom-display {
-    right: inherit;
+    inset-inline-end: inherit;
   }
 
   &.dropdown-items-with-label {
     .Dropdown__item {
-      padding-left: 20px;
+      padding-inline-start: 20px;
     }
   }
 }
@@ -113,21 +113,21 @@
 .Dropdown__label {
   font-weight: bold;
   min-height: 28px;
-  padding-left: 8px;
+  padding-inline-start: 8px;
   align-items: center;
   display: flex;
   border-radius: 0px;
-  padding-right: 32px;
+  padding-inline-end: 32px;
 }
 
 .Dropdown__item {
   @include button-reset;
   height: 28px;
-  padding-left: 8px;
+  padding-inline-start: 8px;
   align-items: center;
   display: flex;
   border-radius: 0px;
-  padding-right: 32px;
+  padding-inline-end: 32px;
   line-height: 28px;
   cursor: pointer;
 
@@ -165,10 +165,10 @@
   }
 }
 
-[data-element="endLineStyleDropdown"] .picked-option-text {
+[data-element='endLineStyleDropdown'] .picked-option-text {
   flex: 0.95 !important;
 }
 
-[data-element="endLineStyleDropdown"] .picked-option .arrow {
+[data-element='endLineStyleDropdown'] .picked-option .arrow {
   width: 11px !important;
 }

@@ -8,7 +8,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import core from 'core';
 import { MockApp, createStore, waitForTimeout } from 'helpers/storybookHelper';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
-import { within, userEvent, expect, waitFor } from '@storybook/test';
+import { within, userEvent, expect, waitFor } from 'storybook/test';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -149,6 +149,30 @@ export const StylePanelTextTool = () => {
   useToolHook(window.Core.Tools.FreeTextCreateTool, window.Core.Tools.ToolNames.FREETEXT, setShouldRender, FreeTextDefaults);
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
+
+StylePanelTextTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const textStyleShowMoreButton = await canvas.findByLabelText('Text Style Show More Colors');
+  const testStrokeStyleShowMoreButton = await canvas.findByLabelText('Stroke Show More Colors');
+  await userEvent.click(textStyleShowMoreButton);
+  await userEvent.click(testStrokeStyleShowMoreButton);
+
+  await waitFor(async () => {
+    expect(textStyleShowMoreButton.textContent).toBe('Show Less');
+    expect(testStrokeStyleShowMoreButton.textContent).toBe('Show Less');
+  });
+
+  const textStyleColor = await canvas.findByRole('button', { name: `Text Style Color ${initialTextColors[0]}` });
+  const strokeColor = await canvas.findByRole('button', { name: `Stroke Color ${initialTextColors[0]}` });
+  await userEvent.click(await canvas.findByRole('button', { name: /^Text Style Delete Selected Color/i }));
+  const textStyleColorButtons = await canvas.findAllByRole('button', { name: /^Text Style Color/i });
+  const strokeColorButtons = await canvas.findAllByRole('button', { name: /^Stroke Color/i });
+
+  expect(textStyleColorButtons.length).not.toEqual(strokeColorButtons.length);
+  expect(textStyleColor).not.toBeInTheDocument();
+  expect(strokeColor).toBeInTheDocument();
+};
+
 export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
 StylePanelFreeTextToolMobileVersion.parameters = window.storybook.MobileParameters;
 

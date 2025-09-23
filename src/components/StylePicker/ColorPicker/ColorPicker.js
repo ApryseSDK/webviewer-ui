@@ -12,10 +12,12 @@ import Tooltip from 'components/Tooltip';
 import useFocusHandler from 'hooks/useFocusHandler';
 import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
 import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
+import DataElementWrapper from 'components/DataElementWrapper';
 
 const TRANSPARENT_COLOR = 'transparent';
 
 const propTypes = {
+  dataElement: PropTypes.string,
   color: PropTypes.any,
   ariaTypeLabel: PropTypes.string,
   activeTool: PropTypes.string,
@@ -25,6 +27,7 @@ const propTypes = {
 };
 
 const ColorPicker = ({
+  dataElement,
   onColorChange,
   hasTransparentColor = false,
   color,
@@ -67,7 +70,7 @@ const ColorPicker = ({
     colors,
     setSelectedColor,
     onColorChange,
-    updateColorsAction: actions.setColors,
+    updateColorsAction: (newColors) => dispatch(actions.setColors(newColors, activeToolName, type, true)),
   });
 
   const handleCopyColor = () => {
@@ -104,7 +107,7 @@ const ColorPicker = ({
   }
 
   return (
-    <>
+    <DataElementWrapper dataElement={dataElement}>
       <div className={classNames('ColorPalette')}>
         {palette.map((color) => parseColor(color)).map((color, i) => (
           !color
@@ -178,7 +181,7 @@ const ColorPicker = ({
           {t(isExpanded ? 'message.showLess' : 'message.showMore')}
         </button>
       </div>
-    </>
+    </DataElementWrapper>
   );
 };
 

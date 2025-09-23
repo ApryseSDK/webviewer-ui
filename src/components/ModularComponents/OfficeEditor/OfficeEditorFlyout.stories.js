@@ -4,7 +4,7 @@ import Flyout from '../Flyout';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
@@ -234,6 +234,10 @@ const initialState = {
   },
   featureFlags: {
     customizableUI: true,
+  },
+  spreadsheetEditor: {
+    canRedo: false,
+    canUndo: false,
   }
 };
 const store = configureStore({

@@ -111,6 +111,7 @@
     "open": "Open",
     "deselectAll": "Deselecteer alles",
     "select": "Selecteer",
+    "buttonPressed": "{{buttonName}} knop ingedrukt",
     "moveToTop": "Ga naar boven",
     "moveToBottom": "Naar beneden verplaatsen",
     "movePageToTop": "Pagina naar boven verplaatsen",
@@ -272,7 +273,6 @@
       "close": "Sluit alle annotaties"
     },
     "comparePanel": "Vergelijk Paneel",
-    "watermarkPanel": "Watermerkpaneel",
     "mainMenu": "Hoofdmenu"
   },
   "message": {
@@ -294,6 +294,7 @@
     "noResults": "Geen resultaten.",
     "numResultsFound": "gevonden resultaten",
     "loadError": "Fout bij het laden van document",
+    "urlInputFileLoadError": "Het bestand kon niet worden opgehaald vanaf de opgegeven URL.",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "enterPasswordPlaceholder": "Voer wachtwoord in",
@@ -307,6 +308,8 @@
     "searchCommentsPlaceholder": "Zoek opmerkingen",
     "searchDocumentPlaceholder": "Document zoeken",
     "clearSearchResults": "Zoekresultaten wissen",
+    "toggleReplaceInput": "Wisselen tussen vervangende invoer",
+    "toggleSearchOptions": "Zoekopties in-/uitschakelen",
     "searchResultsCleared": "Zoekresultaten gewist",
     "searchSettingsPlaceholder": "Zoekinstellingen",
     "searchSuggestionsPlaceholder": "Zoeksuggesties",
@@ -803,7 +806,30 @@
       "setShortcut": "Snelkoppeling instellen",
       "editShortcut": "Snelkoppeling bewerken",
       "shortcutAlreadyExists": "De sneltoets hierboven bestaat al.",
-      "close": "Knopinfo sluiten"
+      "close": "Knopinfo sluiten",
+      "spreadsheetEditor": {
+        "copyText": "Geselecteerde tekst of cellen kopiëren",
+        "pasteText": "Tekst of cellen plakken",
+        "cutText": "Geselecteerde tekst of cellen knippen",
+        "undoChange": "Een wijziging ongedaan maken",
+        "redoChange": "Een wijziging opnieuw uitvoeren",
+        "selectAll": "Selecteer alle cellen",
+        "moveToEdgeUp": "Spring naar de bovenkant van het blad",
+        "moveToEdgeDown": "Spring naar de onderkant van het blad",
+        "moveToEdgeLeft": "Spring naar de meest linkse kolom",
+        "moveToEdgeRight": "Spring naar de meest rechtse kolom",
+        "adjustSelectionUp": "Selectie naar boven uitbreiden",
+        "adjustSelectionDown": "Selectie naar beneden uitbreiden",
+        "adjustSelectionLeft": "Selectie naar links uitbreiden",
+        "adjustSelectionRight": "Selectie naar rechts uitbreiden",
+        "up": "Verplaats het celselectievak omhoog",
+        "down": "Verplaats het celselectievak naar beneden",
+        "left": "Verplaats celselectievak naar links",
+        "right": "Verplaats celselectievak naar rechts",
+        "enter": "Geselecteerde cel bewerken",
+        "tab": "Verplaats het celselectievak naar rechts",
+        "delete": "Gegevens van heldere cellen"
+      }
     },
     "cellBorderStyle": {
       "none": "Geen",
@@ -861,12 +887,12 @@
       "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     },
     "sheetTabRenameIssueOne": {
-      "title": "Bewerken Waarschuwing",
-      "message": "Deze bladnaam bestaat al. Voer een andere naam in."
+      "title": "Bladnaam bewerken",
+      "message": "Deze naam bestaat al. Voer een andere naam in."
     },
     "sheetTabRenameIssueTwo": {
-      "title": "Bewerken Waarschuwing",
-      "message": "Deze bladnaam mag niet leeg zijn."
+      "title": "Bladnaam bewerken",
+      "message": "De bladnaam mag niet leeg zijn. Voer een naam in."
     },
     "sheetTabDeleteMessage": {
       "title": "Bewerken Waarschuwing",
@@ -1251,13 +1277,6 @@
     "propertiesHeader": "Eigenschappen",
     "miscValuesHeader": "Alle",
     "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken."
-  },
-  "watermarkPanel": {
-    "textWatermark": "Tekst watermerk",
-    "uploadImage": "Afbeelding uploaden",
-    "browse": "Bladeren",
-    "watermarkOptions": "Watermerkopties",
-    "watermarks": "Watermerken"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF-portfolio maken",

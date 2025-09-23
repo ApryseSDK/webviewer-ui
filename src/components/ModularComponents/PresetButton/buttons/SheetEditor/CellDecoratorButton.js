@@ -11,15 +11,23 @@ import setCellFontStyle from 'src/helpers/setCellFontStyle';
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const CellDecoratorButton = forwardRef((props, ref) => {
   const { isFlyoutItem, styleType, style, className } = props;
+  const menuItem = menuItems[`${styleType}Button`];
+  const {
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = menuItem.title,
+  } = props;
   const currentFontStyle = useSelector((state) => selectors.getActiveCellRangeFontStyle(state, styleType));
   const isActive = currentFontStyle;
-  const { dataElement, icon, title } = menuItems[`${styleType}Button`];
 
   const handleClick = () => {
     setCellFontStyle({ [styleType]: !isActive });

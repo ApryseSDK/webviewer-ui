@@ -1,5 +1,5 @@
 import DataElements from 'constants/dataElement';
-import { PLACEMENT } from 'constants/customizationVariables';
+import { isElementOnLeftSide } from './rightToLeft';
 
 export default (dataElement, state) => getLeftPanelDataElements(state).includes(dataElement);
 
@@ -8,7 +8,7 @@ export const getLeftPanelDataElements = (state) => {
   const { customizableUI } = featureFlags;
 
   if (customizableUI) {
-    return state.viewer.genericPanels.filter((item) => item.location === PLACEMENT.LEFT);
+    return state.viewer.genericPanels.filter((item) => isElementOnLeftSide(item.location));
   }
 
   const defaultLeftPanels = [

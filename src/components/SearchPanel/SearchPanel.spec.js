@@ -78,7 +78,7 @@ describe('SearchPanel', () => {
   });
 
   it('Should set minWidth and width if not mobile device', () => {
-    const { container } = render(<SearchPanel currentWidth={100}/>);
+    const { container } = render(<SearchPanel currentWidth={100} />);
     const searchPanel = container.querySelector('.SearchPanel');
     expect(searchPanel).toBeInTheDocument();
     expect(searchPanel).toHaveStyle('width: 100px');
@@ -86,14 +86,14 @@ describe('SearchPanel', () => {
   });
 
   it('Should render close button if mobile device', () => {
-    const { container } = render(<SearchPanel isMobile/>);
+    const { container } = render(<SearchPanel isMobile />);
     expect(container.querySelector('.SearchPanel')).toBeInTheDocument();
     expect(container.querySelector('.close-icon-container')).toBeInTheDocument();
   });
 
   it('Should not set minWidth and width if mobile device', () => {
     const currentWidth = 100;
-    const { container } = render(<SearchPanel currentWidth={currentWidth} isMobile/>);
+    const { container } = render(<SearchPanel currentWidth={currentWidth} isMobile />);
     const searchPanel = container.querySelector('.SearchPanel');
     expect(searchPanel).toBeInTheDocument();
     // getPropertyValue returns empty string if value is not set
@@ -102,14 +102,14 @@ describe('SearchPanel', () => {
   });
 
   it('Should have class \'open\' if isOpen=true passed as props', () => {
-    const { container } = render(<SearchPanel isOpen/>);
+    const { container } = render(<SearchPanel isOpen />);
     const searchPanel = container.querySelector('.SearchPanel');
     expect(searchPanel).toBeInTheDocument();
     expect(searchPanel).toHaveClass('open');
   });
 
   it('Should have class \'closed\' if isOpen=false passed as props', () => {
-    const { container } = render(<SearchPanel isOpen={false}/>);
+    const { container } = render(<SearchPanel isOpen={false} />);
     const searchPanel = container.querySelector('.SearchPanel');
     expect(searchPanel).toBeInTheDocument();
     expect(searchPanel).toHaveClass('closed');
@@ -190,7 +190,7 @@ describe('SearchPanelContainer', () => {
     jest.resetAllMocks();
     // test would break if we don't make default return from useSearch as code is trying to destruct undefined value
     useSearch.mockReturnValue({});
-    jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => {});
+    jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     const isOpen = true;
     const currentWidth = 1280;
@@ -256,5 +256,63 @@ describe('SearchPanelContainer', () => {
     render(<SearchPanelContainer />);
     expect(actionsSetSearchValueActionMock).not.toHaveBeenCalled();
     expect(coreClearSearchResultsMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('adjustSpreadsheetTableWidth', () => {
+  let isSpreadsheetEditorDocumentMock;
+  let getDocumentMock;
+  let editorWrapper;
+  let spreadsheetEditorMock;
+
+  beforeEach(() => {
+    useSearch.mockReturnValue({
+      searchStatus: 'SEARCH_NOT_INITIATED',
+      searchResults: [],
+      activeSearchResultIndex: -1,
+      setSearchStatus: jest.fn(),
+    });
+    isSpreadsheetEditorDocumentMock = jest.spyOn(require('src/helpers/officeEditor'), 'isSpreadsheetEditorDocument');
+    isSpreadsheetEditorDocumentMock.mockReturnValue(true);
+
+    editorWrapper = {
+      style: { width: '100%' },
+    };
+    document.getElementById = jest.fn(() => editorWrapper);
+
+    spreadsheetEditorMock = { onSizeChanged: jest.fn() };
+    getDocumentMock = jest.spyOn(require('src/core/getDocument'), 'default');
+    getDocumentMock.mockReturnValue({
+      getSpreadsheetEditorDocument: () => ({
+        getEditor: () => spreadsheetEditorMock,
+      }),
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should adjust container width based on panel width on component mount', () => {
+    render(<SearchPanel currentWidth={200} />);
+    expect(document.getElementById).toHaveBeenCalledWith('editorWrapper');
+    expect(editorWrapper.style.width).toBe('824px');
+    expect(spreadsheetEditorMock.onSizeChanged).toHaveBeenCalled();
+  });
+
+  it('should not adjust container width if not in spreadsheet editor', () => {
+    isSpreadsheetEditorDocumentMock.mockReturnValue(false);
+    render(<SearchPanel currentWidth={100} />);
+    expect(document.getElementById).not.toHaveBeenCalled();
+    expect(spreadsheetEditorMock.onSizeChanged).not.toHaveBeenCalled();
+  });
+
+  it('should adjust container width back to original on component unmount', () => {
+    const removePropertyMock = jest.fn();
+    editorWrapper.style.removeProperty = removePropertyMock;
+    const { unmount } = render(<SearchPanel currentWidth={200} />);
+    expect(editorWrapper.style.width).toBe('824px');
+    unmount();
+    expect(removePropertyMock).toHaveBeenCalledWith('width');
   });
 });

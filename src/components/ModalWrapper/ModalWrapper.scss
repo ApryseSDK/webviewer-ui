@@ -67,12 +67,12 @@
     input.text-input-modal {
       width: 100%;
       height: 30px;
-      padding-left: 8px;
+      padding-inline-start: 8px;
       border: 1px solid var(--gray-5);
       border-radius: 4px;
       color: var(--text-color);
       padding-bottom: 6px;
-      padding-right: 42px;
+      padding-inline-end: 42px;
       padding-top: 4px;
       margin-top: 16px;
 
@@ -82,7 +82,6 @@
 
         &.correct {
           border: 1px solid var(--focus-border);
-
         }
       }
 
@@ -91,7 +90,7 @@
       }
 
       &.wrong {
-        border: 1px solid #CF0101;
+        border: 1px solid #cf0101;
       }
     }
   }

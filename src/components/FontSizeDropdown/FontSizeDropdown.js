@@ -9,6 +9,7 @@ import './FontSizeDropdown.scss';
 export const DEBOUNCE_TIME = 750;
 
 const propTypes = {
+  dataElement: PropTypes.string,
   fontSize: PropTypes.number,
   fontUnit: PropTypes.string, // Ex: 'pt'
   onFontSizeChange: PropTypes.func.isRequired,
@@ -33,6 +34,7 @@ const BREAKS_AND_INCREMENT = {
 };
 
 const FontSizeDropdown = ({
+  dataElement,
   onFontSizeChange,
   fontSize = 12,
   fontUnit = 'pt',
@@ -134,6 +136,7 @@ const FontSizeDropdown = ({
   const dropdown = (
     <Dropdown
       id="FontSizeDropdown"
+      dataElement={dataElement}
       disableFocusing={disableFocusing}
       showLabelInList
       items={sizes}

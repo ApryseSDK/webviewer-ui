@@ -1,9 +1,12 @@
 import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents, mockLeftHeader } from './mockAppState';
-import { userEvent, within, expect, waitFor } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { defaultModularComponents, defaultModularHeaders } from 'src/redux/modularComponents';
-import { createTemplate } from 'helpers/storybookHelper';
-
+import { createTemplate, MockApp } from 'helpers/storybookHelper';
+import initialState from 'src/redux/initialState';
+import actions from 'actions';
+import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
+import React from 'react';
 export default {
   title: 'ModularComponents/App',
   component: App,
@@ -25,6 +28,18 @@ DefaultUI.play = async ({ canvasElement }) => {
   window.instance.UI.setActiveGroupedItems('annotateGroupedItems');
   const annotateRibbon = await canvas.findByRole('button', { name: /Annotate/i });
   await expect(annotateRibbon).toHaveAttribute('aria-current', 'true');
+
+  // Check if dir is being set correctly on Language change
+  const appElement = canvasElement.querySelector('.App');
+  await expect(appElement).toHaveAttribute('dir', 'ltr');
+  window.instance.UI.setLanguage('ur');
+  await waitFor(() => {
+    expect(appElement).toHaveAttribute('dir', 'rtl');
+  });
+  window.instance.UI.setLanguage('en');
+  await waitFor(() => {
+    expect(appElement).toHaveAttribute('dir', 'ltr');
+  });
 };
 
 const headersWithLeftHeader = {
@@ -353,4 +368,111 @@ UIWithoutRibbons.play = async ({ canvasElement }) => {
   window.instance.UI.setActiveGroupedItems('insertGroupedItems');
   const rubberStampTool = canvas.getByRole('button', { name: 'Rubber Stamp' });
   expect(rubberStampTool).toBeInTheDocument();
+};
+
+const undoButton = {
+  'dataElement': 'myDataElement-undoButton',
+  'title': 'Undo!',
+  'type': 'presetButton',
+  'img': 'apryse-logo',
+  'buttonType': 'undoButton'
+};
+
+const presetButtonFlyoutMap = {
+  ['MainMenuFlyout']: {
+    dataElement: 'MainMenuFlyout',
+    'items': [
+      {
+        'dataElement': 'myDataElement-downloadButton',
+        'title': 'Download!',
+        'type': 'presetButton',
+        'img': 'apryse-logo',
+        'buttonType': 'downloadButton'
+      },
+    ]
+  },
+};
+
+const mockModularComponentsWithPresetButtons = { ...mockModularComponents, undoButton };
+
+export const UIWithPresetButtons = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponentsWithPresetButtons, flyoutMap: presetButtonFlyoutMap });
+
+UIWithPresetButtons.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const body = within(document.body);
+
+  // Hover over the preset Undo button
+  const presetUndoButton = canvas.getByRole('button', { name: /Undo!/i });
+  await userEvent.hover(presetUndoButton);
+  const tooltip = await body.findByText('Undo!');
+  await expect(tooltip).toBeInTheDocument();
+
+  // Open the menu flyout and view the preset Download button
+  const menuButton = canvas.getByRole('button', { name: 'Menu' });
+  await userEvent.click(menuButton);
+  const downloadButton = canvas.getByRole('button', { name: /Download/i });
+  expect(downloadButton).toBeInTheDocument();
+};
+
+let storeRef = { current: null };
+export const AppStashSwitchStory = createTemplate({
+  headers: mockHeadersNormalized,
+  components: mockModularComponents,
+  flyoutMap: initialState.viewer.flyoutMap,
+  storeRef,
+});
+
+AppStashSwitchStory.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const dataElement = 'MainMenuFlyout';
+
+  const getMainMenuItems = () => storeRef.current.getState().viewer.flyoutMap[dataElement]?.items || [];
+
+  // Add new item to the Main Menu Flyout
+  const newName = 'New Item 1';
+  storeRef.current.dispatch(actions.setFlyoutItems(dataElement, [
+    ...getMainMenuItems(),
+    {
+      icon: 'icon-header-file-picker-line',
+      label: newName,
+      onClick: () => {
+        console.log(`clicked ${newName}`);
+      }
+    }
+  ]));
+
+  // Switch to Spreadsheet Editor mode and ensure item is not visible
+  storeRef.current.dispatch(actions.stashComponents(VIEWER_CONFIGURATIONS.DEFAULT));
+  storeRef.current.dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
+  canvas.getByRole('button', { name: 'Menu' }).click();
+  await expect(canvas.queryByRole('button', { name: newName })).not.toBeInTheDocument();
+
+  // Switch back to the default mode
+  storeRef.current.dispatch(actions.restoreComponents(VIEWER_CONFIGURATIONS.DEFAULT));
+  const newItem = await canvas.findByRole('button', { name: newName });
+  await expect(newItem).toBeInTheDocument();
+};
+
+export const AppFlyoutResponsiveTest = (args, context) => {
+  return (
+    <MockApp initialState={initialState} width={500} height={800} />
+  );
+};
+
+AppFlyoutResponsiveTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const zoomToggleButton = await canvas.findByRole('button', { name: 'Zoom Options' });
+  await userEvent.click(zoomToggleButton);
+  const flyout = await canvas.findByRole('button', { name: /Zoom: 100%/ });
+  await expect(flyout).toBeVisible();
+};
+
+AppFlyoutResponsiveTest.parameters = {
+  layout: 'fullscreen',
+  chromatic: {
+    delay: 2000,
+    modes: {
+      'Light theme RTL': { disable: true },
+    },
+  }
 };

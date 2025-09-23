@@ -882,6 +882,16 @@ export const setActiveCellRangeStyle = (styles) => ({
   payload: { styles },
 });
 
+export const setSpreadsheetEditorCanUndo = (canUndo) => ({
+  type: 'SET_SPREADSHEET_EDITOR_CAN_UNDO',
+  payload: { canUndo },
+});
+
+export const setSpreadsheetEditorCanRedo = (canRedo) => ({
+  type: 'SET_SPREADSHEET_EDITOR_CAN_REDO',
+  payload: { canRedo },
+});
+
 export const setSelectedBorderColorOption = (selectedBorderColorOption) => ({
   type: 'SET_SELECTED_BORDER_COLOR_OPTION',
   payload: { selectedBorderColorOption },

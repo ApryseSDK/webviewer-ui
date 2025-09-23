@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 
-.NotePopup  {
+.NotePopup {
   flex-grow: 0;
   display: flex;
   justify-content: flex-end;
@@ -17,14 +17,13 @@
     justify-content: center;
     align-items: center;
 
-
     .Icon {
       width: 24px;
       height: 24px;
     }
 
     &:hover {
-      background: var(--blue-1)
+      background: var(--blue-1);
     }
 
     &.active {
@@ -39,11 +38,11 @@
     z-index: 80;
     position: absolute;
     @include ie11 {
-      right: 0;
+      inset-inline-end: 0;
     }
     border-radius: 4px;
     background: var(--component-background);
-    top: 40px;
+    inset-block-start: 40px;
     width: max-content;
 
     .note-popup-option {
@@ -55,7 +54,7 @@
     }
 
     &.options-reply {
-      top: 30px;
+      inset-block-start: 30px;
     }
 
     .option {
@@ -63,8 +62,8 @@
       flex-direction: column;
       justify-content: center;
       height: 28px;
-      padding-left: 8px;
-      padding-right: 17px;
+      padding-inline-start: 8px;
+      padding-inline-end: 17px;
       border-radius: 0px;
 
       &:hover {
@@ -108,10 +107,10 @@
 }
 
 .NotePopupFlyout {
-  min-width: unset!important;
-  max-width: unset!important;
+  min-width: unset !important;
+  max-width: unset !important;
   .flyout-item-container {
-    height: unset!important;
-    margin: unset!important;
+    height: unset !important;
+    margin: unset !important;
   }
 }

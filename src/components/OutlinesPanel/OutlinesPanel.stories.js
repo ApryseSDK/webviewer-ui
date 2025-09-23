@@ -10,6 +10,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { workerTypes } from '../../constants/types';
+import { within } from 'storybook/test';
 
 export default {
   title: 'Components/OutlinesPanel',
@@ -129,3 +130,16 @@ export const LoadingOutlines = createTemplate({
     }
   }
 });
+
+export const AddingOutline = createTemplate({
+  initialState: {
+    document: {
+      outlines: [],
+    }
+  }
+});
+AddingOutline.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await canvas.findByRole('button', { name: 'Add Outlines' });
+  canvas.getByRole('button', { name: 'Add Outlines' }).click();
+};

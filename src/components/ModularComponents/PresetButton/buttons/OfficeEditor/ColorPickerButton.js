@@ -13,6 +13,9 @@ import DataElements from 'constants/dataElement';
 
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
+  dataElement: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const ColorPickerButton = forwardRef((props, ref) => {
@@ -25,8 +28,12 @@ const ColorPickerButton = forwardRef((props, ref) => {
     shallowEqual,
   );
 
-  const { isFlyoutItem } = props;
-  const { icon, title } = menuItems.officeEditorColorPicker;
+  const {
+    isFlyoutItem,
+    dataElement = menuItems.officeEditorColorPicker.dataElement,
+    img: icon = menuItems.officeEditorColorPicker.icon,
+    title = menuItems.officeEditorColorPicker.title,
+  } = props;
 
   const dispatch = useDispatch();
 
@@ -35,9 +42,9 @@ const ColorPickerButton = forwardRef((props, ref) => {
 
   const colorIcon = (
     <Icon
-      dataElement={DataElements.OFFICE_EDITOR_TEXT_COLOR_BUTTON} // adding this dataElement to the icon to track the overlay position
+      dataElement={dataElement} // adding this dataElement to the icon to track the overlay position
       className={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color menu-icon`}
-      glyph='icon-office-editor-circle'
+      glyph={props.img || 'icon-office-editor-circle'}
       color={activeColor.toString()}
       ariaLabel={ariaLabel}
     />
@@ -64,7 +71,7 @@ const ColorPickerButton = forwardRef((props, ref) => {
         />
         : (
           <ToggleElementButton
-            dataElement={DataElements.OFFICE_EDITOR_TEXT_COLOR_BUTTON}
+            dataElement={dataElement}
             title={title}
             ariaLabel={ariaLabel}
             img={icon}
@@ -86,6 +93,7 @@ const ColorPickerButton = forwardRef((props, ref) => {
           dispatch(actions.closeElements([DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY, 'officeEditorHomeToolsGroupedItemsFlyout']));
         }}
         color={activeColor}
+        toggleButtonDataElement={dataElement}
       />
     </>
   );

@@ -2,8 +2,9 @@ import actions from 'actions';
 import {
   verticalAlignmentLabels,
   horizontalAlignmentLabels,
-  getFormatTypeFromFormatString,
 } from 'constants/spreadsheetEditor';
+import getFormatTypeFromFormatString from 'src/helpers/getFormatTypeFromFormatString';
+import core from 'core';
 
 const filterUndefined = (obj) =>
   // eslint-disable-next-line no-unused-vars
@@ -17,6 +18,9 @@ export default (dispatch) => (styleObject) => {
   const isCellRangeMerged = styleObject.merge;
   const borderStyle = styleObject.border;
 
+  const canUndo = core.getDocumentViewer().getSpreadsheetEditorManager().getSpreadsheetEditorHistoryManager().canUndo();
+  const canRedo = core.getDocumentViewer().getSpreadsheetEditorManager().getSpreadsheetEditorHistoryManager().canRedo();
+
   const filteredPayload = filterUndefined({
     verticalAlignment,
     horizontalAlignment,
@@ -26,6 +30,9 @@ export default (dispatch) => (styleObject) => {
     backgroundColor,
     borderStyle
   });
+
+  dispatch(actions.setSpreadsheetEditorCanUndo(canUndo));
+  dispatch(actions.setSpreadsheetEditorCanRedo(canRedo));
 
   if (Object.keys(filteredPayload).length > 0) {
     dispatch(actions.setActiveCellRangeStyle(filteredPayload));

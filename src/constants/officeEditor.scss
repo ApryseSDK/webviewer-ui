@@ -6,7 +6,7 @@
   width: 100%;
   padding: 4px 8px;
 
-  & > .Dropdown {
+  &>.Dropdown {
     width: 100% !important;
 
     .Dropdown__input {
@@ -16,8 +16,8 @@
 
   .Dropdown__items {
     z-index: 90;
-    top: 38px !important; // align the dropdown to the bottom of the parent container with padding
-    right: 8px; // align the dropdown to the right of the parent container
+    inset-block-start: 38px !important; // align the dropdown to the bottom of the parent container with padding
+    inset-inline-end: 8px; // align the dropdown to the right of the parent container
     max-width: calc(100% - 16px);
     overflow-y: auto;
 
@@ -41,7 +41,7 @@
   .Dropdown__item-icon {
     flex-shrink: 0;
     width: 24px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     margin-bottom: 14px;
   }
 
@@ -51,7 +51,7 @@
 
   .Dropdown__item-label {
     font-weight: 700;
-    text-align: left;
+    text-align: start;
   }
 
   .Dropdown__item-description {
@@ -65,8 +65,8 @@
     height: 1px;
     margin: 0;
     position: absolute;
-    bottom: -5px;
-    left: 0;
+    inset-block-end: -5px;
+    inset-inline-start: 0;
   }
 }
 

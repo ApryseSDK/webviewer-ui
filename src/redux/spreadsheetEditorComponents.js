@@ -18,7 +18,9 @@ const defaultSpreadsheetEditorHeaders = {
     style: {},
     items: [
       'groupedLeftHeaderButtons',
-      'editorDropdown'
+      'editorDropdown',
+      //'divider-0.1', TODO: unhide this with OCT release
+      //'searchPanelToggle' TODO: unhide this with OCT release
     ]
   },
   'tools-header': {
@@ -246,6 +248,13 @@ const defaultSpreadsheetEditorComponents = {
     toggleElement: DataElements.CELL_TEXT_ALIGNMENT_FLYOUT,
     type: 'toggleButton',
   },
+  searchPanelToggle: {
+    dataElement: 'searchPanelToggle',
+    title: 'component.searchPanel',
+    type: 'toggleButton',
+    img: 'icon-header-search',
+    toggleElement: 'searchPanel',
+  },
 
   /** Cell Border Style */
   borderStyleToggleButton: {
@@ -329,6 +338,11 @@ const defaultSpreadsheetEditorComponents = {
 };
 
 const defaultSpreadsheetEditorPanels = [
+  {
+    dataElement: 'searchPanel',
+    render: 'searchPanel',
+    location: 'right'
+  },
 ];
 
 const adjustmentButtons = CELL_ADJUSTMENT_FLYOUT_ITEMS.map((item) => {

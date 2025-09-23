@@ -1,5 +1,6 @@
 import getRootNode from 'helpers/getRootNode';
 import core from 'core';
+import { useTranslation } from 'react-i18next';
 
 export function isKeyboardNav() {
   return document.documentElement.getAttribute('data-tabbing') === 'true';
@@ -23,6 +24,11 @@ export function escapePressListener(event, onEscapeFunction) {
   if (event.key === 'Escape') {
     onEscapeFunction(event);
   }
+}
+
+export function getButtonPressedAnnouncement(buttonName) {
+  const [t] = useTranslation();
+  return t('action.buttonPressed', { buttonName: t(buttonName) });
 }
 
 export function createAnnouncement(onClickAnnouncement) {

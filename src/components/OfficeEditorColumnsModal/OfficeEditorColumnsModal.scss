@@ -6,12 +6,12 @@
   .input-container .ui__input {
     input[type=number].column-amount-input {
       -moz-appearance: auto;
-      padding-right: 8px;
+      padding-inline-end: 8px;
     }
 
     input.column-amount-input::-webkit-inner-spin-button,
     input.column-amount-input::-webkit-outer-spin-button {
-      -webkit-appearance: auto ;
+      -webkit-appearance: auto;
     }
   }
 

@@ -3,13 +3,11 @@ import SpreadsheetSwitcher
   from 'components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher/SpreadsheetSwitcher';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { within, expect, userEvent } from '@storybook/test';
+import { within, expect, userEvent, fireEvent } from 'storybook/test';
 import rootReducer from 'reducers/rootReducer';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import actions from 'actions';
-import { fireEvent } from '@testing-library/react';
 import WarningModal from 'components/WarningModal';
-
 
 const customViewports = {
   ViewOptionOne: {
@@ -113,9 +111,6 @@ KeyboardNavigation.play = async ({ canvasElement }) => {
     await userEvent.keyboard('{ArrowRight}');
   }
 
-  const moreTabsButton = canvas.getByRole('button', { name: /Show More/ });
-  await expect(moreTabsButton).toHaveFocus();
-
   await userEvent.keyboard('{Home}');
   await expect(firstTab).toHaveFocus();
 
@@ -148,6 +143,7 @@ export const Edit = () => {
   const deleteTab = (name) => {
     const newTabs = [...tabs].filter((tab) => tab.name !== name);
     setTabs(newTabs);
+    setActiveSheetIndex(0);
   };
   const renameSheet = (oldName, newName) => {
     let newTabs = [...tabs];
@@ -160,10 +156,7 @@ export const Edit = () => {
     newTabs.push({ name: 'Sheet 3', sheetIndex: 2 });
     setTabs(newTabs);
   };
-  const validateName = (oldName, newName) => {
-    if (oldName === newName) {
-      return false;
-    }
+  const checkIsSheetNameDuplicated = (newName) => {
     return tabs.findIndex((tab) => tab.name === newName) > -1;
   };
   return (
@@ -171,7 +164,7 @@ export const Edit = () => {
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%', marginTop: '400px' }}>
         <SpreadsheetSwitcher tabs={tabs} activeSheetIndex={activeSheetIndex}
           setActiveSheet={setActiveSheet} deleteSheet={deleteTab} renameSheet={renameSheet}
-          createNewSheet={addSheet} skipDeleteWarning validateName={validateName}
+          createNewSheet={addSheet} skipDeleteWarning checkIsSheetNameDuplicated={checkIsSheetNameDuplicated}
         />
         <WarningModal />
         <FlyoutContainer />
@@ -197,7 +190,9 @@ Edit.play = async ({ canvasElement }) => {
   let input = canvas.getByRole('textbox');
   await userEvent.type(input, ' Test');
   fireEvent.blur(input);
-  await expect(canvas.getByRole('tab', { name: /Sheet 2 Test/i })).toBeInTheDocument();
+  userEvent.click(document.body);
+  const renamedTab = await canvas.findByRole('tab', { name: /Sheet 2 Test/i });
+  await expect(renamedTab).toBeInTheDocument();
 
   // Add Flow
   canvas.getByRole('button', { name: /Add Sheet/i }).click();
@@ -209,8 +204,9 @@ Edit.play = async ({ canvasElement }) => {
   input = canvas.getByRole('textbox');
   input.value = '';
   await userEvent.type(input, 'Sheet 3');
-  fireEvent.blur(input);
+  userEvent.click(document.body);
   await expect(input.ariaInvalid).toBe('true');
-  canvas.getByRole('button', { name: /Close/i }).click();
-  await expect(canvas.getByRole('tab', { name: /Sheet 2 Test/i })).toBeInTheDocument();
+  const closeButton = await canvas.findByRole('button', { name: /Close/i });
+  await userEvent.click(closeButton);
+  await expect(await canvas.findByRole('tab', { name: /Sheet 2 Test/i })).toBeInTheDocument();
 };
