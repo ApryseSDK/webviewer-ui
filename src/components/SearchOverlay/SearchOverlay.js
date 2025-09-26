@@ -15,8 +15,8 @@ import Button from 'components/Button';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Spinner from '../Spinner';
 import SearchOptionsFlyout from './SearchOptionsFlyout';
-import { getInstanceNode } from 'helpers/getRootNode';
-import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
+import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
 import '../Button/Button.scss';
 
@@ -40,17 +40,19 @@ const propTypes = {
   selectPreviousResult: PropTypes.func,
   isProcessingSearchResults: PropTypes.bool,
   activeDocumentViewerKey: PropTypes.number,
+  showReplaceSpinner: PropTypes.bool,
+  setShowReplaceSpinner: PropTypes.func,
 };
 
 function SearchOverlay(props) {
   const { t } = useTranslation();
   const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult, isProcessingSearchResults, activeDocumentViewerKey } = props;
   const { searchValue, setSearchValue, executeSearch, replaceValue, nextResultValue, setReplaceValue } = props;
-  const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard, setSearchStatus, isSearchInProgress, setIsSearchInProgress } = props;
+  const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard, setSearchStatus } = props;
   const { searchStatus, isPanelOpen } = props;
+  const { showReplaceSpinner, setShowReplaceSpinner } = props;
   const [isReplaceBtnDisabled, setReplaceBtnDisabled] = useState(true);
   const [isReplaceAllBtnDisabled, setReplaceAllBtnDisabled] = useState(true);
-  const [showReplaceSpinner, setShowReplaceSpinner] = useState(false);
   const [isReplacementRegexValid, setReplacementRegexValid] = useState(true);
   const [allowInitialSearch, setAllowInitialSearch] = useState(false);
   const [isReplaceInputActive, setisReplaceInputActive] = useState(false);
@@ -58,6 +60,9 @@ function SearchOverlay(props) {
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
+  const dispatch = useDispatch();
+  const isSearchInProgress = useSelector((state) => selectors.isSearchInProgress(state));
+  const officeEditorIsReplaceInProgress = useSelector((state) => selectors.getOfficeEditorIsReplaceInProgress(state));
 
   useEffect(() => {
     try {
@@ -72,6 +77,9 @@ function SearchOverlay(props) {
     if (numberOfResultsFound > 0) {
       setSearchStatus('SEARCH_DONE');
     }
+
+    setReplaceBtnDisabled(numberOfResultsFound === 0);
+    setReplaceAllBtnDisabled(numberOfResultsFound === 0);
   }, [searchResults]);
 
   useEffect(() => {
@@ -102,28 +110,15 @@ function SearchOverlay(props) {
     }
   }, [isCaseSensitive, isWholeWord, isWildcard, activeDocumentViewerKey]);
 
-  useEffect(() => {
-    core.addEventListener('pagesUpdated', onPagesUpdated);
-    return () => {
-      core.removeEventListener('pagesUpdated', onPagesUpdated);
-    };
-  });
-
-  const onPagesUpdated = (e) => {
-    if (e.linearizedUpdate) {
-      return;
-    }
-    search(searchValue);
-  };
-
   const search = async (searchValue) => {
     if (searchValue && searchValue.length > 0) {
-      setIsSearchInProgress(true);
+      dispatch(actions.setSearchInProgress(true));
       setSearchStatus('SEARCH_IN_PROGRESS');
 
       if (isOfficeEditorMode()) {
         await core.getDocument().getOfficeEditor().updateSearchData();
       }
+
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
         wholeWord: isWholeWord,
@@ -139,13 +134,42 @@ function SearchOverlay(props) {
     [isCaseSensitive, isWholeWord, isWildcard]
   );
 
-  const throttleSearch = useCallback(
-    throttle(search, waitTime),
-    [isCaseSensitive, isWholeWord, isWildcard]
-  );
+  const throttleSearch = throttle(search, waitTime);
+  const searchParamsRef = useRef({
+    searchValue,
+    throttleSearch,
+    officeEditorIsReplaceInProgress
+  });
+
+  useEffect(() => {
+    searchParamsRef.current = {
+      searchValue,
+      throttleSearch,
+      officeEditorIsReplaceInProgress
+    };
+  }, [searchValue, throttleSearch, officeEditorIsReplaceInProgress, isCaseSensitive, isWholeWord, isWildcard]);
+
+  useEffect(() => {
+    core.addEventListener('pagesUpdated', onPagesUpdated);
+    return () => {
+      core.removeEventListener('pagesUpdated', onPagesUpdated);
+    };
+  });
+
+  const onPagesUpdated = (e) => {
+    const { searchValue, officeEditorIsReplaceInProgress } = searchParamsRef.current;
+    if (e.linearizedUpdate || officeEditorIsReplaceInProgress) {
+      return;
+    }
+    search(searchValue);
+  };
 
   useEffect(() => {
     const onOfficeDocumentEdited = () => {
+      const { searchValue, throttleSearch, officeEditorIsReplaceInProgress } = searchParamsRef.current;
+      if (officeEditorIsReplaceInProgress) {
+        return;
+      }
       if (searchValue && searchValue.length > 0) {
         throttleSearch(searchValue);
       }
@@ -156,13 +180,13 @@ function SearchOverlay(props) {
     return () => {
       core.getDocument()?.removeEventListener('officeDocumentEdited', onOfficeDocumentEdited);
     };
-  }, [searchValue]);
+  }, []);
 
   const textInputOnChange = (event) => {
     setSearchValue(event.target.value);
     debouncedSearch(event.target.value);
 
-    if (event.target.value && replaceValue) {
+    if (event.target.value && numberOfResultsFound > 0) {
       setReplaceBtnDisabled(false);
       setReplaceAllBtnDisabled(false);
     }
@@ -170,7 +194,7 @@ function SearchOverlay(props) {
 
   const replaceTextInputOnChange = (event) => {
     setReplaceValue(event.target.value);
-    if (event.target.value && searchValue) {
+    if (event.target.value && searchValue && numberOfResultsFound > 0) {
       setReplaceBtnDisabled(false);
       setReplaceAllBtnDisabled(false);
     }
@@ -224,45 +248,63 @@ function SearchOverlay(props) {
     [selectPreviousResult, searchResults, activeResultIndex],
   );
 
+  const toggleReplaceInput = () => {
+    setisReplaceInputActive(!isReplaceInputActive);
+  };
+
+  const retriggerSearch = () => {
+    if (isOfficeEditorMode()) {
+      search(searchValue);
+      return;
+    }
+
+    if (isSpreadsheetEditorMode()) {
+      const previousSearchValue = searchValue;
+      const previousReplaceValue = replaceValue;
+      clearSearchResult();
+      setSearchValue(previousSearchValue);
+      setReplaceValue(previousReplaceValue);
+
+      const shouldEnableReplaceButtons = core.getPageSearchResults()?.length > 0;
+      if (shouldEnableReplaceButtons) {
+        setReplaceBtnDisabled(false);
+        setReplaceAllBtnDisabled(false);
+      }
+    }
+  };
+
   const searchAndReplaceAll = useCallback(
     async function searchAndReplaceAllCallback() {
       if (isReplaceAllBtnDisabled && nextResultValue) {
         return;
       }
+
       setShowReplaceSpinner(true);
-      await getInstanceNode().instance.Core.ContentEdit.searchAndReplaceText({
-        documentViewer: getInstanceNode().instance.Core.documentViewer,
-        searchResults: core.getPageSearchResults(),
-        replaceWith: replaceValue,
-      });
+      const results = core.getPageSearchResults();
+      const documentViewer = core.getDocumentViewer();
+      await documentViewer.replace(results, replaceValue);
+      retriggerSearch();
       setShowReplaceSpinner(false);
+      setReplaceAllBtnDisabled(true);
     },
     [replaceValue]
   );
-
-  const toggleReplaceInput = () => {
-    setisReplaceInputActive(!isReplaceInputActive);
-  };
 
   const searchAndReplaceOne = useCallback(
     async function searchAndReplaceOneCallback() {
       if (isReplaceBtnDisabled && nextResultValue) {
         return;
       }
+
       setShowReplaceSpinner(true);
-
-      await getInstanceNode().instance.Core.ContentEdit.searchAndReplaceText({
-        documentViewer: getInstanceNode().instance.Core.documentViewer,
-        replaceWith: replaceValue,
-        searchResults: [core.getActiveSearchResult()],
-      });
-
+      const activeSearchResult = core.getActiveSearchResult();
+      const documentViewer = core.getDocumentViewer();
+      await documentViewer.replace([activeSearchResult], replaceValue);
+      retriggerSearch();
       setShowReplaceSpinner(false);
     },
     [replaceValue, nextResultValue, isReplaceBtnDisabled]
   );
-
-  const dispatch = useDispatch();
 
   const replaceAllConfirmationWarning = () => {
     const title = t('option.searchPanel.replaceText');
@@ -359,7 +401,7 @@ function SearchOverlay(props) {
         </div>
       </div>
       {shouldShowReplaceInput && (
-        <div data-element="searchAndReplace" className="replace-options">
+        <div data-element={DataElements.SEARCH_PANEL_REPLACE_CONTAINER} className="replace-options">
           <div className="input-container with-replace-icon">
             <Icon
               disabled={false}
@@ -373,13 +415,22 @@ function SearchOverlay(props) {
             />
           </div>
           <div className='replace-buttons'>
-            {(showReplaceSpinner) ? <Spinner width={25} height={25} /> : null}
-            <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
-              aria-label={t('option.searchPanel.replaceAll')}
-              onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
-            <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
-              aria-label={t('option.searchPanel.replace')}
-              onClick={replaceOneConfirmationWarning}>{t('option.searchPanel.replace')}</button>
+            {(showReplaceSpinner) ? <Spinner width={'25px'} height={'25px'} /> : null}
+            <Button
+              onClick={replaceAllConfirmationWarning}
+              title={t('option.searchPanel.replaceAll')}
+              ariaLabel={t('option.searchPanel.replaceAll')}
+              className={'btn-replace-all'}
+              disabled={isReplaceAllBtnDisabled}
+            >{t('option.searchPanel.replaceAll')}</Button>
+
+            <Button
+              onClick={replaceOneConfirmationWarning}
+              title={t('option.searchPanel.replace')}
+              ariaLabel={t('option.searchPanel.replace')}
+              className={'btn-replace'}
+              disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
+            >{t('option.searchPanel.replace')}</Button>
           </div>
         </div>
       )}
@@ -398,11 +449,11 @@ function SearchOverlay(props) {
         <p className="no-margin" aria-live="assertive">{isSearchDoneAndNotProcessingResults && !isSearchInProgress ? `${numberOfResultsFound} ${t('message.numResultsFound')}` : undefined}</p>
         {numberOfResultsFound > 0 && (
           <div className="buttons">
-            <button className="button" onClick={previousButtonOnClick} aria-label={t('action.prevResult')}>
-              <Icon className="arrow" glyph="icon-chevron-left" />
+            <button className="button" onClick={previousButtonOnClick} title={t('action.prevResult')} aria-label={t('action.prevResult')}>
+              <Icon className="arrow" glyph={getStartFacingChevronIcon()} />
             </button>
-            <button className="button" onClick={nextButtonOnClick} aria-label={t('action.nextResult')}>
-              <Icon className="arrow" glyph="icon-chevron-right" />
+            <button className="button" onClick={nextButtonOnClick} title={t('action.nextResult')} aria-label={t('action.nextResult')}>
+              <Icon className="arrow" glyph={getEndFacingChevronIcon()} />
             </button>
           </div>
         )}
