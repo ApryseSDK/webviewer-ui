@@ -20,6 +20,9 @@ const createMockDocumentViewer = (getSelectedCellRange, cells) => () => ({
   }),
 });
 
+const mockReturnRange = () => ({ firstRow: 0, lastRow: 1, firstColumn: 0, lastColumn: 1 });
+const mockCells = [{ getStyle: () => ({ getCellBorder: () => ({ style: 'None' }) }) }, {}];
+
 const createInitialState = (activeFlyout, openElement) => ({
   ...oePartialState,
   viewer: {
@@ -118,10 +121,7 @@ const WithResetCoreViewer = ({ children }) => {
 
 const withStoreAndMockedCore = (activeFlyout, openElement) => {
   const decorator = (Story) => {
-    core.getDocumentViewer = createMockDocumentViewer(
-      () => ({ firstRow: 0, lastRow: 1, firstColumn: 0, lastColumn: 1 }),
-      [1, 2]
-    );
+    core.getDocumentViewer = createMockDocumentViewer(mockReturnRange, mockCells);
     const store = createStore(activeFlyout, openElement);
     return (
       <Provider store={store}>
