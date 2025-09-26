@@ -11,7 +11,7 @@ import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
 import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'helpers/hotkeysManager';
 import { getInstanceNode } from 'helpers/getRootNode';
-import { isOfficeEditorMode, isSpreadsheetEditorDocument } from 'helpers/officeEditor';
+import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { panelNames } from 'constants/panel';
 import { getPortfolioFiles } from 'helpers/portfolio';
@@ -20,9 +20,10 @@ import {
   OfficeEditorEditMode,
   EditingStreamType,
   ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR,
-  ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR
+  ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR,
+  EDIT_OPERATION_SOURCE,
 } from 'constants/officeEditor';
-import { SPREADSHEET_EDITOR_SCOPE, ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR } from 'src/constants/spreadsheetEditor';
+import { SPREADSHEET_EDITOR_SCOPE, ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR, SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FeatureFlags from 'constants/featureFlags';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
@@ -258,12 +259,12 @@ export const configureOfficeEditor = (store) => () => {
       isCustomUIEnabled ?
         dispatch(actions.disableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
         dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-      dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON, DataElements.SEARCH_PANEL_REPLACE_CONTAINER], PRIORITY_TWO));
     } else {
       isCustomUIEnabled ?
         dispatch(actions.enableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
         dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-      dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
+      dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON, DataElements.SEARCH_PANEL_REPLACE_CONTAINER], PRIORITY_TWO));
     }
     if (editMode === OfficeEditorEditMode.REVIEWING || editMode === OfficeEditorEditMode.PREVIEW) {
       dispatch(actions.openElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
@@ -327,12 +328,30 @@ export const configureOfficeEditor = (store) => () => {
     doc.addEventListener('editModeUpdated', updateEditMode);
     updateActiveStream(EditingStreamType.BODY);
     contentSelectTool.addEventListener('activeStreamChanged', updateActiveStream);
-    doc.addEventListener('editOperationStarted', () => {
-      core.getOfficeEditor().setEditMode('viewOnly');
+    doc.addEventListener('editOperationStarted', ({ source }) => {
+      switch (source) {
+        case EDIT_OPERATION_SOURCE.HEADER_FOOTER:
+          core.getOfficeEditor().setEditMode('viewOnly');
+          break;
+        case EDIT_OPERATION_SOURCE.REPLACE:
+          dispatch(actions.setOfficeEditorIsReplaceInProgress(true));
+          break;
+        default:
+          break;
+      }
       dispatch(actions.openElement('loadingModal'));
     });
-    doc.addEventListener('editOperationEnded', () => {
-      core.getOfficeEditor().setEditMode('editing');
+    doc.addEventListener('editOperationEnded', ({ source }) => {
+      switch (source) {
+        case EDIT_OPERATION_SOURCE.HEADER_FOOTER:
+          core.getOfficeEditor().setEditMode('editing');
+          break;
+        case EDIT_OPERATION_SOURCE.REPLACE:
+          dispatch(actions.setOfficeEditorIsReplaceInProgress(false));
+          break;
+        default:
+          break;
+      }
       dispatch(actions.closeElement('loadingModal'));
     });
     // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
@@ -340,10 +359,34 @@ export const configureOfficeEditor = (store) => () => {
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
     dispatch(actions.setClearSearchOnPanelClose(true));
-  } else if (isSpreadsheetEditorDocument()) {
+  } else if (isSpreadsheetEditorMode()) {
     if (!isCustomUIEnabled) {
       console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
+    }
+    const spreadsheetEditorOptions = getHashParameters('spreadsheetEditorOptions', '{}');
+    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || SpreadsheetEditorEditMode.VIEW_ONLY;
+    if (!Object.values(SpreadsheetEditorEditMode).includes(onLoadEditMode)) {
+      console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to view mode.`);
+      onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;
+    }
+    dispatch(actions.setSpreadsheetEditorEditMode(onLoadEditMode));
+    const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
+    spreadsheetEditorManager.setEditMode(onLoadEditMode);
+    if (onLoadEditMode === SpreadsheetEditorEditMode.VIEW_ONLY) {
+      dispatch(
+        actions.disableElements(
+          [DataElements.SEARCH_PANEL_REPLACE_CONTAINER],
+          PRIORITY_THREE
+        )
+      );
+    } else {
+      dispatch(
+        actions.enableElements(
+          [DataElements.SEARCH_PANEL_REPLACE_CONTAINER],
+          PRIORITY_THREE
+        )
+      );
     }
     swapUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR);
     dispatch(actions.disableElements(
