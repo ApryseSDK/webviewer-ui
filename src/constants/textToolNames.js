@@ -1,0 +1,14 @@
+export default [
+  'FREETEXT',
+  'FREETEXT2',
+  'FREETEXT3',
+  'FREETEXT4',
+  'CALLOUT',
+  'CALLOUT2',
+  'CALLOUT3',
+  'CALLOUT4',
+  'REDACTION',
+  'REDACTION2',
+  'REDACTION3',
+  'REDACTION4',
+];

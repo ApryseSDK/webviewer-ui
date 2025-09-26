@@ -2,6 +2,7 @@ const WEBVIEWER_STORAGE_PATTERN = [
   'wc--toolData',
   'wc-viewer',
   'webviewer',
+  'default-toolData',
 ];
 
 class LocalStorageManager {
