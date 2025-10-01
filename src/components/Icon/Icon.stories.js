@@ -14,6 +14,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function Colorized() {
   return (
     /* eslint-disable custom/no-hex-colors */
@@ -25,6 +27,8 @@ export function Colorized() {
   );
 }
 
+Colorized.parameters = window.storybook.disableRtlMode;
+
 export function Disabled() {
   return (
     <div>
@@ -33,3 +37,5 @@ export function Disabled() {
     </div>
   );
 }
+
+Disabled.parameters = window.storybook.disableRtlMode;

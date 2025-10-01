@@ -14,12 +14,12 @@ import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 import { getFlyoutItemType } from 'helpers/itemToFlyoutHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { getElementToFocusOnIndex } from 'helpers/keyboardNavigationHelper';
+import getAppRect from 'helpers/getAppRect';
 import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/FlyoutItem';
 import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
-import getAppRect from 'helpers/getAppRect';
-import debounce from 'lodash/debounce';
+import core from 'core';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -35,6 +35,7 @@ const Flyout = () => {
   const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
   const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
   const currentPage = useSelector(selectors.getCurrentPage);
+  const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
 
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
@@ -68,64 +69,73 @@ const Flyout = () => {
 
   useLayoutEffect(() => {
     const tempRefElement = getElementDOMRef(toggleElement);
-    const appRect = getAppRect();
-    const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
-    setMaxHeightValue(maxHeightValue);
 
-    // Check if the element is in the dom or invisible
+    // Check if the element is in the DOM or invisible
     if (tempRefElement && tempRefElement.offsetParent === null) {
       return;
     }
 
-    const calculateAndSetPosition = () => {
-      const tempRefElement = getElementDOMRef(toggleElement);
-      const appRect = getAppRect();
-      const correctedPosition = { x: position.x, y: position.y };
-      // Check if toggleElement is not null
-      if (toggleElement && tempRefElement) {
+    const calculateAndMaybeSetPosition = () => {
+      const refEl = getElementDOMRef(toggleElement);
+      const app = getAppRect();
+      // Keep max height in sync with the exact app rect used for positioning
+      setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
+      const next = { x: position.x, y: position.y };
+
+      if (toggleElement && refEl) {
         const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
-        correctedPosition.x = x;
-        correctedPosition.y = y;
+        next.x = x;
+        next.y = y;
       }
+
       const flyoutRect = flyoutRef.current?.getBoundingClientRect();
-      if (flyoutRect) {
+      if (flyoutRect && app) {
         const PADDING = 5;
-        const widthOverflow = correctedPosition.x + flyoutRect.width + PADDING - appRect.right;
-        const heightOverflow = correctedPosition.y + flyoutRect.height + PADDING - appRect.bottom;
+        const widthOverflow = next.x + flyoutRect.width + PADDING - app.right;
+        const heightOverflow = next.y + flyoutRect.height + PADDING - app.bottom;
         if (widthOverflow > 0) {
-          correctedPosition.x -= widthOverflow;
+          next.x -= widthOverflow;
         }
         if (heightOverflow > 0) {
-          correctedPosition.y -= heightOverflow;
+          next.y -= heightOverflow;
         }
-        if (correctedPosition.x < PADDING) {
-          correctedPosition.x = PADDING;
+        if (next.x < PADDING) {
+          next.x = PADDING;
         }
-        if (correctedPosition.y < PADDING) {
-          correctedPosition.y = PADDING;
+        if (next.y < PADDING) {
+          next.y = PADDING;
         }
       }
-      setCorrectedPosition(correctedPosition);
+
+      setCorrectedPosition((prev) => {
+        if (!prev || prev.x !== next.x || prev.y !== next.y) {
+          return next;
+        }
+        return prev;
+      });
     };
 
-    // Wait for flyout to render all items before calculating position
+    // Run once now and once on the next frame to catch late layout
     if (flyoutRef.current) {
-      let observer;
-      const disconnect = debounce(
-        () => observer.disconnect(),
-        100, { leading: false, trailing: true });
-      const setPosition = () => {
-        calculateAndSetPosition();
-        disconnect();
-      };
-      // Set position at multiple stages to minimize flickering
-      observer = new MutationObserver(setPosition);
-      observer.observe(flyoutRef.current, { attributes: true, childList: true, subtree: true });
-      setPosition();
-      requestAnimationFrame(setPosition);
-      return () => observer.disconnect();
+      calculateAndMaybeSetPosition();
+      requestAnimationFrame(calculateAndMaybeSetPosition);
     }
-  }, [activeItem, position, items, inputValue]);
+
+    let resizeObserver;
+
+    if (typeof ResizeObserver !== 'undefined' && flyoutRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        calculateAndMaybeSetPosition();
+      });
+      resizeObserver.observe(flyoutRef.current);
+    }
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, [activePath, position, items, inputValue, isFlyoutOpen]);
 
   useLayoutEffect(() => {
     const appRect = getAppRect();
@@ -141,7 +151,7 @@ const Flyout = () => {
       }
     }
     setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && (flyoutRect.height > appRect.height || isChildOverflowing));
-  }, [activeItem, position, items]);
+  }, [activePath, position, items]);
 
   useEffect(() => {
     if (flyoutRef.current) {
@@ -175,17 +185,26 @@ const Flyout = () => {
     setActivePath([]);
   }, [dispatch, activeFlyout]));
 
+  const isPlacingSignatureOnDocument = (e) => {
+    const toolMode = core.getToolMode();
+    const isSignatureTool =  ['AnnotationCreateSignature', 'AnnotationCreateInitials'].includes(toolMode?.name);
+    const isPlacingOnWidget = e.target.closest('[id^="SignatureFormField"]');
+    const isPlacingOnDocument = e.target.id.startsWith('pageContainer') || e.target.id.startsWith('pageWidgetContainer');
+    return isSignatureTool && (isPlacingOnWidget || isPlacingOnDocument);
+  };
+
   const onClickOutside = useCallback(
     (e) => {
       const menuButton = getElementDOMRef(toggleElement);
       const clickedMenuButton = menuButton?.contains(e.target);
       const isClickingColorPicker = e.target.closest('.ColorPickerOverlay');
       const isClickingColorModal = e.target.closest('[data-element="ColorPickerModal"]');
-      if (!clickedMenuButton && !isClickingColorPicker && !isClickingColorModal) {
+      const isDrawingOrCreatingSignature = isSignatureModalOpen && (e.target.closest('.SignatureModal') || e.target.classList.contains('signature-create'));
+      if (!clickedMenuButton && !isClickingColorPicker && !isClickingColorModal && !isPlacingSignatureOnDocument(e) && !isDrawingOrCreatingSignature) {
         closeFlyout();
       }
     },
-    [closeFlyout, toggleElement],
+    [closeFlyout, toggleElement, isSignatureModalOpen],
   );
 
   useOnClickOutside(flyoutRef, onClickOutside);

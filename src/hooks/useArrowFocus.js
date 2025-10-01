@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { focusableElementDomString } from '@pdftron/webviewer-react-toolkit';
+import { focusableElementDomString } from 'constants/focusableElementDomString';
 import { findFocusableIndex } from '../helpers/accessibility';
 
 /**

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
 import Dropdown from 'components/Dropdown';
 import IncrementNumberInput from './IncrementNumberInput';

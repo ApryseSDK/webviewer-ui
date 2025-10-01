@@ -8,15 +8,15 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { mapToolNameToKey } from 'constants/map';
 import defaultTool from 'constants/defaultTool';
+import { ITEM_RENDER_PREFIXES, PLACEMENT } from 'constants/customizationVariables';
+import DataElements from 'constants/dataElement';
 import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';
 import { shortcutAria } from 'helpers/hotkeysManager';
 import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
-import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
-import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -50,84 +50,80 @@ const ToolButton = forwardRef((props, ref) => {
     (state) => selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
     shallowEqual
   );
-  const rubberStampPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.RUBBER_STAMP_PANEL));
-  const signatureListPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL));
+  const rubberStampPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.RUBBER_STAMP_PANEL), shallowEqual);
+  const signatureListPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL), shallowEqual);
+  const isSignatureListFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, signatureListPanelInFlyout?.dataElement));
+  const isRubberStampPanelInFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, rubberStampPanelInFlyout?.dataElement));
 
   const dispatch = useDispatch();
 
   const [isButtonActive, setIsButtonActive] = useState(activeToolName === toolName);
 
-  useEffect(() => {
-    if (toolName === activeToolName) {
-      setIsButtonActive(true);
-    } else {
-      setIsButtonActive(false);
-    }
-  }, [activeToolName]);
+  const isToolAssociatedWithPanel = [ToolNames.SIGNATURE, ToolNames.RUBBER_STAMP].includes(toolName);
 
-  const isToolWithPanelAssociatedActive = (toolName, activeTool) => {
-    const isDefaultToolActive = activeTool === defaultTool;
-    const isActiveToolSameOfToolName = activeTool === toolName;
-    if (isDefaultToolActive || isActiveToolSameOfToolName) {
-      if (toolName === ToolNames.SIGNATURE) {
-        return isSignatureListPanelOpen;
+  const isPanelAssociatedWithToolOpen = () => {
+    const isDefaultToolActive = toolName === defaultTool;
+
+    if (isToolAssociatedWithPanel) {
+      if (isDefaultToolActive || toolName === ToolNames.SIGNATURE) {
+        return signatureListPanelInFlyout ? isSignatureListFlyoutOpen : isSignatureListPanelOpen;
       }
-      if (toolName === ToolNames.RUBBER_STAMP) {
-        return isRubberStampPanelOpen;
+      if (isDefaultToolActive || toolName === ToolNames.RUBBER_STAMP) {
+        return rubberStampPanelInFlyout ? isRubberStampPanelInFlyoutOpen : isRubberStampPanelOpen;
       }
     }
     return false;
   };
 
 
+  const handleToolModeChange = (activeTool) => {
+    const isActiveTool = activeTool === toolName;
+    const shouldActivateButton = (isActiveTool && !isToolAssociatedWithPanel) || (isToolAssociatedWithPanel && isPanelAssociatedWithToolOpen());
+
+    if (shouldActivateButton) {
+      setIsButtonActive(true);
+      handlePanels(activeTool, 'open');
+    } else {
+      setIsButtonActive(false);
+    }
+  };
+
   useEffect(() => {
-    const handleToolModeChange = (tool) => {
-      const isSignatureToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
-      const isRubberStampToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
-      const shouldActivateButton = tool.name === toolName || isSignatureToolActive || isRubberStampToolActive;
-
-      if (shouldActivateButton) {
-        setIsButtonActive(true);
-      } else {
-        setIsButtonActive(false);
-      }
-    };
-
-    core.addEventListener('toolModeUpdated', handleToolModeChange);
-    return () => {
-      core.removeEventListener('toolModeUpdated', handleToolModeChange);
-    };
-  }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
-
+    handleToolModeChange(activeToolName);
+  }, [activeToolName, isSignatureListPanelOpen, isRubberStampPanelOpen, isSignatureListFlyoutOpen, isRubberStampPanelInFlyoutOpen]);
 
   const handlePanels = (toolName, action) => {
-    let elementToHandle;
+    let panelToHandle;
     let isPanelInFlyout = false;
 
     if (toolName === ToolNames.SIGNATURE) {
       if (signatureListPanelInFlyout) {
-        elementToHandle = signatureListPanelInFlyout.dataElement;
+        panelToHandle = signatureListPanelInFlyout.dataElement;
         isPanelInFlyout = true;
       } else {
-        elementToHandle = DataElements.SIGNATURE_LIST_PANEL;
+        panelToHandle = DataElements.SIGNATURE_LIST_PANEL;
       }
     } else if (toolName === ToolNames.RUBBER_STAMP) {
       if (rubberStampPanelInFlyout) {
-        elementToHandle = rubberStampPanelInFlyout.dataElement;
+        panelToHandle = rubberStampPanelInFlyout.dataElement;
         isPanelInFlyout = true;
       } else {
-        elementToHandle = DataElements.RUBBER_STAMP_PANEL;
+        panelToHandle = DataElements.RUBBER_STAMP_PANEL;
       }
+    }
+
+    if (!panelToHandle) {
+      return;
     }
 
     if (action === 'open') {
       if (isPanelInFlyout) {
-        dispatch(actions.openFlyout(elementToHandle, dataElement));
+        dispatch(actions.openFlyout(panelToHandle, dataElement));
         return;
       }
-      dispatch(actions.openElement(elementToHandle));
+      dispatch(actions.openElement(panelToHandle));
     } else if (action === 'close') {
-      dispatch(actions.closeElement(elementToHandle));
+      dispatch(actions.closeElement(panelToHandle));
     }
   };
 
@@ -169,8 +165,8 @@ const ToolButton = forwardRef((props, ref) => {
 
   let forceTooltipPosition;
 
-  if (['left', 'right'].includes(headerPlacement)) {
-    forceTooltipPosition = headerPlacement === 'left' ? 'right' : 'left';
+  if ([PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(headerPlacement)) {
+    forceTooltipPosition = headerPlacement === PLACEMENT.LEFT ? PLACEMENT.RIGHT : PLACEMENT.LEFT;
   }
 
   if (isFlyoutItem) {

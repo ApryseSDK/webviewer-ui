@@ -34,6 +34,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function ImageDropdown() {
   const images = [
     { key: 'None', src: 'icon-linestyle-none' },
@@ -63,6 +65,7 @@ export function ImageDropdown() {
     </ReduxProvider>
   );
 }
+ImageDropdown.parameters = window.storybook.disableRtlMode;
 
 export function DropdownWithInput() {
   const translationPrefix = 'option.notesOrder';
@@ -145,6 +148,7 @@ export function DropdownWithInput() {
   );
 }
 
+DropdownWithInput.parameters = window.storybook.disableRtlMode;
 export function DropdownWithInputAndNoSearch() {
 
   const [pointSizeSelectionKey, setPointSizeSelectionKey] = React.useState(DEFAULT_POINT_SIZE.toString());
@@ -185,6 +189,8 @@ export function DropdownWithInputAndNoSearch() {
 
 }
 
+DropdownWithInputAndNoSearch.parameters = window.storybook.disableRtlMode;
+
 export function DropdownWithCustomDisplay({ disabled = false }) {
   const translationPrefix = 'option.notesOrder';
   const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
@@ -217,9 +223,13 @@ DropdownWithCustomDisplay.propTypes = {
   disabled: PropTypes.bool,
 };
 
+DropdownWithCustomDisplay.parameters = window.storybook.disableRtlMode;
+
 export function DropdownWithCustomDisplayAndDisabled() {
   return <DropdownWithCustomDisplay disabled={true} />;
 }
+
+DropdownWithCustomDisplayAndDisabled.parameters = window.storybook.disableRtlMode;
 
 export function DropdownWithNoItems() {
   const images = [];
@@ -235,3 +245,5 @@ export function DropdownWithNoItems() {
     </ReduxProvider>
   );
 }
+
+DropdownWithNoItems.parameters = window.storybook.disableRtlMode;

@@ -150,14 +150,17 @@ const FlexDropdownWrapper = ({ isBottomAligned, arrowDirection, direction, heigh
 };
 
 const Template = (args) => <FlexDropdownWrapper {...args} />;
+Template.parameters = window.storybook.disableRtlMode;
 
 export const Basic = Template.bind({});
+Basic.parameters = window.storybook.disableRtlMode;
 
 export const BottomAligned = Template.bind({});
 BottomAligned.args = {
   isBottomAligned: true,
   arrowDirection: 'up',
 };
+BottomAligned.parameters = window.storybook.disableRtlMode;
 
 export const Vertical = Template.bind({});
 Vertical.args = {
@@ -166,6 +169,7 @@ Vertical.args = {
   width: 68,
   arrowDirection: 'left',
 };
+Vertical.parameters = window.storybook.disableRtlMode;
 
 export const VerticalBottomAligned = Template.bind({});
 VerticalBottomAligned.args = {
@@ -175,3 +179,4 @@ VerticalBottomAligned.args = {
   width: 68,
   arrowDirection: 'right',
 };
+VerticalBottomAligned.parameters = window.storybook.disableRtlMode;

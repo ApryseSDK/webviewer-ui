@@ -56,6 +56,8 @@ export function Basic(args) {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function CustomHeaderOverwriteDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {
     overwriteDefaultHeader: true,
@@ -76,6 +78,8 @@ export function CustomHeaderOverwriteDefault() {
   );
 }
 
+CustomHeaderOverwriteDefault.parameters = window.storybook.disableRtlMode;
+
 export function CustomHeaderPrependToDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {
     overwriteDefaultHeader: false,
@@ -95,6 +99,8 @@ export function CustomHeaderPrependToDefault() {
     </Provider>
   );
 }
+
+CustomHeaderPrependToDefault.parameters = window.storybook.disableRtlMode;
 
 function customHeaderRenderFunction(notes) {
   const div = document.createElement('div');

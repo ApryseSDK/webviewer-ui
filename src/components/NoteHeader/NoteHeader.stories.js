@@ -82,6 +82,8 @@ export function Basic() {
     </Provider>
   );
 }
+Basic.parameters = window.storybook.disableRtlMode;
+
 
 export const testPropsWithAnnotationNumbering = {
   ...testProps,
@@ -97,6 +99,8 @@ export function BasicWithAnnotationNumbering() {
     </Provider>
   );
 }
+BasicWithAnnotationNumbering.parameters = window.storybook.disableRtlMode;
+
 
 export const testPropsWithTrackedChange = {
   ...testProps,
@@ -113,3 +117,5 @@ export function BasicWithTrackedChange() {
     </Provider>
   );
 }
+BasicWithTrackedChange.parameters = window.storybook.disableRtlMode;
+

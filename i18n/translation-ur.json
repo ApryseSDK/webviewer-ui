@@ -99,6 +99,7 @@
     "pageManipulation": "صفحہ ہیرا پھیری",
     "replace": "بدل دیں۔",
     "replacePage": "صفحہ تبدیل کریں۔",
+    "goToResult": "نتیجہ پر جائیں",
     "modal": "سرمایہ",
     "isOpen": "کھلا ہے",
     "setDestination": "منزل طے کریں۔",
@@ -347,7 +348,8 @@
     "errorPageNumber": "غلط صفحہ نمبر۔ حد ہے۔ ",
     "errorBlankPageNumber": "براہ کرم صفحہ نمبر بتائیں",
     "errorLoadingDocument": "اس دستاویز کو پڑھنے میں ایک مسئلہ تھا اور ہو سکتا ہے کہ کچھ صفحات ظاہر نہ ہوں۔ یہ اشارہ کرتا ہے کہ دستاویز خراب ہو سکتی ہے۔ صفحات کی کل تعداد {{totalPageCount}} ہے اور دکھائے جانے والے صفحات کی تعداد {{displayedPageCount}} ہے۔",
-    "noRevisions": "اس دستاویز میں کوئی ترمیم نہیں ہے۔"
+    "noRevisions": "اس دستاویز میں کوئی ترمیم نہیں ہے۔",
+    "listEmptyValue": "ایک یا زیادہ فیلڈز کی قدر خالی ہے۔"
   },
   "option": {
     "type": {
@@ -1220,7 +1222,7 @@
     "cropDimensions": "فصل کے طول و عرض",
     "dimensionInput": {
       "unitOfMeasurement": "یونٹ",
-      "autoTrim": "presets",
+      "autoTrim": "پیش سیٹس",
       "autoTrimCustom": "حسب ضرورت"
     },
     "cropModal": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "فونٹ فیملی"
     },
-    "blankSheet": "خالی شیٹ"
+    "blankSheet": "خالی شیٹ",
+    "insertImage": "تصویر داخل کریں۔"
   },
   "insertPageModal": {
     "title": "نیا صفحہ داخل کریں۔",
@@ -1547,7 +1550,7 @@
     },
     "pageDimensions": {
       "header": "صفحہ کے طول و عرض",
-      "subHeader": "presets",
+      "subHeader": "پیش سیٹ",
       "presets": {
         "letter": "خط",
         "halfLetter": "آدھا خط",

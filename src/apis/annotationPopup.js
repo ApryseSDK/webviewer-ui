@@ -10,5 +10,6 @@ WebViewer(...)
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';
+import DataElements from 'constants/dataElement';
 
-export default (store) => createPopupAPI(store, 'annotationPopup');
+export default (store) => createPopupAPI(store, DataElements.ANNOTATION_POPUP);

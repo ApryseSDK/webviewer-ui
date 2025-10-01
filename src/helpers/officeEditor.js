@@ -30,7 +30,7 @@ export function isOfficeEditorMode() {
   return core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR;
 }
 
-export function isSpreadsheetEditorDocument() {
+export function isSpreadsheetEditorMode() {
   return core.getDocument()?.getType() === workerTypes.SPREADSHEET_EDITOR;
 }
 

@@ -5,7 +5,6 @@ import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { RESIZE_BAR_WIDTH } from 'src/constants/panel';
 // Mocking useSelector
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -52,7 +51,7 @@ describe('useFloatingHeaderSelectors hook', () => {
         ...initialState.viewer,
         openElements: {
           ...initialState.viewer.openElements,
-          leftPanel: false,
+          leftPanel: true,
           notesPanel: false,
           redactionPanel: true,
         },
@@ -64,6 +63,18 @@ describe('useFloatingHeaderSelectors hook', () => {
           topFloatingContainerHeight: 36,
           bottomFloatingContainerHeight: 28,
         },
+        genericPanels: [
+          {
+            'dataElement': 'redactionPanel',
+            'render': 'redactionPanel',
+            'location': 'end'
+          },
+          {
+            'dataElement': 'leftPanel',
+            'render': 'tabPanel',
+            'location': 'start'
+          }
+        ],
         modularHeaders: [
           floatEndBottomHeader,
           floatStartTopHeader,
@@ -84,9 +95,9 @@ describe('useFloatingHeaderSelectors hook', () => {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
 
-    expect(result.current.isLeftPanelOpen).toBeFalsy();
+    expect(result.current.isLeftPanelOpen).toBe(true);
     expect(result.current.isRightPanelOpen).toBe(true);
-    expect(result.current.leftPanelWidth).toBe(mockState.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH);
+    expect(result.current.leftPanelWidth).toBe(mockState.viewer.panelWidths.leftPanel);
     expect(result.current.rightPanelWidth).toBe(mockState.viewer.panelWidths.redactionPanel);
     expect(result.current.leftHeaderWidth).toBe(0);
     expect(result.current.rightHeaderWidth).toBe(0);

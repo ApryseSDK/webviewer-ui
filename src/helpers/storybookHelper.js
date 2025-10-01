@@ -25,7 +25,8 @@ export const createStore = (preloadedState) => {
 
 // isOffset adds a div beside WebViewer, so that it behaves as if it was
 // in Showcase or our samples.
-export const MockApp = ({ initialState, width, height, isOffset, storeRef = null }) => {
+export const MockApp = ({ initialState, width, height, isOffset, storeRef = null, initialDirection }) => {
+
   const [store] = useState(createStore(initialState));
   if (storeRef) {
     // This is useful for tests that need to access the store directly
@@ -72,7 +73,7 @@ export const MockApp = ({ initialState, width, height, isOffset, storeRef = null
             flexShrink: 0,
           }}
         />}
-        <App removeEventHandlers={noop} />
+        <App removeEventHandlers={noop} initialDirection={initialDirection} />
       </div>
     </Provider>
   );
@@ -84,9 +85,11 @@ MockApp.propTypes = {
   height: PropTypes.string,
   isOffset: PropTypes.bool,
   storeRef: PropTypes.object,
+  initialDirection: PropTypes.string,
 };
 
 const BasicAppTemplate = (args, context) => {
+  const { addonRtl } = context.globals;
   const isMultiTab = args?.isMultiTab || false;
   const stateWithHeaders = {
     ...initialState,
@@ -117,9 +120,13 @@ const BasicAppTemplate = (args, context) => {
     spreadsheetEditor: {
       ...initialState.spreadsheetEditor,
       ...args.spreadsheetEditorRedux,
-    }
+    },
+    document: {
+      ...initialState.document,
+      ...args.documentRedux
+    },
   };
-  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} storeRef={args.storeRef} />;
+  return <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} storeRef={args.storeRef} initialDirection={addonRtl} />;
 };
 
 export const createTemplate = ({
@@ -131,11 +138,12 @@ export const createTemplate = ({
   height = '100%',
   spreadsheetEditorRedux = {},
   viewerRedux = {},
+  documentRedux = {},
   uiConfiguration = VIEWER_CONFIGURATIONS.DEFAULT,
   storeRef = null,
 }) => {
   const template = BasicAppTemplate.bind({});
-  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux, uiConfiguration, storeRef };
+  template.args = { headers, components, flyoutMap, isMultiTab, width, height, spreadsheetEditorRedux, viewerRedux, documentRedux, uiConfiguration, storeRef };
   template.parameters = { layout: 'fullscreen' };
   return template;
 };
@@ -271,7 +279,16 @@ export const setupNotesPanelCoreMocks = (core, annotations, selectedAnnotations)
       getDisplayMode: () => ({
         isContinuous: () => true
       })
-    })
+    }),
+    getViewerElement: () => {},
+    getAccessibleReadingOrderManager: () => ({
+      isInAccessibleReadingOrderMode: () => false,
+      startAccessibleReadingOrderMode: noop,
+      endAccessibleReadingOrderMode: noop,
+      addEventListener: noop,
+      removeEventListener: noop,
+    }),
+    addEventListener: () => {},
   };
   core.getDocumentViewer = () => documentViewer;
   core.canModifyContents = () => true;
@@ -279,6 +296,9 @@ export const setupNotesPanelCoreMocks = (core, annotations, selectedAnnotations)
   core.getGroupAnnotations = () => [];
   core.selectAnnotation = () => undefined;
   core.jumpToAnnotation = () => noop;
+  core.isCreateRedactionEnabled = () => true;
+  core.getToolModeMap = () => ({});
+  core.getNumberOfGroups = () => 0;
 };
 
 export const string280Chars = 'very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_very_long_file_name_';

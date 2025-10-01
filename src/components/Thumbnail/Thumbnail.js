@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useImperativeHandle, useCallback } 
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import selectors from 'selectors';
-import useDidUpdate from 'hooks/useDidUpdate';
 import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
 import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
@@ -10,9 +9,10 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import './Thumbnail.scss';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import getRootNode from 'helpers/getRootNode';
 import findFocusableElements from 'helpers/findFocusableElements';
+import useIsRTL from 'src/hooks/useIsRTL';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
@@ -40,13 +40,11 @@ const Thumbnail = React.forwardRef((props, ref) => {
     actions,
     isMobile,
     canLoad,
-    onCancel,
     isThumbnailSelectingPages,
     thumbnailSelectionMode,
     activeDocumentViewerKey,
     panelSelector,
     parentKeyListener,
-    isRightToLeft,
   } = props;
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
@@ -57,6 +55,8 @@ const Thumbnail = React.forwardRef((props, ref) => {
   const { t } = useTranslation();
   // To ensure checkmark loads after thumbnail
   const [loaded, setLoaded] = useState(false);
+  const isRightToLeft = useIsRTL();
+  const rtlRef = useRef(isRightToLeft);
 
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
 
@@ -74,9 +74,14 @@ const Thumbnail = React.forwardRef((props, ref) => {
     };
   }, []);
 
+  useEffect(() => {
+    rtlRef.current = isRightToLeft;
+  }, [isRightToLeft]);
+
   const loadThumbnailAsync = () => {
     loadTimeout = setTimeout(() => {
       const thumbnailContainer = getRootNode().querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
+      const isRTL = rtlRef.current;
 
       const pageNum = index + 1;
       const viewerRotation = core.getRotation(pageNum);
@@ -98,12 +103,16 @@ const Thumbnail = React.forwardRef((props, ref) => {
                 thumbnailContainer.removeChild(childElement);
               }
 
-              thumb.className = `page-image ${isRightToLeft ? 'right-to-left' : ''}`;
+              thumb.className = `page-image ${isRTL ? 'right-to-left' : ''}`;
 
               const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
               thumb.style.width = `${thumb.width * ratio}px`;
               thumb.style.height = `${thumb.height * ratio}px`;
               setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
+
+              if (isRTL) {
+                thumb.style['transform'] = 'translate(50%, -50%)';
+              }
 
               if (Math.abs(viewerRotation)) {
                 const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
@@ -175,15 +184,6 @@ const Thumbnail = React.forwardRef((props, ref) => {
       onRemove(index);
     };
   }, []);
-
-  useDidUpdate(() => {
-    if (canLoad) {
-      loadThumbnailAsync();
-      updateAnnotations(index);
-    } else {
-      onCancel(index);
-    }
-  }, [canLoad, activeDocumentViewerKey]);
 
   const handleClick = (e) => {
     const checkboxToggled = e.target.type && e.target.type === 'checkbox';
@@ -351,6 +351,10 @@ const Thumbnail = React.forwardRef((props, ref) => {
     }
   }, [isThumbnailSelectingPages, loaded]);
 
+  useEffect(() => {
+    loadThumbnailAsync();
+  }, [isRightToLeft]);
+
   const isMultiselectEnabled = isThumbnailSelectingPages && loaded;
 
   return (
@@ -422,13 +426,11 @@ Thumbnail.propTypes = {
   actions: PropTypes.object,
   isMobile: PropTypes.func,
   canLoad: PropTypes.bool,
-  onCancel: PropTypes.func,
   isThumbnailSelectingPages: PropTypes.bool,
   thumbnailSelectionMode: PropTypes.string,
   activeDocumentViewerKey: PropTypes.number,
   panelSelector: PropTypes.string,
   parentKeyListener: PropTypes.func,
-  isRightToLeft: PropTypes.bool,
 };
 
 export default Thumbnail;

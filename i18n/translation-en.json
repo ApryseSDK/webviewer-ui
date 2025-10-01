@@ -99,6 +99,7 @@
     "pageManipulation": "Page Manipulation",
     "replace": "Replace",
     "replacePage": "Replace Page",
+    "goToResult": "Go to result",
     "modal": "modal",
     "isOpen": "is open",
     "setDestination": "Set Destination",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Invalid page number. Limit is ",
     "errorBlankPageNumber": "Please specify a page number",
     "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}.",
-    "noRevisions": "This document has no revisions."
+    "noRevisions": "This document has no revisions.",
+    "listEmptyValue": "One or more fields have an empty value."
   },
   "option": {
     "type": {
@@ -640,6 +642,7 @@
       "text": "Text Size"
     },
     "shared": {
+      "sheetIndex": "Sheet",
       "page": "Page",
       "precision": "Precision",
       "enableSnapping": "Enable snapping for measurement tools"
@@ -1524,7 +1527,8 @@
     "fontFamily": {
       "dropdownLabel": "Font Family"
     },
-    "blankSheet": "Blank Sheet"
+    "blankSheet": "Blank Sheet",
+    "insertImage": "Insert image"
   },
   "insertPageModal": {
     "title": "Insert New Page",

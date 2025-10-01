@@ -18,12 +18,24 @@ import dayjs from 'dayjs';
 import languageRules from 'constants/languageRules';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import getAvailableLanguages from './getAvailableLanguages';
+import textToolNames from 'constants/textToolNames';
+import localStorageManager from 'helpers/localStorageManager';
+import { getInstanceID } from 'helpers/getRootNode';
+import setToolStyles from 'helpers/setToolStyles';
 
 let pendingLanguageTimeout;
 export default (store) => async (language) => {
   if (pendingLanguageTimeout) {
     clearTimeout(pendingLanguageTimeout);
   }
+
+  const availableLanguages = getAvailableLanguages();
+  if (!availableLanguages.includes(language)) {
+    console.warn(`Language with ISO code "${language}" is not supported.`);
+    return;
+  }
+
   await new Promise((resolve) => {
     pendingLanguageTimeout = setTimeout(async () => {
       let languageObj = null;
@@ -49,6 +61,9 @@ export default (store) => async (language) => {
         const pendingLanguagePromise = i18next.changeLanguage(language);
         setDatePickerLocale(pendingLanguagePromise, language);
         await pendingLanguagePromise;
+
+        updateTextToolDefaults();
+
         fireEvent(Events['LANGUAGE_CHANGED'], languageEventObject);
       }
       resolve();
@@ -72,4 +87,39 @@ const setDatePickerLocale = (i18nextPromise, language) => {
         widget.refreshDatePicker();
       });
   });
+};
+
+const applyTextToolDirectionalDefaults = (toolName, directionSpecificStyles) => {
+  const isRTL = i18next?.dir() === 'rtl';
+  const rtlDefaults = directionSpecificStyles || {};
+
+  const font = isRTL ? rtlDefaults.Font || 'Noto Sans Arabic' : 'Helvetica';
+  const textAlign = isRTL ? rtlDefaults.TextAlign || 'right' : 'left';
+
+  setToolStyles(toolName, 'Font', font);
+  setToolStyles(toolName, 'TextAlign', textAlign);
+};
+
+const updateTextToolDefaults = () => {
+  const { ToolNames } = window.Core.Tools;
+
+  for (const toolKey of textToolNames) {
+    const toolName = ToolNames[toolKey];
+    let directionSpecificStyles = null;
+
+    if (localStorageManager.isLocalStorageEnabled()) {
+      const instanceId = getInstanceID();
+      directionSpecificStyles = JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-toolData-${toolName}-${i18next.dir()}`));
+    }
+    if (directionSpecificStyles && (directionSpecificStyles.Font || directionSpecificStyles.TextAlign)) {
+      if (directionSpecificStyles.Font) {
+        setToolStyles(toolName, 'Font', directionSpecificStyles.Font);
+      }
+      if (directionSpecificStyles.TextAlign) {
+        setToolStyles(toolName, 'TextAlign', directionSpecificStyles.TextAlign);
+      }
+    } else {
+      applyTextToolDirectionalDefaults(toolName);
+    }
+  }
 };

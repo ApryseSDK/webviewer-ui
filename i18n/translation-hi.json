@@ -99,6 +99,7 @@
     "pageManipulation": "पृष्ठ हेरफेर",
     "replace": "बदलने के",
     "replacePage": "पेज बदलें",
+    "goToResult": "परिणाम पर जाएं",
     "modal": "मॉडल",
     "isOpen": "खुला है",
     "setDestination": "गंतव्य तय करें",
@@ -347,7 +348,8 @@
     "errorPageNumber": "अमान्य पृष्ठ संख्या। सीमा है",
     "errorBlankPageNumber": "कृपया पृष्ठ संख्या निर्दिष्ट करें",
     "errorLoadingDocument": "इस दस्तावेज़ को पढ़ने में एक समस्या थी और हो सकता है कि कुछ पृष्ठ प्रदर्शित न हों। यह इंगित करता है कि दस्तावेज़ दूषित हो सकता है। कुल पृष्ठ संख्या {{totalPageCount}} है और प्रदर्शित किए जा रहे पृष्ठों की संख्या {{displayedPageCount}} है।",
-    "noRevisions": "इस दस्तावेज़ में कोई संशोधन नहीं है।"
+    "noRevisions": "इस दस्तावेज़ में कोई संशोधन नहीं है।",
+    "listEmptyValue": "एक या अधिक फ़ील्ड में रिक्त मान है."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "फुहारा परिवार"
     },
-    "blankSheet": "ब्लेंक शीट"
+    "blankSheet": "ब्लेंक शीट",
+    "insertImage": "चित्र डालें"
   },
   "insertPageModal": {
     "title": "नया पेज डालें",

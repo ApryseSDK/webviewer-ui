@@ -35,3 +35,5 @@ Button.args = {
   ariaLabel: 'Do Something',
   onClick: () => console.log('Button clicked'),
 };
+
+Button.parameters = window.storybook.disableChromatic;

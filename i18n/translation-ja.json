@@ -99,6 +99,7 @@
     "pageManipulation": "ページ操作",
     "replace": "入れ替え",
     "replacePage": "ページを置換",
+    "goToResult": "結果へ移動",
     "modal": "モーダル",
     "isOpen": "開いています",
     "setDestination": "行き先を設定する",
@@ -347,7 +348,8 @@
     "errorPageNumber": "ページ番号が無効です。限界は",
     "errorBlankPageNumber": "ページ番号を指定してください",
     "errorLoadingDocument": "このドキュメントの読み取り中に問題が発生したため、一部のページが表示されない可能性があります。これは、ドキュメントが破損している可能性があることを示しています。総ページ数は {{totalPageCount}} で、表示されているページ数は {{displayedPageCount}} です。",
-    "noRevisions": "この文書には改訂版はありません。"
+    "noRevisions": "この文書には改訂版はありません。",
+    "listEmptyValue": "1 つ以上のフィールドに空の値があります。"
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "フォントファミリー"
     },
-    "blankSheet": "白紙"
+    "blankSheet": "白紙",
+    "insertImage": "画像を挿入"
   },
   "insertPageModal": {
     "title": "新しいページを挿入",

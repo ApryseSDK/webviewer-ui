@@ -99,6 +99,7 @@
     "pageManipulation": "Manipulation des pages",
     "replace": "Remplacer",
     "replacePage": "Remplacer la page",
+    "goToResult": "Accéder au résultat",
     "modal": "modal",
     "isOpen": "est ouvert",
     "setDestination": "Destination choisie",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Numéro de page invalide. La limite est",
     "errorBlankPageNumber": "Veuillez indiquer un numéro de page",
     "errorLoadingDocument": "Un problème est survenu lors de la lecture de ce document et certaines pages peuvent ne pas s'afficher. Cela indique que le document est peut-être corrompu. Le nombre total de pages est de {{totalPageCount}} et le nombre de pages affichées est de {{displayedPageCount}}.",
-    "noRevisions": "Ce document n'a aucune révision."
+    "noRevisions": "Ce document n'a aucune révision.",
+    "listEmptyValue": "Un ou plusieurs champs ont une valeur vide."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Famille de polices"
     },
-    "blankSheet": "Feuille blanche"
+    "blankSheet": "Feuille blanche",
+    "insertImage": "Insérer une image"
   },
   "insertPageModal": {
     "title": "Insérer une nouvelle page",

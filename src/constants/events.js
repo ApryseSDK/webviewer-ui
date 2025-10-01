@@ -19,6 +19,7 @@
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
  * @property {string} FULLSCREEN_MODE_TOGGLED {@link UI#event:fullscreenModeToggled UI.Events.fullscreenModeToggled}
  * @property {string} BEFORE_TAB_CHANGED {@link UI#event:beforeTabChanged UI.Events.beforeTabChanged}
+ * @property {string} AFTER_TAB_CHANGED {@link UI#event:afterTabChanged UI.Events.afterTabChanged}
  * @property {string} TAB_DELETED {@link UI#event:tabDeleted UI.Events.tabDeleted}
  * @property {string} TAB_ADDED {@link UI#event:tabAdded UI.Events.tabAdded}
  * @property {string} TAB_MOVED {@link UI#event:tabMoved UI.Events.tabMoved}
@@ -56,6 +57,7 @@ export default {
   'VISIBILITY_CHANGED': 'visibilityChanged',
   'FULLSCREEN_MODE_TOGGLED': 'fullscreenModeToggled',
   'BEFORE_TAB_CHANGED': 'beforeTabChanged',
+  'AFTER_TAB_CHANGED': 'afterTabChanged',
   'TAB_DELETED': 'tabDeleted',
   'TAB_ADDED': 'tabAdded',
   'TAB_MOVED': 'tabMoved',
@@ -217,6 +219,17 @@ export default {
 * @property {string} nextTab.src Source of current tab
 * @property {string} nextTab.options Tab load options
 */
+
+/**
+ * Triggered after the UI switches tabs
+ * @name UI#afterTabChanged
+ * @property {object} currentTab An object containing the properties for the currently active tab (null if no currently active tab)
+ * @property {number} currentTab.id The id of the tab being switched to
+ * @property {string} currentTab.src Source of current tab
+ * @property {string} currentTab.options Tab load options
+ * @property {boolean} currentTab.annotationsChanged True if the annotations have been changed since loading the tab
+ * @event
+ */
 
 /**
 * Triggered when a Tab is deleted

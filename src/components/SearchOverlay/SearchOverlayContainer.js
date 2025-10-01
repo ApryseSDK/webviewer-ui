@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import SearchOverlay from './SearchOverlay';
-import { getOverrideSearchExecution } from 'helpers/search';
+import { getOverrideSearchExecution, buildSearchModeArray } from 'helpers/search';
+import { isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import searchTextFullFactory from '../../apis/searchTextFull';
 import core from 'core';
 import actions from 'actions';
@@ -13,16 +14,24 @@ export function executeSearch(searchValue, options, store) {
     ...options,
   };
 
-  if (searchValue !== null && searchValue !== undefined) {
-    // user can override search execution with instance.overrideSearchExecution()
-    // Here we check if user has done that and call that rather than default search execution
-    const overrideSearchExecution = getOverrideSearchExecution();
-    if (overrideSearchExecution) {
-      overrideSearchExecution(searchValue, searchOptions);
-    } else {
-      const searchTextFull = searchTextFullFactory(store);
-      searchTextFull(searchValue, searchOptions, false);
-    }
+  if (searchValue === null || searchValue === undefined) {
+    return;
+  }
+
+  if (isSpreadsheetEditorMode()) {
+    const searchModes = buildSearchModeArray(searchOptions);
+    core.getDocumentViewer().search(searchValue, searchModes);
+    return;
+  }
+
+  // user can override search execution with instance.overrideSearchExecution()
+  // Here we check if user has done that and call that rather than default search execution
+  const overrideSearchExecution = getOverrideSearchExecution();
+  if (overrideSearchExecution) {
+    overrideSearchExecution(searchValue, searchOptions);
+  } else {
+    const searchTextFull = searchTextFullFactory(store);
+    searchTextFull(searchValue, searchOptions, false);
   }
 }
 
@@ -50,6 +59,14 @@ export function selectPreviousResult(searchResults = [], activeResultIndex, disp
 function SearchOverlayContainer(props) {
   const dispatch = useDispatch();
   const store = useStore();
+  const [showReplaceSpinner, setShowReplaceSpinner] = useState(false);
+
+  props = {
+    ...props,
+    showReplaceSpinner,
+    setShowReplaceSpinner
+  };
+
   return (
     <SearchOverlay
       executeSearch={(searchValue, options = {}) => {

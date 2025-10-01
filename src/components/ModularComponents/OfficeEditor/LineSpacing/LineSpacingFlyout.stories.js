@@ -61,3 +61,5 @@ export function ActiveDouble() {
   initialState.officeEditor.cursorProperties.paragraphProperties.lineHeightMultiplier = 2;
   return prepareFlyoutStory();
 }
+
+ActiveDouble.parameters = window.storybook.disableRtlMode;

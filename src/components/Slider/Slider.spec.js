@@ -40,7 +40,6 @@ const mockProps = {
   dataElement: 'fontSizeSlider',
   getCirclePosition: jest.fn().mockReturnValue(1),
   convertRelativeCirclePositionToValue: jest.fn().mockReturnValue(1),
-  onStyleChange: jest.fn(),
   onSliderChange: jest.fn(),
 };
 
@@ -53,7 +52,6 @@ const mockPropsStroke = {
   dataElement: 'strokeThicknessSlider',
   getCirclePosition: jest.fn(),
   convertRelativeCirclePositionToValue: jest.fn(),
-  onStyleChange: jest.fn(),
   onSliderChange: jest.fn(),
   withInputField: true,
   inputFieldType: 'number',
@@ -71,7 +69,6 @@ const mockAccessibleProperties = {
   dataElement: 'strokeThicknessSlider',
   getCirclePosition: jest.fn(),
   convertRelativeCirclePositionToValue: jest.fn(),
-  onStyleChange: jest.fn(),
   onSliderChange: jest.fn(),
   withInputField: true,
   inputFieldType: 'number',
@@ -90,7 +87,6 @@ const mockPropsOpacity = {
   dataElement: 'opacitySlider',
   getCirclePosition: jest.fn(),
   convertRelativeCirclePositionToValue: jest.fn().mockReturnValue(52),
-  onStyleChange: jest.fn(),
   onSliderChange: jest.fn(),
   withInputField: true,
   inputFieldType: 'number',

@@ -99,6 +99,7 @@
     "pageManipulation": "Manipularea paginii",
     "replace": "A inlocui",
     "replacePage": "Înlocuiește pagina",
+    "goToResult": "Mergi la rezultat",
     "modal": "modal",
     "isOpen": "este deschis",
     "setDestination": "Seteaza destinatia",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Număr de pagină nevalid. Limita este",
     "errorBlankPageNumber": "Vă rugăm să specificați un număr de pagină",
     "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}.",
-    "noRevisions": "Acest document nu are revizuiri."
+    "noRevisions": "Acest document nu are revizuiri.",
+    "listEmptyValue": "Unul sau mai multe câmpuri au o valoare goală."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Familia de fonturi"
     },
-    "blankSheet": "Foaie goală"
+    "blankSheet": "Foaie goală",
+    "insertImage": "Inserează imaginea"
   },
   "insertPageModal": {
     "title": "Inserați o pagină nouă",

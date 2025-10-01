@@ -11,13 +11,23 @@
   @extend %modal;
 
   .modal-container {
+    --modal-content-height: min(450px, 60vh);
     width: 480px;
     overflow: hidden;
+
+    .spinner-container {
+      justify-content: center;
+      align-items: center;
+      height: var(--modal-content-height);
+      display: flex;
+    }
 
     .settings {
       display: flex;
       flex-direction: column;
       width: 100%;
+      height: var(--modal-content-height);
+      overflow: auto;
       padding: 24px;
 
       .ui__choice {
@@ -50,6 +60,7 @@
       }
 
       .page-number-input-container {
+        width: fit-content;
         margin-top: 8px;
       }
     }
@@ -78,7 +89,10 @@
 
     label.ui__choice__label,
     label.section-label {
-      padding: 2px 0 2px 4px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      padding-inline-start: 4px;
+      padding-inline-end: 0px;
     }
 
     .print-quality-section-label {
@@ -216,9 +230,9 @@
       width: auto;
       padding: 6px 16px;
 
-        &:hover {
-          @extend %secondary-button-hover;
-        }
+      &:hover {
+        @extend %secondary-button-hover;
       }
     }
+  }
 }

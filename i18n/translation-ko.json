@@ -99,6 +99,7 @@
     "pageManipulation": "페이지 편집",
     "replace": "바꾸기",
     "replacePage": "페이지 교체",
+    "goToResult": "결과로 이동",
     "modal": "모달",
     "isOpen": "열려있습니다",
     "setDestination": "목적지 설정",
@@ -347,7 +348,8 @@
     "errorPageNumber": "잘못된 페이지 번호입니다. 한도",
     "errorBlankPageNumber": "페이지 번호를 지정해주세요",
     "errorLoadingDocument": "이 문서를 읽는 동안 문제가 발생했으며 일부 페이지가 표시되지 않을 수 있습니다. 이는 문서가 손상되었을 수 있음을 나타냅니다. 총 페이지 수는 {{totalPageCount}}이고 표시되는 페이지 수는 {{displayedPageCount}}입니다.",
-    "noRevisions": "이 문서에는 수정본이 없습니다."
+    "noRevisions": "이 문서에는 수정본이 없습니다.",
+    "listEmptyValue": "하나 이상의 필드에 빈 값이 있습니다."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "글꼴 패밀리"
     },
-    "blankSheet": "빈 시트"
+    "blankSheet": "빈 시트",
+    "insertImage": "이미지 삽입"
   },
   "insertPageModal": {
     "title": "새 페이지 삽입",

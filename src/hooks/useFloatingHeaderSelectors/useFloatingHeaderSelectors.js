@@ -5,7 +5,7 @@ const useFloatingHeaderSelectors = () => {
   return useSelector((state) => ({
     isLeftPanelOpen: selectors.isLeftPanelOpen(state),
     isRightPanelOpen: selectors.isRightPanelOpen(state),
-    leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
+    leftPanelWidth: selectors.getDocumentContainerLeftMargin(state),
     rightPanelWidth: selectors.getOpenRightPanelWidth(state),
     leftHeaderWidth: selectors.getActiveLeftHeaderWidth(state),
     rightHeaderWidth: selectors.getActiveRightHeaderWidth(state),
@@ -17,6 +17,7 @@ const useFloatingHeaderSelectors = () => {
     bottomStartFloatingHeaders: selectors.getBottomStartFloatingHeaders(state),
     bottomEndFloatingHeaders: selectors.getBottomEndFloatingHeaders(state),
     topEndFloatingHeaders: selectors.getTopEndFloatingHeaders(state),
+    bottomHeadersWidth: selectors.getBottomHeadersWidth(state),
   }));
 };
 

@@ -59,7 +59,11 @@ const AnnotationStylePopup = (props) => {
   const [t] = useTranslation();
   const [isAutoSizeFont, setAutoSizeFont] = useState(properties.isAutoSizeFont);
 
-  const handleSliderChange = (property, value) => {
+  const handleSliderChange = (property, value, doneSliderChange) => {
+    if (doneSliderChange) {
+      handleStyleChange();
+    }
+
     const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
     annotations.forEach((annotation) => {
       annotation[property] = value;

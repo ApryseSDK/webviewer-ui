@@ -9,6 +9,7 @@ import core from 'core';
 import { MockApp, createStore, waitForTimeout } from 'helpers/storybookHelper';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { within, userEvent, expect, waitFor } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -47,9 +48,12 @@ const EmptyStylePanel = (location) => {
 };
 
 export const EmptyStylePanelOnTheLeft = () => EmptyStylePanel('left');
+EmptyStylePanelOnTheLeft.parameters = window.storybook.disableRtlMode;
 export const EmptyStylePanelOnTheRight = () => EmptyStylePanel('right');
+EmptyStylePanelOnTheRight.parameters = window.storybook.disableRtlMode;
 
 const StylePanelInApp = (context, location) => {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...initialState,
     viewer: {
@@ -78,7 +82,7 @@ const StylePanelInApp = (context, location) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={mockState} />;
+  return <MockApp initialState={mockState} initialDirection={addonRtl} />;
 };
 
 export const StylePanelInAppLeft = (args, context) => StylePanelInApp(context, 'left');
@@ -152,21 +156,33 @@ export const StylePanelTextTool = () => {
 
 StylePanelTextTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const textStyleShowMoreButton = await canvas.findByLabelText('Text Style Show More Colors');
-  const testStrokeStyleShowMoreButton = await canvas.findByLabelText('Stroke Show More Colors');
+  const textStyleLabel = `${getTranslatedText('option.stylePopup.textStyle')} ${getTranslatedText('action.showMoreColors')}`;
+  const textStyleShowMoreButton = await canvas.findByLabelText(textStyleLabel);
+
+  const strokeStyleLabel = `${getTranslatedText('option.annotationColor.StrokeColor')} ${getTranslatedText('action.showMoreColors')}`;
+  const testStrokeStyleShowMoreButton = await canvas.findByLabelText(strokeStyleLabel);
   await userEvent.click(textStyleShowMoreButton);
   await userEvent.click(testStrokeStyleShowMoreButton);
 
   await waitFor(async () => {
-    expect(textStyleShowMoreButton.textContent).toBe('Show Less');
-    expect(testStrokeStyleShowMoreButton.textContent).toBe('Show Less');
+    expect(textStyleShowMoreButton.textContent).toBe(getTranslatedText('message.showLess'));
+    expect(testStrokeStyleShowMoreButton.textContent).toBe(getTranslatedText('message.showLess'));
   });
 
-  const textStyleColor = await canvas.findByRole('button', { name: `Text Style Color ${initialTextColors[0]}` });
-  const strokeColor = await canvas.findByRole('button', { name: `Stroke Color ${initialTextColors[0]}` });
-  await userEvent.click(await canvas.findByRole('button', { name: /^Text Style Delete Selected Color/i }));
-  const textStyleColorButtons = await canvas.findAllByRole('button', { name: /^Text Style Color/i });
-  const strokeColorButtons = await canvas.findAllByRole('button', { name: /^Stroke Color/i });
+  const textStyleColorLabel = `${getTranslatedText('option.stylePopup.textStyle')} ${getTranslatedText('option.colorPalette.colorLabel')} ${initialTextColors[0]}`;
+  const textStyleColor = await canvas.findByRole('button', { name: new RegExp(textStyleColorLabel) });
+
+  const strokeColorLabelWithColor = `${getTranslatedText('option.annotationColor.StrokeColor')} ${getTranslatedText('option.colorPalette.colorLabel')} ${initialTextColors[0]}`;
+  const strokeColor = await canvas.findByRole('button', { name: new RegExp(strokeColorLabelWithColor) });
+
+  const textStyleDeleteLabel = `${getTranslatedText('option.stylePopup.textStyle')} ${getTranslatedText('action.deleteColor')}`;
+  await userEvent.click(await canvas.findByRole('button', { name: new RegExp(textStyleDeleteLabel) }));
+
+  const textStyleLabels = `${getTranslatedText('option.stylePopup.textStyle')} ${getTranslatedText('option.colorPalette.colorLabel')}`;
+
+  const textStyleColorButtons = await canvas.findAllByRole('button', { name: new RegExp(`^${textStyleLabels}`) });
+  const strokeColorLabel = `${getTranslatedText('option.annotationColor.StrokeColor')} ${getTranslatedText('option.colorPalette.colorLabel')}`;
+  const strokeColorButtons = await canvas.findAllByRole('button', { name: new RegExp(strokeColorLabel) });
 
   expect(textStyleColorButtons.length).not.toEqual(strokeColorButtons.length);
   expect(textStyleColor).not.toBeInTheDocument();
@@ -232,7 +248,7 @@ export const StylePanelDistanceTool = () => {
 
 StylePanelDistanceTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  const checkbox = await canvas.findByRole('checkbox', { name: getTranslatedText('option.shared.enableSnapping') });
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
@@ -248,7 +264,7 @@ export const StylePanelArcMeasurementTool = () => {
 };
 StylePanelArcMeasurementTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  const checkbox = await canvas.findByRole('checkbox', { name: getTranslatedText('option.shared.enableSnapping') });
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
@@ -265,7 +281,7 @@ export const StylePanelAreaMeasurementTool = () => {
 };
 StylePanelAreaMeasurementTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
+  const checkbox = await canvas.findByRole('checkbox', { name: getTranslatedText('option.shared.enableSnapping') });
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
@@ -346,21 +362,22 @@ StylePanelTooltipOnColors.play = async ({ canvasElement }) => {
   // Required timeout to allow useEffect to run and render the story
   await waitForTimeout(100);
   // eslint-disable-next-line custom/no-hex-colors
-  const button = (await canvas.findAllByLabelText('Stroke Color #E44234'))[0];
+  const strokeColorLabel = `${getTranslatedText('option.annotationColor.StrokeColor')} ${getTranslatedText('option.colorPalette.colorLabel')}`;
+  const button = (await canvas.findAllByLabelText(`${strokeColorLabel} #E44234`))[0];
   await userEvent.hover(button);
   // Required timeout since tooltip shows after a delay
   await waitForTimeout(1000);
   await expect(await document.body.querySelector('.tooltip__content')).not.toBeNull();
 };
 
-export const toggleAllSectionsInShapeTool = StylePanelShapeTool.bind({});
-toggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
+StylePanelTooltipOnColors.parameters = window.storybook.disableRtlMode;
+
+export const ToggleAllSectionsInShapeTool = StylePanelShapeTool.bind({});
+ToggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   // Wait for the style panel to be rendered
-  await waitFor(() => {
-    expect(canvas.getByRole('button', { name: /Stroke/i, expanded: true })).toBeInTheDocument();
-  });
+  expect(await canvas.findByRole('button', { name: getTranslatedText('option.annotationColor.StrokeColor'), expanded: true })).toBeInTheDocument();
 
   //Reset the sections to fit the initial state of the style panel of the selected tool
   mockStore.dispatch({
@@ -372,7 +389,7 @@ toggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
     payload: { dataElement: ['fillColorContainer'] },
   });
 
-  const buttons = await canvas.getAllByText('Stroke');
+  const buttons = await canvas.getAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
   const strokeSectionToggleButton = buttons[0];
   await waitFor(() => {
     // expect the stroke section is expanded initially
@@ -385,30 +402,32 @@ toggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
     expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('false');
   });
 
-  const FillToggleButton = await canvas.getByText('Fill');
+  const FillToggleButton = await canvas.getByText(getTranslatedText('option.annotationColor.FillColor'));
   await userEvent.click(FillToggleButton);
   await waitFor(() => {
     expect(FillToggleButton.getAttribute('aria-expanded')).toBe('true');
   });
   // eslint-disable-next-line custom/no-hex-colors
-  const firstColorInColorPalette = await canvas.getByLabelText('Fill Color #E44234');
+  const firstColorLabel = `${getTranslatedText('option.annotationColor.FillColor')} ${getTranslatedText('option.colorPalette.colorLabel')} #E44234`;
+  const firstColorInColorPalette = await canvas.getByLabelText(new RegExp(firstColorLabel));
   expect(firstColorInColorPalette).toBeInTheDocument();
 
-  const OpacityToggleButton = await canvas.getByText('Opacity');
+  const OpacityToggleButton = await canvas.getByText(getTranslatedText('option.slider.opacity'));
   await userEvent.click(OpacityToggleButton);
   await waitFor(() => {
     expect(OpacityToggleButton.getAttribute('aria-expanded')).toBe('true');
-    expect(canvas.getByRole('textbox', { name: /Opacity/i })).toBeInTheDocument();
+    expect(canvas.getByRole('textbox', { name: new RegExp(getTranslatedText('option.slider.opacity')) })).toBeInTheDocument();
   });
 };
 
-export const toggleAllSectionsInFreeTextTool = StylePanelTextTool.bind({});
-toggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
+ToggleAllSectionsInShapeTool.parameters = window.storybook.disableRtlMode;
+
+export const ToggleAllSectionsInFreeTextTool = StylePanelTextTool.bind({});
+ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  // Wait for the style panel to be rendered
+  const textStyleButton = await canvas.findByText(getTranslatedText('option.stylePopup.textStyle'));
   await waitFor(() => {
-    expect(canvas.getByText('Text Style')).toBeInTheDocument();
-    expect(canvas.getByText('Text Style').getAttribute('aria-expanded')).toBe('true');
+    expect(textStyleButton.getAttribute('aria-expanded')).toBe('true');
   });
 
   //Reset the sections to fit the initial state of the style panel of the selected tool
@@ -425,28 +444,32 @@ toggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
     payload: { dataElement: ['fillColorContainer'] },
   });
 
-  let buttons = await canvas.getAllByText('Stroke');
+  let buttons = await canvas.findAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
   const strokeSectionToggleButton = buttons[0];
   await userEvent.click(strokeSectionToggleButton);
+  // expect the stroke section is expanded initially
   await waitFor(async () => {
-    // expect the stroke section is expanded initially
-    buttons = await canvas.getAllByText('Stroke');
+    buttons = await canvas.findAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
     expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('true');
     expect(buttons.length).toBe(2);
   });
 
-  const FillToggleButton = await canvas.getByText('Fill');
-  await userEvent.click(FillToggleButton);
+
+  const fillToggleButton = await canvas.findByText(getTranslatedText('option.annotationColor.FillColor'));
+  await userEvent.click(fillToggleButton);
   await waitFor(() => {
-    expect(FillToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(fillToggleButton.getAttribute('aria-expanded')).toBe('true');
     const colorPaletts = document.querySelectorAll('.ColorPalette');
     expect(colorPaletts.length).toBe(3);
   });
 
-  const OpacityToggleButton = await canvas.getByText('Opacity');
-  await userEvent.click(OpacityToggleButton);
+  const opacityToggleButton = await canvas.findByText(getTranslatedText('option.slider.opacity'));
+  await userEvent.click(opacityToggleButton);
   await waitFor(() => {
-    expect(OpacityToggleButton.getAttribute('aria-expanded')).toBe('true');
-    expect(canvas.getByRole('textbox', { name: /Opacity/i })).toBeInTheDocument();
+    expect(opacityToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(canvas.getByRole('textbox', { name: new RegExp(getTranslatedText('option.slider.opacity')) })).toBeInTheDocument();
   });
+
 };
+
+ToggleAllSectionsInFreeTextTool.parameters = window.storybook.disableRtlMode;

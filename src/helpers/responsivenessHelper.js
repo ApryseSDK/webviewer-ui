@@ -110,8 +110,8 @@ export const getCurrentFreeSpace = ({
       isChild: true,
     });
   }
-  const leftOrTop = isVertical ? 'Left' : 'Top';
-  const rightOrBottom = isVertical ? 'Right' : 'Bottom';
+  const leftOrTop = isVertical ? 'Top': 'Left';
+  const rightOrBottom = isVertical ? 'Bottom' : 'Right';
   calculatedFreeSpace -= getCSSValue(style, `padding${leftOrTop}`) + getCSSValue(style, `padding${rightOrBottom}`);
   calculatedFreeSpace -= getCSSValue(style, `margin${leftOrTop}`) + getCSSValue(style, `margin${rightOrBottom}`);
   calculatedFreeSpace -= getCSSValue(style, `border${leftOrTop}Width`) + getCSSValue(style, `border${rightOrBottom}Width`);

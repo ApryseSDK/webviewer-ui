@@ -99,6 +99,7 @@
     "pageManipulation": "Thao Tác Trang",
     "replace": "Thay thế",
     "replacePage": "Thay thế trang",
+    "goToResult": "Đi đến kết quả",
     "modal": "phương thức",
     "isOpen": "đang mở",
     "setDestination": "Đích đã được cài",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Số trang không hợp lệ. Giới hạn là",
     "errorBlankPageNumber": "Vui lòng chỉ định số trang",
     "errorLoadingDocument": "Đã xảy ra sự cố khi đọc tài liệu này và một số trang có thể không được hiển thị. Điều này cho thấy tài liệu có thể bị hỏng. Tổng số trang là {{totalPageCount}} và số trang đang được hiển thị là {{displayPageCount}}.",
-    "noRevisions": "Tài liệu này không có sửa đổi."
+    "noRevisions": "Tài liệu này không có sửa đổi.",
+    "listEmptyValue": "Một hoặc nhiều trường có giá trị trống."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Họ phông chữ"
     },
-    "blankSheet": "Tờ giấy trắng"
+    "blankSheet": "Tờ giấy trắng",
+    "insertImage": "Chèn hình ảnh"
   },
   "insertPageModal": {
     "title": "Chèn trang mới",

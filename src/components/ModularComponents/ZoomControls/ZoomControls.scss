@@ -11,10 +11,6 @@
   min-width: 28px;
   margin: 2px;
 
-  &.size0 {
-    min-width: 139px;
-  }
-
   .ZoomContainer {
     display: flex;
     align-items: center;
@@ -59,12 +55,21 @@
         border: none;
         background-color: transparent;
         font-weight: 700;
-        min-width: 28px;
+        width: 40px;
         text-align: end;
       }
 
       &:focus-visible {
         outline: var(--focus-visible-outline) !important;
+      }
+
+      &:dir(rtl) {
+        flex-direction: row-reverse;
+        padding-inline-start: 10px;
+
+        input {
+          text-align: start;
+        }
       }
     }
   }

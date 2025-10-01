@@ -47,3 +47,5 @@ export function Basic() {
     />
   );
 }
+
+Basic.parameters = window.storybook.disableRtlMode;

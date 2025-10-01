@@ -2,7 +2,7 @@ import React from 'react';
 import { workerTypes } from 'constants/types';
 import core from 'core';
 import i18next from 'i18next';
-import Choice from 'components/Choice/Choice';
+import Choice from 'components/Choice';
 import getMeasurementTools from 'helpers/getMeasurementTools';
 import actions from 'actions';
 import { useDispatch } from 'react-redux';

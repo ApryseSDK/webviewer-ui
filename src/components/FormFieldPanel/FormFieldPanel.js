@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import CreatableDropdown from '../CreatableDropdown';
 import CreatableList from '../CreatableList';
 import HorizontalDivider from '../HorizontalDivider';

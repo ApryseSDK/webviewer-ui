@@ -41,15 +41,18 @@ const CreatableListContainer = ({
   });
   const [items, setItems] = useState(draggableItems);
   const [nextId, setNextId] = useState(draggableItems.length);
+  const [isInvalidInputList, setIsInvalidInputList] = useState(false);
   const containerRef = useRef();
 
   useEffect(() => {
     // Skip calling onOptionsUpdated on the initial prop-driven update
     if (isInitialized.current) {
       const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
-      onOptionsUpdated(sanitizedOptions);
+      const filteredOptions = sanitizedOptions.filter((option) => option.value !== '');
+      onOptionsUpdated(filteredOptions);
     } else {
       // Mark the component as initialized after render / rerender
+      setIsInvalidInputList(false);
       isInitialized.current = true;
     }
   }, [items, onOptionsUpdated]);
@@ -61,24 +64,37 @@ const CreatableListContainer = ({
     if (popupRef) {
       validatePopupHeight();
     }
+    setIsInvalidInputList(true);
   }, [nextId, items]);
 
   const handleDeleteItem = (id) => () => {
+    let foundInvalidOption = false;
     const updatedItems = items.filter((item) => {
+      if (!item.value && id !== item.id) {
+        foundInvalidOption = true;
+      }
       return id !== item.id;
     });
-
+    setIsInvalidInputList(foundInvalidOption);
     setItems(updatedItems);
   };
 
   const handleItemValueChange = (id) => (value) => {
+    let foundInvalidOption = false;
     const updatedItems = items.map((item) => {
       if (item.id !== id) {
+        if (!item.value) {
+          foundInvalidOption = true;
+        }
         return item;
+      }
+      if (!value) {
+        foundInvalidOption = true;
       }
       return { ...item, value, displayValue: value };
     });
 
+    setIsInvalidInputList(foundInvalidOption);
     setItems(updatedItems);
   };
 
@@ -133,16 +149,26 @@ const CreatableListContainer = ({
             onChange={handleItemValueChange(item.id)}
             onDeleteItem={handleDeleteItem(item.id)}
             moveListItem={moveListItem}
-            addItem={onAddItem}
+            addItem={isInvalidInputList ? () => {} : onAddItem}
           />
         ))}
       </div>
+      {isInvalidInputList && (
+        <div
+          className="invalid-option-message"
+          role="alert"
+          aria-live="assertive"
+        >
+          {t('message.listEmptyValue')}
+        </div>
+      )}
       <Button
         title={t('action.addOption')}
         className="add-item-button"
         label={t('action.addOption')}
         img="icon-plus-sign"
         onClick={onAddItem}
+        disabled={isInvalidInputList}
       />
     </div>
   );

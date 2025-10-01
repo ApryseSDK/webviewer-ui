@@ -5,9 +5,9 @@
  */
 import actions from 'actions';
 import selectors from 'selectors';
-
 export default (store, popupDataElement) => Object.create(PopupAPI).initialize(store, popupDataElement);
 
+const { checkTypes, TYPES } = window.Core;
 const PopupAPI = {
   initialize(store, popupDataElement) {
     this.store = store;
@@ -69,6 +69,7 @@ WebViewer(...)
   });
    */
   update(items) {
+    checkTypes([items], [TYPES.OPTIONAL(TYPES.ARRAY(TYPES.ANY))], 'UI.Popup#update');
     if (!items) {
       items = [];
     }

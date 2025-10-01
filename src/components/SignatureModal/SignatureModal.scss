@@ -4,6 +4,7 @@
 
 .SignatureModal {
   @extend %modal;
+  z-index: 110;
 
   .modal-container {
     display: flex;
@@ -261,7 +262,6 @@
         .Dropdown__items {
           inset-block-end: auto;
           inset-block-start: 100%;
-          width: 100%;
           inset-inline-start: 0;
           inset-inline-end: auto;
         }

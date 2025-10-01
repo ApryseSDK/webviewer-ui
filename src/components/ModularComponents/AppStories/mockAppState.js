@@ -1,5 +1,6 @@
 import { defaultModularHeaders, defaultModularComponents } from 'src/redux/modularComponents';
 import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
+import DataElements from 'constants/dataElement';
 
 export const mockHeadersNormalized = {
   'default-top-header': {
@@ -93,7 +94,9 @@ export const mockModularComponents = {
     title: 'portfolio.createPDFPortfolio',
     isActive: false,
     label: 'portfolio.createPDFPortfolio',
-    icon: 'icon-pdf-portfolio'
+    icon: 'icon-pdf-portfolio',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
   },
   settingsButton: {
     dataElement: 'settingsButton',
@@ -358,7 +361,7 @@ export const mockModularComponents = {
     dataElement: 'panel2Button',
     type: 'toggleButton',
     img: 'icon-redact-panel',
-    toggleElement: 'redactPanel_1'
+    toggleElement: 'redactionPanel'
   },
   redactionGroupedItems: {
     dataElement: 'redactionGroupedItems',
@@ -663,6 +666,22 @@ export const uiWithCustomElements = {
     }
   },
   'flyouts': {
+  },
+  'popups': {
+    [DataElements.ANNOTATION_POPUP]: [
+      { dataElement: DataElements.VIEW_FILE_BUTTON },
+      { dataElement: DataElements.COMMENT_BUTTON },
+      { dataElement: DataElements.STYLE_EDIT_BUTTON },
+    ],
+    [DataElements.TEXT_POPUP]: [
+      { dataElement: DataElements.COPY_TEXT_BUTTON },
+      { dataElement: DataElements.TEXT_HIGHLIGHT_TOOL_BUTTON },
+      { dataElement: DataElements.TEXT_UNDERLINE_TOOL_BUTTON },
+    ],
+    [DataElements.CONTEXT_MENU_POPUP]: [
+      { dataElement: DataElements.PAN_TOOL_BUTTON },
+      { dataElement: DataElements.STICKY_TOOL_BUTTON },
+    ],
   }
 };
 
@@ -688,7 +707,7 @@ export const uiWithCustomStyleAndClass = {
   'modularComponents': {
     'leftPanelButton': {
       'dataElement': 'leftPanelButton',
-      'title': 'Left Panel',
+      'title': 'component.leftPanel',
       'type': 'toggleButton',
       'img': 'icon-header-sidebar-line',
       'toggleElement': 'tabPanel',
@@ -759,4 +778,20 @@ export const uiWithCustomStyleAndClass = {
   },
   'panels': {},
   'flyouts': {},
+  'popups': {
+    [DataElements.ANNOTATION_POPUP]: [
+      { dataElement: DataElements.VIEW_FILE_BUTTON },
+      { dataElement: DataElements.COMMENT_BUTTON },
+      { dataElement: DataElements.STYLE_EDIT_BUTTON },
+    ],
+    [DataElements.TEXT_POPUP]: [
+      { dataElement: DataElements.COPY_TEXT_BUTTON },
+      { dataElement: DataElements.TEXT_HIGHLIGHT_TOOL_BUTTON },
+      { dataElement: DataElements.TEXT_UNDERLINE_TOOL_BUTTON },
+    ],
+    [DataElements.CONTEXT_MENU_POPUP]: [
+      { dataElement: DataElements.PAN_TOOL_BUTTON },
+      { dataElement: DataElements.STICKY_TOOL_BUTTON },
+    ],
+  }
 };

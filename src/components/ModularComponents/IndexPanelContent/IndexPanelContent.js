@@ -3,7 +3,7 @@ import './IndexPanelContent.scss';
 import actions from 'actions';
 import Button from 'components/Button';
 import core from 'core';
-import { Input } from '@pdftron/webviewer-react-toolkit';
+import Input from 'components/Input';
 import mapValidationResponseToTranslation from 'src/helpers/mapValidationResponseToTranslation';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import PropTypes from 'prop-types';

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import selectors from 'selectors';
 import { useSelector } from 'react-redux';
-import { focusableElementDomString } from '@pdftron/webviewer-react-toolkit';
+import { focusableElementDomString } from 'constants/focusableElementDomString';
 import getRootNode from 'helpers/getRootNode';
 import core from 'core';
 

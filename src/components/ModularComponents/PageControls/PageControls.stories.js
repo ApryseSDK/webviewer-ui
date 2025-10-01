@@ -11,6 +11,7 @@ import { button8, button9 } from '../Helpers/mockHeaders';
 import { MockDocumentContainer, oePartialState, createStore } from 'helpers/storybookHelper';
 import { expect, within, userEvent } from 'storybook/test';
 import PropTypes from 'prop-types';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 const leftChevron = {
   onClick: () => { },
@@ -155,6 +156,7 @@ PageControlsStory.propTypes = {
 export const Basic = (storyProps) => {
   return <PageControlsStory store={store} storyProps={storyProps} />;
 };
+Basic.parameters = window.storybook.disableRtlMode;
 
 export const PageControlsInHeader = (storyProps) => {
   const pageControlsTools = {
@@ -183,6 +185,7 @@ export const PageControlsInHeader = (storyProps) => {
     </Provider>
   );
 };
+PageControlsInHeader.parameters = window.storybook.disableRtlMode;
 
 PageControlsInHeader.play = async ({ canvasElement }) => {
   const pageControls = canvasElement.querySelector('[data-element="pageControlsTools"]');
@@ -203,6 +206,7 @@ const docxStore = createStore(initialState);
 export const PageControlsInputDocx = (storyProps) => {
   return <PageControlsStory store={docxStore} storyProps={storyProps} />;
 };
+PageControlsInputDocx.parameters = window.storybook.disableRtlMode;
 
 /**
  * This story demonstrates the functionality of the PageControlsInput component
@@ -212,7 +216,7 @@ export const PageControlsInputDocx = (storyProps) => {
  */
 PageControlsInputDocx.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const input = await canvas.findByRole('textbox', { name: /page number input/i });
+  const input = await canvas.findByRole('textbox', { name: new RegExp(getTranslatedText('action.pageNumberInput')) });
   expect(input).toBeInTheDocument();
 
   await userEvent.click(input);

@@ -2,10 +2,13 @@ import actions from 'actions';
 import disableElements from 'src/apis/disableElements';
 import enableElements from 'src/apis/enableElements';
 import DataElements from 'constants/dataElement';
+import selectors from 'selectors';
 
 export default (dispatch, store) => (isReadOnly) => {
-  dispatch(actions.setReadOnly(isReadOnly));
-  if (isReadOnly) {
+  const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
+
+  dispatch(actions.setViewOnly(isReadOnly));
+  if (isReadOnly && !isCustomUI) {
     disableElements(store)([
       'documentControl',
       'thumbnailControl',

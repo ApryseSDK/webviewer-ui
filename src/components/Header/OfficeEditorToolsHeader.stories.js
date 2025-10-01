@@ -48,7 +48,8 @@ export function Basic() {
   );
 }
 Basic.parameters = {
-  mode: allModes.viewport1400
+  mode: allModes.viewport1400,
+  ...window.storybook.disableRtlMode,
 };
 
 export function Overflow() {
@@ -71,6 +72,9 @@ export function Overflow() {
 Overflow.parameters = {
   chromatic: {
     mode: allModes.viewport850,
-    delay: 3000
-  }
+    delay: 3000,
+    modes: {
+      'Light theme RTL': { disable: true },
+    },
+  },
 };

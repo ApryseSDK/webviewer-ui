@@ -109,7 +109,7 @@ import textPopup from './textPopup';
 import toggleFullScreen from './toggleFullScreen';
 import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
+  disableToolDefaultStyleUpdateFromAnnotationPopup,
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
 import { enableAnnotationToolStyleSyncing, disableAnnotationToolStyleSyncing } from './annotationToolStyleSyncing';
 import unregisterTool from './unregisterTool';
@@ -279,6 +279,17 @@ import stopTextComparison from './stopTextComparison';
 import setActiveTabInPanel from './setActiveTabInPanel';
 import setActiveGroupedItems from './setActiveGroupedItems';
 import CustomElement from 'src/apis/ModularComponents/customElement';
+import {
+  enableViewOnlyMode,
+  disableViewOnlyMode,
+  addToViewOnlyWhitelist,
+  removeFromViewOnlyWhitelist,
+  updateViewOnlyWhitelist,
+  getViewOnlyWhitelist,
+  updateViewOnlyShortcuts,
+  getViewOnlyShortcuts
+} from 'src/apis/viewOnlyMode';
+import { Shortcuts } from 'helpers/hotkeysManager';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -556,6 +567,15 @@ export default (store) => {
     disableFeatureFlag: disableFeatureFlag(store),
     setPanelWidth: setPanelWidth(store),
     setScaleOverlayPosition: setScaleOverlayPosition(store),
+    enableViewOnlyMode: enableViewOnlyMode(store),
+    disableViewOnlyMode: disableViewOnlyMode(store),
+    addToViewOnlyWhitelist: addToViewOnlyWhitelist(store),
+    removeFromViewOnlyWhitelist: removeFromViewOnlyWhitelist(store),
+    getViewOnlyWhitelist: getViewOnlyWhitelist(store),
+    updateViewOnlyWhitelist: updateViewOnlyWhitelist(store),
+    Shortcuts,
+    updateViewOnlyShortcuts: updateViewOnlyShortcuts(store),
+    getViewOnlyShortcuts,
 
     // undocumented
     loadedFromServer: false,

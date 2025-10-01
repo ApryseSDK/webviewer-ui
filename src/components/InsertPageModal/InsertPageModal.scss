@@ -106,7 +106,8 @@
         border-radius: 4px;
         padding: 0 8px;
         height: 32px;
-        width: 92px;
+        min-width: 92px;
+        width: fit-content;
         display: flex;
         align-items: center;
         justify-content: center;

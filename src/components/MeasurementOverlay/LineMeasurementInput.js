@@ -24,7 +24,7 @@ const Scale = window.Core.Scale;
 
 function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
   const [t] = useTranslation();
-  const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
+  const isReadOnly = useSelector((state) => selectors.isViewOnly(state));
   const factor = annotation?.Measure.axis[0].factor;
   const unit = annotation?.DisplayUnits[0] || selectedTool?.Measure?.unit;
   const [length, setLength] = useState((annotation?.getLineLength() * factor || 0).toFixed(2));

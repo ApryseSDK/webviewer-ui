@@ -372,8 +372,8 @@ const AnnotationPopup = ({
                   <ActionButton
                     className="main-menu-button"
                     dataElement='openAlignmentButton'
-                    label={isRightClickMenu ? 'alignment' : ''}
-                    title={!isRightClickMenu ? 'Align' : ''}
+                    label={isRightClickMenu ? 'alignmentPopup.alignment' : ''}
+                    title={!isRightClickMenu ? 'alignmentPopup.alignment' : ''}
                     img="ic-alignment-main"
                     onClick={onOpenAlignmentModal}
                   />

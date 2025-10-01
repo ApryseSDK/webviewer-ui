@@ -27,6 +27,8 @@ export const EmptyGrid = () => (
   </Provider>
 );
 
+EmptyGrid.parameters = window.storybook.disableRtlMode;
+
 const mockDocument = {
   getPageCount: () => 10,
   getFilename: () => 'helloDarknessMyOldFriend.pdf',
@@ -59,3 +61,5 @@ export const FileLoadedGrid = () => {
     </Provider>
   );
 };
+
+FileLoadedGrid.parameters = window.storybook.disableRtlMode;

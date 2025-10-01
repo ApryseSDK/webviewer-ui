@@ -12,7 +12,6 @@ const propTypes = {
   getDisplayValue: PropTypes.func.isRequired,
   onSliderChange: PropTypes.func.isRequired,
   dataElement: PropTypes.string,
-  onStyleChange: PropTypes.func.isRequired,
   withInputField: PropTypes.bool,
   inputFieldType: PropTypes.string,
   min: PropTypes.number,
@@ -34,7 +33,6 @@ function Slider(props) {
     shouldHideSliderTitle,
     getDisplayValue,
     withInputField,
-    onStyleChange,
     onSliderChange,
     property,
     getLocalValue,
@@ -68,25 +66,26 @@ function Slider(props) {
   const [displayValue, setDisplayValue] = useState(defaultDisplayValue);
   const [inputValue, setInputValue] = useState(value);
 
-  const updateParent = (text) => {
+  const updateParent = (text, mouseUp) => {
     const payload = (getLocalValue) ? getLocalValue(text) : text;
-    onSliderChange(property, payload);
-    onStyleChange(property, payload);
+    onSliderChange(property, payload, mouseUp);
   };
 
-  const onChange = (e) => {
-    const targetValue = e.target.value;
-    let newValue;
-    if (isThereSteps) {
-      newValue = steps[targetValue];
-    } else {
-      newValue = targetValue;
+  const handleChange = (e, mouseUp = false) => {
+    let targetValue = parseFloat(e.target.value);
+    if (isRightToLeft) {
+      targetValue = max - (targetValue - min);
     }
+    const newValue = isThereSteps ? steps[targetValue] : targetValue;
 
     setDisplayValue(newValue);
     setInputValue(newValue);
     setPosition(targetValue);
-    updateParent(newValue);
+    updateParent(newValue, mouseUp);
+  };
+
+  const handleMouseUp = (e) => {
+    handleChange(e, true);
   };
 
   const onInputChange = (e) => {
@@ -120,7 +119,7 @@ function Slider(props) {
     setDisplayValue(targetValue);
     setInputValue(targetValue);
     setPosition(position);
-    updateParent(targetValue);
+    updateParent(targetValue, true);
   };
 
   const onInputBlur = (isEditing) => {
@@ -211,13 +210,8 @@ function Slider(props) {
             aria-valuenow={displayValue}
             aria-valuetext={`${label} ${getDisplayValue(displayValue)}`}
             type='range'
-            onChange={(e) => {
-              let newPosition = parseFloat(e.target.value);
-              if (isRightToLeft) {
-                newPosition = max - (newPosition - min);
-              }
-              onChange({ target: { value: newPosition } });
-            }}
+            onChange={handleChange}
+            onMouseUp={handleMouseUp}
             min={min}
             max={max}
             step={step}

@@ -134,12 +134,18 @@ const getStyles = (isDarkMode) => ({
   }),
 });
 
+const renderRedactionOption = (icon, label) => (
+  <span className='redactionOption'>
+    {icon && <Icon glyph={icon} />}
+    {label}
+  </span>
+);
+
 const RedactionOption = (props) => {
   const { data } = props;
   return (
     <components.Option {...props}>
-      {data.icon && <Icon glyph={data.icon} />}
-      {data.label}
+      {renderRedactionOption(data.icon, data.label)}
     </components.Option>
   );
 };
@@ -151,8 +157,7 @@ RedactionOption.propTypes = {
 const MultiValueLabel = ({ data }) => {
   return (
     <div tabIndex={0} style={{ display: 'flex', height: '18px' }}>
-      {data.icon && <Icon glyph={data.icon} />}
-      {data.label}
+      {renderRedactionOption(data.icon, data.label)}
     </div>
   );
 };

@@ -38,11 +38,6 @@
       inset-inline-start: 50%;
       inset-block-start: 50%;
       transform: translate(-50%, -50%);
-
-      &.right-to-left {
-        transform: translate(-15%, -50%);
-        inset-inline-start: 0;
-      }
     }
 
     .checkbox {

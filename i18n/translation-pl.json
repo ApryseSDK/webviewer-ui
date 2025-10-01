@@ -99,6 +99,7 @@
     "pageManipulation": "Manipulacja stronami",
     "replace": "Zastąp",
     "replacePage": "Zamień stronę",
+    "goToResult": "Przejdź do wyniku",
     "modal": "modalny",
     "isOpen": "jest otwarte",
     "setDestination": "Ustaw cel",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Nieprawidłowy numer strony. Limit to",
     "errorBlankPageNumber": "Proszę podać numer strony",
     "errorLoadingDocument": "Podczas czytania tego dokumentu wystąpił problem i niektóre strony mogą nie być wyświetlane. Oznacza to, że dokument może być uszkodzony. Całkowita liczba stron to {{totalPageCount}}, a liczba wyświetlanych stron to {{displayedPageCount}}.",
-    "noRevisions": "Dokument ten nie zawiera żadnych poprawek."
+    "noRevisions": "Dokument ten nie zawiera żadnych poprawek.",
+    "listEmptyValue": "Jedno lub więcej pól ma pustą wartość."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Rodzina czcionek"
     },
-    "blankSheet": "Pusta Arkusz"
+    "blankSheet": "Pusta Arkusz",
+    "insertImage": "Wstaw obraz"
   },
   "insertPageModal": {
     "title": "Wstaw nową stronę",

@@ -138,6 +138,8 @@ const isOfficeEditorUndoEnabled = (state) => state.officeEditor.canUndo;
 
 const isOfficeEditorRedoEnabled = (state) => state.officeEditor.canRedo;
 
+const getOfficeEditorIsReplaceInProgress = (state) => state.officeEditor.isReplaceInProgress;
+
 export {
   isStyleButtonActive,
   getPointSizeSelectionKey,
@@ -151,4 +153,5 @@ export {
   isNonPrintingCharactersEnabled,
   isOfficeEditorUndoEnabled,
   isOfficeEditorRedoEnabled,
+  getOfficeEditorIsReplaceInProgress,
 };

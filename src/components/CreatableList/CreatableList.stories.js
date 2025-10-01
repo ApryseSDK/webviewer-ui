@@ -26,10 +26,6 @@ const store = createStore(rootReducer);
 
 const listOptions = [
   {
-    'displayValue': '',
-    'value': '',
-  },
-  {
     'displayValue': 'AB',
     'value': 'AB',
   },

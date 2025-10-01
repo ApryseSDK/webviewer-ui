@@ -2,6 +2,10 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import FileInputPanel from './FileInputPanel';
+import { within, expect, userEvent } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+
+const noop = () => {};
 
 export default {
   title: 'Components/FileInputPanel',
@@ -33,6 +37,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function WithDefaultValue() {
   const props = {
     defaultValue: 'https://example.com/document.pdf',
@@ -44,6 +50,8 @@ export function WithDefaultValue() {
     </Provider>
   );
 }
+
+WithDefaultValue.parameters = window.storybook.disableRtlMode;
 
 export function BasicWithError() {
   const props = {
@@ -58,6 +66,8 @@ export function BasicWithError() {
   );
 }
 
+BasicWithError.parameters = window.storybook.disableRtlMode;
+
 export function LongInputWithError() {
   const props = {
     defaultValue: 'https://example.example.org/example/example/thumb/a/a5/example_icon.png/500px-example_icon.png',
@@ -70,3 +80,28 @@ export function LongInputWithError() {
     </Provider>
   );
 }
+
+LongInputWithError.parameters = window.storybook.disableRtlMode;
+
+export function WithDropdown() {
+  const props = {
+    defaultValue: 'https://example.example.org/example/example/thumb/a/a5/example_icon.png/500px-example_icon.png',
+    setExtension: noop,
+    acceptFormats: ['.png', '.jpg', '.jpeg'],
+  };
+
+  return (
+    <Provider store={store}>
+      <FileInputPanel {...props} />
+    </Provider>
+  );
+}
+
+WithDropdown.parameters = window.storybook.disableRtlMode;
+
+WithDropdown.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const dropDown = canvas.getByRole('combobox', { name: getTranslatedText('OpenFile.extension') });
+  expect(dropDown).toBeInTheDocument();
+  await userEvent.click(dropDown);
+};

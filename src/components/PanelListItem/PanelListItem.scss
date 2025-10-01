@@ -76,6 +76,10 @@ $border-thickness-adjustment: 2px;
 
     &.toggled {
       transform: rotate(90deg);
+
+      &:dir(rtl) {
+        transform: rotate(-90deg);
+      }
     }
     &.visible {
       visibility: visible;

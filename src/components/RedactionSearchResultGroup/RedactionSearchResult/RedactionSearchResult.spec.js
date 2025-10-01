@@ -11,7 +11,11 @@ import {
   PhoneNumber,
   Email,
 } from './RedactionSearchResult.stories';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
+const store = configureStore({ reducer: rootReducer });
 
 describe('RedactionSearchResult', () => {
   describe('storybook components', () => {
@@ -56,7 +60,11 @@ describe('RedactionSearchResult', () => {
         resultStrEnd: 9,
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const searchResult = screen.getByText(props.resultStr);
       expect(searchResult).toHaveClass('search-value');
     });
@@ -67,7 +75,11 @@ describe('RedactionSearchResult', () => {
         resultStr: '4242 4242 4242 4242'
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const searchResult = screen.getByText(props.resultStr);
       expect(searchResult).toHaveClass('redaction-search-result-info');
     });
@@ -78,7 +90,11 @@ describe('RedactionSearchResult', () => {
         resultStr: '867-5309'
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const searchResult = screen.getByText(props.resultStr);
       expect(searchResult).toHaveClass('redaction-search-result-info');
     });
@@ -89,7 +105,11 @@ describe('RedactionSearchResult', () => {
         resultStr: 'paul.atreides@dune.com'
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const searchResult = screen.getByText(props.resultStr);
       expect(searchResult).toHaveClass('redaction-search-result-info');
     });
@@ -101,7 +121,11 @@ describe('RedactionSearchResult', () => {
         onClickResult: jest.fn()
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const searchResult = screen.getByRole('button', { name: props.resultStr });
       userEvent.click(searchResult);
       expect(props.onClickResult).toBeCalled();
@@ -114,7 +138,11 @@ describe('RedactionSearchResult', () => {
         onChange: jest.fn(),
       };
 
-      render(<RedactionSearchResult {...props} />);
+      render(
+        <Provider store={store}>
+          <RedactionSearchResult {...props} />
+        </Provider>
+      );
       const checkBox = screen.getByRole('checkbox');
       userEvent.click(checkBox);
       expect(props.onChange).toBeCalledTimes(1);

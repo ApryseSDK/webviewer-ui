@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import NoteStateFlyout from 'components/ModularComponents/NoteStateFlyout';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import DataElements from 'constants/dataElement';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -17,6 +19,7 @@ function NoteState(props) {
   } = props;
 
   const [t] = useTranslation();
+  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
@@ -29,6 +32,7 @@ function NoteState(props) {
         title={t('option.notesOrder.status')}
         img={icon}
         toggleElement={`${DataElements.NOTE_STATE_FLYOUT}-${id}`}
+        disabled={isViewOnly}
       />
       <NoteStateFlyout
         noteId={id}

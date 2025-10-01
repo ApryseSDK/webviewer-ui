@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -30,26 +30,23 @@ const ToggleAccessibilityMode = forwardRef((props, ref) => {
   const shouldAddA11yContentToDOM = useSelector(selectors.shouldAddA11yContentToDOM);
   const accessibleReadingOrderManager = core.getDocumentViewer()?.getAccessibleReadingOrderManager();
 
-  useEffect(() => {
-    if (shouldAddA11yContentToDOM) {
-      accessibleReadingOrderManager?.startAccessibleReadingOrderMode();
-    } else {
-      accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
-    }
-  }, [shouldAddA11yContentToDOM]);
-
   const onClick = () => {
     const state = store.getState();
     if (!state.advanced.fullAPI && !isAccessibleMode) {
       console.warn('FullAPI is required to use accessibility mode');
       return;
     }
+    if (shouldAddA11yContentToDOM) {
+      accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
+    } else {
+      accessibleReadingOrderManager?.startAccessibleReadingOrderMode();
+    }
     dispatch(actions.setShouldAddA11yContentToDOM(!shouldAddA11yContentToDOM));
   };
 
   return (
     isFlyoutItem ?
-      <FlyoutItemContainer {...props} ref={ref} onClick={onClick} />
+      <FlyoutItemContainer {...props} ref={ref} onClick={onClick} isActive={shouldAddA11yContentToDOM} />
       : (
         getPresetButtonDOM({
           buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,

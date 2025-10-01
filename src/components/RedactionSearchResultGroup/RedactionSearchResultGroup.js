@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import RedactionSearchResult from './RedactionSearchResult';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import { useTranslation } from 'react-i18next';
 import CollapsibleSection from 'components/CollapsibleSection';
 import './RedactionSearchResultGroup.scss';

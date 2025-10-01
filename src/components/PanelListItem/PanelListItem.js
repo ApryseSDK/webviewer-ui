@@ -4,12 +4,13 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Button from '../Button';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import Icon from 'components/Icon';
 import './PanelListItem.scss';
 import useNestingLevel from 'src/hooks/useNestingLevel';
 import createItemsForBookmarkOutlineFlyout from 'helpers/createItemsForBookmarkOutlineFlyout';
 import { menuItems, menuTypes } from 'helpers/outlineFlyoutHelper';
+import { getEndFacingChevronIcon } from 'helpers/rightToLeft';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 
@@ -184,7 +185,7 @@ const PanelListItem = ({
             })}
           >
             <Button
-              img="icon-chevron-right"
+              img={getEndFacingChevronIcon()}
               className="panel-list-button"
               ariaExpanded={isExpanded}
               ariaLabel={`${isExpanded ? t('action.collapse') : t('action.expand')} ${labelHeader}`}

@@ -8,6 +8,7 @@ import rootReducer from 'reducers/rootReducer';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import actions from 'actions';
 import WarningModal from 'components/WarningModal';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 const customViewports = {
   ViewOptionOne: {
@@ -104,7 +105,7 @@ KeyboardNavigation.play = async ({ canvasElement }) => {
   await expect(firstTab).toHaveFocus();
 
   await userEvent.keyboard('{ArrowRight}');
-  const firstTabMoreButton = canvas.getByRole('button', { name: /More options Sheet 1/ });
+  const firstTabMoreButton = canvas.getByRole('button', { name: new RegExp(`${getTranslatedText('option.searchPanel.moreOptions')} Sheet 1`) });
   await expect(firstTabMoreButton).toHaveFocus();
 
   for (let i = 0; i < 7; i++) {
@@ -115,7 +116,7 @@ KeyboardNavigation.play = async ({ canvasElement }) => {
   await expect(firstTab).toHaveFocus();
 
   await userEvent.keyboard('{End}');
-  const addSheetButton = canvas.getByRole('button', { name: /Add Sheet/ });
+  const addSheetButton = canvas.getByRole('button', { name: getTranslatedText('action.addSheet') });
   await expect(addSheetButton).toHaveFocus();
 
   // tab away from the sheet switcher
@@ -178,15 +179,15 @@ Edit.play = async ({ canvasElement }) => {
 
   // Delete Flow
   await expect(canvas.getByRole('tab', { name: /Sheet 1/i })).toBeInTheDocument();
-  canvas.getByRole('button', { name: /More Options Sheet 1/i }).click();
-  canvas.getByRole('button', { name: /Delete/i }).click();
+  canvas.getByRole('button', { name: new RegExp(`${getTranslatedText('option.searchPanel.moreOptions')} Sheet 1`) }).click();
+  canvas.getByRole('button', { name: getTranslatedText('action.delete') }).click();
   // Query instead of locator to assert null (can't be done with locators)
   await expect(canvas.queryByLabelText('Sheet 1')).toBeNull();
 
   // Rename Flow
   await expect(canvas.getByRole('tab', { name: /Sheet 2/i })).toBeInTheDocument();
-  canvas.getByRole('button', { name: /More Options Sheet 2/i }).click();
-  canvas.getByRole('button', { name: /Rename/i }).click();
+  canvas.getByRole('button', { name: new RegExp(`${getTranslatedText('option.searchPanel.moreOptions')} Sheet 2`) }).click();
+  canvas.getByRole('button', { name: getTranslatedText('action.rename') }).click();
   let input = canvas.getByRole('textbox');
   await userEvent.type(input, ' Test');
   fireEvent.blur(input);
@@ -195,18 +196,20 @@ Edit.play = async ({ canvasElement }) => {
   await expect(renamedTab).toBeInTheDocument();
 
   // Add Flow
-  canvas.getByRole('button', { name: /Add Sheet/i }).click();
+  canvas.getByRole('button', { name: getTranslatedText('action.addSheet') }).click();
   await expect(canvas.getByRole('tab', { name: /Sheet 3/i })).toBeInTheDocument();
 
   // Invalid rename flow
-  canvas.getByRole('button', { name: /More Options Sheet 2 Test/i }).click();
-  canvas.getByRole('button', { name: /Rename/i }).click();
+  canvas.getByRole('button', { name: new RegExp(`${getTranslatedText('option.searchPanel.moreOptions')} Sheet 2 Test`) }).click();
+  canvas.getByRole('button', { name: getTranslatedText('action.rename') }).click();
   input = canvas.getByRole('textbox');
   input.value = '';
   await userEvent.type(input, 'Sheet 3');
   userEvent.click(document.body);
   await expect(input.ariaInvalid).toBe('true');
-  const closeButton = await canvas.findByRole('button', { name: /Close/i });
+  const closeButton = await canvas.findByRole('button', { name: getTranslatedText('action.close') });
   await userEvent.click(closeButton);
   await expect(await canvas.findByRole('tab', { name: /Sheet 2 Test/i })).toBeInTheDocument();
 };
+
+Edit.parameters = window.storybook.disableRtlMode;

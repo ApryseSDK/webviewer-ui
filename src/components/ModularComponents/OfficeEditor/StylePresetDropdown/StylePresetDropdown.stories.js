@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import StylePresetDropdown from './StylePresetDropdown';
-import { userEvent, expect } from 'storybook/test';
+import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditor/StylePresetDropdown',
@@ -40,12 +41,15 @@ export function NormalText() {
   return prepareDropdownStory();
 }
 
+NormalText.parameters = window.storybook.disableChromatic;
+
 NormalText.play = async ({ canvasElement }) => {
   // open the dropdown and check the active item
-  const dropdown = canvasElement.querySelector('.Dropdown');
+  const canvas = within(canvasElement);
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('officeEditor.fontStyles.dropdownLabel') });
   await userEvent.click(dropdown);
-  const activeItem = canvasElement.querySelector('.Dropdown__item.active');
-  expect(activeItem.innerText).toBe('Normal Text');
+  const activeItem = canvas.getByRole('option', { name: /Normal Text/ });
+  expect(activeItem.classList.contains('active')).toBe(true);
 };
 
 export function Heading1() {
@@ -56,10 +60,13 @@ export function Heading1() {
   return prepareDropdownStory();
 }
 
+Heading1.parameters = window.storybook.disableChromatic;
+
 Heading1.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
   // open the dropdown and check the active item
-  const dropdown = canvasElement.querySelector('.Dropdown');
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('officeEditor.fontStyles.dropdownLabel') });
   await userEvent.click(dropdown);
-  const activeItem = canvasElement.querySelector('.Dropdown__item.active');
-  expect(activeItem.innerText).toBe('Heading 1');
+  const activeItem = canvas.getByRole('option', { name: /Heading 1/ });
+  expect(activeItem.classList.contains('active')).toBe(true);
 };

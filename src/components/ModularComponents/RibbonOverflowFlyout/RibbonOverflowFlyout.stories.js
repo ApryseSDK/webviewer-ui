@@ -127,6 +127,7 @@ export const OverflowFlyout = (props) => {
     </Provider>
   );
 };
+OverflowFlyout.parameters = window.storybook.disableRtlMode;
 
 const noIconsStore = configureStore({
   reducer: () => {
@@ -157,6 +158,7 @@ export const NoIconsOverflowFlyout = (props) => {
     </Provider>
   );
 };
+NoIconsOverflowFlyout.parameters = window.storybook.disableRtlMode;
 
 const translatedStore = configureStore({
   reducer: () => {

@@ -43,9 +43,11 @@ export const StylePicker = () => {
   );
 };
 
-export const noNegativeValuesInStyleSliders = StylePicker.bind({});
+StylePicker.parameters = window.storybook.disableRtlMode;
 
-noNegativeValuesInStyleSliders.play = async ({ canvasElement }) => {
+export const NoNegativeValuesInStyleSliders = StylePicker.bind({});
+
+NoNegativeValuesInStyleSliders.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const strokeThicknessInput = await canvas.findByRole('textbox', { name: /Stroke/ });
   const opacityInput = await canvas.findByRole('textbox', { name: /Opacity/ });
@@ -63,3 +65,5 @@ noNegativeValuesInStyleSliders.play = async ({ canvasElement }) => {
   const updatedOpacityInput = await canvas.findByRole('textbox', { name: /Opacity/ });
   expect(updatedOpacityInput.value).toBe('0%');
 };
+
+NoNegativeValuesInStyleSliders.parameters = window.storybook.disableRtlMode;

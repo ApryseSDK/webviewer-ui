@@ -16,3 +16,5 @@ export function Basic() {
     </NoteTextPreview>
   );
 }
+
+Basic.parameters = window.storybook.disableRtlMode;

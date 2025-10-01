@@ -87,7 +87,8 @@
         display: flex;
         align-items: center;
         padding: 8px 16px;
-        width: 72px;
+        min-width: 72px;
+        width: fit-content;
         justify-content: center;
         position: relative;
         color: var(--primary-button-text);

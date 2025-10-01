@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 import core from 'core';
-import Choice from '../Choice/Choice';
+import Choice from 'components/Choice';
 
 import { Swipeable } from 'react-swipeable';
 import './Model3DModal.scss';

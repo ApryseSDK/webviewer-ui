@@ -1,0 +1,3 @@
+import SpreadsheetEditorInsertImageButton from './SpreadsheetEditorInsertImagebutton';
+
+export default SpreadsheetEditorInsertImageButton;

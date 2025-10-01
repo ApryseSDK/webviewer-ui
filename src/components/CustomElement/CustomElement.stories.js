@@ -44,15 +44,41 @@ export const CustomElementReact = () => (
   </Provider>
 );
 
+CustomElementReact.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
+};
+
 export const CustomElementHTML = () => (
   <Provider store={store}>
     <CustomElement {...defaultProps} render={renderDiv}/>
   </Provider>
 );
 
+CustomElementHTML.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
+};
 export const CustomElementWithRenderArguments = () => (
   <Provider store={store}>
     <CustomElement {...defaultProps} render={(arg) => arg ? <ReactElement/> : failedTestDiv()}
       renderArguments={[true]}/>
   </Provider>
 );
+
+CustomElementWithRenderArguments.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
+};

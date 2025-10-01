@@ -76,10 +76,14 @@ export const Basic = () => {
   return renderComponent();
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
 export const Selecting = () => {
   return renderComponent(selectProps);
 };
 
+Selecting.parameters = window.storybook.disableRtlMode;
 export const MultiSelecting = () => {
   return renderComponent(multiSelectProps);
 };
+
+MultiSelecting.parameters = window.storybook.disableRtlMode;

@@ -15,12 +15,9 @@ export default {
 
 const initialState = OEModularUIMockState;
 
-const store = configureStore({ reducer: () => initialState });
 
-const prepareButtonStory = (buttonType, enableNonPrintingCharacters = false) => {
-  const props = {
-    buttonType: buttonType,
-  };
+const prepareButtonStory = (buttonsToRender, initialState, enableNonPrintingCharacters = false) => {
+  const store = configureStore({ reducer: () => initialState });
 
   core.getOfficeEditor = () => ({
     isTextSelected: () => false,
@@ -45,109 +42,61 @@ const prepareButtonStory = (buttonType, enableNonPrintingCharacters = false) => 
 
   return (
     <Provider store={store}>
-      <PresetButton {...props} />
+      {buttonsToRender.map((buttonType) => (
+        <PresetButton key={buttonType} buttonType={buttonType} />
+      ))}
     </Provider>
   );
 };
 
-export function BoldButton() {
-  initialState.officeEditor.cursorProperties.bold = false; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.BOLD);
-}
+const officeEditorButtons = [
+  PRESET_BUTTON_TYPES.BOLD,
+  PRESET_BUTTON_TYPES.ITALIC,
+  PRESET_BUTTON_TYPES.UNDERLINE,
+  PRESET_BUTTON_TYPES.ALIGN_LEFT,
+  PRESET_BUTTON_TYPES.ALIGN_CENTER,
+  PRESET_BUTTON_TYPES.ALIGN_RIGHT,
+  PRESET_BUTTON_TYPES.JUSTIFY_BOTH,
+  PRESET_BUTTON_TYPES.INCREASE_INDENT,
+  PRESET_BUTTON_TYPES.DECREASE_INDENT,
+  PRESET_BUTTON_TYPES.OE_COLOR_PICKER,
+  PRESET_BUTTON_TYPES.INSERT_IMAGE,
+  PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+];
 
-export function ActiveBoldButton() {
-  initialState.officeEditor.cursorProperties.bold = true; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.BOLD);
-}
+export const OfficeEditorPresetButtons = () => {
+  return prepareButtonStory(officeEditorButtons, initialState);
+};
 
-export function ItalicButton() {
-  initialState.officeEditor.cursorProperties.italic = false; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ITALIC);
-}
-
-export function ActiveItalicButton() {
-  initialState.officeEditor.cursorProperties.italic = true; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ITALIC);
-}
-
-export function UnderlineButton() {
-  initialState.officeEditor.cursorProperties.underlineStyle = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.UNDERLINE);
-}
-
-export function ActiveUnderlineButton() {
-  initialState.officeEditor.cursorProperties.underlineStyle = 'single'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.UNDERLINE);
-}
-
-export function AlignLeftButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_LEFT);
-}
-
-export function ActiveAlignLeftButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'left'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_LEFT);
-}
-
-export function AlignCenterButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_CENTER);
-}
-
-export function ActiveAlignCenterButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'center'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_CENTER);
-}
-
-export function AlignRightButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_RIGHT);
-}
-
-export function ActiveAlignRightButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'right'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.ALIGN_RIGHT);
-}
-
-export function AlignJustifyButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = ''; // set inactive state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_BOTH);
-}
-
-export function ActiveAlignJustifyButton() {
-  initialState.officeEditor.cursorProperties.paragraphProperties.justification = 'both'; // set active state
-  return prepareButtonStory(PRESET_BUTTON_TYPES.JUSTIFY_BOTH);
-}
-
-export function IncreaseIndentButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.INCREASE_INDENT);
-}
-
-export function DecreaseIndentButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.DECREASE_INDENT);
-}
-
-export function ColorPickerButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.OE_COLOR_PICKER);
-}
-
-ColorPickerButton.play = async ({ canvasElement }) => {
+OfficeEditorPresetButtons.play = async ({ canvasElement }) => {
   // check color picker button active state
   const canvas = within(canvasElement);
-  const colorPickerButton = canvas.getByRole('button');
+  // eslint-disable-next-line custom/no-hex-colors
+  const colorPickerButton = canvas.getByRole('button', { name: '#00FF00' });
   const colorPickerButtonIcon = colorPickerButton.querySelector('.Icon');
   expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
 };
 
-export function InsertImageButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.INSERT_IMAGE);
-}
+OfficeEditorPresetButtons.parameters = window.storybook.disableRtlMode;
 
-export function ToggleNonPrintingCharactersButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS, false);
-}
+export const OfficeEditorPresetButtonsActive = () => {
+  const initialStateWithActiveStyles = {
+    ...initialState,
+    officeEditor: {
+      ...initialState.officeEditor,
+      cursorProperties: {
+        ...initialState.officeEditor.cursorProperties,
+        bold: true,
+        italic: true,
+        underlineStyle: 'single',
+        paragraphProperties: {
+          ...initialState.officeEditor.cursorProperties.paragraphProperties,
+          justification: 'center',
+        },
+      },
+    },
+  };
+  return prepareButtonStory(officeEditorButtons, initialStateWithActiveStyles, true);
+};
 
-export function ActiveToggleNonPrintingCharactersButton() {
-  return prepareButtonStory(PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS, true);
-}
+OfficeEditorPresetButtonsActive.parameters = window.storybook.disableRtlMode;

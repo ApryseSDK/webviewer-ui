@@ -10,5 +10,6 @@ WebViewer(...)
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';
+import DataElements from 'src/constants/dataElement';
 
-export default (store) => createPopupAPI(store, 'textPopup');
+export default (store) => createPopupAPI(store, DataElements.TEXT_POPUP);

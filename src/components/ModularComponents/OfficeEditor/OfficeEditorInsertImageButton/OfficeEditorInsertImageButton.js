@@ -1,49 +1,43 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import FlyoutItemContainer from '../../FlyoutItemContainer';
-import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
-import OfficeEditorImageFilePickerHandler from 'components/OfficeEditorImageFilePickerHandler';
-import ActionButton from 'components/ActionButton';
+import InsertImageButton from 'components/InsertImageButton';
 import { menuItems } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
-import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import selectors from 'selectors';
+import actions from 'actions';
+import addImageToOfficeEditorDocument from 'src/helpers/addImageToOfficeEditorDocument';
+import { OFFICE_EDITOR_ACCEPTED_IMAGE_FORMATS } from 'src/constants/officeEditor';
 
 const OfficeEditorInsertImageButton = forwardRef((props, ref) => {
   const menuItem = menuItems[PRESET_BUTTON_TYPES.INSERT_IMAGE];
-  const {
-    isFlyoutItem,
-    style,
-    className,
-    dataElement = menuItem.dataElement,
-    img: icon = menuItem.icon,
-    title = props.title || menuItem.title,
-  } = props;
   const { label } = menuItem;
+  const {
+    dataElement = menuItem.dataElement,
+    title = menuItem.title,
+    icon = menuItem.icon,
+  } = props;
 
-  const handleClick = () => {
-    openOfficeEditorFilePicker();
+  const dispatch = useDispatch();
+  const activeFlyout = useSelector(selectors.getActiveFlyout);
+
+  const handleFileInputChange = async (e) => {
+    await addImageToOfficeEditorDocument(dispatch, actions, e, activeFlyout);
   };
 
   return (
-    <>
-      {isFlyoutItem ?
-        <FlyoutItemContainer {...props} label={label} ref={ref} onClickHandler={() => handleClick} />
-        : (
-          <ActionButton
-            className={classNames({
-              'button-text-icon': true,
-              [className]: true,
-            })}
-            dataElement={dataElement}
-            title={title}
-            img={icon}
-            label={label}
-            onClick={handleClick}
-            style={style}
-          />
-        )}
-      <OfficeEditorImageFilePickerHandler />
-    </>
+    <InsertImageButton
+      {...props}
+      label={label}
+      onFileInputChange={handleFileInputChange}
+      acceptedFormats={OFFICE_EDITOR_ACCEPTED_IMAGE_FORMATS}
+      dataElement={dataElement}
+      title={title}
+      ref={ref}
+      icon={icon}
+      filePickerId="office-editor-file-picker"
+      className="button-text-icon"
+    />
   );
 });
 
@@ -54,6 +48,7 @@ OfficeEditorInsertImageButton.propTypes = {
   className: PropTypes.string,
   img: PropTypes.string,
   title: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 OfficeEditorInsertImageButton.displayName = 'InsertImageButton';
 

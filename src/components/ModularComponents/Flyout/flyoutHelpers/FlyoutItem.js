@@ -57,6 +57,11 @@ const FlyoutItem = React.forwardRef((props, ref) => {
   const { flyoutItem, type, onClickHandler } = props;
   const modularComponent = useSelector((state) => flyoutItem?.dataElement ? selectors.getModularComponent(state, flyoutItem.dataElement) : undefined) || flyoutItem;
 
+  const isDisabledViewOnly = useSelector((state) => selectors.isDisabledViewOnly(state, modularComponent.dataElement));
+  if (modularComponent && isDisabledViewOnly) {
+    return null;
+  }
+
   const typesToGetExtraInfo = [
     ITEM_TYPE.PRESET_BUTTON,
     ITEM_TYPE.RIBBON_ITEM,
@@ -118,7 +123,7 @@ const StaticItem = React.forwardRef((props, ref) => {
     );
   };
 
-  if (flyoutItem.render) {
+  if (flyoutItem.render && typeof flyoutItem.render === 'string') {
     switch (flyoutItem.render) {
       case ITEM_RENDER_PREFIXES.STYLE_PANEL: {
         return (

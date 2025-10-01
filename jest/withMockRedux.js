@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
-
+import { defaultPopups } from 'src/redux/modularComponents';
 
 const defaultState = {
   viewer: {
@@ -16,25 +16,7 @@ const defaultState = {
     flyoutMap: {},
     currentPage: 7,
     pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    annotationPopup: [
-      { dataElement: 'viewFileButton' },
-      { dataElement: 'annotationCommentButton' },
-      { dataElement: 'annotationStyleEditButton' },
-      { dataElement: 'annotationDateEditButton' },
-      { dataElement: 'annotationRedactButton' },
-      { dataElement: 'annotationCropButton' },
-      { dataElement: 'annotationContentEditButton' },
-      { dataElement: 'annotationClearSignatureButton' },
-      { dataElement: 'annotationGroupButton' },
-      { dataElement: 'annotationUngroupButton' },
-      { dataElement: 'formFieldEditButton' },
-      { dataElement: 'linkButton' },
-      { dataElement: 'fileAttachmentDownload' },
-      { dataElement: 'annotationDeleteButton' },
-      { dataElement: 'shortCutKeysFor3D' },
-      { dataElement: 'playSoundButton' },
-      { dataElement: 'annotationAlignButton' }
-    ],
+    modularPopups: defaultPopups,
     savedSignatures: [],
     maxSignatureCount: 10,
     focusedElementsStack: [],
@@ -45,7 +27,9 @@ const defaultState = {
   },
   document: {
     totalPages: { 1: 9, 2: 0 },
-  }
+  },
+  featureFlags: {
+  },
 };
 
 export default function withMockRedux(Component, mockInitialState ={ viewer: {}, search: {}, document: {} }) {
@@ -65,6 +49,10 @@ export default function withMockRedux(Component, mockInitialState ={ viewer: {},
     spreadsheetEditor: {
       ...defaultState.spreadsheetEditor,
       ...mockInitialState.spreadsheetEditor,
+    },
+    officeEditor: {
+      ...defaultState.officeEditor,
+      ...mockInitialState.officeEditor,
     },
   };
   return function WithMockReduxWrapper(props) {

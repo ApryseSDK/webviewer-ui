@@ -11,6 +11,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import { focusActiveIcon } from 'components/DocumentCropPopup/DocumentCropPopupContainer';
+import useDraggablePosition from '../../hooks/useDraggablePosition';
 
 function SnippingToolPopupContainer() {
   const snippingToolName = window.Core.Tools.ToolNames['SNIPPING'];
@@ -110,34 +111,7 @@ function SnippingToolPopupContainer() {
   };
 
   const snippingPopupRef = useRef();
-  const DEFAULT_POPUP_WIDTH = 250;
-  const DEFAULT_POPUP_HEIGHT = 200;
-  const documentContainerElement = core.getScrollViewElement();
-  const popupWidth = snippingPopupRef.current?.getBoundingClientRect().width || DEFAULT_POPUP_WIDTH;
-  const popupHeight = snippingPopupRef.current?.getBoundingClientRect().height || DEFAULT_POPUP_HEIGHT;
-  const docContainer = getRootNode().querySelector('.DocumentContainer');
-  const xOffset = docContainer?.getBoundingClientRect().width || 0;
-
-  const getSnippingPopupOffset = () => {
-    const offset = {
-      x: xOffset - popupWidth - 20,
-      y: documentContainerElement?.offsetTop + 10,
-    };
-    if (snippingAnnotation && snippingPopupRef?.current) {
-      offset.x = Math.min(offset.x, documentContainerElement.offsetWidth - popupWidth);
-    }
-    return offset;
-  };
-
-  const getSnippingPopupBounds = () => {
-    const bounds = {
-      top: 0,
-      bottom: documentContainerElement.offsetHeight - popupHeight,
-      left: 0 - getSnippingPopupOffset()['x'],
-      right: documentContainerElement.offsetWidth - getSnippingPopupOffset()['x'] - popupWidth,
-    };
-    return bounds;
-  };
+  const { position, handleDrag, handleStop, containerRef, style, bounds } = useDraggablePosition('top-right');
 
   const closeAndReset = () => {
     snippingCreateTool.reset();
@@ -187,10 +161,19 @@ function SnippingToolPopupContainer() {
     return (
       <Draggable
         cancel={'input, button, .collapsible-menu, .ui__choice__label'}
-        positionOffset={getSnippingPopupOffset()}
-        bounds={getSnippingPopupBounds()}
+        position={position}
+        bounds={bounds}
+        onDrag={handleDrag}
+        onStop={handleStop}
       >
-        <div className="SnippingPopupContainer" ref={snippingPopupRef}>
+        <div
+          className="SnippingPopupContainer"
+          ref={(el) => {
+            snippingPopupRef.current = el;
+            containerRef.current = el;
+          }}
+          style={style}
+        >
           <SnippingToolPopup {...props} />
         </div>
       </Draggable>

@@ -113,7 +113,7 @@ export const createEmbeddedPrintPages = async (
 ) => {
   try {
     const { isAlwaysPrintAnnotationsInColorEnabled } = printingOptions;
-    const processedBaseDoc = await createCleanDocumentCopy(document, pagesToPrint);
+    const processedBaseDoc = await createCleanDocumentCopy(document);
     const layerDocument = await createLayerDocument(document, processedBaseDoc);
     const xfdfString = await prepareAnnotations(annotationManager, pagesToPrint, printingOptions);
     const watermarkedDoc = await applyWatermark(layerDocument, watermarkModalOptions);

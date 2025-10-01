@@ -51,6 +51,8 @@ StatefulButtonCounter.args = {
   mount: () => {},
 };
 
+StatefulButtonCounter.parameters = window.storybook.disableRtlMode;
+
 export const StatefulButtonStates = BasicComponent.bind({});
 StatefulButtonStates.args = {
   type: 'statefulButton',
@@ -74,6 +76,8 @@ StatefulButtonStates.args = {
   },
   mount: () => {},
 };
+
+StatefulButtonStates.parameters = window.storybook.disableRtlMode;
 
 
 export const StatefulButtonWithStyleAndClass = BasicComponent.bind({});
@@ -111,3 +115,5 @@ StatefulButtonWithStyleAndClass.play = async ({ canvasElement }) => {
   const button = canvas.getByRole('button', { name: /Clockwise/i });
   expect(button.classList.contains('custom-class')).toBe(true);
 };
+
+StatefulButtonWithStyleAndClass.parameters = window.storybook.disableRtlMode;

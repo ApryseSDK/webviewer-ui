@@ -32,6 +32,8 @@ export function FileAttachmentPanelLeftEmpty() {
   );
 }
 
+FileAttachmentPanelLeftEmpty.parameters = window.storybook.disableRtlMode;
+
 export function FileAttachmentPanelRightEmpty() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
@@ -41,6 +43,8 @@ export function FileAttachmentPanelRightEmpty() {
     </Provider>
   );
 }
+
+FileAttachmentPanelRightEmpty.parameters = window.storybook.disableRtlMode;
 
 const filesMock = {
   embeddedFiles: [
@@ -72,3 +76,5 @@ export function FileAttachmentPanelRightWithFiles() {
     </Provider>
   );
 }
+
+FileAttachmentPanelRightWithFiles.parameters = window.storybook.disableRtlMode;

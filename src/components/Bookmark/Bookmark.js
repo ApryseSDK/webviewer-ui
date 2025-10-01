@@ -115,13 +115,16 @@ const Bookmark = ({
 
   const flyoutSelector = `${DataElements.BOOKMARK_FLYOUT}-${pageIndex}`;
   const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+  const isViewOnly = useSelector(selectors.isViewOnly);
+  const canEditBookmark = !isViewOnly;
+
   const bookmarkMoreOptionsDataElement = `bookmark-more-button-${panelSelector}-${pageIndex}`;
   const panelListType = 'bookmark';
 
   const bookmarkPanelListProps = {
     labelHeader: defaultLabel,
     description: text,
-    enableMoreOptionsContextMenuFlyout: true,
+    enableMoreOptionsContextMenuFlyout: canEditBookmark,
     contentMenuFlyoutOptions: {
       shouldHideDeleteButton: false,
       currentFlyout: currentFlyout,

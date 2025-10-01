@@ -12,6 +12,7 @@ import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor'
 import { cssFontValues } from 'src/constants/fonts/fonts';
 import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditorFlyout',
@@ -277,27 +278,27 @@ export const FlyoutComponent = () => {
 FlyoutComponent.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // check style buttons active state
-  const boldButton = await canvas.findByRole('button', { name: 'Bold' });
+  const boldButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.bold') });
   expect(boldButton).toHaveAttribute('aria-pressed', 'true');
-  const italicButton = await canvas.findByRole('button', { name: 'Italic' });
+  const italicButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.italic') });
   expect(italicButton).toHaveAttribute('aria-pressed', 'true');
-  const underlineButton =  await canvas.findByRole('button', { name: 'Underline' });
+  const underlineButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.underline') });
   expect(underlineButton).toHaveAttribute('aria-pressed', 'true');
 
   // check list type buttons active state
-  const orderedListButton =  await canvas.findByRole('button', { name: 'Numbered list' });
+  const orderedListButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.numberList') });
   expect(orderedListButton).toHaveAttribute('aria-pressed', 'true');
-  const unorderedListButton = await canvas.findByRole('button', { name: 'Bulleted list' });
+  const unorderedListButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.bulletList') });
   expect(unorderedListButton).toHaveAttribute('aria-pressed', 'false');
 
   // check alignment buttons active state
-  const leftAlignButton =  await canvas.findByRole('button', { name: 'Left align' });
+  const leftAlignButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.leftAlign') });
   expect(leftAlignButton).toHaveAttribute('aria-pressed', 'false');
-  const centerAlignButton = await canvas.findByRole('button', { name: 'Center align' });
+  const centerAlignButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.centerAlign') });
   expect(centerAlignButton).toHaveAttribute('aria-pressed', 'false');
-  const rightAlignButton = await canvas.findByRole('button', { name: 'Right align' });
+  const rightAlignButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.rightAlign') });
   expect(rightAlignButton).toHaveAttribute('aria-pressed', 'false');
-  const justifyBothButton = await canvas.findByRole('button', { name: 'Justify' });
+  const justifyBothButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.justify') });
   expect(justifyBothButton).toHaveAttribute('aria-pressed', 'true');
 
   // check active color picker button's icon
@@ -306,12 +307,12 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   expect(colorPickerIcon).toBeInTheDocument();
 
   // check active non printing characters button
-  const nonPrintingCharactersButton = await canvas.findByRole('button', { name: 'Non-printing characters' });
+  const nonPrintingCharactersButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.nonPrintingCharacters') });
   expect(nonPrintingCharactersButton).toHaveAttribute('aria-pressed', 'true');
 
   // check undo is enabled and redo is disabled
-  const undoButton = await canvas.findByRole('button', { name: 'Undo' });
+  const undoButton = await canvas.findByRole('button', { name: getTranslatedText('action.undo') });
   expect(undoButton.disabled, 'undo button should not be disabled').toBe(false);
-  const redoButton = await canvas.findByRole('button', { name: 'Redo' });
+  const redoButton = await canvas.findByRole('button', { name: getTranslatedText('action.redo') });
   expect(redoButton.disabled, 'redo button should be disabled').toBe(true);
 };

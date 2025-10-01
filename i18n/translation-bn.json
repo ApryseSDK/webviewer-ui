@@ -99,6 +99,7 @@
     "pageManipulation": "পৃষ্ঠা ম্যানিপুলেশন",
     "replace": "প্রতিস্থাপন করুন",
     "replacePage": "পৃষ্ঠা প্রতিস্থাপন করুন",
+    "goToResult": "ফলাফলে যান",
     "modal": "মডেল",
     "isOpen": "খোলা",
     "setDestination": "লক্ষ ঠিক করো",
@@ -347,7 +348,8 @@
     "errorPageNumber": "অবৈধ পৃষ্ঠা নম্বর। সীমা হল",
     "errorBlankPageNumber": "একটি পৃষ্ঠা নম্বর উল্লেখ করুন",
     "errorLoadingDocument": "এই নথিটি পড়তে একটি সমস্যা হয়েছে এবং কিছু পৃষ্ঠাগুলি প্রদর্শিত নাও হতে পারে৷ এটি নির্দেশ করে যে নথিটি নষ্ট হতে পারে। মোট পৃষ্ঠা সংখ্যা হল {{totalPageCount}} এবং প্রদর্শিত পৃষ্ঠাগুলির সংখ্যা হল {{displayedPageCount}}৷",
-    "noRevisions": "এই নথির কোন সংশোধন নেই."
+    "noRevisions": "এই নথির কোন সংশোধন নেই.",
+    "listEmptyValue": "এক বা একাধিক ক্ষেত্রের একটি খালি মান আছে।"
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "ফন্ট ফ্যামিলি"
     },
-    "blankSheet": "খালি শীট"
+    "blankSheet": "খালি শীট",
+    "insertImage": "ছবি ঢোকান"
   },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা ঢোকান",

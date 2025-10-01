@@ -16,7 +16,7 @@ const regexOfValidFormatstring = /^([^\d#,.%]{0,10}[#0,]+)(\.0+)?([^\d]{0,10})$/
  * - '#,##0;(#,##0)'         ----- 15, (-15);
  * - '#,##0.000;(#,##0.000)' ----- 15.000, (-15.000);
  * @param {string} formatString
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const isFinancialFormat = (formatString) => {
   const financialRegex = /^#,##0(\.0+)?;\(#,##0(\.0+)?\)$/;
@@ -31,7 +31,7 @@ export const isFinancialFormat = (formatString) => {
  * - '_($* #,##0.00_);_($* (#,##0.00);'    ----- $15.00, $(-15.00);
  * - '_($* #,##0.000_);_($* (#,##0.000);'  ----- $15.000, $(-15.000);
  * @param {string} formatString
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const isAccountingFormat = (formatString) => {
   const accountingRegex = /^_\(\$\* #,##0(\.0+)?_\);_\(\$\* \(#,##0(\.0+)?\);$/;
@@ -47,8 +47,8 @@ export const isAccountingFormat = (formatString) => {
  * (3) format string with double quotes like '"0.00"' is invalid
  * (4) 'General' as format string is invalid
  * (5) date-like format strings like 'MM/dd/yyyy' or 'hh:mm:ss AM/PM' are invalid
- * @param {*} formatString
- * @returns {Boolean}
+ * @param {string} formatString
+ * @returns {boolean}
  */
 export function cannotBeAdjustedWithDecimal(formatString) {
   const isQuoted = /".+?"/.test(formatString);
@@ -133,26 +133,25 @@ export const removeOneDecimalPlace = (formatString) => {
 };
 
 export function adjustDecimalOnFormatString(formatString, type) {
+  const adjustDecimalFunction = type === 'increaseDecimalFormat' ? addOneDecimalPlace : removeOneDecimalPlace;
+  let adjustedFormatString;
   if (cannotBeAdjustedWithDecimal(formatString)) {
     return formatString;
   }
 
-  const adjustDecimalFunction = type === 'increaseDecimalFormat' ? addOneDecimalPlace : removeOneDecimalPlace;
+  const shouldAdjustDecimalForSemicolonSeparatedFormat =
+    isFinancialFormat(formatString) || isAccountingFormat(formatString);
 
-  if (isFinancialFormat(formatString)) {
-    return adjustDecimalForSemicolonSeparatedFormat(formatString, {
+  if (shouldAdjustDecimalForSemicolonSeparatedFormat) {
+    adjustedFormatString = adjustDecimalForSemicolonSeparatedFormat(formatString, {
+      preserveTrailingSemicolon: isAccountingFormat(formatString),
       adjustDecimalFunction,
     });
+  } else {
+    adjustedFormatString = adjustDecimalFunction(formatString);
   }
 
-  if (isAccountingFormat(formatString)) {
-    return adjustDecimalForSemicolonSeparatedFormat(formatString, {
-      preserveTrailingSemicolon: true,
-      adjustDecimalFunction,
-    });
-  }
-
-  return adjustDecimalFunction(formatString);
+  return adjustedFormatString;
 }
 
 export function getDecimalAdjustedFormatString(type) {

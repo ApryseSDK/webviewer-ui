@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { menuTypes } from 'helpers/outlineFlyoutHelper';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
-import { Input } from '@pdftron/webviewer-react-toolkit';
+import Input from 'components/Input';
 import Button from 'components/Button';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
 import { isOpenableFile } from 'helpers/portfolio';

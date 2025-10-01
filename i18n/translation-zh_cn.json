@@ -99,6 +99,7 @@
     "pageManipulation": "页面操作",
     "replace": "代替",
     "replacePage": "替换页面",
+    "goToResult": "转到结果",
     "modal": "莫代尔",
     "isOpen": "开了",
     "setDestination": "设置目的地",
@@ -347,7 +348,8 @@
     "errorPageNumber": "页码无效。限制是",
     "errorBlankPageNumber": "请指定页码",
     "errorLoadingDocument": "阅读本文档时出现问题，某些页面可能无法显示。这表明文档可能已损坏。总页数为 {{totalPageCount}}，显示的页数为 {{displayedPageCount}}。",
-    "noRevisions": "本文档没有修订。"
+    "noRevisions": "本文档没有修订。",
+    "listEmptyValue": "一个或多个字段具有空值。"
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "字体系列"
     },
-    "blankSheet": "空白页"
+    "blankSheet": "空白页",
+    "insertImage": "插入图片"
   },
   "insertPageModal": {
     "title": "插入新页",

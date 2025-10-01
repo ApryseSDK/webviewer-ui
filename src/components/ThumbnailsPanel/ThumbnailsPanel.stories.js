@@ -7,6 +7,7 @@ import { createStore } from 'src/helpers/storybookHelper';
 import { userEvent, within, expect } from 'storybook/test';
 import rootReducer from 'reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/Thumbnails',
@@ -60,7 +61,7 @@ export const Thumbnails = () => {
 Thumbnails.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const thumbnailContainer = canvas.getByLabelText('Thumbnails');
+  const thumbnailContainer = canvas.getByLabelText(getTranslatedText('component.thumbnailsPanel'));
   await expect(thumbnailContainer).toBeInTheDocument();
 
   const thumbnails = canvas.getAllByRole('gridcell');

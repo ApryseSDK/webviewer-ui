@@ -3,7 +3,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import i18next from 'i18next';
 import core from 'core';
 import Button from 'components/Button';
-import Choice from 'components/Choice/Choice';
+import Choice from 'components/Choice';
 import getClassName from 'helpers/getClassName';
 import classNames from 'classnames';
 import actions from 'actions';

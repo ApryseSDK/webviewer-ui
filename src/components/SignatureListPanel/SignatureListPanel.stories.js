@@ -12,6 +12,7 @@ export default {
 };
 
 const SignatureListPanelInApp = (context, location, signatures = [], initials = []) => {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...initialState,
     viewer: {
@@ -49,7 +50,7 @@ const SignatureListPanelInApp = (context, location, signatures = [], initials = 
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={mockState} />;
+  return <MockApp initialState={mockState} initialDirection={addonRtl} />;
 };
 
 export const EmptySignatureListPanelInAppLeft = (args, context) => SignatureListPanelInApp(context, 'left');

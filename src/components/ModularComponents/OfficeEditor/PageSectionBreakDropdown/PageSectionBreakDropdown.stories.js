@@ -21,6 +21,8 @@ export const Basic = () => {
   );
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export const DisabledInTable = () => {
   initialState.officeEditor.cursorProperties.locationProperties.inTable = true;
   return (
@@ -32,6 +34,8 @@ export const DisabledInTable = () => {
   );
 };
 
+DisabledInTable.parameters = window.storybook.disableRtlMode;
+
 export const DisabledInHeader = () => {
   initialState.officeEditor.stream = 'header';
   return (
@@ -42,3 +46,5 @@ export const DisabledInHeader = () => {
     </Provider>
   );
 };
+
+DisabledInHeader.parameters = window.storybook.disableRtlMode;

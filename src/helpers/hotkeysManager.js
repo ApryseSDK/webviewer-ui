@@ -86,6 +86,38 @@ export const Shortcuts = {
   DELETE: 'delete',
 };
 
+let VIEW_ONLY_SHORTCUTS = [
+  Shortcuts.ROTATE_CLOCKWISE,
+  Shortcuts.ROTATE_COUNTER_CLOCKWISE,
+  Shortcuts.COPY,
+  Shortcuts.OPEN_FILE,
+  Shortcuts.SEARCH,
+  Shortcuts.ZOOM_IN,
+  Shortcuts.ZOOM_OUT,
+  Shortcuts.SET_HEADER_FOCUS,
+  Shortcuts.FIT_SCREEN_WIDTH,
+  Shortcuts.PRINT,
+  Shortcuts.BOOKMARK,
+  Shortcuts.PREVIOUS_PAGE,
+  Shortcuts.NEXT_PAGE,
+  Shortcuts.UP,
+  Shortcuts.DOWN,
+  Shortcuts.SWITCH_PAN,
+  Shortcuts.SELECT,
+  Shortcuts.PAN,
+  Shortcuts.CLOSE,
+  // the ones below are not included in the shortcuts modal but are supported
+  Shortcuts.NUMPAD_ROTATE_CLOCKWISE,
+  Shortcuts.NUMPAD_ROTATE_COUNTER_CLOCKWISE,
+  Shortcuts.NUMPAD_ZOOM_IN,
+  Shortcuts.NUMPAD_ZOOM_OUT,
+  Shortcuts.HOME,
+  Shortcuts.END,
+];
+
+export const setViewOnlyShortcuts = (newShortcuts) => VIEW_ONLY_SHORTCUTS = newShortcuts;
+export const getViewOnlyShortcuts = () => VIEW_ONLY_SHORTCUTS;
+
 const PDFViewerConfig = [
   [Shortcuts.ROTATE_CLOCKWISE, 'option.settings.rotateDocumentClockwise'],
   [Shortcuts.ROTATE_COUNTER_CLOCKWISE, 'option.settings.rotateDocumentCounterclockwise'],
@@ -1068,6 +1100,74 @@ WebViewer(...)
       if (disabledHotkeys[Keys[property]] === false) {
         this.off(Keys[property]);
       }
+    }
+  },
+
+  setViewOnlyMode(enabled) {
+    const currentShortcutKeyMap = this.getShortcutKeyMap();
+
+    if (enabled) {
+      // Capture the current default mode state
+      this.originalUnbindedHotkeysMap = { ...unbindedHotkeysMap };
+
+      this.preViewOnlyEnabledShortcuts = {};
+
+      Object.keys(currentShortcutKeyMap).forEach((shortcut) => {
+        const key = currentShortcutKeyMap[shortcut];
+        if (key) {
+          const keyLower = key.toLowerCase();
+
+          // For concatenated keys (e.g., "ctrl+f, command+f"), check if any individual key is disabled
+          let isEnabled = true;
+          if (keyLower.includes(', ')) {
+            const individualKeys = splitKey(keyLower);
+            // If any individual key is disabled, consider the whole shortcut disabled
+            isEnabled = !individualKeys.some((individualKey) => this.originalUnbindedHotkeysMap[individualKey] === false);
+          } else {
+            isEnabled = this.originalUnbindedHotkeysMap[keyLower] !== false;
+          }
+
+          this.preViewOnlyEnabledShortcuts[shortcut] = isEnabled;
+        }
+      });
+
+      this.off();
+
+      getViewOnlyShortcuts().forEach((shortcut) => {
+        const key = currentShortcutKeyMap[shortcut];
+        if (key && this.preViewOnlyEnabledShortcuts[shortcut]) {
+          const handler = this.keyHandlerMap[ShortcutKeys[shortcut]];
+          if (handler) {
+            this.on(key, handler);
+          }
+        }
+      });
+    } else {
+      this.off();
+
+      // Restore the original state from default mode
+      if (this.originalUnbindedHotkeysMap) {
+        for (const key in unbindedHotkeysMap) {
+          delete unbindedHotkeysMap[key];
+        }
+        Object.assign(unbindedHotkeysMap, this.originalUnbindedHotkeysMap);
+      }
+
+      // Re-enable all shortcuts that were enabled in the original default mode
+      Object.keys(currentShortcutKeyMap).forEach((shortcut) => {
+        const key = currentShortcutKeyMap[shortcut];
+        const wasEnabledInOriginalState = this.preViewOnlyEnabledShortcuts?.[shortcut];
+
+        if (key && wasEnabledInOriginalState !== false) {
+          const handler = this.keyHandlerMap[ShortcutKeys[shortcut]];
+          if (handler) {
+            this.on(key, handler);
+          }
+        }
+      });
+
+      delete this.preViewOnlyEnabledShortcuts;
+      delete this.originalUnbindedHotkeysMap;
     }
   }
 };

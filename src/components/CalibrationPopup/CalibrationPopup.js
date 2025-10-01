@@ -3,7 +3,7 @@ import selectors from 'selectors';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import core from 'core';
 import actions from 'actions';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import Dropdown from '../Dropdown';
 import Tooltip from '../Tooltip';
 import PropTypes from 'prop-types';

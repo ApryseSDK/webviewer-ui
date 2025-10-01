@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import Button from '../Button';
 import { useDrag, useDrop } from 'react-dnd';
 import Icon from 'components/Icon';
+import PropTypes from 'prop-types';
 
 import './CreatableList.scss';
 
@@ -101,13 +102,17 @@ const CreatableListItem = ({
           glyph="icon-drag-handle"
         />
       </div>
-      <input
-        type="text"
-        onChange={onChangeHandler}
-        value={option.displayValue}
-        onKeyPress={addNewItemOnEnterKey}
-        autoFocus
-      />
+      <div className='input-wrapper'>
+        <input
+          type="text"
+          className={option.value ? '' : 'invalid'}
+          onChange={onChangeHandler}
+          value={option.displayValue}
+          onKeyPress={addNewItemOnEnterKey}
+          autoFocus
+        />
+        {!option.value && <Icon glyph="icon-alert" />}
+      </div>
       <Button
         title="action.delete"
         img="icon-delete-line"
@@ -116,5 +121,10 @@ const CreatableListItem = ({
     </div>
   );
 };
+
+const propTypes = {
+  option: PropTypes.object,
+};
+CreatableListItem.propTypes = propTypes;
 
 export default CreatableListItem;

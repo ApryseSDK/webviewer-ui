@@ -7,6 +7,7 @@ import Flyout from '../Flyout';
 import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from 'storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/ViewControlsFlyout',
@@ -175,7 +176,7 @@ ViewControlsFlyoutTest.play = async (context) => {
   const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'View Control Toggle' });
   await userEvent.click(flyoutToggle);
   // Check if the flyout is open
-  const flyoutItem = await canvas.findByText('Rotate Clockwise');
+  const flyoutItem = await canvas.findByText(getTranslatedText('action.rotateClockwise'));
   expect(flyoutItem).toBeInTheDocument();
   // Click flyoutItem
   await userEvent.click(flyoutItem);
@@ -284,16 +285,21 @@ ViewControlsToggleButtonInsideAFlyout.play = async (context) => {
   await userEvent.click(flyoutToggle);
 
   // Check if the flyout is open
-  const viewControls = await canvas.findByRole('button', { name: /View Controls/i });
+  const viewControls = await canvas.findByRole('button', { name: getTranslatedText('component.viewControls') });
   expect(viewControls).toBeInTheDocument();
   // Click flyoutItem
   await userEvent.click(viewControls);
-  const viewControlsItem = await canvas.findByRole('button', { name: /Rotate Clockwise/i });
+  const viewControlsItem = await canvas.findByRole('button', { name: getTranslatedText('action.rotateClockwise') });
   expect(viewControlsItem).toBeInTheDocument();
 
   // Click the toggle again to close the flyout
   await userEvent.click(flyoutToggle);
   expect(viewControlsItem).not.toBeInTheDocument();
+};
+
+ViewControlsToggleButtonInsideAFlyout.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
 };
 
 export const ViewControlsFlyoutOnMobile = () => {

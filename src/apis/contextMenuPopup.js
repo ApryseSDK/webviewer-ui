@@ -10,5 +10,6 @@ WebViewer(...)
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';
+import DataElements from 'src/constants/dataElement';
 
-export default (store) => createPopupAPI(store, 'contextMenuPopup');
+export default (store) => createPopupAPI(store, DataElements.CONTEXT_MENU_POPUP);

@@ -58,3 +58,5 @@ export function PortfolioPanelRight() {
     </Provider>
   );
 }
+
+PortfolioPanelRight.parameters = window.storybook.disableRtlMode;

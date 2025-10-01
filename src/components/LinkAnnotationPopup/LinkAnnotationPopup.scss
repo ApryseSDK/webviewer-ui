@@ -14,10 +14,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
 
       .link-annot-input {
-        margin: 8px 0 8px 8px;
+        margin: 8px;
         color: var(--gray-8);
         font-style: normal;
         font-weight: 400;
@@ -45,7 +44,7 @@
       }
 
       .main-menu-button {
-        margin: 4px 8px 4px 0;
+        margin: 4px 8px;
       }
     }
   }

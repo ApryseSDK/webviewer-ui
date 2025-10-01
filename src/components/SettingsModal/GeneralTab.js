@@ -61,7 +61,7 @@ const GeneralTab = () => {
             onClickItem={changeLanguage}
             maxHeight={200}
             width={336}
-            getCustomItemStyle={() => ({ textAlign: 'left', width: '326px' })}
+            getCustomItemStyle={() => ({ textAlign: 'start', width: '326px' })}
             className="language-dropdown"
           />
         </DataElementWrapper>

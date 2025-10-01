@@ -4,6 +4,7 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import sizeManager from 'helpers/responsivenessHelper';
+import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
 import PageControls from './PageControls';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { useSelector, useDispatch } from 'react-redux';
@@ -91,7 +92,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     title: isFirstPage ? null : t('action.pagePrev'),
     label: size === 1 ? t('action.pagePrev') : null,
     headerPlacement,
-    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-up' : 'icon-chevron-left',
+    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-up' : getStartFacingChevronIcon(),
     type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
     disabled: isFirstPage,
     ariaLabel: t('action.pagePrev'),
@@ -108,7 +109,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     title: isLastPage ? null : t('action.pageNext'),
     label: size === 1 ? t('action.pageNext') : null,
     headerPlacement,
-    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-down' : 'icon-chevron-right',
+    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-down' : getEndFacingChevronIcon(),
     type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
     disabled: isLastPage,
     ariaLabel: t('action.pageNext'),

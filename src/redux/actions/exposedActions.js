@@ -6,12 +6,15 @@ import { disableElements, enableElements, setActiveFlyout, setFlyoutToggleElemen
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getOpenGenericPanel,
+import {
+  getOpenGenericPanel,
   getEnabledRibbonItems,
   getGenericPanelsOnTheSameLocation,
   isElementOpen,
   getIsCustomUIEnabled,
-  getGenericPanels
+  getGenericPanels,
+  isDisabledViewOnly,
+  getVisibleTabPanelTabs
 } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import { OPACITY_LEVELS } from 'constants/customizationVariables';
@@ -22,7 +25,27 @@ import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 import { getAllAssociatedGroupedItems } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { areConfigsEquivalent } from 'helpers/compareObjects';
+import i18next from 'i18next';
+import { panelNames } from 'src/constants/panel';
 
+export const updateViewOnlyBlacklist = (dataElements) => ({
+  type: 'UPDATE_VIEW_ONLY_BLACKLIST',
+  payload: { dataElements },
+});
+export const updateViewOnlyWhitelist = (dataElements) => ({
+  type: 'UPDATE_VIEW_ONLY_WHITELIST',
+  payload: { dataElements },
+});
+export const closeAllElements = () => (dispatch, getState) => {
+  const state = getState();
+  const openElements = Object.keys(state.viewer.openElements);
+  if (openElements.length > 0) {
+    dispatch(closeElements(openElements));
+  }
+  dispatch(setFlyoutToggleElement(null));
+  dispatch(setActiveFlyout(false));
+};
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
   payload: { position },
@@ -100,6 +123,7 @@ export const setStandardStamps = (t) => async (dispatch) => {
         canvasWidth,
         canvasHeight,
         text,
+        direction: i18next.dir(),
       };
 
       return rubberStampTool.getPreview(annotation, options);
@@ -131,6 +155,7 @@ export const setCustomStamps = (t) => async (dispatch) => {
         canvasWidth,
         canvasHeight,
         text,
+        direction: i18next.dir(),
       };
 
       return rubberStampTool.getPreview(annotation, options);
@@ -402,6 +427,10 @@ export const setOfficeEditorCanRedo = (canRedo) => ({
   type: 'SET_OFFICE_EDITOR_CAN_REDO',
   payload: { canRedo },
 });
+export const setOfficeEditorIsReplaceInProgress = (isReplaceInProgress) => ({
+  type: 'SET_OFFICE_EDITOR_IS_REPLACE_IN_PROGRESS',
+  payload: { isReplaceInProgress },
+});
 export const addOfficeEditorAvailableFontFace = (fontFace) => ({
   type: 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE',
   payload: { fontFace },
@@ -492,12 +521,21 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
   const isFlyoutElement = state.viewer.flyoutMap?.[dataElement];
+  const isElementDisabledViewOnly = isDisabledViewOnly(state, dataElement);
 
   if (isFlyoutElement) {
     dispatch(setActiveFlyout(dataElement));
   }
 
-  if (isElementDisabled || isElementOpen) {
+  if (dataElement === panelNames.TABS) {
+    const visibleTabPanelTabs = getVisibleTabPanelTabs(state, dataElement);
+    const hideTabPanel = visibleTabPanelTabs.length === 0;
+    if (hideTabPanel) {
+      return;
+    }
+  }
+
+  if (isElementDisabled || isElementOpen || isElementDisabledViewOnly) {
     return;
   }
 
@@ -656,28 +694,27 @@ const normalizeItems = (items, componentsMap, existingComponentsMap) => {
     const normalizedItem = pick(item, itemKeysToStore);
     const dataElementKey = normalizedItem.dataElement;
 
-    // if the dataElementKey already exists in the header items, we will just continue
-    if (result.indexOf(dataElementKey) > -1) {
-      continue;
-    }
-
-    normalizedItem.dataElement = dataElementKey;
-
     // If there are nested items, recursively normalize them
-    if (item.items && item.items.length > 0) {
+    if (item.items?.length > 0) {
       const nestedItemsDataElements = normalizeItems(item.items, componentsMap, existingComponentsMap);
       normalizedItem.items = nestedItemsDataElements;
     }
 
-    let newNormalizedItem = normalizedItem;
-    if (existingComponentsMap[dataElementKey]) {
-      console.warn(`Modular component with dataElement ${dataElementKey} already exists. Existing component's properties have been updated.`);
-      const comp = existingComponentsMap[dataElementKey];
-      newNormalizedItem = { ...comp, ...normalizedItem };
+    const componentsMapHasItem = componentsMap[dataElementKey];
+    // If existing the component items already contains dataElementKey and there is a difference in the new component, merge; otherwise append as new.
+    if (componentsMapHasItem) {
+      const areComponentsDifferent = !areConfigsEquivalent(item, existingComponentsMap[dataElementKey]);
+      if (areComponentsDifferent) {
+        const existingComponent = existingComponentsMap[dataElementKey];
+        componentsMap[dataElementKey] = { ...existingComponent, ...normalizedItem };
+        console.warn(`Modular component with dataElement ${dataElementKey} already exists. Existing component's properties have been updated.`);
+      }
     }
-    componentsMap[dataElementKey] = newNormalizedItem;
 
-    result.push(dataElementKey);
+    if (!componentsMapHasItem) {
+      componentsMap[dataElementKey] = normalizedItem;
+      result.push(dataElementKey);
+    }
   }
   return result;
 };
@@ -759,13 +796,12 @@ export const setFlyouts = (flyouts) => (dispatch) => {
 export const openFlyout = (dataElement, toggleElement) => (dispatch, getState) => {
   const state = getState();
   const isElementDisabled = state.viewer.disabledElements[dataElement]?.disabled;
-  const isToggleElementDisabled = state.viewer.disabledElements[toggleElement]?.disabled;
   const flyoutElement = state.viewer.flyoutMap?.[dataElement];
+  const toggleComponent = flyoutElement?.toggleElement ?? toggleElement;
+  const isToggleElementDisabled = state.viewer.disabledElements[toggleComponent]?.disabled;
   if (isElementDisabled || !flyoutElement || isToggleElementDisabled) {
     return;
   }
-
-  const toggleComponent = toggleElement ?? flyoutElement?.toggleElement;
 
   if (toggleComponent) {
     const ribbonAssociatedWithToggleButton = selectors.getRibbonAssociatedWithToggleButton(state, toggleComponent);
@@ -787,13 +823,9 @@ export const openFlyout = (dataElement, toggleElement) => (dispatch, getState) =
 export const resetModularUIState = () => ({
   type: 'RESET_MODULAR_UI_STATE',
 });
-export const setRightHeaderWidth = (width) => ({
-  type: 'SET_RIGHT_HEADER_WIDTH',
-  payload: width
-});
-export const setLeftHeaderWidth = (width) => ({
-  type: 'SET_LEFT_HEADER_WIDTH',
-  payload: width
+export const setHeaderWidth = (header, width) => ({
+  type: 'SET_HEADER_WIDTH',
+  payload: { header, width }
 });
 export const setTopFloatingContainerHeight = (height) => ({
   type: 'SET_TOP_FLOATING_CONTAINER_HEIGHT',

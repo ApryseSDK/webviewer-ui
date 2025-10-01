@@ -22,7 +22,7 @@ const ResponsiveContainer = ({
   const animationRequest = useRef(null);
   const isResizingRef = useRef(false);
   const enabledItems = useSelector((state) => items.map((item) => {
-    if (selectors.isElementDisabled(state, item.dataElement)) {
+    if (selectors.isElementDisabled(state, item.dataElement) || selectors.isDisabledViewOnly(state, item.dataElement)) {
       return null;
     }
     return item;

@@ -95,6 +95,8 @@ export function NotModifiable() {
   );
 }
 
+NotModifiable.parameters = window.storybook.disableRtlMode;
+
 export function UndefinedCoreScales() {
   const [selectedScales, setSelectedScales] = useState(presetScales);
   core.getScalePrecision = () => 0.1;
@@ -117,3 +119,5 @@ export function UndefinedCoreScales() {
     </ReduxProvider>
   );
 }
+
+UndefinedCoreScales.parameters = window.storybook.disableRtlMode;

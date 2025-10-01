@@ -16,7 +16,7 @@
   }
 }
 
-.TextButton:hover {
+.TextButton:hover:not(:disabled) {
   box-shadow: inset 0 0 0 1px var(--blue-6);
   color: var(--blue-6);
   background-color: var(--faded-component-background);

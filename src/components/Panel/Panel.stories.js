@@ -42,6 +42,7 @@ export function Basic() {
     </Provider>
   );
 }
+Basic.parameters = window.storybook.disableRtlMode;
 
 export function PanelOnRightSide() {
   mockInitialState.viewer.panelCustomEmptyPanel = undefined;
@@ -55,6 +56,7 @@ export function PanelOnRightSide() {
     </Provider>
   );
 }
+PanelOnRightSide.parameters = window.storybook.disableRtlMode;
 // Should not be cutoff
 export function PanelWithHeaders() {
   const state = {

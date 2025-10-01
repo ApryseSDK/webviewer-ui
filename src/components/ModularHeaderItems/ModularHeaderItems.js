@@ -10,6 +10,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const ModularHeaderItems = (props) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const ModularHeaderItems = (props) => {
   const [itemsGap, setItemsGap] = useState(gap);
   const elementRef = useRef();
   const headerDirection = [PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(placement) ? DIRECTION.COLUMN : DIRECTION.ROW;
+  const [isHeaderEmpty, setIsHeaderEmpty] = useState(false);
 
   useEffect(() => {
     setItemsGap(gap);
@@ -62,6 +64,11 @@ const ModularHeaderItems = (props) => {
     }
     flyout.items.length > 0 ? dispatch(actions.updateFlyout(flyoutDataElement, flyout)) : dispatch(actions.removeFlyout(flyoutDataElement));
   }, [size, items]);
+
+  useEffect(() => {
+    setIsHeaderEmpty(elementRef.current.childElementCount === 0);
+  }, [items]);
+
   useSizeStore({
     elementRef,
     dataElement: headerId,
@@ -89,15 +96,19 @@ const ModularHeaderItems = (props) => {
   }), [items, size, disabledElements]);
 
   return (
-    <div className={`ModularHeaderItems ${className}`}
-      ref={elementRef}
-      style={{
-        gap: `${itemsGap}px`,
-        flexDirection: headerDirection,
-        justifyContent: justifyContent,
-        maxWidth: `${maxWidth}px`,
-        maxHeight: `${maxHeight}px`,
-      }}>
+    <div className={classNames({
+      'ModularHeaderItems': true,
+      [className]: true,
+      'empty-header': isHeaderEmpty,
+    })}
+    ref={elementRef}
+    style={{
+      gap: `${itemsGap}px`,
+      flexDirection: headerDirection,
+      justifyContent: justifyContent,
+      maxWidth: `${maxWidth}px`,
+      maxHeight: `${maxHeight}px`,
+    }}>
       <ResponsiveContainer headerDirection={headerDirection} elementRef={elementRef} parentDataElement={headerId}
         items={items}>
         {headerItems}

@@ -14,22 +14,11 @@ const { ToolNames } = window.Core.Tools;
 const { Annotations } = window.Core;
 
 export default function useOnAnnotationPopupOpen() {
-  const [
-    popupItems,
-    isRightClickAnnotationPopupEnabled,
-    isNotesPanelOpen,
-    isScaleOverlayContainerOpen,
-    activeDocumentViewerKey,
-  ] = useSelector(
-    (state) => [
-      selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP),
-      selectors.isRightClickAnnotationPopupEnabled(state),
-      selectors.isElementOpen(state, DataElements.NOTES_PANEL),
-      selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER),
-      selectors.getActiveDocumentViewerKey(state),
-    ],
-    shallowEqual,
-  );
+  const popupItems = useSelector((state) => selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP), shallowEqual);
+  const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
+  const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
+  const isScaleOverlayContainerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER));
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const dispatch = useDispatch();
 

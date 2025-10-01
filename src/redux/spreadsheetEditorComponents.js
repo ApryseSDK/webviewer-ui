@@ -20,7 +20,7 @@ const defaultSpreadsheetEditorHeaders = {
       'groupedLeftHeaderButtons',
       'editorDropdown',
       'divider-0.1',
-      'searchPanelToggle'
+      'searchPanelToggle',
     ]
   },
   'tools-header': {
@@ -158,6 +158,10 @@ const defaultSpreadsheetEditorComponents = {
       'cellFormatIncreaseDecimal',
       'cellFormatMoreToggleButton',
       'divider-0.8',
+      'spreadsheetEditorInsertImageButton',
+      'divider-0.9',
+      'undoButton',
+      'redoButton',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -195,6 +199,10 @@ const defaultSpreadsheetEditorComponents = {
   },
   'divider-0.8': {
     dataElement: 'divider-0.8',
+    type: 'divider'
+  },
+  'divider-0.9': {
+    dataElement: 'divider-0.9',
     type: 'divider'
   },
   cellCutButton: {
@@ -335,6 +343,24 @@ const defaultSpreadsheetEditorComponents = {
     dataElement: 'fontFamilyDropdown',
     type: 'fontFamilyDropdown',
   },
+  spreadsheetEditorInsertImageButton: {
+    dataElement: 'spreadsheetEditorInsertImageButton',
+    type: 'presetButton',
+    buttonType: 'spreadsheetEditorInsertImageButton',
+    icon: 'icon-tool-image-line',
+    title: 'spreadsheetEditor.insertImage',
+    label: 'spreadsheetEditor.insertImage',
+  },
+  undoButton: {
+    dataElement: 'undoButton',
+    type: 'presetButton',
+    buttonType: 'undoButton'
+  },
+  redoButton: {
+    dataElement: 'redoButton',
+    type: 'presetButton',
+    buttonType: 'redoButton'
+  },
 };
 
 const defaultSpreadsheetEditorPanels = [
@@ -449,7 +475,7 @@ const defaultSpreadsheetFlyoutMap = {
     'className': 'CellAdjustment',
     'items': [
       {
-        'dataElement': 'cellAdjustmentFlyout',
+        'dataElement': 'cellAdjustmentFlyoutLabel',
         'type': 'label',
         'label': 'spreadsheetEditor.cellAdjustment',
       },

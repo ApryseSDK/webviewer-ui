@@ -99,6 +99,7 @@
     "pageManipulation": "Sidmanipulation",
     "replace": "Byta ut",
     "replacePage": "Ersätt sida",
+    "goToResult": "Gå till resultatet",
     "modal": "modal",
     "isOpen": "är öppen",
     "setDestination": "Ställ in destination",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Ogiltigt sidnummer. Gränsen är",
     "errorBlankPageNumber": "Vänligen ange ett sidnummer",
     "errorLoadingDocument": "Det uppstod ett problem med att läsa det här dokumentet och vissa sidor kanske inte visas. Detta indikerar att dokumentet kan vara skadat. Det totala antalet sidor är {{totalPageCount}} och antalet sidor som visas är {{displayedPageCount}}.",
-    "noRevisions": "Detta dokument har inga ändringar."
+    "noRevisions": "Detta dokument har inga ändringar.",
+    "listEmptyValue": "Ett eller flera fält har ett tomt värde."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Typsnittsfamilj"
     },
-    "blankSheet": "Tomt ark"
+    "blankSheet": "Tomt ark",
+    "insertImage": "Infoga bild"
   },
   "insertPageModal": {
     "title": "Infoga ny sida",

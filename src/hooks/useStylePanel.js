@@ -185,7 +185,13 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     }
   }, [selectedAnnotation, currentTool, selectedAnnotations]);
 
-  const onStyleChange = (property, value) => {
+  const getColorFromHex = (hex) => {
+    const colorRGB = hexToRGBA(hex);
+    const color = new Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
+    return color;
+  };
+
+  const onStyleChange = (property, value, doneStyleChange = true) => {
     setStyle((previousStyle) => {
       return { ...previousStyle, [property]: value };
     });
@@ -200,23 +206,20 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       }
     }
 
+    const newValue = colorProperties.includes(property) ? getColorFromHex(value) : value;
+
     if (selectedAnnotations.length > 0) {
       selectedAnnotations.forEach((annotation) => {
-        if (colorProperties.includes(property)) {
-          const colorRGB = hexToRGBA(value);
-          const color = new Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-          core.setAnnotationStyles(annotation, { [property]: color }, activeDocumentViewerKey);
+        if (doneStyleChange) {
+          core.setAnnotationStyles(annotation, { [property]: newValue }, activeDocumentViewerKey);
           if (isAnnotationToolStyleSyncingEnabled) {
-            setToolStyles(annotation.ToolName, property, color);
+            setToolStyles(annotation.ToolName, property, newValue);
           }
         } else {
-          core.setAnnotationStyles(annotation, { [property]: value }, activeDocumentViewerKey);
-          if (annotation instanceof Annotations.FreeTextAnnotation && ['FontSize', 'Font', 'StrokeThickness'].includes(property)) {
-            adjustFreeTextBoundingBox(annotation);
-          }
-          if (isAnnotationToolStyleSyncingEnabled) {
-            setToolStyles(annotation.ToolName, property, value);
-          }
+          annotation[property] = newValue;
+        }
+        if (annotation instanceof Annotations.FreeTextAnnotation && ['FontSize', 'Font', 'StrokeThickness'].includes(property)) {
+          adjustFreeTextBoundingBox(annotation);
         }
         core.getAnnotationManager().redrawAnnotation(annotation);
         if (annotation instanceof Annotations.WidgetAnnotation) {
@@ -226,12 +229,8 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     } else {
       const currentTool = core.getToolMode();
       if (currentTool) {
-        if (colorProperties.includes(property)) {
-          const colorRGB = hexToRGBA(value);
-          const color = new Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-          setToolStyles(currentTool.name, property, color);
-        } else {
-          setToolStyles(currentTool.name, property, value);
+        if (doneStyleChange) {
+          setToolStyles(currentTool.name, property, newValue);
         }
         if (currentTool instanceof window.Core.Tools.RubberStampCreateTool) {
           currentTool.showPreview();

@@ -47,12 +47,12 @@ function NotesPanelContainer(props) {
   }, [activeDocumentViewerKey, selectedNoteIdsMap[1], selectedNoteIdsMap[2], setSelectedNoteIdsMap]);
   const selectedNoteIds = selectedNoteIdsMap[activeDocumentViewerKey] || selectedNoteIdsMap[1];
 
-  const [isMultiSelectedViewerMap, setIsMultiSelectedViewerMap] = useState({ 1: {}, 2: {}, });
-  const setIsMultiSelectedMap = useCallback((isMultiSelected, documentViewerKey = activeDocumentViewerKey) => {
-    isMultiSelectedViewerMap[documentViewerKey] = isMultiSelected;
-    setIsMultiSelectedViewerMap({ ...isMultiSelectedViewerMap });
-  }, [activeDocumentViewerKey, isMultiSelectedViewerMap[1], isMultiSelectedViewerMap[2], setIsMultiSelectedViewerMap]);
-  const isMultiSelectedMap = isMultiSelectedViewerMap[activeDocumentViewerKey] || isMultiSelectedViewerMap[1];
+  const [multiSelectedViewerMap, setMultiSelectedViewerMap] = useState({ 1: {}, 2: {}, });
+  const setMultiSelectedMap = useCallback((isMultiSelected, documentViewerKey = activeDocumentViewerKey) => {
+    multiSelectedViewerMap[documentViewerKey] = isMultiSelected;
+    setMultiSelectedViewerMap({ ...multiSelectedViewerMap });
+  }, [activeDocumentViewerKey, multiSelectedViewerMap[1], multiSelectedViewerMap[2], setMultiSelectedViewerMap]);
+  const multiSelectedMap = multiSelectedViewerMap[activeDocumentViewerKey] || multiSelectedViewerMap[1];
 
   const isValidAnnotation = (annot) => {
     const annotationManager = core.getAnnotationManager();
@@ -83,6 +83,15 @@ function NotesPanelContainer(props) {
     const _setNotes = (documentViewerKey = activeDocumentViewerKey) => () => {
       const selectedAnnotations = core.getSelectedAnnotations(documentViewerKey);
       const groupedAnnots = getGroupedAnnots(selectedAnnotations);
+      const shouldDisplayMultiSelect = (selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) || isMultiSelectMode;
+
+      if (isNotesPanelMultiSelectEnabled && shouldDisplayMultiSelect) {
+        setMultiSelectMode(true);
+        selectedAnnotations.forEach((selectedAnnot) => {
+          multiSelectedMap[selectedAnnot.Id] = selectedAnnot;
+        });
+        setMultiSelectedMap({ ...multiSelectedMap }, documentViewerKey);
+      }
 
       if (isMultiSelectMode && groupedAnnots.length === selectedAnnotations.length) {
         setMultiSelectMode(false);
@@ -149,14 +158,14 @@ function NotesPanelContainer(props) {
         && shouldDisplayMultiSelect) {
         setMultiSelectMode(true);
         selectedAnnotations.forEach((selectedAnnot) => {
-          isMultiSelectedMap[selectedAnnot.Id] = selectedAnnot;
+          multiSelectedMap[selectedAnnot.Id] = selectedAnnot;
         });
-        setIsMultiSelectedMap({ ...isMultiSelectedMap }, documentViewerKey);
+        setMultiSelectedMap({ ...multiSelectedMap }, documentViewerKey);
       } else if (action === 'deselected') {
         annotations.forEach((a) => {
-          delete isMultiSelectedMap[a.Id];
+          delete multiSelectedMap[a.Id];
         });
-        setIsMultiSelectedMap({ ...isMultiSelectedMap }, documentViewerKey);
+        setMultiSelectedMap({ ...multiSelectedMap }, documentViewerKey);
       }
     };
     const onAnnotationSelected1 = onAnnotationSelected(1);
@@ -174,7 +183,7 @@ function NotesPanelContainer(props) {
         core.removeEventListener('annotationSelected', onAnnotationSelected2, 2);
       }
     };
-  }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, isMultiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
+  }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, multiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
 
   function getGroupedAnnots(selectedAnnotations) {
     const mainAnnot = selectedAnnotations.find((annot) => annot.isGrouped());
@@ -200,8 +209,8 @@ function NotesPanelContainer(props) {
     setSearchInput,
     isMultiSelectMode,
     setMultiSelectMode,
-    isMultiSelectedMap,
-    setIsMultiSelectedMap,
+    multiSelectedMap,
+    setMultiSelectedMap,
     scrollToSelectedAnnot,
     setScrollToSelectedAnnot,
   };

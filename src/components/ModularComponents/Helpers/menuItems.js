@@ -323,6 +323,11 @@ const baseMenuItems = {
     title: 'spreadsheetEditor.bottomAlign',
     isActive: false,
   },
+  [PRESET_BUTTON_TYPES.SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON]: {
+    dataElement: 'spreadsheetEditorInsertImageButton',
+    presetDataElement: DataElements.SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON,
+    icon: 'icon-tool-image-line',
+  }
 };
 
 export const menuItems = {

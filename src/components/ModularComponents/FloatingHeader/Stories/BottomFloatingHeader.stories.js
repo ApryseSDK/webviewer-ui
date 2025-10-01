@@ -60,6 +60,7 @@ BottomHeaderWithDefaultAndFloaties.args = {
     floatEndBottomHeader,
   },
 };
+BottomHeaderWithDefaultAndFloaties.parameters = window.storybook.disableRtlMode;
 
 export const FloatBottomStartHeader = Template.bind({});
 FloatBottomStartHeader.args = {
@@ -69,6 +70,8 @@ FloatBottomStartHeader.args = {
   },
 };
 
+FloatBottomStartHeader.parameters = window.storybook.disableRtlMode;
+
 export const FloatBottomCenterHeader = Template.bind({});
 floatCenterTopHeaderDynamic.placement = 'bottom';
 FloatBottomCenterHeader.args = {
@@ -77,6 +80,7 @@ FloatBottomCenterHeader.args = {
     floatCenterTopHeaderDynamic,
   },
 };
+FloatBottomCenterHeader.parameters = window.storybook.disableRtlMode;
 
 FloatBottomCenterHeader.play = async ()  => {
   const textInput = await document.querySelector('.opacity-mode-dynamic');
@@ -94,3 +98,4 @@ FloatBottomEndHeader.args = {
     floatEndBottomHeader,
   },
 };
+FloatBottomEndHeader.parameters = window.storybook.disableRtlMode;

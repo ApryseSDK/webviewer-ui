@@ -321,7 +321,6 @@
       }
 
       .Dropdown__items {
-        width: 100% !important;
         z-index: max($modal-z-index, $popup-z-index);
       }
 
@@ -367,7 +366,6 @@
       .Dropdown__items {
         inset-block-start: -52px;
         z-index: max($modal-z-index, $popup-z-index);
-        width: 100%;
       }
 
       .wrapper {

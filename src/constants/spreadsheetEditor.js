@@ -81,3 +81,7 @@ export const getFormatTypeFromFormatString = (formatString) => {
   const match = numberFormatPatterns.find((pattern) => pattern.pattern.test(formatString));
   return match ? match.key : '';
 };
+
+export const SPREADSHEET_EDITOR_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'bmp', 'webp', 'gif'].map(
+  (format) => `.${format}`,
+).join(', ');

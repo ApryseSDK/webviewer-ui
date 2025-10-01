@@ -22,7 +22,7 @@ import fireEvent from 'helpers/fireEvent';
 import './ThumbnailsPanel.scss';
 import getRootNode from 'helpers/getRootNode';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
+import useIsRTL from 'hooks/useIsRTL';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -45,15 +45,16 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const isThumbnailControlDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailControl'));
   const isThumbnailSliderDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailsSizeSlider'));
   const isReaderMode = useSelector(selectors.isReaderMode);
-  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
+  const isDocumentReadOnly = useSelector(selectors.isViewOnly);
   const totalPagesFromSecondaryDocumentViewer = useSelector((state) => selectors.getTotalPages(state, 2));
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isRightClickEnabled = useSelector(selectors.openingPageManipulationOverlayByRightClickEnabled);
   const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
+  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const [t] = useTranslation();
-  const isRightToLeft = i18next.dir() === 'rtl';
+  const isRightToLeft = useIsRTL();
 
   const listRef = useRef();
   const pendingThumbs = useRef([]);
@@ -232,6 +233,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     annotCanvas.ariaLabel = `${t('action.page')} ${pageNumber}`;
     annotCanvas.style.maxWidth = `${thumbnailSize}px`;
     annotCanvas.style.maxHeight = `${thumbnailSize}px`;
+    annotCanvas.style['transform'] = `${isRightToLeft ? 'translate(50%, -50%)' : 'translate(-50%, -50%)'}`;
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
@@ -607,7 +609,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       <div role="row" aria-label="row" className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
-          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
+          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && !isViewOnly;
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < pageCount ? (
@@ -632,7 +634,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                   index={thumbIndex}
                   canLoad={canLoad}
                   onLoad={onLoad}
-                  onCancel={onCancel}
                   onRemove={onRemove}
                   onDragStart={onDragStart}
                   onDragOver={onDragOver}
@@ -642,7 +643,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                   thumbnailSize={thumbnailSize}
                   panelSelector={panelSelector}
                   parentKeyListener={(e) => handleThumbnailKeyDown(e, thumbIndex)}
-                  isRightToLeft={isRightToLeft}
                 />
               </td>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
@@ -669,7 +669,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     'height': `${hoverAreaHeight}px`,
   };
 
-  const onSliderChange = (property, value) => {
+  const onSliderChange = (_, value) => {
     let zoomValue = Number(value) * ZOOM_RANGE_MAX;
     if (zoomValue < 100) {
       zoomValue = 100;
@@ -705,7 +705,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
             value={thumbnailSize / 1000}
             getDisplayValue={() => thumbnailSize}
             onSliderChange={onSliderChange}
-            onStyleChange={onSliderChange}
             shouldHideSliderTitle={true}
             shouldHideSliderValue={true}
           />

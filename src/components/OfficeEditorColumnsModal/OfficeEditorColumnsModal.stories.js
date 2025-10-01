@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { convertMeasurementUnit } from 'helpers/officeEditor';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/OfficeEditorColumnsModal',
@@ -23,15 +24,20 @@ export function Basic() {
 }
 
 const getColumnInputs = (canvas, numberOfColums) => {
-  return new Array(numberOfColums).fill().map((_, i) => ({
-    width: canvas.getByLabelText(`Column ${i + 1} Width`),
-    spacing: (i < numberOfColums - 1) ? canvas.getByLabelText(`Column ${i + 1} Spacing`) : { value: '0' }
-  }));
+  return new Array(numberOfColums).fill().map((_, i) => {
+    const columnWidthLabel = `${getTranslatedText('officeEditor.column')} ${i + 1} ${getTranslatedText('officeEditor.columnsModal.width')}`;
+    const columnSpacingLabel = `${getTranslatedText('officeEditor.column')} ${i + 1} ${getTranslatedText('officeEditor.columnsModal.spacing')}`;
+    return {
+      label: columnWidthLabel,
+      width: canvas.getByLabelText(columnWidthLabel),
+      spacing: (i < numberOfColums - 1) ? canvas.getByLabelText(columnSpacingLabel) : { value: '0' }
+    };
+  });
 };
 
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const columnAmountInput = canvas.getByLabelText('Number of Columns');
+  const columnAmountInput = canvas.getByLabelText(getTranslatedText('officeEditor.columnsModal.columnAmount'));
 
   // allow to clear input or type 0
   await userEvent.type(columnAmountInput, '{backspace}');
@@ -56,14 +62,15 @@ export const ColumnCalculation = () => <Basic />;
 
 ColumnCalculation.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const columnAmountInput = canvas.getByLabelText('Number of Columns');
-  const equalWidthCheckbox = canvas.getByLabelText('Equal Column Width');
+  const columnAmountInput = canvas.getByLabelText(getTranslatedText('officeEditor.columnsModal.columnAmount'));
+  const equalWidthCheckbox = canvas.getByLabelText(getTranslatedText('officeEditor.columnsModal.equalColumns'));
 
   await userEvent.click(equalWidthCheckbox);
   expect(equalWidthCheckbox.checked).toBe(false);
 
   // Confirm available page width
-  await waitFor(() => expect(canvas.getByLabelText('Column 1 Width').valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM));
+  const columnLabel = `${getTranslatedText('officeEditor.column')} 1 ${getTranslatedText('officeEditor.columnsModal.width')}`;
+  await waitFor(() => expect(canvas.getByLabelText(columnLabel).valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM));
 
   await userEvent.type(columnAmountInput, '{backspace}5');
   expect(columnAmountInput.value).toBe('5');
@@ -88,7 +95,7 @@ ColumnCalculation.play = async ({ canvasElement }) => {
   }
 
   await userEvent.type(columnAmountInput, '{backspace}1');
-  expect(canvas.getByLabelText('Column 1 Width').valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM);
+  expect(canvas.getByLabelText(columnLabel).valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM);
 };
 
 export const UnitConversion = () => <Basic />;
@@ -97,14 +104,15 @@ UnitConversion.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const singleColumnWidthInch = convertMeasurementUnit(SINGLE_COLUMN_WIDTH_CM, 'cm', 'inch');
 
-  const unitButton = await canvas.findByRole('combobox', { name: 'Unit Measurement' });
+  const unitButton = await canvas.findByRole('combobox', { name: getTranslatedText('officeEditor.unitMeasurement') });
   await userEvent.click(unitButton);
   const inchOption = canvas.getByRole('option', { name: 'inch' });
   await userEvent.click(inchOption);
 
-  await waitFor(() => expect(canvas.getByLabelText('Column 1 Width').valueAsNumber).toBeCloseTo(singleColumnWidthInch, 1));
+  const columnLabel = `${getTranslatedText('officeEditor.column')} 1 ${getTranslatedText('officeEditor.columnsModal.width')}`;
+  await waitFor(() => expect(canvas.getByLabelText(columnLabel).valueAsNumber).toBeCloseTo(singleColumnWidthInch, 1));
 
-  const columnAmountInput = canvas.getByLabelText('Number of Columns');
+  const columnAmountInput = canvas.getByLabelText(getTranslatedText('officeEditor.columnsModal.columnAmount'));
   columnAmountInput.focus();
   columnAmountInput.value = '';
   await userEvent.type(columnAmountInput, '3[Tab]');

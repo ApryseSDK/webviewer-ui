@@ -99,6 +99,7 @@
     "pageManipulation": "頁面操作",
     "replace": "代替",
     "replacePage": "替換頁面",
+    "goToResult": "轉到結果",
     "modal": "莫代爾",
     "isOpen": "開了",
     "setDestination": "設置目的地",
@@ -347,7 +348,8 @@
     "errorPageNumber": "頁碼無效。限制是",
     "errorBlankPageNumber": "請指定頁碼",
     "errorLoadingDocument": "閱讀本文檔時出現問題，某些頁面可能無法顯示。這表明文檔可能已損壞。總頁數為 {{totalPageCount}}，顯示的頁數為 {{displayedPageCount}}。",
-    "noRevisions": "本文檔沒有任何修訂。"
+    "noRevisions": "本文檔沒有任何修訂。",
+    "listEmptyValue": "一個或多個欄位具有空值。"
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "字體系列"
     },
-    "blankSheet": "空白頁"
+    "blankSheet": "空白頁",
+    "insertImage": "插入圖片"
   },
   "insertPageModal": {
     "title": "插入新頁面",

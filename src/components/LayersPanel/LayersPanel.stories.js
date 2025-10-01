@@ -2,11 +2,12 @@ import React from 'react';
 import LayersPanel from 'components/LayersPanel';
 import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
-import { userEvent, within, waitFor, expect } from 'storybook/test';
+import { userEvent, within, expect } from 'storybook/test';
 import core from 'core';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import Panel from 'components/Panel';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/LayersPanel',
@@ -17,6 +18,12 @@ const layers = [
   {
     'name': 'Layer 1',
     'id': 'layer1',
+    'children': [
+      {
+        'name': 'SubLayer 1',
+        'id': 'sublayer1',
+      },
+    ],
   },
   {
     'name': 'Layer 2',
@@ -29,6 +36,7 @@ const layers = [
 ];
 
 export function Basic(args, context) {
+  const { addonRtl } = context.globals;
   const documentViewer = core.getDocumentViewer();
   const annotationManager = documentViewer.getAnnotationManager();
   annotationManager.drawAnnotationsFromList = () => {};
@@ -46,7 +54,7 @@ export function Basic(args, context) {
         {
           dataElement: 'panel1',
           render: 'layersPanel',
-          location: 'left',
+          location: 'start',
         },
       ],
       openElements: {
@@ -72,7 +80,7 @@ export function Basic(args, context) {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateWithLayersPanel} />;
+  return <MockApp initialState={stateWithLayersPanel} initialDirection={addonRtl}/>;
 }
 
 Basic.parameters = { layout: 'fullscreen' };
@@ -80,43 +88,33 @@ Basic.parameters = { layout: 'fullscreen' };
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const menuButton = await canvas.queryByRole('button', { name: 'Menu' });
+  const menuButton = canvas.getByRole('button', { name: getTranslatedText('component.menuOverlay') });
   expect(menuButton).toBeInTheDocument();
   await userEvent.click(menuButton);
 
-  await waitFor(() => {
-    const btn = canvas.queryByRole('button', { name: 'Settings' });
-    expect(btn).toBeInTheDocument();
-  });
-  const settingsButton = await canvas.queryByRole('button', { name: 'Settings' });
+  const settingsButton = canvas.getByRole('button', { name: getTranslatedText('option.settings.settings') });
   expect(settingsButton).toBeInTheDocument();
   await userEvent.click(settingsButton);
 
-  await waitFor(() => {
-    const btn = canvas.queryByRole('button', { name: 'Advanced Settings' });
-    expect(btn).toBeInTheDocument();
-  });
-
-  const settingsAdvancedButton = await canvas.queryByRole('button', { name: 'Advanced Settings' });
+  const settingsAdvancedButton = await canvas.findByRole('button', { name: getTranslatedText('option.settings.advancedSetting') });
   expect(settingsAdvancedButton).toBeInTheDocument();
   await userEvent.click(settingsAdvancedButton);
 
-  const input = await canvas.queryByRole('checkbox', { name: 'Disable Fade Page Navigation Component' });
+  const input = canvas.getByRole('checkbox', { name: getTranslatedText('option.settings.disableFadePageNavigationComponent') });
   expect(input).toBeInTheDocument();
   await userEvent.click(input);
 
-  const closeBtn = await canvas.queryByRole('button', { name: 'Close' });
+  const closeBtn = canvas.getByRole('button', { name: getTranslatedText('action.close') });
   expect(closeBtn).toBeInTheDocument();
   await userEvent.click(closeBtn);
 
-  await waitFor(async () => {
-    const pageNav = await canvas.queryByRole('button', { name: 'Previous page' });
-    expect(pageNav).toBeInTheDocument();
-    expect(pageNav).toBeVisible();
-  });
+  const pageNav = await canvas.findByRole('button', { name: getTranslatedText('action.pagePrev') });
+  expect(pageNav).toBeInTheDocument();
+  expect(pageNav).toBeVisible();
 };
 
 export const RightSide = (args, context) => {
+  const { addonRtl } = context.globals;
   const stateWithLayersPanelOnRight = {
     ...initialState,
     viewer: {
@@ -149,12 +147,13 @@ export const RightSide = (args, context) => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateWithLayersPanelOnRight} />;
+  return <MockApp initialState={stateWithLayersPanelOnRight} initialDirection={addonRtl} />;
 };
 
 RightSide.parameters = { layout: 'fullscreen' };
 
 export const Empty = (args, context) => {
+  const { addonRtl } = context.globals;
   const stateWithEmptyLayersPanel = {
     ...initialState,
     viewer: {
@@ -163,7 +162,7 @@ export const Empty = (args, context) => {
         {
           dataElement: 'panel1',
           render: 'layersPanel',
-          location: 'left',
+          location: 'start',
         },
       ],
       openElements: {
@@ -187,7 +186,7 @@ export const Empty = (args, context) => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateWithEmptyLayersPanel} />;
+  return <MockApp initialState={stateWithEmptyLayersPanel} initialDirection={addonRtl} />;
 };
 
 Empty.parameters = { layout: 'fullscreen' };
@@ -211,8 +210,11 @@ const store = configureStore({ reducer: () => stateLoading });
 
 export const Loading = () => {
   return <Provider store={store}>
-    <Panel location="left" dataElement="panel1">
+    <Panel location="start" dataElement="panel1">
       <LayersPanel />
     </Panel>
   </Provider>;
 };
+
+Loading.parameters = window.storybook.disableRtlMode;
+

@@ -1,6 +1,7 @@
 import App from 'components/App';
 import { createTemplate, defaultSpreadSheetEditorState } from 'helpers/storybookHelper';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 import {
   defaultSpreadsheetEditorComponents,
   defaultSpreadsheetEditorHeaders,
@@ -56,29 +57,29 @@ CellFormats.parameters ={
 CellAlignments.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const cellAlignmentButton = await canvas.findByRole('button', { name: 'Text Alignment' });
+  const cellAlignmentButton = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.textAlignment') });
   await userEvent.click(cellAlignmentButton);
 
   // Seven buttons and one label should be visible
-  const flyoutLabel = await canvas.findByText('Text Alignment');
+  const flyoutLabel = await canvas.findByText(getTranslatedText('spreadsheetEditor.textAlignment'));
   expect(flyoutLabel).toBeInTheDocument();
 
-  const leftAlign = await canvas.findByRole('button', { name: 'Left align' });
+  const leftAlign = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.leftAlign') });
   expect(leftAlign).toBeInTheDocument();
 
-  const centerAlign = await canvas.findByRole('button', { name: 'Center align' });
+  const centerAlign = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.centerAlign') });
   expect(centerAlign).toBeInTheDocument();
 
-  const rightAlign = await canvas.findByRole('button', { name: 'Right align' });
+  const rightAlign = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.rightAlign') });
   expect(rightAlign).toBeInTheDocument();
 
-  const topAlign = await canvas.findByRole('button', { name: 'Top align' });
+  const topAlign = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.topAlign') });
   expect(topAlign).toBeInTheDocument();
 
-  const middleAlign = await canvas.findByRole('button', { name: 'Middle align' });
+  const middleAlign = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.middleAlign') });
   expect(middleAlign).toBeInTheDocument();
 
-  const bottomAlign = await canvas.findByRole('button', { name: 'Bottom align' });
+  const bottomAlign = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.bottomAlign') });
   expect(bottomAlign).toBeInTheDocument();
 
   //Left Align and Middle Align are mocked as active in the current state
@@ -90,35 +91,35 @@ CellAlignments.play = async ({ canvasElement }) => {
 CellFormats.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const moreOptions = canvas.queryByRole('button', { name: 'More' });
+  const moreOptions = canvas.queryByRole('button', { name: getTranslatedText('action.more') });
   await userEvent.click(moreOptions);
 
   // Seven buttons and one label should be visible
-  const cellFormatButton = await canvas.findByRole('button', { name: 'More cell format options' });
+  const cellFormatButton = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.cellFormatMoreOptions') });
   await userEvent.click(cellFormatButton);
 
-  const flyoutLabel = await canvas.findByText('Cell Format');
+  const flyoutLabel = await canvas.findByText(getTranslatedText('spreadsheetEditor.cellFormat'));
   expect(flyoutLabel).toBeInTheDocument();
 
-  const automatic = await canvas.findByRole('button', { name: 'Automatic' });
+  const automatic = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.automaticFormat') });
   expect(automatic).toBeInTheDocument();
 
-  const currency = await canvas.findByRole('button', { name: 'Accounting' });
+  const currency = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.accountingFormat') });
   expect(currency).toBeInTheDocument();
 
-  const financial = await canvas.findByRole('button', { name: 'Financial' });
+  const financial = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.financialFormat') });
   expect(financial).toBeInTheDocument();
 
-  const currencyRounded = await canvas.findByRole('button', { name: 'Currency rounded' });
+  const currencyRounded = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.currencyRoundedFormat') });
   expect(currencyRounded).toBeInTheDocument();
 
-  const date = await canvas.findByRole('button', { name: 'Date' });
+  const date = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.calendarFormat') });
   expect(date).toBeInTheDocument();
 
-  const time = await canvas.findByRole('button', { name: 'Time' });
+  const time = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.clockHourFormat') });
   expect(time).toBeInTheDocument();
 
-  const dateTime = await canvas.findByRole('button', { name: 'Date Time' });
+  const dateTime = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.calendarTimeFormat') });
   expect(dateTime).toBeInTheDocument();
 
   expect(currencyRounded).toHaveAttribute('aria-pressed', 'true');

@@ -52,6 +52,8 @@ export const MenuOverlayXOD = () => {
   );
 };
 
+MenuOverlayXOD.parameters = window.storybook.disableRtlMode;
+
 export const MenuOverlayPDF = () => {
   return (
     <Provider store={store}>
@@ -61,3 +63,6 @@ export const MenuOverlayPDF = () => {
     </Provider>
   );
 };
+
+MenuOverlayPDF.parameters = window.storybook.disableRtlMode;
+

@@ -41,3 +41,4 @@ ActionButton.args = {
     alert('Action Triggered');
   },
 };
+ActionButton.parameters = window.storybook.disableRtlMode;

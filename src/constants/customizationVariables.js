@@ -278,6 +278,8 @@ const PRESET_BUTTON_TYPES = {
   CELL_COPY: 'cellCopy',
   CELL_PASTE: 'cellPaste',
   CELL_CUT: 'cellCut',
+
+  SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON: 'spreadsheetEditorInsertImageButton'
 };
 
 const PRESET_BUTTONS_MODAL_TOGGLES = [

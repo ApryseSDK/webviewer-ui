@@ -2,20 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentRef } from 'hooks/useCurrentRef';
 import { findFocusableIndex } from 'helpers/accessibility';
 import { getDOMActiveElement } from 'helpers/webComponent';
-
-const focusableElementDomString = [
-  'a[href]',
-  'area[href]',
-  'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
-  'select:not([disabled]):not([aria-hidden])',
-  'textarea:not([disabled]):not([aria-hidden])',
-  'button:not([disabled]):not([aria-hidden])',
-  'iframe',
-  'object',
-  'embed',
-  '[contenteditable]',
-  '[tabindex]:not([tabindex^="-"])',
-].join(',');
+import { focusableElementDomString } from 'constants/focusableElementDomString';
 
 /**
  * @ignore

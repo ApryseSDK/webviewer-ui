@@ -99,6 +99,7 @@
     "pageManipulation": "Sayfa Manipülasyonu",
     "replace": "Yer değiştirmek",
     "replacePage": "Sayfayı Değiştir",
+    "goToResult": "Sonuca git",
     "modal": "modal",
     "isOpen": "açık",
     "setDestination": "Hedef belirlemek",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Geçersiz sayfa numarası. Sınır (şimdiki değeri)",
     "errorBlankPageNumber": "Lütfen bir sayfa numarası belirtin",
     "errorLoadingDocument": "Bu belge okunurken bir sorun oluştu ve bazı sayfalar görüntülenemeyebilir. Bu, belgenin bozuk olabileceğini gösterir. Toplam sayfa sayısı {{totalPageCount}} ve görüntülenen sayfa sayısı {{displayedPageCount}}.",
-    "noRevisions": "Bu belgenin revizyonu yoktur."
+    "noRevisions": "Bu belgenin revizyonu yoktur.",
+    "listEmptyValue": "Bir veya daha fazla alanda boş değer var."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Yazı Tipi Ailesi"
     },
-    "blankSheet": "Boş Sayfa"
+    "blankSheet": "Boş Sayfa",
+    "insertImage": "Resim ekle"
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",

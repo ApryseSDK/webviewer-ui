@@ -1,5 +1,5 @@
 import React from 'react';
-import Choice from '../Choice/Choice';
+import Choice from 'components/Choice';
 import './ThumbnailCard.scss';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';

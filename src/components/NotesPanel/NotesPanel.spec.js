@@ -3,12 +3,9 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
-// import { Basic } from './NotesPanel.stories';
 import NotesPanelContainer from './NotesPanelContainer';
 import core from 'core';
 
-// const BasicStory = withI18n(Basic);
-const BasicStory = {};
 
 function noop() {
   // Comment needed to suppress SonarCloud code smell.
@@ -44,8 +41,7 @@ const initialState = {
 
 const store = configureStore({ reducer: () => initialState });
 
-// To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
-describe.skip('NotesPanel', () => {
+describe('NotesPanel', () => {
   beforeEach(() => {
     core.getDocumentViewer = () => ({
       addEventListener: noop,
@@ -65,14 +61,6 @@ describe.skip('NotesPanel', () => {
           removeEventListener: noop
         };
       },
-    });
-  });
-
-  describe('Storybook Component', () => {
-    it('Basic story should not throw any errors', () => {
-      expect(() => {
-        render(<BasicStory />);
-      }).not.toThrow();
     });
   });
 

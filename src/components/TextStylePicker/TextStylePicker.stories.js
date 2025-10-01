@@ -46,6 +46,7 @@ TextStylePickerSection.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
+TextStylePickerSection.parameters = window.storybook.disableRtlMode;
 
 export const TextStylePickerFreeTextDisabled = BasicComponent.bind({});
 TextStylePickerFreeTextDisabled.args = {
@@ -57,6 +58,7 @@ TextStylePickerFreeTextDisabled.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
+TextStylePickerFreeTextDisabled.parameters = window.storybook.disableRtlMode;
 
 export const TextStylePickerFreeTextEnabled = BasicComponent.bind({});
 TextStylePickerFreeTextEnabled.args = {
@@ -68,6 +70,7 @@ TextStylePickerFreeTextEnabled.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
+TextStylePickerFreeTextEnabled.parameters = window.storybook.disableRtlMode;
 
 export const WidgetLayoutEnabled = BasicComponent.bind({});
 WidgetLayoutEnabled.args = {
@@ -80,6 +83,7 @@ WidgetLayoutEnabled.args = {
   onPropertyChange: noop,
   isWidget: true
 };
+WidgetLayoutEnabled.parameters = window.storybook.disableRtlMode;
 
 export const RedactionLayoutEnabled = BasicComponent.bind({});
 RedactionLayoutEnabled.args = {
@@ -91,6 +95,7 @@ RedactionLayoutEnabled.args = {
   isRedaction: true,
   onPropertyChange: noop,
 };
+RedactionLayoutEnabled.parameters = window.storybook.disableRtlMode;
 
 export const ContentEditLayoutEnabled = BasicComponent.bind({});
 ContentEditLayoutEnabled.args = {
@@ -102,3 +107,4 @@ ContentEditLayoutEnabled.args = {
   isContentEditing: true,
   onPropertyChange: noop,
 };
+ContentEditLayoutEnabled.parameters = window.storybook.disableRtlMode;

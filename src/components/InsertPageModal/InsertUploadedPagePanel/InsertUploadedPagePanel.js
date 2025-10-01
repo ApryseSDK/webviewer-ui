@@ -6,7 +6,7 @@ import selectors from 'selectors';
 
 import './InsertUploadedPagePanel.scss';
 import PageThumbnailsGrid from 'components/PageThumbnailsGrid';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
 import { useSelector } from 'react-redux';
 

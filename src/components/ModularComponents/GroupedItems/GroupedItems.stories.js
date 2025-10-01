@@ -49,6 +49,8 @@ export const GroupWithFormBuilderTools = () => {
   );
 };
 
+GroupWithFormBuilderTools.parameters = window.storybook.disableRtlMode;
+
 const items = [
   button1,
   button2,
@@ -101,3 +103,5 @@ GroupShouldUpdateFlyout.play = async () => {
   await waitForStoreUpdate();
   await expect(getFlyoutItems().map((i) => i.dataElement)).toEqual([button5, button4, button3, button2, button1].map((i) => i.dataElement));
 };
+
+GroupShouldUpdateFlyout.parameters = window.storybook.disableRtlMode;

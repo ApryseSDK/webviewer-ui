@@ -39,7 +39,7 @@ function RightHeaderContainer() {
 
   useEffect(() => {
     if (dimensions.width !== null) {
-      dispatch(actions.setRightHeaderWidth(dimensions.width));
+      dispatch(actions.setHeaderWidth('rightHeader', dimensions.width));
     }
   }, [dimensions]);
 

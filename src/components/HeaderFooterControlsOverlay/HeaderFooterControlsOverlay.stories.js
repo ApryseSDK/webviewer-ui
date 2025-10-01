@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { userEvent, within, waitFor, expect } from 'storybook/test';
 import core from 'core';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/HeaderFooterControlsOverlay',
@@ -28,14 +29,17 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement.parentNode);
 
-  await waitFor(() => {
-    expect(canvas.getByText('Header - Section 1')).toBeVisible();
-  });
+  const headerLabel = getTranslatedText('officeEditor.header.0');
+  const sectionLabel = getTranslatedText('officeEditor.section');
+  const optionsLabel = getTranslatedText('officeEditor.options');
+  expect(await canvas.findByText(`${headerLabel} - ${sectionLabel} 1`)).toBeVisible();
 
-  const optionsButton = canvas.getByRole('button', { name: 'Header - Section 1 Options' });
+  const optionsButton = canvas.getByRole('button', { name: `${headerLabel} - ${sectionLabel} 1 ${optionsLabel}` });
 
   expect(optionsButton).toBeInTheDocument();
   await userEvent.click(optionsButton);
@@ -55,3 +59,5 @@ export function HeaderFooterBarPositionFallback() {
     </Provider>
   );
 }
+
+HeaderFooterBarPositionFallback.parameters = window.storybook.disableRtlMode;

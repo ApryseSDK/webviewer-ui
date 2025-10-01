@@ -12,7 +12,7 @@ import Icon from 'components/Icon';
 import TextStylePicker from 'components/TextStylePicker';
 import LabelTextEditor from 'components/LabelTextEditor';
 import LineStyleOptions from 'components/LineStyleOptions';
-import Choice from 'components/Choice/Choice';
+import Choice from 'components/Choice';
 import { getStrokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
 import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
@@ -118,7 +118,6 @@ class StylePopup extends React.PureComponent {
   renderSliders = () => {
     const {
       style: { Opacity, StrokeThickness, FontSize },
-      onStyleChange,
       onSliderChange,
       isMeasure = false,
       // TODO: Actually disable these elements
@@ -212,7 +211,7 @@ class StylePopup extends React.PureComponent {
     const sliderComponents = Object.keys(sliders).map((key) => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange} />;
+      return <Slider {...props} key={key} onSliderChange={onSliderChange} />;
     });
 
     return (

@@ -99,6 +99,7 @@
     "pageManipulation": "Paginamanipulatie",
     "replace": "Vervangen",
     "replacePage": "Pagina vervangen",
+    "goToResult": "Ga naar resultaat",
     "modal": "modaal",
     "isOpen": "is geopend",
     "setDestination": "Bestemming instellen",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Ongeldig paginanummer. Limiet is",
     "errorBlankPageNumber": "Geef een paginanummer op",
     "errorLoadingDocument": "Er is een probleem opgetreden bij het lezen van dit document en sommige pagina's worden mogelijk niet weergegeven. Dit geeft aan dat het document mogelijk beschadigd is. Het totale aantal pagina's is {{totalPageCount}} en het aantal weergegeven pagina's is {{displayedPageCount}}.",
-    "noRevisions": "Dit document heeft geen herzieningen."
+    "noRevisions": "Dit document heeft geen herzieningen.",
+    "listEmptyValue": "Eén of meer velden hebben een lege waarde."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Lettertypefamilie"
     },
-    "blankSheet": "Leeg vel"
+    "blankSheet": "Leeg vel",
+    "insertImage": "Afbeelding invoegen"
   },
   "insertPageModal": {
     "title": "Nieuwe pagina invoegen",

@@ -51,6 +51,13 @@ export default () => {
       );
     }
 
+    // Deprecation warning for Legacy UI
+    if (ui === 'legacy') {
+      console.warn(
+        'Deprecation Warning: WebViewer Legacy UI will be removed and support will end in mid-2026 with the release of WebViewer 12. Please see this guide for Modular UI migration details: https://docs.apryse.com/web/guides/get-started/migrating-to-v11-modular-ui.',
+      );
+    }
+
     // if there's any major version differences, log with console.error
     // if there's only minor version differences, log with console.warn
     const webViewerComponents = [

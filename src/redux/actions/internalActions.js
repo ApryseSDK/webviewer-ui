@@ -229,11 +229,18 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
 };
 
 export const setActiveTabInPanel = (tabPanel, wrapperPanel) => (dispatch, getState) => {
+  const state = getState();
+  const isDisabledViewOnly = selectors.isViewOnly(state) && selectors.isDisabledViewOnly(state, tabPanel);
+  if (isDisabledViewOnly) {
+    console.warn(`TabPanel with dataElement ${tabPanel} is disabled in view-only mode.`);
+    return;
+  }
+
   const currentActivePanel = selectors.getActiveTabInPanel(getState(), wrapperPanel);
   if (currentActivePanel === tabPanel) {
     return;
   }
-  const state = getState();
+
   const targetPanel = selectors.getGenericPanels(state).find((panel) => panel.dataElement === wrapperPanel);
   if (!targetPanel) {
     console.warn(`TabPanel with dataElement ${wrapperPanel} does not exist.`);
@@ -310,9 +317,9 @@ export const setFullScreen = (isFullScreen) => ({
   type: 'SET_FULL_SCREEN',
   payload: { isFullScreen },
 });
-export const setReadOnly = (isReadOnly) => ({
-  type: 'SET_READ_ONLY',
-  payload: { isReadOnly },
+export const setViewOnly = (isViewOnly) => ({
+  type: 'SET_VIEW_ONLY',
+  payload: { isViewOnly },
 });
 export const registerTool = (tool) => ({
   type: 'REGISTER_TOOL',
@@ -627,6 +634,10 @@ export const removeSearchListener = (func) => ({
 export const setSearchValue = (value) => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
+});
+export const setSearchInProgress = (isSearchInProgress) => ({
+  type: 'SET_SEARCH_IN_PROGRESS',
+  payload: { isSearchInProgress },
 });
 export const setReplaceValue = (replaceText) => ({
   type: 'SET_REPLACE_VALUE',

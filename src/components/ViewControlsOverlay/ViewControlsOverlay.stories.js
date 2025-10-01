@@ -42,6 +42,7 @@ export const Default = () => {
     </Provider>
   );
 };
+Default.parameters = window.storybook.disableRtlMode;
 
 const initialStateWithMultiTab = {
   ...initialState,
@@ -67,3 +68,5 @@ export const WithMultiTab = () => {
     </Provider>
   );
 };
+
+WithMultiTab.parameters = window.storybook.disableChromatic;

@@ -57,6 +57,10 @@ const modularHeadersWithRightHeader = {
   floatEndRightHeader,
 };
 export const RightHeaderWithDefaultAndFloaties = createTemplate({ headers: modularHeadersWithRightHeader, components: mockModularComponents });
+RightHeaderWithDefaultAndFloaties.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
+};
 
 export const FloatRightStartHeader = Template.bind({});
 FloatRightStartHeader.args = {
@@ -65,6 +69,7 @@ FloatRightStartHeader.args = {
     secondFloatStartRightHeader,
   },
 };
+FloatRightStartHeader.parameters = { chromatic: { disableSnapshot: true } };
 
 export const FloatRightCenterHeader = Template.bind({});
 FloatRightCenterHeader.args = {
@@ -72,6 +77,7 @@ FloatRightCenterHeader.args = {
     floatCenterRightHeader,
   },
 };
+FloatRightCenterHeader.parameters = { chromatic: { disableSnapshot: true } };
 
 export const FloatRightEndHeader = Template.bind({});
 FloatRightEndHeader.args = {
@@ -79,3 +85,4 @@ FloatRightEndHeader.args = {
     floatEndRightHeader,
   },
 };
+FloatRightEndHeader.parameters = { chromatic: { disableSnapshot: true } };

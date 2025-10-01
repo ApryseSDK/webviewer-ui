@@ -97,6 +97,9 @@ const mapI18nCodeToGoogleTranslationCode = (code) => {
     ro: 'ro',
     sv: 'sv',
     ur: 'ur',
+    ar: 'ar',
+    fa: 'fa',
+    he: 'he',
   };
 
   if (!map[code]) {

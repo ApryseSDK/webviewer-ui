@@ -8,6 +8,7 @@ export default [
   'Cousine',
   'Liberation Serif',
   'Open Sans',
+  'Noto Sans Arabic',
   'Roboto',
   'Roboto Mono',
   'Tinos',

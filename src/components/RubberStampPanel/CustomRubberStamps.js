@@ -43,7 +43,7 @@ const CustomRubberStamp = React.memo((
         <img src={imgSrc} alt="" />
       </button>
       <Button
-        data-element="defaultSignatureDeleteButton"
+        dataElement="customStampDeleteButton"
         onClick={() => {
           deleteHandler(index);
         }}

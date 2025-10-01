@@ -19,6 +19,15 @@
     &:hover {
       background: var(--popup-button-hover);
     }
+
+    .Icon {
+      justify-content: center;
+      display: flex;
+
+      svg {
+        width: 16px;
+      }
+    }
   }
 
   hr {

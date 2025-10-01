@@ -27,3 +27,5 @@ export const LogoBarComponent = () => (
     </div>
   </Provider>
 );
+
+LogoBarComponent.parameters = window.storybook.disableChromatic;

@@ -39,6 +39,8 @@ export function BasicButton(props) {
   );
 }
 
+BasicButton.parameters = window.storybook.disableRtlMode;
+
 export default {
   title: 'Components/Buttons',
   component: ButtonComponent,
@@ -54,3 +56,4 @@ Button.args = {
   strokeColor: initialColors[0],
   dataElement: 'test',
 };
+Button.parameters = window.storybook.disableRtlMode;

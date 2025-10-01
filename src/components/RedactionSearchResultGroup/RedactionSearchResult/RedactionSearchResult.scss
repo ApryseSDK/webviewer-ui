@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   padding: 12px;
+  gap: 14px;
   background-color: var(--component-background);
   border: solid 1px transparent;
   border-radius: 4px;
@@ -23,7 +24,6 @@
   .Icon {
     svg {
       transform: scale(1.2);
-      padding-top: 2px;
     }
   }
 

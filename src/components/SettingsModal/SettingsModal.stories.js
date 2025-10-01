@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import hotkeysManager, { ShortcutKeys , SHORTCUT_CONFIGS } from 'helpers/hotkeysManager';
 import { userEvent, within, expect } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/SettingsModal',
@@ -155,16 +156,16 @@ export function TabbingTest() {
 
 TabbingTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const searchInput = canvas.getByLabelText('Search settings');
+  const searchInput = canvas.getByLabelText(getTranslatedText('message.searchSettingsPlaceholder'));
   await userEvent.tab();
   await expect(searchInput).toHaveFocus();
 
   await userEvent.tab();
-  const generalButton = await canvas.findByRole('button', { name: /General/i });
+  const generalButton = await canvas.findByRole('button', { name: getTranslatedText('option.settings.general') });
   await expect(generalButton).toHaveFocus();
 
   await userEvent.tab();
-  const keyboardButton = await canvas.findByRole('button', { name: /Keyboard Shortcut/i });
+  const keyboardButton = await canvas.findByRole('button', { name: getTranslatedText('option.settings.keyboardShortcut') });
   await expect(keyboardButton).toHaveFocus();
 
   // Simulate pressing 'Enter' on the keyboard button
@@ -174,7 +175,7 @@ TabbingTest.play = async ({ canvasElement }) => {
   await expect(keyboardButton).toHaveAttribute('aria-current', 'page');
 
   await userEvent.tab();
-  const advancedButton = await canvas.findByRole('button', { name: /Advanced Setting/i });
+  const advancedButton = await canvas.findByRole('button', { name: getTranslatedText('option.settings.advancedSetting') });
   await expect(advancedButton).toHaveFocus();
 
   await userEvent.tab();
@@ -190,20 +191,20 @@ TabbingTest.play = async ({ canvasElement }) => {
 
   // Scope the search to the EditKeyboardShortcutModal and look for the Close button
   const editKeyboardShortcutModalWithin = within(editKeyboardShortcutModal);
-  const closeModalButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Close/i });
+  const closeModalButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: getTranslatedText('action.close') });
 
   // Ensure the Close button inside the EditKeyboardShortcutModal is focused
   await expect(closeModalButton).toHaveFocus();
 
   await userEvent.tab();
-  const editShortcutButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: /Edit Shortcut/i });
+  const editShortcutButton = await editKeyboardShortcutModalWithin.findByRole('button', { name: getTranslatedText('option.settings.editShortcut') });
   await expect(editShortcutButton).toHaveFocus();
 };
 
 SpreadsheetKeyboardShortcuts.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const keyboardButton = await canvas.findByRole('button', { name: /Keyboard Shortcut/i });
+  const keyboardButton = await canvas.findByRole('button', { name: getTranslatedText('option.settings.keyboardShortcut') });
   await userEvent.click(keyboardButton);
 
   const shortcuts = canvasElement.querySelectorAll('.shortcut-table-item');
@@ -218,3 +219,35 @@ SpreadsheetKeyboardShortcuts.play = async ({ canvasElement }) => {
 
 export const KeyboardShortcutInMobile = () => KeyboardShortcut();
 KeyboardShortcutInMobile.parameters = window.storybook?.MobileParameters;
+
+export function ViewOnlyKeyboardShortcuts() {
+  const store = getStore(2);
+  hotkeysManager.initialize(store);
+
+  const originalGetState = store.getState;
+  store.getState = () => {
+    const state = originalGetState();
+    return {
+      ...state,
+      viewer: {
+        ...state.viewer,
+        isViewOnly: true,
+      },
+    };
+  };
+
+  return (
+    <Provider store={store}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+ViewOnlyKeyboardShortcuts.play = async ({ canvasElement }) => {
+  const editButtons = canvasElement.querySelectorAll('[data-element^="edit-button-"]');
+  for (const button of editButtons) {
+    await expect(button).toBeDisabled();
+  }
+
+  expect(editButtons).toHaveLength(19);
+};

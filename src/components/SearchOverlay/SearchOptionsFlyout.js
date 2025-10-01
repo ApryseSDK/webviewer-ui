@@ -5,7 +5,7 @@ import DataElements from 'src/constants/dataElement';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-import Choice from 'components/Choice/Choice';
+import Choice from 'components/Choice';
 import './SearchOptionsFlyout.scss';
 
 const SearchOptionsFlyout = ({

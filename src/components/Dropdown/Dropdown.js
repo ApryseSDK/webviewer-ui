@@ -494,7 +494,7 @@ function Dropdown({
   if (maxHeight) {
     listBoxStyle.maxHeight = `${maxHeight}px`;
   }
-  if (width) {
+  if (width !== DEFAULT_WIDTH) {
     listBoxStyle.width = `${width}px`;
   }
 
@@ -792,7 +792,7 @@ function Dropdown({
           }
         </div>
       </div>
-      <div aria-live="polite" style={{ position: 'absolute', left: '-9999px' }}>
+      <div aria-live="polite" style={{ position: 'absolute', insetInlineStart: '-9999px' }}>
         {noMatchMessage}
       </div>
     </DataElementWrapper>

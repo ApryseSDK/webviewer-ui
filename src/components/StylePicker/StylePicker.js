@@ -141,8 +141,8 @@ const StylePicker = ({
     setFillColor(color);
   };
 
-  const onSliderChange = (property, value) => {
-    onStyleChange?.(property, value);
+  const onSliderChange = (property, value, doneStyleChange = true) => {
+    onStyleChange?.(property, value, doneStyleChange);
   };
 
   // We do not have sliders to show up for redaction annots
@@ -229,7 +229,6 @@ const StylePicker = ({
       <Slider
         key={property}
         {...sliderProps}
-        onStyleChange={onSliderChange}
         onSliderChange={onSliderChange}
         shouldHideSliderTitle={shouldHideSliderTitle}
         customCircleRadius={8}

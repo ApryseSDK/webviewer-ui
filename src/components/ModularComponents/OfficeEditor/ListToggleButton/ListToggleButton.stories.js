@@ -36,10 +36,14 @@ export function InactiveOrderedListButton() {
   return prepareButtonStory(LIST_OPTIONS.Ordered);
 }
 
+InactiveOrderedListButton.parameters = window.storybook.disableRtlMode;
+
 export function ActiveOrderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Ordered; // set active state
   return prepareButtonStory(LIST_OPTIONS.Ordered);
 }
+
+ActiveOrderedListButton.parameters = window.storybook.disableRtlMode;
 
 export function InactiveOrderedListHover() {
   return prepareButtonStory(LIST_OPTIONS.Ordered);
@@ -47,6 +51,7 @@ export function InactiveOrderedListHover() {
 
 InactiveOrderedListHover.parameters = {
   pseudo: { hover: true },
+  ...window.storybook.disableRtlMode,
 };
 
 export function InactiveUnorderedListButton() {
@@ -54,10 +59,14 @@ export function InactiveUnorderedListButton() {
   return prepareButtonStory(LIST_OPTIONS.Unordered);
 }
 
+InactiveUnorderedListButton.parameters = window.storybook.disableRtlMode;
+
 export function ActiveUnorderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Unordered; // set active state
   return prepareButtonStory(LIST_OPTIONS.Unordered);
 }
+
+ActiveUnorderedListButton.parameters = window.storybook.disableRtlMode;
 
 export function InactiveUnorderedListHover() {
   return prepareButtonStory(LIST_OPTIONS.Unordered);
@@ -65,4 +74,5 @@ export function InactiveUnorderedListHover() {
 
 InactiveUnorderedListHover.parameters = {
   pseudo: { hover: true },
+  ...window.storybook.disableRtlMode,
 };

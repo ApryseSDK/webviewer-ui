@@ -6,7 +6,8 @@ import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import Dropdown from 'components/Dropdown';
-import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
+import Input from 'components/Input';
 import { focusContent } from 'helpers/officeEditor';
 import { useOfficeEditorColumnsModal } from 'hooks/useOfficeEditorColumnsModal';
 import {

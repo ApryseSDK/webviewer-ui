@@ -99,6 +99,7 @@
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Gantikan",
     "replacePage": "Gantikan Halaman",
+    "goToResult": "Pergi ke hasil",
     "modal": "modal",
     "isOpen": "ia terbuka",
     "setDestination": "Tetapkan Destinasi",
@@ -347,7 +348,8 @@
     "errorPageNumber": "Nombor halaman tidak sah. Had ialah",
     "errorBlankPageNumber": "Sila nyatakan nombor halaman",
     "errorLoadingDocument": "Terdapat masalah membaca dokumen ini dan beberapa halaman mungkin tidak dipaparkan. Ini menunjukkan dokumen itu mungkin rosak. Jumlah kiraan halaman ialah {{totalPageCount}} dan nombor halaman yang dipaparkan ialah {{displayedPageCount}}.",
-    "noRevisions": "Dokumen ini tidak mempunyai semakan."
+    "noRevisions": "Dokumen ini tidak mempunyai semakan.",
+    "listEmptyValue": "Satu atau lebih medan mempunyai nilai kosong."
   },
   "option": {
     "type": {
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Keluarga Font"
     },
-    "blankSheet": "Lembaran Kosong"
+    "blankSheet": "Lembaran Kosong",
+    "insertImage": "Sisipkan imej"
   },
   "insertPageModal": {
     "title": "Sisipkan Halaman Baharu",

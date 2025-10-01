@@ -111,6 +111,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function BasicWithSkipAutoLink() {
   return (
     <Provider store={store}>
@@ -122,3 +124,5 @@ export function BasicWithSkipAutoLink() {
     </Provider>
   );
 }
+
+BasicWithSkipAutoLink.parameters = window.storybook.disableRtlMode;

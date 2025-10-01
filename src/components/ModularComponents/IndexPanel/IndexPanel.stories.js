@@ -57,6 +57,7 @@ export function Basic() {
       </div></div>
   );
 }
+Basic.parameters = window.storybook.disableRtlMode;
 
 export function WithWidgets() {
   const store = configureStore({ reducer: () => mockState });

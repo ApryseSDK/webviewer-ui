@@ -7,8 +7,8 @@ const Group = (props) => {
   const { name, data, open } = props;
 
   const [isActive, setIsActive] = useState(open);
-  const downArrow = 'ic_chevron_down_black_24px';
-  const rightArrow = 'ic_chevron_right_black_24px';
+  const downArrow = 'icon-chevron-down';
+  const rightArrow = 'icon-chevron-right';
 
   const onClick = () => {
     setIsActive(!isActive);

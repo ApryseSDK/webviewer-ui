@@ -1,13 +1,13 @@
-.ui__choice__input__icon {
-  inset-block-start: -6px !important;
-}
-
-.ui__icon {
-  align-items: baseline !important;
-}
-
 .ui__choice {
   align-items: center;
+  
+  .ui__choice__input__icon {
+    height: 17px;
+    width: 17px;
+    svg path {
+      fill: var(--color-contrast-1);
+    }
+  }
 }
 
 .ui__choice__label {

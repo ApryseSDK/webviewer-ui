@@ -37,7 +37,7 @@ function LeftHeaderContainer() {
   const [elementRef, dimensions] = useResizeObserver();
   useEffect(() => {
     if (dimensions.width !== null) {
-      dispatch(actions.setLeftHeaderWidth(dimensions.width));
+      dispatch(actions.setHeaderWidth('leftHeader', dimensions.width));
     }
   }, [dimensions.width]);
 

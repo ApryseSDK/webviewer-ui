@@ -13,6 +13,7 @@ import createItemsForBookmarkOutlineFlyout from 'src/helpers/createItemsForBookm
 import { menuItems as MenuItemsForBookmarkOutlines, menuTypes } from 'helpers/outlineFlyoutHelper';
 import { setClickMiddleWare } from 'helpers/clickTracker';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/Flyout',
@@ -495,7 +496,7 @@ FlyoutOpeningTest.play = async ({ canvasElement }) => {
   const submenuItem2 = await canvas.findByText('Submenu Item 2');
   expect(submenuItem2).toBeInTheDocument();
   // Click submenu back button to close it
-  const backBtn = await canvas.findByText('Back');
+  const backBtn = await canvas.getByRole('button', { name: getTranslatedText('action.back') });
   await userEvent.click(backBtn);
   // Check if the submenu is gone
   expect(submenuItem2).not.toBeInTheDocument();
@@ -536,6 +537,10 @@ FlyoutClosingTest.play = async ({ canvasElement }) => {
 
   expect(flyoutItem).not.toBeInTheDocument();
 };
+FlyoutClosingTest.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
+};
 
 FlyoutComponent.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -543,7 +548,7 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   await fireEvent.focus(option1);
   // Pressing first element on the Flyout to open its children
   await fireEvent.keyDown(option1, { key: 'Enter', code: 'Enter' });
-  const backButton = await canvas.findByRole('button', { name: /Back/i });
+  const backButton = await canvas.findByRole('button', { name: getTranslatedText('action.back') });
   const option11 = await canvas.findByRole('button', { name: /Item 1.1/i });
   expect(backButton).toBeInTheDocument();
   expect(option11).toBeInTheDocument();
@@ -633,6 +638,8 @@ StatefulButtonInFlyout.play = async ({ canvasElement }) => {
   await expect(imgTitle).toContainHTML('icon - header - page manipulation - page layout - single page - line');
 };
 
+StatefulButtonInFlyout.parameters = window.storybook.disableRtlMode;
+
 const portfolioFlyoutStore = configureStore({
   reducer: () => {
     return {
@@ -649,6 +656,7 @@ export const PortfolioFlyout = () => {
     </Provider>
   );
 };
+PortfolioFlyout.parameters = window.storybook.disableRtlMode;
 
 const mockInitialState = {
   middleware: false,
@@ -691,6 +699,8 @@ export const FlyoutOverride = () => {
   );
 };
 
+FlyoutOverride.parameters = window.storybook.disableRtlMode;
+
 FlyoutOverride.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   await canvas.getByRole('button', { name: /New Label/i }).click();
@@ -727,9 +737,9 @@ export const RubberStampPanelInFlyout = createTemplate({ headers: mockHeadersNor
 RubberStampPanelInFlyout.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const insertRibbon = canvas.getByRole('button', { name: /Insert/i });
+  const insertRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Insert') });
   await userEvent.click(insertRibbon);
-  const rubberStampButton = canvas.getByRole('button', { name: /Rubber Stamp/i });
+  const rubberStampButton = canvas.getByRole('button', { name: getTranslatedText('annotation.rubberStamp') });
   await userEvent.click(rubberStampButton);
 
   await waitFor(() => {
@@ -742,9 +752,9 @@ export const SignatureListPanelInFlyout = createTemplate({ headers: mockHeadersN
 SignatureListPanelInFlyout.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const insertRibbon = canvas.getByRole('button', { name: /Insert/i });
+  const insertRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Insert') });
   await userEvent.click(insertRibbon);
-  const signatureListButton = canvas.getByRole('button', { name: /Signature/i });
+  const signatureListButton = canvas.getByRole('button', { name: getTranslatedText('annotation.signature') });
   await userEvent.click(signatureListButton);
 
   await waitFor(() => {
@@ -850,3 +860,7 @@ export const FlyoutOverflow = createTemplate({
   ...getDirectionalArgs('top', 'left'),
   height: '200px',
 });
+FlyoutOverflow.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
+};

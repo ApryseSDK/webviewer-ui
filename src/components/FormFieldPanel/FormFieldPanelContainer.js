@@ -15,6 +15,7 @@ import setToolStyles from 'helpers/setToolStyles';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import mapValidationResponseToTranslation from 'helpers/mapValidationResponseToTranslation';
 import FormFieldPanel from './FormFieldPanel';
+import useIsRTL from 'hooks/useIsRTL';
 import './FormFieldPanel.scss';
 import { createFields, createFlags, defaultDimension, defaultFlags, defaultProperties, getPageHeight, getPageWidth, getSignatureOption, handleFieldCreation, handleFlagsCreation, isRenderingOptions, redrawAnnotation, validateDimension } from './utils';
 
@@ -49,6 +50,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
 
   const isMobile = isMobileSize();
   const customizableUI = featureFlags.customizableUI;
+  const isRTL = useIsRTL();
 
   const [fieldProperties, setFieldProperties] = useState(defaultProperties);
   const [fieldDimension, setFieldDimension] = useState(defaultDimension);
@@ -213,7 +215,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     });
     setPanelTitle(t(`formField.formFieldPanel.${field.getFieldType()}`));
     setValidationMessage(validationMessage);
-  }, [isOpen, annotation]);
+  }, [isOpen, annotation, isRTL]);
 
   const onFieldNameChange = useCallback((name) => {
     const validatedResponse = formFieldCreationManager.setFieldName(annotation, name);

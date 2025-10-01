@@ -37,7 +37,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   ] = useSelector(
     (state) => [
       selectors.getAutoFocusNoteOnAnnotationSelection(state),
-      selectors.isDocumentReadOnly(state),
+      selectors.isViewOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
       selectors.getIsReplyDisabled(state)?.(annotation),
       selectors.getIsMentionEnabled(state),
