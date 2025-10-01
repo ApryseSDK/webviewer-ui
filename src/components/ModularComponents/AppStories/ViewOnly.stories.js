@@ -10,7 +10,6 @@ import { panelNames } from 'src/constants/panel';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 import { defaultFlyoutMap } from 'src/redux/modularComponents';
-import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/ViewOnly',
@@ -185,12 +184,12 @@ ViewOnlyWhitelist.play = async ({ canvasElement }) => {
 
   // Annotate ribbon should not show header since no buttons are whitelisted
   const canvas = within(canvasElement);
-  await canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Annotate') }).click();
+  await canvas.getByRole('button', { name: 'Annotate' }).click();
   const headers = await canvas.findAllByRole('toolbar');
   expect(headers.length).toBe(1);
 
-  await canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Shapes') }).click();
-  await expect(await canvas.findByRole('button', { name: getTranslatedText('annotation.ellipse') })).toBeInTheDocument();
+  await canvas.getByRole('button', { name: 'Shapes' }).click();
+  await expect(await canvas.findByRole('button', { name: 'Ellipse' })).toBeInTheDocument();
 
   // should be able to update hotkeys whitelist
   window.instance.UI.updateViewOnlyShortcuts([window.instance.UI.Shortcuts.RECTANGLE]);
