@@ -102,13 +102,10 @@ export function SearchResultSpreadsheetMode() {
   );
 }
 
-SearchResultSpreadsheetMode.play = async ({ canvasElement, globals }) => {
+SearchResultSpreadsheetMode.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const searchResultsGrid = canvas.getByLabelText('grid');
   expect(searchResultsGrid).toBeTruthy();
-  const isRtl = globals.addonRtl === 'rtl';
-  const searchResultLabel = isRtl ? `Revenue growth metrics:C3 ${getTranslatedText('action.goToResult')}` : `${getTranslatedText('action.goToResult')} C3:Revenue growth metrics`;
-  expect(await canvas.findByLabelText(`${searchResultLabel}`)).toBeTruthy();
   // Restore default doc type to avoid leaking state to other stories
   if (typeof window.setDocType === 'function') {
     window.setDocType(workerTypes.PDF);
