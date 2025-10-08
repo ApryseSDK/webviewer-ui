@@ -641,6 +641,7 @@
       "text": "Tamanho do texto"
     },
     "shared": {
+      "sheetIndex": "Folha",
       "page": "Página",
       "precision": "Precisão",
       "enableSnapping": "Ativar encaixe para ferramentas de medição"

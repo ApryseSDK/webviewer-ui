@@ -1,6 +1,7 @@
 let currentId = 0;
 
 /**
+ * @ignore
  * Generates a sequential string to use as a unique identifier. This should be
  * used over `getId` if you need to use it as a DOM id, or a React key.
  *

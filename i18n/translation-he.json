@@ -347,7 +347,8 @@
     "errorPageNumber": "מספר עמוד לא חוקי. המגבלה היא",
     "errorBlankPageNumber": "אנא ציין מספר עמוד",
     "errorLoadingDocument": "אירעה בעיה בקריאת מסמך זה וייתכן שחלק מהדפים לא יוצגו. משמעות הדבר היא שהמסמך עלול להיות פגום. מספר הדפים הכולל הוא {{totalPageCount}} ומספר הדפים המוצגים הוא {{displayedPageCount}}.",
-    "noRevisions": "למסמך זה אין תיקונים."
+    "noRevisions": "למסמך זה אין תיקונים.",
+    "listEmptyValue": "שדה אחד או יותר מכילים ערך ריק."
   },
   "option": {
     "type": {
@@ -1525,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "משפחת גופנים"
     },
-    "blankSheet": "גיליון ריק"
+    "blankSheet": "גיליון ריק",
+    "insertImage": "הכנס תמונה"
   },
   "insertPageModal": {
     "title": "הוסף עמוד חדש",

@@ -641,6 +641,7 @@
       "text": "Dimensione del testo"
     },
     "shared": {
+      "sheetIndex": "Foglio",
       "page": "Pagina",
       "precision": "Precisione",
       "enableSnapping": "Abilita snap per strumenti di misurazione"

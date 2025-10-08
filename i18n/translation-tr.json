@@ -641,6 +641,7 @@
       "text": "Yazı Boyutu"
     },
     "shared": {
+      "sheetIndex": "Çarşaf",
       "page": "Sayfa",
       "precision": "Hassas",
       "enableSnapping": "Ölçüm araçları için yakalamayı etkinleştir"

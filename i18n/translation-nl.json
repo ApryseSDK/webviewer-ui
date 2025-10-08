@@ -641,6 +641,7 @@
       "text": "Lettergrootte"
     },
     "shared": {
+      "sheetIndex": "Laken",
       "page": "Pagina",
       "precision": "precisie",
       "enableSnapping": "Schakel snappen in voor meetinstrumenten"

@@ -641,6 +641,7 @@
       "text": "Textgröße"
     },
     "shared": {
+      "sheetIndex": "Blatt",
       "page": "Seite",
       "precision": "Genauigkeit",
       "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"

@@ -641,6 +641,7 @@
       "text": "Rozmiar czcionki"
     },
     "shared": {
+      "sheetIndex": "Arkusz",
       "page": "Strona",
       "precision": "Precyzja",
       "enableSnapping": "Włącz przyciąganie dla narzędzi pomiarowych"

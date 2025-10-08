@@ -641,6 +641,7 @@
       "text": "텍스트 크기"
     },
     "shared": {
+      "sheetIndex": "시트",
       "page": "페이지",
       "precision": "정밀도",
       "enableSnapping": "스냅 가능"

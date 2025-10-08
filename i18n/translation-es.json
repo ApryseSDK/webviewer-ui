@@ -641,6 +641,7 @@
       "text": "Tamaño del texto"
     },
     "shared": {
+      "sheetIndex": "Hoja",
       "page": "Página",
       "precision": "Precisión",
       "enableSnapping": "Habilitar el ajuste para herramientas de medición"

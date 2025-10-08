@@ -641,6 +641,7 @@
       "text": "Textstorlek"
     },
     "shared": {
+      "sheetIndex": "Ark",
       "page": "Sida",
       "precision": "Precision",
       "enableSnapping": "Aktivera snapping för mätverktyg"

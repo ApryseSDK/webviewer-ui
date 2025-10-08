@@ -641,6 +641,7 @@
       "text": "Kích Cỡ Văn Bản"
     },
     "shared": {
+      "sheetIndex": "Tờ giấy",
       "page": "Trang",
       "precision": "Độ chính xác",
       "enableSnapping": "Bật chụp nhanh cho các công cụ đo lường"

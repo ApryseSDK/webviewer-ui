@@ -365,7 +365,8 @@ export const configureOfficeEditor = (store) => () => {
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
     const spreadsheetEditorOptions = getHashParameters('spreadsheetEditorOptions', '{}');
-    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || SpreadsheetEditorEditMode.VIEW_ONLY;
+    const currentSpreadsheetEditorMode = selectors.getSpreadsheetEditorEditMode(getState());
+    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || currentSpreadsheetEditorMode || SpreadsheetEditorEditMode.VIEW_ONLY;
     if (!Object.values(SpreadsheetEditorEditMode).includes(onLoadEditMode)) {
       console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to view mode.`);
       onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;

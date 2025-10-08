@@ -641,6 +641,7 @@
       "text": "Mărimea textului"
     },
     "shared": {
+      "sheetIndex": "Foaie",
       "page": "Pagină",
       "precision": "Precizie",
       "enableSnapping": "Activați snapping pentru instrumentele de măsurare"

@@ -641,6 +641,7 @@
       "text": "テキストサイズ"
     },
     "shared": {
+      "sheetIndex": "シート",
       "page": "ページ",
       "precision": "精度",
       "enableSnapping": "測定ツールのスナップを有効にする"

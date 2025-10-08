@@ -641,6 +641,7 @@
       "text": "Taille du texte"
     },
     "shared": {
+      "sheetIndex": "Feuille",
       "page": "Page",
       "precision": "Précision",
       "enableSnapping": "Activer le magnétisme pour les outils de mesure"

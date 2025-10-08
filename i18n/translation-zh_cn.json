@@ -641,6 +641,7 @@
       "text": "文字大小"
     },
     "shared": {
+      "sheetIndex": "床单",
       "page": "页",
       "precision": "精准度",
       "enableSnapping": "启用测量工具的捕捉"

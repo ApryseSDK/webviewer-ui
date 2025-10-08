@@ -641,6 +641,7 @@
       "text": "Velikost textu"
     },
     "shared": {
+      "sheetIndex": "List",
       "page": "Strana",
       "precision": "Přesnost",
       "enableSnapping": "Povolit uchopení pro měřicí nástroje"
