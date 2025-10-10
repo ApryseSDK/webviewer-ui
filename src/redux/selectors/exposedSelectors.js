@@ -1294,7 +1294,7 @@ const hasPanelInItems = (items, panelType) => {
       }
     }
 
-    if (typeof item === 'object' && item.render === panelType) {
+    if (item && typeof item === 'object' && item.render === panelType) {
       return true;
     }
 
