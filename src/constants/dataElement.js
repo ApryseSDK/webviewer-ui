@@ -185,6 +185,7 @@ const DataElements = {
 
   // Notes panel - multi select
   NOTE_MULTI_SELECT_MODE_BUTTON: 'multiSelectModeButton',
+  NOTE_SELECT_ALL_BUTTON: 'selectAllAnnotationsButton',
   NOTE_MULTI_REPLY_BUTTON: 'multiReplyButton',
   NOTE_MULTI_STATE_BUTTON: 'multiStateButton',
   NOTE_MULTI_SHARE_TYPE_BUTTON: 'multiShareTypeButton',
