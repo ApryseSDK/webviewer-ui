@@ -48,6 +48,7 @@ function NotesPanelHeader({
     isOfficeEditorMode,
     officeEditorEditMode,
     customizableUI,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -57,6 +58,7 @@ function NotesPanelHeader({
       selectors.getIsOfficeEditorMode(state),
       selectors.getOfficeEditorEditMode(state),
       selectors.getFeatureFlags(state)?.customizableUI,
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual
   );
@@ -175,19 +177,52 @@ function NotesPanelHeader({
           className="buttons-container"
         >
           {isMultiSelectEnabled && !isOfficeEditorMode && (
-            <Button
-              dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
-              className={classNames({
-                active: isMultiSelectMode,
-              })}
-              disabled={notes.length === 0}
-              img="icon-annotation-select-multiple"
-              onClick={() => {
-                core.deselectAllAnnotations();
-                toggleMultiSelectMode();
-              }}
-              title={t('component.multiSelectButton')}
-            />
+            <>
+              {isMultiSelectMode && (
+                <Button
+                  dataElement={DataElements.NOTE_SELECT_ALL_BUTTON}
+                  disabled={notes.length === 0}
+                  img="icon-header-chat-line"
+                  onClick={() => {
+                    const selectedAnnotations = core.getSelectedAnnotations(activeDocumentViewerKey);
+                    if(selectedAnnotations.length > 0) {
+                      core.deselectAllAnnotations();
+                    } else {
+                      core.selectAnnotations(notes, activeDocumentViewerKey);
+                    } 
+                  }}
+                  className={classNames({
+                    'inactive': notes.length === 0,
+                    'select-all-button': true,
+                    active: core.getSelectedAnnotations(activeDocumentViewerKey).length === notes.length,
+                  })}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    width: '38px',
+                    gap: '3px'
+                  }}
+                  label={t('option.print.all')}
+                  title={t('action.selectAll')}
+                />
+              )}
+              
+              <Button
+                dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
+                className={classNames({
+                  active: isMultiSelectMode,
+                })}
+                disabled={notes.length === 0}
+                img="icon-annotation-select-multiple"
+                onClick={() => {
+                  core.deselectAllAnnotations();
+                  toggleMultiSelectMode();
+                }}
+                title={t('component.multiSelectButton')}
+              />
+            </>
           )}
           <Button
             dataElement={DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON}
