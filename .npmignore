@@ -1,0 +1,32 @@
+# Source files - we only want to publish the build folder
+src/
+assets/
+docs/
+eslint-plugin-custom/
+i18n/
+jest/
+lib/
+scripts/
+storybook-static/
+
+# Config files
+.eslintrc
+.gitignore
+.prettierrc
+jest.config.js
+jsconfig.json
+webpack.config*.js
+dev-server.js
+postcss.config.js
+*.md
+!build/
+
+# Development dependencies
+node_modules/
+.git/
+.vscode/
+
+# Test files
+**/*.test.js
+**/*.spec.js
+__tests__/

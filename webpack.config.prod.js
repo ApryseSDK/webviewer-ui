@@ -1,6 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const webpack = require('webpack');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -13,7 +14,13 @@ module.exports = {
     filename: 'webviewer-ui.min.js',
     chunkFilename: 'chunks/[name].chunk.js',
     publicPath: './',
+    library: {
+      name: 'WebViewerUI',
+      type: 'umd',
+      umdNamedDefine: true,
+    },
   },
+  // No externals - bundle everything including React for web component use
   plugins: [
     new CopyWebpackPlugin([
       {
@@ -35,6 +42,10 @@ module.exports = {
       },
     ]),
     new NodePolyfillPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+      append: '\n//# sourceMappingURL=[url]',
+    }),
     // new MiniCssExtractPlugin({
     //   filename: 'style.css',
     //   chunkFilename: 'chunks/[name].chunk.css'
@@ -190,5 +201,4 @@ module.exports = {
       minSize: 0,
     },
   },
-  devtool: 'source-map',
 };

@@ -1,13 +1,28 @@
 {
-  "name": "webviewer-ui",
+  "name": "@madisoncres/webviewer-ui",
   "author": "Apryse Software Inc.",
   "version": "11.3.0",
-  "description": "WebViewer UI built in React",
-  "main": "src/index.js",
+  "description": "WebViewer UI built in React (bundled with all dependencies for Web Component use)",
+  "main": "build/webviewer-ui.min.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "webviewer",
+    "pdf",
+    "viewer",
+    "ui",
+    "react",
+    "document"
+  ],
+  "files": [
+    "build/**/*",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
+    "prepublishOnly": "npm run build",
     "start": "npx babel-node ./dev-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
-    "postinstall": "cp ./node_modules/@storybook/react-dom-shim/dist/react-16.js ./node_modules/@storybook/react-dom-shim/dist/react-18.js && cp ./node_modules/@storybook/react-dom-shim/dist/react-16.mjs ./node_modules/@storybook/react-dom-shim/dist/react-18.mjs",
+    "//postinstall": "cp ./node_modules/@storybook/react-dom-shim/dist/react-16.js ./node_modules/@storybook/react-dom-shim/dist/react-18.js && cp ./node_modules/@storybook/react-dom-shim/dist/react-16.mjs ./node_modules/@storybook/react-dom-shim/dist/react-18.mjs",
     "lint": "eslint ./src --fix --ext .js,.jsx,.ts,.tsx",
     "lint:ci": "eslint ./src --quiet --ext .js,.jsx,.ts,.tsx",
     "clean": "rimraf build",
@@ -20,7 +35,7 @@
     "jest:watch": "jest --watch",
     "lint:styles": "stylelint '**/*.scss'"
   },
-  "dependencies": {
+  "devDependencies": {
     "@pdftron/webviewer-react-toolkit": "^0.7.11",
     "autolinker": "^3.11.1",
     "blob-stream": "^0.1.3",
@@ -54,9 +69,7 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
+    "uuid": "^9.0.0",
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
     "@babel/eslint-parser": "^7.16.0",

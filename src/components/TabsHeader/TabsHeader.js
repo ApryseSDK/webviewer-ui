@@ -29,6 +29,9 @@ const TabsHeader = () => {
   const [hovering, setHovering] = useState();
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
   const [focusableElements, setFocusableElements] = useState([]);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(false);
+  const [isHeaderMounted, setIsHeaderMounted] = useState(false);
   const prevFocusableElementsRef = useRef([]);
   const hoveredTab = useRef();
   const tabsHeaderRef = useRef();
@@ -71,14 +74,56 @@ const TabsHeader = () => {
     hoveredTab.current = div;
   }, []);
 
-  const breakpoint = Math.floor((width - 80) / 180); // Browser width minus a space for the add button, divided by max-width of tab
+  const breakpoint = 100//Math.floor((width - 80) / 180); // Browser width minus a space for the add button, divided by max-width of tab
   const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
 
+  //useEffect(() => {
+  //  if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
+  //    tabManager.moveTab(activeIndex, breakpoint - 1);
+  //  }
+  //}, [breakpoint, activeIndex, tabManager]);
+
   useEffect(() => {
-    if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
-      tabManager.moveTab(activeIndex, breakpoint - 1);
+    if (tabsHeaderRef.current && activeTab) {
+      const activeTabElement = tabsHeaderRef.current.querySelector('.draggable-tab.active');
+      if (activeTabElement) {
+        activeTabElement.scrollIntoView(true);
+      }
     }
-  }, [breakpoint, activeIndex, tabManager]);
+  }, [activeTab]);
+
+  useEffect(() => {
+    const checkScrollButtons = () => {
+      if (tabsHeaderRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = tabsHeaderRef.current;
+        setShowLeftButton(scrollLeft > 0);
+        setShowRightButton(scrollLeft < scrollWidth - clientWidth - 1);
+      }
+    };
+
+    checkScrollButtons();
+    const container = tabsHeaderRef.current;
+    console.log('Container value:', container, 'tabsHeaderRef.current:', tabsHeaderRef.current);
+    if (container) {
+      container.addEventListener('scroll', checkScrollButtons);
+      window.addEventListener('resize', checkScrollButtons);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', checkScrollButtons);
+      }
+      window.removeEventListener('resize', checkScrollButtons);
+    };
+  }, [currTabs, tabs, isHeaderMounted]);
+
+  const scrollTabs = (direction) => {
+    if (tabsHeaderRef.current) {
+      const scrollAmount = 200;
+      const newScrollLeft = tabsHeaderRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+      tabsHeaderRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     if (tabsHeaderRef.current) {
@@ -240,14 +285,14 @@ const TabsHeader = () => {
       return [null, null];
     }
     const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
-    if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
-      tabManager.moveTab(activeIndex, breakpoint - 1);
-    }
+    //if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
+    //  tabManager.moveTab(activeIndex, breakpoint - 1);
+    //}
     const renderedTabs = currTabs.map((tab, index) => {
       const isActive = tab.id === activeTab;
       const fileName = removeFileNameExtension(tab.options.filename);
       const tabId = `tab-${fileName}-${tab.id}`;
-      if (index < breakpoint) {
+      //if (index < breakpoint) {
         return <Tab
           onDragStart={(e) => onDragStart(e, index)}
           onDragOver={(e) => onDragOver(e, index, tab)}
@@ -265,16 +310,16 @@ const TabsHeader = () => {
           ariaCurrent={isActive ? 'page' : undefined}
           tabNameHandler={tabNameHandler}
         />;
-      }
-      return <CollapsedTab
-        onDragStart={(e) => onDragStart(e, index)}
-        tab={tab}
-        key={tab.id}
-        id={tabId}
-        closeTab={() => deleteTab(tab.id)}
-        setActive={() => setActiveTab(tab.id)}
-        onDragEnd={() => onDragEnd()}
-      />;
+      // }
+      // return <CollapsedTab
+      //   onDragStart={(e) => onDragStart(e, index)}
+      //   tab={tab}
+      //   key={tab.id}
+      //   id={tabId}
+      //   closeTab={() => deleteTab(tab.id)}
+      //   setActive={() => setActiveTab(tab.id)}
+      //   onDragEnd={() => onDragEnd()}
+      // />;
     });
     return [renderedTabs?.slice(0, breakpoint), renderedTabs?.slice(breakpoint, renderedTabs.length)];
   }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave]);
@@ -282,9 +327,9 @@ const TabsHeader = () => {
   async function setActiveTab(id) {
     dispatch(actions.closeElement('tabMenu'));
     const tabIndex = currTabs.findIndex((t) => t.id === id);
-    if (tabIndex >= breakpoint) {
-      tabManager.moveTab(tabIndex, breakpoint - 1);
-    }
+    //if (tabIndex >= breakpoint) {
+    //  tabManager.moveTab(tabIndex, breakpoint - 1);
+    //}
     activeTab !== id && await tabManager.setActiveTab(id, true);
   }
 
@@ -299,43 +344,73 @@ const TabsHeader = () => {
   }
 
   return (
-    <div className="TabsHeader"
-      role="tablist"
-      ref={tabsHeaderRef}
-      tabIndex={-1}
-      onDrop={onDrop}
-      onDragEnd={onDragEnd}
-      onKeyDown={handleKeyDown}
-    >
-      {tabs}
-      <div className={classNames({
-        'add-button': true,
-        'add-button-with-label': isEmptyPageOpen,
-      })}>
-        {additionalTabs?.length > 0 && <ToggleElementButton
-          className="dropdown-menu tab-dropdown-button"
-          dataElement="tabTrigger"
-          title={t('action.showMoreFiles')}
-          toggleElement={DataElements.TABS_LIST_MENU}
-          label={additionalTabs.length.toString()}
-        />}
+    <div className="TabsHeader-wrapper">
+      {showLeftButton && (
         <Button
-          title="action.openFile"
-          img="icon-menu-add"
-          onClick={openFile}
-          dataElement={'addTabButton'}
+          className="scroll-button scroll-button-left"
+          img="icon-chevron-left"
+          onClick={() => scrollTabs('left')}
+          dataElement="tabScrollLeftButton"
           tabIndex={-1}
-          label={isEmptyPageOpen ? 'action.openFile' : ''}
         />
-        {additionalTabs?.length > 0 &&
-          (
-            <TabsListFlyout
-              id={DataElements.TABS_LIST_MENU}
-              additionalTabs={additionalTabs}
-            />
-          )
-        }
+      )}
+      <div
+        className={classNames({
+          'TabsHeader': true,
+          'has-left-button': showLeftButton,
+          'has-right-button': showRightButton,
+        })}
+        role="tablist"
+        ref={(el) => {
+          tabsHeaderRef.current = el;
+          if (el && !isHeaderMounted) {
+            setIsHeaderMounted(true);
+          }
+        }}
+        tabIndex={-1}
+        onDrop={onDrop}
+        onDragEnd={onDragEnd}
+        onKeyDown={handleKeyDown}
+      >
+        {tabs}
+        <div className={classNames({
+          'add-button': true,
+          'add-button-with-label': isEmptyPageOpen,
+        })}>
+          {additionalTabs?.length > 0 && <ToggleElementButton
+            className="dropdown-menu tab-dropdown-button"
+            dataElement="tabTrigger"
+            title={t('action.showMoreFiles')}
+            toggleElement={DataElements.TABS_LIST_MENU}
+            label={additionalTabs.length.toString()}
+          />}
+          <Button
+            title="action.openFile"
+            img="icon-menu-add"
+            onClick={openFile}
+            dataElement={'addTabButton'}
+            tabIndex={-1}
+            label={isEmptyPageOpen ? 'action.openFile' : ''}
+          />
+          {additionalTabs?.length > 0 &&
+            (
+              <TabsListFlyout
+                id={DataElements.TABS_LIST_MENU}
+                additionalTabs={additionalTabs}
+              />
+            )
+          }
+        </div>
       </div>
+      {showRightButton && (
+        <Button
+          className="scroll-button scroll-button-right"
+          img="icon-chevron-right"
+          onClick={() => scrollTabs('right')}
+          dataElement="tabScrollRightButton"
+          tabIndex={-1}
+        />
+      )}
     </div>
   );
 };

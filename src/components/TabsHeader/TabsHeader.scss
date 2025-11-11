@@ -1,3 +1,45 @@
+.TabsHeader-wrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: flex-end;
+  background: var(--multi-tab-header-background);
+  height: var(--multi-tab-header-height);
+
+  .scroll-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    height: 34px;
+    z-index: 10;
+    background: var(--multi-tab-header-background);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: inset 0 -1px 0 0 var(--multi-tab-divider);
+
+    .Icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: var(--view-header-button-hover);
+    }
+
+    &.scroll-button-left {
+      left: 0;
+    }
+
+    &.scroll-button-right {
+      right: 0;
+    }
+  }
+}
+
 .TabsHeader {
   display: flex;
   width: 100%;
@@ -5,8 +47,25 @@
   align-items: flex-end;
   background: var(--multi-tab-header-background);
   overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-x: auto;
   height: var(--multi-tab-header-height);
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &.has-left-button {
+    margin-left: 32px;
+  }
+
+  &.has-right-button {
+    margin-right: 32px;
+  }
 
   &:has(:focus-visible) {
     outline: var(--focus-visible-outline) !important;

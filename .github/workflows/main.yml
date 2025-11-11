@@ -1,0 +1,70 @@
+name: NPM Publish.
+
+on:
+  push:
+    branches:
+      - 11.3.scrollable-tabs
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Configure Git identity
+        run: |
+          git config user.email "$(git log -1 --pretty=format:'%ae')"
+          git config user.name "$(git log -1 --pretty=format:'%an')"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bump version
+        continue-on-error: true
+        uses: remorses/bump-version@js
+        with:
+            version_file: ./VERSION
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read VERSION
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./VERSION
+      - name: Echo VERSION
+        run: echo "${{ steps.package.outputs.content }}"
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+
+
+      - name: Set env vars
+        id: setEnvVars
+        run: |
+            echo "VERSION=${{ steps.package.outputs.content }}" >> $GITHUB_ENV;
+
+
+      - name: Bump version in package.json
+        run: |
+          current_version=$(jq -r .version package.json)
+          new_version=$(node -p "require('semver').inc('$current_version', 'patch')")
+          jq ".version |= \"$VERSION\"" package.json > package.json.tmp
+          mv package.json.tmp package.json
+
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          AUTH_GITHUB_TOKEN: ${{ secrets.AUTH_GITHUB_TOKEN }}
+
+      - name: Push tags to GitHub
+        run: git push origin --tags
