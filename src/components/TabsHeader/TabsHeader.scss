@@ -50,6 +50,7 @@
   overflow-x: auto;
   height: var(--multi-tab-header-height);
   scroll-behavior: smooth;
+  margin-right: 4px;
 
   &::-webkit-scrollbar {
     height: 0;
