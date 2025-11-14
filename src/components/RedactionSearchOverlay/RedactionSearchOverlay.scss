@@ -17,4 +17,14 @@
       font-size: 13px;
     }
   }
+
+  .redactionOption {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .Icon {
+      padding: 2px;
+    }
+  }
 }

@@ -20,6 +20,8 @@ Basic.args = {
   pageCount: 10,
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export const BasicWithError = PageNumberInputTemplate.bind({});
 BasicWithError.args = {
   selectedPageNumbers: [],
@@ -27,6 +29,8 @@ BasicWithError.args = {
   pageCount: 10,
   pageNumberError: 'Error message',
 };
+
+BasicWithError.parameters = window.storybook.disableRtlMode;
 
 BasicWithError.play = async ()  => {
   const textInput = await document.querySelector('.page-number-input');

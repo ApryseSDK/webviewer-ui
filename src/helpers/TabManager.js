@@ -51,6 +51,7 @@ export const enableMultiTab = () => (dispatch, getState) => {
   // page. To prevent this, we are using a timeout.
   function docLoadedEvent() {
     const doc = core.getDocument();
+    const state = getState();
     const tabs = selectors.getTabs(state);
     const exist = tabs.some((item) => item.options?.filename === doc.filename);
     if (!exist) {
@@ -303,20 +304,22 @@ export default class TabManager {
     if (shouldShowWarning) {
       this.showDeleteWarning(tabToDelete);
     } else {
-      const [deletedTab] = tabs.splice(tabs.findIndex((tab) => tab.id === id), 1);
+      const [deletedTab] = tabs.filter((tab) => tab.id === id);
+      const updatedTabs = tabs.filter((tab) => tab.id !== id);
       deletedTab.delete(this.db);
+      if (id === activeTab && updatedTabs.length > 0) {
+        this.setActiveTab(updatedTabs[0].id);
+      } else if (updatedTabs.length === 0) {
+        core.closeDocument();
+        this.store.dispatch(actions.setActiveTab(null));
+      }
+      this.store.dispatch(actions.setTabs(updatedTabs));
+
       fireEvent(Events['TAB_DELETED'], {
         src: deletedTab.src,
         options: deletedTab.options,
         id: deletedTab.id,
       });
-      if (id === activeTab && tabs.length) {
-        this.setActiveTab(tabs[0].id);
-      } else if (!tabs.length) {
-        core.closeDocument();
-        this.store.dispatch(actions.setActiveTab(null));
-      }
-      this.store.dispatch(actions.setTabs(tabs));
     }
   }
 
@@ -339,23 +342,27 @@ export default class TabManager {
       }
     }
     const tab = new Tab(currId + 1, src, this, options, useDB);
-    tabs.push(tab);
+    const newTabs = [...tabs, tab];
+    this.store.dispatch(actions.setTabs(newTabs));
+    if (shouldLoadTab) {
+      await this.setActiveTab(tab.id, saveCurrentTabState);
+    }
+
     fireEvent(Events['TAB_ADDED'], {
       src: tab.src,
       options: tab.options,
       id: tab.id,
     });
-    if (shouldLoadTab) {
-      await this.setActiveTab(tab.id, saveCurrentTabState);
-    }
-    this.store.dispatch(actions.setTabs(tabs));
     return tab.id;
   }
 
   moveTab(from, to) {
     const { tabs } = this.store.getState().viewer;
-    const tab = tabs.splice(from, 1)[0];
-    tabs.splice(to, 0, tab);
+    const updatedTabs = [...tabs];
+    const tab = updatedTabs.splice(from, 1)[0];
+    updatedTabs.splice(to, 0, tab);
+    this.store.dispatch(actions.setTabs(updatedTabs));
+
     fireEvent(Events['TAB_MOVED'], {
       src: tab.src,
       options: tab.options,
@@ -363,7 +370,6 @@ export default class TabManager {
       prevIndex: from,
       newIndex: to,
     });
-    this.store.dispatch(actions.setTabs(tabs));
   }
 
   listenForAnnotChanges() {
@@ -504,6 +510,10 @@ export class Tab {
       const tx = db.transaction('files', 'readonly');
       const store = tx.objectStore('files');
       const req = store.get(this.id);
+      if (this.id) {
+        this.options.docId = this.id.toString();
+      }
+
       req.onsuccess = async () => {
         const doc = req.result;
         loadDocument(dispatch, doc, this.options);
@@ -597,6 +607,15 @@ export class Tab {
       await core.getDocument().getDocumentCompletePromise();
       this.saveData.zoom && await core.zoomTo(this.saveData.zoom);
       this.saveData.page && await core.setCurrentPage(this.saveData.page);
+
+      fireEvent(Events['AFTER_TAB_CHANGED'], {
+        currentTab: this.src ? {
+          src: this.src,
+          options: this.options,
+          id: this.id,
+          annotationsChanged: this.changes.annotations,
+          hasUnsavedChanges: this.changes.hasUnsavedChanges
+        } : null });
     };
 
     core.addEventListener('documentLoaded', updateViewer, { once: true });

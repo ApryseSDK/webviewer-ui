@@ -39,3 +39,5 @@ export function SignaturePanelEmpty() {
     </Provider>
   );
 }
+
+SignaturePanelEmpty.parameters = window.storybook.disableRtlMode;

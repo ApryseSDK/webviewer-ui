@@ -61,6 +61,7 @@ const PrintModalContainer = () => {
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
   const [pagesToPrint, setPagesToPrint] = useState([]);
   const [isGrayscale, setIsGrayscale] = useState(false);
+  const [pagesAreProcessing, setPagesAreProcessing] = useState(false);
   const [isWatermarkModalVisible, setIsWatermarkModalVisible] = useState(false);
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
@@ -133,9 +134,21 @@ const PrintModalContainer = () => {
       isGrayscale,
       isAlwaysPrintAnnotationsInColorEnabled,
     };
+
+    setPagesAreProcessing(true);
     const document = core.getDocument();
     const annotationManager = core.getAnnotationManager();
-    printEmbeddedPDF(await processEmbeddedPrintOptions(printingOptions, document, annotationManager));
+    const embeddedPrintOptions = await processEmbeddedPrintOptions(printingOptions, document, annotationManager);
+
+    await printEmbeddedPDF(embeddedPrintOptions);
+
+    // The `afterprint` event doesn't seem to get triggered so a slight delay improves the UX
+    // Otherwise there's a weird delay between the print modal and the browser's print dialog
+    // without the setTimeout
+    setTimeout(() => {
+      setPagesAreProcessing(false);
+      closePrintModalAfterPrint();
+    }, 1000);
   };
 
   const rasterPrinting = (e) => {
@@ -173,18 +186,23 @@ const PrintModalContainer = () => {
       printOptions,
       undefined
     );
+
+    setPagesAreProcessing(true);
     createPages.forEach(async (pagePromise) => {
       await pagePromise;
       setCount(count < pagesToPrint.length && (count !== -1 ? count + 1 : count));
     });
+
     Promise.all(createPages)
       .then((pages) => {
         printPages(pages);
-        closePrintModalAfterPrint();
       })
       .catch((e) => {
         console.error(e);
         setCount(-1);
+      }).finally(() => {
+        setPagesAreProcessing(false);
+        closePrintModalAfterPrint();
       });
   };
 
@@ -223,7 +241,7 @@ const PrintModalContainer = () => {
       pagesToPrint={pagesToPrint}
       setPagesToPrint={setPagesToPrint}
       count={count}
-      isPrinting={isPrinting}
+      isPrinting={isPrinting || pagesAreProcessing}
       pageLabels={pageLabels}
       layoutMode={layoutMode}
       useEmbeddedPrint={useEmbeddedPrint}

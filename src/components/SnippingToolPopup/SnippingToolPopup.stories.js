@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
+import { configureStore } from '@reduxjs/toolkit';
 import SnippingToolPopup from './SnippingToolPopup';
-import { MockApp, createStore as createMockAppStore } from 'helpers/storybookHelper';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { createStore } from 'redux';
 
 export default {
   title: 'Components/SnippingToolPopup',
@@ -22,7 +22,7 @@ function rootReducer(state = basicInitialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const noop = () => {};
 
@@ -51,7 +51,25 @@ export function Basic() {
   );
 }
 
-export function BasicMobile(args, context) {
+export function BasicMobile() {
+  const mobileProps = {
+    ...popupProps,
+    isMobile: true,
+  };
+
+  return (
+    <Provider store={store}>
+      <div className="SnippingPopupContainer">
+        <SnippingToolPopup {...mobileProps} />
+      </div>
+    </Provider>
+  );
+}
+
+BasicMobile.parameters = window.storybook?.MobileParameters;
+
+export function PopupInApp(args, context) {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...initialState,
     viewer: {
@@ -61,7 +79,6 @@ export function BasicMobile(args, context) {
         snippingToolPopup: true,
       },
       isInDesktopOnlyMode: false,
-      isMobile: true,
       activeTheme: context.globals.theme,
     },
     featureFlags: {
@@ -69,12 +86,10 @@ export function BasicMobile(args, context) {
     },
   };
 
-  const mockAppStore = createMockAppStore(mockState);
+  const mockAppStore = createStore(mockState);
   setItemToFlyoutStore(mockAppStore);
 
   return (
-    <MockApp initialState={mockState}/>
+    <MockApp initialState={mockState} initialDirection={addonRtl}/>
   );
 }
-
-BasicMobile.parameters = window.storybook?.MobileParameters;

@@ -347,7 +347,8 @@
     "errorPageNumber": "Nomor halaman tidak valid. Batasnya adalah",
     "errorBlankPageNumber": "Harap tentukan nomor halaman",
     "errorLoadingDocument": "Ada masalah saat membaca dokumen ini dan beberapa halaman mungkin tidak ditampilkan. Ini menunjukkan dokumen mungkin rusak. Jumlah halaman total adalah {{totalPageCount}} dan jumlah halaman yang ditampilkan adalah {{displayedPageCount}}.",
-    "noRevisions": "Dokumen ini tidak memiliki revisi."
+    "noRevisions": "Dokumen ini tidak memiliki revisi.",
+    "listEmptyValue": "Satu atau lebih bidang memiliki nilai kosong."
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "Ukuran teks"
     },
     "shared": {
+      "sheetIndex": "Lembaran",
       "page": "Halaman",
       "precision": "presisi",
       "enableSnapping": "Aktifkan gertakan untuk alat pengukuran"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Keluarga Font"
     },
-    "blankSheet": "Lembar Kosong"
+    "blankSheet": "Lembar Kosong",
+    "insertImage": "Sisipkan gambar"
   },
   "insertPageModal": {
     "title": "Sisipkan Halaman Baru",

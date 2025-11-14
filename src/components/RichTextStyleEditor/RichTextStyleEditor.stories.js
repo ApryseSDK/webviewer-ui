@@ -124,6 +124,7 @@ Basic.args = {
   ...baseProps,
   isRedaction: false,
 };
+Basic.parameters = window.storybook.disableRtlMode;
 
 export const WidgetLayout = BasicComponent.bind({
   ...baseObject
@@ -133,6 +134,7 @@ WidgetLayout.args = {
   isWidget: true,
   isRedaction: false,
 };
+WidgetLayout.parameters = window.storybook.disableRtlMode;
 
 export const RedactionLayout = BasicComponent.bind({
   ...baseObject
@@ -142,3 +144,4 @@ RedactionLayout.args = {
   isRedaction: true,
   isContentEditing: false,
 };
+RedactionLayout.parameters = window.storybook.disableRtlMode;

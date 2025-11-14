@@ -347,7 +347,8 @@
     "errorPageNumber": "Número de página inválido. Limite é",
     "errorBlankPageNumber": "Por favor especifique um número de página",
     "errorLoadingDocument": "Ocorreu um problema ao ler este documento e algumas páginas podem não ser exibidas. Isso indica que o documento pode estar corrompido. A contagem total de páginas é {{totalPageCount}} e o número de páginas exibidas é {{displayedPageCount}}.",
-    "noRevisions": "Este documento não possui revisões."
+    "noRevisions": "Este documento não possui revisões.",
+    "listEmptyValue": "Um ou mais campos têm um valor vazio."
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "Tamanho do texto"
     },
     "shared": {
+      "sheetIndex": "Folha",
       "page": "Página",
       "precision": "Precisão",
       "enableSnapping": "Ativar encaixe para ferramentas de medição"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Fontes"
     },
-    "blankSheet": "Folha em branco"
+    "blankSheet": "Folha em branco",
+    "insertImage": "Inserir imagem"
   },
   "insertPageModal": {
     "title": "Inserir nova página",

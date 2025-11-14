@@ -13,7 +13,7 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import range from 'lodash/range';
 import getRootNode from 'helpers/getRootNode';
 import { workerTypes } from 'constants/types';
-import { isOfficeEditorMode } from './officeEditor';
+import { isOfficeEditorMode, isSpreadsheetEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 
@@ -620,7 +620,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement(DataElements.LOADING_MODAL));
       fireEvent(Events.FILE_DOWNLOADED);
-    } else if (pages && !downloadAllPages) {
+    } else if (pages && !isSpreadsheetEditorMode() && !downloadAllPages) {
       return (temporaryModifiedDoc || doc).extractPages(pages, options.xfdfString).then((data) => downloadDataAsFile(data, extension, { ...options, downloadName }), handleError);
     } else {
       return (temporaryModifiedDoc || doc).getFileData(clonedOptions).then((data) => downloadDataAsFile(data, extension, { ...options, downloadName }), handleError);

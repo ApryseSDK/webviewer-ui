@@ -34,7 +34,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
   const onAnnotationChanged = eventListeners.onAnnotationChanged(documentViewerKey);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch, documentViewerKey);
-  const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(documentViewerKey);
+  const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(documentViewerKey, store, dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
   const onCaretAnnotationAdded = eventListeners.onCaretAnnotationAdded(store);
   const onFullScreenChange = eventListeners.onFullScreenChange(store);

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import RibbonItem from '../RibbonItem';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import FlexDropdown from '../FlexDropdown';
@@ -45,17 +45,19 @@ const RibbonGroup = (props) => {
 
   const { t } = useTranslation();
 
+  const store = useStore();
   const activeCustomRibbon = useSelector(selectors.getActiveCustomRibbon);
   const customHeadersAdditionalProperties = useSelector((selectors.getCustomHeadersAdditionalProperties));
   const isRibbonGroupDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
-  const enabledRibbonItems = useSelector(selectors.getEnabledRibbonItems);
+  const enabledRibbonItems = useSelector((state) => selectors.getEnabledRibbonItems(state));
+  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
 
   const validatedRibbonItems = useMemo(() => {
-    return validateItems(items, enabledRibbonItems);
-  }, [items, enabledRibbonItems]);
+    return validateItems(items, enabledRibbonItems.filter((item) => !selectors.isDisabledViewOnly(store.getState(), item)));
+  }, [items, enabledRibbonItems, isViewOnly]);
 
   const { setActiveGroupedItemsAndTool } = useRibbonActions(items);
   const elementRef = useRef();

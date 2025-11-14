@@ -3,20 +3,23 @@ import DocumentCropPopup from './DocumentCropPopup';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DimensionsInput from './DimensionsInput';
+import { MockApp, createStore as createMockAppStore } from 'helpers/storybookHelper';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import initialState from 'src/redux/initialState';
 
 export default {
   title: 'Components/DocumentCropPopup',
   component: DocumentCropPopup,
 };
 
-const initialState = {
+const basicInitialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
   },
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = basicInitialState, action) {
   return state;
 }
 
@@ -178,3 +181,29 @@ export function DocumentCropPopupMobile() {
 }
 
 DocumentCropPopupMobile.parameters = window.storybook?.MobileParameters;
+
+export function PopupInApp(args, context) {
+  const { addonRtl } = context.globals;
+  const mockState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      activeToolName: 'CropPage',
+      openElements: {
+        documentCropPopup: true,
+      },
+      isInDesktopOnlyMode: false,
+      activeTheme: context.globals.theme,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+
+  const mockAppStore = createMockAppStore(mockState);
+  setItemToFlyoutStore(mockAppStore);
+
+  return (
+    <MockApp initialState={mockState} initialDirection={addonRtl} />
+  );
+}

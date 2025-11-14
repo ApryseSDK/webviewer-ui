@@ -21,25 +21,18 @@ const dataElementName = 'thumbnailControl';
 
 const ThumbnailControls = ({ index }) => {
   const { t } = useTranslation();
-  const [isElementDisabled] = useSelector((state) => [selectors.isElementDisabled(state, dataElementName)]);
-  const [isMoreOptionDisabled] = useSelector((state) => [selectors.isElementDisabled(state, DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON)]);
-  const [isPageDeletionConfirmationModalEnabled, selectedIndexes] = useSelector((state) => [
-    selectors.pageDeletionConfirmationModalEnabled(state),
-    selectors.getSelectedThumbnailPageIndexes(state),
-  ]);
+  const isElementDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElementName));
+  const isMoreOptionDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON));
+  const isPageDeletionConfirmationModalEnabled = useSelector(selectors.pageDeletionConfirmationModalEnabled);
+  const selectedIndexes = useSelector(selectors.getSelectedThumbnailPageIndexes, shallowEqual);
+  const currentPage = useSelector(selectors.getCurrentPage);
+  const pageThumbnailControlMenuItems = useSelector(selectors.getThumbnailControlMenuItems, shallowEqual);
+  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
+  const isViewOnly = useSelector(selectors.isViewOnly);
+
   const dispatch = useDispatch();
   const buttonsRef = useRef([]);
   const buttonContainerRef = useRef(null);
-
-  const [
-    currentPage,
-    pageThumbnailControlMenuItems,
-    featureFlags,
-  ] = useSelector((state) => [
-    selectors.getCurrentPage(state),
-    selectors.getThumbnailControlMenuItems(state),
-    selectors.getFeatureFlags(state),
-  ], shallowEqual);
 
   let pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map((i) => i + 1) : [index + 1];
 
@@ -126,7 +119,9 @@ const ThumbnailControls = ({ index }) => {
 
   if (isElementDisabled) {
     return null;
-  } if (isXod || isOffice || document?.isWebViewerServerDocument()) {
+  }
+
+  if (isXod || isOffice || document?.isWebViewerServerDocument()) {
     return (
       <div className="thumbnailControls-overlay" data-element={dataElementName}
         style={{ display: 'flex' }}
@@ -146,6 +141,11 @@ const ThumbnailControls = ({ index }) => {
       </div>
     );
   }
+
+  if (isViewOnly) {
+    return null;
+  }
+
   return (
     <div className={classNames({
       'thumbnailControls-overlay': true,

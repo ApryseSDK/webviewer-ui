@@ -60,4 +60,5 @@ export default (store) => (src, options) => {
  * @property {boolean} [xodazureWorkaround] - Whether or not to workaround the issue of Azure not accepting range requests of a certain type. Enabling the workaround will add an extra HTTP request of overhead but will still allow documents to be loaded from other locations.
  * @property {boolean} [xodstartOffline] - Whether to start loading the document in offline mode or not. This can be set to true if the document had previously been saved to an offline database using WebViewer APIs. You'll need to use this option to load from a completely offline state.
  * @property {number} [chunkSize] - The size (in bytes) of each request when downloading a linearized PDF. The size must be a power of 2 and greater than 65536 bytes.
+ * @property {number} [customHandlerId] A field used to specify the Apryse custom security handler. Its value needs to be an integer in [0, 0xFFFFFFFF].
  */

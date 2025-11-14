@@ -1,5 +1,5 @@
 import React from 'react';
-import Choice from '../../Choice';
+import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 

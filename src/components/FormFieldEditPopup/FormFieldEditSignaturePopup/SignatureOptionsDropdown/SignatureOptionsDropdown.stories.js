@@ -36,3 +36,5 @@ export function SignatureOptions() {
     </Provider>
   );
 }
+
+SignatureOptions.parameters = window.storybook.disableRtlMode;

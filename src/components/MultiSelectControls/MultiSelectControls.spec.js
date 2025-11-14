@@ -60,8 +60,8 @@ describe('MultiSelectControls', () => {
           showMultiStyle={true}
           setShowMultiStyle={noop}
           setMultiSelectMode={noop}
-          isMultiSelectedMap={{}}
-          setIsMultiSelectedMap={noop}
+          multiSelectedMap={{}}
+          setMultiSelectedMap={noop}
           multiSelectedAnnotations={[]}
         />
       </Provider>

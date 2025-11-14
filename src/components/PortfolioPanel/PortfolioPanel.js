@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
-import TouchBackEnd from 'react-dnd-touch-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -248,7 +248,7 @@ const PortfolioPanel = () => {
           tabManager,
         }}
       >
-        <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
+        <DndProvider backend={isMobileDevice ? TouchBackend : HTML5Backend}>
           <PortfolioDragLayer />
 
           <div className='portfolio-panel-list'>

@@ -36,6 +36,7 @@ import { panelNames } from 'constants/panel';
 import cloneDeep from 'lodash/cloneDeep';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import { defaultPopups } from 'src/redux/modularComponents';
 
 const { checkTypes, TYPES } = window.Core;
 const disabledElements = [];
@@ -127,7 +128,7 @@ const validatePanels = (panels, functionMap = {}) => {
 const flyoutItemType = TYPES.OBJECT({
   dataElement: TYPES.STRING,
   type: TYPES.OPTIONAL(TYPES.ONE_OF([ITEM_TYPE.PRESET_BUTTON, ITEM_TYPE.BUTTON, ITEM_TYPE.STATEFUL_BUTTON, ITEM_TYPE.TOGGLE_BUTTON])),
-  render: TYPES.OPTIONAL(TYPES.STRING),
+  render: TYPES.OPTIONAL(TYPES.MULTI_TYPE(TYPES.STRING, TYPES.FUNCTION)),
   children: TYPES.OPTIONAL(TYPES.ARRAY(TYPES.MULTI_TYPE(TYPES.STRING, TYPES.OBJECT({})))) // Allow both strings and objects
 });
 
@@ -181,6 +182,22 @@ const validateFlyouts = (flyouts, components) => {
   });
 };
 
+const validatePopups = (popups) => {
+  const normalizedPopup = TYPES.ARRAY(TYPES.OBJECT({
+    dataElement: TYPES.STRING
+  }));
+
+  const popupKeys = Object.keys(popups);
+  popupKeys.forEach((key) => {
+    try {
+      checkTypes([popups[key]], [normalizedPopup], 'UI.importModularComponents.validatePopups');
+    } catch (error) {
+      throw new Error(`Invalid popup found: ${key} - ${error.message}`);
+    }
+  });
+
+};
+
 const validateJSONStructure = (jsonData, functionMap) => {
   if (!jsonData) {
     throw new Error('No data provided');
@@ -200,6 +217,10 @@ const validateJSONStructure = (jsonData, functionMap) => {
 
   if (jsonData.flyouts) {
     validateFlyouts(jsonData.flyouts, jsonData.modularComponents);
+  }
+
+  if (jsonData.popups) {
+    validatePopups(jsonData.popups);
   }
 };
 
@@ -228,6 +249,7 @@ export default (store) => async (components, functions = {}) => {
   const componentMap = componentsToValidate.modularComponents || {};
   const panels = componentsToValidate.panels || {};
   const flyouts = componentsToValidate.flyouts || {};
+  const popups = componentsToValidate.popups || { ...defaultPopups };
 
   const panelList = Object.values(panels).map((panel) => panel);
 
@@ -238,6 +260,40 @@ export default (store) => async (components, functions = {}) => {
     const storedModularComponentFunctions = store.getState().viewer.modularComponentFunctions;
     return storedModularComponentFunctions[functionString] || (() => { });
   };
+
+
+  // Import popups and bind functions
+  const fnMap = store.getState().viewer.modularComponentFunctions || {};
+  const getFn = (key) => fnMap[key];
+  const bindFunctionProps = (item, popupKey) => {
+    if (!item || typeof item !== 'object') {
+      return item;
+    }
+    const out = { ...item };
+
+    for (const prop of ['onClick', 'render']) {
+      const val = out[prop];
+      if (typeof val === 'string') {
+        const fn = getFn(val);
+        if (typeof fn !== 'function') {
+          console.warn(
+            `importModularComponents: Missing function '${val}' for prop '${prop}' on popup item '${out.dataElement}' in popup '${popupKey}'. Provide it in the functionMap.`
+          );
+          // set a no-op function to avoid errors
+          out[prop] = () => { };
+        } else {
+          out[prop] = fn;
+        }
+      }
+    }
+
+    return out;
+  };
+
+  for (const [popupKey, items] of Object.entries(popups)) {
+    const mapped = (items || []).map((item) => bindFunctionProps(item, popupKey));
+    store.dispatch(actions.setPopupItems(popupKey, mapped));
+  }
 
   Object.values(componentMap).forEach((component) => {
     if (component.type === ITEM_TYPE.BUTTON) {

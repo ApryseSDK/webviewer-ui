@@ -29,7 +29,7 @@ const EmbeddedJSPopupSubMenu = ({ title, onClick, popUpMenuItems, scrollTop = 0 
       <div>{title}</div>
       {
         <>
-          <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center' }}><Icon glyph="ic_chevron_right_black_24px" /></div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center' }}><Icon glyph="icon-chevron-right" /></div>
           <EmbeddedJSPopupMenu
             title={`${title}SubMenu`}
             popUpMenuItems={popUpMenuItems}

@@ -347,7 +347,8 @@
     "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
     "errorBlankPageNumber": "Bitte geben Sie eine Seitenzahl an",
     "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}.",
-    "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf."
+    "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf.",
+    "listEmptyValue": "Ein oder mehrere Felder haben einen leeren Wert."
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "Textgröße"
     },
     "shared": {
+      "sheetIndex": "Blatt",
       "page": "Seite",
       "precision": "Genauigkeit",
       "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Schriftfamilie"
     },
-    "blankSheet": "Leeres Blatt"
+    "blankSheet": "Leeres Blatt",
+    "insertImage": "Bild einfügen"
   },
   "insertPageModal": {
     "title": "Neue Seite einfügen",

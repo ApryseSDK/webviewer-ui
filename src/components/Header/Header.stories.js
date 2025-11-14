@@ -33,3 +33,5 @@ DefaultHeader.args = {
   isToolsHeaderOpen: true,
   isMultiTab: true,
 };
+
+DefaultHeader.parameters = window.storybook.disableRtlMode;

@@ -1,6 +1,6 @@
 import displayModeObjects from 'constants/displayModeObjects';
 import core from 'core';
-import { useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useSelector, useStore, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
@@ -198,11 +198,10 @@ const ViewControlsFlyout = () => {
         icon: 'icon-accessibility-mode',
         label: 'accessibility.accessibilityMode',
         title: 'accessibility.accessibilityMode',
-        onClick: () => {
-          dispatch(actions.setShouldAddA11yContentToDOM(!shouldAddA11yContentToDOM));
-        },
         dataElement: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
-        isActive: shouldAddA11yContentToDOM
+        type: 'presetButton',
+        buttonType: 'toggleAccessibilityModeButton',
+        isFlyoutItem: true,
       };
       const accessibilityElements = [divider, accessibilityLabel, toggleAccessibilityModeButton];
       viewControlsFlyoutItems = [...viewControlsFlyoutItems, ...accessibilityElements];
@@ -224,15 +223,6 @@ const ViewControlsFlyout = () => {
       dispatch(actions.updateFlyout(viewControlsFlyout.dataElement, viewControlsFlyout));
     }
   }, [isFullScreen, isMultiViewerModeAvailable, isMultiViewerMode, displayMode, isReaderMode, shouldAddA11yContentToDOM]);
-
-  useEffect(() => {
-    const accessibleReadingOrderManager = documentViewer.getAccessibleReadingOrderManager();
-    if (shouldAddA11yContentToDOM) {
-      accessibleReadingOrderManager?.startAccessibleReadingOrderMode();
-    } else {
-      accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
-    }
-  }, [shouldAddA11yContentToDOM]);
 
   if (isDisabled) {
     return;

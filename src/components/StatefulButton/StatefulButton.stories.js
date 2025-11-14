@@ -49,6 +49,9 @@ StatefulButtonCounter.args = {
   mount: () => {},
 };
 
+StatefulButtonCounter.parameters = window.storybook.disableRtlMode;
+
+
 export const StatefulButtonStates = BasicComponent.bind({});
 StatefulButtonStates.args = {
   type: 'statefulButton',
@@ -71,3 +74,5 @@ StatefulButtonStates.args = {
   },
   mount: () => {},
 };
+
+StatefulButtonStates.parameters = window.storybook.disableRtlMode;

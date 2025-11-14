@@ -2,12 +2,14 @@ import React from 'react';
 import TabPanel from './TabPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { panelMinWidth } from 'constants/panel';
+import { panelMinWidth, panelNames } from 'constants/panel';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
-import { expect, waitFor, within , userEvent } from 'storybook/test';
+import { expect, within , userEvent } from 'storybook/test';
+import viewOnlyWhitelist from 'src/redux/viewOnlyWhitelist';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/TabPanel',
@@ -179,10 +181,13 @@ const tabPanelTemplate = (dataElement, width) => {
 };
 
 export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly', 320));
+TabPanelWithIconsOnly.parameters = window.storybook.disableRtlMode;
 
 export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
+TabPanelWithLabelsOnly.parameters = window.storybook.disableRtlMode;
 
 export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
+TabPanelIconsAndLabels.parameters = window.storybook.disableRtlMode;
 
 const initialStateThumbnailsOnly = {
   viewer: {
@@ -274,6 +279,7 @@ export const TabPanelWithThumbnailPanelMaxWidth = () => (
 );
 
 const TabPanelInApp = (context, location, activePanel, panelWidth) => {
+  const { addonRtl } = context.globals;
   const appMockState = {
     ...initialState,
     viewer: {
@@ -353,8 +359,8 @@ const TabPanelInApp = (context, location, activePanel, panelWidth) => {
   const store = createStore(appMockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={appMockState} />;
-} ;
+  return <MockApp initialState={appMockState} initialDirection={addonRtl} />;
+};
 
 export const TabPanelInApplication = (args, context) => (TabPanelInApp(context, 'left', 'thumbnailsPanel', 400));
 
@@ -377,14 +383,17 @@ TabPanelWithLayersInMobile.parameters = window.storybook.MobileParameters;
 TabPanelWithSignatureInMobile.parameters = window.storybook.MobileParameters;
 TabPanelWithFileAttachmentInMobile.parameters = window.storybook.MobileParameters;
 
-const panelsToCheck = [
-  { name: 'Thumbnails', className: 'ThumbnailsPanel' },
-  { name: 'Outlines', className: 'OutlinesPanel' },
-  { name: 'Bookmarks', className: 'BookmarksPanel' },
-  { name: 'Layers', className: 'LayersPanel' },
-  { name: 'Signatures', className: 'SignaturePanel' },
-  { name: 'Attachments', className: 'fileAttachmentPanel' },
+const PANELS_META = [
+  { key: 'component.thumbnailsPanel', className: 'ThumbnailsPanel', panelName: panelNames.THUMBNAIL },
+  { key: 'component.outlinesPanel', className: 'OutlinesPanel', panelName: panelNames.OUTLINE },
+  { key: 'component.bookmarksPanel', className: 'BookmarksPanel', panelName: panelNames.BOOKMARKS },
+  { key: 'component.layersPanel', className: 'LayersPanel', panelName: panelNames.LAYERS },
+  { key: 'component.signaturePanel', className: 'SignaturePanel', panelName: panelNames.SIGNATURE },
+  { key: 'component.attachmentPanel', className: 'fileAttachmentPanel', panelName: panelNames.FILE_ATTACHMENT },
 ];
+
+const getPanelsToCheck = () =>
+  PANELS_META.map((p) => ({ ...p, name: getTranslatedText(p.key) }));
 
 TabPanelInApplication.parameters = {
   test: {
@@ -394,15 +403,12 @@ TabPanelInApplication.parameters = {
 };
 TabPanelInApplication.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  // Wait for the first tab to be rendered before proceeding
-  await waitFor(() => {
-    const tabButton = canvas.getByRole('button', { name: /Thumbnails/i });
-    expect(tabButton).toBeInTheDocument();
-  });
+  const tabButton = await canvas.findByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
+  expect(tabButton).toBeInTheDocument();
 
   // should correctly renders all the tabs, should render each panel when clicked
   // and each tab should have the correct aria-current attribute when it is active
-  for (const panel of panelsToCheck) {
+  for (const panel of getPanelsToCheck()) {
     const tabButton = await canvas.getByRole('button', { name: panel.name });
     await expect(tabButton).toBeInTheDocument();
     await userEvent.click(tabButton);
@@ -410,4 +416,47 @@ TabPanelInApplication.play = async ({ canvasElement }) => {
     await expect(panelElement).toBeInTheDocument();
     await expect(tabButton).toHaveAttribute('aria-current', 'true');
   }
+};
+
+export const ViewOnlyTabPanel = (args, context) => (TabPanelInApp(context, 'left', 'viewOnlyPanel'));
+ViewOnlyTabPanel.parameters = window.storybook.disableRtlMode;
+
+ViewOnlyTabPanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  let tabButton = await canvas.findByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
+  expect(tabButton).toBeInTheDocument();
+
+  window.instance.UI.enableViewOnlyMode();
+  window.instance.UI.openElements(['tabPanel']);
+
+  tabButton = await canvas.findByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
+  expect(tabButton).toBeInTheDocument();
+
+  for (const panel of getPanelsToCheck()) {
+    const tabButton = canvas.queryByRole('button', { name: panel.name });
+    const isWhitelisted = viewOnlyWhitelist.panel.includes(panel.panelName);
+    if (isWhitelisted) {
+      await expect(tabButton).toBeInTheDocument();
+    } else {
+      await expect(tabButton).toBeNull();
+    }
+  }
+};
+
+export const TabPanelWithNoVisibleTabs = (args, context) => (TabPanelInApp(context, 'left', 'viewOnlyPanel'));
+TabPanelWithNoVisibleTabs.parameters = window.storybook.disableRtlMode;
+
+TabPanelWithNoVisibleTabs.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const panels = Object.values(panelNames);
+
+  window.instance.UI.openElement(panelNames.TABS);
+  let tabButton = await canvas.findByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
+  expect(tabButton).toBeInTheDocument();
+
+  window.instance.UI.disableElements(panels);
+  window.instance.UI.openElement(panelNames.TABS);
+  tabButton = canvas.queryByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
+  expect(tabButton).toBeNull();
 };

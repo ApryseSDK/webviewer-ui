@@ -33,6 +33,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     elementDOM,
     onKeyDownHandler,
     onClickHandler,
+    isActive,
   } = { ...props, ...customElementOverrides };
 
   let icon = customElementOverrides?.icon || customElementOverrides?.img || props.icon;
@@ -97,6 +98,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
       className={classNames({
         'flyout-item-container': true,
         'disabled': disabled,
+        'active': isActive,
         [additionalClass]: true
       })}
     >

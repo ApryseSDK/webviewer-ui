@@ -498,8 +498,7 @@ class WatermarkModal extends React.PureComponent {
                     getDisplayValue={(opacity) => `${Math.round(opacity)}%`}
                     withInputField={isCustomizableUI}
                     inputFieldType={'number'}
-                    onSliderChange={() => { }}
-                    onStyleChange={(property, value) => this.handleInputChange(
+                    onSliderChange={(_, value) => this.handleInputChange(
                       FORM_FIELD_KEYS.opacity,
                       Math.round(value * 100),
                     )}

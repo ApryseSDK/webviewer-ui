@@ -11,6 +11,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import MobilePopupWrapper from '../MobilePopupWrapper';
+import useDraggablePosition from '../../hooks/useDraggablePosition';
 
 export function focusActiveIcon(e) {
   if (e && e.nativeEvent.pointerType === '') {
@@ -130,36 +131,8 @@ function DocumentCropPopupContainer() {
   };
 
   const cropPopupRef = useRef();
-  const DEFAULT_POPUP_WIDTH = 250;
-  const DEFAULT_POPUP_HEIGHT = 250;
-  const documentContainerElement = core.getScrollViewElement();
-  const popupWidth = cropPopupRef.current?.getBoundingClientRect().width || DEFAULT_POPUP_WIDTH;
-  const popupHeight = cropPopupRef.current?.getBoundingClientRect().height || DEFAULT_POPUP_HEIGHT;
+  const { position, handleDrag, handleStop, containerRef, style, bounds } = useDraggablePosition('top-right');
   const documentViewer = core.getDocumentViewer(1);
-
-  const docContainer = getRootNode().querySelector('.DocumentContainer');
-  const xOffset = docContainer?.getBoundingClientRect().width || 0;
-
-  const cropPopupOffset = () => {
-    const offset = {
-      x: xOffset - popupWidth - 20,
-      y: documentContainerElement?.offsetTop + 10,
-    };
-    if (cropAnnotation && cropPopupRef?.current) {
-      offset.x = Math.min(offset.x, documentContainerElement.offsetWidth - popupWidth);
-    }
-    return offset;
-  };
-
-  const cropPopupBounds = () => {
-    const bounds = {
-      top: 0,
-      bottom: documentContainerElement.offsetHeight - popupHeight,
-      left: 0 - cropPopupOffset()['x'],
-      right: documentContainerElement.offsetWidth - cropPopupOffset()['x'] - popupWidth,
-    };
-    return bounds;
-  };
 
   const closeAndReset = () => {
     cropCreateTool.reset();
@@ -268,10 +241,19 @@ function DocumentCropPopupContainer() {
     return (
       <Draggable
         cancel={'input, button, .collapsible-menu, .ui__choice__label'}
-        positionOffset={cropPopupOffset()}
-        bounds={cropPopupBounds()}
+        position={position}
+        bounds={bounds}
+        onDrag={handleDrag}
+        onStop={handleStop}
       >
-        <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
+        <div
+          className="DocumentCropPopupContainer"
+          ref={(el) => {
+            cropPopupRef.current = el;
+            containerRef.current = el;
+          }}
+          style={style}
+        >
           <DocumentCropPopup {...props} />
         </div>
       </Draggable>

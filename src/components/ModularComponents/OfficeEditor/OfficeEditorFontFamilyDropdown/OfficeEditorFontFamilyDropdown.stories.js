@@ -3,8 +3,9 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import OfficeEditorFontFamilyDropdown from './OfficeEditorFontFamilyDropdown';
-import { userEvent, expect } from 'storybook/test';
+import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditor/FontFamilyDropdown',
@@ -36,9 +37,9 @@ export function Basic() {
 }
 
 Basic.play = async ({ canvasElement }) => {
-  // open the dropdown and check the active item is Arial from the mock state
-  const dropdown = canvasElement.querySelector('.Dropdown');
+  const canvas = within(canvasElement);
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('officeEditor.fontFamily.dropdownLabel') });
   await userEvent.click(dropdown);
-  const dropdownItem = canvasElement.querySelector('[data-element=dropdown-item-Arial]');
+  const dropdownItem = canvas.getByRole('option', { name: 'Arial' });
   expect(dropdownItem.classList.contains('active')).toBe(true);
 };

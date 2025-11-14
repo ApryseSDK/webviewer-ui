@@ -54,6 +54,7 @@ const DataElements = {
   FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
   FORM_FIELD_PANEL: 'formFieldPanel',
   SEARCH_PANEL: 'searchPanel',
+  SEARCH_PANEL_REPLACE_CONTAINER: 'searchAndReplace',
   TEXT_EDITING_PANEL: 'textEditingPanel',
   COMPARE_PANEL: 'comparePanel',
   PORTFOLIO_PANEL: 'portfolioPanel',
@@ -395,7 +396,46 @@ const DataElements = {
   // Sheets Editor
   FORMULA_BAR: 'formulaBar',
   FORMULA_OVERLAY: 'formulaOverlay',
-  SPREADSHEET_SWITCHER: 'spreadsheetSwitcher'
+  SPREADSHEET_SWITCHER: 'spreadsheetSwitcher',
+
+  // Annotation Popup Buttons
+  VIEW_FILE_BUTTON: 'viewFileButton',
+  COMMENT_BUTTON: 'annotationCommentButton',
+  STYLE_EDIT_BUTTON: 'annotationStyleEditButton',
+  DATE_EDIT_BUTTON: 'annotationDateEditButton',
+  REDACT_BUTTON: 'annotationRedactButton',
+  CROP_BUTTON: 'annotationCropButton',
+  CONTENT_EDIT_BUTTON: 'annotationContentEditButton',
+  CLEAR_SIGNATURE_BUTTON: 'annotationClearSignatureButton',
+  GROUP_BUTTON: 'annotationGroupButton',
+  UNGROUP_BUTTON: 'annotationUngroupButton',
+  FORM_FIELD_EDIT_BUTTON: 'formFieldEditButton',
+  LINK_BUTTON: 'linkButton',
+  FILE_ATTACHMENT_DOWNLOAD: 'fileAttachmentDownload',
+  ANNOTATION_DELETE_BUTTON: 'annotationDeleteButton',
+  SHORTCUT_KEYS_FOR_3D: 'shortCutKeysFor3D',
+  PLAY_SOUND_BUTTON: 'playSoundButton',
+  OPEN_ALIGNMENT_BUTTON: 'openAlignmentButton',
+
+  // Text Popup
+  COPY_TEXT_BUTTON: 'copyTextButton',
+  TEXT_HIGHLIGHT_TOOL_BUTTON: 'textHighlightToolButton',
+  TEXT_UNDERLINE_TOOL_BUTTON: 'textUnderlineToolButton',
+  TEXT_SQUIGGLY_TOOL_BUTTON: 'textSquigglyToolButton',
+  TEXT_STRIKEOUT_TOOL_BUTTON: 'textStrikeoutToolButton',
+  TEXT_REDACT_TOOL_BUTTON: 'textRedactToolButton',
+
+  // Context Menu Popup
+  PAN_TOOL_BUTTON: 'panToolButton',
+  STICKY_TOOL_BUTTON: 'stickyToolButton',
+  HIGHLIGHT_TOOL_BUTTON: 'highlightToolButton',
+  FREE_HAND_TOOL_BUTTON: 'freeHandToolButton',
+  FREE_HAND_HIGHLIGHT_TOOL_BUTTON: 'freeHandHighlightToolButton',
+  FREE_TEXT_TOOL_BUTTON: 'freeTextToolButton',
+  MARK_INSERT_TEXT_TOOL_BUTTON: 'markInsertTextToolButton',
+  MARK_REPLACE_TEXT_TOOL_BUTTON: 'markReplaceTextToolButton',
+
+  SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON: 'spreadsheetEditorInsertImageButton',
 };
 
 DataElements.TOOLBAR_GROUPS = [

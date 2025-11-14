@@ -234,6 +234,8 @@ export function RedactionLeftGenericPanel() {
   );
 }
 
+RedactionLeftGenericPanel.parameters = window.storybook.disableRtlMode;
+
 export function RedactionRightGenericPanel() {
   return (
     <Provider store={store}>
@@ -247,6 +249,8 @@ export function RedactionRightGenericPanel() {
     </Provider >
   );
 }
+
+RedactionRightGenericPanel.parameters = window.storybook.disableRtlMode;
 
 
 export function RightPanelWithRedactionItems() {
@@ -263,6 +267,8 @@ export function RightPanelWithRedactionItems() {
   );
 }
 
+RightPanelWithRedactionItems.parameters = window.storybook.disableRtlMode;
+
 export function LeftPanelWithRedactionItems() {
   return (
     <Provider store={store}>
@@ -276,6 +282,8 @@ export function LeftPanelWithRedactionItems() {
     </Provider >
   );
 }
+
+LeftPanelWithRedactionItems.parameters = window.storybook.disableRtlMode;
 
 const RedactSearchPanelInApp = (location, panelSize) => {
   const mockState = {

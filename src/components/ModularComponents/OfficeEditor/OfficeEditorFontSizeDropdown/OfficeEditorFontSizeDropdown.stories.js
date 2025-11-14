@@ -4,8 +4,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { DEFAULT_POINT_SIZE } from 'src/constants/officeEditor';
 import core from 'core';
 import OfficeEditorFontSizeDropdown from './OfficeEditorFontSizeDropdown';
-import { userEvent, expect } from 'storybook/test';
+import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditor/FontSizeDropdown',
@@ -38,9 +39,10 @@ export function Basic() {
 
 Basic.play = async ({ canvasElement }) => {
   // open the dropdown and check the active item
-  const dropdown = canvasElement.querySelector('.Dropdown');
+  const canvas = within(canvasElement);
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('officeEditor.fontSize.dropdownLabel') });
   await userEvent.click(dropdown);
-  const dropdownItem = canvasElement.querySelector(`[data-element=dropdown-item-${DEFAULT_POINT_SIZE.toString()}]`);
+  const dropdownItem = canvas.getByRole('option', { name: DEFAULT_POINT_SIZE.toString() });
   expect(dropdownItem.classList.contains('active')).toBe(true);
 };
 
@@ -53,8 +55,11 @@ export function CustomPointSize() {
 
 CustomPointSize.play = async ({ canvasElement }) => {
   // open the dropdown and check the active item
-  const dropdown = canvasElement.querySelector('.Dropdown');
+  const canvas = within(canvasElement);
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('officeEditor.fontSize.dropdownLabel') });
   await userEvent.click(dropdown);
-  const dropdownItem = canvasElement.querySelector(`[data-element=dropdown-item-${customPointSize.toString()}]`);
+  const dropdownItem = canvas.getByRole('option', { name: customPointSize.toString() });
   expect(dropdownItem.classList.contains('active')).toBe(true);
 };
+
+CustomPointSize.parameters = window.storybook.disableRtlMode;

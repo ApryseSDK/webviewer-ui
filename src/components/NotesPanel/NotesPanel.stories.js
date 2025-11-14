@@ -11,7 +11,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore, setupNotesPanelCoreMocks } from 'helpers/storybookHelper';
 import core from 'core';
 import { userEvent, within, expect, waitFor } from 'storybook/test';
-
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/NotesPanel/NotesPanel',
@@ -113,6 +113,8 @@ export function BasicInGenericPanel() {
     </Provider>
   );
 }
+BasicInGenericPanel.parameters = window.storybook.disableRtlMode;
+
 export function BasicInGenericPanelOnLeft() {
   initialState.viewer.notesPanelCustomEmptyPanel = undefined;
   const store = configureStore({ reducer: () => initialState });
@@ -124,6 +126,7 @@ export function BasicInGenericPanelOnLeft() {
     </Provider>
   );
 }
+BasicInGenericPanelOnLeft.parameters = window.storybook.disableRtlMode;
 
 export function EmptyWithCustomIconAndMessage() {
   initialState.viewer.notesPanelCustomEmptyPanel = {
@@ -189,6 +192,7 @@ export function EmptyWithCustomRenderCallback() {
 }
 
 const NotesPanelInApp = (context, location, panelSize) => {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...mockAppState,
     viewer: {
@@ -220,7 +224,7 @@ const NotesPanelInApp = (context, location, panelSize) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={mockState} />;
+  return <MockApp initialState={mockState} initialDirection={addonRtl} />;
 };
 
 export const NotesPanelInMobile = (args, context) => NotesPanelInApp(context, 'right');
@@ -270,6 +274,44 @@ NotesPanelWithNotes.play = async ({ canvasElement }) => {
   expect(listItems.length).toBe(1);
 };
 
+const createTestNotesWithComments = () => {
+  const replyAnnot = new window.Core.Annotations.StickyAnnotation();
+  replyAnnot.Listable = true;
+  replyAnnot.isReply = () => true;
+  replyAnnot.getContents = () => 'Reply comment test';
+  replyAnnot.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '18': {} });
+
+  const annotationsList = window.Core.documentViewer.getAnnotationManager().getAnnotationsList();
+  const rectangle = annotationsList.find((item) => item instanceof window.Core.Annotations.RectangleAnnotation);
+  rectangle.Listable = true;
+  rectangle.getContents = () => 'Test comment https://google.ca test';
+  rectangle.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '30': {} });
+  rectangle._replies = [replyAnnot];
+  rectangle.getReplies = () => [replyAnnot];
+  rectangle.getCustomData = (key) => {
+    const customData = {
+      'trn-annot-preview': 'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before.',
+    };
+
+    return customData[key];
+  };
+
+  const line = annotationsList.find((item) => item instanceof window.Core.Annotations.LineAnnotation);
+  line.Listable = true;
+  line.getContents = () => 'We used to look up at the sky and wonder at our place in the stars.';
+  line.getRichTextStyle = () => ({ '0': {}, '22': { 'font-weight': 'bold' }, '30': {} });
+  line.getCustomData = (key) => {
+    const customData = {
+      'trn-annot-preview': '˚✩₊˚',
+    };
+
+    return customData[key];
+  };
+  line.getStatus = () => 'Accepted';
+
+  return { replyAnnot, rectangle, line };
+};
+
 const customNoteFunction = () => { };
 export const NotesPanelNotesWithComments = (args, context) => {
   const mockState = {
@@ -298,26 +340,7 @@ export const NotesPanelNotesWithComments = (args, context) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
   });
 
-  const replyAnnot = new window.Core.Annotations.StickyAnnotation();
-  replyAnnot.Listable = true;
-  replyAnnot.isReply = () => true;
-  replyAnnot.getContents = () => 'Reply comment test';
-  replyAnnot.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '18': {} });
-
-  const annotationsList = window.Core.documentViewer.getAnnotationManager().getAnnotationsList();
-  const rectangle = annotationsList.find((item) => item instanceof window.Core.Annotations.RectangleAnnotation);
-  rectangle.Listable = true;
-  rectangle.getContents = () => 'Test comment https://google.ca test';
-  rectangle.getRichTextStyle = () => ({ '0': {}, '13': { 'font-weight': 'bold' }, '30': {} });
-  rectangle._replies = [replyAnnot];
-  rectangle.getReplies = () => [replyAnnot];
-  rectangle.getCustomData = (key) => {
-    const customData = {
-      'trn-annot-preview': 'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before.',
-    };
-
-    return customData[key];
-  };
+  const { replyAnnot, rectangle } = createTestNotesWithComments();
   setupNotesPanelCoreMocks(core, [], []);
   core.getAnnotationsList = () => [rectangle, replyAnnot];
   core.getSelectedAnnotations = () => [rectangle];
@@ -337,10 +360,10 @@ NotesPanelNotesWithComments.parameters = {
 
 NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  expect(canvas.getByRole('button', { name: /Multi Select/i })).toBeVisible();
+  expect(canvas.getByRole('button', { name: getTranslatedText('component.multiSelectButton') })).toBeVisible();
 
   await waitFor(async () => {
-    await expect(canvas.getByRole('button', { name: 'Status' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: getTranslatedText('option.notesOrder.status') })).toBeInTheDocument();
   });
 
   const textElement = await canvas.getByText(/Test comment/i);
@@ -366,8 +389,12 @@ NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
   expect(computedStyle.pointerEvents).not.toBe('none');
   expect(computedStyle.userSelect).not.toBe('none');
 
-  const replyTextElement = await canvas.getByText(/Reply comment/i);
+  const replyTextElement = canvas.getByText(/Reply comment/i);
   await expect(replyTextElement).toBeInTheDocument();
+
+  const moreButton = await canvas.findByRole('button', { name: getTranslatedText('action.showMore') });
+  await userEvent.click(moreButton);
+  await canvas.findByText(/"Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."/);
 };
 
 export function NotesPanelWithNotesInFormFieldMode(args, context) {
@@ -417,3 +444,34 @@ NotesPanelWithNotesInFormFieldMode.play = async ({ canvasElement }) => {
   const listItems = await canvas.findAllByRole('listitem');
   expect(listItems.length).toBe(3);
 };
+
+export const ViewOnlyNotesPanel = (args, context) => {
+  const { replyAnnot, rectangle, line } = createTestNotesWithComments();
+  setupNotesPanelCoreMocks(core, [rectangle, replyAnnot, line], [rectangle]);
+  return NotesPanelInApp(context, 'right');
+};
+
+ViewOnlyNotesPanel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  window.instance.UI.enableViewOnlyMode();
+  window.instance.UI.openElement('notesPanel');
+
+  const note = await canvas.findByText(/Space, the final frontier./gi);
+  await userEvent.click(note);
+
+  const statusButton = await canvas.findAllByRole('button', { name: getTranslatedText('option.notesOrder.status') });
+  statusButton.forEach((button) => {
+    expect(button).toBeDisabled();
+  });
+
+  const optionsButton = canvas.queryByRole('button', { name: getTranslatedText('officeEditor.options') });
+  expect(optionsButton).toBeNull();
+
+  const addFileAttachmentButton = canvas.queryByRole('button', { name: getTranslatedText('component.addFileAttachment') });
+  expect(addFileAttachmentButton).toBeNull();
+
+  const multiSelectToggleButton = await canvas.findByRole('button', { name: getTranslatedText('component.multiSelectButton') });
+  userEvent.click(multiSelectToggleButton);
+};
+
+ViewOnlyNotesPanel.parameters = window.storybook.disableRtlMode;

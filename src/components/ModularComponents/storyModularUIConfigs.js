@@ -1,3 +1,5 @@
+import DataElements from 'constants/dataElement';
+
 export const uiWithFlyout = {
   'modularComponents': {
     'flyoutToggle': {
@@ -168,7 +170,23 @@ export const uiWithPanelsInFlyout = {
     },
     ...panelsInFlyouts,
   },
-  'panels': {}
+  'panels': {},
+  'popups': {
+    [DataElements.ANNOTATION_POPUP]: [
+      { dataElement: DataElements.VIEW_FILE_BUTTON },
+      { dataElement: DataElements.COMMENT_BUTTON },
+      { dataElement: DataElements.STYLE_EDIT_BUTTON },
+    ],
+    [DataElements.TEXT_POPUP]: [
+      { dataElement: DataElements.COPY_TEXT_BUTTON },
+      { dataElement: DataElements.TEXT_HIGHLIGHT_TOOL_BUTTON },
+      { dataElement: DataElements.TEXT_UNDERLINE_TOOL_BUTTON },
+    ],
+    [DataElements.CONTEXT_MENU_POPUP]: [
+      { dataElement: DataElements.PAN_TOOL_BUTTON },
+      { dataElement: DataElements.STICKY_TOOL_BUTTON },
+    ],
+  }
 };
 
 export const panelsInFlyoutMap = {

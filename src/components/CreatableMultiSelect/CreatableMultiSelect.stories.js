@@ -61,6 +61,8 @@ export function Basic() {
     />);
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function WithCustomStyles() {
   return (
     <CreatableMultiSelect
@@ -86,6 +88,8 @@ export function WithCustomStyles() {
       }}
     />);
 }
+
+WithCustomStyles.parameters = window.storybook.disableRtlMode;
 
 export function WithCustomComponents() {
   const MultiValueLabel = ({ data }) => {
@@ -115,6 +119,8 @@ export function WithCustomComponents() {
     />);
 }
 
+WithCustomComponents.parameters = window.storybook.disableRtlMode;
+
 export function MultiSelectGroups() {
   return (
     <CreatableMultiSelect
@@ -123,3 +129,5 @@ export function MultiSelectGroups() {
       menuIsOpen
     />);
 }
+
+MultiSelectGroups.parameters = window.storybook.disableRtlMode;

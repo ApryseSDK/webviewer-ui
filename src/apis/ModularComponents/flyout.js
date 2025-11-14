@@ -10,6 +10,7 @@ export const flyoutItemBase = {
   label: TYPES.OPTIONAL(TYPES.STRING),
   onClick: TYPES.OPTIONAL(TYPES.FUNCTION),
   icon: TYPES.OPTIONAL(TYPES.STRING),
+  render: TYPES.OPTIONAL(TYPES.MULTI_TYPE(TYPES.STRING, TYPES.FUNCTION)),
 };
 export const flyoutItemType = TYPES.MULTI_TYPE(
   TYPES.OBJECT({ type: TYPES.ONE_OF(validItemTypes) }),

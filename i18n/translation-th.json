@@ -347,7 +347,8 @@
     "errorPageNumber": "หมายเลขหน้าไม่ถูกต้อง ขีดจำกัดคือ",
     "errorBlankPageNumber": "กรุณาระบุหมายเลขหน้า",
     "errorLoadingDocument": "เกิดปัญหาในการอ่านเอกสารนี้และบางหน้าอาจไม่แสดง นี่แสดงว่าเอกสารอาจเสียหาย จำนวนหน้าทั้งหมดคือ {{totalPageCount}} และจำนวนหน้าที่แสดงคือ {{displayedPageCount}}",
-    "noRevisions": "เอกสารนี้ไม่มีการแก้ไข"
+    "noRevisions": "เอกสารนี้ไม่มีการแก้ไข",
+    "listEmptyValue": "ฟิลด์หนึ่งรายการขึ้นไปมีค่าว่าง"
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "ขนาดตัวอักษร"
     },
     "shared": {
+      "sheetIndex": "แผ่น",
       "page": "หน้าหนังสือ",
       "precision": "ความแม่นยำ",
       "enableSnapping": "เปิดใช้งานการสแนปสำหรับเครื่องมือวัด"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "ฟอนต์ตระกูล"
     },
-    "blankSheet": "แผ่นเปล่า"
+    "blankSheet": "แผ่นเปล่า",
+    "insertImage": "แทรกภาพ"
   },
   "insertPageModal": {
     "title": "แทรกหน้าใหม่",

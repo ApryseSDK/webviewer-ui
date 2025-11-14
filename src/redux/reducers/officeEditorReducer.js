@@ -31,6 +31,13 @@ export default (initialState) => (state = initialState, action) => {
         canRedo,
       };
     }
+    case 'SET_OFFICE_EDITOR_IS_REPLACE_IN_PROGRESS': {
+      const { isReplaceInProgress } = payload;
+      return {
+        ...state,
+        isReplaceInProgress,
+      };
+    }
     case 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE': {
       const { fontFace } = payload;
       const fontFaces = state.availableFontFaces.slice();

@@ -7,6 +7,7 @@ import { getPresetButtonDOM } from '../Helpers/menuItems';
 import ToggleElementButton from '../ToggleElementButton';
 import setCellBorder from 'src/helpers/setCellBorder';
 import getButtonDisplay from 'src/helpers/getBorderDisplayButton';
+import isBorderButtonActive from 'src/helpers/isBorderButtonActive';
 import selectors from 'selectors';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,6 +18,7 @@ const CellBorders = (props) => {
   const { isFlyoutItem, dataElement, disabled } = props;
   const selectedBorderStyleListOption = useSelector((state)=> selectors.getSelectedBorderStyleListOption(state));
   const selectedBorderColorOption = useSelector((state)=> selectors.getSelectedBorderColorOption(state));
+  const isSingleCell = useSelector((state) => selectors.getIsSingleCell(state));
 
   const { t } = useTranslation();
 
@@ -58,6 +60,7 @@ const CellBorders = (props) => {
             React.cloneElement(button, {
               key: button.props.dataElement,
               className: 'border-button',
+              isActive: isSingleCell ? isBorderButtonActive(button.props.dataElement) : false
             })
           ))}
         </div>

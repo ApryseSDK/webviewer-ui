@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input } from '@pdftron/webviewer-react-toolkit';
+import Input from 'components/Input';
 import Icon from 'components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';

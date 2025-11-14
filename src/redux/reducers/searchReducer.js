@@ -148,6 +148,12 @@ export default (initialState) => (state = initialState, action) => {
         redactionSearchPatterns: updatedRedactionSearchPatterns,
       };
     }
+    case 'SET_SEARCH_IN_PROGRESS': {
+      return {
+        ...state,
+        isSearchInProgress: payload.isSearchInProgress,
+      };
+    }
     default:
       return state;
   }

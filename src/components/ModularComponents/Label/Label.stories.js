@@ -18,6 +18,8 @@ export const LabelComponent = () => (
   </Provider>
 );
 
+LabelComponent.parameters = window.storybook.disableRtlMode;
+
 export const LabelWithStyle = () => (
   <Provider store={store}>
     <Label dataElement="test" label="Test Label With Custom Style" className="label-custom-class"
@@ -30,3 +32,5 @@ LabelWithStyle.play = async ({ canvasElement }) => {
   // Checking if the class was added to the label
   expect(labelElement.classList.contains('label-custom-class')).toBe(true);
 };
+
+LabelWithStyle.parameters = window.storybook.disableRtlMode;

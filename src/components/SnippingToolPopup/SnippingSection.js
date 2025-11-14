@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import CollapsibleSection from '../CollapsibleSection';
 import PropTypes from 'prop-types';
 

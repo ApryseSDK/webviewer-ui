@@ -40,7 +40,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     left: 0,
   });
   const [location, setLocation] = useState('bottom');
-  const [t] = useTranslation();
+  const [t, i18n, ready] = useTranslation();
   const delayShow = 300;
   const opacityTimeout = 50;
 
@@ -229,7 +229,8 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   const isActive = hotkeysManager.isActive(shortcutKey);
 
   let hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
-  let shortcut = t(`shortcut.${shortcutKey}`);
+  const englishT = ready ? i18n.getFixedT('en') : (val) => val;
+  let shortcut = englishT(`shortcut.${shortcutKey}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
   }

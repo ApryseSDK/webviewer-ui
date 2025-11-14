@@ -43,6 +43,8 @@ Default.args = {
   labelId: 'formula-overlay-label',
 };
 
+Default.parameters = window.storybook.disableRtlMode;
+
 export const FrenchTranslation = Template.bind({});
 FrenchTranslation.args = {
   selectedFormula,
@@ -54,3 +56,5 @@ FrenchTranslation.decorators = [
     return <Story />;
   },
 ];
+
+FrenchTranslation.parameters = window.storybook.disableChromatic;

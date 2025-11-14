@@ -61,6 +61,11 @@ export const PresetButtonsInTheApp = createTemplate({
   spreadsheetEditorRedux: defaultSpreadSheetEditorState,
 });
 
+PresetButtonsInTheApp.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
+};
+
 export const PresetButtonsWithCanUndoAndRedo = createTemplate({
   ...basePresetButtonsConfig,
   spreadsheetEditorRedux: {
@@ -69,3 +74,7 @@ export const PresetButtonsWithCanUndoAndRedo = createTemplate({
     canRedo: true,
   },
 });
+
+// This story does not yet show any undo/redo buttons so we won't baseline it in chromatic
+// until that is implemented.
+PresetButtonsWithCanUndoAndRedo.parameters = window.storybook.disableChromatic;

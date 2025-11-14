@@ -3,7 +3,16 @@ import { render, screen } from '@testing-library/react';
 import ListSeparator from './ListSeparator';
 import { Basic as ListSeparatorStory } from './ListSeparator.stories';
 
+jest.mock('core', () => ({
+  getDocument: jest.fn(() => ({
+    getType: jest.fn(() => 'spreadsheetEditor')
+  }))
+}));
+
 describe('ListSeparator component', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
   it('Should render without any props', () => {
     expect(() => {
       render(<ListSeparator />);

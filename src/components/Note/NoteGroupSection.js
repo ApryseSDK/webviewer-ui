@@ -24,8 +24,8 @@ const NoteGroupSection = ({
   const [isViewingGroupAnnots, setIsViewingGroupAnnots] = useState(false);
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
-  const upArrow = 'ic_chevron_up_black_24px';
-  const downArrow = 'ic_chevron_down_black_24px';
+  const upArrow = 'icon-chevron-up';
+  const downArrow = 'icon-chevron-down';
 
   const ViewAllAnnotsButton = (
     <Button

@@ -12,8 +12,7 @@ import Element from 'components/Element';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import RedactionPanel from 'components/RedactionPanel';
 import { panelNames, panelData } from 'constants/panel';
-import DataElements from 'constants/dataElement';
-import { getPanelToRender, createCustomElement, getEnabledPanels } from 'helpers/tabPanelHelper';
+import { getPanelToRender, createCustomElement } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
 const removeDuplicates = (array) => [...new Set(array)];
@@ -41,13 +40,10 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   const genericPanels = useSelector(selectors.getGenericPanels);
   const selectedTab = useSelector((state) => selectors.getActiveTabInPanel(state, tabPanelDataElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
-  const isPortfolioPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL));
   const portfolioFiles = useSelector((state) => selectors.getPortfolio(state));
   const disabledElements = useSelector(selectors.getDisabledElements);
+  const enabledPanels = useSelector((state) => selectors.getEnabledTabPanelTabs(state, tabPanelDataElement));
 
-  const isSignaturePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SIGNATURE_PANEL));
-
-  const panelsList = genericPanels.find((panel) => panel.dataElement === tabPanelDataElement).panelsList;
   const renderPanel = (panelName, dataElement) => {
     if (panelName === panelNames.REDACTION) {
       return (
@@ -63,20 +59,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
   const getPanelsObjectToRender = () => {
     const panelsToRender = {};
-    const enabledPanels = getEnabledPanels({ panelsList, disabledElements, tabPanelDataElement });
+    const presetPanels = Object.values(panelNames);
     enabledPanels?.forEach((panel, index) => {
-      const isPortfolioPanelNotAvailable = panel.render === panelNames.PORTFOLIO && (isPortfolioPanelDisabled || portfolioFiles.length === 0);
-      if (isPortfolioPanelNotAvailable || panel.render === panelNames.SIGNATURE && isSignaturePanelDisabled) {
-        return;
-      }
-      if (panel.icon) {
-        setIconFlag(true);
-      }
-      if (panel.label) {
-        setLabelFlag(true);
-      }
       const panelRenderer = panel.render;
-      const presetPanels = Object.values(panelNames);
       // Case it is a preset panel
       if (typeof panelRenderer === 'string') {
         const customPanel = genericPanels.find((customPanel) => [customPanel.render, customPanel.dataElement].includes(panelRenderer));
@@ -96,26 +81,12 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
             tabPanel: tabPanelDataElement,
             render: renderPanel(customPanel.render, `${customPanel.dataElement}-tab-panel`)
           };
-          // preset panels may not have these explicitly set by the user
-          // since they have their own defaults
-          if (panelInfo.icon) {
-            setIconFlag(true);
-          }
-          if (panelInfo.label) {
-            setLabelFlag(true);
-          }
         } else {
           panelsToRender[panelRenderer] = {
             ...customPanel,
             render: createCustomElement(customPanel),
             sortIndex: index,
           };
-          if (customPanel.icon) {
-            setIconFlag(true);
-          }
-          if (customPanel.label) {
-            setLabelFlag(true);
-          }
         }
       } else if (typeof panelRenderer === 'function') {
         dispatch(actions.addPanel(panel));
@@ -129,7 +100,6 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
       }
     });
 
-    setVisiblePanelTabs(Object.keys(panelsToRender));
     return panelsToRender;
   };
 
@@ -266,10 +236,24 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
 
   useEffect(() => {
-    setPanelsObject(getPanelsObjectToRender());
+    const panelsToRender = getPanelsObjectToRender();
+
+    setPanelsObject(panelsToRender);
+    setVisiblePanelTabs(Object.keys(panelsToRender));
+
+    const hasIcon = Object.values(panelsToRender).some((panel) => panel.icon);
+    const hasLabel = Object.values(panelsToRender).some((panel) => panel.label);
+
+    if (hasIcon) {
+      setIconFlag(true);
+    }
+    if (hasLabel) {
+      setLabelFlag(true);
+    }
+
     // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
     setOverflowItems([]);
-  }, [isPortfolioPanelDisabled, portfolioFiles, isSignaturePanelDisabled, redactionAnnotationsList, disabledElements]);
+  }, [portfolioFiles, redactionAnnotationsList, disabledElements]);
 
   useEffect(() => {
     if (!selectedTab) {

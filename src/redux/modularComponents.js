@@ -1087,4 +1087,46 @@ const defaultFlyoutMap = {
   },
 };
 
-export { defaultModularComponents, defaultModularHeaders, defaultPanels, defaultFlyoutMap };
+const defaultPopups = {
+  [DataElements.ANNOTATION_POPUP]: [
+    { dataElement: DataElements.VIEW_FILE_BUTTON },
+    { dataElement: DataElements.COMMENT_BUTTON },
+    { dataElement: DataElements.STYLE_EDIT_BUTTON },
+    { dataElement: DataElements.DATE_EDIT_BUTTON },
+    { dataElement: DataElements.REDACT_BUTTON },
+    { dataElement: DataElements.CROP_BUTTON },
+    { dataElement: DataElements.CONTENT_EDIT_BUTTON },
+    { dataElement: DataElements.CLEAR_SIGNATURE_BUTTON },
+    { dataElement: DataElements.GROUP_BUTTON },
+    { dataElement: DataElements.UNGROUP_BUTTON },
+    { dataElement: DataElements.FORM_FIELD_EDIT_BUTTON },
+    { dataElement: DataElements.CALIBRATION_POPUP_BUTTON },
+    { dataElement: DataElements.LINK_BUTTON },
+    { dataElement: DataElements.FILE_ATTACHMENT_DOWNLOAD },
+    { dataElement: DataElements.ANNOTATION_DELETE_BUTTON },
+    { dataElement: DataElements.SHORTCUT_KEYS_FOR_3D },
+    { dataElement: DataElements.PLAY_SOUND_BUTTON },
+    { dataElement: DataElements.OPEN_ALIGNMENT_BUTTON },
+  ],
+  [DataElements.TEXT_POPUP]: [
+    { dataElement: DataElements.COPY_TEXT_BUTTON },
+    { dataElement: DataElements.TEXT_HIGHLIGHT_TOOL_BUTTON },
+    { dataElement: DataElements.TEXT_UNDERLINE_TOOL_BUTTON },
+    { dataElement: DataElements.TEXT_SQUIGGLY_TOOL_BUTTON },
+    { dataElement: DataElements.TEXT_STRIKEOUT_TOOL_BUTTON },
+    { dataElement: DataElements.TEXT_REDACT_TOOL_BUTTON },
+    { dataElement: DataElements.LINK_BUTTON },
+  ],
+  [DataElements.CONTEXT_MENU_POPUP]: [
+    { dataElement: DataElements.PAN_TOOL_BUTTON },
+    { dataElement: DataElements.STICKY_TOOL_BUTTON },
+    { dataElement: DataElements.HIGHLIGHT_TOOL_BUTTON },
+    { dataElement: DataElements.FREE_HAND_TOOL_BUTTON },
+    { dataElement: DataElements.FREE_HAND_HIGHLIGHT_TOOL_BUTTON },
+    { dataElement: DataElements.FREE_TEXT_TOOL_BUTTON },
+    { dataElement: DataElements.MARK_INSERT_TEXT_TOOL_BUTTON },
+    { dataElement: DataElements.MARK_REPLACE_TEXT_TOOL_BUTTON },
+  ],
+};
+
+export { defaultModularComponents, defaultModularHeaders, defaultPanels, defaultFlyoutMap, defaultPopups };

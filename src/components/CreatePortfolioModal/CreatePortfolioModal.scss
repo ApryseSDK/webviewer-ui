@@ -98,6 +98,8 @@
       .create-portfolio {
         @extend %default-button-selected;
         min-width: 72px;
+        width: fit-content;
+        padding: var(--padding-tiny);
 
         @include mobile {
           font-size: 13px;

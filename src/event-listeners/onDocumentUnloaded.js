@@ -2,10 +2,10 @@ import actions from 'actions';
 import core from 'core';
 import overlays from '../constants/overlays';
 import selectors from 'selectors';
-import { PRIORITY_TWO } from 'constants/actionPriority';
+import { PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
 import { ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR, ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR } from 'constants/officeEditor';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import { ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR } from 'src/constants/spreadsheetEditor';
+import { ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR, ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR } from 'src/constants/spreadsheetEditor';
 
 export default (dispatch, store, documentViewerKey) => () => {
   const isSpreadsheetEditorEnabled = selectors.isSpreadsheetEditorModeEnabled(store.getState());
@@ -78,6 +78,10 @@ export default (dispatch, store, documentViewerKey) => () => {
     }));
     dispatch(actions.enableElements(
       ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
+    ));
+    dispatch(actions.disableElements(
+      ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR,
+      PRIORITY_THREE, // Since we enable replace with PRIORITY_THREE we need to disable with the same priority.
     ));
     dispatch(actions.setSpreadsheetEditorCanUndo(false));
     dispatch(actions.setSpreadsheetEditorCanRedo(false));

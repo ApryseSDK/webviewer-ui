@@ -22,6 +22,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../mockAppState';
  * @ignore
  */
 const MockAppTemplate = (args, context) => {
+  const { addonRtl } = context.globals;
   const stateWithHeaders = {
     ...initialState,
     viewer: {
@@ -63,7 +64,7 @@ const MockAppTemplate = (args, context) => {
     },
   };
   return (
-    <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} isOffset={args.isOffset} />
+    <MockApp initialState={stateWithHeaders} width={args.width} height={args.height} isOffset={args.isOffset} initialDirection={addonRtl} />
   );
 };
 

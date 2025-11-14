@@ -37,9 +37,14 @@ const BottomHeaderContainer = () => {
     dispatch(actions.setBottomFloatingContainerHeight(height));
   }, 200);
 
+  const setBottomFloatingContainerWidth = debounce((width) => {
+    dispatch(actions.setHeaderWidth('bottomHeaders', width));
+  }, 200);
+
   useEffect(() => {
     if (dimensions.height !== null && floatingHeaders.length > 0) {
       setBottomFloatingContainerHeight(dimensions.height);
+      setBottomFloatingContainerWidth(dimensions.width);
     }
   }, [dimensions, floatingHeaders.length]);
 

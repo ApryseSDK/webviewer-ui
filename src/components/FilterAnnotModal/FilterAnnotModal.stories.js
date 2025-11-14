@@ -266,6 +266,7 @@ export function MeasurementAnnotationsFilterEnabled() {
     </Provider>
   );
 }
+MeasurementAnnotationsFilterEnabled.parameters = window.storybook.disableRtlMode;
 
 export function DocumentFilterActive() {
   const props = {

@@ -1,4 +1,4 @@
-import Choice from '../Choice';
+import Choice from 'components/Choice';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
 import PropTypes from 'prop-types';
 import React from 'react';

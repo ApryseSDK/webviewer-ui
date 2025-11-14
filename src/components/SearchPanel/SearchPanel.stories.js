@@ -8,6 +8,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import { default as mockAppInitialState } from 'src/redux/initialState';
 import { within, expect } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/SearchPanel',
@@ -37,7 +38,10 @@ const initialState = {
   search: {},
   featureFlags: {
     customizableUI: true
-  }
+  },
+  officeEditor: {
+    isReplaceInProgress: false,
+  },
 };
 
 const store = configureStore({ reducer: () => initialState });
@@ -54,10 +58,10 @@ export function SearchPanelLeft() {
 
 SearchPanelLeft.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const searchInput = await canvas.findByRole('textbox', { name: 'Search document' });
+  const searchInput = await canvas.findByRole('textbox', { name: getTranslatedText('message.searchDocumentPlaceholder') });
   expect(searchInput).toBeInTheDocument();
 
-  const replaceToggleButton = canvas.getByRole('button', { name: 'Toggle replace input' });
+  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('message.toggleReplaceInput') });
   await replaceToggleButton.click();
 };
 
@@ -79,14 +83,17 @@ export function SearchPanelRight() {
 
 SearchPanelRight.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const searchInput = await canvas.findByRole('textbox', { name: 'Search document' });
+  const searchInput = await canvas.findByRole('textbox', { name: getTranslatedText('message.searchDocumentPlaceholder') });
   expect(searchInput).toBeInTheDocument();
-  const clearSearchButton = await canvas.findByRole('button', { name: 'Clear search results' });
+  const clearSearchButton = await canvas.findByRole('button', { name: getTranslatedText('message.clearSearchResults') });
   expect(clearSearchButton).toBeInTheDocument();
 
-  const replaceToggleButton = canvas.getByRole('button', { name: 'Toggle replace input' });
+  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('message.toggleReplaceInput') });
   await replaceToggleButton.click();
 };
+
+SearchPanelRight.parameters = window.storybook.disableRtlMode;
+
 const SearchPanelInApp = (context, location, panelSize) => {
   const mockState = {
     ...mockAppInitialState,

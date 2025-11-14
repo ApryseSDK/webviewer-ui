@@ -8,7 +8,7 @@ import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import Dropdown from 'components/Dropdown';
-import { Input } from '@pdftron/webviewer-react-toolkit';
+import Input from 'components/Input';
 import mapObjectKeys from 'helpers/mapObjectKeys';
 import {
   OFFICE_EDITOR_TRANSLATION_PREFIX,

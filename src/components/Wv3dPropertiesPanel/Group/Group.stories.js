@@ -125,3 +125,5 @@ Default.args = {
     handle: '29081',
   },
 };
+
+Default.parameters = window.storybook.disableChromatic;

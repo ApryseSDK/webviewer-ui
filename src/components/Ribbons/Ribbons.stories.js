@@ -26,7 +26,11 @@ const BasicComponent = (props) => {
 
 export const Ribbons = BasicComponent.bind({});
 
+Ribbons.parameters = window.storybook.disableChromatic;
+
 export const MobileRibbons = BasicComponent.bind({});
 MobileRibbons.args = {
   containerWidth: '300px',
 };
+
+MobileRibbons.parameters = window.storybook.disableChromatic;

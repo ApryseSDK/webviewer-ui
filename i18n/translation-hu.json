@@ -347,7 +347,8 @@
     "errorPageNumber": "Érvénytelen oldalszám. A határ az",
     "errorBlankPageNumber": "Kérjük, adjon meg egy oldalszámot",
     "errorLoadingDocument": "Hiba történt a dokumentum olvasása közben, és előfordulhat, hogy egyes oldalak nem jelennek meg. Ez azt jelzi, hogy a dokumentum sérült. A teljes oldalszám {{totalPageCount}}, a megjelenített oldalak száma pedig {{displayedPageCount}}.",
-    "noRevisions": "Ennek a dokumentumnak nincs revíziója."
+    "noRevisions": "Ennek a dokumentumnak nincs revíziója.",
+    "listEmptyValue": "Egy vagy több mező üres értékkel rendelkezik."
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "Szövegméret"
     },
     "shared": {
+      "sheetIndex": "Lap",
       "page": "oldal",
       "precision": "Pontosság",
       "enableSnapping": "Kapcsolás engedélyezése mérőeszközökhöz"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Betűcsalád"
     },
-    "blankSheet": "Üres lap"
+    "blankSheet": "Üres lap",
+    "insertImage": "Kép beszúrása"
   },
   "insertPageModal": {
     "title": "Új oldal beszúrása",

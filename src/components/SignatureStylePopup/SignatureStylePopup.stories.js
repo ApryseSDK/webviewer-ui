@@ -45,6 +45,7 @@ export const SavedFullSignaturesTab = () => (
   </Provider>
 );
 
+SavedFullSignaturesTab.parameters = window.storybook.disableRtlMode;
 const savedInitialsStore = configureStore({
   reducer: () => ({
     viewer: {
@@ -64,12 +65,14 @@ export const SavedInitialsTab = () => (
   </Provider>
 );
 
+SavedInitialsTab.parameters = window.storybook.disableRtlMode;
 export const SelectedSignature = () => (
   <Provider store={savedInitialsStore}>
     <SelectedSignatureRow />
   </Provider>
 );
 
+SelectedSignature.parameters = window.storybook.disableRtlMode;
 const intialStateInitialsMode = {
   viewer: {
     ...initialState.viewer,
@@ -86,3 +89,5 @@ export const SelectedInitials = () => (
     <SelectedSignatureRow />
   </Provider>
 );
+
+SelectedInitials.parameters = window.storybook.disableRtlMode;

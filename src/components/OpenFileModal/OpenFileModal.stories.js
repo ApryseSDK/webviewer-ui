@@ -3,6 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import OpenFileModal from './OpenFileModal';
 import { expect, userEvent } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/OpenFileModal',
@@ -112,5 +113,5 @@ BasicWithUrlInputError.play = async () => {
 
   const errorMessageDiv = document.querySelector('.no-margin');
   expect(errorMessageDiv).toBeInTheDocument();
-  expect(errorMessageDiv.innerText).toBe('File could not be retrieved from the provided URL.');
+  expect(errorMessageDiv.innerText).toBe(getTranslatedText('message.urlInputFileLoadError'));
 };

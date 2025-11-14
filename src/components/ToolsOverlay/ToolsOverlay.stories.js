@@ -36,3 +36,5 @@ const BasicComponent = (props) => {
 };
 
 export const ToolsOverlay = BasicComponent.bind({});
+
+ToolsOverlay.parameters = window.storybook.disableRtlMode;

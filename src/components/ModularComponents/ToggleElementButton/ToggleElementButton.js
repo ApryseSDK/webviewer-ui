@@ -28,7 +28,7 @@ const ToggleElementButton = (props) => {
   const isActive = useSelector((state) => selectors.isElementOpen(state, toggleElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
   const isToggleElementDisabled = useSelector((state) => selectors.isElementDisabled(state, toggleElement));
-  const isButtonDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
+  const isButtonDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement) || selectors.isDisabledViewOnly(state, toggleElement));
   const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
 
   const [isElementActive, setIsElementActive] = useState(isActive);

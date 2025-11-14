@@ -1,4 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from 'actions/index';
+import selectors from 'selectors';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import SearchResult from 'components/SearchResult';
@@ -7,7 +10,7 @@ import Icon from 'components/Icon';
 import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { addSearchListener, removeSearchListener } from 'helpers/search';
-import { isSpreadsheetEditorDocument } from 'src/helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
 import getDocument from 'src/core/getDocument';
 
 import './SearchPanel.scss';
@@ -45,8 +48,8 @@ function SearchPanel(props) {
   } = props;
 
   const { t } = useTranslation();
-  const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus } = useSearch(activeDocumentViewerKey);
-
+  const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus, setActiveSearchResultIndex } = useSearch(activeDocumentViewerKey);
+  const dispatch = useDispatch();
   const onCloseButtonClick = React.useCallback(function onCloseButtonClick() {
     if (closeSearchPanel) {
       closeSearchPanel();
@@ -54,6 +57,7 @@ function SearchPanel(props) {
   }, [closeSearchPanel]);
 
   const onClickResult = React.useCallback(function onClickResult(resultIndex, result, activeDocumentViewerKey) {
+    setActiveSearchResultIndex(resultIndex);
     setActiveResult(result, activeDocumentViewerKey);
     if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
@@ -62,14 +66,14 @@ function SearchPanel(props) {
     setNextResultValue(result);
   }, [closeSearchPanel, isMobile]);
 
-  const [isSearchInProgress, setIsSearchInProgress] = React.useState(false);
+  const isSearchInProgress = useSelector((state) => selectors.isSearchInProgress(state));
 
   const searchEventListener = () => {
-    setIsSearchInProgress(false);
+    dispatch(actions.setSearchInProgress(false));
   };
 
   const adjustSpreadsheetTableWidth = (isUnmounting) => {
-    if (isSpreadsheetEditorDocument()) {
+    if (isSpreadsheetEditorMode()) {
       const editorWrapper = document.getElementById('editorWrapper');
       if (isUnmounting) {
         editorWrapper.style.removeProperty('width');
@@ -133,7 +137,6 @@ function SearchPanel(props) {
         activeResultIndex={activeSearchResultIndex}
         isPanelOpen={isOpen}
         isSearchInProgress={isSearchInProgress}
-        setIsSearchInProgress={setIsSearchInProgress}
         activeDocumentViewerKey={activeDocumentViewerKey}
       />
       <SearchResult

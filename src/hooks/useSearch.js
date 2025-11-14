@@ -1,19 +1,47 @@
-import React from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import core from 'core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions/index';
+import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
+import selectors from 'selectors';
+import { debounce } from 'lodash';
+import { buildSearchModeArray } from 'src/helpers/search';
 
 function useSearch(activeDocumentViewerKey) {
-  const [searchResults, setSearchResults] = React.useState([]);
-  const [activeSearchResult, setActiveSearchResult] = React.useState();
-  const [activeSearchResultIndex, setActiveSearchResultIndex] = React.useState(0);
-  const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
+  const searchValue = useSelector(selectors.getSearchValue);
+  const caseSensitive = useSelector(selectors.isCaseSensitive);
+  const wholeWord = useSelector(selectors.isWholeWord);
+  const [searchResults, setSearchResults] = useState([]);
+  const [activeSearchResult, setActiveSearchResult] = useState();
+  const [activeSearchResultIndex, setActiveSearchResultIndex] = useState(0);
+  const [searchStatus, setSearchStatus] = useState('SEARCH_NOT_INITIATED');
   const dispatch = useDispatch();
   const documentViewers = core.getDocumentViewers();
   const documentViewersCount = documentViewers.length;
+  const debounceTime = 500;
 
+  const spreadsheetSearch = async (searchValue, modes) => {
+    if (!searchValue) {
+      setSearchStatus('SEARCH_NOT_INITIATED');
+      return;
+    }
 
-  React.useEffect(() => {
+    dispatch(actions.setSearchInProgress(true));
+    setSearchStatus('SEARCH_IN_PROGRESS');
+
+    const searchModes = buildSearchModeArray(modes);
+    const results = await core
+      .getDocumentViewer()
+      .search(searchValue, searchModes)
+      .getAll();
+
+    setSearchResults(results);
+    setSearchStatus('SEARCH_DONE');
+    dispatch(actions.setSearchInProgress(false));
+  };
+
+  const debouncedSearch = useMemo(() => debounce(spreadsheetSearch, debounceTime), []);
+  useEffect(() => {
     // First time useSearch is mounted we check if core has results
     // and if it has, we make sure those are set. This will make sure if external search is done
     // that the result will reflect on the UI those set in core
@@ -38,7 +66,21 @@ function useSearch(activeDocumentViewerKey) {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(()=>{
+    if (isSpreadsheetEditorMode()) {
+      const workbook = core.getDocument().getSpreadsheetEditorDocument().getWorkbook();
+      const sheetNames = [];
+      for (let i=0; i<workbook.sheetCount; i++) {
+        const sheet = workbook.getSheetAt(i);
+        sheetNames.push(sheet.name);
+      }
+
+      dispatch(actions.setPageLabels(sheetNames));
+      debouncedSearch(searchValue, { wholeWord, caseSensitive });
+    }
+  }, [searchValue, wholeWord, caseSensitive]);
+
+  useEffect(() => {
     const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
     function activeSearchResultChanged(newActiveSearchResult) {
       const coreSearchResults = activeDocumentViewer.getPageSearchResults() || [];
@@ -103,6 +145,7 @@ function useSearch(activeDocumentViewerKey) {
     searchResults,
     activeSearchResult,
     activeSearchResultIndex,
+    setActiveSearchResultIndex,
     setSearchStatus,
   };
 }

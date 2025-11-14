@@ -76,3 +76,5 @@ export function SignatureFieldPopup() {
     </Provider>
   );
 }
+
+SignatureFieldPopup.parameters = window.storybook.disableRtlMode;

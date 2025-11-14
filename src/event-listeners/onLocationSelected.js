@@ -51,6 +51,7 @@ export default (store, documentViewerKey) => async (_, widget) => {
 
       if ((savedSignatures.length === 0 && !requiresInitials) || isToolsOverlayDisabled) {
         store.dispatch(actions.openElement('signatureModal'));
+        core.setToolMode(ToolNames.SIGNATURE);
       } else if ((savedInitials.length === 0 && requiresInitials) || isToolsOverlayDisabled) {
         store.dispatch(actions.openElement('signatureModal'));
       } else if (widget && isCustomizableUI) {

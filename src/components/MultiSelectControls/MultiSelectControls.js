@@ -25,8 +25,8 @@ const propTypes = {
   showMultiStyle: PropTypes.bool.isRequired,
   setShowMultiStyle: PropTypes.func.isRequired,
   setMultiSelectMode: PropTypes.func.isRequired,
-  isMultiSelectedMap: PropTypes.object.isRequired,
-  setIsMultiSelectedMap: PropTypes.func.isRequired,
+  multiSelectedMap: PropTypes.object.isRequired,
+  setMultiSelectedMap: PropTypes.func.isRequired,
   multiSelectedAnnotations: PropTypes.array.isRequired,
 };
 
@@ -52,8 +52,8 @@ const MultiSelectControls = ({
   showMultiStyle,
   setShowMultiStyle,
   setMultiSelectMode,
-  isMultiSelectedMap,
-  setIsMultiSelectedMap,
+  multiSelectedMap,
+  setMultiSelectedMap,
   multiSelectedAnnotations,
 }) => {
   const [
@@ -64,26 +64,25 @@ const MultiSelectControls = ({
   const [t] = useTranslation();
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
-  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
   const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
 
   useEffect(() => {
     const handleAnnotationDelete = (annotations) => {
-      const updatedMap = { ...isMultiSelectedMap };
+      const updatedMap = { ...multiSelectedMap };
       annotations.forEach((annot) => {
         delete updatedMap[annot.Id];
       });
-      setIsMultiSelectedMap(updatedMap);
+      setMultiSelectedMap(updatedMap);
     };
     const handleAnnotationModify = (annotations) => {
       const updatedMap = getUpdatedMultiSelectedMap(annotations);
 
       if (hasDifferenceInKeys(updatedMap)) {
-        setIsMultiSelectedMap(updatedMap);
+        setMultiSelectedMap(updatedMap);
       }
     };
     const getUpdatedMultiSelectedMap = (annotations) => {
-      const updatedMap = { ...isMultiSelectedMap };
+      const updatedMap = { ...multiSelectedMap };
 
       annotations.forEach((annot) => {
         updateGroupAnnotations(annot, updatedMap);
@@ -93,7 +92,7 @@ const MultiSelectControls = ({
     };
     const updateGroupAnnotations = (annot, updatedMap) => {
       const groupedAnnots = core.getGroupAnnotations(annot, activeDocumentViewerKey);
-      const groupIsSelected = groupedAnnots.some((groupedAnnot) => isMultiSelectedMap[groupedAnnot.Id]);
+      const groupIsSelected = groupedAnnots.some((groupedAnnot) => multiSelectedMap[groupedAnnot.Id]);
 
       if (groupIsSelected) {
         groupedAnnots.forEach((groupAnnot) => {
@@ -102,7 +101,7 @@ const MultiSelectControls = ({
       }
     };
     const hasDifferenceInKeys = (updatedMap) => {
-      const originalKeys = Object.keys(isMultiSelectedMap);
+      const originalKeys = Object.keys(multiSelectedMap);
       const updatedKeys = Object.keys(updatedMap);
 
       return originalKeys.some((key) => !updatedKeys.includes(key));
@@ -119,12 +118,12 @@ const MultiSelectControls = ({
     return () => {
       core.removeEventListener('annotationChanged', onAnnotationChanged, activeDocumentViewerKey);
     };
-  }, [isMultiSelectedMap, activeDocumentViewerKey]);
+  }, [multiSelectedMap, activeDocumentViewerKey]);
 
   useEffect(() => {
     return () => {
       setShowMultiReply(false);
-      setIsMultiSelectedMap({});
+      setMultiSelectedMap({});
     };
   }, []);
 
@@ -169,7 +168,7 @@ const MultiSelectControls = ({
     );
   }
 
-  const isMultiStyleButtonDisabled = isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0;
+  const isMultiStyleButtonDisabled = modifiableMultiSelectAnnotations.length === 0;
   const multiStyleButtonProps = {
     dataElement: DataElements.NOTE_MULTI_STYLE_BUTTON,
     img: 'icon-menu-style-line',
@@ -182,7 +181,7 @@ const MultiSelectControls = ({
       <div className="buttons-container">
         <Button
           dataElement={DataElements.NOTE_MULTI_REPLY_BUTTON}
-          disabled={isDocumentReadOnly || multiSelectedAnnotations.length === 0}
+          disabled={multiSelectedAnnotations.length === 0}
           img="icon-header-chat-line"
           onClick={() => {
             setShowMultiReply(true);
@@ -194,7 +193,7 @@ const MultiSelectControls = ({
           title={t('option.notesOrder.status')}
           img={'icon-annotation-status-none'}
           toggleElement={DataElements.NOTE_STATE_FLYOUT}
-          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
+          disabled={modifiableMultiSelectAnnotations.length === 0}
         />
         <NoteStateFlyout
           isMultiSelectMode={true}
@@ -223,7 +222,7 @@ const MultiSelectControls = ({
         {!canUngroup &&
           <Button
             dataElement={DataElements.NOTE_MULTI_GROUP_BUTTON}
-            disabled={isDocumentReadOnly || !canGroup}
+            disabled={!canGroup}
             img="group-annotations-icon"
             onClick={() => {
               core.groupAnnotations(multiSelectedAnnotations[0], multiSelectedAnnotations, activeDocumentViewerKey);
@@ -241,7 +240,7 @@ const MultiSelectControls = ({
           />}
         <Button
           dataElement={DataElements.NOTE_MULTI_DELETE_BUTTON}
-          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
+          disabled={modifiableMultiSelectAnnotations.length === 0}
           img="icon-delete-line"
           onClick={() => {
             const title = t('warning.multiDeleteAnnotation.title');

@@ -6,6 +6,7 @@ import { OEModularUIMockState } from 'helpers/storybookHelper';
 import DataElements from 'constants/dataElement';
 import OfficeEditorColumnDropdown from './OfficeEditorColumnDropdown';
 import WarningModal from 'src/components/WarningModal';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditor/OfficeEditorColumnDropdown',
@@ -24,10 +25,12 @@ export const Basic = () => {
   );
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export const Expanded = () => <Basic />;
 Expanded.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const columnButton = await canvas.findByRole('button', { name: 'Columns' });
+  const columnButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.columns') });
   await userEvent.click(columnButton);
   await expect(columnButton).toHaveAttribute('aria-expanded', 'true');
 };

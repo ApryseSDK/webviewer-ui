@@ -22,9 +22,134 @@ export const {
   isNonPrintingCharactersEnabled,
   isOfficeEditorUndoEnabled,
   isOfficeEditorRedoEnabled,
+  getOfficeEditorIsReplaceInProgress,
 } = exposedOfficeEditorSelectors;
 
 // viewer
+export const isDisabledViewOnly = (state, dataElement, isRecursiveCall = false) => {
+  if (!state.viewer.isViewOnly) {
+    return false;
+  }
+  if (!dataElement) {
+    return false;
+  }
+  const viewOnlyWhitelist = state.viewer.viewOnlyWhitelist;
+  if (viewOnlyWhitelist.dataElement.includes(dataElement)) {
+    return false;
+  }
+  if (viewOnlyWhitelist.dataElementBlacklist.includes(dataElement)) {
+    return true;
+  }
+  const component = getModularComponent(state, dataElement);
+  if (component) {
+    if (component.type === ITEM_TYPE.DIVIDER) {
+      return isRecursiveCall;
+    }
+    if (viewOnlyWhitelist[component.type]) {
+      return !viewOnlyWhitelist[component.type]?.includes(component.toolName || component.buttonType || dataElement);
+    }
+    const containerTypes = [
+      ITEM_TYPE.TOGGLE_BUTTON,
+      ITEM_TYPE.GROUPED_ITEMS,
+      ITEM_TYPE.RIBBON_ITEM,
+      ITEM_TYPE.RIBBON_GROUP,
+      ITEM_TYPE.MODULAR_HEADER,
+    ];
+    if (containerTypes.includes(component.type)) {
+      for (let child of getChildren(component)) {
+        if (!isDisabledViewOnly(state, child, true)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  const flyout = getFlyout(state, dataElement);
+  if (flyout) {
+    for (let child of flyout.items) {
+      if (child === 'divider') {
+        continue;
+      }
+      if (!child?.dataElement) {
+        return false;
+      }
+      if (!isDisabledViewOnly(state, child.dataElement, true)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  const panel = getGenericPanel(state, dataElement);
+  if (panel) {
+    if (panel.render === 'tabPanel') {
+      const hasEnabledChildren = panel.panelsList.some((childPanel) => {
+        return viewOnlyWhitelist.panel.includes(childPanel.render || childPanel.dataElement);
+      });
+
+      if (!hasEnabledChildren) {
+        return true;
+      }
+    }
+    return !viewOnlyWhitelist.panel.includes(panel.render || dataElement);
+  }
+  const isModal = dataElement.endsWith('Modal');
+  if (isModal) {
+    return !viewOnlyWhitelist.modal.includes(dataElement);
+  }
+  return false;
+};
+const getChildren = (component) => {
+  switch (component.type) {
+    case ITEM_TYPE.TOGGLE_BUTTON:
+      return [component.toggleElement];
+    case ITEM_TYPE.GROUPED_ITEMS:
+    case ITEM_TYPE.RIBBON_GROUP:
+    case ITEM_TYPE.MODULAR_HEADER:
+      return component.items;
+    case ITEM_TYPE.RIBBON_ITEM:
+      return component.groupedItems;
+    default:
+      return [];
+  }
+};
+
+export const getGenericPanel = (state, dataElement) => {
+  return state.viewer.genericPanels.find((panel) => panel.dataElement === dataElement || panel.render === dataElement);
+};
+
+export const getEnabledTabPanelTabs = (state, tabPanelDataElement) => {
+  const disabledElements = state.viewer.disabledElements;
+  const panelsList = getGenericPanel(state, tabPanelDataElement).panelsList;
+  const enabledPanels = panelsList.filter((panel) => {
+    const isPanelDisabled = disabledElements[panel.render]?.disabled;
+    const isPanelTabDisabled = disabledElements[`${panel.render}-${tabPanelDataElement}`]?.disabled;
+    const isPanelDisabledViewOnly = isDisabledViewOnly(state, panel.render);
+    const isPortfolioPanelNotAvailable = panel.render === panelNames.PORTFOLIO && state.document?.portfolio?.length === 0;
+    return !isPanelDisabled && !isPanelTabDisabled && !isPanelDisabledViewOnly && !isPortfolioPanelNotAvailable;
+  });
+  return enabledPanels;
+};
+
+export const getVisibleTabPanelTabs = (state, tabPanelDataElement) => {
+  const visiblePanels = [];
+  const enabledPanels = getEnabledTabPanelTabs(state, tabPanelDataElement);
+  enabledPanels?.forEach((panel) => {
+    const panelRenderer = panel.render;
+    if (typeof panelRenderer === 'string') {
+      const genericPanel = getGenericPanel(state, panelRenderer);
+      if (!genericPanel) {
+        console.warn(`Panel ${panelRenderer} is not a valid custom panel`);
+        return;
+      }
+      visiblePanels.push(panelRenderer);
+    } else if (typeof panelRenderer === 'function') {
+      visiblePanels.push(panel.dataElement);
+    }
+  });
+  return visiblePanels;
+};
+
 export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
 export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;
@@ -205,23 +330,20 @@ export const getGenericPanelsOnTheSameLocation = (state, dataElement) => {
   return [];
 };
 
-export const getDocumentContainerMargin = (state, marginSide) => {
-  const genericPanelOpen = getOpenGenericPanel(state, marginSide);
-  return 0 + (genericPanelOpen ? getPanelWidth(state, genericPanelOpen) : 0);
-};
-
 export const getDocumentContainerLeftMargin = (state) => {
-  const { customizableUI } = getFeatureFlags(state);
-  if (customizableUI) {
-    return getDocumentContainerMargin(state, PLACEMENT.LEFT);
+  const isCustomUI = getIsCustomUIEnabled(state);
+  if (isCustomUI) {
+    const openLeftPanel = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
+    return openLeftPanel ? getPanelWidth(state, openLeftPanel) : 0;
   } else {
     return 0 + (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0);
   }
 };
 export const getDocumentContainerRightMargin = (state) => {
-  const { customizableUI } = getFeatureFlags(state);
-  if (customizableUI) {
-    return getDocumentContainerMargin(state, PLACEMENT.RIGHT);
+  const isCustomUI = getIsCustomUIEnabled(state);
+  if (isCustomUI) {
+    const openRightPanel = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
+    return openRightPanel ? getPanelWidth(state, openRightPanel) : 0;
   }
   return 0;
 };
@@ -568,6 +690,8 @@ export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.r
 
 export const getLeftHeaderWidth = (state) => state.viewer.modularHeadersWidth.leftHeader;
 
+export const getBottomHeadersWidth = (state) => state.viewer.modularHeadersWidth.bottomHeaders;
+
 export const getActiveLeftHeaderWidth = (state) => {
   const activeHeaders = getActiveHeaders(state);
   const isLeftHeaderActive = activeHeaders?.some((header) => header.placement === PLACEMENT.LEFT);
@@ -725,7 +849,7 @@ export const isFullScreen = (state) => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = (state) => state.viewer.doesAutoLoad;
 
-export const isDocumentReadOnly = (state) => state.viewer.isReadOnly;
+export const isViewOnly = (state) => state.viewer.isViewOnly;
 
 export const getCustomPanels = (state) => state.viewer.customPanels;
 
@@ -792,7 +916,25 @@ export const getSelectedTab = (state, id) => state.viewer.tab[id];
 
 export const getCustomElementOverrides = (state, dataElement = '') => state.viewer.customElementOverrides[dataElement];
 
-export const getPopupItems = (state, popupDataElement) => state.viewer[popupDataElement] || [];
+export const getPopupItems = (state, popupDataElement) => {
+  const popup = state.viewer.modularPopups[popupDataElement];
+  if (!popup) {
+    return [];
+  }
+  return popup.filter((item) => {
+    if (!state.viewer.isViewOnly) {
+      return true;
+    }
+    const dataElement = item?.dataElement;
+    if (!dataElement || state.viewer.viewOnlyWhitelist.dataElement.includes(dataElement)) {
+      return true;
+    }
+    if (state.viewer.viewOnlyWhitelist.dataElementBlacklist.includes(dataElement)) {
+      return true;
+    }
+    return state.viewer.viewOnlyWhitelist.popup.includes(dataElement);
+  });
+};
 
 export const getMenuOverlayItems = (state) => state.viewer.menuOverlay;
 
@@ -920,6 +1062,8 @@ export const isWildcard = (state) => state.search.isWildcard;
 
 export const isSearchUp = (state) => state.search.isSearchUp;
 
+export const isSearchInProgress = (state) => state.search.isSearchInProgress;
+
 export const isAmbientString = (state) => state.search.isAmbientString;
 
 export const isRegex = (state) => state.search.isRegex;
@@ -1036,16 +1180,23 @@ export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanv
 export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;
 
 export const isRightPanelOpen = (state) => {
-  const genericPanelOnRight = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
-  return genericPanelOnRight?.length > 0;
+  const openRightPanel = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
+  return openRightPanel?.length > 0;
 };
 
 export const isLeftPanelOpen = (state) => {
-  const genericPanelOnLeft = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
-  return genericPanelOnLeft?.length > 0;
+  const openLeftPanel = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
+  return openLeftPanel?.length > 0;
 };
 
 export const getOpenRightPanelWidth = (state) => {
+  const isCustomUI = getIsCustomUIEnabled(state);
+
+  if (isCustomUI) {
+    const isRightPanelVisible = isRightPanelOpen(state);
+    return isRightPanelVisible ? getDocumentContainerRightMargin(state) : 0;
+  }
+
   const panelMap = [
     { name: DataElements.NOTES_PANEL, isOpen: isElementOpen, getWidth: getNotesPanelWidthWithResizeBar },
     { name: DataElements.SEARCH_PANEL, isOpen: isElementOpen, getWidth: getSearchPanelWidthWithResizeBar },

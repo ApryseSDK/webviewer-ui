@@ -32,6 +32,8 @@ export const ToolsHeaderNoPreset = () => {
   return (<BasicComponent store={store} />);
 };
 
+ToolsHeaderNoPreset.parameters = window.storybook.disableRtlMode;
+
 const mockInitialViewerState = {
   ...initialState.viewer,
   activeToolGroup: 'freeHandTools',
@@ -49,3 +51,5 @@ const storeWithToolSelected = createStore(reducer);
 export const ToolsHeaderToolActive = () => {
   return (<BasicComponent store={storeWithToolSelected} />);
 };
+
+ToolsHeaderToolActive.parameters = window.storybook.disableRtlMode;

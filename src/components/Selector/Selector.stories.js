@@ -26,6 +26,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function Placeholder() {
   const items = ['ITEM 1', 'ITEM 2'];
   const [selectedItem, setSelectedItem] = useState();
@@ -45,3 +47,5 @@ export function Placeholder() {
     </div>
   );
 }
+
+Placeholder.parameters = window.storybook.disableRtlMode;

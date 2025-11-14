@@ -108,6 +108,7 @@ export const TextEditingUndoRedo = () => {
 };
 
 const TextEditingPanelInApp = (context, dataElement, location) => {
+  const { addonRtl } = context.globals;
   const appMockState = {
     ...initialState,
     viewer: {
@@ -139,7 +140,7 @@ const TextEditingPanelInApp = (context, dataElement, location) => {
   const store = createStore(appMockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={appMockState} />;
+  return <MockApp initialState={appMockState} initialDirection={addonRtl}/>;
 };
 
 export const LeftSide = (args, context) => TextEditingPanelInApp(context, 'panel1', 'left');

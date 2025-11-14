@@ -1,4 +1,4 @@
-@import '../node_modules/@pdftron/webviewer-react-toolkit/dist/css/style.css';
+@import './style.scss';
 
 /* Defaults. Remove from here as you override below. */
 //   --color-theme-primary: #00a5e4;
@@ -86,7 +86,7 @@
   transform: scale(1);
 }
 
-/* Overriding theme from webviewer-react-toolkit. */
+/* Overriding theme style.css that came from webviewer-react-toolkit. */
 :root,
 :host,
 html[data-theme='dark'] {

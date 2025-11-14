@@ -95,7 +95,6 @@
     overflow-x: hidden; // necessary so that children respect border-radius on hover
     overflow-y: auto;
     max-height: 200px;
-    width: 100%;
 
     &.hide {
       // Required to get width for positioning.

@@ -40,6 +40,12 @@
     .Icon {
       width: 18px;
       height: 18px;
+      justify-content: center;
+      display: flex;
+  
+      svg {
+        width: 14px;
+      }
     }
   }
 

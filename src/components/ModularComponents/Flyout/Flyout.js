@@ -14,11 +14,12 @@ import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 import { getFlyoutItemType } from 'helpers/itemToFlyoutHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { getElementToFocusOnIndex } from 'helpers/keyboardNavigationHelper';
+import getAppRect from 'helpers/getAppRect';
 import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/FlyoutItem';
 import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
-import getAppRect from 'helpers/getAppRect';
+import core from 'core';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const Flyout = () => {
   const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
   const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
   const currentPage = useSelector(selectors.getCurrentPage);
+  const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
 
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
@@ -149,7 +151,7 @@ const Flyout = () => {
       }
     }
     setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && (flyoutRect.height > appRect.height || isChildOverflowing));
-  }, [activeItem, position, items]);
+  }, [activePath, position, items]);
 
   useEffect(() => {
     if (flyoutRef.current) {
@@ -183,17 +185,26 @@ const Flyout = () => {
     setActivePath([]);
   }, [dispatch, activeFlyout]));
 
+  const isPlacingSignatureOnDocument = (e) => {
+    const toolMode = core.getToolMode();
+    const isSignatureTool =  ['AnnotationCreateSignature', 'AnnotationCreateInitials'].includes(toolMode?.name);
+    const isPlacingOnWidget = e.target.closest('[id^="SignatureFormField"]');
+    const isPlacingOnDocument = e.target.id.startsWith('pageContainer') || e.target.id.startsWith('pageWidgetContainer');
+    return isSignatureTool && (isPlacingOnWidget || isPlacingOnDocument);
+  };
+
   const onClickOutside = useCallback(
     (e) => {
       const menuButton = getElementDOMRef(toggleElement);
       const clickedMenuButton = menuButton?.contains(e.target);
       const isClickingColorPicker = e.target.closest('.ColorPickerOverlay');
       const isClickingColorModal = e.target.closest('[data-element="ColorPickerModal"]');
-      if (!clickedMenuButton && !isClickingColorPicker && !isClickingColorModal) {
+      const isDrawingOrCreatingSignature = isSignatureModalOpen && (e.target.closest('.SignatureModal') || e.target.classList.contains('signature-create'));
+      if (!clickedMenuButton && !isClickingColorPicker && !isClickingColorModal && !isPlacingSignatureOnDocument(e) && !isDrawingOrCreatingSignature) {
         closeFlyout();
       }
     },
-    [closeFlyout, toggleElement],
+    [closeFlyout, toggleElement, isSignatureModalOpen],
   );
 
   useOnClickOutside(flyoutRef, onClickOutside);

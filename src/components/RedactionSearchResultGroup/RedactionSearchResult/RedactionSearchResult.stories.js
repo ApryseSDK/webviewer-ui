@@ -1,12 +1,16 @@
 import React from 'react';
 import RedactionSearchResult from './RedactionSearchResult';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/RedactionSearchPanel/RedactionSearchResult',
   component: RedactionSearchResult,
 };
 
+const store = configureStore({ reducer: rootReducer });
 
 export function Text() {
   const props = {
@@ -18,9 +22,12 @@ export function Text() {
     icon: 'icon-text-redaction',
   };
   return (
-    <RedactionSearchResult {...props} />
+    <Provider store={store}>
+      <RedactionSearchResult {...props} />
+    </Provider>
   );
 }
+Text.parameters = window.storybook.disableRtlMode;
 
 export function CreditCard() {
   const props = {
@@ -29,9 +36,12 @@ export function CreditCard() {
     icon: 'redact-icons-credit-card',
   };
   return (
-    <RedactionSearchResult {...props} />
+    <Provider store={store}>
+      <RedactionSearchResult {...props} />
+    </Provider>
   );
 }
+CreditCard.parameters = window.storybook.disableRtlMode;
 
 export function Image() {
   const props = {
@@ -40,10 +50,12 @@ export function Image() {
     icon: 'redact-icons-image',
   };
   return (
-    <RedactionSearchResult {...props} />
+    <Provider store={store}>
+      <RedactionSearchResult {...props} />
+    </Provider>
   );
 }
-
+Image.parameters = window.storybook.disableRtlMode;
 
 export function PhoneNumber() {
   const props = {
@@ -52,9 +64,12 @@ export function PhoneNumber() {
     icon: 'redact-icons-phone-number',
   };
   return (
-    <RedactionSearchResult {...props} />
+    <Provider store={store}>
+      <RedactionSearchResult {...props} />
+    </Provider>
   );
 }
+PhoneNumber.parameters = window.storybook.disableRtlMode;
 
 
 export function Email() {
@@ -64,6 +79,9 @@ export function Email() {
     icon: 'redact-icons-email',
   };
   return (
-    <RedactionSearchResult {...props} />
+    <Provider store={store}>
+      <RedactionSearchResult {...props} />
+    </Provider>
   );
 }
+Email.parameters = window.storybook.disableRtlMode;

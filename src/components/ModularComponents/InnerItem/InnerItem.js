@@ -31,10 +31,16 @@ import CellTextColor from '../SpreadsheetEditor/CellTextColor';
 import CellBackgroundColor from '../SpreadsheetEditor/CellBackgroundColor';
 import FontSizeDropdownContainer from '../EditorSwitchers/FontSizeDropdown/FontSizeDropdownContainer';
 import FontFamilyDropdownContainer from '../EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
   const key = `${type}-${dataElement}-${headerPlacement}`;
+  const isDisabledViewOnly = useSelector((state) => selectors.isDisabledViewOnly(state, dataElement));
+  if (isDisabledViewOnly) {
+    return null;
+  }
 
   switch (type) {
     case ITEM_TYPE.BUTTON:

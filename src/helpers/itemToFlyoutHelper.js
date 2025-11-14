@@ -114,11 +114,10 @@ export const itemToFlyout = (item, {
       if (!menuItem) {
         menuItem = menuItems[itemProps.dataElement];
       }
-      const dataElement = itemProps.dataElement || menuItem.dataElement;
-      const icon = itemProps.img || menuItem.icon;
-      const title = itemProps.title || menuItem.title;
-      const { label } = menuItem;
-      flyoutItem.label = label;
+      const dataElement = itemProps.dataElement || menuItem?.dataElement;
+      const icon = itemProps.img || menuItem?.icon;
+      const title = itemProps.title || menuItem?.title;
+      flyoutItem.label = menuItem?.label;
       flyoutItem.dataElement = dataElement;
       flyoutItem.icon = icon;
       flyoutItem.title = title;

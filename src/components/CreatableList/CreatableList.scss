@@ -19,3 +19,27 @@
 .icon-handle {
   cursor: grab;
 }
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .Icon {
+    position: absolute;
+    inset-inline-end: 15px;
+    color: var(--error-border-color);
+  }
+
+  input {
+    &.invalid {
+      border-color: var(--color-message-error);
+    }
+  }
+}
+
+.invalid-option-message {
+  color: var(--color-message-error);
+  margin-top: 8px;
+  font-size: 13px;
+}

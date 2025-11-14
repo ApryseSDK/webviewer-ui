@@ -60,6 +60,7 @@ TopHeaderWithDefaultAndFloaties.args = {
     floatEndHeader,
   },
 };
+TopHeaderWithDefaultAndFloaties.parameters = window.storybook.disableRtlMode;
 
 export const FloatTopStartHeader = Template.bind({});
 FloatTopStartHeader.args = {
@@ -68,6 +69,7 @@ FloatTopStartHeader.args = {
     secondFloatStartHeader,
   },
 };
+FloatTopStartHeader.parameters = window.storybook.disableRtlMode;
 
 export const FloatTopCenterHeader = Template.bind({});
 FloatTopCenterHeader.args = {
@@ -75,6 +77,7 @@ FloatTopCenterHeader.args = {
     floatCenterHeader,
   },
 };
+FloatTopCenterHeader.parameters = window.storybook.disableRtlMode;
 
 export const FloatTopEndHeader = Template.bind({});
 FloatTopEndHeader.args = {
@@ -82,3 +85,4 @@ FloatTopEndHeader.args = {
     floatEndHeader,
   },
 };
+FloatTopEndHeader.parameters = window.storybook.disableRtlMode;

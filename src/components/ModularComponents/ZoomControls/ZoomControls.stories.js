@@ -47,6 +47,8 @@ export const SmallSize = () => {
   );
 };
 
+SmallSize.parameters = window.storybook.disableRtlMode;
+
 export const ZoomInSheetEditorMode = () => {
   let preloadedState = {
     ...initialState,
@@ -69,6 +71,8 @@ export const ZoomInSheetEditorMode = () => {
   );
 };
 
+ZoomInSheetEditorMode.parameters = window.storybook.disableRtlMode;
+
 export const ZoomInOfficeEditorMode = (args, context) => {
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
@@ -77,7 +81,7 @@ export const ZoomInOfficeEditorMode = (args, context) => {
     getOfficeEditor: () => {},
   });
 
-  return <MockApp initialState={getStateWithFlyoutOpen(context)} />;
+  return <MockApp initialState={getStateWithFlyoutOpen(context)} initialDirection={context.globals.addonRtl} />;
 };
 
 ZoomInOfficeEditorMode.parameters = {
@@ -104,7 +108,7 @@ const getStateWithFlyoutOpen = (context) => {
 };
 
 export const OpenWithMockApp = (args, context) => {
-  return <MockApp initialState={getStateWithFlyoutOpen(context)} />;
+  return <MockApp initialState={getStateWithFlyoutOpen(context)} initialDirection={context.globals.addonRtl}/>;
 };
 
 OpenWithMockApp.parameters = {

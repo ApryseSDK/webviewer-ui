@@ -8,6 +8,7 @@ import {
 } from 'src/redux/spreadsheetEditorComponents';
 import { within, expect, userEvent } from 'storybook/test';
 import initialState from 'src/redux/initialState';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'SpreadsheetEditor/App',
@@ -64,6 +65,8 @@ export const EditingModeUI = createTemplate(editingModeTemplate);
 
 export const EditingModeHeaderKeyboardNavigationTest = createTemplate(editingModeTemplate);
 
+export const moreOptionsFlyoutTest = createTemplate(editingModeTemplate);
+
 EditingModeUI.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
@@ -81,15 +84,17 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   await userEvent.tab();
-  const menuButton = canvas.getByRole('button', { name: 'Menu' });
+  const menuButton = canvas.getByRole('button', { name: getTranslatedText('component.menuOverlay') });
   expect(menuButton).toHaveFocus();
 
+  const editFileNameLabel = `${getTranslatedText('action.edit')} ${getTranslatedText('saveModal.fileName')}`;
+
   const topHeaderItems = [
-    { role: 'textbox', name: 'Set zoom' },
-    { role: 'button', name: 'Zoom Options' },
-    { role: 'button', name: 'Zoom out' },
-    { role: 'button', name: 'Zoom in' },
-    { role: 'button', name: /^Edit File Name/ }, // regex for dynamic file name
+    { role: 'textbox', name: getTranslatedText('action.zoomSet') },
+    { role: 'button', name: getTranslatedText('option.settings.zoomOptions') },
+    { role: 'button', name: getTranslatedText('action.zoomOut') },
+    { role: 'button', name: getTranslatedText('action.zoomIn') },
+    { role: 'button', name: new RegExp(editFileNameLabel) }, // regex for dynamic file name
   ];
 
   for (const item of topHeaderItems) {
@@ -100,26 +105,26 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
 
   // List of all toolbar items in order (update as needed)
   const toolbarItems = [
-    { role: 'button', name: 'Cut' },
-    { role: 'button', name: 'Copy' },
-    { role: 'button', name: 'Paste' },
-    { role: 'combobox', name: 'Font Family' },
-    { role: 'combobox', name: 'Font Size' },
-    { role: 'button', name: 'Bold' },
-    { role: 'button', name: 'Italic' },
-    { role: 'button', name: 'Underline' },
-    { role: 'button', name: 'Strikeout' },
-    { role: 'button', name: 'Text Color' },
-    { role: 'button', name: 'Background Color' },
-    { role: 'button', name: 'Text Alignment' },
-    { role: 'button', name: 'Cell Adjustment' },
-    { role: 'button', name: 'Border Style' },
-    { role: 'button', name: 'Merge' },
-    { role: 'button', name: 'Currency' },
-    { role: 'button', name: 'Percent' },
-    { role: 'button', name: 'Decrease decimal' },
-    { role: 'button', name: 'Increase decimal' },
-    { role: 'button', name: 'More cell format options' },
+    { role: 'button', name: getTranslatedText('action.cut') },
+    { role: 'button', name: getTranslatedText('action.copy') },
+    { role: 'button', name: getTranslatedText('action.paste') },
+    { role: 'combobox', name: getTranslatedText('spreadsheetEditor.fontFamily.dropdownLabel') },
+    { role: 'combobox', name: getTranslatedText('spreadsheetEditor.fontSize.dropdownLabel') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.bold') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.italic') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.underline') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.strikeout') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.textColor') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.cellBackgroundColor') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.textAlignment') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.cellAdjustment') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.cellBorderStyle') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.merge') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.currencyFormat') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.percentFormat') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.decreaseDecimalFormat') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.increaseDecimalFormat') },
+    { role: 'button', name: getTranslatedText('action.more') },
   ];
 
   // Focus the first toolbar item
@@ -144,15 +149,20 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
 
   // Shift+Tab should return focus to the file name button
   await userEvent.tab({ shift: true });
-  const fileNameButton = canvas.getByRole('button', { name: /^Edit File Name/ });
+  const fileNameButton = canvas.getByRole('button', { name: new RegExp(editFileNameLabel) });
   expect(fileNameButton).toHaveFocus();
 
-  // TODO: uncomment when search panel is enabled
-  // const searchToggle = canvas.getByRole('button', { name: 'Search' });
-  // await userEvent.click(searchToggle);
-  // expect(searchToggle).toHaveFocus();
-  // const searchPanel = canvasElement.querySelector('[data-element="searchPanel"]');
-  // expect(searchPanel).toBeInTheDocument();
+  const searchToggle = canvas.getByRole('button', { name: getTranslatedText('component.searchPanel') });
+  await userEvent.click(searchToggle);
+  expect(searchToggle).toHaveFocus();
+  const searchPanel = canvasElement.querySelector('[data-element="searchPanel"]');
+  expect(searchPanel).toBeInTheDocument();
+
+  const textInput = await canvas.findByRole('textbox', { name: getTranslatedText('message.searchDocumentPlaceholder') });
+  expect(textInput).toBeInTheDocument();
+
+  await userEvent.type(textInput, 'hello world');
+  await expect(textInput).toHaveValue('hello world');
 };
 
 export const ViewOnlyUI = createTemplate({
@@ -175,3 +185,16 @@ export const ViewOnlyUI = createTemplate({
     editMode: 'viewOnly',
   },
 });
+
+moreOptionsFlyoutTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const moreButton = await canvas.findByRole('button', { name: getTranslatedText('action.more') });
+  if (!moreButton) {
+    return;
+  }
+
+  await userEvent.click(moreButton);
+  const insertImageButton = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.insertImage') });
+  expect(insertImageButton).toBeInTheDocument();
+};

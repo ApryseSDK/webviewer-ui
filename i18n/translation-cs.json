@@ -347,7 +347,8 @@
     "errorPageNumber": "Neplatné číslo stránky. Limit je",
     "errorBlankPageNumber": "Zadejte prosím číslo stránky",
     "errorLoadingDocument": "Při čtení tohoto dokumentu došlo k problému a některé stránky se nemusí zobrazit. To znamená, že dokument může být poškozen. Celkový počet stránek je {{totalPageCount}} a počet zobrazených stránek je {{displayedPageCount}}.",
-    "noRevisions": "Tento dokument nemá žádné revize."
+    "noRevisions": "Tento dokument nemá žádné revize.",
+    "listEmptyValue": "Jedno nebo více polí má prázdnou hodnotu."
   },
   "option": {
     "type": {
@@ -640,6 +641,7 @@
       "text": "Velikost textu"
     },
     "shared": {
+      "sheetIndex": "List",
       "page": "Strana",
       "precision": "Přesnost",
       "enableSnapping": "Povolit uchopení pro měřicí nástroje"
@@ -1524,7 +1526,8 @@
     "fontFamily": {
       "dropdownLabel": "Rodina písem"
     },
-    "blankSheet": "Prázdný list"
+    "blankSheet": "Prázdný list",
+    "insertImage": "Vložit obrázek"
   },
   "insertPageModal": {
     "title": "Vložit novou stránku",

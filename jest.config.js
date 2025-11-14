@@ -87,6 +87,7 @@ module.exports = {
     "^constants/(.*)$": "<rootDir>/src/constants/$1",
     "^helpers/(.*)$": "<rootDir>/src/helpers/$1",
     "^hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "^core/(.*)$": "<rootDir>/src/core/$1",
     "^core$": "<rootDir>/src/core",
     "^actions$": "<rootDir>/src/redux/actions",
     "^actions(.*)$": "<rootDir>/src/redux/actions/$1",

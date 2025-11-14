@@ -61,6 +61,8 @@ export function TextRedactionItem() {
   );
 }
 
+TextRedactionItem.parameters = window.storybook.disableRtlMode;
+
 export function RegionRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
   const mockRegionRedactionAnnotation = getMockRedactionAnnotation();
@@ -79,6 +81,8 @@ export function RegionRedactionItem() {
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
 }
+
+RegionRedactionItem.parameters = window.storybook.disableRtlMode;
 
 export function FullPageRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
@@ -99,6 +103,8 @@ export function FullPageRedactionItem() {
   );
 }
 
+FullPageRedactionItem.parameters = window.storybook.disableRtlMode;
+
 export function CreditCardRedactionItem() {
   const mockCreditCardRedaction = getMockRedactionAnnotation();
   mockCreditCardRedaction.redactionType = redactionTypeMap['CREDIT_CARD'];
@@ -117,6 +123,8 @@ export function CreditCardRedactionItem() {
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
 }
+
+CreditCardRedactionItem.parameters = window.storybook.disableRtlMode;
 
 export function PhoneNumberRedactionItem() {
   const mockPhoneNumberRedaction = getMockRedactionAnnotation();
@@ -137,6 +145,8 @@ export function PhoneNumberRedactionItem() {
   );
 }
 
+PhoneNumberRedactionItem.parameters = window.storybook.disableRtlMode;
+
 export function EmailRedactionItem() {
   const mockEmailRedaction = getMockRedactionAnnotation();
   mockEmailRedaction.redactionType = redactionTypeMap['EMAIL'];
@@ -154,6 +164,8 @@ export function EmailRedactionItem() {
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
 }
+
+EmailRedactionItem.parameters = window.storybook.disableRtlMode;
 
 export function RedactionItemWithLabelText() {
   const labelTextRedaction = getMockRedactionAnnotation();
@@ -174,3 +186,5 @@ export function RedactionItemWithLabelText() {
     <RedactionItemWithRedux {...textRedactionItemProps} />
   );
 }
+
+RedactionItemWithLabelText.parameters = window.storybook.disableRtlMode;

@@ -75,3 +75,5 @@ export const Basic = () => {
     </Provider>
   );
 };
+
+Basic.parameters = window.storybook.disableRtlMode;

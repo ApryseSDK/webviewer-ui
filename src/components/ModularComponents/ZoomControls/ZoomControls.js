@@ -24,7 +24,6 @@ function ZoomControls(props) {
   } = componentProps;
 
   const [t] = useTranslation();
-  const INPUT_WIDTH_MULTIPLIER = 8;
 
   const isZoomValueValid = (zoomValue) => {
     const regex = /^(\d){0,4}$/;
@@ -56,8 +55,6 @@ function ZoomControls(props) {
     }
   };
 
-  const inputWidth = zoomValue ? (zoomValue.length + 1) * INPUT_WIDTH_MULTIPLIER : 0;
-
   return (
     <div className={classNames('ZoomContainerWrapper', {
       [`size${size}`]: true,
@@ -80,7 +77,6 @@ function ZoomControls(props) {
                 onBlur={onBlur}
                 onKeyDown={handleKeyDown}
                 tabIndex={-1}
-                style={{ width: inputWidth }}
                 aria-label={t('action.zoomSet')}
               />
               <span>%</span>

@@ -223,7 +223,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
         ariaLabelledby={buttonLabelId}
         ariaControls={`${dropdownId}-dropdown`}
         ariaExpanded={isOpen}
-        img={'ic_chevron_down_black_24px'}
+        img={'icon-chevron-down'}
         label={t('officeEditor.options')}
         isActive={isOpen}
         disabled={optionsDisabled}

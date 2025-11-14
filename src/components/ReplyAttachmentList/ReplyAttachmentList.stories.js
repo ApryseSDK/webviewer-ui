@@ -47,6 +47,7 @@ export function DisplayMode() {
     </Provider>
   );
 }
+DisplayMode.parameters = window.storybook.disableRtlMode;
 
 // State 2
 export function EditMode() {
@@ -63,6 +64,7 @@ export function EditMode() {
     </Provider>
   );
 }
+EditMode.parameters = window.storybook.disableRtlMode;
 
 const SVG_MIME_TYPE = 'image/svg+xml';
 const svgString = `
@@ -93,3 +95,4 @@ export function UnsafeSVGAttachment() {
     </Provider>
   );
 }
+UnsafeSVGAttachment.parameters = window.storybook.disableRtlMode;

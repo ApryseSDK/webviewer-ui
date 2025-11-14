@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import VirtualizedList from 'react-virtualized/dist/commonjs/List';
 import CellMeasurer, { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
 import ListSeparator from 'components/ListSeparator';
 import classNames from 'classnames';
+import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
 
 const SearchResultListSeparatorPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
@@ -25,9 +26,15 @@ function SearchResultListSeparator(props) {
 
   const isFirstListItem = previousListItem === currentListItem;
   const isInDifferentPage = previousListItem.pageNum !== currentListItem.pageNum;
+  const isInDifferentSheet = previousListItem.sheetOrder !== currentListItem.sheetOrder;
 
-  if (isFirstListItem || isInDifferentPage) {
-    const listSeparatorText = `${t('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
+  if (isFirstListItem || isInDifferentPage || isInDifferentSheet) {
+    let listSeparatorText;
+    if (isSpreadsheetEditorMode()) {
+      listSeparatorText = pageLabels[currentListItem.sheetOrder];
+    } else {
+      listSeparatorText = `${t('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
+    }
     return (
       <div role="cell">
         <ListSeparator>{listSeparatorText}</ListSeparator>
@@ -44,12 +51,13 @@ const SearchResultListItemPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
   activeResultIndex: PropTypes.number.isRequired,
   onSearchResultClick: PropTypes.func,
-  activeDocumentViewerKey: PropTypes.number
+  activeDocumentViewerKey: PropTypes.number,
+  title: PropTypes.string
 };
 
 function SearchResultListItem(props) {
   const [customizableUI] = useSelector((state) => [state.featureFlags.customizableUI]);
-  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey } = props;
+  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey, title } = props;
   const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
   const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
   const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
@@ -69,6 +77,7 @@ function SearchResultListItem(props) {
       }}
       aria-current={currentResultIndex === activeResultIndex}
     >
+      {title && <div className='search-title'>{title}</div>}
       {textBeforeSearchValue}
       <span className='search-value'>
         {searchValue}
@@ -93,11 +102,11 @@ const SearchResultPropTypes = {
 
 function SearchResult(props) {
   const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults, isSearchInProgress, activeDocumentViewerKey } = props;
-  const cellMeasureCache = React.useMemo(() => {
+  const cellMeasureCache = useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
-  const listRef = React.useRef(null);
-  const [listSize, setListSize] = React.useState(0);
+  const listRef = useRef(null);
+  const [listSize, setListSize] = useState(0);
 
   if (searchResults.length === 0) {
     // clear measure cache, when doing a new search
@@ -111,7 +120,7 @@ function SearchResult(props) {
     cellMeasureCache.clearAll();
   }
 
-  const rowRenderer = React.useCallback(function rowRendererCallback(rendererOptions) {
+  const rowRenderer = useCallback(function rowRendererCallback(rendererOptions) {
     const { index, key, parent, style } = rendererOptions;
     const result = searchResults[index];
     return (
@@ -131,6 +140,7 @@ function SearchResult(props) {
               t={t}
             />
             <SearchResultListItem
+              title={isSpreadsheetEditorMode ? result.cell : undefined}
               result={result}
               currentResultIndex={index}
               activeResultIndex={activeResultIndex}
@@ -143,7 +153,7 @@ function SearchResult(props) {
     );
   }, [cellMeasureCache, searchResults, activeResultIndex, t, pageLabels]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (listRef) {
       listRef.current?.scrollToRow(activeResultIndex);
     }
@@ -167,7 +177,6 @@ function SearchResult(props) {
     );
   }
 
-
   return (
     <VirtualizedList
       width={200}
@@ -189,7 +198,9 @@ function SearchResultWithContentRectHOC(props) {
   const { measureRef, contentRect, ...rest } = props;
   const { height } = contentRect.bounds;
   return (
-    <div className="results" ref={measureRef}>
+    <div className={classNames('results', {
+      'spreadsheet-results': isSpreadsheetEditorMode()
+    })} ref={measureRef}>
       <SearchResult height={height} {...rest} />
     </div>
   );
@@ -207,4 +218,5 @@ const SearchResultWithContentRectHOCAndBounds = withContentRect('bounds')(Search
 const SearchResultsContainer = (props) => {
   return (<SearchResultWithContentRectHOCAndBounds {...props} />);
 };
+export { SearchResult };
 export default SearchResultsContainer;

@@ -124,6 +124,7 @@ export const Adding = () => {
     </ReduxProvider>
   );
 };
+Adding.parameters = window.storybook.disableRtlMode;
 
 export const Renaming = () => {
   return (

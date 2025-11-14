@@ -35,7 +35,8 @@ import { SYNC_MODES } from 'constants/multiViewerContants';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { getInstanceID } from 'helpers/getRootNode';
 import { defaultBackgroundColor, initialColors, initialTextColors } from 'helpers/initialColorStates';
-import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels } from './modularComponents';
+import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels, defaultPopups } from './modularComponents';
+import viewOnlyWhitelist from './viewOnlyWhitelist';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -756,45 +757,6 @@ export default {
     },
     customHeadersAdditionalProperties: {},
     enableRightClickAnnotationPopup: false,
-    annotationPopup: [
-      { dataElement: 'viewFileButton' },
-      { dataElement: 'annotationCommentButton' },
-      { dataElement: 'annotationStyleEditButton' },
-      { dataElement: 'annotationDateEditButton' },
-      { dataElement: 'annotationRedactButton' },
-      { dataElement: 'annotationCropButton' },
-      { dataElement: 'annotationContentEditButton' },
-      { dataElement: 'annotationClearSignatureButton' },
-      { dataElement: 'annotationGroupButton' },
-      { dataElement: 'annotationUngroupButton' },
-      { dataElement: 'formFieldEditButton' },
-      { dataElement: DataElements.CALIBRATION_POPUP_BUTTON },
-      { dataElement: 'linkButton' },
-      { dataElement: 'fileAttachmentDownload' },
-      { dataElement: 'annotationDeleteButton' },
-      { dataElement: 'shortCutKeysFor3D' },
-      { dataElement: 'playSoundButton' },
-      { dataElement: 'openAlignmentButton' }
-    ],
-    textPopup: [
-      { dataElement: 'copyTextButton' },
-      { dataElement: 'textHighlightToolButton' },
-      { dataElement: 'textUnderlineToolButton' },
-      { dataElement: 'textSquigglyToolButton' },
-      { dataElement: 'textStrikeoutToolButton' },
-      { dataElement: 'textRedactToolButton' },
-      { dataElement: 'linkButton' },
-    ],
-    contextMenuPopup: [
-      { dataElement: 'panToolButton' },
-      { dataElement: 'stickyToolButton' },
-      { dataElement: 'highlightToolButton' },
-      { dataElement: 'freeHandToolButton' },
-      { dataElement: 'freeHandHighlightToolButton' },
-      { dataElement: 'freeTextToolButton' },
-      { dataElement: 'markInsertTextToolButton' },
-      { dataElement: 'markReplaceTextToolButton' },
-    ],
     menuOverlay: [
       { dataElement: 'newDocumentButton' },
       { dataElement: 'filePickerButton' },
@@ -1999,7 +1961,8 @@ export default {
     isCommentThreadExpansionEnabled: false,
     enableMouseWheelZoom: true,
     doesAutoLoad: getHashParameters('auto_load', true),
-    isReadOnly: getHashParameters('readonly', false),
+    isViewOnly: getHashParameters('readonly', false),
+    viewOnlyWhitelist,
     customModals: [],
     customPanels: [],
     genericPanels: defaultPanels,
@@ -2111,6 +2074,7 @@ export default {
     modularComponentStash: {},
     modularHeaders: defaultModularHeaders,
     modularComponents: defaultModularComponents,
+    modularPopups: defaultPopups,
     modularComponentFunctions: {},
     activeGroupedItems: [],
     activeCustomRibbon: '',
@@ -2158,6 +2122,7 @@ export default {
     isWildcard: false,
     isRegex: false,
     isSearchUp: false,
+    isSearchInProgress: false,
     isAmbientString: false,
     clearSearchPanelOnClose: false,
     results: [],
@@ -2234,6 +2199,7 @@ export default {
   officeEditor: {
     canUndo: false,
     canRedo: false,
+    isReplaceInProgress: false,
     cursorProperties: {
       paragraphProperties: {},
       locationProperties: {},
@@ -2298,7 +2264,7 @@ export default {
     textColors: structuredClone(initialTextColors),
     borderColors: structuredClone(initialTextColors),
     cellBackgroundColors: structuredClone(initialTextColors),
-    editMode: SpreadsheetEditorEditMode['VIEW_ONLY'],
+    editMode: SpreadsheetEditorEditMode.VIEW_ONLY,
     availableFontFaces: availableSpreadsheetEditorFonts,
     cssFontValues: cssFontValues,
     canUndo: false,

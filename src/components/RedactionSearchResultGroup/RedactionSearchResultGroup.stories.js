@@ -100,3 +100,5 @@ export function Basic() {
     </div>
   );
 }
+
+Basic.parameters = window.storybook.disableRtlMode;

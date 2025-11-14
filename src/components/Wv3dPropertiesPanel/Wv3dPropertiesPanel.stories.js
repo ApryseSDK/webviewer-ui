@@ -274,7 +274,11 @@ export function DefaultStandard() {
   return <Default {...defaultArgs} />;
 }
 
+DefaultStandard.parameters = window.storybook.disableChromatic;
+
 export const DefaultWide = WideTemplate.bind({});
+
+DefaultWide.parameters = window.storybook.disableChromatic;
 
 DefaultWide.args = {
   modelData: oneElement,
@@ -302,6 +306,8 @@ export function MultiplePropertiesElements() {
   return <MultipleElements {...multipleElementsArgs} />;
 }
 
+MultiplePropertiesElements.parameters = window.storybook.disableChromatic;
+
 const NoElementsSelected = StandardTemplate.bind({});
 
 const noElementsSelectedArgs = {
@@ -318,6 +324,8 @@ NoElementsSelected.args = noElementsSelectedArgs;
 export function EmptyPanel() {
   return <NoElementsSelected {...noElementsSelectedArgs} />;
 }
+
+EmptyPanel.parameters = window.storybook.disableChromatic;
 
 const GroupOrderDefined = StandardTemplate.bind({});
 
@@ -339,6 +347,8 @@ export function GroupOrderSpecified() {
   return <GroupOrderDefined {...groupOrderDefinedArgs} />;
 }
 
+GroupOrderSpecified.parameters = window.storybook.disableChromatic;
+
 const EmptyRowsRemoved = StandardTemplate.bind({});
 
 const rowsRemovedSchema = JSON.parse(JSON.stringify(baseSchema));
@@ -358,6 +368,8 @@ EmptyRowsRemoved.args = emptyRowsRemovedArgs;
 export function RemoveEmptyRows() {
   return <EmptyRowsRemoved {...emptyRowsRemovedArgs} />;
 }
+
+RemoveEmptyRows.parameters = window.storybook.disableChromatic;
 
 const EmptyGroupsRemoved = StandardTemplate.bind({});
 
@@ -380,6 +392,8 @@ export function RemoveEmptyGroups() {
   return <EmptyGroupsRemoved {...emptyRowsRemovedArgs} />;
 }
 
+RemoveEmptyGroups.parameters = window.storybook.disableChromatic;
+
 const NoRawValues = StandardTemplate.bind({});
 
 const NoRawValuesSchema = JSON.parse(JSON.stringify(baseSchema));
@@ -399,3 +413,5 @@ NoRawValues.args = noRawValuesArgs;
 export function RemoveRawValues() {
   return <NoRawValues {...noRawValuesArgs} />;
 }
+
+RemoveRawValues.parameters = window.storybook.disableChromatic;

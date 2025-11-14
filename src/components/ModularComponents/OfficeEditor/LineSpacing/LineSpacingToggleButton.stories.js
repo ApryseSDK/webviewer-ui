@@ -66,9 +66,10 @@ const initialState = {
   }
 };
 
-const store = configureStore({ reducer: () => initialState });
 
-const prepareButtonStory = () => {
+const prepareButtonStory = (initialState) => {
+  const store = configureStore({ reducer: () => initialState });
+
   core.getOfficeEditor = () => ({
     isTextSelected: () => false,
     isCursorInTable: () => false
@@ -87,11 +88,32 @@ const prepareButtonStory = () => {
 };
 
 export function InactiveButton() {
-  initialState.viewer.openElements.lineSpacingFlyout = false;
-  return prepareButtonStory();
+  const initialStateWithDisabledElements = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      disabledElements: {
+        lineSpacingToggleButton: true,
+      },
+    },
+  };
+  return prepareButtonStory(initialStateWithDisabledElements);
 }
 
+InactiveButton.parameters = window.storybook.disableChromatic;
+
 export function ActiveButton() {
-  initialState.viewer.openElements.lineSpacingFlyout = true;
-  return prepareButtonStory();
+  const initialStateWithActiveElements = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      openElements: {
+        ...initialState.viewer.openElements,
+        lineSpacingFlyout: true,
+      },
+    },
+  };
+  return prepareButtonStory(initialStateWithActiveElements);
 }
+
+ActiveButton.parameters = window.storybook.disableChromatic;

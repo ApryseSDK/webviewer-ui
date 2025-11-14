@@ -60,6 +60,10 @@ export const ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR = [
   DataElements.CONTEXT_MENU_POPUP
 ];
 
+export const ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR = [
+  DataElements.SEARCH_PANEL_REPLACE_CONTAINER
+];
+
 export const getFormatTypeFromFormatString = (formatString) => {
   const formatType = Object.keys(formatsMap).find((key) => {
     return formatsMap[key] === formatString;
@@ -81,3 +85,7 @@ export const getFormatTypeFromFormatString = (formatString) => {
   const match = numberFormatPatterns.find((pattern) => pattern.pattern.test(formatString));
   return match ? match.key : '';
 };
+
+export const SPREADSHEET_EDITOR_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'bmp', 'webp', 'gif'].map(
+  (format) => `.${format}`,
+).join(', ');

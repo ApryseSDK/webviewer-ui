@@ -70,7 +70,8 @@ export const ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR = [
 
 export const ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR = [
   DataElements.OFFICE_EDITOR_TOOLS_HEADER,
-  DataElements.INLINE_COMMENT_POPUP
+  DataElements.INLINE_COMMENT_POPUP,
+  DataElements.SEARCH_PANEL_REPLACE_CONTAINER
 ];
 
 export const AVAILABLE_POINT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
@@ -121,6 +122,8 @@ export const POINTS_PER_CM = window.Core.Document.OfficeEditor.POINTS_PER_CM; //
 
 export const LAYOUT_UNITS = window.Core.Document.OfficeEditor.LayoutUnits;
 
+export const EDIT_OPERATION_SOURCE = window.Core.Document.OfficeEditor.EditOperationSource;
+
 export const MARGIN_UNIT_LABELS = {
   CM: 'cm',
   MM: 'mm',
@@ -160,3 +163,8 @@ export const DEFAULT_COLUMN_SPACING_IN_POINTS = window.Core.Document.OfficeEdito
 export const MINIMUM_COLUMN_WIDTH_IN_POINTS = window.Core.Document.OfficeEditor.MINIMUM_COLUMN_WIDTH_IN_POINTS; // 36
 
 export const OFFICE_EDITOR_TRANSLATION_PREFIX = 'officeEditor.';
+
+// TODO: Can we accept any other image formats?
+export const OFFICE_EDITOR_ACCEPTED_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'bmp'].map(
+  (format) => `.${format}`,
+).join(', ');

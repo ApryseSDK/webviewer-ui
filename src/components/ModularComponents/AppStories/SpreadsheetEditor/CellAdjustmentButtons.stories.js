@@ -8,6 +8,7 @@ import {
   defaultSpreadsheetFlyoutMap,
 } from 'src/redux/spreadsheetEditorComponents';
 import core from 'core';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'SpreadsheetEditor/App/CellAdjustmentButtons',
@@ -66,32 +67,32 @@ CellAdjustmentItems.play = async ({ canvasElement }) => {
 
   const canvas = await within(canvasElement);
   // Have to do this to ensure UI config has switched and loaded the buttons
-  await canvas.findByRole('button', { name: /Insert column left/gi });
+  await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.insertColumnLeft') });
 
   // Insert 1 column at index 1
-  await canvas.getByRole('button', { name: /Insert column left/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.insertColumnLeft') }).click();
   await expect(mockFunctions.createColumns.mock.lastCall[0]).toBe(1);
   await expect(mockFunctions.createColumns.mock.lastCall[1]).toBe(1);
 
   // Insert 1 column at index 4
-  await canvas.getByRole('button', { name: /Insert column right/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.insertColumnRight') }).click();
   await expect(mockFunctions.createColumns.mock.lastCall[0]).toBe(4);
 
   // Insert row at index 1
-  await canvas.getByRole('button', { name: /Insert row above/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.insertRowTop') }).click();
   await expect(mockFunctions.createRows.mock.lastCall[0]).toBe(1);
 
   // Insert row at index 4
-  await canvas.getByRole('button', { name: /Insert row below/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.insertRowBottom') }).click();
   await expect(mockFunctions.createRows.mock.lastCall[0]).toBe(4);
 
   // Delete column at index 1-3
-  await canvas.getByRole('button', { name: /Delete column/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.deleteColumn') }).click();
   await expect(mockFunctions.removeColumns.mock.lastCall[0]).toBe(1);
   await expect(mockFunctions.removeColumns.mock.lastCall[1]).toBe(3);
 
   // Delete row at index 1-3
-  await canvas.getByRole('button', { name: /Delete row/gi }).click();
+  await canvas.getByRole('button', { name: getTranslatedText('spreadsheetEditor.deleteRow') }).click();
   await expect(mockFunctions.removeRows.mock.lastCall[0]).toBe(1);
   await expect(mockFunctions.removeRows.mock.lastCall[1]).toBe(3);
 

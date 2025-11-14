@@ -40,6 +40,11 @@
   input {
     height: 32px;
     border-color: var(--gray-6);
+    padding: 6px;
+  }
+
+  .input-wrapper {
+    flex: 1;
   }
 
   .ui__input {
@@ -383,7 +388,8 @@
     }
 
     .Button.add-item-button {
-      width: 90px;
+      min-width: 90px;
+      width: fit-content;
       margin-inline-start: 0;
       justify-content: flex-start;
 

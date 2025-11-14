@@ -10,6 +10,7 @@ export default {
 };
 
 const RubberStampPanelInApp = (context, location) => {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...initialState,
     viewer: {
@@ -37,11 +38,13 @@ const RubberStampPanelInApp = (context, location) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp initialState={mockState} />;
+  return <MockApp initialState={mockState} initialDirection={addonRtl} />;
 };
 
 export const RubberStampPanelInleft = (args, context) => RubberStampPanelInApp(context, 'left');
 export const RubberStampPanelInRight = (args, context) => RubberStampPanelInApp(context, 'right');
+RubberStampPanelInRight.parameters = window.storybook.disableRtlMode;
+
 export const RubberStampPanelInMobile = (args, context) => RubberStampPanelInApp(context, );
 
 RubberStampPanelInleft.parameters = {

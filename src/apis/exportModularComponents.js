@@ -203,6 +203,7 @@ export default (store) => () => {
   const modularHeaders = validateHeaders(state.viewer.modularHeaders);
   const panelList = state.viewer.genericPanels;
   const flyoutMap = state.viewer.flyoutMap;
+  const popupsMap = state.viewer.modularPopups;
 
   const convertPanelsToMap = (panelsArray) => {
     const panelsMap = {};
@@ -238,14 +239,55 @@ export default (store) => () => {
     return normalizedFlyouts;
   };
 
+  const preparePopups = (popups) => {
+    const cloned = cloneDeep(popups || {});
+    const fnMap = state.viewer.modularComponentFunctions || {};
+    const FUNCTION_PROPS = ['onClick', 'render'];
+
+    const toKeyOrDelete = (obj, prop) => {
+      const val = obj[prop];
+      if (typeof val !== 'function') {
+        return;
+      } // keep non-function values as-is (e.g., string render prefixes)
+      const key = getFunctionKey(prop, fnMap, obj.dataElement, val);
+      if (key) {
+        obj[prop] = key;
+      } else {
+        delete obj[prop];
+      }
+    };
+
+    const sanitizeItem = (item) => {
+      // Allow strings/dividers/React elements or any non-object to pass through unchanged
+      if (!item || typeof item !== 'object') {
+        return item;
+      }
+      // Shallow clone so we never mutate the original
+      const out = { ...item };
+      FUNCTION_PROPS.forEach((p) => toKeyOrDelete(out, p));
+      return out;
+    };
+
+    const sanitizePopupItems = (items = []) => items.map(sanitizeItem);
+
+    const result = {};
+    for (const [popupKey, popupItems] of Object.entries(cloned)) {
+      result[popupKey] = sanitizePopupItems(popupItems);
+    }
+    return result;
+  };
+
   const panels = convertPanelsToMap(panelList);
   const flyouts = prepareFlyouts(flyoutMap, modularComponents);
+  const popups = preparePopups(popupsMap);
+
 
   const allData = {
     modularComponents,
     modularHeaders,
     panels,
     flyouts,
+    popups,
   };
 
   return allData;

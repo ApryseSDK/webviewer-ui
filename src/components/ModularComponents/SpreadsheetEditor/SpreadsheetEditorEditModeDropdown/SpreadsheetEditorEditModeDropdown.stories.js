@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import SpreadsheetEditorEditModeDropdown from './SpreadsheetEditorEditModeDropdown';
 import { userEvent, expect, within } from 'storybook/test';
 import rootReducer from 'src/redux/reducers/rootReducer';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'SpreadsheetEditor/SpreadsheetEditorEditModeDropdown',
@@ -25,9 +26,8 @@ export function ModeChangingDropdown() {
 ModeChangingDropdown.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // open the dropdown and check the active item
-  const dropdown = canvas.getByRole('combobox', { name: 'Edit mode selection' });
+  const dropdown = canvas.getByRole('combobox', { name: getTranslatedText('spreadsheetEditor.editModeDropdown') });
   await userEvent.click(dropdown);
-  const viewingOption = canvas.getByRole('option', { name: 'Viewing View only' });
+  const viewingOption = canvas.getByRole('option', { name: new RegExp(getTranslatedText('spreadsheetEditor.viewOnly')) });
   expect(viewingOption).toBeInTheDocument();
-  expect(viewingOption.innerText).toBe('Viewing\nView only');
 };

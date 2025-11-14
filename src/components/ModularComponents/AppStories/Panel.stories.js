@@ -2,6 +2,7 @@ import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 import { within, expect } from 'storybook/test';
 import { createTemplate } from 'helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/App/Panels',
@@ -15,12 +16,12 @@ SetActiveTabInPanel.play = async ({ canvasElement }) => {
   // We open the tab panel programatically
   window.instance.UI.openElements(['tabPanel']);
   // the active tab should be the thumbnails tab
-  const thumbnailsTab = await canvas.findByRole('button', { name: /Thumbnails/i });
+  const thumbnailsTab = await canvas.findByRole('button', { name: getTranslatedText('component.thumbnailsPanel') });
   await expect(thumbnailsTab.classList.contains('active')).toBe(true);
   await expect(thumbnailsTab.getAttribute('aria-current')).toBe('true');
 
   // At this point the outlines tab should not be selected or active
-  const outlinesTab = await canvas.findByRole('button', { name: /Outlines/i });
+  const outlinesTab = await canvas.findByRole('button', { name: getTranslatedText('component.outlinesPanel') });
   await expect(outlinesTab.getAttribute('aria-current')).toBe('false');
   await expect(outlinesTab.classList.contains('active')).toBe(false);
   // Call API to set the active tab to outlines

@@ -44,6 +44,8 @@ export const Basic = () => {
   return <BasicComponent {...props} />;
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export const ErrorComponent = () => {
   const props = {
     label: 'Test Input',
@@ -55,5 +57,7 @@ export const ErrorComponent = () => {
   };
   return <BasicComponent {...props} />;
 };
+
+ErrorComponent.parameters = window.storybook.disableRtlMode;
 
 

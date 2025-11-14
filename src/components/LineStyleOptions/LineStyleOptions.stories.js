@@ -28,3 +28,5 @@ export function Basic() {
     </ReduxProvider>
   );
 }
+
+Basic.parameters = window.storybook.disableRtlMode;

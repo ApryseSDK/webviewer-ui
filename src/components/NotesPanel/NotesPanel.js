@@ -23,26 +23,27 @@ import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
+import PropTypes from 'prop-types';
 
 import './NotesPanel.scss';
 
 const NotesPanel = ({
-  currentLeftPanelWidth,
+  parentDataElement,
   notes,
   selectedNoteIds,
   setSelectedNoteIds,
+  scrollToSelectedAnnot,
+  setScrollToSelectedAnnot,
   searchInput,
   setSearchInput,
   isMultiSelectMode,
   setMultiSelectMode,
-  isMultiSelectedMap,
-  setIsMultiSelectedMap,
-  scrollToSelectedAnnot,
-  setScrollToSelectedAnnot,
+  multiSelectedMap,
+  setMultiSelectedMap,
   isCustomPanel,
   isCustomPanelOpen,
   isLeftSide,
-  parentDataElement,
+  currentLeftPanelWidth,
 }) => {
 
   const sortStrategy = useSelector(selectors.getSortStrategy);
@@ -53,7 +54,7 @@ const NotesPanel = ({
   const internalNoteFilter = useSelector(selectors.getInternalNoteFilter, shallowEqual);
   const currentNotesPanelWidth = useSelector((state) => parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state), shallowEqual);
   const notesInLeftPanel = useSelector(selectors.getNotesInLeftPanel);
-  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
+  const isDocumentReadOnly = useSelector(selectors.isViewOnly);
   const showAnnotationNumbering = useSelector(selectors.isAnnotationNumberingEnabled);
   const enableNotesPanelVirtualizedList = useSelector(selectors.getEnableNotesPanelVirtualizedList);
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
@@ -221,8 +222,12 @@ const NotesPanel = ({
   };
 
   useEffect(() => {
-    setMultiSelectedAnnotations(Object.values(isMultiSelectedMap));
-  }, [isMultiSelectedMap]);
+    setMultiSelectedAnnotations(Object.values(multiSelectedMap));
+    if (curAnnotId === undefined) {
+      const ids = Object.keys(multiSelectedMap);
+      setCurAnnotId(ids[0]);
+    }
+  }, [multiSelectedMap]);
 
   const toggleMultiSelectMode = () => {
     if (isMultiSelectMode) {
@@ -302,29 +307,30 @@ const NotesPanel = ({
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note
+            parentScroll={scrollTopRef}
             isCustomPanelOpen={isCustomPanelOpen}
             shouldHideConnectorLine={isLeftSide}
             annotation={currNote}
-            isMultiSelected={!!isMultiSelectedMap[currNote.Id]}
+            isMultiSelected={!!multiSelectedMap[currNote.Id]}
             isMultiSelectMode={isMultiSelectMode}
             isMultiSelectEnabled={isNotesPanelMultiSelectEnabled}
             isInNotesPanel
             handleMultiSelect={(checked) => {
               if (checked) {
-                const _isMultiSelectedMap = { ...isMultiSelectedMap };
+                const _multiSelectedMap = { ...multiSelectedMap };
                 const groupAnnots = core.getGroupAnnotations(currNote, activeDocumentViewerKey);
                 groupAnnots.forEach((groupAnnot) => {
-                  _isMultiSelectedMap[groupAnnot.Id] = groupAnnot;
+                  _multiSelectedMap[groupAnnot.Id] = groupAnnot;
                 });
-                setIsMultiSelectedMap(_isMultiSelectedMap);
+                setMultiSelectedMap(_multiSelectedMap);
                 core.selectAnnotations(groupAnnots);
               } else {
-                const _isMultiSelectedMap = { ...isMultiSelectedMap };
+                const _multiSelectedMap = { ...multiSelectedMap };
                 const groupAnnots = core.getGroupAnnotations(currNote, activeDocumentViewerKey);
                 groupAnnots.forEach((groupAnnot) => {
-                  delete _isMultiSelectedMap[groupAnnot.Id];
+                  delete _multiSelectedMap[groupAnnot.Id];
                 });
-                setIsMultiSelectedMap(_isMultiSelectedMap);
+                setMultiSelectedMap(_multiSelectedMap);
                 core.deselectAnnotations([currNote, ...groupAnnots]);
               }
             }}
@@ -407,6 +413,9 @@ const NotesPanel = ({
   }
 
   const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel || isCustomPanel);
+  const showPlaceHolder = isMultiSelectMode && !isDocumentReadOnly;
+  const placeHolder = showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder;
+  const showMultiSelectControls = isMultiSelectMode && !isDocumentReadOnly;
 
   return !showNotePanel ? null : (
     <div
@@ -475,7 +484,7 @@ const NotesPanel = ({
           {/* These two placeholders need to exist so that MultiSelectControls can
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
-          {isMultiSelectMode ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder) : null}
+          {showPlaceHolder ?? placeHolder}
           {isOfficeEditorMode && !isMultiSelectMode && (notesToRender.length > 0) && (
             <div className="preview-all-changes">
               <div className="divider" />
@@ -489,7 +498,7 @@ const NotesPanel = ({
           )}
         </>
       </div>
-      {isMultiSelectMode && (
+      {showMultiSelectControls && (
         <MultiSelectControls
           showMultiReply={showMultiReply}
           setShowMultiReply={setShowMultiReply}
@@ -498,8 +507,8 @@ const NotesPanel = ({
           showMultiStyle={showMultiStyle}
           setShowMultiStyle={setShowMultiStyle}
           setMultiSelectMode={setMultiSelectMode}
-          isMultiSelectedMap={isMultiSelectedMap}
-          setIsMultiSelectedMap={setIsMultiSelectedMap}
+          multiSelectedMap={multiSelectedMap}
+          setMultiSelectedMap={setMultiSelectedMap}
           multiSelectedAnnotations={multiSelectedAnnotations}
         />
       )}
@@ -507,6 +516,25 @@ const NotesPanel = ({
       {ariaLiveResultsContainer()}
     </div>
   );
+};
+
+NotesPanel.propTypes = {
+  parentDataElement: PropTypes.string,
+  notes: PropTypes.array,
+  selectedNoteIds: PropTypes.object,
+  setSelectedNoteIds: PropTypes.func,
+  scrollToSelectedAnnot: PropTypes.bool,
+  setScrollToSelectedAnnot: PropTypes.func,
+  searchInput: PropTypes.string,
+  setSearchInput: PropTypes.func,
+  isMultiSelectMode: PropTypes.bool,
+  setMultiSelectMode: PropTypes.func,
+  multiSelectedMap: PropTypes.object,
+  setMultiSelectedMap: PropTypes.func,
+  isCustomPanel: PropTypes.bool,
+  isCustomPanelOpen: PropTypes.bool,
+  isLeftSide: PropTypes.bool,
+  currentLeftPanelWidth: PropTypes.number,
 };
 
 export default NotesPanel;

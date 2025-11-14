@@ -87,6 +87,7 @@
   inset-inline-end: 0px;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+  width: 100%;
 
   background: var(--component-background);
   white-space: nowrap;
@@ -101,6 +102,7 @@
 
   &.dropdown-items-with-custom-display {
     inset-inline-end: inherit;
+    width: auto;
   }
 
   &.dropdown-items-with-label {

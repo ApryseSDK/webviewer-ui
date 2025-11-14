@@ -3,6 +3,7 @@ import PageReplacementModal from './PageReplacementModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { expect, userEvent } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/PageReplacementModal',
@@ -65,7 +66,7 @@ ReplaceURL.play = async () => {
 
   const errorMessageDiv = document.querySelector('.no-margin');
   expect(errorMessageDiv).toBeInTheDocument();
-  expect(errorMessageDiv.innerText).toBe('File could not be retrieved from the provided URL.');
+  expect(errorMessageDiv.innerText).toBe(getTranslatedText('message.urlInputFileLoadError'));
 };
 
 const initialStateTwo = {

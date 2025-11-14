@@ -43,7 +43,8 @@ const state = {
   },
 };
 
-export const MultiTabWithMarginOffset = () => {
+export const MultiTabWithMarginOffset = (_, context) => {
+  const { addonRtl } = context.globals;
   useEffect(() => {
     const originalInnerWidth = window.innerWidth;
 
@@ -80,7 +81,7 @@ export const MultiTabWithMarginOffset = () => {
   return (
     <Provider store={store}>
       <div style={divStyle}>
-        <App removeEventHandlers={noop}/>
+        <App removeEventHandlers={noop} initialDirection={addonRtl}/>
       </div>
     </Provider>
   );

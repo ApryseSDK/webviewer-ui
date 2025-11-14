@@ -16,7 +16,6 @@ import RubberStampPanel from 'components/RubberStampPanel';
 import PortfolioPanel from 'components/PortfolioPanel';
 import CustomElement from 'components/CustomElement';
 
-
 export const getPanelToRender = (panelName, dataElement, tabPanelDataElement) => {
   switch (panelName) {
     case panelNames.OUTLINE:
@@ -61,14 +60,4 @@ export const createCustomElement = (item) => {
     dataElement={item.dataElement}
     render={item.render}
   />;
-};
-
-export const getEnabledPanels = (paramsObject) => {
-  const { panelsList, disabledElements, tabPanelDataElement } = paramsObject;
-  const enabledPanels = panelsList.filter((panel) => {
-    const isPanelDisabled = disabledElements[panel.render]?.disabled;
-    const isPanelTabDisabled = disabledElements[`${panel.render}-${tabPanelDataElement}`]?.disabled;
-    return !isPanelDisabled && !isPanelTabDisabled;
-  });
-  return enabledPanels;
 };

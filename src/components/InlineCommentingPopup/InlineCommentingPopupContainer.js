@@ -37,7 +37,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
       selectors.getActiveLeftPanel(state),
       selectors.isAnnotationNumberingEnabled(state),
       selectors.getSortStrategy(state),
-      selectors.isDocumentReadOnly(state),
+      selectors.isViewOnly(state),
       selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,

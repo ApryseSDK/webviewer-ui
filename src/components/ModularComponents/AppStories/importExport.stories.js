@@ -3,6 +3,7 @@ import { mockHeadersNormalized, mockModularComponents, uiWithCustomElements, uiW
 import { within, expect, userEvent, waitFor } from 'storybook/test';
 import { createTemplate } from 'helpers/storybookHelper';
 import { uiWithPanelsInFlyout } from '../storyModularUIConfigs';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/App/Import',
@@ -39,13 +40,13 @@ ImportingWithCustomStyleAndClassName.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   window.instance.UI.importModularComponents(uiWithCustomStyleAndClass);
 
-  const leftPanelToggleButton = canvas.getByRole('button', { name: /Left Panel/i });
+  const leftPanelToggleButton = canvas.getByRole('button', { name: getTranslatedText('component.leftPanel') });
   await expect(leftPanelToggleButton.style.borderRadius).toBe('8px');
 
-  const panToolButton = await canvas.getAllByRole('button', { name: /Pan/i })[1];
+  const panToolButton = await canvas.findByRole('button', { name: getTranslatedText('tool.pan') });
   await expect(panToolButton.classList.contains('my-new-class-for-tools')).toBe(true);
 
-  const annotateRibbon = canvas.getByRole('button', { name: /Annotate/i });
+  const annotateRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Annotate') });
   await expect(annotateRibbon.classList.contains('annotate-ribbon')).toBe(true);
   await expect(annotateRibbon.style.border).toBe('2px dotted blue');
 
@@ -75,12 +76,10 @@ ImportingConfigWithPanelsInFlyout.play = async ({ canvasElement }) => {
   window.instance.UI.importModularComponents(uiWithPanelsInFlyout, functionMap);
 
 
-  await checkFlyoutCanBeOpened(canvas, 'Style', 'stylePanelFlyout');
+  await checkFlyoutCanBeOpened(canvas, getTranslatedText('action.style'), 'stylePanelFlyout');
 
   const submenuItem = await canvas.findByRole('button', { name: /Other Item/i });
-  await waitFor(() => {
-    expect(submenuItem).toBeInTheDocument();
-  });
+  expect(submenuItem).toBeInTheDocument();
   await submenuItem.click();
 
   await waitFor(() => {
@@ -88,8 +87,8 @@ ImportingConfigWithPanelsInFlyout.play = async ({ canvasElement }) => {
     expect(submenuStylePanel).toBeInTheDocument();
   });
 
-  await checkFlyoutCanBeOpened(canvas, 'Rubber Stamp', 'rubberStampFlyout');
-  await checkFlyoutCanBeOpened(canvas, 'Signature', 'signatureListFlyout');
+  await checkFlyoutCanBeOpened(canvas, getTranslatedText('annotation.rubberStamp'), 'rubberStampFlyout');
+  await checkFlyoutCanBeOpened(canvas, getTranslatedText('annotation.signature'), 'signatureListFlyout');
 
   const exportedConfig = window.instance.UI.exportModularComponents();
   expect(exportedConfig).toEqual(uiWithPanelsInFlyout);

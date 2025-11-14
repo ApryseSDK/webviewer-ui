@@ -211,7 +211,8 @@
       border-radius: 4px;
       padding: 8px 16px;
       height: 32px;
-      width: 100px;
+      min-width: 100px;
+      width: fit-content;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -221,7 +222,6 @@
 
       @include mobile {
         height: 32px;
-        width: 100px;
       }
 
       &:not(:disabled):not(.disabled) {

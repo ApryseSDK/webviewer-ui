@@ -100,8 +100,8 @@
 
   #virtualized-thumbnails-container {
     flex: 1;
-
   }
+  
   .ReactVirtualized__Grid.ReactVirtualized__List.thumbnailsList {
     &.right-to-left {
       direction: rtl !important;
@@ -124,7 +124,7 @@
   .columnsOfThumbnails {
     &.row {
       display: flex;
-      justify-content: left;
+      justify-content: start;
       align-items: center;
       flex-direction: row;
     }

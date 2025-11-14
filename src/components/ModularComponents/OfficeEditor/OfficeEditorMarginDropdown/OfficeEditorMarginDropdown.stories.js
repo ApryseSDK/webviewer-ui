@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { userEvent, within, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 import OfficeEditorMarginDropdown from './OfficeEditorMarginDropdown';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/OfficeEditor/OfficeEditorMarginDropdown',
@@ -22,13 +23,15 @@ export const Basic = () => {
   );
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export const Expanded = () => <Basic />;
 Expanded.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const marginButton = canvas.getByRole('button', { name: 'Margins' });
+  const marginButton = canvas.getByRole('button', { name: getTranslatedText('officeEditor.margins') });
   await userEvent.click(marginButton);
   await expect(marginButton).toHaveAttribute('aria-expanded', 'true');
-  const normalOption = canvas.getByRole('option', { name: /Normal/, });
+  const normalOption = canvas.getByRole('option', { name: new RegExp(getTranslatedText('officeEditor.normal')) });
   await expect(normalOption).toHaveAttribute('aria-selected', 'true');
 };
 
@@ -38,7 +41,7 @@ export const InInch = () => {
 };
 InInch.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  await userEvent.click(canvas.getByRole('button', { name: 'Margins' }));
+  await userEvent.click(canvas.getByRole('button', { name: getTranslatedText('officeEditor.margins') }));
 };
 
 export const InMM = () => {
@@ -47,5 +50,5 @@ export const InMM = () => {
 };
 InMM.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  await userEvent.click(canvas.getByRole('button', { name: 'Margins' }));
+  await userEvent.click(canvas.getByRole('button', { name: getTranslatedText('officeEditor.margins') }));
 };

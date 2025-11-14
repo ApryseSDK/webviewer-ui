@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
 import { isMobileDevice } from 'helpers/device';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import TouchBackEnd from 'react-dnd-touch-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import Outline from 'components/Outline';
 import OutlineContext from 'components/Outline/Context';
 import Button from 'components/Button';
@@ -31,26 +31,14 @@ import Spinner from 'components/Spinner';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
 
 const OutlinesPanel = ({ isTest = false }) => {
-  const [
-    isDisabled,
-    outlines,
-    outlineEditingEnabled,
-    shouldAutoExpandOutlines,
-    currentPage,
-    pageLabels,
-    featureFlags,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL),
-      selectors.getOutlines(state),
-      selectors.getOutlineEditingEnabled(state),
-      selectors.shouldAutoExpandOutlines(state),
-      selectors.getCurrentPage(state),
-      selectors.getPageLabels(state),
-      selectors.getFeatureFlags(state),
-    ],
-    shallowEqual,
-  );
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL));
+  const outlines = useSelector(selectors.getOutlines, shallowEqual);
+  const outlineEditingEnabled = useSelector(selectors.getOutlineEditingEnabled);
+  const shouldAutoExpandOutlines = useSelector(selectors.shouldAutoExpandOutlines);
+  const currentPage = useSelector(selectors.getCurrentPage);
+  const pageLabels = useSelector(selectors.getPageLabels, shallowEqual);
+  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
+  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const defaultDestText = 'Full Page';
   const areaDestinationText = 'Area Selection';
@@ -61,12 +49,12 @@ const OutlinesPanel = ({ isTest = false }) => {
   const [currentDestText, setCurrentDestText] = useState(defaultDestText);
   const [currentDestCoord, setCurrentDestCoord] = useState(defaultDestCoord);
   const [currentDestPage, setCurrentDestPage] = useState(currentPage);
-  const [isOutlineEditable, setOutlineEditable] = useState(false);
+  const [isOutlineEditable, setIsOutlineEditable] = useState(false);
   const [activeOutlinePath, setActiveOutlinePath] = useState(null);
-  const [isAddingNewOutline, setAddingNewOutline] = useState(false);
+  const [isAddingNewOutline, setIsAddingNewOutline] = useState(false);
   const [editingOutlines, setEditingOutlines] = useState({});
-  const [isAnyOutlineRenaming, setAnyOutlineRenaming] = useState(false);
-  const [isMultiSelectMode, setMultiSelectMode] = useState(false);
+  const [isAnyOutlineRenaming, setIsAnyOutlineRenaming] = useState(false);
+  const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
   const [selectedOutlines, setSelectedOutlines] = useState([]);
   const customizableUI = featureFlags.customizableUI;
 
@@ -86,7 +74,7 @@ const OutlinesPanel = ({ isTest = false }) => {
   }, [outlinesNotLoaded, documentLoaded]);
 
   useLayoutEffect(() => {
-    setAddingNewOutline(false);
+    setIsAddingNewOutline(false);
 
     if (nextPathRef.current !== null) {
       setActiveOutlinePath(nextPathRef.current);
@@ -95,7 +83,7 @@ const OutlinesPanel = ({ isTest = false }) => {
 
     const shouldResetMultiSelectedMode = !outlines || outlines.length === 0;
     if (shouldResetMultiSelectedMode) {
-      setMultiSelectMode(false);
+      setIsMultiSelectMode(false);
     }
   }, [outlines]);
 
@@ -106,12 +94,12 @@ const OutlinesPanel = ({ isTest = false }) => {
       workerType === workerTypes.IMAGE
     );
 
-    const evaluateOutlineEditable = () => core.isFullPDFEnabled() && isSupportedType && outlineEditingEnabled;
+    const evaluateOutlineEditable = () => core.isFullPDFEnabled() && isSupportedType && outlineEditingEnabled && !isViewOnly;
 
-    setOutlineEditable(evaluateOutlineEditable());
+    setIsOutlineEditable(evaluateOutlineEditable());
 
     const onDocumentLoaded = () => {
-      setOutlineEditable(evaluateOutlineEditable());
+      setIsOutlineEditable(evaluateOutlineEditable());
     };
 
     core.addEventListener('documentLoaded', onDocumentLoaded);
@@ -120,7 +108,7 @@ const OutlinesPanel = ({ isTest = false }) => {
 
   useEffect(() => {
     const isAnyEditing = Object.values(editingOutlines).some((value) => value);
-    setAnyOutlineRenaming(isAnyEditing);
+    setIsAnyOutlineRenaming(isAnyEditing);
   }, [editingOutlines, outlines]);
 
   useEffect(() => {
@@ -319,7 +307,7 @@ const OutlinesPanel = ({ isTest = false }) => {
               dataElement={DataElements.OUTLINE_MULTI_SELECT}
               label={t('option.bookmarkOutlineControls.done')}
               disabled={isAddingNewOutline}
-              onClick={() => setMultiSelectMode(false)}
+              onClick={() => setIsMultiSelectMode(false)}
               ariaLabel={`${t('option.bookmarkOutlineControls.done')} ${t('action.edit')}`}
             />
             :
@@ -329,7 +317,7 @@ const OutlinesPanel = ({ isTest = false }) => {
               label={t('option.bookmarkOutlineControls.edit')}
               disabled={isAddingNewOutline || outlinesNotLoaded || outlines.length === 0}
               onClick={() => {
-                setMultiSelectMode(true);
+                setIsMultiSelectMode(true);
                 setSelectedOutlines([]);
               }}
               ariaLabel={`${t('action.edit')} ${t('component.outlinesPanel')}`}
@@ -347,7 +335,7 @@ const OutlinesPanel = ({ isTest = false }) => {
             setActiveOutlinePath,
             activeOutlinePath,
             isOutlineActive: (outline) => getPath(outline) === activeOutlinePath,
-            setAddingNewOutline,
+            setIsAddingNewOutline,
             isAddingNewOutline,
             setEditingOutlines,
             editingOutlines,
@@ -363,7 +351,7 @@ const OutlinesPanel = ({ isTest = false }) => {
             removeOutlines,
           }}
         >
-          <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
+          <DndProvider backend={isMobileDevice ? TouchBackend : HTML5Backend}>
             <OutlinesDragLayer/>
 
             <div className="bookmark-outline-row">
@@ -375,7 +363,7 @@ const OutlinesPanel = ({ isTest = false }) => {
                   <OutlineContent
                     isAdding={true}
                     text={''}
-                    onCancel={() => setAddingNewOutline(false)}
+                    onCancel={() => setIsAddingNewOutline(false)}
                   />
                 </DataElementWrapper>
               )}
@@ -414,7 +402,7 @@ const OutlinesPanel = ({ isTest = false }) => {
                     img="icon-menu-add"
                     ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
                     disabled={selectedOutlines.length > 0 || isAddingNewOutline || isAnyOutlineRenaming}
-                    onClick={() => setAddingNewOutline(true)}
+                    onClick={() => setIsAddingNewOutline(true)}
                   />
                   <Button
                     className="multi-selection-button"
@@ -430,7 +418,7 @@ const OutlinesPanel = ({ isTest = false }) => {
                   dataElement={DataElements.OUTLINE_ADD_NEW_BUTTON}
                   disabled={isAddingNewOutline || isAnyOutlineRenaming}
                   label={`${t('action.add')} ${t('component.outlinePanel')}`}
-                  onClick={() => setAddingNewOutline(true)}
+                  onClick={() => setIsAddingNewOutline(true)}
                   ariaLabel={`${t('action.add')} ${t('component.outlinesPanel')}`}
                 />
               }

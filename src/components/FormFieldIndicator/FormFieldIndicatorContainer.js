@@ -37,7 +37,8 @@ const FormFieldIndicatorContainer = () => {
     return formFieldAnnotationsList
       .filter((fieldAnnotation) => {
         return fieldAnnotation.getCustomData('trn-form-field-show-indicator') === 'true';
-      }).map((fieldAnnotation) => {
+      })
+      .map((fieldAnnotation) => {
         return createFormFieldIndicator(fieldAnnotation);
       });
   };
@@ -52,7 +53,6 @@ const FormFieldIndicatorContainer = () => {
       core.removeEventListener('documentUnloaded', resetIndicators);
     };
   }, []);
-
 
   useEffect(() => {
     setIndicators(getIndicators());
@@ -82,29 +82,31 @@ const FormFieldIndicatorContainer = () => {
   const createFormFieldIndicator = (annotation) => {
     const { scrollLeft, scrollTop } = core.getScrollViewElement();
     const payload = {
-      displayMode: core.getDocumentViewer().getDisplayModeManager().getDisplayMode(),
+      displayMode: core
+        .getDocumentViewer()
+        .getDisplayModeManager()
+        .getDisplayMode(),
       viewerBoundingRect: core.getViewerElement().getBoundingClientRect(),
-      appBoundingRect: getRootNode().getElementById('app').getBoundingClientRect(),
+      appBoundingRect: getRootNode()
+        .getElementById('app')
+        .getBoundingClientRect(),
       scrollLeft: scrollLeft,
       scrollTop: scrollTop,
     };
-    return (<FormFieldIndicator
-      key={`indicator_${annotation.Id}`}
-      annotation={annotation}
-      parameters={payload} />);
+    return <FormFieldIndicator key={`indicator_${annotation.Id}`} annotation={annotation} parameters={payload} />;
   };
 
   if (isOpen && !isDisabled) {
-    return (<>
-      {
-        createPortal(<div id="form-field-indicator-wrapper" >
-          <div data-element={DataElements['FORM_FIELD_INDICATOR_CONTAINER']}>
-            {indicators}
-          </div>
-        </div>, (window.isApryseWebViewerWebComponent)
-          ? getRootNode().getElementById('app') : document.body)
-      }
-    </>);
+    return (
+      <>
+        {createPortal(
+          <div id="form-field-indicator-wrapper">
+            <div data-element={DataElements['FORM_FIELD_INDICATOR_CONTAINER']}>{indicators}</div>
+          </div>,
+          window.isApryseWebViewerWebComponent ? getRootNode().getElementById('app') : document.body,
+        )}
+      </>
+    );
   }
 
   return null;

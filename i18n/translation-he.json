@@ -1,0 +1,6040 @@
+{
+  "action": {
+    "addParagraph": "הוסף פסקה",
+    "add": "הוסף",
+    "addSheet": "הוסף גיליון",
+    "apply": "החל",
+    "applyAll": "החל הכל",
+    "calendar": "לוח שנה",
+    "calibrate": "לדרג",
+    "cancel": "בטל",
+    "confirm": "לאשר",
+    "currentPageIs": "הדף הנוכחי הוא",
+    "clear": "נקה",
+    "clearAll": "נקה הכל",
+    "close": "סגור",
+    "undo": "בטל",
+    "redo": "בצע שוב",
+    "comment": "הערה",
+    "reply": "הוסף תגובה",
+    "copy": "העתק",
+    "cut": "גזור",
+    "paste": "הדבק",
+    "pasteWithoutFormatting": "הדבקה ללא עיצוב",
+    "delete": "מחק",
+    "deleted": "נמחק",
+    "group": "קבוצה",
+    "ungroup": "לפרוק קבוצה",
+    "download": "הורדה",
+    "edit": "ערוך",
+    "collapse": "צמצם",
+    "expand": "הרחב",
+    "extract": "חלץ",
+    "extractPage": "חלץ עמוד",
+    "enterFullscreen": "כניסה למסך מלא",
+    "exitFullscreen": "יציאה ממסך מלא",
+    "fit": "להתאים",
+    "fitToPage": "התאם לעמוד",
+    "fitToWidth": "התאם לרוחב",
+    "more": "עוד",
+    "openFile": "פתח קובץ",
+    "showMoreFiles": "הצג קבצים נוספים",
+    "page": "עמוד",
+    "of": "של",
+    "pagePrev": "עמוד קודם",
+    "pageNext": "עמוד הבא",
+    "pageSet": "הגדר עמוד",
+    "print": "הדפס",
+    "proceed": "להתקדם",
+    "name": "שם",
+    "rename": "שינוי שם",
+    "remove": "להסיר",
+    "ok": "בסדר",
+    "rotate": "כיוון העמוד",
+    "rotate3D": "לסובב",
+    "rotateClockwise": "סיבוב עם כיוון השעון",
+    "rotateCounterClockwise": "סיבוב נגד כיוון השעון",
+    "rotatedClockwise": "מסובב עם כיוון השעון",
+    "rotatedCounterClockwise": "סיבוב נגד כיוון השעון",
+    "rotationIs": "סיבוב העמודים הנוכחי הוא",
+    "movedToBottomOfDocument": "הועבר לתחתית המסמך",
+    "movedToTopofDocument": "הועבר לראש המסמך",
+    "extracted": "שחולץ",
+    "save": "שמור",
+    "post": "פרסם",
+    "create": "צור",
+    "update": "עדכן",
+    "showMoreResults": "הצג תוצאות נוספות",
+    "sign": "סימן",
+    "style": "סגנון",
+    "submit": "שלח",
+    "zoom": "זום",
+    "zoomIn": "התקרב",
+    "zoomOut": "התרחק",
+    "zoomSet": "הגדר זום",
+    "zoomChanged": "הזום הנוכחי הוא",
+    "zoomControls": "פקדי זום",
+    "draw": "צייר",
+    "type": "סוג",
+    "upload": "העלאה",
+    "link": "קשר",
+    "unlink": "מחיקת קישור",
+    "fileAttachmentDownload": "הורד את הקובץ המצורף",
+    "prevResult": "תוצאה קודמת",
+    "nextResult": "התוצאה הבאה",
+    "prev": "קודם",
+    "next": "הבא",
+    "startFormEditing": "התחל עריכת טופס",
+    "exitFormEditing": "יציאה ממצב עריכת טופס",
+    "exit": "יציאה",
+    "addOption": "הוסף אפשרות",
+    "formFieldEdit": "עריכת שדה טופס",
+    "formFieldEditMode": "עריכת שדות טופס",
+    "contentEditMode": "עריכת תוכן",
+    "viewShortCutKeysFor3D": "הצג מקשי קיצור",
+    "markAllRead": "סמן הכל כנקרא",
+    "pageInsertion": "הכנסת עמוד",
+    "insertPage": "הוסף עמוד",
+    "insert": "להכניס",
+    "pageManipulation": "מניפולציה של עמודים",
+    "replace": "להחליף",
+    "replacePage": "החלפת עמוד",
+    "modal": "הון",
+    "isOpen": "פתוח",
+    "setDestination": "הגדרת יעד",
+    "showLess": "הצג פחות",
+    "showMore": "עוד",
+    "chooseFile": "בחר קובץ",
+    "changeDate": "תאריך שינוי",
+    "browse": "עיון בקבצים",
+    "selectYourOption": "בחר את האפשרות שלך",
+    "open": "פתח",
+    "deselectAll": "בטל את הבחירה של הכל",
+    "select": "בחר",
+    "buttonPressed": "לחצן {{buttonName}} נלחץ",
+    "moveToTop": "מעבר למעלה",
+    "moveToBottom": "העבר לתחתית",
+    "movePageToTop": "העברת עמוד לראש הדף",
+    "movePageToBottom": "העברת עמוד לתחתית",
+    "moveUp": "הזז למעלה",
+    "moveDown": "הזז למטה",
+    "moveLeft": "הזז שמאלה",
+    "moveRight": "הזז ימינה",
+    "backToMenu": "חזרה לתפריט",
+    "redactPages": "עריכת דפים",
+    "playAudio": "הפעלת אודיו",
+    "pauseAudio": "השהיית אודיו",
+    "selectAll": "בחר הכל",
+    "unselect": "בטל בחירה",
+    "addMark": "הוסף סימן",
+    "viewFile": "הצג קובץ",
+    "multiReplyAnnotations": "תשובה להערות שנבחרו ({{count}})",
+    "comparePages": "השווה דפים",
+    "startComparison": "התחל השוואה",
+    "showComparison": "הצג השוואה",
+    "highlightChanges": "הדגשת שינויים",
+    "back": "חזרה",
+    "clearSignature": "חתימה ברורה",
+    "clearInitial": "נקה ראשי תיבות",
+    "readOnlySignature": "לא ניתן למחוק חתימה לקריאה בלבד",
+    "newDocument": "מסמך חדש",
+    "sideBySideView": "מבט זה לצד זה",
+    "pageNumberInput": "הזנת מספר עמוד",
+    "addNewColor": "הוסף צבע חדש",
+    "deleteColor": "מחק את הצבע שנבחר",
+    "copySelectedColor": "העתק את הצבע הנבחר",
+    "showMoreColors": "הצג עוד צבעים",
+    "showLessColors": "הצג פחות צבעים",
+    "fromCustomColorPicker": "מבוחר צבעים מותאם אישית",
+    "newSpreadsheetDocument": "גיליון אלקטרוני חדש",
+    "resetDefault": "איפוס לברירת מחדל"
+  },
+  "annotation": {
+    "areaMeasurement": "אזור",
+    "arc": "קשת",
+    "arcMeasurement": "מדידת קשת",
+    "arrow": "חץ",
+    "callout": "הסבר",
+    "crop": "חיתוך עמוד",
+    "caret": "קארט",
+    "dateFreeText": "לוח שנה",
+    "formFillCheckmark": "תקתוק",
+    "formFillCross": "לחצות",
+    "distanceMeasurement": "מרחק",
+    "rectangularAreaMeasurement": "שטח מלבני",
+    "ellipseMeasurement": "אזור אליפסה",
+    "countMeasurement": "מדידת ספירה",
+    "ellipse": "אליפסה",
+    "eraser": "מחק",
+    "fileattachment": "קובץ מצורף",
+    "freehand": "יד חופשית",
+    "freeHandHighlight": "סימון יד חופשית",
+    "freetext": "טקסט חופשי",
+    "markInsertText": "הכנס טקסט",
+    "markReplaceText": "החלפת טקסט",
+    "highlight": "שיא",
+    "image": "תמונה",
+    "line": "קו",
+    "perimeterMeasurement": "היקפי",
+    "polygon": "מצולע",
+    "polygonCloud": "ענן",
+    "polyline": "פוליליין",
+    "rectangle": "מלבן",
+    "redact": "עריכה",
+    "formFillDot": "נקודה",
+    "signature": "חתימה",
+    "snipping": "כלי חיתוך",
+    "squiggly": "מתפתל",
+    "stamp": "חותמת",
+    "stickyNote": "פתק",
+    "strikeout": "סטרייקאאוט",
+    "underline": "לשים דגש",
+    "custom": "מנהג",
+    "rubberStamp": "חותמת גומי",
+    "note": "פתק",
+    "textField": "שדה טקסט",
+    "signatureFormField": "שדה חתימה",
+    "checkBoxFormField": "שדה תיבת סימון",
+    "radioButtonFormField": "שדה כפתור רדיו",
+    "listBoxFormField": "שדה תיבת רשימה",
+    "comboBoxFormField": "שדה תיבה משולבת",
+    "link": "קשר",
+    "other": "אחר",
+    "3D": "תלת-ממד",
+    "sound": "קול",
+    "changeView": "שנה תצוגה",
+    "newImage": "תמונה חדשה",
+    "defaultCustomStampTitle": "חותמת מותאמת אישית"
+  },
+  "rubberStamp": {
+    "Approved": "מאושר",
+    "AsIs": "כפי שהוא",
+    "Completed": "הושלם",
+    "Confidential": "סודי",
+    "Departmental": "מחלקתי",
+    "Draft": "טיוטה",
+    "Experimental": "נסיוני",
+    "Expired": "פג תוקף",
+    "Final": "סופי",
+    "ForComment": "לתגובה",
+    "ForPublicRelease": "לפרסום ציבורי",
+    "InformationOnly": "מידע בלבד",
+    "NotApproved": "לא אושר",
+    "NotForPublicRelease": "לא לפרסום ציבורי",
+    "PreliminaryResults": "תוצאות ראשוניות",
+    "Sold": "נמכר",
+    "TopSecret": "סודי ביותר",
+    "Void": "בטל",
+    "SHSignHere": "חתום כאן",
+    "SHWitness": "עד",
+    "SHInitialHere": "ראשי תיבות כאן",
+    "SHAccepted": "מקובל",
+    "SBRejected": "נדחה"
+  },
+  "component": {
+    "attachmentPanel": "קבצים מצורפים",
+    "leftPanel": "פאנל שמאלי",
+    "toolsHeader": "כלי עבודה",
+    "searchOverlay": "לחפש",
+    "searchPanel": "לחפש",
+    "menuOverlay": "תפריט",
+    "notesPanel": "הערות",
+    "indexPanel": "לוח אינדקס",
+    "outlinePanel": "מתאר",
+    "outlinesPanel": "קווי מתאר",
+    "newOutlineTitle": "כותרת מתווה חדשה",
+    "outlineTitle": "כותרת מתווה",
+    "destination": "יעד",
+    "bookmarkPanel": "סימניה",
+    "bookmarksPanel": "סימניות",
+    "bookmarkTitle": "כותרת לסימניות",
+    "bookmarkPage": "עמוד",
+    "signaturePanel": "חתימות",
+    "layersPanel": "שכבות",
+    "thumbnailsPanel": "תמונות ממוזערות",
+    "toolsButton": "כלי עבודה",
+    "redaction": "עריכה",
+    "viewControls": "בקרות תצוגה",
+    "pageControls": "פקדי עמוד",
+    "calibration": "כיול",
+    "zoomOverlay": "שכבת-על של זום",
+    "textPopup": "חלון קופץ טקסט",
+    "createStampButton": "צור בול חדש",
+    "filter": "לסנן",
+    "multiSelectButton": "בחירה מרובה",
+    "pageReplaceModalTitle": "החלפת עמוד",
+    "files": "קבצים",
+    "file": "קובץ",
+    "editText": "עריכת טקסט",
+    "redactionPanel": "לוח עריכה",
+    "tabLabel": "טאב",
+    "noteGroupSection": {
+      "open": "הצג את כל ההערות",
+      "close": "סגור את כל ההערות"
+    },
+    "comparePanel": "השוואת לוח",
+    "mainMenu": "תפריט ראשי"
+  },
+  "message": {
+    "showMore": "הצג עוד",
+    "showLess": "הצג פחות",
+    "toolsOverlayNoPresets": "אין הגדרות קבועות מראש",
+    "badDocument": "טעינת המסמך נכשלה. המסמך פגום או לא תקין.",
+    "customPrintPlaceholder": "לדוגמה 3, 4-10",
+    "encryptedAttemptsExceeded": "טעינת המסמך המוצפן נכשלה. יותר מדי ניסיונות.",
+    "encryptedUserCancelled": "טעינת המסמך המוצפן נכשלה. הזנת הסיסמה בוטלה.",
+    "enterPassword": "מסמך זה מוגן בסיסמה. אנא הזן סיסמה",
+    "incorrectPassword": "סיסמה שגויה, ניסיונות שנותרו: {{ remainingAttempts }}",
+    "noAnnotations": "התחל לרשום הערות כדי להשאיר תגובה.",
+    "noAnnotationsReadOnly": "למסמך זה אין הערות.",
+    "noAnnotationsFilter": "התחל ליצור הערות ומסננים יופיעו כאן.",
+    "noBookmarks": "אין סימניות זמינות",
+    "noOutlines": "אין קווי מתאר זמינים",
+    "noAttachments": "למסמך זה אין קבצים מצורפים.",
+    "noResults": "לא נמצאו תוצאות.",
+    "numResultsFound": "תוצאות שנמצאו",
+    "loadError": "שגיאה בטעינת המסמך",
+    "urlInputFileLoadError": "לא ניתן היה לאחזר את הקובץ מכתובת האתר שסופקה.",
+    "notSupported": "סוג קובץ זה אינו נתמך.",
+    "passwordRequired": "נדרשת סיסמה",
+    "enterPasswordPlaceholder": "הזן סיסמה",
+    "preparingToPrint": "מתכונן להדפסה...",
+    "annotationReplyCount": "תשובה",
+    "annotationReplyCount_plural": "תשובות {{count}}",
+    "printTotalPageCount": "סה\"כ: עמוד {{count}}",
+    "printTotalPageCount_plural": "סה\"כ: {{count}} עמודים",
+    "processing": "עיבוד...",
+    "searching": "מחפש...",
+    "searchCommentsPlaceholder": "חיפוש תגובות",
+    "searchDocumentPlaceholder": "חיפוש מסמך",
+    "clearSearchResults": "נקה תוצאות חיפוש",
+    "toggleReplaceInput": "החלפת קלט",
+    "toggleSearchOptions": "החלף אפשרויות חיפוש",
+    "searchResultsCleared": "תוצאות החיפוש נוקו",
+    "searchSettingsPlaceholder": "הגדרות חיפוש",
+    "searchSuggestionsPlaceholder": "הצעות חיפוש",
+    "signHere": "חתום כאן",
+    "insertTextHere": "הכנס טקסט כאן",
+    "imageSignatureAcceptedFileTypes": "רק {{acceptedFileTypes}} מתקבלים",
+    "signatureRequired": "נדרשת חתימה וראשי תיבות כדי להמשיך",
+    "enterMeasurement": "הזן את המדידה בין שתי הנקודות",
+    "errorEnterMeasurement": "המספר שהזנת אינו חוקי, ניתן להזין ערכים כמו 7.5 או 7 1/2",
+    "linkURLorPage": "קישור או דף",
+    "warning": "אזהרה",
+    "svgMalicious": "סקריפט SVG הוזנח מטעמי אבטחה",
+    "doNotShowAgain": "אל תראה לי את זה שוב",
+    "doNotAskAgain": "אל תשאל שוב",
+    "enterReplacementText": "הזן את הטקסט שברצונך להחליף",
+    "sort": "סוג",
+    "sortBy": "מיין לפי",
+    "emptyCustomStampInput": "טקסט החותמת אינו יכול להיות ריק",
+    "unpostedComment": "תגובה שלא פורסמה",
+    "lockedLayer": "השכבה נעולה",
+    "layerVisibililtyNoChange": "לא ניתן לשנות את נראות השכבה",
+    "noLayers": "למסמך זה אין שכבות.",
+    "noSignatureFields": "למסמך זה אין שדות חתימה.",
+    "untitled": "ללא כותרת",
+    "selectHowToLoadFile": "בחר כיצד לטעון את המסמך שלך",
+    "openFileByUrl": "פתיחת קובץ לפי כתובת URL:",
+    "enterUrlHere": "הזן כאן כתובת URL",
+    "openLocalFile": "פתיחת קובץ מקומי:",
+    "selectFile": "בחר קובץ",
+    "selectPageToReplace": "בחר את העמודים במסמך שברצונך להחליף בהם.",
+    "embeddedFiles": "קבצים מוטמעים",
+    "pageNum": "עמוד",
+    "viewBookmark": "הצג סימניה בדף",
+    "error": "שגיאה",
+    "errorPageNumber": "מספר עמוד לא חוקי. המגבלה היא",
+    "errorBlankPageNumber": "אנא ציין מספר עמוד",
+    "errorLoadingDocument": "אירעה בעיה בקריאת מסמך זה וייתכן שחלק מהדפים לא יוצגו. משמעות הדבר היא שהמסמך עלול להיות פגום. מספר הדפים הכולל הוא {{totalPageCount}} ומספר הדפים המוצגים הוא {{displayedPageCount}}.",
+    "noRevisions": "למסמך זה אין תיקונים.",
+    "listEmptyValue": "שדה אחד או יותר מכילים ערך ריק."
+  },
+  "option": {
+    "type": {
+      "caret": "קארט",
+      "custom": "מנהג",
+      "ellipse": "אליפסה",
+      "fileattachment": "קובץ מצורף",
+      "freehand": "יד חופשית",
+      "callout": "הסבר",
+      "freetext": "טקסט חופשי",
+      "line": "קו",
+      "polygon": "מצולע",
+      "polyline": "פוליליין",
+      "rectangle": "מלבן",
+      "redact": "עריכה",
+      "signature": "חתימה",
+      "stamp": "חותמת",
+      "stickyNote": "פתק דביק",
+      "highlight": "שיא",
+      "strikeout": "סטרייקאאוט",
+      "underline": "לשים דגש",
+      "squiggly": "מתפתל",
+      "3D": "תלת-ממד",
+      "other": "אחר",
+      "initials": "ראשי תיבות",
+      "saved": "נשמר"
+    },
+    "notesOrder": {
+      "dropdownLabel": "סדר מיון רשימה",
+      "position": "מצב",
+      "time": "זמן",
+      "status": "סטטוס",
+      "author": "מחבר",
+      "type": "סוג",
+      "color": "צבע",
+      "createdDate": "תאריך יצירה",
+      "modifiedDate": "תאריך שינוי"
+    },
+    "toolbarGroup": {
+      "dropdownLabel": "קבוצות סרגל כלים",
+      "flyoutLabel": "סרט",
+      "toolbarGroup-View": "נוף",
+      "toolbarGroup-Annotate": "הוסף הערות",
+      "toolbarGroup-Shapes": "צורות",
+      "toolbarGroup-Insert": "להכניס",
+      "toolbarGroup-Measure": "למדוד",
+      "toolbarGroup-Edit": "ערוך",
+      "toolbarGroup-EditText": "עריכת טקסט",
+      "toolbarGroup-FillAndSign": "מילוי וחתום",
+      "toolbarGroup-Forms": "טפסים",
+      "toolbarGroup-Redact": "עריכה",
+      "toolbarGroup-oe-Home": "בית",
+      "toolbarGroup-oe-Insert": "להכניס",
+      "toolbarGroup-oe-Layout": "מערך",
+      "toolbarGroup-oe-Review": "סקירה"
+    },
+    "annotationColor": {
+      "StrokeColor": "שבץ",
+      "FillColor": "למלא",
+      "TextColor": "טקסט"
+    },
+    "colorPalette": {
+      "colorLabel": "צבע"
+    },
+    "colorPalettePicker": {
+      "addColor": "הוסף צבע חדש",
+      "selectColor": "בחר צבע"
+    },
+    "displayMode": {
+      "layout": "פריסת עמוד",
+      "pageTransition": "מעבר עמוד"
+    },
+    "documentControls": {
+      "selectTooltip": "בחר מספר עמודים",
+      "closeTooltip": "סגור את הבחירה המרובה"
+    },
+    "bookmarkOutlineControls": {
+      "edit": "ערוך",
+      "done": "נעשה",
+      "reorder": "סדר מחדש"
+    },
+    "layout": {
+      "cover": "כריכה מול עמוד",
+      "double": "עמוד כפול",
+      "single": "עמוד בודד"
+    },
+    "mathSymbols": "סמלים מתמטיים",
+    "notesPanel": {
+      "separator": {
+        "today": "היום",
+        "yesterday": "אתמול",
+        "unknown": "לא ידוע"
+      },
+      "noteContent": {
+        "noName": "(ללא שם)",
+        "noDate": "(ללא תאריך)"
+      },
+      "toggleMultiSelect": "החלף/הפעל בחירה מרובה עבור ביאור"
+    },
+    "pageTransition": {
+      "continuous": "עמוד רציף",
+      "default": "עמוד אחר עמוד",
+      "reader": "קורא"
+    },
+    "print": {
+      "all": "כל",
+      "current": "עמוד נוכחי",
+      "pages": "דפים להדפסה",
+      "specifyPages": "ציין עמודים",
+      "view": "תצוגה נוכחית",
+      "pageQuality": "איכות הדפסה",
+      "qualityNormal": "נורמלי",
+      "qualityHigh": "גבוה",
+      "includeAnnotations": "כלול הערות",
+      "includeComments": "כלול הערות",
+      "printSettings": "הגדרות הדפסה",
+      "printGrayscale": "הדפס גווני אפור",
+      "printCurrentDisabled": "התצוגה הנוכחית זמינה רק בעת צפייה בדף בודד."
+    },
+    "printInfo": {
+      "author": "מחבר",
+      "subject": "נושא",
+      "date": "תאריך"
+    },
+    "redaction": {
+      "markForRedaction": "סימון לעריכה"
+    },
+    "searchPanel": {
+      "caseSensitive": "תלוי רישיות",
+      "wholeWordOnly": "מילה שלמה",
+      "wildcard": "תו כללי",
+      "replace": "להחליף",
+      "replaceAll": "החלף הכל",
+      "replaceText": "החלפת טקסט",
+      "confirmMessageReplaceAll": "האם אתה בטוח שברצונך להחליף את כל הטקסט?",
+      "confirmMessageReplaceOne": "האם אתה בטוח שברצונך להחליף את הטקסט הזה?",
+      "moreOptions": "אפשרויות נוספות",
+      "lessOptions": "פחות אפשרויות",
+      "confirm": "לאשר"
+    },
+    "toolsOverlay": {
+      "currentStamp": "בול נוכחי",
+      "currentSignature": "חתימה נוכחית",
+      "signatureAltText": "חתימה"
+    },
+    "stampOverlay": {
+      "addStamp": "הוסף בול חדש"
+    },
+    "signatureOverlay": {
+      "addSignatureOrInitials": "חתימה/ראשי תיבות חדשים",
+      "addSignature": "חתימה חדשה"
+    },
+    "signatureModal": {
+      "modalName": "צור חתימה חדשה",
+      "dragAndDrop": "גרור ושחרר את התמונה שלך כאן",
+      "or": "או",
+      "pickImage": "בחר חתימה",
+      "selectImage": "בחר את התמונה שלך כאן",
+      "typeSignature": "סוג חתימה*",
+      "typeInitial": "ראשי תיבות של סוג*",
+      "drawSignature": "צייר חתימה*",
+      "drawInitial": "צייר ראשי תיבות*",
+      "imageSignature": "חתימת תמונה",
+      "imageInitial": "ראשי תיבות של תמונה",
+      "pickInitialsFile": "בחר ראשי תיבות",
+      "noSignatures": "אין כרגע חתימות שמורות.",
+      "fontStyle": "סגנון גופן",
+      "textSignature": {
+        "dropdownLabel": "משפחת גופנים"
+      }
+    },
+    "pageReplacementModal": {
+      "yourFiles": "הקבצים שלך",
+      "chooseFile": "בחר קובץ",
+      "localFile": "העלאה",
+      "pageReplaceInputLabel": "החלפת עמוד",
+      "pageReplaceInputFromSource": "עם עמוד/ים",
+      "warning": {
+        "title": "לצאת מהחלפת דף?",
+        "message": "יציאה תבטל את כל הבחירות שביצעת עד כה. האם אתה בטוח שאתה עדיין רוצה לצאת?"
+      }
+    },
+    "filterAnnotModal": {
+      "color": "צבע",
+      "includeReplies": "כלול תשובות",
+      "filters": "מסננים",
+      "user": "משתמש",
+      "type": "סוג",
+      "status": "סטטוס",
+      "filterSettings": "הגדרות סינון",
+      "filterDocument": "סינון מסמך וחלונית הערות"
+    },
+    "state": {
+      "accepted": "מקובל",
+      "rejected": "נדחה",
+      "completed": "הושלם",
+      "cancelled": "בוטלה",
+      "set": "הגדר סטטוס:",
+      "setBy": "נקבע על ידי",
+      "none": "אף לא אחד",
+      "marked": "מסומן",
+      "unmarked": "לא מסומן"
+    },
+    "measurementOverlay": {
+      "scale": "יחס קנה מידה",
+      "angle": "זוית",
+      "distance": "מרחק",
+      "perimeter": "היקפי",
+      "area": "אזור",
+      "distanceMeasurement": "מדידת מרחק",
+      "perimeterMeasurement": "מדידת היקפית",
+      "arcMeasurement": "מדידת קשת",
+      "areaMeasurement": "מדידת שטח",
+      "countMeasurement": "מדידת ספירה",
+      "radius": "רדיוס",
+      "count": "לספור",
+      "length": "משך",
+      "xAxis": "ציר X",
+      "yAxis": "ציר Y"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "שינוי גודל גופן באופן דינמי"
+    },
+    "measurementOption": {
+      "scale": "סולם",
+      "selectScale": "בחירת קנה מידה",
+      "selectScaleDropdown": "בחר תפריט נפתח קנה מידה"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "לדרג",
+        "custom": "מנהג",
+        "fractionalUnits": "יחידות חלקיות",
+        "precision": "דיוק",
+        "preset": "הגדרה מראש",
+        "paperUnits": "יחידות נייר",
+        "displayUnits": "יחידות תצוגה",
+        "fractionUnitsTooltip": "יחידות שבר חלות רק על in ו-ft-in",
+        "incorrectSyntax": "תחביר שגוי",
+        "units": "יחידות"
+      },
+      "scaleOverlay": {
+        "addNewScale": "הוסף קנה מידה חדש",
+        "selectTwoPoints": "בחר שתי נקודות בעלות ממד ידוע לכיול",
+        "inputKnowDimension": "הזן מידות ויחידות ידועות לכיול",
+        "multipleScales": "סולמות מרובים"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "מחיקת קנה מידה",
+        "scaleIsOn-delete-info": "סולם זה נמצא כיום בשימוש ב",
+        "page-delete-info": "עמוד",
+        "appliedTo-delete-info": "והוחל על",
+        "measurement": "מדידה",
+        "measurements": "מדידות",
+        "deletionIs": "המחיקה היא",
+        "irreversible": "בלתי הפיך",
+        "willDeleteMeasurement": "וימחק את המידות הקשורות.",
+        "confirmDelete": "האם אתה בטוח שאתה רוצה למחוק את קנה המידה הזה?",
+        "thisCantBeUndone": "לא ניתן לבטל את זה.",
+        "ifChangeScale": "אם תשנו את קנה המידה עבור המדידה או הכלי שנבחרו, קנה המידה",
+        "notUsedWillDelete": "לא ישמש עוד על ידי אף מדידה או כלי ויימחק. המחיקה אינה הפיכה.",
+        "ifToContinue": "האם אתה בטוח שאתה רוצה להמשיך?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "מחיקת תוכן",
+        "message": "האם אתה בטוח שברצונך למחוק את התוכן שנבחר? לא ניתן לבטל פעולה זו."
+      },
+      "digitalSign": {
+        "title": "אזהרה: מסמך אטום",
+        "message": "מסמך זה נחתם ואינו ניתן לשינוי או שינוי."
+      }
+    },
+    "stylePopup": {
+      "textStyle": "סגנון טקסט",
+      "colors": "צבעים",
+      "invalidFontSize": "גודל הגופן חייב להיות בטווח הבא",
+      "labelText": "טקסט תווית",
+      "labelTextPlaceholder": "הוסף טקסט תווית"
+    },
+    "styleOption": {
+      "style": "סגנון",
+      "solid": "מוצק",
+      "cloudy": "מעונן"
+    },
+    "slider": {
+      "opacity": "אטימות",
+      "thickness": "שבץ",
+      "text": "גודל טקסט"
+    },
+    "shared": {
+      "sheetIndex": "דף",
+      "page": "עמוד",
+      "precision": "דיוק",
+      "enableSnapping": "הפעלת הצמדה עבור כלי מדידה"
+    },
+    "watermark": {
+      "title": "סימן מים",
+      "addWatermark": "הוסף סימן מים",
+      "size": "גודל",
+      "location": "בחר מיקום לעריכת סימני מים",
+      "text": "טקסט",
+      "style": "סגנון",
+      "resetAllSettings": "איפוס כל ההגדרות",
+      "font": "גופן",
+      "addNew": "הוסף חדש",
+      "locations": {
+        "center": "מרכז",
+        "topLeft": "למעלה משמאל",
+        "topRight": "למעלה ימין",
+        "topCenter": "מרכז עליון",
+        "bottomLeft": "שמאל למטה",
+        "bottomRight": "למטה ימין",
+        "bottomCenter": "מרכז תחתון"
+      }
+    },
+    "thumbnailPanel": {
+      "delete": "מחיקת דף",
+      "rotateClockwise": "סיבוב עם כיוון השעון",
+      "rotateCounterClockwise": "סיבוב נגד כיוון השעון",
+      "rotatePageClockwise": "סובב את הדף עם כיוון השעון",
+      "rotatePageCounterClockwise": "סובב את הדף נגד כיוון השעון",
+      "moreOptions": "אפשרויות נוספות",
+      "moreOptionsMenu": "תפריט אפשרויות נוספות של תמונות ממוזערות",
+      "enterPageNumbers": "הזן מספרי עמודים כדי לבחור",
+      "multiSelectPages": "עמודים מרובים לבחירה",
+      "multiSelectPagesExample": "לדוגמה 1, 3, 5-10"
+    },
+    "thumbnailsControlOverlay": {
+      "move": "העברת דפים"
+    },
+    "richText": {
+      "bold": "נועז",
+      "italic": "נטוי",
+      "underline": "לשים דגש",
+      "strikeout": "סטרייקאאוט",
+      "alignLeft": "יישור טקסט שמאלה",
+      "alignRight": "יישור טקסט ימינה",
+      "alignCenter": "יישור טקסט למרכז",
+      "justifyCenter": "יישור טקסט במרכז",
+      "alignTop": "יישור למעלה",
+      "alignMiddle": "יישור באמצע",
+      "alignBottom": "יישור תחתון"
+    },
+    "customStampModal": {
+      "modalName": "צור בול חדש",
+      "stampText": "טקסט חותמת",
+      "timestampText": "טקסט חותמת זמן",
+      "Username": "שם משתמש",
+      "Date": "תאריך",
+      "Time": "זמן",
+      "fontStyle": "סגנון גופן",
+      "dateFormat": "פורמט תאריך",
+      "month": "חודש",
+      "day": "יום",
+      "year": "שנה",
+      "hour": "שעה",
+      "minute": "דקה",
+      "second": "שניה",
+      "textColor": "צבע הטקסט",
+      "backgroundColor": "צבע רקע",
+      "dateToolTipLabel": "מידע נוסף על פורמט תאריך",
+      "previewCustomStamp": "תצוגה מקדימה של"
+    },
+    "pageRedactModal": {
+      "addMark": "הוסף סימן",
+      "pageSelection": "בחירת עמוד",
+      "current": "עמוד נוכחי",
+      "specify": "ציין עמודים",
+      "odd": "דפים אי-זוגיים בלבד",
+      "even": "עמודים זוגיים בלבד"
+    },
+    "lineStyleOptions": {
+      "title": "סגנון"
+    },
+    "settings": {
+      "settings": "הגדרות",
+      "searchSettings": "הגדרות חיפוש",
+      "general": "כללי",
+      "language": "שפה",
+      "theme": "נושא",
+      "darkMode": "מצב כהה",
+      "lightMode": "מצב אור",
+      "advancedSetting": "הגדרות מתקדמות",
+      "viewing": "צפייה",
+      "disableFadePageNavigationComponent": "השבתת רכיב ניווט עמודים מעומעם",
+      "disableFadePageNavigationComponentDesc": "יש להשאיר תמיד את רכיב ניווט העמוד על המסך. התנהגות ברירת המחדל היא לטשטש אותו לאחר פרק זמן מסוים של חוסר פעילות.",
+      "enabledFormFieldHighlighting": "הפעל הדגשות של שדות טופס",
+      "enabledFormFieldHighlightingDesc": "הפעל סימון של שדות טופס במסמכי PDF. מופעל כברירת מחדל.",
+      "disableNativeScrolling": "השבתת גלילה מקורית",
+      "disableNativeScrollingDesc": "השבת התנהגות גלילה מקורית של מכשירים ניידים אם היא הופעלה בעבר. שים לב שהתנהגות גלילה מקורית של מכשירים ניידים כבויה כברירת מחדל.",
+      "annotations": "הערות",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "השבת עדכון סגנון ברירת מחדל של הכלי מחלון קופץ של ביאור",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "מבטל סנכרון של עדכוני סגנונות ביאור לכלי המשויך שיצר את הביאור. לכן, אם סגנון של ביאור משתנה, סגנונות ברירת המחדל של הכלי לא יעודכנו.",
+      "notesPanel": "לוח הערות",
+      "disableNoteSubmissionWithEnter": "השבתת שליחת הערות באמצעות Enter",
+      "disableNoteSubmissionWithEnterDesc": "השבת את היכולת לשלוח הערות על ידי לחיצה על Enter רק אם היא הייתה מופעלת בעבר. פעולה זו תחזיר את שליחת ההערות לברירת המחדל שהיא Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "השבתת הרחבה אוטומטית של שרשור התגובות",
+      "disableAutoExpandCommentThreadDesc": "מבטל את ההרחבה האוטומטית של כל שרשורי התגובות בחלונית ההערות.",
+      "disableReplyCollapse": "השבתת תגובה כיווץ",
+      "disableReplyCollapseDesc": "מבטל את כיווץ התשובות בחלונית ההערות.",
+      "disableTextCollapse": "השבתת כיווץ טקסט",
+      "disableTextCollapseDesc": "מבטל את כיווץ טקסט ההערה בחלונית ההערות.",
+      "search": "לחפש",
+      "disableClearSearchOnPanelClose": "השבת ניקוי חיפוש בלוח סגור",
+      "disableClearSearchOnPanelCloseDesc": "השבת ניקוי תוצאות חיפוש כאשר המשתמש סוגר את לוח החיפוש. כאשר האפשרות מושבתת, תוצאות החיפוש נשמרות גם אם המשתמש סוגר ופותח מחדש את לוח החיפוש. שים לב, מכשירים ניידים לעולם לא מוחקים תוצאות חיפוש גם אם הגדרה זו מופעלת. הסיבה לכך היא שיש לסגור את לוח החיפוש כדי להציג את תוצאות החיפוש במסמך.",
+      "pageManipulation": "מניפולציה של עמודים",
+      "disablePageDeletionConfirmationModal": "השבתת מודאל אישור מחיקת עמוד",
+      "disablePageDeletionConfirmationModalDesc": "השבת את מודול האישור בעת מחיקת עמוד מתצוגת התמונות הממוזערות",
+      "disableMultiselect": "השבתת בחירה מרובה",
+      "disableMultiselectDesc": "השבתת בחירה מרובה בחלונית התמונות הממוזערות השמאלית",
+      "miscellaneous": "שונות",
+      "keyboardShortcut": "קיצורי מקלדת",
+      "command": "פקודה",
+      "description": "תאור",
+      "action": "פעולה",
+      "rotateDocumentClockwise": "סובב את המסמך עם כיוון השעון",
+      "rotateDocumentCounterclockwise": "סובב את המסמך נגד כיוון השעון",
+      "copyText": "העתקת טקסט או הערות שנבחרו",
+      "pasteText": "הדבקת טקסט או הערות",
+      "undoChange": "ביטול שינוי ביאור",
+      "redoChange": "בצע שוב שינוי ביאור",
+      "openFile": "פתח את בורר הקבצים",
+      "openSearch": "פתח את שכבת החיפוש",
+      "zoomOptions": "אפשרויות זום",
+      "zoomIn": "התקרב",
+      "zoomOut": "התרחק",
+      "setHeaderFocus": "מגדיר את המיקוד לכותרת",
+      "fitScreenWidth": "התאם את המסמך לרוחב המסך במסך קטן (< 640 פיקסלים), אחרת התאם אותו לגודלו המקורי",
+      "print": "הדפס",
+      "bookmarkOpenPanel": "הוסף דף במהירות לסימניות ופתח את לוח הסימניות",
+      "goToPreviousPage": "עבור לעמוד הקודם",
+      "goToNextPage": "עבור לעמוד הבא",
+      "goToPreviousPageArrowUp": "מעבר לעמוד הקודם במצב פריסה יחידה (ArrowUp)",
+      "goToNextPageArrowDown": "מעבר לעמוד הבא במצב פריסה יחידה (חץ למטה)",
+      "holdSwitchPan": "החזק כדי לעבור למצב סיבוב ושחרר כדי לחזור לכלי הקודם",
+      "selectAnnotationEdit": "בחר בכלי עריכת ביאור",
+      "selectPan": "בחר את כלי הגלשן",
+      "selectCreateArrowTool": "בחר בכלי יצירת חץ לביאורים",
+      "selectCreateCalloutTool": "בחר בכלי AnnotationCreateCallout",
+      "selectEraserTool": "בחר בכלי מחק הערות",
+      "selectCreateFreeHandTool": "בחר בכלי יצירת ביאור (AnnotationCreateFreeHand)",
+      "selectCreateStampTool": "בחר בכלי AnnotationCreateStamp",
+      "selectCreateLineTool": "בחר בכלי יצירת קו ביאור",
+      "selectCreateStickyTool": "בחר בכלי יצירת ביאור דביק",
+      "selectCreateEllipseTool": "בחר בכלי יצירת אליפסה של ביאור",
+      "selectCreateRectangleTool": "בחר בכלי AnnotationCreateCantonle",
+      "selectCreateRubberStampTool": "בחר בכלי AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "בחר בכלי יצירת טקסט חופשי של ביאור",
+      "openSignatureModal": "פתח את המודאל של החתימה או את שכבת העל",
+      "selectCreateTextSquigglyTool": "בחר בכלי יצירת טקסט מפותל (AnnotationCreateTextSquiggly)",
+      "selectCreateTextHighlightTool": "בחר בכלי יצירת טקסט להדגשת ביאור",
+      "selectCreateTextStrikeoutTool": "בחר בכלי יצירת טקסט באמצעות מחיקת טקסט",
+      "selectCreateTextUnderlineTool": "בחר בכלי יצירת ביאור של טקסט תחתון",
+      "editKeyboardShortcut": "עריכת קיצור מקלדת",
+      "setShortcut": "הגדר קיצור דרך",
+      "editShortcut": "עריכת קיצור דרך",
+      "shortcutAlreadyExists": "קיצור המקשים שלמעלה כבר קיים.",
+      "close": "סגור את תיאור הכלי",
+      "spreadsheetEditor": {
+        "copyText": "העתקת טקסט או תאים שנבחרו",
+        "pasteText": "הדבקת טקסט או תאים",
+        "cutText": "גזירת טקסט או תאים שנבחרו",
+        "undoChange": "ביטול שינוי",
+        "redoChange": "בצע מחדש שינוי",
+        "selectAll": "בחר את כל התאים",
+        "moveToEdgeUp": "קפיצה לראש הגיליון",
+        "moveToEdgeDown": "קפיצה לתחתית הגיליון",
+        "moveToEdgeLeft": "קפיצה לעמודה השמאלית ביותר",
+        "moveToEdgeRight": "קפיצה לעמודה הימנית ביותר",
+        "adjustSelectionUp": "הרחב את הבחירה כלפי מעלה",
+        "adjustSelectionDown": "הרחב את הבחירה כלפי מטה",
+        "adjustSelectionLeft": "הרחב את הבחירה שמאלה",
+        "adjustSelectionRight": "הרחב את הבחירה ימינה",
+        "up": "הזזת תיבת בחירת התאים כלפי מעלה",
+        "down": "הזזת תיבת בחירת התאים כלפי מטה",
+        "left": "הזזת תיבת בחירת התאים שמאלה",
+        "right": "הזזת תיבת בחירת התאים ימינה",
+        "enter": "עריכת התא שנבחר",
+        "tab": "הזזת תיבת בחירת התאים ימינה",
+        "delete": "נקה נתוני סלולר"
+      }
+    },
+    "cellBorderStyle": {
+      "none": "אף לא אחד",
+      "thin": "מוצק",
+      "dashed": "מקווקו",
+      "dotted": "מנוקד"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "מחיקת דף",
+      "deleteMessage": "האם אתה בטוח שברצונך למחוק את העמוד/ים שנבחרו? לא ניתן לבטל פעולה זו.",
+      "deleteLastPageMessage": "לא ניתן למחוק את כל העמודים במסמך."
+    },
+    "extractPage": {
+      "title": "חלץ עמוד",
+      "message": "האם אתה בטוח שברצונך לחלץ את העמוד/ים שנבחרו?",
+      "confirmBtn": "חלץ",
+      "secondaryBtn": "חילוץ ומחיקה"
+    },
+    "redaction": {
+      "applyTile": "החלת עריכה",
+      "applyMessage": "פעולה זו תסיר לצמיתות את כל הפריטים שנבחרו להסרה. לא ניתן לבטל אותה."
+    },
+    "deleteBookmark": {
+      "title": "למחוק סימניה?",
+      "message": "האם אתה בטוח שברצונך למחוק את הסימניות האלה? לא ניתן לבטל פעולה זו."
+    },
+    "deleteOutline": {
+      "title": "למחוק את קווי המתאר?",
+      "message": "האם אתה בטוח שברצונך למחוק את קווי המתאר האלה?\n\nמחיקת קווי מתאר המכילים קווי מתאר מקוננים תגרום למחיקת כל המבנה הפנימי, ובמידת הצורך יהיה צורך ליצור אותו מחדש."
+    },
+    "selectPage": {
+      "selectTitle": "לא נבחרו דפים",
+      "selectMessage": "אנא בחר דפים ונסה שוב."
+    },
+    "colorPicker": {
+      "deleteTitle": "מחיקת צבע מותאם אישית",
+      "deleteMessage": "למחוק את הצבע המותאם אישית שנבחר? הוא יוסר מפלטת הצבעים שלך."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "מחיקת צבע מותאם אישית"
+    },
+    "multiDeleteAnnotation": {
+      "title": "למחוק הערות?",
+      "message": "מחיקה תסיר את כל התגובות, התשובות והקבוצות ולא ניתן לבטל אותה.\n\nהאם אתה בטוח שברצונך למחוק את ההערות הללו?"
+    },
+    "closeFile": {
+      "title": "לסגור בלי להוריד?",
+      "message": "בוצעו שינויים במסמך זה, האם אתה בטוח שברצונך לסגור אותו מבלי להוריד את עבודתך? לא ניתן לבטל פעולה זו.",
+      "rejectDownloadButton": "סגור ללא הורדה"
+    },
+    "connectToURL": {
+      "title": "אזהרת אבטחה",
+      "message": "מסמך זה מנסה להתחבר אל: \n\n{{- uri}}\n\nאם אתה בוטח במסמך זה, לחץ על אישור כדי לפתוח אותו."
+    },
+    "sheetTabRenameIssueOne": {
+      "title": "עריכת שם גיליון",
+      "message": "שם זה כבר קיים. אנא הזן שם אחר."
+    },
+    "sheetTabRenameIssueTwo": {
+      "title": "עריכת שם גיליון",
+      "message": "שם הגיליון אינו יכול להיות ריק. אנא הזן שם."
+    },
+    "sheetTabDeleteMessage": {
+      "title": "אזהרת עריכה",
+      "message": "האם אתה בטוח שברצונך למחוק את הגיליון הזה?"
+    },
+    "officeEditorPageLayout": {
+      "title": "פריסת עמוד",
+      "columnsMessage": "ההגדרות שבחרת עבור ריווח בין עמודות גדולות מדי עבור רוחב העמוד בחלקים מסוימים.",
+      "marginsMessage": "ההגדרות שבחרת עבור שוליים גדולות מדי עבור רוחב העמוד בחלקים מסוימים."
+    }
+  },
+  "shortcut": {
+    "arrow": "(א)",
+    "callout": "(ג)",
+    "copy": "(Ctrl C)",
+    "delete": "(מתוך ה-)",
+    "ellipse": "(ה-)",
+    "eraser": "(וגם)",
+    "freehand": "(ו)",
+    "freetext": "(ת)",
+    "highlight": "(ח)",
+    "line": "(ל)",
+    "pan": "(P)",
+    "rectangle": "(ר)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(ש)",
+    "squiggly": "(ז)",
+    "image": "(אני)",
+    "redo": "(Ctrl Shift Z)",
+    "redo_windows": "(Ctrl Y)",
+    "undo": "(Ctrl Z)",
+    "stickyNote": "(נ)",
+    "strikeout": "(ק)",
+    "underline": "(בתוך)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl U)",
+      "strikeout": "(Ctrl K)"
+    },
+    "rotate3D": "Shift + גרירה",
+    "zoom3D": "Shift + גלילה"
+  },
+  "tool": {
+    "pan": "פאן",
+    "select": "בחר",
+    "selectAnOption": "בחר אפשרות",
+    "Marquee": "זום מרקייז",
+    "Link": "קישור או דף",
+    "Standard": "תקן",
+    "Custom": "מנהג"
+  },
+  "link": {
+    "url": "כתובת אתר",
+    "page": "עמוד",
+    "enterurl": "הזן את כתובת האתר שאליה תרצה לקשר",
+    "enterUrlAlt": "הזן כתובת URL",
+    "insertLink": "הכנס קישור",
+    "insertLinkOrPage": "הוספת קישור או דף",
+    "enterpage": "הזן את מספר העמוד שאליו תרצה לקשר",
+    "urlLink": "קישור כתובת URL"
+  },
+  "Model3D": {
+    "add3D": "הוסף אובייקט תלת-ממדי",
+    "enterurl": "הזן את כתובת ה-URL של האובייקט התלת-ממדי בפורמט glTF",
+    "enterurlOrLocalFile": "הזן את כתובת ה-URL או העלה אובייקט תלת-ממדי בפורמט glTF",
+    "formatError": "רק פורמט glTF (.glb) נתמך"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "הזן כתובת URL או בחר קובץ לטעינה לתוך WebViewer",
+    "enterUrl": "הזן כתובת URL של הקובץ",
+    "extension": "סיומת קובץ",
+    "existingFile": "הקובץ כבר פתוח",
+    "addTab": "הוסף כרטיסייה",
+    "newTab": "כרטיסייה חדשה"
+  },
+  "datePicker": {
+    "previousMonth": "חודש קודם",
+    "nextMonth": "החודש הבא",
+    "months": {
+      "0": "ינואר",
+      "1": "פברואר",
+      "2": "מרס",
+      "3": "אפריל",
+      "4": "מאי",
+      "5": "יוני",
+      "6": "יולי",
+      "7": "אוגוסט",
+      "8": "ספטמבר",
+      "9": "אוקטובר",
+      "10": "נובמבר",
+      "11": "דצמבר"
+    },
+    "monthsShort": {
+      "0": "יאן",
+      "1": "פברואר",
+      "2": "לקלקל",
+      "3": "אפריל",
+      "4": "מאי",
+      "5": "יוני",
+      "6": "יולי",
+      "7": "אוגוסט",
+      "8": "ספטמבר",
+      "9": "אוקטובר",
+      "10": "נובמבר",
+      "11": "דצמבר"
+    },
+    "weekdays": {
+      "0": "יום ראשון",
+      "1": "יום שני",
+      "2": "יום שלישי",
+      "3": "יום רביעי",
+      "4": "יום חמישי",
+      "5": "יום שישי",
+      "6": "שבת"
+    },
+    "weekdaysShort": {
+      "0": "שמש",
+      "1": "שלי",
+      "2": "שלישי",
+      "3": "להתחתן",
+      "4": "לאסוף",
+      "5": "שישי",
+      "6": "שבת"
+    },
+    "today": "היום",
+    "invalidDateTime": "תאריך/שעה לא חוקיים: הקלט צריך להתאים לפורמט"
+  },
+  "formField": {
+    "indexPanel": {
+      "formFieldList": "רשימת שדות טופס",
+      "notFields": "מסמך זה אינו מכיל שדות טופס"
+    },
+    "formFieldPopup": {
+      "fieldName": "שם השדה",
+      "fieldValue": "ערך ברירת מחדל",
+      "readOnly": "קריאה בלבד",
+      "multiSelect": "בחירה מרובה",
+      "required": "דרוש",
+      "multiLine": "רב-קו",
+      "apply": "החל",
+      "cancel": "בטל",
+      "flags": "דגלי שדה",
+      "fieldSize": "גודל השדה",
+      "options": "אפשרויות",
+      "properties": "נכסים",
+      "radioGroups": "כפתורי רדיו עם אותו שם שדה ישתייכו לאותה קבוצה.",
+      "nameRequired": "שם השדה נדרש",
+      "fieldIndicator": "אינדיקטורים בשטח",
+      "documentFieldIndicator": "מחווני שדות מסמך",
+      "includeFieldIndicator": "כלול מחוון שדה",
+      "indicatorPlaceHolders": {
+        "TextFormField": "הכנס טקסט כאן",
+        "CheckBoxFormField": "לבדוק",
+        "RadioButtonFormField": "למלא",
+        "ListBoxFormField": "בחר",
+        "ComboBoxFormField": "בחר",
+        "SignatureFormField": {
+          "fullSignature": "חתום כאן",
+          "initialsSignature": "ראשי תיבות כאן"
+        }
+      },
+      "size": "גודל",
+      "width": "רוחב",
+      "height": "גובה",
+      "invalidField": {
+        "duplicate": "שם השדה כבר קיים",
+        "empty": "שם השדה אינו יכול להיות ריק"
+      }
+    },
+    "formFieldPanel": {
+      "SignatureFormField": "ביאור שדה חתימה",
+      "CheckBoxFormField": "ביאור שדה תיבת סימון",
+      "RadioButtonFormField": "ביאור שדה כפתור רדיו",
+      "ListBoxFormField": "ביאור שדה תיבת רשימה",
+      "ComboBoxFormField": "ביאור שדה של תיבת קומבו",
+      "TextFormField": "ביאור שדה טקסט"
+    },
+    "apply": "החלת שדות",
+    "type": "סוג שדה",
+    "types": {
+      "text": "טקסט",
+      "signature": "חתימה",
+      "checkbox": "תיבת סימון",
+      "radio": "כפתור רדיו",
+      "listbox": "תיבת רשימה",
+      "combobox": "תיבת קומבו",
+      "button": "לחצן"
+    }
+  },
+  "alignmentPopup": {
+    "alignment": "יישור",
+    "alignLeft": "יישור שמאלה",
+    "alignHorizontalCenter": "יישור אופקי למרכז",
+    "alignVerticalCenter": "יישור אנכי למרכז",
+    "alignRight": "יישור ימינה",
+    "alignTop": "יישור למעלה",
+    "alignBottom": "יישור תחתון",
+    "distribute": "להפיץ",
+    "distributeHorizontal": "פיזור אופקי",
+    "distributeVertical": "פיזור אנכי"
+  },
+  "digitalSignatureModal": {
+    "certification": "הסמכה",
+    "Certification": "הסמכה",
+    "signature": "חתימה",
+    "Signature": "חתימה",
+    "valid": "תקף",
+    "invalid": "לא בתוקף",
+    "unknown": "לא ידוע",
+    "title": "נכסים של {{type}}",
+    "header": {
+      "documentIntegrity": "שלמות המסמך",
+      "identitiesTrust": "זהויות ואמון",
+      "generalErrors": "שגיאות כלליות",
+      "digestStatus": "סטטוס תקציר"
+    },
+    "documentPermission": {
+      "noChangesAllowed": "ה-{{editor}} ציין כי אין לבצע שינויים במסמך זה.",
+      "formfillingSigningAllowed": "ה-{{editor}} ציין כי מילוי טפסים וחתימה מותרים עבור מסמך זה. שינויים אחרים אינם מותרים.",
+      "annotatingFormfillingSigningAllowed": "ה-{{editor}} ציין כי מילוי טפסים, חתימה והערות מותרים עבור מסמך זה. שינויים אחרים אינם מותרים.",
+      "unrestricted": "ה-{{editor}} ציין כי אין הגבלות על מסמך זה."
+    },
+    "digestAlgorithm": {
+      "preamble": "אלגוריתם התקציר ששימש לחתימה על החתימה:",
+      "unknown": "אלגוריתם התקציר ששימש לחתימה על החתימה אינו ידוע."
+    },
+    "trustVerification": {
+      "none": "אין תוצאה מפורטת של אימות אמון זמינה.",
+      "current": "בוצע ניסיון אימות אמון ביחס לשעה הנוכחית",
+      "signing": "ניסיון אימות אמון בנוגע לזמן החתימה: {{trustVerificationTime}}",
+      "timestamp": "בוצע ניסיון אימות אמון בנוגע לחותמת זמן מוטמעת מאובטחת: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "זהות החותם היא",
+      "valid": "תקף.",
+      "unknown": "לא ידוע."
+    },
+    "summaryBox": {
+      "summary": "סוג דיגיטלי הוא {{type}}",
+      "signedBy": ", חתום על ידי {{name}}"
+    }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "לאשר",
+    "certified": "מוסמך",
+    "Certified": "מוסמך",
+    "Certification": "הסמכה",
+    "signer": "חותם",
+    "signed": "חתום",
+    "Signed": "חתום",
+    "Signature": "חתימה",
+    "by": "על ידי",
+    "on": "על",
+    "disallowedChange": "שינוי שאינו מותר: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "שדה חתימה לא חתום: {{fieldName}}",
+    "signatureProperties": "מאפייני חתימה",
+    "trustVerification": {
+      "current": "זמן האימות בו נעשה שימוש היה השעה הנוכחית",
+      "signing": "זמן האימות הוא מהשעון במחשב של החותם",
+      "timestamp": "זמן האימות נלקח מחותמת הזמן המאובטחת המוטמעת במסמך",
+      "verifiedTrust": "תוצאת אימות אמינות: מאומת",
+      "noTrustVerification": "אין תוצאה מפורטת של אימות אמון זמינה."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "אין סטטוס הרשאות לדיווח.",
+      "permissionsVerificationDisabled": "אימות הרשאות הושבת.",
+      "hasAllowedChanges": "המסמך מכיל שינויים המותרים על פי הגדרות ההרשאות של החתימה.",
+      "invalidatedByDisallowedChanges": "המסמך מכיל שינויים שאינם מותרים על ידי הגדרות ההרשאות של החתימה.",
+      "unmodified": "המסמך לא שונה מאז היווסדו",
+      "unsupportedPermissionsFeatures": "נתקלו בתכונות הרשאות שאינן נתמכות."
+    },
+    "trustStatus": {
+      "trustVerified": "ביסס בהצלחה אמון ב-{{verificationType}}.",
+      "untrusted": "לא ניתן היה לבסס אמון.",
+      "trustVerificationDisabled": "אימות האמון הושבת.",
+      "noTrustStatus": "אין סטטוס אמון לדווח."
+    },
+    "digestStatus": {
+      "digestInvalid": "התקציר שגוי.",
+      "digestVerified": "התקציר נכון.",
+      "digestVerificationDisabled": "אימות התקציר הושבת.",
+      "weakDigestAlgorithmButDigestVerifiable": "התקציר נכון, אבל אלגוריתם התקציר חלש ולא מאובטח.",
+      "noDigestStatus": "אין סטטוס תקציר לדווח.",
+      "unsupportedEncoding": "אף SignatureHandler מותקן לא הצליח לזהות את קידוד החתימה.",
+      "documentHasBeenAltered": "המסמך שונה או הושחת מאז חתימתו."
+    },
+    "documentStatus": {
+      "noError": "אין שגיאה כללית לדווח.",
+      "corruptFile": "SignatureHandler דיווח על פגיעה בקבצים.",
+      "unsigned": "החתימה טרם נחתמה באופן קריפטוגרפי.",
+      "badByteRanges": "SignatureHandler מדווח על פגיעה בטווחי ה-ByteRanges בחתימה הדיגיטלית.",
+      "corruptCryptographicContents": "SignatureHandler מדווח על פגיעה בתוכן החתימה הדיגיטלית."
+    },
+    "signatureDetails": {
+      "signatureDetails": "פרטי חתימה",
+      "contactInformation": "פרטי קשר",
+      "location": "מקום",
+      "reason": "לנמק",
+      "signingTime": "זמן חתימה",
+      "noContactInformation": "לא סופקו פרטי קשר",
+      "noLocation": "לא סופק מיקום",
+      "noReason": "לא סופקה סיבה",
+      "noSigningTime": "לא נמצא זמן חתימה"
+    },
+    "panelMessages": {
+      "noSignatureFields": "מסמך זה אינו מכיל שדות חתימה",
+      "certificateDownloadError": "אירעה שגיאה בעת ניסיון להוריד אישור מהימן",
+      "localCertificateError": "ישנן כמה בעיות בקריאת אישור מקומי"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} תקף.",
+      "failed": "{{verificationType}} נכשל."
+    }
+  },
+  "cropPopUp": {
+    "title": "דפים לחיתוך",
+    "allPages": "כל",
+    "singlePage": "עמוד נוכחי",
+    "multiPage": "ציין עמוד",
+    "cropDimensions": "מידות היבול",
+    "dimensionInput": {
+      "unitOfMeasurement": "יחידה",
+      "autoTrim": "הגדרות קבועות מראש",
+      "autoTrimCustom": "מנהג"
+    },
+    "cropModal": {
+      "applyTitle": "למרוח יבול?",
+      "applyMessage": "פעולה זו תגרום לחתוך לצמיתות את כל הדפים שנבחרו. לא ניתן לבטל אותה.",
+      "cancelTitle": "לבטל את החיתוך?",
+      "cancelMessage": "האם אתה בטוח שברצונך לבטל את החיתוך של כל העמודים שנבחרו?"
+    }
+  },
+  "snippingPopUp": {
+    "title": "כלי חיתוך",
+    "clipboard": "העתק ללוח",
+    "download": "הורדה",
+    "cropAndRemove": "חיתוך והסרה",
+    "snippingModal": {
+      "applyTitle": "להחיל חיתוך?",
+      "applyMessage": "פעולה זו תגרום לגזירה לצמיתות של האזור שצוין ותסיר דפים אחרים. לא ניתן לבטלה.",
+      "cancelTitle": "לבטל את החיתוך?",
+      "cancelMessage": "האם אתה בטוח שאתה רוצה להפסיק לחתוך?"
+    }
+  },
+  "textEditingPanel": {
+    "paragraph": "סעיף",
+    "text": "טקסט"
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "התחילו לערוך טקסט על ידי סימון טקסט, אזורים, עמודים או ביצוע חיפוש.",
+    "redactionSearchPlaceholder": "עריכה באמצעות מקלדת או תבניות",
+    "redactionCounter": "מסומן לעריכה",
+    "clearMarked": "נקה",
+    "redactAllMarked": "מחיקת הכל",
+    "redactionItems": "פריטי עריכה",
+    "redactionItem": {
+      "regionRedaction": "עריכה אזורית",
+      "fullPageRedaction": "עריכה של עמוד שלם",
+      "fullVideoFrameRedaction": "עריכת וידאו",
+      "audioRedaction": "עריכת אודיו",
+      "fullVideoFrameAndAudioRedaction": "עריכת וידאו ואודיו",
+      "image": "תמונה"
+    },
+    "expand": "הרחב",
+    "collapse": "צמצם",
+    "searchResults": "תוצאות חיפוש",
+    "search": {
+      "creditCards": "כרטיס אשראי",
+      "phoneNumbers": "מספרי טלפון",
+      "images": "תמונות",
+      "emails": "אימיילים",
+      "pattern": "תבניות",
+      "start": "התחל לבצע את החיפוש שלך"
+    }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "נכסים",
+    "miscValuesHeader": "כל",
+    "emptyPanelMessage": "בחר אלמנט כדי להציג את המאפיינים שלו."
+  },
+  "portfolio": {
+    "createPDFPortfolio": "צור תיק עבודות PDF",
+    "uploadFiles": "העלאת קבצים",
+    "uploadFolder": "תיקיית העלאה",
+    "addFiles": "הוסף קבצים",
+    "addFile": "הוסף קובץ",
+    "addFolder": "הוסף תיקייה",
+    "createFolder": "צור תיקייה",
+    "portfolioPanelTitle": "תיק עבודות PDF",
+    "portfolioNewFolder": "תיקייה חדשה",
+    "portfolioDocumentTitle": "כותרת המסמך",
+    "portfolioFolderPlaceholder": "שם התיקייה",
+    "portfolioFilePlaceholder": "שם הקובץ",
+    "folderNameAlreadyExists": "שם התיקייה כבר קיים",
+    "fileNameAlreadyExists": "שם הקובץ כבר קיים",
+    "openFile": "פתח בכרטיסייה חדשה",
+    "fileAlreadyExists": "הקובץ כבר קיים",
+    "fileAlreadyExistsMessage": "הקובץ \"{{fileName}}\" כבר קיים בתיק העבודות.",
+    "deletePortfolio": "האם אתה בטוח שברצונך למחוק את \"{{fileName}}\"?",
+    "reselect": "בחירה מחדש"
+  },
+  "languageModal": {
+    "selectLanguage": "בחר שפה"
+  },
+  "officeEditor": {
+    "bold": "נועז",
+    "italic": "נטוי",
+    "underline": "לשים דגש",
+    "textColor": "צבע הטקסט",
+    "leftAlign": "יישור שמאלה",
+    "centerAlign": "יישור מרכז",
+    "rightAlign": "יישור ימינה",
+    "justify": "להצדיק",
+    "lineSpacing": "ריווח שורות ופסקאות",
+    "lineSpacingMenu": "ריווח שורות",
+    "bulletList": "רשימה עם תבליטים",
+    "numberList": "רשימה ממוספרת",
+    "decreaseIndent": "הקטנת כניסה",
+    "increaseIndent": "הגדלת כניסה",
+    "nonPrintingCharacters": "תווים שאינם להדפסה",
+    "insertLink": "הכנס קישור",
+    "insertImage": "הכנס תמונה",
+    "image": "תמונה",
+    "table": "לוח",
+    "insertRowAbove": "הוסף שורה מעל",
+    "insertRowBelow": "הוסף שורה למטה",
+    "insertColumnRight": "הכנס עמודה ימינה",
+    "insertColumnLeft": "הכנס עמודה שמאלה",
+    "deleteRow": "מחיקת שורה",
+    "deleteColumn": "מחיקת עמודה",
+    "deleteTable": "מחיקת טבלה",
+    "deleted": "נמחק:",
+    "added": "נוסף:",
+    "editing": "עריכה",
+    "editingDescription": "עריכת מסמך",
+    "reviewing": "סקירה",
+    "reviewingDescription": "הציעו הצעות",
+    "viewOnly": "צפייה",
+    "viewOnlyDescription": "הצג ללא הצעות",
+    "notSupportedOnMobile": "עריכה ב-Office אינה נתמכת במכשירים ניידים.",
+    "previewAllChanges": "תצוגה מקדימה של כל השינויים",
+    "accept": "לקבל",
+    "reject": "לדחות",
+    "pastingTitle": "הדבקה אינה זמינה",
+    "pastingMessage": "הדבקה אינה נתמכת בדפדפן שלך. במקום זאת, תוכל להשתמש בקיצור מקלדת",
+    "pastingWithoutFormatTitle": "הדבקה ללא עיצוב אינה זמינה",
+    "pastingWithoutFormatMessage": "הדבקה ללא עיצוב אינה נתמכת בדפדפן שלך. במקום זאת, תוכל להשתמש בקיצור מקלדת",
+    "breaks": "הפסקות",
+    "pageBreak": "מעבר עמוד",
+    "pageBreakDescription": "סוף עמוד והתחל בעמוד חדש",
+    "sectionBreakNextPage": "מעבר מקטע - עמוד הבא",
+    "sectionBreakNextPageDescription": "הוסף מעבר מקטע והתחל בעמוד הבא",
+    "sectionBreakContinuous": "מעבר מקטע - רציף",
+    "sectionBreakContinuousDescription": "הוספת מעבר מקטע והמשך באותו עמוד",
+    "section": "סעיף",
+    "margins": "שוליים",
+    "normal": "נורמלי",
+    "narrow": "לצמצם",
+    "moderate": "למתן",
+    "wide": "רחב",
+    "top": "ראש",
+    "bottom": "תחתית",
+    "left": "שמאל",
+    "right": "ימינה",
+    "customMargins": "שוליים מותאמים אישית",
+    "customMarginsDescription": "הגדר שוליים מותאמים אישית",
+    "column": "עמודה",
+    "columns": "עמודות",
+    "singleColumn": "עמודה אחת",
+    "twoColumn": "2 עמודות",
+    "threeColumn": "3 עמודות",
+    "customColumn": "עמודות מותאמות אישית",
+    "customColumnDescription": "הגדר עמודות מותאמות אישית",
+    "unitMeasurement": "יחידת מדידה",
+    "header": {
+      "0": "כותרת",
+      "1": "כותרת ראשונה בעמוד הראשון",
+      "2": "כותרת ראשית של עמוד זוגי",
+      "3": "כותרת אי-זוגית של עמוד",
+      "-1": "כותרת לא חוקית"
+    },
+    "footer": {
+      "0": "כותרת תחתונה",
+      "1": "כותרת תחתונה בעמוד הראשון",
+      "2": "כותרת תחתונה של עמוד זוגי",
+      "3": "כותרת תחתונה של עמוד אי-זוגי",
+      "-1": "כותרת תחתונה לא חוקית"
+    },
+    "options": "אפשרויות",
+    "pageOptions": "אפשרויות עמוד",
+    "removeHeader": "הסר כותרת",
+    "removeFooter": "הסר כותרת תחתונה",
+    "headerFooterOptionsModal": {
+      "title": "פורמט כותרת עליונה ותחתונה",
+      "headerFromTop": "כותרת מלמעלה",
+      "footerFromBottom": "כותרת תחתונה מלמטה",
+      "layouts": {
+        "layout": "מערך",
+        "noSelection": "אין בחירה",
+        "differentFirstPage": "עמוד ראשון שונה",
+        "differentEvenOddPages": "דפים זוגיים ואי-זוגיים שונים",
+        "differentFirstEvenOddPages": "עמודים ראשונים, זוגיים ואי-זוגיים שונים"
+      }
+    },
+    "columnsModal": {
+      "title": "התאמת עמודה מותאמת אישית",
+      "columnAmount": "מספר עמודות",
+      "columnNumber": "מספר עמודה",
+      "width": "רוחב",
+      "spacing": "ריווח",
+      "widthAndSpacing": "רוחב ומרווח",
+      "equalColumns": "רוחב עמודה שווה"
+    },
+    "marginsModal": {
+      "title": "התאמת שוליים מותאמת אישית",
+      "leftMargin": "שוליים שמאליים",
+      "rightMargin": "שוליים ימניים",
+      "topMargin": "שוליים עליונים",
+      "bottomMargin": "שוליים תחתונים"
+    },
+    "lineSpacingOptions": {
+      "15": "1.5",
+      "115": "1.15",
+      "single": "אחד",
+      "double": "להכפיל",
+      "custom": "מנהג"
+    },
+    "numberDropdown": {
+      "6": "מספר לטיני רומי 1",
+      "7": "מספר עשרוני",
+      "8": "מספר לטיני רומי 2",
+      "10": "לטינית רומית",
+      "11": "מספר לטיני רומי",
+      "dropdownLabel": "קביעות מספור קבועות מראש"
+    },
+    "bulletDropdown": {
+      "0": "כדור",
+      "1": "כיכר הבולט",
+      "2": "תבליט מרובע",
+      "3": "יהלום",
+      "4": "לבדוק",
+      "5": "חץ",
+      "dropdownLabel": "קביעות מוגדרות מראש של תבליטים"
+    },
+    "fontSize": {
+      "dropdownLabel": "גודל גופן"
+    },
+    "fontStyles": {
+      "dropdownLabel": "סגנונות גופן"
+    },
+    "fontFamily": {
+      "dropdownLabel": "משפחת גופנים"
+    }
+  },
+  "spreadsheetEditor": {
+    "editing": "עריכה",
+    "viewOnly": "צפייה",
+    "editingDescription": "עריכת מסמך",
+    "viewOnlyDescription": "צפייה בלבד",
+    "editModeDropdown": "בחירת מצב עריכה",
+    "bold": "נועז",
+    "italic": "נטוי",
+    "underline": "לשים דגש",
+    "strikethrough": "קו חוצה",
+    "strikeout": "סטרייקאאוט",
+    "cellBorderStyle": "סגנון גבול",
+    "merge": "למזג",
+    "unmerge": "בטל מיזוג",
+    "cellFormat": "פורמט תא",
+    "automaticFormat": "אוטומטי",
+    "plainTextFormat": "טקסט רגיל",
+    "increaseDecimalFormat": "הגדלת עשרונית",
+    "decreaseDecimalFormat": "הקטנת עשרונית",
+    "numberFormat": "מספר",
+    "percentFormat": "אחוז",
+    "accountingFormat": "חשבונאות",
+    "financialFormat": "כספי",
+    "currencyFormat": "מטבע",
+    "currencyRoundedFormat": "מטבע מעוגל",
+    "calendarFormat": "תאריך",
+    "clockHourFormat": "זמן",
+    "calendarTimeFormat": "תאריך שעה",
+    "formatAsCurrency": "פורמט כמטבע",
+    "formatAsPercent": "עיצוב כאחוזים",
+    "formatAsDecDecimal": "הקטנת הנקודה העשרונית",
+    "formatAsIncDecimal": "הגדלת הנקודה העשרונית",
+    "textColor": "צבע טקסט",
+    "cellBackgroundColor": "צבע רקע",
+    "cellBorderColor": "צבע גבול",
+    "textLabel": "טקסט",
+    "backgroundLabel": "רקע",
+    "borderLabel": "גבול",
+    "textAlignment": "יישור טקסט",
+    "topAlign": "יישור עליון",
+    "middleAlign": "יישור אמצעי",
+    "bottomAlign": "יישור תחתון",
+    "cellAdjustment": "התאמת תאים",
+    "cellFormatMoreOptions": "אפשרויות נוספות לעיצוב תאים",
+    "insertColumnLeft": "הוסף עמודה שמאלה",
+    "insertColumnRight": "הכנס עמודה ימינה",
+    "insertRowTop": "הוסף שורה למעלה",
+    "insertRowBottom": "הוסף שורה למטה",
+    "insertColumnShiftDown": "הוספת תאים והזזה למטה",
+    "insertColumnShiftRight": "הוספת תאים והזזה ימינה",
+    "deleteColumn": "מחיקת עמודה",
+    "deleteRow": "מחיקת שורה",
+    "deleteColumnShiftUp": "מחיקת תאים והזזה למעלה",
+    "deleteColumnShiftLeft": "מחיקת תאים והזזה שמאלה",
+    "clearBorder": "גבולות ברורים",
+    "all": "כל הגבולות",
+    "inside": "גבולות פנימיים",
+    "outside": "גבולות חיצוניים",
+    "top": "גבול עליון",
+    "bottom": "גבול תחתון",
+    "left": "גבול שמאלי",
+    "right": "גבול ימני",
+    "vertical": "גבול אנכי",
+    "horizontal": "גבול אופקי",
+    "none": "ללא גבולות",
+    "borders": "גבולות",
+    "fontSize": {
+      "dropdownLabel": "גודל גופן"
+    },
+    "fontFamily": {
+      "dropdownLabel": "משפחת גופנים"
+    },
+    "blankSheet": "גיליון ריק",
+    "insertImage": "הכנס תמונה"
+  },
+  "insertPageModal": {
+    "title": "הוסף עמוד חדש",
+    "tabs": {
+      "blank": "ריק",
+      "upload": "העלאה"
+    },
+    "pagePlacements": {
+      "header": "מיקום דף",
+      "above": "עמוד למעלה",
+      "below": "מתחת לעמוד"
+    },
+    "pageLocations": {
+      "header": "מיקום הדף",
+      "specify": "ציין עמוד",
+      "specifyLocation": "ציין מיקום דף",
+      "amount": "מספר עמודים",
+      "total": "סך הכל",
+      "pages": "דפים"
+    },
+    "pageDimensions": {
+      "header": "מידות העמוד",
+      "subHeader": "הגדרות קבועות מראש",
+      "presets": {
+        "letter": "מכתב",
+        "halfLetter": "חצי אות",
+        "juniorLegal": "עורך דין זוטר",
+        "custom": "מנהג"
+      },
+      "units": "יחידות"
+    },
+    "browse": "עיון בקבצים",
+    "fileSelected": {
+      "title": "בחר דפים להוספה"
+    },
+    "button": "הוסף עמוד/ים",
+    "selectPages": "בחר דפים להוספה",
+    "page": "עמוד",
+    "warning": {
+      "title": "יציאה - הוספת עמוד חדש?",
+      "message": "יציאה תבטל את כל הבחירות שביצעת עד כה. האם אתה בטוח שאתה עדיין רוצה לצאת?"
+    }
+  },
+  "multiViewer": {
+    "dragAndDrop": "גרור ושחרר את הקובץ שלך לכאן כדי להשוות",
+    "or": "או",
+    "browse": "עיון בקבצים",
+    "startSync": "התחל סנכרון",
+    "stopSync": "עצירת הסנכרון",
+    "closeDocument": "סגור את המסמך",
+    "save": "שמור מסמך",
+    "comparePanel": {
+      "Find": "חיפוש במסמך",
+      "changesList": "רשימת שינויים",
+      "change": "לשנות",
+      "old": "ישן",
+      "new": "חדש",
+      "page": "עמוד",
+      "textContent": "תוכן טקסט",
+      "delete": "מחק",
+      "insert": "להכניס",
+      "edit": "ערוך"
+    }
+  },
+  "saveModal": {
+    "close": "סגור",
+    "saveAs": "שמור בשם",
+    "general": "כללי",
+    "fileName": "שם הקובץ",
+    "fileType": "סוג קובץ",
+    "fileLocation": "מיקום הקובץ",
+    "browse": "לדפדף",
+    "pageRange": "טווח עמודים",
+    "all": "כל",
+    "currentView": "תצוגה נוכחית",
+    "currentPage": "עמוד נוכחי",
+    "specifyPage": "ציין עמוד",
+    "properties": "נכסים",
+    "includeAnnotation": "כלול הערות",
+    "includeComments": "כלול הערות",
+    "watermark": "סימן מים",
+    "addWatermark": "הוסף סימן מים",
+    "save": "שמור קובץ",
+    "pageError": "אנא הזן טווח בין 1 -",
+    "fileNameCannotBeEmpty": "שם הקובץ אינו יכול להיות ריק"
+  },
+  "filePicker": {
+    "dragAndDrop": "גרור ושחרר את הקובץ שלך לכאן",
+    "selectFile": "בחר את הקובץ שלך כאן",
+    "or": "או"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "סגנונות",
+      "annotation": "ביאור",
+      "annotations": "הערות",
+      "tool": "כלי",
+      "textStyles": "סגנונות טקסט",
+      "currentColor": "צבע נוכחי",
+      "customColors": "צבעים מותאמים אישית",
+      "redactionTextLabel": "הוסף תווית טקסט",
+      "redactionMarkOutline": "סמן מתווה",
+      "redactionFill": "צבע עריכה",
+      "redactionTextPlaceholder": "הוסף תווית טקסט",
+      "contentEdit": "עריכת תוכן"
+    },
+    "lineStyles": {
+      "startLineStyleLabel": "סגנון קו התחלה",
+      "middleLineStyleLabel": "סגנון קו אמצעי",
+      "endLineStyleLabel": "סגנון שורת סיום"
+    },
+    "addColorToCustom": "הוסף לצבעים מותאמים אישית",
+    "noToolSelected": "בחר כלי כדי להציג את מאפייני הכלי",
+    "noToolStyle": "הכלי אינו מכיל תכונות עיצוב.",
+    "noSharedToolStyle": "להערות שנבחרו אין מאפייני עיצוב משותפים.",
+    "lineEnding": {
+      "start": {
+        "dropdownLabel": "תחילת קו"
+      },
+      "end": {
+        "dropdownLabel": "סוף קו"
+      },
+      "middle": {
+        "dropdownLabel": "קו אמצעי"
+      }
+    },
+    "borderStyle": {
+      "dropdownLabel": "גבול"
+    }
+  },
+  "signatureListPanel": {
+    "header": "רשימת חתימות",
+    "newSignature": "חתימה חדשה",
+    "newSignatureAndInitial": "צור חתימה וראשי תיבות חדשים",
+    "signatureList": {
+      "signature": "חתימה",
+      "initials": "ראשי תיבות"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "בולים",
+    "standard": "בולים סטנדרטיים"
+  },
+  "colorPickerModal": {
+    "modalTitle": "בורר צבעים"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "כותרת עליונה",
+      "leftHeader": "כותרת שמאלית",
+      "rightHeader": "כותרת ימנית",
+      "bottomHeader": "כותרת תחתונה",
+      "documentContent": "תוכן המסמך"
+    },
+    "label": "נגישות",
+    "accessibilityMode": "מצב נגישות",
+    "skipTo": "דלג אל",
+    "document": "מסמך",
+    "notes": "הערות"
+  },
+  "formulaBar": {
+    "label": "סרגל הנוסחאות",
+    "range": "לנוע",
+    "formulas": "נוסחאות"
+  },
+  "formulas": {
+    "SUMIF": {
+      "description": "סכום מותנה על פני טווח.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח אשר נבדק מול ה'קריטריון'."
+        },
+        "criterion": {
+          "name": "קריטריון",
+          "detail": "התבנית או הבדיקה שיש להחיל על `range`."
+        },
+        "sum_range": {
+          "name": "טווח_סכום",
+          "detail": "הטווח שיש לסכם, אם שונה מ-`range`."
+        }
+      }
+    },
+    "TAN": {
+      "description": "משיק של זווית הניתנת ברדיאנים.",
+      "parameters": {
+        "angle": {
+          "name": "זוית",
+          "detail": "הזווית שיש למצוא את המשיק שלה, ברדיאנים."
+        }
+      }
+    },
+    "TANH": {
+      "description": "טנגנס היפרבולי של כל מספר ממשי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "כל ערך ממשי לחישוב הטנגנס ההיפרבולי שלו."
+        }
+      }
+    },
+    "CEILING": {
+      "description": "מעגלת את המספר כלפי מעלה לכפולה הקרובה ביותר של גורם.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל כלפי מעלה לכפולה השלמה הקרובה ביותר של `factor`."
+        },
+        "factor": {
+          "name": "גורם",
+          "detail": "המספר שאליו הכפולות `value` יעוגל."
+        }
+      }
+    },
+    "ATAN": {
+      "description": "טנגנס הפוך של ערך, ברדיאנים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הטנגנס ההפוך."
+        }
+      }
+    },
+    "ASINH": {
+      "description": "סינוס היפרבולי הפוך של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הסינוס ההיפרבולי ההפוך."
+        }
+      }
+    },
+    "ABS": {
+      "description": "ערך מוחלט של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר שממנו יש להחזיר את הערך המוחלט."
+        }
+      }
+    },
+    "ACOS": {
+      "description": "קוסינוס הפוך של ערך, ברדיאנים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הקוסינוס ההפוך. חייב להיות בין `-1` ל-`1`, כולל."
+        }
+      }
+    },
+    "ACOSH": {
+      "description": "קוסינוס היפרבולי הפוך של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הקוסינוס ההיפרבולי ההפוך. חייב להיות גדול או שווה ל-'1'."
+        }
+      }
+    },
+    "MULTINOMIAL": {
+      "description": "פונקציית התפלגות רב-נומית.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון."
+        }
+      }
+    },
+    "ATANH": {
+      "description": "טנגנס היפרבולי הפוך של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הטנגנס ההיפרבולי ההפוך. חייב להיות בין -1 ל-1, לא כולל."
+        }
+      }
+    },
+    "ATAN2": {
+      "description": "ארק-טנגנס של ערך.",
+      "parameters": {
+        "x": {
+          "name": "איקס",
+          "detail": "קואורדינטת ה-x של נקודת הקצה של קטע הקו שעבורו יש לחשב את הזווית מציר ה-x."
+        },
+        "y": {
+          "name": "ו",
+          "detail": "קואורדינטת ה-y של נקודת הקצה של קטע הקו שעבורו יש לחשב את הזווית מציר ה-x."
+        }
+      }
+    },
+    "COUNTBLANK": {
+      "description": "מספר ערכים ריקים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שבו יש לספור את מספר הריקים."
+        }
+      }
+    },
+    "COSH": {
+      "description": "קוסינוס היפרבולי של כל מספר ממשי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "כל ערך ממשי לחישוב הקוסינוס ההיפרבולי שלו."
+        }
+      }
+    },
+    "INT": {
+      "description": "מעגל את המספר כלפי מטה למספר השלם הקרוב ביותר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל כלפי מטה למספר השלם הקרוב ביותר."
+        }
+      }
+    },
+    "ISEVEN": {
+      "description": "האם הערך הנתון הוא זוגי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כזוגי."
+        }
+      }
+    },
+    "ISODD": {
+      "description": "האם הערך שסופק הוא אי-זוגי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כאי-זוגי."
+        }
+      }
+    },
+    "LCM": {
+      "description": "הכפולה המשותפת הקטנה ביותר של מספר שלם אחד או יותר.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שאת הגורמים שלו יש לקחת בחשבון בחישוב למציאת הכפולה המשותפת הקטנה ביותר."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שאת הגורמים שלהם יש לקחת בחשבון כדי למצוא את הכפולה המשותפת הקטנה ביותר."
+        }
+      }
+    },
+    "LN": {
+      "description": "הלוגריתם של מספר, בסיס e (מספר אוילר).",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הלוגריתם, על בסיס e."
+        }
+      }
+    },
+    "LOG": {
+      "description": "הלוגריתם של מספר ביחס לבסיס.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הלוגריתם."
+        },
+        "base": {
+          "name": "בסיס",
+          "detail": "הבסיס שישמש לחישוב הלוגריתם."
+        }
+      }
+    },
+    "LOG10": {
+      "description": "הלוגריתם של מספר, בסיס 10.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הלוגריתם, בסיס 10."
+        }
+      }
+    },
+    "MOD": {
+      "description": "אופרטור מודולו (שארית).",
+      "parameters": {
+        "dividend": {
+          "name": "דיבידנד",
+          "detail": "המספר שיש לחלק כדי למצוא את השארית."
+        },
+        "divisor": {
+          "name": "מחלק",
+          "detail": "המספר שיש לחלק בו."
+        }
+      }
+    },
+    "MROUND": {
+      "description": "מעגלת מספר לכפולה השלמה הקרובה ביותר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר שיש לעגל לכפולה השלמה הקרובה ביותר של מספר אחר."
+        },
+        "factor": {
+          "name": "גורם",
+          "detail": "המספר שאליו הכפולות `value` יעוגל."
+        }
+      }
+    },
+    "ODD": {
+      "description": "מעגלת מספר כלפי מעלה למספר האי-זוגי הקרוב ביותר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל למספר האי-זוגי הגדול ביותר הבא."
+        }
+      }
+    },
+    "SUMSQ": {
+      "description": "סכום ריבועים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "המספר או הטווח הראשון שאת הריבועים שלו יש לחבר יחד."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "מספרים או טווחים נוספים שאת הריבועים שלהם יש להוסיף לריבוע/ריבועים של `value1`."
+        }
+      }
+    },
+    "COMBIN": {
+      "description": "מספר צירופים מקבוצת אובייקטים.",
+      "parameters": {
+        "n": {
+          "name": "נ",
+          "detail": "גודל מאגר האובייקטים לבחירה."
+        },
+        "k": {
+          "name": "ק",
+          "detail": "מספר האובייקטים לבחירה."
+        }
+      }
+    },
+    "SUM": {
+      "description": "סכום של סדרה של מספרים ו/או תאים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "המספר או הטווח הראשון שיש לחבר יחד."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "מספרים או טווחים נוספים להוספה ל-`value1`."
+        }
+      }
+    },
+    "SUBTOTAL": {
+      "description": "סכום ביניים עבור טווח באמצעות פונקציה ספציפית.",
+      "parameters": {
+        "function_code": {
+          "name": "קוד_פונקציה",
+          "detail": "הפונקציה שיש להשתמש בה בצבירת סכום ביניים."
+        },
+        "range1": {
+          "name": "טווח1",
+          "detail": "הטווח הראשון שעבורו יש לחשב סכום ביניים."
+        },
+        "range2": {
+          "name": "טווח2",
+          "detail": "טווחים נוספים שעליהם יש לחשב סכומי ביניים."
+        }
+      }
+    },
+    "ASIN": {
+      "description": "סינוס הפוך של ערך, ברדיאנים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את הסינוס ההפוך. חייב להיות בין `-1` ל-`1`, כולל."
+        }
+      }
+    },
+    "COUNTIF": {
+      "description": "ספירה מותנית על פני טווח.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח שנבדק מול ה'קריטריון'."
+        },
+        "criterion": {
+          "name": "קריטריון",
+          "detail": "התבנית או הבדיקה שיש להחיל על `range`."
+        }
+      }
+    },
+    "RADIANS": {
+      "description": "ממיר ערך זווית במעלות לרדיאנים.",
+      "parameters": {
+        "angle": {
+          "name": "זוית",
+          "detail": "הזווית שיש להמיר ממעלות לרדיאנים."
+        }
+      }
+    },
+    "RAND": {
+      "description": "מספר אקראי בין 0 (כולל) ל-1 (לא כולל)."
+    },
+    "COUNTUNIQUE": {
+      "description": "סופר את מספר הערכים הייחודיים בטווח.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון לצורך ייחוד."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון לצורך ייחוד."
+        }
+      }
+    },
+    "DEGREES": {
+      "description": "ממיר ערך זווית ברדיאנים למעלות.",
+      "parameters": {
+        "angle": {
+          "name": "זוית",
+          "detail": "הזווית שיש להמיר מרדיאנים למעלות."
+        }
+      }
+    },
+    "ERFC": {
+      "description": "פונקציית שגיאת גאוס משלימה של ערך.",
+      "parameters": {
+        "z": {
+          "name": "עם",
+          "detail": "המספר שעבורו יש לחשב את פונקציית השגיאה המשלימה של גאוס."
+        }
+      }
+    },
+    "EVEN": {
+      "description": "מעגלת מספר כלפי מעלה למספר הזוגי השלם הקרוב ביותר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל למספר הזוגי הגדול ביותר הבא."
+        }
+      }
+    },
+    "EXP": {
+      "description": "מספר אוילר, e (~2.718) בחזקת אחת.",
+      "parameters": {
+        "exponent": {
+          "name": "מעריך",
+          "detail": "המעריך שיש להעלות אליו את e."
+        }
+      }
+    },
+    "FACT": {
+      "description": "פקטוריאל של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר או ההפניה למספר שהפקטורל שלו יחושב ויוחזר."
+        }
+      }
+    },
+    "FACTDOUBLE": {
+      "description": "\"פקטוריאל כפול\" של מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר או ההפניה למספר שהפקטורל הכפול שלו יחושב ויוחזר."
+        }
+      }
+    },
+    "PI": {
+      "description": "המספר פאי."
+    },
+    "GCD": {
+      "description": "המחלק המשותף הגדול ביותר של מספר שלם אחד או יותר.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שאת הגורמים שלו יש לקחת בחשבון בחישוב למציאת המחלק המשותף הגדול ביותר."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון את הגורמים שלהם כדי למצוא את המחלק המשותף הגדול ביותר."
+        }
+      }
+    },
+    "RANDBETWEEN": {
+      "description": "מספר שלם אקראי בין שני ערכים, כולל.",
+      "parameters": {
+        "low": {
+          "name": "נמוך",
+          "detail": "הקצה התחתון של הטווח האקראי."
+        },
+        "high": {
+          "name": "גבוה",
+          "detail": "הקצה הגבוה של הטווח האקראי."
+        }
+      }
+    },
+    "ROUND": {
+      "description": "מעגלת מספר לפי כללים סטנדרטיים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל למספר המקומות `places`."
+        },
+        "places": {
+          "name": "מקומות",
+          "detail": "מספר המקומות העשרוניים שאליהם יש לעגל."
+        }
+      }
+    },
+    "ROUNDDOWN": {
+      "description": "מעגל מספר כלפי מטה.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל למספר המקומות `מקומות`, תמיד מעוגל כלפי מטה."
+        },
+        "places": {
+          "name": "מקומות",
+          "detail": "מספר המקומות העשרוניים שאליהם יש לעגל."
+        }
+      }
+    },
+    "ROUNDUP": {
+      "description": "מעגל מספר כלפי מעלה.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לעגל למספר המקומות `מקומות`, תמיד מעוגל כלפי מעלה."
+        },
+        "places": {
+          "name": "מקומות",
+          "detail": "מספר המקומות העשרוניים שאליהם יש לעגל."
+        }
+      }
+    },
+    "SERIESSUM": {
+      "description": "סכום של סדרת חזקות.",
+      "parameters": {
+        "x": {
+          "name": "איקס",
+          "detail": "הקלט לסדרת החזקות. משתנה בהתאם לסוג הקירוב, יכול להיות זווית, אקספוננט או ערך אחר."
+        },
+        "n": {
+          "name": "נ",
+          "detail": "החזקה ההתחלתית שאליה יש להעלות את ה-'x' בסדרת החזקות."
+        },
+        "m": {
+          "name": "מ'",
+          "detail": "התוספת שבה יש להגדיל את `x`."
+        },
+        "a": {
+          "name": "א",
+          "detail": "המערך או הטווח המכילים את המקדמים של סדרת החזקות."
+        }
+      }
+    },
+    "SIGN": {
+      "description": "סימן של מספר נתון (+/-/0).",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שסימנו יוערך."
+        }
+      }
+    },
+    "SIN": {
+      "description": "סינוס של זווית הניתנת ברדיאנים.",
+      "parameters": {
+        "angle": {
+          "name": "זוית",
+          "detail": "הזווית שיש למצוא את הסינוס שלה, ברדיאנים."
+        }
+      }
+    },
+    "SINH": {
+      "description": "סינוס היפרבולי של כל מספר ממשי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "כל ערך ממשי לחישוב הסינוס ההיפרבולי שלו."
+        }
+      }
+    },
+    "SQRT": {
+      "description": "שורש ריבועי חיובי של מספר חיובי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר שעבורו יש לחשב את השורש הריבועי החיובי."
+        }
+      }
+    },
+    "SQRTPI": {
+      "description": "שורש ריבועי של המכפלה של פאי והמספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "המספר שיוכפל בפאי ויוחזר שורש הריבועי של המכפלה"
+        }
+      }
+    },
+    "GAMMALN": {
+      "description": "לוגריתם של פונקציית גמא.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הקלט לפונקציית גמא. הלוגריתם הטבעי של Gamma(`value`) יוחזר."
+        }
+      }
+    },
+    "COS": {
+      "description": "קוסינוס של זווית הניתן ברדיאנים.",
+      "parameters": {
+        "angle": {
+          "name": "זוית",
+          "detail": "הזווית שיש למצוא את הקוסינוס שלה, ברדיאנים."
+        }
+      }
+    },
+    "TRUNC": {
+      "description": "מקצר מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לקטום."
+        },
+        "places": {
+          "name": "מקומות",
+          "detail": "מספר הספרות המשמעותיות מימין לנקודה העשרונית שיש לשמור."
+        }
+      }
+    },
+    "QUOTIENT": {
+      "description": "מספר אחד מחולק במספר אחר.",
+      "parameters": {
+        "dividend": {
+          "name": "דיבידנד",
+          "detail": "המספר שיש לחלק."
+        },
+        "divisor": {
+          "name": "מחלק",
+          "detail": "המספר שיש לחלק בו."
+        }
+      }
+    },
+    "POWER": {
+      "description": "מספר עולה בחזקת.",
+      "parameters": {
+        "base": {
+          "name": "בסיס",
+          "detail": "המספר שיש להעלות בחזקת ה'אקספוננט'."
+        },
+        "exponent": {
+          "name": "מעריך",
+          "detail": "המעריך שיש להעלות אליו את הבסיס."
+        }
+      }
+    },
+    "SUMIFS": {
+      "description": "מסכם טווח בהתאם למספר קריטריונים.",
+      "parameters": {
+        "sum_range": {
+          "name": "טווח_סכום",
+          "detail": "הטווח שיש לסכם."
+        },
+        "criteria_range1": {
+          "name": "טווח_קריטריונים1",
+          "detail": "הטווח לבדיקה מול קריטריון 1."
+        },
+        "criterion1": {
+          "name": "קריטריון 1",
+          "detail": "התבנית או הבדיקה שיש להחיל על criteria_range1."
+        },
+        "criteria_range2": {
+          "name": "טווח_קריטריונים2",
+          "detail": "טווחים נוספים לבדיקה."
+        }
+      }
+    },
+    "COUNTIFS": {
+      "description": "ספירת ערכים בהתאם לקריטריונים מרובים.",
+      "parameters": {
+        "criteria_range1": {
+          "name": "טווח_קריטריונים1",
+          "detail": "הטווח שיש לבדוק מול `criterion1`."
+        },
+        "criterion1": {
+          "name": "קריטריון 1",
+          "detail": "התבנית או הבדיקה שיש להחיל על `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "טווח_קריטריונים2",
+          "detail": "טווחים נוספים לבדיקה."
+        }
+      }
+    },
+    "PRODUCT": {
+      "description": "תוצאה של כפל סדרה של מספרים יחד.",
+      "parameters": {
+        "factor1": {
+          "name": "גורם 1",
+          "detail": "המספר או הטווח הראשון לחישוב עבור המכפלה."
+        },
+        "factor2": {
+          "name": "גורם 2",
+          "detail": "מספרים או טווחים נוספים לחישוב עבור המכפלה."
+        }
+      }
+    },
+    "HARMEAN": {
+      "description": "הממוצע ההרמוני של קבוצת נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של האוכלוסייה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול באוכלוסייה."
+        }
+      }
+    },
+    "HYPGEOMDIST": {
+      "description": "הסתברות התפלגות היפר-גיאומטרית.",
+      "parameters": {
+        "num_successes": {
+          "name": "מספר_הצלחות",
+          "detail": "מספר ההצלחות הרצוי."
+        },
+        "num_draws": {
+          "name": "מספר_ציורים",
+          "detail": "מספר ההגרלות המותרות."
+        },
+        "successes_in_pop": {
+          "name": "הצלחות_ב_פופ",
+          "detail": "המספר הכולל של הצלחות באוכלוסייה."
+        },
+        "pop_size": {
+          "name": "גודל_פופ",
+          "detail": "הגודל הכולל של האוכלוסייה"
+        },
+        "cumulative": {
+          "name": "מצטבר",
+          "detail": "קבע את הערך הלוגי של צורת הפונקציה.\n\nאם cumulative הוא TRUE(), הפונקציה HYPGEOM.DIST מחזירה את פונקציית ההתפלגות המצטברת;\n\nאם FALSE(), היא מחזירה את פונקציית צפיפות ההסתברות."
+        }
+      }
+    },
+    "INTERCEPT": {
+      "description": "חיתוך Y של הקו הנגזר באמצעות רגרסיה לינארית.",
+      "parameters": {
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "KURT": {
+      "description": "קורטוזיס של מערך נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של קבוצת הנתונים."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול במערך הנתונים."
+        }
+      }
+    },
+    "LARGE": {
+      "description": "האלמנט ה-N בגודלו במערך נתונים.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "מערך או טווח המכילים את קבוצת הנתונים שיש לקחת בחשבון."
+        },
+        "n": {
+          "name": "נ",
+          "detail": "הדירוג מהגדול ביותר לקטן ביותר של האלמנט שיש להחזיר."
+        }
+      }
+    },
+    "STDEVA": {
+      "description": "סטיית תקן של המדגם (טקסט כ-0).",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של המדגם."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול במדגם."
+        }
+      }
+    },
+    "STDEVP": {
+      "description": "סטיית תקן של אוכלוסייה שלמה.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של האוכלוסייה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול באוכלוסייה."
+        }
+      }
+    },
+    "GEOMEAN": {
+      "description": "הממוצע הגיאומטרי של קבוצת נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של האוכלוסייה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול באוכלוסייה."
+        }
+      }
+    },
+    "PERCENTRANK_INC": {
+      "description": "דירוג אחוזים (percentile) מ-0 עד 1 כולל.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "המערך או הטווח המכילים את קבוצת הנתונים שיש לקחת בחשבון."
+        },
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שדירוג האחוזים שלו ייקבע."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להשתמש בהן בחישוב. ברירת המחדל היא 3."
+        }
+      }
+    },
+    "FORECAST": {
+      "description": "ערך y צפוי מבוסס על רגרסיה לינארית.",
+      "parameters": {
+        "x": {
+          "name": "איקס",
+          "detail": "הערך על ציר ה-x שיש לחזות."
+        },
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "FISHERINV": {
+      "description": "טרנספורמציה הפוכה של פישר של ערך מסוים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את טרנספורמציית פישר ההפוכה."
+        }
+      }
+    },
+    "FISHER": {
+      "description": "טרנספורמציית פישר של ערך מסוים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שעבורו יש לחשב את טרנספורמציית פישר."
+        }
+      }
+    },
+    "COUNT": {
+      "description": "מספר הערכים המספריים במערך הנתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת ספירה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת ספירה."
+        }
+      }
+    },
+    "COUNTA": {
+      "description": "מספר הערכים במערך נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת ספירה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת ספירה."
+        }
+      }
+    },
+    "AVERAGE": {
+      "description": "ערך ממוצע מספרי במערך נתונים, תוך התעלמות מטקסט.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך הממוצע."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך הממוצע."
+        }
+      }
+    },
+    "BINOM_DIST": {
+      "description": "הסתברות התפלגות בינומית.",
+      "parameters": {
+        "num_successes": {
+          "name": "מספר_הצלחות",
+          "detail": "מספר ההצלחות שעבורן יש לחשב את ההסתברות בניסויים של `num_trials`."
+        },
+        "num_trials": {
+          "name": "מספר_ניסויים",
+          "detail": "מספר הניסויים הבלתי תלויים."
+        },
+        "prob_success": {
+          "name": "prob_success",
+          "detail": "ההסתברות להצלחה בכל ניסוי נתון."
+        },
+        "cumulative": {
+          "name": "מצטבר",
+          "detail": "האם להשתמש בהתפלגות מצטברת בינומית."
+        }
+      }
+    },
+    "DEVSQ": {
+      "description": "סכום ריבועי הסטיות המבוסס על מדגם.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של המדגם."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול במדגם."
+        }
+      }
+    },
+    "AVERAGEIF": {
+      "description": "ממוצע ערכים בהתאם לקריטריונים.",
+      "parameters": {
+        "criteria_range": {
+          "name": "טווח_קריטריונים",
+          "detail": "הטווח שיש לבדוק מול ה-`קריטריון`."
+        },
+        "criterion": {
+          "name": "קריטריון",
+          "detail": "התבנית או הבדיקה שיש להחיל על `rang_קריטריונים`."
+        },
+        "average_range": {
+          "name": "טווח_ממוצע",
+          "detail": "הטווח לממוצע. אם לא נכלל, `criteria_range` משמש במקום זאת לממוצע."
+        }
+      }
+    },
+    "AVERAGEIFS": {
+      "description": "ממוצע ערכים בהתאם לקריטריונים מרובים.",
+      "parameters": {
+        "average_range": {
+          "name": "טווח_ממוצע",
+          "detail": "הטווח לממוצע."
+        },
+        "criteria_range1": {
+          "name": "טווח_קריטריונים1",
+          "detail": "הטווח שיש לבדוק מול `criterion1`."
+        },
+        "criterion1": {
+          "name": "קריטריון 1",
+          "detail": "התבנית או הבדיקה שיש להחיל על `criteria_range1`."
+        },
+        "criteria_range2": {
+          "name": "טווח_קריטריונים2",
+          "detail": "טווחים נוספים לבדיקה."
+        }
+      }
+    },
+    "PERMUT": {
+      "description": "מספר פרמוטציות ממספר אובייקטים.",
+      "parameters": {
+        "n": {
+          "name": "נ",
+          "detail": "גודל מאגר האובייקטים לבחירה."
+        },
+        "k": {
+          "name": "ק",
+          "detail": "מספר האובייקטים לבחירה."
+        }
+      }
+    },
+    "TRIMMEAN": {
+      "description": "ממוצע של מערך נתונים ללא גבולות גבוהים/נמוכים.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "מערך או טווח המכילים את קבוצת הנתונים שיש לקחת בחשבון."
+        },
+        "exclude_proportion": {
+          "name": "אי הכללה_פרופורציה",
+          "detail": "הפרופורציה של קבוצת הנתונים שיש להחריג, מקצוות הקבוצה."
+        }
+      }
+    },
+    "PEARSON": {
+      "description": "מקדם המתאם של מכפלה-מומנט של פירסון.",
+      "parameters": {
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "MINA": {
+      "description": "ערך מספרי מינימלי במערך נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך המינימלי."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך המינימלי."
+        }
+      }
+    },
+    "MIN": {
+      "description": "ערך מינימלי במערך נתונים מספרי.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך המינימלי."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך המינימלי."
+        }
+      }
+    },
+    "MEDIAN": {
+      "description": "ערך חציוני במערך נתונים מספרי.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך החציוני."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך החציוני."
+        }
+      }
+    },
+    "MAXA": {
+      "description": "ערך מספרי מקסימלי במערך נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך המקסימלי."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך המקסימלי."
+        }
+      }
+    },
+    "MAX": {
+      "description": "ערך מקסימלי במערך נתונים מספרי.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון שיש לקחת בחשבון בעת חישוב הערך המקסימלי."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לקחת בחשבון בעת חישוב הערך המקסימלי."
+        }
+      }
+    },
+    "PROB": {
+      "description": "ערכי ההסתברות נמצאים בטווח.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "מערך או טווח המכילים את קבוצת הנתונים שיש לקחת בחשבון."
+        },
+        "probabilities": {
+          "name": "הסתברויות",
+          "detail": "מערך או טווח המכיל הסתברויות התואמות ל-`data`."
+        },
+        "low_limit": {
+          "name": "גבול_נמוך",
+          "detail": "הגבול התחתון של טווח הערכים שעבורו יש לחשב את ההסתברות."
+        },
+        "high_limit": {
+          "name": "גבול גבוה",
+          "detail": "הגבול העליון של טווח הערכים שעבורו יש לחשב את ההסתברות."
+        }
+      }
+    },
+    "RSQ": {
+      "description": "ריבוע מקדם המתאם.",
+      "parameters": {
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "VARA": {
+      "description": "שונות של המדגם (טקסט כ-0).",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של המדגם."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול במדגם."
+        }
+      }
+    },
+    "VARPA": {
+      "description": "שונות של כלל האוכלוסייה (טקסט כ-0).",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של האוכלוסייה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול באוכלוסייה."
+        }
+      }
+    },
+    "STEYX": {
+      "description": "סטיית התקן של ערכי y צפויים ברגרסיה.",
+      "parameters": {
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "STANDARDIZE": {
+      "description": "שווה ערך מנורמל של משתנה אקראי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "ערך המשתנה האקראי שיש לנרמל."
+        },
+        "mean": {
+          "name": "ממוצע",
+          "detail": "ממוצע ההתפלגות."
+        },
+        "standard_deviation": {
+          "name": "סטיית_תקן",
+          "detail": "סטיית התקן של ההתפלגות."
+        }
+      }
+    },
+    "SMALL": {
+      "description": "האיבר ה-N הקטן ביותר במערך נתונים.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "המערך או הטווח המכילים את קבוצת הנתונים שיש לקחת בחשבון."
+        },
+        "n": {
+          "name": "נ",
+          "detail": "הדירוג מהקטן לגדול של האלמנט שיש להחזיר."
+        }
+      }
+    },
+    "SLOPE": {
+      "description": "שיפוע הקו מרגרסיה לינארית של נתונים.",
+      "parameters": {
+        "data_y": {
+          "name": "נתונים_י",
+          "detail": "הטווח המייצג את המערך או המטריצה של הנתונים התלויים."
+        },
+        "data_x": {
+          "name": "נתונים_x",
+          "detail": "הטווח המייצג את המערך או המטריצה של נתונים בלתי תלויים."
+        }
+      }
+    },
+    "SKEW": {
+      "description": "הטיה של מערך נתונים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך או הטווח הראשון של קבוצת הנתונים."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "ערכים או טווחים נוספים שיש לכלול במערך הנתונים."
+        }
+      }
+    },
+    "VLOOKUP": {
+      "description": "חיפוש אנכי.",
+      "parameters": {
+        "search_key": {
+          "name": "מפתח_חיפוש",
+          "detail": "הערך לחיפוש. לדוגמה, `42`, `\"חתולים\"`, או `I24`."
+        },
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח שיש לקחת בחשבון לחיפוש. העמודה הראשונה בטווח מחפשת את המפתח שצוין ב-`search_key`."
+        },
+        "index": {
+          "name": "מדד",
+          "detail": "אינדקס העמודה של הערך שיש להחזיר, כאשר העמודה הראשונה ב-`range` ממוספרת 1."
+        },
+        "is_sorted": {
+          "name": "ממוין",
+          "detail": "מציין האם העמודה שיש לחפש (העמודה הראשונה בטווח שצוין) ממוינת, ובמקרה כזה תוחזר ההתאמה הקרובה ביותר עבור `search_key`."
+        }
+      }
+    },
+    "HLOOKUP": {
+      "description": "חיפוש אופקי",
+      "parameters": {
+        "search_key": {
+          "name": "מפתח_חיפוש",
+          "detail": "הערך לחיפוש. לדוגמה, `42`, `\"חתולים\"`, או `I24`."
+        },
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח שיש לקחת בחשבון לחיפוש. השורה הראשונה בטווח מחפשת את המפתח שצוין ב-`search_key`."
+        },
+        "index": {
+          "name": "מדד",
+          "detail": "אינדקס השורה של הערך שיש להחזיר, כאשר השורה הראשונה ב-`range` ממוספרת 1."
+        },
+        "is_sorted": {
+          "name": "ממוין",
+          "detail": "מציין האם השורה לחיפוש (השורה הראשונה בטווח שצוין) ממוינת."
+        }
+      }
+    },
+    "LOOKUP": {
+      "description": "חפש ערך.",
+      "parameters": {
+        "search_key": {
+          "name": "מפתח_חיפוש",
+          "detail": "הערך שיש לחפש בשורה או בעמודה. לדוגמה, `42`, `\"Cats\"`, או `I24`."
+        },
+        "search_range|search_result_array": {
+          "name": "טווח_חיפוש|מערך_תוצאות_חיפוש",
+          "detail": "שיטה אחת לשימוש בפונקציה זו היא לספק שורה או עמודה ממוינת אחת `search_range` לחיפוש אחר `search_key` עם ארגומנט שני `result_range`. הדרך השנייה היא לשלב את שני הארגומנטים הללו לתוך `search_result_array` אחד שבו השורה או העמודה הראשונה מתבצעת וערך מוחזר מהשורה או העמודה האחרונה במערך. אם `search_key` לא נמצא, ייתכן שתוחזר התאמה לא מדויקת."
+        },
+        "result_range": {
+          "name": "טווח_תוצאות",
+          "detail": "הטווח שממנו יש להחזיר תוצאה. הערך המוחזר תואם למיקום שבו נמצא `search_key` ב-`search_range`. טווח זה חייב להכיל שורה או עמודה אחת בלבד ואין להשתמש בו אם משתמשים בשיטת `search_result_array`."
+        }
+      }
+    },
+    "ADDRESS": {
+      "description": "הפניה לתא כמחרוזת.",
+      "parameters": {
+        "row": {
+          "name": "שורה",
+          "detail": "מספר השורה של הפניה לתא"
+        },
+        "column": {
+          "name": "עמודה",
+          "detail": "מספר העמודה (לא השם) של הפניה לתא. `A` הוא מספר העמודה `1`."
+        },
+        "absolute_relative_mode": {
+          "name": "מצב_יחסי_מוחלט",
+          "detail": "אינדיקטור האם ההפניה היא מוחלטת של שורה/עמודה. `1` הוא מוחלט של שורה ועמודה (לדוגמה $A$1), `2` הוא מוחלט של שורה ויחסי של עמודה (לדוגמה A$1), `3` הוא מוחלט של שורה ויחסי של עמודה (לדוגמה $A1), ו-`4` הוא יחסי של שורה ועמודה (לדוגמה A1)."
+        },
+        "use_a1_notation": {
+          "name": "use_a1_notation",
+          "detail": "ערך בוליאני המציין האם להשתמש בסימון בסגנון `A1` (TRUE) או בסימון בסגנון `R1C1` (FALSE)."
+        },
+        "sheet": {
+          "name": "דף",
+          "detail": "טקסט המציין את שם הגיליון שאליו מצביעה הכתובת."
+        }
+      }
+    },
+    "INDIRECT": {
+      "description": "הפניה לתא שצוינה על ידי מחרוזת.",
+      "parameters": {
+        "cell_reference_as_string": {
+          "name": "תא_הפניה_כמחרוזת",
+          "detail": "הפניה לתא, כתובה כמחרוזת עם מרכאות מסביב."
+        },
+        "is_A1_notation": {
+          "name": "הסימון is_A1",
+          "detail": "מציין אם ההפניה לתא היא בסימון A1 (TRUE) או בסימון R1C1 (FALSE)."
+        }
+      }
+    },
+    "ROW": {
+      "description": "מספר שורה של תא מסוים.",
+      "parameters": {
+        "cell_reference": {
+          "name": "הפניה_לתא",
+          "detail": "התא שמספר השורה שלו יוחזר."
+        }
+      }
+    },
+    "ROWS": {
+      "description": "מספר השורות במערך או בטווח שצוינו.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח שספירת השורות שלו תוחזר."
+        }
+      }
+    },
+    "COLUMN": {
+      "description": "מספר עמודה של תא מסוים.",
+      "parameters": {
+        "cell_reference": {
+          "name": "הפניה_לתא",
+          "detail": "התא שמספר העמודה שלו יוחזר. עמודה `A` מתאימה ל-`1`."
+        }
+      }
+    },
+    "COLUMNS": {
+      "description": "מספר העמודות במערך או בטווח שצוינו.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הטווח שספירת העמודות שלו תוחזר."
+        }
+      }
+    },
+    "OFFSET": {
+      "description": "היסט של הפניה לטווח יחסית לתא.",
+      "parameters": {
+        "cell_reference": {
+          "name": "הפניה_לתא",
+          "detail": "נקודת ההתחלה שממנה יש לספור את שורות ועמודות ההיסט."
+        },
+        "offset_rows": {
+          "name": "שורות_אופסט",
+          "detail": "מספר השורות שיש לקזז לפיהן."
+        },
+        "offset_columns": {
+          "name": "עמודות_אופסט",
+          "detail": "מספר העמודות שיש לקזז לפיהן."
+        },
+        "height": {
+          "name": "גובה",
+          "detail": "גובה הטווח שיש להחזיר החל מיעד ההיסט."
+        },
+        "width": {
+          "name": "רוחב",
+          "detail": "רוחב הטווח שיש להחזיר החל מיעד ההיסט."
+        }
+      }
+    },
+    "MATCH": {
+      "description": "מיקום הפריט בטווח התואם לערך.",
+      "parameters": {
+        "search_key": {
+          "name": "מפתח_חיפוש",
+          "detail": "הערך לחיפוש. לדוגמה, `42`, `\"חתולים\"`, או `I24`."
+        },
+        "range": {
+          "name": "לנוע",
+          "detail": "המערך החד-ממדי לחיפוש."
+        },
+        "search_type": {
+          "name": "סוג_חיפוש",
+          "detail": "שיטת החיפוש. `1` (ברירת מחדל) מוצא את הערך הגדול ביותר הקטן או שווה ל-`search_key` כאשר `range` ממוין בסדר עולה. `0` מוצא את הערך המדויק כאשר `range` אינו ממוין. `-1` מוצא את הערך הקטן ביותר הגדול או שווה ל-`search_key` כאשר `range` ממוין בסדר יורד."
+        }
+      }
+    },
+    "INDEX": {
+      "description": "תוכן התא שצוין לפי היסט של שורות ועמודות.",
+      "parameters": {
+        "reference": {
+          "name": "הפניה",
+          "detail": "מערך התאים שיש להסיט לתוכם."
+        },
+        "row": {
+          "name": "שורה",
+          "detail": "מספר שורות ההיסט."
+        },
+        "column": {
+          "name": "עמודה",
+          "detail": "מספר עמודות ההיסט."
+        }
+      }
+    },
+    "GETPIVOTDATA": {
+      "description": "מחלץ ערך מצטבר מטבלת צירים המתאים לכותרות השורות והעמודות שצוינו.",
+      "parameters": {
+        "value_name": {
+          "name": "שם_ערך",
+          "detail": "שם הערך בטבלת הצירים שעבורו ברצונך לקבל נתונים."
+        },
+        "any_pivot_table_cell": {
+          "name": "תא_טבלת_ציר_כל_תא",
+          "detail": "כל הפניה לתא בטבלת הציר הרצויה (מומלץ פינה עליונה)."
+        },
+        "original_column": {
+          "name": "עמודה_מקורית",
+          "detail": "שם העמודה במערך הנתונים המקורי (לא טבלת הציר)."
+        },
+        "pivot_item": {
+          "name": "פריט_ציר",
+          "detail": "שם השורה או העמודה המוצגות בטבלת הציר המתאימות ל-*original_column* שברצונך לאחזר."
+        }
+      }
+    },
+    "CHOOSE": {
+      "description": "אלמנט מרשימת אפשרויות המבוסס על אינדקס.",
+      "parameters": {
+        "index": {
+          "name": "מדד",
+          "detail": "איזו אפשרות (מתוך עד 30 שסופקו) להחזיר."
+        },
+        "choice1": {
+          "name": "בחירה 1",
+          "detail": "ערך פוטנציאלי להחזרה. נדרש. יכול להיות הפניה לתא או ערך בודד."
+        },
+        "choice2": {
+          "name": "בחירה2",
+          "detail": "ערכים נוספים לבחירה."
+        }
+      }
+    },
+    "TIME": {
+      "description": "ממיר שעה/דקה/שנייה לשעה.",
+      "parameters": {
+        "hour": {
+          "name": "שעה",
+          "detail": "רכיב השעה של הזמן."
+        },
+        "minute": {
+          "name": "דקה",
+          "detail": "רכיב הדקות של הזמן."
+        },
+        "second": {
+          "name": "שניה",
+          "detail": "המרכיב השני של הזמן."
+        }
+      }
+    },
+    "TIMEVALUE": {
+      "description": "ממיר מחרוזת זמן לייצוג המספר הסידורי שלה.",
+      "parameters": {
+        "time_string": {
+          "name": "מחרוזת_זמן",
+          "detail": "המחרוזת שמכילה את ייצוג הזמן."
+        }
+      }
+    },
+    "EOMONTH": {
+      "description": "היום האחרון של החודש לפני או אחרי תאריך.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "התאריך שממנו יש לחשב את התוצאה."
+        },
+        "months": {
+          "name": "חודשים",
+          "detail": "מספר החודשים לפני (שלילי) או אחרי (חיובי) 'date_start' שיש לקחת בחשבון."
+        }
+      }
+    },
+    "EDATE": {
+      "description": "תאריך מספר חודשים לפני/אחרי תאריך אחר.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "התאריך שממנו יש לחשב את התוצאה."
+        },
+        "months": {
+          "name": "חודשים",
+          "detail": "מספר החודשים לפני (שלילי) או אחרי (חיובי) 'start_date' שיש לחשב."
+        }
+      }
+    },
+    "SECOND": {
+      "description": "רכיב שני של זמן מסוים.",
+      "parameters": {
+        "time": {
+          "name": "זמן",
+          "detail": "הזמן שממנו יש לחשב את הרכיב השני"
+        }
+      }
+    },
+    "MINUTE": {
+      "description": "רכיב הדקות של זמן מסוים.",
+      "parameters": {
+        "time": {
+          "name": "זמן",
+          "detail": "הזמן שממנו יש לחשב את רכיב הדקות."
+        }
+      }
+    },
+    "HOUR": {
+      "description": "רכיב השעה של זמן מסוים.",
+      "parameters": {
+        "time": {
+          "name": "זמן",
+          "detail": "הזמן שממנו יש לחשב את רכיב השעה."
+        }
+      }
+    },
+    "NOW": {
+      "description": "תאריך ושעה נוכחיים כערך תאריך."
+    },
+    "NETWORKDAYS": {
+      "description": "ימי עבודה נטו בין שני ימים שסופקו.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "תאריך ההתחלה של התקופה שממנה יש לחשב את מספר ימי העבודה נטו."
+        },
+        "end_date": {
+          "name": "תאריך_סיום",
+          "detail": "תאריך הסיום של התקופה שממנו יש לחשב את מספר ימי העבודה נטו."
+        },
+        "holidays": {
+          "name": "חגים",
+          "detail": "קבוע טווח או מערך המכיל את מספרי הסידור של התאריכים שיש לקחת בחשבון כחגים."
+        }
+      }
+    },
+    "ISOWEEKNUM": {
+      "description": "מספר שבוע ISO של השנה.",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שעבורו יש לקבוע את מספר השבוע לפי ISO. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        }
+      }
+    },
+    "WEEKNUM": {
+      "description": "מספר השבוע בשנה.",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שעבורו יש לקבוע את מספר השבוע. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "type": {
+          "name": "סוג",
+          "detail": "מספר המייצג את היום שבו מתחיל השבוע. יום ראשון = 1."
+        }
+      }
+    },
+    "WEEKDAY": {
+      "description": "יום בשבוע של התאריך שסופק (כמספר).",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שעבורו יש לקבוע את היום בשבוע. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "type": {
+          "name": "סוג",
+          "detail": "מספר המציין את מערכת המספור שיש להשתמש בה כדי לייצג את ימי חול. כברירת מחדל, ספירות החל מיום ראשון הן 1."
+        }
+      }
+    },
+    "DAY": {
+      "description": "היום בחודש בו חל תאריך מסוים.",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שממנו יש לחלץ את היום."
+        }
+      }
+    },
+    "DAYS": {
+      "description": "מספר הימים בין שני תאריכים.",
+      "parameters": {
+        "end_date": {
+          "name": "תאריך_סיום",
+          "detail": "סוף טווח התאריכים."
+        },
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "תחילת טווח התאריכים."
+        }
+      }
+    },
+    "DAYS360": {
+      "description": "ימים בין שני תאריכים בשנה בת 360 יום.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "תאריך ההתחלה שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "end_date": {
+          "name": "תאריך_סיום",
+          "detail": "תאריך הסיום שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "method": {
+          "name": "שיטה",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "DATE": {
+      "description": "ממיר שנה/חודש/יום לתאריך.",
+      "parameters": {
+        "year": {
+          "name": "שנה",
+          "detail": "רכיב השנה של התאריך."
+        },
+        "month": {
+          "name": "חודש",
+          "detail": "רכיב החודש של התאריך."
+        },
+        "day": {
+          "name": "יום",
+          "detail": "רכיב היום של התאריך."
+        }
+      }
+    },
+    "DATEVALUE": {
+      "description": "ממיר מחרוזת תאריך לערך תאריך.",
+      "parameters": {
+        "date_string": {
+          "name": "מחרוזת_תאריך",
+          "detail": "המחרוזת המייצגת את התאריך."
+        }
+      }
+    },
+    "DATEDIF": {
+      "description": "הפרש תאריך.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "תאריך ההתחלה שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "end_date": {
+          "name": "תאריך_סיום",
+          "detail": "תאריך הסיום שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "unit": {
+          "name": "יחידה",
+          "detail": "קיצור מחרוזת ליחידת זמן. לדוגמה, \"M\" עבור חודש. ערכים מקובלים הם \"Y\", \"M\", \"D\", \"MD\", \"YM\", \"YD\"."
+        }
+      }
+    },
+    "WORKDAY": {
+      "description": "מספר ימי עבודה מתאריך התחלה.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "התאריך שממנו מתחילים לספור."
+        },
+        "num_days": {
+          "name": "מספר_ימים",
+          "detail": "מספר ימי העבודה שיש להקדים מ-`start_date`. אם שלילי, סופר אחורה."
+        },
+        "holidays": {
+          "name": "חגים",
+          "detail": "קבוע טווח או מערך המכיל את התאריכים שיש לקחת בחשבון כחגים."
+        }
+      }
+    },
+    "YEAR": {
+      "description": "שנה שצוינה על ידי תאריך נתון.",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שממנו יש לחלץ את השנה."
+        }
+      }
+    },
+    "YEARFRAC": {
+      "description": "מספר שנים מדויק בין שני תאריכים.",
+      "parameters": {
+        "start_date": {
+          "name": "תאריך_התחלה",
+          "detail": "תאריך ההתחלה שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "end_date": {
+          "name": "תאריך_סיום",
+          "detail": "תאריך הסיום שיש לקחת בחשבון בחישוב. חייב להיות הפניה לתא המכיל תאריך, פונקציה המחזירה סוג תאריך או מספר."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "TODAY": {
+      "description": "תאריך נוכחי כערך תאריך."
+    },
+    "MONTH": {
+      "description": "חודש בשנה בו חל תאריך מסוים.",
+      "parameters": {
+        "date": {
+          "name": "תאריך",
+          "detail": "התאריך שממנו יש לחלץ את החודש."
+        }
+      }
+    },
+    "EFFECT": {
+      "description": "ריבית אפקטיבית שנתית.",
+      "parameters": {
+        "nominal_rate": {
+          "name": "שער נומינלי",
+          "detail": "הריבית הנומינלית לשנה."
+        },
+        "periods_per_year": {
+          "name": "תקופות_לשנה",
+          "detail": "מספר תקופות הריבית המורכבות בשנה."
+        }
+      }
+    },
+    "DOLLAR": {
+      "description": "מעצב מספר כמטבע ספציפי למיקום הגיליון האלקטרוני שלך.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "הערך שיש לעצב."
+        },
+        "number_of_places": {
+          "name": "מספר_מקומות",
+          "detail": "מספר המקומות העשרוניים שיש להציג."
+        }
+      }
+    },
+    "DOLLARDE": {
+      "description": "ממיר שבר עשרוני לערך עשרוני.",
+      "parameters": {
+        "fractional_price": {
+          "name": "מחיר_חלקי",
+          "detail": "הצעת המחיר הניתנת באמצעות מוסכמות של שברים עשרוניים."
+        },
+        "unit": {
+          "name": "יחידה",
+          "detail": "יחידות השבר, לדוגמה '8' עבור שמינית או '32' עבור שלוש-שנייה."
+        }
+      }
+    },
+    "DOLLARFR": {
+      "description": "ממיר ערך עשרוני לשבר עשרוני.",
+      "parameters": {
+        "decimal_price": {
+          "name": "מחיר_עשרוני",
+          "detail": "הצעת המחיר הניתנת כערך עשרוני."
+        },
+        "unit": {
+          "name": "יחידה",
+          "detail": "היחידות של השבר הרצוי, לדוגמה '8' עבור שמינית או '32' עבור שלוש-ושמינית."
+        }
+      }
+    },
+    "DB": {
+      "description": "פחת באמצעות שיטת היתרה הפוחתת.",
+      "parameters": {
+        "cost": {
+          "name": "עלות",
+          "detail": "העלות הראשונית של הנכס."
+        },
+        "salvage": {
+          "name": "שמור",
+          "detail": "שווי הנכס בתום הפחת."
+        },
+        "life": {
+          "name": "חיים",
+          "detail": "מספר התקופות בהן הנכס מופחת."
+        },
+        "period": {
+          "name": "תקופה",
+          "detail": "התקופה היחידה בתוך 'חיים' שעבורה יש לחשב פחת."
+        },
+        "month": {
+          "name": "חודש",
+          "detail": "מספר החודשים בשנה הראשונה של פחת."
+        }
+      }
+    },
+    "DDB": {
+      "description": "פחת באמצעות שיטת היתרה הפוחתת הכפולה.",
+      "parameters": {
+        "cost": {
+          "name": "עלות",
+          "detail": "העלות הראשונית של הנכס."
+        },
+        "salvage": {
+          "name": "שמור",
+          "detail": "שווי הנכס בתום הפחת."
+        },
+        "life": {
+          "name": "חיים",
+          "detail": "מספר התקופות בהן הנכס מופחת."
+        },
+        "period": {
+          "name": "תקופה",
+          "detail": "התקופה היחידה בתוך 'חיים' שעבורה יש לחשב פחת."
+        },
+        "factor": {
+          "name": "גורם",
+          "detail": "הגורם שבו הפחת יורד."
+        }
+      }
+    },
+    "RATE": {
+      "description": "ריבית של השקעה אנושית.",
+      "parameters": {
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "payment_per_period": {
+          "name": "תשלום_לפרק_זמן",
+          "detail": "הסכום שיש לשלם לכל תקופה."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        },
+        "rate_guess": {
+          "name": "ניחוש_שיעור",
+          "detail": "הערכה לגבי מה תהיה הריבית."
+        }
+      }
+    },
+    "CUMPRINC": {
+      "description": "קרן מצטברת ששולמה על פני קבוצת תקופות.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "first_period": {
+          "name": "תקופה_ראשונה",
+          "detail": "מספר תקופת התשלום לתחילת החישוב המצטבר."
+        },
+        "last_period": {
+          "name": "תקופה_אחרונה",
+          "detail": "מספר תקופת התשלום לסיום החישוב המצטבר."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "COUPNUM": {
+      "description": "מספר קופונים בין הסליקה למועד הפירעון.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "SYD": {
+      "description": "פחת באמצעות שיטת סכום ספרות של שנים.",
+      "parameters": {
+        "cost": {
+          "name": "עלות",
+          "detail": "העלות הראשונית של הנכס."
+        },
+        "salvage": {
+          "name": "שמור",
+          "detail": "שווי הנכס בתום הפחת."
+        },
+        "life": {
+          "name": "חיים",
+          "detail": "מספר התקופות בהן הנכס מופחת."
+        },
+        "period": {
+          "name": "תקופה",
+          "detail": "התקופה היחידה בתוך 'חיים' שעבורה יש לחשב פחת."
+        }
+      }
+    },
+    "TBILLEQ": {
+      "description": "שיעור תשואה שווה ערך עבור שטר אוצר.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההנחה של החשבון בעת הרכישה."
+        }
+      }
+    },
+    "TBILLYIELD": {
+      "description": "התשואה של שטר אוצר אמריקאי בהתבסס על מחיר.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "price": {
+          "name": "מחיר",
+          "detail": "המחיר שבו נרכש נייר הערך לכל 100 ערך נקוב."
+        }
+      }
+    },
+    "TBILLPRICE": {
+      "description": "מחיר שטר האוצר של ארה\"ב.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההנחה של החשבון בעת הרכישה."
+        }
+      }
+    },
+    "PV": {
+      "description": "ערך נוכחי של השקעה אנושית.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "payment_amount": {
+          "name": "סכום_תשלום",
+          "detail": "הסכום שיש לשלם לכל תקופה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "COUPDAYBS": {
+      "description": "מספר הימים מהקופון הראשון ועד לסילוקו.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "COUPDAYS": {
+      "description": "ימים בתקופת הקופון המכילה את תאריך הסליקה.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "FV": {
+      "description": "ערך עתידי של השקעה בקרן אנושית.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "payment_amount": {
+          "name": "סכום_תשלום",
+          "detail": "הסכום שיש לשלם לכל תקופה."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "FVSCHEDULE": {
+      "description": "ערך עתידי של הקרן מסדרת ריביות.",
+      "parameters": {
+        "principal": {
+          "name": "קרן",
+          "detail": "סכום ההון ההתחלתי או הערך שיש להצטבר כנגדו."
+        },
+        "rate_schedule": {
+          "name": "לוח זמנים לתעריפים",
+          "detail": "סדרה של ריביות שיצטברו כנגד ה'קרן'."
+        }
+      }
+    },
+    "YIELD": {
+      "description": "תשואה שנתית של נייר ערך המשלם ריבית תקופתית.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "rate": {
+          "name": "קצב",
+          "detail": "שיעור הריבית השנתי."
+        },
+        "price": {
+          "name": "מחיר",
+          "detail": "המחיר שבו נרכש נייר הערך לכל 100 ערך נקוב."
+        },
+        "redemption": {
+          "name": "גאולה",
+          "detail": "סכום הפדיון לכל 100 ערך נקוב, או נקוב."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "YIELDDISC": {
+      "description": "תשואה שנתית של נייר ערך ניכיון.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "price": {
+          "name": "מחיר",
+          "detail": "המחיר שבו נרכש נייר הערך לכל 100 ערך נקוב."
+        },
+        "redemption": {
+          "name": "גאולה",
+          "detail": "סכום הפדיון לכל 100 ערך נקוב, או נקוב."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "NOMINAL": {
+      "description": "ריבית נומינלית שנתית.",
+      "parameters": {
+        "effective_rate": {
+          "name": "שיעור_אפקטיבי",
+          "detail": "הריבית האפקטיבית לשנה."
+        },
+        "periods_per_year": {
+          "name": "תקופות_לשנה",
+          "detail": "מספר תקופות הריבית המורכבות בשנה."
+        }
+      }
+    },
+    "XIRR": {
+      "description": "שיעור תשואה פנימי בהינתן תזרימי מזומנים לא מחזוריים.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "סכומי_תזרים_מזומנים",
+          "detail": "מערך או טווח המכילים את ההכנסה או התשלומים הקשורים להשקעה."
+        },
+        "cashflow_dates": {
+          "name": "תאריכי_תזרים_מזומנים",
+          "detail": "מערך או טווח עם תאריכים התואמים לתזרימי המזומנים ב-`cashflow_amounts`."
+        },
+        "rate_guess": {
+          "name": "ניחוש_שיעור",
+          "detail": "הערכה של מה יהיה שיעור התשואה הפנימי."
+        }
+      }
+    },
+    "MIRR": {
+      "description": "שיעור תשואה פנימי שונה.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "סכומי_תזרים_מזומנים",
+          "detail": "מערך או טווח המכילים את ההכנסה או התשלומים הקשורים להשקעה."
+        },
+        "financing_rate": {
+          "name": "שיעור_מימון",
+          "detail": "הריבית המשולמת על כספים שהושקעו."
+        },
+        "reinvestment_return_rate": {
+          "name": "שיעור_תשואה_על_השקעה_מחודשת",
+          "detail": "התשואה (כאחוז) שהושגה על השקעה חוזרת של הכנסה שהתקבלה מההשקעה."
+        }
+      }
+    },
+    "IRR": {
+      "description": "שיעור תשואה פנימי בהינתן תזרימי מזומנים תקופתיים.",
+      "parameters": {
+        "cashflow_amounts": {
+          "name": "סכומי_תזרים_מזומנים",
+          "detail": "מערך או טווח המכילים את ההכנסה או התשלומים הקשורים להשקעה."
+        },
+        "rate_guess": {
+          "name": "ניחוש_שיעור",
+          "detail": "הערכה של מה יהיה שיעור התשואה הפנימי."
+        }
+      }
+    },
+    "NPV": {
+      "description": "הערך הנוכחי הנקי של השקעה המבוסס על סדרה של תזרימי מזומנים תקופתיים ושיעור היוון.",
+      "parameters": {
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההיוון של ההשקעה על פני תקופה אחת."
+        },
+        "cashflow1": {
+          "name": "תזרים מזומנים1",
+          "detail": "תזרים המזומנים העתידי הראשון."
+        },
+        "cashflow2": {
+          "name": "תזרים מזומנים2",
+          "detail": "תזרימי מזומנים עתידיים נוספים."
+        }
+      }
+    },
+    "XNPV": {
+      "description": "ערך נוכחי נקי בהינתן תזרימי מזומנים לא תקופתיים.",
+      "parameters": {
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההיוון של ההשקעה על פני תקופה אחת."
+        },
+        "cashflow_amounts": {
+          "name": "סכומי_תזרים_מזומנים",
+          "detail": "טווח תאים המכילים את ההכנסה או התשלומים הקשורים להשקעה."
+        },
+        "cashflow_dates": {
+          "name": "תאריכי_תזרים_מזומנים",
+          "detail": "טווח תאים עם תאריכים התואמים לתזרימי המזומנים ב-`cashflow_amounts`."
+        }
+      }
+    },
+    "CUMIPMT": {
+      "description": "ריבית מצטברת ששולמה על פני קבוצת תקופות.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "first_period": {
+          "name": "תקופה_ראשונה",
+          "detail": "מספר תקופת התשלום לתחילת החישוב המצטבר."
+        },
+        "last_period": {
+          "name": "תקופה_אחרונה",
+          "detail": "מספר תקופת התשלום לסיום החישוב המצטבר."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "PMT": {
+      "description": "תשלום תקופתי עבור השקעה אנושית.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "IPMT": {
+      "description": "תשלום ריבית עבור השקעה.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "period": {
+          "name": "תקופה",
+          "detail": "תקופת הפחת, במונחים של מספר תקופות."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "PPMT": {
+      "description": "תשלום על קרן ההשקעה.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "period": {
+          "name": "תקופה",
+          "detail": "תקופת הפחת, במונחים של מספר תקופות."
+        },
+        "number_of_periods": {
+          "name": "מספר_תקופות",
+          "detail": "מספר התשלומים שיש לבצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "INTRATE": {
+      "description": "מחשב את שיעור הריבית האפקטיבי.",
+      "parameters": {
+        "buy_date": {
+          "name": "תאריך_קנייה",
+          "detail": "תאריך רכישת ההשקעה."
+        },
+        "sell_date": {
+          "name": "תאריך_מכירה",
+          "detail": "תאריך מכירת ההשקעה."
+        },
+        "buy_price": {
+          "name": "מחיר_קנייה",
+          "detail": "המחיר בו נרכשה ההשקעה."
+        },
+        "sell_price": {
+          "name": "מחיר_מכירה",
+          "detail": "המחיר בו נמכרה ההשקעה."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "PRICE": {
+      "description": "מחיר של נייר ערך המשלם ריבית תקופתית.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "rate": {
+          "name": "קצב",
+          "detail": "שיעור הריבית השנתי."
+        },
+        "yield": {
+          "name": "תשואה",
+          "detail": "התשואה השנתית הצפויה של נייר הערך."
+        },
+        "redemption": {
+          "name": "גאולה",
+          "detail": "סכום הפדיון לכל 100 ערך נקוב, או נקוב."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "PRICEDISC": {
+      "description": "מחיר של נייר ערך בהנחה.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההיוון של נייר הערך בעת הרכישה."
+        },
+        "redemption": {
+          "name": "גאולה",
+          "detail": "סכום הפדיון לכל 100 ערך נקוב, או נקוב."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "PRICEMAT": {
+      "description": "מחיר נייר ערך המשלם ריבית במועד הפירעון.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "issue": {
+          "name": "להנפיק",
+          "detail": "התאריך בו נייר הערך הונפק לראשונה."
+        },
+        "rate": {
+          "name": "קצב",
+          "detail": "שיעור הריבית השנתי."
+        },
+        "yield": {
+          "name": "תשואה",
+          "detail": "התשואה השנתית הצפויה של נייר הערך."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "RECEIVED": {
+      "description": "סכום שהתקבל במועד הפירעון עבור נייר ערך.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "investment": {
+          "name": "השקעה",
+          "detail": "הסכום שהושקע (ללא קשר לערך הנקוב של כל נייר ערך)."
+        },
+        "discount": {
+          "name": "דיסקונט",
+          "detail": "שיעור ההיוון של נייר הערך שהושקע בו."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "DISC": {
+      "description": "שיעור ההיוון של נייר ערך המבוסס על מחיר.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "price": {
+          "name": "מחיר",
+          "detail": "המחיר שבו נרכש נייר הערך לכל 100 ערך נקוב."
+        },
+        "redemption": {
+          "name": "גאולה",
+          "detail": "סכום הפדיון לכל 100 ערך נקוב, או נקוב."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "NPER": {
+      "description": "מספר תקופות התשלום עבור השקעה.",
+      "parameters": {
+        "rate": {
+          "name": "קצב",
+          "detail": "הריבית."
+        },
+        "payment_amount": {
+          "name": "סכום_תשלום",
+          "detail": "סכום כל תשלום שבוצע."
+        },
+        "present_value": {
+          "name": "ערך_הווה",
+          "detail": "הערך הנוכחי של הקצבה."
+        },
+        "future_value": {
+          "name": "ערך_עתידי",
+          "detail": "הערך העתידי שנותר לאחר ביצוע התשלום הסופי."
+        },
+        "end_or_beginning": {
+          "name": "סוף_או_התחלה",
+          "detail": "האם התשלומים אמורים להתבצע בסוף (`0`) או בתחילת (`1`) של כל תקופה."
+        }
+      }
+    },
+    "SLN": {
+      "description": "פחת של נכס בשיטת הקו הישר.",
+      "parameters": {
+        "cost": {
+          "name": "עלות",
+          "detail": "העלות הראשונית של הנכס."
+        },
+        "salvage": {
+          "name": "שמור",
+          "detail": "שווי הנכס בתום הפחת."
+        },
+        "life": {
+          "name": "חיים",
+          "detail": "מספר התקופות בהן הנכס מופחת."
+        }
+      }
+    },
+    "DURATION": {
+      "description": "מספר התקופות עד שהשקעה מגיעה לערך מסוים.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "rate": {
+          "name": "קצב",
+          "detail": "שיעור הריבית השנתי."
+        },
+        "yield": {
+          "name": "תשואה",
+          "detail": "התשואה השנתית הצפויה של נייר הערך."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "MDURATION": {
+      "description": "משך זמן מקולי שונה.",
+      "parameters": {
+        "settlement": {
+          "name": "הסדר",
+          "detail": "תאריך הסליקה של נייר הערך, התאריך לאחר ההנפקה בו נייר הערך נמסר לקונה."
+        },
+        "maturity": {
+          "name": "בגרות",
+          "detail": "תאריך הפדיון או תאריך הסיום של נייר הערך, מתי ניתן לפדות אותו בערכו הנקוב או בערכו הנקוב."
+        },
+        "rate": {
+          "name": "קצב",
+          "detail": "שיעור הריבית השנתי."
+        },
+        "yield": {
+          "name": "תשואה",
+          "detail": "התשואה השנתית הצפויה של נייר הערך."
+        },
+        "frequency": {
+          "name": "תדר",
+          "detail": "מספר תשלומי הריבית או הקופון בשנה (1, 2 או 4)."
+        },
+        "day_count_convention": {
+          "name": "כנס_ספירת_ימים",
+          "detail": "אינדיקטור לשיטת ספירת הימים שיש להשתמש בה."
+        }
+      }
+    },
+    "BIN2DEC": {
+      "description": "ממיר מספר בינארי עם סימן לפורמט עשרוני.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "מספר_בינארי_חתום",
+          "detail": "הערך הבינארי בן 10 הסיביות עם החתום שיש להמיר למספר עשרוני, מסופק כמחרוזת."
+        }
+      }
+    },
+    "BIN2HEX": {
+      "description": "ממיר מספר בינארי למספר הקסדצימלי.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "מספר_בינארי_חתום",
+          "detail": "הערך הבינארי בן 10 הסיביות עם סימן שיש להמיר לערך הקסדמי עם סימן, המסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "BIN2OCT": {
+      "description": "ממיר מספר בינארי למספר אוקטלי.",
+      "parameters": {
+        "signed_binary_number": {
+          "name": "מספר_בינארי_חתום",
+          "detail": "הערך הבינארי בן 10 הסיביות עם סימן שיש להמיר לאוקטל עם סימן, מסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "DEC2BIN": {
+      "description": "ממיר מספר עשרוני לפורמט בינארי עם סימן.",
+      "parameters": {
+        "decimal_number": {
+          "name": "מספר_עשרוני",
+          "detail": "הערך העשרוני שיש להמיר לקובץ בינארי עם סימן, מסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "DEC2HEX": {
+      "description": "ממיר מספר עשרוני למספר הקסדצימלי.",
+      "parameters": {
+        "decimal_number": {
+          "name": "מספר_עשרוני",
+          "detail": "הערך העשרוני שיש להמיר למספר הקסדצימלי עם סימן, מסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "DEC2OCT": {
+      "description": "ממיר מספר עשרוני לפורמט אוקטלי עם סימן.",
+      "parameters": {
+        "decimal_number": {
+          "name": "מספר_עשרוני",
+          "detail": "הערך העשרוני שיש להמיר לאוקטל עם סימן, מסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "HEX2BIN": {
+      "description": "ממיר מספר הקסדצימלי למספר בינארי.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "מספר_הקסדצימלי_עם_חתימה",
+          "detail": "הערך ההקסדצימלי בן 40 סיביות עם חתום שיש להמיר לקובץ בינארי עם חתום, המסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "HEX2DEC": {
+      "description": "ממיר מספר הקסדצימלי למספר עשרוני.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "מספר_הקסדצימלי_עם_חתימה",
+          "detail": "הערך ההקסדצימלי בן 40 סיביות עם סימן שיש להמיר למספר עשרוני, מסופק כמחרוזת."
+        }
+      }
+    },
+    "HEX2OCT": {
+      "description": "ממיר מספר הקסדצימלי למספר אוקטלי.",
+      "parameters": {
+        "signed_hexadecimal_number": {
+          "name": "מספר_הקסדצימלי_עם_חתימה",
+          "detail": "הערך ההקסדצימלי בן 40 סיביות עם סימן שיש להמיר לאוקטלי עם סימן, המסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "OCT2BIN": {
+      "description": "ממיר מספר אוקטלי למספר בינארי.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "מספר_אוקטלי_עם_חתימה",
+          "detail": "הערך האוקטלי בן 30 הסיביות עם סימן שיש להמיר לקובץ בינארי עם סימן, מסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "OCT2DEC": {
+      "description": "ממיר מספר אוקטלי עם סימן לפורמט עשרוני.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "מספר_אוקטלי_עם_חתימה",
+          "detail": "הערך האוקטלי בן 30 הסיביות עם הסימן שיש להמיר למספר עשרוני, מסופק כמחרוזת."
+        }
+      }
+    },
+    "OCT2HEX": {
+      "description": "ממיר מספר אוקטלי למספר הקסדצימלי.",
+      "parameters": {
+        "signed_octal_number": {
+          "name": "מספר_אוקטלי_עם_חתימה",
+          "detail": "הערך האוקטלי בן 30 הסיביות עם סימן שיש להמיר לערך הקסדצימלי עם סימן, המסופק כמחרוזת."
+        },
+        "significant_digits": {
+          "name": "ספרות_משמעותיות",
+          "detail": "מספר הספרות המשמעותיות שיש להבטיח בתוצאה."
+        }
+      }
+    },
+    "COMPLEX": {
+      "description": "יוצר מספר מרוכב.",
+      "parameters": {
+        "real_part": {
+          "name": "חלק_אמיתי",
+          "detail": "המקדם האמיתי."
+        },
+        "imaginary_part": {
+          "name": "חלק_דמיוני",
+          "detail": "המקדם הדמיוני."
+        },
+        "suffix": {
+          "name": "סיומת",
+          "detail": "הסיומת למקדם הדמיוני יכולה להיות רק 'i' או 'j'. אם מושמטת, ייעשה שימוש ב-'i'."
+        }
+      }
+    },
+    "IMREAL": {
+      "description": "המקדם הממשי של מספר מרוכב.",
+      "parameters": {
+        "complex_number": {
+          "name": "מספר_מרוכב",
+          "detail": "המספר המרוכב, בפורמט a+bi או a+bj."
+        }
+      }
+    },
+    "IMAGINARY": {
+      "description": "המקדם המדומה של מספר מרוכב.",
+      "parameters": {
+        "complex_number": {
+          "name": "מספר_מרוכב",
+          "detail": "המספר המרוכב, בפורמט a+bi או a+bj."
+        }
+      }
+    },
+    "IMCONJUGATE": {
+      "description": "הצומד המרוכב של מספר.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "המספר המרוכב שיש לחשב עבורו את המספר הצומד."
+        }
+      }
+    },
+    "IMABS": {
+      "description": "הערך המוחלט של מספר מרוכב.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "המספר המרוכב לחישוב הערך המוחלט שלו."
+        }
+      }
+    },
+    "DELTA": {
+      "description": "השווה שני ערכים מספריים.",
+      "parameters": {
+        "number1": {
+          "name": "מספר 1",
+          "detail": "המספר הראשון להשוואה."
+        },
+        "number2": {
+          "name": "מספר 2",
+          "detail": "המספר השני להשוואה."
+        }
+      }
+    },
+    "IMSUM": {
+      "description": "סכום של סדרה של מספרים מרוכבים.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "המספר המרוכב או הטווח הראשון שיש לחבר יחד."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "מספרים מרוכבים או טווחים נוספים להוספה ל-`value1`."
+        }
+      }
+    },
+    "IMSUB": {
+      "description": "ההבדל בין שני מספרים מרוכבים.",
+      "parameters": {
+        "first_number": {
+          "name": "מספר_ראשון",
+          "detail": "המספר המרוכב שיש לחסר ממנו את המספר_השני."
+        },
+        "second_number": {
+          "name": "מספר_שני",
+          "detail": "המספר המרוכב שיש לחסר מ-first_number."
+        }
+      }
+    },
+    "IMPRODUCT": {
+      "description": "תוצאה של כפל סדרה של מספרים מרוכבים יחד.",
+      "parameters": {
+        "factor1": {
+          "name": "גורם 1",
+          "detail": "המספר או הטווח הראשון לחישוב עבור המכפלה."
+        },
+        "factor2": {
+          "name": "גורם 2",
+          "detail": "מספרים מרוכבים או טווחים נוספים לחישוב עבור המכפלה."
+        }
+      }
+    },
+    "IMDIV": {
+      "description": "מספר מרוכב אחד מחולק במספר מרוכב אחר.",
+      "parameters": {
+        "dividend": {
+          "name": "דיבידנד",
+          "detail": "המספר המרוכב שיש לחלק."
+        },
+        "divisor": {
+          "name": "מחלק",
+          "detail": "המספר המרוכב שיש לחלק בו."
+        }
+      }
+    },
+    "NOT": {
+      "description": "מחזירה את הערך ההפוך מהערך הלוגי שסופק.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ביטוי_לוגי",
+          "detail": "ביטוי או הפניה לתא המכיל ביטוי המייצג ערך לוגי כלשהו."
+        }
+      }
+    },
+    "TRUE": {
+      "description": "ערך לוגי `true`."
+    },
+    "FALSE": {
+      "description": "ערך לוגי `false`."
+    },
+    "AND": {
+      "description": "אופרטור לוגי `and`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ביטוי_לוגי1",
+          "detail": "ביטוי או הפניה לתא המכיל ביטוי המייצג ערך לוגי כלשהו, לדוגמה `TRUE` או `FALSE`, או ביטוי שניתן לכפות עליו ערך לוגי."
+        },
+        "logical_expression2": {
+          "name": "ביטוי_לוגי2",
+          "detail": "ביטויים נוספים המייצגים ערכים לוגיים."
+        }
+      }
+    },
+    "IFERROR": {
+      "description": "ערך אם זו אינה שגיאה, אחרת ארגומנט שני.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש להחזיר אם `value` עצמו אינו שגיאה."
+        },
+        "value_if_error": {
+          "name": "ערך_אם_שגיאה",
+          "detail": "הערך שהפונקציה מחזירה אם `value` הוא שגיאה."
+        }
+      }
+    },
+    "IF": {
+      "description": "מחזירה ערך בהתאם לביטוי לוגי.",
+      "parameters": {
+        "logical_expression": {
+          "name": "ביטוי_לוגי",
+          "detail": "ביטוי או הפניה לתא המכיל ביטוי המייצג ערך לוגי כלשהו, לדוגמה `TRUE` או `FALSE`."
+        },
+        "value_if_true": {
+          "name": "ערך_אם_אמת",
+          "detail": "הערך שהפונקציה מחזירה אם `logical_expression` הוא `TRUE`."
+        },
+        "value_if_false": {
+          "name": "ערך_אם_שקר",
+          "detail": "הערך שהפונקציה מחזירה אם `logical_expression` הוא `FALSE`."
+        }
+      }
+    },
+    "OR": {
+      "description": "אופרטור לוגי `או`.",
+      "parameters": {
+        "logical_expression1": {
+          "name": "ביטוי_לוגי1",
+          "detail": "ביטוי או הפניה לתא המכיל ביטוי המייצג ערך לוגי כלשהו, לדוגמה `TRUE` או `FALSE`, או ביטוי שניתן לכפות עליו ערך לוגי."
+        },
+        "logical_expression2": {
+          "name": "ביטוי_לוגי2",
+          "detail": "ביטויים נוספים שמעריכים ערכים לוגיים."
+        }
+      }
+    },
+    "NE": {
+      "description": "לא שווה.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך הראשון."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך שיש לבדוק מול `value1` לאיתור אי-שוויון."
+        }
+      }
+    },
+    "EQ": {
+      "description": "להשתוות.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך הראשון."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך שיש לבדוק מול `value1` לבדיקת שוויון."
+        }
+      }
+    },
+    "GT": {
+      "description": "גדול יותר מ-.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך שיש לבדוק כגדול מ-`value2`."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך השני."
+        }
+      }
+    },
+    "GTE": {
+      "description": "גדול או שווה ל.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך שיש לבדוק כגדול או שווה ל-`value2`."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך השני."
+        }
+      }
+    },
+    "LT": {
+      "description": "פחות מ.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך שיש לבדוק כנמוך מ-`value2`."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך השני."
+        }
+      }
+    },
+    "LTE": {
+      "description": "קטן מ- או שווה ל-.",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך שיש לבדוק כקטן או שווה ל-`value2`."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך השני."
+        }
+      }
+    },
+    "ADD": {
+      "description": "סכום של שני מספרים",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "התוספת הראשונה."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "התוספת השנייה."
+        }
+      }
+    },
+    "MINUS": {
+      "description": "הפרש של שני מספרים",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "המינואנד, או המספר שממנו יש לחסר."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "המספר שיש לחסר מ-'value1'."
+        }
+      }
+    },
+    "MULTIPLY": {
+      "description": "מכפלה של שני מספרים",
+      "parameters": {
+        "factor1": {
+          "name": "גורם 1",
+          "detail": "הכפל הראשון."
+        },
+        "factor2": {
+          "name": "גורם 2",
+          "detail": "הכפל השני."
+        }
+      }
+    },
+    "DIVIDE": {
+      "description": "מספר אחד חלקי מספר אחר",
+      "parameters": {
+        "dividend": {
+          "name": "דיבידנד",
+          "detail": "המספר שיש לחלק."
+        },
+        "divisor": {
+          "name": "מחלק",
+          "detail": "המספר שיש לחלק בו."
+        }
+      }
+    },
+    "CONCAT": {
+      "description": "חיבור של שני ערכים",
+      "parameters": {
+        "value1": {
+          "name": "ערך1",
+          "detail": "הערך שאליו יתווסף `value2`."
+        },
+        "value2": {
+          "name": "ערך2",
+          "detail": "הערך שיש להוסיף ל-`value1`."
+        }
+      }
+    },
+    "UNARY_PERCENT": {
+      "description": "ערך מתפרש כאחוז.",
+      "parameters": {
+        "percentage": {
+          "name": "אחוזים",
+          "detail": "הערך שיש לפרש כאחוז."
+        }
+      }
+    },
+    "CONCATENATE": {
+      "description": "מצרף מחרוזות זו לזו.",
+      "parameters": {
+        "string1": {
+          "name": "מחרוזת1",
+          "detail": "המחרוזת הראשונית."
+        },
+        "string2": {
+          "name": "מחרוזת2",
+          "detail": "עוד מחרוזות להוספה ברצף."
+        }
+      }
+    },
+    "CODE": {
+      "description": "ערך מפת יוניקוד מספרי של תו.",
+      "parameters": {
+        "string": {
+          "name": "חוט",
+          "detail": "המחרוזת שערך מפת יוניקוד של התו הראשון שלה יוחזר."
+        }
+      }
+    },
+    "CHAR": {
+      "description": "מקבל תו המשויך למספר.",
+      "parameters": {
+        "table_number": {
+          "name": "מספר_טבלה",
+          "detail": "מספר התו שיש לחפש בטבלת יוניקוד הנוכחית בפורמט עשרוני."
+        }
+      }
+    },
+    "ARABIC": {
+      "description": "מחשב את הערך של ספרה רומית.",
+      "parameters": {
+        "roman_numeral": {
+          "name": "ספרה רומית",
+          "detail": "הספרה הרומית לעיצוב, שערכה חייב להיות בין 1 ל-3999, כולל."
+        }
+      }
+    },
+    "ROMAN": {
+      "description": "מעצב מספר בספרות רומיות.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "המספר לעיצוב, בין 1 ל-3999, כולל."
+        }
+      }
+    },
+    "REGEXEXTRACT": {
+      "description": "מחלץ תת-מחרוזות תואמות באמצעות ביטוי רגולרי.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "טקסט הקלט."
+        },
+        "regular_expression": {
+          "name": "ביטוי_רגיל",
+          "detail": "החלק הראשון של `text` שתואם לביטוי זה יוחזר."
+        }
+      }
+    },
+    "REGEXMATCH": {
+      "description": "האם קטע טקסט תואם לביטוי רגולרי.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "הטקסט שיש לבדוק מול הביטוי הרגולרי."
+        },
+        "regular_expression": {
+          "name": "ביטוי_רגיל",
+          "detail": "הביטוי הרגולרי לבדיקת הטקסט."
+        }
+      }
+    },
+    "REGEXREPLACE": {
+      "description": "מחליף טקסט בביטויים רגולריים.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "הטקסט, שחלקו יוחלף."
+        },
+        "regular_expression": {
+          "name": "ביטוי_רגיל",
+          "detail": "הביטוי הרגולרי. כל המופעים התואמים ב-`text` יוחלפו."
+        },
+        "replacement": {
+          "name": "תחליף",
+          "detail": "הטקסט שיתווסף לטקסט המקורי."
+        }
+      }
+    },
+    "T": {
+      "description": "ארגומנטים של מחרוזות כטקסט.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט שיש להמיר לטקסט."
+        }
+      }
+    },
+    "FIXED": {
+      "description": "מעצב מספר עם מספר קבוע של ספרות אחרי הנקודה.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "המספר לעיצוב."
+        },
+        "number_of_places": {
+          "name": "מספר_מקומות",
+          "detail": "מספר המקומות העשרוניים שיוצגו בתוצאה."
+        },
+        "suppress_separator": {
+          "name": "מפריד_מושך",
+          "detail": "האם להשתיק או לא להשתיק את מפריד האלפים המשמש באזורים מסוימים (לדוגמה, `1,000` הופך ל-`1000`). מפרידים יופיעו אם ערך זה הוא 0 או מושמט, ונעדרים אחרת."
+        }
+      }
+    },
+    "FIND": {
+      "description": "המיקום הראשון של המחרוזת שנמצא בטקסט, תלוי רישיות.",
+      "parameters": {
+        "search_for": {
+          "name": "חיפוש_ל",
+          "detail": "המחרוזת שיש לחפש בתוך `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "טקסט_לחיפוש",
+          "detail": "הטקסט לחיפוש עבור המופע הראשון של `search_for`."
+        },
+        "starting_at": {
+          "name": "התחלה_ב",
+          "detail": "התו בתוך `text_to_search` שבו יש להתחיל את החיפוש."
+        }
+      }
+    },
+    "FINDB": {
+      "description": "המיקום שבו מחרוזת נמצאת לראשונה בתוך טקסט (בינארי).",
+      "parameters": {
+        "search_for": {
+          "name": "חיפוש_ל",
+          "detail": "המחרוזת שיש לחפש בתוך `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "טקסט_לחיפוש",
+          "detail": "הטקסט לחיפוש עבור המופע הראשון של `search_for`."
+        },
+        "starting_at": {
+          "name": "התחלה_ב",
+          "detail": "התו בתוך `text_to_search` שבו יש להתחיל את החיפוש."
+        }
+      }
+    },
+    "JOIN": {
+      "description": "משרשר אלמנטים של מערכים באמצעות מפריד.",
+      "parameters": {
+        "delimiter": {
+          "name": "מפריד",
+          "detail": "התו או המחרוזת שיש למקם בין כל ערך משורשר."
+        },
+        "value_or_array1": {
+          "name": "value_or_array1",
+          "detail": "הערך או הערכים שיש להוסיף באמצעות `delimiter`."
+        },
+        "value_or_array2": {
+          "name": "value_or_array2",
+          "detail": "יש להוסיף ערכים נוספים באמצעות `delimiter`."
+        }
+      }
+    },
+    "LEFT": {
+      "description": "תת-מחרוזת מתחילת המחרוזת שצוינה.",
+      "parameters": {
+        "string": {
+          "name": "חוט",
+          "detail": "המחרוזת שממנה יוחזר החלק השמאלי."
+        },
+        "number_of_characters": {
+          "name": "מספר_תווים",
+          "detail": "מספר התווים שיש להחזיר מצד שמאל של `string`."
+        }
+      }
+    },
+    "RIGHT": {
+      "description": "תת-מחרוזת מסוף מחרוזת מוגדרת.",
+      "parameters": {
+        "string": {
+          "name": "חוט",
+          "detail": "המחרוזת שממנה יוחזר החלק הימני."
+        },
+        "number_of_characters": {
+          "name": "מספר_תווים",
+          "detail": "מספר התווים שיש להחזיר מצד ימין של `string`."
+        }
+      }
+    },
+    "MID": {
+      "description": "קטע של מחרוזת.",
+      "parameters": {
+        "string": {
+          "name": "חוט",
+          "detail": "המחרוזת שממנה יש לחלץ קטע."
+        },
+        "starting_at": {
+          "name": "התחלה_ב",
+          "detail": "האינדקס משמאל ל-`string` שממנו יש להתחיל לחלץ. התו הראשון ב-`string` הוא בעל אינדקס 1."
+        },
+        "extract_length": {
+          "name": "אורך_החילוץ",
+          "detail": "אורך הקטע לחילוץ."
+        }
+      }
+    },
+    "LEN": {
+      "description": "אורך של מחרוזת.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "המחרוזת שאורכה יוחזר."
+        }
+      }
+    },
+    "LENB": {
+      "description": "אורך מחרוזת בבתים.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "המחרוזת שאורכה יוחזר."
+        }
+      }
+    },
+    "LOWER": {
+      "description": "ממיר מחרוזת שצוינה לאותיות קטנות.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "המחרוזת שיש להמיר לאותיות קטנות."
+        }
+      }
+    },
+    "UPPER": {
+      "description": "ממיר מחרוזת שצוינה לאותיות גדולות.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "המחרוזת שיש להמיר לאותיות גדולות."
+        }
+      }
+    },
+    "EXACT": {
+      "description": "בודק האם שתי מחרוזות זהות.",
+      "parameters": {
+        "string1": {
+          "name": "מחרוזת1",
+          "detail": "המחרוזת הראשונה להשוואה"
+        },
+        "string2": {
+          "name": "מחרוזת2",
+          "detail": "המחרוזת השנייה להשוואה"
+        }
+      }
+    },
+    "REPLACE": {
+      "description": "מחליף חלק ממחרוזת טקסט בטקסט שונה.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "הטקסט, שחלקו יוחלף."
+        },
+        "position": {
+          "name": "מצב",
+          "detail": "המיקום שבו תתחיל ההחלפה (החל מ-1)."
+        },
+        "length": {
+          "name": "משך",
+          "detail": "מספר התווים בטקסט שיש להחליף."
+        },
+        "new_text": {
+          "name": "טקסט_חדש",
+          "detail": "הטקסט שיתווסף לטקסט המקורי."
+        }
+      }
+    },
+    "REPT": {
+      "description": "טקסט שצוין חזר על עצמו מספר פעמים.",
+      "parameters": {
+        "text_to_repeat": {
+          "name": "טקסט_לחזרה",
+          "detail": "התו או המחרוזת שיש לחזור עליהם."
+        },
+        "number_of_repetitions": {
+          "name": "מספר_חזרות",
+          "detail": "מספר הפעמים ש-`text_to_repeat` צריך להופיע בערך המוחזר."
+        }
+      }
+    },
+    "SEARCH": {
+      "description": "המיקום הראשון של המחרוזת נמצא בטקסט, תוך התעלמות מקטנות/רישיות.",
+      "parameters": {
+        "search_for": {
+          "name": "חיפוש_ל",
+          "detail": "המחרוזת שיש לחפש בתוך `text_to_search`."
+        },
+        "text_to_search": {
+          "name": "טקסט_לחיפוש",
+          "detail": "הטקסט לחיפוש עבור המופע הראשון של `search_for`."
+        },
+        "starting_at": {
+          "name": "התחלה_ב",
+          "detail": "התו בתוך `text_to_search` שבו יש להתחיל את החיפוש."
+        }
+      }
+    },
+    "SUBSTITUTE": {
+      "description": "מחליף טקסט קיים בטקסט חדש במחרוזת.",
+      "parameters": {
+        "text_to_search": {
+          "name": "טקסט_לחיפוש",
+          "detail": "הטקסט שבתוכו יש לחפש ולהחליף."
+        },
+        "search_for": {
+          "name": "חיפוש_ל",
+          "detail": "המחרוזת שיש לחפש בתוך `text_to_search`."
+        },
+        "replace_with": {
+          "name": "להחליף_עם",
+          "detail": "המחרוזת שתחליף את `search_for`."
+        },
+        "occurrence_number": {
+          "name": "מספר_מופע",
+          "detail": "המופע של `search_for` בתוך `text_to_search` שיוחלף ב-`replace_with`. כברירת מחדל, כל המופעים של `search_for` מוחלפים; עם זאת, אם מצוין `occurrence_number`, רק המופע המצוין של `search_for` מוחלף."
+        }
+      }
+    },
+    "CLEAN": {
+      "description": "מסיר תווים שאינם ניתנים להדפסה מקטע טקסט.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "הטקסט שאת התווים שאינם ניתנים להדפסה יש להסיר."
+        }
+      }
+    },
+    "TEXT": {
+      "description": "מעצב מספר לטקסט.",
+      "parameters": {
+        "number": {
+          "name": "מספר",
+          "detail": "המספר, התאריך או השעה לעיצוב."
+        },
+        "format": {
+          "name": "פורמט",
+          "detail": "התבנית לפיה יש לעצב את המספר, מוקף במרכאות."
+        }
+      }
+    },
+    "TRIM": {
+      "description": "מסיר תווי רווח.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "הטקסט או ההפניה לתא המכיל טקסט שיש לגזום."
+        }
+      }
+    },
+    "VALUE": {
+      "description": "ממיר מחרוזת תאריך/שעה/מספר למספר.",
+      "parameters": {
+        "text": {
+          "name": "טקסט",
+          "detail": "המחרוזת המכילה את הערך שיש להמיר."
+        }
+      }
+    },
+    "PROPER": {
+      "description": "הופך כל מילה במחרוזת שצוינה לאות גדולה.",
+      "parameters": {
+        "text_to_capitalize": {
+          "name": "טקסט_לא_אותיות_רישיות",
+          "detail": "הטקסט שיוחזר כאשר האות הראשונה של כל מילה באות גדולה וכל שאר האותיות באות קטנה."
+        }
+      }
+    },
+    "CONVERT": {
+      "description": "המרת יחידות עבור מספרים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך המספרי ב-`start_unit` שיש להמיר ל-`end_unit`."
+        },
+        "start_unit": {
+          "name": "יחידת_התחלה",
+          "detail": "יחידת ההתחלה, היחידה המוקצית כעת ל-`value`."
+        },
+        "end_unit": {
+          "name": "יחידת_סוף",
+          "detail": "יחידת המידה שאליה יש להמיר את הארגומנט, `value`."
+        }
+      }
+    },
+    "SUMX2MY2": {
+      "description": "סכום ההפרשים של הריבועים.",
+      "parameters": {
+        "array_x": {
+          "name": "מערך_x",
+          "detail": "מערך או טווח הערכים שהריבועים שלהם יופחתו בריבועי הערכים המתאימים ב-`array_y` ויחובבו יחד."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "מערך או טווח הערכים אשר הריבועים שלהם יופחתו מריבועי הערכים המתאימים ב-`array_x` ויחובבו יחד."
+        }
+      }
+    },
+    "SUMX2PY2": {
+      "description": "סכום סכומי הריבועים.",
+      "parameters": {
+        "array_x": {
+          "name": "מערך_x",
+          "detail": "מערך או טווח הערכים אשר הריבועים שלהם יתווספו לריבועי הערכים המתאימים ב-`array_y` ויחוברו יחד."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "מערך או טווח הערכים אשר הריבועים שלהם יתווספו לריבועי הערכים המתאימים ב-`array_x` ויחוברו יחד."
+        }
+      }
+    },
+    "SUMXMY2": {
+      "description": "סכום ריבועי ההפרשים.",
+      "parameters": {
+        "array_x": {
+          "name": "מערך_x",
+          "detail": "המערך או טווח הערכים שיופחתו על ידי ערכים תואמים ב-`array_y`, יועלו בריבוע ויחובבו יחד."
+        },
+        "array_y": {
+          "name": "array_y",
+          "detail": "מערך או טווח הערכים שיוחסרו מהערכים המתאימים ב-`array_x`, התוצאה יועלתה בריבוע, וכל התוצאות הללו יוספו יחד."
+        }
+      }
+    },
+    "TRANSPOSE": {
+      "description": "מבצע טרנספוזציה של השורות והעמודות של מערך.",
+      "parameters": {
+        "array_or_range": {
+          "name": "מערך_או_טווח",
+          "detail": "המערך או הטווח שהשורות והעמודות שלו יוחלפו."
+        }
+      }
+    },
+    "TREND": {
+      "description": "מתאים נקודות למגמה ליניארית הנגזרת באמצעות ריבועים פחותים.",
+      "parameters": {
+        "known_data_y": {
+          "name": "נתונים_ידועים_י",
+          "detail": "המערך או הטווח המכילים ערכים תלויים (y) שכבר ידועים, המשמשים להתאמת עקומה של מגמה ליניארית אידיאלית."
+        },
+        "known_data_x": {
+          "name": "נתונים_ידועים_x",
+          "detail": "ערכי המשתנה/ים הבלתי תלויים התואמים ל-`known_data_y`."
+        },
+        "new_data_x": {
+          "name": "נתונים חדשים",
+          "detail": "נקודות הנתונים שיש להחזיר עבורן את ערכי ה-`y` בהתאמת העקומה האידיאלית."
+        },
+        "b": {
+          "name": "ב'",
+          "detail": "בהינתן צורה ליניארית כללית של `y = m*x+b` עבור התאמת עקומה, מחשב את `b` אם `TRUE` או מאלץ את `b` להיות `0` ומחשב רק את ערכי `m` אם `FALSE`, כלומר מאלץ את התאמת העקומה לעבור דרך נקודת ההתחלה."
+        }
+      }
+    },
+    "FREQUENCY": {
+      "description": "התפלגות התדרים של המערך.",
+      "parameters": {
+        "data": {
+          "name": "נתונים",
+          "detail": "המערך או הטווח המכילים את הערכים שיש לספור."
+        },
+        "classes": {
+          "name": "שיעורים",
+          "detail": "המערך או הטווח המכילים את קבוצת המחלקות."
+        }
+      }
+    },
+    "GROWTH": {
+      "description": "מצביע על מגמת צמיחה אקספוננציאלית.",
+      "parameters": {
+        "known_data_y": {
+          "name": "נתונים_ידועים_י",
+          "detail": "המערך או הטווח המכילים ערכים תלויים (y) שכבר ידועים, המשמשים להתאמת עקומה של עקומת צמיחה אקספוננציאלית אידיאלית."
+        },
+        "known_data_x": {
+          "name": "נתונים_ידועים_x",
+          "detail": "ערכי המשתנה/ים הבלתי תלויים התואמים ל-`known_data_y`."
+        },
+        "new_data_x": {
+          "name": "נתונים חדשים",
+          "detail": "נקודות הנתונים שיש להחזיר עבורן את ערכי ה-`y` בהתאמת העקומה האידיאלית."
+        },
+        "b": {
+          "name": "ב'",
+          "detail": "בהינתן צורה אקספוננציאלית כללית של `y = b*m^x` עבור התאמת עקומה, מחשב את `b` אם `TRUE` או מאלץ את `b` להיות `1` ומחשב רק את ערכי `m` אם `FALSE`."
+        }
+      }
+    },
+    "LINEST": {
+      "description": "מגמה ליניארית בהתאמה הטובה ביותר באמצעות ריבועים פחותים.",
+      "parameters": {
+        "known_data_y": {
+          "name": "נתונים_ידועים_י",
+          "detail": "המערך או הטווח המכילים ערכים תלויים (y) שכבר ידועים, המשמשים להתאמת עקומה של מגמה ליניארית אידיאלית."
+        },
+        "known_data_x": {
+          "name": "נתונים_ידועים_x",
+          "detail": "ערכי המשתנה/ים הבלתי תלויים התואמים ל-`known_data_y`."
+        },
+        "calculate_b": {
+          "name": "חישוב_ב",
+          "detail": "בהינתן צורה ליניארית של `y = m*x+b`, מחשב את נקודת החיתוך של ה-y (`b`) אם `TRUE`. אחרת, מאלץ את `b` להיות `0` ומחשב רק את ערכי `m` אם `FALSE`, כלומר מאלץ את התאמת העקומה לעבור דרך נקודת ההתחלה."
+        },
+        "verbose": {
+          "name": "מלולי",
+          "detail": "דגל המציין האם להחזיר סטטיסטיקות רגרסיה נוספות או רק את המקדמים הליניאריים ואת נקודת החיתוך עם ציר ה-y (ברירת מחדל)."
+        }
+      }
+    },
+    "LOGEST": {
+      "description": "עקומת צמיחה אקספוננציאלית המתאימה ביותר.",
+      "parameters": {
+        "known_data_y": {
+          "name": "נתונים_ידועים_י",
+          "detail": "המערך או הטווח המכילים ערכים תלויים (y) שכבר ידועים, המשמשים להתאמת עקומה של עקומת צמיחה אקספוננציאלית אידיאלית."
+        },
+        "known_data_x": {
+          "name": "נתונים_ידועים_x",
+          "detail": "ערכי המשתנה/ים הבלתי תלויים התואמים ל-`known_data_y`."
+        },
+        "b": {
+          "name": "ב'",
+          "detail": "בהינתן צורה אקספוננציאלית כללית של `y = b*m^x` עבור התאמת עקומה, מחשב את `b` אם `TRUE` או מאלץ את `b` להיות `1` ומחשב רק את ערכי `m` אם `FALSE`."
+        },
+        "verbose": {
+          "name": "מלולי",
+          "detail": "דגל המציין האם להחזיר סטטיסטיקות רגרסיה נוספות או רק את המקדם והמעריכים המחושבים."
+        }
+      }
+    },
+    "MDETERM": {
+      "description": "דטרמיננטה מטריצה של מטריצה ריבועית.",
+      "parameters": {
+        "square_matrix": {
+          "name": "מטריצת_ריבוע",
+          "detail": "מערך או טווח עם מספר שווה של שורות ועמודות המייצגים מטריצה שהדטרמיננטה שלה תחושב."
+        }
+      }
+    },
+    "MINVERSE": {
+      "description": "ההופכי הכפלי של מטריצה ריבועית.",
+      "parameters": {
+        "square_matrix": {
+          "name": "מטריצת_ריבוע",
+          "detail": "מערך או טווח עם מספר שווה של שורות ועמודות המייצגים מטריצה שההופכי הכפל שלה יחושב."
+        }
+      }
+    },
+    "MMULT": {
+      "description": "מכפלת המטריצה של שתי מטריצות.",
+      "parameters": {
+        "matrix1": {
+          "name": "מטריצה1",
+          "detail": "המטריצה הראשונה בפעולת כפל מטריצות, המיוצגת כמערך או טווח."
+        },
+        "matrix2": {
+          "name": "מטריקס2",
+          "detail": "המטריצה השנייה בפעולת כפל מטריצות, המיוצגת כמערך או טווח."
+        }
+      }
+    },
+    "SUMPRODUCT": {
+      "description": "סכום מכפלות של איברים בשני מערכים.",
+      "parameters": {
+        "array1": {
+          "name": "מערך1",
+          "detail": "המערך או הטווח הראשון שהערכים שלו יוכפלו עם הערכים המתאימים במערך או בטווח השני מסוג זה."
+        },
+        "array2": {
+          "name": "מערך2",
+          "detail": "המערך או הטווח השני שהערכים שלו יוכפלו עם הערכים המתאימים במערך או בטווח הראשון מסוג זה."
+        }
+      }
+    },
+    "ISFORMULA": {
+      "description": "האם ערך הוא נוסחה.",
+      "parameters": {
+        "cell": {
+          "name": "תא",
+          "detail": "התא שיש לאמת כמכיל נוסחה."
+        }
+      }
+    },
+    "CELL": {
+      "description": "מקבל מידע על תא.",
+      "parameters": {
+        "info_type": {
+          "name": "סוג_מידע",
+          "detail": "סוג המידע המבוקש (ראו מאמר לגבי הסוגים הזמינים)"
+        },
+        "reference": {
+          "name": "הפניה",
+          "detail": "ההפניה לתא."
+        }
+      }
+    },
+    "NA": {
+      "description": "שגיאת `#N/A`."
+    },
+    "ISBLANK": {
+      "description": "האם התא שאליו מפנה ריק.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הפניה לתא שייבדק לריקנות."
+        }
+      }
+    },
+    "ISERR": {
+      "description": "האם ערך הוא שגיאה שאינה `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כסוג שגיאה שאינו `#N/A`."
+        }
+      }
+    },
+    "ISERROR": {
+      "description": "האם ערך הוא שגיאה.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כסוג שגיאה."
+        }
+      }
+    },
+    "ISLOGICAL": {
+      "description": "האם ערך הוא 'אמת' או 'שקר'.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כערך לוגי מסוג `TRUE` או `FALSE`."
+        }
+      }
+    },
+    "ISNA": {
+      "description": "האם ערך הוא השגיאה `#n/a`.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש להשוות לערך השגיאה `#N/A`."
+        }
+      }
+    },
+    "ISNONTEXT": {
+      "description": "האם ערך אינו טקסטואלי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לבדוק."
+        }
+      }
+    },
+    "ISNUMBER": {
+      "description": "האם ערך הוא מספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כמספר."
+        }
+      }
+    },
+    "ISREF": {
+      "description": "האם ערך הוא הפניה חוקית לתא.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כהפניה לתא."
+        }
+      }
+    },
+    "ISTEXT": {
+      "description": "האם ערך הוא טקסט.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כטקסט."
+        }
+      }
+    },
+    "TYPE": {
+      "description": "קבל את סוג הערך.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שאת סוגו יש לקבוע."
+        }
+      }
+    },
+    "N": {
+      "description": "ארגומנט מסופק כמספר.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט שיש להמיר למספר."
+        }
+      }
+    },
+    "TO_DATE": {
+      "description": "ממיר מספר שסופק לתאריך.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט או ההפניה לתא שיש להמיר לתאריך."
+        }
+      }
+    },
+    "TO_PURE_NUMBER": {
+      "description": "ממיר כל ערך מספרי למספר טהור.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט או ההפניה לתא שיש להמיר למספר טהור."
+        }
+      }
+    },
+    "TO_TEXT": {
+      "description": "ממיר ערך מספרי שסופק לערך טקסט.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט או ההפניה לתא שיש להמיר לטקסט."
+        }
+      }
+    },
+    "TO_DOLLARS": {
+      "description": "ממיר מספר שסופק לערך דולרי.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט או ההפניה לתא שיש להמיר לערך דולרי."
+        }
+      }
+    },
+    "TO_PERCENT": {
+      "description": "ממיר מספר נתון לאחוזים.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הארגומנט או ההפניה לתא שיש להמיר לאחוז."
+        }
+      }
+    },
+    "DGET": {
+      "description": "ערך יחיד מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DMAX": {
+      "description": "מקסימום של ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DMIN": {
+      "description": "מינימום של ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DAVERAGE": {
+      "description": "ממוצע של קבוצת ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DCOUNT": {
+      "description": "סופר ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DCOUNTA": {
+      "description": "סופר ערכים וטקסט מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DPRODUCT": {
+      "description": "מכפלה של ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DSTDEV": {
+      "description": "סטיית התקן של מדגם האוכלוסייה מהטבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DSTDEVP": {
+      "description": "סטיית התקן של כלל האוכלוסייה מהטבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DSUM": {
+      "description": "סכום ערכים מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DVAR": {
+      "description": "שונות מדגם האוכלוסייה מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "DVARP": {
+      "description": "שונות של אוכלוסייה מטווח דמוי טבלה.",
+      "parameters": {
+        "database": {
+          "name": "מסד נתונים",
+          "detail": "המערך או הטווח המכילים את הנתונים שיש לקחת בחשבון, בנויים באופן כזה שהשורה הראשונה מכילה את התוויות עבור הערכים של כל עמודה."
+        },
+        "field": {
+          "name": "שדה",
+          "detail": "מציין איזו עמודה ב-`database` מכילה את הערכים שיש לחלץ ולפעול עליהם."
+        },
+        "criteria": {
+          "name": "קריטריונים",
+          "detail": "מערך או טווח המכילים אפס קריטריונים או יותר לסינון ערכי `מסד נתונים` לפיהם לפני הפעולה."
+        }
+      }
+    },
+    "SEX_BY_IDCARD": {
+      "description": "קבל מגדר על סמך מספר תעודת זהות.",
+      "parameters": {
+        "ID number": {
+          "name": "מספר תעודת זהות",
+          "detail": "מספר זיהוי או טווח בן 15 ספרות או 18 ספרות."
+        }
+      }
+    },
+    "PROVINCE_BY_IDCARD": {
+      "description": "קבל את מחוז הלידה על סמך מספר תעודת הזהות.",
+      "parameters": {
+        "ID number": {
+          "name": "מספר תעודת זהות",
+          "detail": "מספר זיהוי או טווח בן 15 ספרות או 18 ספרות."
+        }
+      }
+    },
+    "STAR_BY_IDCARD": {
+      "description": "קבל את קבוצת הכוכבים על סמך מספר הזיהוי.",
+      "parameters": {
+        "ID number": {
+          "name": "מספר תעודת זהות",
+          "detail": "מספר זיהוי או טווח בן 15 ספרות או 18 ספרות."
+        }
+      }
+    },
+    "DATA_CN_STOCK_VOLUMN": {
+      "description": "מחזירה את נפח המסחר המתאים של מניות A.",
+      "parameters": {
+        "Stock code": {
+          "name": "קוד מלאי",
+          "detail": "קוד מלאי בן 6 ספרות, חובה."
+        },
+        "Date": {
+          "name": "תאריך",
+          "detail": "יום המסחר של המניה, ברירת המחדל היא יום המסחר האחרון"
+        },
+        "Reversion and exclusion": {
+          "name": "חזרה והדרה",
+          "detail": "בחר את סוג השחזור הימני לשעבר של המלאי, ברירת המחדל היא 0 [היפוך קודם], 1 [מחיר מקורי], 2 [היפוך לאחר]"
+        }
+      }
+    },
+    "ISDATE": {
+      "description": "האם ערך הוא תאריך.",
+      "parameters": {
+        "value": {
+          "name": "ערך",
+          "detail": "הערך שיש לאמת כתאריך."
+        }
+      }
+    },
+    "LINESPLINES": {
+      "description": "צור תרשים קו של תרשימים זעירים",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Line color": {
+          "name": "צבע הקו",
+          "detail": "צבע הקו של גרף הקווים יכול להיות טווח A1, ערך אינדקס טבלת צבעים או ערך צבע ספציפי. הגדר אותו ל-0 או ל-false כדי לא להציג אותו. הוא תומך ב-regx, rgb, rgba וכו'. ברירת מחדל #2ec7c9"
+        },
+        "Line thickness": {
+          "name": "עובי הקו",
+          "detail": "עובי הקו של גרף הקווים, ברירת המחדל היא 1px"
+        },
+        "Auxiliary line": {
+          "name": "קו עזר",
+          "detail": "קו אופקי, שיכול להיות מינימום, מקסימום, ממוצע, חציון, טווח או ערך מותאם אישית, ברירת מחדל 0 ללא"
+        },
+        "Auxiliary line color": {
+          "name": "צבע קו עזר",
+          "detail": "הגדרת צבע של קו עזר, זהה לתצורת צבע הקו, ברירת מחדל #000"
+        },
+        "Maximum mark": {
+          "name": "ציון מקסימלי",
+          "detail": "מזהה את הערך המקסימלי של גרף הקווים, אותה תצורת צבע קו, ברירת המחדל 0 לא מוצג"
+        },
+        "Minimum mark": {
+          "name": "ציון מינימום",
+          "detail": "זהה את הערך המינימלי של גרף הקווים, אותה תצורת צבע קו, ברירת המחדל 0 לא מוצג"
+        },
+        "Mark size": {
+          "name": "גודל הסימון",
+          "detail": "הגדרות גודל הסימן המקסימלי והמינימלי, ברירת המחדל היא 1.5"
+        }
+      }
+    },
+    "STACKCOLUMNSPLINES": {
+      "description": "יצירת היסטוגרמה אנכית מצטברת של תבניות ניצוץ",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Stack by column": {
+          "name": "ערימה לפי עמודה",
+          "detail": "אם עליך לערום לפי שורה, הגדר פריט זה כ-false או 0, ברירת המחדל היא 1"
+        },
+        "Bar interval": {
+          "name": "מרווח עמודות",
+          "detail": "המרחק בין הסורגים, ברירת המחדל היא 1"
+        },
+        "Max": {
+          "name": "מקס",
+          "detail": "הערך המקסימלי של הסרגל המצטבר, המשמש לוויסות אורך הסרגל, ברירת המחדל היא חישוב אוטומטי של false, auto, null"
+        },
+        "Color palette": {
+          "name": "פלטת צבעים",
+          "detail": "פלטת הצבעים יכולה להגדיר בנפרד את צבע הסרגל של כל ממד, אותו ניתן להגדיר לטווח של A1:A10 וכו'. ברירת המחדל היא #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "STACKBARSPLINES": {
+      "description": "צור תרשים עמודות אופקי מצטבר של תבניות ניצוצות",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Stack by column": {
+          "name": "ערימה לפי עמודה",
+          "detail": "אם עליך לערום לפי שורה, הגדר פריט זה כ-false או 0, ברירת המחדל היא 1"
+        },
+        "Bar interval": {
+          "name": "מרווח עמודות",
+          "detail": "המרחק בין הסורגים, ברירת המחדל היא 1"
+        },
+        "Max": {
+          "name": "מקס",
+          "detail": "הערך המקסימלי של הסרגל המצטבר, המשמש לוויסות אורך הסרגל, ברירת המחדל היא חישוב אוטומטי של false, auto, null"
+        },
+        "Color palette": {
+          "name": "פלטת צבעים",
+          "detail": "פלטת הצבעים יכולה להגדיר בנפרד את צבע הסרגל של כל ממד, אותו ניתן להגדיר לטווח של A1:A10 וכו'. ברירת המחדל היא #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "DISCRETESPLINES": {
+      "description": "צור תבניות ניצוצות גרף בדיד",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Segmentation threshold": {
+          "name": "סף פילוח",
+          "detail": "הבחנה בין צבעים לעמודות גרף נפרדות, לדוגמה: אם הערך הוא 0, כחול גדול מ-0, אדום קטן מ-0, ובררת המחדל היא 0"
+        },
+        "Above threshold color": {
+          "name": "צבע מעל הסף",
+          "detail": "צבע הקו של גרף הקווים יכול להיות טווח A1, ערך אינדקס טבלת צבעים או ערך צבע ספציפי. הגדר אותו ל-0 או ל-false כדי לא להציג אותו. הוא תומך ב-regx, rgb, rgba וכו'. ברירת מחדל #2ec7c9"
+        },
+        "Below threshold color": {
+          "name": "צבע מתחת לסף",
+          "detail": "הגדרת הצבע של הסרגל מתחת לסף, זהה לצבע מעל הסף, ברירת מחדל #fc5c5c"
+        }
+      }
+    },
+    "TRISTATESPLINES": {
+      "description": "צור גרף שלושה מצבים של תבניות ניצוץ",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Bar interval": {
+          "name": "מרווח עמודות",
+          "detail": "המרחק בין הסורגים, ברירת המחדל היא 1"
+        },
+        "Bar color": {
+          "name": "צבע הסרגל",
+          "detail": "צבע הקו של גרף הקווים יכול להיות טווח A1, ערך אינדקס טבלת צבעים או ערך צבע ספציפי. הגדר אותו ל-0 או ל-false כדי לא להציג אותו. הוא תומך ב-regx, rgb, rgba וכו'. ברירת מחדל #fc5c5c"
+        },
+        "Negative bar color": {
+          "name": "צבע עמודה שלילי",
+          "detail": "הגדרת צבע פס שלילי, המייצגת את הצבע של הערך השלילי, זהה לתצורת צבע הפס, ברירת מחדל #97b552"
+        },
+        "Zero value bar color": {
+          "name": "צבע סרגל ערך אפס",
+          "detail": "הגדרת צבע סרגל בעל ערך אפס, המייצגת צבע בעל ערך 0, אותה תצורת צבע של הסרגל, ברירת מחדל #999"
+        },
+        "Color palette": {
+          "name": "פלטת צבעים",
+          "detail": "פלטת הצבעים יכולה להגדיר את הצבע של כל סרגל בנפרד, ניתן להגדיר הגדרות מרובות, ושני פורמטים נתמכים: צבע אחד כגון #000, כלומר שצבע הסרגל הראשון הוא שחור; טווח ערכים 2: צבע, כגון -2:# 000 מציין שהסרגל עם ערך של -2 הוא שחור, 0:5:#000 מציין שהסרגל עם ערך של 0-5 הוא שחור, ובררת המחדל היא ריק."
+        }
+      }
+    },
+    "PIESPLINES": {
+      "description": "צור תרשים עוגה של תרשימים זעירים",
+      "parameters": {
+        "Range": {
+          "name": "לנוע",
+          "detail": "טווח, ניתן לחשב ערכים ביעילות, כגון A1:A20, {1,2,3,4,5} וכו'."
+        },
+        "Rotation angle": {
+          "name": "זווית סיבוב",
+          "detail": "זווית הסיבוב של תרשים העוגה, ברירת המחדל היא 0"
+        },
+        "border": {
+          "name": "גבול",
+          "detail": "גודל גבול תרשים עוגה, ברירת המחדל היא ללא 0"
+        },
+        "Border color": {
+          "name": "צבע הגבול",
+          "detail": "צבע הגבול של תרשים העוגה, ברירת המחדל היא #000"
+        },
+        "Color palette": {
+          "name": "פלטת צבעים",
+          "detail": "ניתן להגדיר את צבע הפרוסה בלוח הצבעים, אותו ניתן להגדיר לטווח של A1:A10 וכו'. ברירת המחדל היא #2ec7c9, #fc5c5c, #5ab1ef, #ffb980..."
+        }
+      }
+    },
+    "BULLETSPLINES": {
+      "description": "יצירת תבליטים של תבליטים",
+      "parameters": {
+        "Target": {
+          "name": "יעד",
+          "detail": "ניתן לחשב ביעילות את הערך המספרי עבור ערך היעד שהושג, כגון A1, 100 וכו'."
+        },
+        "achieved": {
+          "name": "הושג",
+          "detail": "רק כאשר הערך הושלם ניתן לחשב את הערך ביעילות, כגון A1, 100 וכו'."
+        },
+        "Contrast": {
+          "name": "להשוות",
+          "detail": "ניתן לחשב ביעילות ערכים השוואה, כגון עודף, מינימום ושורה תחתונה עבור תגמולים, כגון A1, 100 וכו'. ניתן להגדיר עד 9 ערכי השוואה."
+        }
+      }
+    },
+    "COMPOSESPLINES": {
+      "description": "שילוב גרפי תמרורים לתא אחד",
+      "parameters": {
+        "config": {
+          "name": "תצורה",
+          "detail": "הגדרות תרשים Sparklines, כגון A1:A20, תרשים עוגה מלא, הגדרות תרשים קווים וכו'."
+        }
+      }
+    },
+    "SORT": {
+      "description": "ממיין שורות בטווח לפי עמודה שצוינה.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הנתונים שיש למיין."
+        },
+        "sort_column": {
+          "name": "מיון_עמודה",
+          "detail": "האינדקס של העמודה ב-`range` או בטווח מחוץ ל-`range` המכיל את הערכים לפיהם יש למיין."
+        },
+        "is_ascending": {
+          "name": "עולה",
+          "detail": "`TRUE` או `FALSE` מציינים האם למיין את `sort_column` בסדר עולה. `FALSE` ממיין בסדר יורד."
+        },
+        "sort_column2": {
+          "name": "מיון_עמודה2",
+          "detail": "עמודות נוספות."
+        }
+      }
+    },
+    "FILTER": {
+      "description": "מסנן טווח בהתבסס על התנאים שסופקו.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הנתונים שיש לסנן."
+        },
+        "condition1": {
+          "name": "תנאי 1",
+          "detail": "עמודה או שורה המכילות ערכים של אמת או שקר התואמים לעמודה או לשורה הראשונה של `range`, או נוסחת מערך המוערכת כאמת או שקר."
+        },
+        "condition2": {
+          "name": "מצב2",
+          "detail": "שורות או עמודות נוספות המכילות ערכים בוליאניים `TRUE` או `FALSE` המציינים האם השורה או העמודה המתאימה ב-`range` צריכים לעבור דרך `FILTER`. יכול להכיל גם ביטויי נוסחאות מערך שמעריכים שורות או עמודות כאלה. כל התנאים חייבים להיות מאותו סוג (שורה או עמודה). ערבוב של תנאי שורה ותנאי עמודה אינו מותר."
+        }
+      }
+    },
+    "UNIQUE": {
+      "description": "שורות ייחודיות בטווח המקור שסופק.",
+      "parameters": {
+        "range": {
+          "name": "לנוע",
+          "detail": "הנתונים שיש לסנן לפי ערכים ייחודיים."
+        },
+        "by_col": {
+          "name": "מאת_col",
+          "detail": "[אפשרות] - ערך לוגי, המציין כיצד להשוות; לפי שורה = FALSE() או מושמט; לפי עמודה = TRUE()."
+        },
+        "occurs_once": {
+          "name": "מתרחש_פעם_פעם",
+          "detail": "[אפשרות] - ערך לוגי, רק מופע אחד בערך הייחודי מוחזר = TRUE(); כולל את כל הערכים הייחודיים = FALSE() או מושמט."
+        }
+      }
+    },
+    "RANDARRAY": {
+      "description": "מחזירה רשת של מספרים אקראיים.",
+      "parameters": {
+        "rows": {
+          "name": "שורות",
+          "detail": "מספר השורות שיש למלא במספר אקראי."
+        },
+        "columns": {
+          "name": "עמודות",
+          "detail": "מספר העמודות שיש למלא במספר אקראי."
+        }
+      }
+    },
+    "SEQUENCE": {
+      "description": "מחזירה רשת של מספרים עוקבים.",
+      "parameters": {
+        "rows": {
+          "name": "שורות",
+          "detail": "מספר השורות ברשת המתקבלת של הפונקציה."
+        },
+        "columns": {
+          "name": "עמודות",
+          "detail": "מספר העמודות ברשת התוצאה של הפונקציה. אם מושמטת, רשת התוצאות תכיל עמודה אחת."
+        },
+        "start": {
+          "name": "התחלה",
+          "detail": "המספר שבו יתחיל הרצף. אם מושמט, הרצף יתחיל ב-1."
+        },
+        "step": {
+          "name": "שלב",
+          "detail": "הסכום שבו כל ערך ברצף יהיה שונה. אם מושמט, כל ערך יהיה שונה ב-1."
+        }
+      }
+    },
+    "EVALUATE": {
+      "description": "הערך לפי נוסחה או ביטוי מילוליים.",
+      "parameters": {
+        "expression": {
+          "name": "הבעה",
+          "detail": "נוסחה או ביטוי"
+        }
+      }
+    },
+    "REMOTE": {
+      "description": "קורא לפונקציה בשרת/API אחורי מרוחק.",
+      "parameters": {
+        "remote_expression": {
+          "name": "ביטוי_מרוחק",
+          "detail": "נוסחה"
+        }
+      }
+    }
+  }
+}

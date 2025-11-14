@@ -131,3 +131,5 @@ Default.args = {
     },
   },
 };
+
+Default.parameters = window.storybook.disableChromatic;

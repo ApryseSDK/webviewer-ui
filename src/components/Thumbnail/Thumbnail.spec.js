@@ -1,12 +1,35 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 const TestThumbnail = withProviders(Thumbnail);
 
 function noop() { }
 
-jest.mock('core');
+const mockDocument = {
+  getPageInfo: () => ({
+    width: 100,
+    height: 100
+  }),
+  loadCanvas: async ({ drawComplete }) => {
+    const canvas = document.createElement('canvas');
+    await drawComplete(canvas);
+  },
+};
+
+jest.mock('core', () => ({
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  getRotation: () => 1,
+  getDocument: () => mockDocument,
+  setCurrentPage: () => {},
+}));
+
+jest.mock('src/helpers/getRootNode', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    querySelector: jest.fn(() => false),
+  })),
+}));
 
 describe('Thumbnail', () => {
   describe('Component', () => {
@@ -47,7 +70,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
           isReaderModeOrReadOnly={false}
@@ -69,7 +91,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
           isReaderModeOrReadOnly={false}
@@ -91,7 +112,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           isThumbnailMultiselectEnabled
           shiftKeyThumbnailPivotIndex={null}
           isReaderModeOrReadOnly={false}
@@ -112,7 +132,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           shiftKeyThumbnailPivotIndex={1}
           isThumbnailMultiselectEnabled
           isReaderModeOrReadOnly={false}
@@ -133,7 +152,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
           isReaderModeOrReadOnly={false}
@@ -154,7 +172,6 @@ describe('Thumbnail', () => {
       const { container } = render(
         <TestThumbnail
           dispatch={() => { }}
-          isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
           isReaderModeOrReadOnly={false}
@@ -166,6 +183,111 @@ describe('Thumbnail', () => {
       const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([1, 2]);
+    });
+  });
+  describe('Thumbnail Flickering', () => {
+    const mockUpdateAnnotations = jest.fn();
+    const mockOnFinishLoading = jest.fn();
+    const mockOnLoad = jest.fn();
+    const rerenderThumbnail = (rerender, canLoad) => {
+      rerender(
+        <TestThumbnail
+          dispatch={() => { }}
+          shiftKeyThumbnailPivotIndex={null}
+          isThumbnailMultiselectEnabled
+          isReaderModeOrReadOnly={false}
+          selectedPageIndexes={[]}
+          actions={{}}
+          index={0}
+          currentPage={1}
+          canLoad={canLoad}
+          updateAnnotations={mockUpdateAnnotations}
+          onFinishLoading={mockOnFinishLoading}
+          onLoad={mockOnLoad}
+        />
+      );
+    };
+
+    const checkMockCount = async (count) => {
+      await waitFor(() => {
+        expect(mockOnFinishLoading).toHaveBeenCalledTimes(count);
+      });
+      expect(mockUpdateAnnotations).toHaveBeenCalledTimes(count);
+    };
+
+    beforeEach(() => {
+      mockUpdateAnnotations.mockClear();
+      mockOnFinishLoading.mockClear();
+      mockOnLoad.mockClear();
+    });
+
+    // This is to mock onBeginRendering to onFinishedRendering
+    it('should trigger once when canLoad is false', async () => {
+      const { rerender } = render(
+        <TestThumbnail
+          dispatch={() => { }}
+          shiftKeyThumbnailPivotIndex={null}
+          isThumbnailMultiselectEnabled
+          isReaderModeOrReadOnly={false}
+          selectedPageIndexes={[]}
+          actions={{}}
+          index={0}
+          currentPage={1}
+          canLoad={false}
+          updateAnnotations={mockUpdateAnnotations}
+          onFinishLoading={mockOnFinishLoading}
+          onLoad={mockOnLoad}
+        />
+      );
+
+      // PR is calling updateAnnotations https://github.com/XodoDocs/webviewer/pull/11554
+      // Once fixed the test should be adjust to expect(mockUpdateAnnotations).not.toHaveBeenCalled();
+      // For now its a placeholder
+
+      // This would trigger regardless if canLoad is true or false on first render
+      // because of the isRightToLeft useEffect
+      await checkMockCount(1);
+
+      // Subsequent rerenders should not trigger mockUpdateAnnotations
+      rerenderThumbnail(rerender, true);
+      await checkMockCount(1);
+
+      rerenderThumbnail(rerender, false);
+      await checkMockCount(1);
+    });
+
+    it('should trigger updateAnnotation twice when canLoad is true on first render', async () => {
+      const { rerender } = render(
+        <TestThumbnail
+          dispatch={() => { }}
+          shiftKeyThumbnailPivotIndex={null}
+          isThumbnailMultiselectEnabled
+          isReaderModeOrReadOnly={false}
+          selectedPageIndexes={[]}
+          actions={{}}
+          index={0}
+          currentPage={1}
+          canLoad={true}
+          updateAnnotations={mockUpdateAnnotations}
+          onFinishLoading={mockOnFinishLoading}
+          onLoad={mockOnLoad}
+        />
+      );
+
+      // PR is calling updateAnnotations https://github.com/XodoDocs/webviewer/pull/11554
+      // Once fixed the test should be adjust to expect(mockOnFinishLoading).toHaveBeenCalledTimes(1);
+      // For now its a placeholder
+
+      // Because canLoad is true, we expect two calls for mockUpdateAnnotations
+      // and another because of the isRightToLeft useEffect
+      await checkMockCount(2);
+
+      // Subsequent rerenders should not trigger mockUpdateAnnotations
+      rerenderThumbnail(rerender, false);
+      await checkMockCount(2);
+
+      rerenderThumbnail(rerender, true);
+      await checkMockCount(2);
     });
   });
 });

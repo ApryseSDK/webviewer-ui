@@ -9,18 +9,13 @@ import { isMobile as isMobileCSS, isMobileDevice } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 export default function useOnContextMenuOpen() {
-  const [
-    popupItems,
-    isRightClickAnnotationPopupEnabled,
-    activeDocumentViewerKey,
-  ] = useSelector(
-    (state) => [
-      selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
-      selectors.isRightClickAnnotationPopupEnabled(state),
-      selectors.getActiveDocumentViewerKey(state),
-    ],
-    shallowEqual,
+
+  const popupItems = useSelector(
+    (state) => selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
+    shallowEqual
   );
+  const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const dispatch = useDispatch();
 

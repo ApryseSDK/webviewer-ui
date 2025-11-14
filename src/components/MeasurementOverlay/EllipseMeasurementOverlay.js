@@ -60,7 +60,7 @@ const propTypes = {
 function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool, canModify }) {
   const { t } = useTranslation();
 
-  const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
+  const isReadOnly = useSelector((state) => selectors.isViewOnly(state));
   const area = annotation?.getMeasurementTextWithScaleAndUnits?.() || 0;
   const data = {
     precision: !annotation ? selectedTool?.defaults?.Precision : annotation.Precision,

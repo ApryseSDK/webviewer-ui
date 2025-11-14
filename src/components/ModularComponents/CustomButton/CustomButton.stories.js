@@ -34,6 +34,8 @@ DefaultButton.args = {
   }
 };
 
+DefaultButton.parameters = window.storybook.disableRtlMode;
+
 export const DefaultButtonOnHover = BasicComponent.bind({});
 DefaultButtonOnHover.args = {
   dataElement: 'button-data-element',
@@ -48,6 +50,7 @@ DefaultButtonOnHover.args = {
 
 DefaultButtonOnHover.parameters = {
   pseudo: { hover: true },
+  ...window.storybook.disableRtlMode,
 };
 
 export const ConfirmButton = BasicComponent.bind({});
@@ -61,6 +64,8 @@ ConfirmButton.args = {
   }
 };
 
+ConfirmButton.parameters = window.storybook.disableRtlMode;
+
 export const CancelButton = BasicComponent.bind({});
 CancelButton.args = {
   dataElement: 'button-data-element',
@@ -71,6 +76,8 @@ CancelButton.args = {
     alert('Cancel button clicked!');
   }
 };
+
+CancelButton.parameters = window.storybook.disableRtlMode;
 
 export const CustomButtonWithStyle = BasicComponent.bind({});
 CustomButtonWithStyle.args = {
@@ -88,6 +95,7 @@ CustomButtonWithStyle.args = {
   },
   className: 'custom-class',
 };
+CustomButtonWithStyle.parameters = window.storybook.disableRtlMode;
 
 CustomButtonWithStyle.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

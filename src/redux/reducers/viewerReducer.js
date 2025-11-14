@@ -19,6 +19,32 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'UPDATE_VIEW_ONLY_BLACKLIST': {
+      let { dataElements } = payload;
+      dataElements = Array.isArray(dataElements) ? dataElements : [dataElements];
+      return {
+        ...state,
+        viewOnlyWhitelist: {
+          ...state.viewOnlyWhitelist,
+          dataElementBlacklist: [
+            ...dataElements,
+          ]
+        }
+      };
+    }
+    case 'UPDATE_VIEW_ONLY_WHITELIST': {
+      let { dataElements } = payload;
+      dataElements = Array.isArray(dataElements) ? dataElements : [dataElements];
+      return {
+        ...state,
+        viewOnlyWhitelist: {
+          ...state.viewOnlyWhitelist,
+          dataElement: [
+            ...dataElements,
+          ]
+        }
+      };
+    }
     case 'SET_SCALE_OVERLAY_POSITION':
       return {
         ...state,
@@ -571,7 +597,10 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_POPUP_ITEMS':
       return {
         ...state,
-        [payload.dataElement]: payload.items,
+        modularPopups: {
+          ...state.modularPopups,
+          [payload.dataElement]: payload.items,
+        }
       };
     case 'SET_MENUOVERLAY_ITEMS':
       return {
@@ -629,8 +658,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, notesShowLastUpdatedDate: payload.notesShowLastUpdatedDate };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
-    case 'SET_READ_ONLY':
-      return { ...state, isReadOnly: payload.isReadOnly };
+    case 'SET_VIEW_ONLY':
+      return { ...state, isViewOnly: payload.isViewOnly };
     case 'SET_CUSTOM_PANEL':
       return {
         ...state,
@@ -912,20 +941,12 @@ export default (initialState) => (state = initialState, action) => {
           [payload.wrapperPanel]: payload.tabPanel
         },
       };
-    case 'SET_RIGHT_HEADER_WIDTH':
+    case 'SET_HEADER_WIDTH':
       return {
         ...state,
         modularHeadersWidth: {
           ...state.modularHeadersWidth,
-          rightHeader: payload,
-        }
-      };
-    case 'SET_LEFT_HEADER_WIDTH':
-      return {
-        ...state,
-        modularHeadersWidth: {
-          ...state.modularHeadersWidth,
-          leftHeader: payload,
+          [payload.header]: payload.width,
         }
       };
     case 'SET_TOP_FLOATING_CONTAINER_HEIGHT':

@@ -62,6 +62,8 @@ Basic.args = {
   hasBackToMenu: true,
 };
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 const distanceMeasurementAnnot = new window.Core.Annotations.LineAnnotation();
 distanceMeasurementAnnot['Measure'] = {
   'scale': '1 in = 1 in',
@@ -122,6 +124,8 @@ const measurementProperties = {
   StrokeStyle: 'solid'
 };
 
+DistanceMeasurement.parameters = window.storybook.disableRtlMode;
+
 DistanceMeasurement.args = {
   annotations: [distanceMeasurementAnnot],
   style: getAnnotationStyles(distanceMeasurementAnnot),
@@ -145,6 +149,8 @@ const freeTextProperties = {
   StrokeStyle: 'solid',
 };
 
+FreeText.parameters = window.storybook.disableRtlMode;
+
 FreeText.args = {
   annotations: [freeTextAnnot],
   style: getAnnotationStyles(freeTextAnnot),
@@ -166,3 +172,5 @@ WidgetAnnotation.args = {
   },
   colorMapKey: mapAnnotationToKey(textWidgetAnnotation),
 };
+
+WidgetAnnotation.parameters = window.storybook.disableRtlMode;

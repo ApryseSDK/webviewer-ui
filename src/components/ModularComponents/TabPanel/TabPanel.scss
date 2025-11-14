@@ -29,14 +29,14 @@
       gap: 4px;
 
       &:first-child {
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
+        border-start-start-radius: 4px;
+        border-end-start-radius: 4px;
       }
 
       &:last-child,
       &.lastButton {
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
+        border-start-end-radius: 4px;
+        border-end-end-radius: 4px;
         border-inline-end: 1px solid var(--border);
       }
 
@@ -115,8 +115,8 @@
         width: 100%;
 
         .Button {
-          border-bottom-left-radius: 0px;
-          border-top-left-radius: 0px;
+          border-start-start-radius: 0px;
+          border-end-start-radius: 0px;
         }
       }
     }

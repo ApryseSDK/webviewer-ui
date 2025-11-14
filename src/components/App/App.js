@@ -87,14 +87,15 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
+  initialDirection: PropTypes.oneOf(['ltr','rtl']),
 };
 
-const App = ({ removeEventHandlers }) => {
+const App = ({ removeEventHandlers, initialDirection }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [direction, setDirection] = useState('ltr');
+  const [direction, setDirection] = useState(initialDirection ?? i18next.dir() ?? 'ltr');
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const genericPanels = useSelector(selectors.getGenericPanels, shallowEqual);
@@ -362,7 +363,12 @@ const App = ({ removeEventHandlers }) => {
   useEffect(() => {
     const onLanguageChange = () => setDirection(i18next.dir());
     i18next.on('languageChanged', onLanguageChange);
-    setLanguage(store)(store.getState().viewer.currentLanguage);
+
+    // Only sync Redux → i18n if we're *not* in an overridden RTL mode
+    if (initialDirection !== 'rtl') {
+      setLanguage(store)(store.getState().viewer.currentLanguage);
+    }
+
     hotkeysManager.initialize(store);
     setDefaultDisabledElements(store);
 

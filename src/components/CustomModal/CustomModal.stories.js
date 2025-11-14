@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import CustomModal from './CustomModal';
-import { within, expect, waitFor } from 'storybook/test';
+import { within, expect } from 'storybook/test';
 import App from 'components/App';
 import { createTemplate } from 'helpers/storybookHelper';
 import { mockCustomModal } from 'helpers/mockCustomModal';
@@ -45,11 +45,14 @@ CustomModalUI.play = async ({ canvasElement }) => {
 
 export const CustomModalWithAPI = createTemplate({ headers: {}, components: {} });
 CustomModalWithAPI.play = async ({ canvasElement }) => {
-  const canvas = await within(canvasElement);
+  const canvas = within(canvasElement);
   window.instance.UI.addCustomModal(mockCustomModal);
   window.instance.UI.openElements(['customModal']);
-  await waitFor(async () => {
-    const customModal = await canvas.getByText('Custom Modal Test');
-    await expect(customModal).toBeInTheDocument();
-  });
+  const customModal = await canvas.findByText('Custom Modal Test');
+  expect(customModal).toBeInTheDocument();
+};
+
+CustomModalWithAPI.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
 };

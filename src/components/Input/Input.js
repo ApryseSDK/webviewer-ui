@@ -1,61 +1,98 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { forwardRef, useMemo } from 'react';
+import classNames from 'classnames';
+import useFocus from 'hooks/useFocus';
 import Icon from 'components/Icon';
-
 import './Input.scss';
-import selectors from 'selectors';
+import PropTypes from 'prop-types';
 
-const propTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string,
-  defaultChecked: PropTypes.bool,
-  onChange: PropTypes.func,
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]).isRequired,
-  checked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  dataElement: PropTypes.string.isRequired,
-};
+const Input = forwardRef(({
+  message = 'default',
+  messageText,
+  fillWidth,
+  wrapperClassName,
+  padMessageText,
+  className,
+  onFocus,
+  onBlur,
+  rightElement,
+  leftElement,
+  type = 'text',
+  disabled,
+  ...props
+}, ref) => {
+  const { focused, handleOnFocus, handleOnBlur } = useFocus(onFocus, onBlur);
 
-const Input = React.forwardRef((props, ref) => {
-  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, props.dataElement));
+  const rightIcon = useMemo(() => {
+    if (rightElement) {
+      return rightElement;
+    }
 
-  const inputProps = omit(props, ['dataElement', 'label']);
+    let icon;
+    if (message === 'warning') {
+      icon = 'icon-alert';
+    } else if (message === 'error') {
+      icon = 'icon-error';
+    }
 
-  const labelClassName = `Input ${props.disabled ? 'disabled' : ''}`;
+    return icon ? <Icon className="ui__input__icon" glyph={icon} /> : undefined;
+  }, [message, rightElement]);
 
-  return isDisabled ? null : (
-    <React.Fragment>
-      <input className="Input" ref={ref} {...inputProps}/>
-      <label className={labelClassName} htmlFor={props.id} data-element={props.dataElement}>{props.label}
-        {ref?.current?.checked &&
-          <div
-            className="icon-container"
-          >
-            <Icon
-              glyph="icon-menu-checkmark"
-            />
-          </div>}
-      </label>
-    </React.Fragment>
+  const wrapperClass = classNames(
+    'ui__base',
+    'ui__input__wrapper',
+    {
+      'ui__input__wrapper--fill': fillWidth,
+      'ui__input__wrapper--pad': padMessageText && !messageText,
+    },
+    wrapperClassName,
+  );
+
+  const mainClass = classNames(
+    'ui__input',
+    `ui__input--message-${message}`,
+    { 'ui__input--focused': focused }
+  );
+
+  const inputClass = classNames(
+    'ui__input__input',
+    { 'ui__input__input--disabled': disabled },
+    className
+  );
+
+  return (
+    <div className={wrapperClass}>
+      <div className={mainClass}>
+        {leftElement}
+        <input
+          {...props}
+          type={type}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          className={inputClass}
+          disabled={disabled}
+          ref={ref}
+        />
+        {rightIcon}
+      </div>
+      {messageText && <div className="ui__input__messageText">{messageText}</div>}
+    </div>
   );
 });
 
-const omit = (obj, keysToOmit) => {
-  return Object.keys(obj).reduce((result, key) => {
-    if (!keysToOmit.includes(key)) {
-      result[key] = obj[key];
-    }
-
-    return result;
-  }, {});
-};
-
 Input.displayName = 'Input';
-Input.propTypes = propTypes;
 
+Input.propTypes = {
+  message: PropTypes.oneOf(['default', 'warning', 'error']),
+  messageText: PropTypes.string,
+  fillWidth: PropTypes.bool,
+  wrapperClassName: PropTypes.string,
+  padMessageText: PropTypes.bool,
+  className: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  rightElement: PropTypes.node,
+  leftElement: PropTypes.node,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+};
 export default Input;

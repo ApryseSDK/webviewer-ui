@@ -74,6 +74,8 @@ export function Basic() {
   );
 }
 
+Basic.parameters = window.storybook.disableRtlMode;
+
 export function DifferentLanguages() {
   const annotation = {};
   const style = {
@@ -111,6 +113,8 @@ export function DifferentLanguages() {
     </Provider>
   );
 }
+
+DifferentLanguages.parameters = window.storybook.disableRtlMode;
 
 export function DifferentStates() {
   const annotation = {};
@@ -150,3 +154,5 @@ export function DifferentStates() {
     </Provider>
   );
 }
+
+DifferentStates.parameters = window.storybook.disableRtlMode;

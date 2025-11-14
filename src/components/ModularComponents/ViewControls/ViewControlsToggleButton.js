@@ -5,19 +5,17 @@ import PropTypes from 'prop-types';
 
 const ViewControlsToggleButton = ({ className }) => {
   return (
-    <div>
-      <ToggleElementButton
-        dataElement="view-controls-toggle-button"
-        className={classNames({
-          'viewControlsToggleButton': true,
-          [className]: true,
-        })}
-        title="component.viewControls"
-        disabled={false}
-        img="icon-header-page-manipulation-line"
-        toggleElement="viewControlsFlyout"
-      />
-    </div>
+    <ToggleElementButton
+      dataElement="view-controls-toggle-button"
+      className={classNames({
+        'viewControlsToggleButton': true,
+        [className]: true,
+      })}
+      title="component.viewControls"
+      disabled={false}
+      img="icon-header-page-manipulation-line"
+      toggleElement="viewControlsFlyout"
+    />
   );
 };
 

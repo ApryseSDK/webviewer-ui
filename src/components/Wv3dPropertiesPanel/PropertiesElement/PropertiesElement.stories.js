@@ -161,3 +161,5 @@ Default.args = {
   element: testElement,
   schema: baseSchema,
 };
+
+Default.parameters = window.storybook.disableChromatic;

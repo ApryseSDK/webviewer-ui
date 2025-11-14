@@ -91,6 +91,8 @@ StylePopupInFormBuilder.args = {
   onLineStyleChange: noop,
 };
 
+StylePopupInFormBuilder.parameters = window.storybook.disableRtlMode;
+
 export const StylePopupForRedactionToolInHeaderItem = () => {
   const props = {
     currentStyleTab: 'TextColor',
@@ -152,6 +154,8 @@ export const StylePopupForRedactionToolInHeaderItem = () => {
     </Provider>
   );
 };
+
+StylePopupForRedactionToolInHeaderItem.parameters = window.storybook.disableRtlMode;
 
 
 export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
@@ -308,6 +312,8 @@ export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
     ) : <>Loading...</>;
 };
 
+StylePopupForDistanceMeasurementToolInHeaderItem.parameters = window.storybook.disableRtlMode;
+
 StylePopupForDistanceMeasurementToolInHeaderItem.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const checkbox = await canvas.findByRole('checkbox', { name: 'Enable snapping for measurement tools' });
@@ -376,3 +382,5 @@ export const StylePopupForFreeTextToolInHeaderItem = () => {
     </Provider>
   );
 };
+
+StylePopupForFreeTextToolInHeaderItem.parameters = window.storybook.disableRtlMode;

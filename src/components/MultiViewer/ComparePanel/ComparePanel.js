@@ -8,7 +8,7 @@ import ChangeListItem from 'components/MultiViewer/ComparePanel/ChangeListItem';
 import throttle from 'lodash/throttle';
 import { panelMinWidth } from 'constants/panel';
 import Icon from 'components/Icon';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 
 const specialChar = /([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/gm;

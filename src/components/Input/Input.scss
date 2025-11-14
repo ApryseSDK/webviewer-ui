@@ -1,77 +1,11 @@
-@import '../../constants/styles';
-
-input[type='checkbox'].Input,
-input[type='radio'].Input {
-  display: none;
-}
-
-label.Input {
-  position: relative;
-  display: block;
-  flex: 1;
-  padding: 5px;
-  cursor: pointer;
-
-  .icon-container {
-    position: absolute;
-    inset-inline-start: -10px;
-    inset-block-start: 50%;
-    transform: translate(-50%, -50%);
-
-    svg {
-      color: var(--primary-button-text);
+.ui__input__wrapper {
+  .ui__input{
+    .ui__input__icon {
+      margin: 0 2px;
+      
+      svg path {
+        fill: var(--error-border-color);
+      }
     }
-
-    .Icon {
-      height: 14px;
-      width: 14px;
-    }
-  }
-
-  &.disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    inset-inline-start: -10px;
-    inset-block-start: 50%;
-    transform: translate(-50%, -50%);
-    width: 15px;
-    height: 15px;
-    padding: 2px;
-    box-sizing: border-box;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    background: var(--component-background);
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    inset-inline-start: -10px;
-    inset-block-start: 50%;
-    transform: translate(-50%, -50%);
-    width: 7px;
-    height: 7px;
-    box-sizing: border-box;
-    background: transparent;
-    transition: all 0.2s ease;
-  }
-}
-
-input[type='checkbox']:checked + label {
-  &:before {
-    background: var(--primary-button);
-    border: 1px solid var(--primary-button);
-  }
-}
-
-input[type='radio']:checked + label {
-  &:before {
-    background: var(--primary-button);
-    border: 1px solid var(--primary-button);
   }
 }

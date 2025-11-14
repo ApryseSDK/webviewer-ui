@@ -1,5 +1,6 @@
 import React from 'react';
-import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
+import Input from 'components/Input';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 

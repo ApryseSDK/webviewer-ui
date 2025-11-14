@@ -44,6 +44,8 @@ export function AllToolButtons() {
   );
 }
 
+AllToolButtons.parameters = window.storybook.disableRtlMode;
+
 export const OverrideToolButtonProps = () => {
   const props = {
     dataElement: 'AnnotationCreateSticky',
@@ -57,6 +59,8 @@ export const OverrideToolButtonProps = () => {
     </WithProvider>
   );
 };
+
+OverrideToolButtonProps.parameters = window.storybook.disableRtlMode;
 
 export const WithCustomStyle = () => {
   const props = {
@@ -83,6 +87,8 @@ WithCustomStyle.play = async ({ canvasElement }) => {
   const button = canvas.getByRole('button', { name: /Arc measurement/i });
   expect(button.classList.contains('arc-measurement-class')).toBe(true);
 };
+
+WithCustomStyle.parameters = window.storybook.disableRtlMode;
 
 let toolStyles;
 const ReduxStory = () => {
@@ -142,3 +148,5 @@ ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
   store.dispatch(actions.setActiveToolStyles(toolStyles));
   await expect(button.firstChild.style.color).toBe('rgb(100, 0, 100)');
 };
+
+ChangingToolStylesShouldRerender.parameters = window.storybook.disableRtlMode;

@@ -34,7 +34,7 @@ jest.mock('components/SearchResult', () => {
 });
 
 function createDisabledStateForDataElement(dataElement) {
-  const state = { viewer: { disabledElements: {} } };
+  const state = { viewer: { disabledElements: {} }, search: { isSearchInProgress: false } };
   state.viewer.disabledElements[dataElement] = { disabled: true };
   return state;
 }
@@ -42,6 +42,8 @@ function createDisabledStateForDataElement(dataElement) {
 describe('SearchPanel', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
+    jest.spyOn(reactRedux, 'useSelector').mockReturnValue(false);
     // test would break if we don't make default return from useSearch as code is trying to destruct undefined value
     useSearch.mockReturnValue({});
   });
@@ -128,6 +130,8 @@ describe('SearchPanel', () => {
   it('Should set active result when result is clicked', () => {
     const closeSearchPanelMock = jest.fn();
     const setActiveResultMock = jest.fn();
+    const setActiveSearchResultIndex = jest.fn();
+    useSearch.mockReturnValue({ setActiveSearchResultIndex });
 
     const { container } = render(
       <SearchPanel
@@ -157,6 +161,8 @@ describe('SearchPanel', () => {
   it('Should close search panel when result is clicked using mobile device', () => {
     const closeSearchPanelMock = jest.fn();
     const setActiveResultMock = jest.fn();
+    const setActiveSearchResultIndex = jest.fn();
+    useSearch.mockReturnValue({ setActiveSearchResultIndex });
     const { container } = render(
       <SearchPanel
         isMobile
@@ -260,20 +266,22 @@ describe('SearchPanelContainer', () => {
 });
 
 describe('adjustSpreadsheetTableWidth', () => {
-  let isSpreadsheetEditorDocumentMock;
+  let isSpreadsheetEditorModeMock;
   let getDocumentMock;
   let editorWrapper;
   let spreadsheetEditorMock;
 
   beforeEach(() => {
+    jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
+    jest.spyOn(reactRedux, 'useSelector').mockReturnValue(false);
     useSearch.mockReturnValue({
       searchStatus: 'SEARCH_NOT_INITIATED',
       searchResults: [],
       activeSearchResultIndex: -1,
       setSearchStatus: jest.fn(),
     });
-    isSpreadsheetEditorDocumentMock = jest.spyOn(require('src/helpers/officeEditor'), 'isSpreadsheetEditorDocument');
-    isSpreadsheetEditorDocumentMock.mockReturnValue(true);
+    isSpreadsheetEditorModeMock = jest.spyOn(require('src/helpers/officeEditor'), 'isSpreadsheetEditorMode');
+    isSpreadsheetEditorModeMock.mockReturnValue(true);
 
     editorWrapper = {
       style: { width: '100%' },
@@ -301,7 +309,7 @@ describe('adjustSpreadsheetTableWidth', () => {
   });
 
   it('should not adjust container width if not in spreadsheet editor', () => {
-    isSpreadsheetEditorDocumentMock.mockReturnValue(false);
+    isSpreadsheetEditorModeMock.mockReturnValue(false);
     render(<SearchPanel currentWidth={100} />);
     expect(document.getElementById).not.toHaveBeenCalled();
     expect(spreadsheetEditorMock.onSizeChanged).not.toHaveBeenCalled();

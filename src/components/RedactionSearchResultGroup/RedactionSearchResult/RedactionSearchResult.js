@@ -1,5 +1,5 @@
 import React from 'react';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import Choice from 'components/Choice';
 import Icon from 'components/Icon';
 import './RedactionSearchResult.scss';
 import classNames from 'classnames';
@@ -45,16 +45,12 @@ const RedactionSearchResult = (props) => {
         aria-label={ambientStr}
         aria-current={isActive}
       ></button>
-      <div style={{ paddingRight: '14px' }}>
-        <Choice
-          aria-label={`${ambientStr}`}
-          checked={isChecked}
-          onChange={onChange}
-        />
-      </div>
-      <div style={{ paddingRight: '14px' }}>
-        <Icon glyph={icon} />
-      </div>
+      <Choice
+        aria-label={`${ambientStr}`}
+        checked={isChecked}
+        onChange={onChange}
+      />
+      <Icon glyph={icon} />
       <div className="redaction-search-result-info">
         {displayResult}
       </div>

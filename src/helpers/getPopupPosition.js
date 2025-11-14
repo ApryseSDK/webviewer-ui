@@ -155,11 +155,23 @@ const getSelectedTextPageNumber = (allQuads) => {
 const getSelectedTextPageCoordinates = (allQuads, startPageNumber, endPageNumber) => {
   const getTopAndBottom = () => {
     const firstQuad = allQuads[startPageNumber][0];
-    const top = firstQuad.y3;
+    let top;
+
+    if (firstQuad.y1 < firstQuad.y3) {
+      top = firstQuad.y1;
+    } else {
+      top = firstQuad.y3;
+    }
 
     const endPageQuads = allQuads[endPageNumber];
     const lastQuad = endPageQuads[endPageQuads.length - 1];
-    const bottom = lastQuad.y1;
+    let bottom;
+
+    if (lastQuad.y1 < lastQuad.y3) {
+      bottom = lastQuad.y3;
+    } else {
+      bottom = lastQuad.y1;
+    }
 
     return { top, bottom };
   };

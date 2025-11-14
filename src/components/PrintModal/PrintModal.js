@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import getClassName from 'helpers/getClassName';
 import LayoutMode from 'constants/layoutMode';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
-import Choice from 'components/Choice/Choice';
+import Choice from 'components/Choice';
 import ModalWrapper from 'components/ModalWrapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
 import useFocusOnClose from 'hooks/useFocusOnClose';
 import './PrintModal.scss';
 import Button from '../Button';
+import Spinner from '../Spinner';
 
 const PrintModal = ({
   isDisabled,
@@ -264,164 +265,176 @@ const PrintModal = ({
           closeHandler={closePrintModal}
         >
           <div className="swipe-indicator" />
-          <div className="settings">
-            <div className="section">
-              <div className="section-label">{`${t('option.print.pages')}:`}</div>
-              <form
-                className="settings-form"
-                onChange={onChange}
-                onSubmit={createPagesAndPrint}
-              >
-                <Choice
-                  dataElement="allPagesPrintOption"
-                  ref={allPages}
-                  id="all-pages"
-                  name="pages"
-                  radio
-                  label={t('option.print.all')}
-                  defaultChecked
-                  disabled={isPrinting}
-                  center
-                />
-                <Choice
-                  dataElement="currentPagePrintOption"
-                  ref={currentPageRef}
-                  id="current-page"
-                  name="pages"
-                  radio
-                  label={t('option.print.current')}
-                  disabled={isPrinting}
-                  center
-                />
-                <Choice
-                  dataElement="currentViewPrintOption"
-                  ref={currentView}
-                  id="current-view"
-                  name="pages"
-                  radio
-                  label={t('option.print.view')}
-                  disabled={isCurrentViewDisabled}
-                  center
-                  title={t('option.print.printCurrentDisabled')}
-                />
-                <Choice
-                  dataElement="customPagesPrintOption"
-                  ref={customPages}
-                  id="custom-pages"
-                  name="pages"
-                  className="specify-pages-choice"
-                  radio
-                  label={customPagesLabelElement}
-                  disabled={isPrinting}
-                  center
-                />
-                <Choice
-                  dataElement="annotationsPrintOption"
-                  id="include-annotations"
-                  name="annotations"
-                  label={t('option.print.includeAnnotations')}
-                  disabled={isPrinting}
-                  onChange={() => setIncludeAnnotations((prevState) => !prevState)}
-                  checked={includeAnnotations}
-                  center
-                />
-                {embedPrintValid && (
-                  <>
-                    {
-                      isFullAPIEnabled && (
-                        <>
-                          <Choice
-                            dataElement="grayscalePrintOption"
-                            id="print-grayscale"
-                            name="grayscale"
-                            label={t('option.print.printGrayscale')}
-                            disabled={isPrinting}
-                            onChange={() => setIsGrayscale((prevState) => !prevState)}
-                            checked={isGrayscale}
-                            center
-                          />
-                          <Choice
-                            dataElement="commentsPrintOption"
-                            ref={includeCommentsRef}
-                            id="include-comments"
-                            name="comments"
-                            label={t('option.print.includeComments')}
-                            onChange={() => setIncludeComments((prevState) => !prevState)}
-                            disabled={isPrinting}
-                            checked={includeComments}
-                            center
-                          />
-                        </>
-                      )
-                    }
-                  </>
-                )}
-                {!embedPrintValid && (
-                  <>
-                    <Choice
-                      dataElement="grayscalePrintOption"
-                      id="print-grayscale"
-                      name="grayscale"
-                      label={t('option.print.printGrayscale')}
-                      disabled={isPrinting}
-                      onChange={() => setIsGrayscale((prevState) => !prevState)}
-                      checked={isGrayscale}
-                      center
-                    />
-                    <Choice
-                      dataElement="commentsPrintOption"
-                      ref={includeCommentsRef}
-                      id="include-comments"
-                      name="comments"
-                      label={t('option.print.includeComments')}
-                      onChange={() => setIncludeComments((prevState) => !prevState)}
-                      disabled={isPrinting}
-                      checked={includeComments}
-                      center
-                    />
-                  </>
-                )}
-              </form>
+          {isPrinting && (
+            <div className="spinner-container">
+              <Spinner
+                inPanel
+                width={'40px'}
+                height={'40px'}
+              />
             </div>
-            {!embedPrintValid && (
-              <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
-                <label className="section-label print-quality-section-label" htmlFor="printQualityOptions" id="print-quality-options-label">{`${t('option.print.pageQuality')}:`}</label>
-                <Dropdown
-                  id="printQualityOptions"
-                  labelledById='print-quality-options-label'
-                  dataElement="printQualityOptions"
-                  items={Object.keys(printQualityOptions)}
-                  getDisplayValue={(item) => printQualityOptions[item]}
-                  onClickItem={handlePrintQualityChange}
-                  currentSelectionKey={printQuality?.toString()}
-                  width={274}
-                />
-              </DataElementWrapper>
-            )}
-            <div className="total">
-              {isPrinting ? (
-                <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
-              ) : (
-                <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+          )}
+          {!isPrinting && (
+            <div className="settings">
+              <div className="section">
+                <div className="section-label">{`${t('option.print.pages')}:`}</div>
+                <form
+                  className="settings-form"
+                  onChange={onChange}
+                  onSubmit={createPagesAndPrint}
+                >
+                  <Choice
+                    dataElement="allPagesPrintOption"
+                    ref={allPages}
+                    id="all-pages"
+                    name="pages"
+                    radio
+                    label={t('option.print.all')}
+                    defaultChecked
+                    disabled={isPrinting}
+                    center
+                  />
+                  <Choice
+                    dataElement="currentPagePrintOption"
+                    ref={currentPageRef}
+                    id="current-page"
+                    name="pages"
+                    radio
+                    label={t('option.print.current')}
+                    disabled={isPrinting}
+                    center
+                  />
+                  <Choice
+                    dataElement="currentViewPrintOption"
+                    ref={currentView}
+                    id="current-view"
+                    name="pages"
+                    radio
+                    label={t('option.print.view')}
+                    disabled={isCurrentViewDisabled}
+                    center
+                    title={t('option.print.printCurrentDisabled')}
+                  />
+                  <Choice
+                    dataElement="customPagesPrintOption"
+                    ref={customPages}
+                    id="custom-pages"
+                    name="pages"
+                    className="specify-pages-choice"
+                    radio
+                    label={customPagesLabelElement}
+                    disabled={isPrinting}
+                    center
+                  />
+                  <Choice
+                    dataElement="annotationsPrintOption"
+                    id="include-annotations"
+                    name="annotations"
+                    label={t('option.print.includeAnnotations')}
+                    disabled={isPrinting}
+                    onChange={() => setIncludeAnnotations((prevState) => !prevState)}
+                    checked={includeAnnotations}
+                    center
+                  />
+                  {embedPrintValid && (
+                    <>
+                      {
+                        isFullAPIEnabled && (
+                          <>
+                            <Choice
+                              dataElement="grayscalePrintOption"
+                              id="print-grayscale"
+                              name="grayscale"
+                              label={t('option.print.printGrayscale')}
+                              disabled={isPrinting}
+                              onChange={() => setIsGrayscale((prevState) => !prevState)}
+                              checked={isGrayscale}
+                              center
+                            />
+                            <Choice
+                              dataElement="commentsPrintOption"
+                              ref={includeCommentsRef}
+                              id="include-comments"
+                              name="comments"
+                              label={t('option.print.includeComments')}
+                              onChange={() => setIncludeComments((prevState) => !prevState)}
+                              disabled={isPrinting}
+                              checked={includeComments}
+                              center
+                            />
+                          </>
+                        )
+                      }
+                    </>
+                  )}
+                  {!embedPrintValid && (
+                    <>
+                      <Choice
+                        dataElement="grayscalePrintOption"
+                        id="print-grayscale"
+                        name="grayscale"
+                        label={t('option.print.printGrayscale')}
+                        disabled={isPrinting}
+                        onChange={() => setIsGrayscale((prevState) => !prevState)}
+                        checked={isGrayscale}
+                        center
+                      />
+                      <Choice
+                        dataElement="commentsPrintOption"
+                        ref={includeCommentsRef}
+                        id="include-comments"
+                        name="comments"
+                        label={t('option.print.includeComments')}
+                        onChange={() => setIncludeComments((prevState) => !prevState)}
+                        disabled={isPrinting}
+                        checked={includeComments}
+                        center
+                      />
+                    </>
+                  )}
+                </form>
+              </div>
+              {!embedPrintValid && (
+                <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
+                  <label className="section-label print-quality-section-label" htmlFor="printQualityOptions" id="print-quality-options-label">{`${t('option.print.pageQuality')}:`}</label>
+                  <Dropdown
+                    id="printQualityOptions"
+                    labelledById='print-quality-options-label'
+                    dataElement="printQualityOptions"
+                    items={Object.keys(printQualityOptions)}
+                    getDisplayValue={(item) => printQualityOptions[item]}
+                    onClickItem={handlePrintQualityChange}
+                    currentSelectionKey={printQuality?.toString()}
+                    width={274}
+                  />
+                </DataElementWrapper>
+              )}
+              <div className="total">
+                {isPrinting ? (
+                  <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
+                ) : (
+                  <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+                )}
+              </div>
+              {!isApplyWatermarkDisabled && (
+                <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
+                  <div className="section-label">{t('option.watermark.title')}</div>
+                  <Button
+                    dataElement="applyWatermark"
+                    className="apply-watermark"
+                    disabled={isPrinting}
+                    onClick={openWaterMarkModalWithFocusTransfer}
+                  >
+                    {t('option.watermark.addNew')}
+                  </Button>
+                </DataElementWrapper>
               )}
             </div>
-            {!isApplyWatermarkDisabled && (
-              <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
-                <div className="section-label">{t('option.watermark.title')}</div>
-                <Button
-                  dataElement="applyWatermark"
-                  className="apply-watermark"
-                  disabled={isPrinting}
-                  onClick={openWaterMarkModalWithFocusTransfer}
-                >
-                  {t('option.watermark.addNew')}
-                </Button>
-              </DataElementWrapper>
-            )}
-          </div>
+          )}
           <div className="divider"></div>
           <div className="buttons">
             <Button
+              disabled={isPrinting}
               className="button"
               onClick={createPagesAndPrint}
               label={t('action.print')}

@@ -3,6 +3,15 @@
   align-items: center;
   margin-bottom: 5px;
   user-select: all !important;
+
+  .Icon {
+    justify-content: center;
+    display: flex;
+
+    svg {
+      width: 16px;
+    }
+  }
 }
 
 .dropdown.active {

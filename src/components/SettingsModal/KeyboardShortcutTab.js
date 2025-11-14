@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import selectors from 'selectors';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
@@ -17,12 +18,12 @@ import './KeyboardShortcutTab.scss';
 const KeyboardShortcutTab = ({ editorMode = EditorModes.DEFAULT }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
-
+  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const { keyboardShortcuts, shortcutKeyMap } = useKeyboardShortcuts(editorMode);
   const [currentShortcut, setCurrentShortcut] = useState(undefined);
   const isEditingDisabled = useMemo(() => {
-    return editorMode !== EditorModes.DEFAULT;
+    return editorMode !== EditorModes.DEFAULT || isViewOnly;
   }, [editorMode]);
 
   const getCommandStrings = (command) => {

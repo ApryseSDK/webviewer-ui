@@ -64,13 +64,19 @@ FileNameButton.play = async ({ canvasElement }) => {
   expect(inputCap).toBe(FILESAVERJS_MAX_NAME_LENTH);
 };
 
+FileNameButton.parameters = window.storybook.disableRtlMode;
+
 export function OfficeEditorDisabledFileName() {
   initialState.officeEditor.editMode = OfficeEditorEditMode.VIEW_ONLY;
   return prepareButtonStory();
 }
+
+OfficeEditorDisabledFileName.parameters = window.storybook.disableRtlMode;
 
 export function SpreadsheetEditorDisabledFileName() {
   initialState.viewer.isSpreadsheetEditorModeEnabled = true;
   initialState.spreadsheetEditor.editMode = SpreadsheetEditorEditMode.VIEW_ONLY;
   return prepareButtonStory('spreadsheetEditorFileName');
 }
+
+SpreadsheetEditorDisabledFileName.parameters = window.storybook.disableRtlMode;

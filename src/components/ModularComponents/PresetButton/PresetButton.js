@@ -31,6 +31,7 @@ import AlignmentButtonContainer from './buttons/AlignmentButtonContainer';
 import './PresetButton.scss';
 import './buttons/SheetEditor/SheetEditor.scss';
 import StyleButtonContainer from './buttons/StyleButtonContainer';
+import SpreadsheetEditorInsertImageButton from 'src/components/ModularComponents/SpreadsheetEditorInsertImageButton';
 // Lazy load sheet editor components
 const VerticalAlignmentButton = lazy(() => import('./buttons/SheetEditor/VerticalAlignmentButton'));
 const CellAdjustmentButton = lazy(() => import('./buttons/SheetEditor/CellAdjustmentButton'));
@@ -116,6 +117,8 @@ const PresetButton = forwardRef((props, ref) => {
             return <CopyPasteCutButton {...props} ref={ref} actionType={CELL_ACTION_OPTIONS.Paste} />;
           case PRESET_BUTTON_TYPES.CELL_CUT:
             return <CopyPasteCutButton {...props} ref={ref} actionType={CELL_ACTION_OPTIONS.Cut} />;
+          case PRESET_BUTTON_TYPES.SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON:
+            return <SpreadsheetEditorInsertImageButton {...props} ref={ref} />;
           default:
             // Since switch uses strict comparison, here we should use if statement to check for matches
             if (checkIfArrayContains(CELL_ADJUSTMENT_FLYOUT_ITEMS, buttonType)) {

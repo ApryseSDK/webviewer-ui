@@ -5,6 +5,22 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import localStorageManager from './localStorageManager';
 
+export const simulatePenDownInStylusMode = (toolInstance, touchObject) => {
+  if (toolInstance.annotation) {
+    return;
+  }
+  const { clientX, clientY, screenX, screenY, pageX, pageY } = touchObject;
+  toolInstance.pointerType = 'pen';
+  const mouseEvent = new MouseEvent('mousedown', {
+    bubbles: true,
+    cancelable: true,
+    clientX, clientY, screenX, screenY, pageX, pageY,
+    button: 0,
+    buttons: 1
+  });
+  toolInstance.mouseLeftDown(mouseEvent);
+};
+
 const touchType = {
   TAP: 'tap',
   DOUBLE_TAP: 'doubleTap',
@@ -62,10 +78,18 @@ const TouchEventManager = {
     this.container.removeEventListener('touchcancel', this.handleTouchCancel);
   },
   handleTouchStart(e) {
-    if (core.getToolMode().name === 'Pan' &&
+    const isUsingStylusInPanMode = (
+      core.getToolMode().name === 'Pan' &&
       core.getDocumentViewer().isStylusModeEnabled() &&
-      e.touches[0].touchType === 'stylus') {
+      e.touches[0].touchType === 'stylus'
+    );
+    if (isUsingStylusInPanMode) {
       core.setToolMode(core.getTool('Pan')['previouslyUsedTool']['name']);
+      // When the pen touches down, because of the switching logic, the mouseLeftDown method
+      // was called on the Pan tool instance, not FreeHand tool. So the subsequent mouseMove calls
+      // on the FreeHand tool are executed without an annotation created from the mouseLeftDown
+      // of the FreeHand tool. So we need to simulate that manually here.
+      simulatePenDownInStylusMode(core.getToolMode(), e.touches[0]);
       return;
     }
     switch (e.touches.length) {

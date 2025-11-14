@@ -19,7 +19,27 @@ function Accessibility() {
   const isSearchPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'searchPanel'));
   const isSearchPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchPanel'));
 
+  const accessibleReadingOrderManager = core.getDocumentViewer()?.getAccessibleReadingOrderManager();
+
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleModeStarted = () => {
+      dispatch(actions.setShouldAddA11yContentToDOM(true));
+    };
+
+    const handleModeEnded = () => {
+      dispatch(actions.setShouldAddA11yContentToDOM(false));
+    };
+
+    accessibleReadingOrderManager.addEventListener('accessibleReadingOrderModeStarted', handleModeStarted);
+    accessibleReadingOrderManager.addEventListener('accessibleReadingOrderModeEnded', handleModeEnded);
+
+    return () => {
+      accessibleReadingOrderManager.removeEventListener('accessibleReadingOrderModeStarted', handleModeStarted);
+      accessibleReadingOrderManager.removeEventListener('accessibleReadingOrderModeEnded', handleModeEnded);
+    };
+  }, []);
 
   useEffect(() => {
     const onDocumentLoaded = () => {
@@ -28,7 +48,6 @@ function Accessibility() {
       }
       const type = core.getDocument()?.getType();
       if (type === workerTypes.PDF) {
-        const accessibleReadingOrderManager = core.getDocumentViewer()?.getAccessibleReadingOrderManager();
         const isInAROMode = accessibleReadingOrderManager.isInAccessibleReadingOrderMode();
         !isInAROMode && accessibleReadingOrderManager?.startAccessibleReadingOrderMode();
       }

@@ -79,6 +79,8 @@ export const TopHeader = (storyProps) => {
   );
 };
 
+TopHeader.parameters = window.storybook.disableRtlMode;
+
 export const LeftHeader = (storyProps) => {
   const props = {
     dataElement: 'leftHeader',
@@ -95,6 +97,8 @@ export const LeftHeader = (storyProps) => {
     </Provider>
   );
 };
+
+LeftHeader.parameters = window.storybook.disableRtlMode;
 
 export const RightHeader = (storyProps) => {
   const props = {
@@ -114,6 +118,8 @@ export const RightHeader = (storyProps) => {
   );
 };
 
+RightHeader.parameters = window.storybook.disableRtlMode;
+
 export const BottomHeader = (storyProps) => {
   const props = {
     dataElement: 'bottomHeader',
@@ -131,3 +137,5 @@ export const BottomHeader = (storyProps) => {
     </Provider>
   );
 };
+
+BottomHeader.parameters = window.storybook.disableRtlMode;

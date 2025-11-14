@@ -31,3 +31,5 @@ ToolButton.args = {
   group: 'freeTextTools',
   color: initialColors[0],
 };
+
+ToolButton.parameters = window.storybook.disableRtlMode;

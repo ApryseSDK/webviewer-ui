@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import { userEvent, within, expect, waitFor } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/HeaderFooterOptionsModal',
@@ -33,8 +34,8 @@ export function Basic() {
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const inputs = [
-    canvas.getByLabelText('Header from Top'),
-    canvas.getByLabelText('Footer from Bottom')
+    canvas.getByLabelText(getTranslatedText('officeEditor.headerFooterOptionsModal.headerFromTop')),
+    canvas.getByLabelText(getTranslatedText('officeEditor.headerFooterOptionsModal.footerFromBottom'))
   ];
 
   for (const input of inputs) {
