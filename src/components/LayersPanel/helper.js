@@ -1,6 +1,6 @@
 import core from 'core';
 
-export async function toggleAnnotationsVisibility(layers) {
+async function toggleAnnotationsVisibility(layers) {
   const layerMap = getLayerMapping(layers);
   const doc = await core.getDocument();
 
@@ -80,10 +80,11 @@ async function handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent
  */
 async function handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layer) {
   const annotationManager = core.getAnnotationManager();
+
   const { pageNum, annotationViewerCoordinates, annotationType } = await getAnnotationDetails(pdfNetAnnotation);
   const annotationsOnPage = await getAnnotationsOnPage(annotationManager, pageNum);
   annotationsOnPage.forEach((annotation) => {
-    if (compareWebviewerPDFNetAnnotation(annotation, annotationType, annotationViewerCoordinates)) {
+    if (compareWebViewerPDFNetAnnotation(annotation, annotationType, annotationViewerCoordinates)) {
       annotation.Hidden = !layer.visible;
     }
   });
@@ -99,24 +100,22 @@ async function handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layer) {
 async function findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManager) {
   const annotSDF = await pdfNetAnnotation.getSDFObj();
   const isNMKeyValid = await annotSDF.findObj('NM');
-
-  const pageIndex = await (await pdfNetAnnotation.getPage()).getIndex();
-
-  if (isNMKeyValid) {
-    const NMInfoDict = await annotSDF.get('NM');
-    const NMInfoObject = await NMInfoDict.value();
-    const idString = await NMInfoObject.getAsPDFText();
-
-    const webViewerAnnotationsOnSamePage = annotationManager.getAnnotationsList().filter((annot) => annot.PageNumber === pageIndex);
-    const targetWebViewerAnnotation = webViewerAnnotationsOnSamePage.find((annot) => annot.Id === idString);
-
-    if (!targetWebViewerAnnotation) {
-      console.warn('Could not find matching WebViewer annotation for the provided PDFNet annotation.');
-    }
-    return targetWebViewerAnnotation;
+  if (!isNMKeyValid) {
+    return null;
   }
 
-  return null;
+  const NMInfoDict = await annotSDF.get('NM');
+  const NMInfoObject = await NMInfoDict.value();
+  const idString = await NMInfoObject.getAsPDFText();
+  const pageIndex = await (await pdfNetAnnotation.getPage()).getIndex();
+  const webViewerAnnotationsOnSamePage = annotationManager.getAnnotationsList().filter((annot) => annot.PageNumber === pageIndex);
+  const targetWebViewerAnnotation = webViewerAnnotationsOnSamePage.find((annot) => annot.Id === idString);
+
+  if (!targetWebViewerAnnotation) {
+    console.warn('Could not find matching WebViewer annotation for the provided PDFNet annotation.');
+  }
+
+  return targetWebViewerAnnotation;
 }
 
 /**
@@ -129,9 +128,9 @@ async function findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManag
  * @param {object} pdfNetAnnotationViewerCoords The position of PDFNet annotation in viewer coordinate space.
  * @returns {boolean} Returns true if a match was found. False otherwise.
  */
-function compareWebviewerPDFNetAnnotation(annotation, pdfNetAnnotationType, pdfNetAnnotationViewerCoords) {
+function compareWebViewerPDFNetAnnotation(annotation, pdfNetAnnotationType, pdfNetAnnotationViewerCoords) {
   const rectFromPDFNetAnnotation = createRectFromPDFNetAnnotation(pdfNetAnnotationViewerCoords);
-  const positionMatched = annotation.getRect().equalTo(rectFromPDFNetAnnotation);
+  const positionMatched = isEqualThreshold(annotation.getRect(), rectFromPDFNetAnnotation);
   const typeMatched = pdfNetAnnotationType.toLowerCase() === annotation.elementName;
 
   return positionMatched && typeMatched;
@@ -165,10 +164,10 @@ async function getPDFNetAnnotations(pdfDoc) {
 
     for (let i = 0; i < numAnnots; ++i) {
       const annot = await page.getAnnot(i);
-
       if (!(await annot.isValid())) {
         continue;
       }
+
       pdfNetAnnotations.push(annot);
     }
   }
@@ -192,7 +191,6 @@ async function getAnnotationDetails(pdfNetAnnotation) {
 
   const page = await pdfNetAnnotation.getPage();
   const pageNum = await page.getIndex();
-
   const annotationViewerCoordinates = await getViewerCoordinates(pageNum, await pdfNetAnnotation.getRect());
 
   return { annotationType, annotationViewerCoordinates, pageNum };
@@ -239,3 +237,35 @@ function getLayerMapping(layers) {
 function getAnnotationsOnPage(annotationManager, pageNum) {
   return annotationManager.getAnnotationsList().filter((annot) => annot.PageNumber === pageNum);
 }
+
+/**
+ * @ignore
+ * Helper function that compares two rects, taking into account a threshold (i.e. if they're slightly off).
+ * This function will be refactored into WebViewer Core as part of a larger layer refactoring.
+ * @param {Core.Math.Rect} rect
+ * @param {Core.Math.Rect} otherRect
+ * @returns True if both rects are equal within the threshold.
+ */
+function isEqualThreshold(rect, otherRect) {
+  const threshold = 2; // 2 units in viewer space coordinates.
+
+  return (
+    Math.abs(rect['x1'] - otherRect['x1']) <= threshold &&
+    Math.abs(rect['x2'] - otherRect['x2']) <= threshold &&
+    Math.abs(rect['y1'] - otherRect['y1']) <= threshold &&
+    Math.abs(rect['y2'] - otherRect['y2']) <= threshold
+  );
+}
+
+export {
+  toggleAnnotationsVisibility,
+  getLayerMapping,
+  getAnnotationsOnPage,
+  isEqualThreshold,
+  createRectFromPDFNetAnnotation,
+  compareWebViewerPDFNetAnnotation,
+  getOCMDLayerId,
+  getAnnotationDetails,
+  getViewerCoordinates,
+  handleAnnotationVisibilityEdgeCase,
+};
