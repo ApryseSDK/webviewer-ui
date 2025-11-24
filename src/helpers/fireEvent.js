@@ -1,6 +1,15 @@
 import { isIE11 } from 'helpers/device';
 import Events from 'constants/events';
-import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
+import getRootNode from 'helpers/getRootNode';
+
+let eventHandler;
+
+export const getEventHandler = () => {
+  if (!eventHandler) {
+    eventHandler = new window.Core.EventHandler();
+  }
+  return eventHandler;
+};
 
 const fireEvent = async (eventName, data, element = null) => {
   let event;
@@ -28,7 +37,12 @@ const fireEvent = async (eventName, data, element = null) => {
     event.initEvent(eventName, true, true);
     event.detail = data;
   }
-  element ? element.dispatchEvent(event) : getInstanceNode().dispatchEvent(event);
+  if (element) {
+    element.dispatchEvent(event);
+  } else {
+    await getEventHandler().triggerAsync(eventName, event);
+    window.dispatchEvent(event); // For backward compatibility
+  }
 };
 
 export default fireEvent;
