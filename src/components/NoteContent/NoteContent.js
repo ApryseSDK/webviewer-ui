@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
@@ -91,6 +91,7 @@ const NoteContent = ({
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
+  const store = useStore();
 
   const isReply = annotation.isReply();
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
@@ -272,7 +273,7 @@ const NoteContent = ({
   contents = sanitizeContent(contents);
 
   // for link annotations we want to get their URL. We are unable to use "getContents" to get that data, need to use "getLinkDestination" instead
-  const contentsToRender = annotation instanceof window.Core.Annotations.Link ? getLinkDestination(annotation) : annotation.getContents();
+  const contentsToRender = annotation instanceof window.Core.Annotations.Link ? getLinkDestination(annotation, store) : annotation.getContents();
 
   const richTextStyle = annotation.getRichTextStyle();
   let textColor = annotation['TextColor'];
@@ -326,13 +327,6 @@ const NoteContent = ({
     }
   };
 
-  const handleContentsClicked = (e) => {
-    if (window.getSelection()?.toString()) {
-      e?.stopPropagation();
-    }
-    handleNoteClick(e);
-  };
-
   const noteContentClass = classNames({
     NoteContent: true,
     isReply,
@@ -361,7 +355,7 @@ const NoteContent = ({
             />
           ) : (
             contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleNoteClick}>
                 {isReply && (attachments.length > 0) && (
                   <ReplyAttachmentList
                     files={attachments}

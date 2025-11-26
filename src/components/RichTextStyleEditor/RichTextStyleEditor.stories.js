@@ -44,6 +44,7 @@ const state = {
       '#13558c', '#76287b', '#347842', '#318f29', '#ffffff',
       '#cdcdcd', '#9c9c9c', '#696969', '#272727', '#000000'
     ],
+    customColors: [],
     /* eslint-enable custom/no-hex-colors */
     textColors: initialTextColors,
     toolColorOverrides: {},

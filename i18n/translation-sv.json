@@ -345,11 +345,15 @@
     "pageNum": "Sida",
     "viewBookmark": "Visa bokmärke på sidan",
     "error": "Fel",
-    "errorPageNumber": "Ogiltigt sidnummer. Gränsen är",
+    "errorPageNumberPart1": "Ogiltigt sidnummer.",
+    "errorPageNumberPart2": "Gränsen är",
     "errorBlankPageNumber": "Vänligen ange ett sidnummer",
     "errorLoadingDocument": "Det uppstod ett problem med att läsa det här dokumentet och vissa sidor kanske inte visas. Detta indikerar att dokumentet kan vara skadat. Det totala antalet sidor är {{totalPageCount}} och antalet sidor som visas är {{displayedPageCount}}.",
     "noRevisions": "Detta dokument har inga ändringar.",
-    "listEmptyValue": "Ett eller flera fält har ett tomt värde."
+    "listEmptyValue": "Ett eller flera fält har ett tomt värde.",
+    "listDuplicateValue": "Flera fält har följande värden:",
+    "networkError": "Något gick fel när den här komponenten laddades. Kontrollera din nätverksanslutning och uppdatera sidan.",
+    "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Textstorlek"
     },
     "shared": {
+      "sheetIndex": "Ark",
       "page": "Sida",
       "precision": "Precision",
       "enableSnapping": "Aktivera snapping för mätverktyg"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Ta bort sida",
-      "deleteMessage": "Är du säker på att du vill ta bort de valda sidorna. Detta kan inte ångras.",
+      "deleteMessage": "Är du säker på att du vill ta bort den/de valda sidan/sidorna? Detta kan inte ångras.",
       "deleteLastPageMessage": "Du kan inte ta bort alla sidor i dokumentet."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Arknamnet kan inte vara tomt. Ange ett namn."
     },
     "sheetTabDeleteMessage": {
-      "title": "Redigera varning",
+      "title": "Ta bort ark",
       "message": "Är du säker på att du vill ta bort det här bladet?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Horisontell kant",
     "none": "Inga gränser",
     "borders": "Gränser",
+    "textWrap": "Textbrytning",
+    "wrap": "Sjal",
+    "overflow": "Svämma över",
+    "clip": "Klämma",
     "fontSize": {
       "dropdownLabel": "Fontstorlek"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Vattenstämpel",
     "addWatermark": "Lägg till vattenstämpel",
     "save": "Spara fil",
-    "pageError": "Vänligen ange ett intervall mellan 1 - ",
     "fileNameCannotBeEmpty": "Filnamnet får inte vara tomt"
   },
   "filePicker": {

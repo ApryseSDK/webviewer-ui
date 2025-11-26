@@ -345,11 +345,15 @@
     "pageNum": "Pagina",
     "viewBookmark": "Visualizza segnalibro sulla pagina",
     "error": "Errore",
-    "errorPageNumber": "Numero di pagina non valido. Il limite è",
+    "errorPageNumberPart1": "Numero di pagina non valido.",
+    "errorPageNumberPart2": "Il limite è",
     "errorBlankPageNumber": "Si prega di specificare un numero di pagina",
     "errorLoadingDocument": "Si è verificato un problema durante la lettura di questo documento e alcune pagine potrebbero non essere visualizzate. Ciò indica che il documento potrebbe essere danneggiato. Il conteggio totale delle pagine è {{totalPageCount}} e il numero di pagine visualizzate è {{displayedPageCount}}.",
     "noRevisions": "Questo documento non ha revisioni.",
-    "listEmptyValue": "Uno o più campi contengono un valore vuoto."
+    "listEmptyValue": "Uno o più campi contengono un valore vuoto.",
+    "listDuplicateValue": "Più campi hanno i seguenti valori:",
+    "networkError": "Si è verificato un errore durante il caricamento di questo componente. Controlla la connessione di rete e aggiorna la pagina.",
+    "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Dimensione del testo"
     },
     "shared": {
+      "sheetIndex": "Foglio",
       "page": "Pagina",
       "precision": "Precisione",
       "enableSnapping": "Abilita snap per strumenti di misurazione"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Elimina pagina",
-      "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate? L'operazione non può essere annullata.",
+      "deleteMessage": "Vuoi davvero eliminare le pagine selezionate? L'operazione non può essere annullata.",
       "deleteLastPageMessage": "Non è possibile eliminare tutte le pagine del documento."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Il nome del foglio non può essere vuoto. Inserisci un nome."
     },
     "sheetTabDeleteMessage": {
-      "title": "Modifica avviso",
+      "title": "Elimina foglio",
       "message": "Sei sicuro di voler eliminare questo foglio?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Bordo orizzontale",
     "none": "Nessun confine",
     "borders": "Confini",
+    "textWrap": "A capo automatico del testo",
+    "wrap": "Avvolgere",
+    "overflow": "Traboccamento",
+    "clip": "Clip",
     "fontSize": {
       "dropdownLabel": "Dimensione del carattere"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Filigrana",
     "addWatermark": "Aggiungi filigrana",
     "save": "Salvare il file",
-    "pageError": "Inserisci un intervallo compreso tra 1 - ",
     "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
   },
   "filePicker": {

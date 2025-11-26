@@ -139,23 +139,28 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
   const isVertical = headerDirection === DIRECTION.COLUMN;
   if (lastSizedElementMap[parentDataElement]) {
     const lastSizedElement = lastSizedElementMap[parentDataElement];
-    const element = lastSizedElement.getElement();
-    const hasToShrink = (lastSizedElement.changeType === SIZE_CHANGE_TYPES.GROW && freeSpace < 0);
-    const hasToGrow = element.canGrow && (lastSizedElement.changeType === SIZE_CHANGE_TYPES.SHRINK && freeSpace > 0);
-    if (hasToGrow && element.canGrow) {
-      const growSizeIncrease = getGrowSizeIncrease({ element, isVertical });
-      if (growSizeIncrease > freeSpace) {
-        return null;
+    const isLastElementStillAvailable = items.some((item) => item.dataElement === lastSizedElement.dataElement);
+    if (isLastElementStillAvailable) {
+      const element = lastSizedElement.getElement();
+      const hasToShrink = (lastSizedElement.changeType === SIZE_CHANGE_TYPES.GROW && freeSpace < 0);
+      const hasToGrow = element.canGrow && (lastSizedElement.changeType === SIZE_CHANGE_TYPES.SHRINK && freeSpace > 0);
+      if (hasToGrow) {
+        const growSizeIncrease = getGrowSizeIncrease({ element, isVertical });
+        if (growSizeIncrease > freeSpace) {
+          return null;
+        }
       }
-    }
-    if (hasToShrink || hasToGrow) {
-      return () => {
-        createSizeChange({
-          parentDataElement,
-          item: lastSizedElement,
-          changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
-        });
-      };
+      if (hasToShrink || hasToGrow) {
+        return () => {
+          createSizeChange({
+            parentDataElement,
+            item: lastSizedElement,
+            changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
+          });
+        };
+      }
+    } else {
+      lastSizedElementMap[parentDataElement] = null;
     }
   }
   const [itemList, groupedItemList] = sortResponsiveItems(items, parentDataElement);

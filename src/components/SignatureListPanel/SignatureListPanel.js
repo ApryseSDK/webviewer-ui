@@ -18,6 +18,7 @@ import SignatureAddButton from './SignatureAddButton';
 import core from 'core';
 import PropTypes from 'prop-types';
 import Events from 'constants/events';
+import { getEventHandler } from 'helpers/fireEvent';
 
 const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LIST_PANEL, isFlyout = false }) => {
   const [t] = useTranslation();
@@ -77,9 +78,9 @@ const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LI
       }
     };
 
-    window.addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     return () => {
-      window.removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+      getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     };
   }, []);
 

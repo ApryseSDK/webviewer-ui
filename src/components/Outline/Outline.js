@@ -34,6 +34,12 @@ const propTypes = {
   isDraggedDownwards: PropTypes.bool,
 };
 
+export const shouldExpandOutline = (activeOutlinePath, outlinePath) => {
+  return activeOutlinePath !== null
+    && activeOutlinePath !== outlinePath
+    && activeOutlinePath.startsWith(`${outlinePath}-`);
+};
+
 const Outline = forwardRef(
   function Outline(
     {
@@ -83,14 +89,10 @@ const Outline = forwardRef(
     }));
 
     useEffect(() => {
-      const shouldExpandOutline =
-        activeOutlinePath !== null
-        && activeOutlinePath !== outlinePath
-        && activeOutlinePath.startsWith(outlinePath);
-      if (shouldExpandOutline) {
+      if (shouldExpandOutline(activeOutlinePath, outlinePath)) {
         setIsExpanded(true);
       }
-    }, [activeOutlinePath, isAddingNewOutline, outline]);
+    }, [activeOutlinePath, isAddingNewOutline, outlinePath]);
 
     useLayoutEffect(() => {
       setIsExpanded(shouldAutoExpandOutlines);

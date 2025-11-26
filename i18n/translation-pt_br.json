@@ -345,11 +345,15 @@
     "pageNum": "Página",
     "viewBookmark": "Ver marcador na página",
     "error": "Erro",
-    "errorPageNumber": "Número de página inválido. Limite é",
+    "errorPageNumberPart1": "Número de página inválido.",
+    "errorPageNumberPart2": "O limite é",
     "errorBlankPageNumber": "Por favor especifique um número de página",
     "errorLoadingDocument": "Ocorreu um problema ao ler este documento e algumas páginas podem não ser exibidas. Isso indica que o documento pode estar corrompido. A contagem total de páginas é {{totalPageCount}} e o número de páginas exibidas é {{displayedPageCount}}.",
     "noRevisions": "Este documento não possui revisões.",
-    "listEmptyValue": "Um ou mais campos têm um valor vazio."
+    "listEmptyValue": "Um ou mais campos têm um valor vazio.",
+    "listDuplicateValue": "Vários campos têm os seguintes valores:",
+    "networkError": "Ocorreu um erro ao carregar este componente. Verifique sua conexão de rede e atualize a página.",
+    "refreshPage": "Verifique sua conexão de rede e atualize a página."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Tamanho do texto"
     },
     "shared": {
+      "sheetIndex": "Folha",
       "page": "Página",
       "precision": "Precisão",
       "enableSnapping": "Ativar encaixe para ferramentas de medição"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Excluir página",
-      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas? Isso não pode ser desfeito.",
+      "deleteMessage": "Tem certeza de que deseja excluir a(s) página(s) selecionada(s)? Esta ação não pode ser desfeita.",
       "deleteLastPageMessage": "Você não pode excluir todas as páginas do documento."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "O nome da planilha não pode estar em branco. Insira um nome."
     },
     "sheetTabDeleteMessage": {
-      "title": "Aviso de edição",
+      "title": "Excluir folha",
       "message": "Tem certeza de que deseja excluir esta planilha?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Borda horizontal",
     "none": "Sem Bordas",
     "borders": "Fronteiras",
+    "textWrap": "Quebra de texto",
+    "wrap": "Enrolar",
+    "overflow": "Transbordamento",
+    "clip": "Grampo",
     "fontSize": {
       "dropdownLabel": "Tamanho da fonte"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Marca d'água",
     "addWatermark": "Adicione uma Marca D'água",
     "save": "Salvar Arquivo",
-    "pageError": "Insira um intervalo entre 1 - ",
     "fileNameCannotBeEmpty": "O nome do arquivo não pode ficar vazio"
   },
   "filePicker": {

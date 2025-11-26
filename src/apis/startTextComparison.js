@@ -13,6 +13,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import Events from 'constants/events';
+import { getEventHandler } from 'helpers/fireEvent';
 
 export default (store) => () => {
   if (!selectors.isMultiViewerMode(store.getState())) {
@@ -20,7 +21,7 @@ export default (store) => () => {
   }
   const documentViewers = core.getDocumentViewers();
   if (documentViewers.length < 2) {
-    window.addEventListener(Events.MULTI_VIEWER_READY, () => {
+    getEventHandler().addEventListener(Events.MULTI_VIEWER_READY, () => {
       const documentViewers = core.getDocumentViewers();
       documentViewers[0].startSemanticDiff(documentViewers[1]);
     });

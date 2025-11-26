@@ -15,13 +15,11 @@ const InsertBlankPagePanel = ({
   insertNewPageBelow,
   insertNewPageIndexes,
   numberOfBlankPagesToInsert,
-  pageNumberError,
   setInsertNewPageBelow,
   setInsertNewPageIndexes,
   setNumberOfBlankPagesToInsert,
   setInsertPageHeight,
   setInsertPageWidth,
-  setPageNumberError,
   loadedDocumentPageCount,
 }) => {
   const [presetNewPageDimensions] = useSelector((state) => [
@@ -74,11 +72,6 @@ const InsertBlankPagePanel = ({
   };
 
   const handlePageNumbersChanged = (pageNumbers) => {
-    if (pageNumbers.length > 0) {
-      setPageNumberError(null);
-    } else {
-      setPageNumberError(`${t('message.errorBlankPageNumber')}`);
-    }
     setInsertNewPageIndexes(pageNumbers);
   };
 
@@ -150,7 +143,6 @@ const InsertBlankPagePanel = ({
               pageCount={loadedDocumentPageCount}
               onSelectedPageNumbersChange={handlePageNumbersChanged}
               onBlurHandler={handlePageNumbersChanged}
-              pageNumberError={pageNumberError}
             />
           </div>
           <div className="input-container">
@@ -219,13 +211,11 @@ InsertBlankPagePanel.propTypes = {
   insertNewPageBelow: PropTypes.bool,
   insertNewPageIndexes: PropTypes.array,
   numberOfBlankPagesToInsert: PropTypes.number,
-  pageNumberError: PropTypes.string,
   setInsertNewPageBelow: PropTypes.func,
   setInsertNewPageIndexes: PropTypes.func,
   setNumberOfBlankPagesToInsert: PropTypes.func,
   setInsertPageHeight: PropTypes.func,
   setInsertPageWidth: PropTypes.func,
-  setPageNumberError: PropTypes.func,
   loadedDocumentPageCount: PropTypes.number,
 };
 

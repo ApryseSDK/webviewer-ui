@@ -9,6 +9,7 @@ const ModularHeaderContainer = React.forwardRef((props, ref) => {
 
   const activeGroupedItems = useSelector((state) => selectors.getActiveGroupedItems(state), shallowEqual);
   const fixedGroupedItems = useSelector((state) => selectors.getFixedGroupedItems(state), shallowEqual);
+  const viewOnlyWhitelist = useSelector(selectors.getViewOnlyWhitelist);
 
   // We memoize the items to avoid unneeded re-renders
   const memoizedItems = React.useMemo(() => {
@@ -22,7 +23,7 @@ const ModularHeaderContainer = React.forwardRef((props, ref) => {
       }
       return true;
     });
-  }, [items, activeGroupedItems, fixedGroupedItems]);
+  }, [items, activeGroupedItems, fixedGroupedItems, viewOnlyWhitelist]);
 
   return <ModularHeader ref={ref} {...props} items={memoizedItems} />;
 });

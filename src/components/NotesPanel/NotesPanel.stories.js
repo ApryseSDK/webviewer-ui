@@ -10,7 +10,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore, setupNotesPanelCoreMocks } from 'helpers/storybookHelper';
 import core from 'core';
-import { userEvent, within, expect, waitFor } from 'storybook/test';
+import { userEvent, within, expect, waitFor, fn } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
@@ -312,8 +312,9 @@ const createTestNotesWithComments = () => {
   return { replyAnnot, rectangle, line };
 };
 
-const customNoteFunction = () => { };
+const customNoteFunction = fn();
 export const NotesPanelNotesWithComments = (args, context) => {
+  const { addonRtl } = context.globals;
   const mockState = {
     ...mockAppState,
     viewer: {
@@ -346,11 +347,7 @@ export const NotesPanelNotesWithComments = (args, context) => {
   core.getSelectedAnnotations = () => [rectangle];
 
   return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
+    <MockApp initialState={mockState} store={store} initialDirection={addonRtl} />
   );
 };
 
@@ -360,19 +357,38 @@ NotesPanelNotesWithComments.parameters = {
 
 NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  expect(canvas.getByRole('button', { name: getTranslatedText('component.multiSelectButton') })).toBeVisible();
+
+  // Check that notes are editable in View Only Mode
+  window.instance.UI.enableViewOnlyMode();
+  window.instance.UI.openElement('notesPanel');
+  const note = await canvas.findByText(/Space, the final frontier./gi);
+  await userEvent.click(note);
+  const addReplyFields = await canvas.findAllByRole('generic', { name: getTranslatedText('action.reply') });
+  const statusButton = await canvas.findByRole('button', { name: getTranslatedText('option.notesOrder.status') });
+  const optionsButtons = await canvas.findAllByRole('button', { name: getTranslatedText('formField.formFieldPopup.options') });
+  expect(addReplyFields.length).toBeGreaterThan(0);
+  expect(statusButton).toBeEnabled();
+  expect(optionsButtons.length).toBeGreaterThan(0);
+  for (const optionsButton of optionsButtons) {
+    expect(optionsButton).toBeEnabled();
+  }
+  window.instance.UI.disableViewOnlyMode();
+  window.instance.UI.openElement('notesPanel');
+
+  const multiSelectButton = await canvas.findByRole('button', { name: getTranslatedText('component.multiSelectButton') });
+  expect(multiSelectButton).toBeVisible();
 
   await waitFor(async () => {
     await expect(canvas.getByRole('button', { name: getTranslatedText('option.notesOrder.status') })).toBeInTheDocument();
   });
 
-  const textElement = await canvas.getByText(/Test comment/i);
+  const textElement = await canvas.findByText(/Test comment/i);
   await expect(textElement).toBeInTheDocument();
 
   await userEvent.click(textElement);
-  await expect(customNoteFunction).toHaveBeenCalled;
+  await expect(customNoteFunction).toHaveBeenCalled();
 
-  const link = await canvas.getByRole('link', { name: /google.ca/i });
+  const link = canvas.getByRole('link', { name: /google.ca/i });
   await expect(link).toBeInTheDocument();
   expect(link).toHaveAttribute('href', 'https://google.ca');
   expect(link).toHaveAttribute('target', '_blank');
@@ -381,7 +397,7 @@ NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
 
   await userEvent.click(link);
 
-  const preview = await canvas.getByText(/Space, the final frontier. These are the voyages of the Starship Enterprise/i);
+  const preview = await canvas.findByText(/Space, the final frontier. These are the voyages of the Starship Enterprise/i);
   expect(preview).toBeInTheDocument();
 
   // Check computed style (text should be selectable and interactable)
@@ -389,12 +405,17 @@ NotesPanelNotesWithComments.play = async ({ canvasElement }) => {
   expect(computedStyle.pointerEvents).not.toBe('none');
   expect(computedStyle.userSelect).not.toBe('none');
 
-  const replyTextElement = canvas.getByText(/Reply comment/i);
+  const replyTextElement = await canvas.findByText(/Reply comment/i);
   await expect(replyTextElement).toBeInTheDocument();
 
   const moreButton = await canvas.findByRole('button', { name: getTranslatedText('action.showMore') });
   await userEvent.click(moreButton);
   await canvas.findByText(/"Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."/);
+
+  const activeElement = canvasElement.ownerDocument.activeElement;
+  if (activeElement && typeof activeElement.blur === 'function') {
+    activeElement.blur();
+  }
 };
 
 export function NotesPanelWithNotesInFormFieldMode(args, context) {
@@ -444,34 +465,3 @@ NotesPanelWithNotesInFormFieldMode.play = async ({ canvasElement }) => {
   const listItems = await canvas.findAllByRole('listitem');
   expect(listItems.length).toBe(3);
 };
-
-export const ViewOnlyNotesPanel = (args, context) => {
-  const { replyAnnot, rectangle, line } = createTestNotesWithComments();
-  setupNotesPanelCoreMocks(core, [rectangle, replyAnnot, line], [rectangle]);
-  return NotesPanelInApp(context, 'right');
-};
-
-ViewOnlyNotesPanel.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  window.instance.UI.enableViewOnlyMode();
-  window.instance.UI.openElement('notesPanel');
-
-  const note = await canvas.findByText(/Space, the final frontier./gi);
-  await userEvent.click(note);
-
-  const statusButton = await canvas.findAllByRole('button', { name: getTranslatedText('option.notesOrder.status') });
-  statusButton.forEach((button) => {
-    expect(button).toBeDisabled();
-  });
-
-  const optionsButton = canvas.queryByRole('button', { name: getTranslatedText('officeEditor.options') });
-  expect(optionsButton).toBeNull();
-
-  const addFileAttachmentButton = canvas.queryByRole('button', { name: getTranslatedText('component.addFileAttachment') });
-  expect(addFileAttachmentButton).toBeNull();
-
-  const multiSelectToggleButton = await canvas.findByRole('button', { name: getTranslatedText('component.multiSelectButton') });
-  userEvent.click(multiSelectToggleButton);
-};
-
-ViewOnlyNotesPanel.parameters = window.storybook.disableRtlMode;

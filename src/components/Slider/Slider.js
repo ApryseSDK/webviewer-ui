@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import './Slider.scss';
-import i18next from 'i18next';
+import useIsRTL from 'hooks/useIsRTL';
 
 const propTypes = {
   property: PropTypes.string.isRequired,
@@ -51,7 +51,7 @@ function Slider(props) {
   const sliderRef = useRef(null);
   const [t] = useTranslation();
   const [isEditingInputField, setIsEditingInputField] = useState(false);
-  const isRightToLeft = i18next.dir() === 'rtl';
+  const isRightToLeft = useIsRTL();
 
   const isThereSteps = steps.length !== 0;
 
@@ -84,7 +84,7 @@ function Slider(props) {
     updateParent(newValue, mouseUp);
   };
 
-  const handleMouseUp = (e) => {
+  const handleDragEnd = (e) => {
     handleChange(e, true);
   };
 
@@ -211,7 +211,8 @@ function Slider(props) {
             aria-valuetext={`${label} ${getDisplayValue(displayValue)}`}
             type='range'
             onChange={handleChange}
-            onMouseUp={handleMouseUp}
+            onMouseUp={handleDragEnd}
+            onTouchEnd={handleDragEnd}
             min={min}
             max={max}
             step={step}

@@ -57,6 +57,7 @@ function SearchOverlay(props) {
   const [allowInitialSearch, setAllowInitialSearch] = useState(false);
   const [isReplaceInputActive, setisReplaceInputActive] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
+  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
@@ -254,7 +255,7 @@ function SearchOverlay(props) {
 
   const retriggerSearch = () => {
     if (isOfficeEditorMode()) {
-      search(searchValue);
+      search(searchParamsRef.current.searchValue);
       return;
     }
 
@@ -450,10 +451,10 @@ function SearchOverlay(props) {
         {numberOfResultsFound > 0 && (
           <div className="buttons">
             <button className="button" onClick={previousButtonOnClick} title={t('action.prevResult')} aria-label={t('action.prevResult')}>
-              <Icon className="arrow" glyph={getStartFacingChevronIcon()} />
+              <Icon className="arrow" glyph={getStartFacingChevronIcon(isSpreadsheetEditorModeEnabled)} />
             </button>
             <button className="button" onClick={nextButtonOnClick} title={t('action.nextResult')} aria-label={t('action.nextResult')}>
-              <Icon className="arrow" glyph={getEndFacingChevronIcon()} />
+              <Icon className="arrow" glyph={getEndFacingChevronIcon(isSpreadsheetEditorModeEnabled)} />
             </button>
           </div>
         )}

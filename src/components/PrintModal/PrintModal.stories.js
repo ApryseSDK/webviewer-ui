@@ -80,7 +80,7 @@ PrintModal.play = async ({ canvasElement }) => {
   expect(customPagesInput).toBeInTheDocument();
   await userEvent.click(customPagesInput);
   await userEvent.type(customPagesInput, '11', { delay: 100 });
-  const testError = canvas.getByText(`${getTranslatedText('message.errorPageNumber')}9`);
+  const testError = canvas.getByText(`${getTranslatedText('message.errorPageNumberPart1')}${getTranslatedText('message.errorPageNumberPart2')}9.`);
   expect(testError).toBeInTheDocument();
 };
 

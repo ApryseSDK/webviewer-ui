@@ -15,7 +15,6 @@ const toggleViewOnlyMode = (store, enable) => {
     console.error('View Only Mode can only be toggled when using the Default UI. Please enable the Default UI via WebViewer constructor options.');
   }
   const { dispatch } = store;
-  core.setReadOnly(enable);
   if (enable) {
     core.getFormFieldCreationManager().endFormFieldCreationMode();
     core.getContentEditManager().endContentEditMode();

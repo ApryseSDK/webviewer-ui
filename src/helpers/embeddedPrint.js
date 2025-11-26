@@ -8,7 +8,7 @@ import {
   createCleanDocumentCopy,
   processStandardDocument,
   processColorAnnotations,
-  createLayerDocument
+  createLayerDocument,
 } from './embeddedPrintHelper';
 import core from 'core';
 
@@ -113,13 +113,17 @@ export const createEmbeddedPrintPages = async (
 ) => {
   try {
     const { isAlwaysPrintAnnotationsInColorEnabled } = printingOptions;
-    const processedBaseDoc = await createCleanDocumentCopy(document);
-    const layerDocument = await createLayerDocument(document, processedBaseDoc);
+    const isClientSideDocument = !document.isWebViewerServerDocument();
+    const cleanDocument = await createCleanDocumentCopy(document);
+    const processedBaseDoc = isClientSideDocument
+      ? await createLayerDocument(document, cleanDocument, pagesToPrint)
+      : cleanDocument;
+
+    const watermarkedDocument = await applyWatermark(processedBaseDoc, watermarkModalOptions);
     const xfdfString = await prepareAnnotations(annotationManager, pagesToPrint, printingOptions);
-    const watermarkedDoc = await applyWatermark(layerDocument, watermarkModalOptions);
     return isAlwaysPrintAnnotationsInColorEnabled
-      ? await processColorAnnotations(document, watermarkedDoc, xfdfString, printingOptions, pagesToPrint)
-      : await processStandardDocument(document, watermarkedDoc, xfdfString, printingOptions, pagesToPrint);
+      ? await processColorAnnotations(document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint)
+      : await processStandardDocument(document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint);
   } catch (error) {
     console.error('Error creating embedded print pages:', error);
     throw error;

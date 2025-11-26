@@ -7,7 +7,7 @@ import selectors from 'selectors';
 export default (dispatch, store) => (isReadOnly) => {
   const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
 
-  dispatch(actions.setViewOnly(isReadOnly));
+  dispatch(actions.setReadOnly(isReadOnly));
   if (isReadOnly && !isCustomUI) {
     disableElements(store)([
       'documentControl',

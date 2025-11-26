@@ -41,6 +41,57 @@ const addTrustedCertificates = (store) => (certificates) => {
   store.dispatch(actions.addTrustedCertificates(certificates));
 };
 
+const handlePutRequest = (putRequestObject) => {
+  const { putReq, store, resolve, reject } = putRequestObject;
+  putReq.onsuccess = () => {
+    const key = putReq.result;
+    store.dispatch(actions.setTrustListKey(key));
+    resolve(key);
+  };
+  putReq.onerror = () => {
+    reject(putReq.error);
+  };
+};
+
+const awaitIdbTransaction = (transaction, db) => {
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+    transaction.onerror = () => {
+      reject(transaction.error);
+    };
+  });
+};
+
+const handleDBRequest = (dbRequestObject) => {
+  const { request, store, resolve, reject, trustList } = dbRequestObject;
+
+  request.onupgradeneeded = () => {
+    const db = request.result;
+    if (!db.objectStoreNames.contains('trustList')) {
+      db.createObjectStore('trustList', { autoIncrement: true });
+    }
+  };
+
+  request.onsuccess = async () => {
+    const db = request.result;
+    const transaction = db.transaction('trustList', 'readwrite');
+    const storeOS = transaction.objectStore('trustList');
+    const trustListArray = Array.isArray(trustList) ? trustList : [trustList];
+    const putReq = storeOS.put(trustListArray);
+
+    handlePutRequest({ putReq, store, resolve, reject });
+    await awaitIdbTransaction(transaction, db);
+  };
+
+  request.onerror = () => {
+    console.warn('IndexedDB open failed, trust lists will not be saved');
+    reject(request.error);
+  };
+};
+
 /**
  * Loads a Trust List to be used for Digital Signature Verification.
  *
@@ -64,7 +115,18 @@ const addTrustedCertificates = (store) => (certificates) => {
  * });
  */
 const loadTrustList = (store) => (trustList) => {
-  store.dispatch(actions.addTrustList(trustList));
+  const state = store.getState();
+  const canUseIndexedDB = !state.advanced.disableIndexedDB;
+  return new Promise((resolve, reject) => {
+    if (!canUseIndexedDB) {
+      store.dispatch(actions.setTrustListKey(null));
+      return resolve(null);
+    }
+
+    const request = indexedDB.open('WebViewerTrustList', 1);
+
+    handleDBRequest({ request, store, resolve, reject, trustList });
+  });
 };
 
 /**

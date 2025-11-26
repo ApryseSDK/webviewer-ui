@@ -2,6 +2,7 @@ import actions from 'actions';
 import {
   verticalAlignmentLabels,
   horizontalAlignmentLabels,
+  wrapTextLabels,
 } from 'constants/spreadsheetEditor';
 import { defaultCellStyle, defaultTextColor } from 'src/helpers/initialColorStates';
 import getFormatTypeFromFormatString from 'src/helpers/getFormatTypeFromFormatString';
@@ -25,6 +26,7 @@ export default (dispatch) => (event) => {
   const isCellRangeMerged = event.isMerged();
   const rawVerticalAlignment = cellStyle?.verticalAlignment;
   const rawHorizontalAlignment = cellStyle?.horizontalAlignment;
+  const rawWrapText = cellStyle?.wrapText;
   const rawFont = cellStyle?.font || {};
   const formatString = topLeft.getStyle()?.getDataFormatString();
   const backgroundColor = cellStyle?.backgroundColor;
@@ -41,6 +43,7 @@ export default (dispatch) => (event) => {
 
   const verticalAlignment = verticalAlignmentLabels[rawVerticalAlignment];
   const horizontalAlignment = horizontalAlignmentLabels[rawHorizontalAlignment];
+  const wrapText = wrapTextLabels[rawWrapText];
   const font = {
     fontFace: rawFont.fontFace,
     pointSize: rawFont.pointSize,
@@ -72,6 +75,7 @@ export default (dispatch) => (event) => {
       styles: {
         verticalAlignment,
         horizontalAlignment,
+        wrapText,
         font,
         formatType,
         isCellRangeMerged,

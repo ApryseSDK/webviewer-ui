@@ -60,7 +60,7 @@ const DownloadButton = forwardRef((props, ref) => {
   }
 
   const handleClick = () => {
-    downloadPdf(dispatch, {}, activeDocumentViewerKey);
+    downloadPdf(dispatch, { useDisplayAuthor: true }, activeDocumentViewerKey);
   };
 
   return (

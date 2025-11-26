@@ -51,6 +51,8 @@ export const OfficeEditorEditMode = window.Core.Document.OfficeEditor.EditMode;
 
 export const EditingStreamType = window.Core.Document.OfficeEditor.EditingStreamType;
 
+export const EditOperationSource = window.Core.Document.OfficeEditor.EditOperationSource;
+
 export const OFFICE_EDITOR_SCOPE = 'office-editor';
 
 export const ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR = [
@@ -114,11 +116,6 @@ export const AVAILABLE_STYLE_PRESET_MAP = {
 /* eslint-enable custom/no-hex-colors */
 
 export const HEADER_FOOTER_BAR_DEFAULT_POSITION = 100;
-
-export const CM_PER_INCH = window.Core.Document.OfficeEditor.CM_PER_INCH; // 2.54
-export const MM_PER_CM = window.Core.Document.OfficeEditor.MM_PER_CM; // 10
-export const POINTS_PER_INCH = window.Core.Document.OfficeEditor.POINTS_PER_INCH; // 72
-export const POINTS_PER_CM = window.Core.Document.OfficeEditor.POINTS_PER_CM; // 28.3464566929133858
 
 export const LAYOUT_UNITS = window.Core.Document.OfficeEditor.LayoutUnits;
 

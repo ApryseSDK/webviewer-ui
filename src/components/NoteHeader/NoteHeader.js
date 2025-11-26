@@ -21,8 +21,6 @@ import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
 
 import './NoteHeader.scss';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
 
 const { Annotations } = window.Core;
 
@@ -53,66 +51,6 @@ const propTypes = {
 };
 
 /**
- * Determines the majority text color in a rich text annotation.
- *
- * Given a richTextStyle object mapping character positions to style objects,
- * the total text length, and a default color, this function calculates which color
- * covers the largest portion of the text. If the non-rich text portion is larger
- * than the rich text portions, the default color is returned. Otherwise, the color
- * with the largest coverage is returned.
- *
- * @param {Object} richTextStyle - An object where keys are character positions and values are style objects containing a `color` property.
- * @param {number} textLength - The total length of the text.
- * @param {string} color - The default color to use if no rich text color is dominant.
- * @returns {string} The color that covers the majority of the text.
- * @ignore
- */
-function getMajorityTextColor(richTextStyle, textLength, color) {
-  let resultColor = '';
-  let totalRichTextLength = 0;
-  let richTextLocations = [];
-  let richTextColorLengths = [];
-  Object.keys(richTextStyle)
-    .forEach((key) => {
-      richTextLocations.push(key);
-    });
-
-  Object.keys(richTextStyle).forEach((key) => {
-    if (richTextStyle[key].color) {
-      let length = 0;
-      const location = parseInt(key, 10);
-      const nextLocation = richTextLocations[richTextLocations.indexOf(key) + 1];
-      if (nextLocation) {
-        length = nextLocation - location;
-      } else {
-        length = textLength - location;
-      }
-      richTextColorLengths.push({ color: richTextStyle[key].color, textLength: length });
-      totalRichTextLength += length;
-    }
-  });
-
-  const nonRichTextLength = textLength - totalRichTextLength;
-  if (nonRichTextLength > totalRichTextLength) {
-    return color;
-  }
-
-  let highestTextLength = 0;
-  richTextColorLengths.forEach((item) => {
-    if (item.textLength > nonRichTextLength && item.textLength > highestTextLength) {
-      resultColor = item.color;
-      highestTextLength = item.textLength;
-    }
-  });
-
-  if (resultColor === '') {
-    return color;
-  }
-
-  return resultColor;
-}
-
-/**
  * Determines the color to use for the comment box header, considering its icon color and rich text style.
  *
  * If the annotation contains rich text styles, the function analyzes the styles to select the most representative color.
@@ -129,21 +67,28 @@ function getColorFromAnnotation(annotation, iconColor) {
   let color = annotation[iconColor]?.toHexString?.();
 
   const isFreeText = annotation instanceof Annotations.FreeTextAnnotation;
-  if (isFreeText) {
-    // If the annotation has rich text style, we need to determine the color based on the rich text style
-    const richTextStyle = annotation.getRichTextStyle();
 
-    if (richTextStyle) {
-      const numberOfRichTextStyles = Object.keys(richTextStyle).length;
-      const textLength = annotation.getContents().length;
-      const isSingleColorRichText = numberOfRichTextStyles === 1 && richTextStyle[0] && richTextStyle[0].color;
-      if (isSingleColorRichText) {
-        const richTextLength = textLength - Object.keys(richTextStyle)[0];
-        color = richTextLength / textLength > 0.5 ? richTextStyle[0].color : color;
-      } else if (numberOfRichTextStyles > 1) {
-        color = getMajorityTextColor(richTextStyle, textLength, color);
-      }
-    }
+  if (!isFreeText) {
+    return color;
+  }
+
+  // If the annotation has rich text style, we need to determine the color based on the rich text style
+  const richTextStyle = annotation.getRichTextStyle();
+
+  if (!richTextStyle) {
+    return color;
+  }
+
+  const numberOfRichTextStyles = Object.keys(richTextStyle).length;
+  const textLength = annotation.getContents().length;
+  const firstRichTextStyle = richTextStyle[0];
+  const isSingleColorRichText = numberOfRichTextStyles === 1 && firstRichTextStyle && firstRichTextStyle.color;
+  if (isSingleColorRichText) {
+    const richTextLength = textLength - Object.keys(richTextStyle)[0];
+    color = richTextLength / textLength > 0.5 ? firstRichTextStyle.color : color;
+  } else if (numberOfRichTextStyles > 1) {
+    const majorityColors = annotation.getEditor()?.getMajorityTextColors() || [];
+    color = majorityColors.length < 1 ? color : majorityColors[0];
   }
 
   return color;
@@ -224,7 +169,6 @@ function NoteHeader(props) {
   } = props;
 
   const [t] = useTranslation();
-  const isViewOnly = useSelector(selectors.isViewOnly);
 
   let date = getDateCreatedInTimezone(sortStrategy, notesShowLastUpdatedDate, annotation, timezone);
   const noteDateAndTime = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
@@ -252,7 +196,8 @@ function NoteHeader(props) {
     core.getOfficeEditor().rejectTrackedChange(trackedChangeId);
   };
 
-  const showNotePopup = !isViewOnly && !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
+  const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
+  const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
 
   return (
     <div className={noteHeaderClass}>
@@ -302,7 +247,7 @@ function NoteHeader(props) {
               annotationId={annotation.Id}
               ariaLabel={`Unposted Comment, ${renderAuthorName(annotation)}, ${noteDateAndTime}`}
             />
-            {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange &&
+            {showNoteState &&
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}

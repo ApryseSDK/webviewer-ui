@@ -2,6 +2,7 @@ import actions from 'actions';
 import {
   verticalAlignmentLabels,
   horizontalAlignmentLabels,
+  wrapTextLabels,
 } from 'constants/spreadsheetEditor';
 import getFormatTypeFromFormatString from 'src/helpers/getFormatTypeFromFormatString';
 import core from 'core';
@@ -13,6 +14,7 @@ const filterUndefined = (obj) =>
 export default (dispatch) => (styleObject) => {
   const verticalAlignment = verticalAlignmentLabels[styleObject.verticalAlignment];
   const horizontalAlignment = horizontalAlignmentLabels[styleObject.horizontalAlignment];
+  const wrapText = wrapTextLabels[styleObject.wrapText];
   const backgroundColor = styleObject.backgroundColor;
   const formatType = getFormatTypeFromFormatString(styleObject.formatString);
   const isCellRangeMerged = styleObject.merge;
@@ -24,6 +26,7 @@ export default (dispatch) => (styleObject) => {
   const filteredPayload = filterUndefined({
     verticalAlignment,
     horizontalAlignment,
+    wrapText,
     font: styleObject.font,
     formatType,
     isCellRangeMerged,

@@ -73,7 +73,6 @@ export const mockModularComponents = {
   saveAsButton: {
     dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
-    isActive: false,
     label: 'saveModal.saveAs',
     icon: 'icon-save',
     type: ITEM_TYPE.PRESET_BUTTON,
@@ -82,7 +81,6 @@ export const mockModularComponents = {
   printButton: {
     dataElement: 'printButton',
     title: 'action.print',
-    isActive: false,
     label: 'action.print',
     icon: 'icon-header-print-line',
     type: ITEM_TYPE.PRESET_BUTTON,
@@ -92,7 +90,6 @@ export const mockModularComponents = {
   createPortfolioButton: {
     dataElement: 'createPortfolioButton',
     title: 'portfolio.createPDFPortfolio',
-    isActive: false,
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
     type: ITEM_TYPE.PRESET_BUTTON,
@@ -101,7 +98,6 @@ export const mockModularComponents = {
   settingsButton: {
     dataElement: 'settingsButton',
     title: 'option.settings.settings',
-    isActive: false,
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
     type: ITEM_TYPE.PRESET_BUTTON,
@@ -468,7 +464,6 @@ export const mockLeftHeader = {
       'dataElement': 'printButton',
       'buttonType': 'printButton',
       'title': 'action.print',
-      'isActive': false,
       'label': 'action.print',
       'icon': 'icon-header-print-line',
       'hidden': false,

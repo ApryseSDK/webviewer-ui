@@ -53,7 +53,7 @@ const SaveModal = () => {
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
   const [pageCount, setPageCount] = useState(1);
-  const [errorText, setErrorText] = useState('');
+  const [hasPageNumberError, setHasPageNumberError] = useState(false);
 
   useEffect(() => {
     const updateFile = async () => {
@@ -134,15 +134,15 @@ const SaveModal = () => {
       return;
     }
     setPageRange(e.target.value);
-    if (errorText) {
+    if (hasPageNumberError) {
       setHasTyped(false);
       clearError();
     }
   };
   const onIncludeAnnotationsChanged = () => setIncludeAnnotations(!includeAnnotations);
   const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
-  const clearError = () => setErrorText('');
-  const onError = () => setErrorText(t('saveModal.pageError') + pageCount);
+  const clearError = () => setHasPageNumberError(false);
+  const onError = () => setHasPageNumberError(true);
   const onSpecifiedPagesChanged = (pageNumbers) => {
     if (!hasTyped) {
       setHasTyped(true);
@@ -178,6 +178,7 @@ const SaveModal = () => {
     downloadPdf(dispatch, {
       includeAnnotations,
       includeComments,
+      useDisplayAuthor: true,
       filename: filename || 'untitled',
       downloadType: filetype.extension,
       pages,
@@ -188,12 +189,12 @@ const SaveModal = () => {
   };
 
   const [hasTyped, setHasTyped] = useState(false);
-  const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
+  const saveDisabled = (hasPageNumberError || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
 
   const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode() || isSpreadsheetEditorMode;
 
   const customPagesLabelElement = (
-    <div className={classNames('page-number-input-container', { error: !!errorText })}>
+    <div className={classNames('page-number-input-container', { error: hasPageNumberError })}>
       <label className={'specifyPagesChoiceLabel'}>
         <span>
           {t('option.print.specifyPages')}
@@ -209,7 +210,6 @@ const SaveModal = () => {
           onBlurHandler={setSpecifiedPages}
           onSelectedPageNumbersChange={onSpecifiedPagesChanged}
           onError={onError}
-          pageNumberError={errorText}
         />
       }
     </div>
@@ -233,7 +233,7 @@ const SaveModal = () => {
               data-testid="fileNameInput"
               onChange={onFilenameChange}
               value={filename}
-              fillWidth="false"
+              fillWidth={true}
               padMessageText={true}
               messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : ''}
               message={filename === '' ? 'warning' : 'default'}

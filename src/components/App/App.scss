@@ -60,10 +60,6 @@ select,
   font-size: 13px;
   font-family: 'Lato', sans-serif;
   color: var(--text-color);
-
-  @include mobile {
-    font-size: 16px;
-  }
   font-family: 'Lato', sans-serif;
 }
 

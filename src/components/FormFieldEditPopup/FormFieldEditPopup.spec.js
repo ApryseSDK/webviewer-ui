@@ -3,6 +3,11 @@ import { render, fireEvent, getByText, getByDisplayValue, screen } from '@testin
 import userEvent from '@testing-library/user-event';
 import FormFieldEditPopup from './FormFieldEditPopup';
 import { Basic } from './FormFieldEditPopup.stories';
+import core from 'core';
+
+jest.mock('core', () => ({
+  getAnnotationManager: jest.fn(),
+}));
 
 const BasicFormFieldEditPopupStory = withI18n(Basic);
 
@@ -96,6 +101,18 @@ export const createMockAnnotation = () => {
 
 
 describe('FormFieldEditPopup', () => {
+  beforeEach(() => {
+    const mockAnnotationManager = {
+      trigger: jest.fn(),
+      drawAnnotationsFromList: jest.fn(),
+    };
+    core.getAnnotationManager.mockReturnValue(mockAnnotationManager);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('Component', () => {
     it('Story should not throw any errors', () => {
       expect(() => {

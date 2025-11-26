@@ -359,7 +359,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           await new Promise((resolve) => {
             const key = mapAnnotationToKey(annotation);
             const colorProperty = colorMap[key] && colorMap[key].iconColor;
-            const color = annotation[colorProperty || 'StrokeColor'].toString();
+            const color = annotation[colorProperty || 'StrokeColor']?.toString();
             const iconKey = getDataWithKey(key).icon;
             // eslint-disable-next-line global-require,import/no-dynamic-require
             const icon = require(`../../assets/icons/${iconKey}.svg`);

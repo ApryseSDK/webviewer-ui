@@ -35,6 +35,12 @@ export default function useTabFocus() {
 
     const keydownListener = (e) => {
       if (e.key === 'Tab') {
+        const documentViewer = core.getDocumentViewer();
+        const viewerElement = documentViewer.getViewerElement();
+        if (!viewerElement || !viewerElement.isConnected) {
+          return;
+        }
+
         const activeElement = getRootNode().activeElement;
         let nextElement;
         if (e.shiftKey) {
@@ -42,7 +48,6 @@ export default function useTabFocus() {
         } else {
           nextElement = getNextFocusableElement(activeElement, 1);
         }
-        const documentViewer = core.getDocumentViewer();
         const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
         const visiblePages = displayMode.getVisiblePages();
         const currentPageContainers = visiblePages.map((page) => getRootNode().querySelector(`#pageContainer${page}`));

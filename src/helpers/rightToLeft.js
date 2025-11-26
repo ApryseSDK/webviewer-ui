@@ -36,12 +36,12 @@ export const isEquivalentPanelLocation = (location, itemLocation) => {
   return (locationIsLeft && itemIsLeft) || (locationIsRight && itemIsRight);
 };
 
-export const getStartFacingChevronIcon = () => {
-  const isRightToLeft = i18next.dir() === 'rtl';
+export const getStartFacingChevronIcon = (forceLtr = false) => {
+  const isRightToLeft = forceLtr ? false : i18next.dir() === 'rtl';
   return isRightToLeft ? 'icon-chevron-right' : 'icon-chevron-left';
 };
 
-export const getEndFacingChevronIcon = () => {
-  const isRightToLeft = i18next.dir() === 'rtl';
+export const getEndFacingChevronIcon = (forceLtr = false) => {
+  const isRightToLeft = forceLtr ? false : i18next.dir() === 'rtl';
   return isRightToLeft ? 'icon-chevron-left' : 'icon-chevron-right';
 };

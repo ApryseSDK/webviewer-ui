@@ -345,11 +345,15 @@
     "pageNum": "Halaman",
     "viewBookmark": "Lihat Bookmark di Halaman",
     "error": "Kesalahan",
-    "errorPageNumber": "Nomor halaman tidak valid. Batasnya adalah",
+    "errorPageNumberPart1": "Nomor halaman tidak valid.",
+    "errorPageNumberPart2": "Batasnya adalah",
     "errorBlankPageNumber": "Harap tentukan nomor halaman",
     "errorLoadingDocument": "Ada masalah saat membaca dokumen ini dan beberapa halaman mungkin tidak ditampilkan. Ini menunjukkan dokumen mungkin rusak. Jumlah halaman total adalah {{totalPageCount}} dan jumlah halaman yang ditampilkan adalah {{displayedPageCount}}.",
     "noRevisions": "Dokumen ini tidak memiliki revisi.",
-    "listEmptyValue": "Satu atau lebih bidang memiliki nilai kosong."
+    "listEmptyValue": "Satu atau lebih bidang memiliki nilai kosong.",
+    "listDuplicateValue": "Beberapa bidang memiliki nilai berikut:",
+    "networkError": "Terjadi kesalahan saat memuat komponen ini. Silakan periksa koneksi jaringan Anda dan segarkan halaman.",
+    "refreshPage": "Silakan periksa koneksi jaringan Anda dan segarkan halaman."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Ukuran teks"
     },
     "shared": {
+      "sheetIndex": "Lembaran",
       "page": "Halaman",
       "precision": "presisi",
       "enableSnapping": "Aktifkan gertakan untuk alat pengukuran"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Hapus Halaman",
-      "deleteMessage": "Apakah Anda yakin ingin menghapus halaman yang dipilih? Hal ini tidak dapat dibatalkan.",
+      "deleteMessage": "Yakin ingin menghapus halaman yang dipilih? Tindakan ini tidak dapat dibatalkan.",
       "deleteLastPageMessage": "Anda tidak dapat menghapus semua halaman dalam dokumen."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Nama lembar tidak boleh kosong. Silakan masukkan nama."
     },
     "sheetTabDeleteMessage": {
-      "title": "Edit Peringatan",
+      "title": "Hapus Lembar",
       "message": "Apakah Anda yakin ingin menghapus lembar ini?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Batas Horisontal",
     "none": "Tidak Ada Batas",
     "borders": "Perbatasan",
+    "textWrap": "Pembungkusan Teks",
+    "wrap": "Membungkus",
+    "overflow": "Meluap",
+    "clip": "Klip",
     "fontSize": {
       "dropdownLabel": "Ukuran Font"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Tanda air",
     "addWatermark": "Tambahkan Tanda Air",
     "save": "Menyimpan file",
-    "pageError": "Silakan masukkan rentang antara 1 - ",
     "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
   },
   "filePicker": {

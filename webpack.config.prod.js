@@ -19,6 +19,7 @@ module.exports = {
     filename: 'webviewer-ui.min.js',
     chunkFilename: 'chunks/[name].chunk.js',
     publicPath: './',
+    jsonpFunction: 'webpackJsonpWebViewerUI',
   },
   plugins: [
     new CopyWebpackPlugin([

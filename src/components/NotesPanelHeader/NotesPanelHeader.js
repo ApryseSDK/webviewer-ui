@@ -21,6 +21,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
 import Icon from '../Icon';
+import { getEventHandler } from 'helpers/fireEvent';
 
 const propTypes = {
   notes: PropTypes.array.isRequired,
@@ -83,9 +84,9 @@ function NotesPanelHeader({
       }
     };
 
-    window.addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
+    getEventHandler().addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     return () => {
-      window.removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
+      getEventHandler().removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     };
   }, []);
 

@@ -54,7 +54,7 @@ import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChang
 import useOnHeaderFooterUpdate from 'src/hooks/useOnHeaderFooterUpdate';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
-import fireEvent from 'helpers/fireEvent';
+import fireEvent, { getEventHandler } from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
@@ -95,7 +95,6 @@ const App = ({ removeEventHandlers, initialDirection }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [direction, setDirection] = useState(initialDirection ?? i18next.dir() ?? 'ltr');
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const genericPanels = useSelector(selectors.getGenericPanels, shallowEqual);
@@ -107,6 +106,8 @@ const App = ({ removeEventHandlers, initialDirection }) => {
   const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
   const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
   const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
+  const defaultDirection = isSpreadsheetEditorModeEnabled ? 'ltr' : (initialDirection ?? i18next.dir() ?? 'ltr');
+  const [direction, setDirection] = useState(defaultDirection);
 
   // These hooks control behaviours regarding the opening and closing of panels and in the case
   // of the redaction hook it creates a reference that tracks the redaction annotations
@@ -361,7 +362,13 @@ const App = ({ removeEventHandlers, initialDirection }) => {
 
   // These need to be done here to wait for the persisted values loaded in redux
   useEffect(() => {
-    const onLanguageChange = () => setDirection(i18next.dir());
+    const onLanguageChange = () => {
+      if (isSpreadsheetEditorModeEnabled) {
+        setDirection('ltr');
+        return;
+      }
+      setDirection(i18next.dir());
+    };
     i18next.on('languageChanged', onLanguageChange);
 
     // Only sync Redux → i18n if we're *not* in an overridden RTL mode
@@ -375,7 +382,7 @@ const App = ({ removeEventHandlers, initialDirection }) => {
     return () => {
       i18next.off('languageChanged', onLanguageChange);
     };
-  }, []);
+  }, [currentUIConfiguration]);
 
   useEffect(() => {
     const onError = (error) => {
@@ -403,8 +410,8 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       }
     };
 
-    window.addEventListener('loaderror', onError);
-    return () => window.removeEventListener('loaderror', onError);
+    getEventHandler().addEventListener(Events.LOAD_ERROR, onError);
+    return () => getEventHandler().removeEventListener(Events.LOAD_ERROR, onError);
   }, []);
 
   useEffect(() => {

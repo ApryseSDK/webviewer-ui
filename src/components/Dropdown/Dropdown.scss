@@ -84,7 +84,9 @@
   flex-direction: column;
   position: absolute;
   inset-block-start: 30px;
-  inset-inline-end: 0px;
+  &:dir(ltr) {
+    inset-inline-end: 0px;
+  }
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
   width: 100%;

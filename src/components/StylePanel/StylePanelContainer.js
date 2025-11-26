@@ -44,9 +44,11 @@ const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout 
         annotation.getGroupedChildren().forEach((child) => allSelectedAnnotations.add(child));
       }
     });
-    const selectedAnnotations = Array.from(allSelectedAnnotations);
 
-    setSelectedAnnotations(selectedAnnotations);
+    const annotationsArray = Array.from(allSelectedAnnotations);
+    const modifiableAnnotations = annotationsArray.filter((annotation) => core.canModify(annotation));
+
+    setSelectedAnnotations(modifiableAnnotations);
     setCurrentTool(tool);
   }, 150, { leading: false, trailing: true });
 

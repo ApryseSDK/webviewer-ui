@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
@@ -25,7 +25,17 @@ function PageControls(props) {
 
   const totalPages = useSelector(selectors.getTotalPages);
   const currentPage = useSelector(selectors.getCurrentPage);
+  const isCustomPageLabelsEnabled = useSelector(selectors.isCustomPageLabelsEnabled);
+  const [currentPageOfTotal, setCurrentPageOfTotal] = useState(currentPage);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    let label = totalPages;
+    if (isCustomPageLabelsEnabled) {
+      label = `${currentPage} / ${totalPages}`;
+    }
+    setCurrentPageOfTotal(label);
+  }, [totalPages,currentPage, isCustomPageLabelsEnabled]);
 
   return (
     <div className={classNames({ PageControlsWrapper: true, [className]: true })}
@@ -39,7 +49,7 @@ function PageControls(props) {
           'total-page': true,
           'paddingTop': headerDirection === DIRECTION.COLUMN,
           'paddingLeft': headerDirection === DIRECTION.ROW,
-        })}>{totalPages}</div>
+        })}>{currentPageOfTotal}</div>
         <CustomButton {...nextPageButton} />
       </>}
       {size === 1 &&

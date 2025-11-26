@@ -9,6 +9,10 @@ jest.mock('src/helpers/setCellFontStyle', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('core', () => ({
+  getDocument: () => {},
+}));
+
 describe('CellTextColor', () => {
   it('renders the storybook component correctly', () => {
     expect(() => {

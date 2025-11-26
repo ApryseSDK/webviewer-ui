@@ -75,6 +75,9 @@ const Thumbnail = React.forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
+    if (loaded) {
+      loadThumbnailAsync();
+    }
     rtlRef.current = isRightToLeft;
   }, [isRightToLeft]);
 
@@ -350,10 +353,6 @@ const Thumbnail = React.forwardRef((props, ref) => {
       buttonMultiSelectRefs.current = findFocusableElements(thumbContainerRef.current);
     }
   }, [isThumbnailSelectingPages, loaded]);
-
-  useEffect(() => {
-    loadThumbnailAsync();
-  }, [isRightToLeft]);
 
   const isMultiselectEnabled = isThumbnailSelectingPages && loaded;
 

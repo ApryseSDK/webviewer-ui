@@ -15,7 +15,7 @@ const propTypes = {
   annotations: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedTool: PropTypes.object,
   updateIsCalibration: PropTypes.func.isRequired,
-  enableOrDisableToolElements: PropTypes.func.isRequired,
+  disableToolElements: PropTypes.func.isRequired,
   onScaleSelected: PropTypes.func.isRequired,
   onCancelCalibrationMode: PropTypes.func.isRequired,
   onApplyCalibration: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ const ScaleOverlay = ({
   annotations,
   selectedTool,
   updateIsCalibration,
-  enableOrDisableToolElements,
+  disableToolElements,
   onScaleSelected,
   onCancelCalibrationMode,
   onApplyCalibration,
@@ -74,12 +74,12 @@ const ScaleOverlay = ({
   useEffect(() => {
     if (activeToolName === 'AnnotationCreateCalibrationMeasurement') {
       !isCalibration && updateIsCalibration(true);
-      enableOrDisableToolElements(true);
+      disableToolElements(true);
     } else {
       updateIsCalibration(false);
-      enableOrDisableToolElements(false);
+      disableToolElements(false);
     }
-  }, [activeToolName, updateIsCalibration, enableOrDisableToolElements]);
+  }, [activeToolName, updateIsCalibration, disableToolElements]);
 
   const selectedScales = useMemo(() => {
     const scales = new Set();

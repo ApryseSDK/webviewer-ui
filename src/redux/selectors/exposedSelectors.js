@@ -26,6 +26,7 @@ export const {
 } = exposedOfficeEditorSelectors;
 
 // viewer
+export const getViewOnlyWhitelist = (state) => state.viewer.viewOnlyWhitelist;
 export const isDisabledViewOnly = (state, dataElement, isRecursiveCall = false) => {
   if (!state.viewer.isViewOnly) {
     return false;
@@ -97,7 +98,16 @@ export const isDisabledViewOnly = (state, dataElement, isRecursiveCall = false) 
   if (isModal) {
     return !viewOnlyWhitelist.modal.includes(dataElement);
   }
+  const isOverlay = dataElement.endsWith('Overlay');
+  if (isOverlay) {
+    return !viewOnlyWhitelist.overlay.includes(dataElement);
+  }
   return false;
+};
+export const isToolDisabledViewOnly = (state, toolName) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  const dataElement = toolButtonObjects[toolName]?.dataElement;
+  return isDisabledViewOnly(state, dataElement);
 };
 const getChildren = (component) => {
   switch (component.type) {
@@ -498,12 +508,33 @@ export const getRibbonAssociatedWithToggleButton = (state, dataElement) => {
 };
 
 export const getLastActiveToolForRibbon = (state, ribbonDataElement) => {
-  return state.viewer.lastActiveToolForRibbon[ribbonDataElement];
+  const lastActiveToolForRibbon = state.viewer.lastActiveToolForRibbon[ribbonDataElement];
+  if (lastActiveToolForRibbon) {
+    const isToolEnabled = !isToolDisabled(state, lastActiveToolForRibbon);
+    if (isToolEnabled) {
+      return lastActiveToolForRibbon;
+    }
+  }
+  return undefined;
 };
 
 export const getFirstToolForRibbon = (state, ribbonDataElement) => {
   const toolsAssociatedWithRibbon = getToolsAssociatedWithRibbon(state, ribbonDataElement);
-  return toolsAssociatedWithRibbon[0];
+  for (const toolName of toolsAssociatedWithRibbon) {
+    const isToolEnabled = !isToolDisabled(state, toolName);
+    if (isToolEnabled) {
+      return toolName;
+    }
+  }
+  return undefined;
+};
+
+export const isToolDisabled = (state, toolName) => {
+  const toolDataElement = getToolButtonDataElement(state, toolName);
+  if (!toolDataElement) {
+    return true;
+  }
+  return isElementDisabled(state, toolDataElement);
 };
 
 export const getFirstToolForGroupedItems = (state, group) => {
@@ -849,6 +880,8 @@ export const isFullScreen = (state) => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = (state) => state.viewer.doesAutoLoad;
 
+export const isDocumentReadOnly = (state) => state.viewer.isReadOnly;
+
 export const isViewOnly = (state) => state.viewer.isViewOnly;
 
 export const getCustomPanels = (state) => state.viewer.customPanels;
@@ -856,6 +889,8 @@ export const getCustomPanels = (state) => state.viewer.customPanels;
 export const getCustomModals = (state) => state.viewer.customModals;
 
 export const getPageLabels = (state) => state.viewer.pageLabels;
+
+export const isCustomPageLabelsEnabled = (state) => state.viewer.isCustomPageLabelsEnabled;
 
 export const getSelectedThumbnailPageIndexes = (state) => state.viewer.selectedThumbnailPageIndexes;
 
@@ -867,6 +902,17 @@ export const getDisabledCustomPanelTabs = (state) => state.viewer.customPanels.r
   }
   return disabledTabs;
 }, []);
+
+export const getDisabledToolNames = (state) => {
+  const disabledElements = getDisabledElements(state);
+  const disabledDataElements = Object.keys(disabledElements).filter(
+    (dataElement) => isElementDisabled(state, dataElement)
+  );
+
+  return disabledDataElements
+    .map((dataElement) => getToolNameByDataElement(state, dataElement))
+    .filter(Boolean);
+};
 
 export const isEmbedPrintSupported = (state) => !isAndroid && state.viewer.useEmbeddedPrint;
 
@@ -962,7 +1008,7 @@ export const isReaderMode = (state) => state.viewer.isReaderMode;
 
 export const getCertificates = (state) => state.digitalSignatureValidation.certificates;
 
-export const getTrustLists = (state) => state.digitalSignatureValidation.trustLists;
+export const getTrustListKey = (state) => state.digitalSignatureValidation.trustListKey;
 
 export const getValidationModalWidgetName = (state) => state.digitalSignatureValidation.validationModalWidgetName;
 
@@ -1266,14 +1312,18 @@ export const getStringCellValue = (state) => state.spreadsheetEditor.cellPropert
 export const getSpreadsheetEditorEditMode = (state) => state.spreadsheetEditor.editMode;
 export const getActiveCellRangeVerticalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.verticalAlignment;
 export const getActiveCellRangeHorizontalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.horizontalAlignment;
+export const getActiveCellRangeWrapText = (state) => state.spreadsheetEditor.cellProperties.styles.wrapText;
 export const getActiveCellRangeFontStyle = (state, style) => state.spreadsheetEditor.cellProperties.styles.font[style];
 export const getActiveCellFormatType = (state) => state.spreadsheetEditor.cellProperties.styles.formatType;
 export const getActiveCellBorderStyle = (state) => state.spreadsheetEditor.cellProperties.styles.border;
 export const getSelectedBorderColorOption = (state) => state.spreadsheetEditor.selectedBorderColorOption;
 export const getSelectedBorderStyleListOption = (state) => state.spreadsheetEditor.selectedBorderStyleListOption;
 export const getTextColors = (state) => state.spreadsheetEditor.textColors;
+export const getCustomTextColors = (state) => state.spreadsheetEditor.customTextColors;
 export const getBorderColors = (state) => state.spreadsheetEditor.borderColors;
+export const getCustomBorderColors = (state) => state.spreadsheetEditor.customBorderColors;
 export const getCellBackgroundColors = (state) => state.spreadsheetEditor.cellBackgroundColors;
+export const getCustomCellBackgroundColors = (state) => state.spreadsheetEditor.customCellBackgroundColors;
 export const getIsSingleCell = (state) => state.spreadsheetEditor.cellProperties.isSingleCell;
 export const getIsCellRangeMerged = (state) => state.spreadsheetEditor.cellProperties.styles.isCellRangeMerged;
 export const getCellBackgroundColor = (state) => state.spreadsheetEditor.cellProperties.styles.backgroundColor;
@@ -1283,12 +1333,15 @@ export const getCanCut = (state) => state.spreadsheetEditor.cellProperties.canCu
 export const getAvailableSpreadsheetEditorFontFaces = (state) => state.spreadsheetEditor.availableFontFaces;
 export const getSpreadsheetEditorCSSFontValues = (state) => state.spreadsheetEditor.cssFontValues;
 
-const hasPanelInItems = (items, panelType) => {
+export const hasPanelInItems = (items, panelType) => {
   if (!items || !Array.isArray(items)) {
     return false;
   }
   return items.some((item) => {
-    if (item && typeof item === 'object' && item.props && item.hasOwnProperty('key')) {
+    if (!item) {
+      return false;
+    }
+    if (typeof item === 'object' && item.props && item.hasOwnProperty('key')) {
       if (item.props.isFlyout && item.key.startsWith(panelType)) {
         return true;
       }
@@ -1298,7 +1351,7 @@ const hasPanelInItems = (items, panelType) => {
       return true;
     }
 
-    if (item && item.children) {
+    if (item.children) {
       return hasPanelInItems(item.children, panelType);
     }
     return false;

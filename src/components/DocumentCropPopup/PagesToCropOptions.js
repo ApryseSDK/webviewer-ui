@@ -11,7 +11,6 @@ const PagesToCropOptions = ({
   selectedPages,
   handlePageNumbersChanged,
   handlePageNumberError,
-  pageNumberError,
 }) => {
   const { t } = useTranslation();
 
@@ -58,7 +57,6 @@ const PagesToCropOptions = ({
               onSelectedPageNumbersChange={handlePageNumbersChanged}
               onBlurHandler={handlePageNumbersChanged}
               onError={handlePageNumberError}
-              pageNumberError={pageNumberError}
             />
           </div>
           <div className="section extra-space-section" />
@@ -77,5 +75,4 @@ PagesToCropOptions.propTypes = {
   selectedPages: PropTypes.array,
   handlePageNumbersChanged: PropTypes.func.isRequired,
   handlePageNumberError: PropTypes.func.isRequired,
-  pageNumberError: PropTypes.string,
 };

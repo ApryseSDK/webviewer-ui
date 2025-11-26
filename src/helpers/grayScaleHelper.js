@@ -6,6 +6,12 @@ export const setGrayscaleDarknessFactor = (factor) => {
 
 export const getGrayscaleDarknessFactor = () => grayscaleDarknessFactor;
 
+/**
+ * Convert a PDF document to grayscale.
+ * @param {window.Core.Document} pdfDocument document to convert
+ * @returns {Promise<window.Core.Document>} the grayscale document
+ * @ignore
+ */
 export const convertToGrayscaleDocument = async (pdfDocument) => {
   const { PDFNet } = window.Core;
   const { PDFDoc, ElementBuilder, ElementWriter, ColorSpace, ColorPt, Matrix2D, GState } = PDFNet;

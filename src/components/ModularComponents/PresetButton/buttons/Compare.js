@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
@@ -9,6 +9,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
+
 /**
  * A button that starts semantic text compare and opens the compare panel
  * @name compareButton
@@ -19,7 +20,7 @@ const CompareButton = forwardRef((props, ref) => {
   const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.COMPARE_PANEL));
   const [doc1TypeValid, setDoc1TypeValid] = useState(false);
   const [doc2TypeValid, setDoc2TypeValid] = useState(false);
-  const diffStarted = useRef(false);
+  const isCompareStarted = useSelector(selectors.isCompareStarted);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const CompareButton = forwardRef((props, ref) => {
     };
     const onDocumentUnloaded = (documentViewerKey) => () => {
       documentViewerKey === 1 ? setDoc1TypeValid(false) : setDoc2TypeValid(false);
-      diffStarted.current = false;
+      dispatch(actions.setIsCompareStarted(false));
       dispatch(actions.closeElement(DataElements.COMPARE_PANEL));
     };
     const docLoaded1 = onDocumentLoaded(1);
@@ -66,8 +67,8 @@ const CompareButton = forwardRef((props, ref) => {
   const handleClick = () => {
     const isOpening = !isPanelOpen;
     dispatch(actions.toggleElement(DataElements.COMPARE_PANEL));
-    if (!diffStarted.current && isOpening) {
-      diffStarted.current = true;
+    if (!isCompareStarted && isOpening) {
+      dispatch(actions.setIsCompareStarted(true));
       const documentViewers = core.getDocumentViewers();
       documentViewers[0].startSemanticDiff(documentViewers[1]);
     }

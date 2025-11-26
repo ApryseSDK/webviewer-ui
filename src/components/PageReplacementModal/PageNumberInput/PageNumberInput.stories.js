@@ -1,6 +1,8 @@
 import React from 'react';
 import PageNumberInput from './PageNumberInput';
 import { userEvent, expect } from 'storybook/test';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 
 function noop() { }
 
@@ -8,9 +10,21 @@ export default {
   title: 'Components/PageReplacementModal/PageNumberInput',
   component: PageNumberInput,
 };
+const initialState = {
+  viewer: {
+    isCustomPageLabelsEnabled: false,
+    pageLabels: [],
+  }
+};
+
+const store = configureStore({
+  reducer: () => initialState,
+});
 
 const PageNumberInputTemplate = (args) => (
-  <PageNumberInput {...args} />
+  <Provider store={store}>
+    <PageNumberInput {...args} />
+  </Provider>
 );
 
 export const Basic = PageNumberInputTemplate.bind({});
@@ -27,7 +41,6 @@ BasicWithError.args = {
   selectedPageNumbers: [],
   onSelectedPageNumbersChange: noop,
   pageCount: 10,
-  pageNumberError: 'Error message',
 };
 
 BasicWithError.parameters = window.storybook.disableRtlMode;

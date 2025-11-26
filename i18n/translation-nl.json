@@ -345,11 +345,15 @@
     "pageNum": "Bladzijde",
     "viewBookmark": "Bekijk bladwijzer op pagina",
     "error": "Fout",
-    "errorPageNumber": "Ongeldig paginanummer. Limiet is",
+    "errorPageNumberPart1": "Ongeldig paginanummer.",
+    "errorPageNumberPart2": "Limiet is",
     "errorBlankPageNumber": "Geef een paginanummer op",
     "errorLoadingDocument": "Er is een probleem opgetreden bij het lezen van dit document en sommige pagina's worden mogelijk niet weergegeven. Dit geeft aan dat het document mogelijk beschadigd is. Het totale aantal pagina's is {{totalPageCount}} en het aantal weergegeven pagina's is {{displayedPageCount}}.",
     "noRevisions": "Dit document heeft geen herzieningen.",
-    "listEmptyValue": "Eén of meer velden hebben een lege waarde."
+    "listEmptyValue": "Eén of meer velden hebben een lege waarde.",
+    "listDuplicateValue": "Meerdere velden hebben de volgende waarden:",
+    "networkError": "Er is iets misgegaan bij het laden van dit onderdeel. Controleer uw netwerkverbinding en vernieuw de pagina.",
+    "refreshPage": "Controleer uw netwerkverbinding en vernieuw de pagina."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Lettergrootte"
     },
     "shared": {
+      "sheetIndex": "Laken",
       "page": "Pagina",
       "precision": "precisie",
       "enableSnapping": "Schakel snappen in voor meetinstrumenten"
@@ -897,7 +902,7 @@
       "message": "De bladnaam mag niet leeg zijn. Voer een naam in."
     },
     "sheetTabDeleteMessage": {
-      "title": "Bewerken Waarschuwing",
+      "title": "Blad verwijderen",
       "message": "Weet u zeker dat u dit blad wilt verwijderen?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Horizontale rand",
     "none": "Geen grenzen",
     "borders": "Grenzen",
+    "textWrap": "Tekstomloop",
+    "wrap": "Wrap",
+    "overflow": "Overloop",
+    "clip": "Klem",
     "fontSize": {
       "dropdownLabel": "Lettergrootte"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Watermerk",
     "addWatermark": "Voeg een watermerk toe",
     "save": "Sla bestand op",
-    "pageError": "Voer een bereik in tussen 1 - ",
     "fileNameCannotBeEmpty": "Bestandsnaam mag niet leeg zijn"
   },
   "filePicker": {

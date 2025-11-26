@@ -658,6 +658,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, notesShowLastUpdatedDate: payload.notesShowLastUpdatedDate };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
+    case 'SET_READ_ONLY':
+      return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_VIEW_ONLY':
       return { ...state, isViewOnly: payload.isViewOnly };
     case 'SET_CUSTOM_PANEL':
@@ -686,6 +688,10 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, useClientSidePrint: payload.useClientSidePrint };
     case 'SET_PAGE_LABELS':
       return { ...state, pageLabels: [...payload.pageLabels] };
+    case 'ENABLE_CUSTOM_PAGE_LABELS':
+      return { ...state, isCustomPageLabelsEnabled: true };
+    case 'DISABLE_CUSTOM_PAGE_LABELS':
+      return { ...state, isCustomPageLabelsEnabled: false };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
     case 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX':
@@ -723,7 +729,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_COLOR_MAP':
       return { ...state, colorMap: payload.colorMap };
     case 'SET_WARNING_MESSAGE':
-      return { ...state, warning: { ...state.warning, ...payload } };
+      return { ...state, warning: { ...payload } };
     case 'ENABLE_DELETE_TAB_WARNING':
       return { ...state, warning: { ...state.warning, ...payload } };
     case 'DISABLE_DELETE_TAB_WARNING':

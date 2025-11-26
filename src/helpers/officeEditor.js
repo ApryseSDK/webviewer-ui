@@ -10,11 +10,7 @@ import {
   MARGIN_SIDES,
   LAYOUT_UNITS,
   MARGIN_UNIT_LABELS,
-  MM_PER_CM,
-  POINTS_PER_INCH,
-  POINTS_PER_CM,
   MINIMUM_COLUMN_WIDTH_IN_POINTS,
-  DEFAULT_COLUMN_SPACING_IN_POINTS,
   PAGE_LAYOUT_WARNING_TYPE
 } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
@@ -225,7 +221,7 @@ export const getConvertedMarginOptions = (unit) => {
     return {
       ...option,
       ...mapObjectKeys(Object.values(MARGIN_SIDES), (side) => {
-        const convertedValue = convertMeasurementUnit(option[side], LAYOUT_UNITS.CM, unit);
+        const convertedValue = convertBetweenUnits(option[side], LAYOUT_UNITS.CM, unit);
         return roundNumberToDecimals(convertedValue);
       }),
     };
@@ -300,48 +296,10 @@ export const showPageLayoutWarning = (dispatch, actions, type) => {
   dispatch(actions.showWarningMessage(warning));
 };
 
-export const convertMeasurementUnit = (value, fromUnit, toUnit) => {
-  if (fromUnit === toUnit) {
-    return value;
-  }
-  // Convert value to point
-  let valueInPoint;
-  switch (fromUnit) {
-    case LAYOUT_UNITS.CM:
-      valueInPoint = value * POINTS_PER_CM;
-      break;
-    case LAYOUT_UNITS.MM:
-      valueInPoint = value * (POINTS_PER_CM / MM_PER_CM);
-      break;
-    case LAYOUT_UNITS.INCH:
-      valueInPoint = value * POINTS_PER_INCH;
-      break;
-    case LAYOUT_UNITS.PHYSICAL_POINT:
-    default:
-      valueInPoint = value;
-      break;
-  }
-
-  // Convert from point to target unit
-  switch (toUnit) {
-    case LAYOUT_UNITS.CM:
-      return valueInPoint / POINTS_PER_CM;
-    case LAYOUT_UNITS.MM:
-      return valueInPoint / (POINTS_PER_CM / MM_PER_CM);
-    case LAYOUT_UNITS.INCH:
-      return valueInPoint / POINTS_PER_INCH;
-    case LAYOUT_UNITS.PHYSICAL_POINT:
-    default:
-      return valueInPoint;
-  }
-};
+export const convertBetweenUnits = window.Core.Document.OfficeEditor.Layout.convertBetweenUnits;
 
 export const getMinimumColumnWidth = (unit) => {
-  return convertMeasurementUnit(MINIMUM_COLUMN_WIDTH_IN_POINTS, LAYOUT_UNITS.PHYSICAL_POINT, unit);
-};
-
-export const getDefaultColumnSpacing = (unit) => {
-  return convertMeasurementUnit(DEFAULT_COLUMN_SPACING_IN_POINTS, LAYOUT_UNITS.PHYSICAL_POINT, unit);
+  return convertBetweenUnits(MINIMUM_COLUMN_WIDTH_IN_POINTS, LAYOUT_UNITS.PHYSICAL_POINT, unit);
 };
 
 /**
@@ -399,14 +357,12 @@ export const roundNumberToDecimals = (value, decimals = 2) => {
  *   - Otherwise, returns the original value.
  */
 export const validateMarginInput = (input, maxMargin) => {
-  if (isNaN(input) || input <= 0) {
+  if (!Number.isFinite(input) || input <= 0) {
     return 0;
   }
-  maxMargin = maxMargin < 0 ? 0 : maxMargin;
-  if (input > maxMargin) {
-    return roundNumberToDecimals(maxMargin);
-  }
-  return input;
+
+  const clampedMax = Math.max(0, maxMargin);
+  return input > clampedMax ? roundNumberToDecimals(clampedMax) : input;
 };
 
 export const focusContent = () => {

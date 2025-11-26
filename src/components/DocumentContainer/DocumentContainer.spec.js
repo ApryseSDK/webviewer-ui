@@ -174,5 +174,17 @@ describe('DocumentContainer', () => {
         expect(core.scrollViewUpdated).toHaveBeenCalled();
       });
     });
+
+    describe('Focus behavior on document container', () => {
+      test('main element should be focusable', () => {
+        const { container } = renderWithRedux(<DocumentContainer {...defaultProps} />);
+        const documentContentContainer = container.querySelector('.document-content-container');
+        const mainElement = documentContentContainer.querySelector('main');
+
+        mainElement.focus();
+
+        expect(document.activeElement).toBe(mainElement);
+      });
+    });
   });
 });

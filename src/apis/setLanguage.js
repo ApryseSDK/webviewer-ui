@@ -30,8 +30,10 @@ export default (store) => async (language) => {
     clearTimeout(pendingLanguageTimeout);
   }
 
-  const availableLanguages = getAvailableLanguages();
-  if (!availableLanguages.includes(language)) {
+  const isDefaultLanguage = getAvailableLanguages().includes(language);
+  const isCustomLanguage = i18next.hasResourceBundle(language, 'translation');
+  const isUnsupported = !isDefaultLanguage && !isCustomLanguage;
+  if (isUnsupported) {
     console.warn(`Language with ISO code "${language}" is not supported.`);
     return;
   }

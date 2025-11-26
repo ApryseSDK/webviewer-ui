@@ -185,3 +185,77 @@ export function CellAdjustmentButtons() {
 }
 
 CellAdjustmentButtons.parameters = window.storybook.disableRtlMode;
+
+let startDiffCalled;
+let useCompareTestMock = () => useEffect(() => {
+  startDiffCalled = false;
+  let originalGet = core.getDocumentViewers;
+  core.getDocumentViewers = () => {
+    return [{
+      startSemanticDiff: () => {
+        startDiffCalled = true;
+      }
+    }, {}];
+  };
+  return () => {
+    startDiffCalled = false;
+    core.getDocumentViewers = originalGet;
+  };
+}, []);
+
+export function CompareButtonNotStarted() {
+  const mockInitialState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isMultiViewerReady: true,
+      isMultiViewerMode: true,
+      isCompareStarted: false,
+      disabledElements: {},
+    },
+  };
+  useCompareTestMock();
+  const store = configureStore({ reducer: () => mockInitialState });
+  return (
+    <Provider store={store}>
+      <PresetButton buttonType={PRESET_BUTTON_TYPES.COMPARE}/>
+    </Provider>
+  );
+}
+CompareButtonNotStarted.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = await canvas.findByRole('button', { name: /Compare/i });
+  await button.click();
+  // Should start diff when not started
+  await expect(startDiffCalled).toBe(true);
+};
+CompareButtonNotStarted.parameters = window.storybook.disableRtlMode;
+
+export function CompareButtonAlreadyStarted() {
+  const mockInitialState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isMultiViewerReady: true,
+      isMultiViewerMode: true,
+      isCompareStarted: true,
+      disabledElements: {},
+    },
+  };
+  useCompareTestMock();
+  const store = configureStore({ reducer: () => mockInitialState });
+  return (
+    <Provider store={store}>
+      <PresetButton buttonType={PRESET_BUTTON_TYPES.COMPARE}/>
+    </Provider>
+  );
+}
+CompareButtonAlreadyStarted.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = await canvas.findByRole('button', { name: /Compare/i });
+  await button.click();
+  // Should not start diff again
+  await expect(startDiffCalled).toBe(false);
+};
+CompareButtonAlreadyStarted.parameters = window.storybook.disableRtlMode;
+

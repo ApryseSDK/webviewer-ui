@@ -487,6 +487,32 @@ const ToolNameHotkeyMap = {
   AnnotationCreateRubberStamp: Keys.Q
 };
 
+/**
+ * @ignore
+ * Generates a map from shortcut identifiers to tool names.
+ *
+ * This combines ShortcutKeys and ToolNameHotkeyMap to create a direct mapping
+ * that allows looking up which tool a shortcut activates.
+ *
+ * @returns {Object.<string, string>} A map where:
+ *   - key: shortcut identifier (e.g., "CTRL_A", "SHIFT_P")
+ *   - value: tool name (e.g., "AnnotationCreateTextHighlight", "Pan")
+ */
+function generateShortcutToToolNameMap() {
+  const keyToToolName = Object.fromEntries(
+    Object.entries(ToolNameHotkeyMap).map(([toolName, key]) => [key, toolName])
+  );
+
+  return Object.entries(ShortcutKeys).reduce((map, [shortcut, keys]) => {
+    if (keyToToolName[keys]) {
+      map[shortcut] = keyToToolName[keys];
+    }
+    return map;
+  }, {});
+}
+
+export const ShortcutToToolNameMap = generateShortcutToToolNameMap();
+
 const unbindedHotkeysMap = {};
 let previousUnbindedHotkeysMap = {};
 
@@ -1171,6 +1197,24 @@ WebViewer(...)
     }
   }
 };
+
+/**
+  * @ignore
+  * Check if a shortcut's associated tool is in the provided tool name list
+  * @param {string} shortcut - The shortcut identifier (e.g., Shortcuts.ERASER)
+  * @param {string[]} toolNames - Array of tool names to check against
+  * @returns {boolean} True if the shortcut's tool is in the list
+  * @example
+  * isShortcutInToolList(Shortcuts.ERASER, ['AnnotationEraserTool']) // returns true
+  * isShortcutInToolList(Shortcuts.ERASER, ['Pan']) // returns false
+ */
+export function isShortcutInToolList(shortcut, toolNames) {
+  if (!shortcut || !Array.isArray(toolNames)) {
+    return false;
+  }
+  const toolName = ShortcutToToolNameMap[shortcut];
+  return toolName && toolNames.includes(toolName);
+}
 
 let closeToolTipFunc;
 

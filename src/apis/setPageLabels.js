@@ -15,7 +15,21 @@ WebViewer(...)
  */
 
 import actions from 'actions';
+import core from 'core';
 
 export default (store) => (pageLabels) => {
+  const { checkTypes, TYPES } = window.Core;
+  checkTypes([pageLabels], [TYPES.ARRAY(TYPES.STRING)], 'UI.setPageLabels');
+
+  const hasDuplicates = (arr) => new Set(arr).size !== arr.length;
+
+  if (hasDuplicates(pageLabels)) {
+    throw new Error('UI.setPageLabels: Duplicate page labels are not allowed.');
+  }
+
   store.dispatch(actions.setPageLabels(pageLabels));
+  const labelsCountMatchesTotal = pageLabels.length === core.getTotalPages();
+  if (labelsCountMatchesTotal) {
+    store.dispatch(actions.enableCustomPageLabels());
+  }
 };

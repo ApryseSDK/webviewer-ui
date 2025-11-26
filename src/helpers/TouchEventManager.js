@@ -5,6 +5,40 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import localStorageManager from './localStorageManager';
 
+// Determines swipe direction based on horizontal and vertical distances
+// The final swipe direction is determined by the greater distance (horizontal or vertical)
+export const determineSwipeDirection = ({
+  horizontalDistance,
+  verticalDistance,
+  reachedLeft,
+  reachedRight,
+  reachedTop,
+  reachedBottom,
+  threshold,
+}) => {
+  let swipedToRight = false;
+  let swipedToLeft = false;
+  let swipedToBottom = false;
+  let swipedToTop = false;
+
+  if (Math.abs(horizontalDistance) >= Math.abs(verticalDistance)) {
+    // Horizontal swipe
+    swipedToRight = reachedRight && horizontalDistance > threshold;
+    swipedToLeft = reachedLeft && horizontalDistance < -threshold;
+  } else {
+    // Vertical swipe
+    swipedToBottom = reachedBottom && verticalDistance > threshold;
+    swipedToTop = reachedTop && verticalDistance < -threshold;
+  }
+
+  return {
+    swipedToRight,
+    swipedToLeft,
+    swipedToBottom,
+    swipedToTop,
+  };
+};
+
 export const simulatePenDownInStylusMode = (toolInstance, touchObject) => {
   if (toolInstance.annotation) {
     return;
@@ -297,10 +331,16 @@ const TouchEventManager = {
 
         const { reachedLeft, reachedTop, reachedRight, reachedBottom } = this.reachedBoundary();
         const threshold = 0.1 * this.container.clientWidth;
-        const swipedToBottom = reachedBottom && this.touch.verticalDistance > threshold;
-        const swipedToTop = reachedTop && this.touch.verticalDistance < -threshold;
-        const swipedToRight = reachedRight && this.touch.horizontalDistance > threshold;
-        const swipedToLeft = reachedLeft && this.touch.horizontalDistance < -threshold;
+
+        const { swipedToRight, swipedToLeft, swipedToBottom, swipedToTop } = determineSwipeDirection({
+          horizontalDistance: this.touch.horizontalDistance,
+          verticalDistance: this.touch.verticalDistance,
+          reachedLeft,
+          reachedRight,
+          reachedTop,
+          reachedBottom,
+          threshold,
+        });
 
         const currentPage = core.getCurrentPage();
         const totalPages = core.getTotalPages();
@@ -337,7 +377,7 @@ const TouchEventManager = {
 
         if (this.isUsingAnnotationTools()) {
           const tool = core.getToolMode();
-          tool.finish && tool.finish();
+          tool.finish?.();
         } else if (!isFreeTextUnderMouse) {
           if (this.oldZoom) {
             this.touch.scale = Math.max(this.oldZoom / this.touch.zoom, getMinZoomLevel() / this.touch.zoom);

@@ -345,11 +345,15 @@
     "pageNum": "Pagină",
     "viewBookmark": "Vizualizați marcajul pe pagină",
     "error": "Eroare",
-    "errorPageNumber": "Număr de pagină nevalid. Limita este",
+    "errorPageNumberPart1": "Număr de pagină nevalid.",
+    "errorPageNumberPart2": "Limita este",
     "errorBlankPageNumber": "Vă rugăm să specificați un număr de pagină",
     "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}.",
     "noRevisions": "Acest document nu are revizuiri.",
-    "listEmptyValue": "Unul sau mai multe câmpuri au o valoare goală."
+    "listEmptyValue": "Unul sau mai multe câmpuri au o valoare goală.",
+    "listDuplicateValue": "Câmpurile multiple au următoarele valori:",
+    "networkError": "Ceva nu a funcționat la încărcarea acestei componente. Verificați conexiunea la rețea și actualizați pagina.",
+    "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Mărimea textului"
     },
     "shared": {
+      "sheetIndex": "Foaie",
       "page": "Pagină",
       "precision": "Precizie",
       "enableSnapping": "Activați snapping pentru instrumentele de măsurare"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Șterge pagina",
-      "deleteMessage": "Sigur doriți să ștergeți paginile selectate? Acest lucru nu poate fi anulat.",
+      "deleteMessage": "Sigur doriți să ștergeți pagina (paginile) selectată(e)? Această acțiune nu poate fi anulată.",
       "deleteLastPageMessage": "Nu puteți șterge toate paginile din document."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Numele foii nu poate fi gol. Vă rugăm să introduceți un nume."
     },
     "sheetTabDeleteMessage": {
-      "title": "Editare avertisment",
+      "title": "Ștergeți foaia",
       "message": "Sigur doriți să ștergeți această foaie?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Frontieră orizontală",
     "none": "Fără Frontiere",
     "borders": "Frontiere",
+    "textWrap": "Încadrare text",
+    "wrap": "Înfășurare",
+    "overflow": "Depășire",
+    "clip": "Clip",
     "fontSize": {
       "dropdownLabel": "Dimensiunea fontului"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Filigran",
     "addWatermark": "Adăugați filigran",
     "save": "Salvează fișierul",
-    "pageError": "Vă rugăm să introduceți un interval între 1 - ",
     "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
   },
   "filePicker": {

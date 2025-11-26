@@ -45,13 +45,13 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const isThumbnailControlDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailControl'));
   const isThumbnailSliderDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailsSizeSlider'));
   const isReaderMode = useSelector(selectors.isReaderMode);
-  const isDocumentReadOnly = useSelector(selectors.isViewOnly);
+  const isViewOnly = useSelector(selectors.isViewOnly);
+  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
   const totalPagesFromSecondaryDocumentViewer = useSelector((state) => selectors.getTotalPages(state, 2));
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isRightClickEnabled = useSelector(selectors.openingPageManipulationOverlayByRightClickEnabled);
   const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
-  const isViewOnly = useSelector(selectors.isViewOnly);
 
   const [t] = useTranslation();
   const isRightToLeft = useIsRTL();
@@ -79,6 +79,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const [globalIndex, setGlobalIndex] = useState(0);
   const pageCount = activeDocumentViewerKey === 2 ? totalPagesFromSecondaryDocumentViewer : totalPages;
   const customizableUI = featureFlags?.customizableUI;
+  const shouldShowControls = !(isReaderMode || isDocumentReadOnly || isViewOnly || isContentEditingEnabled);
 
   const dispatch = useDispatch();
 
@@ -567,7 +568,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       dispatch(actions.setSelectedPageThumbnails([pageIndex]));
     }
 
-    if (isReaderMode || isDocumentReadOnly || isContentEditingEnabled) {
+    if (!shouldShowControls) {
       return;
     }
 
@@ -604,12 +605,12 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
-    const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly);
+    const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly || isViewOnly);
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
-          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && !isViewOnly;
+          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < pageCount ? (
@@ -664,7 +665,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
-  const shouldShowControls = !(isReaderMode || isDocumentReadOnly || isContentEditingEnabled);
   const thumbnailAutoScrollAreaStyle = {
     'height': `${hoverAreaHeight}px`,
   };

@@ -47,10 +47,7 @@ const isPanelOpenOnIndexPanelSide = (state) => {
 };
 
 export default (dispatch, store, hotkeysManager) => async () => {
-  dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: true }));
-  dispatch(actions.setCustomElementOverrides('saveAsButton', { disabled: true }));
   dispatch(actions.setCustomElementOverrides('printButton', { disabled: true }));
-  dispatch(actions.setCustomElementOverrides('filePickerButton', { disabled: true }));
   dispatch(actions.disableElement('textPopup', 1));
   const isPanelOpen = isPanelOpenOnIndexPanelSide(store.getState());
   await dispatch(actions.enableElement(DataElements.INDEX_PANEL));

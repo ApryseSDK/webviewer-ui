@@ -34,7 +34,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const [numberOfBlankPagesToInsert, setNumberOfBlankPagesToInsert] = useState(1);
   const [insertPageHeight, setInsertPageHeight] = useState(0);
   const [insertPageWidth, setInsertPageWidth] = useState(0);
-  const [pageNumberError, setPageNumberError] = useState('');
 
   useEffect(() => {
     const pageNumbers = selectedPageIndexes.length > 0 ? selectedPageIndexes.map((i) => i + 1) : [currentPage];
@@ -104,13 +103,11 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
       insertNewPageBelow,
       insertNewPageIndexes,
       numberOfBlankPagesToInsert,
-      pageNumberError,
       setInsertNewPageBelow,
       setInsertNewPageIndexes,
       setNumberOfBlankPagesToInsert,
       setInsertPageHeight,
       setInsertPageWidth,
-      setPageNumberError,
       loadedDocumentPageCount,
     };
     return (
@@ -143,7 +140,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
             className="insertPageModalConfirmButton"
             label="insertPageModal.button"
             onClick={apply}
-            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0 || pageNumberError} />
+            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0} />
         </div>
       </div>
     );

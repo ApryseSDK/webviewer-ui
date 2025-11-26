@@ -41,21 +41,63 @@ const CreatableListContainer = ({
   });
   const [items, setItems] = useState(draggableItems);
   const [nextId, setNextId] = useState(draggableItems.length);
-  const [isInvalidInputList, setIsInvalidInputList] = useState(false);
+  const [invalidInputList, setInvalidInputList] = useState([]);
+  const [inputListHasEmptyValue, setInputListHasEmptyValue] = useState(false);
+  const [inputListDuplicateValues, setInputListDuplicateValues] = useState([]);
   const containerRef = useRef();
 
   useEffect(() => {
     // Skip calling onOptionsUpdated on the initial prop-driven update
     if (isInitialized.current) {
-      const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
-      const filteredOptions = sanitizedOptions.filter((option) => option.value !== '');
-      onOptionsUpdated(filteredOptions);
+      const { invalidItems, hasEmpty, duplicates } = validateItems();
+
+      setInvalidInputList(invalidItems);
+      setInputListHasEmptyValue(hasEmpty);
+      setInputListDuplicateValues(Array.from(duplicates));
+
+      const filteredOptions = items.filter((item) => item.value && !invalidInputList.includes(item));
+      const sanitizedOptions = filteredOptions.map((item) => ({ value: item.value, displayValue: item.displayValue }));
+      onOptionsUpdated(sanitizedOptions);
     } else {
-      // Mark the component as initialized after render / rerender
-      setIsInvalidInputList(false);
+      setInvalidInputList([]);
       isInitialized.current = true;
     }
   }, [items, onOptionsUpdated]);
+
+  const getCounts = useCallback(() => {
+    const valueCounts = new Map();
+    for (const item of items) {
+      const { value } = item;
+      if (!value) {
+        continue;
+      }
+      const count = valueCounts.get(value) || 0;
+      valueCounts.set(value, count + 1);
+    }
+    return valueCounts;
+  }, [items]);
+
+  const identifyInvalidItems = useCallback((counts) => {
+    const invalidItems = [];
+    let hasEmpty = false;
+    const duplicates = new Set();
+    for (const item of items) {
+      const { value } = item;
+      if (value && counts.get(value) > 1) {
+        invalidItems.push(item);
+        duplicates.add(value);
+      } else if (!value) {
+        hasEmpty = true;
+        invalidItems.push(item);
+      }
+    }
+    return { invalidItems, hasEmpty, duplicates };
+  }, [items]);
+
+  const validateItems = useCallback(() => {
+    const valueCounts = getCounts();
+    return identifyInvalidItems(valueCounts);
+  }, [items]);
 
   const onAddItem = useCallback(() => {
     const id = nextId;
@@ -64,37 +106,22 @@ const CreatableListContainer = ({
     if (popupRef) {
       validatePopupHeight();
     }
-    setIsInvalidInputList(true);
   }, [nextId, items]);
 
   const handleDeleteItem = (id) => () => {
-    let foundInvalidOption = false;
     const updatedItems = items.filter((item) => {
-      if (!item.value && id !== item.id) {
-        foundInvalidOption = true;
-      }
       return id !== item.id;
     });
-    setIsInvalidInputList(foundInvalidOption);
     setItems(updatedItems);
   };
 
   const handleItemValueChange = (id) => (value) => {
-    let foundInvalidOption = false;
     const updatedItems = items.map((item) => {
       if (item.id !== id) {
-        if (!item.value) {
-          foundInvalidOption = true;
-        }
         return item;
-      }
-      if (!value) {
-        foundInvalidOption = true;
       }
       return { ...item, value, displayValue: value };
     });
-
-    setIsInvalidInputList(foundInvalidOption);
     setItems(updatedItems);
   };
 
@@ -149,11 +176,12 @@ const CreatableListContainer = ({
             onChange={handleItemValueChange(item.id)}
             onDeleteItem={handleDeleteItem(item.id)}
             moveListItem={moveListItem}
-            addItem={isInvalidInputList ? () => {} : onAddItem}
+            addItem={invalidInputList?.length > 0 ? () => { } : onAddItem}
+            invalid={invalidInputList?.includes(item) || invalidInputList.some((i) => i.value === item.value && i.id !== item.id)}
           />
         ))}
       </div>
-      {isInvalidInputList && (
+      {inputListHasEmptyValue && (
         <div
           className="invalid-option-message"
           role="alert"
@@ -162,13 +190,22 @@ const CreatableListContainer = ({
           {t('message.listEmptyValue')}
         </div>
       )}
+      {inputListDuplicateValues.length > 0 && (
+        <div
+          className="invalid-option-message"
+          role="alert"
+          aria-live="assertive"
+        >
+          {t('message.listDuplicateValue')} {inputListDuplicateValues.join(', ')}
+        </div>
+      )}
       <Button
         title={t('action.addOption')}
         className="add-item-button"
         label={t('action.addOption')}
         img="icon-plus-sign"
         onClick={onAddItem}
-        disabled={isInvalidInputList}
+        disabled={invalidInputList?.length > 0}
       />
     </div>
   );

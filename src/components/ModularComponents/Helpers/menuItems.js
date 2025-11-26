@@ -5,6 +5,7 @@ import {
   CELL_ADJUSTMENT_FLYOUT_ITEMS,
   CELL_BORDER_BUTTONS,
   CELL_FORMAT_BUTTONS,
+  CELL_TEXT_WRAP_FLYOUT_ITEMS,
 } from 'constants/customizationVariables';
 import Button from 'components/Button';
 import classNames from 'classnames';
@@ -341,6 +342,22 @@ export const menuItems = {
       dataElement: `${item}`,
       presetDataElement: `${item}PresetButton`,
       icon: `ic-${icon}`,
+      label: `spreadsheetEditor.${item}`,
+      title: `spreadsheetEditor.${item}`,
+      isActive: false,
+    };
+    return acc;
+  }, {}),
+
+  ...CELL_TEXT_WRAP_FLYOUT_ITEMS.reduce((acc, item) => {
+    if (item === 'divider') {
+      return acc;
+    }
+    const icon = item.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+    acc[item] = {
+      dataElement: `${item}`,
+      presetDataElement: `${item}PresetButton`,
+      icon: `ic-text-${icon}`,
       label: `spreadsheetEditor.${item}`,
       title: `spreadsheetEditor.${item}`,
       isActive: false,

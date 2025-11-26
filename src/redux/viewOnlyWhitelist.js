@@ -54,5 +54,6 @@ export default {
     DataElements.PLAY_SOUND_BUTTON,
     DataElements.COPY_TEXT_BUTTON,
     DataElements.PAN_TOOL_BUTTON,
-  ]
+  ],
+  overlay: []
 };

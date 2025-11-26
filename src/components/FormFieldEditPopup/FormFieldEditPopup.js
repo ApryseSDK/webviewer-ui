@@ -12,6 +12,7 @@ import TextInput from '../TextInput';
 import './FormFieldEditPopup.scss';
 import CreatableList from '../CreatableList';
 import FormFieldEditPopupIndicator from './FormFieldEditPopupIndicator';
+import { createDimensionChangeHandlers } from 'helpers/formFieldEditPopupHelpers';
 
 const propTypes = {
   fields: PropTypes.array.isRequired,
@@ -26,7 +27,6 @@ const propTypes = {
   selectedRadioGroup: PropTypes.string,
   getPageHeight: PropTypes.func.isRequired,
   getPageWidth: PropTypes.func.isRequired,
-  redrawAnnotation: PropTypes.func.isRequired,
   indicator: PropTypes.object.isRequired,
 };
 
@@ -43,7 +43,6 @@ const FormFieldEditPopup = ({
   selectedRadioGroup,
   getPageHeight,
   getPageWidth,
-  redrawAnnotation,
   indicator,
 }) => {
   const { t } = useTranslation();
@@ -54,6 +53,14 @@ const FormFieldEditPopup = ({
 
   const [width, setWidth] = useState(annotation.Width.toFixed(0));
   const [height, setHeight] = useState(annotation.Height.toFixed(0));
+
+  const { onWidthChange, onHeightChange } = createDimensionChangeHandlers(
+    annotation,
+    getPageWidth,
+    getPageHeight,
+    setWidth,
+    setHeight
+  );
 
   const popupRef = useRef(null);
 
@@ -80,38 +87,6 @@ const FormFieldEditPopup = ({
       field.onChange(input.value);
       setRadioButtonGroup({ value: input.value, label: input.value });
     }
-  }
-
-  function onWidthChange(width) {
-    const validatedWidth = validateWidth(width);
-    annotation.setWidth(validatedWidth);
-    setWidth(validatedWidth);
-    redrawAnnotation(annotation);
-  }
-
-  function onHeightChange(height) {
-    const validatedHeight = validateHeight(height);
-    annotation.setHeight(validatedHeight);
-    setHeight(validatedHeight);
-    redrawAnnotation(annotation);
-  }
-
-  function validateWidth(width) {
-    const documentWidth = getPageWidth();
-    const maxWidth = documentWidth - annotation.X;
-    if (width > maxWidth) {
-      return maxWidth;
-    }
-    return width;
-  }
-
-  function validateHeight(height) {
-    const documentHeight = getPageHeight();
-    const maxHeight = documentHeight - annotation.Y;
-    if (height > maxHeight) {
-      return maxHeight;
-    }
-    return height;
   }
 
   function renderInput(field) {

@@ -12,8 +12,8 @@ WebViewer(...)
     });
   });
  */
-import { getInstanceNode } from 'helpers/getRootNode';
+import { getEventHandler } from 'helpers/fireEvent';
 
 export default (eventName, listener) => {
-  getInstanceNode().addEventListener(eventName, listener);
+  getEventHandler().addEventListener(eventName, listener);
 };

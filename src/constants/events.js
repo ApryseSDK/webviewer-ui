@@ -59,6 +59,7 @@ export default {
   'BEFORE_TAB_CHANGED': 'beforeTabChanged',
   'AFTER_TAB_CHANGED': 'afterTabChanged',
   'TAB_DELETED': 'tabDeleted',
+  'BEFORE_TAB_DELETED': 'beforeTabDeleted',
   'TAB_ADDED': 'tabAdded',
   'TAB_MOVED': 'tabMoved',
   'LANGUAGE_CHANGED': 'languageChanged',

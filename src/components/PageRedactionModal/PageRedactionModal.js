@@ -45,7 +45,7 @@ const PageRedactionModal = ({
 
   const [selectionType, setSelectionType] = useState(SelectionTypes.CURRENT);
   const [pages, setPages] = useState();
-  const [pageNumberError, setPageNumberError] = useState('');
+  const [hasPageNumberError, setHasPageNumberError] = useState(false);
 
   useEffect(() => {
     setPages(selectedPages);
@@ -101,20 +101,18 @@ const PageRedactionModal = ({
   const onSelectionChange = (e) => {
     if (!e.target.classList.contains('page-number-input')) {
       setSelectionType(e.target.value);
-      setPageNumberError('');
+      setHasPageNumberError(false);
     }
   };
   const onPagesChanged = (pageNumbers) => {
     if (pageNumbers.length > 0) {
-      setPageNumberError('');
+      setHasPageNumberError(false);
       setPages(pageNumbers);
     }
   };
 
-  const handlePageNumberError = (pageNumber) => {
-    if (pageNumber) {
-      setPageNumberError(`${t('message.errorPageNumber')} ${pageLabels.length}`);
-    }
+  const handlePageNumberError = () => {
+    setHasPageNumberError(true);
   };
 
   const specifyPagesLabelElement = (
@@ -128,7 +126,7 @@ const PageRedactionModal = ({
         )}
       </label>
       {selectionType === 'specify' && (
-        <div className={classNames('page-number-input-container', { error: !!pageNumberError })}>
+        <div className={classNames('page-number-input-container', { error: hasPageNumberError })}>
           <PageNumberInput
             selectedPageNumbers={pages}
             pageCount={pageLabels.length}
@@ -136,7 +134,6 @@ const PageRedactionModal = ({
             onSelectedPageNumbersChange={onPagesChanged}
             onBlurHandler={setPages}
             onError={handlePageNumberError}
-            pageNumberError={pageNumberError}
           />
         </div>
       )}
@@ -207,14 +204,14 @@ const PageRedactionModal = ({
             className="cancel modal-button secondary-button"
             dataElement="modalRedactButton"
             label="annotation.redact"
-            disabled={pageNumberError}
+            disabled={hasPageNumberError}
             onClick={onRedactWithFocusTransfer}
           />
           <Button
             className="confirm modal-button"
             dataElement="modalMarkRedactButton"
             label="option.pageRedactModal.addMark"
-            disabled={pageNumberError}
+            disabled={hasPageNumberError}
             onClick={onMarktWithFocusTransfer}
           />
         </div>

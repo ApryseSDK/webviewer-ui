@@ -1046,9 +1046,9 @@ export const addTrustedCertificates = (certificates) => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
   payload: { certificates },
 });
-export const addTrustList = (trustList) => ({
-  type: 'ADD_TRUST_LIST',
-  payload: { trustList },
+export const setTrustListKey = (trustListKey) => ({
+  type: 'SET_TRUST_LIST_KEY',
+  payload: { trustListKey },
 });
 export const setSignatureValidationModalWidgetName = (widgetName) => ({
   type: 'SET_VALIDATION_MODAL_WIDGET_NAME',
@@ -1255,11 +1255,23 @@ export const setCellBackgroundColors = (colors) => ({
   type: 'SET_CELL_BACKGROUND_COLORS',
   payload: { colors },
 });
+export const setCustomCellBackgroundColors = (customColors) => ({
+  type: 'SET_CUSTOM_CELL_BACKGROUND_COLORS',
+  payload: { customColors },
+});
 export const setTextColors = (colors) => ({
   type: 'SET_TEXT_COLORS',
   payload: { colors },
 });
+export const setCustomTextColors = (customColors) => ({
+  type: 'SET_CUSTOM_TEXT_COLORS',
+  payload: { customColors },
+});
 export const setBorderColors = (colors) => ({
   type: 'SET_BORDER_COLORS',
   payload: { colors },
+});
+export const setCustomBorderColors = (customColors) => ({
+  type: 'SET_CUSTOM_BORDER_COLORS',
+  payload: { customColors },
 });

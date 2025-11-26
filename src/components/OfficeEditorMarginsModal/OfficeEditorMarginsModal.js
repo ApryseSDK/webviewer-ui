@@ -17,7 +17,7 @@ import {
   VERTICAL_MARGIN_LIMIT,
   PAGE_LAYOUT_WARNING_TYPE,
 } from 'constants/officeEditor';
-import { validateMarginInput, focusContent, convertMeasurementUnit, getMinimumColumnWidth, formatToDecimalString, showPageLayoutWarning } from 'helpers/officeEditor';
+import { validateMarginInput, focusContent, convertBetweenUnits, getMinimumColumnWidth, formatToDecimalString, showPageLayoutWarning } from 'helpers/officeEditor';
 
 import './OfficeEditorMarginsModal.scss';
 
@@ -132,13 +132,13 @@ const OfficeEditorMarginsModal = () => {
     }
     setInitialUnit(currentUnit);
 
-    const pageWidthInCurrentUnit = convertMeasurementUnit(pageWidth, initialUnit, currentUnit);
-    const pageHeightInCurrentUnit = convertMeasurementUnit(pageHeight, initialUnit, currentUnit);
+    const pageWidthInCurrentUnit = convertBetweenUnits(pageWidth, initialUnit, currentUnit);
+    const pageHeightInCurrentUnit = convertBetweenUnits(pageHeight, initialUnit, currentUnit);
     setPageWidth(pageWidthInCurrentUnit);
     setPageHeight(pageHeightInCurrentUnit);
 
-    const initialMarginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertMeasurementUnit(initialMargins[side], initialUnit, currentUnit));
-    const marginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertMeasurementUnit(numericMargins[side], initialUnit, currentUnit));
+    const initialMarginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertBetweenUnits(initialMargins[side], initialUnit, currentUnit));
+    const marginsInCurrentUnit = mapObjectKeys(SIDES, (side) => convertBetweenUnits(numericMargins[side], initialUnit, currentUnit));
     const maxMarginsInCurrentUnit = calculateAllMaxMargins(pageWidthInCurrentUnit, pageHeightInCurrentUnit, marginsInCurrentUnit, currentUnit);
 
     // validate margins here because of rounding from conversion

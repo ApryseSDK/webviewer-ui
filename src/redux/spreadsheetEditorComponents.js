@@ -1,5 +1,5 @@
 import DataElements from 'constants/dataElement';
-import { ITEM_TYPE, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS } from 'src/constants/customizationVariables';
+import { ITEM_TYPE, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS, CELL_TEXT_WRAP_FLYOUT_ITEMS } from 'src/constants/customizationVariables';
 
 const defaultSpreadsheetEditorHeaders = {
   'default-top-header': {
@@ -58,6 +58,18 @@ const formatButtonsConfigs = CELL_FORMAT_BUTTONS.reduce((acc, item) => {
 }, {});
 
 const adjustmentButtonsConfig = CELL_ADJUSTMENT_FLYOUT_ITEMS.reduce((acc, item) => {
+  if (item === 'divider') {
+    return acc;
+  }
+  acc[item] = {
+    dataElement: item,
+    type: 'presetButton',
+    buttonType: item,
+  };
+  return acc;
+}, {});
+
+const textWrapButtonsConfig = CELL_TEXT_WRAP_FLYOUT_ITEMS.reduce((acc, item) => {
   if (item === 'divider') {
     return acc;
   }
@@ -151,6 +163,7 @@ const defaultSpreadsheetEditorComponents = {
       'borderStyleToggleButton',
       'cellBorderColorElement',
       'mergeToggleButton',
+      'cellTextWrapButton',
       'divider-0.7',
       'cellFormatAsCurrency',
       'cellFormatAsPercent',
@@ -335,6 +348,16 @@ const defaultSpreadsheetEditorComponents = {
   },
   ...adjustmentButtonsConfig,
 
+  cellTextWrapButton: {
+    dataElement: 'cellTextWrapButton',
+    img: 'ic-text-wrapping',
+    title: 'spreadsheetEditor.textWrap',
+    toggleElement: DataElements.CELL_TEXT_WRAP_FLYOUT,
+    type: 'toggleButton',
+  },
+
+  ...textWrapButtonsConfig,
+
   fontSizeDropdown: {
     dataElement: 'fontSizeDropdown',
     type: 'fontSizeDropdown',
@@ -372,6 +395,17 @@ const defaultSpreadsheetEditorPanels = [
 ];
 
 const adjustmentButtons = CELL_ADJUSTMENT_FLYOUT_ITEMS.map((item) => {
+  if (item === 'divider') {
+    return 'divider';
+  }
+  return {
+    dataElement: item,
+    type: 'presetButton',
+    buttonType: item,
+  };
+});
+
+const textWrapButtons = CELL_TEXT_WRAP_FLYOUT_ITEMS.map((item) => {
   if (item === 'divider') {
     return 'divider';
   }
@@ -480,6 +514,19 @@ const defaultSpreadsheetFlyoutMap = {
         'label': 'spreadsheetEditor.cellAdjustment',
       },
       ...adjustmentButtons,
+    ]
+  },
+
+  [DataElements.CELL_TEXT_WRAP_FLYOUT]: {
+    'dataElement': DataElements.CELL_TEXT_WRAP_FLYOUT,
+    'className': 'CellTextWrap',
+    'items': [
+      {
+        'dataElement': 'cellTextWrapFlyoutLabel',
+        'type': 'label',
+        'label': 'spreadsheetEditor.textWrap',
+      },
+      ...textWrapButtons,
     ]
   },
 

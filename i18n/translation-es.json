@@ -345,11 +345,15 @@
     "pageNum": "Página",
     "viewBookmark": "Ver marcador en la página",
     "error": "Error",
-    "errorPageNumber": "Número de página no válido. El límite es",
+    "errorPageNumberPart1": "Número de página no válido.",
+    "errorPageNumberPart2": "El límite es",
     "errorBlankPageNumber": "Por favor especifique un número de página",
     "errorLoadingDocument": "Hubo un problema al leer este documento y es posible que no se muestren algunas páginas. Esto indica que el documento puede estar dañado. El recuento total de páginas es {{totalPageCount}} y el número de páginas que se muestran es {{displayedPageCount}}.",
     "noRevisions": "Este documento no tiene revisiones.",
-    "listEmptyValue": "Uno o más campos tienen un valor vacío."
+    "listEmptyValue": "Uno o más campos tienen un valor vacío.",
+    "listDuplicateValue": "Varios campos tienen los siguientes valores:",
+    "networkError": "Se produjo un error al cargar este componente. Verifique su conexión de red y actualice la página.",
+    "refreshPage": "Verifique su conexión de red y actualice la página."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Tamaño del texto"
     },
     "shared": {
+      "sheetIndex": "Hoja",
       "page": "Página",
       "precision": "Precisión",
       "enableSnapping": "Habilitar el ajuste para herramientas de medición"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Eliminar página",
-      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer.",
+      "deleteMessage": "¿Seguro que quieres eliminar la(s) página(s) seleccionada(s)? Esta acción no se puede deshacer.",
       "deleteLastPageMessage": "No puede eliminar todas las páginas del documento."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "El nombre de la hoja no puede estar vacío. Ingrese un nombre."
     },
     "sheetTabDeleteMessage": {
-      "title": "Advertencia de edición",
+      "title": "Eliminar hoja",
       "message": "¿Está seguro de que desea eliminar esta hoja?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Borde horizontal",
     "none": "Sin bordes",
     "borders": "Bordes",
+    "textWrap": "Ajuste de texto",
+    "wrap": "Envoltura",
+    "overflow": "Rebosar",
+    "clip": "Acortar",
     "fontSize": {
       "dropdownLabel": "Tamaño de fuente"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Filigrana",
     "addWatermark": "Agregar marca de agua",
     "save": "Guardar el archivo",
-    "pageError": "Por favor ingrese un rango entre 1 - ",
     "fileNameCannotBeEmpty": "El nombre del archivo no puede estar vacío"
   },
   "filePicker": {

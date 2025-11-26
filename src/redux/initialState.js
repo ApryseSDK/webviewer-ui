@@ -1961,7 +1961,8 @@ export default {
     isCommentThreadExpansionEnabled: false,
     enableMouseWheelZoom: true,
     doesAutoLoad: getHashParameters('auto_load', true),
-    isViewOnly: getHashParameters('readonly', false),
+    isReadOnly: getHashParameters('readonly', false),
+    isViewOnly: getHashParameters('viewonly', false),
     viewOnlyWhitelist,
     customModals: [],
     customPanels: [],
@@ -1969,6 +1970,7 @@ export default {
     useEmbeddedPrint: false,
     useClientSidePrint: false,
     pageLabels: [],
+    isCustomPageLabelsEnabled: false,
     selectedThumbnailPageIndexes: [],
     shiftKeyThumbnailPivotIndex: null,
     noteDateFormat: defaultNoteDateFormat,
@@ -2217,7 +2219,7 @@ export default {
     validationModalWidgetName: '',
     verificationResult: {},
     certificates: [],
-    trustLists: [],
+    trustListKey: null,
     isRevocationCheckingEnabled: false,
     revocationProxyPrefix: null,
   },
@@ -2238,6 +2240,7 @@ export default {
       styles: {
         verticalAlignment: null,
         horizontalAlignment: null,
+        wrapText: null,
         font: {
           fontFace: null,
           pointSize: null,
@@ -2262,8 +2265,17 @@ export default {
     // eslint-disable-next-line custom/no-hex-colors
     selectedBorderColorOption: '#000000',
     textColors: structuredClone(initialTextColors),
+    customTextColors: localStorageManager.getItemSynchronous(`${instanceId}-customTextColors`)
+      ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customTextColors`))
+      : [],
     borderColors: structuredClone(initialTextColors),
+    customBorderColors: localStorageManager.getItemSynchronous(`${instanceId}-customBorderColors`)
+      ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customBorderColors`))
+      : [],
     cellBackgroundColors: structuredClone(initialTextColors),
+    customCellBackgroundColors: localStorageManager.getItemSynchronous(`${instanceId}-customCellBackgroundColors`)
+      ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customCellBackgroundColors`))
+      : [],
     editMode: SpreadsheetEditorEditMode.VIEW_ONLY,
     availableFontFaces: availableSpreadsheetEditorFonts,
     cssFontValues: cssFontValues,

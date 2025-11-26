@@ -28,7 +28,7 @@ import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FeatureFlags from 'constants/featureFlags';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
-let notesInLeftPanel;
+let notesInLeftPanel = getHashParameters('notesInLeftPanel', false);
 
 const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
 
@@ -247,13 +247,30 @@ export const updatePortfolio = (store) => async () => {
   }
 };
 
-export const configureOfficeEditor = (store) => () => {
+export const setupCompositionInput = (documentViewerKey) => () => {
+  const docViewer = core.getDocumentViewer(documentViewerKey);
+  const enableCompositionInput = getHashParameters('enableCompositionInput', false);
+  if (enableCompositionInput) {
+    docViewer.enableCompositionInput();
+  }
+};
+
+export const configureEditorMode = (store) => () => {
   const { getState, dispatch } = store;
   const doc = core.getDocument();
   const contentSelectTool = core.getTool('OfficeEditorContentSelect');
   const isCustomUIEnabled = getIsCustomUIEnabled(store);
 
-  const updateEditMode = (editMode) => {
+  const swapUIConfiguration = (newUIConfiguration) => {
+    const currentUIConfiguration = selectors.getUIConfiguration(getState());
+    if (currentUIConfiguration === newUIConfiguration) {
+      return;
+    }
+    dispatch(actions.stashComponents(currentUIConfiguration));
+    dispatch(actions.restoreComponents(newUIConfiguration));
+  };
+
+  const updateOfficeEditorEditMode = (editMode) => {
     dispatch(actions.setOfficeEditorEditMode(editMode));
     if (editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW) {
       isCustomUIEnabled ?
@@ -273,21 +290,12 @@ export const configureOfficeEditor = (store) => () => {
     }
   };
 
-  const updateActiveStream = (stream) => {
+  const updateOfficeEditorActiveStream = (stream) => {
     dispatch(actions.setOfficeEditorActiveStream(stream));
   };
 
-  const swapUIConfiguration = (newUIConfiguration) => {
-    if (currentUIConfiguration === newUIConfiguration) {
-      return;
-    }
-    dispatch(actions.stashComponents(currentUIConfiguration));
-    dispatch(actions.restoreComponents(newUIConfiguration));
-  };
-
-  const currentUIConfiguration = selectors.getUIConfiguration(getState());
-  const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
-  if (isOfficeEditorMode()) {
+  const configureOfficeEditorMode = () => {
+    const isOfficeEditorHeaderEnabled = (store) => selectors.getIsOfficeEditorHeaderEnabled(store.getState());
     if (!isOfficeEditorHeaderEnabled(store)) {
       swapUIConfiguration(VIEWER_CONFIGURATIONS.DOCX_EDITOR);
       dispatch(actions.setIsOfficeEditorHeaderEnabled(true));
@@ -324,10 +332,10 @@ export const configureOfficeEditor = (store) => () => {
       onLoadEditMode = OfficeEditorEditMode.EDITING;
     }
     doc.getOfficeEditor().setEditMode(onLoadEditMode);
-    updateEditMode(onLoadEditMode);
-    doc.addEventListener('editModeUpdated', updateEditMode);
-    updateActiveStream(EditingStreamType.BODY);
-    contentSelectTool.addEventListener('activeStreamChanged', updateActiveStream);
+    updateOfficeEditorEditMode(onLoadEditMode);
+    doc.addEventListener('editModeUpdated', updateOfficeEditorEditMode);
+    updateOfficeEditorActiveStream(EditingStreamType.BODY);
+    contentSelectTool.addEventListener('activeStreamChanged', updateOfficeEditorActiveStream);
     doc.addEventListener('editOperationStarted', ({ source }) => {
       switch (source) {
         case EDIT_OPERATION_SOURCE.HEADER_FOOTER:
@@ -359,13 +367,16 @@ export const configureOfficeEditor = (store) => () => {
     notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
     dispatch(actions.setClearSearchOnPanelClose(true));
-  } else if (isSpreadsheetEditorMode()) {
+  };
+
+  const configureSpreadsheetEditorMode = () => {
     if (!isCustomUIEnabled) {
       console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
     const spreadsheetEditorOptions = getHashParameters('spreadsheetEditorOptions', '{}');
-    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || SpreadsheetEditorEditMode.VIEW_ONLY;
+    const currentSpreadsheetEditorMode = selectors.getSpreadsheetEditorEditMode(getState());
+    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || currentSpreadsheetEditorMode || SpreadsheetEditorEditMode.VIEW_ONLY;
     if (!Object.values(SpreadsheetEditorEditMode).includes(onLoadEditMode)) {
       console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to view mode.`);
       onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;
@@ -396,19 +407,31 @@ export const configureOfficeEditor = (store) => () => {
     hotkeys.setScope(SPREADSHEET_EDITOR_SCOPE);
     dispatch(actions.enableSpreadsheetEditorMode());
     dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR));
-  } else {
+  };
+
+  const configureDefaultPDFMode = () => {
     swapUIConfiguration(VIEWER_CONFIGURATIONS.DEFAULT);
     dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.DEFAULT));
     dispatch(actions.disableSpreadsheetEditorMode());
 
     const currentGenericPanels = selectors.getGenericPanels(getState());
-    const panels = getIsCustomUIEnabled(store) ? currentGenericPanels : [];
+    const panels = isCustomUIEnabled ? currentGenericPanels : [];
     dispatch(actions.setGenericPanels(panels));
-    doc.removeEventListener('editModeUpdated', updateEditMode);
-    contentSelectTool.removeEventListener('activeStreamChanged', updateActiveStream);
+
+    doc.removeEventListener('editModeUpdated', updateOfficeEditorEditMode);
+    contentSelectTool.removeEventListener('activeStreamChanged', updateOfficeEditorActiveStream);
+
     hotkeys.setScope(defaultHotkeysScope);
     dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
+  };
+
+  if (isOfficeEditorMode()) {
+    configureOfficeEditorMode();
+  } else if (isSpreadsheetEditorMode()) {
+    configureSpreadsheetEditorMode();
+  } else {
+    configureDefaultPDFMode();
   }
 };
 

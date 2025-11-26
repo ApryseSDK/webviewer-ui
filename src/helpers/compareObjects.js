@@ -73,6 +73,7 @@ const shallowValueEqual = (object1, object2) => {
 };
 
 /**
+ * @ignore
  * Returns true if `incoming` adds new non-ignored keys or changes values
  * compared to `existing`. Ignores: dataElement, items, store, and undefined values in `incoming`.
  */

@@ -24,16 +24,25 @@ const propTypes = {
   onKeyDownHandler: PropTypes.func,
 };
 
-const propertySetters = {
-  CellBackgroundColor: 'setCellBackgroundColors',
-  BorderColor: 'setBorderColors',
-  TextColor: 'setTextColors',
-};
-
-const propertyGetters = {
-  CellBackgroundColor: 'getCellBackgroundColors',
-  BorderColor: 'getBorderColors',
-  TextColor: 'getTextColors',
+const propertyMethods = {
+  CellBackgroundColor: {
+    setter: 'setCellBackgroundColors',
+    getter: 'getCellBackgroundColors',
+    customSetter: 'setCustomCellBackgroundColors',
+    customGetter: 'getCustomCellBackgroundColors',
+  },
+  BorderColor: {
+    setter: 'setBorderColors',
+    getter: 'getBorderColors',
+    customSetter: 'setCustomBorderColors',
+    customGetter: 'getCustomBorderColors',
+  },
+  TextColor: {
+    setter: 'setTextColors',
+    getter: 'getTextColors',
+    customSetter: 'setCustomTextColors',
+    customGetter: 'getCustomTextColors',
+  }
 };
 
 const SpreadsheetColorPicker = ({
@@ -49,10 +58,14 @@ const SpreadsheetColorPicker = ({
   if (!Array.isArray(selectedColors)) {
     selectedColors = [selectedColors];
   }
-  const setterName = propertySetters[property];
-  const getterName = propertyGetters[property];
+  const setterName = propertyMethods[property]['setter'];
+  const getterName = propertyMethods[property]['getter'];
+  const customSetterName = propertyMethods[property]['customSetter'];
+  const customGetterName = propertyMethods[property]['customGetter'];
 
-  const cellStyleColors =  useSelector(selectors[getterName]);
+  const cellPropertyColors =  useSelector(selectors[getterName]);
+  const customColors = useSelector(selectors[customGetterName]);
+  const [cellStyleColors, setCellStyleColors] = useState(Array.from(new Set([...cellPropertyColors, ...customColors])));
 
   const [palette, setPalette] = useState(cellStyleColors);
   const [isExpanded, setIsExpanded] = useState(true);
@@ -67,6 +80,10 @@ const SpreadsheetColorPicker = ({
   const isCopyButtonDisabled = !selectedColors || areAllColorsInPalette || isTransparentColor;
   const isDeleteDisabled = palette.length <= 1 || !isCopyButtonDisabled || isTransparentColor || isDefaultTextColor || isDefaultCellBorderColor;
   const selectedColor = selectedColors.length === 1 ? selectedColors[0] : undefined;
+
+  useEffect(() => {
+    setCellStyleColors(Array.from(new Set([...cellPropertyColors, ...customColors])));
+  }, [cellPropertyColors, customColors]);
 
   useEffect(() => {
     const colorsLowercase = cellStyleColors.map((color) => color.toLowerCase());
@@ -88,6 +105,8 @@ const SpreadsheetColorPicker = ({
     colors: cellStyleColors,
     onColorChange,
     setColors: (newColors) => dispatch(actions[setterName](newColors)),
+    spreadsheetSetter: customSetterName,
+    spreadsheetGetter: customGetterName,
   }));
 
   const handleColorChange = (property, color) => {
@@ -99,7 +118,9 @@ const SpreadsheetColorPicker = ({
     colors: palette,
     onColorChange,
     transformFn: getColorFromHex,
-    updateColorsAction: (newColors) => dispatch(actions[setterName](newColors))
+    updateColorsAction: (newColors) => dispatch(actions[setterName](newColors)),
+    spreadsheetSetter: customSetterName,
+    spreadsheetGetter: customGetterName,
   });
 
   const handleCopyColor = () => {

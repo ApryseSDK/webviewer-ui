@@ -14,11 +14,14 @@ function SpreadsheetSwitcherContainer(props) {
   const [sheets, setSheets] = useState([]);
   const [activeSheetIndex, setActiveSheetIndex] = useState(0);
 
-  const getSheetsFromWorkbook = (workbookInstance) => {
+  const getVisibleSheetsFromWorkbook = (workbookInstance) => {
     let sheetCount = workbookInstance.sheetCount;
     const sheetArray = [];
     for (let i = 0; i < sheetCount; i++) {
       const sheet = workbookInstance.getSheetAt(i);
+      if (workbookInstance.isSheetHidden(sheet.name)) {
+        continue;
+      }
       sheetArray.push({ name: sheet.name, sheetIndex: i });
     }
     return sheetArray;
@@ -39,7 +42,7 @@ function SpreadsheetSwitcherContainer(props) {
       const doc = documentViewer.getDocument().getSpreadsheetEditorDocument();
       const workbookInstance = doc.getWorkbook();
       if (workbookInstance) {
-        setSheets(getSheetsFromWorkbook(workbookInstance));
+        setSheets(getVisibleSheetsFromWorkbook(workbookInstance));
       }
     };
 

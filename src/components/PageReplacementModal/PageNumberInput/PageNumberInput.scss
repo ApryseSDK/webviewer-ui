@@ -1,4 +1,5 @@
 .PageNumberInput {
+  position: relative;
   cursor: default;
 
   .input-wrapper {
@@ -36,6 +37,6 @@
     color: var(--error-text-color);
     margin-top: 8px;
     position: absolute;
-    width: 100%;
+    width: max-content;
   }
 }

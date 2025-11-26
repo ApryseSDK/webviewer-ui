@@ -16,48 +16,25 @@ import './PrintModal.scss';
 
 const PrintModalContainer = () => {
   const dispatch = useDispatch();
-  const [
-    isDisabled,
-    isOpen,
-    isApplyWatermarkDisabled,
-    currentPage,
-    printQuality,
-    defaultPrintOptions,
-    pageLabels,
-    sortStrategy,
-    colorMap,
-    layoutMode,
-    printedNoteDateFormat,
-    language,
-    watermarkModalOptions,
-    timezone,
-    useEmbeddedPrint,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementDisabled(state, DataElements.PRINT_MODAL),
-      selectors.isElementOpen(state, DataElements.PRINT_MODAL),
-      selectors.isElementDisabled(state, 'applyWatermark'),
-      selectors.getCurrentPage(state),
-      selectors.getPrintQuality(state),
-      selectors.getDefaultPrintOptions(state),
-      selectors.getPageLabels(state, 'pageLabels'),
-      selectors.getSortStrategy(state),
-      selectors.getColorMap(state),
-      selectors.getDisplayMode(state),
-      selectors.getPrintedNoteDateFormat(state),
-      selectors.getCurrentLanguage(state),
-      selectors.getWatermarkModalOptions(state),
-      selectors.getTimezone(state),
-      selectors.isEmbedPrintSupported(state, 'useEmbeddedPrint')
-    ],
-    shallowEqual
-  );
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PRINT_MODAL));
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.PRINT_MODAL));
+  const isApplyWatermarkDisabled = useSelector((state) => selectors.isElementDisabled(state, 'applyWatermark'));
+  const currentPage = useSelector(selectors.getCurrentPage);
+  const printQuality = useSelector(selectors.getPrintQuality);
+  const defaultPrintOptions = useSelector(selectors.getDefaultPrintOptions, shallowEqual);
+  const sortStrategy = useSelector(selectors.getSortStrategy);
+  const colorMap = useSelector(selectors.getColorMap, shallowEqual);
+  const layoutMode = useSelector(selectors.getDisplayMode, shallowEqual);
+  const printedNoteDateFormat = useSelector(selectors.getPrintedNoteDateFormat);
+  const language = useSelector(selectors.getCurrentLanguage);
+  const watermarkModalOptions = useSelector(selectors.getWatermarkModalOptions, shallowEqual);
+  const timezone = useSelector(selectors.getTimezone);
+  const useEmbeddedPrint = useSelector((state) => selectors.isEmbedPrintSupported(state, 'useEmbeddedPrint'));
 
   const existingWatermarksRef = useRef();
 
   const [allowWatermarkModal, setAllowWatermarkModal] = useState(false);
   const [count, setCount] = useState(-1);
-
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
   const [pagesToPrint, setPagesToPrint] = useState([]);
   const [isGrayscale, setIsGrayscale] = useState(false);
@@ -242,7 +219,6 @@ const PrintModalContainer = () => {
       setPagesToPrint={setPagesToPrint}
       count={count}
       isPrinting={isPrinting || pagesAreProcessing}
-      pageLabels={pageLabels}
       layoutMode={layoutMode}
       useEmbeddedPrint={useEmbeddedPrint}
     />

@@ -345,11 +345,15 @@
     "pageNum": "頁",
     "viewBookmark": "在頁面上查看書籤",
     "error": "錯誤",
-    "errorPageNumber": "頁碼無效。限制是",
+    "errorPageNumberPart1": "頁碼無效。",
+    "errorPageNumberPart2": "極限是",
     "errorBlankPageNumber": "請指定頁碼",
     "errorLoadingDocument": "閱讀本文檔時出現問題，某些頁面可能無法顯示。這表明文檔可能已損壞。總頁數為 {{totalPageCount}}，顯示的頁數為 {{displayedPageCount}}。",
     "noRevisions": "本文檔沒有任何修訂。",
-    "listEmptyValue": "一個或多個欄位具有空值。"
+    "listEmptyValue": "一個或多個欄位具有空值。",
+    "listDuplicateValue": "多個欄位具有以下值：",
+    "networkError": "載入此組件時出現錯誤。請檢查您的網路連線並重新整理頁面。",
+    "refreshPage": "請檢查您的網路連線並重新整理頁面。"
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "文字大小"
     },
     "shared": {
+      "sheetIndex": "床單",
       "page": "頁面",
       "precision": "精確度",
       "enableSnapping": "啟用測量工具的捕捉"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "刪除頁面",
-      "deleteMessage": "您確定要刪除所選頁面嗎？這無法撤消。",
+      "deleteMessage": "您確定要刪除所選頁面嗎？此操作無法撤銷。",
       "deleteLastPageMessage": "您無法刪除文檔中的所有頁面。"
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "工作表名稱不能為空。請輸入一個名稱。"
     },
     "sheetTabDeleteMessage": {
-      "title": "編輯警告",
+      "title": "刪除表格",
       "message": "您確定要刪除此工作表嗎？"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "水平邊框",
     "none": "無邊界",
     "borders": "邊界",
+    "textWrap": "文字換行",
+    "wrap": "裹",
+    "overflow": "溢出",
+    "clip": "夾子",
     "fontSize": {
       "dropdownLabel": "字體大小"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存檔",
-    "pageError": "請輸入 1 - 之間的範圍 ",
     "fileNameCannotBeEmpty": "文件名不能為空"
   },
   "filePicker": {

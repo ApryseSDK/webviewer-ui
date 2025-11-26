@@ -58,7 +58,8 @@ import onDocumentLoaded, {
   checkDocumentForTools,
   updateOutlines,
   updatePortfolio,
-  configureOfficeEditor,
+  configureEditorMode,
+  setupCompositionInput,
   initializeLayersVisibility,
 } from './onDocumentLoaded';
 import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
@@ -129,7 +130,8 @@ export {
   checkDocumentForTools,
   updateOutlines,
   updatePortfolio,
-  configureOfficeEditor,
+  configureEditorMode,
+  setupCompositionInput,
   onSpreadsheetEditorSelectionChanged,
   onSpreadsheetEditorEditModeChanged,
   openSpreadsheetEditorLoadingModal,

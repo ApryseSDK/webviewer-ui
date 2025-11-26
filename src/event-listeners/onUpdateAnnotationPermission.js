@@ -12,13 +12,17 @@ import selectors from 'selectors';
 export default (store) => () => {
   const { dispatch } = store;
   const isReadOnly = core.getIsReadOnly();
+  const isViewOnly = selectors.isViewOnly(store.getState());
   const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
 
-  if (isReadOnly && !isCustomUI) {
+  if (isReadOnly || (isViewOnly && !isCustomUI)) {
     disableTools(store)();
     disableFeatures(store)([Feature.Annotating]);
     core.setToolMode(defaultTool);
     dispatch(actions.setActiveToolGroup(''));
+    if (isReadOnly) {
+      dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
+    }
   } else {
     enableTools(store)();
     if (!isOfficeEditorMode()) {
@@ -26,7 +30,8 @@ export default (store) => () => {
     }
   }
 
-  dispatch(actions.setViewOnly(core.getIsReadOnly()));
+  dispatch(actions.setReadOnly(isReadOnly));
+  dispatch(actions.setViewOnly(isViewOnly));
   dispatch(actions.setAdminUser(core.getIsAdminUser()));
   dispatch(actions.setUserName(core.getCurrentUser()));
   core.drawAnnotationsFromList(core.getSelectedAnnotations());

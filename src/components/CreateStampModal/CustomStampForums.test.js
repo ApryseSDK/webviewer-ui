@@ -153,4 +153,24 @@ describe('Custom Stamp Modal Body Tests', () => {
     expect(input).toBeInTheDocument();
     expect(input).toHaveAttribute('aria-label', 'More info about date format');
   });
+  it('should have the subtitle as expected when updating timestamp text checkboxes', async () => {
+    const setStateMock = jest.fn();
+    const stampToolMock = {
+      drawCustomStamp: jest.fn(),
+    };
+    render(
+      <ModalBodyWithI18n
+        {...props} setState={setStateMock} stampTool={stampToolMock}
+      />
+    );
+    const usernameCheckbox = screen.getByRole('checkbox', { name: /Username/i });
+    const dateCheckbox = screen.getByRole('checkbox', { name: /Date/i });
+    fireEvent.click(dateCheckbox);
+    fireEvent.click(usernameCheckbox);
+    expect(stampToolMock.drawCustomStamp).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        subtitle: props.dateTimeFormats[0].time
+      })
+    );
+  });
 });

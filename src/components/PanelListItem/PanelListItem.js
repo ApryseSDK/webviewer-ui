@@ -15,13 +15,14 @@ import { useDispatch } from 'react-redux';
 import actions from 'actions';
 
 const PanelListChildren = ({ children }) => {
-  if (!children || children.length === 0) {
+  const items = React.Children.toArray(children);
+  if (items.length === 0) {
     return null;
   }
   return (
     <ul className="panel-list-children">
-      {children.map((child) => (
-        <li key={child?.key}>{child}</li>
+      {items.map((child, index) => (
+        <li key={child?.key ?? index}>{child}</li>
       ))}
     </ul>
   );
@@ -95,6 +96,8 @@ const PanelListItem = ({
   setIsExpandedHandler,
   textColor,
   isActive,
+  virtualizedChildrenRenderer,
+  virtualizedChildrenCount,
 }) => {
   const panelListItemRef = useRef();
   const currentNestingLevel = useNestingLevel(panelListItemRef);
@@ -135,6 +138,9 @@ const PanelListItem = ({
   useEffect(() => {
     setIsExpanded(expanded);
   }, [expanded]);
+
+  const defaultChildrenCount = React.Children.count(children);
+  const totalChildrenCount = virtualizedChildrenCount ?? defaultChildrenCount;
 
   const handleOnExpand = (e) => {
     e.stopPropagation();
@@ -181,7 +187,7 @@ const PanelListItem = ({
             className={classNames({
               'chevron-container': true,
               toggled: isExpanded,
-              visible: children && children.length > 0,
+              visible: totalChildrenCount > 0,
             })}
           >
             <Button
@@ -219,7 +225,11 @@ const PanelListItem = ({
           <div className="panel-list-description">{description}</div>
         )}
       </div>
-      {isExpanded && <PanelListChildren>{children}</PanelListChildren>}
+      {isExpanded && totalChildrenCount > 0 && (
+        virtualizedChildrenRenderer
+          ? virtualizedChildrenRenderer()
+          : <PanelListChildren>{children}</PanelListChildren>
+      )}
     </div>
   );
 };
@@ -255,6 +265,8 @@ PanelListItem.propTypes = {
     moreOptionsDataElement: PropTypes.string,
   }),
   isActive: PropTypes.bool,
+  virtualizedChildrenRenderer: PropTypes.func,
+  virtualizedChildrenCount: PropTypes.number,
 };
 
 export default PanelListItem;

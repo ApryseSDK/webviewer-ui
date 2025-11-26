@@ -3,11 +3,16 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import SignatureModes from 'constants/signatureModes';
+import FocusStackManager from 'helpers/focusStackManager';
 
 export default (store, documentViewerKey) => async (_, widget) => {
   const signatureTool = core.getTool('AnnotationCreateSignature', documentViewerKey);
   const signatureMode = selectors.getSignatureMode(store.getState());
   const { ToolNames } = window.Core.Tools;
+
+  if (widget?.getInnerElement()) {
+    FocusStackManager.push(widget.getInnerElement().dataset.element);
+  }
 
   if (!(await signatureTool.isEmptySignature()) && signatureMode === SignatureModes.FULL_SIGNATURE) {
     await signatureTool.addSignature();

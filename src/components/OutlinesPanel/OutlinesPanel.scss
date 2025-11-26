@@ -26,7 +26,7 @@
   }
 
   .small-outlines-list {
-    height: calc(100% - 154px) !important; // 154px is the height of the add outline content
+    flex: 1 1 auto;
   }
 
   &.modular-ui-panel {

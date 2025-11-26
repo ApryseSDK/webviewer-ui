@@ -26,16 +26,19 @@ export const FORMAT_DOCUMENT_FOR_PRINT_OPTION = {
  * @ignore
  * @remarks
  * extractPages keeps a protected pdf password if the user has already entered it.
+ * WVS documents with forceClientSideInit false does not have access to edit layers.
  */
 export const createCleanDocumentCopy = async (document) => {
   const extension = document.getType();
-  const shouldUsePageExtraction = extension === 'pdf' || extension === 'webviewerServer';
+  const shouldUsePageExtraction = extension === 'pdf';
 
   const documentData = shouldUsePageExtraction
     ? await document.extractPages(getPageArray(document.getPageCount()))
     : await document.getFileData({ downloadType: 'pdf', includeAnnotations: false });
 
-  return window.Core.createDocument(documentData, { extension: 'pdf' });
+  const createdDocument = await window.Core.createDocument(documentData, { extension: 'pdf' });
+
+  return createdDocument;
 };
 
 /**
@@ -50,22 +53,6 @@ export const prepareAnnotations = (annotationManager, pagesToPrint, printingOpti
   const includeComments = printingOptions?.includeComments;
   const includeAnnotations = includeComments ? true : printingOptions?.includeAnnotations;
   return extractXFDF(annotationManager, pagesToPrint, includeAnnotations);
-};
-
-/**
- * Extract pages from the document and merge annotations.
- * @param {window.Core.Document} document Document object using WebViewer Server
- * @param {window.Core.Document} processedDoc Document object copied from the original document
- * @param {Array<number>} pagesToPrint array of page numbers to print
- * @param {string} xfdfString string of xfdf data
- * @returns {window.Core.Document} Document object with the selected pages
- * @ignore
- */
-export const extractPagesWithMergedAnnotations = async (document, processedDoc, pagesToPrint, xfdfString) => {
-  if (useWebViewerServerDocument(document)) {
-    return extractPages(document, pagesToPrint, xfdfString);
-  }
-  return extractPages(processedDoc, pagesToPrint, xfdfString);
 };
 
 /**
@@ -270,7 +257,7 @@ const extractPages = async (document, pagesToPrint, xfdfString) => {
 const useWebViewerServerDocument = (document) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
-  return extension === 'pdf' && bbURLPromise;
+  return extension === 'webviewerServer' && bbURLPromise;
 };
 
 /**
@@ -334,8 +321,8 @@ const cropDocumentToCurrentView = async (document) => {
  * @returns {Promise<window.Core.Document>}
  */
 export const processStandardDocument = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+  await ensurePDFNetInitialized(document, printingOptions.isGrayscale);
   const documentWithColorAnnotations = await applyPrintOptions(
-    document,
     modifiedDoc,
     xfdfString,
     printingOptions,
@@ -358,17 +345,36 @@ export const processStandardDocument = async (document, modifiedDoc, xfdfString,
  * @returns {Promise<window.Core.Document>}
  */
 export const processColorAnnotations = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+  await ensurePDFNetInitialized(document, printingOptions.isGrayscale);
   const grayscaleDoc = printingOptions.isGrayscale
     ? await convertToGrayscaleDocument(modifiedDoc)
     : modifiedDoc;
 
   return applyPrintOptions(
-    document,
     grayscaleDoc,
     xfdfString,
     printingOptions,
     pagesToPrint
   );
+};
+
+/**
+ * Ensures that PDFNet is initialized if needed.
+ * @param {window.Core.Document} document document to check
+ * @param {boolean} isGrayScale whether grayscale is needed
+ * @returns {Promise<void>}
+ * @ignore
+ * @remarks
+ * `forceClientSideInit` determines whether to initialize PDFNet on the client side.
+ * `forceClientSideInit: false` never calls PDFNet.initialize(), which is required to
+ * convertToGrayscale.
+ */
+const ensurePDFNetInitialized = async (document, isGrayScale) => {
+  const isForceClientSideInit = useWebViewerServerDocument(document) && document.isWebViewerServerDocument();
+  const { PDFNet } = window.Core;
+  if (isGrayScale && isForceClientSideInit) {
+    await PDFNet.initialize();
+  }
 };
 
 /**
@@ -381,9 +387,8 @@ export const processColorAnnotations = async (document, modifiedDoc, xfdfString,
  * @returns {Promise<window.Core.Document>} document with applied print options
  * @ignore
  */
-export const applyPrintOptions = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
-  let processedDoc = await extractPagesWithMergedAnnotations(
-    document,
+export const applyPrintOptions = async (modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+  let processedDoc = await extractPages(
     modifiedDoc,
     pagesToPrint,
     xfdfString,

@@ -345,11 +345,15 @@
     "pageNum": "Trang",
     "viewBookmark": "Xem dấu trang trên trang",
     "error": "Lỗi",
-    "errorPageNumber": "Số trang không hợp lệ. Giới hạn là",
+    "errorPageNumberPart1": "Số trang không hợp lệ.",
+    "errorPageNumberPart2": "Giới hạn là",
     "errorBlankPageNumber": "Vui lòng chỉ định số trang",
     "errorLoadingDocument": "Đã xảy ra sự cố khi đọc tài liệu này và một số trang có thể không được hiển thị. Điều này cho thấy tài liệu có thể bị hỏng. Tổng số trang là {{totalPageCount}} và số trang đang được hiển thị là {{displayPageCount}}.",
     "noRevisions": "Tài liệu này không có sửa đổi.",
-    "listEmptyValue": "Một hoặc nhiều trường có giá trị trống."
+    "listEmptyValue": "Một hoặc nhiều trường có giá trị trống.",
+    "listDuplicateValue": "Nhiều trường có các giá trị sau:",
+    "networkError": "Đã xảy ra lỗi khi tải thành phần này. Vui lòng kiểm tra kết nối mạng và làm mới trang.",
+    "refreshPage": "Vui lòng kiểm tra kết nối mạng của bạn và làm mới trang."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Kích Cỡ Văn Bản"
     },
     "shared": {
+      "sheetIndex": "Tờ giấy",
       "page": "Trang",
       "precision": "Độ chính xác",
       "enableSnapping": "Bật chụp nhanh cho các công cụ đo lường"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Xóa Trang",
-      "deleteMessage": "Bạn có chắc chắn muốn xóa (các) trang đã chọn không? Không thể hoàn tác việc này.",
+      "deleteMessage": "Bạn có chắc chắn muốn xóa các trang đã chọn không? Thao tác này không thể hoàn tác.",
       "deleteLastPageMessage": "Bạn không thể xóa tất cả các trang trong tài liệu."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Tên trang tính không được để trống. Vui lòng nhập tên."
     },
     "sheetTabDeleteMessage": {
-      "title": "Chỉnh sửa cảnh báo",
+      "title": "Xóa trang tính",
       "message": "Bạn có chắc chắn muốn xóa trang tính này không?"
     },
     "officeEditorPageLayout": {
@@ -1520,6 +1525,10 @@
     "horizontal": "Đường viền ngang",
     "none": "Không có biên giới",
     "borders": "Đường viền",
+    "textWrap": "Ngắt dòng văn bản",
+    "wrap": "Bọc",
+    "overflow": "Tràn",
+    "clip": "Kẹp",
     "fontSize": {
       "dropdownLabel": "Kích thước phông chữ"
     },
@@ -1611,7 +1620,6 @@
     "watermark": "Chữ ký ảnh",
     "addWatermark": "Thêm hình mờ",
     "save": "Lưu tập tin",
-    "pageError": "Vui lòng nhập phạm vi từ 1 - ",
     "fileNameCannotBeEmpty": "Tên tệp không được để trống"
   },
   "filePicker": {

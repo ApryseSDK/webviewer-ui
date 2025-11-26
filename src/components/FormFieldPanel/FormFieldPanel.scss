@@ -384,6 +384,9 @@
 
       &:focus {
         border: 1px solid var(--blue-5);
+        &.invalid {
+          border-color: var(--color-message-error);
+        }
       }
     }
 

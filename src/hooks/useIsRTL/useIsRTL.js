@@ -1,12 +1,25 @@
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 
 const useIsRTL = () => {
-  const [isRTL, setIsRTL] = useState(i18next.dir() === 'rtl');
+  const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
+  const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
+
+  const getDir = () => {
+    if (isSpreadsheetEditorModeEnabled) {
+      return 'ltr';
+    }
+    return i18next.dir();
+  };
+
+  const [isRTL, setIsRTL] = useState(getDir() === 'rtl');
 
   useEffect(() => {
     const handler = () => {
-      setIsRTL(i18next.dir() === 'rtl');
+      setIsRTL(getDir() === 'rtl');
     };
 
     i18next.on('languageChanged', handler);

@@ -26,7 +26,7 @@ const propTypes = {
 const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const [
     autoFocusNoteOnAnnotationSelection,
-    isReadOnly,
+    isDocumentReadOnly,
     isReplyDisabled,
     isReplyDisabledForAnnotation,
     isMentionEnabled,
@@ -37,7 +37,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   ] = useSelector(
     (state) => [
       selectors.getAutoFocusNoteOnAnnotationSelection(state),
-      selectors.isViewOnly(state),
+      selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
       selectors.getIsReplyDisabled(state)?.(annotation),
       selectors.getIsMentionEnabled(state),
@@ -147,7 +147,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   };
 
   const ifReplyNotAllowed =
-    isReadOnly ||
+    isDocumentReadOnly ||
     isReplyDisabled ||
     isReplyDisabledForAnnotation;
 
