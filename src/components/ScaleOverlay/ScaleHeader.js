@@ -5,6 +5,9 @@ import ScaleSelector from './ScaleSelector';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import useFocusHandler from 'hooks/useFocusHandler';
+import selectors from 'selectors';
+import { useSelector } from 'react-redux';
+import DataElements from 'src/constants/dataElement';
 
 const propTypes = {
   scales: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -17,6 +20,7 @@ const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale
   const [t] = useTranslation();
 
   const onClickFocusWrapped = useFocusHandler(onAddingNewScale);
+  const isScaleModalEnabled = useSelector((state) => !selectors.isDisabledViewOnly(state, DataElements.SCALE_MODAL));
 
   return (
     <div className="scale-overlay-header">
@@ -29,9 +33,12 @@ const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale
           onScaleSelected={onScaleSelected}
           onAddingNewScale={onAddingNewScale}
           ariaLabelledBy="scale-dropdown-label"
+          isScaleModalEnabled={isScaleModalEnabled}
         />
       ) : (
-        <Button className="add-new-scale" onClick={onClickFocusWrapped} dataElement="addNewScale" label={t('option.measurement.scaleOverlay.addNewScale')} />
+        isScaleModalEnabled && (
+          <Button className="add-new-scale" onClick={onClickFocusWrapped} dataElement="addNewScale" label={t('option.measurement.scaleOverlay.addNewScale')} />
+        )
       )}
     </div>
   );

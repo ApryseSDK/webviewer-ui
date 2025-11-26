@@ -40,6 +40,12 @@ export const horizontalAlignmentLabels = {
   3: 'right',
 };
 
+export const wrapTextLabels = {
+  1: 'overflow',
+  2: 'wrap',
+  3: 'clip',
+};
+
 export const formatsMap = {
   'calendarFormat': 'MM/dd/yyyy',
   'clockHourFormat': 'hh:mm:ss AM/PM',
@@ -58,6 +64,10 @@ export const SPREADSHEET_EDITOR_SCOPE = 'spreadsheet-editor';
 
 export const ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR = [
   DataElements.CONTEXT_MENU_POPUP
+];
+
+export const ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR = [
+  DataElements.SEARCH_PANEL_REPLACE_CONTAINER
 ];
 
 export const getFormatTypeFromFormatString = (formatString) => {

@@ -49,7 +49,6 @@ const PrintModal = ({
   isPrinting,
   layoutMode,
   useEmbeddedPrint,
-  pageLabels
 }) => {
   PrintModal.propTypes = {
     isDisabled: PropTypes.bool,
@@ -79,7 +78,6 @@ const PrintModal = ({
     isPrinting: PropTypes.bool,
     layoutMode: PropTypes.string,
     useEmbeddedPrint: PropTypes.bool,
-    pageLabels: PropTypes.array
   };
 
   const dispatch = useDispatch();
@@ -92,7 +90,7 @@ const PrintModal = ({
   const currentView = useRef();
   const [embedPrintValid, setEmbedPrintValid] = useState(false);
   const [specifiedPages, setSpecifiedPages] = useState([]);
-  const [pageNumberError, setPageNumberError] = useState('');
+  const [hasPageNumberError, setHasPageNumberError] = useState(false);
   const [isCustomPagesChecked, setIsCustomPagesChecked] = useState(false);
 
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
@@ -108,15 +106,13 @@ const PrintModal = ({
 
   const className = getClassName('Modal PrintModal', { isOpen });
 
-  const handlePageNumberError = (pageNumber) => {
-    if (pageNumber) {
-      setPageNumberError(`${t('message.errorPageNumber')} ${core.getTotalPages()}`);
-    }
+  const handlePageNumberError = () => {
+    setHasPageNumberError(true);
   };
 
   const handlePageNumberChange = (pageNumbers) => {
     if (pageNumbers.length > 0) {
-      setPageNumberError('');
+      setHasPageNumberError(false);
       setSpecifiedPages(pageNumbers);
     }
   };
@@ -132,7 +128,7 @@ const PrintModal = ({
         )}
       </label>
       {isCustomPagesChecked && (
-        <div className={classNames('page-number-input-container', { error: !!pageNumberError })}>
+        <div className={classNames('page-number-input-container', { error: hasPageNumberError })}>
           <PageNumberInput
             id="specifyPagesInput"
             selectedPageNumbers={specifiedPages}
@@ -140,9 +136,6 @@ const PrintModal = ({
             onSelectedPageNumbersChange={handlePageNumberChange}
             onBlurHandler={setSpecifiedPages}
             onError={handlePageNumberError}
-            pageNumberError={pageNumberError}
-            customPageLabels={pageLabels}
-            enablePageLabels={true}
           />
         </div>
       )}
@@ -277,7 +270,7 @@ const PrintModal = ({
           {!isPrinting && (
             <div className="settings">
               <div className="section">
-                <div className="section-label">{`${t('option.print.pages')}:`}</div>
+                <div className="section-label">{`${t('option.print.pages')}`}</div>
                 <form
                   className="settings-form"
                   onChange={onChange}
@@ -396,7 +389,7 @@ const PrintModal = ({
               </div>
               {!embedPrintValid && (
                 <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
-                  <label className="section-label print-quality-section-label" htmlFor="printQualityOptions" id="print-quality-options-label">{`${t('option.print.pageQuality')}:`}</label>
+                  <label className="section-label print-quality-section-label" htmlFor="printQualityOptions" id="print-quality-options-label">{`${t('option.print.pageQuality')}`}</label>
                   <Dropdown
                     id="printQualityOptions"
                     labelledById='print-quality-options-label'

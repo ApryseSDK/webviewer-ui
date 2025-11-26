@@ -345,11 +345,15 @@
     "pageNum": "Strana",
     "viewBookmark": "Zobrazit záložku na stránce",
     "error": "Chyba",
-    "errorPageNumber": "Neplatné číslo stránky. Limit je",
+    "errorPageNumberPart1": "Neplatné číslo stránky.",
+    "errorPageNumberPart2": "Limit je",
     "errorBlankPageNumber": "Zadejte prosím číslo stránky",
     "errorLoadingDocument": "Při čtení tohoto dokumentu došlo k problému a některé stránky se nemusí zobrazit. To znamená, že dokument může být poškozen. Celkový počet stránek je {{totalPageCount}} a počet zobrazených stránek je {{displayedPageCount}}.",
     "noRevisions": "Tento dokument nemá žádné revize.",
-    "listEmptyValue": "Jedno nebo více polí má prázdnou hodnotu."
+    "listEmptyValue": "Jedno nebo více polí má prázdnou hodnotu.",
+    "listDuplicateValue": "Více polí má následující hodnoty:",
+    "networkError": "Při načítání této komponenty došlo k chybě. Zkontrolujte prosím připojení k síti a obnovte stránku.",
+    "refreshPage": "Zkontrolujte prosím připojení k síti a obnovte stránku."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Velikost textu"
     },
     "shared": {
+      "sheetIndex": "List",
       "page": "Strana",
       "precision": "Přesnost",
       "enableSnapping": "Povolit uchopení pro měřicí nástroje"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Smazat stránku",
-      "deleteMessage": "Jste si jisti, že chcete smazat vybrané stránky? Toto nelze vrátit zpět.",
+      "deleteMessage": "Opravdu chcete smazat vybrané stránky? Tuto akci nelze vrátit zpět.",
       "deleteLastPageMessage": "Nemůžete odstranit všechny stránky v dokumentu."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Název listu nemůže být prázdný. Zadejte prosím název."
     },
     "sheetTabDeleteMessage": {
-      "title": "Upravit upozornění",
+      "title": "Smazat list",
       "message": "Opravdu chcete tento list smazat?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Smazat tabulku",
     "deleted": "Smazáno:",
     "added": "Přidal:",
+    "formatted": "Formátováno:",
     "editing": "Editace",
     "editingDescription": "Upravit dokument",
     "reviewing": "Recenze",
@@ -1520,6 +1526,10 @@
     "horizontal": "Horizontální hranice",
     "none": "Žádné hranice",
     "borders": "Hranice",
+    "textWrap": "Zalamování textu",
+    "wrap": "Zabalit",
+    "overflow": "Přetékat",
+    "clip": "Klip",
     "fontSize": {
       "dropdownLabel": "Velikost písma"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "Vodoznak",
     "addWatermark": "Přidat vodoznak",
     "save": "Uložení souboru",
-    "pageError": "Zadejte rozsah mezi 1 - ",
     "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
   },
   "filePicker": {

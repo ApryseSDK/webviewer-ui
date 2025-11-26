@@ -4,7 +4,7 @@ import OfficeEditorColumnsModal from './OfficeEditorColumnsModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { userEvent, within, expect, waitFor } from 'storybook/test';
-import { convertMeasurementUnit } from 'helpers/officeEditor';
+import { convertBetweenUnits } from 'helpers/officeEditor';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
@@ -93,7 +93,6 @@ ColumnCalculation.play = async ({ canvasElement }) => {
     await userEvent.type(inputs[i].spacing, '0.5[Tab]');
     await expectInputsToBeWithinLimits();
   }
-
   await userEvent.type(columnAmountInput, '{backspace}1');
   expect(canvas.getByLabelText(columnLabel).valueAsNumber).toBe(SINGLE_COLUMN_WIDTH_CM);
 };
@@ -102,7 +101,7 @@ export const UnitConversion = () => <Basic />;
 
 UnitConversion.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const singleColumnWidthInch = convertMeasurementUnit(SINGLE_COLUMN_WIDTH_CM, 'cm', 'inch');
+  const singleColumnWidthInch = convertBetweenUnits(SINGLE_COLUMN_WIDTH_CM, 'cm', 'inch');
 
   const unitButton = await canvas.findByRole('combobox', { name: getTranslatedText('officeEditor.unitMeasurement') });
   await userEvent.click(unitButton);

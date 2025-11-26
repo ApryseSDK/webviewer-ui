@@ -17,7 +17,7 @@ import mapValidationResponseToTranslation from 'helpers/mapValidationResponseToT
 import FormFieldPanel from './FormFieldPanel';
 import useIsRTL from 'hooks/useIsRTL';
 import './FormFieldPanel.scss';
-import { createFields, createFlags, defaultDimension, defaultFlags, defaultProperties, getPageHeight, getPageWidth, getSignatureOption, handleFieldCreation, handleFlagsCreation, isRenderingOptions, redrawAnnotation, validateDimension } from './utils';
+import { createFields, createFlags, defaultDimension, defaultFlags, defaultProperties, getPageHeight, getPageWidth, getSignatureOption, handleFieldCreation, handleFlagsCreation, isRenderingOptions, redrawAnnotation, validateDimension, triggerAnnotationChangedEventWithModify } from './utils';
 
 const { Annotations, Tools } = window.Core;
 
@@ -26,26 +26,14 @@ const propTypes = {
 };
 
 const FormFieldPanelContainer = React.memo(({ annotation }) => {
-  const [
-    isOpen,
-    toolButtonObject,
-    isSignatureOptionsDropdownDisabled,
-    isInDesktopOnlyMode,
-    mobilePanelSize,
-    featureFlags,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementOpen(state, DataElements.FORM_FIELD_PANEL),
-      selectors.getToolButtonObjects(state),
-      selectors.isElementDisabled(state, 'signatureOptionsDropdown'),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.getMobilePanelSize(state),
-      selectors.getFeatureFlags(state),
-    ],
-    shallowEqual,
-  );
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.FORM_FIELD_PANEL));
+  const toolButtonObject = useSelector(selectors.getToolButtonObjects, shallowEqual);
+  const isSignatureOptionsDropdownDisabled = useSelector((state) => selectors.isElementDisabled(state, 'signatureOptionsDropdown'));
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
+  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const isMobile = isMobileSize();
@@ -110,7 +98,12 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     } else {
       closeAndReset();
     }
-  }, [toolButtonObject, t]);
+  }, [toolButtonObject, i18n.language]);
+
+  useEffect(() => {
+    const currentTool = core.getToolMode();
+    setPanelTitleForTool(currentTool.name);
+  }, [i18n.language]);
 
   useEffect(() => {
     updateRadioGroupsForRadioAnnotation();
@@ -215,7 +208,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     });
     setPanelTitle(t(`formField.formFieldPanel.${field.getFieldType()}`));
     setValidationMessage(validationMessage);
-  }, [isOpen, annotation, isRTL]);
+  }, [isOpen, annotation, isRTL, i18n.language]);
 
   const onFieldNameChange = useCallback((name) => {
     const validatedResponse = formFieldCreationManager.setFieldName(annotation, name);
@@ -318,6 +311,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
         width: validatedWidth,
       }));
       redrawAnnotation(annotation);
+      triggerAnnotationChangedEventWithModify([annotation]);
     } else {
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,
@@ -337,6 +331,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
         height: validatedHeight
       }));
       redrawAnnotation(annotation);
+      triggerAnnotationChangedEventWithModify([annotation]);
     } else {
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,

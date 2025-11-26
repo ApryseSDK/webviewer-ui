@@ -129,14 +129,14 @@ describe('InsertUploadedPagePanel', () => {
     userEvent.clear(pageInput);
     userEvent.type(pageInput, '20');
 
-    screen.getByText('Invalid page number. Limit is 10');
+    screen.getByText('Invalid page number. Limit is 10.');
     fireEvent.blur(pageInput);
 
     expect(pageInput.value).toEqual('');
 
     userEvent.clear(pageInput);
     userEvent.type(pageInput, '2024, easter bunny');
-    screen.getByText('Invalid page number. Limit is 10');
+    screen.getByText('Invalid page number. Limit is 10.');
 
     fireEvent.blur(pageInput);
 

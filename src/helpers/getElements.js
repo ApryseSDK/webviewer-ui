@@ -1,9 +1,11 @@
+import getRootNode from './getRootNode';
+
 export function getOpenedWarningModal() {
-  return document.querySelector('.WarningModal.open .container');
+  return getRootNode().querySelector('.WarningModal.open .container');
 }
 
 export function getOpenedColorPicker() {
-  return document.querySelector('.ColorPickerModal.open');
+  return getRootNode().querySelector('.ColorPickerModal.open');
 }
 
 export function getAllOpenedModals() {

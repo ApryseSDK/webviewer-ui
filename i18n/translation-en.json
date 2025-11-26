@@ -345,11 +345,15 @@
     "pageNum": "Page",
     "viewBookmark": "View Bookmark on Page",
     "error": "Error",
-    "errorPageNumber": "Invalid page number. Limit is ",
+    "errorPageNumberPart1": "Invalid page number. ",
+    "errorPageNumberPart2": "Limit is ",
     "errorBlankPageNumber": "Please specify a page number",
     "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}.",
     "noRevisions": "This document has no revisions.",
-    "listEmptyValue": "One or more fields have an empty value."
+    "listEmptyValue": "One or more fields have an empty value.",
+    "listDuplicateValue": "Multiple fields have the following values: ",
+    "networkError": "Something went wrong loading this component:  ",
+    "refreshPage": "Please check your network connection and refresh the page."
   },
   "option": {
     "type": {
@@ -844,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Delete Page",
-      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone.",
+      "deleteMessage": "Are you sure you want to delete the selected page(s)? This can't be undone.",
       "deleteLastPageMessage": "You cannot delete all pages in the document."
     },
     "extractPage": {
@@ -898,7 +902,7 @@
       "message": "The sheet name cannot be empty. Please enter a name."
     },
     "sheetTabDeleteMessage": {
-      "title": "Edit Warning",
+      "title": "Delete Sheet",
       "message": "Are you sure you want to delete this sheet?"
     },
     "officeEditorPageLayout": {
@@ -1334,6 +1338,7 @@
     "deleteTable": "Delete Table",
     "deleted": "Deleted: ",
     "added": "Added: ",
+    "formatted": "Formatted: ",
     "editing": "Editing",
     "editingDescription": "Edit document",
     "reviewing": "Reviewing",
@@ -1521,6 +1526,10 @@
     "horizontal": "Horizontal Border",
     "none": "No Borders",
     "borders": "Borders",
+    "textWrap": "Text Wrapping",
+    "wrap": "Wrap",
+    "overflow": "Overflow",
+    "clip": "Clip",
     "fontSize": {
       "dropdownLabel": "Font Size"
     },
@@ -1612,7 +1621,6 @@
     "watermark": "Watermark",
     "addWatermark": "Add Watermark",
     "save": "Save File",
-    "pageError": "Please enter a range between  1 - ",
     "fileNameCannotBeEmpty": "File Name cannot be empty"
   },
   "filePicker": {

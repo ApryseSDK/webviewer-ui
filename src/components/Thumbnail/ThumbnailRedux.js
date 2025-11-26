@@ -27,7 +27,7 @@ const ThumbnailRedux = React.forwardRef((props, ref) => {
       selectors.getSelectedThumbnailPageIndexes(state),
       selectors.isThumbnailMultiselectEnabled(state),
       selectors.isReaderMode(state),
-      selectors.isViewOnly(state),
+      selectors.isDocumentReadOnly(state),
       selectors.getShiftKeyThumbnailPivotIndex(state),
       selectors.isThumbnailSelectingPages(state),
       selectors.getThumbnailSelectionMode(state),

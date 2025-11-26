@@ -3,7 +3,7 @@
  * @method UI.loadDocument
  * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
  * @param {UI.loadDocumentOptions} [options] Additional options
-
+ * @returns {Promise<void>} A promise that resolves when the document has been created
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -16,9 +16,7 @@ WebViewer(...)
 
 import loadDocument from 'helpers/loadDocument';
 
-export default (store) => (src, options) => {
-  loadDocument(store.dispatch, src, options);
-};
+export default (store) => (src, options) => loadDocument(store.dispatch, src, options);
 
 /**
  * @typedef {Object} UI.loadDocumentOptions inherits from {@link Core.loadDocumentOptions}

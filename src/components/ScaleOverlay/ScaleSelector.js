@@ -17,11 +17,12 @@ const propTypes = {
   onScaleSelected: PropTypes.func.isRequired,
   onAddingNewScale: PropTypes.func.isRequired,
   ariaLabelledBy: PropTypes.string,
+  isScaleModalEnabled: PropTypes.bool,
 };
 
 const Scale = window.Core.Scale;
 
-const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAddingNewScale, ariaLabelledBy }) => {
+const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAddingNewScale, ariaLabelledBy, isScaleModalEnabled }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
@@ -39,6 +40,7 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
 
   const isMultipleScalesMode = useSelector((state) => selectors.getIsMultipleScalesMode(state));
   const isMultipleScales = selectedScales.length > 1;
+  const showScaleModal = isScaleModalEnabled && isMultipleScalesMode;
 
   const getScalesInfo = (scales) => {
     const scalesInfo = [];
@@ -260,7 +262,7 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
               </button>
             </li>
           ))}
-          {isMultipleScalesMode && (
+          {showScaleModal && (
             <li>
               <Button onClick={onAddingNewScale} label={t('option.measurement.scaleOverlay.addNewScale')} className="add-new-scale" />
             </li>

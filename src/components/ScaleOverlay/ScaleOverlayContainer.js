@@ -9,6 +9,7 @@ import React, { useCallback, useReducer, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import useDraggablePosition from '../../hooks/useDraggablePosition';
+import PropTypes from 'prop-types';
 
 import './ScaleOverlay.scss';
 
@@ -29,20 +30,23 @@ const measurementDataElements = [
   'arcToolGroupButton'
 ];
 
+const propTypes = {
+  annotations: PropTypes.array,
+  selectedTool: PropTypes.object,
+};
+
 const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [
-    isDisabled,
-    isOpen,
-    initialPosition,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementDisabled(state, DataElements.SCALE_OVERLAY_CONTAINER),
-      selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER),
-      selectors.getScaleOverlayPosition(state),
-    ],
-  );
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SCALE_OVERLAY_CONTAINER));
+  const isDisabledViewOnly = useSelector((state) => selectors.isDisabledViewOnly(state, DataElements.SCALE_OVERLAY));
+  const areToolsDisabledViewOnly = useSelector((state) => {
+    const annotationToolNames = [...new Set(annotations.map((annotation) => annotation.ToolName))];
+    const toolNames = annotationToolNames.length > 0 ? annotationToolNames : [selectedTool?.name];
+    return toolNames.some((name) => selectors.isToolDisabledViewOnly(state, name));
+  });
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER));
+  const initialPosition = useSelector((state) => selectors.getScaleOverlayPosition(state));
   const { position, handleDrag, handleStop, containerRef, style, bounds, resetPosition } = useDraggablePosition(initialPosition);
   const [, forceUpdate] = useReducer((x) => x + 1, 0, () => 0);
 
@@ -54,7 +58,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     dispatch(actions.updateCalibrationInfo({ isCalibration }));
   }, []);
 
-  const enableOrDisableToolElements = useCallback((disabled) => {
+  const disableToolElements = useCallback((disabled) => {
     measurementDataElements.forEach((dataElement) => {
       dispatch(
         actions.setCustomElementOverrides(dataElement, {
@@ -142,14 +146,18 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
 
   const isMobile = isMobileSize();
 
+  if (isDisabled || isDisabledViewOnly || areToolsDisabledViewOnly) {
+    return null;
+  }
+
   if (isMobile) {
-    return !isDisabled && (
+    return (
       <MobilePopupWrapper>
         <ScaleOverlay
           annotations={annotations}
           selectedTool={selectedTool}
           updateIsCalibration={updateIsCalibration}
-          enableOrDisableToolElements={enableOrDisableToolElements}
+          disableToolElements={disableToolElements}
           onScaleSelected={onScaleSelected}
           onCancelCalibrationMode={onCancelCalibrationMode}
           onApplyCalibration={onApplyCalibration}
@@ -160,7 +168,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
       </MobilePopupWrapper>
     );
   } else {
-    return !isDisabled && (
+    return (
       <Draggable
         position={position}
         bounds={bounds}
@@ -183,7 +191,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
             annotations={annotations}
             selectedTool={selectedTool}
             updateIsCalibration={updateIsCalibration}
-            enableOrDisableToolElements={enableOrDisableToolElements}
+            disableToolElements={disableToolElements}
             onScaleSelected={onScaleSelected}
             onCancelCalibrationMode={onCancelCalibrationMode}
             onApplyCalibration={onApplyCalibration}
@@ -196,5 +204,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     );
   }
 };
+
+ScaleOverlayContainer.propTypes = propTypes;
 
 export default ScaleOverlayContainer;

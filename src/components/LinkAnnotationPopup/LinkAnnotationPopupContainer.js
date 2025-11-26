@@ -19,7 +19,8 @@ import React, {
 import {
   useSelector,
   shallowEqual,
-  useDispatch
+  useDispatch,
+  useStore
 } from 'react-redux';
 import getGroupedLinkAnnotations from 'src/helpers/getGroupedLinkAnnotations';
 
@@ -60,6 +61,7 @@ const LinkAnnotationPopupContainer = ({
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const dispatch = useDispatch();
   const popupRef = useRef(null);
+  const store = useStore();
 
   const closePopup = () => dispatch(actions.closeElement(DataElements.LINK_ANNOTATION_POPUP));
 
@@ -98,7 +100,7 @@ const LinkAnnotationPopupContainer = ({
     }
   };
 
-  const contents = getLinkDestination(annotation) || '';
+  const contents = getLinkDestination(annotation, store) || '';
 
   const handleUnLink = () => {
     deleteLinkAnnotationWithGroup(annotation, activeDocumentViewerKey);

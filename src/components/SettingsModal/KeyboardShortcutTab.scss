@@ -37,6 +37,13 @@
     .shortcut-table-item-command {
       color: var(--gray-7);
       width: 220px;
+      display: flex;
+      flex-wrap: wrap;
+
+      &:dir(rtl) {
+        direction: ltr;
+        justify-content: right;
+      }
 
       span:not(:last-child) {
         margin-inline-end: 8px;

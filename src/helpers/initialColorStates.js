@@ -52,6 +52,7 @@ const defaultBorderColor = '#000000';
 const defaultCellStyle = {
   verticalAlignment: 2,
   horizontalAlignment: 1,
+  wrapText: 3,
   font: {
     fontFace: 'Arial',
     pointSize: 8,

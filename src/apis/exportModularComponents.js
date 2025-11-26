@@ -59,6 +59,9 @@ export default (store) => () => {
   const processItemWithRender = (item, components) => {
     const exportItem = {};
     for (const prop in item) {
+      if (prop === 'isActive') {
+        continue;
+      }
       if (prop === 'onClick') {
         const storedModularComponentFunctions = state.viewer.modularComponentFunctions;
         exportItem.onClick = getFunctionKey('onClick', storedModularComponentFunctions, item.dataElement, item[prop]);
@@ -126,6 +129,10 @@ export default (store) => () => {
   };
 
   const processComponentValue = (key, value, componentObject, component) => {
+    if (key === 'isActive') {
+      delete componentObject[key];
+      return;
+    }
     // Skip React elements - they should be handled by processItems
     if (React.isValidElement(value)) {
       delete componentObject[key];

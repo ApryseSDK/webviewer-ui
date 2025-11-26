@@ -1,6 +1,6 @@
 import React, { forwardRef, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
-import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS, STYLE_TOGGLE_OPTIONS } from 'constants/customizationVariables';
+import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS, STYLE_TOGGLE_OPTIONS, CELL_TEXT_WRAP_FLYOUT_ITEMS } from 'constants/customizationVariables';
 import { JUSTIFICATION_OPTIONS } from 'constants/officeEditor';
 import {
   CELL_ACTION_OPTIONS,
@@ -32,6 +32,7 @@ import './PresetButton.scss';
 import './buttons/SheetEditor/SheetEditor.scss';
 import StyleButtonContainer from './buttons/StyleButtonContainer';
 import SpreadsheetEditorInsertImageButton from 'src/components/ModularComponents/SpreadsheetEditorInsertImageButton';
+import CellTextWrapButton from './buttons/SheetEditor/CellTextWrapButton';
 // Lazy load sheet editor components
 const VerticalAlignmentButton = lazy(() => import('./buttons/SheetEditor/VerticalAlignmentButton'));
 const CellAdjustmentButton = lazy(() => import('./buttons/SheetEditor/CellAdjustmentButton'));
@@ -125,6 +126,8 @@ const PresetButton = forwardRef((props, ref) => {
               return <CellAdjustmentButton {...props} ref={ref} />;
             } else if (checkIfArrayContains(CELL_FORMAT_BUTTONS.map((i) => i.label), buttonType)) {
               return <CellFormatButton {...props} ref={ref} formatType={buttonType} />;
+            } else if (checkIfArrayContains(Object.values(CELL_TEXT_WRAP_FLYOUT_ITEMS), buttonType)) {
+              return <CellTextWrapButton {...props} wrapText={buttonType} ref={ref} />;
             }
 
             console.warn(`${buttonType} is not a valid item type.`);

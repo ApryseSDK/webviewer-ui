@@ -48,6 +48,10 @@
   overflow: auto;
   user-select: none;
 
+  &:focus {
+    outline: none;
+  }
+
   @include ie11 {
     margin-inline-start: 0 !important;
     width: 100% !important;

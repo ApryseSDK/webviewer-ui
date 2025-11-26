@@ -46,21 +46,24 @@
       flex-direction: column;
       border-radius: 4px;
       align-self: stretch;
-      color: var(--gray-9);
+      color: var(--color-font-primary);
       font-size: var(--font-size-medium);
       font-weight: var(--font-weight-medium);
+      gap: 4px;
 
       &.old {
         .value-title {
-          color: var(--red);
+          color: var(--change-list-title-old);
         }
         background-color: var(--change-list-old-bg);
+        border: 1px solid var(--change-list-title-old);
       }
       &.new {
         .value-title {
-          color: var(--green);
+          color: var(--change-list-title-new);
         }
         background-color: var(--change-list-new-bg);
+        border: 1px solid var(--change-list-title-new);
       }
 
       .value-title {

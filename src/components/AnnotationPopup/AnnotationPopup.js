@@ -31,7 +31,6 @@ const propTypes = {
   isVisible: PropTypes.bool,
 
   focusedAnnotation: PropTypes.object,
-  multipleAnnotationsSelected: PropTypes.bool,
   popupRef: PropTypes.any,
   position: PropTypes.object,
 
@@ -58,7 +57,7 @@ const propTypes = {
   onEditContent: PropTypes.func,
   openContentEditDeleteWarningModal: PropTypes.func,
 
-  isAppearanceSignature: PropTypes.bool,
+  showClearSignatureButton: PropTypes.bool,
   onClearAppearanceSignature: PropTypes.func,
 
   showRedactionButton: PropTypes.bool,
@@ -88,10 +87,12 @@ const propTypes = {
   showCalibrateButton: PropTypes.bool,
   onOpenCalibration: PropTypes.func,
 
+  showAlignButton: PropTypes.bool,
+  onOpenAlignmentModal: PropTypes.func,
+
   customizableUI: PropTypes.bool,
   toggleStylePanel: PropTypes.func,
   isInReadOnlyMode: PropTypes.bool,
-  onOpenAlignmentModal: PropTypes.func,
 };
 
 const AnnotationPopup = ({
@@ -109,7 +110,6 @@ const AnnotationPopup = ({
   focusedAnnotation,
   popupRef,
   position,
-  multipleAnnotationsSelected,
 
   showViewFileButton,
   onViewFile,
@@ -134,7 +134,7 @@ const AnnotationPopup = ({
   onEditContent,
   openContentEditDeleteWarningModal,
 
-  isAppearanceSignature,
+  showClearSignatureButton,
   onClearAppearanceSignature,
 
   showRedactionButton,
@@ -164,10 +164,12 @@ const AnnotationPopup = ({
   showCalibrateButton,
   onOpenCalibration,
 
+  showAlignButton,
+  onOpenAlignmentModal,
+
   customizableUI,
   toggleStylePanel,
   isInReadOnlyMode,
-  onOpenAlignmentModal,
 }) => {
   const [t] = useTranslation();
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
@@ -190,7 +192,6 @@ const AnnotationPopup = ({
   let StrokeStyle = 'solid';
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
   const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
-  const showClearSignatureButton = isAppearanceSignature && !showFormFieldButton;
   try {
     StrokeStyle = (focusedAnnotation['Style'] === 'dash')
       ? `${focusedAnnotation['Style']},${focusedAnnotation['Dashes']}`
@@ -368,7 +369,7 @@ const AnnotationPopup = ({
                     onClick={onUngroupAnnotations}
                   />
                 )}
-                {multipleAnnotationsSelected && !isMobile && (
+                {showAlignButton && (
                   <ActionButton
                     className="main-menu-button"
                     dataElement='openAlignmentButton'

@@ -94,7 +94,7 @@ describe('InsertPageModal', () => {
       userEvent.clear(pageInput);
       userEvent.type(pageInput, '20');
 
-      screen.getByText('Please specify a page number');
+      screen.getByText('Invalid page number. Limit is 9.');
       fireEvent.blur(pageInput);
 
       expect(pageInput.value).toEqual('');

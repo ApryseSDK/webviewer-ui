@@ -7,14 +7,15 @@
  * @param {boolean} [options.wholeWord=false] Search whole words only.
  * @param {boolean} [options.wildcard=false] Search a string with a wildcard *. For example, *viewer.
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
+ * @returns {Promise<void>} Returns a promise that resolves when the search is complete.
  * @example
 WebViewer(...)
   .then(function(instance) {
     const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
-    docViewer.addEventListener('documentLoaded', function() {
-      instance.UI.searchTextFull('test', {
+    docViewer.addEventListener('documentLoaded', async function() {
+      await instance.UI.searchTextFull('test', {
         wholeWord: true
       });
     });
@@ -24,7 +25,6 @@ WebViewer(...)
 import actions from 'actions';
 import core from 'core';
 import { getSearchListeners } from 'helpers/search';
-import { isOfficeEditorMode } from 'helpers/officeEditor';
 import selectors from 'selectors';
 
 const onResultThrottleTimeout = 100;
@@ -54,7 +54,7 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-export default (store) => (searchValue, options, isUserTriggered = true) => {
+const searchTextFullFactory = (store) => async (searchValue, options, isUserTriggered = true) => {
   const dispatch = store?.dispatch;
   // Store is optional. Default activeDocumentViewerKey is 1
   const activeDocumentViewerKey = store ? selectors.getActiveDocumentViewerKey(store.getState()) : 1;
@@ -81,16 +81,15 @@ export default (store) => (searchValue, options, isUserTriggered = true) => {
 
       resultTimeout = setTimeout(() => {
         activeDocumentViewer.displayAdditionalSearchResults(throttleResults);
+        if (!hasActiveResultBeenSet) {
+          // when full search is done, we make first found result to be the active result
+          activeDocumentViewer.setActiveSearchResult(result);
+          hasActiveResultBeenSet = true;
+        }
         throttleResults = [];
         resultTimeout = null;
         doneCallback();
       }, onResultThrottleTimeout);
-    }
-
-    if (!hasActiveResultBeenSet && !isOfficeEditorMode()) {
-      // when full search is done, we make first found result to be the active result
-      activeDocumentViewer.setActiveSearchResult(result);
-      hasActiveResultBeenSet = true;
     }
   }
 
@@ -139,20 +138,26 @@ export default (store) => (searchValue, options, isUserTriggered = true) => {
   function onDocumentEnd() { }
 
   function handleSearchError(error) {
-    dispatch(actions.setProcessingSearchResults(false));
+    if (dispatch) {
+      dispatch(actions.setProcessingSearchResults(false));
+    }
     console.error(error);
   }
-  const textSearchInitOptions = {
-    'fullSearch': true,
-    onResult,
-    onDocumentEnd,
-    'onError': handleSearchError,
-  };
 
   const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
   throttleResults = [];
 
   activeDocumentViewer.clearSearchResults();
-  activeDocumentViewer.textSearchInit(searchValue, searchMode, textSearchInitOptions);
   activeDocumentViewer.addEventListener('searchInProgress', searchInProgressCallback);
+  try {
+    const searchStream = activeDocumentViewer.search(searchValue, searchMode);
+    for await (const result of searchStream) {
+      onResult(result);
+    }
+    onDocumentEnd();
+  } catch (error) {
+    handleSearchError(error);
+  }
 };
+
+export default searchTextFullFactory;

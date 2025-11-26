@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useRef, useEffect, useMemo, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
@@ -11,6 +11,7 @@ import Button from 'components/Button';
 import TextButton from '../TextButton';
 import OutlineContent from 'components/OutlineContent';
 import DataElementWrapper from 'components/DataElementWrapper';
+import PropTypes from 'prop-types';
 
 import core from 'core';
 import outlineUtils from 'helpers/OutlineUtils';
@@ -29,6 +30,66 @@ import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
 import Spinner from 'components/Spinner';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
+
+const createOutlinesPanelComponents = (outlineScrollParentRef) => {
+  const Scroller = React.forwardRef((props, ref) => {
+    const setRef = (node) => {
+      outlineScrollParentRef.current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+    };
+    return <div {...props} ref={setRef} />;
+  });
+  Scroller.displayName = 'OutlinesPanelScroller';
+
+  return { Scroller };
+};
+
+const OutlineListItem = React.memo(({
+  outline,
+  setSelectedOutlines,
+  moveOutlineInward,
+  moveOutlineBeforeTarget,
+  moveOutlineAfterTarget,
+}) => {
+  const handleSetMultiSelected = useCallback((path, value) => {
+    setSelectedOutlines((currentSelected) => {
+      const isSelected = currentSelected.includes(path);
+
+      if (isSelected && !value) {
+        return currentSelected.filter((outlinePath) => outlinePath !== path);
+      }
+
+      if (!isSelected && value) {
+        return [...currentSelected, path];
+      }
+
+      return currentSelected;
+    });
+  }, [setSelectedOutlines]);
+
+  return (
+    <Outline
+      outline={outline}
+      setMultiSelected={handleSetMultiSelected}
+      moveOutlineInward={moveOutlineInward}
+      moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+      moveOutlineAfterTarget={moveOutlineAfterTarget}
+    />
+  );
+});
+
+OutlineListItem.displayName = 'OutlineListItem';
+OutlineListItem.propTypes = {
+  outline: Outline.propTypes.outline,
+  setSelectedOutlines: PropTypes.func.isRequired,
+  moveOutlineInward: PropTypes.func.isRequired,
+  moveOutlineBeforeTarget: PropTypes.func.isRequired,
+  moveOutlineAfterTarget: PropTypes.func.isRequired,
+};
 
 const OutlinesPanel = ({ isTest = false }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL));
@@ -60,16 +121,46 @@ const OutlinesPanel = ({ isTest = false }) => {
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const outlinesPromiseRef = useRef(null);
   const nextPathRef = useRef(null);
   const TOOL_NAME = 'OutlineDestinationCreateTool';
   const tool = core.getTool(TOOL_NAME);
   const panelRef = useRef();
+  const outlineScrollParentRef = useRef(null);
+
+  useEffect(() => {
+    if (!documentLoaded && outlinesPromiseRef.current) {
+      outlinesPromiseRef.current.reject();
+      outlinesPromiseRef.current = null;
+    }
+  }, [documentLoaded]);
 
   useEffect(() => {
     if (outlinesNotLoaded && documentLoaded) {
-      core.getOutlines((outlines) => {
-        dispatch(actions.setOutlines(outlines));
+      const outlinesPromise = {};
+      outlinesPromise.promise = new Promise((resolve) => {
+        let isComplete = false;
+        const onPromiseCompletion = () => {
+          if (!isComplete) {
+            isComplete = true;
+            outlinesPromiseRef.current = null;
+            resolve();
+          }
+        };
+
+        outlinesPromise.resolve = onPromiseCompletion;
+        outlinesPromise.reject = onPromiseCompletion;
+
+        core.getOutlines((outlines) => {
+          if (isComplete) {
+            return;
+          }
+          outlinesPromiseRef.current = null;
+          dispatch(actions.setOutlines(outlines));
+          resolve();
+        });
       });
+      outlinesPromiseRef.current = outlinesPromise;
     }
   }, [outlinesNotLoaded, documentLoaded]);
 
@@ -287,6 +378,22 @@ const OutlinesPanel = ({ isTest = false }) => {
     dispatch(actions.showWarningMessage(confirmationWarning));
   };
 
+  const virtuosoComponents = useMemo(
+    () => createOutlinesPanelComponents(outlineScrollParentRef),
+    [outlineScrollParentRef]
+  );
+
+  const renderOutlineItem = useCallback((index, outline) => (
+    <OutlineListItem
+      key={outlineUtils.getOutlineId(outline)}
+      outline={outline}
+      setSelectedOutlines={setSelectedOutlines}
+      moveOutlineInward={moveOutlineInward}
+      moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+      moveOutlineAfterTarget={moveOutlineAfterTarget}
+    />
+  ), [moveOutlineAfterTarget, moveOutlineBeforeTarget, moveOutlineInward, setSelectedOutlines]);
+
   if (isDisabled) {
     return null;
   }
@@ -349,10 +456,11 @@ const OutlinesPanel = ({ isTest = false }) => {
             renameOutline,
             updateOutlineDest,
             removeOutlines,
+            outlineScrollParentRef,
           }}
         >
           <DndProvider backend={isMobileDevice ? TouchBackend : HTML5Backend}>
-            <OutlinesDragLayer/>
+            <OutlinesDragLayer />
 
             <div className="bookmark-outline-row">
               {!isAddingNewOutline && (outlinesNotLoaded || outlines.length === 0) &&
@@ -367,26 +475,14 @@ const OutlinesPanel = ({ isTest = false }) => {
                   />
                 </DataElementWrapper>
               )}
-              <Virtuoso className={classNames({ 'small-outlines-list': isAddingNewOutline })} data={outlines || []} itemContent={(index, outline) => (
-                <Outline
-                  key={outlineUtils.getOutlineId(outline)}
-                  outline={outline}
-                  setMultiSelected={(path, value) => {
-                    if (selectedOutlines.find((outline) => outline === path)) {
-                      if (!value) {
-                        setSelectedOutlines(selectedOutlines.filter((outline) => outline !== path));
-                      }
-                    } else {
-                      if (value) {
-                        setSelectedOutlines([...selectedOutlines, path]);
-                      }
-                    }
-                  }}
-                  moveOutlineInward={moveOutlineInward}
-                  moveOutlineBeforeTarget={moveOutlineBeforeTarget}
-                  moveOutlineAfterTarget={moveOutlineAfterTarget}
-                />
-              )} initialItemCount={isTest ? outlines?.length : undefined}/>
+              <Virtuoso
+                className={classNames({ 'small-outlines-list': isAddingNewOutline })}
+                data={outlines || []}
+                components={virtuosoComponents}
+                computeItemKey={(_, outline) => outlineUtils.getOutlineId(outline)}
+                itemContent={renderOutlineItem}
+                initialItemCount={isTest ? outlines?.length : undefined}
+              />
             </div>
           </DndProvider>
 

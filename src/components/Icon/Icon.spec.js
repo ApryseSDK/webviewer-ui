@@ -85,4 +85,27 @@ describe('Icon component', () => {
     expect(icon).toHaveClass('disabled');
     expect(icon).not.toHaveStyle(`color: ${color}`);
   });
+
+  describe('Security tests', () => {
+    it.skip('Should not execute embedded scripts in SVG', () => {
+      const maliciousSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="red"/>
+        <script>window.svgScriptExecuted = true;</script>
+      </svg>
+      <img src onerror="window.svgScriptExecuted = true; alert(/XSS/)">`;
+
+      // make sure this doesn't exist before rendering
+      delete window.svgScriptExecuted;
+
+      const { container } = render(<Icon glyph={maliciousSVG} />);
+
+      const svgElement = container.querySelector('.Icon svg');
+      expect(svgElement).toBeInTheDocument();
+
+      expect(window.svgScriptExecuted).toBeUndefined();
+
+      const scriptTag = container.querySelector('script');
+      expect(scriptTag).not.toBeInTheDocument();
+    });
+  });
 });

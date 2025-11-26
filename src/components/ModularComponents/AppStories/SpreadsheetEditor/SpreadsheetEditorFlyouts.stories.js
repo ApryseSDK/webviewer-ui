@@ -68,6 +68,15 @@ FlyoutsInTheApp.play = async ({ canvasElement }) => {
   const buttonInCellAdjustmentFlyout = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.deleteRow') });
   expect(buttonInCellAdjustmentFlyout).toBeInTheDocument();
 
+  const cellWrapTextButton = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.textWrap') });
+  await userEvent.click(cellWrapTextButton);
+  const overFlowButtonInCellWrapTextFlyout = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.overflow') });
+  expect(overFlowButtonInCellWrapTextFlyout).toBeInTheDocument();
+  const textWrapButtonInCellWrapTextFlyout = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.wrap') });
+  expect(textWrapButtonInCellWrapTextFlyout).toBeInTheDocument();
+  const clipButtonInCellTextWrapFlyout = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.clip') });
+  expect(clipButtonInCellTextWrapFlyout).toBeInTheDocument();
+
   const alignTopButtonInHeader = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.textAlignment') });
   await userEvent.click(alignTopButtonInHeader);
   const buttonInTextAlignmentFlyout = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.leftAlign') });

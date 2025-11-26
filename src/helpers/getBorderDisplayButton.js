@@ -13,6 +13,7 @@ import { CELL_BORDER_BUTTONS } from 'src/constants/customizationVariables';
  * @property {boolean} Inside
  * @property {boolean} Vertical
  * @property {boolean} Horizontal
+ * @ignore
  */
 
 /**

@@ -28,6 +28,11 @@ const initialState = {
       defaultUnit: '',
     },
     selectedScale: { pageScale: { value: 1, unit: 'in' }, worldScale: { value: 1, unit: 'in' }, toString: () => '1 in = 1 in scale' },
+    toolButtonObjects: {
+      'AnnotationCreateDistanceMeasurement': {
+        dataElement: 'distanceMeasurementToolButton'
+      }
+    },
   }
 };
 
@@ -56,7 +61,7 @@ jest.mock('core', () => ({
 
 const props = {
   annotations: [],
-  selectedTool: undefined,
+  selectedTool: { name: 'AnnotationCreateDistanceMeasurement' },
 };
 
 // Helper function that allows us to inject different context scenarios to test with

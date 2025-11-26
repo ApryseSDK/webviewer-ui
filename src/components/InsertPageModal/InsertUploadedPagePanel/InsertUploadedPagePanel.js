@@ -24,7 +24,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumberToInsertAt, setPageNumberToInsertAt] = useState([insertNewPageIndexes[0]]);
   const [insertAbove, setInsertAbove] = useState(true);
-  const [pageNumberError, setPageNumberError] = useState('');
+  const [hasPageNumberError, setHasPageNumberError] = useState(false);
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
 
   const pageInputBlurHandler = (pageNumbers) => {
     if (pageNumbers.length > 0) {
-      setPageNumberError(null);
+      setHasPageNumberError(false);
       setPageNumberToInsertAt(pageNumbers);
     }
   };
@@ -90,10 +90,8 @@ const InsertUploadedPagePanel = React.forwardRef(({
     closeModalWarning();
   };
 
-  const handlePageNumberError = (pageNumber) => {
-    if (pageNumber) {
-      setPageNumberError(`${t('message.errorPageNumber')} ${loadedDocumentPageCount}`);
-    }
+  const handlePageNumberError = () => {
+    setHasPageNumberError(true);
   };
 
   return (
@@ -130,7 +128,6 @@ const InsertUploadedPagePanel = React.forwardRef(({
                 onSelectedPageNumbersChange={pageInputBlurHandler}
                 onBlurHandler={setPageNumberToInsertAt}
                 onError={handlePageNumberError}
-                pageNumberError={pageNumberError}
               />
             </div>
           </div>
@@ -152,7 +149,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
           className="modal-btn"
           onClick={insertPagesHandler}
           label={t('insertPageModal.button')}
-          disabled={getSelectedPages().length === 0 || isLoading || pageNumberToInsertAt.length === 0 || pageNumberError}
+          disabled={getSelectedPages().length === 0 || isLoading || pageNumberToInsertAt.length === 0 || hasPageNumberError}
         />
       </div>
     </div>

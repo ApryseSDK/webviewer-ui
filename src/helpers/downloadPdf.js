@@ -15,6 +15,7 @@ import { workerTypes } from 'constants/types';
 import { isOfficeEditorMode, isSpreadsheetEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
+import { getDownloadFilename, getDocumentFileExtension } from './downloadHelper';
 
 let isDownloaded = false;
 let previousWatermarkSettings = { };
@@ -359,7 +360,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           await new Promise((resolve) => {
             const key = mapAnnotationToKey(annotation);
             const colorProperty = colorMap[key] && colorMap[key].iconColor;
-            const color = annotation[colorProperty || 'StrokeColor'].toString();
+            const color = annotation[colorProperty || 'StrokeColor']?.toString();
             const iconKey = getDataWithKey(key).icon;
             // eslint-disable-next-line global-require,import/no-dynamic-require
             const icon = require(`../../assets/icons/${iconKey}.svg`);
@@ -551,27 +552,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       options.includeAnnotations = false;
     }
 
-    const getDownloadFilename = (name, extension) => {
-      if (!name.toLowerCase().endsWith(extension)) {
-        return `${name}${extension}`;
-      }
-      return name;
-    };
-
-    const extension = doc.getFilename().split('.').pop()?.toLowerCase() || '';
-    const docType = doc?.getType();
-
-    const isNotPDF =
-      docType?.includes('video') ||
-      docType === 'audio' ||
-      docType === workerTypes.OFFICE ||
-      docType === workerTypes.SPREADSHEET_EDITOR ||
-      isOfficeEditorMode();
-
-    const shouldUseOriginalExtension = isNotPDF && !convertToPDF;
-    const desiredExtension = shouldUseOriginalExtension ? `.${extension}` : '.pdf';
-
-    const downloadName = getDownloadFilename(filename, desiredExtension);
+    const extension = getDocumentFileExtension(doc);
+    const downloadName = getDownloadFilename(filename, doc, options.downloadType);
 
     // Cloning the options object to be able to delete the customDocument property if needed.
     // doc.getFileData(options) will throw an error if this customDocument property is passed in

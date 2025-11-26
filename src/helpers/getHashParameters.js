@@ -18,43 +18,24 @@ const paramCorrections = {
   'did': 'documentId',
   'toolbar': 'showToolbarControl',
 };
-const paramsToStringify = ['initialDoc'];
+
+const paramsRequiringJSONFormat = new Set(['initialDoc']);
+
+const getAttributeValue = (param) => {
+  const correctedParam = paramCorrections[param] ? paramCorrections[param] : param;
+  const instanceNode = getInstanceNode();
+  if (!instanceNode) {
+    return undefined;
+  }
+
+  const attributeValue = instanceNode.getAttribute(correctedParam);
+
+  return normalizeAttributeValue(attributeValue, correctedParam);
+};
 
 export default window.isApryseWebViewerWebComponent ? (param, defaultValue = false) => {
   const defaultType = typeof defaultValue;
-  const correctedParam = paramCorrections[param] ? paramCorrections[param] : param;
-
-  let val = getInstanceNode().getAttribute(correctedParam);
-  if (correctedParam === 'initialDoc' && val) {
-    // If initialDoc is string with commas,
-    // we will split it and turn it to array
-    const filesArray = val.split(',');
-    const resultFilesArray = [];
-    let currentFile = '';
-
-    for (let file of filesArray) {
-      currentFile += (currentFile ? ',' : '') + file;
-
-      // Check if the filename has query parameters attached
-      // E.g. "http://website.com/path/file.pdf?foo=bar"
-      if (/\?[a-zA-Z0-9_-]+=\w+/.test(file)) {
-        file = file.split('?')[0];
-      }
-
-      if (/\.\w{2,4}$/.test(file)) {  // Check if part ends with an extension (e.g. .pdf, .docx)
-        resultFilesArray.push(currentFile);
-        currentFile = ''; // Reset for the next file
-      }
-    }
-    val = resultFilesArray;
-    if (val && val.length === 1) {
-      val = val[0];
-    }
-  }
-  // Need to stringify because the Core function returns a string as well
-  if (val && paramsToStringify.includes(correctedParam)) {
-    return JSON.stringify(val);
-  }
+  let val = getAttributeValue(param);
 
   if (defaultType === 'boolean' && !isUndefined(val)) {
     const value = val;
@@ -67,3 +48,28 @@ export default window.isApryseWebViewerWebComponent ? (param, defaultValue = fal
   }
   return val || defaultValue;
 } : window.Core.getHashParameter;
+
+function normalizeAttributeValue(value, param) {
+  if (isUndefined(value) || value === null) {
+    return undefined;
+  }
+
+  if (Array.isArray(value)) {
+    return JSON.stringify(value);
+  }
+
+  const stringValue = `${value}`.trim();
+  if (!stringValue) {
+    return stringValue;
+  }
+
+  try {
+    JSON.parse(stringValue);
+    return stringValue;
+  } catch (error) {
+    if (paramsRequiringJSONFormat.has(param)) {
+      return JSON.stringify(stringValue);
+    }
+    return stringValue;
+  }
+}

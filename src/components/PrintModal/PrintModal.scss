@@ -95,15 +95,16 @@
       padding-inline-end: 0px;
     }
 
-    .print-quality-section-label {
+    label.print-quality-section-label {
       padding: 0;
       margin-bottom: 8px;
     }
 
     #printQualityOptions {
+      margin-top: 8px;
+      
       button.Dropdown {
         height: 32px;
-        margin-top: 8px;
       }
 
       &.Dropdown__wrapper {

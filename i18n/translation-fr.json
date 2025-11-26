@@ -345,11 +345,15 @@
     "pageNum": "Page",
     "viewBookmark": "Afficher le signet sur la page",
     "error": "Erreur",
-    "errorPageNumber": "Numéro de page invalide. La limite est",
+    "errorPageNumberPart1": "Numéro de page invalide.",
+    "errorPageNumberPart2": "La limite est",
     "errorBlankPageNumber": "Veuillez indiquer un numéro de page",
     "errorLoadingDocument": "Un problème est survenu lors de la lecture de ce document et certaines pages peuvent ne pas s'afficher. Cela indique que le document est peut-être corrompu. Le nombre total de pages est de {{totalPageCount}} et le nombre de pages affichées est de {{displayedPageCount}}.",
     "noRevisions": "Ce document n'a aucune révision.",
-    "listEmptyValue": "Un ou plusieurs champs ont une valeur vide."
+    "listEmptyValue": "Un ou plusieurs champs ont une valeur vide.",
+    "listDuplicateValue": "Plusieurs champs ont les valeurs suivantes :",
+    "networkError": "Un problème est survenu lors du chargement de ce composant. Veuillez vérifier votre connexion réseau et actualiser la page.",
+    "refreshPage": "Veuillez vérifier votre connexion réseau et actualiser la page."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Taille du texte"
     },
     "shared": {
+      "sheetIndex": "Feuille",
       "page": "Page",
       "precision": "Précision",
       "enableSnapping": "Activer le magnétisme pour les outils de mesure"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Supprimer la page",
-      "deleteMessage": "Etes-vous sûr de vouloir supprimer la ou les pages sélectionnées ? Cela ne peut pas être annulé.",
+      "deleteMessage": "Êtes-vous sûr de vouloir supprimer la ou les pages sélectionnées ? Cette action est irréversible.",
       "deleteLastPageMessage": "Il ne resterait aucune page. Veuillez laisser au moins une page"
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Le nom de la feuille ne peut pas être vide. Veuillez saisir un nom."
     },
     "sheetTabDeleteMessage": {
-      "title": "Modifier l'avertissement",
+      "title": "Supprimer la feuille",
       "message": "Etes-vous sûr de vouloir supprimer cette feuille ?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Supprimer le tableau",
     "deleted": "Supprimé :",
     "added": "Ajoutée:",
+    "formatted": "Formaté :",
     "editing": "Modification",
     "editingDescription": "Modifier le document",
     "reviewing": "Révision",
@@ -1520,6 +1526,10 @@
     "horizontal": "bordure horizontale",
     "none": "Pas de frontières",
     "borders": "Frontières",
+    "textWrap": "Habillage du texte",
+    "wrap": "Envelopper",
+    "overflow": "Débordement",
+    "clip": "Agrafe",
     "fontSize": {
       "dropdownLabel": "Taille de la police"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "Filigrane",
     "addWatermark": "Ajouter un filigrane",
     "save": "Enregistrer le fichier",
-    "pageError": "Veuillez saisir une plage comprise entre 1 et ",
     "fileNameCannotBeEmpty": "Le nom du fichier ne peut pas être vide"
   },
   "filePicker": {

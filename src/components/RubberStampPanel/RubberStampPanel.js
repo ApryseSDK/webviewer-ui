@@ -18,6 +18,7 @@ import CustomRubberStamps from './CustomRubberStamps';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import PropTypes from 'prop-types';
+import { getEventHandler } from 'helpers/fireEvent';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
@@ -66,9 +67,9 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
       }
     };
 
-    window.addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     return () => {
-      window.removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+      getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     };
   }, []);
 

@@ -1,5 +1,6 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
@@ -8,7 +9,11 @@ import ModalWrapper from 'components/ModalWrapper';
 import Dropdown from 'components/Dropdown';
 import Choice from 'components/Choice';
 import Input from 'components/Input';
-import { focusContent } from 'helpers/officeEditor';
+import {
+  focusContent,
+  formatToDecimalString,
+  convertBetweenUnits,
+} from 'helpers/officeEditor';
 import { useOfficeEditorColumnsModal } from 'hooks/useOfficeEditorColumnsModal';
 import {
   OFFICE_EDITOR_TRANSLATION_PREFIX,
@@ -19,23 +24,62 @@ import {
 import './OfficeEditorColumnsModal.scss';
 
 const OfficeEditorColumnsModal = () => {
+  const currentUnit = useSelector(selectors.getOfficeEditorUnitMeasurement);
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const columnTranslation = t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}column`);
 
   const {
     columnAmount,
-    inputColumns,
+    columns,
     equalColumns,
     maxAllowedColumns,
-    currentUnit,
-    handleColumnAmountChange,
-    handleColumnChange,
-    handleColumnBlur,
-    handleColumnAmountBlur,
+    commitColumnAmount,
+    changeColumnAmount,
+    commitColumnValue,
     toggleEqualColumns,
-    onApply,
+    commitColumnSettings,
   } = useOfficeEditorColumnsModal();
+
+  const [displayColumns, setDisplayColumns] = useState([]);
+
+  const convertInputToPoints = (numericValue) => {
+    return convertBetweenUnits(numericValue, currentUnit, LAYOUT_UNITS.PHYSICAL_POINT);
+  };
+
+  const formatColumnsForDisplay = (pointColumns) => pointColumns.map((column) => ({
+    width: formatToDecimalString(convertBetweenUnits(column.width, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit)),
+    spacing: formatToDecimalString(convertBetweenUnits(column.spacing, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit)),
+  }));
+
+  useEffect(() => {
+    setDisplayColumns(formatColumnsForDisplay(columns));
+  }, [columns, currentUnit]);
+
+  const handleColumnBlur = (event, index, type) => {
+    const numericValue = Number.parseFloat(event.target.value);
+    if (!Number.isFinite(numericValue)) {
+      setDisplayColumns(formatColumnsForDisplay(columns));
+      return;
+    }
+    const valueInPoints = convertInputToPoints(numericValue);
+    const newColumns = commitColumnValue(valueInPoints, index, type);
+    setDisplayColumns(formatColumnsForDisplay(newColumns));
+  };
+
+  const handleColumnChange = (event, index, type) => {
+    const { value } = event.target;
+    // Use functional state update so we always work with the latest displayColumns
+    // (blur/unit changes enqueue updates too, so a closed-over array could be stale).
+    setDisplayColumns((prevColumns) => {
+      const nextColumns = [...prevColumns];
+      nextColumns[index] = {
+        ...nextColumns[index],
+        [type]: value,
+      };
+      return nextColumns;
+    });
+  };
 
   const handleUnitChange = (unit) => dispatch(actions.setOfficeEditorUnitMeasurement(unit));
   const closeModal = () => dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_COLUMNS_MODAL));
@@ -44,15 +88,14 @@ const OfficeEditorColumnsModal = () => {
     focusContent();
   };
   const applyAndClose = async () => {
-    onApply();
+    commitColumnSettings();
     closeModal();
   };
 
   const inputElements = Object.values(COLUMN_INPUT_TYPES).map((inputType) => ({
     id: `${inputType}ColumnInput`,
     label: t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}columnsModal.${inputType}`),
-    onChange: (value, index) => handleColumnChange(value, index, inputType),
-    onBlur: (value, index) => handleColumnBlur(value, index, inputType),
+    onBlur: (event, index) => handleColumnBlur(event, index, inputType),
     type: inputType,
   }));
 
@@ -71,8 +114,8 @@ const OfficeEditorColumnsModal = () => {
             <Input
               type='number'
               id='columnAmountInput'
-              onBlur={(e) => handleColumnAmountBlur(e.target.valueAsNumber)}
-              onChange={(e) => handleColumnAmountChange(e.target.value)}
+              onBlur={(e) => commitColumnAmount(e.target.valueAsNumber)}
+              onChange={(e) => changeColumnAmount(e.target.value)}
               value={columnAmount}
               min='1'
               max={maxAllowedColumns}
@@ -106,25 +149,25 @@ const OfficeEditorColumnsModal = () => {
               <div className='flex-third'>{t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}columnsModal.spacing`)}</div>
             </div>
             <div className='columns-container'>
-              {inputColumns.map((column, columnIndex) => {
+              {displayColumns.map((column, columnIndex) => {
                 const columnNumber = columnIndex + 1;
                 return <div key={columnNumber} className='row'>
                   <div className='row-label flex-third'>
                     {columnTranslation} {columnNumber}
                   </div>
                   {inputElements.map((input) => {
-                    const isLastColumn = columnIndex === inputColumns.length - 1;
+                    const isLastColumn = columnIndex === displayColumns.length - 1;
                     const isSpacingInput = input.type === COLUMN_INPUT_TYPES.SPACING;
                     const shouldRender = !(isLastColumn && isSpacingInput);
-                    const shouldDisable = inputColumns.length === 1 || (equalColumns && columnNumber !== 1);
+                    const shouldDisable = displayColumns.length === 1 || (equalColumns && columnNumber !== 1);
                     return shouldRender &&
-                      <div key={`${columnNumber} ${input.id}`} className='input-container flex-third'>
+                      <div key={`${columnNumber}-${input.id}`} className='input-container flex-third'>
                         <Input
                           type='number'
                           id={`${input.id}-${columnNumber}`}
-                          onChange={(e) => input.onChange(e.target.value, columnIndex)}
-                          onBlur={(e) => input.onBlur(e.target.valueAsNumber, columnIndex)}
-                          value={column[input.type]}
+                          value={column?.[input.type] ?? ''}
+                          onBlur={(e) => input.onBlur(e, columnIndex)}
+                          onChange={(e) => handleColumnChange(e, columnIndex, input.type)}
                           aria-label={`${columnTranslation} ${columnNumber} ${input.label}`}
                           disabled={shouldDisable}
                           min='0'

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import StylePanel from './index';
 import core from 'core';
+import i18next from 'i18next';
 
 const getTool = () => ({
   name: 'AnnotationCreateRectangle',
@@ -15,18 +16,12 @@ const getTool = () => ({
   setStyles: jest.fn(),
 });
 
-const mockAnnotation = {
-  ToolName: 'AnnotationCreateRectangle',
-  isContentEditPlaceholder: () => {},
-  'StrokeThickness': 2.5,
-  'Opacity': 1,
-};
-
 jest.mock('core', () => ({
   getDocumentViewer: () => {},
   isFullPDFEnabled: () => false,
   addEventListener: () => {},
   removeEventListener: () => {},
+  canModify: () => true,
   getFormFieldCreationManager: () => ({
     isInFormFieldCreationMode: () => false,
   }),
@@ -40,7 +35,11 @@ jest.mock('core', () => ({
   setAnnotationStyles: jest.fn(),
   getAnnotationManager: () => ({
     redrawAnnotation: () => {},
-  })
+    getGroupAnnotations: () => [],
+  }),
+  getDocument: () => ({
+    getType: () => 'pdf',
+  }),
 }));
 
 const mockInitialState = {
@@ -54,22 +53,45 @@ const mockInitialState = {
   },
 };
 
-const mockStore = configureStore({
-  reducer: () => mockInitialState
+const createMockStore = () => configureStore({
+  reducer: () => mockInitialState,
 });
 
 const renderStylePanel = () => {
+  const store = createMockStore();
   render(
-    <Provider store={mockStore}>
+    <Provider store={store}>
       <StylePanel />
     </Provider>
   );
+  return store;
 };
 
 describe('StylePanel', () => {
+  let getSelectedAnnotationsSpy;
+
+  afterEach(async () => {
+    getSelectedAnnotationsSpy?.mockRestore();
+    getSelectedAnnotationsSpy = null;
+    // ensure language is reset to english after each test
+    await act(async () => {
+      await i18next.changeLanguage('en');
+    });
+  });
+
   it('should render correctly when a tool is active', () => {
     renderStylePanel();
     expect(screen.getByText('Rectangle Tool')).toBeInTheDocument();
+  });
+
+  it('should re-render when language changes', async () => {
+    renderStylePanel();
+    expect(await screen.findByText('Rectangle Tool')).toBeInTheDocument();
+
+    await act(async () => {
+      await i18next.changeLanguage('fr');
+    });
+    expect(await screen.findByText('Rectangle Outil')).toBeInTheDocument();
   });
 
   it('triggers toolUpdated event only when user is done dragging slider', () => {
@@ -84,8 +106,11 @@ describe('StylePanel', () => {
   });
 
   it('triggers annotationChanged event only when user is done dragging slider', () => {
-    const getSelectedAnnotationsOverride = () => [mockAnnotation];
-    jest.spyOn(core, 'getSelectedAnnotations').mockImplementation(getSelectedAnnotationsOverride);
+    const mockRectangle = new window.Core.Annotations.RectangleAnnotation();
+    mockRectangle.StrokeThickness = 2.5;
+    mockRectangle.Opacity = 1;
+    const getSelectedAnnotationsOverride = () => [mockRectangle];
+    getSelectedAnnotationsSpy = jest.spyOn(core, 'getSelectedAnnotations').mockImplementation(getSelectedAnnotationsOverride);
     renderStylePanel();
 
     const slider = screen.getByRole('slider', { name: /stroke/i });
@@ -95,5 +120,12 @@ describe('StylePanel', () => {
 
     fireEvent.mouseUp(slider);
     expect(core.setAnnotationStyles).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(slider, { target: { value: 3 } });
+    expect(core.setAnnotationStyles).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(slider);
+    expect(core.setAnnotationStyles).toHaveBeenCalledTimes(2);
+
   });
 });

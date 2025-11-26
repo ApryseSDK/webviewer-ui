@@ -20,6 +20,7 @@ const initialState = {
     colors: [],
     activeToolName: '',
     snapMode: {},
+    customColors: [],
   }
 };
 
@@ -37,6 +38,8 @@ const StylePickerWithRedux = (props) => (
 jest.mock('core', () => ({
   getTool: () => '',
   addEventListener: () => { },
+  getType: () => '',
+  getDocument: () => ({ getType: () => 'pdf' })
 }));
 
 const style = {

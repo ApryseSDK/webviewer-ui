@@ -345,10 +345,15 @@
     "pageNum": "עמוד",
     "viewBookmark": "הצג סימניה בדף",
     "error": "שגיאה",
-    "errorPageNumber": "מספר עמוד לא חוקי. המגבלה היא",
+    "errorPageNumberPart1": "מספר עמוד לא חוקי.",
+    "errorPageNumberPart2": "הגבול הוא",
     "errorBlankPageNumber": "אנא ציין מספר עמוד",
     "errorLoadingDocument": "אירעה בעיה בקריאת מסמך זה וייתכן שחלק מהדפים לא יוצגו. משמעות הדבר היא שהמסמך עלול להיות פגום. מספר הדפים הכולל הוא {{totalPageCount}} ומספר הדפים המוצגים הוא {{displayedPageCount}}.",
-    "noRevisions": "למסמך זה אין תיקונים."
+    "noRevisions": "למסמך זה אין תיקונים.",
+    "listEmptyValue": "שדה אחד או יותר מכילים ערך ריק.",
+    "listDuplicateValue": "שדות מרובים מכילים את הערכים הבאים:",
+    "networkError": "משהו השתבש בעת טעינת רכיב זה. אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
+    "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף."
   },
   "option": {
     "type": {
@@ -897,7 +902,7 @@
       "message": "שם הגיליון אינו יכול להיות ריק. אנא הזן שם."
     },
     "sheetTabDeleteMessage": {
-      "title": "אזהרת עריכה",
+      "title": "מחיקת גיליון",
       "message": "האם אתה בטוח שברצונך למחוק את הגיליון הזה?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "מחיקת טבלה",
     "deleted": "נמחק:",
     "added": "נוסף:",
+    "formatted": "מעוצב:",
     "editing": "עריכה",
     "editingDescription": "עריכת מסמך",
     "reviewing": "סקירה",
@@ -1520,13 +1526,18 @@
     "horizontal": "גבול אופקי",
     "none": "ללא גבולות",
     "borders": "גבולות",
+    "textWrap": "גלישת טקסט",
+    "wrap": "לַעֲטוֹף",
+    "overflow": "גְלִישָׁה",
+    "clip": "לְקַצֵץ",
     "fontSize": {
       "dropdownLabel": "גודל גופן"
     },
     "fontFamily": {
       "dropdownLabel": "משפחת גופנים"
     },
-    "blankSheet": "גיליון ריק"
+    "blankSheet": "גיליון ריק",
+    "insertImage": "הכנס תמונה"
   },
   "insertPageModal": {
     "title": "הוסף עמוד חדש",
@@ -1610,7 +1621,6 @@
     "watermark": "סימן מים",
     "addWatermark": "הוסף סימן מים",
     "save": "שמור קובץ",
-    "pageError": "אנא הזן טווח בין 1 -",
     "fileNameCannotBeEmpty": "שם הקובץ אינו יכול להיות ריק"
   },
   "filePicker": {

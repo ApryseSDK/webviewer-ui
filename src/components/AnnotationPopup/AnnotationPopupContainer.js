@@ -43,6 +43,7 @@ const propTypes = {
   stylePopupRepositionFlag: PropTypes.bool,
   setStylePopupRepositionFlag: PropTypes.func,
   closePopup: PropTypes.func,
+  widgetThatOpenedPopupRef: PropTypes.object,
 };
 
 const AnnotationPopupContainer = ({
@@ -61,6 +62,7 @@ const AnnotationPopupContainer = ({
   stylePopupRepositionFlag,
   setStylePopupRepositionFlag,
   closePopup,
+  widgetThatOpenedPopupRef,
 }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP));
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.ANNOTATION_POPUP));
@@ -223,6 +225,39 @@ const AnnotationPopupContainer = ({
     });
   }, [tabManager, focusedAnnotation, tabs, isMultiTab]);
 
+  useEffect(() => {
+    const popup = popupRef.current;
+    if (!popup) {
+      return;
+    }
+    if (widgetThatOpenedPopupRef?.current) {
+      const associatedSignatureAnnotation = widgetThatOpenedPopupRef.current.getAssociatedSignatureAnnotation();
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape' && isOpen) {
+          event.preventDefault();
+          event.stopPropagation();
+          if (associatedSignatureAnnotation === focusedAnnotation) {
+            annotManager.deselectAnnotation(focusedAnnotation, activeDocumentViewerKey);
+          }
+          closePopup();
+        }
+        if (canModify && (event.key === 'Delete' || event.key === 'Backspace') && isOpen) {
+          event.preventDefault();
+          event.stopPropagation();
+          if (widgetThatOpenedPopupRef?.current?.isSignedByAppearance()) {
+            widgetThatOpenedPopupRef.current.clearSignature(annotManager);
+          } else if (associatedSignatureAnnotation) {
+            annotManager.deleteAnnotation(associatedSignatureAnnotation, activeDocumentViewerKey);
+          }
+          closePopup();
+        }
+      };
+
+      popup.addEventListener('keydown', handleKeyDown, true);
+      return () => popup.removeEventListener('keydown', handleKeyDown, true);
+    }
+  }, [popupRef,isOpen, widgetThatOpenedPopupRef, focusedAnnotation, closePopup, annotManager, activeDocumentViewerKey]);
+
   /* ALL REACT HOOKS NEED TO BE BEFORE RENDERING */
   if (isDisabled || !focusedAnnotation) {
     return null;
@@ -276,6 +311,13 @@ const AnnotationPopupContainer = ({
       closePopup();
     }
   };
+
+  /* ALIGN */
+  const showAlignButton = (
+    canModify
+    && multipleAnnotationsSelected
+    && !isMobile()
+  );
 
   const onOpenAlignmentModal = () => {
     dispatch(actions.openElement(DataElements.ANNOTATION_ALIGNMENT_POPUP));
@@ -331,9 +373,11 @@ const AnnotationPopupContainer = ({
   };
 
   /* CLEAR APPEARANCE SIGNATURE */
+  const showClearSignatureButton = canModify && isAppearanceSignature && !showFormFieldButton;
+
   const onClearAppearanceSignature = () => {
     focusedAnnotation.clearSignature(annotManager);
-    dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
+    closePopup();
   };
 
   /* REDACTION */
@@ -386,7 +430,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* DELETE ANNOTATION */
-  const showDeleteButton = canModify;
+  const showDeleteButton = canModify && !showClearSignatureButton;
 
   const openContentEditDeleteWarningModal = () => {
     const message = t('option.contentEdit.deletionModal.message');
@@ -426,7 +470,8 @@ const AnnotationPopupContainer = ({
   ];
 
   const showLinkButton = (
-    !toolsThatCantHaveLinks.includes(focusedAnnotation.ToolName)
+    canModify
+    && !toolsThatCantHaveLinks.includes(focusedAnnotation.ToolName)
     && !includesFormFieldAnnotation
     && !focusedAnnotation.isContentEditPlaceholder()
     // TODO(Adam): Update this once SoundAnnotation tool is created.
@@ -533,7 +578,7 @@ const AnnotationPopupContainer = ({
       onEditContent={onEditContent}
       openContentEditDeleteWarningModal={openContentEditDeleteWarningModal}
 
-      isAppearanceSignature={isAppearanceSignature}
+      showClearSignatureButton={showClearSignatureButton}
       onClearAppearanceSignature={onClearAppearanceSignature}
 
       showRedactionButton={showRedactionButton}
@@ -568,6 +613,7 @@ const AnnotationPopupContainer = ({
       isStylePanelOpen={isStylePanelOpen}
       isInReadOnlyMode={isInReadOnlyMode}
 
+      showAlignButton={showAlignButton}
       onOpenAlignmentModal={onOpenAlignmentModal}
     />
   );

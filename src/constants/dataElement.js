@@ -109,6 +109,7 @@ const DataElements = {
   MULTITABS_EMPTY_PAGE: 'multiTabsEmptyPage',
 
   // Overlays
+  SCALE_OVERLAY: 'scaleOverlay',
   SCALE_OVERLAY_CONTAINER: 'scaleOverlayContainer',
   MEASUREMENT_OVERLAY: 'measurementOverlay',
   VIEW_CONTROLS_OVERLAY: 'viewControlsOverlay',
@@ -380,6 +381,10 @@ const DataElements = {
   // Cell Adjustment
   CELL_ADJUSTMENT_BUTTON: 'cellAdjustmentButton',
   CELL_ADJUSTMENT_FLYOUT: 'cellAdjustmentFlyout',
+
+  // Cell Text Wrap
+  CELL_TEXT_WRAP_BUTTON: 'cellTextWrapButton',
+  CELL_TEXT_WRAP_FLYOUT: 'cellTextWrapFlyout',
 
   // Rubber Stamp Panel
   CREATE_RUBBER_STAMP_BUTTON_WRAP: 'createRubberStampButtonWrap',

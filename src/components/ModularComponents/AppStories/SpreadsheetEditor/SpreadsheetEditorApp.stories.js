@@ -29,7 +29,12 @@ const editingModeTemplate = {
       'newSpreadsheetButton': { disabled: false },
       'logoBar': { disabled: true },
     },
-    isSpreadsheetEditorModeEnabled: true
+    isSpreadsheetEditorModeEnabled: true,
+    genericPanels: [{
+      dataElement: 'searchPanel',
+      render: 'searchPanel',
+      location: 'right',
+    }]
   },
   spreadsheetEditorRedux: {
     editMode: 'editing',
@@ -62,11 +67,6 @@ const editingModeTemplate = {
 };
 
 export const EditingModeUI = createTemplate(editingModeTemplate);
-
-export const EditingModeHeaderKeyboardNavigationTest = createTemplate(editingModeTemplate);
-
-export const moreOptionsFlyoutTest = createTemplate(editingModeTemplate);
-
 EditingModeUI.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
@@ -80,6 +80,7 @@ EditingModeUI.play = async ({ canvasElement }) => {
   expect(containerRect.height + bottomHeaders).toEqual(contentRect.height);
 };
 
+export const EditingModeHeaderKeyboardNavigationTest = createTemplate(editingModeTemplate);
 EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
@@ -120,10 +121,10 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
     { role: 'button', name: getTranslatedText('spreadsheetEditor.cellAdjustment') },
     { role: 'button', name: getTranslatedText('spreadsheetEditor.cellBorderStyle') },
     { role: 'button', name: getTranslatedText('spreadsheetEditor.merge') },
+    { role: 'button', name: getTranslatedText('spreadsheetEditor.textWrap') },
     { role: 'button', name: getTranslatedText('spreadsheetEditor.currencyFormat') },
     { role: 'button', name: getTranslatedText('spreadsheetEditor.percentFormat') },
     { role: 'button', name: getTranslatedText('spreadsheetEditor.decreaseDecimalFormat') },
-    { role: 'button', name: getTranslatedText('spreadsheetEditor.increaseDecimalFormat') },
     { role: 'button', name: getTranslatedText('action.more') },
   ];
 
@@ -186,7 +187,8 @@ export const ViewOnlyUI = createTemplate({
   },
 });
 
-moreOptionsFlyoutTest.play = async ({ canvasElement }) => {
+export const MoreOptionsFlyoutTest = createTemplate(editingModeTemplate);
+MoreOptionsFlyoutTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   const moreButton = await canvas.findByRole('button', { name: getTranslatedText('action.more') });

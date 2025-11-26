@@ -345,11 +345,15 @@
     "pageNum": "Seite",
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler",
-    "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
+    "errorPageNumberPart1": "Ungültige Seitenzahl.",
+    "errorPageNumberPart2": "Limit ist",
     "errorBlankPageNumber": "Bitte geben Sie eine Seitenzahl an",
     "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}.",
     "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf.",
-    "listEmptyValue": "Ein oder mehrere Felder haben einen leeren Wert."
+    "listEmptyValue": "Ein oder mehrere Felder haben einen leeren Wert.",
+    "listDuplicateValue": "Mehrere Felder haben die folgenden Werte:",
+    "networkError": "Beim Laden dieser Komponente ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite.",
+    "refreshPage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Textgröße"
     },
     "shared": {
+      "sheetIndex": "Blatt",
       "page": "Seite",
       "precision": "Genauigkeit",
       "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Seite löschen",
-      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden.",
+      "deleteMessage": "Sind Sie sicher, dass Sie die ausgewählten Seiten löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
       "deleteLastPageMessage": "Sie können nicht alle Seiten im Dokument löschen."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Der Blattname darf nicht leer sein. Bitte geben Sie einen Namen ein."
     },
     "sheetTabDeleteMessage": {
-      "title": "Warnung bearbeiten",
+      "title": "Löschblatt",
       "message": "Möchten Sie dieses Blatt wirklich löschen?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Tabelle löschen",
     "deleted": "Gelöscht:",
     "added": "Hinzugefügt: ",
+    "formatted": "Formatiert:",
     "editing": "Bearbeitung",
     "editingDescription": "Dokument bearbeiten",
     "reviewing": "Überprüfung",
@@ -1520,6 +1526,10 @@
     "horizontal": "Horizontaler Rand",
     "none": "Keine Grenzen",
     "borders": "Grenzen",
+    "textWrap": "Textumbruch",
+    "wrap": "Wickeln",
+    "overflow": "Überlauf",
+    "clip": "Clip",
     "fontSize": {
       "dropdownLabel": "Schriftgröße"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "Wasserzeichen",
     "addWatermark": "Wasserzeichen hinzufügen",
     "save": "Datei speichern",
-    "pageError": "Bitte geben Sie einen Bereich zwischen 1 und",
     "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
   },
   "filePicker": {

@@ -90,6 +90,7 @@ function useSearch(activeDocumentViewerKey) {
       if (newActiveSearchResultIndex >= 0) {
         setActiveSearchResult(newActiveSearchResult);
         setActiveSearchResultIndex(newActiveSearchResultIndex);
+        dispatch(actions.setNextResultValue(newActiveSearchResult));
       }
     }
 

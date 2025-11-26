@@ -1,0 +1,19 @@
+@import '../../../constants/styles';
+
+.ErrorToast {
+  position: fixed;
+  max-width: 400px;
+  inset-block-end: 20px;
+  inset-inline-start: calc(50% - 200px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--red);
+  color: white;
+  padding: 16px;
+  font-size: var(--font-size-medium);
+  gap: 8px;
+
+  @media (max-width: 400px) {
+    inset-inline-start: 0;
+  }
+}

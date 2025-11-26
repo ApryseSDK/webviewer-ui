@@ -21,6 +21,7 @@ const ResponsiveContainer = ({
 }) => {
   const animationRequest = useRef(null);
   const isResizingRef = useRef(false);
+  const isViewOnly = useSelector((state) => selectors.isViewOnly(state));
   const enabledItems = useSelector((state) => items.map((item) => {
     if (selectors.isElementDisabled(state, item.dataElement) || selectors.isDisabledViewOnly(state, item.dataElement)) {
       return null;
@@ -55,7 +56,8 @@ const ResponsiveContainer = ({
         const itemToResizeFunc = findItemToResize({
           items: enabledItems,
           freeSpace,
-          headerDirection, parentDataElement,
+          headerDirection,
+          parentDataElement,
         });
         if (itemToResizeFunc) {
           itemToResizeFunc();
@@ -100,7 +102,7 @@ const ResponsiveContainer = ({
         isResizingRef.current = false;
       }
     };
-  }, [items, elementRef?.current, parentDataElement, headerDirection]);
+  }, [items, elementRef?.current, parentDataElement, headerDirection, isViewOnly]);
 
   useEffect(() => {
     resizeResponsively();

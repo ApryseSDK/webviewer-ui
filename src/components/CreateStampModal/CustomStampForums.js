@@ -185,7 +185,7 @@ const CustomStampForums = ({
 
   const handleUsernameCheckbox = () => {
     setUsernameCheckbox(!usernameCheckbox);
-    const txt = updateTimestampLabel(!usernameCheckbox, dateCheckbox, dateTime);
+    const txt = updateTimestampLabel(!usernameCheckbox, (dateCheckbox || timeCheckbox), dateTime);
     setTimestampFormat(txt);
     updateCanvas(stampTextInputValue, txt);
   };

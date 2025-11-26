@@ -345,10 +345,15 @@
     "pageNum": "صفحة",
     "viewBookmark": "عرض الإشارة المرجعية على الصفحة",
     "error": "خطأ",
-    "errorPageNumber": "رقم الصفحة غير صحيح. الحد الأقصى هو",
+    "errorPageNumberPart1": "رقم الصفحة غير صالح.",
+    "errorPageNumberPart2": "الحد هو",
     "errorBlankPageNumber": "الرجاء تحديد رقم الصفحة",
     "errorLoadingDocument": "حدثت مشكلة أثناء قراءة هذا المستند، وقد لا تظهر بعض صفحاته. هذا يشير إلى احتمال تلف المستند. إجمالي عدد الصفحات هو {{totalPageCount}}، وعدد الصفحات المعروضة هو {{displayedPageCount}}.",
-    "noRevisions": "لا يوجد أي تعديلات على هذه الوثيقة."
+    "noRevisions": "لا يوجد أي تعديلات على هذه الوثيقة.",
+    "listEmptyValue": "يحتوي حقل واحد أو أكثر على قيمة فارغة.",
+    "listDuplicateValue": "تحتوي الحقول المتعددة على القيم التالية:",
+    "networkError": "حدث خطأ أثناء تحميل هذا المكوّن. يُرجى التحقق من اتصالك بالشبكة وتحديث الصفحة.",
+    "refreshPage": "يرجى التحقق من اتصال الشبكة لديك وتحديث الصفحة."
   },
   "option": {
     "type": {
@@ -652,7 +657,7 @@
       "size": "مقاس",
       "location": "اختر موقعًا لتحرير العلامات المائية",
       "text": "نص",
-      "style": "تعديل النمط",      
+      "style": "تعديل النمط",
       "resetAllSettings": "إعادة تعيين جميع الإعدادات",
       "font": "الخط",
       "addNew": "إضافة جديد",
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "حذف الصفحات",
-      "deleteMessage": "هل أنت متأكد من أنك تريد حذف الصفحات المحددة؟ لا يمكن التراجع عن هذا الإجراء.",
+      "deleteMessage": "هل أنت متأكد من رغبتك في حذف الصفحات المحددة؟ لا يمكن التراجع عن هذا الإجراء.",
       "deleteLastPageMessage": "لا يمكنك حذف كافة الصفحات في المستند."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "لا يمكن أن يكون إسم الورقة فارغًا. يُرجى إدخال اسم."
     },
     "sheetTabDeleteMessage": {
-      "title": "تعديل التحذير",
+      "title": "حذف الورقة",
       "message": "هل أنت متأكد أنك تريد حذف هذه الورقة؟"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "حذف الجدول",
     "deleted": "تم الحذف:",
     "added": "تمت الإضافة:",
+    "formatted": "مُنسَّق:",
     "editing": "تعديل",
     "editingDescription": "تعديل المستند",
     "reviewing": "المراجعة",
@@ -1520,13 +1526,18 @@
     "horizontal": "الحدود الأفقية",
     "none": "لا حدود",
     "borders": "الحدود",
+    "textWrap": "التفاف النص",
+    "wrap": "طَوّق",
+    "overflow": "فيضان",
+    "clip": "مقطع",
     "fontSize": {
       "dropdownLabel": "حجم الخط"
     },
     "fontFamily": {
       "dropdownLabel": "عائلة الخطوط"
     },
-    "blankSheet": "ورقة عمل فارغة"
+    "blankSheet": "ورقة عمل فارغة",
+    "insertImage": "إدراج الصورة"
   },
   "insertPageModal": {
     "title": "إدراج صفحة جديدة",
@@ -1610,7 +1621,6 @@
     "watermark": "العلامة المائية",
     "addWatermark": "إضافة علامة مائية",
     "save": "حفظ الملف",
-    "pageError": "الرجاء إدخال نطاق بين 1 -",
     "fileNameCannotBeEmpty": "لا يمكن أن يكون اسم الملف فارغًا"
   },
   "filePicker": {

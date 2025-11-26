@@ -29,7 +29,6 @@ const propTypes = {
   isMultiSelectMode: PropTypes.bool,
   isInNotesPanel: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
-  parentScroll: PropTypes.object,
 };
 
 let currId = 0;
@@ -42,7 +41,6 @@ const Note = ({
   handleMultiSelect,
   isCustomPanelOpen,
   shouldHideConnectorLine,
-  parentScroll,
 }) => {
   const {
     isSelected,
@@ -181,6 +179,11 @@ const Note = ({
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
     e && e.stopPropagation();
+
+    const isTextSelected = window.getSelection().toString();
+    if (isTextSelected) {
+      return;
+    }
 
     if (isMultiSelectMode) {
       handleMultiSelect(!isMultiSelected);
@@ -351,7 +354,6 @@ const Note = ({
           annotation={annotation}
           noteContainerRef={containerRef}
           isCustomPanelOpen={isCustomPanelOpen}
-          parentScroll={parentScroll}
         />
       )}
     </div>

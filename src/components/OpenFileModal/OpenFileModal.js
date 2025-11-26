@@ -74,7 +74,8 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
       const document = await core.createDocument(source);
 
       if (document) {
-        await tabManager.addTab(document, {
+        document.unloadResources();
+        await tabManager.addTab(source, {
           extension: _extension,
           filename: _filename,
           setActive: true,

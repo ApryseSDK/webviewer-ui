@@ -2,6 +2,9 @@ import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 import core from 'core';
 import { createMockAppTemplate } from './helpers/appResponsivenessHelpers';
+import { within, expect } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { createTemplate } from 'src/helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/App Responsiveness',
@@ -119,3 +122,35 @@ export const RibbonItemsShouldNotLoop = createMockAppTemplate({
     },
   }
 });
+
+export const ViewOnly = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
+
+ViewOnly.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  window.instance.UI.enableViewOnlyMode();
+
+  const searchButton = await canvas.findByRole('button', { name: getTranslatedText('component.searchPanel') });
+  const commentsButton = await canvas.findByRole('button', { name: getTranslatedText('component.notesPanel') });
+  let moreButton = canvas.queryByRole('button', { name: getTranslatedText('action.more') });
+  await expect(searchButton).toBeVisible();
+  await expect(commentsButton).toBeVisible();
+  await expect(moreButton).toBeNull();
+
+  const appElement = canvasElement.querySelector('.App');
+  appElement.style.width = '375px';
+  appElement.style.height = '667px';
+  window.dispatchEvent(new Event('resize'));
+
+  moreButton = await canvas.findByRole('button', { name: getTranslatedText('action.more') });
+  await expect(moreButton).toBeVisible();
+  await expect(searchButton).toBeVisible();
+  await expect(commentsButton).toBeVisible();
+};
+
+ViewOnly.parameters = {
+  chromatic: {
+    modes: {
+      'Dark theme': { disable: true },
+    },
+  },
+};

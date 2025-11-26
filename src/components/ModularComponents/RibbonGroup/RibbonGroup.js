@@ -51,13 +51,14 @@ const RibbonGroup = (props) => {
   const isRibbonGroupDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const enabledRibbonItems = useSelector((state) => selectors.getEnabledRibbonItems(state));
   const isViewOnly = useSelector(selectors.isViewOnly);
+  const viewOnlyWhitelist = useSelector(selectors.getViewOnlyWhitelist);
 
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
 
   const validatedRibbonItems = useMemo(() => {
     return validateItems(items, enabledRibbonItems.filter((item) => !selectors.isDisabledViewOnly(store.getState(), item)));
-  }, [items, enabledRibbonItems, isViewOnly]);
+  }, [items, enabledRibbonItems, isViewOnly, viewOnlyWhitelist]);
 
   const { setActiveGroupedItemsAndTool } = useRibbonActions(items);
   const elementRef = useRef();

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import getLinkDestination from 'helpers/getLinkDestination';
@@ -13,6 +13,7 @@ export default function useOnLinkAnnotationPopupOpen() {
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
   const [isEnterComponent, setIsEnterComponent] = useState(false);
+  const store = useStore();
 
   const hidePopup = useCallback(_debounce(() => {
     setAnnotation(null);
@@ -40,7 +41,7 @@ export default function useOnLinkAnnotationPopupOpen() {
       }
       const annotations = core.getAnnotationManager(activeDocumentViewerKey).getAnnotationsByMouseEvent(e, true);
       const linkAnnot = annotations.find((annot) => annot instanceof window.Core.Annotations.Link);
-      const contents = getLinkDestination(linkAnnot) || '';
+      const contents = getLinkDestination(linkAnnot, store) || '';
 
       if (contents) {
         setAnnotation(linkAnnot);

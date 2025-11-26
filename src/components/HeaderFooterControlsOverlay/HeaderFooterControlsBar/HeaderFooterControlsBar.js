@@ -11,7 +11,7 @@ import Dropdown from 'components/Dropdown';
 import classNames from 'classnames';
 import core from 'core';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
-import { HEADER_FOOTER_BAR_DEFAULT_POSITION, OfficeEditorEditMode } from 'constants/officeEditor';
+import { HEADER_FOOTER_BAR_DEFAULT_POSITION, OfficeEditorEditMode, EditOperationSource } from 'constants/officeEditor';
 
 import './HeaderFooterControlsBar.scss';
 
@@ -130,7 +130,7 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
 
   useEffect(() => {
     const onLayoutChange = (e) => {
-      if (e.source !== 'headerFooter') {
+      if (e.source !== EditOperationSource.HEADER_FOOTER) {
         return;
       }
       const headerType = officeEditor.getHeaderPageType(pageNumber);

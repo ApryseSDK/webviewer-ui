@@ -46,9 +46,9 @@ $padding-inner: 16px;
       font-size: var(--font-size-medium);
       font-family: var(--font-family);
       font-weight: var(--font-weight-bold);
-      color: var(--gray-9);
+      color: var(--text-color);
       span {
-        color: var(--gray-7);
+        color: var(--faded-text);
       }
     }
 
@@ -64,7 +64,7 @@ $padding-inner: 16px;
         margin-top: 10px;
         font-size: var(--font-size-default);
         font-family: var(--font-family);
-        color: var(--gray-7);
+        color: var(--faded-text);
       }
     }
 

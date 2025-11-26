@@ -11,7 +11,7 @@ import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
 import { SearchWrapper } from './SearchWrapper';
 import useFocusHandler from 'hooks/useFocusHandler';
 import PropTypes from 'prop-types';
-import useKeyboardShortcuts from 'hooks/useKeyboardShortcuts';
+import useKeyboardShortcuts from 'src/hooks/useKeyboardShortcuts';
 
 import './KeyboardShortcutTab.scss';
 

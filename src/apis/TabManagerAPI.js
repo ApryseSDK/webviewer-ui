@@ -38,15 +38,15 @@ const TabManagerAPI = {
    * Delete a tab by id in the UI
    * @method UI.TabManager.deleteTab
    * @param {number} tabId The tab id to be deleted from the tab header
-   * @returns {void}
+   * @returns {Promise<void>}
    * @example
    * WebViewer(...).then(function(instance) {
    *   instance.UI.TabManager.deleteTab(0); // Delete tab id 0
    * });
    */
-  deleteTab(tabId) {
+  async deleteTab(tabId) {
     const tabManager = selectors.getTabManager(this.store.getState());
-    tabManager.deleteTab(tabId);
+    await tabManager.deleteTab(tabId);
   },
 
   /**

@@ -5,12 +5,12 @@ import { setLoadingProgress } from 'actions/internalActions';
 import actions from 'actions';
 import selectors from 'selectors';
 import getHashParameters from 'helpers/getHashParameters';
-import fireEvent from 'helpers/fireEvent';
+import fireEvent, { getEventHandler } from 'helpers/fireEvent';
 import downloadPdf from 'helpers/downloadPdf';
 import Events from 'constants/events';
 import isString from 'lodash/isString';
 import DataElements from 'constants/dataElement';
-import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
+import getRootNode from 'helpers/getRootNode';
 
 const FILE_DATA_OPTIONS = {
   flags: window.Core.SaveOptions.INCREMENTAL,
@@ -131,6 +131,7 @@ export default class TabManager {
   db;
   store;
   useDB;
+  tabLoadPromise;
 
   constructor(docArr, extensionArr, store) {
     this.store = store;
@@ -222,11 +223,8 @@ export default class TabManager {
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
     }
-    if (currentTab) {
-      await core.getDocumentViewer().getAnnotationManager().exportAnnotations();
-      await core.getDocumentViewer().getAnnotationsLoadedPromise();
-    }
-    fireEvent(Events['BEFORE_TAB_CHANGED'], {
+    await this.waitForTabToLoad();
+    await fireEvent(Events['BEFORE_TAB_CHANGED'], {
       currentTab: currentTab ? {
         src: currentTab.src,
         options: currentTab.options,
@@ -240,18 +238,22 @@ export default class TabManager {
         id: newTab.id,
       },
     });
-    // Need this timeout because window.dispatchEvent is synchronous
-    // This will cause the document to be closed if the customer exports an XFDF or runs another async call here
-    // Allow a timeout of 400ms for async calls to finish before closing the document.
-    setTimeout(async () => {
-      if (currentTab) {
-        saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
-        core.closeDocument();
-      }
-      this.store.dispatch(actions.setActiveTab(id));
-      isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
-      await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
-    }, 400);
+    const viewerState = this.getViewerState(state);
+    if (currentTab) {
+      saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
+      await core.closeDocument();
+    }
+    this.store.dispatch(actions.setActiveTab(id));
+    isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
+    this.tabLoadPromise = newTab.load(this.store.dispatch, this.db, viewerState);
+    await this.tabLoadPromise;
+  }
+
+  async waitForTabToLoad() {
+    if (this.tabLoadPromise) {
+      await this.tabLoadPromise;
+      this.tabLoadPromise = null;
+    }
   }
 
   getViewerState = (state) => {
@@ -295,7 +297,7 @@ export default class TabManager {
     this.store.dispatch(actions.showWarningMessage(confirmationWarning));
   }
 
-  deleteTab(id) {
+  async deleteTab(id) {
     const state = this.store.getState();
     const { tabs, activeTab } = state.viewer;
     const tabToDelete = tabs.find((tab) => tab.id === id);
@@ -306,16 +308,22 @@ export default class TabManager {
     } else {
       const [deletedTab] = tabs.filter((tab) => tab.id === id);
       const updatedTabs = tabs.filter((tab) => tab.id !== id);
+      await fireEvent(Events['BEFORE_TAB_DELETED'], {
+        src: deletedTab.src,
+        options: deletedTab.options,
+        id: deletedTab.id,
+      });
       deletedTab.delete(this.db);
+      this.store.dispatch(actions.setTabs(updatedTabs));
       if (id === activeTab && updatedTabs.length > 0) {
-        this.setActiveTab(updatedTabs[0].id);
+        await this.setActiveTab(updatedTabs[0].id);
       } else if (updatedTabs.length === 0) {
-        core.closeDocument();
+        await this.waitForTabToLoad();
+        await core.closeDocument();
         this.store.dispatch(actions.setActiveTab(null));
       }
-      this.store.dispatch(actions.setTabs(updatedTabs));
 
-      fireEvent(Events['TAB_DELETED'], {
+      await fireEvent(Events['TAB_DELETED'], {
         src: deletedTab.src,
         options: deletedTab.options,
         id: deletedTab.id,
@@ -348,7 +356,7 @@ export default class TabManager {
       await this.setActiveTab(tab.id, saveCurrentTabState);
     }
 
-    fireEvent(Events['TAB_ADDED'], {
+    await fireEvent(Events['TAB_ADDED'], {
       src: tab.src,
       options: tab.options,
       id: tab.id,
@@ -421,11 +429,11 @@ export default class TabManager {
       }
     };
 
-    getInstanceNode().addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+    getEventHandler().addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
     documentViewer.addEventListener('pagesUpdated', onPagesUpdated);
 
     const removeListeners = () => {
-      getInstanceNode().removeEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+      getEventHandler().removeEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
       documentViewer.removeEventListener('pagesUpdated', onPagesUpdated);
     };
 
@@ -502,25 +510,26 @@ export class Tab {
   async load(dispatch, db, viewerState) {
     const annotsChanged = (this.saveData.annotInDB || this.saveData.annots);
     this.options.loadAnnotations = !annotsChanged;
-    core.addEventListener('documentUnloaded', async () => {
-      this.restorePageDataOnLoad(viewerState, dispatch);
-      annotsChanged && await this.restoreAnnotDataOnLoad(db);
-    }, { once: true });
+    this.restorePageDataOnLoad(viewerState, dispatch);
+    annotsChanged && await this.restoreAnnotDataOnLoad(db);
     if (this.useDB && this.saveData.docInDB) {
-      const tx = db.transaction('files', 'readonly');
-      const store = tx.objectStore('files');
-      const req = store.get(this.id);
-      if (this.id) {
-        this.options.docId = this.id.toString();
-      }
+      await new Promise((resolve) => {
+        const tx = db.transaction('files', 'readonly');
+        const store = tx.objectStore('files');
+        const req = store.get(this.id);
+        if (this.id) {
+          this.options.docId = this.id.toString();
+        }
 
-      req.onsuccess = async () => {
-        const doc = req.result;
-        loadDocument(dispatch, doc, this.options);
-      };
-      tx.commit();
+        req.onsuccess = async () => {
+          const doc = req.result;
+          await loadDocument(dispatch, doc, this.options);
+          resolve();
+        };
+        tx.commit();
+      });
     } else {
-      loadDocument(dispatch, this.src, this.options);
+      await loadDocument(dispatch, this.src, this.options);
     }
   }
 
@@ -608,14 +617,15 @@ export class Tab {
       this.saveData.zoom && await core.zoomTo(this.saveData.zoom);
       this.saveData.page && await core.setCurrentPage(this.saveData.page);
 
-      fireEvent(Events['AFTER_TAB_CHANGED'], {
+      await fireEvent(Events['AFTER_TAB_CHANGED'], {
         currentTab: this.src ? {
           src: this.src,
           options: this.options,
           id: this.id,
           annotationsChanged: this.changes.annotations,
           hasUnsavedChanges: this.changes.hasUnsavedChanges
-        } : null });
+        } : null
+      });
     };
 
     core.addEventListener('documentLoaded', updateViewer, { once: true });

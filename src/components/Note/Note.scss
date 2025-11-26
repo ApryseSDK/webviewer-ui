@@ -95,6 +95,10 @@
       }
     }
   }
+  
+  .container {
+    pointer-events: auto;
+  }
 
   .text-button {
     color: var(--secondary-button-text);

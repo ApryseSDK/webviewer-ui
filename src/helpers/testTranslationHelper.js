@@ -6,6 +6,7 @@ import i18next from 'i18next';
  */
 
 /**
+ * @ignore
  * Get the translated text for a given translation key
  * @param {string} key - The translation key (e.g., 'action.zoomControls')
  * @param {Object} options - Translation options (optional)

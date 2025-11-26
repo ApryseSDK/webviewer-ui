@@ -345,11 +345,15 @@
     "pageNum": "Halaman",
     "viewBookmark": "Lihat Penanda Halaman pada Halaman",
     "error": "ralat",
-    "errorPageNumber": "Nombor halaman tidak sah. Had ialah",
+    "errorPageNumberPart1": "Nombor halaman tidak sah. ",
+    "errorPageNumberPart2": "Had ialah ",
     "errorBlankPageNumber": "Sila nyatakan nombor halaman",
     "errorLoadingDocument": "Terdapat masalah membaca dokumen ini dan beberapa halaman mungkin tidak dipaparkan. Ini menunjukkan dokumen itu mungkin rosak. Jumlah kiraan halaman ialah {{totalPageCount}} dan nombor halaman yang dipaparkan ialah {{displayedPageCount}}.",
     "noRevisions": "Dokumen ini tidak mempunyai semakan.",
-    "listEmptyValue": "Satu atau lebih medan mempunyai nilai kosong."
+    "listEmptyValue": "Satu atau lebih medan mempunyai nilai kosong.",
+    "listDuplicateValue": "Medan berbilang mempunyai nilai berikut: ",
+    "networkError": "Kesilapan telah berlaku semasa memuatkan komponen ini. Sila semak sambungan rangkaian anda dan muat semula halaman.",
+    "refreshPage": "Sila semak sambungan rangkaian anda dan muat semula halaman."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Saiz Teks"
     },
     "shared": {
+      "sheetIndex": "Lembaran",
       "page": "Halaman",
       "precision": "Ketepatan",
       "enableSnapping": "Dayakan menjentik untuk alat ukuran"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Padam Halaman",
-      "deleteMessage": "Adakah anda pasti mahu memadamkan halaman yang dipilih. Ini tidak boleh dibuat asal.",
+      "deleteMessage": "Adakah anda pasti mahu memadamkan halaman yang dipilih? Ini tidak boleh dibuat asal.",
       "deleteLastPageMessage": "Anda tidak boleh memadam semua halaman dalam dokumen."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Nama helaian tidak boleh kosong. Sila masukkan nama."
     },
     "sheetTabDeleteMessage": {
-      "title": "Edit Amaran",
+      "title": "Padam Helaian",
       "message": "Adakah anda pasti mahu memadamkan helaian ini?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Padamkan Jadual",
     "deleted": "Dipadamkan:",
     "added": "Ditambah:",
+    "formatted": "Diformat: ",
     "editing": "Suntingan",
     "editingDescription": "Edit dokumen",
     "reviewing": "Mengkaji",
@@ -1520,6 +1526,10 @@
     "horizontal": "Sempadan Mendatar",
     "none": "Tiada Sempadan",
     "borders": "Sempadan",
+    "textWrap": "Pembalut Teks",
+    "wrap": "Bungkus",
+    "overflow": "Limpahan",
+    "clip": "Klip",
     "fontSize": {
       "dropdownLabel": "Saiz Font"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "Tera air",
     "addWatermark": "Tambah Tera Air",
     "save": "Simpan fail",
-    "pageError": "Sila masukkan julat antara 1 - ",
     "fileNameCannotBeEmpty": "Nama Fail tidak boleh kosong"
   },
   "filePicker": {

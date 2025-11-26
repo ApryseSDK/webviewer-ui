@@ -38,9 +38,9 @@ const ColorPicker = ({
   const activeToolName = Object.values(window.Core.Tools.ToolNames).includes(activeTool) ? activeTool : window.Core.Tools.ToolNames.EDIT;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [colors] = useSelector((state) => [
-    selectors.getColors(state, activeToolName, type),
-  ]);
+  const defaultColors = useSelector((state) => selectors.getColors(state, activeToolName, type));
+  const customColors = useSelector(selectors.getCustomColors);
+  const colors = Array.from(new Set([...defaultColors, ...customColors]));
   const [selectedColor, setSelectedColor] = useState();
   const [isExpanded, setIsExpanded] = useState(false);
   const forceExpandRef = useRef(true);

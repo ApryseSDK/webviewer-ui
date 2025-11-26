@@ -22,6 +22,7 @@ import defineWebViewerInstanceUIAPIs from 'src/apis';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
+import wildCardMatch from 'helpers/wildCardMatch';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
 import eventHandler from 'helpers/eventHandler';
 import setupI18n from 'helpers/setupI18n';
@@ -262,6 +263,29 @@ if (window.CanvasRenderingContext2D) {
     }
   };
 
+  const validateUIConfigOrigin = async (uiConfigURL) => {
+    if (uiConfigURL.origin === window.location.origin) {
+      return true;
+    }
+
+    // Load allowed origins list from configorigin.txt (same mechanism used in loadConfig)
+    // https://github.com/XodoDocs/webviewer/blob/master/src/ui/src/helpers/loadScript.js
+    const response = await fetch('configorigin.txt');
+    let data = '';
+    if (response.ok) {
+      data = await response.text();
+    }
+    data = data.replaceAll('\r', '\n').replaceAll('\t', '\n');
+    const allowedOrigins = data.split('\n').filter(Boolean);
+
+    if (!wildCardMatch(allowedOrigins, uiConfigURL.origin)) {
+      console.warn(`uiConfig requested from origin ${uiConfigURL.origin}. Add this origin to lib/ui/configorigin.txt to allow loading this UI configuration.`);
+      return false;
+    }
+
+    return true;
+  };
+
   fullAPIReady.then(() => loadConfig()).then(async () => {
     if (preloadWorker) {
       initTransports();
@@ -280,9 +304,22 @@ if (window.CanvasRenderingContext2D) {
     const uiConfigPath = getHashParameters('uiConfig', '');
     if (uiConfigPath) {
       try {
-        const uiConfigRequest = await fetch(uiConfigPath);
-        const uiConfig = await uiConfigRequest.json();
-        await importModularComponents(store)(uiConfig);
+        // Normalize to a URL object to handle both absolute and relative paths
+        let uiConfigURL;
+        try {
+          uiConfigURL = new URL(uiConfigPath, window.location.href);
+        } catch {
+          // If URL parsing fails, uiConfigPath is likely a relative path.
+          // This is expected and can be safely handled by using the original path and current origin.
+          uiConfigURL = { href: uiConfigPath, origin: window.location.origin };
+        }
+
+        const isOriginAllowed = await validateUIConfigOrigin(uiConfigURL);
+        if (isOriginAllowed) {
+          const uiConfigRequest = await fetch(uiConfigURL.href);
+          const uiConfig = await uiConfigRequest.json();
+          await importModularComponents(store)(uiConfig);
+        }
       } catch (e) {
         console.error(`Failed to load uiConfiguration from: ${uiConfigPath}`);
         console.error(e);
@@ -304,6 +341,8 @@ if (window.CanvasRenderingContext2D) {
       lng: language,
     });
 
+    const appElement = getRootNode().getElementById('app');
+
     ReactDOM.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -314,7 +353,7 @@ if (window.CanvasRenderingContext2D) {
           </I18nextProvider>
         </PersistGate>
       </Provider>,
-      getRootNode().getElementById('app'),
+      appElement,
     );
     window.isApryseWebViewerWebComponent && retargetEvents(getRootNode());
   });

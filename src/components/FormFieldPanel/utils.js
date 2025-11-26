@@ -98,6 +98,14 @@ export const redrawAnnotation = (annotation) => {
   core.getAnnotationManager().drawAnnotationsFromList([annotation]);
 };
 
+export const triggerAnnotationChangedEventWithModify = (annotations) => {
+  core.getAnnotationManager().trigger('annotationChanged', [
+    annotations,
+    'modify',
+    {}
+  ]);
+};
+
 export const getPageHeight = () => {
   return core.getPageHeight(core.getCurrentPage());
 };

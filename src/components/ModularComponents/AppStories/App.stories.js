@@ -279,6 +279,11 @@ export const VerticalHeaderKeyboardNavigationTest = createTemplate({
   components: mockLeftHeader.modularComponents,
 });
 
+VerticalHeaderKeyboardNavigationTest.parameters = {
+  ...VerticalHeaderKeyboardNavigationTest.parameters,
+  ...window.storybook.disableRtlMode,
+};
+
 VerticalHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 

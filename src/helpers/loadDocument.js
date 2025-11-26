@@ -42,18 +42,21 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
     options.enableOfficeEditing = false;
   }
 
+  let loadPromise;
   if (!src) {
     if (isXLSXEditorMode) {
-      core.loadBlankSpreadsheet(options);
+      loadPromise = core.loadBlankSpreadsheet(options);
     } else if (isDOCXEditorMode) {
-      core.loadBlankOfficeEditorDocument(options);
+      loadPromise = core.loadBlankOfficeEditorDocument(options);
     }
   } else {
     // ignore caught errors because they are already being handled in the onError callback
-    core.loadDocument(src, options, documentViewerKey).catch(() => {});
+    loadPromise = core.loadDocument(src, options, documentViewerKey).catch(() => {});
   }
 
   dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
+
+  return loadPromise;
 };
 
 

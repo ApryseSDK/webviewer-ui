@@ -11,7 +11,7 @@ import Input from 'components/Input';
 import core from 'core';
 import { LAYOUT_UNITS, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
-import { validateMarginInput, focusContent, convertMeasurementUnit, formatToDecimalString } from 'helpers/officeEditor';
+import { validateMarginInput, focusContent, convertBetweenUnits, formatToDecimalString } from 'helpers/officeEditor';
 import Dropdown from 'components/Dropdown';
 
 import './HeaderFooterOptionsModal.scss';
@@ -36,14 +36,14 @@ const HeaderFooterOptionsModal = () => {
   const onClickUnitDropdownItem = (unit) => dispatch(actions.setOfficeEditorUnitMeasurement(unit));
 
   const onHeaderInputBlur = (inputVal) => {
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
+    const maxMarginsInCurrentUnit = convertBetweenUnits(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const val = validateMarginInput(inputVal, maxMarginsInCurrentUnit);
     setHeaderToTop(val);
     setHeaderToTopInput(formatToDecimalString(val));
   };
 
   const onFooterInputBlur = (inputVal) => {
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
+    const maxMarginsInCurrentUnit = convertBetweenUnits(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const val = validateMarginInput(inputVal, maxMarginsInCurrentUnit);
     setFooterToBottom(val);
     setFooterToBottomInput(formatToDecimalString(val));
@@ -94,9 +94,9 @@ const HeaderFooterOptionsModal = () => {
     setInitialUnit(currentUnit);
 
     // get and set header and footer distances in the new unit
-    const headerDistanceToTopInCurrentUnit = convertMeasurementUnit(headerToTop, initialUnit, currentUnit);
-    const footerDistanceToBottomInCurrentUnit = convertMeasurementUnit(footerToBottom, initialUnit, currentUnit);
-    const maxMarginsInCurrentUnit = convertMeasurementUnit(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
+    const headerDistanceToTopInCurrentUnit = convertBetweenUnits(headerToTop, initialUnit, currentUnit);
+    const footerDistanceToBottomInCurrentUnit = convertBetweenUnits(footerToBottom, initialUnit, currentUnit);
+    const maxMarginsInCurrentUnit = convertBetweenUnits(maxMarginInPoints, LAYOUT_UNITS.PHYSICAL_POINT, currentUnit);
     const validatedHeaderDistance = validateMarginInput(headerDistanceToTopInCurrentUnit, maxMarginsInCurrentUnit);
     const validatedFooterDistance = validateMarginInput(footerDistanceToBottomInCurrentUnit, maxMarginsInCurrentUnit);
     setHeaderToTop(validatedHeaderDistance);

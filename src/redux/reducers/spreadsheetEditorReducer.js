@@ -1,7 +1,16 @@
+import { getInstanceID } from 'helpers/getRootNode';
+import localStorageManager from 'helpers/localStorageManager';
+
 const colorSetters = {
   'SET_CELL_BACKGROUND_COLORS': 'cellBackgroundColors',
   'SET_TEXT_COLORS': 'textColors',
   'SET_BORDER_COLORS': 'borderColors',
+};
+
+const customColorSetters = {
+  'SET_CUSTOM_CELL_BACKGROUND_COLORS': 'customCellBackgroundColors',
+  'SET_CUSTOM_TEXT_COLORS': 'customTextColors',
+  'SET_CUSTOM_BORDER_COLORS': 'customBorderColors',
 };
 
 export default (initialState) => (state = initialState, action) => {
@@ -11,6 +20,19 @@ export default (initialState) => (state = initialState, action) => {
     return {
       ...state,
       [colorSetters[type]]: [...payload.colors],
+    };
+  }
+
+  if (type in customColorSetters) {
+    if (localStorageManager.isLocalStorageEnabled()) {
+      const instanceId = getInstanceID();
+      localStorageManager.setItemSynchronous(`${instanceId}-${customColorSetters[type]}`, JSON.stringify(payload.customColors));
+    } else {
+      console.error(`localStorage is disabled, ${customColorSetters[type]} cannot be restored`);
+    }
+    return {
+      ...state,
+      [customColorSetters[type]]: [...payload.customColors],
     };
   }
 

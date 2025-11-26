@@ -11,8 +11,8 @@ import ResizeBar from 'components/ResizeBar';
 import { isIE } from 'helpers/device';
 import MobilePanelWrapper from '../ModularComponents/MobilePanelWrapper';
 import PropTypes from 'prop-types';
-import i18next from 'i18next';
 import { isElementOnLeftSide, isElementOnRightSide } from 'src/helpers/rightToLeft';
+import useIsRTL from 'hooks/useIsRTL';
 
 const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
@@ -31,9 +31,7 @@ const DesktopPanel = ({ children }) => {
   const activeBottomHeaders = useSelector(selectors.getActiveBottomHeaders);
   const isMultiTabActive = useSelector(selectors.getIsMultiTab);
   const dispatch = useDispatch();
-
-  const appDirection = i18next.dir();
-  const isRightToLeft = appDirection === 'rtl';
+  const isRightToLeft = useIsRTL();
 
   let style = {};
   if (currentWidth && (isInDesktopOnlyMode || !isMobile)) {

@@ -317,6 +317,10 @@ export const setFullScreen = (isFullScreen) => ({
   type: 'SET_FULL_SCREEN',
   payload: { isFullScreen },
 });
+export const setReadOnly = (isReadOnly) => ({
+  type: 'SET_READ_ONLY',
+  payload: { isReadOnly },
+});
 export const setViewOnly = (isViewOnly) => ({
   type: 'SET_VIEW_ONLY',
   payload: { isViewOnly },
@@ -340,6 +344,12 @@ export const setHeaderItems = (header, headerItems) => ({
 export const setCustomHeadersAdditionalProperties = (customHeader, additionalProperties) => ({
   type: 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES',
   payload: { customHeader, additionalProperties },
+});
+export const enableCustomPageLabels = () => ({
+  type: 'ENABLE_CUSTOM_PAGE_LABELS'
+});
+export const disableCustomPageLabels = () => ({
+  type: 'DISABLE_CUSTOM_PAGE_LABELS'
 });
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',

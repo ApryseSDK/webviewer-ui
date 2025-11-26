@@ -1,22 +1,29 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import { EditorModes, SpreadsheetShortcutKeyMap, SHORTCUT_CONFIGS, getViewOnlyShortcuts } from 'helpers/hotkeysManager';
+import {
+  EditorModes,
+  SpreadsheetShortcutKeyMap,
+  SHORTCUT_CONFIGS,
+} from 'helpers/hotkeysManager';
+import { filterOutDisabledToolShortcuts, filterViewOnlyShortcuts } from './utils';
 
 const useKeyboardShortcuts = (editorMode) => {
   const shortcutKeyMap = useSelector(selectors.getShortcutKeyMap);
   const isViewOnly = useSelector(selectors.isViewOnly);
+  const disabledToolNames = useSelector(selectors.getDisabledToolNames);
 
   const keyboardShortcuts = useMemo(() => {
-    if (!isViewOnly) {
-      return SHORTCUT_CONFIGS[editorMode] || SHORTCUT_CONFIGS[EditorModes.DEFAULT];
-    }
+    const baseShortcuts = SHORTCUT_CONFIGS[editorMode] || SHORTCUT_CONFIGS[EditorModes.DEFAULT];
 
-    const shortcuts = SHORTCUT_CONFIGS[editorMode] || SHORTCUT_CONFIGS[EditorModes.DEFAULT];
-    return shortcuts.filter(([shortcut]) => {
-      return getViewOnlyShortcuts().includes(shortcut) && shortcutKeyMap[shortcut];
-    });
-  }, [editorMode, isViewOnly, shortcutKeyMap]);
+    let filteredShortcuts = isViewOnly
+      ? filterViewOnlyShortcuts(baseShortcuts, shortcutKeyMap)
+      : baseShortcuts;
+
+    filteredShortcuts = filterOutDisabledToolShortcuts(filteredShortcuts, disabledToolNames);
+
+    return filteredShortcuts;
+  }, [editorMode, isViewOnly, shortcutKeyMap, disabledToolNames]);
 
   let effectiveShortcutKeyMap;
   switch (editorMode) {

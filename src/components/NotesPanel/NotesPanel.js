@@ -54,7 +54,7 @@ const NotesPanel = ({
   const internalNoteFilter = useSelector(selectors.getInternalNoteFilter, shallowEqual);
   const currentNotesPanelWidth = useSelector((state) => parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state), shallowEqual);
   const notesInLeftPanel = useSelector(selectors.getNotesInLeftPanel);
-  const isDocumentReadOnly = useSelector(selectors.isViewOnly);
+  const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
   const showAnnotationNumbering = useSelector(selectors.isAnnotationNumberingEnabled);
   const enableNotesPanelVirtualizedList = useSelector(selectors.getEnableNotesPanelVirtualizedList);
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
@@ -307,7 +307,6 @@ const NotesPanel = ({
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note
-            parentScroll={scrollTopRef}
             isCustomPanelOpen={isCustomPanelOpen}
             shouldHideConnectorLine={isLeftSide}
             annotation={currNote}

@@ -345,11 +345,15 @@
     "pageNum": "Strona",
     "viewBookmark": "Wyświetl zakładkę na stronie",
     "error": "Błąd",
-    "errorPageNumber": "Nieprawidłowy numer strony. Limit to",
+    "errorPageNumberPart1": "Nieprawidłowy numer strony.",
+    "errorPageNumberPart2": "Limit jest",
     "errorBlankPageNumber": "Proszę podać numer strony",
     "errorLoadingDocument": "Podczas czytania tego dokumentu wystąpił problem i niektóre strony mogą nie być wyświetlane. Oznacza to, że dokument może być uszkodzony. Całkowita liczba stron to {{totalPageCount}}, a liczba wyświetlanych stron to {{displayedPageCount}}.",
     "noRevisions": "Dokument ten nie zawiera żadnych poprawek.",
-    "listEmptyValue": "Jedno lub więcej pól ma pustą wartość."
+    "listEmptyValue": "Jedno lub więcej pól ma pustą wartość.",
+    "listDuplicateValue": "Pola wielokrotne mają następujące wartości:",
+    "networkError": "Wystąpił błąd podczas ładowania tego komponentu. Sprawdź połączenie sieciowe i odśwież stronę.",
+    "refreshPage": "Sprawdź połączenie sieciowe i odśwież stronę."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Rozmiar czcionki"
     },
     "shared": {
+      "sheetIndex": "Arkusz",
       "page": "Strona",
       "precision": "Precyzja",
       "enableSnapping": "Włącz przyciąganie dla narzędzi pomiarowych"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Usuń stronę",
-      "deleteMessage": "Czy na pewno chcesz usunąć wybrane strony? Tego nie można cofnąć.",
+      "deleteMessage": "Czy na pewno chcesz usunąć wybrane strony? Tej czynności nie można cofnąć.",
       "deleteLastPageMessage": "Nie można usunąć wszystkich stron w dokumencie."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "Nazwa arkusza nie może być pusta. Proszę podać nazwę."
     },
     "sheetTabDeleteMessage": {
-      "title": "Ostrzeżenie o edycji",
+      "title": "Usuń arkusz",
       "message": "Czy na pewno chcesz usunąć ten arkusz?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Usuń tabelę",
     "deleted": "Usunięto:",
     "added": "Dodany:",
+    "formatted": "Sformatowano:",
     "editing": "Redagowanie",
     "editingDescription": "Edytuj dokument",
     "reviewing": "Przeglądanie",
@@ -1520,6 +1526,10 @@
     "horizontal": "Obramowanie poziome",
     "none": "Bez granic",
     "borders": "Granice",
+    "textWrap": "Zawijanie tekstu",
+    "wrap": "Zawinąć",
+    "overflow": "Przelewowy",
+    "clip": "Klips",
     "fontSize": {
       "dropdownLabel": "Rozmiar czcionki"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "znak wodny",
     "addWatermark": "Dodaj znak wodny",
     "save": "Zapisz plik",
-    "pageError": "Proszę wprowadzić zakres pomiędzy 1 - ",
     "fileNameCannotBeEmpty": "Nazwa pliku nie może być pusta"
   },
   "filePicker": {

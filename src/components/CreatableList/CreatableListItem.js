@@ -14,6 +14,7 @@ const CreatableListItem = ({
   moveListItem,
   id,
   addItem,
+  invalid,
 }) => {
   const ItemTypes = {
     ITEM: 'item'
@@ -105,13 +106,13 @@ const CreatableListItem = ({
       <div className='input-wrapper'>
         <input
           type="text"
-          className={option.value ? '' : 'invalid'}
+          className={invalid ? 'invalid' : ''}
           onChange={onChangeHandler}
           value={option.displayValue}
           onKeyPress={addNewItemOnEnterKey}
           autoFocus
         />
-        {!option.value && <Icon glyph="icon-alert" />}
+        {invalid && <Icon glyph="icon-alert" />}
       </div>
       <Button
         title="action.delete"
@@ -124,6 +125,7 @@ const CreatableListItem = ({
 
 const propTypes = {
   option: PropTypes.object,
+  invalid: PropTypes.bool,
 };
 CreatableListItem.propTypes = propTypes;
 

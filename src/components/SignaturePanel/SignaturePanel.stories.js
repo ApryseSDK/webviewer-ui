@@ -24,7 +24,7 @@ const initialState = {
     validationModalWidgetName: '',
     verificationResult: {},
     certificates: [],
-    trustLists: [],
+    trustListKey: null,
     isRevocationCheckingEnabled: false,
     revocationProxyPrefix: null,
   },

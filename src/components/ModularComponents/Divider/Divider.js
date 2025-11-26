@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './Divider.scss';
 import PropTypes from 'prop-types';
+import DataElementWrapper from 'src/components/DataElementWrapper';
 
 const Divider = ({ headerDirection, style, className, dataElement }) => {
   const dividerClasses = classNames({
@@ -11,7 +12,11 @@ const Divider = ({ headerDirection, style, className, dataElement }) => {
   });
 
   return (
-    <div data-element={dataElement} className={dividerClasses} style={style} />
+    <DataElementWrapper
+      dataElement={dataElement}
+      className={dividerClasses}
+      style={style}
+    />
   );
 };
 

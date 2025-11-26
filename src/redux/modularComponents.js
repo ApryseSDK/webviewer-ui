@@ -115,7 +115,6 @@ const defaultModularComponents = {
   saveAsButton: {
     dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
-    isActive: false,
     label: 'saveModal.saveAs',
     icon: 'icon-save',
     type: 'presetButton',
@@ -124,7 +123,6 @@ const defaultModularComponents = {
   printButton: {
     dataElement: 'printButton',
     title: 'action.print',
-    isActive: false,
     label: 'action.print',
     icon: 'icon-header-print-line',
     type: 'presetButton',
@@ -134,7 +132,6 @@ const defaultModularComponents = {
   createPortfolioButton: {
     dataElement: 'createPortfolioButton',
     title: 'portfolio.createPDFPortfolio',
-    isActive: false,
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
     type: 'presetButton',
@@ -143,7 +140,6 @@ const defaultModularComponents = {
   settingsButton: {
     dataElement: 'settingsButton',
     title: 'option.settings.settings',
-    isActive: false,
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
     type: 'presetButton',
@@ -1009,7 +1005,6 @@ const defaultFlyoutMap = {
         'icon': 'icon-plus-sign',
         'label': 'action.newDocument',
         'title': 'action.newDocument',
-        'isActive': false,
         'type': 'presetButton',
         'buttonType': 'newDocumentButton'
       },
@@ -1046,7 +1041,6 @@ const defaultFlyoutMap = {
         'icon': 'icon-save',
         'label': 'saveModal.saveAs',
         'title': 'saveModal.saveAs',
-        'isActive': false,
         'type': 'presetButton',
         'buttonType': 'saveAsButton'
       },
@@ -1056,7 +1050,6 @@ const defaultFlyoutMap = {
         'icon': 'icon-header-print-line',
         'label': 'action.print',
         'title': 'action.print',
-        'isActive': false,
         'type': 'presetButton',
         'buttonType': 'printButton'
       },
@@ -1067,7 +1060,6 @@ const defaultFlyoutMap = {
         'icon': 'icon-pdf-portfolio',
         'label': 'portfolio.createPDFPortfolio',
         'title': 'portfolio.createPDFPortfolio',
-        'isActive': false,
         'type': 'presetButton',
         'buttonType': 'createPortfolioButton'
       },
@@ -1078,7 +1070,6 @@ const defaultFlyoutMap = {
         'icon': 'icon-header-settings-line',
         'label': 'option.settings.settings',
         'title': 'option.settings.settings',
-        'isActive': false,
         'type': 'presetButton',
         'buttonType': 'settingsButton'
       },

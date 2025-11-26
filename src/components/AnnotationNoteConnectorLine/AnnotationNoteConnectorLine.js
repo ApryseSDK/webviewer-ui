@@ -31,14 +31,12 @@ const propTypes = {
   annotation: PropTypes.object,
   noteContainerRef: PropTypes.object,
   isCustomPanelOpen: PropTypes.bool,
-  parentScroll: PropTypes.object,
 };
 
-const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPanelOpen, parentScroll }) => {
+const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPanelOpen }) => {
   const [
     topHeadersHeight,
     bottomHeadersHeight,
-    notePanelWidth,
     lineIsOpen,
     notePanelIsOpen,
     isLineDisabled,
@@ -49,7 +47,6 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     (state) => [
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
-      selectors.getNotesPanelWidth(state),
       selectors.isElementOpen(state, DataElements.ANNOTATION_NOTE_CONNECTOR_LINE),
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
       selectors.isElementDisabled(state, DataElements.ANNOTATION_NOTE_CONNECTOR_LINE),
@@ -62,7 +59,6 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
 
   const dispatch = useDispatch();
   const [lineProperties, setLineProperties] = useState();
-
 
   useEffect(() => {
     const onPageNumberUpdated = () => {
@@ -116,6 +112,25 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     annotationTopLeft?.x,
     annotationTopLeft?.y,
   ];
+  const scrollViewDeps = [
+    scrollViewElement,
+    scrollViewElement?.scrollTop,
+    scrollViewElement?.scrollLeft,
+  ];
+  const documentAndHeaderDeps = [
+    documentContainerWidth,
+    documentContainerHeight,
+    activeDocumentViewerKey,
+    bottomHeadersHeight,
+    topHeadersHeight,
+  ];
+  const noteContainerRect = noteContainerRef?.current?.getBoundingClientRect();
+  const positionAndSizeDeps = [
+    noteContainerRect?.top,
+    noteContainerRect?.left,
+    noteContainerRect?.right,
+    noteContainerRect?.bottom,
+  ];
   useEffect(() => {
     calculatePosition({
       activeDocumentViewerKey,
@@ -123,18 +138,10 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
       topHeadersHeight,
     });
   }, [
-    noteContainerRef,
-    parentScroll.current,
-    documentContainerWidth,
-    documentContainerHeight,
-    scrollViewElement,
-    scrollViewElement?.scrollTop,
-    scrollViewElement?.scrollLeft,
-    notePanelWidth,
-    bottomHeadersHeight,
-    topHeadersHeight,
-    activeDocumentViewerKey,
+    ...positionAndSizeDeps,
     ...annotDeps,
+    ...scrollViewDeps,
+    ...documentAndHeaderDeps,
   ]);
 
   useEffect(() => {

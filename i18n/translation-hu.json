@@ -345,11 +345,15 @@
     "pageNum": "oldal",
     "viewBookmark": "Könyvjelző megtekintése az oldalon",
     "error": "Hiba",
-    "errorPageNumber": "Érvénytelen oldalszám. A határ az",
+    "errorPageNumberPart1": "Érvénytelen oldalszám.",
+    "errorPageNumberPart2": "A határérték",
     "errorBlankPageNumber": "Kérjük, adjon meg egy oldalszámot",
     "errorLoadingDocument": "Hiba történt a dokumentum olvasása közben, és előfordulhat, hogy egyes oldalak nem jelennek meg. Ez azt jelzi, hogy a dokumentum sérült. A teljes oldalszám {{totalPageCount}}, a megjelenített oldalak száma pedig {{displayedPageCount}}.",
     "noRevisions": "Ennek a dokumentumnak nincs revíziója.",
-    "listEmptyValue": "Egy vagy több mező üres értékkel rendelkezik."
+    "listEmptyValue": "Egy vagy több mező üres értékkel rendelkezik.",
+    "listDuplicateValue": "Több mező a következő értékekkel rendelkezik:",
+    "networkError": "Hiba történt a komponens betöltése során. Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt.",
+    "refreshPage": "Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "Szövegméret"
     },
     "shared": {
+      "sheetIndex": "Lap",
       "page": "oldal",
       "precision": "Pontosság",
       "enableSnapping": "Kapcsolás engedélyezése mérőeszközökhöz"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Oldal törlése",
-      "deleteMessage": "Biztosan törli a kiválasztott oldal(oka)t? Ezt nem lehet visszavonni.",
+      "deleteMessage": "Biztosan törölni szeretné a kiválasztott oldal(ak)at? Ez a művelet nem vonható vissza.",
       "deleteLastPageMessage": "Nem törölheti a dokumentum összes oldalát."
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "A munkalap neve nem lehet üres. Kérjük, adjon meg egy nevet."
     },
     "sheetTabDeleteMessage": {
-      "title": "Figyelmeztetés szerkesztése",
+      "title": "Lap törlése",
       "message": "Biztosan törli ezt a lapot?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "Táblázat törlése",
     "deleted": "Törölve:",
     "added": "Hozzáadva:",
+    "formatted": "Formázva:",
     "editing": "Szerkesztés",
     "editingDescription": "Dokumentum szerkesztése",
     "reviewing": "Áttekintés",
@@ -1520,6 +1526,10 @@
     "horizontal": "Vízszintes határ",
     "none": "Nincs határ",
     "borders": "Határok",
+    "textWrap": "Szövegtörés",
+    "wrap": "Betakar",
+    "overflow": "Túlcsordulás",
+    "clip": "Csipesz",
     "fontSize": {
       "dropdownLabel": "Betűméret"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "Vízjel",
     "addWatermark": "Vízjel hozzáadása",
     "save": "Fájl mentése",
-    "pageError": "Adjon meg egy tartományt 1 - ",
     "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
   },
   "filePicker": {

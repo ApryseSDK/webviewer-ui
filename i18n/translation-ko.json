@@ -345,11 +345,15 @@
     "pageNum": "페이지",
     "viewBookmark": "페이지에서 책갈피 보기",
     "error": "오류",
-    "errorPageNumber": "잘못된 페이지 번호입니다. 한도",
+    "errorPageNumberPart1": "잘못된 페이지 번호입니다.",
+    "errorPageNumberPart2": "제한은",
     "errorBlankPageNumber": "페이지 번호를 지정해주세요",
     "errorLoadingDocument": "이 문서를 읽는 동안 문제가 발생했으며 일부 페이지가 표시되지 않을 수 있습니다. 이는 문서가 손상되었을 수 있음을 나타냅니다. 총 페이지 수는 {{totalPageCount}}이고 표시되는 페이지 수는 {{displayedPageCount}}입니다.",
     "noRevisions": "이 문서에는 수정본이 없습니다.",
-    "listEmptyValue": "하나 이상의 필드에 빈 값이 있습니다."
+    "listEmptyValue": "하나 이상의 필드에 빈 값이 있습니다.",
+    "listDuplicateValue": "여러 필드에는 다음 값이 있습니다.",
+    "networkError": "이 구성 요소를 로드하는 중에 오류가 발생했습니다. 네트워크 연결을 확인하고 페이지를 새로 고치세요.",
+    "refreshPage": "네트워크 연결을 확인하고 페이지를 새로고침하세요."
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "텍스트 크기"
     },
     "shared": {
+      "sheetIndex": "시트",
       "page": "페이지",
       "precision": "정밀도",
       "enableSnapping": "스냅 가능"
@@ -897,7 +902,7 @@
       "message": "시트 이름은 비워둘 수 없습니다. 이름을 입력하세요."
     },
     "sheetTabDeleteMessage": {
-      "title": "편집 경고",
+      "title": "시트 삭제",
       "message": "이 시트를 삭제하시겠습니까?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "테이블 삭제",
     "deleted": "삭제됨:",
     "added": "추가됨:",
+    "formatted": "형식:",
     "editing": "편집",
     "editingDescription": "문서 편집",
     "reviewing": "검토 중",
@@ -1520,6 +1526,10 @@
     "horizontal": "수평 테두리",
     "none": "국경 없음",
     "borders": "국경",
+    "textWrap": "텍스트 줄바꿈",
+    "wrap": "포장하다",
+    "overflow": "과다",
+    "clip": "클립",
     "fontSize": {
       "dropdownLabel": "글꼴 크기"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "양수표",
     "addWatermark": "워터 마크를 추가",
     "save": "파일을 저장",
-    "pageError": "1 - 사이의 범위를 입력하십시오. ",
     "fileNameCannotBeEmpty": "파일 이름은 비워둘 수 없습니다."
   },
   "filePicker": {

@@ -115,6 +115,7 @@ const readOnlySignatureAnnotationProps = {
   showLinkButton: false,
   linkAnnotationToURL: () => console.log('Link'),
   showDeleteButton: false,
+  showClearSignatureButton: true,
   onDeleteAnnotation: () => console.log('Delete'),
   isAppearanceSignature: true
 };
@@ -134,7 +135,7 @@ const readOnlySignatureAnnotationPropsDisabled = {
   isRightClickMenu: true,
 };
 
-export const SignatureReadOnlyDiablePopUp = () => {
+export const SignatureReadOnlyDisablePopUp = () => {
   return (
     <Provider store={configureStore({ reducer: () => mockInitialState })}>
       <AnnotationPopup {...readOnlySignatureAnnotationPropsDisabled} />
@@ -142,7 +143,7 @@ export const SignatureReadOnlyDiablePopUp = () => {
   );
 };
 
-SignatureReadOnlyDiablePopUp.parameters = window.storybook.disableRtlMode;
+SignatureReadOnlyDisablePopUp.parameters = window.storybook.disableRtlMode;
 
 export const CustomizedAnnotationPopup = () => {
   const stateWithMockedPopups = {

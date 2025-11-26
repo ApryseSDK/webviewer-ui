@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useRef, useState, lazy } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import core from 'core';
 import selectors from 'selectors';
+import { Virtuoso } from 'react-virtuoso';
 import Button from '../Button';
 import TextButton from '../TextButton';
 import { menuTypes } from 'helpers/outlineFlyoutHelper';
@@ -15,6 +16,57 @@ import PanelListItem from '../PanelListItem';
 import outlineUtils from 'helpers/OutlineUtils';
 
 const Outline = lazy(() => import('../Outline'));
+
+export const createOutlineVirtuosoComponents = (scrollParent) => {
+  const List = React.forwardRef(({ className = '', style, ...listProps }, ref) => (
+    <ul
+      {...listProps}
+      ref={ref}
+      className={className ? `${className} panel-list-children` : 'panel-list-children'}
+      style={{ ...style, margin: 0 }}
+    />
+  ));
+  List.displayName = 'OutlineChildrenList';
+  List.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+  };
+
+  const Item = React.forwardRef(({ children: itemChildren, style, ...itemProps }, ref) => (
+    <li {...itemProps} ref={ref} style={style}>
+      {itemChildren}
+    </li>
+  ));
+  Item.displayName = 'OutlineChildrenItem';
+  Item.propTypes = {
+    children: PropTypes.node,
+    style: PropTypes.object,
+  };
+
+  const Scroller = React.forwardRef(({ style, ...scrollerProps }, ref) => {
+    const scrollerStyle = {
+      ...style,
+      overflowY: 'hidden',
+      overflowX: 'visible',
+    };
+    if (scrollerStyle.height === 0 || scrollerStyle.height === '0px') {
+      scrollerStyle.height = scrollParent?.clientHeight || style?.height || '100%';
+    }
+    return (
+      <div
+        {...scrollerProps}
+        ref={ref}
+        style={scrollerStyle}
+      />
+    );
+  });
+  Scroller.displayName = 'OutlineChildrenScroller';
+  Scroller.propTypes = {
+    style: PropTypes.object,
+  };
+
+  return { List, Item, Scroller };
+};
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -53,6 +105,8 @@ const OutlineContent = ({
   moveOutlineBeforeTarget,
   moveOutlineAfterTarget
 }) => {
+  const outlineContext = useContext(OutlineContext);
+
   const {
     currentDestPage,
     currentDestText,
@@ -66,7 +120,9 @@ const OutlineContent = ({
     selectedOutlines,
     updateOutlines,
     removeOutlines,
-  } = useContext(OutlineContext);
+  } = outlineContext || {};
+
+  const outlineScrollParentRef = outlineContext?.outlineScrollParentRef;
 
   const featureFlags = useSelector((state) => selectors.getFeatureFlags(state), shallowEqual);
   const customizableUI = featureFlags.customizableUI;
@@ -222,18 +278,43 @@ const OutlineContent = ({
     }
   };
 
-  const renderContent = (outline) => {
-    return (
-      <Outline
-        key={outlineUtils.getOutlineId(outline)}
-        outline={outline}
-        setMultiSelected={setMultiSelected}
-        moveOutlineInward={moveOutlineInward}
-        moveOutlineBeforeTarget={moveOutlineBeforeTarget}
-        moveOutlineAfterTarget={moveOutlineAfterTarget}
-      />
-    );
-  };
+  const childOutlines = Array.isArray(children) ? children : [];
+  const [scrollParent, setScrollParent] = useState(null);
+
+  useEffect(() => {
+    if (outlineScrollParentRef?.current) {
+      setScrollParent(outlineScrollParentRef.current);
+    }
+  }, [outlineScrollParentRef]);
+
+  const renderContent = useCallback((outline) => (
+    <Outline
+      key={outlineUtils.getOutlineId(outline)}
+      outline={outline}
+      setMultiSelected={setMultiSelected}
+      moveOutlineInward={moveOutlineInward}
+      moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+      moveOutlineAfterTarget={moveOutlineAfterTarget}
+    />
+  ), [moveOutlineAfterTarget, moveOutlineBeforeTarget, moveOutlineInward, setMultiSelected]);
+
+  const virtuosoComponents = useMemo(
+    () => createOutlineVirtuosoComponents(scrollParent),
+    [scrollParent]
+  );
+
+  const virtuosoScrollParent = scrollParent ?? null;
+
+  const renderVirtualizedChildren = useCallback(() => (
+    <Virtuoso
+      data={childOutlines}
+      computeItemKey={(index, outline) => outlineUtils.getOutlineId(outline)}
+      components={virtuosoComponents}
+      {...(virtuosoScrollParent ? { customScrollParent: virtuosoScrollParent } : {})}
+      itemContent={(index, outline) => renderContent(outline)}
+    />
+  ), [childOutlines, renderContent, virtuosoComponents, virtuosoScrollParent]);
+
 
   return (
     <div className="bookmark-outline-label-row">
@@ -260,10 +341,10 @@ const OutlineContent = ({
           contextMenuMoreButtonOptions={contextMenuMoreButtonOptions}
           expanded={isExpanded}
           setIsExpandedHandler={setIsExpanded}
+          virtualizedChildrenCount={childOutlines.length}
+          virtualizedChildrenRenderer={childOutlines.length ? renderVirtualizedChildren : null}
         >
-          {children.map((outline) => {
-            return renderContent(outline);
-          })}
+          {!childOutlines.length && null}
         </PanelListItem>
       }
 

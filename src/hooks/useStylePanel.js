@@ -17,7 +17,7 @@ import actions from 'actions';
 const { Annotations } = window.Core;
 
 const useStylePanel = ({ selectedAnnotations, currentTool }) => {
-  const [t] = useTranslation();
+  const { t, i18n } = useTranslation();
   const [style, setStyle] = useState({
     StrokeColor: null,
     StrokeThickness: null,
@@ -183,7 +183,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       updateFromTool(currentTool);
       setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
     }
-  }, [selectedAnnotation, currentTool, selectedAnnotations]);
+  }, [selectedAnnotation, currentTool, selectedAnnotations, i18n.language]);
 
   const getColorFromHex = (hex) => {
     const colorRGB = hexToRGBA(hex);
@@ -285,6 +285,11 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   const handleAutoSize = () => {
     if (selectedAnnotations.length > 0) {
       selectedAnnotations.forEach((annotation) => {
+        if (editorInstance && editorInstance[0]) {
+          const editor = editorInstance[0];
+          const text = editor.getContents();
+          annotation.setContents(text);
+        }
         handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont);
       });
     } else if (currentTool) {

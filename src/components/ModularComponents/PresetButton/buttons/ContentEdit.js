@@ -10,6 +10,7 @@ import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
+import { useTranslation } from 'react-i18next';
 
 /**
  * A button that toggles Content Edit Mode.
@@ -26,21 +27,50 @@ const ContentEditButton = forwardRef((props, ref) => {
     title = menuItems.contentEditButton.title,
   } = props;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const dispatch = useDispatch();
   const [active, setActive] = useState(core.getContentEditManager().isInContentEditMode());
+  const [t] = useTranslation();
 
   useEffect(() => {
     const contentEditManager = core.getContentEditManager();
     if (contentEditManager) {
+      const documentViewer = core.getDocumentViewer();
+
+      const showWarningModalHandler = () => {
+        const message = t('option.contentEdit.deletionModal.message');
+        const title = t('option.contentEdit.deletionModal.title');
+        const confirmBtnText = t('action.ok');
+
+        const warning = {
+          message,
+          title,
+          confirmBtnText,
+          onConfirm: () => {
+            core.deleteAnnotations(
+              core.getSelectedAnnotations(activeDocumentViewerKey),
+              undefined,
+              activeDocumentViewerKey,
+            );
+          },
+        };
+
+        dispatch(actions.showWarningMessage(warning));
+      };
+
+      documentViewer.addEventListener('showWarningModal', showWarningModalHandler);
+
       const updateState = () => setActive(contentEditManager.isInContentEditMode());
       contentEditManager.addEventListener('contentEditModeStarted', updateState);
       contentEditManager.addEventListener('contentEditModeEnded', updateState);
+
       return () => {
         contentEditManager.removeEventListener('contentEditModeStarted', updateState);
         contentEditManager.removeEventListener('contentEditModeEnded', updateState);
+        documentViewer.removeEventListener('showWarningModal', showWarningModalHandler);
       };
     }
-  }, []);
+  }, [activeDocumentViewerKey, dispatch, t]);
 
   const handleClick = () => {
     const contentEditManager = core.getContentEditManager();

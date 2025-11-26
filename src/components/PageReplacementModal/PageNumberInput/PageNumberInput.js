@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import selectors from 'selectors';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import Icon from 'components/Icon';
 import './PageNumberInput.scss';
@@ -10,13 +13,11 @@ const propTypes = {
   selectedPageNumbers: PropTypes.arrayOf(PropTypes.number),
   pageCount: PropTypes.number,
   placeholder: PropTypes.string,
-  pageNumberError: PropTypes.string,
   onBlurHandler: PropTypes.func,
   onError: PropTypes.func,
   ariaLabel: PropTypes.string,
   onSelectedPageNumbersChange: PropTypes.func,
-  customPageLabels: PropTypes.array,
-  enablePageLabels: PropTypes.bool
+  usePageIndexes: PropTypes.bool,
 };
 
 const noop = () => { };
@@ -25,34 +26,59 @@ function PageNumberInput({
   id,
   selectedPageNumbers,
   pageCount,
-  enablePageLabels = false,
-  customPageLabels = null,
   placeholder,
-  pageNumberError,
   onSelectedPageNumbersChange,
   ariaLabel,
   onError = noop,
   onBlurHandler = noop,
+  usePageIndexes = false,
 }) {
-  // Since we don't have page labels info we just assume page numbers as labels
-  let pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
+
+  const [t] = useTranslation();
+  const isCustomPageLabelsEnabled = useSelector(selectors.isCustomPageLabelsEnabled);
+  const pageLabels = useSelector(selectors.getPageLabels);
+
+  const activePageLabels = useMemo(
+    () => isCustomPageLabelsEnabled && pageLabels && !usePageIndexes
+      ? pageLabels
+      : Array.from({ length: pageCount }, (_, i) => (i + 1).toString()),
+    [isCustomPageLabelsEnabled, pageLabels, pageCount]
+  );
+
   const [pageString, setPageString] = useState('');
   const [hasError, setHasError] = useState(false);
+  const [isUserTyping, setIsUserTyping] = useState(false);
+  const [pageNumberError, setPageNumberError] = useState('');
 
   useEffect(() => {
-    // Whenever we receive a selectedPageNumbers prop, massage it into the nice format
-    if (selectedPageNumbers) {
+    if (selectedPageNumbers && !isUserTyping) {
       setPageString(getPageString(selectedPageNumbers));
     }
-  }, [selectedPageNumbers]);
+  }, [selectedPageNumbers, isUserTyping]);
 
   useEffect(() => {
-    setHasError(!!pageNumberError);
-  }, [pageNumberError]);
+    if (hasError) {
+      let errorMessage = t('message.errorPageNumberPart1');
+      if (!isCustomPageLabelsEnabled) {
+        errorMessage = errorMessage.concat(`${t('message.errorPageNumberPart2')} ${activePageLabels.length}.`);
+      }
+      setPageNumberError(errorMessage);
+      onError();
+    }
+  }, [hasError]);
+
+  const getPageNumbersArray = (inputValue) => {
+    const selectedPagesString = inputValue.replaceAll(' ', '');
+    const isSelectedPagesStringEmpty = selectedPagesString.length === 0;
+    const pageNumbersArray = isSelectedPagesStringEmpty ? [] : getPageArrayFromString(inputValue, activePageLabels, pageCount);
+    setHasError(pageNumbersArray.length === 0 && selectedPagesString.length > 0);
+    return pageNumbersArray;
+  };
 
   const onPagesChange = (e) => {
     const inputValue = e.target.value;
     const lastChar = inputValue[inputValue.length - 1];
+    setIsUserTyping(true);
 
     if (lastChar === ',' || lastChar === '-' || lastChar === ' ') {
       setPageString(inputValue);
@@ -60,16 +86,14 @@ function PageNumberInput({
     }
 
     setPageString(inputValue);
-
-    if (enablePageLabels && customPageLabels) {
-      pageLabels = customPageLabels;
-    }
-
-    const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
+    const pageNumbersArray = getPageNumbersArray(inputValue);
 
     // Send info back to parent component
     onSelectedPageNumbersChange && onSelectedPageNumbersChange(pageNumbersArray);
+  };
+
+  const getDisplayValue = (pageNumber, pageLabels) => {
+    return isCustomPageLabelsEnabled ? pageLabels[pageNumber - 1] : pageNumber;
   };
 
   const getPageString = (selectedPageArray) => {
@@ -78,13 +102,15 @@ function PageNumberInput({
     let prevIndex = null;
 
     for (let i = 0; sortedPages.length > i; i++) {
+      const currentDisplayValue = getDisplayValue(sortedPages[i], activePageLabels);
       if (sortedPages[i + 1] === sortedPages[i] + 1) {
         prevIndex = prevIndex !== null ? prevIndex : sortedPages[i];
       } else if (prevIndex !== null) {
-        pagesToPrint = `${pagesToPrint}${prevIndex}-${sortedPages[i]}, `;
+        const startDisplayValue = getDisplayValue(prevIndex, activePageLabels);
+        pagesToPrint = `${pagesToPrint}${startDisplayValue}-${currentDisplayValue}, `;
         prevIndex = null;
       } else {
-        pagesToPrint = `${pagesToPrint}${sortedPages[i]}, `;
+        pagesToPrint = `${pagesToPrint}${currentDisplayValue}, `;
       }
     }
 
@@ -92,12 +118,8 @@ function PageNumberInput({
   };
 
   const onBlur = (e) => {
-    if (enablePageLabels && customPageLabels) {
-      pageLabels = customPageLabels;
-    }
-
-    const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
+    setIsUserTyping(false);
+    const pageNumbersArray = getPageNumbersArray(e.target.value);
     const pageNumbersString = getPageString(pageNumbersArray);
     setPageString(pageNumbersString);
 

@@ -127,8 +127,8 @@ const ContextMenuPopup = ({
     let { left, top } = clickPos;
     const { offsetLeft, offsetTop } = getOffsetAdjustments();
 
-    left -= offsetLeft;
-    top -= offsetTop;
+    left -= offsetLeft + window.scrollX;
+    top -= offsetTop + window.scrollY;
 
     const horizontalGap = 2;
     const verticalGap = 2;
@@ -146,7 +146,7 @@ const ContextMenuPopup = ({
     }
 
     if (top + height > containerBox.bottom - offsetTop) {
-      top = containerBox.bottom - height - verticalGap;
+      top = containerBox.bottom - offsetTop - height - verticalGap;
     }
 
     return { left, top };

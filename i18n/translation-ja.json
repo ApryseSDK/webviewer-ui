@@ -345,11 +345,15 @@
     "pageNum": "ページ",
     "viewBookmark": "ページにブックマークを表示",
     "error": "エラー",
-    "errorPageNumber": "ページ番号が無効です。限界は",
+    "errorPageNumberPart1": "ページ番号が無効です。",
+    "errorPageNumberPart2": "制限は",
     "errorBlankPageNumber": "ページ番号を指定してください",
     "errorLoadingDocument": "このドキュメントの読み取り中に問題が発生したため、一部のページが表示されない可能性があります。これは、ドキュメントが破損している可能性があることを示しています。総ページ数は {{totalPageCount}} で、表示されているページ数は {{displayedPageCount}} です。",
     "noRevisions": "この文書には改訂版はありません。",
-    "listEmptyValue": "1 つ以上のフィールドに空の値があります。"
+    "listEmptyValue": "1 つ以上のフィールドに空の値があります。",
+    "listDuplicateValue": "複数のフィールドには次の値が設定されます。",
+    "networkError": "このコンポーネントの読み込み中に問題が発生しました。ネットワーク接続を確認し、ページを更新してください。",
+    "refreshPage": "ネットワーク接続を確認し、ページを更新してください。"
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "テキストサイズ"
     },
     "shared": {
+      "sheetIndex": "シート",
       "page": "ページ",
       "precision": "精度",
       "enableSnapping": "測定ツールのスナップを有効にする"
@@ -897,7 +902,7 @@
       "message": "シート名は空欄にできません。名前を入力してください。"
     },
     "sheetTabDeleteMessage": {
-      "title": "編集警告",
+      "title": "シートを削除",
       "message": "このシートを削除してもよろしいですか?"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "テーブルの削除",
     "deleted": "削除済み:",
     "added": "追加した： ",
+    "formatted": "フォーマット済み:",
     "editing": "編集",
     "editingDescription": "ドキュメントを編集",
     "reviewing": "レビュー中",
@@ -1520,6 +1526,10 @@
     "horizontal": "水平境界線",
     "none": "国境なし",
     "borders": "国境",
+    "textWrap": "テキストの折り返し",
+    "wrap": "包む",
+    "overflow": "オーバーフロー",
+    "clip": "クリップ",
     "fontSize": {
       "dropdownLabel": "フォントサイズ"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "透かし",
     "addWatermark": "透かしを追加",
     "save": "ファイルを保存",
-    "pageError": "1～の範囲を入力してください",
     "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
   },
   "filePicker": {

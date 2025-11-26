@@ -345,11 +345,15 @@
     "pageNum": "页",
     "viewBookmark": "在页面上查看书签",
     "error": "错误",
-    "errorPageNumber": "页码无效。限制是",
+    "errorPageNumberPart1": "页码无效。",
+    "errorPageNumberPart2": "极限是",
     "errorBlankPageNumber": "请指定页码",
     "errorLoadingDocument": "阅读本文档时出现问题，某些页面可能无法显示。这表明文档可能已损坏。总页数为 {{totalPageCount}}，显示的页数为 {{displayedPageCount}}。",
     "noRevisions": "本文档没有修订。",
-    "listEmptyValue": "一个或多个字段具有空值。"
+    "listEmptyValue": "一个或多个字段具有空值。",
+    "listDuplicateValue": "多个字段具有以下值：",
+    "networkError": "加载此组件时出现错误。请检查您的网络连接并刷新页面。",
+    "refreshPage": "请检查您的网络连接并刷新页面。"
   },
   "option": {
     "type": {
@@ -642,6 +646,7 @@
       "text": "文字大小"
     },
     "shared": {
+      "sheetIndex": "床单",
       "page": "页",
       "precision": "精准度",
       "enableSnapping": "启用测量工具的捕捉"
@@ -843,7 +848,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "删除页面",
-      "deleteMessage": "您确定要删除所选页面吗？此操作无法撤消。",
+      "deleteMessage": "您确定要删除所选页面吗？此操作无法撤销。",
       "deleteLastPageMessage": "您无法删除文档中的所有页面。"
     },
     "extractPage": {
@@ -897,7 +902,7 @@
       "message": "工作表名称不能为空。请输入一个名称。"
     },
     "sheetTabDeleteMessage": {
-      "title": "编辑警告",
+      "title": "删除表格",
       "message": "您确实要删除该工作表吗？"
     },
     "officeEditorPageLayout": {
@@ -1333,6 +1338,7 @@
     "deleteTable": "删除表",
     "deleted": "已删除：",
     "added": "添加： ",
+    "formatted": "格式化：",
     "editing": "編輯",
     "editingDescription": "編輯文檔",
     "reviewing": "审阅",
@@ -1520,6 +1526,10 @@
     "horizontal": "水平边框",
     "none": "无边界",
     "borders": "边界",
+    "textWrap": "文本换行",
+    "wrap": "裹",
+    "overflow": "溢出",
+    "clip": "夹子",
     "fontSize": {
       "dropdownLabel": "字体大小"
     },
@@ -1611,7 +1621,6 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存档",
-    "pageError": "请输入 1 - 之间的范围",
     "fileNameCannotBeEmpty": "文件名不能为空"
   },
   "filePicker": {

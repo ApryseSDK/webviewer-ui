@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, } from 'react';
-import { useDispatch, useSelector, } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector, } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
@@ -20,21 +20,13 @@ const SignaturePanel = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [certificateErrorMessage, setCertificateErrorMessage] = useState('');
   const [document, setDocument] = useState(core.getDocument());
-  const [
-    isDisabled,
-    certificate,
-    trustLists,
-    currentLanguage,
-    revocationChecking,
-    revocationProxyPrefix,
-  ] = useSelector((state) => [
-    selectors.isElementDisabled(state, 'signaturePanel'),
-    selectors.getCertificates(state),
-    selectors.getTrustLists(state),
-    selectors.getCurrentLanguage(state),
-    selectors.getIsRevocationCheckingEnabled(state),
-    selectors.getRevocationProxyPrefix(state),
-  ]);
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'signaturePanel'));
+  const certificate = useSelector(selectors.getCertificates, shallowEqual);
+  const currentLanguage = useSelector(selectors.getCurrentLanguage);
+  const revocationChecking = useSelector(selectors.getIsRevocationCheckingEnabled);
+  const revocationProxyPrefix = useSelector(selectors.getRevocationProxyPrefix);
+  const trustListKey = useSelector(selectors.getTrustListKey);
+
   const [translate] = useTranslation();
 
   const onDocumentLoaded = async () => {
@@ -114,6 +106,52 @@ const SignaturePanel = () => {
     };
   }, [onDocumentUnloaded]);
 
+  const onDBRequestSucceeded = (request, resolve, reject) => {
+    const db = request.result;
+
+    const isTrustListStoreAvailable = db.objectStoreNames.contains('trustList');
+    if (!isTrustListStoreAvailable) {
+      db.close();
+      resolve(null);
+      return;
+    }
+
+    const transaction = db.transaction('trustList', 'readonly');
+    const store = transaction.objectStore('trustList');
+
+    let getReq = store.get(trustListKey);
+    getReq.onsuccess = async () => {
+      const value = getReq.result;
+
+      if (!value) {
+        resolve(null);
+      } else if (value instanceof ArrayBuffer) {
+        resolve(value.slice(0));
+      } else {
+        resolve(value);
+      }
+    };
+
+    getReq.onerror = () => reject(getReq.error);
+
+    transaction.onerror = () => {
+      reject(transaction.error);
+    };
+    transaction.oncomplete = () => db.close();
+  };
+
+  const getTrustList = async () => {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('WebViewerTrustList', 1);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        onDBRequestSucceeded(request, resolve, reject);
+      };
+    });
+  };
+
+
   useEffect(() => {
     // Need certificates for PDFNet to verify against, and for the document
     // to be loaded in order to iterate through the signature fields in the
@@ -121,9 +159,10 @@ const SignaturePanel = () => {
     if (document) {
       // We need to wait for the annotationsLoaded event, otherwise the
       // Field will not exist in the document
-      core.getAnnotationsLoadedPromise().then(() => {
+      core.getAnnotationsLoadedPromise().then(async () => {
         setShowSpinner(true);
-        setVerificationResult(document, certificate, trustLists, currentLanguage, revocationChecking, revocationProxyPrefix, dispatch)
+        const trustList = trustListKey ? (await getTrustList() || []) : [];
+        setVerificationResult(document, certificate, trustList, currentLanguage, revocationChecking, revocationProxyPrefix, dispatch)
           .then(async (verificationResult) => {
             const fieldManager = core.getAnnotationManager().getFieldManager();
             setFields(Object.keys(verificationResult).map((fieldName) => fieldManager.getField(fieldName)));
@@ -146,7 +185,7 @@ const SignaturePanel = () => {
     } else {
       setShowSpinner(true);
     }
-  }, [certificate, document, dispatch, currentLanguage]);
+  }, [certificate, document, dispatch, currentLanguage, trustListKey]);
 
   if (isDisabled) {
     return null;
@@ -160,7 +199,7 @@ const SignaturePanel = () => {
   const renderLoadingOrErrors = () => {
     let result;
     if (showSpinner) {
-      result = <Spinner inPanel width={'40px'} height={'40px'}/>;
+      result = <Spinner inPanel width={'40px'} height={'40px'} />;
     } else if (certificateErrorMessage === 'Error reading the local certificate') {
       result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {
@@ -177,7 +216,7 @@ const SignaturePanel = () => {
 
     return (
       <div className="empty-panel-container">
-        <Icon className="empty-icon" glyph={panelData[panelNames.SIGNATURE].icon}/>
+        <Icon className="empty-icon" glyph={panelData[panelNames.SIGNATURE].icon} />
         <div className="empty-message">{result}</div>
       </div>
     );

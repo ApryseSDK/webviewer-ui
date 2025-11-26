@@ -23,7 +23,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const checkDocumentForTools = eventListeners.checkDocumentForTools(dispatch);
   const updateOutlines = eventListeners.updateOutlines(dispatch, documentViewerKey);
   const updatePortfolio = eventListeners.updatePortfolio(store);
-  const configureOfficeEditor = eventListeners.configureOfficeEditor(store);
+  const configureEditorMode = eventListeners.configureEditorMode(store);
+  const setupCompositionInput = eventListeners.setupCompositionInput(documentViewerKey);
   const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch, store, documentViewerKey);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
@@ -84,7 +85,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('documentLoaded', checkDocumentForTools, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', updateOutlines, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', updatePortfolio, undefined, documentViewerKey);
-        core.addEventListener('documentLoaded', configureOfficeEditor, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', configureEditorMode, undefined, documentViewerKey);
+        core.addEventListener('documentLoaded', setupCompositionInput, undefined, documentViewerKey);
         core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged, undefined, documentViewerKey);
         core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
         core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
@@ -171,7 +173,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('documentLoaded', updateOutlines, documentViewerKey);
         core.removeEventListener('documentLoaded', initializeLayersVisibility, documentViewerKey);
         core.removeEventListener('documentLoaded', updatePortfolio, documentViewerKey);
-        core.removeEventListener('documentLoaded', configureOfficeEditor, documentViewerKey);
+        core.removeEventListener('documentLoaded', configureEditorMode, documentViewerKey);
+        core.removeEventListener('documentLoaded', setupCompositionInput, documentViewerKey);
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted);

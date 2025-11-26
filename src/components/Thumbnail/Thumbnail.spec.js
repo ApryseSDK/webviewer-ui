@@ -27,8 +27,12 @@ jest.mock('core', () => ({
 jest.mock('src/helpers/getRootNode', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    querySelector: jest.fn(() => false),
-  })),
+    querySelector: jest.fn(() => ({
+      getAttribute: (k) => (k === 'dir' ? 'ltr' : null),
+      appendChild: jest.fn(),
+      querySelector: jest.fn(() => null),
+    }))
+  }))
 }));
 
 describe('Thumbnail', () => {
@@ -222,7 +226,7 @@ describe('Thumbnail', () => {
     });
 
     // This is to mock onBeginRendering to onFinishedRendering
-    it('should trigger once when canLoad is false', async () => {
+    it('should not trigger when canLoad is false', async () => {
       const { rerender } = render(
         <TestThumbnail
           dispatch={() => { }}
@@ -240,23 +244,18 @@ describe('Thumbnail', () => {
         />
       );
 
-      // PR is calling updateAnnotations https://github.com/XodoDocs/webviewer/pull/11554
-      // Once fixed the test should be adjust to expect(mockUpdateAnnotations).not.toHaveBeenCalled();
-      // For now its a placeholder
-
-      // This would trigger regardless if canLoad is true or false on first render
-      // because of the isRightToLeft useEffect
-      await checkMockCount(1);
+      // Initial render should not trigger mockUpdateAnnotations because canLoad is false
+      await checkMockCount(0);
 
       // Subsequent rerenders should not trigger mockUpdateAnnotations
       rerenderThumbnail(rerender, true);
-      await checkMockCount(1);
+      await checkMockCount(0);
 
       rerenderThumbnail(rerender, false);
-      await checkMockCount(1);
+      await checkMockCount(0);
     });
 
-    it('should trigger updateAnnotation twice when canLoad is true on first render', async () => {
+    it('should trigger updateAnnotation once when canLoad is true on first render', async () => {
       const { rerender } = render(
         <TestThumbnail
           dispatch={() => { }}
@@ -274,20 +273,15 @@ describe('Thumbnail', () => {
         />
       );
 
-      // PR is calling updateAnnotations https://github.com/XodoDocs/webviewer/pull/11554
-      // Once fixed the test should be adjust to expect(mockOnFinishLoading).toHaveBeenCalledTimes(1);
-      // For now its a placeholder
-
-      // Because canLoad is true, we expect two calls for mockUpdateAnnotations
-      // and another because of the isRightToLeft useEffect
-      await checkMockCount(2);
+      // Because canLoad is true, we expect one call for mockUpdateAnnotations
+      await checkMockCount(1);
 
       // Subsequent rerenders should not trigger mockUpdateAnnotations
       rerenderThumbnail(rerender, false);
-      await checkMockCount(2);
+      await checkMockCount(1);
 
       rerenderThumbnail(rerender, true);
-      await checkMockCount(2);
+      await checkMockCount(1);
     });
   });
 });

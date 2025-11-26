@@ -17,6 +17,7 @@ export default (dispatch) => ({ added, removed, moved }) => {
       // this 'onLayoutChange' handler get trigger before the other 'onLayoutChange' event handler in core (that added by annotationManager to update page numbers) gets triggered
       // use 'setTimeout' so the other 'onLayoutChange' handler finishes before we call 'setPageLabels'
       dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
+      dispatch(actions.disableCustomPageLabels());
     }, 0);
   }
 };

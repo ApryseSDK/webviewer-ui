@@ -17,7 +17,7 @@ const DocumentCropPopupMobile = ({
   selectedPages,
   handlePageNumbersChanged,
   handlePageNumberError,
-  pageNumberError,
+  hasPageNumberError,
   handleApply,
   handleCancel,
   isCropping,
@@ -55,7 +55,6 @@ const DocumentCropPopupMobile = ({
                 selectedPages={selectedPages}
                 handlePageNumbersChanged={handlePageNumbersChanged}
                 handlePageNumberError={handlePageNumberError}
-                pageNumberError={pageNumberError}
               />
             </div>
           </CollapsibleSection>
@@ -97,7 +96,7 @@ const DocumentCropPopupMobile = ({
               className="save-button"
               dataElement="cropApplyButton"
               onClick={handleApply}
-              disabled={!isCropping || pageNumberError}
+              disabled={!isCropping || hasPageNumberError}
               label={t('action.apply')}
             />
           </div>
@@ -112,7 +111,7 @@ export default DocumentCropPopupMobile;
 DocumentCropPopupMobile.propTypes = {
   cropAnnotation: PropTypes.object,
   isCropping: PropTypes.bool,
-  pageNumberError: PropTypes.string,
+  hasPageNumberError: PropTypes.bool,
   yOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   xOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

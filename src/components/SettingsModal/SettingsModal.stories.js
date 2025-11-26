@@ -18,7 +18,17 @@ const getStore = (num) => {
   const initialState = {
     viewer: {
       openElements: { 'settingsModal': true },
-      disabledElements: {},
+      disabledElements: {
+        ['eraserToolButton']: { disabled: false, priority: 1 },
+      },
+      toolButtonObjects: {
+        AnnotationEraserTool: {
+          dataElement: 'eraserToolButton',
+          title: 'annotation.eraser',
+          img: 'icon-operation-eraser',
+          showColor: 'never',
+        },
+      },
       customElementOverrides: {},
       tab: {},
       currentLanguage: 'en',
@@ -62,6 +72,28 @@ const getStore = (num) => {
         const newState = { ...state };
         newState.viewer.tab[payload.id] = payload.dataElement;
         return newState;
+      case 'DISABLE_ELEMENT':
+        return {
+          ...state,
+          viewer: {
+            ...state.viewer,
+            disabledElements: {
+              ...state.viewer.disabledElements,
+              [payload]: { disabled: true, priority: 2 },
+            },
+          },
+        };
+      case 'ENABLE_ELEMENT':
+        return {
+          ...state,
+          viewer: {
+            ...state.viewer,
+            disabledElements: {
+              ...state.viewer.disabledElements,
+              [payload]: { disabled: false, priority: 1 },
+            },
+          },
+        };
       default:
         return state;
     }
@@ -250,4 +282,37 @@ ViewOnlyKeyboardShortcuts.play = async ({ canvasElement }) => {
   }
 
   expect(editButtons).toHaveLength(19);
+};
+
+const disabledToolStore = getStore(2);
+export function DisabledToolsHideShortcuts() {
+  hotkeysManager.initialize(disabledToolStore);
+
+  return (
+    <Provider store={disabledToolStore}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+DisabledToolsHideShortcuts.play = async ({ canvasElement }) => {
+  disabledToolStore.dispatch({
+    type: 'DISABLE_ELEMENT',
+    payload: 'eraserToolButton',
+  });
+
+  const shortcuts = canvasElement.querySelectorAll('.shortcut-table-item');
+  const shortcutTexts = Array.from(shortcuts).map((s) => s.textContent);
+
+  expect(shortcutTexts.some((text) => text.includes('Eraser'))).toBe(false);
+
+  disabledToolStore.dispatch({
+    type: 'ENABLE_ELEMENT',
+    payload: 'eraserToolButton',
+  });
+
+  const updatedShortcuts = canvasElement.querySelectorAll('.shortcut-table-item');
+  const updatedShortcutTexts = Array.from(updatedShortcuts).map((s) => s.textContent);
+
+  expect(updatedShortcutTexts.some((text) => text.includes('Eraser'))).toBe(true);
 };

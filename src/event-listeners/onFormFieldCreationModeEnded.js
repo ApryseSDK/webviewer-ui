@@ -4,10 +4,7 @@ import core from 'core';
 import DataElements from 'constants/dataElement';
 
 export default (dispatch, store, hotkeysManager) => () => {
-  dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: false }));
-  dispatch(actions.setCustomElementOverrides('saveAsButton', { disabled: false }));
   dispatch(actions.setCustomElementOverrides('printButton', { disabled: false }));
-  dispatch(actions.setCustomElementOverrides('filePickerButton', { disabled: false }));
   dispatch(actions.enableElement('textPopup', 1));
   dispatch(actions.closeElement(DataElements.INDEX_PANEL));
   dispatch(actions.disableElement(DataElements.INDEX_PANEL));

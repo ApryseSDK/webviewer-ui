@@ -90,7 +90,8 @@ const CommentTextarea = React.forwardRef(
     },
     ref
   ) => {
-    const [t] = useTranslation();
+    const { t, i18n } = useTranslation();
+    const languageKey = i18n.resolvedLanguage || i18n.language;
 
     const isAddReplyAttachmentDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON));
 
@@ -117,6 +118,7 @@ const CommentTextarea = React.forwardRef(
     return (
       <div className='comment-textarea' onBlur={onBlur} onFocus={onFocus} onClick={onClick} onScroll={onScroll}>
         <ReactQuill
+          key={languageKey}
           className='comment-textarea ql-container ql-editor'
           style={{ overflowY: 'visible' }}
           ref={(ele) => {

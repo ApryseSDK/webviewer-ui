@@ -291,6 +291,17 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
     return;
   }
 
+  const bbURLPromise = core.getPrintablePDF();
+  const isWebViewerServerDocument = bbURLPromise && typeof bbURLPromise.then === 'function';
+  const isServerPrintSupported = !isGrayscale && isWebViewerServerDocument;
+
+  const shouldUseServerPrint = isServerPrintSupported && !useClientSidePrint;
+
+  if (shouldUseServerPrint) {
+    serverPrint(bbURLPromise);
+    return;
+  }
+
   if (!printWithoutModal) {
     dispatch(actions.openElements(['printModal']));
     return;
@@ -298,10 +309,8 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
   const pageArray = isPrintCurrentView ? [core.getDocumentViewer().getCurrentPage()] : pagesToPrintPageArray(pagesToPrint);
   options.pagesToPrint = pageArray;
   options.isAlwaysPrintAnnotationsInColorEnabled = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
-  const bbURLPromise = core.getPrintablePDF();
-  if (!isGrayscale && bbURLPromise && !useClientSidePrint) {
-    serverPrint(bbURLPromise);
-  } else if (canEmbedPrint(isEmbedPrintSupported)) {
+
+  if (canEmbedPrint(isEmbedPrintSupported)) {
     embeddedPrintNoneSupportedOptions(options);
     printEmbeddedPDF(await processEmbeddedPrintOptions(options, document, annotationManager));
   } else if (includeAnnotations || includeComments || printWithoutModal) {
