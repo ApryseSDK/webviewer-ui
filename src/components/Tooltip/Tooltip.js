@@ -29,6 +29,8 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   const timeoutRef = useRef(null);
   const hiddenByClickRef = useRef(false);
   const childRef = useRef(null);
+  const showRef = useRef(false); // track current show state to avoid redundant enqueues from high-frequency pointermove
+  const opacityRef = useRef(0); // track current opacity to avoid redundant enqueues
   useImperativeHandle(ref, () => childRef.current);
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'tooltip'));
 
@@ -44,6 +46,20 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   const delayShow = 300;
   const opacityTimeout = 50;
 
+  const setShowGuarded = (value) => {
+    if (showRef.current !== value) {
+      showRef.current = value;
+      setShow(value);
+    }
+  };
+
+  const setOpacityGuarded = (value) => {
+    if (opacityRef.current !== value) {
+      opacityRef.current = value;
+      setOpacity(value);
+    }
+  };
+
   useEffect(() => {
     const showToolTip = () => {
       clearTimeout(timeoutRef.current);
@@ -52,14 +68,15 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       }
       timeoutRef.current = setTimeout(() => {
         setCloseToolTipFunc(hideByClick);
-        setShow(true);
+        setShowGuarded(true);
         fireEvent(Events.TOOLTIP_OPENED);
       }, delayShow - opacityTimeout);
     };
 
     const hideTooltip = () => {
       clearTimeout(timeoutRef.current);
-      setShow(false);
+      setShowGuarded(false);
+      setOpacityGuarded(0);
     };
 
     const hideByBlur = () => {
@@ -208,10 +225,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     if (show && childEle && tooltipEle) {
       setTopAndLeft();
       setTimeout(() => {
-        setOpacity(1);
+        setOpacityGuarded(1);
       }, opacityTimeout);
     } else {
-      setOpacity(0);
+      setOpacityGuarded(0);
     }
   }, [childRef, show]);
 
