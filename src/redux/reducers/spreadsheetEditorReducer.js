@@ -97,6 +97,13 @@ export default (initialState) => (state = initialState, action) => {
         canRedo,
       };
     }
+    case 'SET_ACTIVE_BORDER_BUTTONS': {
+      const { activeBorderButtons } = payload;
+      return {
+        ...state,
+        activeBorderButtons,
+      };
+    }
     default:
       return state;
   }

@@ -204,7 +204,7 @@ describe('LinkAnnotationPopup Component', () => {
       getGroupedLinkAnnotations.mockRestore();
     });
 
-    it('Should call deleteAnnotation twice if group annotation includes a highlight annotation', () => {
+    it('Should call deleteAnnotation thrice if group annotation includes a highlight annotation', () => {
       const mockHighlightAnnotation = new window.Core.Annotations.TextHighlightAnnotation();
       mockHighlightAnnotation.Opacity = 0;
       core.getAnnotationManager = jest.fn().mockReturnValue({
@@ -233,8 +233,42 @@ describe('LinkAnnotationPopup Component', () => {
 
       const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
       unlinkButton.click();
-      expect(deleteAnnotation).toBeCalledTimes(2);
+      expect(deleteAnnotation).toBeCalledTimes(3);
       getGroupedLinkAnnotations.mockRestore();
+    });
+
+    it('Should delete both link and highlight annotation if group annotation includes a highlight annotation', () => {
+      const mockHighlightAnnotation = new window.Core.Annotations.TextHighlightAnnotation();
+      const mockLinkAnnotation = new window.Core.Annotations.Link();
+      mockHighlightAnnotation.Opacity = 0;
+      core.getAnnotationManager = jest.fn().mockReturnValue({
+        deleteAnnotation: jest.fn(),
+        getGroupAnnotations: jest.fn().mockReturnValue([mockHighlightAnnotation, mockLinkAnnotation]),
+        ungroupAnnotations: jest.fn(),
+      });
+      const annotationManager = core.getAnnotationManager(1);
+      const deleteAnnotation = jest.fn();
+      annotationManager.deleteAnnotation = deleteAnnotation;
+      getGroupedLinkAnnotations.mockImplementation(() => [mockLinkAnnotation]);
+
+      const handleUnLink = () => deleteLinkAnnotationWithGroup(mockLinkAnnotation, 1);
+
+      render(
+        <LinkAnnotationPopupWithProviders
+          isAnnotation={true}
+          isMobileDevice={false}
+          linkText={uri}
+          handleUnLink={handleUnLink}
+          handleOnMouseEnter={noop}
+          handleOnMouseLeave={noop}
+          handleMouseMove={noop}
+        />
+      );
+
+      const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
+      unlinkButton.click();
+      expect(deleteAnnotation).toBeCalledWith(mockLinkAnnotation, { 'source': 'unlink' }, true);
+      expect(deleteAnnotation).toBeCalledWith(mockHighlightAnnotation, { 'source': 'unlink' }, true);
     });
   });
 });

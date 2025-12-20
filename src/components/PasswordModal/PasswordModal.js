@@ -8,6 +8,7 @@ import selectors from 'selectors';
 import ModalWrapper from '../ModalWrapper';
 import { escapePressListener } from 'helpers/accessibility';
 import DataElements from 'constants/dataElement';
+import { fireError } from 'helpers/fireEvent';
 
 import './PasswordModal.scss';
 
@@ -93,9 +94,11 @@ const PasswordModal = () => {
   const renderContent = () => {
     const userExceedsMaxAttempts = attempt === maxAttempts;
     if (userExceedsMaxAttempts) {
+      fireError(t('message.encryptedAttemptsExceeded'));
       return getErrorModal('message.encryptedAttemptsExceeded');
     }
     if (userCancelled) {
+      fireError(t('message.encryptedUserCancelled'));
       return getErrorModal('message.encryptedUserCancelled');
     }
 

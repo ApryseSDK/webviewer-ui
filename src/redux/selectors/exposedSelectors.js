@@ -920,6 +920,8 @@ export const useClientSidePrint = (state) => state.viewer.useClientSidePrint;
 
 export const shouldAutoExpandOutlines = (state) => state.viewer.autoExpandOutlines;
 
+export const getOutlinesStateMap = (state) => state.viewer.outlinesStateMap;
+
 export const isAnnotationNumberingEnabled = (state) => {
   return state.viewer.isAnnotationNumberingEnabled;
 };
@@ -1136,7 +1138,7 @@ export const getCurrentLanguage = (state) => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = (state) => state.viewer.fadePageNavigationComponent;
 
-export const isWidgetHighlightingEnabled  = (state) => state.viewer.isWidgetHighlightingEnabled;
+export const isWidgetHighlightingEnabled = (state) => state.viewer.isWidgetHighlightingEnabled;
 
 export const isContentEditWarningHidden = (state) => state.viewer.hideContentEditWarning;
 
@@ -1306,6 +1308,7 @@ export const isSpreadsheetEditorModeEnabled = (state) => {
 export const getUIConfiguration = (state) => state.viewer.uiConfiguration;
 
 // ** Spreadsheet Editor Selectors **
+const DEFAULT_BORDER_BUTTONS = [];
 export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellRange;
 export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
 export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;
@@ -1328,6 +1331,7 @@ export const getIsSingleCell = (state) => state.spreadsheetEditor.cellProperties
 export const getIsCellRangeMerged = (state) => state.spreadsheetEditor.cellProperties.styles.isCellRangeMerged;
 export const getCellBackgroundColor = (state) => state.spreadsheetEditor.cellProperties.styles.backgroundColor;
 export const getCanCopy = (state) => state.spreadsheetEditor.cellProperties.canCopy;
+export const getActiveBorderButtons = (state) => state.spreadsheetEditor.activeBorderButtons || DEFAULT_BORDER_BUTTONS;
 export const getCanPaste = (state) => state.spreadsheetEditor.cellProperties.canPaste;
 export const getCanCut = (state) => state.spreadsheetEditor.cellProperties.canCut;
 export const getAvailableSpreadsheetEditorFontFaces = (state) => state.spreadsheetEditor.availableFontFaces;

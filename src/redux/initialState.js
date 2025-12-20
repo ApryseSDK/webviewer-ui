@@ -87,6 +87,7 @@ export default {
       [PRESET_BUTTON_TYPES.NEW_SPREADSHEET]: { disabled: true },
     },
     enabledRibbonsStash: [],
+    enabledToolsStash: [],
     selectedScale: initialScale,
     isAddingNewScale: false,
     calibrationInfo: {
@@ -125,6 +126,7 @@ export default {
       formFieldPanel: 307,
       tabPanel: 330,
       officeEditorReviewPanel: 330,
+      officeEditorCommentPanel: 330,
     },
     mobilePanelSize: PANEL_SIZES.SMALL_SIZE,
     documentContainerWidth: null,
@@ -139,6 +141,7 @@ export default {
     isWidgetHighlightingEnabled: true,
     pageDeletionConfirmationModalEnabled: true,
     autoExpandOutlines: getHashParameters('autoExpandOutlines', false),
+    outlinesStateMap: {},
     isAnnotationNumberingEnabled: getHashParameters('enableAnnotationNumbering', false),
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
@@ -2281,5 +2284,6 @@ export default {
     cssFontValues: cssFontValues,
     canUndo: false,
     canRedo: false,
+    activeBorderButtons: [],
   }
 };

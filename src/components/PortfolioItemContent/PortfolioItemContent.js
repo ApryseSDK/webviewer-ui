@@ -8,7 +8,6 @@ import selectors from 'selectors';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
-import { isOpenableFile } from 'helpers/portfolio';
 import '../../constants/bookmarksOutlinesShared.scss';
 import './PortfolioItemContent.scss';
 import PanelListItem from '../PanelListItem/PanelListItem';
@@ -115,9 +114,7 @@ const PortfolioItemContent = ({
         movePortfolio(id, val);
         break;
       case menuTypes.OPENFILE:
-        if (isOpenableFile(extension)) {
-          openPortfolioItem(portfolioItem);
-        }
+        openPortfolioItem(portfolioItem);
         break;
       case menuTypes.RENAME:
         setPortfolioRenaming(true);

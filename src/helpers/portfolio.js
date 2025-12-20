@@ -26,7 +26,7 @@ export const PORTFOLIO_CONSTANTS = {
 };
 
 export const isOpenableFile = (extension) => {
-  return window.Core.SupportedFileFormats.CLIENT.includes(extension);
+  return window.Core.SupportedFileFormats.CLIENT.includes(extension.toLowerCase());
 };
 
 export const hasChildren = (portfolioItem) => {

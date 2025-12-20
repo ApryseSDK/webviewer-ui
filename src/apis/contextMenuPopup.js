@@ -1,12 +1,34 @@
 /**
  * An instance of Popup that can be used to edit items in the context menu popup component
  * @name UI.contextMenuPopup
- * @implements {UI.Popup}
  * @type {UI.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.UI.contextMenuPopup.someAPI();
+    // Add a custom action to the context menu
+    instance.UI.contextMenuPopup.add({
+      type: 'actionButton',
+      img: 'icon-tool-measurement-distance',
+      title: 'Measure Distance',
+      dataElement: 'measureDistanceButton',
+      onClick: () => {
+        instance.Core.documentViewer.setToolMode(instance.Core.documentViewer.getTool('AnnotationCreateDistanceMeasurement'));
+      }
+    });
+
+    // Add a divider and another custom tool
+    instance.UI.contextMenuPopup.add([
+      { type: 'divider' },
+      {
+        type: 'actionButton',
+        img: 'icon-tool-crop',
+        title: 'Crop Pages',
+        dataElement: 'cropToolButton',
+        onClick: () => {
+          instance.Core.documentViewer.setToolMode(instance.Core.documentViewer.getTool('CropCreateTool'));
+        }
+      }
+    ]);
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';

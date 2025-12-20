@@ -28,8 +28,13 @@ export default (dispatch, store) => (newTool, oldTool) => {
       dispatch(actions.setSelectedStampIndex(null));
     }
 
-    /// If the tool is associated with the current ribbon we set it as the last selected tool
-    if (toolsAssociatedWithRibbon.includes(newTool.name)) {
+    const isAssociatedWithRibbon = toolsAssociatedWithRibbon.includes(newTool.name);
+    const isCalibrationMeasurementTool = newTool.name === ToolNames.CALIBRATION_MEASUREMENT;
+
+    // If the tool is associated with the current ribbon or it is the calibration tool, set it as the
+    // last selected tool. The calibration tool is not directly associated with any ribbon. It is used
+    // when creating a new scale for a measurement tool.
+    if (isAssociatedWithRibbon || isCalibrationMeasurementTool) {
       dispatch(actions.setLastActiveToolForRibbon({
         toolName: newTool.name,
         ribbon: activeCustomRibbon,

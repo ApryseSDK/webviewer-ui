@@ -263,7 +263,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
         if (section === 'middle') {
           const dashes = value.split(',');
           annotation.Style = dashes.shift();
-          annotation.Dashes = dashes;
+          annotation.Dashes = dashes.length ? dashes : null;
         }
         if (section === 'end') {
           annotation.setEndStyle(value);
@@ -288,7 +288,9 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
         if (editorInstance && editorInstance[0]) {
           const editor = editorInstance[0];
           const text = editor.getContents();
-          annotation.setContents(text);
+          // We are trimming the New Line that the Quill Editor adds and requires internally
+          const trimContents = (text?.length > 0 && text?.endsWith('\n')) ? text.slice(0, -1) : text;
+          annotation.setContents(trimContents);
         }
         handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont);
       });

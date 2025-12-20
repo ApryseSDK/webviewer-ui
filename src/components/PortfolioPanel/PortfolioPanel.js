@@ -123,10 +123,13 @@ const PortfolioPanel = () => {
   };
 
   const openPortfolioItem = (portfolioItem) => {
-    if (isOpenableFile(portfolioItem.extension)) {
-      dispatch(enableMultiTab());
-      dispatch(actions.addPortfolioTab(portfolioItem));
+    if (!isOpenableFile(portfolioItem.extension)) {
+      console.warn(`Cannot open file "${portfolioItem.name}". Extension "${portfolioItem.extension}" is not supported.`);
+      return;
     }
+
+    dispatch(enableMultiTab());
+    dispatch(actions.addPortfolioTab(portfolioItem));
   };
 
   const isNameDuplicated = (newName, id) => {
@@ -175,7 +178,7 @@ const PortfolioPanel = () => {
     const portfolioFiles = await getPortfolioFiles();
     const fromIndex = portfolioFiles.findIndex((file) => file.id === fileId);
     const outOfBound = (fromIndex === 0 && direction === menuTypes.MOVE_UP)
-      || (fromIndex === portfolioFiles.length -1 && direction === menuTypes.MOVE_DOWN);
+      || (fromIndex === portfolioFiles.length - 1 && direction === menuTypes.MOVE_DOWN);
     if (outOfBound) {
       return;
     }

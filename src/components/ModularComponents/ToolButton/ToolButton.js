@@ -46,6 +46,7 @@ const ToolButton = forwardRef((props, ref) => {
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems, shallowEqual);
   const isSignatureListPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL));
   const isRubberStampPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL));
+  const isToolDisabled = useSelector((state) => selectors.isToolDisabled(state, toolName));
   const customOverrides = useSelector(
     (state) => selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
     shallowEqual
@@ -167,6 +168,10 @@ const ToolButton = forwardRef((props, ref) => {
 
   if ([PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(headerPlacement)) {
     forceTooltipPosition = headerPlacement === PLACEMENT.LEFT ? PLACEMENT.RIGHT : PLACEMENT.LEFT;
+  }
+
+  if (isToolDisabled) {
+    return null;
   }
 
   if (isFlyoutItem) {

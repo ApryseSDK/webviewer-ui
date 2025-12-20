@@ -107,5 +107,35 @@ describe('Icon component', () => {
       const scriptTag = container.querySelector('script');
       expect(scriptTag).not.toBeInTheDocument();
     });
+
+    it('Should sanitize aria-label to prevent XSS attacks', () => {
+      const maliciousAriaLabel = '"><svg/onload=alert(1)><!--onmouseover=alert(1337) data-x="';
+
+      const { container } = render(<Icon glyph={'icon-menu-checkmark'} ariaLabel={maliciousAriaLabel} />);
+
+      const icon = container.querySelector('.Icon svg');
+      expect(icon).toBeInTheDocument();
+
+      const ariaLabel = icon.getAttribute('aria-label');
+
+      expect(ariaLabel).not.toMatch(/<script/i);
+      expect(ariaLabel).not.toMatch(/\bon\w+\s*=/i);
+      expect(ariaLabel).not.toMatch(/\bjavascript:/i);
+      expect(ariaLabel).not.toMatch(/\bdata-[-\w]+\s*=/i);
+
+      expect(ariaLabel).not.toBe(maliciousAriaLabel);
+    });
+
+    it('Should handle legitimate aria-labels correctly', () => {
+      const legitimateAriaLabel = "Unposted Comment, *([#Jack & @Jill's Account,./$1!{?|;:}]^%-+=><)";
+
+      const { container } = render(<Icon glyph={'icon-menu-checkmark'} ariaLabel={legitimateAriaLabel} />);
+
+      const icon = container.querySelector('.Icon svg');
+      expect(icon).toBeInTheDocument();
+
+      const ariaLabel = icon.getAttribute('aria-label');
+      expect(ariaLabel).toBe(legitimateAriaLabel);
+    });
   });
 });

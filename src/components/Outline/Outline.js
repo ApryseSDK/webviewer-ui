@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext, useEffect, useLayoutEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
@@ -58,6 +58,8 @@ const Outline = forwardRef(
     ref
   ) {
     const outlines = useSelector((state) => selectors.getOutlines(state));
+    const outlinesStateMap = useSelector(selectors.getOutlinesStateMap, shallowEqual);
+
     const {
       setActiveOutlinePath,
       activeOutlinePath,
@@ -71,9 +73,11 @@ const Outline = forwardRef(
     } = useContext(OutlineContext);
 
     const outlinePath = outlineUtils.getPath(outline);
+    const isOutlineExpanded = outlinesStateMap[outlinePath]?.isExpanded || false;
+    const isOutlineRenaming = outlinesStateMap[outlinePath]?.isRenaming || false;
 
-    const [isExpanded, setIsExpanded] = useState(shouldAutoExpandOutlines);
-    const [isRenaming, setIsRenaming] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(shouldAutoExpandOutlines || isOutlineExpanded);
+    const [isRenaming, setIsRenaming] = useState(isOutlineRenaming);
     const [isChangingDest, setChangingDest] = useState(false);
     const [clearSingleClick, setClearSingleClick] = useState(undefined);
 
@@ -89,7 +93,7 @@ const Outline = forwardRef(
     }));
 
     useEffect(() => {
-      if (shouldExpandOutline(activeOutlinePath, outlinePath)) {
+      if (shouldExpandOutline(activeOutlinePath, outlinePath) || isOutlineExpanded) {
         setIsExpanded(true);
       }
     }, [activeOutlinePath, isAddingNewOutline, outlinePath]);
@@ -99,13 +103,31 @@ const Outline = forwardRef(
     }, [shouldAutoExpandOutlines]);
 
     useLayoutEffect(() => {
-      setIsRenaming(false);
+      setIsRenaming(isOutlineRenaming);
       setChangingDest(false);
 
       if (isAddingNewOutline && activeOutlinePath === outlinePath) {
         setIsExpanded(true);
       }
     }, [outlines]);
+
+    useEffect(() => {
+      const isExpandedStateUpdated = isExpanded === isOutlineExpanded;
+      if (isExpandedStateUpdated) {
+        return;
+      }
+
+      dispatch(actions.setOutlinesStateMap(outlinePath, { isExpanded }));
+    }, [isExpanded]);
+
+    useEffect(() => {
+      const isRenamingStateUpdated = isRenaming === isOutlineRenaming;
+      if (isRenamingStateUpdated) {
+        return;
+      }
+
+      dispatch(actions.setOutlinesStateMap(outlinePath, { isRenaming }));
+    }, [isRenaming]);
 
     const onSingleClick = useCallback(() => {
       core.goToOutline(outline);

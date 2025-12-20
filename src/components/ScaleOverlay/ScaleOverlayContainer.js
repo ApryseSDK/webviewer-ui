@@ -73,7 +73,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   const openScaleModal = useCallback((scale) => {
     scale && setSelectedScale(new Scale(scale));
     dispatch(actions.openElements([DataElements.SCALE_MODAL]));
-    dispatch(actions.setIsAddingNewScale());
+    dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
   }, []);
 
   const onScaleSelected = useCallback((selectedScales, scale) => {
@@ -127,9 +127,9 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   };
 
   const onCancelCalibrationMode = useCallback((previousToolName) => {
-    core.setToolMode(previousToolName);
     updateIsCalibration(false);
     dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
+    core.setToolMode(previousToolName);
   }, []);
 
   const onApplyCalibration = useCallback((previousToolName, tempScale, isFractionalUnit) => {
@@ -140,8 +140,8 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   }, [annotations]);
 
   const onAddingNewScale = useCallback(() => {
-    openScaleModal();
     dispatch(actions.setIsAddingNewScale(true));
+    openScaleModal();
   }, []);
 
   const isMobile = isMobileSize();

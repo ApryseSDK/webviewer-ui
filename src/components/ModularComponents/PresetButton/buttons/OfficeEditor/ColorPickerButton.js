@@ -1,3 +1,9 @@
+/**
+ * The preset color picker button for the Office Editor
+ * @name officeEditorColorPicker
+ * @memberof UI.Components.PresetButton
+ */
+
 import React, { useEffect, forwardRef } from 'react';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import ColorPickerOverlay from 'components/ColorPickerOverlay';

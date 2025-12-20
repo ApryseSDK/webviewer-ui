@@ -1,12 +1,19 @@
 /**
- * An instance of MenuOverlay that can be used to edit items in the settings menu overlay component.
+ * An instance of MenuOverlay that can be used to add, update, or retrieve items in the settings menu overlay component
  * @name UI.settingsMenuOverlay
- * @implements {UI.MenuOverlay}
  * @type {UI.MenuOverlay}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.UI.settingsMenuOverlay.someAPI();
+    // Add a custom button to the settings menu
+    instance.UI.settingsMenuOverlay.add({
+      type: 'actionButton',
+      className: 'row',
+      img: 'icon-header-print-line',
+      onClick: () => console.log('Custom action'),
+      dataElement: 'customButton',
+      label: 'Custom Action'
+    });
   });
  */
 
@@ -27,23 +34,24 @@ const MenuOverlayAPI = {
     return this;
   },
   /**
-   * Add an array of Actions Buttons after the item that has the given data element.
+   * Adds action buttons to the menu overlay after a specified item
    * @method UI.MenuOverlay#add
-   * @param {Array.<object>} items Same as <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton</a>
-   * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning
-   * @returns {this} The instance itself
+   * @memberof UI.MenuOverlay
+   * @param {Array.<object>|object} items One or more action button objects. See the <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton documentation</a> for the object structure.
+   * @param {string} [dataElement] The data element of the item to insert after. If not provided, items will be added at the beginning.
+   * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining
    * @example
 WebViewer(...)
   .then(function(instance) {
     instance.UI.settingsMenuOverlay.add({
       type: 'actionButton',
-      className:"row",
+      className: 'row',
       img: 'icon-header-print-line',
       onClick: () => {
-        alert('Printing...');
+        console.log('Print button clicked');
       },
-      dataElement: 'alertButton',
-      label:'print button'
+      dataElement: 'printButton',
+      label: 'Print'
     });
   });
    */
@@ -62,37 +70,39 @@ WebViewer(...)
     return this;
   },
   /**
-   * Update all the items in the menuOverlay dropdown.
-   * To update an individual item, use {@link UI.updateElement updateElement}
+   * Replaces all items in the menu overlay with a new set of items.
+   * To update an individual item, use {@link UI.updateElement}.
    * @method UI.MenuOverlay#update
-   * @param {Array.<object>} [items] the items that will be rendered in the menuOverlay dropdown
-   * @returns {this} The instance itself
+   * @memberof UI.MenuOverlay
+   * @param {Array.<object>} [items=[]] The new array of items to render in the menu overlay. See the <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton documentation</a> for the object structure. If not provided, the menu will be cleared.
+   * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining
+   * @see UI.updateElement
    * @example
 WebViewer(...)
   .then(function(instance) {
-    // replace existing items with a new array of items
+    // Replace all existing items with a new array of items
     instance.UI.settingsMenuOverlay.update([
       {
         type: 'actionButton',
-        className:"row",
+        className: 'row',
         img: 'icon-header-print-line',
         onClick: () => {
-          alert('Hello world!');
+          console.log('Print action');
         },
-        dataElement: 'alertButton',
-        label:'test button',
-        role:"option"
+        dataElement: 'printButton',
+        label: 'Print',
+        role: 'option'
       },
       {
         type: 'actionButton',
-        className:"row",
-        img: 'icon-header-print-line',
+        className: 'row',
+        img: 'icon-header-download',
         onClick: () => {
-          alert('Hello world!');
+          console.log('Download action');
         },
-        dataElement: 'alertButton2',
-        label:'test button 2',
-        role:"option"
+        dataElement: 'downloadButton',
+        label: 'Download',
+        role: 'option'
       },
     ]);
   });
@@ -106,13 +116,15 @@ WebViewer(...)
     return this;
   },
   /**
-   * Return the array of items in the menuOverlay dropdown.
+   * Returns the current array of items in the menu overlay
    * @method UI.MenuOverlay#getItems
-   * @returns {Array.<object>} Current items in the menuOverlay dropdown.
+   * @memberof UI.MenuOverlay
+   * @returns {Array.<object>} The current items in the menu overlay
    * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.settingsMenuOverlay.getItems();
+    const items = instance.UI.settingsMenuOverlay.getItems();
+    console.log('Current menu items:', items);
   });
    */
   getItems() {

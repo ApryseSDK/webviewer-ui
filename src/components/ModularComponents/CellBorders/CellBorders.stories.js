@@ -22,7 +22,8 @@ const mockConfigs = {
       { getStyle: () => ({ getCellBorder: () => ({ style: 'Thin' }) }) },
       { getStyle: () => ({ getCellBorder: () => ({}) }) }
     ],
-    isSingleCell: false
+    isSingleCell: false,
+    borderStyles: null
   },
   singleCell: {
     range: () => ({ firstRow: 1, lastRow: 1, firstColumn: 1, lastColumn: 1 }),
@@ -30,31 +31,58 @@ const mockConfigs = {
       getStyle: () => ({
         getCellBorder: (side) => {
           return ['Right', 'Left'].includes(side)
-            ? { style: 'Thin' }
-            : { style: 'None' };
+            // eslint-disable-next-line custom/no-hex-colors
+            ? { style: 'Thin', color: '#000000' }
+            : { style: 'None', color: null };
         }
       })
     }],
-    isSingleCell: true
+    isSingleCell: true,
+    borderStyles: {
+      top: { color: null, style: 'None' },
+      // eslint-disable-next-line custom/no-hex-colors
+      right: { color: '#000000', style: 'Thin' },
+      bottom: { color: null, style: 'None' },
+      // eslint-disable-next-line custom/no-hex-colors
+      left: { color: '#000000', style: 'Thin' },
+    }
   },
   noBorders: {
     range: () => ({ firstRow: 1, lastRow: 1, firstColumn: 1, lastColumn: 1 }),
     cells: [{
       getStyle: () => ({ getCellBorder: () => ({ style: 'None' }) })
     }],
-    isSingleCell: true
+    isSingleCell: true,
+    borderStyles: {
+      top: { color: null, style: 'None' },
+      right: { color: null, style: 'None' },
+      bottom: { color: null, style: 'None' },
+      left: { color: null, style: 'None' },
+    }
   }
 };
 
-const createMockStore = (isSingleCell) => {
+const createMockStore = (isSingleCell, borderStyles = null) => {
+  const defaultBorderStyles = {
+    top: { color: null, style: 'None' },
+    right: { color: null, style: 'None' },
+    bottom: { color: null, style: 'None' },
+    left: { color: null, style: 'None' },
+  };
+
   return configureStore({
     reducer: rootReducer,
     preloadedState: {
       spreadsheetEditor: {
         cellProperties: {
           isSingleCell,
-          styles: {}
-        }
+          styles: {
+            border: borderStyles || defaultBorderStyles
+          }
+        },
+        selectedBorderStyleListOption: 'Thin',
+        // eslint-disable-next-line custom/no-hex-colors
+        selectedBorderColorOption: '#000000',
       }
     }
   });
@@ -64,7 +92,7 @@ const createMockDecorator = (configKey) => {
   const MockDecorator = (Story) => {
     const config = mockConfigs[configKey];
     core.getDocumentViewer = createMockDocumentViewer(config.range, config.cells);
-    const mockStore = createMockStore(config.isSingleCell);
+    const mockStore = createMockStore(config.isSingleCell, config.borderStyles);
     return (
       <Provider store={mockStore}>
         <Story />

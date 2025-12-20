@@ -1,13 +1,17 @@
 /**
+ * @typedef {object} UI.ModularComponentsData
+ * @property {Object.<string, UI.Components.ItemProperties>} [modularComponents] The map of components to be used in the UI, where keys are component identifiers
+ * @property {Object.<string, UI.Components.ContainerProperties>} [modularHeaders] The map of headers to be used in the UI, where keys are header identifiers
+ * @property {Object.<string, UI.PanelProperties>} [panels] The map of panels to be used in the UI, where keys are panel identifiers
+ * @property {Object.<string, UI.Components.Flyout>} [flyouts] The map of flyouts to be used in the UI, where keys are flyout identifiers
+ * @property {Object.<string, Array.<object>>} [popups] The map of popups to be used in the UI, where keys are popup identifiers and values are arrays of popup items (objects with at minimum a dataElement property)
+ */
+
+/**
  * Creates a new modular UI using the provided JSON data and function map. The data is validated and will throw an error if a part of its structure is not valid. Existing UI components will be replaced with the new components provided in the JSON data.
  * @method UI.importModularComponents
- * @param {Object} data The JSON data containing maps of components, headers, and panels to be used in the UI. If any of the properties are not provided, they will not be used in the UI. ex: { modularComponents: { ... }, modularHeaders: { ... }, panels: { ... } }
- * @property {Object} modularComponents The map of components to be used in the UI. Refer to: {@link ItemProperties} for properties of modularComponents
- * @property {Object} modularHeaders The map of headers to be used in the UI. Refer to: {@link ContainerProperties} for properties of modularHeaders
- * @property {Object} panels The map of panels to be used in the UI. Refer to: {@link PanelProperties} for properties of panels
- * @property {Object} flyouts The map of flyouts to be used in the UI.
- * @property {string} flyouts.dataElement A unique string that identifies the flyout.
- * @param {object} [functionMap] A map of functions to be used in the components. The keys should match the function names used in the components. The values should be the actual functions to be called.
+ * @param {UI.ModularComponentsData} data The JSON data containing maps of components, headers, and panels to be used in the UI. If any of the properties are not provided, they will not be used in the UI
+ * @param {object} [functionMap] A map of functions to be used in the components. The keys should match the function names used in the components. The values should be the actual functions to be called
  * @example
  * WebViewer(...)
  .then(function (instance) {

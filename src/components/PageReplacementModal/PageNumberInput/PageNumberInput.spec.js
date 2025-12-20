@@ -54,7 +54,7 @@ ControlledPageNumberInput.propTypes = {
   selectedPageNumbers: PropTypes.array,
 };
 
-describe.only('PageNumberInput component', () => {
+describe('PageNumberInput component', () => {
   // These tests are expected to throw warnings so we do this to reduce noise in our output
   let warnSpy;
 

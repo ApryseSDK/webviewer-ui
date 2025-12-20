@@ -1,14 +1,14 @@
 /**
- * Contains string enumeration for all themes for WebViewer. They are used to set the viewer theme.
+ * String enumeration of available themes for WebViewer. Use these values to set the viewer's theme.
  * @name UI.Theme
- * @property {string} DARK The theme where the WebViewer will be dark.
- * @property {string} LIGHT The theme where the WebViewer will be light.
+ * @property {string} DARK The dark theme for WebViewer.
+ * @property {string} LIGHT The light theme for WebViewer.
  * @example
-WebViewer(...)
-  .then(function(instance) {
-    const theme = instance.UI.Theme;
-    instance.UI.setTheme(theme.DARK);
-  });
+ * WebViewer(...)
+ *   .then(function(instance) {
+ *     const theme = instance.UI.Theme;
+ *     instance.UI.setTheme(theme.DARK);
+ *   });
  */
 
 export default {

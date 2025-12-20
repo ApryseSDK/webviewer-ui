@@ -107,7 +107,7 @@ export function BasicInGenericPanel() {
   const store = configureStore({ reducer: () => initialState });
   return (
     <Provider store={store}>
-      <Panel location={'right'} dataElement={'panel'}>
+      <Panel location={'right'} dataElement={'notesPanel'}>
         <NotesPanel isCustomPanelOpen={true} isCustomPanel={true} />
       </Panel>
     </Provider>
@@ -120,7 +120,7 @@ export function BasicInGenericPanelOnLeft() {
   const store = configureStore({ reducer: () => initialState });
   return (
     <Provider store={store}>
-      <Panel location={'left'} dataElement={'panel'}>
+      <Panel location={'left'} dataElement={'notesPanel'}>
         <NotesPanel isCustomPanelOpen={true} isCustomPanel={true} />
       </Panel>
     </Provider>
@@ -464,4 +464,71 @@ NotesPanelWithNotesInFormFieldMode.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const listItems = await canvas.findAllByRole('listitem');
   expect(listItems.length).toBe(3);
+};
+
+export function OEEmptyReviewPanel() {
+  const state = { ...initialState };
+  state.viewer.openElements.officeEditorReviewPanel = true;
+  state.viewer.panelWidths.officeEditorReviewPanel = 330;
+  const store = configureStore({ reducer: () => state });
+
+  return (
+    <Provider store={store}>
+      <Panel location={'left'} dataElement='officeEditorReviewPanel'>
+        <NotesPanel />
+      </Panel>
+    </Provider>
+  );
+}
+OEEmptyReviewPanel.parameters = window.storybook.disableRtlMode;
+
+
+export function OEEmptyCommentPanel() {
+  const state = { ...initialState };
+  state.viewer.isOfficeEditorMode = true;
+  state.officeEditor.stream = 0;
+  state.viewer.openElements.officeEditorCommentPanel = true;
+  state.viewer.panelWidths.officeEditorCommentPanel = 330;
+  const store = configureStore({ reducer: () => state });
+
+  return (
+    <Provider store={store}>
+      <Panel location={'right'} dataElement='officeEditorCommentPanel'>
+        <NotesPanel />
+      </Panel>
+    </Provider>
+  );
+}
+OEEmptyCommentPanel.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
+};
+
+export function OECommentPanelInHeaderStream() {
+  const state = { ...initialState };
+  state.viewer.isOfficeEditorMode = true;
+  state.officeEditor.stream = 1;
+  state.viewer.openElements.officeEditorCommentPanel = true;
+  state.viewer.panelWidths.officeEditorCommentPanel = 330;
+  const store = configureStore({ reducer: () => state });
+
+  return (
+    <Provider store={store}>
+      <Panel location={'right'} dataElement='officeEditorCommentPanel'>
+        <NotesPanel />
+      </Panel>
+    </Provider>
+  );
+}
+OECommentPanelInHeaderStream.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
 };

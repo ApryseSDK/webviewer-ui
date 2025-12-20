@@ -294,6 +294,7 @@ const defaultOfficeEditorModularComponents = {
       'officeEditorModeDropdown',
       'divider-0.3',
       'searchPanelToggle',
+      // 'commentPanelToggle',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -362,6 +363,13 @@ const defaultOfficeEditorModularComponents = {
     type: 'toggleButton',
     img: 'icon-header-search',
     toggleElement: 'searchPanel'
+  },
+  commentPanelToggle: {
+    dataElement: 'commentPanelToggle',
+    title: 'component.commentPanel',
+    type: 'toggleButton',
+    img: 'icon-header-chat-line',
+    toggleElement: DataElements.OFFICE_EDITOR_COMMENT_PANEL,
   },
   officeEditorHomeGroupedItems: {
     dataElement: 'officeEditorHomeGroupedItems',
@@ -462,8 +470,13 @@ const defaultOfficeEditorPanels = [
     location: 'left'
   },
   {
-    dataElement: 'searchPanel',
+    dataElement: DataElements.SEARCH_PANEL,
     render: 'searchPanel',
+    location: 'right'
+  },
+  {
+    dataElement: DataElements.OFFICE_EDITOR_COMMENT_PANEL,
+    render: 'notesPanel',
     location: 'right'
   },
 ];

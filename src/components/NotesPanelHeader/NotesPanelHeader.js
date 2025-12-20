@@ -16,7 +16,7 @@ import CustomElement from 'components/CustomElement';
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { OfficeEditorEditMode, NOTES_PANEL_TEXTS } from 'constants/officeEditor';
 import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
@@ -24,6 +24,7 @@ import Icon from '../Icon';
 import { getEventHandler } from 'helpers/fireEvent';
 
 const propTypes = {
+  parentDataElement: PropTypes.string,
   notes: PropTypes.array.isRequired,
   disableFilterAnnotation: PropTypes.bool,
   setSearchInputHandler: PropTypes.func.isRequired,
@@ -34,6 +35,7 @@ const propTypes = {
 
 const SORT_CONTAINER_ELEMENT = 'sortContainer';
 function NotesPanelHeader({
+  parentDataElement = DataElements.NOTES_PANEL,
   notes,
   disableFilterAnnotation,
   setSearchInputHandler,
@@ -133,7 +135,8 @@ function NotesPanelHeader({
   );
 
   const openFilterModalWithFocusTransfer = useFocusHandler(() => dispatch(actions.openElement('filterModal')));
-  const placeholderText = isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder');
+  const placeholderText = t(NOTES_PANEL_TEXTS[parentDataElement].searchPlaceholder);
+
   const originalHeaderElement = (
     <DataElementWrapper
       className={
@@ -166,7 +169,7 @@ function NotesPanelHeader({
         className="comments-counter"
         dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
       >
-        <h2 className='main-comment'>{isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel')} {`(${notes.length})`}</h2>
+        <h2 className='main-comment'>{t(NOTES_PANEL_TEXTS[parentDataElement].title)} {`(${notes.length})`}</h2>
       </DataElementWrapper>
 
       <DataElementWrapper

@@ -227,6 +227,7 @@ export const ToolButtonsHeader = createTemplate({
 });
 ToolButtonsHeader.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
+  window.instance.UI.enableAllElements();
   window.instance.UI.enableViewOnlyMode();
   const toolButtons = await canvas.findAllByRole('button');
   expect(toolButtons.length).toBe(3);

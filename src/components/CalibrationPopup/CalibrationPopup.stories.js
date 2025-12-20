@@ -1,9 +1,10 @@
 import React from 'react';
-import { createStore, combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import CalibrationPopup from './CalibrationPopup';
 import viewerReducer from 'reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
+import { configureStore } from '@reduxjs/toolkit';
 
 export default {
   title: 'Components/CalibrationPopup',
@@ -29,7 +30,9 @@ export default {
 const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer),
 });
-const store = createStore(reducer);
+const store = configureStore({
+  reducer: reducer
+});
 
 const BasicTemplate = (args) => {
   return (

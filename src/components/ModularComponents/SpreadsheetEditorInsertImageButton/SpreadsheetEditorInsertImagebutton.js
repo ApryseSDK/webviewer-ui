@@ -1,3 +1,8 @@
+/**
+ * The preset button for inserting an image in the Spreadsheet Editor
+ * @name spreadsheetEditorInsertImageButton
+ * @memberof UI.Components.PresetButton
+ */
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import InsertImageButton from 'components/InsertImageButton';

@@ -27,6 +27,7 @@ import './ScaleModal.scss';
 import '../Choice/Choice.scss';
 
 const Scale = window.Core.Scale;
+const { ToolNames } = window.Core.Tools;
 
 export const scaleOptions = {
   CUSTOM: 'custom',
@@ -41,24 +42,22 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     isDisabled,
     isOpen,
     isHidden,
-    currentToolbarGroup,
     selectedScale,
     activeToolName,
     isAddingNewScale,
     measurementScalePreset,
     { tempScale, isFractionalUnit },
-    isMultipleScalesMode
+    isMultipleScalesMode,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SCALE_MODAL),
     selectors.isElementOpen(state, DataElements.SCALE_MODAL),
     selectors.isElementHidden(state, DataElements.SCALE_MODAL),
-    selectors.getCurrentToolbarGroup(state),
     selectors.getSelectedScale(state),
     selectors.getActiveToolName(state),
     selectors.getIsAddingNewScale(state),
     selectors.getMeasurementScalePreset(state),
     selectors.getCalibrationInfo(state),
-    selectors.getIsMultipleScalesMode(state)
+    selectors.getIsMultipleScalesMode(state),
   ]);
 
   const [isFractionalPrecision, setIsFractionalPrecision] = useState(false);
@@ -109,11 +108,17 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     }
   }, [scaleOption]);
 
-  useDidUpdate(() => {
-    if (currentToolbarGroup === 'toolbarGroup-Measure') {
-      closeModal();
-    }
-  }, [currentToolbarGroup]);
+  useEffect(() => {
+    // Close modal when switching tools outside of calibration flow
+    const onToolModeUpdated = (newTool) => {
+      const isNewToolCalibration = newTool.name === ToolNames.CALIBRATION_MEASUREMENT;
+      if (!isNewToolCalibration && isOpen && !isHidden) {
+        closeModal();
+      }
+    };
+    core.addEventListener('toolModeUpdated', onToolModeUpdated);
+    return () => core.removeEventListener('toolModeUpdated', onToolModeUpdated);
+  }, [isOpen, isHidden]);
 
   useEffect(() => {
     const newPrecisionOption = scalePresetPrecision[presetScale[0]];
@@ -147,6 +152,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.SCALE_MODAL));
+    dispatch(actions.setIsAddingNewScale(false));
   };
 
   const createAndApplyScale = (scale, applyTo) => {

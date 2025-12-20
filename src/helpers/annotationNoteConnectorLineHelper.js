@@ -44,7 +44,7 @@ export const getConnectorLines = ({
   annotationTopLeft = adjustPointForWebcomponent(annotationTopLeft, true);
   annotationBottomRight = adjustPointForWebcomponent(annotationBottomRight, true);
   const annotationHeight = annotationTopLeft.y - annotationBottomRight.y;
-  const isPanelOnLeft = annotationTopLeft.x > noteContainerRect.left;
+  const isPanelOnLeft = (annotationTopLeft.x - scrollLeft) > noteContainerRect.left;
   let horizontalDistanceToAnnotation;
   const SELECTION_POINT_WIDTH = 10;
   if (isPanelOnLeft) {

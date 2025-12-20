@@ -1,13 +1,20 @@
 /**
- * An  instance of ThumbnailControlMenu that can be used to edit the items included in the thumbnail menu overlay
+ * An instance of ThumbnailControlMenu that can be used to add, update, or retrieve menu items in the thumbnail control menu overlay
  * @name UI.thumbnailControlMenu
- * @implements {UI.ThumbnailControlMenu}
  * @type {UI.ThumbnailControlMenu}
  * @example
- WebViewer(...)
+WebViewer(...)
   .then(function (instance) {
-    instance.UI.thumbnailControlMenu.someAPI();
-  })
+    // Add a custom menu item to the thumbnail control menu
+    instance.UI.thumbnailControlMenu.add([{
+      title: 'Alert me',
+      img: 'data:image/png;base64,...',
+      onClick: (selectedPageNumbers) => {
+        console.log('Selected thumbnails:', selectedPageNumbers);
+      },
+      dataElement: 'alertMeDataElement',
+    }]);
+  });
  */
 /**
  * A class which contains ThumbnailControlMenu APIs. <br/><br/>
@@ -26,37 +33,34 @@ const ThumbnailControlMenuAPI = {
   },
 
   /**
-   * @typedef UI.ThumbnailControlMenu.MenuItem
-   * @type {object}
-   * @property {string} title Title to be displayed for the operation
-   * @property {string} img path to image to be used as an icon for the operation
-   * @property {function} onClick onClick handler, which takes as a parameter an array of selected page numbers
-   * @property {string} dataElement Unique dataElement for this operation
+   * @typedef {Object} UI.ThumbnailControlMenu.MenuItem
+   * @property {string} title Title to be displayed for the menu item
+   * @property {string} img Path to the image to be used as an icon for the menu item
+   * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter
+   * @property {string} dataElement Unique data element identifier for this menu item
    */
 
   /**
-   * Adds an array of thumbnail menu buttons to the default menu. If passed a dataElement parameter, it will
-   * add the new menu buttons after this element. Otherwise, they will be appended to the start of the existing list
-   * of buttons.
+   * Adds menu items to the thumbnail control menu. If a dataElement parameter is provided, the new items will be added after that element. Otherwise, they will be added at the beginning.
    * @method UI.ThumbnailControlMenu#add
-   * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} MenuItem Array of buttons to be added, each with its individual operations. See example below.
-   * @param {('thumbRotateClockwise' | 'thumbDelete' )} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added at the top.
-   * You can call {@link UI.ThumbnailControlMenu#getItems getItems} to get existing items and their dataElements.
-   * @returns {UI.ThumbnailControlMenu} The instance itself
+   * @memberof UI.ThumbnailControlMenu
+   * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} menuItems Array of menu items to be added
+   * @param {string} [dataElementToInsertAfter] The data element of the item to insert after. Can be 'thumbRotateClockwise', 'thumbDelete', or a custom data element. If not provided, items will be added at the beginning. Call {@link UI.ThumbnailControlMenu#getItems getItems} to see existing items and their data elements.
+   * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining
    * @example
-      WebViewer(...)
-      .then(function (instance) {
-        instance.UI.thumbnailControlMenu.add([
-          {
-            title: 'alertme',
-            img: 'data:image/png;base64,...',
-            onClick: (selectedPageNumbers) => {
-              alert(`Selected thumbnail: ${selectedPageNumbers}`);
-            },
-            dataElement: 'alertMeDataElement',
-          },
-        ]);
-      })
+WebViewer(...)
+  .then(function (instance) {
+    instance.UI.thumbnailControlMenu.add([
+      {
+        title: 'Alert me',
+        img: 'data:image/png;base64,...',
+        onClick: (selectedPageNumbers) => {
+          alert(`Selected thumbnails: ${selectedPageNumbers}`);
+        },
+        dataElement: 'alertMeDataElement',
+      },
+    ]);
+  });
    */
   add(operations, dataElementToInsertAfter) {
     if (!operations || operations.length === 0) {
@@ -77,26 +81,27 @@ const ThumbnailControlMenuAPI = {
   },
 
   /**
-   * Update all the buttons in the ThumbnailControlMenu, essentially replacing them with
-   * a new list of buttons.
-   * To update an individual item, use {@link UI.updateElement updateElement}
+   * Replaces all items in the ThumbnailControlMenu with a new list of menu items.
+   * To update an individual item, use {@link UI.updateElement}.
    * @method UI.ThumbnailControlMenu#update
-   * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} MenuItem The list of MenuItems that will be rendered in the thumbnail menu overlay. See the add documentation for an example.
-   * @returns {UI.ThumbnailControlMenu} The instance of itself
+   * @memberof UI.ThumbnailControlMenu
+   * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} menuItems The list of menu items that will be rendered in the thumbnail control menu. If not provided, the menu will be cleared.
+   * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining
+   * @see UI.updateElement
    * @example
-      WebViewer(...)
-      .then(function (instance) {
-        instance.UI.thumbnailControlMenu.update([
-          {
-            title: 'alertme',
-            img: 'data:image/png;base64,...',
-            onClick: (selectedPageNumbers) => {
-              alert(`Selected thumbnail: ${selectedPageNumbers}`);
-            },
-            dataElement: 'alertMeDataElement',
-          },
-        ]);
-      })
+WebViewer(...)
+  .then(function (instance) {
+    instance.UI.thumbnailControlMenu.update([
+      {
+        title: 'Alert me',
+        img: 'data:image/png;base64,...',
+        onClick: (selectedPageNumbers) => {
+          console.log('Selected thumbnails:', selectedPageNumbers);
+        },
+        dataElement: 'alertMeDataElement',
+      },
+    ]);
+  });
   */
   update(operations) {
     if (!operations) {
@@ -108,14 +113,16 @@ const ThumbnailControlMenuAPI = {
   },
 
   /**
-   * Return the array of items in the ThumbnailControlMenu.
+   * Returns the current array of items in the ThumbnailControlMenu
    * @method UI.ThumbnailControlMenu#getItems
-   * @returns {Array.<UI.ThumbnailControlMenu.MenuItem>} Current items in the ThumbnailControlMenu.
+   * @memberof UI.ThumbnailControlMenu
+   * @returns {Array.<UI.ThumbnailControlMenu.MenuItem>} The current menu items in the thumbnail control menu
    * @example
-    WebViewer(...)
-      .then(function(instance) {
-        instance.UI.ThumbnailControlMenu.getItems();
-      });
+WebViewer(...)
+  .then(function(instance) {
+    const items = instance.UI.thumbnailControlMenu.getItems();
+    console.log('Current thumbnail control menu items:', items);
+  });
    */
   getItems() {
     return [...selectors.getThumbnailControlMenuItems(this.store.getState())];

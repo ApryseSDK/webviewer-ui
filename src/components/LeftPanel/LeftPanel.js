@@ -150,7 +150,7 @@ const LeftPanel = () => {
           </div>
         }
         {isOfficeEditorMode ?
-          <NotesPanel currentLeftPanelWidth={currentWidth} />
+          <NotesPanel currentLeftPanelWidth={currentWidth} dataElement={DataElements.OFFICE_EDITOR_REVIEW_PANEL} />
           :
           <>
             <div className="left-panel-header">

@@ -1,3 +1,27 @@
+/**
+ * The preset button for left alignment
+ * @name alignLeftButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for center alignment
+ * @name alignCenterButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for right alignment
+ * @name alignRightButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for justified alignment
+ * @name justifyBothButton
+ * @memberof UI.Components.PresetButton
+ */
+
 import React, { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import OfficeEditorAlignment from './OfficeEditor/AlignmentButton';

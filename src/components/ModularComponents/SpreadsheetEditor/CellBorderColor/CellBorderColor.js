@@ -8,6 +8,8 @@ import { getUniqueBorderColors, getColorFromHex, parseColor } from 'helpers/colo
 import { defaultBorderColor } from 'src/helpers/initialColorStates';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
+import calculateActiveBorderButtons from 'src/helpers/calculateActiveBorderButtons';
+import applyActiveBorders from 'src/helpers/applyActiveBorders';
 
 const CellBorderColor = (props) => {
   // eslint-disable-next-line custom/no-hex-colors
@@ -16,6 +18,8 @@ const CellBorderColor = (props) => {
 
   const defaultRGBAColor = getColorFromHex(defaultColor);
   const activeCellBorderStyle = useSelector(selectors.getActiveCellBorderStyle);
+  const selectedBorderStyleListOption = useSelector((state) => selectors.getSelectedBorderStyleListOption(state));
+  const isSingleCell = useSelector((state) => selectors.getIsSingleCell(state));
   const activeCellBorderColors = getUniqueBorderColors(activeCellBorderStyle);
   const [borderColors, setBorderColors] = useState(defaultRGBAColor);
 
@@ -50,7 +54,14 @@ const CellBorderColor = (props) => {
 
   const handleColorChange = (color) => {
     setBorderColors(color);
-    dispatch(actions.setSelectedBorderColorOption(parseColor(color)));
+    const parsedColor = parseColor(color);
+    dispatch(actions.setSelectedBorderColorOption(parsedColor));
+    if (!isSingleCell) {
+      // changing border color can only be applied immediately if a single cell is selected
+      return;
+    }
+    const activeBorderButtons = calculateActiveBorderButtons(activeCellBorderStyle);
+    applyActiveBorders(activeBorderButtons, selectedBorderStyleListOption, parsedColor);
   };
 
   return (

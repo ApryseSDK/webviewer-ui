@@ -1,3 +1,14 @@
+/**
+ * The preset button for increasing indent in the Office Editor
+ * @name increaseIndentButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for decreasing indent in the Office Editor
+ * @name decreaseIndentButton
+ * @memberof UI.Components.PresetButton
+ */
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
 import core from 'core';

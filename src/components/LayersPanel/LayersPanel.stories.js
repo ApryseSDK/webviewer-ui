@@ -83,7 +83,11 @@ export function Basic(args, context) {
   return <MockApp initialState={stateWithLayersPanel} initialDirection={addonRtl}/>;
 }
 
-Basic.parameters = { layout: 'fullscreen' };
+Basic.parameters = {
+  layout: 'fullscreen',
+  // For issues with mocks that are unrelated to the test
+  test: { dangerouslyIgnoreUnhandledErrors: true  }
+};
 
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

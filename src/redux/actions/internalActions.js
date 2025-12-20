@@ -561,6 +561,10 @@ export const setAutoExpandOutlines = (autoExpandOutlines = false) => ({
   type: 'SET_AUTO_EXPAND_OUTLINES',
   payload: { autoExpandOutlines },
 });
+export const setOutlinesStateMap = (outlinePath, outlineState) => ({
+  type: 'SET_OUTLINES_PANEL_STATE',
+  payload: { outlinePath, outlineState },
+});
 export const setAnnotationNumbering = (isAnnotationNumberingEnabled = false) => ({
   type: 'SET_ANNOTATION_NUMBERING',
   payload: { isAnnotationNumberingEnabled },
@@ -921,4 +925,14 @@ export const setSelectedBorderColorOption = (selectedBorderColorOption) => ({
 export const setSelectedBorderStyleListOption = (selectedBorderStyleListOption) => ({
   type: 'SET_SELECTED_BORDER_STYLE_OPTION',
   payload: { selectedBorderStyleListOption },
+});
+
+export const setActiveBorderButtons = (activeBorderButtons) => ({
+  type: 'SET_ACTIVE_BORDER_BUTTONS',
+  payload: { activeBorderButtons },
+});
+
+export const stashEnabledTools = (toolNames) => ({
+  type: 'STASH_ENABLED_TOOLS',
+  payload: { toolNames },
 });

@@ -12,6 +12,8 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import { addSearchListener, removeSearchListener } from 'helpers/search';
 import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
 import getDocument from 'src/core/getDocument';
+import getRootNode from 'helpers/getRootNode';
+
 
 import './SearchPanel.scss';
 import useSearch from 'hooks/useSearch';
@@ -74,7 +76,7 @@ function SearchPanel(props) {
 
   const adjustSpreadsheetTableWidth = (isUnmounting) => {
     if (isSpreadsheetEditorMode()) {
-      const editorWrapper = document.getElementById('editorWrapper');
+      const editorWrapper = getRootNode().getElementById('editorWrapper');
       if (isUnmounting) {
         editorWrapper.style.removeProperty('width');
       } else {

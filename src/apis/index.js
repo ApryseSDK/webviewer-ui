@@ -44,7 +44,6 @@ import getToolMode from './getToolMode';
 import getZoomLevel from './getZoomLevel';
 import getMaxZoomLevel from './getMaxZoomLevel';
 import getMinZoomLevel from './getMinZoomLevel';
-import hideOutlineControl from './hideOutlineControl';
 import hotkeys from './hotkeys';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -339,7 +338,6 @@ export default (store) => {
     getMaxZoomLevel,
     getMinZoomLevel,
     hotkeys,
-    hideOutlineControl: hideOutlineControl(store),
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),

@@ -521,7 +521,7 @@ export const defaultHotkeysScope = 'viewer';
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link UI.hotkeys instance.UI.hotkeys}
- * @namespace Hotkeys
+ * @class UI.Hotkeys
  * @memberof UI
  */
 const HotkeysManager = {

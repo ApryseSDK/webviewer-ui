@@ -13,11 +13,12 @@ import MultiSelectControls from 'components/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 import Choice from 'components/Choice';
+import TextButton from 'components/TextButton';
 
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import { getSortStrategies } from 'constants/sortStrategies';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { EditingStreamType, OfficeEditorEditMode, NOTES_PANEL_TEXTS } from 'constants/officeEditor';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -29,6 +30,7 @@ import './NotesPanel.scss';
 
 const NotesPanel = ({
   parentDataElement,
+  dataElement = DataElements.NOTES_PANEL,
   notes,
   selectedNoteIds,
   setSelectedNoteIds,
@@ -63,6 +65,7 @@ const NotesPanel = ({
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
   const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
+  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -349,7 +352,7 @@ const NotesPanel = ({
   );
 
   const ariaLiveResultsContainer = () => {
-    const message = isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel');
+    const message = t(NOTES_PANEL_TEXTS[dataElement].title);
     return (
       <p aria-live="assertive" style={{ position: 'absolute', left: '-9999px' }}>
         {notesToRender.length > 0 ? `${message} ${notesToRender.length}` : t('message.noResults')}
@@ -359,10 +362,10 @@ const NotesPanel = ({
 
   const NoAnnotationsGlyph = customEmptyPanel?.icon ?
     customEmptyPanel.icon :
-    (isOfficeEditorMode ? 'ic-edit-page' : 'illustration - empty state - outlines');
+    NOTES_PANEL_TEXTS[dataElement].icon;
   const NoAnnotationsMessage = customEmptyPanel?.message ?
     customEmptyPanel.message :
-    (isOfficeEditorMode ? t('message.noRevisions') : t('message.noAnnotations'));
+    t(NOTES_PANEL_TEXTS[dataElement].noAnnotation);
   const NoAnnotationsReadOnlyMessage =
     customEmptyPanel && customEmptyPanel.readOnlyMessage
       ? customEmptyPanel.readOnlyMessage
@@ -416,6 +419,15 @@ const NotesPanel = ({
   const placeHolder = showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder;
   const showMultiSelectControls = isMultiSelectMode && !isDocumentReadOnly;
 
+  const showOfficeEditorFooter = isOfficeEditorMode && !isMultiSelectMode;
+  const showReviewPanelFooter =
+    showOfficeEditorFooter
+    && dataElement === DataElements.OFFICE_EDITOR_REVIEW_PANEL
+    && notesToRender.length > 0;
+  const showCommentPanelFooter =
+    showOfficeEditorFooter
+    && dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL;
+
   return !showNotePanel ? null : (
     <div
       className={classNames({
@@ -446,6 +458,7 @@ const NotesPanel = ({
         )}
         <>
           <NotesPanelHeader
+            parentDataElement={dataElement}
             notes={notesToRender}
             disableFilterAnnotation={notes.length === 0}
             setSearchInputHandler={setSearchInput}
@@ -484,14 +497,28 @@ const NotesPanel = ({
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
           {showPlaceHolder ?? placeHolder}
-          {isOfficeEditorMode && !isMultiSelectMode && (notesToRender.length > 0) && (
-            <div className="preview-all-changes">
-              <div className="divider" />
+          {showReviewPanelFooter && (
+            <div className='office-editor-footer'>
+              <div className='divider' />
               <Choice
                 isSwitch
                 checked={officeEditorEditMode === OfficeEditorEditMode.PREVIEW}
                 label={t('officeEditor.previewAllChanges')}
                 onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OfficeEditorEditMode.PREVIEW : OfficeEditorEditMode.REVIEWING)}
+              />
+            </div>
+          )}
+          {showCommentPanelFooter && (
+            <div className='office-editor-footer'>
+              <div className='divider' />
+              <TextButton
+                className='add-new-button'
+                img='icon-menu-add'
+                dataElement={DataElements.OFFICE_EDITOR_COMMENT_ADD_NEW_BUTTON}
+                disabled={activeStream !== EditingStreamType.BODY}
+                label={`${t('action.add')} ${t('action.comment')}`}
+                ariaLabel={`${t('action.add')} ${t('action.comment')}`}
+                onClick={() => { }}
               />
             </div>
           )}
@@ -519,6 +546,7 @@ const NotesPanel = ({
 
 NotesPanel.propTypes = {
   parentDataElement: PropTypes.string,
+  dataElement: PropTypes.string,
   notes: PropTypes.array,
   selectedNoteIds: PropTypes.object,
   setSelectedNoteIds: PropTypes.func,

@@ -1,3 +1,8 @@
+/**
+ * The preset button for toggling non-printing characters in the Office Editor
+ * @name officeEditorToggleNonPrintingCharactersButton
+ * @memberof UI.Components.PresetButton
+ */
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
 import core from 'core';

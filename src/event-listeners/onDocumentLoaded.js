@@ -382,8 +382,6 @@ export const configureEditorMode = (store) => () => {
       onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;
     }
     dispatch(actions.setSpreadsheetEditorEditMode(onLoadEditMode));
-    const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
-    spreadsheetEditorManager.setEditMode(onLoadEditMode);
     if (onLoadEditMode === SpreadsheetEditorEditMode.VIEW_ONLY) {
       dispatch(
         actions.disableElements(

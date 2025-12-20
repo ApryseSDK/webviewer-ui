@@ -9,6 +9,8 @@ import DataElements from 'constants/dataElement';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
+import calculateActiveBorderButtons from 'src/helpers/calculateActiveBorderButtons';
+import applyActiveBorders from 'src/helpers/applyActiveBorders';
 
 import './CellBorderStyleDropdown.scss';
 
@@ -16,10 +18,20 @@ const CellBorderStyleDropdown = (props) => {
   const { isFlyoutItem, onKeyDownHandler, disabled = false, labelledById } = props;
   const [t] = useTranslation();
   const selectedBorderStyleListOption = useSelector((state)=> selectors.getSelectedBorderStyleListOption(state));
+  const selectedBorderColorOption = useSelector((state) => selectors.getSelectedBorderColorOption(state));
+  const activeCellBorderStyle = useSelector((state) => selectors.getActiveCellBorderStyle(state));
+  const isSingleCell = useSelector((state) => selectors.getIsSingleCell(state));
   const dispatch = useDispatch();
 
   const onClickBorderStyle = (key) => {
     dispatch(actions.setSelectedBorderStyleListOption(key));
+    if (!isSingleCell) {
+      // changing border stroke style can only be applied immediately
+      // if a single cell is selected
+      return;
+    }
+    const activeBorderButtons = calculateActiveBorderButtons(activeCellBorderStyle);
+    applyActiveBorders(activeBorderButtons, key, selectedBorderColorOption);
   };
 
   const translationPrefix = 'option.cellBorderStyle.';

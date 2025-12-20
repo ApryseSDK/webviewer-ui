@@ -1,5 +1,5 @@
 /**
- * Return the current tool object.
+ * Returns the current tool object
  * @method UI.getToolMode
  * @return {Core.Tools.Tool} Instance of the current tool
  * @example

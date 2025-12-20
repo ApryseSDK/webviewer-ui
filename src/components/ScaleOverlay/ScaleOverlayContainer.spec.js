@@ -1,8 +1,8 @@
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ScaleOverlayContainer from './ScaleOverlayContainer';
+import { configureStore } from '@reduxjs/toolkit';
 
 class MockScale {
   MockScale(scale) {
@@ -40,7 +40,7 @@ function rootReducer(state = initialState, action) { // eslint-disable-line no-u
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 const ScaleOverlayContainerWithRedux = (props) => (
   <Provider store={store}>
     <ScaleOverlayContainer {...props} />

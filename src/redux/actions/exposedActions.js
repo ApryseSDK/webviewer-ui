@@ -711,10 +711,8 @@ const normalizeItems = (items, componentsMap, existingComponentsMap) => {
       }
     }
 
-    if (!componentsMapHasItem) {
-      componentsMap[dataElementKey] = normalizedItem;
-      result.push(dataElementKey);
-    }
+    componentsMap[dataElementKey] = normalizedItem;
+    result.push(dataElementKey);
   }
   return result;
 };

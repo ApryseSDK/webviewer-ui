@@ -1,12 +1,24 @@
 /**
  * An instance of Popup that can be used to edit items in the annotation popup component
  * @name UI.annotationPopup
- * @implements {UI.Popup}
  * @type {UI.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.UI.annotationPopup.someAPI();
+    // Add a custom button to the annotation popup
+    instance.UI.annotationPopup.add({
+      type: 'actionButton',
+      img: 'icon-save',
+      title: 'Save annotation data',
+      dataElement: 'saveAnnotationButton',
+      onClick: () => {
+        console.log('Annotation saved!');
+      }
+    });
+
+    // Get current items in the popup
+    const items = instance.UI.annotationPopup.getItems();
+    console.log('Current annotation popup items:', items);
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';

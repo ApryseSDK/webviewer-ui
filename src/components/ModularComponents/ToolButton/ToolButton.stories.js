@@ -1,3 +1,5 @@
+import { createTemplate } from 'helpers/storybookHelper';
+import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import ToolButton from './ToolButton';
@@ -150,3 +152,45 @@ ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
 };
 
 ChangingToolStylesShouldRerender.parameters = window.storybook.disableRtlMode;
+
+export const getsDisabledWithTool = createTemplate({
+  headers: {
+    ...mockHeadersNormalized,
+    'default-top-header': {
+      ...mockHeadersNormalized['default-top-header'],
+      items: [
+        ...mockHeadersNormalized['default-top-header'].items,
+        'customDataElementButton',
+      ],
+    },
+  },
+  components: {
+    ...mockModularComponents,
+    customDataElementButton: {
+      dataElement: 'customDataElementButton',
+      type: 'toolButton',
+      toolName: 'AnnotationCreateFileAttachment',
+      title: 'Custom Data Element',
+    },
+  },
+});
+
+getsDisabledWithTool.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const buttonLabel = /Custom Data Element/i;
+  const toolName = window.instance.Core.Tools.ToolNames.FILEATTACHMENT;
+
+  const expectButtonVisible = async () => {
+    await expect(canvas.findByRole('button', { name: buttonLabel })).resolves.toBeInTheDocument();
+  };
+
+  const expectButtonHidden = async () => {
+    await expect(canvas.queryByRole('button', { name: buttonLabel })).toBeNull();
+  };
+
+  await expectButtonVisible();
+  window.instance.UI.disableTools([toolName]);
+  await expectButtonHidden();
+  window.instance.UI.enableTools([toolName]);
+  await expectButtonVisible();
+};

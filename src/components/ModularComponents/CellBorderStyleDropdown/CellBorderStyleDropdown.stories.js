@@ -11,7 +11,33 @@ export default {
   component: CellBorderStyleDropdown,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const createMockStore = (borderStyles = null) => {
+  const defaultBorderStyles = {
+    top: { color: null, style: 'None' },
+    right: { color: null, style: 'None' },
+    bottom: { color: null, style: 'None' },
+    left: { color: null, style: 'None' },
+  };
+
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: {
+      spreadsheetEditor: {
+        cellProperties: {
+          isSingleCell: true,
+          styles: {
+            border: borderStyles || defaultBorderStyles
+          }
+        },
+        selectedBorderStyleListOption: 'Thin',
+        // eslint-disable-next-line custom/no-hex-colors
+        selectedBorderColorOption: '#000000',
+      }
+    }
+  });
+};
+
+const store = createMockStore();
 
 export function Basic() {
   return (

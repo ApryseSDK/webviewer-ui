@@ -88,7 +88,8 @@ const reducer = () => {
       activeFlyout: 'bookmarkOutlineFlyout-',
       openElements: {
         'bookmarkOutlineFlyout-': true,
-      }
+      },
+      outlinesStateMap: {},
     },
     document: {
       outlines: getDefaultOutlines(),

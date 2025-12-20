@@ -8,6 +8,12 @@ import enableFeatures from 'src/apis/enableFeatures';
 import Feature from 'constants/feature';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 import selectors from 'selectors';
+import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
+
+const getEnabledTools = (state) => {
+  const allToolNames = getAnnotationCreateToolNames();
+  return allToolNames.filter((toolName) => !selectors.isToolDisabled(state, toolName));
+};
 
 export default (store) => () => {
   const { dispatch } = store;
@@ -16,7 +22,15 @@ export default (store) => () => {
   const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
 
   if (isReadOnly || (isViewOnly && !isCustomUI)) {
-    disableTools(store)();
+    const state = store.getState();
+    const enabledTools = getEnabledTools(state);
+    const enabledToolsStash = state.viewer.enabledToolsStash;
+
+    if (!enabledToolsStash || enabledToolsStash.length === 0) {
+      dispatch(actions.stashEnabledTools(enabledTools));
+    }
+
+    disableTools(store)(enabledTools);
     disableFeatures(store)([Feature.Annotating]);
     core.setToolMode(defaultTool);
     dispatch(actions.setActiveToolGroup(''));
@@ -24,7 +38,14 @@ export default (store) => () => {
       dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
     }
   } else {
-    enableTools(store)();
+    const state = store.getState();
+    const enabledToolsStash = state.viewer.enabledToolsStash;
+
+    enableTools(store)(enabledToolsStash);
+
+    // clear the stash after re-enabling tools
+    dispatch(actions.stashEnabledTools([]));
+
     if (!isOfficeEditorMode()) {
       enableFeatures(store)([Feature.Annotating]);
     }

@@ -1,18 +1,14 @@
 /**
- * Adds a sorting strategy in notes panel.
+ * Adds a sorting strategy to the notes panel
  * @method UI.addSortStrategy
- * @param {object} sortStrategy Sorting strategy that will be used to sort notes
- * @param {string} sortStrategy.name Name of the strategy, which will be shown in notes panel's dropdown
- * @param {UI.getSortedNotes} sortStrategy.getSortedNotes Function that takes unsorted notes (annotations) and returns them sorted
- * @param {UI.shouldRenderSeparator} sortStrategy.shouldRenderSeparator Function that returns when a separator should be rendered
- * @param {UI.getSeparatorContent} sortStrategy.getSeparatorContent Function that returns the content of a separator
+ * @param {UI.SortStrategy} sortStrategy Sorting strategy that will be used to sort notes in the notes panel
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var mySortStrategy = {
+    const mySortStrategy = {
       name: 'annotationType',
       getSortedNotes: function(notes) {
-        return notes.sort(function(a ,b) {
+        return notes.sort(function(a, b) {
           if (a.Subject < b.Subject) return -1;
           if (a.Subject > b.Subject) return 1;
           if (a.Subject === b.Subject) return 0;
@@ -30,26 +26,36 @@ WebViewer(...)
   });
  */
 /**
- * Callback that gets passed to `sortStrategy.getSortedNotes` in {@link UI.addSortStrategy addSortStrategy}.
+ * @typedef {object} UI.SortStrategy
+ * @property {string} name Name of the strategy, which will be shown in notes panel's dropdown
+ * @property {UI.getSortedNotes} getSortedNotes Function that takes unsorted notes (annotations) and returns them sorted
+ * @property {UI.shouldRenderSeparator} shouldRenderSeparator Function that returns when a separator should be rendered
+ * @property {UI.getSeparatorContent} getSeparatorContent Function that returns the content of a separator
+ */
+/**
+ * Callback function for sorting notes in a custom sort strategy. This is used as the getSortedNotes property in {@link UI.SortStrategy}.
  * @callback UI.getSortedNotes
  * @param {Array<Core.Annotations.Annotation>} notes List of unsorted notes (annotations)
  * @return {Array<Core.Annotations.Annotation>} Sorted notes (annotations)
  */
 /**
- * Callback that gets passed to `sortStrategy.shouldRenderSeparator` in {@link UI.addSortStrategy addSortStrategy}.
+ * Callback function that determines when to render a separator between notes. This is used as the shouldRenderSeparator property in {@link UI.SortStrategy}.
  * @callback UI.shouldRenderSeparator
  * @param {Core.Annotations.Annotation} prevNote Previous note (annotation)
  * @param {Core.Annotations.Annotation} currNote Current note (annotation)
  * @return {boolean} Whether a separator should be rendered or not
  */
 /**
- * Callback that gets passed to `sortStrategy.getSeparatorContent` in {@link UI.addSortStrategy addSortStrategy}.
+ * Callback function that returns the content to display in a separator. This is used as the getSeparatorContent property in {@link UI.SortStrategy}.
  * @callback UI.getSeparatorContent
  * @param {Core.Annotations.Annotation} prevNote Previous note (annotation)
  * @param {Core.Annotations.Annotation} currNote Current note (annotation)
- * @param {object} options Optional values
- * @param {Array.<string>} options.pageLabels List of page label
+ * @param {UI.SeparatorOptions} options Optional values
  * @return {(string|number)} Content to be rendered in a separator
+ */
+/**
+ * @typedef {object} UI.SeparatorOptions
+ * @property {Array.<string>} pageLabels List of page labels
  */
 
 import { addSortStrategy } from 'constants/sortStrategies';

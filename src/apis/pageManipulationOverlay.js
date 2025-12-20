@@ -1,13 +1,25 @@
 /**
- * An  instance of PageManipulationOverlay that can be used to edit the items included in the overlay
+ * An instance of PageManipulationOverlay that can be used to add, update, or retrieve page manipulation operations in the overlay
  * @name UI.pageManipulationOverlay
- * @implements {UI.PageManipulationOverlay}
  * @type {UI.PageManipulationOverlay}
  * @example
- WebViewer(...)
+WebViewer(...)
   .then(function (instance) {
-    instance.UI.pageManipulationOverlay.someAPI();
-  })
+    // Add a custom page operation to the overlay
+    instance.UI.pageManipulationOverlay.add([{
+      type: 'customPageOperation',
+      header: 'Custom options',
+      dataElement: 'customPageOperations',
+      operations: [{
+        title: 'Alert me',
+        img: '/path-to-image',
+        onClick: (selectedPageNumbers) => {
+          console.log('Selected pages:', selectedPageNumbers);
+        },
+        dataElement: 'customPageOperationButton',
+      }]
+    }]);
+  });
  */
 
 /**
@@ -34,75 +46,48 @@ const PageManipulationOverlayAPI = {
     return this;
   },
   /**
-   * @typedef UI.PageManipulationOverlay.PageManipulationSection
-   * @type {object}
-   * @property {string} type Required type of 'customPageOperation'
-   * @property {string} header Header to be displayed in the UI for this section
-   * @property {string} dataElement Unique dataElement
-   * @property {UI.PageManipulationOverlay.PageOperation[]} operations the operations that will be available under this section
+   * @typedef {Object} UI.PageManipulationOverlay.PageManipulationSection
+   * @property {string} type The type of section. Use 'customPageOperation' for custom operations or 'divider' for separators.
+   * @property {string} [header] Header text to be displayed in the UI for this section. Required if type is 'customPageOperation'.
+   * @property {string} [dataElement] Unique data element identifier. Required if type is 'customPageOperation'.
+   * @property {Array.<UI.PageManipulationOverlay.PageOperation>} [operations] The operations that will be available under this section. Required if type is 'customPageOperation'.
    */
   /**
-   * @typedef UI.PageManipulationOverlay.PageOperation
-   * @type {object}
+   * @typedef {Object} UI.PageManipulationOverlay.PageOperation
    * @property {string} title Title to be displayed for the operation
-   * @property {string} img path to imge to be used as an icon for the operation
-   * @property {function} onClick onClick handler, which takes as a parameter an array of selected page numbers
-   * @property {string} dataElement Unique dataElement for this operation
+   * @property {string} img Path to the image to be used as an icon for the operation
+   * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter
+   * @property {string} dataElement Unique data element identifier for this operation
    */
   /**
-   * Adds an array of page manipulation operations to the default operations. If passed a dataElement parameter, it will
-   * add the new operations after this element. Otherwise, they will be appended to the start of the existing list
-   * of operations.
+   * Adds page manipulation operations to the overlay. If a dataElement parameter is provided, the new operations will be added after that element. Otherwise, they will be added at the beginning.
    * @method UI.PageManipulationOverlay#add
-   * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} PageManipulationSection Array of sections to be added, each with its individual operations. See example below.
-   * @param {('pageRotationControls' | 'pageManipulationControls')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added at the top.
-   * You can call {@link UI.PageManipulationOverlay#getItems getItems} to get existing items and their dataElements.
-   * @returns {UI.PageManipulationOverlay} The instance itself
+   * @memberof UI.PageManipulationOverlay
+   * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} operations Array of sections to be added, each with its individual operations
+   * @param {string} [dataElementToInsertAfter] The data element of the item to insert after. Can be 'pageRotationControls', 'pageManipulationControls', or a custom data element. If not provided, items will be added at the beginning. Call {@link UI.PageManipulationOverlay#getItems getItems} to see existing items and their data elements.
+   * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining
    * @example
-   * // Each object in the operations array shall consist of the following:
-    {
-      type: 'customPageOperation', // Required type of 'customPageOperation'
-      header: 'Custom options', // Header to be displayed in the UI
-      dataElement: 'customPageOperations', // Unique dataElement
-      // Each new section can have one more more operations.
-      // The onClick handler for each operation gets passed an array of the currently selected
-      // thumbnail page numbers.
-      operations: [
-        {
-          title: 'Alert me of selected thumbnail page numbers',
-          img: '/path-to-image',
-          onClick: (selectedPageNumbers) => {
-            alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
-          },
-          dataElement: 'customPageOperationButton', // Each operation must have a dataElement
-        }
-      ]
-    }
-
-    // Additionally, to add dividers you can include this in the operations array:
-    { type: 'divider' }
-    // Example:
-    WebViewer(...)
-      .then(function (instance) {
-        instance.UI.pageManipulationOverlay.add([
+WebViewer(...)
+  .then(function (instance) {
+    instance.UI.pageManipulationOverlay.add([
+      {
+        type: 'customPageOperation',
+        header: 'Custom options',
+        dataElement: 'customPageOperations',
+        operations: [
           {
-            type: 'customPageOperation',
-            header: 'Custom options',
-            dataElement: 'customPageOperations',
-            operations: [
-              {
-                title: 'Alert me',
-                img: '/path-to-image',
-                onClick: (selectedPageNumbers) => {
-                  alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
-                },
-                dataElement: 'customPageOperationButton',
-              }
-            ]
-          },
-          { type: 'divider' }
-        ]);
-      });
+            title: 'Alert me of selected thumbnail page numbers',
+            img: '/path-to-image',
+            onClick: (selectedPageNumbers) => {
+              alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
+            },
+            dataElement: 'customPageOperationButton',
+          }
+        ]
+      },
+      { type: 'divider' }
+    ]);
+  });
    */
   add(operations, dataElementToInsertAfter) {
     if (!operations || operations.length === 0) {
@@ -133,49 +118,50 @@ const PageManipulationOverlayAPI = {
   },
 
   /**
-   * Update all the operations in the PageManipulationOverlay, essentially replacing them with
-   * a new list of operations.
-   * To update an individual item, use {@link UI.updateElement updateElement}
+   * Replaces all operations in the PageManipulationOverlay with a new list of operations
+   * To update an individual item, use {@link UI.updateElement}.
    * @method UI.PageManipulationOverlay#update
-   * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} PageManipulationSection The list of PageManipulationSections that will be rendered in the PageManipulation overlay. See the add documentation for an example.
-   * @returns {UI.PageManipulationOverlay} The instance of itself
+   * @memberof UI.PageManipulationOverlay
+   * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} operations The list of page manipulation sections that will be rendered in the overlay. If not provided, the overlay will be cleared.
+   * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining
+   * @see UI.updateElement
    * @example
-    WebViewer(...)
-      .then(function (instance) {
-        instance.UI.pageManipulationOverlay.update([
+WebViewer(...)
+  .then(function (instance) {
+    instance.UI.pageManipulationOverlay.update([
+      {
+        type: 'customPageOperation',
+        header: 'Print Operations',
+        dataElement: 'customPageOperations',
+        operations: [
           {
-            type: 'customPageOperation',
-            header: 'Print Operations',
-            dataElement: 'customPageOperations',
-            operations: [
-              {
-                title: 'Print page',
-                img: 'icon-header-print-line',
-                onClick: (selectedPageNumbers) => {
-                  alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
-                },
-                dataElement: 'printThumbnailPage',
-              }
-            ]
-          },
-          { type: 'divider' },
-          {
-            type: 'customPageOperation',
-            header: 'Alert Operations',
-            dataElement: 'customPageOperations-2',
-            operations: [
-              {
-                title: 'Alert me',
-                img: 'icon-header-print-line',
-                onClick: (selectedPageNumbers) => {
-                  alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
-                },
-                dataElement: 'alertPage',
-              }
-            ]
+            title: 'Print page',
+            img: 'icon-header-print-line',
+            onClick: (selectedPageNumbers) => {
+              console.log('Printing pages:', selectedPageNumbers);
+            },
+            dataElement: 'printThumbnailPage',
           }
-        ]);
-      });
+        ]
+      },
+      { type: 'divider' },
+      {
+        type: 'customPageOperation',
+        header: 'Alert Operations',
+        dataElement: 'customPageOperations-2',
+        operations: [
+          {
+            title: 'Alert me',
+            img: 'icon-header-print-line',
+            onClick: (selectedPageNumbers) => {
+              alert(`Selected thumbnail pages: ${selectedPageNumbers}`);
+            },
+            dataElement: 'alertPage',
+          }
+        ]
+      }
+    ]);
+  });
    */
   update(operations) {
     if (!operations) {
@@ -196,13 +182,15 @@ const PageManipulationOverlayAPI = {
   },
 
   /**
-   * Return the array of items in the PageManipulationOverlay.
+   * Returns the current array of items in the PageManipulationOverlay
    * @method UI.PageManipulationOverlay#getItems
-   * @returns {Array.<UI.PageManipulationOverlay.PageManipulationSection>} Current items in the PageManipulationOverlay.
+   * @memberof UI.PageManipulationOverlay
+   * @returns {Array.<UI.PageManipulationOverlay.PageManipulationSection>} The current page manipulation sections in the overlay
    * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.pageManipulationOverlay.getItems();
+    const items = instance.UI.pageManipulationOverlay.getItems();
+    console.log('Current page manipulation items:', items);
   });
    */
   getItems() {
@@ -222,8 +210,10 @@ WebViewer(...)
     return index;
   },
   /**
-   * Disables the Page Manipulation Overlay opening through right-click.
+   * Disables the Page Manipulation Overlay from opening through right-click on thumbnails
    * @method UI.PageManipulationOverlay#disableOpeningByRightClick
+   * @memberof UI.PageManipulationOverlay
+   * @see UI.PageManipulationOverlay#enableOpeningByRightClick
    * @example
 WebViewer(...)
   .then(function(instance) {
@@ -234,8 +224,10 @@ WebViewer(...)
     this.store.dispatch(actions.setPageManipulationOverlayOpenByRightClick(false));
   },
   /**
-   * Enables the Page Manipulation Overlay opening through right-click.
+   * Enables the Page Manipulation Overlay to open through right-click on thumbnails.
    * @method UI.PageManipulationOverlay#enableOpeningByRightClick
+   * @memberof UI.PageManipulationOverlay
+   * @see UI.PageManipulationOverlay#disableOpeningByRightClick
    * @example
 WebViewer(...)
   .then(function(instance) {

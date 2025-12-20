@@ -1,3 +1,21 @@
+/**
+ * The preset button for toggling bold style
+ * @name boldButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for toggling italic style
+ * @name italicButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * The preset button for toggling underline style
+ * @name underlineButton
+ * @memberof UI.Components.PresetButton
+ */
+
 import React, { forwardRef, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';

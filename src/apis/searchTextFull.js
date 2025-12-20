@@ -1,13 +1,13 @@
 /**
  * Searches the full document for the texts matching searchValue.
  * @method UI.searchTextFull
- * @param {string} searchValue The text value to look for.
- * @param {object} [options] Search options.
- * @param {boolean} [options.caseSensitive=false] Search with matching cases.
- * @param {boolean} [options.wholeWord=false] Search whole words only.
- * @param {boolean} [options.wildcard=false] Search a string with a wildcard *. For example, *viewer.
- * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
- * @returns {Promise<void>} Returns a promise that resolves when the search is complete.
+ * @param {string} searchValue The text value to look for
+ * @param {object} [options] Search options
+ * @param {boolean} [options.caseSensitive=false] Whether the search is case sensitive
+ * @param {boolean} [options.wholeWord=false] Whether to search for whole words only
+ * @param {boolean} [options.wildcard=false] Whether to search with wildcard characters. For example, *viewer
+ * @param {boolean} [options.regex=false] Whether to search using regular expressions. For example, www(.*)com
+ * @returns {Promise<void>} Returns a promise that resolves when the search is complete
  * @example
 WebViewer(...)
   .then(function(instance) {

@@ -117,7 +117,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.removeEventListener('dragover', this.preventDefault);
       this.container.current.removeEventListener('drop', this.onDrop);
     }
 

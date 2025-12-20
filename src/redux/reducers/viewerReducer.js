@@ -548,6 +548,20 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, activeCustomRibbon: payload.customRibbon };
     case 'SET_AUTO_EXPAND_OUTLINES':
       return { ...state, autoExpandOutlines: payload.autoExpandOutlines };
+    case 'SET_OUTLINES_PANEL_STATE': {
+      const { outlinePath, outlineState } = payload;
+      const [[stateKey, stateValue]] = Object.entries(outlineState);
+      return {
+        ...state,
+        outlinesStateMap: {
+          ...state.outlinesStateMap,
+          [outlinePath]: {
+            ...state.outlinesStateMap[outlinePath],
+            [stateKey]: stateValue,
+          },
+        },
+      };
+    }
     case 'SET_ANNOTATION_NUMBERING':
       return { ...state, isAnnotationNumberingEnabled: payload.isAnnotationNumberingEnabled };
     case 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY':
@@ -1202,6 +1216,9 @@ export default (initialState) => (state = initialState, action) => {
     }
     case 'STASH_ENABLED_RIBBONS': {
       return { ...state, enabledRibbonsStash: [...state.enabledRibbonsStash, ...payload.ribbonItems] };
+    }
+    case 'STASH_ENABLED_TOOLS': {
+      return { ...state, enabledToolsStash: payload.toolNames };
     }
     case 'STASH_COMPONENTS': {
       const { UIMode } = payload;

@@ -289,6 +289,10 @@ const App = ({ removeEventHandlers, initialDirection }) => {
             documentId: getHashParameters('did', null),
             showInvalidBookmarks: getHashParameters('showInvalidBookmarks', false),
             chunkSize,
+            spreadsheetEditorOptions: (() => {
+              const optionsStr = getHashParameters('spreadsheetEditorOptions', null);
+              return optionsStr ? JSON.parse(optionsStr) : {};
+            })(),
           };
           loadDocument(dispatch, initialDoc, options);
         }
@@ -360,7 +364,6 @@ const App = ({ removeEventHandlers, initialDirection }) => {
     tabletBreakpoint.addListener(onBreakpoint);
   }, []);
 
-  // These need to be done here to wait for the persisted values loaded in redux
   useEffect(() => {
     const onLanguageChange = () => {
       if (isSpreadsheetEditorModeEnabled) {
@@ -376,13 +379,16 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       setLanguage(store)(store.getState().viewer.currentLanguage);
     }
 
-    hotkeysManager.initialize(store);
-    setDefaultDisabledElements(store);
-
     return () => {
       i18next.off('languageChanged', onLanguageChange);
     };
   }, [currentUIConfiguration]);
+
+  // These need to be done only once on app load
+  useEffect(() => {
+    hotkeysManager.initialize(store);
+    setDefaultDisabledElements(store);
+  }, []);
 
   useEffect(() => {
     const onError = (error) => {

@@ -64,7 +64,13 @@ function normalizeAttributeValue(value, param) {
   }
 
   try {
-    JSON.parse(stringValue);
+    const parsed = JSON.parse(stringValue);
+    if (paramsRequiringJSONFormat.has(param)) {
+      return JSON.stringify(parsed);
+    }
+    if (Array.isArray(parsed)) {
+      return parsed.join(',');
+    }
     return stringValue;
   } catch (error) {
     if (paramsRequiringJSONFormat.has(param)) {

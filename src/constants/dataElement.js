@@ -283,6 +283,8 @@ const DataElements = {
   OFFICE_EDITOR_COLUMN_DROPDOWN_TOGGLE: 'officeEditorColumnDropdownToggle',
   OFFICE_EDITOR_COLUMN_DROPDOWN: 'officeEditorColumnDropdown',
   OFFICE_EDITOR_COLUMN_UNIT: 'officeEditorColumnUnit',
+  OFFICE_EDITOR_COMMENT_PANEL: 'officeEditorCommentPanel',
+  OFFICE_EDITOR_COMMENT_ADD_NEW_BUTTON: 'officeEditorCommentAddNewButton',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',

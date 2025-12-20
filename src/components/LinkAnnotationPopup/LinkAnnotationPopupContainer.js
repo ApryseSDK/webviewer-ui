@@ -42,6 +42,9 @@ export const deleteLinkAnnotationWithGroup = (annotation, activeDocumentViewerKe
       annotationManager.deleteAnnotation(linkAnnot, { 'source': 'unlink' }, true);
     }
   });
+  if (textHighlightAnnotation) {
+    annotationManager.deleteAnnotation(textHighlightAnnotation, { 'source': 'unlink' }, true);
+  }
   annotationManager.deleteAnnotation(annotation, { 'source': 'unlink' }, true);
 };
 

@@ -1,13 +1,13 @@
 /**
- * Return the current zoom level
+ * Returns the current zoom level
  * @method UI.getZoomLevel
- * @return {number} Zoom level (0 ~ 1)
+ * @return {number} Zoom level (0 to 1)
  * @example
 WebViewer(...)
   .then(function(instance) {
     const docViewer = instance.Core.documentViewer;
 
-    // you must have a document loaded when calling this api
+    // you must have a document loaded when calling this API
     docViewer.addEventListener('documentLoaded', function() {
       console.log(instance.UI.getZoomLevel());
     });

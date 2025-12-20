@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import DOMPurify from 'dompurify';
 
 import './Icon.scss';
 
@@ -83,7 +84,8 @@ class Icon extends React.PureComponent {
 
     // Deque required aria-label to be on the SVG element rather than the wrapping div
     if (ariaLabel) {
-      svgElement = svgElement.replace('<svg', `<svg aria-label="${ariaLabel}"`);
+      const sanitizedAriaLabel = DOMPurify.sanitize(ariaLabel, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+      svgElement = svgElement.replace('<svg', `<svg aria-label="${sanitizedAriaLabel}"`);
     }
 
     return (

@@ -6,9 +6,10 @@
 WebViewer(...)
   .then(function(instance) {
     // open left panel
-    instance.UI.openElements([ 'leftPanel' ]);
+    instance.UI.openElements(['leftPanel']);
     // view outlines panel
     instance.UI.setActiveLeftPanel('outlinesPanel');
+  });
  */
 
 import actions from 'actions';

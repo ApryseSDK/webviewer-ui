@@ -62,13 +62,17 @@
       height: 72px;
     }
 
-    .preview-all-changes {
+    .office-editor-footer {
       height: 57px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
       margin-inline-end: 16px;
+
+      .officeEditorCommentPanel & {
+        align-items: center;
+      }
 
       .divider {
         height: 1px;
@@ -102,6 +106,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      .officeEditorCommentPanel & {
+        flex-grow: 1;
+      }
 
       .msg {
         @include tablet-and-desktop {
