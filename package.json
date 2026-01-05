@@ -40,6 +40,7 @@
     "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",
     "i18next": "^19.0.3",
     "i18next-http-backend": "^1.0.16",
+    "lodash.debounce": "^4.0.8",
     "quill-mention": "^4.1.0",
     "react": "^17.0.0",
     "react-color": "^2.18.1",

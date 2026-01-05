@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import NoteShareType from 'components/NoteShareType';
 import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
-import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import Choice from 'components/Choice';
 import Tooltip from 'components/Tooltip';
 
@@ -179,7 +178,6 @@ function NoteHeader(props) {
                 }}
               />
             )}
-            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
 
             {/* WISEflow: Note share type menu */}
             {!isNoteStateDisabled &&

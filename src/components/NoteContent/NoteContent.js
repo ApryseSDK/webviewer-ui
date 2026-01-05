@@ -31,10 +31,14 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import { COMMON_COLORS } from 'constants/commonColors';
-import Button from 'components/Button';
 import getAnnotationReference from 'src/helpers/getAnnotationReference';
 
+import SavedStateIndicator from './SavedStateIndicator';
 import './NoteContent.scss';
+import { AnnotationCustomEvents, AnnotationSavedState } from './annotationSavedState';
+import debounce from 'lodash.debounce';
+
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 dayjs.extend(LocalizedFormat);
 
@@ -65,7 +69,6 @@ const NoteContent = ({
   handleMultiSelect,
   isGroupMember,
 }) => {
-
   const noteDateFormat = useSelector((state) => selectors.getNoteDateFormat(state));
   const iconColor = useSelector((state) => selectors.getIconColor(state, mapAnnotationToKey(annotation), shallowEqual));
   const isNoteStateDisabled = useSelector((state) => selectors.isElementDisabled(state, 'noteStateFlyout'));
@@ -85,7 +88,7 @@ const NoteContent = ({
     onTopNoteContentClicked,
     sortStrategy,
     showAnnotationNumbering,
-    setPendingEditText
+    setPendingEditText,
   } = useContext(NoteContext);
 
   const dispatch = useDispatch();
@@ -164,10 +167,10 @@ const NoteContent = ({
                   href,
                   text: anchorText,
                   start: offset,
-                  end: offset + match.getMatchedText().length
+                  end: offset + match.getMatchedText().length,
                 });
             }
-          }
+          },
         });
       }
 
@@ -186,9 +189,7 @@ const NoteContent = ({
               return null;
             }
             const text = annotation['TrackedChangeType'] === 1 ? t('officeEditor.added') : t('officeEditor.deleted');
-            return (
-              <span style={{ color: annotation.FillColor.toString(), fontWeight: 700 }}>{text}</span>
-            );
+            return <span style={{ color: annotation.FillColor.toString(), fontWeight: 700 }}>{text}</span>;
           };
 
           return (
@@ -318,35 +319,38 @@ const NoteContent = ({
       contentStyle.color = textColor.toHexString();
     }
 
-      return (
-        <>
-          {(isEditing && isSelected) ? (
-            <ContentArea
-              annotation={annotation}
-              noteIndex={noteIndex}
-              setIsEditing={setIsEditing}
-              textAreaValue={textAreaValue}
-              onTextAreaValueChange={setPendingEditText}
-              pendingText={pendingEditTextMap[annotation.Id]}
-            />
-          ) : (
-            contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
-                {isReply && (attachments.length > 0) && (
-                  <ReplyAttachmentList
-                    files={attachments}
-                    isEditing={false}
-                  />
-                )}
-                {renderContents(contentsToRender, richTextStyle, contentStyle, skipAutoLink)}
-              </div>
-            )
-          )}
-        </>
-      );
-    },
-    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, setPendingEditText, attachments]
-  );
+    return (
+      <>
+        {isEditing && isSelected ? (
+          <ContentArea
+            annotation={annotation}
+            noteIndex={noteIndex}
+            setIsEditing={setIsEditing}
+            textAreaValue={textAreaValue}
+            onTextAreaValueChange={setPendingEditText}
+            pendingText={pendingEditTextMap[annotation.Id]}
+          />
+        ) : (
+          contentsToRender && (
+            <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+              {isReply && attachments.length > 0 && <ReplyAttachmentList files={attachments} isEditing={false} />}
+              {renderContents(contentsToRender, richTextStyle, contentStyle, skipAutoLink)}
+            </div>
+          )
+        )}
+      </>
+    );
+  }, [
+    annotation,
+    isSelected,
+    isEditing,
+    setIsEditing,
+    contents,
+    renderContents,
+    textAreaValue,
+    setPendingEditText,
+    attachments,
+  ]);
 
   const text = annotation.getCustomData('trn-annot-preview');
   const textPreview = useMemo(() => {
@@ -354,62 +358,79 @@ const NoteContent = ({
       return null;
     }
 
-      const highlightSearchResult = highlightSearchInput(text, searchInput);
-      const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
-      // If we have a search result do not use text
-      // preview but instead show the entire text
-      if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
-        return (
-          <DataElementWrapper
-            className="selected-text-preview"
-            dataElement="notesSelectedTextPreview">
-            <NoteTextPreview linesToBreak={3}>
-              {`"${highlightSearchResult}"`}
-            </NoteTextPreview>
-          </DataElementWrapper>
-        );
-      }
-      
+    const highlightSearchResult = highlightSearchInput(text, searchInput);
+    const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
+    // If we have a search result do not use text
+    // preview but instead show the entire text
+    if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
       return (
-        <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
-          {highlightSearchResult}
-        </div>
+        <DataElementWrapper className="selected-text-preview" dataElement="notesSelectedTextPreview">
+          <NoteTextPreview linesToBreak={3}>{`"${highlightSearchResult}"`}</NoteTextPreview>
+        </DataElementWrapper>
       );
-    }, [text, searchInput]);
+    }
 
+    return (
+      <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
+        {highlightSearchResult}
+      </div>
+    );
+  }, [text, searchInput]);
 
-  const header = useMemo(
-    () => {
-      return (
-        <NoteHeader
-          icon={icon}
-          iconColor={iconColor}
-          annotation={annotation}
-          language={language}
-          noteDateFormat={noteDateFormat}
-          isSelected={isSelected}
-          setIsEditing={setIsEditing}
-          notesShowLastUpdatedDate={notesShowLastUpdatedDate}
-          isReply={isReply}
-          isUnread={isUnread}
-          renderAuthorName={renderAuthorName}
-          renderAnnotationReference={renderAnnotationReference}
-          isNoteStateDisabled={isNoteStateDisabled}
-          isEditing={isEditing}
-          noteIndex={noteIndex}
-          sortStrategy={sortStrategy}
-          activeTheme={activeTheme}
-          handleMultiSelect={handleMultiSelect}
-          isMultiSelected={isMultiSelected}
-          isMultiSelectMode={isMultiSelectMode}
-          isGroupMember={isGroupMember}
-          showAnnotationNumbering={showAnnotationNumbering}
-          timezone={timezone}
-          isTrackedChange={isTrackedChange}
-        />
-      );
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone, isTrackedChange]
-  );
+  const header = useMemo(() => {
+    return (
+      <NoteHeader
+        icon={icon}
+        iconColor={iconColor}
+        annotation={annotation}
+        language={language}
+        noteDateFormat={noteDateFormat}
+        isSelected={isSelected}
+        setIsEditing={setIsEditing}
+        notesShowLastUpdatedDate={notesShowLastUpdatedDate}
+        isReply={isReply}
+        isUnread={isUnread}
+        renderAuthorName={renderAuthorName}
+        renderAnnotationReference={renderAnnotationReference}
+        isNoteStateDisabled={isNoteStateDisabled}
+        isEditing={isEditing}
+        noteIndex={noteIndex}
+        sortStrategy={sortStrategy}
+        activeTheme={activeTheme}
+        handleMultiSelect={handleMultiSelect}
+        isMultiSelected={isMultiSelected}
+        isMultiSelectMode={isMultiSelectMode}
+        isGroupMember={isGroupMember}
+        showAnnotationNumbering={showAnnotationNumbering}
+        timezone={timezone}
+        isTrackedChange={isTrackedChange}
+      />
+    );
+  }, [
+    icon,
+    iconColor,
+    annotation,
+    language,
+    noteDateFormat,
+    isSelected,
+    setIsEditing,
+    notesShowLastUpdatedDate,
+    isReply,
+    isUnread,
+    renderAuthorName,
+    core.getDisplayAuthor(annotation['Author']),
+    isNoteStateDisabled,
+    isEditing,
+    noteIndex,
+    getLatestActivityDate(annotation),
+    sortStrategy,
+    handleMultiSelect,
+    isMultiSelected,
+    isMultiSelectMode,
+    isGroupMember,
+    timezone,
+    isTrackedChange,
+  ]);
 
   return (
     <div className={noteContentClass} onClick={handleNoteContentClicked}>
@@ -424,15 +445,74 @@ NoteContent.propTypes = propTypes;
 
 export default NoteContent;
 
-// a component that contains the content textarea, the save button and the cancel button
-const ContentArea = ({
-  annotation,
-  noteIndex,
-  setIsEditing,
-  textAreaValue,
-  onTextAreaValueChange,
-  pendingText
-}) => {
+const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTextAreaValueChange, pendingText }) => {
+  const [savedState, setSavedState] = useState(AnnotationSavedState.NONE);
+
+  useEffect(() => {
+    try {
+      const keys = Object.keys(localStorage);
+      const draftKeys = keys.filter((key) => key.startsWith('annotation_draft_'));
+      const oneDayAgo = Date.now() - ONE_DAY_MS;
+
+      draftKeys.forEach((key) => {
+        try {
+          const stored = localStorage.getItem(key);
+          if (stored) {
+            const draft = JSON.parse(stored);
+            if (draft.timestamp < oneDayAgo) {
+              localStorage.removeItem(key);
+            }
+          }
+        } catch (e) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (e) {
+      console.error('Failed to cleanup old drafts:', e);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storageKey = `annotation_draft_${annotation.Id}`;
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        const draft = JSON.parse(stored);
+        const isRecent = Date.now() - draft.timestamp < ONE_DAY_MS;
+        if (isRecent && draft.value && !pendingText) {
+          handleChange(draft.value);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load from localStorage:', e);
+    }
+  }, []);
+
+  useEffect(() => {
+    function handleAnnotationStateChange(event) {
+      const { state, annotations } = event.detail || {};
+      if (!annotations) {
+        return;
+      }
+      if (annotations.some((a) => a.Id === annotation.Id)) {
+        setSavedState(state);
+
+        if (state === AnnotationSavedState.SAVED) {
+          try {
+            const storageKey = `annotation_draft_${annotation.Id}`;
+            localStorage.removeItem(storageKey);
+          } catch (e) {
+            console.error('Failed to clear localStorage:', e);
+          }
+        }
+      }
+    }
+    window.addEventListener(AnnotationCustomEvents.ANNOTATION_SAVED_STATE_CHANGED, handleAnnotationStateChange);
+    return () => {
+      window.removeEventListener(AnnotationCustomEvents.ANNOTATION_SAVED_STATE_CHANGED, handleAnnotationStateChange);
+    };
+  }, [annotation]);
+
   const [
     autoFocusNoteOnAnnotationSelection,
     isMentionEnabled,
@@ -453,19 +533,26 @@ const ContentArea = ({
   const [t] = useTranslation();
   const textareaRef = useRef();
   const isReply = annotation.isReply();
-  const {
-    setCurAnnotId,
-    pendingAttachmentMap,
-    deleteAttachment,
-    clearAttachments,
-    addAttachments
-  } = useContext(NoteContext);
+  const { setCurAnnotId, pendingAttachmentMap, deleteAttachment, clearAttachments, addAttachments } =
+    useContext(NoteContext);
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
 
+  const debouncedSetContents = useRef(
+    debounce(() => {
+      if (textareaRef.current) {
+        setContents({ preventDefault: () => {} }, 'change');
+      }
+    }, 2000),
+  ).current;
+
+  useEffect(() => {
+    return () => debouncedSetContents.flush();
+  }, [debouncedSetContents]);
+
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
-    if (isAnyCustomPanelOpen || (isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
+    if (isAnyCustomPanelOpen || ((isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current)) {
       const editor = textareaRef.current.getEditor();
       const isFreeTextAnnnotation = annotation && annotation instanceof window.Core.Annotations.FreeTextAnnotation;
       isFreeTextAnnnotation && editor.setText('');
@@ -526,11 +613,13 @@ const ContentArea = ({
   }, []);
 
   const setContents = async (e) => {
-    // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
     const editor = textareaRef.current.getEditor();
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+    if (typeof textAreaValue === 'string' && textAreaValue.replace(/<br\s*\/?>(\s*)?/gi, '').trim() === '') {
+      textAreaValue = '';
+    }
     setAnnotationRichTextStyle(editor, annotation);
 
     const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
@@ -549,10 +638,13 @@ const ContentArea = ({
         }
       });
 
-      annotation.setCustomData('trn-mention', JSON.stringify({
-        contents: textAreaValue,
-        ids,
-      }));
+      annotation.setCustomData(
+        'trn-mention',
+        JSON.stringify({
+          contents: textAreaValue,
+          ids,
+        }),
+      );
       annotation.setContents(plainTextValue ?? '');
     } else {
       annotation.setContents(textAreaValue ?? '');
@@ -560,28 +652,36 @@ const ContentArea = ({
 
     await setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
 
-    const source = (annotation instanceof window.Core.Annotations.FreeTextAnnotation)
-      ? 'textChanged' : 'noteChanged';
-    core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
+    const source = annotation instanceof window.Core.Annotations.FreeTextAnnotation ? 'textChanged' : 'noteChanged';
+    core
+      .getAnnotationManager(activeDocumentViewerKey)
+      .trigger('annotationChanged', [[annotation], 'modify', { source }]);
 
     if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
     }
 
-    setIsEditing(false, noteIndex);
-    // Only set comment to unposted state if it is not empty
-    if (textAreaValue !== '') {
-      onTextAreaValueChange(undefined, annotation.Id);
+    if (e && e.type === 'blur') {
+      if (textAreaValue !== '') {
+        onTextAreaValueChange(undefined, annotation.Id);
+      }
+      clearAttachments(annotation.Id);
     }
-    clearAttachments(annotation.Id);
   };
 
-  const onBlur = (e) => {
-    if (e.relatedTarget?.getAttribute('data-element')?.includes('annotationCommentButton')) {
-      e.target.focus();
-      return;
-    }
+  const handleBlur = (e) => {
+    debouncedSetContents.flush();
+
     setCurAnnotId(undefined);
+    setContents(e);
+
+    setTimeout(() => {
+      const editorContainer = textareaRef.current?.editor?.container;
+      if (editorContainer && editorContainer.contains(document.activeElement)) {
+        return;
+      }
+      setIsEditing(false, noteIndex);
+    }, 0);
   };
 
   const onFocus = () => {
@@ -590,6 +690,27 @@ const ContentArea = ({
 
   const contentClassName = classNames('edit-content', { 'reply-content': isReply });
   const pendingAttachments = pendingAttachmentMap[annotation.Id] || [];
+
+  const handleChange = (value) => {
+    onTextAreaValueChange(value, annotation.Id);
+    setSavedState(AnnotationSavedState.UNSAVED_EDITS);
+
+    try {
+      const storageKey = `annotation_draft_${annotation.Id}`;
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          value,
+          timestamp: Date.now(),
+          annotationId: annotation.Id,
+        }),
+      );
+    } catch (e) {
+      console.error('Failed to save to localStorage:', e);
+    }
+
+    debouncedSetContents();
+  };
 
   return (
     <div className={contentClassName}>
@@ -605,33 +726,21 @@ const ContentArea = ({
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={(value) => onTextAreaValueChange(value, annotation.Id)}
+        onChange={handleChange}
         onSubmit={setContents}
         isReply={isReply}
-        onBlur={onBlur}
+        onBlur={handleBlur}
         onFocus={onFocus}
       />
-      <div className="edit-buttons">
-        <Button
-          className="cancel-button"
-          label={t('action.cancel')}
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsEditing(false, noteIndex);
-            // Clear pending text
-            onTextAreaValueChange(undefined, annotation.Id);
-            clearAttachments(annotation.Id);
-          }}
-        />
-        <Button
-          className={`save-button`}
-          label={t('action.save')}
-          onClick={(e) => {
-            e.stopPropagation();
-            setContents(e);
-          }}
-        />
-      </div>
+      <SavedStateIndicator
+        state={savedState}
+        labels={{
+          saved: t('saveStateIndicator.saved'),
+          saving: t('saveStateIndicator.saving'),
+          unsaved: t('saveStateIndicator.unsaved'),
+          error: t('saveStateIndicator.error'),
+        }}
+      />
     </div>
   );
 };
@@ -642,7 +751,7 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
-  pendingText: PropTypes.string
+  pendingText: PropTypes.string,
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {

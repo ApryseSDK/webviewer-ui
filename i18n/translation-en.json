@@ -1378,5 +1378,11 @@
   },
   "colorPickerModal": {
     "modalTitle": "Color Picker"
+  },
+  "saveStateIndicator": {
+    "saved": "Saved",
+    "saving": "Saving...",
+    "unsaved": "Editing...",
+    "error": "Last edits backed up but not saved"
   }
 }

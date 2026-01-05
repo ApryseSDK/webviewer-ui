@@ -1,0 +1,20 @@
+.SavedStateIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--padding-small);
+  color: var(--faded-text);
+
+  .Icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  &.error {
+    color: #a53737;
+
+    .Icon svg {
+      color: #a53737;
+    }
+  }
+}
