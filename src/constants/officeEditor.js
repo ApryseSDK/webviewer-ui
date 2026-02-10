@@ -78,26 +78,6 @@ export const ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR = [
   DataElements.SEARCH_PANEL_REPLACE_CONTAINER
 ];
 
-export const NOTES_PANEL_TEXTS = {
-  [DataElements.OFFICE_EDITOR_REVIEW_PANEL]: {
-    title: 'officeEditor.reviewing',
-    icon: 'ic-edit-page',
-    noAnnotation: 'message.noRevisions',
-    searchPlaceholder: 'message.searchSuggestionsPlaceholder',
-  },
-  [DataElements.OFFICE_EDITOR_COMMENT_PANEL]: {
-    title: 'component.notesPanel',
-    icon: 'illustration - empty state - outlines',
-    noAnnotation: 'message.noAnnotations',
-    searchPlaceholder: 'message.searchCommentsPlaceholder',
-  },
-  [DataElements.NOTES_PANEL]: {
-    title: 'component.notesPanel',
-    icon: 'illustration - empty state - outlines',
-    noAnnotation: 'message.noAnnotations',
-    searchPlaceholder: 'message.searchCommentsPlaceholder',
-  },
-};
 
 export const AVAILABLE_POINT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 
