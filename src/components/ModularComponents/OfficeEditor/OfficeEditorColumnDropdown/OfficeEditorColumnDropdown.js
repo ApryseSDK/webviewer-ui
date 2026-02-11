@@ -15,7 +15,7 @@ import { COLUMN_OPTIONS } from 'helpers/officeEditor';
 import { checkEqualColumnWidths } from 'helpers/officeEditorColumnsHelper';
 import renderDropdownItemWithDescription from 'helpers/renderDropdownItemWithDescription';
 import './OfficeEditorColumnDropdown.scss';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const ToggleButton = (isOpen) => {
   return (
@@ -47,6 +47,7 @@ const OfficeEditorColumnDropdown = ({
   onKeyDownHandler,
 }) => {
   const [t] = useTranslation();
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [activeColumnOption, setActiveColumnOption] = useState('');
 

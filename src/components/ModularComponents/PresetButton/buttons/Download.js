@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import downloadPdf from 'helpers/downloadPdf';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { workerTypes } from 'constants/types';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
@@ -26,6 +26,7 @@ const DownloadButton = forwardRef((props, ref) => {
     title,
   } = props;
   const [documentType, setDocumentType] = useState(null);
+  const { core } = useCore();
   const dispatch = useDispatch();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 

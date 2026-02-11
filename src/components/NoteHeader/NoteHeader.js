@@ -14,7 +14,7 @@ import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
@@ -167,6 +167,7 @@ function NoteHeader(props) {
     timezone,
     isTrackedChange,
   } = props;
+  const { core } = useCore();
 
   const [t] = useTranslation();
 

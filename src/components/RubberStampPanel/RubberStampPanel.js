@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch, shallowEqual, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import DataElements from 'constants/dataElement';
 import { PANEL_SIZES, panelNames } from 'constants/panel';
@@ -23,6 +23,7 @@ import { getEventHandler } from 'helpers/fireEvent';
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
 const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFlyout = false }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);

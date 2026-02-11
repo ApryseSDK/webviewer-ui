@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import selectors from 'selectors';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import Choice from 'components/Choice';
 import Dropdown from '../Dropdown';
@@ -58,6 +58,7 @@ const CalibrationPropType = {
 
 const CalibrationPopup = ({ annotation }) => {
   const [t] = useTranslation();
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const [

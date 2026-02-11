@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
 import DocumentCropPopup from './DocumentCropPopup';
 import './DocumentCropPopup.scss';
 import Draggable from 'react-draggable';
@@ -12,6 +11,7 @@ import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import MobilePopupWrapper from '../MobilePopupWrapper';
 import useDraggablePosition from '../../hooks/useDraggablePosition';
+import useCore from 'hooks/useCore';
 
 export function focusActiveIcon(e) {
   if (e && e.nativeEvent.pointerType === '') {
@@ -21,6 +21,7 @@ export function focusActiveIcon(e) {
 }
 
 function DocumentCropPopupContainer() {
+  const { core } = useCore();
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
   const activeToolName = useSelector(selectors.getActiveToolName);
   const isDocumentCropPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.DOCUMENT_CROP_POPUP));
@@ -131,7 +132,7 @@ function DocumentCropPopupContainer() {
   };
 
   const cropPopupRef = useRef();
-  const { position, handleDrag, handleStop, containerRef, style, bounds } = useDraggablePosition('top-right');
+  const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds } = useDraggablePosition('top-right');
   const documentViewer = core.getDocumentViewer(1);
 
   const closeAndReset = () => {
@@ -242,7 +243,7 @@ function DocumentCropPopupContainer() {
       <Draggable
         cancel={'input, button, .collapsible-menu, .ui__choice__label'}
         position={position}
-        bounds={bounds}
+        bounds={dragBounds}
         onDrag={handleDrag}
         onStop={handleStop}
       >
@@ -251,8 +252,9 @@ function DocumentCropPopupContainer() {
           ref={(el) => {
             cropPopupRef.current = el;
             containerRef.current = el;
+            setOverlayRef(el);
           }}
-          style={style}
+          style={initialOffset}
         >
           <DocumentCropPopup {...props} />
         </div>

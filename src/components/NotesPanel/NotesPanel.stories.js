@@ -466,40 +466,44 @@ NotesPanelWithNotesInFormFieldMode.play = async ({ canvasElement }) => {
   expect(listItems.length).toBe(3);
 };
 
-export function OEEmptyReviewPanel() {
-  const state = { ...initialState };
-  state.viewer.openElements.officeEditorReviewPanel = true;
-  state.viewer.panelWidths.officeEditorReviewPanel = 330;
-  const store = configureStore({ reducer: () => state });
+const createTestMultiSelectAnnotations = () => {
+  const rectangle1 = new window.Core.Annotations.RectangleAnnotation();
+  rectangle1.Listable = true;
+  rectangle1.Id = '123';
+  rectangle1.PageNumber = 1;
+  rectangle1.ToolName = 'AnnotationCreateRectangle';
 
-  return (
-    <Provider store={store}>
-      <Panel location={'left'} dataElement='officeEditorReviewPanel'>
-        <NotesPanel />
-      </Panel>
-    </Provider>
+  const rectangle2 = new window.Core.Annotations.RectangleAnnotation();
+  rectangle2.Listable = true;
+  rectangle2.Id = '456';
+  rectangle2.PageNumber = 1;
+  rectangle2.ToolName = 'AnnotationCreateRectangle';
+
+  return { rectangle1, rectangle2 };
+};
+
+export function NotesPanelMultiSelectToggle() {
+  const mockState = {
+    ...mockAppState,
+    viewer: {
+      ...mockAppState.viewer,
+      openElements: {
+        notesPanel: true,
+      }
+    }
+  };
+
+  const store = configureStore({ reducer: () => mockState });
+
+  const { rectangle1, rectangle2 } = createTestMultiSelectAnnotations();
+  setupNotesPanelCoreMocks(core, [rectangle1, rectangle2], []);
+
+  return  (
+    <MockApp initialState={mockState} store={store} />
   );
 }
-OEEmptyReviewPanel.parameters = window.storybook.disableRtlMode;
 
-
-export function OEEmptyCommentPanel() {
-  const state = { ...initialState };
-  state.viewer.isOfficeEditorMode = true;
-  state.officeEditor.stream = 0;
-  state.viewer.openElements.officeEditorCommentPanel = true;
-  state.viewer.panelWidths.officeEditorCommentPanel = 330;
-  const store = configureStore({ reducer: () => state });
-
-  return (
-    <Provider store={store}>
-      <Panel location={'right'} dataElement='officeEditorCommentPanel'>
-        <NotesPanel />
-      </Panel>
-    </Provider>
-  );
-}
-OEEmptyCommentPanel.parameters = {
+NotesPanelMultiSelectToggle.parameters = {
   chromatic: {
     modes: {
       'Light theme RTL': { disable: true },
@@ -508,27 +512,27 @@ OEEmptyCommentPanel.parameters = {
   },
 };
 
-export function OECommentPanelInHeaderStream() {
-  const state = { ...initialState };
-  state.viewer.isOfficeEditorMode = true;
-  state.officeEditor.stream = 1;
-  state.viewer.openElements.officeEditorCommentPanel = true;
-  state.viewer.panelWidths.officeEditorCommentPanel = 330;
-  const store = configureStore({ reducer: () => state });
+NotesPanelMultiSelectToggle.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
 
-  return (
-    <Provider store={store}>
-      <Panel location={'right'} dataElement='officeEditorCommentPanel'>
-        <NotesPanel />
-      </Panel>
-    </Provider>
-  );
-}
-OECommentPanelInHeaderStream.parameters = {
-  chromatic: {
-    modes: {
-      'Light theme RTL': { disable: true },
-      'Dark theme': { disable: true },
-    },
-  },
+  const multiSelectButton = await canvas.findByRole('button', { name: getTranslatedText('component.multiSelectButton') });
+  expect(multiSelectButton).toBeVisible();
+
+  userEvent.click(multiSelectButton);
+
+  const listItems = await canvas.findAllByRole('listitem');
+  expect(listItems.length).toBe(2);
+
+  // Checks if checkboxes are present (should be as multi select is on)
+  let checkboxes = await canvas.findAllByRole('checkbox');
+  expect(checkboxes.length).toBe(2);
+
+  window.instance.UI.NotesPanel.disableMultiSelect();
+
+  const listItems2 = await canvas.findAllByRole('listitem');
+  expect(listItems2.length).toBe(2);
+
+  // Confirms checkboxes are not present (shouldn't be as multi select is off)
+  checkboxes = await canvas.queryByRole('checkbox');
+  expect(checkboxes).toBeNull();
 };

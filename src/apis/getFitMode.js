@@ -1,7 +1,7 @@
 /**
- * Returns the current fit mode of the WebViewer Instance UI
+ * Returns the current fit mode of the WebViewer Instance UI.
  * @method UI.getFitMode
- * @return {string} Current fit mode
+ * @return {string} Current fit mode.
  * @example
 WebViewer(...)
   .then(function(instance) {

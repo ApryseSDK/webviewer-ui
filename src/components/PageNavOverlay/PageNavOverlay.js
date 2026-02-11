@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import classNames from 'classnames';
 import selectors from 'selectors';

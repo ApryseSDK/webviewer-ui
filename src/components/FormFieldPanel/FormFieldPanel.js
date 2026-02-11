@@ -7,9 +7,10 @@ import CreatableList from '../CreatableList';
 import HorizontalDivider from '../HorizontalDivider';
 import Button from '../Button';
 import getToolStyles from 'helpers/getToolStyles';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import TextInput from 'components/TextInput';
-import SignatureOptionsDropdown from 'components/FormFieldEditPopup/FormFieldEditSignaturePopup/SignatureOptionsDropdown';
+import SignatureOptionsDropdown
+  from 'components/FormFieldEditPopup/FormFieldEditSignaturePopup/SignatureOptionsDropdown';
 import FormFieldEditPanelIndicator from './FormFieldEditPanelIndicator';
 import './FormFieldPanel.scss';
 
@@ -34,6 +35,7 @@ const FormFieldPanel = ({
   fieldProperties,
   onRadioFieldNameChange,
 }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
 
   const getIndicatorPlaceholderFromAnnotation = useCallback((annotation) => {

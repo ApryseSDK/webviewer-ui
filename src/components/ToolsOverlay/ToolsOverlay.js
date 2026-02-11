@@ -12,6 +12,8 @@ import { withTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import DataElements from 'constants/dataElement';
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import actions from 'actions';

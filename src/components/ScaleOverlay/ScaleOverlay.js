@@ -1,9 +1,9 @@
 import ScaleHeader from './ScaleHeader';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import MeasurementDetail from './MeasurementDetail';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
-import React, { useEffect, useState, useMemo, memo } from 'react';
+import React, { useEffect, useMemo, memo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import CalibrationOverlay from './CalibrationOverlay';
 
@@ -14,6 +14,8 @@ const Scale = window.Core.Scale;
 const propTypes = {
   annotations: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedTool: PropTypes.object,
+  scales: PropTypes.object.isRequired,
+  scalesInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateIsCalibration: PropTypes.func.isRequired,
   disableToolElements: PropTypes.func.isRequired,
   onScaleSelected: PropTypes.func.isRequired,
@@ -25,6 +27,8 @@ const propTypes = {
 const ScaleOverlay = ({
   annotations,
   selectedTool,
+  scales,
+  scalesInfo,
   updateIsCalibration,
   disableToolElements,
   onScaleSelected,
@@ -40,36 +44,12 @@ const ScaleOverlay = ({
     selectors.getCalibrationInfo(state),
     selectors.getActiveToolName(state)
   ], shallowEqual);
-  const [scales, setScales] = useState(core.getScales());
+  const { core } = useCore();
   const shouldShowMeasurementDetail = !!Object.keys(scales).length && !(!selectedTool && (!annotations.length || annotations.length > 1));
 
   useEffect(() => {
     forceUpdate();
   }, [scales]);
-
-  useEffect(() => {
-    const onScaleUpdated = (newScales) => {
-      setScales(newScales);
-    };
-    const updateScales = () => {
-      setScales(core.getScales());
-    };
-
-    const onCreateAnnotationWithNoScale = () => {
-      onAddingNewScale();
-    };
-    core.addEventListener('scaleUpdated', onScaleUpdated);
-    core.addEventListener('createAnnotationWithNoScale', onCreateAnnotationWithNoScale);
-    core.addEventListener('annotationsLoaded', updateScales);
-    core.addEventListener('annotationChanged', updateScales);
-
-    return () => {
-      core.removeEventListener('scaleUpdated', onScaleUpdated);
-      core.removeEventListener('createAnnotationWithNoScale', onCreateAnnotationWithNoScale);
-      core.removeEventListener('annotationsLoaded', updateScales);
-      core.removeEventListener('annotationChanged', updateScales);
-    };
-  }, []);
 
   useEffect(() => {
     if (activeToolName === 'AnnotationCreateCalibrationMeasurement') {
@@ -90,10 +70,20 @@ const ScaleOverlay = ({
       }
     });
     return [...scales];
-  }, [annotations, selectedTool, scales]);
+  }, [annotations, selectedTool, scales, core]);
 
   const totalScales = Object.keys(scales).map((scale) => new Scale(scale));
   const canModifyMeasurement = annotations.length === 1 ? core.canModify(annotations[0]) : false;
+  const renderScale = (scale) => {
+    const precision = core.getScalePrecision(scale);
+    const pageScaleStr = Scale.getFormattedValue(scale.pageScale.value, scale.pageScale.unit, precision, false);
+    const worldScaleStr = Scale.getFormattedValue(scale.worldScale.value, scale.worldScale.unit, precision, false);
+    const scaleDisplay = `${pageScaleStr} = ${worldScaleStr}`;
+    return <div>{scaleDisplay}</div>;
+  };
+  const onDeleteScale = (scale) => {
+    core.deleteScale(scale);
+  };
 
   return isCalibration ? (
     <CalibrationOverlay
@@ -106,9 +96,12 @@ const ScaleOverlay = ({
     <>
       <ScaleHeader
         scales={totalScales}
+        scalesInfo={scalesInfo}
         selectedScales={selectedScales}
         onScaleSelected={onScaleSelected}
         onAddingNewScale={onAddingNewScale}
+        onDeleteScale={onDeleteScale}
+        renderScale={renderScale}
       />
       {shouldShowMeasurementDetail && (
         <MeasurementDetail

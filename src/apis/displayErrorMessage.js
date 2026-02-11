@@ -1,7 +1,7 @@
 /**
- * Displays the custom error message
+ * Displays the custom error message.
  * @method UI.displayErrorMessage
- * @param {string} message An error message
+ * @param {string} message An error message.
  * @example
 WebViewer(...)
   .then(function(instance) {

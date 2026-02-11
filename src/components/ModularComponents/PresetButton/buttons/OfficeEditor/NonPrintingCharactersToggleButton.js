@@ -1,11 +1,11 @@
 /**
- * The preset button for toggling non-printing characters in the Office Editor
+ * A button that toggles the visibility of non-printing characters in the document.
  * @name officeEditorToggleNonPrintingCharactersButton
  * @memberof UI.Components.PresetButton
  */
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ const propTypes = {
 };
 
 const NonPrintingCharactersToggleButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const {
     isFlyoutItem,
     dataElement = menuItems.officeEditorToggleNonPrintingCharactersButton.dataElement,

@@ -21,6 +21,7 @@
     "cut": "ตัด",
     "paste": "แปะ",
     "pasteWithoutFormatting": "วางโดยไม่ต้องจัดรูปแบบ",
+    "addComment": "เพิ่มความคิดเห็น",
     "delete": "ลบ",
     "deleted": "ลบแล้ว",
     "group": "กลุ่ม",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "ข้อความประทับตราต้องไม่เว้นว่างไว้",
     "unpostedComment": "ความคิดเห็นที่ยังไม่ได้โพสต์",
     "lockedLayer": "เลเยอร์ถูกล็อค",
-    "layerVisibililtyNoChange": "ระดับการมองเห็นไม่สามารถเปลี่ยนแปลงได้",
+    "layerVisibilityNoChange": "ระดับการมองเห็นไม่สามารถเปลี่ยนแปลงได้",
     "noLayers": "เอกสารนี้ไม่มีเลเยอร์",
     "noSignatureFields": "เอกสารนี้ไม่มีช่องลายเซ็น",
     "untitled": "ไม่มีชื่อ",
@@ -488,11 +489,13 @@
       "replace": "แทนที่",
       "replaceAll": "แทนที่ทั้งหมด",
       "replaceText": "แทนที่ข้อความ",
+      "replaceOptions": "ตัวเลือกการแทนที่",
       "confirmMessageReplaceAll": "คุณแน่ใจหรือไม่ว่าต้องการแทนที่ข้อความทั้งหมด",
       "confirmMessageReplaceOne": "คุณแน่ใจหรือไม่ว่าต้องการแทนที่ข้อความนี้",
       "moreOptions": "ตัวเลือกเพิ่มเติม",
       "lessOptions": "ตัวเลือกน้อย",
-      "confirm": "ยืนยัน"
+      "confirm": "ยืนยัน",
+      "filter": "กรอง"
     },
     "toolsOverlay": {
       "currentStamp": "แสตมป์ปัจจุบัน",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "ฟอนต์ตระกูล"
     },
-    "blankSheet": "แผ่นเปล่า",
+    "blankSheet": "แผ่น",
     "insertImage": "แทรกภาพ"
   },
   "insertPageModal": {

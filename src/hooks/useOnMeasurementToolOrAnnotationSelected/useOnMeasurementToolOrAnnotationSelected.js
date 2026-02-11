@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import throttle from 'lodash/throttle';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import selectors from 'selectors';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { isMeasurementTool } from 'helpers/getMeasurementTools';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 
@@ -13,8 +13,47 @@ const { ToolNames } = window.Core.Tools;
 const isMeasurementExcludeCalibration = (measurement) => !!isMeasurementTool(measurement) &&
   ![measurement.name, measurement.ToolName].includes(ToolNames.CALIBRATION_MEASUREMENT);
 
+// This helps ensure we don't show an overlay for small annotations
+const isSmallAnnotation = (annotation) => {
+  if (!annotation) {
+    return true;
+  }
+  const w = annotation.getWidth();
+  const h = annotation.getHeight();
+  const minSize = (annotation.getRectPadding() + 1) * 2;
+
+  return w <= minSize && h <= minSize;
+};
+
+const shouldShowInfo = (annotation) => {
+  const key = mapAnnotationToKey(annotation);
+
+  let showInfo;
+  if (
+    [
+      annotationMapKeys.PERIMETER_MEASUREMENT,
+      annotationMapKeys.AREA_MEASUREMENT,
+      annotationMapKeys.RECTANGULAR_AREA_MEASUREMENT,
+      annotationMapKeys.CLOUDY_RECTANGULAR_AREA_MEASUREMENT,
+      annotationMapKeys.ARC_MEASUREMENT,
+    ].includes(key)
+  ) {
+    // For polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
+    showInfo = annotation.getPath().length > 1;
+  } else if ([annotationMapKeys.DISTANCE_MEASUREMENT, annotationMapKeys.ELLIPSE_MEASUREMENT].includes(key)) {
+    showInfo = true;
+  }
+
+  return showInfo;
+};
+
+const isMeasurementToolWithInfo = (tool) => {
+  return isMeasurementExcludeCalibration(tool) && tool.annotation && shouldShowInfo(tool.annotation);
+};
+
 export default function useOnMeasurementToolOrAnnotationSelected() {
   const dispatch = useDispatch();
+  const { core } = useCore();
 
   const [activeToolName] = useSelector((state) => [selectors.getActiveToolName(state)], shallowEqual);
   const [annotations, setAnnotations] = useState([]);
@@ -25,9 +64,17 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
       const selectedAnnotations = core.getSelectedAnnotations();
       const measuredAnnotations = selectedAnnotations.filter(isMeasurementExcludeCalibration);
       if (measuredAnnotations.length && action === 'selected') {
-        setAnnotations(measuredAnnotations);
+        setAnnotations((prevAnnotations) => {
+          if (
+            prevAnnotations.length === measuredAnnotations.length &&
+            prevAnnotations.every((annotation, index) => annotation === measuredAnnotations[index])
+          ) {
+            return prevAnnotations;
+          }
+          return measuredAnnotations;
+        });
       } else if (action === 'deselected') {
-        setAnnotations([]);
+        setAnnotations((prevAnnotations) => (prevAnnotations.length ? [] : prevAnnotations));
       }
     };
 
@@ -38,11 +85,10 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
     };
 
     const onAnnotationChanged = (changedAnnotations, action) => {
-      if (action === 'add' && isMeasurementExcludeCalibration(changedAnnotations[0])) {
-        setAnnotations([]);
-      }
-      if (action === 'delete') {
-        setAnnotations([]);
+      const shouldClear = (action === 'add' && isMeasurementExcludeCalibration(changedAnnotations[0])) ||
+        action === 'delete';
+      if (shouldClear) {
+        setAnnotations((prevAnnotations) => (prevAnnotations.length ? [] : prevAnnotations));
       }
     };
 
@@ -55,60 +101,28 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('toolUpdated', onScaleUpdated);
     };
-  }, []);
+  }, [core, selectedTool]);
 
-  const onMouseMove = throttle(() => {
+  const onMouseMove = useMemo(() => throttle(() => {
     const tool = core.getTool(activeToolName);
     if (isMeasurementToolWithInfo(tool) && !isSmallAnnotation(tool.annotation)) {
-      setAnnotations([tool.annotation]);
+      setAnnotations((prevAnnotations) => {
+        if (prevAnnotations.length === 1 && prevAnnotations[0] === tool.annotation) {
+          return prevAnnotations;
+        }
+        return [tool.annotation];
+      });
     }
-  }, 100);
+  }, 100), [activeToolName, core]);
 
   useEffect(() => {
     core.addEventListener('mouseMove', onMouseMove);
 
     return () => {
       core.removeEventListener('mouseMove', onMouseMove);
+      onMouseMove.cancel();
     };
-  }, [activeToolName]);
-
-  // This helps ensure we don't show an overlay for small annotations
-  const isSmallAnnotation = (annotation) => {
-    if (!annotation) {
-      return true;
-    }
-    const w = annotation.getWidth();
-    const h = annotation.getHeight();
-    const minSize = (annotation.getRectPadding() + 1) * 2;
-
-    return w <= minSize && h <= minSize;
-  };
-
-  const isMeasurementToolWithInfo = (tool) => {
-    return isMeasurementExcludeCalibration(tool) && tool.annotation && shouldShowInfo(tool.annotation);
-  };
-
-  const shouldShowInfo = (annotation) => {
-    const key = mapAnnotationToKey(annotation);
-
-    let showInfo;
-    if (
-      [
-        annotationMapKeys.PERIMETER_MEASUREMENT,
-        annotationMapKeys.AREA_MEASUREMENT,
-        annotationMapKeys.RECTANGULAR_AREA_MEASUREMENT,
-        annotationMapKeys.CLOUDY_RECTANGULAR_AREA_MEASUREMENT,
-        annotationMapKeys.ARC_MEASUREMENT,
-      ].includes(key)
-    ) {
-      // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
-      showInfo = annotation.getPath().length > 1;
-    } else if ([annotationMapKeys.DISTANCE_MEASUREMENT, annotationMapKeys.ELLIPSE_MEASUREMENT].includes(key)) {
-      showInfo = true;
-    }
-
-    return showInfo;
-  };
+  }, [core, onMouseMove]);
 
   useEffect(() => {
     if (activeToolName) {
@@ -120,7 +134,7 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
         setSelectedTool(null);
       }
     }
-  }, [activeToolName]);
+  }, [activeToolName, core]);
 
   useEffect(() => {
     if (annotations.length || selectedTool) {
@@ -128,7 +142,7 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
     } else {
       dispatch(actions.closeElements([DataElements.SCALE_OVERLAY_CONTAINER]));
     }
-  }, [annotations, selectedTool]);
+  }, [annotations, dispatch, selectedTool]);
 
   return { annotations, selectedTool };
 }

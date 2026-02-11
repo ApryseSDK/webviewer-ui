@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FilePicker from 'components/FilePicker';
 
-const FilePickerPanel = ({ onFileProcessed, shouldShowIcon }) => {
+const FilePickerPanel = ({
+  onFileProcessed,
+  shouldShowIcon,
+  allowMultiple = false,
+}) => {
+  const { core } = useCore();
   const [errorMessage, setErrorMessage] = useState('');
   const [acceptFormats, setAcceptFormats] = useState('');
 
@@ -10,16 +15,10 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon }) => {
     setAcceptFormats(core.getAllowedFileExtensions());
   }, []);
 
-  const onChange = (files) => {
-    onFileProcessed(files[0]);
-  };
-
-  const onDrop = async (files) => {
-    let processedFile = files[0];
-
-    if (files.length > 1) {
-      processedFile = await mergeDocuments(files);
-    }
+  const onFileAdded = async (files) => {
+    const processedFile = files.length > 1
+      ? await mergeDocuments(files)
+      : files[0];
 
     onFileProcessed(processedFile);
   };
@@ -54,11 +53,11 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon }) => {
 
   return (
     <FilePicker
-      onChange={onChange}
-      onDrop={onDrop}
+      onChange={onFileAdded}
+      onDrop={onFileAdded}
       shouldShowIcon={shouldShowIcon}
       acceptFormats={acceptFormats}
-      allowMultiple={false}
+      allowMultiple={allowMultiple}
       errorMessage={errorMessage}
     />
   );

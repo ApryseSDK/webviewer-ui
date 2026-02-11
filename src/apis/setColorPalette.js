@@ -6,11 +6,11 @@ import selectors from 'selectors';
  * @typedef UI.PaletteOption
  * @property {string[]} toolNames Tools that will have the same colors in the palette.
  * @property {string[]} colors An array of hex colors. Use 'transparency' for a transparent color.
- * @property {string[]} [palleteTypes] An array of palette types. Can be 'fill' | 'stroke' | 'text'. (Only for StylePanel)
+ * @property {string[]} [palleteTypes] An array of palette types. Can be 'fill' | 'stroke' | 'text'. (Only for StylePanel).
  */
 
 /**
- * Sets the colors in the palette globally or for specific tools and their associated annotations
+ * Sets the colors in the palette globally or for specific tools and their associated annotations.
  * @method UI.setColorPalette
  * @param {string[]|UI.PaletteOption} An array of hex colors that will override the default colors for every tool.
  * An object can be passed to specify colors for particular tools.

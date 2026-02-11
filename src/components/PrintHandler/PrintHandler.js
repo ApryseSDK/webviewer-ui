@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { workerTypes } from 'constants/types';
 import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
@@ -11,6 +11,7 @@ import './PrintHandler.scss';
 import getRootNode from 'helpers/getRootNode';
 
 const PrintHandler = () => {
+  const { core } = useCore();
   const [isDisabled, isEmbedPrintSupported, printMargins] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, 'printHandler'),

@@ -1,8 +1,8 @@
 import React from 'react';
 import TrackChangeOverlay from './TrackChangeOverlay';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { configureStore } from '@reduxjs/toolkit';
 
 export default {
   title: 'Components/TrackChangeOverlay',
@@ -14,6 +14,9 @@ export default {
 
 const getStore = () => {
   const initialState = {
+    viewer: {
+      isMultiViewerMode: false,
+    },
     activeFlyout: null,
     featureFlags: {
       customizableUI: false,
@@ -23,11 +26,11 @@ const getStore = () => {
     }
   };
 
-  function rootReducer(state = initialState, action) {
+  function rootReducer(state = initialState) {
     return state;
   }
 
-  return createStore(rootReducer);
+  return configureStore({ reducer: rootReducer });
 };
 
 export function Basic() {

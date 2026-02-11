@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, mapToolNameToKey } from 'constants/map';
 import usePrevious from 'hooks/usePrevious';
@@ -10,6 +10,7 @@ import { isMeasurementTool } from 'src/helpers/getMeasurementTools';
 
 export default function useOnCountMeasurementAnnotationSelected() {
   const dispatch = useDispatch();
+  const { core } = useCore();
   const [
     activeToolName,
     customMeasurementOverlay,
@@ -48,7 +49,7 @@ export default function useOnCountMeasurementAnnotationSelected() {
         dispatch(actions.closeElement(DataElements.MEASUREMENT_OVERLAY));
       }
     }
-  }, [prevActiveToolName, activeToolName]);
+  }, [activeToolName, core, dispatch, prevActiveToolName]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
@@ -66,7 +67,7 @@ export default function useOnCountMeasurementAnnotationSelected() {
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, [dispatch]);
+  }, [annotation, core, customMeasurementOverlay, dispatch]);
 
   return { annotation };
 }

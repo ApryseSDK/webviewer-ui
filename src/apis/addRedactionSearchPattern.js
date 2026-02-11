@@ -1,7 +1,7 @@
 /**
- * Adds a new search pattern to the redaction search panel
+ * Adds a new search pattern to the redaction search panel.
  * @method UI.addRedactionSearchPattern
- * @param {UI.RedactionSearchPattern} searchPattern A search pattern to add to the redaction search panel
+ * @param {UI.RedactionSearchPattern} searchPattern A search pattern to add to the redaction search panel.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -15,7 +15,7 @@ WebViewer(...)
     );
   });
 
-// Or to search kewyord(s):
+// Or to search keyword(s):
 WebViewer(...)
 .then(function(instance) {
   instance.UI.addRedactionSearchPattern(
@@ -38,10 +38,10 @@ export default (store) => (redactionSearchPattern, regex) => {
 
 /**
 * @typedef {Object} UI.RedactionSearchPattern
-* @property {string} label The label to be used for the search pattern in the UI
+* @property {string} label The label to be used for the search pattern in the UI.
 * @property {string} type A string representing the type of item being searched for. For example, if searching for postal codes, this could be 'postalCode'. This is used
 * to determine which icon will be used to render the result in the search panel.
 * @property {string} [icon] The icon to be used for the search pattern in the search dropdown for the UI and the redaction panel for this type of search. Can be an inline SVG, or the name of an icon included in the WebViewer UI icon set.
 * If no icon is passed, the default icon for text searches will be used.
-* @property {RegExp} regex The regex to be used for the search pattern
+* @property {RegExp} regex The regex to be used for the search pattern.
 */

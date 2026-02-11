@@ -21,6 +21,7 @@
     "cut": "Τομή",
     "paste": "Επικόλληση",
     "pasteWithoutFormatting": "Επικόλληση χωρίς μορφοποίηση",
+    "addComment": "Προσθήκη σχολίου",
     "delete": "Διαγράφω",
     "deleted": "Διαγράφηκε",
     "group": "Ομάδα",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Το κείμενο σφραγίδας δεν μπορεί να είναι κενό",
     "unpostedComment": "Μη αναρτημένο σχόλιο",
     "lockedLayer": "Το στρώμα είναι κλειδωμένο",
-    "layerVisibililtyNoChange": "Η ορατότητα του στρώματος δεν μπορεί να αλλάξει",
+    "layerVisibilityNoChange": "Η ορατότητα του στρώματος δεν μπορεί να αλλάξει",
     "noLayers": "Αυτό το έγγραφο δεν έχει επίπεδα.",
     "noSignatureFields": "Αυτό το έγγραφο δεν έχει πεδία υπογραφής.",
     "untitled": "Χωρίς τίτλο",
@@ -488,11 +489,13 @@
       "replace": "Αντικαθιστώ",
       "replaceAll": "Αντικατάσταση όλων",
       "replaceText": "Αντικατάσταση κειμένου",
+      "replaceOptions": "Αντικατάσταση επιλογών",
       "confirmMessageReplaceAll": "Είστε βέβαιοι ότι θέλετε να αντικαταστήσετε όλο το κείμενο;",
       "confirmMessageReplaceOne": "Είστε βέβαιοι ότι θέλετε να αντικαταστήσετε αυτό το κείμενο;",
       "moreOptions": "Περισσότερες επιλογές",
       "lessOptions": "Λιγότερες επιλογές",
-      "confirm": "Επιβεβαιώνω"
+      "confirm": "Επιβεβαιώνω",
+      "filter": "Φίλτρο"
     },
     "toolsOverlay": {
       "currentStamp": "Τρέχον γραμματόσημο",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Οικογένεια γραμματοσειρών"
     },
-    "blankSheet": "Κενό φύλλο",
+    "blankSheet": "Σεντόνι",
     "insertImage": "Εισαγωγή εικόνας"
   },
   "insertPageModal": {

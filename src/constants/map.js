@@ -1,4 +1,4 @@
-import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from './officeEditor';
+import { OFFICE_EDITOR_COMMENT_KEY, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from './officeEditor';
 
 export const annotationMapKeys = {
   SIGNATURE: 'signature',
@@ -55,6 +55,7 @@ export const annotationMapKeys = {
   ARC: 'arc',
   CHANGE_VIEW: 'changeView',
   TRACKED_CHANGE: 'trackedChange',
+  OFFICE_EDITOR_COMMENT: 'officeEditorComment',
 };
 
 /**
@@ -385,8 +386,9 @@ const map = {
       'AnnotationCreateTextHighlight3',
       'AnnotationCreateTextHighlight4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation &&
-      annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY) === '',
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation
+      && !annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY)
+      && !annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY),
   },
   [annotationMapKeys.UNDERLINE]: {
     icon: 'icon-tool-text-manipulation-underline',
@@ -775,6 +777,15 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation &&
       annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY)
   },
+  [annotationMapKeys.OFFICE_EDITOR_COMMENT]: {
+    icon: 'icon-tool-comment-line',
+    iconColor: 'FillColor',
+    validStyleTabs: [],
+    currentStyleTab: null,
+    styleTabs: [],
+    toolNames: [],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation && annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY)
+  },
 };
 
 export const mapToolNameToKey = (toolName) => Object.keys(map).find((key) => map[key].toolNames.includes(toolName));
@@ -861,53 +872,53 @@ export const updateAnnotationStylePopupTabs = (annotationKey, newAnnotationStyle
 /**
  * A constant containing keys that identify annotations.
  * @name UI.AnnotationKeys
- * @property {string} SIGNATURE The key represents the signature annotation
- * @property {string} FREE_HAND The key represents the free hand annotation
- * @property {string} FREE_HAND_HIGHLIGHT The key represents the free hand highlight annotation
- * @property {string} FREE_TEXT The key represents the free text annotation
- * @property {string} DATE_FREE_TEXT The key represents the date free text annotation
- * @property {string} DISTANCE_MEASUREMENT The key represents the distance measurement annotation
- * @property {string} PERIMETER_MEASUREMENT The key represents the perimeter measurement annotation
- * @property {string} ARC_MEASUREMENT The key represents the arc measurement annotation
- * @property {string} RECTANGULAR_AREA_MEASUREMENT The key represents the rectangular area measurement annotation
- * @property {string} CLOUDY_RECTANGULAR_AREA_MEASUREMENT The key represents the cloudy rectangular area measurement annotation
- * @property {string} AREA_MEASUREMENT The key represents the area measurement annotation
- * @property {string} ELLIPSE_MEASUREMENT The key represents the ellipse measurement annotation
- * @property {string} COUNT_MEASUREMENT The key represents the count measurement annotation
- * @property {string} CALLOUT The key represents the callout annotation
- * @property {string} LINE The key represents the line annotation
- * @property {string} ARROW The key represents the arrow annotation
- * @property {string} POLYGON The key represents the polygon annotation
- * @property {string} CLOUD The key represents the cloud annotation
- * @property {string} HIGHLIGHT The key represents the highlight annotation
- * @property {string} UNDERLINE The key represents the underline annotation
- * @property {string} SQUIGGLY The key represents the squiggly annotation
- * @property {string} STRIKEOUT The key represents the strikeout annotation
- * @property {string} REDACTION The key represents the redaction annotation
- * @property {string} RECTANGLE The key represents the rectangle annotation
- * @property {string} ELLIPSE The key represents the ellipse annotation
- * @property {string} ARC The key represents the arc annotation
- * @property {string} POLYLINE The key represents the polyline annotation
- * @property {string} STICKYNOTE The key represents the sticky note annotation
- * @property {string} IMAGE The key represents the image annotation
- * @property {string} STAMP The key represents the stamp annotaiton
- * @property {string} EDIT The key represents the edit annotation
- * @property {string} PAN The key represents the pan annotation
- * @property {string} CONTENT_EDIT_TOOL The key represents the content edit tool annotation
- * @property {string} ADD_PARAGRAPH_TOOL The key represents the add paragraph tool annotation
- * @property {string} TEXT_SELECT The key represents the text select annotation
- * @property {string} MARQUEE_ZOOM_TOOL The key represents the marquee zoom tool annotation
- * @property {string} ERASER The key represents the eraser annotation
- * @property {string} CROP_PAGE The key represents the crop page annotation
- * @property {string} FILE_ATTACHMENT The key represents the file attachment annotation
- * @property {string} SOUND The key represents the sound annotation
- * @property {string} THREE_D_ANNOTATION The key represents the 3D annotation
- * @property {string} TEXT_FIELD The key represents the text field annotation
- * @property {string} SIGNATURE_FORM_FIELD The key represents the signature form field annotation
- * @property {string} CHECK_BOX_FORM_FIELD The key represents the check box form field annotaiton
- * @property {string} RADIO_BUTTON_FORM_FIELD The key represents the radio button form field annotation
- * @property {string} LIST_BOX_FORM_FIELD The key represents list box form field annotation
- * @property {string} COMBO_BOX_FORM_FIELD The key represents the combo box form field annotation
+ * @property {string} SIGNATURE The key represents the signature annotation.
+ * @property {string} FREE_HAND The key represents the free hand annotation.
+ * @property {string} FREE_HAND_HIGHLIGHT The key represents the free hand highlight annotation.
+ * @property {string} FREE_TEXT The key represents the free text annotation.
+ * @property {string} DATE_FREE_TEXT The key represents the date free text annotation.
+ * @property {string} DISTANCE_MEASUREMENT The key represents the distance measurement annotation.
+ * @property {string} PERIMETER_MEASUREMENT The key represents the perimeter measurement annotation.
+ * @property {string} ARC_MEASUREMENT The key represents the arc measurement annotation.
+ * @property {string} RECTANGULAR_AREA_MEASUREMENT The key represents the rectangular area measurement annotation.
+ * @property {string} CLOUDY_RECTANGULAR_AREA_MEASUREMENT The key represents the cloudy rectangular area measurement annotation.
+ * @property {string} AREA_MEASUREMENT The key represents the area measurement annotation.
+ * @property {string} ELLIPSE_MEASUREMENT The key represents the ellipse measurement annotation.
+ * @property {string} COUNT_MEASUREMENT The key represents the count measurement annotation.
+ * @property {string} CALLOUT The key represents the callout annotation.
+ * @property {string} LINE The key represents the line annotation.
+ * @property {string} ARROW The key represents the arrow annotation.
+ * @property {string} POLYGON The key represents the polygon annotation.
+ * @property {string} CLOUD The key represents the cloud annotation.
+ * @property {string} HIGHLIGHT The key represents the highlight annotation.
+ * @property {string} UNDERLINE The key represents the underline annotation.
+ * @property {string} SQUIGGLY The key represents the squiggly annotation.
+ * @property {string} STRIKEOUT The key represents the strikeout annotation.
+ * @property {string} REDACTION The key represents the redaction annotation.
+ * @property {string} RECTANGLE The key represents the rectangle annotation.
+ * @property {string} ELLIPSE The key represents the ellipse annotation.
+ * @property {string} ARC The key represents the arc annotation.
+ * @property {string} POLYLINE The key represents the polyline annotation.
+ * @property {string} STICKYNOTE The key represents the sticky note annotation.
+ * @property {string} IMAGE The key represents the image annotation.
+ * @property {string} STAMP The key represents the stamp annotation.
+ * @property {string} EDIT The key represents the edit annotation.
+ * @property {string} PAN The key represents the pan annotation.
+ * @property {string} CONTENT_EDIT_TOOL The key represents the content edit tool annotation.
+ * @property {string} ADD_PARAGRAPH_TOOL The key represents the add paragraph tool annotation.
+ * @property {string} TEXT_SELECT The key represents the text select annotation.
+ * @property {string} MARQUEE_ZOOM_TOOL The key represents the marquee zoom tool annotation.
+ * @property {string} ERASER The key represents the eraser annotation.
+ * @property {string} CROP_PAGE The key represents the crop page annotation.
+ * @property {string} FILE_ATTACHMENT The key represents the file attachment annotation.
+ * @property {string} SOUND The key represents the sound annotation.
+ * @property {string} THREE_D_ANNOTATION The key represents the 3D annotation.
+ * @property {string} TEXT_FIELD The key represents the text field annotation.
+ * @property {string} SIGNATURE_FORM_FIELD The key represents the signature form field annotation.
+ * @property {string} CHECK_BOX_FORM_FIELD The key represents the check box form field annotation.
+ * @property {string} RADIO_BUTTON_FORM_FIELD The key represents the radio button form field annotation.
+ * @property {string} LIST_BOX_FORM_FIELD The key represents the list box form field annotation.
+ * @property {string} COMBO_BOX_FORM_FIELD The key represents the combo box form field annotation.
  */
 
 export const AnnotationKeys = {
@@ -963,9 +974,9 @@ export const AnnotationKeys = {
 /**
  * The different available style tabs in the annotation popup.
  * @name UI.AnnotationStylePopupTabs
- * @property {string} TEXT_COLOR Indicates the text style tab in the annotation popup window
- * @property {string} STROKE_COLOR Indicates the stroke color tab in the annotation popup window
- * @property {string} FILL_COLOR Indicates the fill color tab in the annotation popup window
+ * @property {string} TEXT_COLOR Indicates the text style tab in the annotation popup window.
+ * @property {string} STROKE_COLOR Indicates the stroke color tab in the annotation popup window.
+ * @property {string} FILL_COLOR Indicates the fill color tab in the annotation popup window.
  */
 
 export const AnnotationStylePopupTabs = {

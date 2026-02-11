@@ -2,7 +2,7 @@ import actions from 'actions';
 import ActionButton from 'components/ActionButton';
 import CustomElement from 'components/CustomElement';
 import { workerTypes } from 'constants/types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
 import toggleFullscreen from 'helpers/toggleFullscreen';
@@ -51,11 +51,13 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
 };
 
 function MenuOverlay() {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
   const [documentType, setDocumentType] = useState();
 
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
   const useClientSidePrint = useSelector(selectors.useClientSidePrint);
   const colorMap = useSelector(selectors.getColorMap);
@@ -80,11 +82,11 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
+    print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone, documentViewerKey: activeDocumentViewerKey });
   };
 
   const downloadDocument = () => {
-    downloadPdf(dispatch);
+    downloadPdf(dispatch, undefined, activeDocumentViewerKey);
   };
 
   const openSaveModal = () => {

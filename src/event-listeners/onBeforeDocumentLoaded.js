@@ -22,10 +22,10 @@ export default (dispatch, documentViewerKey) => () => {
   }
 
   dispatch(actions.setTotalPages(totalPages, documentViewerKey));
+  const currentPage = core.getCurrentPage(documentViewerKey);
+  dispatch(actions.setCurrentPage(currentPage, documentViewerKey));
 
   if (documentViewerKey === 1) {
     dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
-    const currentPage = core.getCurrentPage();
-    dispatch(actions.setCurrentPage(currentPage));
   }
 };

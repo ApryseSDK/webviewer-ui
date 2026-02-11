@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import './TabsHeader.scss';
@@ -37,7 +37,7 @@ const TabsHeader = () => {
   const tabNameHandler = useSelector(selectors.getTabNameHandler);
   const isMultiTab = useSelector(selectors.getIsMultiTab);
   const tabManager = useSelector(selectors.getTabManager);
-  const currTabs = useSelector(selectors.getTabs, shallowEqual);
+  const currTabs = useSelector(selectors.getTabs);
   const activeTab = useSelector(selectors.getActiveTab);
   const isEmptyPageOpen = useSelector((state) => selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0);
 

@@ -63,7 +63,7 @@ WebViewer(...)
 /**
  * Callback that gets passed to {@link UI.setHeaderItems setHeaderItems}.
  * @callback UI.headerCallback
- * @param {UI.Header} header Header instance with helper functions
+ * @param {UI.Header} header Header instance with helper functions.
  */
 
 import actions from 'actions';

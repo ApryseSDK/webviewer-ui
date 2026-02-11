@@ -204,6 +204,20 @@ const disableAttachmentPreview = (store) => () => {
 };
 
 /**
+ * Enable multi select in the notes panel
+ * @method UI.NotesPanel.enableMultiSelect
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.UI.NotesPanel.enableMultiSelect();
+  });
+ */
+const enableMultiSelect = (store) => () => {
+  store.dispatch(actions.setNotesPanelMultiSelect(true));
+};
+
+
+/**
  * Disable multi select in the notes panel
  * @method UI.NotesPanel.disableMultiSelect
  * @example
@@ -283,6 +297,7 @@ export {
   enableAttachmentPreview,
   disableAttachmentPreview,
   disableMultiSelect,
+  enableMultiSelect,
   setAttachmentHandler,
   enableMeasurementAnnotationFilter,
   disableMeasurementAnnotationFilter,

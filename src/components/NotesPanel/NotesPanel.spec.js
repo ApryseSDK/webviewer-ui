@@ -58,10 +58,11 @@ describe('NotesPanel', () => {
           addEventListener: noop,
           getSelectedAnnotations: () => [],
           getAnnotationsList: () => [],
-          removeEventListener: noop
+          removeEventListener: noop,
         };
       },
     });
+    core.getIsReadOnly = () => false;
   });
 
   describe('UI Tests', () => {

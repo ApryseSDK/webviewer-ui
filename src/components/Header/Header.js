@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 
 import HeaderItems from 'components/HeaderItems';

@@ -1,7 +1,7 @@
 import actions from 'actions';
 /**
  * Add a list of documents to the dropdown element of Page Replacement modal and provide a
- * way to retreive document for displaying Page Replacement modal.
+ * way to retrieve document for displaying Page Replacement modal.
  * @method UI.setPageReplacementModalFileList
  * @param {Array} list An array of object for selection element. Object must have "id", "filename" properties and "onSelect" method.
  * @example

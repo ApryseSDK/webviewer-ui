@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 
 import { isMobileDevice } from 'helpers/device';
@@ -20,6 +20,7 @@ const propTypes = {
 };
 
 const AnnotationContentOverlay = ({ annotation, clientXY }) => {
+  const { core } = useCore();
   const [
     isDisabled,
     isOverlayOpen,

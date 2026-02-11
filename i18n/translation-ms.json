@@ -21,6 +21,7 @@
     "cut": "potong",
     "paste": "tampal",
     "pasteWithoutFormatting": "Tampal tanpa memformat",
+    "addComment": "Tambah Komen",
     "delete": "Padam",
     "deleted": "Dipadamkan",
     "group": "Kumpulan",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Teks setem tidak boleh kosong",
     "unpostedComment": "Komen Tidak Disiarkan",
     "lockedLayer": "Lapisan dikunci",
-    "layerVisibililtyNoChange": "Keterlihatan lapisan tidak boleh diubah",
+    "layerVisibilityNoChange": "Keterlihatan lapisan tidak boleh diubah",
     "noLayers": "Dokumen ini tidak mempunyai lapisan.",
     "noSignatureFields": "Dokumen ini tidak mempunyai medan tandatangan.",
     "untitled": "Tidak bertajuk",
@@ -488,11 +489,13 @@
       "replace": "Gantikan",
       "replaceAll": "Gantikan Semua",
       "replaceText": "Gantikan Teks",
+      "replaceOptions": "Gantikan Pilihan",
       "confirmMessageReplaceAll": "Adakah anda pasti mahu menggantikan semua teks?",
       "confirmMessageReplaceOne": "Adakah anda pasti mahu menggantikan teks ini?",
       "moreOptions": "Lebih banyak pilihan",
       "lessOptions": "Kurang pilihan",
-      "confirm": "sahkan"
+      "confirm": "sahkan",
+      "filter": "Penapis"
     },
     "toolsOverlay": {
       "currentStamp": "Setem Semasa",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Keluarga Font"
     },
-    "blankSheet": "Lembaran Kosong",
+    "blankSheet": "Helaian",
     "insertImage": "Sisipkan imej"
   },
   "insertPageModal": {

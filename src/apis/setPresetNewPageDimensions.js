@@ -1,10 +1,10 @@
 /**
- * Sets preset page dimensions to be used when selecting a page size in the Insert Page Modal
+ * Sets preset page dimensions to be used when selecting a page size in the Insert Page Modal.
  * @method UI.setPresetNewPageDimensions
- * @param {string} presetName The name of a current preset or the name to give to a new preset
- * @param {object} newPreset A set of dimensions to use for a preset new page
- * @param {number} newPreset.height The height of the new page in inches
- * @param {number} newPreset.width The width of the new page in inches
+ * @param {string} presetName The name of a current preset or the name to give to a new preset.
+ * @param {object} newPreset A set of dimensions to use for a preset new page.
+ * @param {number} newPreset.height The height of the new page in inches.
+ * @param {number} newPreset.width The width of the new page in inches.
  *
  * @example
 WebViewer(...)

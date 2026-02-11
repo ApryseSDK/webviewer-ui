@@ -1,3 +1,21 @@
+/**
+ * A button that aligns cell content to the top.
+ * @name alignTopButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * A button that aligns cell content to the middle.
+ * @name alignMiddleButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * A button that aligns cell content to the bottom.
+ * @name alignBottomButton
+ * @memberof UI.Components.PresetButton
+ */
+
 import React from 'react';
 import BaseAlignmentButton from './BaseAlignmentButton';
 import selectors from 'selectors';

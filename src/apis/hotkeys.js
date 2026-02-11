@@ -1,11 +1,12 @@
 /**
- * An instance of Hotkeys that can be used to enable, disable or register custom hotkeys in the viewer
+ * An instance of Hotkeys that can be used to enable, disable or register custom hotkeys in the viewer.
  * @name UI.hotkeys
  * @see UI.Hotkeys
  * @type {Class<UI.Hotkeys>}
  */
 
-import hotkeysManager, { Keys } from 'helpers/hotkeysManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { Keys } from 'helpers/hotkeysUtils';
 
 export default {
   on: (...args) => {

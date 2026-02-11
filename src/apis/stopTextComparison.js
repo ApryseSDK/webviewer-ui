@@ -1,5 +1,5 @@
 /**
- * End text comparison and delete all text comparison annotations
+ * End text comparison and delete all text comparison annotations.
  * @method UI.stopTextComparison
  * @example
  WebViewer(...)

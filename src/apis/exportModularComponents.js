@@ -186,12 +186,21 @@ export default (store) => () => {
     removePresetButtonIcon(componentObject);
 
     shouldAddDisabledFlag(componentObject);
+
+    for (const key in componentObject) {
+      if (componentObject[key] && typeof componentObject[key] === 'object' && componentObject[key].dataElement) {
+        delete componentObject[key].dataElement;
+      }
+    }
+
     return componentObject;
   };
 
   const validateHeaders = (modularHeaders) => {
     for (const key in modularHeaders) {
       const header = modularHeaders[key];
+      // Ensure headers have a dataElement so disabled flags can be added when exporting
+      header.dataElement = header.dataElement || key;
       if (header.items && Array.isArray(header.items)) {
         header.items = header.items.filter((item) => {
           if (item === null || item === undefined) {
@@ -202,6 +211,7 @@ export default (store) => () => {
         });
       }
       shouldAddDisabledFlag(header);
+      delete header.dataElement;
     }
     return modularHeaders;
   };
@@ -225,7 +235,9 @@ export default (store) => () => {
         const dataElement = panelObject.dataElement;
         panelObject.render = getFunctionKey(PANEL_RENDER_FUNCTION_KEY, storedModularComponentFunctions, dataElement, panelObject.render);
       }
-      panelsMap[panelObject.dataElement] = panelObject;
+      const panelKey = panelObject.dataElement;
+      delete panelObject.dataElement;
+      panelsMap[panelKey] = panelObject;
     });
 
     return panelsMap;
@@ -241,7 +253,9 @@ export default (store) => () => {
       }
       const items = processItems(flyout.items, key, components);
       shouldAddDisabledFlag(flyout);
-      normalizedFlyouts[key] = { ...flyout, items };
+      const flyoutCopy = { ...flyout, items };
+      delete flyoutCopy.dataElement;
+      normalizedFlyouts[key] = flyoutCopy;
     }
     return normalizedFlyouts;
   };

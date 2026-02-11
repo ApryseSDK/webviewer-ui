@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useDispatch, useSelector } from 'react-redux';
 import Model3DModalContainer from './Model3DModalContainer';
 import DataElements from 'constants/dataElement';
 
 function Model3DModalRedux(props) {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [url, setURL] = useState('');
   const [file, setFile] = useState({});

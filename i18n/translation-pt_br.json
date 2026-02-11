@@ -21,6 +21,7 @@
     "cut": "Corte",
     "paste": "Colar",
     "pasteWithoutFormatting": "colar sem formatar",
+    "addComment": "Adicionar comentário",
     "delete": "Apagar",
     "deleted": "Excluído",
     "group": "Grupo",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
     "unpostedComment": "Comentário Não Postado",
     "lockedLayer": "Camada está bloqueada",
-    "layerVisibililtyNoChange": "A visibilidade da camada não pode ser alterada",
+    "layerVisibilityNoChange": "A visibilidade da camada não pode ser alterada",
     "noLayers": "Este documento não possui camadas.",
     "noSignatureFields": "Este documento não possui campos de assinatura.",
     "untitled": "Sem título",
@@ -488,11 +489,13 @@
       "replace": "Substituir",
       "replaceAll": "Substitua tudo",
       "replaceText": "Substituir texto",
+      "replaceOptions": "Opções de substituição",
       "confirmMessageReplaceAll": "Tem certeza de que deseja substituir todo o texto?",
       "confirmMessageReplaceOne": "Tem certeza de que deseja substituir este texto?",
       "moreOptions": "Mais opções",
       "lessOptions": "Menos opções",
-      "confirm": "confirme"
+      "confirm": "confirme",
+      "filter": "Filtro"
     },
     "toolsOverlay": {
       "currentStamp": "Carimbo Atual",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Fontes"
     },
-    "blankSheet": "Folha em branco",
+    "blankSheet": "Folha",
     "insertImage": "Inserir imagem"
   },
   "insertPageModal": {

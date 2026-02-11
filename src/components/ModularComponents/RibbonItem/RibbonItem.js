@@ -11,10 +11,11 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivenessHelper';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 
 const RibbonItem = forwardRef((props, ref) => {
+  const { core } = useCore();
   const elementRef = useRef();
   const { t, ready: tReady } = useTranslation();
   const dispatch = useDispatch();
@@ -112,10 +113,22 @@ const RibbonItem = forwardRef((props, ref) => {
 
   if (tReady) {
     if (toolbarGroup) {
-      translatedLabel = t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties));
+      translatedLabel = t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties), { defaultValue: label });
     } else if (label) {
       translatedLabel = t(label);
     }
+  }
+
+  let translatedTitle;
+
+  if (tReady) {
+    if (toolbarGroup) {
+      translatedTitle = t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties), { defaultValue: title });
+    } else if (title) {
+      translatedTitle = t(title);
+    }
+  } else if (title) {
+    translatedTitle = title;
   }
 
   return (
@@ -125,7 +138,7 @@ const RibbonItem = forwardRef((props, ref) => {
         ref={ref}
         onClick={onClick}
         label={translatedLabel}
-        title={translatedLabel || title}
+        title={translatedTitle || translatedLabel}
       />
       :
       <div className={classNames({
@@ -142,7 +155,7 @@ const RibbonItem = forwardRef((props, ref) => {
           dataElement={dataElement}
           img={img}
           label={translatedLabel}
-          title={translatedLabel || title}
+          title={translatedTitle || translatedLabel}
           useI18String={false}
           onClick={onClick}
           disabled={disabled}

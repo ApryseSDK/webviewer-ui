@@ -14,6 +14,7 @@ jest.mock('core', () => ({
   deselectAllAnnotations: () => { },
   selectAnnotation: () => { },
   jumpToAnnotation: () => { },
+  getDocumentViewer: jest.fn(),
 }));
 
 

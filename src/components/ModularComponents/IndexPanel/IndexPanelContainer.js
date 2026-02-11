@@ -5,7 +5,7 @@ import React,
 } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import './IndexPanel.scss';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import DataElements from 'constants/dataElement';
 import IndexPanel from './IndexPanel';
 import PropTypes from 'prop-types';
@@ -18,6 +18,7 @@ const propTypes = {
 
 function IndexPanelContainer(props) {
   const { parentDataElement = undefined, dataElement } = props;
+  const { core } = useCore();
   const [
     isOpen,
   ] = useSelector(

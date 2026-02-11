@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import './SpreadsheetEditorEditModeDropdown.scss';
 
 
@@ -27,6 +27,7 @@ const translationPrefix = 'spreadsheetEditor.';
 
 const SpreadsheetEditorEditModeDropdown = (props) => {
   const { isFlyoutItem, onKeyDownHandler, disabled = false } = props;
+  const { core } = useCore();
   const activeFlyout = useSelector(selectors.getActiveFlyout);
   const editMode = useSelector(selectors.getSpreadsheetEditorEditMode);
 

@@ -21,6 +21,7 @@
     "cut": "Cięcie",
     "paste": "Pasta",
     "pasteWithoutFormatting": "Wklej bez formatowania",
+    "addComment": "Dodaj komentarz",
     "delete": "Usuń",
     "deleted": "Usunięto",
     "group": "Grupuj",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Tekst stempla nie może być pusty",
     "unpostedComment": "Nieopublikowany komentarz",
     "lockedLayer": "Warstwa jest zablokowana",
-    "layerVisibililtyNoChange": "Widoczności warstwy nie można zmienić",
+    "layerVisibilityNoChange": "Widoczności warstwy nie można zmienić",
     "noLayers": "Ten dokument nie ma warstw.",
     "noSignatureFields": "Dokument ten nie zawiera pól na podpis.",
     "untitled": "Nieuprawny",
@@ -488,11 +489,13 @@
       "replace": "Zastąp",
       "replaceAll": "Zastąp wszystko",
       "replaceText": "Zastąp tekst",
+      "replaceOptions": "Zamień opcje",
       "confirmMessageReplaceAll": "Czy na pewno chcesz zamienić cały tekst?",
       "confirmMessageReplaceOne": "Czy na pewno chcesz zastąpić ten tekst?",
       "moreOptions": "Więcej opcji",
       "lessOptions": "Mniej opcji",
-      "confirm": "Potwierdź"
+      "confirm": "Potwierdź",
+      "filter": "Filtr"
     },
     "toolsOverlay": {
       "currentStamp": "Aktualny stempel",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Rodzina czcionek"
     },
-    "blankSheet": "Pusta Arkusz",
+    "blankSheet": "Arkusz",
     "insertImage": "Wstaw obraz"
   },
   "insertPageModal": {

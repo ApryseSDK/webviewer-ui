@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 import getAngleInRadians from 'helpers/getAngleInRadians';
@@ -23,6 +23,7 @@ LineMeasurementInput.propTypes = {
 const Scale = window.Core.Scale;
 
 function LineMeasurementInput({ annotation, isOpen, selectedTool, canModify }) {
+  const { core } = useCore();
   const [t] = useTranslation();
   const isReadOnly = useSelector((state) => selectors.isViewOnly(state));
   const factor = annotation?.Measure.axis[0].factor;

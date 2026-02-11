@@ -8,6 +8,14 @@ import getGroupedLinkAnnotations from 'src/helpers/getGroupedLinkAnnotations';
 
 jest.mock('core');
 jest.mock('src/helpers/getGroupedLinkAnnotations');
+
+beforeEach(() => {
+  core.getAnnotationManager = jest.fn(() => ({
+    deleteAnnotation: jest.fn(),
+    getGroupAnnotations: jest.fn(() => []),
+    ungroupAnnotations: jest.fn(),
+  }));
+});
 const TestAnnotationPopup = withProviders(Basic);
 const LinkAnnotationPopupWithProviders = withProviders(LinkAnnotationPopup);
 
@@ -184,7 +192,7 @@ describe('LinkAnnotationPopup Component', () => {
       annotationManager.deleteAnnotation = deleteAnnotation;
       getGroupedLinkAnnotations.mockImplementation(() => [mockRectangleAnnotation]);
 
-      const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1);
+      const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1, core);
 
       render(
         <LinkAnnotationPopupWithProviders
@@ -201,7 +209,6 @@ describe('LinkAnnotationPopup Component', () => {
       const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
       unlinkButton.click();
       expect(deleteAnnotation).toBeCalledTimes(1);
-      getGroupedLinkAnnotations.mockRestore();
     });
 
     it('Should call deleteAnnotation thrice if group annotation includes a highlight annotation', () => {
@@ -217,7 +224,7 @@ describe('LinkAnnotationPopup Component', () => {
       annotationManager.deleteAnnotation = deleteAnnotation;
       getGroupedLinkAnnotations.mockImplementation(() => [mockHighlightAnnotation]);
 
-      const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1);
+      const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1, core);
 
       render(
         <LinkAnnotationPopupWithProviders
@@ -234,7 +241,6 @@ describe('LinkAnnotationPopup Component', () => {
       const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
       unlinkButton.click();
       expect(deleteAnnotation).toBeCalledTimes(3);
-      getGroupedLinkAnnotations.mockRestore();
     });
 
     it('Should delete both link and highlight annotation if group annotation includes a highlight annotation', () => {
@@ -251,7 +257,7 @@ describe('LinkAnnotationPopup Component', () => {
       annotationManager.deleteAnnotation = deleteAnnotation;
       getGroupedLinkAnnotations.mockImplementation(() => [mockLinkAnnotation]);
 
-      const handleUnLink = () => deleteLinkAnnotationWithGroup(mockLinkAnnotation, 1);
+      const handleUnLink = () => deleteLinkAnnotationWithGroup(mockLinkAnnotation, 1, core);
 
       render(
         <LinkAnnotationPopupWithProviders

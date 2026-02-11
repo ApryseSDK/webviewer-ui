@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import debounce from 'lodash/debounce';
 import useOnFormFieldsChanged from '../../hooks/useOnFormFieldsChanged';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import FormFieldIndicator from './FormFieldIndicator';
 import './FormFieldIndicator.scss';
@@ -11,6 +11,7 @@ import getRootNode from 'helpers/getRootNode';
 import { createPortal } from 'react-dom';
 
 const FormFieldIndicatorContainer = () => {
+  const { core } = useCore();
   const [
     isOpen,
     isDisabled,

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import ActionButton from 'components/ActionButton';
 import Button from 'components/Button';
 import displayModeObjects from 'constants/displayModeObjects';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useStore } from 'react-redux';
@@ -16,6 +16,7 @@ import DataElements from 'src/constants/dataElement';
 import { isIE11, isIOS, isIOSFullScreenSupported } from 'helpers/device';
 
 function ViewControlsOverlay() {
+  const { core } = useCore();
   const [t] = useTranslation();
   const store = useStore();
 

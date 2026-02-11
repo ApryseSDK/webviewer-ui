@@ -589,7 +589,13 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_DISPLAY_MODE':
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
-      return { ...state, currentPage: payload.currentPage };
+      return {
+        ...state,
+        currentPage: {
+          ...state.currentPage,
+          [payload.documentViewerKey]: payload.currentPage
+        }
+      };
     case 'SET_NOTES_PANEL_SORT_STRATEGY':
       return { ...state, sortStrategy: payload.sortStrategy };
     case 'SET_NOTE_DATE_FORMAT':
@@ -792,12 +798,22 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_CUSTOM_MULTI_VIEWER_ACCEPTED_FILE_FORMATS':
       return { ...state, customMultiViewerAcceptedFileFormats: payload.customMultiViewerAcceptedFileFormats };
     case 'ADD_CUSTOM_MODAL': {
+      const { dataElement } = payload;
+
       const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
       });
+
+      const currentWhiteList = state.viewOnlyWhitelist ? state.viewOnlyWhitelist.dataElement : [];
+
+      const nextWhiteList = [...currentWhiteList, dataElement];
       return {
         ...state,
         customModals: [...existingDataElementFiltered, payload],
+        viewOnlyWhitelist: {
+          ...state.viewOnlyWhitelist,
+          dataElement: nextWhiteList,
+        },
       };
     }
     case 'UPDATE_MODULAR_HEADER': {

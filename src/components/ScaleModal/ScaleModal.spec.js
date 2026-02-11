@@ -5,6 +5,7 @@ import { Basic } from './ScaleModal.stories';
 const noop = () => { };
 
 jest.mock('core', () => ({
+  getDocumentViewer: jest.fn(),
   addEventListener: noop,
   removeEventListener: noop,
   getDocumentViewers: () => [{

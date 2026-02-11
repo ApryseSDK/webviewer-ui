@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
@@ -12,7 +12,7 @@ import { ITEM_RENDER_PREFIXES, PLACEMENT } from 'constants/customizationVariable
 import DataElements from 'constants/dataElement';
 import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';
-import { shortcutAria } from 'helpers/hotkeysManager';
+import { shortcutAria } from 'helpers/hotkeysUtils';
 import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 import '../../Button/Button.scss';
@@ -36,6 +36,7 @@ const ToolButton = forwardRef((props, ref) => {
     allFlyoutItems = [],
     style
   } = props;
+  const { core } = useCore();
 
   // use this so that state gets updated when active tool styles change
   // eslint-disable-next-line no-unused-vars

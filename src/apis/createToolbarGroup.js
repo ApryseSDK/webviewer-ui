@@ -1,5 +1,5 @@
 /**
- * Creates a new Toolbar group (Ribbon)
+ * Creates a new Toolbar group (Ribbon).
  *
  * @method UI.createToolbarGroup
  * @param {object} toolbarGroup

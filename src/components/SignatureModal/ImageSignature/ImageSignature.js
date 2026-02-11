@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { isMobile } from 'helpers/device';
 import classNames from 'classnames';
 import i18next from 'i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import './ImageSignature.scss';
 
@@ -57,6 +57,7 @@ const ImageSignature = ({
   enableCreateButton,
   isInitialsModeEnabled = false,
 }) => {
+  const { core } = useCore();
   const [fullSignatureImage, setFullSignatureImage] = useState(null);
   const [fullSignatureFileSize, setFullSignatureFileSize] = useState(null);
   const [initialsImage, setInitialsImage] = useState(null);

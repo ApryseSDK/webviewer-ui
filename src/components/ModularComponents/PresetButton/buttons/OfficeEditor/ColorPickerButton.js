@@ -1,5 +1,5 @@
 /**
- * The preset color picker button for the Office Editor
+ * A button that opens the color picker for text formatting.
  * @name officeEditorColorPicker
  * @memberof UI.Components.PresetButton
  */
@@ -8,7 +8,7 @@ import React, { useEffect, forwardRef } from 'react';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import ColorPickerOverlay from 'components/ColorPickerOverlay';
 import Icon from 'components/Icon';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import selectors from 'selectors';
@@ -25,6 +25,7 @@ const propTypes = {
 };
 
 const ColorPickerButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const [
     activeColor,
   ] = useSelector(

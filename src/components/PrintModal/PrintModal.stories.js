@@ -1,5 +1,6 @@
 import React from 'react';
 import PrintModalComponent from './PrintModal';
+import PrintModalContainer from './PrintModalContainer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { userEvent, within, expect } from 'storybook/test';
@@ -44,6 +45,7 @@ const props = {
   isApplyWatermarkDisabled: false,
   existingWatermarksRef: { current: null },
   currentPage: 1,
+  pageRange: 'all',
   setIsGrayscale: NOOP,
   setIsCurrentView: NOOP,
   setShouldFlatten: NOOP,
@@ -62,11 +64,13 @@ const props = {
 export const PrintModal = () => (
   <Provider store={store}>
     <div>
-      <PrintModalComponent
-        {...props}
-        isFullAPIEnabled={false}
-        useEmbeddedPrint={false}
-      />
+      <PrintModalContainer>
+        <PrintModalComponent
+          {...props}
+          isFullAPIEnabled={false}
+          useEmbeddedPrint={false}
+        />
+      </PrintModalContainer>
     </div>
   </Provider>
 );

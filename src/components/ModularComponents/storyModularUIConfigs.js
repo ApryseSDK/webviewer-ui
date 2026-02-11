@@ -1,9 +1,9 @@
 import DataElements from 'constants/dataElement';
+import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 
 export const uiWithFlyout = {
   'modularComponents': {
     'flyoutToggle': {
-      'dataElement': 'flyoutToggle',
       'title': 'Flyout Toggle',
       'type': 'toggleButton',
       'label': 'Flyout Toggle',
@@ -12,7 +12,6 @@ export const uiWithFlyout = {
   },
   'modularHeaders': {
     'default-top-header': {
-      'dataElement': 'default-top-header',
       'placement': 'top',
       'grow': 0,
       'gap': 12,
@@ -32,7 +31,6 @@ export const uiWithFlyout = {
   },
   'flyouts': {
     'myCustomFlyout': {
-      'dataElement': 'myCustomFlyout',
       'items': [
         {
           'dataElement': 'customFlyoutItem',
@@ -84,7 +82,6 @@ export const uiWithFlyout = {
 
 const panelsInFlyouts = {
   'rubberStampFlyout': {
-    'dataElement': 'rubberStampFlyout',
     'toggleElement': 'rubberStampToolButton',
     'items': [
       {
@@ -94,7 +91,6 @@ const panelsInFlyouts = {
     ]
   },
   'signatureListFlyout': {
-    'dataElement': 'signatureListFlyout',
     'toggleElement': 'signatureCreateToolButton',
     'items': [
       {
@@ -108,36 +104,77 @@ const panelsInFlyouts = {
 export const uiWithPanelsInFlyout = {
   'modularComponents': {
     'stylePanelFlyoutToggle': {
-      'dataElement': 'stylePanelFlyoutToggle',
       'title': 'action.style',
       'type': 'toggleButton',
       'img': 'icon-style-panel-toggle',
-      'toggleElement': 'stylePanelFlyout'
+      'toggleElement': 'stylePanelFlyout',
     },
     'anotherstylePanelFlyout': {
       'type': 'customButton',
-      'dataElement': 'anotherstylePanelFlyout',
       'label': 'Other Item',
       'onClick': 'otherItemClick',
-      'children': [{
-        'dataElement': 'submenuItem',
-        'render': 'stylePanel'
-      }]
+      'children': [
+        {
+          'dataElement': 'submenuItem',
+          'render': 'stylePanel',
+        },
+      ],
     },
     'rubberStampToolButton': {
-      'dataElement': 'rubberStampToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateRubberStamp'
+      'toolName': 'AnnotationCreateRubberStamp',
     },
     'signatureCreateToolButton': {
-      'dataElement': 'signatureCreateToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateSignature'
+      'toolName': 'AnnotationCreateSignature',
+    },
+    continuousPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.CONTINUOUS_PAGE_TRANSITION,
+    },
+    defaultPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DEFAULT_PAGE_TRANSITION,
+    },
+    readerPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+    },
+    rotateClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_CLOCKWISE,
+    },
+    rotateCounterClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_COUNTERCLOCKWISE,
+    },
+    singleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.SINGLE_LAYOUT,
+    },
+    doubleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DOUBLE_LAYOUT,
+    },
+    coverLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.COVER_LAYOUT,
+    },
+    toggleCompareModeButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+    },
+    [DataElements.FULLSCREEN_BUTTON]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
+    },
+    [PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
     },
   },
   'modularHeaders': {
     'default-top-header': {
-      'dataElement': 'default-top-header',
       'placement': 'top',
       'grow': 0,
       'gap': 12,
@@ -147,28 +184,43 @@ export const uiWithPanelsInFlyout = {
       'dimension': {
         'paddingTop': 8,
         'paddingBottom': 8,
-        'borderWidth': 1
+        'borderWidth': 1,
       },
       'style': {},
-      'items': [
-        'stylePanelFlyoutToggle',
-        'rubberStampToolButton',
-        'signatureCreateToolButton',
-      ]
+      'items': ['stylePanelFlyoutToggle', 'rubberStampToolButton', 'signatureCreateToolButton'],
     },
   },
   'flyouts': {
     'stylePanelFlyout': {
-      'dataElement': 'stylePanelFlyout',
       'items': [
         {
           'dataElement': 'mystylePanel',
-          'render': 'stylePanel'
+          'render': 'stylePanel',
         },
         'anotherstylePanelFlyout',
-      ]
+      ],
     },
     ...panelsInFlyouts,
+    viewControlsFlyout: {
+      className: 'ViewControlsFlyout',
+      items: [
+        'continuousPageTransitionButton',
+        'defaultPageTransitionButton',
+        'readerPageTransitionButton',
+        'divider',
+        'rotateClockwiseButton',
+        'rotateCounterClockwiseButton',
+        'divider',
+        'singleLayoutButton',
+        'doubleLayoutButton',
+        'coverLayoutButton',
+        'toggleCompareModeButton',
+        'divider',
+        'fullscreenButton',
+        'divider',
+        'toggleAccessibilityModeButton',
+      ],
+    },
   },
   'panels': {},
   'popups': {
@@ -186,12 +238,11 @@ export const uiWithPanelsInFlyout = {
       { dataElement: DataElements.PAN_TOOL_BUTTON },
       { dataElement: DataElements.STICKY_TOOL_BUTTON },
     ],
-  }
+  },
 };
 
 export const panelsInFlyoutMap = {
   'myCustomFlyout': {
-    'dataElement': 'myCustomFlyout',
     'items': [
       {
         'dataElement': 'stylePanelInFlyout',

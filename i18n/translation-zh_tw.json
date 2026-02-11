@@ -21,6 +21,7 @@
     "cut": "切",
     "paste": "粘貼",
     "pasteWithoutFormatting": "不帶格式粘貼",
+    "addComment": "新增評論",
     "delete": "刪除",
     "deleted": "已刪除",
     "group": "組",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "印章文字不能為空",
     "unpostedComment": "未發布評論",
     "lockedLayer": "圖層已鎖定",
-    "layerVisibililtyNoChange": "圖層可見性無法更改",
+    "layerVisibilityNoChange": "圖層可見性無法更改",
     "noLayers": "該文件沒有圖層。",
     "noSignatureFields": "該文檔沒有簽名字段。",
     "untitled": "無標題",
@@ -488,11 +489,13 @@
       "replace": "代替",
       "replaceAll": "全部替換",
       "replaceText": "替換文本",
+      "replaceOptions": "替換選項",
       "confirmMessageReplaceAll": "您確定要替換所有文本嗎？",
       "confirmMessageReplaceOne": "您確定要替換此文本嗎？",
       "moreOptions": "更多選擇",
       "lessOptions": "更少的選擇",
-      "confirm": "確認"
+      "confirm": "確認",
+      "filter": "篩選"
     },
     "toolsOverlay": {
       "currentStamp": "目前的郵票",

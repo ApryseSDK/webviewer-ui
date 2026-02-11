@@ -1,5 +1,5 @@
 /**
- * Closes the tooltip that is currently being hovered over
+ * Closes the tooltip that is currently being hovered over.
  * @method UI.closeTooltip
  * @example
  WebViewer(...)

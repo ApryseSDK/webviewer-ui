@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
 import getClassName from 'helpers/getClassName';
@@ -15,6 +15,7 @@ import useFocusOnClose from 'hooks/useFocusOnClose';
 import './WarningModal.scss';
 
 const WarningModal = () => {
+  const { core } = useCore();
   const doNotAskCheckboxRef = React.createRef();
 
   const [

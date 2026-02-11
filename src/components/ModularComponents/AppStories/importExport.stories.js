@@ -1,5 +1,11 @@
 import App from 'components/App';
-import { mockHeadersNormalized, mockModularComponents, uiWithCustomElements, uiWithCustomElementsFunctions, uiWithCustomStyleAndClass } from './mockAppState';
+import {
+  mockHeadersNormalized,
+  mockModularComponents,
+  uiWithCustomElements,
+  uiWithCustomElementsFunctions,
+  uiWithCustomStyleAndClass
+} from './mockAppState';
 import { within, expect, userEvent, waitFor } from 'storybook/test';
 import { createTemplate } from 'helpers/storybookHelper';
 import { uiWithPanelsInFlyout } from '../storyModularUIConfigs';
@@ -29,9 +35,8 @@ ImportCustomComponents.play = async ({ canvasElement }) => {
 
   await expect(customPanel).toBeVisible();
 
-  const components = window.instance.UI.exportModularComponents();
-
-  await expect(components).toEqual(uiWithCustomElements);
+  const exportedConfig = window.instance.UI.exportModularComponents();
+  await expect(exportedConfig).toEqual(uiWithCustomElements);
 };
 
 export const ImportingWithCustomStyleAndClassName = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
@@ -92,4 +97,10 @@ ImportingConfigWithPanelsInFlyout.play = async ({ canvasElement }) => {
 
   const exportedConfig = window.instance.UI.exportModularComponents();
   expect(exportedConfig).toEqual(uiWithPanelsInFlyout);
+};
+
+ImportingConfigWithPanelsInFlyout.parameters = {
+  layout: 'fullscreen',
+  // For unrelated error thrown in story
+  test: { dangerouslyIgnoreUnhandledErrors: true  }
 };

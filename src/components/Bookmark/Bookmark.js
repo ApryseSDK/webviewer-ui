@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import TextButton from '../TextButton';
@@ -41,6 +41,7 @@ const Bookmark = ({
   onCancel,
   panelSelector,
 }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
 
   const [isEditing, setIsEditing] = useState(false);

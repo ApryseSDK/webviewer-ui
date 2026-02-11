@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import OpenFileModal from './OpenFileModal';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
@@ -42,7 +42,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer, preloadedState: initialState });
 store.dispatch = () => {};
 
 export function Basic() {
@@ -64,14 +64,7 @@ export function BasicWithUrlInputError() {
     },
   };
 
-  window.Core = {};
-  window.Core.SupportedFileFormats = {};
-  window.Core.SupportedFileFormats.CLIENT = ['pdf', 'docx', 'txt'];
-  window.Core.getAllowedFileExtensions = () => {
-    return ['pdf', 'docx', 'txt'];
-  };
-
-  const modifiedStore = createStore(rootReducer, modifiedState);
+  const modifiedStore = configureStore({ reducer: rootReducer, preloadedState: modifiedState });
   modifiedStore.dispatch = () => {};
 
   return (
@@ -81,37 +74,39 @@ export function BasicWithUrlInputError() {
   );
 }
 
-BasicWithUrlInputError.play = async () => {
-  window.Core = {};
-  window.Core.createDocument = async (file, options) => {
-    throw new Error('File could not be retrieved from the provided URL.');
-  };
-  window.Core.SupportedFileFormats = {};
-  window.Core.SupportedFileFormats.CLIENT = ['pdf', 'docx', 'txt'];
+BasicWithUrlInputError.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const errorString = getTranslatedText('message.urlInputFileLoadError');
 
-  window.Core.getAllowedFileExtensions = () => {
-    return ['pdf', 'docx', 'txt'];
+  const extensions = ['pdf', 'docx', 'txt'];
+  window.Core = {
+    SupportedFileFormats: {
+      CLIENT: extensions,
+    },
+    getAllowedFileExtensions: () => extensions,
+    performDocumentCreationChecks: async () => {
+      throw new Error(errorString);
+    },
   };
 
-  const fileInput = document.getElementById('urlInput');
+  const fileInput = canvas.getByRole('textbox', { name: getTranslatedText('link.enterUrlAlt') });
   expect(fileInput).toBeInTheDocument();
 
   await userEvent.click(fileInput);
-  await userEvent.type(fileInput, 'https://example.com/documents/document.pdf', { delay: 100 });
+  await userEvent.type(fileInput, 'https://example.com/documents/document.pdf');
 
-  const dropDown = document.getElementById('open-file-extension-dropdown');
+  const dropDown = canvas.getByRole('combobox', { name: getTranslatedText('OpenFile.extension') });
   expect(dropDown).toBeInTheDocument();
   await userEvent.click(dropDown);
 
-  const pdfOption = document.getElementById('open-file-extension-dropdown-pdf');
+  const pdfOption = canvas.getByRole('option', { name: 'pdf' });
   expect(pdfOption).toBeInTheDocument();
   await userEvent.click(pdfOption);
 
-  const button = document.querySelector('.modal-btn');
+  const button = canvas.getByRole('button', { name: getTranslatedText('OpenFile.addTab') });
   expect(button).toBeInTheDocument();
   await userEvent.click(button);
 
-  const errorMessageDiv = document.querySelector('.no-margin');
-  expect(errorMessageDiv).toBeInTheDocument();
-  expect(errorMessageDiv.innerText).toBe(getTranslatedText('message.urlInputFileLoadError'));
+  const errorMessage = canvas.getByText(errorString);
+  expect(errorMessage).toBeInTheDocument();
 };

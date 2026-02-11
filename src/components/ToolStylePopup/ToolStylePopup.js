@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';

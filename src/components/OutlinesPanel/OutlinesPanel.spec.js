@@ -3,7 +3,12 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 // import { Editable } from './OutlinesPanel.stories';
 import outlineUtils from '../../helpers/OutlineUtils';
+import { getDefaultOutlines } from '../Outline/Outline.stories';
 import core from 'core';
+import OutlinesPanel from './OutlinesPanel';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
 
 // const BasicOutlinesPanel = withProviders(Editable);
 const BasicOutlinesPanel = {};
@@ -18,25 +23,34 @@ jest.mock('core', () => ({
   addEventListener: NOOP,
   removeEventListener: NOOP,
   getOutlines: NOOP,
-  getDocumentViewer: () => ({
+  getDocumentViewer: (key) => ({
     getDocument: () => ({
       getViewerCoordinates: () => ({ x: 0, y: 0 }),
       getPageRotation: () => 0,
+      getType: () => 'PDF',
     }),
     getAccessibleReadingOrderManager: NOOP,
+    getScrollViewElement: NOOP,
+    getAnnotationById: NOOP,
+    isFullPDFEnabled: () => true,
+    isAnnotationSelected: () => false,
+    deselectAnnotation: NOOP,
+    deselectAnnotations: NOOP,
   }),
+  getDocument: jest.fn(() => null),
+  // Add root-level mocks for direct calls
+  isFullPDFEnabled: () => true,
+  isAnnotationSelected: () => false,
+  deselectAnnotation: NOOP,
+  deselectAnnotations: NOOP,
+  getScrollViewElement: NOOP,
+  getAnnotationById: NOOP,
 }));
 
 // To be fixed as part of https://apryse.atlassian.net/browse/WVR-8684
 describe.skip('OutlinesPanel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('Story should not throw any errors', () => {
-    expect(() => {
-      render(<BasicOutlinesPanel />);
-    }).not.toThrow();
   });
 
   it('Clicks on one outline should make it active and clicks on the panel empty area should deselect the selected outline', async () => {
@@ -142,10 +156,38 @@ describe.skip('OutlinesPanel', () => {
     userEvent.click(multiSelectButton);
     screen.getByRole('button', { name: 'Add Outlines' });
   });
+});
+
+
+const store = configureStore({ reducer: rootReducer });
+
+const MockOutlinesPanel = (props) => (
+  <Provider store={store}>
+    <OutlinesPanel {...props} />
+  </Provider>
+);
+
+describe('OutlinesPanel basic tests', () => {
+  it('Story should not throw any errors', () => {
+    expect(() => {
+      render(<MockOutlinesPanel />);
+    }).not.toThrow();
+  });
 
   it('Should have h2 element for title', async () => {
-    render(<BasicOutlinesPanel />);
+    render(<MockOutlinesPanel />);
     const title = screen.getByRole('heading', { name: 'Outlines' });
     expect(title).toHaveClass('header-title');
+  });
+
+  it('does not throw NaN padding error when isTest is not set', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    expect(() => {
+      render(<MockOutlinesPanel />);
+    }).not.toThrow();
+    expect(errorSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('NaN is an invalid value for the `paddingBottom` css style property')
+    );
+    errorSpy.mockRestore();
   });
 });

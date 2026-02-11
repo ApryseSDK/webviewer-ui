@@ -16,11 +16,14 @@ import { print } from 'helpers/print';
 import selectors from 'selectors';
 
 export default (store) => () => {
+  const state = store.getState();
+  const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
   print(
     store.dispatch,
     selectors.useClientSidePrint(store.getState()),
     selectors.isEmbedPrintSupported(store.getState()),
     selectors.getSortStrategy(store.getState()),
     selectors.getColorMap(store.getState()),
+    { documentViewerKey: activeDocumentViewerKey }
   );
 };

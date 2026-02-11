@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 
 import LogoBar from 'components/LogoBar';
@@ -33,7 +33,6 @@ import BottomHeader from 'components/ModularComponents/BottomHeader';
 import TopHeader from 'components/ModularComponents/TopHeader';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
-import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
 import StylePanelFlyout from 'components/ModularComponents/StylePanelFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
@@ -44,6 +43,7 @@ import useOnAlignmentPopupOpen from 'hooks/useOnAlignmentPopupOpen';
 import useOnFormFieldAnnotationAddedOrSelected from 'hooks/useOnFormFieldAnnotationAddedOrSelected';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
+import useOnCountMeasurementAnnotationSelected from 'hooks/useOnCountMeasurementAnnotationSelected';
 import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
 import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
 import useOnAnnotationContentOverlayOpen from 'hooks/useOnAnnotationContentOverlayOpen';
@@ -91,6 +91,7 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers, initialDirection }) => {
+  const { core } = useCore();
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
@@ -517,7 +518,6 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       >
         <FlyoutContainer />
         <RibbonOverflowFlyout />
-        <ViewControlsFlyout />
         <PageManipulationFlyout />
         <StylePanelFlyout />
         <Accessibility />
@@ -668,6 +668,16 @@ const App = ({ removeEventHandlers, initialDirection }) => {
           dataElement={DataElements.SCALE_MODAL}
           onOpenHook={useOnMeasurementToolOrAnnotationSelected}
         />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ScaleOverlayContainer}
+          dataElement={DataElements.SCALE_OVERLAY_CONTAINER}
+          onOpenHook={useOnMeasurementToolOrAnnotationSelected}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MeasurementOverlay}
+          dataElement={DataElements.MEASUREMENT_OVERLAY}
+          onOpenHook={useOnCountMeasurementAnnotationSelected}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.ContentEditLinkModal} dataElement={DataElements.CONTENT_EDIT_LINK_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SignatureModal} dataElement={DataElements.SIGNATURE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.PrintModal} dataElement={DataElements.PRINT_MODAL} />
@@ -716,7 +726,9 @@ const App = ({ removeEventHandlers, initialDirection }) => {
         />
         <LazyLoadWrapper Component={LazyLoadComponents.OpenFileModal} dataElement={DataElements.OPEN_FILE_MODAL} />
         {customModals.length > 0 && (
-          <LazyLoadWrapper Component={LazyLoadComponents.CustomModal} dataElement={DataElements.CUSTOM_MODAL} />
+          customModals.map((modal) => (
+            (<LazyLoadWrapper key={modal.dataElement} Component={LazyLoadComponents.CustomModal} dataElement={modal.dataElement}/>)
+          ))
         )}
         {core.isFullPDFEnabled() && (
           <LazyLoadWrapper

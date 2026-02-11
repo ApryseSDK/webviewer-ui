@@ -21,6 +21,7 @@
     "cut": "কাটা",
     "paste": "পেস্ট করুন",
     "pasteWithoutFormatting": "বিন্যাস ছাড়া পেস্ট করুন",
+    "addComment": "মন্তব্য যোগ করুন",
     "delete": "মুছে ফেলা",
     "deleted": "মুছে ফেলা হয়েছে",
     "group": "গ্রুপ",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "স্ট্যাম্প টেক্সট খালি হতে পারে না",
     "unpostedComment": "পোস্ট না করা মন্তব্য",
     "lockedLayer": "স্তর লক করা আছে",
-    "layerVisibililtyNoChange": "স্তর দৃশ্যমানতা পরিবর্তন করা যাবে না",
+    "layerVisibilityNoChange": "স্তর দৃশ্যমানতা পরিবর্তন করা যাবে না",
     "noLayers": "এই নথিতে কোন স্তর নেই।",
     "noSignatureFields": "এই নথিতে কোন স্বাক্ষর ক্ষেত্র নেই।",
     "untitled": "শিরোনামহীন",
@@ -488,11 +489,13 @@
       "replace": "প্রতিস্থাপন করুন",
       "replaceAll": "সমস্ত প্রতিস্থাপন",
       "replaceText": "পাঠ্য প্রতিস্থাপন করুন",
+      "replaceOptions": "প্রতিস্থাপনের বিকল্পগুলি",
       "confirmMessageReplaceAll": "আপনি কি নিশ্চিত যে আপনি সমস্ত পাঠ্য প্রতিস্থাপন করতে চান?",
       "confirmMessageReplaceOne": "আপনি কি এই পাঠ্যটি প্রতিস্থাপন করার বিষয়ে নিশ্চিত?",
       "moreOptions": "আরও বিকল্প",
       "lessOptions": "কম বিকল্প",
-      "confirm": "নিশ্চিত করুন"
+      "confirm": "নিশ্চিত করুন",
+      "filter": "ফিল্টার"
     },
     "toolsOverlay": {
       "currentStamp": "বর্তমান স্ট্যাম্প",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "ফন্ট ফ্যামিলি"
     },
-    "blankSheet": "খালি শীট",
+    "blankSheet": "পত্রক",
     "insertImage": "ছবি ঢোকান"
   },
   "insertPageModal": {

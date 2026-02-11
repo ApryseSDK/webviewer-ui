@@ -7,7 +7,8 @@ import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
 jest.mock('core', () => ({
-  getDisplayAuthor: () => 'Duncan Idaho'
+  getDisplayAuthor: () => 'Duncan Idaho',
+  getDocumentViewer: jest.fn(),
 }));
 
 let id = 1;

@@ -1,5 +1,5 @@
 import actions from 'actions';
 
-export default (dispatch) => (pageNumber) => {
-  dispatch(actions.setCurrentPage(pageNumber));
+export default (dispatch, documentViewerKey) => (pageNumber) => {
+  dispatch(actions.setCurrentPage(pageNumber, documentViewerKey));
 };

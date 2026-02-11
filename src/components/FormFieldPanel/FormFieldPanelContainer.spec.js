@@ -27,6 +27,7 @@ jest.mock('core', () => {
     getPageHeight: jest.fn(() => 1000),
     getPageWidth: jest.fn(() => 1000),
     getCurrentPage: jest.fn(() => 1),
+    getDocumentViewer: jest.fn(() => ({})),
     __mocks: {
       addEventListener,
       removeEventListener,

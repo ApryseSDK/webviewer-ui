@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState, l
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import { Virtuoso } from 'react-virtuoso';
 import Button from '../Button';
@@ -121,6 +121,8 @@ const OutlineContent = ({
     updateOutlines,
     removeOutlines,
   } = outlineContext || {};
+
+  const { core } = useCore();
 
   const outlineScrollParentRef = outlineContext?.outlineScrollParentRef;
 

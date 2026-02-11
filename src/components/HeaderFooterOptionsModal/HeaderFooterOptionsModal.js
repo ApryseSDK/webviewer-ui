@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
 import Choice from 'components/Choice';
 import Input from 'components/Input';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { LAYOUT_UNITS, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
 import { validateMarginInput, focusContent, convertBetweenUnits, formatToDecimalString } from 'helpers/officeEditor';
@@ -17,6 +17,7 @@ import Dropdown from 'components/Dropdown';
 import './HeaderFooterOptionsModal.scss';
 
 const HeaderFooterOptionsModal = () => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
 

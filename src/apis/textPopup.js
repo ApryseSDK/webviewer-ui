@@ -1,5 +1,5 @@
 /**
- * An instance of Popup that can be used to edit items in the text popup component
+ * An instance of Popup that can be used to edit items in the text popup component.
  * @name UI.textPopup
  * @type {UI.Popup}
  * @example

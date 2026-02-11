@@ -46,7 +46,8 @@ const store = configureStore({ reducer: () => initialState });
 
 jest.mock('core', () => ({
   getNumberOfGroups: () => 0,
-  addEventListener: jest.fn()
+  addEventListener: jest.fn(),
+  getDocumentViewer: jest.fn(),
 }));
 describe('MultiSelectControls', () => {
 

@@ -257,6 +257,7 @@ const DataElements = {
   OFFICE_EDITOR_COPY: 'officeEditorCopy',
   OFFICE_EDITOR_PASTE: 'officeEditorPaste',
   OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING: 'officeEditorPasteWithoutFormatting',
+  OFFICE_EDITOR_ADD_COMMENT: 'officeEditorAddComment',
   OFFICE_EDITOR_DELETE: 'officeEditorDelete',
   OFFICE_EDITOR_INSERT_ROW_ABOVE: 'officeEditorInsertRowAbove',
   OFFICE_EDITOR_INSERT_ROW_BELOW: 'officeEditorInsertRowBelow',

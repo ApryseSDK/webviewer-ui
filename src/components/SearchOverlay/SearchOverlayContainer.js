@@ -4,6 +4,8 @@ import SearchOverlay from './SearchOverlay';
 import { getOverrideSearchExecution, buildSearchModeArray } from 'helpers/search';
 import { isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import searchTextFullFactory from '../../apis/searchTextFull';
+// Helper functions
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import actions from 'actions';
 

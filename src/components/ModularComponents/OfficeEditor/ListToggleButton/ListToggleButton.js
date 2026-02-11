@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/Dropdown';
 import {
@@ -28,7 +28,7 @@ const ListToggleButton = (props) => {
     ],
     shallowEqual,
   );
-
+  const { core } = useCore();
   const { listType } = props;
 
   const bulletListObjects = OFFICE_BULLET_OPTIONS.map((options) => ({

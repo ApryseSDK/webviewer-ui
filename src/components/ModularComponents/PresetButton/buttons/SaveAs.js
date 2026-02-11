@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { workerTypes } from 'constants/types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
@@ -27,6 +27,7 @@ const SaveAsButton = forwardRef((props, ref) => {
     title,
   } = props;
   const [documentType, setDocumentType] = useState();
+  const { core } = useCore();
   const dispatch = useDispatch();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 

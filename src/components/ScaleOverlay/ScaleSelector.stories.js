@@ -34,13 +34,19 @@ const scales = [
   },
 ];
 
-const coreScales = {
-  '1 mm = 10 mm': [new window.Core.Annotations.ArcAnnotation()], // ArcAnnotation and generic annotation are mocked as same type.
-  '1 in = 50 in': [new window.Core.Annotations.ArcAnnotation()],
-  '1 cm = 25 cm': [new window.Core.Annotations.ArcAnnotation()],
-};
-
 let presetScales = ['1 mm = 10 mm'];
+const scalesInfo = scales.map((scale) => ({
+  scale,
+  title: scale.toString(),
+  measurementsNum: 1,
+  pages: [1],
+  canDelete: true,
+}));
+
+const notModifiableScalesInfo = scalesInfo.map((scaleInfo) => ({
+  ...scaleInfo,
+  canDelete: false,
+}));
 
 const initialState = {
   viewer: {
@@ -52,18 +58,19 @@ const initialState = {
 export function Basic() {
   const [selectedScales, setSelectedScales] = useState(presetScales);
   core.getScalePrecision = () => 0.1;
-  core.getScales = () => coreScales;
-  core.canModify = () => true;
+  const renderScale = (scale) => <div>{scale.toString()}</div>;
   return (
     <ReduxProvider store={configureStore({ reducer: () => initialState })}>
       <div className='ScaleOverlay'>
         <div className='scale-overlay-header'>
           <ScaleSelector
-            scales={scales}
+            scalesInfo={scalesInfo}
             selectedScales={selectedScales}
             onScaleSelected={(currentScale, selectedScale) => {
               setSelectedScales([selectedScale]);
             }}
+            onDeleteScale={() => {}}
+            renderScale={renderScale}
             onAddingNewScale={() => {}}
           />
         </div>
@@ -75,18 +82,19 @@ export function Basic() {
 export function NotModifiable() {
   const [selectedScales, setSelectedScales] = useState(presetScales);
   core.getScalePrecision = () => 0.1;
-  core.canModify = () => false;
-  core.getScales = () => coreScales;
+  const renderScale = (scale) => <div>{scale.toString()}</div>;
   return (
     <ReduxProvider store={configureStore({ reducer: () => initialState })}>
       <div className='ScaleOverlay'>
         <div className='scale-overlay-header'>
           <ScaleSelector
-            scales={scales}
+            scalesInfo={notModifiableScalesInfo}
             selectedScales={selectedScales}
             onScaleSelected={(currentScale, selectedScale) => {
               setSelectedScales([selectedScale]);
             }}
+            onDeleteScale={() => {}}
+            renderScale={renderScale}
             onAddingNewScale={() => {}}
           />
         </div>
@@ -100,18 +108,19 @@ NotModifiable.parameters = window.storybook.disableRtlMode;
 export function UndefinedCoreScales() {
   const [selectedScales, setSelectedScales] = useState(presetScales);
   core.getScalePrecision = () => 0.1;
-  core.canModify = () => true;
-  core.getScales = () => ({ '1 mm = 10 mm': undefined });
+  const renderScale = (scale) => <div>{scale.toString()}</div>;
   return (
     <ReduxProvider store={configureStore({ reducer: () => initialState })}>
       <div className='ScaleOverlay'>
         <div className='scale-overlay-header'>
           <ScaleSelector
-            scales={scales}
+            scalesInfo={[]}
             selectedScales={selectedScales}
             onScaleSelected={(currentScale, selectedScale) => {
               setSelectedScales([selectedScale]);
             }}
+            onDeleteScale={() => {}}
+            renderScale={renderScale}
             onAddingNewScale={() => {}}
           />
         </div>

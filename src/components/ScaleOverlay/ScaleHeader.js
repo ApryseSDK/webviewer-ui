@@ -11,12 +11,15 @@ import DataElements from 'src/constants/dataElement';
 
 const propTypes = {
   scales: PropTypes.arrayOf(PropTypes.object).isRequired,
+  scalesInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedScales: PropTypes.arrayOf(PropTypes.string).isRequired,
   onScaleSelected: PropTypes.func.isRequired,
   onAddingNewScale: PropTypes.func.isRequired,
+  onDeleteScale: PropTypes.func.isRequired,
+  renderScale: PropTypes.func.isRequired,
 };
 
-const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale }) => {
+const ScaleHeader = ({ scales, scalesInfo, selectedScales, onScaleSelected, onAddingNewScale, onDeleteScale, renderScale }) => {
   const [t] = useTranslation();
 
   const onClickFocusWrapped = useFocusHandler(onAddingNewScale);
@@ -28,10 +31,12 @@ const ScaleHeader = ({ scales, selectedScales, onScaleSelected, onAddingNewScale
       <h4 id="scale-dropdown-label" className="scale-overlay-title">{t('option.measurementOption.scale')}</h4>
       {scales.length ? (
         <ScaleSelector
-          scales={scales}
+          scalesInfo={scalesInfo}
           selectedScales={selectedScales}
           onScaleSelected={onScaleSelected}
           onAddingNewScale={onAddingNewScale}
+          onDeleteScale={onDeleteScale}
+          renderScale={renderScale}
           ariaLabelledBy="scale-dropdown-label"
           isScaleModalEnabled={isScaleModalEnabled}
         />

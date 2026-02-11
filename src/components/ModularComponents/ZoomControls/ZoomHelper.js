@@ -1,6 +1,5 @@
 import { fitToWidth, fitToPage, zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import actions from 'actions';
-import core from 'core';
 import { FLYOUT_ITEM_TYPES } from 'src/constants/customizationVariables';
 
 const noop = () => {
@@ -11,14 +10,15 @@ export const getZoomFlyoutItems = ({
   isOfficeEditorMode = false,
   dispatch,
   size = 0,
-  onZoomChanged = noop
+  onZoomChanged = noop,
+  core,
 }) => {
   const {
     onMarqueeZoom,
     onZoomInClicked,
     onZoomOutClicked,
     onClickZoomLevelOption
-  } = getZoomHandlers(dispatch, size, onZoomChanged);
+  } = getZoomHandlers(dispatch, size, onZoomChanged, core);
 
   const fitToWidthButton = {
     icon: 'icon-header-zoom-fit-to-width',
@@ -112,7 +112,7 @@ export const getZoomFlyoutItems = ({
   return zoomItems;
 };
 
-export const getZoomHandlers = (dispatch, size = 0, onZoomChanged = noop) => {
+export const getZoomHandlers = (dispatch, size = 0, onZoomChanged = noop, core) => {
   const onClickZoomLevelOption = (zoomLevel) => {
     zoomTo(zoomLevel);
     (size === 0 || size === 1) && dispatch(actions.closeElement('zoom-containerFlyout'));

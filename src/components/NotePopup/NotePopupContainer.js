@@ -1,5 +1,5 @@
 import React from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import NotePopup from './NotePopup';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
@@ -11,7 +11,7 @@ function NotePopupContainer(props) {
     selectors.getActiveDocumentViewerKey(state),
   ]);
   const { annotation, setIsEditing, noteIndex } = props;
-
+  const { core } = useCore();
   const [canModify, setCanModify] = React.useState(core.canModify(annotation));
   const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
 

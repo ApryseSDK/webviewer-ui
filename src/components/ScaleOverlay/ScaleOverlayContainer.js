@@ -1,11 +1,11 @@
 import actions from 'actions';
 import ScaleOverlay from './ScaleOverlay';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Draggable from 'react-draggable';
 import selectors from 'selectors';
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useCallback, useReducer, useEffect } from 'react';
+import React, { useCallback, useReducer, useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import useDraggablePosition from '../../hooks/useDraggablePosition';
@@ -36,6 +36,7 @@ const propTypes = {
 };
 
 const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SCALE_OVERLAY_CONTAINER));
@@ -47,8 +48,52 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   });
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER));
   const initialPosition = useSelector((state) => selectors.getScaleOverlayPosition(state));
-  const { position, handleDrag, handleStop, containerRef, style, bounds, resetPosition } = useDraggablePosition(initialPosition);
+  const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds, resetPosition } = useDraggablePosition(initialPosition);
   const [, forceUpdate] = useReducer((x) => x + 1, 0, () => 0);
+  const [scales, setScales] = useState({});
+  const scalesInfo = useMemo(() => {
+    const scaleInfoList = [];
+    if (!scales || Object.keys(scales).length === 0) {
+      return scaleInfoList;
+    }
+
+    Object.keys(scales).forEach((scaleKey) => {
+      const scaleData = scales[scaleKey];
+
+      if (!scaleData || scaleData.length === 0) {
+        console.warn(`No measurements found for scale ${scaleKey}`);
+        return;
+      }
+
+      const measurements = [];
+      const relatedPages = new Set();
+      let canDelete = true;
+
+      scaleData.forEach((measurementItem) => {
+        const isAnnotation = measurementItem instanceof window.Core.Annotations.Annotation;
+        if (!isAnnotation) {
+          return;
+        }
+
+        relatedPages.add(measurementItem['PageNumber']);
+        measurements.push(measurementItem);
+
+        if (!core.canModify(measurementItem)) {
+          canDelete = false;
+        }
+      });
+
+      scaleInfoList.push({
+        scale: new Scale(scaleKey),
+        title: scaleKey,
+        measurementsNum: measurements.length,
+        pages: [...relatedPages],
+        canDelete
+      });
+    });
+
+    return scaleInfoList;
+  }, [core, scales]);
 
   useEffect(() => {
     resetPosition();
@@ -144,6 +189,31 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     openScaleModal();
   }, []);
 
+  useEffect(() => {
+    const onScaleUpdated = (newScales) => {
+      setScales(newScales);
+    };
+    const updateScales = () => {
+      setScales(core.getScales());
+    };
+    const onCreateAnnotationWithNoScale = () => {
+      onAddingNewScale();
+    };
+
+    core.addEventListener('scaleUpdated', onScaleUpdated);
+    core.addEventListener('createAnnotationWithNoScale', onCreateAnnotationWithNoScale);
+    core.addEventListener('annotationsLoaded', updateScales);
+    core.addEventListener('annotationChanged', updateScales);
+    updateScales();
+
+    return () => {
+      core.removeEventListener('scaleUpdated', onScaleUpdated);
+      core.removeEventListener('createAnnotationWithNoScale', onCreateAnnotationWithNoScale);
+      core.removeEventListener('annotationsLoaded', updateScales);
+      core.removeEventListener('annotationChanged', updateScales);
+    };
+  }, [core, onAddingNewScale]);
+
   const isMobile = isMobileSize();
 
   if (isDisabled || isDisabledViewOnly || areToolsDisabledViewOnly) {
@@ -156,6 +226,8 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
         <ScaleOverlay
           annotations={annotations}
           selectedTool={selectedTool}
+          scales={scales}
+          scalesInfo={scalesInfo}
           updateIsCalibration={updateIsCalibration}
           disableToolElements={disableToolElements}
           onScaleSelected={onScaleSelected}
@@ -171,7 +243,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     return (
       <Draggable
         position={position}
-        bounds={bounds}
+        bounds={dragBounds}
         onDrag={handleDrag}
         onStop={handleStop}
         cancel={'.scale-overlay-selector, .add-new-scale'}
@@ -184,12 +256,17 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
             closed: !isOpen,
           })}
           data-element={DataElements.SCALE_OVERLAY_CONTAINER}
-          style={style}
-          ref={containerRef}
+          style={initialOffset}
+          ref={(node) => {
+            containerRef.current = node;
+            setOverlayRef(node);
+          }}
         >
           <ScaleOverlay
             annotations={annotations}
             selectedTool={selectedTool}
+            scales={scales}
+            scalesInfo={scalesInfo}
             updateIsCalibration={updateIsCalibration}
             disableToolElements={disableToolElements}
             onScaleSelected={onScaleSelected}

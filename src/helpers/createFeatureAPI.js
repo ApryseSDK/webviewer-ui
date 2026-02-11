@@ -1,7 +1,8 @@
 import core from 'core';
 import localStorageManager from 'helpers/localStorageManager';
 import touchEventManager from 'helpers/TouchEventManager';
-import hotkeysManager, { Shortcuts } from 'helpers/hotkeysManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { Shortcuts } from 'helpers/hotkeysUtils';
 import { enableMultiTab } from 'helpers/TabManager';
 import Feature from 'constants/feature';
 import { PRIORITY_TWO } from 'constants/actionPriority';
@@ -184,11 +185,20 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.TextSelection]: {
       dataElements: ['textPopup', 'textSelectButton'],
       fn: () => {
+        const toolMap = core.getToolModeMap() || {};
         if (!enable) {
           core.clearSelection();
           core.setToolMode('AnnotationEdit');
         }
-        window.Core.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
+        Object.values(toolMap).forEach((tool) => {
+          if (tool && tool.isTextSelectionEnabled) {
+            if (enable) {
+              tool.enableTextSelection();
+            } else {
+              tool.disableTextSelection();
+            }
+          }
+        });
       },
     },
     [Feature.TouchScrollLock]: {

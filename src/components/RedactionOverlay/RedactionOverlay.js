@@ -15,6 +15,9 @@ import { isDesktop } from 'helpers/device';
 
 import actions from 'actions';
 import selectors from 'selectors';
+
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 
 import defaultTool from 'constants/defaultTool';

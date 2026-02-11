@@ -1,6 +1,13 @@
 import React from 'react';
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
-import { FLYOUT_ITEM_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
+import {
+  FLYOUT_ITEM_TYPES,
+  ITEM_TYPE,
+  CHANGE_DISPLAY_BUTTONS,
+  ROTATE_DOCUMENT_BUTTONS,
+  PRESET_BUTTON_TYPES
+} from 'constants/customizationVariables';
 import selectors from 'selectors';
 import actions from 'actions';
 import Icon from 'components/Icon';
@@ -90,7 +97,7 @@ export const itemToFlyout = (item, {
       const zoomOptionsList = selectors.getZoomList(store.getState());
       flyoutItem.className = 'ZoomFlyoutMenu';
       flyoutItem.icon = 'icon-magnifying-glass';
-      flyoutItem.children = getZoomFlyoutItems({ zoomOptionsList, dispatch: store.dispatch, size: 1 });
+      flyoutItem.children = getZoomFlyoutItems({ zoomOptionsList, dispatch: store.dispatch, size: 1, core });
       break;
     }
     case ITEM_TYPE.RIBBON_GROUP:
@@ -203,9 +210,35 @@ const dataElementToLabel = (dataElement) => {
   }
 };
 
+const hasNoIcon = (item) => {
+  const presetsWithIcons = [
+    ...Object.values(CHANGE_DISPLAY_BUTTONS),
+    ...Object.values(ROTATE_DOCUMENT_BUTTONS),
+    PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+    PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+    PRESET_BUTTON_TYPES.UNDO,
+    PRESET_BUTTON_TYPES.REDO,
+    PRESET_BUTTON_TYPES.NEW_DOCUMENT,
+    PRESET_BUTTON_TYPES.NEW_SPREADSHEET,
+    PRESET_BUTTON_TYPES.FILE_PICKER,
+    PRESET_BUTTON_TYPES.DOWNLOAD,
+    PRESET_BUTTON_TYPES.FULLSCREEN,
+    PRESET_BUTTON_TYPES.SAVE_AS,
+    PRESET_BUTTON_TYPES.PRINT,
+    PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
+    PRESET_BUTTON_TYPES.SETTINGS,
+    PRESET_BUTTON_TYPES.FORM_FIELD_EDIT,
+    PRESET_BUTTON_TYPES.CONTENT_EDIT,
+  ];
+  if (item.type === ITEM_TYPE.PRESET_BUTTON && presetsWithIcons.includes(item.buttonType)) {
+    return false;
+  }
+  return !item.icon && !item.img && !item.toolName;
+};
+
 export const getIconDOMElement = (currentItem, allItems = [currentItem], disabled = false) => {
-  const areAllitemsWithoutIcons = allItems.every((item) => !item.icon && !item.img && !item.toolName);
-  const currentItemIconWithoutIcon = !currentItem.icon && !currentItem.img && !currentItem.toolName;
+  const areAllitemsWithoutIcons = allItems.every((item) => hasNoIcon(item));
+  const currentItemIconWithoutIcon = hasNoIcon(currentItem);
   if (currentItemIconWithoutIcon && areAllitemsWithoutIcons) {
     return null;
   }

@@ -18,6 +18,9 @@ jest.mock('core', () => ({
   getFormFieldCreationManager: () => ({
     isInFormFieldCreationMode: () => false,
   }),
+  getDocumentViewer: () => ({
+    getAnnotationManager: () => ({})
+  }),
 }));
 
 jest.mock('src/helpers/getRootNode', () => jest.fn());

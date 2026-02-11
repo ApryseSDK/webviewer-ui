@@ -7,11 +7,12 @@ import {
   getPageRotationControls,
   getPageManipulationControls
 } from 'helpers/pageManipulationFlyoutHelper';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const propTypes = {};
 
 const PageManipulationFlyout = () => {
+  const { core } = useCore();
   const store = useStore();
 
   useEffect(() => {

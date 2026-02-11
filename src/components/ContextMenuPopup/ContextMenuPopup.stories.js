@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import { workerTypes } from 'constants/types';
+import { EditingStreamType } from 'constants/officeEditor';
 import ContextMenuPopup from './ContextMenuPopup';
 import { defaultPopups } from 'src/redux/modularComponents';
 export default {
@@ -32,6 +33,7 @@ const mockInitialState = {
         inTable: false,
       },
     },
+    stream: EditingStreamType.BODY,
   },
   spreadsheetEditor: {
     editMode: 'editing',
@@ -80,6 +82,7 @@ export const OfficeEditor = () => {
   });
 
   mockInitialState.viewer.enableRightClickAnnotationPopup = false;
+  mockInitialState.officeEditor.stream = EditingStreamType.BODY;
 
   return (
     <Provider store={configureStore({ reducer: () => mockInitialState })}>
@@ -111,3 +114,27 @@ export const OfficeEditorTable = () => {
 };
 
 OfficeEditorTable.parameters = window.storybook.disableRtlMode;
+
+export const OfficeEditorHeaderStream = () => {
+  core.getOfficeEditor = () => ({
+    isTextSelected: () => true,
+    isImageSelected: () => false,
+  });
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+  });
+
+  mockInitialState.viewer.enableRightClickAnnotationPopup = false;
+  mockInitialState.officeEditor.cursorProperties.locationProperties.inTable = false;
+  mockInitialState.officeEditor.stream = EditingStreamType.HEADER;
+
+  return (
+    <Provider store={configureStore({ reducer: () => mockInitialState })}>
+      <ContextMenuPopup
+        clickPosition={{ left: 0, top: 0 }}
+      />
+    </Provider>
+  );
+};
+
+OfficeEditorHeaderStream.parameters = window.storybook.disableRtlMode;

@@ -16,6 +16,7 @@ import { isOfficeEditorMode, isSpreadsheetEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getDownloadFilename, getDocumentFileExtension } from './downloadHelper';
+import { createWrappedCore } from 'hooks/useCore/useCore';
 
 let isDownloaded = false;
 let previousWatermarkSettings = { };
@@ -222,9 +223,10 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       isPrintCurrentView: false,
       language,
       createCanvases: true,
-      isGrayscale: false
+      isGrayscale: false,
     };
     const createdPages = createRasterizedPrintPages(
+      createWrappedCore(documentViewerKey),
       pages,
       printingOptions,
       undefined,

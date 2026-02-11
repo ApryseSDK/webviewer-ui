@@ -1,13 +1,11 @@
-import core from 'core';
-
-async function toggleAnnotationsVisibility(layers) {
+async function toggleAnnotationsVisibility(layers, core) {
   const layerMap = getLayerMapping(layers);
   const doc = await core.getDocument();
 
   if (doc && doc.getPDFDoc) {
     const pdfDoc = await doc.getPDFDoc();
     const pdfNetAnnotations = await getPDFNetAnnotations(pdfDoc);
-    await Promise.all(pdfNetAnnotations.map((pdfNetAnnotation) => toggleAnnotationVisibility(pdfNetAnnotation, layerMap)));
+    await Promise.all(pdfNetAnnotations.map((pdfNetAnnotation) => toggleAnnotationVisibility(pdfNetAnnotation, layerMap, core)));
   }
 }
 
@@ -18,7 +16,7 @@ async function toggleAnnotationsVisibility(layers) {
  * @param {Core.PDFNet.Annot} pdfNetAnnotation The PDFNet annotation.
  * @param {object} layerMap An object mapping layer IDs to visibility properties and potential child nodes.
  */
-async function toggleAnnotationVisibility(pdfNetAnnotation, layerMap) {
+async function toggleAnnotationVisibility(pdfNetAnnotation, layerMap, core) {
   const optionalContent = await pdfNetAnnotation.getOptionalContent();
   if (!optionalContent) {
     return;
@@ -26,11 +24,11 @@ async function toggleAnnotationVisibility(pdfNetAnnotation, layerMap) {
 
   const isOCGAnnotation = !!layerMap[optionalContent.id];
   if (isOCGAnnotation) {
-    await handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent);
+    await handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent, core);
     return;
   }
 
-  await handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent);
+  await handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent, core);
 }
 
 /**
@@ -40,7 +38,7 @@ async function toggleAnnotationVisibility(pdfNetAnnotation, layerMap) {
  * @param {object} layerMap An object mapping layer IDs to visibility properties and potential child nodes.
  * @param {Core.PDFNet.Obj} optionalContent Reference to optional content object associated with an annotation. In this context it is an OCG.
  */
-async function handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent) {
+async function handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent, core) {
   const annotationManager = core.getAnnotationManager();
   const annotation = await findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManager);
 
@@ -49,7 +47,7 @@ async function handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent)
     return;
   }
 
-  await handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layerMap[optionalContent.id]);
+  await handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layerMap[optionalContent.id], core);
 }
 
 /**
@@ -59,7 +57,7 @@ async function handleOCGAnnotations(pdfNetAnnotation, layerMap, optionalContent)
  * @param {object} layerMap An object mapping layer IDs to visibility properties and potential child nodes.
  * @param {Core.PDFNet.Obj} optionalContent Reference to optional content object associated with an annotation. In this context it is an OCMD.
  */
-async function handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent) {
+async function handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent, core) {
   const ocmdLayerId = await getOCMDLayerId(optionalContent);
   const annotationManager = core.getAnnotationManager();
   const annotation = await findMatchingWebViewerAnnotation(pdfNetAnnotation, annotationManager);
@@ -68,7 +66,7 @@ async function handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent
     return;
   }
 
-  await handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layerMap[ocmdLayerId]);
+  await handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layerMap[ocmdLayerId], core);
 }
 
 /**
@@ -78,10 +76,10 @@ async function handleOCMDAnnotations(pdfNetAnnotation, layerMap, optionalContent
  * @param {Core.PDFNet.Annot} pdfNetAnnotation The PDFNet annotation containing the OC entry.
  * @param {Core.Document.LayerContext} layer Object representing the layer attached to the PDFNet annotation.
  */
-async function handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layer) {
+async function handleAnnotationVisibilityEdgeCase(pdfNetAnnotation, layer, core) {
   const annotationManager = core.getAnnotationManager();
 
-  const { pageNum, annotationViewerCoordinates, annotationType } = await getAnnotationDetails(pdfNetAnnotation);
+  const { pageNum, annotationViewerCoordinates, annotationType } = await getAnnotationDetails(pdfNetAnnotation, core);
   const annotationsOnPage = await getAnnotationsOnPage(annotationManager, pageNum);
   annotationsOnPage.forEach((annotation) => {
     if (compareWebViewerPDFNetAnnotation(annotation, annotationType, annotationViewerCoordinates)) {
@@ -183,7 +181,7 @@ async function getPDFNetAnnotations(pdfDoc) {
  * @returns {object} Returns an object containing PDFNet annotation type, page number,
  * and Math.Rect of annotation position in viewer coordinate space.
  */
-async function getAnnotationDetails(pdfNetAnnotation) {
+async function getAnnotationDetails(pdfNetAnnotation, core) {
   const annotSDF = await pdfNetAnnotation.getSDFObj();
   const subType = await annotSDF.get('Subtype');
   const subTypeObject = await subType.value();
@@ -191,7 +189,7 @@ async function getAnnotationDetails(pdfNetAnnotation) {
 
   const page = await pdfNetAnnotation.getPage();
   const pageNum = await page.getIndex();
-  const annotationViewerCoordinates = await getViewerCoordinates(pageNum, await pdfNetAnnotation.getRect());
+  const annotationViewerCoordinates = await getViewerCoordinates(pageNum, await pdfNetAnnotation.getRect(), core);
 
   return { annotationType, annotationViewerCoordinates, pageNum };
 }
@@ -203,7 +201,7 @@ async function getAnnotationDetails(pdfNetAnnotation) {
  * @param {number} pageNum The page number where the PDFNet annotation exists.
  * @param {Core.Math.Rect} pdfNetRect The bounding box of a PDFNet annotation.
  */
-async function getViewerCoordinates(pageNum, pdfNetRect) {
+async function getViewerCoordinates(pageNum, pdfNetRect, core) {
   const x1y1 = await core.getDocument().getViewerCoordinates(pageNum, pdfNetRect.x1, pdfNetRect.y1);
   const x2y2 = await core.getDocument().getViewerCoordinates(pageNum, pdfNetRect.x2, pdfNetRect.y2);
   return { x1y1, x2y2 };

@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormulaBar from './FormulaBar';
 import core from 'core';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 const mockProvider = {
   onFormulaBarTextChange: jest.fn(),
@@ -21,18 +23,29 @@ jest.mock('core', () => ({
   removeEventListener: jest.fn(),
 }));
 
+const initialState = {
+  viewer: {}
+};
+
+function rootReducer(state = initialState) {
+  return state;
+}
+const store = configureStore({ reducer: rootReducer });
+
 describe('FormulaBar', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     render(
-      <FormulaBar
-        isReadOnly={false}
-        activeCellRange="A1"
-        cellFormula=""
-        stringCellValue=""
-        onRangeInputChange={jest.fn()}
-        onRangeInputKeyDown={jest.fn()}
-      />
+      <Provider store={store}>
+        <FormulaBar
+          isReadOnly={false}
+          activeCellRange="A1"
+          cellFormula=""
+          stringCellValue=""
+          onRangeInputChange={jest.fn()}
+          onRangeInputKeyDown={jest.fn()}
+        />
+      </Provider>
     );
     // Trigger 'spreadsheetEditorReady' to set up the Provider
     const handler = core.addEventListener.mock.calls.find(

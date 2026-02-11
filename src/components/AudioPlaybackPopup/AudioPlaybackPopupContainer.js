@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Draggable from 'react-draggable';
 import selectors from 'selectors';
@@ -11,6 +11,7 @@ import AudioPlaybackPopup from './AudioPlaybackPopup';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
 function AudioPlaybackPopupContainer() {
+  const { core } = useCore();
   const [isOpen, shouldResetAudioPlaybackPosition, activeSoundAnnotation] = useSelector(
     (state) => [
       selectors.isElementOpen(state, 'audioPlaybackPopup'),

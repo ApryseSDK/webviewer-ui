@@ -11,7 +11,7 @@ import rootReducer from 'reducers/rootReducer';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import retargetEvents from 'react-shadow-dom-retarget-events';
-
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import actions from 'actions';
 import App from 'components/App';

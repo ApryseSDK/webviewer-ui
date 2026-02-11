@@ -1,7 +1,7 @@
 /**
- * Sets the grow of Grouped Items
+ * Sets the grow of Grouped Items.
  * @method UI.setGroupedItemsGrow
- * @param {number} grow The flex grow value of the group
+ * @param {number} grow The flex grow value of the group.
  * @param {Object} [selectors] An object that contains the selectors to filter the Grouped Items to set the grow property on.
  * @example
  * WebViewer(...)

@@ -1,10 +1,11 @@
 import React from 'react';
-import { createStore } from 'redux';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import Dropdown from './Dropdown';
 import { DEFAULT_POINT_SIZE, FONT_SIZE, AVAILABLE_POINT_SIZES } from 'constants/officeEditor';
 import VisuallyHiddenLabel from '../VisuallyHiddenLabel';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'src/redux/reducers/rootReducer';
 
 
 export default {
@@ -20,7 +21,7 @@ export function Basic() {
     setCurrentSelectionKey(key);
   }
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: 100 }}>
         <Dropdown
           id='basic-story'
@@ -52,7 +53,7 @@ export function ImageDropdown() {
   }
 
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: dropdownWidth }}>
         <Dropdown
           id='image-dropdown-story'
@@ -129,7 +130,7 @@ export function DropdownWithInput() {
     }
   }
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: 200 }}>
         <label id="countries-dropdown">Countries</label>
         <Dropdown
@@ -154,7 +155,7 @@ export function DropdownWithInputAndNoSearch() {
   const [pointSizeSelectionKey, setPointSizeSelectionKey] = React.useState(DEFAULT_POINT_SIZE.toString());
 
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: 100 }}>
         <label id="font-size">Font Size</label>
         <Dropdown
@@ -199,7 +200,7 @@ export function DropdownWithCustomDisplay({ disabled = false }) {
     setCurrentSelectionKey(key);
   }
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: 100 }}>
         <VisuallyHiddenLabel id="notesSortLabel" label='Sort' />
         <Dropdown
@@ -235,7 +236,7 @@ export function DropdownWithNoItems() {
   const images = [];
   const dropdownWidth = 145;
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
       <div style={{ width: dropdownWidth }}>
         <Dropdown
           width={dropdownWidth}

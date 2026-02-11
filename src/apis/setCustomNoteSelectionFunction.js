@@ -3,7 +3,7 @@ import actions from 'actions';
 /**
  * @callback CustomNoteSelectionFunction
  * @memberof UI
- * @param {Core.Annotations.Annotation} annotation A reference to the annotation object associated with the note
+ * @param {Core.Annotations.Annotation} annotation A reference to the annotation object associated with the note.
  */
 
 /**

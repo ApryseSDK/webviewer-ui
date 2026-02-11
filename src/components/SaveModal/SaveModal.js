@@ -7,10 +7,11 @@ import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
 import Input from 'components/Input';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
+import usePageRanges, { PAGE_RANGES } from 'src/hooks/usePageRanges';
 import downloadPdf from 'helpers/downloadPdf';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { workerTypes } from 'constants/types';
@@ -20,12 +21,6 @@ import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import './SaveModal.scss';
 
-const PAGE_RANGES = {
-  ALL: 'all',
-  CURRENT_PAGE: 'currentPage',
-  CURRENT_VIEW: 'currentView',
-  SPECIFY: 'specify'
-};
 const FILE_TYPES = {
   OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: workerTypes.OFFICE },
   PDF: { label: 'PDF (*.pdf)', extension: workerTypes.PDF },
@@ -37,6 +32,7 @@ const FILE_TYPES = {
 const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
 
 const SaveModal = () => {
+  const { core } = useCore();
   const store = useStore();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -48,12 +44,19 @@ const SaveModal = () => {
   const [fileTypes, setFileTypes] = useState(initalFileTypes);
   const [filename, setFilename] = useState('');
   const [filetype, setFiletype] = useState(fileTypes[0]);
-  const [pageRange, setPageRange] = useState(PAGE_RANGES.ALL);
-  const [specifiedPages, setSpecifiedPages] = useState();
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
   const [pageCount, setPageCount] = useState(1);
-  const [hasPageNumberError, setHasPageNumberError] = useState(false);
+  const {
+    pageRange,
+    setPageRange,
+    onPageRangeChange,
+    hasPageNumberError,
+    onError,
+    hasSpecifiedPages,
+    specifiedPages,
+    setSpecifiedPages,
+  } = usePageRanges();
 
   useEffect(() => {
     const updateFile = async () => {
@@ -124,7 +127,7 @@ const SaveModal = () => {
     setFilename(e?.target?.value);
   };
   const onFilenameKeyDown = (e) => {
-    if (e.key === 'Enter' && !saveDisabled) {
+    if (e.key === 'Enter' && !isSaveDisabled) {
       onSave();
     }
   };
@@ -134,29 +137,8 @@ const SaveModal = () => {
       setPageRange(PAGE_RANGES.ALL);
     }
   };
-  const onPageRangeChange = (e) => {
-    if (e.target.classList.contains('page-number-input')) {
-      return;
-    }
-    setPageRange(e.target.value);
-    if (hasPageNumberError) {
-      setHasTyped(false);
-      clearError();
-    }
-  };
   const onIncludeAnnotationsChanged = () => setIncludeAnnotations(!includeAnnotations);
   const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
-  const clearError = () => setHasPageNumberError(false);
-  const onError = () => setHasPageNumberError(true);
-  const onSpecifiedPagesChanged = (pageNumbers) => {
-    if (!hasTyped) {
-      setHasTyped(true);
-    }
-
-    if (pageNumbers.length > 0) {
-      clearError();
-    }
-  };
   const onSave = () => {
     let doc = core.getDocument(activeDocumentViewerKey);
 
@@ -193,8 +175,7 @@ const SaveModal = () => {
     closeModalWithOnFocusClose();
   };
 
-  const [hasTyped, setHasTyped] = useState(false);
-  const saveDisabled = (hasPageNumberError || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
+  const isSaveDisabled = (hasPageNumberError || !hasSpecifiedPages) && pageRange === PAGE_RANGES.SPECIFY || !filename;
 
   const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode() || isSpreadsheetEditorMode;
 
@@ -212,8 +193,7 @@ const SaveModal = () => {
         <PageNumberInput
           selectedPageNumbers={specifiedPages}
           pageCount={pageCount}
-          onBlurHandler={setSpecifiedPages}
-          onSelectedPageNumbersChange={onSpecifiedPagesChanged}
+          onSelectedPageNumbersChange={setSpecifiedPages}
           onError={onError}
         />
       }
@@ -302,7 +282,7 @@ const SaveModal = () => {
           </>)}
         </div>
         <div className='footer'>
-          <Button disabled={saveDisabled} onClick={onSave} label={t('saveModal.save')} />
+          <Button disabled={isSaveDisabled} onClick={onSave} label={t('saveModal.save')} />
         </div>
       </ModalWrapper>
     </div >

@@ -1021,6 +1021,10 @@ export const setActiveTheme = (theme) => {
     payload: { theme },
   };
 };
+export const setSearchStatus = (status) => ({
+  type: 'SET_SEARCH_STATUS',
+  payload: status,
+});
 export const setSearchResults = (searchResults) => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,

@@ -11,7 +11,7 @@ import DocumentControls from 'components/DocumentControls';
 import Button from 'components/Button';
 import Slider from 'components/Slider';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } from 'helpers/pageManipulation';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -34,6 +34,7 @@ const MAX_COLUMNS = 16;
 const hoverAreaHeight = 25;
 
 const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
+  const { core } = useCore();
   const isLeftPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'leftPanel'));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailsPanel'));
   const totalPages = useSelector(selectors.getTotalPages);

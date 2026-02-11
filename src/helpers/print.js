@@ -1,17 +1,19 @@
 /* eslint-disable no-unsanitized/property */
 import i18n from 'i18next';
-
 import actions from 'actions';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-
-import core from 'core';
-
 import { createRasterizedPrintPages } from 'helpers/rasterPrint';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
-import { processEmbeddedPrintOptions, canEmbedPrint, embeddedPrintNoneSupportedOptions, printEmbeddedPDF } from 'helpers/embeddedPrint';
+import {
+  processEmbeddedPrintOptions,
+  canEmbedPrint,
+  embeddedPrintNoneSupportedOptions,
+  printEmbeddedPDF
+} from 'helpers/embeddedPrint';
 
 import getRootNode from './getRootNode';
+import { createWrappedCore } from 'hooks/useCore/useCore';
 
 const PRINT_QUALITY = 1;
 
@@ -164,7 +166,7 @@ const getResetPrintStyle = () => {
   return style;
 };
 
-export const printPages = (pages) => {
+export const printPages = (core, pages) => {
   const printHandler = getRootNode().getElementById('print-handler');
   printHandler.innerHTML = '';
   const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
@@ -216,10 +218,10 @@ export const printPages = (pages) => {
       }
     }
   }
-  printDocument(isNativeSafariBrowser);
+  printDocument(core, isNativeSafariBrowser);
 };
 
-const printDocument = (isNativeSafariBrowser) => {
+const printDocument = (core, isNativeSafariBrowser) => {
   const doc = core.getDocument();
   const tempTitle = window.parent.document.title;
 
@@ -254,7 +256,7 @@ const printDocument = (isNativeSafariBrowser) => {
     window.print();
   }
 };
-const pagesToPrintPageArray = (pagesToPrint) => {
+const pagesToPrintPageArray = (core, pagesToPrint) => {
   const pageCount = core.getTotalPages();
   return pagesToPrint ?? Array.from({ length: pageCount }, (_, i) => (i + 1));
 };
@@ -282,7 +284,10 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
     isGrayscale = false,
     timezone,
     pagesToPrint,
+    documentViewerKey = 1,
   } = options;
+
+  const core = createWrappedCore(documentViewerKey);
 
   const document = core.getDocument();
   const annotationManager = core.getAnnotationManager();
@@ -306,13 +311,13 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
     dispatch(actions.openElements(['printModal']));
     return;
   }
-  const pageArray = isPrintCurrentView ? [core.getDocumentViewer().getCurrentPage()] : pagesToPrintPageArray(pagesToPrint);
+  const pageArray = isPrintCurrentView ? [core.getDocumentViewer().getCurrentPage()] : pagesToPrintPageArray(core, pagesToPrint);
   options.pagesToPrint = pageArray;
   options.isAlwaysPrintAnnotationsInColorEnabled = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
 
-  if (canEmbedPrint(isEmbedPrintSupported)) {
+  if (canEmbedPrint(core, isEmbedPrintSupported)) {
     embeddedPrintNoneSupportedOptions(options);
-    printEmbeddedPDF(await processEmbeddedPrintOptions(options, document, annotationManager));
+    printEmbeddedPDF(await processEmbeddedPrintOptions(core, options, document, annotationManager));
   } else if (includeAnnotations || includeComments || printWithoutModal) {
     const printOptions = {
       includeComments,
@@ -329,13 +334,14 @@ export const print = async (dispatch, useClientSidePrint, isEmbedPrintSupported,
       isGrayscale
     };
     const createPages = createRasterizedPrintPages(
+      core,
       pageArray,
       printOptions,
       onProgress,
     );
     Promise.all(createPages)
       .then((pages) => {
-        printPages(pages);
+        printPages(core, pages);
       })
       .catch((e) => {
         console.error(e);

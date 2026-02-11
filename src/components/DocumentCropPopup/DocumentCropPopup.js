@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import DimensionsInput from './DimensionsInput';
-import core from 'core';
 import actions from 'actions';
 import { useDispatch } from 'react-redux';
 import DataElements from 'constants/dataElement';
@@ -14,6 +13,7 @@ import CollapsibleSection from '../CollapsibleSection';
 import useFocusHandler from 'hooks/useFocusHandler';
 
 import './DocumentCropPopup.scss';
+import useCore from 'hooks/useCore';
 
 const DocumentCropPopup = ({
   cropAnnotation,
@@ -35,6 +35,7 @@ const DocumentCropPopup = ({
   shouldShowApplyCropWarning,
   presetCropDimensions,
 }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
 
   const className = classNames({

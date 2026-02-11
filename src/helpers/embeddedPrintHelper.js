@@ -1,6 +1,5 @@
 import { getCurrentViewRect } from './printCurrentViewHelper';
 import { convertToGrayscaleDocument } from './grayScaleHelper';
-import core from 'core';
 
 /**
  * Format options for the function formatDocumentForPrint.
@@ -21,7 +20,7 @@ export const FORMAT_DOCUMENT_FOR_PRINT_OPTION = {
  * and will not be affected by any changes made to the original document.
  * It calls extractPages without xfdfString to create a clean document without
  * any annotations or comments.
- * @param {window.Core.Docment} document Document object
+ * @param {window.Core.Document} document Document object
  * @returns {Promise<window.Core.Document>} Copied document
  * @ignore
  * @remarks
@@ -57,12 +56,13 @@ export const prepareAnnotations = (annotationManager, pagesToPrint, printingOpti
 
 /**
  * Embedded print process that handles the print option of Current View
+ * @param {object} core Core object
  * @param {window.Core.Document} document Document object
  * @returns {Promise<window.Core.Document>} Document object with the selected pages
  * @ignore
  */
-export const createCropDocument = async (document) => {
-  const croppedDoc = await cropDocumentToCurrentView(document);
+export const createCropDocument = async (core, document) => {
+  const croppedDoc = await cropDocumentToCurrentView(core, document);
   const buf = await croppedDoc.getFileData();
   return window.Core.createDocument(buf, { extension: 'pdf' });
 };
@@ -286,17 +286,18 @@ const createDocumentForPrint = async (document, fileDataOptions) => {
 
 /**
  * Crops the document to the current view rect and removes other pages
+ * @param {object} core Core object
  * @param {window.Core.Document} document Document object
  * @returns {window.Core.Document} Document object cropped to the current view
  * @ignore
  */
-const cropDocumentToCurrentView = async (document) => {
+const cropDocumentToCurrentView = async (core, document) => {
   const docViewer = core.getDocumentViewer();
   const currentPageNumber = docViewer.getCurrentPage();
   const numPages = document.getPageCount();
 
   // Crop Pages to Current View Rect for printing
-  const renderRect = getCurrentViewRect(currentPageNumber);
+  const renderRect = getCurrentViewRect(core, currentPageNumber);
   const pageDimensions = core.getDocument().getPageInfo(currentPageNumber);
 
   const cropRect = getCropDimensions(renderRect, pageDimensions);
@@ -312,6 +313,7 @@ const cropDocumentToCurrentView = async (document) => {
 /**
  * This function processes the document for printing with standard annotations.
  * It applies print options and then applies grayscale if needed over the annotated document.
+ * @param {object} core Core object
  * @param {window.Core.Document} document document to print
  * @param {window.Core.Document} modifiedDoc document prepped for printing
  * @param {string} xfdfString string of xfdf data
@@ -320,9 +322,10 @@ const cropDocumentToCurrentView = async (document) => {
  * @ignore
  * @returns {Promise<window.Core.Document>}
  */
-export const processStandardDocument = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+export const processStandardDocument = async (core, document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
   await ensurePDFNetInitialized(document, printingOptions.isGrayscale);
   const documentWithColorAnnotations = await applyPrintOptions(
+    core,
     modifiedDoc,
     xfdfString,
     printingOptions,
@@ -336,6 +339,7 @@ export const processStandardDocument = async (document, modifiedDoc, xfdfString,
 /**
  * This function processes the document while preserving color.
  * Applies the grayscale first and then applies print options.
+ * @param {object} core Core object
  * @param {window.Core.Document} document document to print
  * @param {window.Core.Document} modifiedDoc document prepped for printing
  * @param {string} xfdfString string of xfdf data
@@ -344,13 +348,14 @@ export const processStandardDocument = async (document, modifiedDoc, xfdfString,
  * @ignore
  * @returns {Promise<window.Core.Document>}
  */
-export const processColorAnnotations = async (document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+export const processColorAnnotations = async (core, document, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
   await ensurePDFNetInitialized(document, printingOptions.isGrayscale);
   const grayscaleDoc = printingOptions.isGrayscale
     ? await convertToGrayscaleDocument(modifiedDoc)
     : modifiedDoc;
 
   return applyPrintOptions(
+    core,
     grayscaleDoc,
     xfdfString,
     printingOptions,
@@ -379,7 +384,7 @@ const ensurePDFNetInitialized = async (document, isGrayScale) => {
 
 /**
  * Applies annotations, currentView and generates comments page.
- * @param {window.Core.Document} document document to print
+ * @param {object} core Core object
  * @param {window.Core.Document} modifiedDoc document prepped for printing
  * @param {string} xfdfString string of xfdf data
  * @param {object} printingOptions object with printing options
@@ -387,14 +392,14 @@ const ensurePDFNetInitialized = async (document, isGrayScale) => {
  * @returns {Promise<window.Core.Document>} document with applied print options
  * @ignore
  */
-export const applyPrintOptions = async (modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
+export const applyPrintOptions = async (core, modifiedDoc, xfdfString, printingOptions, pagesToPrint) => {
   let processedDoc = await extractPages(
     modifiedDoc,
     pagesToPrint,
     xfdfString,
   );
   if (printingOptions.isCurrentView) {
-    processedDoc = await createCropDocument(processedDoc);
+    processedDoc = await createCropDocument(core, processedDoc);
   }
   return formatFinalDocument(processedDoc, printingOptions);
 };

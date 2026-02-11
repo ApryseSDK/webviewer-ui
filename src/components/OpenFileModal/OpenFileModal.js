@@ -16,10 +16,11 @@ import useFocusOnClose from 'hooks/useFocusOnClose';
 
 import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
-import core from 'core';
 import PropTypes from 'prop-types';
+import useCore from 'src/hooks/useCore';
 
 const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const [selectedTab] = useSelector((state) => [
     selectors.getSelectedTab(state, 'openFileModal'),
@@ -69,12 +70,9 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
       return setError({ 'extensionError': 'Extension must be provided' });
     }
 
-    const useDb = !_size || TabManager.MAX_FILE_SIZE > _size;
-    try {
-      const document = await core.createDocument(source);
-
-      if (document) {
-        document.unloadResources();
+    await core.performDocumentCreationChecks(source)
+      .then(async () => {
+        const useDb = !_size || TabManager.MAX_FILE_SIZE > _size;
         await tabManager.addTab(source, {
           extension: _extension,
           filename: _filename,
@@ -82,11 +80,10 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
           saveCurrentActiveTabState: true,
           useDB: useDb
         });
-      }
-    } catch (error) {
-      setUrlInputError(t('message.urlInputFileLoadError'));
-      console.error('Error adding tab:', error);
-    }
+      }).catch((error) => {
+        setUrlInputError(t('message.urlInputFileLoadError'));
+        console.error('Error adding tab:', error);
+      });
   };
 
   const modalClass = classNames({

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Measure from 'react-measure';
 import throttle from 'lodash/throttle';
 import debounce from 'lodash/debounce';
+/* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import { isIE, isIE11 } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
@@ -21,9 +22,6 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import ReaderModeViewer from 'components/ReaderModeViewer';
-import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
-import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
-import useOnCountMeasurementAnnotationSelected from 'hooks/useOnCountMeasurementAnnotationSelected';
 import i18next from 'i18next';
 
 import './DocumentContainer.scss';
@@ -373,16 +371,6 @@ class DocumentContainer extends React.PureComponent {
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
               </main>
               {this.props.isReaderMode && <ReaderModeViewer />}
-              <LazyLoadWrapper
-                Component={LazyLoadComponents.ScaleOverlayContainer}
-                dataElement={DataElements.SCALE_OVERLAY_CONTAINER}
-                onOpenHook={useOnMeasurementToolOrAnnotationSelected}
-              />
-              <LazyLoadWrapper
-                Component={LazyLoadComponents.MeasurementOverlay}
-                dataElement={DataElements.MEASUREMENT_OVERLAY}
-                onOpenHook={useOnCountMeasurementAnnotationSelected}
-              />
               <div
                 className="footer"
                 style={footerStyle}

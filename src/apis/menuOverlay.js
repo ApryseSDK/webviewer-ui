@@ -1,5 +1,5 @@
 /**
- * An instance of MenuOverlay that can be used to add, update, or retrieve items in the settings menu overlay component
+ * An instance of MenuOverlay that can be used to add, update, or retrieve items in the settings menu overlay component.
  * @name UI.settingsMenuOverlay
  * @type {UI.MenuOverlay}
  * @example
@@ -34,12 +34,12 @@ const MenuOverlayAPI = {
     return this;
   },
   /**
-   * Adds action buttons to the menu overlay after a specified item
+   * Adds action buttons to the menu overlay after a specified item.
    * @method UI.MenuOverlay#add
    * @memberof UI.MenuOverlay
    * @param {Array.<object>|object} items One or more action button objects. See the <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton documentation</a> for the object structure.
    * @param {string} [dataElement] The data element of the item to insert after. If not provided, items will be added at the beginning.
-   * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining
+  * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining.
    * @example
 WebViewer(...)
   .then(function(instance) {
@@ -75,7 +75,7 @@ WebViewer(...)
    * @method UI.MenuOverlay#update
    * @memberof UI.MenuOverlay
    * @param {Array.<object>} [items=[]] The new array of items to render in the menu overlay. See the <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton documentation</a> for the object structure. If not provided, the menu will be cleared.
-   * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining
+  * @returns {UI.MenuOverlay} The MenuOverlay instance for chaining.
    * @see UI.updateElement
    * @example
 WebViewer(...)
@@ -116,10 +116,10 @@ WebViewer(...)
     return this;
   },
   /**
-   * Returns the current array of items in the menu overlay
+   * Returns the current array of items in the menu overlay.
    * @method UI.MenuOverlay#getItems
    * @memberof UI.MenuOverlay
-   * @returns {Array.<object>} The current items in the menu overlay
+  * @returns {Array.<object>} The current items in the menu overlay.
    * @example
 WebViewer(...)
   .then(function(instance) {

@@ -21,6 +21,7 @@
     "cut": "Couper",
     "paste": "Pâte",
     "pasteWithoutFormatting": "Coller sans formater",
+    "addComment": "Ajouter un commentaire",
     "delete": "Supprimer",
     "deleted": "Supprimé",
     "group": "Grouper",
@@ -169,7 +170,7 @@
     "eraser": "Gomme à effacer",
     "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
-    "freeHandHighlight": "Mise en évidence de la main libre",
+    "freeHandHighlight": "Surligneur à main levée",
     "freetext": "Texte libre",
     "markInsertText": "Insérer du texte",
     "markReplaceText": "Remplacer le texte",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
     "unpostedComment": "Commentaire non publié",
     "lockedLayer": "Le calque est verrouillé",
-    "layerVisibililtyNoChange": "La visibilité de la couche ne peut pas être modifiée",
+    "layerVisibilityNoChange": "La visibilité de la couche ne peut pas être modifiée",
     "noLayers": "Ce document ne comporte aucun calque.",
     "noSignatureFields": "Ce document n'a pas de champs de signature.",
     "untitled": "Sans titre",
@@ -488,11 +489,13 @@
       "replace": "Remplacer",
       "replaceAll": "Remplace tout",
       "replaceText": "Remplacer le texte",
+      "replaceOptions": "Options de remplacement",
       "confirmMessageReplaceAll": "Voulez-vous vraiment remplacer tout le texte ?",
       "confirmMessageReplaceOne": "Voulez-vous vraiment remplacer ce texte ?",
       "moreOptions": "Plus d'options",
       "lessOptions": "Moins d'options",
-      "confirm": "Confirmer"
+      "confirm": "Confirmer",
+      "filter": "Filtre"
     },
     "toolsOverlay": {
       "currentStamp": "Tampon Actuel",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Famille de polices"
     },
-    "blankSheet": "Feuille blanche",
+    "blankSheet": "Feuille",
     "insertImage": "Insérer une image"
   },
   "insertPageModal": {

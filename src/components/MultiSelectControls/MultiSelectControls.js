@@ -13,7 +13,7 @@ import { createStateAnnotation } from 'helpers/NoteStateUtils';
 import DataElements from 'constants/dataElement';
 import PropTypes from 'prop-types';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 
 import './MultiSelectControls.scss';
@@ -30,11 +30,11 @@ const propTypes = {
   multiSelectedAnnotations: PropTypes.array.isRequired,
 };
 
-const getParentAnnotations = (annotations, documentViewerKey = 1) => {
+const getParentAnnotations = (core, annotations) => {
   const annotSet = new Set();
   annotations.forEach((annotation) => {
     if (annotation.isGrouped()) {
-      const parentAnnotation = core.getAnnotationById(annotation['InReplyTo'], documentViewerKey);
+      const parentAnnotation = core.getAnnotationById(annotation['InReplyTo']);
       if (parentAnnotation) {
         annotSet.add(parentAnnotation);
       }
@@ -60,6 +60,7 @@ const MultiSelectControls = ({
     modifiableMultiSelectAnnotations,
     setModifiableMultiSelectAnnotations,
   ] = useState([]);
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
@@ -91,7 +92,7 @@ const MultiSelectControls = ({
       return updatedMap;
     };
     const updateGroupAnnotations = (annot, updatedMap) => {
-      const groupedAnnots = core.getGroupAnnotations(annot, activeDocumentViewerKey);
+      const groupedAnnots = core.getGroupAnnotations(annot);
       const groupIsSelected = groupedAnnots.some((groupedAnnot) => multiSelectedMap[groupedAnnot.Id]);
 
       if (groupIsSelected) {
@@ -114,11 +115,11 @@ const MultiSelectControls = ({
       }
     };
 
-    core.addEventListener('annotationChanged', onAnnotationChanged, undefined, activeDocumentViewerKey);
+    core.addEventListener('annotationChanged', onAnnotationChanged, undefined);
     return () => {
-      core.removeEventListener('annotationChanged', onAnnotationChanged, activeDocumentViewerKey);
+      core.removeEventListener('annotationChanged', onAnnotationChanged);
     };
-  }, [multiSelectedMap, activeDocumentViewerKey]);
+  }, [multiSelectedMap, core]);
 
   useEffect(() => {
     return () => {
@@ -129,18 +130,18 @@ const MultiSelectControls = ({
 
   useEffect(() => {
     const _modifiableMultiSelectAnnotations = multiSelectedAnnotations.filter((multiSelectedAnnot) => {
-      return core.canModify(multiSelectedAnnot, activeDocumentViewerKey);
+      return core.canModify(multiSelectedAnnot);
     });
     setModifiableMultiSelectAnnotations(_modifiableMultiSelectAnnotations);
-  }, [multiSelectedAnnotations]);
+  }, [multiSelectedAnnotations, core]);
 
-  const numberOfGroups = core.getNumberOfGroups(modifiableMultiSelectAnnotations, activeDocumentViewerKey);
+  const numberOfGroups = core.getNumberOfGroups(modifiableMultiSelectAnnotations);
   const canGroup = numberOfGroups > 1;
   const canUngroup = !canGroup && (modifiableMultiSelectAnnotations.length > 2 ||
-    (modifiableMultiSelectAnnotations.length > 0 && core.getGroupAnnotations(modifiableMultiSelectAnnotations[0], activeDocumentViewerKey).length > 1));
+    (modifiableMultiSelectAnnotations.length > 0 && core.getGroupAnnotations(modifiableMultiSelectAnnotations[0]).length > 1));
 
   const handleStateChange = useCallback((newValue) => {
-    getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey).forEach((annot) => {
+    getParentAnnotations(core, multiSelectedAnnotations).forEach((annot) => {
       const stateAnnotation = createStateAnnotation(annot, newValue, activeDocumentViewerKey);
       annot.addReply(stateAnnotation);
       const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
@@ -148,7 +149,7 @@ const MultiSelectControls = ({
       annotationManager.trigger('addReply', [stateAnnotation, annot, annotationManager.getRootAnnotation(annot)]);
     });
     setShowMultiState(false);
-  }, [multiSelectedAnnotations, activeDocumentViewerKey]);
+  }, [multiSelectedAnnotations, activeDocumentViewerKey, core]);
 
   const memoizedContextValue = useMemo(
     () => ({
@@ -160,7 +161,7 @@ const MultiSelectControls = ({
     return (
       <NoteContext.Provider value={memoizedContextValue}>
         <ReplyAreaMultiSelect
-          annotations={getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey)}
+          annotations={getParentAnnotations(core, multiSelectedAnnotations)}
           onSubmit={() => setShowMultiReply(false)}
           onClose={() => setShowMultiReply(false)}
         />
@@ -225,7 +226,7 @@ const MultiSelectControls = ({
             disabled={!canGroup}
             img="group-annotations-icon"
             onClick={() => {
-              core.groupAnnotations(multiSelectedAnnotations[0], multiSelectedAnnotations, activeDocumentViewerKey);
+              core.groupAnnotations(multiSelectedAnnotations[0], multiSelectedAnnotations);
             }}
             title="action.group"
           />}
@@ -234,7 +235,7 @@ const MultiSelectControls = ({
             dataElement={DataElements.NOTE_MULTI_UNGROUP_BUTTON}
             img="ungroup-annotations-icon"
             onClick={() => {
-              core.ungroupAnnotations(multiSelectedAnnotations, activeDocumentViewerKey);
+              core.ungroupAnnotations(multiSelectedAnnotations);
             }}
             title="action.ungroup"
           />}
@@ -252,7 +253,7 @@ const MultiSelectControls = ({
               message,
               confirmBtnText,
               onConfirm: () => {
-                core.deleteAnnotations(modifiableMultiSelectAnnotations, undefined, activeDocumentViewerKey);
+                core.deleteAnnotations(modifiableMultiSelectAnnotations, undefined);
               },
             };
             dispatch(actions.showWarningMessage(warning));

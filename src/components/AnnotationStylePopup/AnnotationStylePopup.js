@@ -5,7 +5,7 @@ import Measure from 'react-measure';
 import { useTranslation } from 'react-i18next';
 import StylePopup from 'components/StylePopup';
 import ActionButton from 'components/ActionButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
@@ -44,6 +44,7 @@ const AnnotationStylePopup = (props) => {
     hasBackToMenu,
     onBackToMenu
   } = props;
+  const { core } = useCore();
 
   const [
     isDisabled,

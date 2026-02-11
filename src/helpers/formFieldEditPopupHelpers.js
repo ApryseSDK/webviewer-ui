@@ -10,7 +10,7 @@ import { redrawAnnotation, triggerAnnotationChangedEventWithModify } from '../co
  * @param {Function} setHeight - State setter for height
  * @returns {Object} Object containing onWidthChange and onHeightChange functions
  */
-export const createDimensionChangeHandlers = (annotation, getPageWidth, getPageHeight, setWidth, setHeight) => {
+export const createDimensionChangeHandlers = (annotation, getPageWidth, getPageHeight, setWidth, setHeight, core) => {
   const validateWidth = (width) => {
     const documentWidth = getPageWidth();
     const maxWidth = documentWidth - annotation.X;
@@ -33,16 +33,16 @@ export const createDimensionChangeHandlers = (annotation, getPageWidth, getPageH
     const validatedWidth = validateWidth(width);
     annotation.setWidth(validatedWidth);
     setWidth(validatedWidth);
-    redrawAnnotation(annotation);
-    triggerAnnotationChangedEventWithModify([annotation]);
+    redrawAnnotation(annotation, core);
+    triggerAnnotationChangedEventWithModify([annotation], core);
   };
 
   const onHeightChange = (height) => {
     const validatedHeight = validateHeight(height);
     annotation.setHeight(validatedHeight);
     setHeight(validatedHeight);
-    redrawAnnotation(annotation);
-    triggerAnnotationChangedEventWithModify([annotation]);
+    redrawAnnotation(annotation, core);
+    triggerAnnotationChangedEventWithModify([annotation], core);
   };
 
   return {

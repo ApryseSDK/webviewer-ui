@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import React from 'react';
 import { rotateRad } from 'helpers/rotate';

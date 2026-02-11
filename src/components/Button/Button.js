@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
-import { shortcutAria } from 'helpers/hotkeysManager';
+import { shortcutAria } from 'helpers/hotkeysUtils';
 import selectors from 'selectors';
 import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
 import { createAnnouncement } from 'helpers/accessibility';

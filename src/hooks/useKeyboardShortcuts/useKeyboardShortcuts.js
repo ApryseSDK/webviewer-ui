@@ -5,7 +5,7 @@ import {
   EditorModes,
   SpreadsheetShortcutKeyMap,
   SHORTCUT_CONFIGS,
-} from 'helpers/hotkeysManager';
+} from 'helpers/hotkeysUtils';
 import { filterOutDisabledToolShortcuts, filterViewOnlyShortcuts } from './utils';
 
 const useKeyboardShortcuts = (editorMode) => {

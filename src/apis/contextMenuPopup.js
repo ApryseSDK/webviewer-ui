@@ -1,5 +1,5 @@
 /**
- * An instance of Popup that can be used to edit items in the context menu popup component
+ * An instance of Popup that can be used to edit items in the context menu popup component.
  * @name UI.contextMenuPopup
  * @type {UI.Popup}
  * @example

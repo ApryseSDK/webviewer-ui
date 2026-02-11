@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 
 import WidgetLocator from '../WidgetLocator';
@@ -49,6 +49,7 @@ const propTypes = {
 };
 
 const WidgetInfo = ({ name, field }) => {
+  const { core } = useCore();
   const verificationResult = useSelector((state) => selectors.getVerificationResult(state, name));
   const [locatorRect, setLocatorRect] = useState(null);
   const [signatureDetailsExpanded, setSignatureDetailsExpanded] = useState(false);

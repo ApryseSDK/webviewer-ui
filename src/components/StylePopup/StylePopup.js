@@ -23,6 +23,8 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
 import getMeasurementTools from 'helpers/getMeasurementTools';
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 
 import './StylePopup.scss';

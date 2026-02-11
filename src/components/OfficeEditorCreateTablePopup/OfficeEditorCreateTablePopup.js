@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -17,6 +17,7 @@ const propTypes = {
 };
 
 const OfficeEditorCreateTablePopup = ({ isOpen, onClose }) => {
+  const { core } = useCore();
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [currentColIndex, setCurrentColIndex] = useState(0);
   const gridRefs = useRef([...Array(DEFAULT_GRID_SIZE)].map(() => {

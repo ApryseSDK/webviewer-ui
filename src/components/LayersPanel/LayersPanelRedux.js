@@ -3,20 +3,20 @@ import LayersPanel from './LayersPanel';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
 import { toggleAnnotationsVisibility } from './helper';
 import onLayersUpdated from 'src/event-listeners/onLayersUpdated';
 import { setNextActivePanelDueToEmptyCurrentPanel } from 'src/event-listeners/onDocumentLoaded';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
+import useCore from 'hooks/useCore';
 
 function LayersPanelRedux(props) {
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const store = useStore();
   const layers = useSelector(selectors.getLayers);
   const documentLoaded = useDocumentLoadState();
   const layersNotFetched = layers === null;
-
 
   function setLayers(updatedLayers) {
     dispatch(actions.setLayers(updatedLayers));
@@ -59,13 +59,12 @@ function LayersPanelRedux(props) {
     if (doc && !layersNotFetched) {
       doc.setLayersArray(layersArray);
       if (core.isFullPDFEnabled()) {
-        toggleAnnotationsVisibility(layersArray).then(() => {
+        toggleAnnotationsVisibility(layersArray, core).then(() => {
           documentViewer.refreshAll();
           documentViewer.updateView();
 
-          documentViewer.getAnnotationManager().drawAnnotationsFromList(
-            documentViewer.getAnnotationManager().getAnnotationsList()
-          );
+          const annotationManager = documentViewer.getAnnotationManager();
+          annotationManager.drawAnnotationsFromList(annotationManager.getAnnotationsList());
         });
       } else {
         documentViewer.refreshAll();
@@ -80,7 +79,7 @@ function LayersPanelRedux(props) {
     layersNotFetched,
   };
 
-  return <LayersPanel {...props}{...reduxProps} />;
+  return <LayersPanel {...props} {...reduxProps} />;
 }
 
 export default LayersPanelRedux;

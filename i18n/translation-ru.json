@@ -21,6 +21,7 @@
     "cut": "Резать",
     "paste": "Вставить",
     "pasteWithoutFormatting": "Вставить без форматирования",
+    "addComment": "Добавить комментарий",
     "delete": "Удалить",
     "deleted": "Удалено",
     "group": "группа",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
     "lockedLayer": "Слой заблокирован",
-    "layerVisibililtyNoChange": "Видимость слоя не может быть изменена",
+    "layerVisibilityNoChange": "Видимость слоя не может быть изменена",
     "noLayers": "В этом документе нет слоев.",
     "noSignatureFields": "В этом документе нет полей для подписи.",
     "untitled": "Без названия",
@@ -488,11 +489,13 @@
       "replace": "Заменять",
       "replaceAll": "Заменить все",
       "replaceText": "Заменить текст",
+      "replaceOptions": "Заменить параметры",
       "confirmMessageReplaceAll": "Вы уверены, что хотите заменить весь текст?",
       "confirmMessageReplaceOne": "Вы уверены, что хотите заменить этот текст?",
       "moreOptions": "Больше опций",
       "lessOptions": "Меньше вариантов",
-      "confirm": "Подтверждать"
+      "confirm": "Подтверждать",
+      "filter": "Фильтр"
     },
     "toolsOverlay": {
       "currentStamp": "Текущая печать",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Семейство шрифтов"
     },
-    "blankSheet": "Чистый Лист",
+    "blankSheet": "Лист",
     "insertImage": "Вставить изображение"
   },
   "insertPageModal": {

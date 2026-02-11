@@ -9,8 +9,14 @@ import actions from 'actions';
  WebViewer(...)
  .then(function (instance) {
     instance.UI.TabManager.setActiveTab(0);
+
   })
  */
+
+const { TYPES, checkTypes } = window.Core;
+
+const LOAD_DOCUMENT_SOURCE_TYPE = TYPES.MULTI_TYPE(TYPES.STRING, TYPES.OBJECT(File), TYPES.OBJECT(Blob), TYPES.OBJECT(window.Core.Document), TYPES.OBJECT({}));
+const LOAD_DOCUMENT_OPTIONS_TYPE = TYPES.OBJECT({});
 
 export default (store) => Object.create(TabManagerAPI).initialize(store);
 
@@ -47,6 +53,38 @@ const TabManagerAPI = {
   async deleteTab(tabId) {
     const tabManager = selectors.getTabManager(this.store.getState());
     await tabManager.deleteTab(tabId);
+  },
+  /**
+   * Update properties of a tab in the UI
+   * @method UI.TabManager.updateTab
+   * @param {number} tabId The id of the tab to be updated
+   * @param {object} newProperties The new properties to set for the tab
+   * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} [newProperties.src] The new source of the tab to be updated (e.g. a URL, a blob, ArrayBuffer, or a File)
+   * @param {UI.loadDocumentOptions} [newProperties.options] The new options for the tab to be updated
+   * @returns {Promise<void>}
+   * @example
+   * WebViewer(...).then(function(instance) {
+   *  // Updating tab id 1 with a new source and filename
+   *  instance.UI.TabManager.updateTab(1, {
+   *     src: 'http://www.example.com/updated.pdf',
+   *     options: { filename: 'Updated Document' },
+   *   });
+   * });
+   */
+  async updateTab(tabId, newProperties) {
+    checkTypes(
+      arguments,
+      [
+        TYPES.NUMBER,
+        TYPES.OBJECT({
+          src: TYPES.OPTIONAL(LOAD_DOCUMENT_SOURCE_TYPE),
+          options: TYPES.OPTIONAL(LOAD_DOCUMENT_OPTIONS_TYPE),
+        }),
+      ],
+      'UI.TabManager.updateTab',
+    );
+    const tabManager = selectors.getTabManager(this.store.getState());
+    await tabManager.updateTab(tabId, newProperties);
   },
 
   /**

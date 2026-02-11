@@ -6,7 +6,7 @@ import NoteTextarea from 'components/NoteTextarea';
 import ReplyAttachmentList from 'components/ReplyAttachmentList';
 import Button from 'components/Button';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
@@ -24,6 +24,7 @@ const propTypes = {
 
 // a component that contains the reply textarea, the reply button and the cancel button
 const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
+  const { core } = useCore();
   const [
     autoFocusNoteOnAnnotationSelection,
     isDocumentReadOnly,

@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import PropTypes from 'prop-types';
 import App from 'components/App';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { addDataElementFromKey } from 'helpers/modularComponentsHelper';
 import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import { defaultPanels } from 'src/redux/modularComponents';
@@ -91,14 +92,16 @@ MockApp.propTypes = {
 const BasicAppTemplate = (args, context) => {
   const { addonRtl } = context.globals;
   const isMultiTab = args?.isMultiTab || false;
+  // Toggle viewer mock rendering for stories. Spreadsheet editor stories should not render the mock page.
+  window.storybookDisableViewerElementMock = args?.uiConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
   const stateWithHeaders = {
     ...initialState,
     viewer: {
       ...initialState.viewer,
       uiConfiguration: args.uiConfiguration,
-      modularHeaders: args.headers,
-      modularComponents: args.components,
-      flyoutMap: args.flyoutMap,
+      modularHeaders: addDataElementFromKey(args.headers),
+      modularComponents: addDataElementFromKey(args.components),
+      flyoutMap: addDataElementFromKey(args.flyoutMap),
       openElements: {},
       genericPanels: defaultPanels,
       activeGroupedItems: ['annotateGroupedItems'],

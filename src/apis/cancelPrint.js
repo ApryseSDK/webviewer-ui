@@ -1,5 +1,5 @@
 /**
- * Stops ongoing page processing to cancel a print job
+ * Stops ongoing page processing to cancel a print job.
  * @method UI.cancelPrint
  * @example
 WebViewer(...)

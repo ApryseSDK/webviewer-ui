@@ -1,10 +1,10 @@
 import { defaultModularHeaders, defaultModularComponents } from 'src/redux/modularComponents';
 import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
+import { addDataElementFromKey } from 'helpers/modularComponentsHelper';
 
-export const mockHeadersNormalized = {
+const mockHeadersNormalizedRaw = {
   'default-top-header': {
-    dataElement: 'default-top-header',
     placement: 'top',
     grow: 0,
     gap: 12,
@@ -28,7 +28,6 @@ export const mockHeadersNormalized = {
     ...defaultModularHeaders['tools-header'],
   },
   'bottomHeader-23ds': {
-    dataElement: 'bottomHeader-23ds',
     placement: 'bottom',
     grow: 0,
     gap: 12,
@@ -53,9 +52,8 @@ export const mockHeadersNormalized = {
   }
 };
 
-export const mockModularComponents = {
+const mockModularComponentsRaw = {
   filePickerButton: {
-    dataElement: 'filePickerButton',
     title: 'action.openFile',
     label: 'action.openFile',
     icon: 'icon-header-file-picker-line',
@@ -63,7 +61,6 @@ export const mockModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.FILE_PICKER,
   },
   downloadButton: {
-    dataElement: 'downloadButton',
     title: 'action.download',
     label: 'action.download',
     icon: 'icon-download',
@@ -71,7 +68,6 @@ export const mockModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.DOWNLOAD,
   },
   saveAsButton: {
-    dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
     label: 'saveModal.saveAs',
     icon: 'icon-save',
@@ -79,16 +75,13 @@ export const mockModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.SAVE_AS,
   },
   printButton: {
-    dataElement: 'printButton',
     title: 'action.print',
     label: 'action.print',
     icon: 'icon-header-print-line',
     type: ITEM_TYPE.PRESET_BUTTON,
     buttonType: PRESET_BUTTON_TYPES.PRINT,
   },
-  undefined: {},
   createPortfolioButton: {
-    dataElement: 'createPortfolioButton',
     title: 'portfolio.createPDFPortfolio',
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
@@ -96,7 +89,6 @@ export const mockModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
   },
   settingsButton: {
-    dataElement: 'settingsButton',
     title: 'option.settings.settings',
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
@@ -104,27 +96,21 @@ export const mockModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.SETTINGS,
   },
   'divider-0.1': {
-    dataElement: 'divider-0.1',
     type: 'divider'
   },
   'divider-0.2': {
-    dataElement: 'divider-0.2',
     type: 'divider'
   },
   'divider-0.3': {
-    dataElement: 'divider-0.3',
     type: 'divider'
   },
   'divider-0.4': {
-    dataElement: 'divider-0.4',
     type: 'divider'
   },
   'divider-0.5': {
-    dataElement: 'divider-0.5',
     type: 'divider'
   },
   'divider-0.6': {
-    dataElement: 'divider-0.6',
     type: 'divider'
   },
   'leftPanelButton': {
@@ -173,7 +159,6 @@ export const mockModularComponents = {
     ...defaultModularComponents['toolbarGroup-FillAndSign']
   },
   'toolbarGroup-Forms': {
-    dataElement: 'toolbarGroup-Forms',
     title: 'Forms',
     type: 'ribbonItem',
     label: 'Forms',
@@ -181,7 +166,6 @@ export const mockModularComponents = {
     toolbarGroup: 'toolbarGroup-Forms'
   },
   'default-ribbon-group': {
-    dataElement: 'default-ribbon-group',
     items: [
       'toolbarGroup-View',
       'toolbarGroup-Annotate',
@@ -224,18 +208,15 @@ export const mockModularComponents = {
     ...defaultModularComponents.strikeoutToolButton,
   },
   'divider-0.12046025247094039': {
-    dataElement: 'divider-0.12046025247094039',
     type: 'divider'
   },
   stylePanelToggle: {
-    dataElement: 'stylePanelToggle',
     title: 'stylePanel.headings.styles',
     type: 'toggleButton',
     img: 'icon-style-panel-toggle',
     toggleElement: 'stylePanel'
   },
   'divider-0.3460871740070717': {
-    dataElement: 'divider-0.3460871740070717',
     type: 'divider'
   },
   undoButton: {
@@ -248,7 +229,6 @@ export const mockModularComponents = {
     ...defaultModularComponents.eraserToolButton
   },
   defaultAnnotationUtilities: {
-    dataElement: 'defaultAnnotationUtilities',
     items: [
       'divider-0.12046025247094039',
       'stylePanelToggle',
@@ -264,7 +244,6 @@ export const mockModularComponents = {
     style: {}
   },
   annotateGroupedItems: {
-    dataElement: 'annotateGroupedItems',
     items: [
       'underlineToolButton',
       'highlightToolButton',
@@ -309,7 +288,6 @@ export const mockModularComponents = {
     ...defaultModularComponents.cloudToolButton
   },
   shapesGroupedItems: {
-    dataElement: 'shapesGroupedItems',
     items: [
       'rectangleToolButton',
       'freeHandToolButton',
@@ -336,7 +314,6 @@ export const mockModularComponents = {
     ...defaultModularComponents.signatureCreateToolButton,
   },
   insertGroupedItems: {
-    dataElement: 'insertGroupedItems',
     items: [
       'rubberStampToolButton',
       'signatureCreateToolButton',
@@ -354,13 +331,11 @@ export const mockModularComponents = {
     ...defaultModularComponents.redactionToolButton,
   },
   panel2Button: {
-    dataElement: 'panel2Button',
     type: 'toggleButton',
     img: 'icon-redact-panel',
     toggleElement: 'redactionPanel'
   },
   redactionGroupedItems: {
-    dataElement: 'redactionGroupedItems',
     items: [
       'redactionToolButton',
       'panel2Button',
@@ -394,12 +369,10 @@ export const mockModularComponents = {
     ...defaultModularComponents.countMeasurementToolButton,
   },
   cloudyRectangularAreaMeasurementToolButton: {
-    dataElement: 'cloudyRectangularAreaMeasurementToolButton',
     type: 'toolButton',
     toolName: 'AnnotationCreateCloudyRectangularAreaMeasurement'
   },
   measureGroupedItems: {
-    dataElement: 'measureGroupedItems',
     items: [
       'distanceMeasurementToolButton',
       'arcMeasurementToolButton',
@@ -421,7 +394,6 @@ export const mockModularComponents = {
     ...defaultModularComponents.cropToolButton,
   },
   editGroupedItems: {
-    dataElement: 'editGroupedItems',
     items: [
       'cropToolButton',
       'undoButton',
@@ -435,7 +407,6 @@ export const mockModularComponents = {
     style: {}
   },
   fillAndSignGroupedItems: {
-    dataElement: 'fillAndSignGroupedItems',
     items: [
       'rubberStampToolButton',
       'defaultAnnotationUtilities'
@@ -447,7 +418,6 @@ export const mockModularComponents = {
     style: {}
   },
   'page-controls-container': {
-    dataElement: 'page-controls-container',
     type: 'pageControls'
   },
   'grouped-item': {
@@ -458,117 +428,87 @@ export const mockModularComponents = {
   },
 };
 
-export const mockLeftHeader = {
+const mockLeftHeaderRaw = {
   'modularComponents': {
     'printButton': {
-      'dataElement': 'printButton',
       'buttonType': 'printButton',
       'title': 'action.print',
       'label': 'action.print',
       'icon': 'icon-header-print-line',
       'hidden': false,
-      'type': 'presetButton'
+      'type': 'presetButton',
     },
     'highlightToolButton': {
-      'dataElement': 'highlightToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateTextHighlight'
+      'toolName': 'AnnotationCreateTextHighlight',
     },
     'underlineToolButton': {
-      'dataElement': 'underlineToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateTextUnderline'
+      'toolName': 'AnnotationCreateTextUnderline',
     },
     'strikeoutToolButton': {
-      'dataElement': 'strikeoutToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateTextStrikeout'
+      'toolName': 'AnnotationCreateTextStrikeout',
     },
     'rectangleToolButton': {
-      'dataElement': 'rectangleToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateRectangle'
+      'toolName': 'AnnotationCreateRectangle',
     },
     'ellipseToolButton': {
-      'dataElement': 'ellipseToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateEllipse'
+      'toolName': 'AnnotationCreateEllipse',
     },
     'arcToolButton': {
-      'dataElement': 'arcToolButton',
       'type': 'toolButton',
-      'toolName': 'AnnotationCreateArc'
+      'toolName': 'AnnotationCreateArc',
     },
     'annotateToolsGroupedItems': {
-      'dataElement': 'annotateToolsGroupedItems',
-      'items': [
-        'highlightToolButton',
-        'underlineToolButton',
-        'strikeoutToolButton',
-      ],
+      'items': ['highlightToolButton', 'underlineToolButton', 'strikeoutToolButton'],
       'type': 'groupedItems',
       'justifyContent': 'center',
       'grow': 0,
       'gap': 12,
-      'alwaysVisible': false
+      'alwaysVisible': false,
     },
     'shapesToolsGroupedItems': {
-      'dataElement': 'shapesToolsGroupedItems',
-      'items': [
-        'rectangleToolButton',
-        'ellipseToolButton',
-        'arcToolButton',
-      ],
+      'items': ['rectangleToolButton', 'ellipseToolButton', 'arcToolButton'],
       'type': 'groupedItems',
       'grow': 0,
       'gap': 12,
-      'alwaysVisible': false
+      'alwaysVisible': false,
     },
     'toolbarGroup-View': {
-      'dataElement': 'toolbarGroup-View',
       'title': 'View',
       'type': 'ribbonItem',
       'label': 'View',
       'groupedItems': [],
-      'toolbarGroup': 'toolbarGroup-View'
+      'toolbarGroup': 'toolbarGroup-View',
     },
     'toolbarGroup-Annotate': {
-      'dataElement': 'toolbarGroup-Annotate',
       'title': 'Annotate',
       'type': 'ribbonItem',
       'label': 'Annotate',
-      'groupedItems': [
-        'annotateToolsGroupedItems'
-      ],
-      'toolbarGroup': 'toolbarGroup-Annotate'
+      'groupedItems': ['annotateToolsGroupedItems'],
+      'toolbarGroup': 'toolbarGroup-Annotate',
     },
     'toolbarGroup-Shapes': {
-      'dataElement': 'toolbarGroup-Shapes',
       'title': 'Shapes',
       'type': 'ribbonItem',
       'label': 'Shapes',
-      'groupedItems': [
-        'shapesToolsGroupedItems'
-      ],
-      'toolbarGroup': 'toolbarGroup-Shapes'
+      'groupedItems': ['shapesToolsGroupedItems'],
+      'toolbarGroup': 'toolbarGroup-Shapes',
     },
     'default-ribbon-group': {
-      'dataElement': 'default-ribbon-group',
-      'items': [
-        'toolbarGroup-View',
-        'toolbarGroup-Annotate',
-        'toolbarGroup-Shapes',
-      ],
+      'items': ['toolbarGroup-View', 'toolbarGroup-Annotate', 'toolbarGroup-Shapes'],
       'type': 'ribbonGroup',
       'justifyContent': 'start',
       'grow': 2,
       'gap': 12,
-      'alwaysVisible': false
+      'alwaysVisible': false,
     },
   },
   'modularHeaders': {
     'default-left-header': {
-      'dataElement': 'default-left-header',
       'placement': 'left',
       'grow': 0,
       'gap': 12,
@@ -578,16 +518,12 @@ export const mockLeftHeader = {
       'dimension': {
         'paddingTop': 8,
         'paddingBottom': 8,
-        'borderWidth': 1
+        'borderWidth': 1,
       },
       'style': {},
-      'items': [
-        'printButton',
-        'default-ribbon-group',
-      ]
+      'items': ['printButton', 'default-ribbon-group'],
     },
     'tools-header': {
-      'dataElement': 'tools-header',
       'placement': 'top',
       'justifyContent': 'center',
       'grow': 0,
@@ -598,43 +534,79 @@ export const mockLeftHeader = {
       'dimension': {
         'paddingTop': 8,
         'paddingBottom': 8,
-        'borderWidth': 1
+        'borderWidth': 1,
       },
       'style': {},
-      'items': [
-        'annotateToolsGroupedItems',
-        'shapesToolsGroupedItems',
-      ]
+      'items': ['annotateToolsGroupedItems', 'shapesToolsGroupedItems'],
     },
   },
-  'panels': {
-  },
-  'flyouts': {
-  }
+  'panels': {},
+  'flyouts': {},
 };
 
 export const uiWithCustomElements = {
   'modularComponents': {
     'customElement1': {
-      'dataElement': 'customElement1',
       'title': 'Test',
       'disabled': false,
       'type': 'customElement',
       'render': 'customElement1Render',
-      'renderArguments': ['Test Args']
+      'renderArguments': ['Test Args'],
     },
     'customPanelToggleButton': {
-      'dataElement': 'customPanelToggleButton',
       'title': 'Test Panel',
       'label': 'Test Panel',
       'type': 'toggleButton',
       'img': 'icon-header-sidebar-line',
-      'toggleElement': 'customPanel'
-    }
+      'toggleElement': 'customPanel',
+    },
+    continuousPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.CONTINUOUS_PAGE_TRANSITION,
+    },
+    defaultPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DEFAULT_PAGE_TRANSITION,
+    },
+    readerPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+    },
+    rotateClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_CLOCKWISE,
+    },
+    rotateCounterClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_COUNTERCLOCKWISE,
+    },
+    singleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.SINGLE_LAYOUT,
+    },
+    doubleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DOUBLE_LAYOUT,
+    },
+    coverLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.COVER_LAYOUT,
+    },
+    toggleCompareModeButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+    },
+    [DataElements.FULLSCREEN_BUTTON]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
+    },
+    [PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+    },
   },
   'modularHeaders': {
     'default-top-header': {
-      'dataElement': 'default-top-header',
       'placement': 'top',
       'grow': 0,
       'gap': 12,
@@ -644,23 +616,39 @@ export const uiWithCustomElements = {
       'dimension': {
         'paddingTop': 8,
         'paddingBottom': 8,
-        'borderWidth': 1
+        'borderWidth': 1,
       },
       'style': {},
-      'items': [
-        'customElement1',
-        'customPanelToggleButton'
-      ]
+      'items': ['customElement1', 'customPanelToggleButton'],
     },
   },
   'panels': {
     'customPanel': {
-      'dataElement': 'customPanel',
       'render': 'customPanelRender',
       'location': 'start',
-    }
+    },
   },
   'flyouts': {
+    viewControlsFlyout: {
+      className: 'ViewControlsFlyout',
+      items: [
+        'continuousPageTransitionButton',
+        'defaultPageTransitionButton',
+        'readerPageTransitionButton',
+        'divider',
+        'rotateClockwiseButton',
+        'rotateCounterClockwiseButton',
+        'divider',
+        'singleLayoutButton',
+        'doubleLayoutButton',
+        'coverLayoutButton',
+        'toggleCompareModeButton',
+        'divider',
+        'fullscreenButton',
+        'divider',
+        'toggleAccessibilityModeButton'
+      ]
+    }
   },
   'popups': {
     [DataElements.ANNOTATION_POPUP]: [
@@ -677,7 +665,7 @@ export const uiWithCustomElements = {
       { dataElement: DataElements.PAN_TOOL_BUTTON },
       { dataElement: DataElements.STICKY_TOOL_BUTTON },
     ],
-  }
+  },
 };
 
 
@@ -701,57 +689,92 @@ export const uiWithCustomElementsFunctions = {
 export const uiWithCustomStyleAndClass = {
   'modularComponents': {
     'leftPanelButton': {
-      'dataElement': 'leftPanelButton',
       'title': 'component.leftPanel',
       'type': 'toggleButton',
       'img': 'icon-header-sidebar-line',
       'toggleElement': 'tabPanel',
       'style': {
         'border': '3px solid green',
-        'borderRadius': '8px'
-      }
+        'borderRadius': '8px',
+      },
     },
     'panToolButton': {
-      'dataElement': 'panToolButton',
       'type': 'toolButton',
       'toolName': 'Pan',
       'style': {
         'border': '2px solid hotpink',
         'borderRadius': '20px',
         'width': '32px',
-        'height': '32px'
+        'height': '32px',
       },
-      'className': 'my-new-class-for-tools'
+      'className': 'my-new-class-for-tools',
     },
     'toolbarGroup-Annotate': {
-      'dataElement': 'toolbarGroup-Annotate',
       'title': 'Annotate',
       'type': 'ribbonItem',
       'className': 'annotate-ribbon',
       'style': {
-        'border': '2px dotted blue'
+        'border': '2px dotted blue',
       },
       'label': 'Annotate',
-      'groupedItems': [
-        'annotateGroupedItems'
-      ],
-      'toolbarGroup': 'toolbarGroup-Annotate'
+      'groupedItems': ['annotateGroupedItems'],
+      'toolbarGroup': 'toolbarGroup-Annotate',
     },
     'default-ribbon-group': {
-      'dataElement': 'default-ribbon-group',
-      'items': [
-        'toolbarGroup-Annotate',
-      ],
+      'items': ['toolbarGroup-Annotate'],
       'type': 'ribbonGroup',
       'justifyContent': 'start',
       'grow': 2,
       'gap': 12,
-      'alwaysVisible': false
+      'alwaysVisible': false,
+    },
+    continuousPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.CONTINUOUS_PAGE_TRANSITION,
+    },
+    defaultPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DEFAULT_PAGE_TRANSITION,
+    },
+    readerPageTransitionButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+    },
+    rotateClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_CLOCKWISE,
+    },
+    rotateCounterClockwiseButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.ROTATE_COUNTERCLOCKWISE,
+    },
+    singleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.SINGLE_LAYOUT,
+    },
+    doubleLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.DOUBLE_LAYOUT,
+    },
+    coverLayoutButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.COVER_LAYOUT,
+    },
+    toggleCompareModeButton: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+    },
+    [DataElements.FULLSCREEN_BUTTON]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
+    },
+    [PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE]: {
+      type: ITEM_TYPE.PRESET_BUTTON,
+      buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
     },
   },
   'modularHeaders': {
     'default-top-header': {
-      'dataElement': 'default-top-header',
       'placement': 'top',
       'grow': 0,
       'gap': 12,
@@ -761,18 +784,35 @@ export const uiWithCustomStyleAndClass = {
       'dimension': {
         'paddingTop': 8,
         'paddingBottom': 8,
-        'borderWidth': 1
+        'borderWidth': 1,
       },
       'style': {},
-      'items': [
-        'leftPanelButton',
-        'default-ribbon-group',
-        'panToolButton'
-      ]
+      'items': ['leftPanelButton', 'default-ribbon-group', 'panToolButton'],
     },
   },
   'panels': {},
-  'flyouts': {},
+  'flyouts': {
+    viewControlsFlyout: {
+      className: 'ViewControlsFlyout',
+      items: [
+        'continuousPageTransitionButton',
+        'defaultPageTransitionButton',
+        'readerPageTransitionButton',
+        'divider',
+        'rotateClockwiseButton',
+        'rotateCounterClockwiseButton',
+        'divider',
+        'singleLayoutButton',
+        'doubleLayoutButton',
+        'coverLayoutButton',
+        'toggleCompareModeButton',
+        'divider',
+        'fullscreenButton',
+        'divider',
+        'toggleAccessibilityModeButton',
+      ],
+    },
+  },
   'popups': {
     [DataElements.ANNOTATION_POPUP]: [
       { dataElement: DataElements.VIEW_FILE_BUTTON },
@@ -788,5 +828,21 @@ export const uiWithCustomStyleAndClass = {
       { dataElement: DataElements.PAN_TOOL_BUTTON },
       { dataElement: DataElements.STICKY_TOOL_BUTTON },
     ],
-  }
+  },
 };
+
+export const mockHeadersNormalized = addDataElementFromKey(mockHeadersNormalizedRaw);
+export const mockModularComponents = addDataElementFromKey(mockModularComponentsRaw);
+
+const applyDataElementToNestedMaps = (config) => {
+  const result = { ...config };
+  if (result.modularComponents) {
+    result.modularComponents = addDataElementFromKey(result.modularComponents);
+  }
+  if (result.modularHeaders) {
+    result.modularHeaders = addDataElementFromKey(result.modularHeaders);
+  }
+  return result;
+};
+
+export const mockLeftHeader = applyDataElementToNestedMaps(mockLeftHeaderRaw);

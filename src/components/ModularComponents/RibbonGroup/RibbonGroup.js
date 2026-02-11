@@ -189,10 +189,10 @@ const RibbonGroup = (props) => {
       return '';
     }
     const key = item.toolbarGroup || item.label || '';
-    const translatedText = getTranslationLabel(key) || t(key, key);
+    const translatedText = getTranslationLabel(key) || t(key, { defaultValue: item.label || key });
     // prioritize translation key, then label if translation key is not found,
     // then return empty string for icon only items
-    return translatedText || t(item.label )|| '';
+    return translatedText || t(item.label) || '';
   };
 
   const renderDropdownItem = (item) => {

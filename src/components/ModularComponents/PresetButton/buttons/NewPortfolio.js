@@ -5,7 +5,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import useFocusHandler from 'hooks/useFocusHandler';
@@ -24,6 +24,7 @@ const NewPortfolioButton = forwardRef((props, ref) => {
     img: icon,
     title
   } = props;
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const isCreatePortfolioButtonEnabled = !useSelector((state) => selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_BUTTON)) && core.isFullPDFEnabled();

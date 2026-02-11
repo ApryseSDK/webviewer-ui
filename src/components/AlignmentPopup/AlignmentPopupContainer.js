@@ -1,6 +1,6 @@
 import actions from 'actions';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -34,6 +34,7 @@ const AlignmentPopupContainer = ({
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const popupRef = useRef();
   const dispatch = useDispatch();
+  const { core } = useCore();
 
   const alignmentOnClick = (alignment) => {
     const annotManager = core.getAnnotationManager();

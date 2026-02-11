@@ -5,6 +5,7 @@ import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import debounce from 'lodash/debounce';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 
 export default function useOnInlineCommentPopupOpen() {
   const [
@@ -14,8 +15,10 @@ export default function useOnInlineCommentPopupOpen() {
     activeLeftPanel,
     inlineCommentFilter,
     activeDocumentViewerKey,
-    isReviewPanelOpen,
+    isModularUIReviewPanelOpen,
     isOfficeEditorMode,
+    isOfficeEditorCommentPanelOpen,
+    featureFlags,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
@@ -26,6 +29,8 @@ export default function useOnInlineCommentPopupOpen() {
       selectors.getActiveDocumentViewerKey(state),
       selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_REVIEW_PANEL),
       selectors.getIsOfficeEditorMode(state),
+      selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_COMMENT_PANEL),
+      selectors.getFeatureFlags(state),
     ],
     shallowEqual,
   );
@@ -36,9 +41,16 @@ export default function useOnInlineCommentPopupOpen() {
   const [reopenFlag, setReopenFlag] = useState(false);
   const { ToolNames } = window.Core.Tools;
 
-  const isNotesPanelOpenOrActive = isNotesPanelOpen
-  || isReviewPanelOpen
-  || (notesInLeftPanel && leftPanelOpen && (activeLeftPanel === 'notesPanel' || isOfficeEditorMode));
+  const isNotesActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
+  const reviewPanelOpen = featureFlags?.customizableUI ? isModularUIReviewPanelOpen : leftPanelOpen;
+
+  const annotationKey = annotation ? mapAnnotationToKey(annotation) : null;
+  const isTrackedChange = annotationKey === annotationMapKeys.TRACKED_CHANGE;
+  const isOfficeComment = annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+  const isTrackedChangeBlocked = isOfficeEditorMode && isTrackedChange && reviewPanelOpen;
+  const isOfficeCommentBlocked = isOfficeEditorMode && isOfficeComment && isOfficeEditorCommentPanelOpen;
+
+  const shouldBlockPopup = isNotesActive || isTrackedChangeBlocked || isOfficeCommentBlocked;
   const closeAndReset = () => {
     dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
     setAnnotation(null);
@@ -123,11 +135,17 @@ export default function useOnInlineCommentPopupOpen() {
   }, [annotation, activeDocumentViewerKey]);
 
   useEffect(() => {
-    if (!isNotesPanelOpenOrActive && annotation && inlineCommentFilter(annotation)) {
+    if (!shouldBlockPopup && annotation && inlineCommentFilter(annotation)) {
       dispatch(actions.openElement(DataElements.INLINE_COMMENT_POPUP));
     }
     // reopenFlag is needed here in order to re-open the popup on scroll
-  }, [annotation, inlineCommentFilter, reopenFlag]);
+  }, [annotation, inlineCommentFilter, reopenFlag, shouldBlockPopup]);
+
+  useEffect(() => {
+    if (annotation && shouldBlockPopup) {
+      closeAndReset();
+    }
+  }, [annotation, shouldBlockPopup]);
 
   useEffect(() => {
     const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);

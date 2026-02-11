@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Button from 'components/Button';
 import defaultTool from 'constants/defaultTool';
 
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';

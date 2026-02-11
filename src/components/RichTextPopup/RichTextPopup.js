@@ -9,7 +9,7 @@ import ColorPalette from 'components/ColorPalette';
 import Button from 'components/Button';
 import HorizontalDivider from 'components/HorizontalDivider';
 import { isMobile } from 'helpers/device';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
 import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import MathSymbolsPicker from '../MathSymbolsPicker';
@@ -31,6 +31,7 @@ const propTypes = {
 };
 
 const RichTextPopup = ({ annotation, editor }) => {
+  const { core } = useCore();
   const [
     isDisabled,
     isOpen,

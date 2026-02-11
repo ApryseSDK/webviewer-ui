@@ -11,12 +11,13 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+import { EditingStreamType } from 'constants/officeEditor';
 
 import './ContextMenuPopup.scss';
 
@@ -59,6 +60,7 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
 const ContextMenuPopup = ({
   clickPosition,
 }) => {
+  const { core } = useCore();
 
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP));
@@ -69,6 +71,7 @@ const ContextMenuPopup = ({
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const isReadOnlyMode = spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
+  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   const [isSpreadsheetAndReadOnlyMode, setIsSpreadsheetAndReadOnlyMode] = useState(isSpreadsheetEditorModeEnabled && isReadOnlyMode);
 
@@ -260,6 +263,13 @@ const ContextMenuPopup = ({
                 dataElement={DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING}
                 onClick={() => handlePaste(false)}
                 shortcut={`${modifierKeyShort}+Shift+V`}
+              />
+              <OfficeActionItem
+                title="action.addComment"
+                img="icon-tool-comment-line"
+                dataElement={DataElements.OFFICE_EDITOR_ADD_COMMENT}
+                onClick={() => core.getOfficeEditor().getCommentManager().addCommentThreadAtCurrentRange('')}
+                disabled={activeStream !== EditingStreamType.BODY}
               />
               {!isCursorInTable && (
                 <OfficeActionItem

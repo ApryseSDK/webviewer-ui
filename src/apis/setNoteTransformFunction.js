@@ -3,10 +3,10 @@ import actions from 'actions';
 /**
  * @callback NoteTransformFunction
  * @memberof UI
- * @param {HTMLElement} wrapperElement  A reference to the DOM node that wraps the note. You can use this to query select child elements to mutate (see the examples below)
- * @param {object} state The state of the note. Contains two properties, 'annotation' and 'isSelected'
- * @param {Core.Annotations.Annotation} state.annotation A reference to the annotation object associated with the note
- * @param {boolean} state.isSelected whether or not the note is currently expanded
+ * @param {HTMLElement} wrapperElement A reference to the DOM node that wraps the note. You can use this to query select child elements to mutate (see the examples below).
+ * @param {object} state The state of the note. Contains two properties, 'annotation' and 'isSelected'.
+ * @param {Core.Annotations.Annotation} state.annotation A reference to the annotation object associated with the note.
+ * @param {boolean} state.isSelected Whether or not the note is currently expanded.
  * @param {function} createElement A utility function that should be used when creating DOM nodes. This is a replacement for `document.createElement`.
  * Accepts the same parameters as `document.createElement`. Using document.createElement instead of this function will cause your DOM nodes to not be cleaned up on subsequent renders.
  */
@@ -37,7 +37,7 @@ import actions from 'actions';
  *  If you need to hide an HTML element, set the style to `display: none` instead.
  * <br><br>
  * @method UI.dangerouslySetNoteTransformFunction
- * @param {UI.NoteTransformFunction} noteTransformFunction The function that will be used to transform notes in the left panel
+ * @param {UI.NoteTransformFunction} noteTransformFunction The function that will be used to transform notes in the left panel.
  * @example
 Webviewer(...)
   .then(instance => {

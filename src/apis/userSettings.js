@@ -2,7 +2,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 import touchEventManager from 'helpers/TouchEventManager';
 import setLanguage from './setLanguage';
-import hotkeysManager, { ShortcutKeys } from 'helpers/hotkeysManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { ShortcutKeys } from 'helpers/hotkeysUtils';
 
 /**
  * Set custom settings shown in Advanced Setting tab in Settings modal.
@@ -34,8 +35,8 @@ export const setCustomSettings = (store) => (customSettings) => {
 
 /**
  * @typedef {Object} UI.CustomSettingItem
- * @property {string} label Custom setting label
- * @property {string} description Custom setting description
+ * @property {string} label Custom setting label.
+ * @property {string} description Custom setting description.
  * @property {function|boolean} isChecked Whether the toggle button is checked.
  * @property {function} onToggled The callback function triggered when the toggle button is clicked.
  */
@@ -58,7 +59,7 @@ const SettingKeys = {
 /**
  * Export the current user settings as JSON object.
  * @method UI.exportUserSettings
- * @return {object} JSON object containing the current user settings
+ * @return {object} JSON object containing the current user settings.
  * @example
 WebViewer(...)
   .then(function (instance) {
@@ -88,7 +89,7 @@ export const exportUserSettings = (store) => () => {
 /**
  * Import user settings from JSON object.
  * @method UI.importUserSettings
- * @param {object} userSettings JSON object containing the new user settings
+ * @param {object} userSettings JSON object containing the new user settings.
  * @example
 WebViewer(...)
   .then(function (instance) {

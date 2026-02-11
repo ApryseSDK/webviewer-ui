@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import FormulaBar from './FormulaBar';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
@@ -14,6 +14,7 @@ export const FormulaBarContainer = () => {
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const isReadOnlyMode = spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY;
 
+  const { core } = useCore();
   const [rangeInputValue, setRangeInputValue] = useState(activeCellRange);
 
   const onRangeInputChange = (value) => {

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
 import DataElements from 'constants/dataElement';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRANSLATION_PREFIX } from 'constants/officeEditor';
 
 import './TrackChangeOverlay.scss';
@@ -38,6 +38,7 @@ const TrackChangeOverlay = ({
   onKeyDownHandler = null,
   activeFlyout = null,
 }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [

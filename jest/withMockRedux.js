@@ -14,7 +14,7 @@ const defaultState = {
     currentLanguage: 'en',
     openElements: {},
     flyoutMap: {},
-    currentPage: 7,
+    currentPage: { 1: 7, 2: 1, },
     pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
     modularPopups: defaultPopups,
     savedSignatures: [],
@@ -53,6 +53,10 @@ export default function withMockRedux(Component, mockInitialState ={ viewer: {},
     officeEditor: {
       ...defaultState.officeEditor,
       ...mockInitialState.officeEditor,
+    },
+    featureFlags: {
+      ...defaultState.featureFlags,
+      ...mockInitialState.featureFlags,
     },
   };
   return function WithMockReduxWrapper(props) {

@@ -6,9 +6,9 @@ import actions from 'actions';
  * List of formats can be found here: {@link https://github.com/iamkun/dayjs/blob/v1.11.1/docs/en/API-reference.md#format-formatstringwithtokens-string dayjs API}.
  * @method UI.addDateTimeFormat
  * @param {object} dateTimeFormat An object containing the date and time formats with the respective keys. At least one of the date or time keys must be present.
- * @param {string} [dateTimeFormat.date] String of date format
- * @param {string} [dateTimeFormat.time] String of time format
- * @param {boolean} [dateTimeFormat.timeFirst] Boolean value to indicate if time should be before date in UI
+ * @param {string} [dateTimeFormat.date] String of date format.
+ * @param {string} [dateTimeFormat.time] String of time format.
+ * @param {boolean} [dateTimeFormat.timeFirst] Boolean value to indicate if time should be before date in UI.
  * @example
  WebViewer(...)
  .then(function(instance) {

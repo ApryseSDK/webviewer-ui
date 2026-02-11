@@ -3,7 +3,7 @@ import actions from 'actions';
 /**
  * @callback CustomMultiViewerAcceptedFileFormats
  * @memberof UI
- * @param {Array<string>} acceptedFileFormats The file formats to support when accepting files in multiviewer mode
+ * @param {Array<string>} acceptedFileFormats The file formats to support when accepting files in multiviewer mode.
  */
 
 /**

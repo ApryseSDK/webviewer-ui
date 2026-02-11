@@ -6,7 +6,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Measure from 'react-measure';
 import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
 import DataElements from 'constants/dataElement';
@@ -16,6 +16,7 @@ import useOnDocumentFileNameEdit from 'hooks/useOnDocumentFileNameEdit';
 import './Ribbons.scss';
 
 const FileName = () => {
+  const { core } = useCore();
   const {
     isEditing,
     fileNameWithoutExtension,
@@ -43,6 +44,7 @@ const FileName = () => {
 };
 
 const Ribbons = () => {
+  const { core } = useCore();
   const [
     toolbarGroups,
     currentToolbarGroup,

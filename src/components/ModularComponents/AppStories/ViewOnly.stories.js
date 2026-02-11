@@ -263,6 +263,7 @@ PresetButtonsHeader.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   window.instance.UI.enableViewOnlyMode();
   const presetButtons = await canvas.findAllByRole('button');
-  expect(presetButtons.length).toBe(6); // Compare and Filepicker are disabled by default
+  expect(presetButtons.length).toBe(12); // Compare and Filepicker are disabled by default
 };
 PresetButtonsHeader.parameters = window.storybook.disableRtlMode;
+

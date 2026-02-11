@@ -9,7 +9,8 @@ import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
-import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'helpers/hotkeysManager';
+import hotkeysManager, { defaultHotkeysScope } from 'helpers/hotkeysManager';
+import { ShortcutKeys, Shortcuts } from 'helpers/hotkeysUtils';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
@@ -23,7 +24,11 @@ import {
   ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR,
   EDIT_OPERATION_SOURCE,
 } from 'constants/officeEditor';
-import { SPREADSHEET_EDITOR_SCOPE, ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR, SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
+import {
+  SPREADSHEET_EDITOR_SCOPE,
+  ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
+  SpreadsheetEditorEditMode
+} from 'src/constants/spreadsheetEditor';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FeatureFlags from 'constants/featureFlags';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
@@ -169,6 +174,7 @@ export const setPrintHandler = (store, documentViewerKey) => () => {
         selectors.isEmbedPrintSupported(getState()),
         selectors.getSortStrategy(getState()),
         selectors.getColorMap(getState()),
+        { documentViewerKey }
       );
     });
 };

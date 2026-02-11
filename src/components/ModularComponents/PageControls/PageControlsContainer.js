@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';

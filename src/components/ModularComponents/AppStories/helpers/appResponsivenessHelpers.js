@@ -2,6 +2,7 @@ import React from 'react';
 import { MockApp } from 'src/helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../mockAppState';
+import { defaultFlyoutMap } from 'src/redux/modularComponents';
 
 /**
  * MockAppTemplate is a functional component that sets up a mock application state
@@ -53,7 +54,8 @@ const MockAppTemplate = (args, context) => {
       flyoutMap: {
         annotateGroupedItemsFlyout: {
           items: []
-        }
+        },
+        ...defaultFlyoutMap,
       },
       activeCustomRibbon: args.activeCustomRibbon,
       activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',

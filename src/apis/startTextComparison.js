@@ -1,5 +1,5 @@
 /**
- * Activate text comparison
+ * Activate text comparison.
  * (Only works when in MultiViewerMode with PDFs loaded for both sides)
  * @method UI.startTextComparison
  * @example

@@ -12,7 +12,7 @@ import { PANEL_LOCATION } from 'constants/customizationVariables';
  */
 
 /**
- * Adds a custom panel in left or right side of the UI.
+ * Adds a custom panel to the left or right side of the UI.
  * @method UI.addPanel
  * @param {Object<PanelProperties>} panel The panel object to be added in the UI.
  * @example

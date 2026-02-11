@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { triggerSelectedRangeStyleChangedWithLatestStyle } from 'src/helpers/undoRedoSpreadsheetHelpers';
 
 // Configuration map for undo/redo operations
-const UNDO_REDO_CONFIG = {
+const getUndoRedoConfig = (core) => ({
   undo: {
     menuItem: () => menuItems.undoButton,
     selectors: {
@@ -40,7 +40,7 @@ const UNDO_REDO_CONFIG = {
     },
     className: 'redo-button',
   },
-};
+});
 
 /**
  * @ignore
@@ -49,6 +49,7 @@ const UNDO_REDO_CONFIG = {
  * @memberof UI.Components.PresetButton
  */
 const UndoRedoButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const {
     type, // 'undo' or 'redo'
     isFlyoutItem,
@@ -59,6 +60,7 @@ const UndoRedoButton = forwardRef((props, ref) => {
     title,
   } = props;
 
+  const UNDO_REDO_CONFIG = getUndoRedoConfig(core);
   const config = UNDO_REDO_CONFIG[type];
   const menuItem = config.menuItem();
 

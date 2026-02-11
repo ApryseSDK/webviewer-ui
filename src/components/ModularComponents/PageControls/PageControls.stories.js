@@ -51,7 +51,7 @@ const initialState = {
     customPanels: [],
     genericPanels: [],
     activeDocumentViewerKey: 1,
-    currentPage: 2,
+    currentPage: { 1: 2, 2: 1 },
     totalPages: 9,
     activeFlyout: 'pageControlsFlyout',
     activeTabInPanel: {},

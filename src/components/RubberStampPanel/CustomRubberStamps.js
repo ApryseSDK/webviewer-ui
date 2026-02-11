@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -74,6 +74,7 @@ const CustomRubberStamps = (
     standardStampsOffset,
     isFlyout,
   }) => {
+  const { core } = useCore();
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
 
   const isMobile = isMobileSize();

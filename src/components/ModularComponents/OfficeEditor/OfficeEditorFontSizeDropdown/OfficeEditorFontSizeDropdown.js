@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { DEFAULT_POINT_SIZE, FONT_SIZE, AVAILABLE_POINT_SIZES } from 'constants/officeEditor';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import classNames from 'classnames';
@@ -17,6 +17,7 @@ const propTypes = {
 };
 
 const OfficeEditorFontSizeDropdown = (props) => {
+  const { core } = useCore();
   const { isFlyoutItem, activeFlyout, onKeyDownHandler } = props;
   const dispatch = useDispatch();
   const [

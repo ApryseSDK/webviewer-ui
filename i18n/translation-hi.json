@@ -21,6 +21,7 @@
     "cut": "काटना",
     "paste": "पेस्ट करें",
     "pasteWithoutFormatting": "बिना फॉर्मेट किए पेस्ट करें",
+    "addComment": "टिप्पणी जोड़ना",
     "delete": "हटाएं",
     "deleted": "हटाए गए",
     "group": "समूह",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "स्टाम्प टेक्स्ट खाली नहीं हो सकता",
     "unpostedComment": "पोस्ट नहीं की गई टिप्पणी",
     "lockedLayer": "परत बंद है",
-    "layerVisibililtyNoChange": "परत दृश्यता को बदला नहीं जा सकता",
+    "layerVisibilityNoChange": "परत दृश्यता को बदला नहीं जा सकता",
     "noLayers": "इस दस्तावेज़ में कोई परतें नहीं हैं.",
     "noSignatureFields": "इस दस्तावेज़ में कोई हस्ताक्षर फ़ील्ड नहीं है.",
     "untitled": "शीर्षकहीन",
@@ -488,11 +489,13 @@
       "replace": "बदलने के",
       "replaceAll": "सबको बदली करें",
       "replaceText": "टेक्स्ट बदलें",
+      "replaceOptions": "विकल्प बदलें",
       "confirmMessageReplaceAll": "क्या आप वाकई सभी टेक्स्ट को बदलना चाहते हैं?",
       "confirmMessageReplaceOne": "क्या आप वाकई इस टेक्स्ट को बदलना चाहते हैं?",
       "moreOptions": "अधिक विकल्प",
       "lessOptions": "कम विकल्प",
-      "confirm": "पुष्टि करें"
+      "confirm": "पुष्टि करें",
+      "filter": "फ़िल्टर"
     },
     "toolsOverlay": {
       "currentStamp": "वर्तमान टिकट",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "फुहारा परिवार"
     },
-    "blankSheet": "ब्लेंक शीट",
+    "blankSheet": "चादर",
     "insertImage": "चित्र डालें"
   },
   "insertPageModal": {

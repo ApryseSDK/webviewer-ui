@@ -19,9 +19,10 @@ import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/Flyout
 import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const Flyout = () => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isMobile = isMobileSize();

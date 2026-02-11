@@ -22,6 +22,7 @@ jest.mock('core', () => ({
     mockCustomStampTool
   ],
   deselectAllAnnotations: noop,
+  getDocumentViewer: jest.fn(),
 }));
 
 const TestCreateStampModalPopup = withProviders(Basic);

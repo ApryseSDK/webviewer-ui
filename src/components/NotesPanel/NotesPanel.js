@@ -14,11 +14,12 @@ import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 import Choice from 'components/Choice';
 import TextButton from 'components/TextButton';
-
+/* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import { getSortStrategies } from 'constants/sortStrategies';
-import { EditingStreamType, OfficeEditorEditMode, NOTES_PANEL_TEXTS } from 'constants/officeEditor';
+import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -66,6 +67,7 @@ const NotesPanel = ({
   const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
   const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
   const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
+  const notesPanelConfig = getNotesPanelConfig(dataElement);
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -196,6 +198,12 @@ const NotesPanel = ({
     },
     [setPendingReplyMap],
   );
+
+  const handleAddNewOfficeEditorComment = useCallback(() => {
+    void core.getOfficeEditor().getCommentManager().addCommentThreadAtCurrentRange('').catch((error) => {
+      console.warn('Failed to add comment thread', error);
+    });
+  }, []);
 
   const [pendingAttachmentMap, setPendingAttachmentMap] = useState({});
   const addAttachments = (annotationID, attachments) => {
@@ -352,7 +360,7 @@ const NotesPanel = ({
   );
 
   const ariaLiveResultsContainer = () => {
-    const message = t(NOTES_PANEL_TEXTS[dataElement].title);
+    const message = t(notesPanelConfig.title);
     return (
       <p aria-live="assertive" style={{ position: 'absolute', left: '-9999px' }}>
         {notesToRender.length > 0 ? `${message} ${notesToRender.length}` : t('message.noResults')}
@@ -362,10 +370,10 @@ const NotesPanel = ({
 
   const NoAnnotationsGlyph = customEmptyPanel?.icon ?
     customEmptyPanel.icon :
-    NOTES_PANEL_TEXTS[dataElement].icon;
+    notesPanelConfig.icon;
   const NoAnnotationsMessage = customEmptyPanel?.message ?
     customEmptyPanel.message :
-    t(NOTES_PANEL_TEXTS[dataElement].noAnnotation);
+    t(notesPanelConfig.noAnnotation);
   const NoAnnotationsReadOnlyMessage =
     customEmptyPanel && customEmptyPanel.readOnlyMessage
       ? customEmptyPanel.readOnlyMessage
@@ -424,8 +432,11 @@ const NotesPanel = ({
     showOfficeEditorFooter
     && dataElement === DataElements.OFFICE_EDITOR_REVIEW_PANEL
     && notesToRender.length > 0;
+  const isOfficeEditorViewOnly = officeEditorEditMode === OfficeEditorEditMode.VIEW_ONLY || officeEditorEditMode === OfficeEditorEditMode.PREVIEW;
   const showCommentPanelFooter =
     showOfficeEditorFooter
+    && !core.getIsReadOnly(activeDocumentViewerKey)
+    && !isOfficeEditorViewOnly
     && dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL;
 
   return !showNotePanel ? null : (
@@ -518,7 +529,7 @@ const NotesPanel = ({
                 disabled={activeStream !== EditingStreamType.BODY}
                 label={`${t('action.add')} ${t('action.comment')}`}
                 ariaLabel={`${t('action.add')} ${t('action.comment')}`}
-                onClick={() => { }}
+                onClick={handleAddNewOfficeEditorComment}
               />
             </div>
           )}

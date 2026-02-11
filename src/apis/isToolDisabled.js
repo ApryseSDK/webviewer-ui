@@ -1,8 +1,8 @@
 /**
- * Checks if a tool is currently disabled in the UI
+ * Checks if a tool is currently disabled in the UI.
  * @method UI.isToolDisabled
  * @memberof UI
- * @param {string|Core.Tools.ToolNames} toolName The name of the tool, either from {@link Core.Tools.ToolNames} or the name you registered your custom tool with
+ * @param {string|Core.Tools.ToolNames} toolName The name of the tool, either from {@link Core.Tools.ToolNames} or the name you registered your custom tool with.
  * @returns {boolean} True if the tool is disabled, false otherwise. Returns false if the tool is not part of the UI configuration.
  * @see UI.enableTools
  * @see UI.disableTools

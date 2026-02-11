@@ -21,6 +21,7 @@
     "cut": "자르다",
     "paste": "반죽",
     "pasteWithoutFormatting": "서식 없이 붙여넣기",
+    "addComment": "댓글 추가",
     "delete": "삭제",
     "deleted": "삭제됨",
     "group": "그룹",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "텍스트르 입력하세요.",
     "unpostedComment": "게시되지 않은 댓글",
     "lockedLayer": "레이어가 잠겨 있습니다.",
-    "layerVisibililtyNoChange": "레이어 가시성을 변경할 수 없습니다.",
+    "layerVisibilityNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "noLayers": "이 문서에는 레이어가 없습니다.",
     "noSignatureFields": "이 문서에는 서명 필드가 없습니다.",
     "untitled": "제목없음",
@@ -488,11 +489,13 @@
       "replace": "바꾸다",
       "replaceAll": "모두 다 바꿔",
       "replaceText": "텍스트 바꾸기",
+      "replaceOptions": "교체 옵션",
       "confirmMessageReplaceAll": "모든 텍스트를 바꾸시겠습니까?",
       "confirmMessageReplaceOne": "이 텍스트를 바꾸시겠습니까?",
       "moreOptions": "추가 옵션",
       "lessOptions": "더 적은 옵션",
-      "confirm": "확인하다"
+      "confirm": "확인하다",
+      "filter": "필터"
     },
     "toolsOverlay": {
       "currentStamp": "현재 스탬프",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "글꼴 패밀리"
     },
-    "blankSheet": "빈 시트",
+    "blankSheet": "시트",
     "insertImage": "이미지 삽입"
   },
   "insertPageModal": {

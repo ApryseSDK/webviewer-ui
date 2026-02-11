@@ -1,5 +1,5 @@
 /**
- * An instance of MultiPageManipulationControls that can be used to add, update, or retrieve page manipulation controls in the multi-page manipulation overlay
+ * An instance of MultiPageManipulationControls that can be used to add, update, or retrieve page manipulation controls in the multi-page manipulation overlay.
  * @name UI.multiPageManipulationControls
  * @type {UI.MultiPageManipulationControls}
  * @example
@@ -38,10 +38,10 @@ WebViewer(...)
  */
 /**
  * @typedef {Object} UI.MultiPageManipulationControls.PageOperation
- * @property {string} title Title to be displayed for the operation
- * @property {string} img Path to the image to be used as an icon for the operation
- * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter
- * @property {string} dataElement Unique data element identifier for this operation
+ * @property {string} title Title to be displayed for the operation.
+ * @property {string} img Path to the image to be used as an icon for the operation.
+ * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter.
+ * @property {string} dataElement Unique data element identifier for this operation.
  */
 import actions from 'actions';
 import selectors from 'selectors';
@@ -54,12 +54,12 @@ const MultiPageManipulationControls = {
     return this;
   },
   /**
-   * Adds page manipulation operations to the multi-page manipulation controls. If a dataElement parameter is provided, the new operations will be added after that element. Otherwise, they will be added at the beginning.
+  * Adds page manipulation operations to the multi-page manipulation controls. If a dataElement parameter is provided, the new operations will be added after that element. Otherwise, they will be added at the beginning.
    * @method UI.MultiPageManipulationControls#add
    * @memberof UI.MultiPageManipulationControls
-   * @param {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} pageManipulationSections Array of sections to be added, each with its individual operations
+  * @param {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} pageManipulationSections Array of sections to be added, each with its individual operations.
    * @param {string} [dataElementToInsertAfter] The data element of the item to insert after. Can be 'leftPanelPageTabsRotate', 'leftPanelPageTabsOperations', 'leftPanelPageTabsMore', or a custom data element. If not provided, items will be added at the beginning. Call {@link UI.MultiPageManipulationControls#getItems getItems} to see existing items and their data elements.
-   * @returns {UI.MultiPageManipulationControls} The MultiPageManipulationControls instance for chaining
+  * @returns {UI.MultiPageManipulationControls} The MultiPageManipulationControls instance for chaining.
    * @example
 WebViewer(...)
   .then(function (instance) {
@@ -157,10 +157,10 @@ WebViewer(...)
   },
 
   /**
-   * Returns the current array of items in the MultiPageManipulationControls
+   * Returns the current array of items in the MultiPageManipulationControls.
    * @method UI.MultiPageManipulationControls#getItems
    * @memberof UI.MultiPageManipulationControls
-   * @returns {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} The current page manipulation sections in the controls
+   * @returns {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} The current page manipulation sections in the controls.
    * @example
 WebViewer(...)
   .then(function(instance) {

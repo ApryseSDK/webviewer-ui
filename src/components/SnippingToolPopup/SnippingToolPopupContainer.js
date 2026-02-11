@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import SnippingToolPopup from './SnippingToolPopup';
 import './SnippingToolPopup.scss';
 import Draggable from 'react-draggable';
@@ -14,6 +14,7 @@ import { focusActiveIcon } from 'components/DocumentCropPopup/DocumentCropPopupC
 import useDraggablePosition from '../../hooks/useDraggablePosition';
 
 function SnippingToolPopupContainer() {
+  const { core } = useCore();
   const snippingToolName = window.Core.Tools.ToolNames['SNIPPING'];
   const snippingCreateTool = core.getTool(snippingToolName);
   const [
@@ -111,7 +112,7 @@ function SnippingToolPopupContainer() {
   };
 
   const snippingPopupRef = useRef();
-  const { position, handleDrag, handleStop, containerRef, style, bounds } = useDraggablePosition('top-right');
+  const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds } = useDraggablePosition('top-right');
 
   const closeAndReset = () => {
     snippingCreateTool.reset();
@@ -162,7 +163,7 @@ function SnippingToolPopupContainer() {
       <Draggable
         cancel={'input, button, .collapsible-menu, .ui__choice__label'}
         position={position}
-        bounds={bounds}
+        bounds={dragBounds}
         onDrag={handleDrag}
         onStop={handleStop}
       >
@@ -171,8 +172,9 @@ function SnippingToolPopupContainer() {
           ref={(el) => {
             snippingPopupRef.current = el;
             containerRef.current = el;
+            setOverlayRef(el);
           }}
-          style={style}
+          style={initialOffset}
         >
           <SnippingToolPopup {...props} />
         </div>

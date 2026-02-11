@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
@@ -13,6 +13,7 @@ import { getButtonPressedAnnouncement } from 'helpers/accessibility';
  * @memberof UI.Components.PresetButton
  */
 const FormFieldEditButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const {
     isFlyoutItem,
     style,

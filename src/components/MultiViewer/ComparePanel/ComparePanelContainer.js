@@ -4,10 +4,11 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 
 const ComparePanelContainer = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.COMPARE_PANEL));
   const currentWidth = useSelector((state) => selectors.getComparePanelWidth(state));

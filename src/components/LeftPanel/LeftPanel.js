@@ -15,7 +15,7 @@ import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
 import NotesPanel from 'components/NotesPanel';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import actions from 'actions';
 import { isMobileSize, isTabletAndMobileSize } from 'helpers/getDeviceSize';
@@ -25,6 +25,7 @@ import DataElements from 'constants/dataElement';
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
+  const { core } = useCore();
   const isMobile = isMobileSize();
   const isTabletAndMobile = isTabletAndMobileSize();
 

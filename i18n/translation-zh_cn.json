@@ -21,6 +21,7 @@
     "cut": "切",
     "paste": "粘贴",
     "pasteWithoutFormatting": "不带格式粘贴",
+    "addComment": "添加评论",
     "delete": "删除",
     "deleted": "已删除",
     "group": "组",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "印章文字不能为空",
     "unpostedComment": "未发布评论",
     "lockedLayer": "图层已锁定",
-    "layerVisibililtyNoChange": "图层可见性无法更改",
+    "layerVisibilityNoChange": "图层可见性无法更改",
     "noLayers": "该文档没有图层。",
     "noSignatureFields": "该文档没有签名字段。",
     "untitled": "无标题",
@@ -488,11 +489,13 @@
       "replace": "代替",
       "replaceAll": "全部替换",
       "replaceText": "替换文本",
+      "replaceOptions": "替换选项",
       "confirmMessageReplaceAll": "您确定要替换所有文本吗？",
       "confirmMessageReplaceOne": "您确定要替换此文本吗？",
       "moreOptions": "更多选择",
       "lessOptions": "更少的选择",
-      "confirm": "确认"
+      "confirm": "确认",
+      "filter": "筛选"
     },
     "toolsOverlay": {
       "currentStamp": "目前的邮票",

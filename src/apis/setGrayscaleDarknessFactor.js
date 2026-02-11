@@ -1,9 +1,9 @@
 import { setGrayscaleDarknessFactor } from 'helpers/grayScaleHelper';
 
 /**
- * Set Grayscale Darkness Factor for printing in Grayscale
+ * Set Grayscale Darkness Factor for printing in Grayscale.
  * @method UI.setGrayscaleDarknessFactor
- * @param {number} darknessFactor Default is '1', '0' is fully black and white
+ * @param {number} darknessFactor Default is '1', '0' is fully black and white.
  * @example
  WebViewer(...)
  .then(function(instance) {

@@ -54,6 +54,14 @@ export default (state) => {
     window.Core.Tools.FreeTextCreateTool.setTextHandler(() => t('message.insertTextHere'));
 
     window.Core.Tools.CalloutCreateTool.setTextHandler(() => t('message.insertTextHere'));
+
+    window.Core.Tools.ArcMeasurementCreateTool.setMeasurementLabelsHandler(() => {
+      return {
+        length: t('option.measurementOverlay.length'),
+        radius: t('option.measurementOverlay.radius'),
+        angle: t('option.measurementOverlay.angle'),
+      };
+    });
   };
 
   if (state.advanced.disableI18n) {

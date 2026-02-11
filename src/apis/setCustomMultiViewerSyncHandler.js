@@ -3,8 +3,8 @@ import actions from 'actions';
 /**
  * @callback CustomMultiViewerSyncHandler
  * @memberof UI
- * @param {number} primaryDocumentViewerKey The primary documentViewerKey to be used when syncing
- * @param {Array<function>} removeHandlerFunctions The event listeners to remove when syncing is finished
+ * @param {number} primaryDocumentViewerKey The primary documentViewerKey to be used when syncing.
+ * @param {Array<function>} removeHandlerFunctions The event listeners to remove when syncing is finished.
  */
 
 /**

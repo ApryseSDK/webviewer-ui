@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import './SelectedStamp.scss';
 
 const SelectedStamp = ({ tReady, toolName }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   useEffect(() => {
     const selectedStampArray = core.getToolsFromAllDocumentViewers(toolName);

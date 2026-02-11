@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
+import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
 import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 
 const StylePanelFlyout = () => {
   const dispatch = useDispatch();
+  const currentFlyout = useSelector((state) => selectors.getFlyout(state, DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT));
 
   useEffect(() => {
     const StylePanelFlyout = {
       dataElement: DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT,
-      className: 'StylePanelFlyout',
+      className: 'MultiSelectStylePanelFlyout',
       items: [
         {
           'dataElement': 'stylePanelInFlyout',
@@ -18,7 +20,12 @@ const StylePanelFlyout = () => {
         },
       ]
     };
-    dispatch(actions.addFlyout(StylePanelFlyout));
+
+    if (!currentFlyout) {
+      dispatch(actions.addFlyout(StylePanelFlyout));
+    } else {
+      dispatch(actions.updateFlyout(StylePanelFlyout.dataElement, StylePanelFlyout));
+    }
   }, []);
 
   return null;

@@ -1,18 +1,24 @@
 /**
- * The preset button for toggling bold style
+ * A button that toggles bold text formatting.
  * @name boldButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for toggling italic style
+ * A button that toggles italic text formatting.
  * @name italicButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for toggling underline style
+ * A button that toggles underline text formatting.
  * @name underlineButton
+ * @memberof UI.Components.PresetButton
+ */
+
+/**
+ * A button that toggles strikeout text formatting.
+ * @name strikeoutButton
  * @memberof UI.Components.PresetButton
  */
 

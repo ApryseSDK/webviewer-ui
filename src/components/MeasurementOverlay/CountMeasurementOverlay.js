@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 CountMeasurementOverlay.propTypes = {
@@ -12,6 +12,7 @@ CountMeasurementOverlay.propTypes = {
 function CountMeasurementOverlay(props) {
   const annotationKey = mapAnnotationToKey(props.annotation);
   const { icon } = getDataWithKey(annotationKey);
+  const { core } = useCore();
   const { t } = useTranslation();
   const annotationList = core.getAnnotationsList();
 

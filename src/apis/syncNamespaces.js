@@ -2,7 +2,7 @@ import core from 'core';
 import { getInstanceNode } from 'helpers/getRootNode';
 
 /**
- * Syncs the namespaces under the Core namespace for the window, this instance, as well as others instances.
+ * Syncs the namespaces under the Core namespace for the window, this instance, as well as other instances.
  * <br/><br/>
  * This is required for interoperability between multiple instances of WebViewer since each loaded instance ends up with different class references despite sharing the same name.
  * @method UI.syncNamespaces

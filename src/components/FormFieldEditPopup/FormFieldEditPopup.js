@@ -13,6 +13,7 @@ import './FormFieldEditPopup.scss';
 import CreatableList from '../CreatableList';
 import FormFieldEditPopupIndicator from './FormFieldEditPopupIndicator';
 import { createDimensionChangeHandlers } from 'helpers/formFieldEditPopupHelpers';
+import useCore from 'hooks/useCore';
 
 const propTypes = {
   fields: PropTypes.array.isRequired,
@@ -45,6 +46,7 @@ const FormFieldEditPopup = ({
   getPageWidth,
   indicator,
 }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const className = classNames({
     Popup: true,
@@ -59,7 +61,8 @@ const FormFieldEditPopup = ({
     getPageWidth,
     getPageHeight,
     setWidth,
-    setHeight
+    setHeight,
+    core,
   );
 
   const popupRef = useRef(null);

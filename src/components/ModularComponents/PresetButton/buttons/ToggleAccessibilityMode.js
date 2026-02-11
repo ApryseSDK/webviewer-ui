@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getPresetButtonDOM } from 'components/ModularComponents/Helpers/menuItems';
 import FlyoutItemContainer from 'components/ModularComponents/FlyoutItemContainer';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
@@ -14,6 +14,7 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
  * @memberof UI.Components.PresetButton
  */
 const ToggleAccessibilityMode = forwardRef((props, ref) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const store = useStore();
   const {
@@ -43,6 +44,16 @@ const ToggleAccessibilityMode = forwardRef((props, ref) => {
     }
     dispatch(actions.setShouldAddA11yContentToDOM(!shouldAddA11yContentToDOM));
   };
+
+  useEffect(() => {
+    if (!store?.getState()?.advanced?.fullAPI) {
+      console.warn('FullAPI is required to use accessibility mode');
+    }
+  }, [store]);
+
+  if (!isAccessibleMode) {
+    return null;
+  }
 
   return (
     isFlyoutItem ?

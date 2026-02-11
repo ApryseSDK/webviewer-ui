@@ -396,6 +396,7 @@ const getPanelsToCheck = () =>
   PANELS_META.map((p) => ({ ...p, name: getTranslatedText(p.key) }));
 
 TabPanelInApplication.parameters = {
+  layout: 'fullscreen',
   test: {
     // For issues with mocks that are unrelated to the test
     dangerouslyIgnoreUnhandledErrors: true,
@@ -419,7 +420,10 @@ TabPanelInApplication.play = async ({ canvasElement }) => {
 };
 
 export const ViewOnlyTabPanel = (args, context) => (TabPanelInApp(context, 'left', 'viewOnlyPanel'));
-ViewOnlyTabPanel.parameters = window.storybook.disableRtlMode;
+ViewOnlyTabPanel.parameters = {
+  layout: 'fullscreen',
+  ...window.storybook.disableRtlMode,
+};
 
 ViewOnlyTabPanel.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

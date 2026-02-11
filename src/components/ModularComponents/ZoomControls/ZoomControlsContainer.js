@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,8 +9,10 @@ import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponent
 import PropTypes from 'prop-types';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 import { defaultZoomList } from 'constants/zoomFactors';
+import useCore from 'hooks/useCore';
 
 const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className }) => {
+  const { core } = useCore();
   const flyoutElement = `${dataElement}Flyout`;
   const [zoomValue, setZoomValue] = useState('100');
   const dispatch = useDispatch();
@@ -35,8 +36,9 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
         isOfficeEditorMode: isOfficeEditorMode(),
         dispatch,
         size,
-        onZoomChanged: setZoomValue
-      })
+        onZoomChanged: setZoomValue,
+        core,
+      }),
     };
     dispatch(actions.setZoomList(zoomList));
     dispatch(actions.updateFlyout(flyoutElement, zoomFlyoutMenu));
@@ -93,7 +95,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   const {
     onZoomInClicked,
     onZoomOutClicked,
-  } = getZoomHandlers(dispatch, size, setZoomValue);
+  } = getZoomHandlers(dispatch, size, setZoomValue, core);
 
   const getCurrentZoom = () => {
     return Math.ceil(core.getZoom() * 100).toString();

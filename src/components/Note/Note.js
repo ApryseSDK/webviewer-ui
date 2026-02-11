@@ -12,7 +12,7 @@ import Button from 'components/Button';
 
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 import useDidUpdate from 'hooks/useDidUpdate';
 import DataElements from 'constants/dataElement';
@@ -42,6 +42,7 @@ const Note = ({
   isCustomPanelOpen,
   shouldHideConnectorLine,
 }) => {
+  const { core } = useCore();
   const {
     isSelected,
     resize,
@@ -210,7 +211,6 @@ const Note = ({
       if (isOfficeEditorMode) {
         const trackedChangeId = annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
         await core.getOfficeEditor().moveCursorToTrackedChange(trackedChangeId);
-        core.getOfficeEditor().freezeMainCursor();
       }
     }
   };

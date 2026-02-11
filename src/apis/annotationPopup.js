@@ -1,5 +1,5 @@
 /**
- * An instance of Popup that can be used to edit items in the annotation popup component
+ * An instance of Popup that can be used to edit items in the annotation popup component.
  * @name UI.annotationPopup
  * @type {UI.Popup}
  * @example

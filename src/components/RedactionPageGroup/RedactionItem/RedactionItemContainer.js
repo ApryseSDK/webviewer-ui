@@ -2,11 +2,12 @@ import React, { useCallback, useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import RedactionItem from './RedactionItem';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { RedactionPanelContext } from '../../RedactionPanel/RedactionPanelContext';
 
 const RedactionItemContainer = (props) => {
   const { annotation } = props;
+  const { core } = useCore();
 
   const { selectedRedactionItemId, setSelectedRedactionItemId } = useContext(RedactionPanelContext);
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import { restoreSelection, keepTextEditSelectionOnInputFocus } from './pdfEditHelper';
 import Dropdown from 'components/Dropdown';
@@ -47,6 +47,7 @@ const FontSizeDropdown = ({
   width,
   disableFocusing = false,
 }) => {
+  const { core } = useCore();
   const [sizes, setSizes] = useState([]);
   const [currentFontSize, setCurrentFontSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
 

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
@@ -45,6 +45,7 @@ const OfficeEditorMarginDropdown = ({
   isFlyoutItem,
   onKeyDownHandler,
 }) => {
+  const { core } = useCore();
   const [selectedKey, setSelectedKey] = useState('');
   const [t] = useTranslation();
   const dispatch = useDispatch();

@@ -10,7 +10,6 @@ import {
   processColorAnnotations,
   createLayerDocument,
 } from './embeddedPrintHelper';
-import core from 'core';
 
 /**
  * Handle different process of embedded print for iOS Safari
@@ -23,11 +22,12 @@ export const iosWindowOpen = () => {
 
 /**
  * Helper function to check if embedded print is supported
+ * @param {object} core - core object
  * @param {boolean} isEmbedPrintSupported a check if useEmbeddedPrint is toggled and not an Android device
  * @returns {boolean} true if embedded print is supported
  * @ignore
  */
-export const canEmbedPrint = (isEmbedPrintSupported) => {
+export const canEmbedPrint = (core, isEmbedPrintSupported) => {
   const supportedFileTypes = [
     workerTypes.PDF,
   ];
@@ -55,13 +55,14 @@ export const embeddedPrintNoneSupportedOptions = (options) => {
 
 /**
  * Creates an embedded PDF document for printing with the specified pages and options.
+ * @param {object} core Core object
  * @param {object} options print options
  * @param {window.Core.Document} document document to print
  * @param {window.Core.AnnotationManager} annotationManager annotation manager object
  * @returns {window.Core.Document} pdf
  * @ignore
  */
-export const processEmbeddedPrintOptions = async (options, document, annotationManager) => {
+export const processEmbeddedPrintOptions = async (core, options, document, annotationManager) => {
   const {
     includeAnnotations,
     includeComments,
@@ -81,6 +82,7 @@ export const processEmbeddedPrintOptions = async (options, document, annotationM
   };
   try {
     const pdf = await createEmbeddedPrintPages(
+      core,
       document,
       annotationManager,
       pagesToPrintArray,
@@ -96,6 +98,7 @@ export const processEmbeddedPrintOptions = async (options, document, annotationM
 
 /**
  * Creates am embedded PDF document for printing with the specified pages and options.
+ * @param {object} core Core object
  * @param {window.Core.Document} document document to print
  * @param {window.Core.AnnotationManager} annotationManager Manage document annotations
  * @param {number[]} pagesToPrint array of page numbers to print
@@ -105,6 +108,7 @@ export const processEmbeddedPrintOptions = async (options, document, annotationM
  * @ignore
  */
 export const createEmbeddedPrintPages = async (
+  core,
   document,
   annotationManager,
   pagesToPrint,
@@ -122,8 +126,8 @@ export const createEmbeddedPrintPages = async (
     const watermarkedDocument = await applyWatermark(processedBaseDoc, watermarkModalOptions);
     const xfdfString = await prepareAnnotations(annotationManager, pagesToPrint, printingOptions);
     return isAlwaysPrintAnnotationsInColorEnabled
-      ? await processColorAnnotations(document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint)
-      : await processStandardDocument(document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint);
+      ? await processColorAnnotations(core, document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint)
+      : await processStandardDocument(core, document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint);
   } catch (error) {
     console.error('Error creating embedded print pages:', error);
     throw error;

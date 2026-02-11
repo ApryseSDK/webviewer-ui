@@ -13,7 +13,7 @@ import OutlineContent from 'components/OutlineContent';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PropTypes from 'prop-types';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import outlineUtils from 'helpers/OutlineUtils';
 import { shouldEndAccessibleReadingOrderMode } from 'helpers/accessibility';
 import DataElements from 'constants/dataElement';
@@ -92,6 +92,7 @@ OutlineListItem.propTypes = {
 };
 
 const OutlinesPanel = ({ isTest = false }) => {
+  const { core } = useCore();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL));
   const outlines = useSelector(selectors.getOutlines, shallowEqual);
   const outlineEditingEnabled = useSelector(selectors.getOutlineEditingEnabled);
@@ -398,6 +399,8 @@ const OutlinesPanel = ({ isTest = false }) => {
     return null;
   }
 
+  const testModeProps = isTest ? { initialItemCount: outlines?.length } : {};
+
   return (
     <div
       className={classNames('Panel OutlinesPanel bookmark-outline-panel', { 'modular-ui-panel': customizableUI })}
@@ -481,7 +484,7 @@ const OutlinesPanel = ({ isTest = false }) => {
                 components={virtuosoComponents}
                 computeItemKey={(_, outline) => outlineUtils.getOutlineId(outline)}
                 itemContent={renderOutlineItem}
-                initialItemCount={isTest ? outlines?.length : undefined}
+                {...testModeProps}
               />
             </div>
           </DndProvider>

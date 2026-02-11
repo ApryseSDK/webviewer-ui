@@ -4,22 +4,25 @@ import selectors from 'selectors';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import { printPages } from 'helpers/print';
 import { createRasterizedPrintPages } from 'helpers/rasterPrint';
 import { processEmbeddedPrintOptions, printEmbeddedPDF } from 'helpers/embeddedPrint';
 import PrintModal from './PrintModal';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import usePageRanges, { PAGE_RANGES } from 'src/hooks/usePageRanges';
 
 import './PrintModal.scss';
 
 const PrintModalContainer = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.PRINT_MODAL));
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.PRINT_MODAL));
   const isApplyWatermarkDisabled = useSelector((state) => selectors.isElementDisabled(state, 'applyWatermark'));
-  const currentPage = useSelector(selectors.getCurrentPage);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
   const printQuality = useSelector(selectors.getPrintQuality);
   const defaultPrintOptions = useSelector(selectors.getDefaultPrintOptions, shallowEqual);
   const sortStrategy = useSelector(selectors.getSortStrategy);
@@ -42,8 +45,18 @@ const PrintModalContainer = () => {
   const [isWatermarkModalVisible, setIsWatermarkModalVisible] = useState(false);
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
-  const [isCurrentView, setIsCurrentView] = useState(false);
-  const [isCurrentViewDisabled, setIsCurrentViewDisabled] = useState(false);
+  const {
+    pageRange,
+    setPageRange,
+    onPageRangeChange,
+    hasPageNumberError,
+    onError,
+    specifiedPages,
+    setSpecifiedPages,
+    hasSpecifiedPages,
+    isCurrentViewDisabled,
+    setIsCurrentViewDisabled,
+  } = usePageRanges();
 
   useEffect(() => {
     if (defaultPrintOptions) {
@@ -68,7 +81,7 @@ const PrintModalContainer = () => {
         DataElements.ERROR_MODAL,
       ]));
     }
-  }, [isOpen, dispatch]);
+  }, [isOpen, dispatch, core]);
 
   const checkCurrentView = () => {
     if (isCurrentViewDisabled) {
@@ -101,6 +114,7 @@ const PrintModalContainer = () => {
   };
 
   const embeddedPrinting = async () => {
+    const isCurrentView = pageRange === PAGE_RANGES.CURRENT_VIEW;
     const isAlwaysPrintAnnotationsInColorEnabled = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
     const printingOptions = {
       isCurrentView,
@@ -115,7 +129,7 @@ const PrintModalContainer = () => {
     setPagesAreProcessing(true);
     const document = core.getDocument();
     const annotationManager = core.getAnnotationManager();
-    const embeddedPrintOptions = await processEmbeddedPrintOptions(printingOptions, document, annotationManager);
+    const embeddedPrintOptions = await processEmbeddedPrintOptions(core, printingOptions, document, annotationManager);
 
     await printEmbeddedPDF(embeddedPrintOptions);
 
@@ -143,6 +157,8 @@ const PrintModalContainer = () => {
       core.setWatermark(existingWatermarksRef.current);
     }
 
+    const isCurrentView = pageRange === PAGE_RANGES.CURRENT_VIEW;
+
     const printOptions = {
       includeComments,
       includeAnnotations,
@@ -159,9 +175,10 @@ const PrintModalContainer = () => {
     };
 
     const createPages = createRasterizedPrintPages(
+      core,
       pagesToPrint,
       printOptions,
-      undefined
+      undefined,
     );
 
     setPagesAreProcessing(true);
@@ -172,7 +189,7 @@ const PrintModalContainer = () => {
 
     Promise.all(createPages)
       .then((pages) => {
-        printPages(pages);
+        printPages(core, pages);
       })
       .catch((e) => {
         console.error(e);
@@ -201,7 +218,14 @@ const PrintModalContainer = () => {
       printQuality={printQuality}
       isGrayscale={isGrayscale}
       setIsGrayscale={setIsGrayscale}
-      setIsCurrentView={setIsCurrentView}
+      pageRange={pageRange}
+      setPageRange={setPageRange}
+      onPageRangeChange={onPageRangeChange}
+      hasPageNumberError={hasPageNumberError}
+      onError={onError}
+      specifiedPages={specifiedPages}
+      setSpecifiedPages={setSpecifiedPages}
+      hasSpecifiedPages={hasSpecifiedPages}
       isCurrentViewDisabled={isCurrentViewDisabled}
       checkCurrentView={checkCurrentView}
       includeAnnotations={includeAnnotations}

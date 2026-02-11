@@ -21,6 +21,7 @@
     "cut": "Střih",
     "paste": "Vložit",
     "pasteWithoutFormatting": "Vložit bez formátování",
+    "addComment": "Přidat komentář",
     "delete": "Vymazat",
     "deleted": "Smazáno",
     "group": "Skupina",
@@ -331,7 +332,7 @@
     "emptyCustomStampInput": "Text razítka nemůže být prázdný",
     "unpostedComment": "Nezveřejněný komentář",
     "lockedLayer": "Vrstva je uzamčena",
-    "layerVisibililtyNoChange": "Viditelnost vrstvy nelze změnit",
+    "layerVisibilityNoChange": "Viditelnost vrstvy nelze změnit",
     "noLayers": "Tento dokument nemá žádné vrstvy.",
     "noSignatureFields": "Tento dokument neobsahuje žádná pole pro podpis.",
     "untitled": "Nepojmenovaná",
@@ -488,11 +489,13 @@
       "replace": "Nahradit",
       "replaceAll": "Vyměnit vše",
       "replaceText": "Nahradit text",
+      "replaceOptions": "Možnosti nahrazení",
       "confirmMessageReplaceAll": "Opravdu chcete nahradit veškerý text?",
       "confirmMessageReplaceOne": "Opravdu chcete tento text nahradit?",
       "moreOptions": "Více možností",
       "lessOptions": "Méně možností",
-      "confirm": "Potvrdit"
+      "confirm": "Potvrdit",
+      "filter": "Filtr"
     },
     "toolsOverlay": {
       "currentStamp": "Aktuální razítko",
@@ -1536,7 +1539,7 @@
     "fontFamily": {
       "dropdownLabel": "Rodina písem"
     },
-    "blankSheet": "Prázdný list",
+    "blankSheet": "List",
     "insertImage": "Vložit obrázek"
   },
   "insertPageModal": {
