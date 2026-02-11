@@ -4,7 +4,7 @@ import RedactionPanel from './RedactionPanel';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import applyRedactions from 'helpers/applyRedactions';
 import { RedactionPanelContext, RedactionPanelProvider } from './RedactionPanelContext';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -14,6 +14,7 @@ import RedactionSearchPanel from 'components/RedactionSearchPanel';
 import { defaultRedactionTypes } from 'constants/redactionTypes';
 
 export const RedactionPanelContainer = (props) => {
+  const { core } = useCore();
   const [
     isOpen,
     isDisabled,

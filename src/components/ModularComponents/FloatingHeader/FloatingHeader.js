@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ModularHeaderItems from 'components/ModularHeaderItems';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { DEFAULT_GAP, OPACITY_LEVELS, OPACITY_MODES, PLACEMENT } from 'constants/customizationVariables';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import debounce from 'lodash/debounce';
 
 const HIDE_FLOATING_HEADER_TIMEOUT = 4000;
@@ -19,6 +19,7 @@ const FloatingHeader = (props) => {
     maxHeight,
     style,
   } = props;
+  const { core } = useCore();
 
   const [isVisible, setIsVisible] = useState(false);
   const scrollViewContainer = core.getScrollViewElement();

@@ -9,9 +9,10 @@ import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const GroupedItems = (props) => {
+  const { core } = useCore();
   const {
     dataElement,
     items,

@@ -1,5 +1,5 @@
 /**
- * Toggles full scree mode of the browser.
+ * Toggles full screen mode of the browser.
  * @method UI.toggleFullScreen
  * @example
 WebViewer(...)

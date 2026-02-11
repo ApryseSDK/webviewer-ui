@@ -5,7 +5,7 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
-import { EditorModes } from 'helpers/hotkeysManager';
+import { EditorModes } from 'helpers/hotkeysUtils';
 import { isMac } from 'helpers/device';
 import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
 import { SearchWrapper } from './SearchWrapper';

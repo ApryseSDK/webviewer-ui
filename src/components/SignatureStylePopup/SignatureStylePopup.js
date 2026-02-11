@@ -5,7 +5,7 @@ import selectors from 'selectors';
 import Icon from 'components/Icon';
 import SignatureRowContent from './SignatureRowContent';
 import SignatureAddBtn from './SignatureAddBtn';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import defaultTool from 'constants/defaultTool';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
@@ -60,6 +60,7 @@ const SavedSignatures = (props) => {
 };
 
 const SignatureStylePopup = (props) => {
+  const { core } = useCore();
   const { t } = props;
   const [
     activeToolName,

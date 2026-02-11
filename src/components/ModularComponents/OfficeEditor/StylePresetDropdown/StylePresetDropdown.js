@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import { AVAILABLE_STYLE_PRESET_MAP } from 'constants/officeEditor';
@@ -18,6 +18,7 @@ const propTypes = {
 };
 
 const StylePresetDropdown = (props) => {
+  const { core } = useCore();
   const { isFlyoutItem, activeFlyout, onKeyDownHandler } = props;
   const dispatch = useDispatch();
   const [

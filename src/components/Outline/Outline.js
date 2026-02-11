@@ -5,7 +5,10 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
+// For canDrag() function
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -58,6 +61,7 @@ const Outline = forwardRef(
     ref
   ) {
     const outlines = useSelector((state) => selectors.getOutlines(state));
+    const { core } = useCore();
     const outlinesStateMap = useSelector(selectors.getOutlinesStateMap, shallowEqual);
 
     const {

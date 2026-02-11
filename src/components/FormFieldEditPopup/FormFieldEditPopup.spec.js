@@ -2,14 +2,20 @@ import React from 'react';
 import { render, fireEvent, getByText, getByDisplayValue, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormFieldEditPopup from './FormFieldEditPopup';
-import { Basic } from './FormFieldEditPopup.stories';
 import core from 'core';
 
 jest.mock('core', () => ({
   getAnnotationManager: jest.fn(),
+  getDocumentViewer: jest.fn(() => ({
+    getAnnotationManager: jest.fn(),
+  })),
 }));
 
-const BasicFormFieldEditPopupStory = withI18n(Basic);
+jest.mock('components/FormFieldPanel/utils', () => ({
+  ...jest.requireActual('components/FormFieldPanel/utils'),
+  redrawAnnotation: jest.fn(),
+  triggerAnnotationChangedEventWithModify: jest.fn(),
+}));
 
 const TestFormFieldEditPopup = withProviders(FormFieldEditPopup);
 
@@ -107,6 +113,9 @@ describe('FormFieldEditPopup', () => {
       drawAnnotationsFromList: jest.fn(),
     };
     core.getAnnotationManager.mockReturnValue(mockAnnotationManager);
+    core.getDocumentViewer.mockReturnValue({
+      getAnnotationManager: jest.fn(() => mockAnnotationManager),
+    });
   });
 
   afterEach(() => {
@@ -114,12 +123,6 @@ describe('FormFieldEditPopup', () => {
   });
 
   describe('Component', () => {
-    it('Story should not throw any errors', () => {
-      expect(() => {
-        render(<BasicFormFieldEditPopupStory />);
-      }).not.toThrow();
-    });
-
     it('Renders an input for each of the Fields passed in', () => {
       const { container } = render(
         <TestFormFieldEditPopup

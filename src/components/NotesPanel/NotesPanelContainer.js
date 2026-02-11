@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+/* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import NotesPanel from './NotesPanel';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -61,7 +62,10 @@ function NotesPanelContainer(props) {
 
     const isListableAnnotation = annot.Listable && !isWidgetAnnotation;
     const isInFormCreationMode = isWidgetAnnotation && formFieldCreationManager.isInFormFieldCreationMode();
-    const isValidForOfficeEditor = !isOfficeEditorMode || mapAnnotationToKey(annot) === annotationMapKeys.TRACKED_CHANGE;
+    const annotationKey = mapAnnotationToKey(annot);
+    const isOfficeEditorComment = dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL && annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+    const isTrackedChange = dataElement === DataElements.OFFICE_EDITOR_REVIEW_PANEL && annotationKey === annotationMapKeys.TRACKED_CHANGE;
+    const isValidForOfficeEditor = !isOfficeEditorMode || isOfficeEditorComment || isTrackedChange;
 
     return (
       (isListableAnnotation || isInFormCreationMode) &&
@@ -184,6 +188,14 @@ function NotesPanelContainer(props) {
       }
     };
   }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, multiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
+
+  // Exit multi-select mode when multi-select is disabled via API
+  useEffect(() => {
+    if (!isNotesPanelMultiSelectEnabled && isMultiSelectMode) {
+      setMultiSelectMode(false);
+      core.getAnnotationManager().deselectAnnotations(core.getSelectedAnnotations(), activeDocumentViewerKey);
+    }
+  }, [isNotesPanelMultiSelectEnabled]);
 
   function getGroupedAnnots(selectedAnnotations) {
     const mainAnnot = selectedAnnotations.find((annot) => annot.isGrouped());

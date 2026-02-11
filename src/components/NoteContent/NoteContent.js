@@ -22,7 +22,7 @@ import setReactQuillContent from 'helpers/setReactQuillContent';
 import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import { isMobile } from 'helpers/device';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getDataWithKey, mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import Theme from 'constants/theme';
 import useDidUpdate from 'hooks/useDidUpdate';
@@ -67,6 +67,7 @@ const NoteContent = ({
   handleNoteClick = () => {},
 }) => {
 
+  const { core } = useCore();
   const noteDateFormat = useSelector((state) => selectors.getNoteDateFormat(state));
   const iconColor = useSelector((state) => selectors.getIconColor(state, mapAnnotationToKey(annotation), shallowEqual));
   const isNoteStateDisabled = useSelector((state) => selectors.isElementDisabled(state, 'noteStateFlyout'));
@@ -495,7 +496,7 @@ const ContentArea = ({
   } = useContext(NoteContext);
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
-
+  const { core } = useCore();
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isAnyCustomPanelOpen || (isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {

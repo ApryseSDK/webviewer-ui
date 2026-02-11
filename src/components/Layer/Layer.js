@@ -39,7 +39,7 @@ function Layer(props) {
   if (layer.locked) {
     tooltipContent = t('message.lockedLayer');
   } else if (layer.disabled) {
-    tooltipContent = t('message.layerVisibililtyNoChange');
+    tooltipContent = t('message.layerVisibilityNoChange');
   }
 
   return (

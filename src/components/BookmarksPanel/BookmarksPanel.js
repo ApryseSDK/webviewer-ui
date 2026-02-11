@@ -8,17 +8,16 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import DataElements from 'constants/dataElement';
 import Choice from 'components/Choice';
 import TextButton from '../TextButton';
-
-import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import '../../constants/bookmarksOutlinesShared.scss';
 import './BookmarksPanel.scss';
 import classNames from 'classnames';
+import useCore from 'hooks/useCore';
 
 const BookmarksPanel = ({ panelSelector }) => {
-
+  const { core } = useCore();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL));
   const bookmarks = useSelector(selectors.getBookmarks, shallowEqual);
   const currentPageIndex = useSelector((state) => selectors.getCurrentPage(state) - 1);

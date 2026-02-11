@@ -5,7 +5,7 @@ import PageManipulationControls from './PageManipulationControls';
 import PageAdditionalControls from 'components/PageManipulationOverlay/PageAdditionalControls';
 import CustomPageManipulationOperations from './CustomPageManipulationOperations';
 import { workerTypes } from 'constants/types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import { useDispatch } from 'react-redux';
 import DataElements from 'src/constants/dataElement';
@@ -39,6 +39,8 @@ function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulatio
 
 function PageManipulationOverlay(props) {
   const { pageNumbers, pageManipulationOverlayItems } = props;
+
+  const { core } = useCore();
 
   const dispatch = useDispatch();
 

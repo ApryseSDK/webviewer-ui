@@ -1,7 +1,7 @@
 import actions from 'actions';
 
 /**
- * Disable the confirmation modal when applying a crop to a page
+ * Disable the confirmation modal when applying a crop to a page.
  *
  * @method UI.disableApplyCropWarningModal
  * @example

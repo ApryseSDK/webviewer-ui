@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Stämpeltexten får inte vara tom",
     "unpostedComment": "Ej postad kommentar",
     "lockedLayer": "Lagret är låst",
-    "layerVisibililtyNoChange": "Lagrets synlighet kan inte ändras",
+    "layerVisibilityNoChange": "Lagrets synlighet kan inte ändras",
     "noLayers": "Detta dokument har inga lager.",
     "noSignatureFields": "Detta dokument har inga signaturfält.",
     "untitled": "Ofrälse",
@@ -488,11 +488,13 @@
       "replace": "Byta ut",
       "replaceAll": "Ersätt alla",
       "replaceText": "Byt ut text",
+      "replaceOptions": "Ersätt alternativ",
       "confirmMessageReplaceAll": "Är du säker på att du vill ersätta all text?",
       "confirmMessageReplaceOne": "Är du säker på att du vill ersätta den här texten?",
       "moreOptions": "Fler alternativ",
       "lessOptions": "Mindre alternativ",
-      "confirm": "Bekräfta"
+      "confirm": "Bekräfta",
+      "filter": "Filtrera"
     },
     "toolsOverlay": {
       "currentStamp": "Nuvarande stämpel",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Typsnittsfamilj"
     },
-    "blankSheet": "Tomt ark",
+    "blankSheet": "Ark",
     "insertImage": "Infoga bild"
   },
   "insertPageModal": {

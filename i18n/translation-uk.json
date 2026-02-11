@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
     "unpostedComment": "Неопублікований коментар",
     "lockedLayer": "Шар заблокований",
-    "layerVisibililtyNoChange": "Видимість шару не можна змінити",
+    "layerVisibilityNoChange": "Видимість шару не можна змінити",
     "noLayers": "Цей документ не має шарів.",
     "noSignatureFields": "Цей документ не має полів для підпису.",
     "untitled": "Без назви",
@@ -488,11 +488,13 @@
       "replace": "Замінити",
       "replaceAll": "Замінити все",
       "replaceText": "Замінити текст",
+      "replaceOptions": "Замінити параметри",
       "confirmMessageReplaceAll": "Ви впевнені, що хочете замінити весь текст?",
       "confirmMessageReplaceOne": "Ви впевнені, що хочете замінити цей текст?",
       "moreOptions": "Більше варіантів",
       "lessOptions": "Менше варіантів",
-      "confirm": "Підтвердьте"
+      "confirm": "Підтвердьте",
+      "filter": "Фільтр"
     },
     "toolsOverlay": {
       "currentStamp": "Актуальна марка",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Сімейство шрифтів"
     },
-    "blankSheet": "Чистий аркуш",
+    "blankSheet": "Аркуш",
     "insertImage": "Вставити зображення"
   },
   "insertPageModal": {

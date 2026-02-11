@@ -6,7 +6,7 @@ import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowCont
 import ToolsDropdown from 'components/ToolsDropdown';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import defaultTool from 'constants/defaultTool';
 
 import './SelectedRubberStamp.scss';
@@ -21,6 +21,7 @@ const usePrevious = (value) => {
 };
 
 const SelectedRubberStamp = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation();
   const prevLanguage = usePrevious(i18n.language);

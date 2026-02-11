@@ -3,10 +3,10 @@ import ToggleElementButton from '../ToggleElementButton';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const ViewControlsToggleButton = ({ className }) => {
+const ViewControlsToggleButton = ({ className, dataElement }) => {
   return (
     <ToggleElementButton
-      dataElement="view-controls-toggle-button"
+      dataElement={dataElement || 'view-controls-toggle-button'}
       className={classNames({
         'viewControlsToggleButton': true,
         [className]: true,
@@ -21,6 +21,7 @@ const ViewControlsToggleButton = ({ className }) => {
 
 ViewControlsToggleButton.propTypes = {
   className: PropTypes.string,
+  dataElement: PropTypes.string,
 };
 
 export default ViewControlsToggleButton;

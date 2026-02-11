@@ -1,7 +1,7 @@
 /**
  * Set an active tab inside of a tab panel.
  * @method UI.setActiveTabInPanel
- * @param {Object} options - The options for selecting the active tab inside a tab panel
+ * @param {Object} options - The options for selecting the active tab inside a tab panel.
  * @param {string} options.tabPanel - The identifier for the tab panel where the tab is located.
  * @param {string} options.tabName - The name of the tab to activate.
  * @example

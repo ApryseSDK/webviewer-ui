@@ -31,7 +31,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onToolUpdated = eventListeners.onToolUpdated(dispatch);
   const onToolModeUpdated = eventListeners.onToolModeUpdated(dispatch, store);
   const onZoomUpdated = eventListeners.onZoomUpdated(dispatch, documentViewerKey, store);
-  const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch);
+  const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch, documentViewerKey);
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
   const onAnnotationChanged = eventListeners.onAnnotationChanged(documentViewerKey);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch, documentViewerKey);
@@ -115,7 +115,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         // -- Tempory divider until panels are ready --
         core.addEventListener('rotationUpdated', onRotationUpdated, undefined, documentViewerKey);
         core.addEventListener('fitModeUpdated', onFitModeUpdated, undefined, documentViewerKey);
-        core.addEventListener('pageNumberUpdated', onPageNumberUpdated, undefined, documentViewerKey);
         core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, undefined, documentViewerKey);
         core.addEventListener(Events.COMPARE_ANNOTATIONS_LOADED, onCompareAnnotationsLoaded, undefined, documentViewerKey);
         core.getTool('AnnotationCreateSticky', documentViewerKey).addEventListener('annotationAdded', onStickyAnnotationAdded);
@@ -136,6 +135,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.getTool('AnnotationCreateMarkReplaceText3', documentViewerKey).addEventListener('annotationAdded', onCaretAnnotationAdded);
         core.getTool('AnnotationCreateMarkReplaceText4', documentViewerKey).addEventListener('annotationAdded', onCaretAnnotationAdded);
       }
+      core.addEventListener('pageNumberUpdated', onPageNumberUpdated, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', handlePasswordModal, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', initializeLayersVisibility, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', showProgressModal, undefined, documentViewerKey);
@@ -191,7 +191,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         document.removeEventListener('MSFullscreenChange', onFullScreenChange);
         core.removeEventListener('rotationUpdated', onRotationUpdated, documentViewerKey);
         core.removeEventListener('fitModeUpdated', onFitModeUpdated, documentViewerKey);
-        core.removeEventListener('pageNumberUpdated', onPageNumberUpdated, documentViewerKey);
         core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, documentViewerKey);
         core.removeEventListener(Events.COMPARE_ANNOTATIONS_LOADED, onCompareAnnotationsLoaded, documentViewerKey);
         core.getTool('AnnotationCreateSticky', documentViewerKey).removeEventListener('annotationAdded', onStickyAnnotationAdded);
@@ -218,6 +217,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal);
         core.removeEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal);
       }
+      core.removeEventListener('pageNumberUpdated', onPageNumberUpdated, documentViewerKey);
       core.removeEventListener('documentLoaded', handlePasswordModal, documentViewerKey);
       core.removeEventListener('documentLoaded', showProgressModal, documentViewerKey);
       core.removeEventListener('documentLoaded', setPrintHandler, documentViewerKey);

@@ -3,14 +3,14 @@
  * function must be called again. Once document end is reached it will jump back to the first found result.
  *
  * @method UI.searchText
- * @param {string} searchValue The text value to look for
- * @param {object} [options] Search options
- * @param {boolean} [options.caseSensitive=false] Whether the search is case sensitive
- * @param {boolean} [options.wholeWord=false] Whether to search for whole words only
- * @param {boolean} [options.wildcard=false] Whether to search with wildcard characters. For example, *viewer
- * @param {boolean} [options.regex=false] Whether to search using regular expressions. For example, www(.*)com
- * @param {boolean} [options.searchUp=false] Whether to search up the document (backwards)
- * @param {boolean} [options.ambientString=false] Whether to get the ambient string in the result
+ * @param {string} searchValue The text value to look for.
+ * @param {object} [options] Search options.
+ * @param {boolean} [options.caseSensitive=false] Whether the search is case sensitive.
+ * @param {boolean} [options.wholeWord=false] Whether to search for whole words only.
+ * @param {boolean} [options.wildcard=false] Whether to search with wildcard characters. For example, *viewer.
+ * @param {boolean} [options.regex=false] Whether to search using regular expressions. For example, www(.*)com.
+ * @param {boolean} [options.searchUp=false] Whether to search up the document (backwards).
+ * @param {boolean} [options.ambientString=false] Whether to get the ambient string in the result.
  * @example
 WebViewer(...)
   .then(function(instance) {

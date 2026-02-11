@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import ColorPicker from 'components/StylePicker/ColorPicker';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import './RichTextStyleEditor.scss';
@@ -44,6 +44,7 @@ const RichTextStyleEditor = ({
   isWidget,
   activeTool,
 }) => {
+  const { core } = useCore();
   const [
     fonts,
   ] = useSelector(

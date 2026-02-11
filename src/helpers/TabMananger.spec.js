@@ -1,8 +1,11 @@
 import TabManager, { getNextNumberForUntitledDocument } from './TabManager';
+import { getFileDataOptionsForTab } from './getFileDataOptionsForTab';
 import rootReducer from 'reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import actions from 'actions';
 import * as fireEvent from 'helpers/fireEvent';
+import loadDocument from 'src/apis/loadDocument';
+
 
 jest.mock('core', () => ({
   closeDocument: jest.fn(),
@@ -79,13 +82,31 @@ describe('TabManager', () => {
   let tabManager;
   let store;
   beforeEach(() => {
-    store = configureStore({ reducer: rootReducer });
+    store = configureStore({
+      reducer: rootReducer,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
+    });
     tabManager = new TabManager([], [], store);
     store.dispatch(actions.setActiveTab(1));
   });
   afterEach(() => {
     store = null;
     tabManager = null;
+  });
+
+  describe('getFileDataOptionsForActiveTab', () => {
+    it('should return the correct file data options for the active tab and create a new one if none exists', () => {
+      // Set the password for tab 1
+      const password = 'xyz';
+      let options1 = getFileDataOptionsForTab(1);
+      options1.password = password;
+
+      // Check that the password was only updated for tab 1
+      options1 = getFileDataOptionsForTab(1);
+      const options2 = getFileDataOptionsForTab(2);
+      expect(options1.password).toEqual(password);
+      expect(options2.password).toBeUndefined();
+    });
   });
 
   describe('Events', () => {
@@ -103,5 +124,54 @@ describe('TabManager', () => {
       expect(eventOrder[0]).toBe('fireEvent'); // beforeTabDeleted
       expect(eventOrder[1]).toBe('closeDocument');
     });
-  }) ;
+
+  });
+
+  describe('updateTab', () => {
+    it('should be able to update the src of a tab', async () => {
+      store.dispatch(actions.setTabs(mockTabs));
+      await tabManager.updateTab(2, { src: 'updatedDoc2.pdf' });
+      const newTabs = store.getState().viewer.tabs;
+      expect(newTabs.find((tab) => tab.id === 2).src).toBe('updatedDoc2.pdf');
+    });
+    it('should be able to update the options of a tab', async () => {
+      store.dispatch(actions.setTabs(mockTabs));
+      await tabManager.updateTab(2, { options: { filename: 'updatedDoc2.pdf' } });
+      const newTabs = store.getState().viewer.tabs;
+      expect(newTabs.find((tab) => tab.id === 2).options.filename).toBe('updatedDoc2.pdf');
+    });
+    it('should call update tab from UI.loadDocument calls', () => {
+      tabManager.setActiveTab = noop;
+      store.dispatch(actions.setMultiTab(true));
+      store.dispatch(actions.setTabManager(tabManager));
+      store.dispatch(actions.setTabs(mockTabs));
+      loadDocument(store)('newDoc.pdf', { filename: 'New Doc' });
+      const newTab = store.getState().viewer.tabs.find((tab) => tab.id === 1);
+      expect(newTab.src).toBe('newDoc.pdf');
+      expect(newTab.options.filename).toBe('New Doc');
+    });
+  });
+});
+
+const initialState = {
+  viewer: {
+    isMultiTab: true,
+  },
+  advanced: {
+    disableI18n: false,
+  },
+};
+describe('MultiTab IndexedDB', () => {
+  it('indexedDB should get a unique id for each instance of WebViewer', () => {
+    const originalDB = window.indexedDB;
+    const mockIndexedDB = {
+      open: jest.fn(() => ({})),
+    };
+    window.indexedDB = mockIndexedDB;
+    const store = configureStore({ reducer: () => initialState });
+    new TabManager([], [], store);
+    expect(mockIndexedDB.open).toHaveBeenCalled();
+    expect(mockIndexedDB.open.mock.calls[0][0]).toMatch(/WebViewer Files-0.\d+/);
+    window.indexedDB = originalDB;
+  });
 });

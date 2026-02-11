@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import { shallowEqual, useSelector } from 'react-redux';
 import selectors from 'selectors';
@@ -17,6 +17,7 @@ const PageControlsInput = forwardRef((props, ref) => {
     isFlyoutItem,
     onKeyDownHandler,
   } = props;
+  const { core } = useCore();
 
   const inputRef = useRef();
   const mountedRef = useRef(true);

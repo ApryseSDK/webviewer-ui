@@ -125,7 +125,6 @@ const FLYOUT_ITEM_TYPES = {
 };
 
 const PREBUILT_FLYOUTS = [
-  'ViewControlsFlyout',
   'ZoomFlyoutMenu',
   'pageControlsFlyout',
   'NoteStateFlyout',
@@ -134,6 +133,7 @@ const PREBUILT_FLYOUTS = [
   'NotePopupFlyout',
   DataElements.PAGE_MANIPULATION_FLYOUT_MULTI_SELECT,
   'CellBordersFlyout',
+  'MultiSelectStylePanelFlyout',
 ];
 
 const OVERFLOW_FLYOUTS = [
@@ -174,33 +174,56 @@ const DEFAULT_STYLES = {
   BORDER_STYLE: 'solid',
 };
 
+const CHANGE_DISPLAY_BUTTONS = {
+  CONTINUOUS_PAGE_TRANSITION: 'continuousPageTransitionButton',
+  DEFAULT_PAGE_TRANSITION: 'defaultPageTransitionButton',
+  READER_PAGE_TRANSITION: 'readerPageTransitionButton',
+  SINGLE_LAYOUT: 'singleLayoutButton',
+  DOUBLE_LAYOUT: 'doubleLayoutButton',
+  COVER_LAYOUT: 'coverLayoutButton',
+};
+
+const ROTATE_DOCUMENT_BUTTONS = {
+  ROTATE_CLOCKWISE: 'rotateClockwiseButton',
+  ROTATE_COUNTERCLOCKWISE: 'rotateCounterClockwiseButton',
+};
+
 /**
  * Contains string enums for preset button types.
  * @name UI.PRESET_BUTTON_TYPES
- * @property {string} UNDO {@link UI.Components.PresetButton.undoButton}
- * @property {string} REDO {@link UI.Components.PresetButton.redoButton}
- * @property {string} NEW_DOCUMENT {@link UI.Components.PresetButton.newDocumentButton}
- * @property {string} FILE_PICKER {@link UI.Components.PresetButton.filePickerButton}
- * @property {string} DOWNLOAD {@link UI.Components.PresetButton.downloadButton}
- * @property {string} FULLSCREEN {@link UI.Components.PresetButton.fullscreenButton}
- * @property {string} SAVE_AS {@link UI.Components.PresetButton.saveAsButton}
- * @property {string} PRINT {@link UI.Components.PresetButton.printButton}
- * @property {string} CREATE_PORTFOLIO {@link UI.Components.PresetButton.createPortfolioButton}
- * @property {string} SETTINGS {@link UI.Components.PresetButton.settingsButton}
- * @property {string} FORM_FIELD_EDIT {@link UI.Components.PresetButton.formFieldEditButton}
- * @property {string} CONTENT_EDIT {@link UI.Components.PresetButton.contentEditButton}
- * @property {string} INCREASE_INDENT {@link UI.Components.PresetButton.increaseIndentButton}
- * @property {string} DECREASE_INDENT {@link UI.Components.PresetButton.decreaseIndentButton}
- * @property {string} BOLD {@link UI.Components.PresetButton.boldButton}
- * @property {string} ITALIC {@link UI.Components.PresetButton.italicButton}
- * @property {string} UNDERLINE {@link UI.Components.PresetButton.underlineButton}
- * @property {string} ALIGN_LEFT {@link UI.Components.PresetButton.alignLeftButton}
- * @property {string} ALIGN_CENTER {@link UI.Components.PresetButton.alignCenterButton}
- * @property {string} ALIGN_RIGHT {@link UI.Components.PresetButton.alignRightButton}
- * @property {string} JUSTIFY_BOTH {@link UI.Components.PresetButton.justifyBothButton}
- * @property {string} OE_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorColorPicker}
- * @property {string} INSERT_IMAGE {@link UI.Components.PresetButton.insertImageButton}
- * @property {string} OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON {@link UI.Components.PresetButton.officeEditorToggleNonPrintingCharactersButton}
+ * @property {string} UNDO {@link UI.Components.PresetButton.undoButton}.
+ * @property {string} REDO {@link UI.Components.PresetButton.redoButton}.
+ * @property {string} NEW_DOCUMENT {@link UI.Components.PresetButton.newDocumentButton}.
+ * @property {string} FILE_PICKER {@link UI.Components.PresetButton.filePickerButton}.
+ * @property {string} DOWNLOAD {@link UI.Components.PresetButton.downloadButton}.
+ * @property {string} FULLSCREEN {@link UI.Components.PresetButton.fullscreenButton}.
+ * @property {string} SAVE_AS {@link UI.Components.PresetButton.saveAsButton}.
+ * @property {string} PRINT {@link UI.Components.PresetButton.printButton}.
+ * @property {string} CREATE_PORTFOLIO {@link UI.Components.PresetButton.createPortfolioButton}.
+ * @property {string} SETTINGS {@link UI.Components.PresetButton.settingsButton}.
+ * @property {string} FORM_FIELD_EDIT {@link UI.Components.PresetButton.formFieldEditButton}.
+ * @property {string} CONTENT_EDIT {@link UI.Components.PresetButton.contentEditButton}.
+ * @property {string} INCREASE_INDENT {@link UI.Components.PresetButton.increaseIndentButton}.
+ * @property {string} DECREASE_INDENT {@link UI.Components.PresetButton.decreaseIndentButton}.
+ * @property {string} BOLD {@link UI.Components.PresetButton.boldButton}.
+ * @property {string} ITALIC {@link UI.Components.PresetButton.italicButton}.
+ * @property {string} UNDERLINE {@link UI.Components.PresetButton.underlineButton}.
+ * @property {string} ALIGN_LEFT {@link UI.Components.PresetButton.alignLeftButton}.
+ * @property {string} ALIGN_CENTER {@link UI.Components.PresetButton.alignCenterButton}.
+ * @property {string} ALIGN_RIGHT {@link UI.Components.PresetButton.alignRightButton}.
+ * @property {string} JUSTIFY_BOTH {@link UI.Components.PresetButton.justifyBothButton}.
+ * @property {string} OE_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorColorPicker}.
+ * @property {string} INSERT_IMAGE {@link UI.Components.PresetButton.insertImageButton}.
+ * @property {string} OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON {@link UI.Components.PresetButton.officeEditorToggleNonPrintingCharactersButton}.
+ * @property {string} CONTINUOUS_PAGE_TRANSITION {@link UI.Components.PresetButton.continuousPageTransitionButton}.
+ * @property {string} DEFAULT_PAGE_TRANSITION {@link UI.Components.PresetButton.defaultPageTransitionButton}.
+ * @property {string} READER_PAGE_TRANSITION {@link UI.Components.PresetButton.readerPageTransitionButton}.
+ * @property {string} SINGLE_LAYOUT {@link UI.Components.PresetButton.singleLayoutButton}.
+ * @property {string} DOUBLE_LAYOUT {@link UI.Components.PresetButton.doubleLayoutButton}.
+ * @property {string} COVER_LAYOUT {@link UI.Components.PresetButton.coverLayoutButton}.
+ * @property {string} ROTATE_CLOCKWISE {@link UI.Components.PresetButton.rotateClockwiseButton}.
+ * @property {string} ROTATE_COUNTERCLOCKWISE {@link UI.Components.PresetButton.rotateCounterClockwiseButton}.
+ * @property {string} TOGGLE_MULTI_VIEWER_MODE {@link UI.Components.PresetButton.toggleMultiViewerModeButton}.
  * @example
  * const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
  */
@@ -234,6 +257,10 @@ const PRESET_BUTTON_TYPES = {
   ALIGN_TOP: 'alignTopButton',
   ALIGN_MIDDLE: 'alignMiddleButton',
   ALIGN_BOTTOM: 'alignBottomButton',
+  TOGGLE_MULTI_VIEWER_MODE: 'toggleMultiViewerModeButton',
+
+  ...CHANGE_DISPLAY_BUTTONS,
+  ...ROTATE_DOCUMENT_BUTTONS,
 
   OE_COLOR_PICKER: 'officeEditorColorPicker',
   OE_TOGGLE_NON_PRINTING_CHARACTERS: 'officeEditorToggleNonPrintingCharactersButton',
@@ -406,4 +433,6 @@ export {
   CELL_ADJUSTMENT_BUTTONS,
   PANEL_LOCATION,
   CELL_TEXT_WRAP_FLYOUT_ITEMS,
+  CHANGE_DISPLAY_BUTTONS,
+  ROTATE_DOCUMENT_BUTTONS,
 };

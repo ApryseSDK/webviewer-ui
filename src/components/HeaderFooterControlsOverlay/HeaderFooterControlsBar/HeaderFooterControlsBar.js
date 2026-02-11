@@ -9,7 +9,7 @@ import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import Dropdown from 'components/Dropdown';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import HeaderFooterModalState from 'helpers/headerFooterModalState';
 import { HEADER_FOOTER_BAR_DEFAULT_POSITION, OfficeEditorEditMode, EditOperationSource } from 'constants/officeEditor';
 
@@ -32,6 +32,7 @@ const MOUSE_EVENTS_TYPES = [
 ];
 
 const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const doc = core.getDocument();

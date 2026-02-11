@@ -1,8 +1,8 @@
 /**
- * Set the configuration schema for the WV3D Properties Panel
+ * Set the configuration schema for the WV3D Properties Panel.
  * @method UI.setWv3dPropertiesPanelSchema
  * @param {object} schema Object containing options for configuring the 3d properties panel.
- * @param {string} schema.headerName Sets the Title Header
+ * @param {string} schema.headerName Sets the Title Header.
  * @param {object} schema.defaultValues Defines the key/value pairs that will appear under the title, outside of a group.
  * @param {object} schema.groups Defines the collapsible groups that appear below the default values.
  * @param {array} schema.groupOrder Defines the order of the groups. If a group is not included it is appended to the end of the defined groups.

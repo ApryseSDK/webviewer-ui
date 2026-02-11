@@ -1,5 +1,5 @@
 /**
- * An instance of ThumbnailControlMenu that can be used to add, update, or retrieve menu items in the thumbnail control menu overlay
+ * An instance of ThumbnailControlMenu that can be used to add, update, or retrieve menu items in the thumbnail control menu overlay.
  * @name UI.thumbnailControlMenu
  * @type {UI.ThumbnailControlMenu}
  * @example
@@ -33,20 +33,20 @@ const ThumbnailControlMenuAPI = {
   },
 
   /**
-   * @typedef {Object} UI.ThumbnailControlMenu.MenuItem
-   * @property {string} title Title to be displayed for the menu item
-   * @property {string} img Path to the image to be used as an icon for the menu item
-   * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter
-   * @property {string} dataElement Unique data element identifier for this menu item
+  * @typedef {Object} UI.ThumbnailControlMenu.MenuItem
+  * @property {string} title Title to be displayed for the menu item.
+  * @property {string} img Path to the image to be used as an icon for the menu item.
+  * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter.
+  * @property {string} dataElement Unique data element identifier for this menu item.
    */
 
   /**
-   * Adds menu items to the thumbnail control menu. If a dataElement parameter is provided, the new items will be added after that element. Otherwise, they will be added at the beginning.
+  * Adds menu items to the thumbnail control menu. If a dataElement parameter is provided, the new items will be added after that element. Otherwise, they will be added at the beginning.
    * @method UI.ThumbnailControlMenu#add
    * @memberof UI.ThumbnailControlMenu
-   * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} menuItems Array of menu items to be added
+  * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} menuItems Array of menu items to be added.
    * @param {string} [dataElementToInsertAfter] The data element of the item to insert after. Can be 'thumbRotateClockwise', 'thumbDelete', or a custom data element. If not provided, items will be added at the beginning. Call {@link UI.ThumbnailControlMenu#getItems getItems} to see existing items and their data elements.
-   * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining
+  * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining.
    * @example
 WebViewer(...)
   .then(function (instance) {
@@ -86,7 +86,7 @@ WebViewer(...)
    * @method UI.ThumbnailControlMenu#update
    * @memberof UI.ThumbnailControlMenu
    * @param {Array.<UI.ThumbnailControlMenu.MenuItem>} menuItems The list of menu items that will be rendered in the thumbnail control menu. If not provided, the menu will be cleared.
-   * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining
+   * @returns {UI.ThumbnailControlMenu} The ThumbnailControlMenu instance for chaining.
    * @see UI.updateElement
    * @example
 WebViewer(...)
@@ -113,10 +113,10 @@ WebViewer(...)
   },
 
   /**
-   * Returns the current array of items in the ThumbnailControlMenu
+   * Returns the current array of items in the ThumbnailControlMenu.
    * @method UI.ThumbnailControlMenu#getItems
    * @memberof UI.ThumbnailControlMenu
-   * @returns {Array.<UI.ThumbnailControlMenu.MenuItem>} The current menu items in the thumbnail control menu
+   * @returns {Array.<UI.ThumbnailControlMenu.MenuItem>} The current menu items in the thumbnail control menu.
    * @example
 WebViewer(...)
   .then(function(instance) {

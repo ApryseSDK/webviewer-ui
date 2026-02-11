@@ -5,7 +5,7 @@ import selectors from 'selectors';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const EDIT_MODE = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
 
@@ -24,6 +24,7 @@ const NewSpreadsheetButton = React.forwardRef((props, ref) => {
     img: icon,
     title
   } = props;
+  const { core } = useCore();
 
   const currentUIConfiguration = useSelector(selectors.getUIConfiguration);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);

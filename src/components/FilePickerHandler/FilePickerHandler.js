@@ -10,26 +10,25 @@ import DataElements from 'constants/dataElement';
 import './FilePickerHandler.scss';
 
 const FilePickerHandler = () => {
-  const [isDisabled, isMultiTab, TabManager] = useSelector(
-    (state) => [
-      selectors.isElementDisabled(state, 'filePickerHandler'),
-      selectors.getIsMultiTab(state),
-      selectors.getTabManager(state),
-    ],
-    shallowEqual,
-  );
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'filePickerHandler'));
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
+  const TabManager = useSelector(selectors.getTabManager, shallowEqual);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+
   const dispatch = useDispatch();
 
-  const openDocument = (e) => {
+  const openDocument = async (e) => {
     const file = e.target.files[0];
     if (file) {
       dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
       dispatch(actions.closeElement(DataElements.MENU_OVERLAY));
       if (isMultiTab) {
-        return TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
+        await TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
+      } else {
+        await loadDocument(dispatch, file, {}, activeDocumentViewerKey);
       }
-      loadDocument(dispatch, file);
     }
+    e.target.value = '';
   };
 
   const wvServer = !!getHashParameters('webviewerServerURL', null);

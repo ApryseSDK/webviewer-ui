@@ -11,7 +11,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
@@ -59,6 +59,7 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
 const ContextMenuPopup = ({
   clickPosition,
 }) => {
+  const { core } = useCore();
 
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP));

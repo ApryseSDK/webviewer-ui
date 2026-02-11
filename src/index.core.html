@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/apryse.svg">
+  <link rel="stylesheet" href="style.css">
   <title>WebViewer UI</title>
 </head>
 

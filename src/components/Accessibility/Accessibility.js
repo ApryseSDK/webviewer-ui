@@ -5,11 +5,12 @@ import './Accessibility.scss';
 import classNames from 'classnames';
 import actions from 'actions';
 import getRootNode from 'helpers/getRootNode';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { workerTypes } from 'constants/types';
 import { useTranslation } from 'react-i18next';
 
 function Accessibility() {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const pageNumber = useSelector(selectors.getCurrentPage);

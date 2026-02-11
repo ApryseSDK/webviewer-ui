@@ -3,7 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import NoteTextarea from 'components/NoteTextarea';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import selectors from 'selectors';
@@ -13,6 +13,7 @@ import './ReplyAreaMultiSelect.scss';
 
 // a component that contains the reply textarea, the reply button and the cancel button
 const ReplyArea = ({ annotations, onSubmit, onClose }) => {
+  const { core } = useCore();
   const [
     isMentionEnabled,
     activeDocumentViewerKey,

@@ -6,6 +6,7 @@ import toggleFullscreen from 'helpers/toggleFullscreen';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
+import { isIOS, isIOSFullScreenSupported } from 'helpers/device';
 
 /**
  * A button that toggles fullscreen mode.
@@ -23,6 +24,11 @@ const FullScreenButton = forwardRef((props, ref) => {
   } = props;
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const label = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
+
+  const shouldShow = !isIOS || isIOSFullScreenSupported;
+  if (!shouldShow) {
+    return null;
+  }
 
   return (
     isFlyoutItem ?

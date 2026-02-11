@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "A bélyegző szövege nem lehet üres",
     "unpostedComment": "Nem közzétett megjegyzés",
     "lockedLayer": "A réteg zárolva van",
-    "layerVisibililtyNoChange": "A réteg láthatósága nem módosítható",
+    "layerVisibilityNoChange": "A réteg láthatósága nem módosítható",
     "noLayers": "Ennek a dokumentumnak nincsenek rétegei.",
     "noSignatureFields": "Ez a dokumentum nem tartalmaz aláírási mezőket.",
     "untitled": "Névtelen",
@@ -488,11 +488,13 @@
       "replace": "Cserélje ki",
       "replaceAll": "Cserélje ki az összeset",
       "replaceText": "Szöveg cseréje",
+      "replaceOptions": "Cserebeállítások",
       "confirmMessageReplaceAll": "Biztos benne, hogy le akarja cserélni az összes szöveget?",
       "confirmMessageReplaceOne": "Biztosan le szeretné cserélni ezt a szöveget?",
       "moreOptions": "Több lehetőség",
       "lessOptions": "Kevesebb lehetőség",
-      "confirm": "megerősít"
+      "confirm": "megerősít",
+      "filter": "Szűrő"
     },
     "toolsOverlay": {
       "currentStamp": "Aktuális bélyegző",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Betűcsalád"
     },
-    "blankSheet": "Üres lap",
+    "blankSheet": "Lap",
     "insertImage": "Kép beszúrása"
   },
   "insertPageModal": {

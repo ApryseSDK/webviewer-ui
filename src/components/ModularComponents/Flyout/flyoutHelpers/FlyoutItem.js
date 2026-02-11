@@ -1,6 +1,6 @@
 import React from 'react';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
@@ -107,6 +107,7 @@ const StaticItem = React.forwardRef((props, ref) => {
   const activeListType = useSelector((state) => selectors.getActiveListType(state));
   const isCursorInTable = useSelector(selectors.isCursorInTable);
   const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
+  const { core } = useCore();
 
   if (isDisabledItem || (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden)) {
     return null;
@@ -356,7 +357,7 @@ const StaticItem = React.forwardRef((props, ref) => {
       const flyoutItemClasses = classNames({
         'disabled': flyoutItem.disabled,
         'active': isItemActive,
-        [allProps.additionalClass]: true,
+        [allProps.additionalClass]: !!allProps.additionalClass,
       });
       return (
         <FlyoutItemContainer {...allProps}

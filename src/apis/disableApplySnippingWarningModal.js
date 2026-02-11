@@ -1,7 +1,7 @@
 import actions from 'actions';
 
 /**
- * Disable the confirmation modal when snipping a page
+ * Disable the confirmation modal when snipping a page.
  *
  * @method UI.disableApplySnippingWarningModal
  * @example

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
 import evalFraction from 'helpers/evalFraction';
@@ -32,6 +32,7 @@ const fractionRegex = /^\d*(\s\d\/\d*)$/;
 const pureFractionRegex = /^(\d\/\d*)*$/;
 
 const CalibrationModal = () => {
+  const { core } = useCore();
   const [isOpen, isDisabled, units] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.CALIBRATION_MODAL),

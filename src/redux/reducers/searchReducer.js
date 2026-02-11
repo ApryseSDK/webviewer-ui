@@ -101,6 +101,12 @@ export default (initialState) => (state = initialState, action) => {
         nextResultIndex: null,
       };
     }
+    case 'SET_SEARCH_STATUS': {
+      return {
+        ...state,
+        status: payload,
+      };
+    }
     case 'SET_SEARCH_RESULTS': {
       return {
         ...state,

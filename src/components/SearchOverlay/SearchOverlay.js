@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 import debounce from 'lodash.debounce';
 import throttle from 'lodash/throttle';
@@ -45,6 +45,7 @@ const propTypes = {
 };
 
 function SearchOverlay(props) {
+  const { core } = useCore();
   const { t } = useTranslation();
   const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult, isProcessingSearchResults, activeDocumentViewerKey } = props;
   const { searchValue, setSearchValue, executeSearch, replaceValue, nextResultValue, setReplaceValue } = props;
@@ -113,7 +114,6 @@ function SearchOverlay(props) {
 
   const search = async (searchValue) => {
     if (searchValue && searchValue.length > 0) {
-      dispatch(actions.setSearchInProgress(true));
       setSearchStatus('SEARCH_IN_PROGRESS');
 
       if (isOfficeEditorMode()) {
@@ -214,6 +214,7 @@ function SearchOverlay(props) {
     function caseSensitiveSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setCaseSensitive(isChecked);
+      setSearchStatus('SEARCH_IN_PROGRESS');
     }, [],
   );
 
@@ -221,6 +222,7 @@ function SearchOverlay(props) {
     function wholeWordSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setWholeWord(isChecked);
+      setSearchStatus('SEARCH_IN_PROGRESS');
     }, [],
   );
 
@@ -380,8 +382,8 @@ function SearchOverlay(props) {
         <div className="search-option-buttons">
           <ToggleElementButton
             dataElement="searchOptionsButton"
-            title={t('message.toggleSearchOptions')}
-            ariaLabel={t('message.toggleSearchOptions')}
+            title={t('option.searchPanel.filter')}
+            ariaLabel={t('option.searchPanel.filter')}
             tabIndex={isPanelOpen ? 0 : -1}
             img={shouldShowDotOnFilterButton ? 'ic-filter-with-dot' : 'ic-filter-alt'}
             className={'search-options-button'}
@@ -391,8 +393,8 @@ function SearchOverlay(props) {
             shouldShowReplaceToggleButton ?
               <Button
                 onClick={toggleReplaceInput}
-                title={t('message.toggleReplaceInput')}
-                ariaLabel={t('message.toggleReplaceInput')}
+                title={t('option.searchPanel.replaceOptions')}
+                ariaLabel={t('option.searchPanel.replaceOptions')}
                 tabIndex={isPanelOpen ? 0 : -1}
                 img='ic_replace'
                 className={'search-options-button'}

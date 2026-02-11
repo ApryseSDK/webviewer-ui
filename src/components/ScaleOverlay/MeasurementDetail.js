@@ -94,7 +94,7 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool, canModify }) => {
     };
     const pts = keyPtMap[key](annotation).filter((pt) => !!pt);
 
-    let angle = getAngleInRadians(...pts);
+    let angle = getAngleInRadians(...pts) || 0;
     if (angle) {
       const decimalPlaces = getNumberOfDecimalPlaces(annotation.Precision);
       angle = ((angle / Math.PI) * 180).toFixed(decimalPlaces);

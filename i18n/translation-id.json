@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Teks stempel tidak boleh kosong",
     "unpostedComment": "Komentar yang Belum Diposkan",
     "lockedLayer": "Lapisan terkunci",
-    "layerVisibililtyNoChange": "Visibilitas lapisan tidak dapat diubah",
+    "layerVisibilityNoChange": "Visibilitas lapisan tidak dapat diubah",
     "noLayers": "Dokumen ini tidak memiliki lapisan.",
     "noSignatureFields": "Dokumen ini tidak memiliki bidang tanda tangan.",
     "untitled": "Tanpa Judul",
@@ -488,11 +488,13 @@
       "replace": "Mengganti",
       "replaceAll": "Menggantikan semua",
       "replaceText": "Ganti Teks",
+      "replaceOptions": "Opsi Penggantian",
       "confirmMessageReplaceAll": "Anda yakin ingin mengganti semua teks?",
       "confirmMessageReplaceOne": "Anda yakin ingin mengganti teks ini?",
       "moreOptions": "Lebih banyak pilihan",
       "lessOptions": "Lebih sedikit pilihan",
-      "confirm": "Mengonfirmasi"
+      "confirm": "Mengonfirmasi",
+      "filter": "Menyaring"
     },
     "toolsOverlay": {
       "currentStamp": "Stempel saat ini",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Keluarga Font"
     },
-    "blankSheet": "Lembar Kosong",
+    "blankSheet": "Lembaran",
     "insertImage": "Sisipkan gambar"
   },
   "insertPageModal": {

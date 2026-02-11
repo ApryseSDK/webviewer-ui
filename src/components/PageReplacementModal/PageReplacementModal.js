@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 import FileListPanel from './FileListPanel';
 import FileInputPanel from './FileInputPanel';
@@ -26,6 +26,7 @@ const PageReplacementModal = ({
   selectedThumbnailPageIndexes,
   selectedTab,
 }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const [source, setSource] = useState({});
   const [error, setError] = useState(null);
@@ -194,6 +195,7 @@ const PageReplacementModal = ({
                 <FilePickerPanel
                   fileInputId={fileInputId}
                   onFileProcessed={(file) => fileProcessedHandler(file)}
+                  allowMultiple={true}
                 />
               </div>
             </TabPanel>

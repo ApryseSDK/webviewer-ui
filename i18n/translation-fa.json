@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "متن مهر نمی‌تواند خالی باشد",
     "unpostedComment": "نظر ارسال نشده",
     "lockedLayer": "لایه قفل شده است",
-    "layerVisibililtyNoChange": "قابلیت مشاهده لایه‌ها قابل تغییر نیست",
+    "layerVisibilityNoChange": "قابلیت مشاهده لایه‌ها قابل تغییر نیست",
     "noLayers": "این سند هیچ لایه‌ای ندارد.",
     "noSignatureFields": "این سند هیچ فیلد امضا ندارد.",
     "untitled": "بدون عنوان",
@@ -488,11 +488,13 @@
       "replace": "جایگزین کردن",
       "replaceAll": "جایگزین کردن همه",
       "replaceText": "متن جایگزین",
+      "replaceOptions": "گزینه‌های جایگزین",
       "confirmMessageReplaceAll": "آیا مطمئن هستید که می‌خواهید تمام متن را جایگزین کنید؟",
       "confirmMessageReplaceOne": "آیا مطمئن هستید که می‌خواهید این متن را جایگزین کنید؟",
       "moreOptions": "گزینه‌های بیشتر",
       "lessOptions": "گزینه‌های کمتر",
-      "confirm": "تأیید"
+      "confirm": "تأیید",
+      "filter": "فیلتر"
     },
     "toolsOverlay": {
       "currentStamp": "تمبر فعلی",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "خانواده فونت"
     },
-    "blankSheet": "ورق خالی",
+    "blankSheet": "ورق",
     "insertImage": "درج تصویر"
   },
   "insertPageModal": {

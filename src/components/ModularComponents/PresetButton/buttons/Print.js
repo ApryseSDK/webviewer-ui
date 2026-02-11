@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { print } from 'helpers/print';
 import selectors from 'selectors';
-import core from 'core';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import useFocusHandler from 'hooks/useFocusHandler';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import useOnDocumentUnloaded from 'src/hooks/useOnDocumentUnloaded';
+import useCore from 'hooks/useCore';
 
 /**
  * A button that prints the document.
@@ -16,14 +16,8 @@ import useOnDocumentUnloaded from 'src/hooks/useOnDocumentUnloaded';
  * @memberof UI.Components.PresetButton
  */
 const PrintButton = forwardRef((props, ref) => {
-  const {
-    isFlyoutItem,
-    dataElement,
-    className,
-    style,
-    img: icon,
-    title,
-  } = props;
+  const { isFlyoutItem, dataElement, className, style, img: icon, title } = props;
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const useClientSidePrint = useSelector(selectors.useClientSidePrint);
@@ -52,7 +46,7 @@ const PrintButton = forwardRef((props, ref) => {
   useOnDocumentUnloaded(handleDocumentUnloaded);
 
   const handlePrint = () => {
-    print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
+    print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone, documentViewerKey: activeDocumentViewerKey });
   };
 
   const handlePrintButtonClick = useFocusHandler(handlePrint);

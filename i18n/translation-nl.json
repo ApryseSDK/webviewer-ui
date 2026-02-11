@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
     "unpostedComment": "Niet-geplaatste reactie",
     "lockedLayer": "Laag is vergrendeld",
-    "layerVisibililtyNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
+    "layerVisibilityNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
     "noLayers": "Dit document heeft geen lagen.",
     "noSignatureFields": "Dit document heeft geen handtekeningvelden.",
     "untitled": "Ongetiteld",
@@ -488,11 +488,13 @@
       "replace": "Vervangen",
       "replaceAll": "Vervang alles",
       "replaceText": "Tekst vervangen",
+      "replaceOptions": "Vervangingsopties",
       "confirmMessageReplaceAll": "Weet u zeker dat u alle tekst wilt vervangen?",
       "confirmMessageReplaceOne": "Weet je zeker dat je deze tekst wilt vervangen?",
       "moreOptions": "Meer opties",
       "lessOptions": "Minder opties",
-      "confirm": "Bevestigen"
+      "confirm": "Bevestigen",
+      "filter": "Filter"
     },
     "toolsOverlay": {
       "currentStamp": "Huidige Stempel",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Lettertypefamilie"
     },
-    "blankSheet": "Leeg vel",
+    "blankSheet": "Laken",
     "insertImage": "Afbeelding invoegen"
   },
   "insertPageModal": {

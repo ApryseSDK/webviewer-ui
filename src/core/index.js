@@ -121,6 +121,7 @@ import mergeDocument from './mergeDocument';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
 import syncNamespaces from './syncNamespaces';
 import createDocument from './createDocument';
+import performDocumentCreationChecks from './performDocumentCreationChecks';
 import getContentEditManager from './getContentEditManager';
 import getTool from './getTool';
 import { getDocumentViewer, setDocumentViewer, getDocumentViewers, deleteDocumentViewer } from './documentViewers';
@@ -276,6 +277,7 @@ export default {
   getFormFieldCreationManager,
   syncNamespaces,
   createDocument,
+  performDocumentCreationChecks,
   getContentEditManager,
   getUserBookmarks,
   setUserBookmarks,

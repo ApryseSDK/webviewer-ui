@@ -1,13 +1,13 @@
-import core from 'core';
 import getRootNode, { getInstanceNode } from './getRootNode';
 
 /**
  * @ignore
  * Utility function that returns a bounding box of the current view of WebViewer.
+ * @param {object} core Core object
  * @param {number} pageNumber Page number of the current page being viewed.
  * @returns {Core.Math.Rect} A {@link Core.Math.Rect} containing the two points that form a bounding box of current view.
  */
-function getCurrentViewRect(pageNumber) {
+function getCurrentViewRect(core, pageNumber) {
   const displayMode = core.getDisplayModeObject();
   const containerElement = core.getScrollViewElement();
   const documentElement = core.getViewerElement();

@@ -4,7 +4,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import Measure from 'react-measure';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
 import ToggleElementButton from 'components/ToggleElementButton';
@@ -27,7 +27,11 @@ import {
   AVAILABLE_POINT_SIZES,
 } from 'constants/officeEditor';
 import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
-import { calculateLineSpacing, convertCursorToStylePreset, convertCoreColorToWebViewerColor } from 'helpers/officeEditor';
+import {
+  calculateLineSpacing,
+  convertCursorToStylePreset,
+  convertCoreColorToWebViewerColor
+} from 'helpers/officeEditor';
 
 import './Header.scss';
 import './OfficeHeader.scss';
@@ -39,6 +43,7 @@ const moreButtonWidth = 77;
 const officeEditorToggleableStyles = window.Core.Document.OfficeEditor.ToggleableStyles;
 
 const TextStyles = ({ activeStates }) => {
+  const { core } = useCore();
   return Object.values(officeEditorToggleableStyles).map((style) => (
     <ActionButton
       key={style}
@@ -55,6 +60,7 @@ const TextStyles = ({ activeStates }) => {
 };
 
 const JustificationOptions = ({ justification }) => {
+  const { core } = useCore();
   return (
     <>
       <ActionButton
@@ -64,7 +70,7 @@ const JustificationOptions = ({ justification }) => {
         img='icon-menu-left-align'
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
-            justification: 'left'
+            justification: 'left',
           });
         }}
       />
@@ -75,7 +81,7 @@ const JustificationOptions = ({ justification }) => {
         img='icon-menu-center-align'
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
-            justification: 'center'
+            justification: 'center',
           });
         }}
       />
@@ -86,7 +92,7 @@ const JustificationOptions = ({ justification }) => {
         img='icon-menu-right-align'
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
-            justification: 'right'
+            justification: 'right',
           });
         }}
       />
@@ -97,7 +103,7 @@ const JustificationOptions = ({ justification }) => {
         img='icon-menu-both-align'
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
-            justification: 'both'
+            justification: 'both',
           });
         }}
       />
@@ -106,6 +112,7 @@ const JustificationOptions = ({ justification }) => {
 };
 
 const ListOptions = ({ listType }) => {
+  const { core } = useCore();
   const bulletListObjects = OFFICE_BULLET_OPTIONS.map((options) => ({
     className: 'officeEditor-list-style-icon',
     key: options.enum,
@@ -185,6 +192,7 @@ ListOptions.propTypes = {
 };
 
 const OfficeEditorToolsHeader = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [
     isOpen,
@@ -308,7 +316,7 @@ const OfficeEditorToolsHeader = () => {
             >
               {({ measureRef }) => (
                 <div
-                  className="HeaderItems"
+                  className='HeaderItems'
                   ref={measureRef}
                 >
                   <Dropdown
@@ -343,7 +351,7 @@ const OfficeEditorToolsHeader = () => {
                     applyCustomStyleToButton={false}
                     currentSelectionKey={convertCursorToStylePreset(properties)}
                     width={160}
-                    dataElement="office-editor-text-format"
+                    dataElement='office-editor-text-format'
                   />
                   <Dropdown
                     id='office-editor-font'
@@ -358,7 +366,7 @@ const OfficeEditorToolsHeader = () => {
                     maxHeight={500}
                     customDataValidator={(font) => availableFontFaces.includes(font)}
                     width={160}
-                    dataElement="office-editor-font"
+                    dataElement='office-editor-font'
                     currentSelectionKey={fontFace}
                     hasInput
                   />
@@ -382,13 +390,13 @@ const OfficeEditorToolsHeader = () => {
                     }}
                     currentSelectionKey={pointSizeSelectionKey}
                     width={80}
-                    dataElement="office-editor-font-size"
+                    dataElement='office-editor-font-size'
                     hasInput
                     isSearchEnabled={false}
                   />
                   {(visibleGroupCount >= 4) && (
                     <>
-                      <div className="divider" />
+                      <div className='divider' />
                       <TextStyles
                         activeStates={{
                           bold: isBold,
@@ -398,7 +406,7 @@ const OfficeEditorToolsHeader = () => {
                       />
                     </>
                   )}
-                  <div className="divider" />
+                  <div className='divider' />
                   <ToggleElementButton
                     onClick={() => setShowMoreTools(false)}
                     dataElement={DataElement.OFFICE_EDITOR_TEXT_COLOR_BUTTON}
@@ -424,11 +432,11 @@ const OfficeEditorToolsHeader = () => {
                   />
                   {(visibleGroupCount >= 5) && (
                     <>
-                      <div className="divider" />
+                      <div className='divider' />
                       <JustificationOptions justification={justification} />
                     </>
                   )}
-                  <div className="divider" />
+                  <div className='divider' />
                   <Dropdown
                     id='office-editor-line-spacing'
                     items={Object.keys(LINE_SPACING_OPTIONS)}
@@ -440,7 +448,7 @@ const OfficeEditorToolsHeader = () => {
                     }}
                     currentSelectionKey={lineHeight}
                     width={80}
-                    dataElement="office-editor-line-spacing"
+                    dataElement='office-editor-line-spacing'
                     displayButton={(isOpen) => (
                       <ActionButton
                         title='officeEditor.lineSpacing'
@@ -450,7 +458,7 @@ const OfficeEditorToolsHeader = () => {
                       />
                     )}
                   />
-                  <div className="divider" />
+                  <div className='divider' />
                   <ActionButton
                     title='officeEditor.pageBreak'
                     img='icon-office-editor-page-break'
@@ -465,7 +473,7 @@ const OfficeEditorToolsHeader = () => {
                     id='office-editor-insert-table'
                     dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
                     width={136}
-                    className="insert-table-dropdown"
+                    className='insert-table-dropdown'
                     displayButton={(isOpen) => (
                       <>
                         <ActionButton
@@ -473,7 +481,7 @@ const OfficeEditorToolsHeader = () => {
                           img='ic-table'
                           isActive={isOpen}
                         />
-                        <Icon className="arrow" glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+                        <Icon className='arrow' glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
                       </>
                     )}
                   >
@@ -481,7 +489,7 @@ const OfficeEditorToolsHeader = () => {
                   </Dropdown>
                   <>
                     <ActionButton
-                      className="tool-group-button"
+                      className='tool-group-button'
                       dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE}
                       title='officeEditor.insertImage'
                       img='icon-tool-image-line'
@@ -493,16 +501,16 @@ const OfficeEditorToolsHeader = () => {
                   </>
                   {(visibleGroupCount === 6) && (
                     <>
-                      <div className="divider" />
+                      <div className='divider' />
                       <ListOptions listType={listType} enableNonPrintingCharacters={enableNonPrintingCharacters} />
                     </>
                   )}
                   {(visibleGroupCount < 6) && (
                     <>
-                      <div className="divider" />
-                      <div className="action-button-wrapper">
+                      <div className='divider' />
+                      <div className='action-button-wrapper'>
                         <ActionButton
-                          className="tool-group-button"
+                          className='tool-group-button'
                           isActive={showMoreTools}
                           dataElement='office-editor-more-tools'
                           title='action.more'
@@ -510,8 +518,8 @@ const OfficeEditorToolsHeader = () => {
                           onClick={() => setShowMoreTools(!showMoreTools)}
                         />
                         {showMoreTools && (
-                          <div className="more-tools MainHeader Tools OfficeEditorTools">
-                            <div className="HeaderItems">
+                          <div className='more-tools MainHeader Tools OfficeEditorTools'>
+                            <div className='HeaderItems'>
                               {(visibleGroupCount < 4) && (
                                 <>
                                   <TextStyles
@@ -521,13 +529,13 @@ const OfficeEditorToolsHeader = () => {
                                       underline: isUnderline
                                     }}
                                   />
-                                  <div className="divider" />
+                                  <div className='divider' />
                                 </>
                               )}
                               {(visibleGroupCount < 5) && (
                                 <>
                                   <JustificationOptions justification={justification} />
-                                  <div className="divider" />
+                                  <div className='divider' />
                                 </>
                               )}
                               {(visibleGroupCount < 6) && (

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './MultiViewer.scss';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import DropArea from 'components/MultiViewer/DropArea';
 import ResizeBar from 'components/ResizeBar';
@@ -21,6 +21,7 @@ import {
 } from 'helpers/documentViewerHelper';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import fireActiveDocumentViewerChanged from 'helpers/fireActiveDocumentViewerChanged';
 import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
 import DataElements from 'constants/dataElement';
 import multiViewerHelper, { useMultiViewerSync } from 'helpers/multiViewerHelper';
@@ -28,6 +29,9 @@ import multiViewerHelper, { useMultiViewerSync } from 'helpers/multiViewerHelper
 const MIN_WIDTH = 350;
 
 const MultiViewer = () => {
+  const { core } = useCore();
+  const { core: coreLeftViewer } = useCore(1);
+  const { core: coreRightViewer } = useCore(2);
   const dispatch = useDispatch();
   const store = useStore();
   const [initialSetup, setInitialSetup] = useState(false);
@@ -39,7 +43,10 @@ const MultiViewer = () => {
   const [width, setWidth] = useState(0);
   const [width2, setWidth2] = useState(0);
   const funcRefs = useRef({
-    updateScrollView: throttle(() => core.scrollViewUpdated(), 100, { leading: true }),
+    updateScrollView: throttle(() => {
+      coreLeftViewer.scrollViewUpdated();
+      coreRightViewer.scrollViewUpdated();
+    }, 100, { leading: true }),
     resizeObserverFunc: throttle((records) => {
       const newWidth = records[0].contentRect.width;
       if (newWidth) {
@@ -88,10 +95,10 @@ const MultiViewer = () => {
           core.setToolMode(window.Core.Tools.ToolNames.EDIT);
         }
       }
-      const isDoc1Loaded = !!core.getDocumentViewer(1).getDocument();
+      const isDoc1Loaded = !!coreLeftViewer.getDocumentViewer().getDocument();
       setDoc1Loaded(isDoc1Loaded);
       addDocumentViewer(2);
-      const newDocViewer = core.getDocumentViewers()[1];
+      const newDocViewer = coreRightViewer.getDocumentViewer();
       setupOpenURLHandler(newDocViewer, store);
 
       syncDocumentViewers(1, 2);
@@ -117,7 +124,7 @@ const MultiViewer = () => {
       setDoc2Loaded(false);
       removeHandlersRef.current();
       removeDocumentViewer(2);
-      core.deleteAnnotations(core.getSemanticDiffAnnotations(1), { force: true }, 1);
+      coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
       resizeOberver.current.disconnect();
       !isComparisonDisabled && resetHeaderItems();
       readyState.current = readyDefaultState;
@@ -168,19 +175,19 @@ const MultiViewer = () => {
       dispatch(actions.setHeaderItems('default', [...headerItems]));
     };
     const removeListeners = () => {
-      core.removeEventListener('documentLoaded', onLoaded1, 1);
-      core.removeEventListener('documentUnloaded', unLoaded1, 1);
-      const hasSecondViewer = !!core.getDocumentViewer(2);
+      coreLeftViewer.removeEventListener('documentLoaded', onLoaded1);
+      coreLeftViewer.removeEventListener('documentUnloaded', unLoaded1);
+      const hasSecondViewer = !!coreRightViewer.getDocumentViewer();
       if (hasSecondViewer) {
-        core.removeEventListener('documentLoaded', onLoaded2, 2);
-        core.removeEventListener('documentUnloaded', unLoaded2, 2);
+        coreRightViewer.removeEventListener('documentLoaded', onLoaded2);
+        coreRightViewer.removeEventListener('documentUnloaded', unLoaded2);
       }
     };
     const addEventListeners = () => {
-      core.addEventListener('documentLoaded', onLoaded1, undefined, 1);
-      core.addEventListener('documentUnloaded', unLoaded1, undefined, 1);
-      core.addEventListener('documentUnloaded', unLoaded2, undefined, 2);
-      core.addEventListener('documentLoaded', onLoaded2, undefined, 2);
+      coreLeftViewer.addEventListener('documentLoaded', onLoaded1, undefined);
+      coreLeftViewer.addEventListener('documentUnloaded', unLoaded1, undefined);
+      coreRightViewer.addEventListener('documentUnloaded', unLoaded2, undefined);
+      coreRightViewer.addEventListener('documentLoaded', onLoaded2, undefined);
     };
     const onLoaded1 = () => {
       setDoc1Loaded(true);
@@ -192,13 +199,13 @@ const MultiViewer = () => {
       stopSyncing();
       setDoc1Loaded(false);
       multiViewerHelper.matchedPages = null;
-      core.deleteAnnotations(core.getSemanticDiffAnnotations(2), { force: true }, 2);
+      coreRightViewer.deleteAnnotations(coreRightViewer.getSemanticDiffAnnotations(), { force: true });
     };
     const unLoaded2 = () => {
       stopSyncing();
       setDoc2Loaded(false);
       multiViewerHelper.matchedPages = null;
-      core.deleteAnnotations(core.getSemanticDiffAnnotations(1), { force: true }, 1);
+      coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
     };
     if (!isMultiViewerMode) {
       if (initialSetup) {
@@ -232,10 +239,14 @@ const MultiViewer = () => {
       onReady('viewer');
     }
   }, [initialSetup]);
-
   const setActiveDocumentViewerKey = (documentViewerKey) => {
+    const previousDocumentViewerKey = activeDocumentViewerKey;
     dispatch(actions.setActiveDocumentViewerKey(documentViewerKey));
+    if (previousDocumentViewerKey !== documentViewerKey) {
+      fireActiveDocumentViewerChanged(previousDocumentViewerKey, documentViewerKey);
+    }
   };
+
   const updateActiveDocumentViewerKey = (documentViewerKey) => {
     const docLoaded = documentViewerKey === 1 ? doc1Loaded : doc2Loaded;
     docLoaded && activeDocumentViewerKey !== documentViewerKey && setActiveDocumentViewerKey(documentViewerKey);

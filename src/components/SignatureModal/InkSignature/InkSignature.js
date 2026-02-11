@@ -7,7 +7,7 @@ import { Swipeable } from 'react-swipeable';
 import ColorPalette from 'components/ColorPalette';
 import Dropdown from 'components/Dropdown';
 import SignatureModes from 'constants/signatureModes';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
 
 import './InkSignature.scss';
@@ -32,6 +32,7 @@ const InkSignature = ({
   enableCreateButton,
   isInitialsModeEnabled = false
 }) => {
+  const { core } = useCore();
   const fullSignatureCanvas = useRef();
   const initialsCanvas = useRef();
   // the ref holds the path points of the underlying freehand annotation

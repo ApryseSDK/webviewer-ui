@@ -1,17 +1,17 @@
 /**
- * The preset button for increasing indent in the Office Editor
+ * A button that increases the text indentation level.
  * @name increaseIndentButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for decreasing indent in the Office Editor
+ * A button that decreases the text indentation level.
  * @name decreaseIndentButton
  * @memberof UI.Components.PresetButton
  */
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
@@ -28,6 +28,7 @@ const propTypes = {
 };
 
 const IndentButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const { isFlyoutItem, isIncreaseIndent, style, className } = props;
   const menuItem = isIncreaseIndent ? menuItems.increaseIndentButton : menuItems.decreaseIndentButton;
   const {

@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
     "lockedLayer": "Il livello è bloccato",
-    "layerVisibililtyNoChange": "La visibilità del livello non può essere modificata",
+    "layerVisibilityNoChange": "La visibilità del livello non può essere modificata",
     "noLayers": "Questo documento non ha livelli.",
     "noSignatureFields": "Questo documento non ha campi per la firma.",
     "untitled": "Senza titolo",
@@ -488,11 +488,13 @@
       "replace": "Sostituire",
       "replaceAll": "Sostituisci tutto",
       "replaceText": "Sostituisci testo",
+      "replaceOptions": "Sostituisci opzioni",
       "confirmMessageReplaceAll": "Sei sicuro di voler sostituire tutto il testo?",
       "confirmMessageReplaceOne": "Sei sicuro di voler sostituire questo testo?",
       "moreOptions": "Più opzioni",
       "lessOptions": "Meno opzioni",
-      "confirm": "Confermare"
+      "confirm": "Confermare",
+      "filter": "Filtro"
     },
     "toolsOverlay": {
       "currentStamp": "Timbro Corrente",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Famiglia di caratteri"
     },
-    "blankSheet": "Foglio bianco",
+    "blankSheet": "Foglio",
     "insertImage": "Inserisci immagine"
   },
   "insertPageModal": {

@@ -103,7 +103,7 @@ describe('File attachment panel', () => {
     });
   });
 
-  it('should rener file names correctly', async () => {
+  it('should render file names correctly', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
       const component = render(

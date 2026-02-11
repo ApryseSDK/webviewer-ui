@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
 import { SearchWrapper } from './SearchWrapper';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 
 import './AdvancedTab.scss';
@@ -14,6 +14,7 @@ import './AdvancedTab.scss';
 const createItem = (label, description, isChecked, onToggled) => ({ label, description, isChecked, onToggled });
 
 const AdvancedTab = () => {
+  const { core } = useCore();
   const [
     shouldFadePageNavigationComponent,
     isNoteSubmissionWithEnterEnabled,

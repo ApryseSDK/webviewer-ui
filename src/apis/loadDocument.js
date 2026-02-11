@@ -2,8 +2,8 @@
  * Load a document inside WebViewer UI.
  * @method UI.loadDocument
  * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
- * @param {UI.loadDocumentOptions} [options] Additional options
- * @returns {Promise<void>} A promise that resolves when the document has been created
+ * @param {UI.loadDocumentOptions} [options] Additional options.
+ * @returns {Promise<void>} A promise that resolves when the document has been created.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -15,11 +15,21 @@ WebViewer(...)
  */
 
 import loadDocument from 'helpers/loadDocument';
+import selectors from 'selectors';
 
-export default (store) => (src, options) => loadDocument(store.dispatch, src, options);
+export default (store) => async (src, options) => {
+  const state = store.getState();
+  const isMultiTab = selectors.getIsMultiTab(state);
+  const tabManager = selectors.getTabManager(state);
+  const activeTab = selectors.getActiveTab(state);
+  if (isMultiTab && tabManager && (activeTab || activeTab === 0)) {
+    return tabManager.updateTab(activeTab, { src, options });
+  }
+  return loadDocument(store.dispatch, src, options);
+};
 
 /**
- * @typedef {Object} UI.loadDocumentOptions inherits from {@link Core.loadDocumentOptions}
+ * @typedef {Object} UI.loadDocumentOptions inherits from {@link Core.loadDocumentOptions}.
  * @property {string} [extension] The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.
  * @property {string} [filename] Filename of the document, which is used when downloading the PDF.
  * @property {object} [customHeaders] An object of custom HTTP headers to use when retrieving the document from the specified url.
@@ -40,7 +50,7 @@ export default (store) => (src, options) => loadDocument(store.dispatch, src, op
  * disableBrowserFontSubstitution prevents this browser substitution, forcing the WebViewer backend to handle all fonts. This means that viewing and conversion to PDF will be 100% consistent from system-to-system, at the expense of a slightly slower initial viewing time and higher bandwidth usage.
  * Using https://docs.apryse.com/documentation/web/faq/self-serve-substitute-fonts/ along with this option allows you to fully customize the substitution behaviour for all office files.
  * @property {object} [officeOptions.formatOptions] An object that contains formatting options for an Office document. Same options as allowed here {@link Core.PDFNet.Convert.OfficeToPDFOptions}.
- * @property {boolean} [officeOptions.formatOptions.hideTotalNumberOfPages] If true will hide total number of pages from page number labels (i.e, Page 1, Page 2, vs Page 1 of 2, Page 2 of 2)
+ * @property {boolean} [officeOptions.formatOptions.hideTotalNumberOfPages] If true will hide total number of pages from page number labels (i.e, Page 1, Page 2, vs Page 1 of 2, Page 2 of 2).
  * @property {boolean} [officeOptions.formatOptions.applyPageBreaksToSheet] If true will split Excel worksheets into pages so that the output resembles print output.
  * @property {boolean} [officeOptions.formatOptions.displayChangeTracking] If true will display office change tracking markup present in the document (i.e, red strikethrough of deleted content and underlining of new content). Otherwise displays the resolved document content, with no markup. Defaults to true.
  * @property {boolean} [officeOptions.formatOptions.displayHiddenText] If true will display hidden text in document. Otherwise hidden text will not be shown. Defaults to false.
@@ -50,7 +60,7 @@ export default (store) => (src, options) => loadDocument(store.dispatch, src, op
  * @property {string} [officeOptions.formatOptions.locale] Sets the value for Locale in the options object ISO 639-1 code of the current system locale. For example: 'en-US', 'ar-SA', 'de-DE', etc.
  * @property {boolean} [enableOfficeEditing] If true, will load docx files with editing capabilities.
  * @property {string} [password] A string that will be used to as the password to load a password protected document.
- * @property {function} [onError] - A callback function that will be called when error occurs in the process of loading a document. The function signature is `function(e) {}`
+ * @property {function} [onError] - A callback function that will be called when error occurs in the process of loading a document. The function signature is `function(e) {}`.
  * @property {object} [xodOptions] - An object that contains the options for a XOD document.
  * @property {boolean} [xoddecrypt] - Function to be called to decrypt a part of the XOD file. For default XOD AES encryption pass Core.Encryption.decrypt.
  * @property {boolean} [xoddecryptOptions] -  An object with options for the decryption e.g. {p: "pass", type: "aes"} where is p is the password.

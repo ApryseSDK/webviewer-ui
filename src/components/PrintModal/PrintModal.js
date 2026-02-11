@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import actions from 'actions';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import getClassName from 'helpers/getClassName';
 import LayoutMode from 'constants/layoutMode';
@@ -14,12 +14,13 @@ import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import Dropdown from '../Dropdown';
-import PageNumberInput from '../PageReplacementModal/PageNumberInput';
+import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
 import useFocusHandler from 'hooks/useFocusHandler';
 import useFocusOnClose from 'hooks/useFocusOnClose';
 import './PrintModal.scss';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import { PAGE_RANGES } from 'src/hooks/usePageRanges';
 
 const PrintModal = ({
   isDisabled,
@@ -30,7 +31,13 @@ const PrintModal = ({
   printQuality,
   isGrayscale,
   setIsGrayscale,
-  setIsCurrentView,
+  pageRange,
+  onPageRangeChange,
+  hasPageNumberError,
+  onError,
+  hasSpecifiedPages,
+  specifiedPages,
+  setSpecifiedPages,
   isCurrentViewDisabled,
   includeAnnotations,
   setIncludeAnnotations,
@@ -50,6 +57,7 @@ const PrintModal = ({
   layoutMode,
   useEmbeddedPrint,
 }) => {
+  const { core } = useCore();
   PrintModal.propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
@@ -59,7 +67,13 @@ const PrintModal = ({
     printQuality: PropTypes.number,
     isGrayscale: PropTypes.bool,
     setIsGrayscale: PropTypes.func,
-    setIsCurrentView: PropTypes.func,
+    pageRange: PropTypes.string,
+    onPageRangeChange: PropTypes.func,
+    hasPageNumberError: PropTypes.bool,
+    onError: PropTypes.func,
+    hasSpecifiedPages: PropTypes.bool,
+    specifiedPages: PropTypes.arrayOf(PropTypes.number),
+    setSpecifiedPages: PropTypes.func,
     isCurrentViewDisabled: PropTypes.bool,
     includeAnnotations: PropTypes.bool,
     setIncludeAnnotations: PropTypes.func,
@@ -83,15 +97,9 @@ const PrintModal = ({
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
-  const allPages = useRef();
-  const currentPageRef = useRef();
-  const customPages = useRef();
   const includeCommentsRef = useRef();
-  const currentView = useRef();
   const [embedPrintValid, setEmbedPrintValid] = useState(false);
-  const [specifiedPages, setSpecifiedPages] = useState([]);
-  const [hasPageNumberError, setHasPageNumberError] = useState(false);
-  const [isCustomPagesChecked, setIsCustomPagesChecked] = useState(false);
+  const isPrintDisabled = isPrinting || (pageRange === PAGE_RANGES.SPECIFY && (hasPageNumberError || !hasSpecifiedPages));
 
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
@@ -106,36 +114,24 @@ const PrintModal = ({
 
   const className = getClassName('Modal PrintModal', { isOpen });
 
-  const handlePageNumberError = () => {
-    setHasPageNumberError(true);
-  };
-
-  const handlePageNumberChange = (pageNumbers) => {
-    if (pageNumbers.length > 0) {
-      setHasPageNumberError(false);
-      setSpecifiedPages(pageNumbers);
-    }
-  };
-
   const customPagesLabelElement = (
     <>
       <label htmlFor="specifyPagesInput" className="specifyPagesChoiceLabel">
         <span>{t('option.print.specifyPages')}</span>
-        {isCustomPagesChecked && (
+        {pageRange === PAGE_RANGES.SPECIFY && (
           <span className="specifyPagesExampleLabel">
             - {t('option.thumbnailPanel.multiSelectPagesExample')}
           </span>
         )}
       </label>
-      {isCustomPagesChecked && (
+      {pageRange === PAGE_RANGES.SPECIFY && (
         <div className={classNames('page-number-input-container', { error: hasPageNumberError })}>
           <PageNumberInput
             id="specifyPagesInput"
             selectedPageNumbers={specifiedPages}
             pageCount={core.getTotalPages()}
-            onSelectedPageNumbersChange={handlePageNumberChange}
-            onBlurHandler={setSpecifiedPages}
-            onError={handlePageNumberError}
+            onSelectedPageNumbersChange={setSpecifiedPages}
+            onError={onError}
           />
         </div>
       )}
@@ -144,17 +140,15 @@ const PrintModal = ({
 
   useEffect(() => {
     onChange();
-  }, [specifiedPages]);
+  }, [pageRange, specifiedPages, core]);
 
   const onChange = () => {
     let pagesToPrint = [];
-    setIsCurrentView(currentView.current?.checked);
-    setIsCustomPagesChecked(customPages.current?.checked);
-    if (allPages.current?.checked || (currentView.current?.checked && embedPrintValid)) {
+    if (pageRange === PAGE_RANGES.ALL || (pageRange === PAGE_RANGES.CURRENT_VIEW && embedPrintValid)) {
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
       }
-    } else if (currentPageRef.current?.checked) {
+    } else if (pageRange === PAGE_RANGES.CURRENT_PAGE) {
       const pageCount = core.getTotalPages();
 
       // when displaying 2 pages, "Current" should print both of them
@@ -190,9 +184,9 @@ const PrintModal = ({
           pagesToPrint.push(currentPage);
           break;
       }
-    } else if (customPages.current?.checked) {
+    } else if (pageRange === PAGE_RANGES.SPECIFY) {
       pagesToPrint = specifiedPages;
-    } else if (currentView.current?.checked) {
+    } else if (pageRange === PAGE_RANGES.CURRENT_VIEW) {
       pagesToPrint = [currentPage];
     }
 
@@ -215,11 +209,11 @@ const PrintModal = ({
       core.setWatermark(existingWatermarksRef.current);
       setIsWatermarkModalVisible(false);
     };
-  }, []);
+  }, [core]);
 
   useEffect(() => {
     (core.getDocument().getType() !== 'xod' && useEmbeddedPrint) ? setEmbedPrintValid(true) : setEmbedPrintValid(false);
-  }, [useEmbeddedPrint]);
+  }, [useEmbeddedPrint, core]);
 
   const handlePrintQualityChange = (quality) => {
     dispatch(actions.setPrintQuality(Number(quality)));
@@ -273,23 +267,24 @@ const PrintModal = ({
                 <div className="section-label">{`${t('option.print.pages')}`}</div>
                 <form
                   className="settings-form"
-                  onChange={onChange}
+                  onChange={onPageRangeChange}
                   onSubmit={createPagesAndPrint}
                 >
                   <Choice
                     dataElement="allPagesPrintOption"
-                    ref={allPages}
+                    checked={pageRange === PAGE_RANGES.ALL}
+                    value={PAGE_RANGES.ALL}
                     id="all-pages"
                     name="pages"
                     radio
                     label={t('option.print.all')}
-                    defaultChecked
                     disabled={isPrinting}
                     center
                   />
                   <Choice
                     dataElement="currentPagePrintOption"
-                    ref={currentPageRef}
+                    checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
+                    value={PAGE_RANGES.CURRENT_PAGE}
                     id="current-page"
                     name="pages"
                     radio
@@ -299,7 +294,8 @@ const PrintModal = ({
                   />
                   <Choice
                     dataElement="currentViewPrintOption"
-                    ref={currentView}
+                    checked={pageRange === PAGE_RANGES.CURRENT_VIEW}
+                    value={PAGE_RANGES.CURRENT_VIEW}
                     id="current-view"
                     name="pages"
                     radio
@@ -310,7 +306,8 @@ const PrintModal = ({
                   />
                   <Choice
                     dataElement="customPagesPrintOption"
-                    ref={customPages}
+                    checked={pageRange === PAGE_RANGES.SPECIFY}
+                    value={PAGE_RANGES.SPECIFY}
                     id="custom-pages"
                     name="pages"
                     className="specify-pages-choice"
@@ -427,7 +424,7 @@ const PrintModal = ({
           <div className="divider"></div>
           <div className="buttons">
             <Button
-              disabled={isPrinting}
+              disabled={isPrintDisabled}
               className="button"
               onClick={createPagesAndPrint}
               label={t('action.print')}

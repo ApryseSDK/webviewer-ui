@@ -168,8 +168,8 @@
     "ellipse": "Ellipse",
     "eraser": "Eraser",
     "fileattachment": "File Attachment",
-    "freehand": "Free Hand",
-    "freeHandHighlight": "Free Hand Highlight",
+    "freehand": "Freehand",
+    "freeHandHighlight": "Freehand Highlight",
     "freetext": "Free Text",
     "markInsertText": "Insert Text",
     "markReplaceText": "Replace Text",
@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Stamp text cannot be empty",
     "unpostedComment": "Unposted Comment",
     "lockedLayer": "Layer is locked",
-    "layerVisibililtyNoChange": "Layer visibililty can't be changed",
+    "layerVisibilityNoChange": "Layer visibility can't be changed",
     "noLayers": "This document has no layers.",
     "noSignatureFields": "This document has no signature fields.",
     "untitled": "Untitled",
@@ -361,7 +361,7 @@
       "custom": "Custom",
       "ellipse": "Ellipse",
       "fileattachment": "File Attachment",
-      "freehand": "Free Hand",
+      "freehand": "Freehand",
       "callout": "Callout",
       "freetext": "Free Text",
       "line": "Line",
@@ -488,11 +488,13 @@
       "replace": "Replace",
       "replaceAll": "Replace All",
       "replaceText": "Replace Text",
+      "replaceOptions": "Replace Options",
       "confirmMessageReplaceAll": "Are you sure you want to replace all text?",
       "confirmMessageReplaceOne": "Are you sure you want to replace this text?",
       "moreOptions": "More options",
       "lessOptions": "Less options",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "filter": "Filter"
     },
     "toolsOverlay": {
       "currentStamp": "Current Stamp",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Font Family"
     },
-    "blankSheet": "Blank Sheet",
+    "blankSheet": "Sheet",
     "insertImage": "Insert image"
   },
   "insertPageModal": {

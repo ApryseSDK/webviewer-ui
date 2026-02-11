@@ -4,7 +4,7 @@ import { getFileAttachments, getEmbeddedFileData } from 'helpers/getFileAttachme
 import Spinner from '../Spinner';
 import { saveAs } from 'file-saver';
 import Icon from 'components/Icon';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -38,7 +38,7 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
           style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
           type="button"
         >
-          {`[${fileExtension}] ${filename}`}<Spinner height={15} width={15}/>
+          {`[${fileExtension}] ${filename}`}<Spinner inPanel height={'15px'} width={'15px'}/>
         </button>
       </li>
     );
@@ -63,6 +63,7 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
 const initialFilesDefault = { embeddedFiles: [], fileAttachmentAnnotations: [] };
 
 const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [fileAttachments, setFileAttachments] = useState(initialFiles);
@@ -75,12 +76,17 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
       const attachments = await getFileAttachments();
       setFileAttachments(attachments);
     };
+    const clearSpinner = () => {
+      setFileIdProcessSpinner(null);
+    };
     core.addEventListener('annotationChanged', updateFileAttachments);
     core.addEventListener('documentLoaded', updateFileAttachments);
+    core.addEventListener('fileAttachmentDataAvailable', clearSpinner);
     updateFileAttachments();
     return () => {
       core.removeEventListener('annotationChanged', updateFileAttachments);
       core.removeEventListener('documentLoaded', updateFileAttachments);
+      core.removeEventListener('fileAttachmentDataAvailable', clearSpinner);
     };
   }, []);
 
@@ -101,14 +107,20 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
   const attachmentPanelItemOnClick = async (fileAttachmentAnnot) => {
     if (isMultiTab) {
       dispatch(actions.openElement(DataElements.LOADING_MODAL));
-      setTimeout(async () => {
+      try {
         const blob = await fileAttachmentAnnot.getFileData();
         const filename = getActualFileName(fileAttachmentAnnot.filename);
         const newTabId = await tabManager.addTab(blob, { filename });
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
         dispatch(actions.closeElement(DataElements.LEFT_PANEL));
         await tabManager.setActiveTab(newTabId);
-      }, 100);
+      } catch (error) {
+        console.error('Error opening file attachment:', error);
+        dispatch(actions.openElement(DataElements.ERROR_MODAL));
+        dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+      } finally {
+        setFileIdProcessSpinner(null);
+      }
     } else {
       return core.getAnnotationManager().trigger('annotationDoubleClicked', fileAttachmentAnnot);
     }
@@ -145,12 +157,14 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
             <ul className="downloadable">
               {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(
                 getActualFileName(fileAttachmentAnnot.filename),
-                async () => {
+                () => {
+                  setFileIdProcessSpinner(`fileAttachmentAnnotation_${idx}`);
                   core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
                   core.selectAnnotation(fileAttachmentAnnot);
-                  await attachmentPanelItemOnClick(fileAttachmentAnnot);
+                  attachmentPanelItemOnClick(fileAttachmentAnnot);
                 },
                 `fileAttachmentAnnotation_${idx}`,
+                showFileIdProcessSpinner
               ),
               )}
             </ul>

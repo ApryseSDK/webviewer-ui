@@ -1,7 +1,7 @@
 import actions from 'actions';
 import ScaleOverlay from './ScaleOverlay';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Draggable from 'react-draggable';
 import selectors from 'selectors';
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,6 +36,7 @@ const propTypes = {
 };
 
 const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SCALE_OVERLAY_CONTAINER));
@@ -47,7 +48,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   });
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER));
   const initialPosition = useSelector((state) => selectors.getScaleOverlayPosition(state));
-  const { position, handleDrag, handleStop, containerRef, style, bounds, resetPosition } = useDraggablePosition(initialPosition);
+  const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds, resetPosition } = useDraggablePosition(initialPosition);
   const [, forceUpdate] = useReducer((x) => x + 1, 0, () => 0);
 
   useEffect(() => {
@@ -171,7 +172,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     return (
       <Draggable
         position={position}
-        bounds={bounds}
+        bounds={dragBounds}
         onDrag={handleDrag}
         onStop={handleStop}
         cancel={'.scale-overlay-selector, .add-new-scale'}
@@ -184,8 +185,11 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
             closed: !isOpen,
           })}
           data-element={DataElements.SCALE_OVERLAY_CONTAINER}
-          style={style}
-          ref={containerRef}
+          style={initialOffset}
+          ref={(node) => {
+            containerRef.current = node;
+            setOverlayRef(node);
+          }}
         >
           <ScaleOverlay
             annotations={annotations}

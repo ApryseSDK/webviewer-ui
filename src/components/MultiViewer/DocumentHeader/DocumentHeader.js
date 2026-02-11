@@ -3,7 +3,7 @@ import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 import downloadPdf from 'helpers/downloadPdf';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ const DocumentHeader = ({
   isSyncing,
 }) => {
   const { t } = useTranslation();
+  const { core } = useCore(documentViewerKey);
   const dispatch = useDispatch();
   const [filename, setFileName] = useState('Untitled');
   const [saveButtonDisabled] = useSelector((state) => [selectors.isElementDisabled(state, DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON)]);

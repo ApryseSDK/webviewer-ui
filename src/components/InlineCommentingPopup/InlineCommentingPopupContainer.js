@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import InlineCommentingPopup from './InlineCommentingPopup';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getAnnotationPopupPositionBasedOn as getPopupPosition } from 'helpers/getPopupPosition';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -20,6 +20,7 @@ const propTypes = {
 };
 
 const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
+  const { core } = useCore();
   const [
     isNotesPanelOpen,
     notesInLeftPanel,

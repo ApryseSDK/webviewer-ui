@@ -1,12 +1,12 @@
 /**
- * Sets preset crop dimensions to be used when selecting a preset crop in the document cropping popup
+ * Sets preset crop dimensions to be used when selecting a preset crop in the document cropping popup.
  * @method UI.setPresetCropDimensions
- * @param {string} presetName The name of a current preset or the name to give to a new preset
- * @param {object} newPreset A set of dimensions to use for a preset crop
- * @param {number} newPreset.yOffset The amount of inches to move the cropped area from the top of the page
- * @param {number} newPreset.height The height of the area to crop the page to in inches
- * @param {number} newPreset.xOffset The amount of inches to move the cropped area from the left of the page
- * @param {number} newPreset.width The width of the area to crop the page to in inches
+ * @param {string} presetName The name of a current preset or the name to give to a new preset.
+ * @param {object} newPreset A set of dimensions to use for a preset crop.
+ * @param {number} newPreset.yOffset The amount of inches to move the cropped area from the top of the page.
+ * @param {number} newPreset.height The height of the area to crop the page to in inches.
+ * @param {number} newPreset.xOffset The amount of inches to move the cropped area from the left of the page.
+ * @param {number} newPreset.width The width of the area to crop the page to in inches.
  *
  * @example
 WebViewer(...)

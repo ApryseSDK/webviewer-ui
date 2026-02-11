@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import DataElementWrapper from '../DataElementWrapper';
 import Icon from 'components/Icon';
 import TextEditingPanel from './TextEditingPanel';
@@ -12,6 +12,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getInstanceNode }  from 'src/helpers/getRootNode';
+import handleSelectionChange from './TextEditingPanelHelpers/handleSelectionChange';
 
 const conversionMap = {
   Font: 'fontName',
@@ -20,6 +21,7 @@ const conversionMap = {
 };
 
 const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
+  const { core } = useCore();
   const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode, isCustomUI] = useSelector(
     (state) => [
       selectors.isElementOpen(state, dataElement),
@@ -58,35 +60,23 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   }, [selectionMode]);
 
   useEffect(() => {
-    const handleSelectionChange = async () => {
-      if (contentEditorRef.current && core.getContentEditManager().isInContentEditMode()) {
-        const attribute = await contentEditorRef.current.getTextAttributes();
-        const color = new instance.Core.Annotations.Color(attribute.fontColor);
-
-        const fontObject = {
-          FontSize: attribute.fontSize,
-          Font: getFontName(attribute.fontName),
-          TextAlign: attribute.textAlign
-        };
-
-        if (!fonts.includes(fontObject.Font)) {
-          setFonts([...fonts, fontObject.Font]);
-        }
-        // We do this to prevent spamming the handleColorChange with same color, but we need a better approach.
-        if (!fonts.includes(fontObject.Font)) {
-          handleColorChange(null, color);
-        }
-
-        setTextEditProperties(fontObject);
-        // remove the fontName attribute so that we don't override the fontName when we set the text attributes
-        delete attribute.fontName;
-        instance.Core.ContentEdit.setTextAttributes(attribute);
-
-        setFormat({ ...attribute, color });
-      }
+    const handleSelectionChangeWrapper = async () => {
+      const isInContentEditMode = contentEditorRef.current && core.getContentEditManager().isInContentEditMode();
+      await handleSelectionChange({
+        getFontName,
+        setFonts,
+        handleColorChange,
+        setTextEditProperties,
+        setFormat,
+        setSelectionMode,
+        contentEditorRef,
+        isInContentEditMode,
+        fonts,
+        instance,
+      });
     };
-    core.addEventListener('contentEditSelectionChange', handleSelectionChange);
-    return () => core.removeEventListener('contentEditSelectionChange', handleSelectionChange);
+    core.addEventListener('contentEditSelectionChange', handleSelectionChangeWrapper);
+    return () => core.removeEventListener('contentEditSelectionChange', handleSelectionChangeWrapper);
   }, [fonts]);
 
   /**
@@ -160,6 +150,9 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
   async function setContentEditPanelProperties(annotation) {
     setSelectedContentBox(annotation);
+    // Editor to Editor focus causes
+    // getTextEditPropertiesFromContentEditPlaceHolder to hang
+    // no errors are thrown, fix in v4.
     const textAttributes = await getTextEditPropertiesFromContentEditPlaceHolder(annotation);
     setFormat(textAttributes);
     setTextEditProperties(textAttributes);

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import Dropdown from 'components/Dropdown';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { isIOS, isMobile } from 'helpers/device';
 import cropImageFromCanvas from 'helpers/cropImageFromCanvas';
 import selectors from 'selectors';
@@ -110,6 +110,7 @@ const TextSignature = ({
   enableCreateButton,
   isInitialsModeEnabled = false,
 }) => {
+  const { core } = useCore();
   const fonts = useSelector((state) => selectors.getSignatureFonts(state));
   const textSignatureCanvasMultiplier = useSelector((state) => selectors.getTextSignatureQuality(state));
   const [fullSignature, setFullSiganture] = useState('');

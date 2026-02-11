@@ -1,7 +1,7 @@
 import {
   getViewOnlyShortcuts,
   isShortcutInToolList
-} from 'helpers/hotkeysManager';
+} from 'helpers/hotkeysUtils';
 export const filterOutDisabledToolShortcuts = (shortcuts, disabledToolNames) => {
   if (disabledToolNames.length === 0) {
     return shortcuts;

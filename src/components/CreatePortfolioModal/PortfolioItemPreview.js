@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Icon from 'components/Icon';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ const propTypes = {
 const options = { loadAsPDF: true };
 
 const PortfolioItemPreview = ({ item }) => {
+  const { core } = useCore();
   const canvasContainer = useRef();
   const [showIcon, setShowIcon] = useState(false);
   const { t } = useTranslation();

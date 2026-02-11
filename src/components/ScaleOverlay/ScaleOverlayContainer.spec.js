@@ -57,6 +57,7 @@ jest.mock('core', () => ({
   getScalePrecision: () => 0.1,
   addEventListener: () => {},
   removeEventListener: () => {},
+  getDocumentViewer: () => ({}),
 }));
 
 const props = {

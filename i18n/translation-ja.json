@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
     "unpostedComment": "未投稿のコメント",
     "lockedLayer": "レイヤーがロックされています",
-    "layerVisibililtyNoChange": "レイヤーの可視性は変更できません",
+    "layerVisibilityNoChange": "レイヤーの可視性は変更できません",
     "noLayers": "このドキュメントにはレイヤーがありません。",
     "noSignatureFields": "この文書には署名フィールドがありません。",
     "untitled": "無題",
@@ -488,11 +488,13 @@
       "replace": "交換",
       "replaceAll": "すべて置換",
       "replaceText": "テキストを置き換える",
+      "replaceOptions": "置換オプション",
       "confirmMessageReplaceAll": "すべてのテキストを置き換えてもよろしいですか？",
       "confirmMessageReplaceOne": "このテキストを置き換えてもよろしいですか？",
       "moreOptions": "より多くのオプション",
       "lessOptions": "オプションが少ない",
-      "confirm": "確認"
+      "confirm": "確認",
+      "filter": "フィルター"
     },
     "toolsOverlay": {
       "currentStamp": "現在のスタンプ",

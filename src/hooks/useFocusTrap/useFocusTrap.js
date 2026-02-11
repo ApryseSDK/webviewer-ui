@@ -101,14 +101,16 @@ export default function useFocusTrap(locked = false, options = {}) {
     // Blur focus target if no focusable elements.
     const focusableElements = getFocusableElements();
     const target = getTarget(event);
-    if (!focusableElements.length) {
+    const targetIsInFocusRef = focusRef.current.contains(target);
+
+    if (!focusableElements.length && targetIsInFocusRef) {
       return target?.blur();
     }
 
     // Focus initial element if focused outside.
     const focusedItemIndex = findFocusableIndex(focusableElements, target);
     const focusedItemWasFound = focusedItemIndex !== -1;
-    const eventIsFromWithinApp = event && focusRef.current.contains(target);
+    const eventIsFromWithinApp = event && targetIsInFocusRef;
 
     if (!focusedItemWasFound && eventIsFromWithinApp) {
       return focusableElements[0].focus();

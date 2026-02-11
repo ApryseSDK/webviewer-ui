@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 function CustomMeasurementOverlay(props) {
@@ -31,6 +31,7 @@ function CustomEllipseMeasurementOverlay(props) {
   const annotationKey = mapAnnotationToKey(props.annotation);
   const { icon } = getDataWithKey(annotationKey);
   const { t } = props;
+  const { core } = useCore();
 
   // Get the Scale, Precision and Units from
   // the AnnotationCreateDistanceMeasurement tool as these do not exist

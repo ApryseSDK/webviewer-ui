@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import classNames from 'classnames';
@@ -17,7 +16,23 @@ import mapValidationResponseToTranslation from 'helpers/mapValidationResponseToT
 import FormFieldPanel from './FormFieldPanel';
 import useIsRTL from 'hooks/useIsRTL';
 import './FormFieldPanel.scss';
-import { createFields, createFlags, defaultDimension, defaultFlags, defaultProperties, getPageHeight, getPageWidth, getSignatureOption, handleFieldCreation, handleFlagsCreation, isRenderingOptions, redrawAnnotation, validateDimension, triggerAnnotationChangedEventWithModify } from './utils';
+import {
+  createFields,
+  createFlags,
+  defaultDimension,
+  defaultFlags,
+  defaultProperties,
+  getPageHeight,
+  getPageWidth,
+  getSignatureOption,
+  handleFieldCreation,
+  handleFlagsCreation,
+  isRenderingOptions,
+  redrawAnnotation,
+  validateDimension,
+  triggerAnnotationChangedEventWithModify
+} from './utils';
+import useCore from 'hooks/useCore';
 
 const { Annotations, Tools } = window.Core;
 
@@ -26,6 +41,7 @@ const propTypes = {
 };
 
 const FormFieldPanelContainer = React.memo(({ annotation }) => {
+  const { core } = useCore();
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.FORM_FIELD_PANEL));
   const toolButtonObject = useSelector(selectors.getToolButtonObjects, shallowEqual);
   const isSignatureOptionsDropdownDisabled = useSelector((state) => selectors.isElementDisabled(state, 'signatureOptionsDropdown'));
@@ -304,14 +320,14 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
 
   const onWidthChange = (newWidth) => {
     if (annotation) {
-      const validatedWidth = validateDimension(newWidth, getPageWidth(), annotation.X);
+      const validatedWidth = validateDimension(newWidth, getPageWidth(core), annotation.X);
       annotation.setWidth(validatedWidth);
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,
         width: validatedWidth,
       }));
-      redrawAnnotation(annotation);
-      triggerAnnotationChangedEventWithModify([annotation]);
+      redrawAnnotation(annotation, core);
+      triggerAnnotationChangedEventWithModify([annotation], core);
     } else {
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,
@@ -324,14 +340,14 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
 
   const onHeightChange = (newHeight) => {
     if (annotation) {
-      const validatedHeight = validateDimension(newHeight, getPageHeight(), annotation.Y);
+      const validatedHeight = validateDimension(newHeight, getPageHeight(core), annotation.Y);
       annotation.setHeight(validatedHeight);
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,
         height: validatedHeight
       }));
-      redrawAnnotation(annotation);
-      triggerAnnotationChangedEventWithModify([annotation]);
+      redrawAnnotation(annotation, core);
+      triggerAnnotationChangedEventWithModify([annotation], core);
     } else {
       setFieldDimension((previousFieldDimension) => ({
         ...previousFieldDimension,
@@ -387,7 +403,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   };
 
   const options = { onFieldNameChange, onFieldValueChange, fieldProperties, onSignatureOptionChange, getSignatureOption, annotation };
-  const fields = createFields(options);
+  const fields = createFields(options, core);
   const flags = createFlags(handleFlagChange, fieldFlags);
 
   const indicatorProps = {
@@ -399,9 +415,9 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   };
 
   const renderPanel = () => {
-    const panelFields = handleFieldCreation(annotation, fields, isSignatureOptionsDropdownDisabled);
-    const panelFlags = handleFlagsCreation(annotation, flags);
-    const shouldShowOptions = isRenderingOptions(annotation);
+    const panelFields = handleFieldCreation(annotation, fields, isSignatureOptionsDropdownDisabled, core);
+    const panelFlags = handleFlagsCreation(annotation, flags, core);
+    const shouldShowOptions = isRenderingOptions(annotation, core);
 
     return (
       <FormFieldPanel

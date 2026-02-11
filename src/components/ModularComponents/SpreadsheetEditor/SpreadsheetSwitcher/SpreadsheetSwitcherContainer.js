@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import SpreadsheetSwitcher from './SpreadsheetSwitcher';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 import { useTranslation } from 'react-i18next';
@@ -7,9 +7,10 @@ import useFocusOnClose from 'src/hooks/useFocusOnClose';
 import { isSheetNameDuplicated } from 'helpers/spreadsheetSwitchContainerHelpers';
 
 const ERROR = 'SpreadsheetEditorDocument is not loaded';
-let NEW_SPREADSHEET_NUMBER = 2;
+let NEW_SPREADSHEET_NUMBER = 1;
 
 function SpreadsheetSwitcherContainer(props) {
+  const { core } = useCore();
   const { t } = useTranslation();
   const [sheets, setSheets] = useState([]);
   const [activeSheetIndex, setActiveSheetIndex] = useState(0);
@@ -80,12 +81,10 @@ function SpreadsheetSwitcherContainer(props) {
       return console.error(ERROR);
     }
 
-    let newName = t('spreadsheetEditor.blankSheet');
-    let isNameUnique = !workbook.getSheet(newName);
-    while (!isNameUnique) {
-      newName = `${t('spreadsheetEditor.blankSheet')} ${NEW_SPREADSHEET_NUMBER++}`;
-      isNameUnique = !workbook.getSheet(newName);
+    while (workbook.getSheet(`${t('spreadsheetEditor.blankSheet')}${NEW_SPREADSHEET_NUMBER}`)) {
+      NEW_SPREADSHEET_NUMBER++;
     }
+    const newName = `${t('spreadsheetEditor.blankSheet')}${NEW_SPREADSHEET_NUMBER}`;
     workbook.createSheet(newName);
   };
 

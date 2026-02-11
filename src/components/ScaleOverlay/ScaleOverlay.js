@@ -1,5 +1,5 @@
 import ScaleHeader from './ScaleHeader';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import MeasurementDetail from './MeasurementDetail';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
@@ -40,6 +40,7 @@ const ScaleOverlay = ({
     selectors.getCalibrationInfo(state),
     selectors.getActiveToolName(state)
   ], shallowEqual);
+  const { core } = useCore();
   const [scales, setScales] = useState(core.getScales());
   const shouldShowMeasurementDetail = !!Object.keys(scales).length && !(!selectedTool && (!annotations.length || annotations.length > 1));
 

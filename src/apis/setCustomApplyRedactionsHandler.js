@@ -3,8 +3,8 @@ import actions from 'actions';
 /**
  * @callback CustomApplyRedactionsHandler
  * @memberof UI
- * @param {Array.<Core.Annotations.Annotation>} annotations
- * @param {function} originalApplyRedactionsFunction The original applyRedactions function
+ * @param {Array.<Core.Annotations.Annotation>} annotations The annotations to apply redactions to.
+ * @param {function} originalApplyRedactionsFunction The original applyRedactions function.
  */
 
 /**

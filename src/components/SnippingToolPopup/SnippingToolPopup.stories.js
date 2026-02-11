@@ -5,6 +5,8 @@ import { MockApp, createStore } from 'helpers/storybookHelper';
 import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { userEvent, within, expect } from 'storybook/test';
+import { getTranslatedText } from 'helpers/testTranslationHelper';
 
 export default {
   title: 'Components/SnippingToolPopup',
@@ -93,3 +95,22 @@ export function PopupInApp(args, context) {
     <MockApp initialState={mockState} initialDirection={addonRtl}/>
   );
 }
+
+// Add interactive tests that clicks on Edit ribbon
+PopupInApp.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const editRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Edit') });
+  await userEvent.click(editRibbon);
+
+  // Wait for popup to fully position
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const snippingToolButton = await canvas.findByRole('button', { name: getTranslatedText('annotation.snipping') });
+  expect(snippingToolButton).toBeInTheDocument();
+};
+
+PopupInApp.parameters = {
+  layout: 'fullscreen',
+  chromatic: { delay: 10000 },
+};

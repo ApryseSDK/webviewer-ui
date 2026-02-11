@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getTextPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import copyText from 'helpers/copyText';
@@ -21,6 +21,7 @@ import DataElements from 'src/constants/dataElement';
 import './TextPopup.scss';
 
 const TextPopup = ({ t, selectedTextQuads }) => {
+  const { core } = useCore();
   const [
     isDisabled,
     isOpen,

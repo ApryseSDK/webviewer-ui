@@ -17,7 +17,7 @@ export const enableAnnotationToolStyleSyncing = (store) => () => {
 
 /**
  * Disables syncing of annotation style updates to the associated tool that created the annotation.
- * So if an annotation's style is changed the tool default styles will not be updated.
+ * So if an annotation's style is changed, the tool default styles will not be updated.
  * @method UI.disableAnnotationToolStyleSyncing
  * @example
 WebViewer(...)

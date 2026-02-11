@@ -5,10 +5,12 @@ import selectors from 'selectors';
 import actions from 'actions';
 import Choice from 'components/Choice';
 import DataElements from 'src/constants/dataElement';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 
 const ComparisonButton = () => {
+  const { core: coreLeftViewer } = useCore(1);
+  const { core: coreRightViewer } = useCore(2);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
@@ -16,15 +18,15 @@ const ComparisonButton = () => {
     selectors.isCompareStarted(state),
     selectors.getIsComparisonOverlayEnabled(state),
   ]);
-  const semanticDiffAnnotations = core.getSemanticDiffAnnotations();
+  const semanticDiffAnnotations = coreLeftViewer.getSemanticDiffAnnotations();
 
   useEffect(() => {
     const checkDisabled = () => {
-      const documentsLoaded = core.getDocument(1) && core.getDocument(2);
-      const document1IsValidType = core.getDocument(1)?.getType() === 'pdf' ||
-        (core.getDocument(1)?.getType() === 'webviewerServer' && !core.getDocument(1)?.isWebViewerServerDocument());
-      const document2IsValidType = core.getDocument(2)?.getType() === 'pdf' ||
-        (core.getDocument(2)?.getType() === 'webviewerServer' && !core.getDocument(2)?.isWebViewerServerDocument());
+      const documentsLoaded = coreLeftViewer.getDocument() && coreRightViewer.getDocument();
+      const document1IsValidType = coreLeftViewer.getDocument()?.getType() === 'pdf' ||
+        (coreLeftViewer.getDocument()?.getType() === 'webviewerServer' && !coreLeftViewer.getDocument()?.isWebViewerServerDocument());
+      const document2IsValidType = coreRightViewer.getDocument()?.getType() === 'pdf' ||
+        (coreRightViewer.getDocument()?.getType() === 'webviewerServer' && !coreRightViewer.getDocument()?.isWebViewerServerDocument());
       if (documentsLoaded && document1IsValidType && document2IsValidType) {
         setDisabled(false);
       } else {
@@ -38,10 +40,10 @@ const ComparisonButton = () => {
       dispatch(actions.closeElement('comparePanel'));
     };
     checkDisabled();
-    core.addEventListener('documentLoaded', checkDisabled, undefined, 1);
-    core.addEventListener('documentLoaded', checkDisabled, undefined, 2);
-    core.addEventListener('documentUnloaded', unLoaded, undefined, 1);
-    core.addEventListener('documentUnloaded', unLoaded, undefined, 2);
+    coreLeftViewer.addEventListener('documentLoaded', checkDisabled, undefined);
+    coreRightViewer.addEventListener('documentLoaded', checkDisabled, undefined);
+    coreLeftViewer.addEventListener('documentUnloaded', unLoaded, undefined);
+    coreRightViewer.addEventListener('documentUnloaded', unLoaded, undefined);
 
     if (!semanticDiffAnnotations.length && isComparisonOverlayEnabled) {
       dispatch(actions.setIsComparisonOverlayEnabled(false));
@@ -52,21 +54,22 @@ const ComparisonButton = () => {
     }
 
     return () => {
-      core.removeEventListener('documentLoaded', checkDisabled, undefined, 1);
-      core.removeEventListener('documentLoaded', checkDisabled, undefined, 2);
-      core.removeEventListener('documentUnloaded', unLoaded, undefined, 1);
-      core.removeEventListener('documentUnloaded', unLoaded, undefined, 2);
+      coreLeftViewer.removeEventListener('documentLoaded', checkDisabled, undefined);
+      coreRightViewer.removeEventListener('documentLoaded', checkDisabled, undefined);
+      coreLeftViewer.removeEventListener('documentUnloaded', unLoaded, undefined);
+      coreRightViewer.removeEventListener('documentUnloaded', unLoaded, undefined);
     };
   }, [semanticDiffAnnotations]);
 
   const startComparison = useCallback(() => {
-    const [documentViewer, documentViewer2] = core.getDocumentViewers();
-    const shouldDiff = documentViewer?.getDocument() && documentViewer2?.getDocument();
+    const documentViewer1 = coreLeftViewer.getDocumentViewer();
+    const documentViewer2 = coreRightViewer.getDocumentViewer();
+    const shouldDiff = documentViewer1?.getDocument() && documentViewer2?.getDocument();
     if (shouldDiff) {
       dispatch(actions.setIsCompareStarted(true));
       dispatch(actions.enableElement('comparePanelToggleButton'));
       dispatch(actions.openElement(DataElements.LOADING_MODAL));
-      documentViewer.startSemanticDiff(documentViewer2).catch((error) => {
+      documentViewer1.startSemanticDiff(documentViewer2).catch((error) => {
         console.error(error);
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
       });
@@ -75,11 +78,12 @@ const ComparisonButton = () => {
 
   const toggleComparisonOverlay = async () => {
     const enable = !isComparisonOverlayEnabled;
-    const [documentViewerOne, documentViewerTwo] = core.getDocumentViewers();
+    const documentViewer1 = coreLeftViewer.getDocumentViewer();
+    const documentViewer2 = coreRightViewer.getDocumentViewer();
     if (enable) {
-      await documentViewerOne.startSemanticDiff(documentViewerTwo);
+      await documentViewer1.startSemanticDiff(documentViewer2);
     } else {
-      await documentViewerOne.stopSemanticDiff();
+      await documentViewer1.stopSemanticDiff();
     }
     dispatch(actions.setIsComparisonOverlayEnabled(enable));
   };

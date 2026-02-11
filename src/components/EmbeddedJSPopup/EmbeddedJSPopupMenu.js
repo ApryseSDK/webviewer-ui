@@ -5,7 +5,7 @@ import EmbeddedJSPopupOption from './EmbeddedJSPopupOption';
 import EmbeddedJSPopupSubMenu from './EmbeddedJSPopupSubMenu';
 
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 
 const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0, top = 0, onSelectOption, popUpMenuItems }, ref) => {
@@ -19,6 +19,7 @@ const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0
     selectors.getEmbeddedJSPopupStyle(state),
   ], shallowEqual);
 
+  const { core } = useCore();
   const scrollContainer = core.getScrollViewElement();
   const dispatch = useDispatch();
   const containerRef = useRef();

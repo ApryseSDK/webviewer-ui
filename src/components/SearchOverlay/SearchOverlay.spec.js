@@ -67,7 +67,10 @@ jest.mock('core', () => {
     clearSearchResults: jest.fn(),
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    getDocument: mockGetDocument
+    getDocument: mockGetDocument,
+    getDocumentViewer: jest.fn(() => ({
+      getDocument: mockGetDocument,
+    })),
   };
 });
 
@@ -176,7 +179,7 @@ describe('SearchOverlay', () => {
 
   const openFlyoutAndGetCheckbox = async (screen, container, checkboxId) => {
     const searchOptionsButton = await waitFor(() => {
-      const button = screen.getByRole('button', { name: 'Toggle search options' });
+      const button = screen.getByRole('button', { name: 'Filter' });
       expect(button).toBeInTheDocument();
       return button;
     });

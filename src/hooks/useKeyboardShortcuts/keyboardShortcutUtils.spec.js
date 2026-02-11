@@ -1,7 +1,7 @@
 import { filterOutDisabledToolShortcuts, filterViewOnlyShortcuts } from './utils';
-import { getViewOnlyShortcuts, isShortcutInToolList } from 'helpers/hotkeysManager';
+import { isShortcutInToolList, getViewOnlyShortcuts } from 'helpers/hotkeysUtils';
 
-jest.mock('helpers/hotkeysManager', () => ({
+jest.mock('helpers/hotkeysUtils', () => ({
   getViewOnlyShortcuts: jest.fn(),
   isShortcutInToolList: jest.fn(),
 }));

@@ -1,7 +1,7 @@
 /**
- * Returns the current zoom level
+ * Returns the current zoom level.
  * @method UI.getZoomLevel
- * @return {number} Zoom level (0 to 1)
+ * @return {number} Zoom level (0 to 1).
  * @example
 WebViewer(...)
   .then(function(instance) {

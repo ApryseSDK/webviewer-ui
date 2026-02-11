@@ -15,12 +15,13 @@ import './SignatureListPanel.scss';
 import Divider from '../ModularComponents/Divider';
 import SavedSignatures from './SavedSignatures';
 import SignatureAddButton from './SignatureAddButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
 import Events from 'constants/events';
 import { getEventHandler } from 'helpers/fireEvent';
 
 const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LIST_PANEL, isFlyout = false }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const isMobile = isMobileSize();
 

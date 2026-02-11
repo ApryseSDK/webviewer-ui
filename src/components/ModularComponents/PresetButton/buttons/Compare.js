@@ -2,7 +2,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import selectors from 'selectors';
@@ -11,11 +11,12 @@ import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
 
 /**
- * A button that starts semantic text compare and opens the compare panel
+ * A button that starts semantic text comparison and opens the compare panel.
  * @name compareButton
  * @memberof UI.Components.CompareButton
  */
 const CompareButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const { isFlyoutItem, className, style } = props;
   const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.COMPARE_PANEL));
   const [doc1TypeValid, setDoc1TypeValid] = useState(false);

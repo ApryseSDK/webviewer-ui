@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -29,6 +29,7 @@ const ContentEditButton = forwardRef((props, ref) => {
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const dispatch = useDispatch();
+  const { core } = useCore();
   const [active, setActive] = useState(core.getContentEditManager().isInContentEditMode());
   const [t] = useTranslation();
 

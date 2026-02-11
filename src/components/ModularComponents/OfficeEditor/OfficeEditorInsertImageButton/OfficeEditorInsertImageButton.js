@@ -1,5 +1,5 @@
 /**
- * The preset button for inserting an image in the Office Editor
+ * A button that inserts an image into the document.
  * @name insertImageButton
  * @memberof UI.Components.PresetButton
  */

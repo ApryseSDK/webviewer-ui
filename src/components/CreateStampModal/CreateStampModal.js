@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const fillColors = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 
 const CustomStampModal = () => {
+  const { core } = useCore();
   const [state, setState] = useState({ font: 'Helvetica', bold: true, color: fillColors[0] });
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const [t] = useTranslation();

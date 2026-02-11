@@ -1,6 +1,7 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+
 const TestThumbnail = withProviders(Thumbnail);
 
 function noop() { }
@@ -22,6 +23,9 @@ jest.mock('core', () => ({
   getRotation: () => 1,
   getDocument: () => mockDocument,
   setCurrentPage: () => {},
+  getDocumentViewer: jest.fn(() => ({
+    getDocument: () => mockDocument,
+  })),
 }));
 
 jest.mock('src/helpers/getRootNode', () => ({

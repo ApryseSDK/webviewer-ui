@@ -8,7 +8,7 @@ import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
 import SavedSignatures from 'components/SignatureModal/SavedSignatures';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import SignatureModes from 'constants/signatureModes';
@@ -20,6 +20,7 @@ import useFocusOnClose from 'hooks/useFocusOnClose';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
+  const { core } = useCore();
   const [
     isDisabled,
     isOpen,

@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import selectors from 'selectors';
 import actions from 'actions';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
@@ -16,7 +16,8 @@ import CustomElement from 'components/CustomElement';
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
-import { OfficeEditorEditMode, NOTES_PANEL_TEXTS } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
+import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
@@ -43,6 +44,7 @@ function NotesPanelHeader({
   toggleMultiSelectMode,
   isMultiSelectEnabled,
 }) {
+  const { core } = useCore();
   const [
     sortStrategy,
     isSortContainerDisabled,
@@ -69,6 +71,7 @@ function NotesPanelHeader({
   const [filterEnabled, setFilterEnabled] = useState(false);
   const [isPreviewingTrackedChanges, setIsPreviewingTrackedChanges] = useState(false);
   const [searchInput, setSearchInput] = useState('');
+  const notesPanelConfig = getNotesPanelConfig(parentDataElement);
 
   useEffect(() => {
     // check if Redux filter state is enabled on mount and set filterEnabled to true
@@ -135,7 +138,7 @@ function NotesPanelHeader({
   );
 
   const openFilterModalWithFocusTransfer = useFocusHandler(() => dispatch(actions.openElement('filterModal')));
-  const placeholderText = t(NOTES_PANEL_TEXTS[parentDataElement].searchPlaceholder);
+  const placeholderText = t(notesPanelConfig.searchPlaceholder);
 
   const originalHeaderElement = (
     <DataElementWrapper
@@ -169,7 +172,7 @@ function NotesPanelHeader({
         className="comments-counter"
         dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
       >
-        <h2 className='main-comment'>{t(NOTES_PANEL_TEXTS[parentDataElement].title)} {`(${notes.length})`}</h2>
+        <h2 className='main-comment'>{t(notesPanelConfig.title)} {`(${notes.length})`}</h2>
       </DataElementWrapper>
 
       <DataElementWrapper

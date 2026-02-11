@@ -1,11 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { default as mockAppState } from 'src/redux/initialState';
 import CustomModal from './CustomModal';
 import { within, expect } from 'storybook/test';
 import App from 'components/App';
-import { createTemplate } from 'helpers/storybookHelper';
+import { createTemplate, MockApp } from 'helpers/storybookHelper';
 import { mockCustomModal } from 'helpers/mockCustomModal';
+import { configureStore } from '@reduxjs/toolkit';
 
 const initialState = {
   viewer: {
@@ -13,6 +15,17 @@ const initialState = {
     openElements: { 'customModal': true },
     disabledElements: {},
   }
+};
+
+const customAppState = {
+  ...mockAppState,
+  viewer: {
+    ...mockAppState.viewer,
+    selectedScale: undefined,
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 function rootReducer(state = initialState) {
@@ -55,4 +68,46 @@ CustomModalWithAPI.play = async ({ canvasElement }) => {
 CustomModalWithAPI.parameters = {
   layout: 'fullscreen',
   ...window.storybook.disableRtlMode,
+};
+
+export function CustomModalViewOnly() {
+  const viewOnlyStore = configureStore({
+    reducer: () => customAppState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  });
+  return <MockApp initialState={customAppState} store={viewOnlyStore}/>;
+}
+
+CustomModalViewOnly.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await window.instance.UI.addCustomModal(mockCustomModal);
+
+  const viewOnlyWhitelist = await window.instance.UI.getViewOnlyWhitelist();
+  await expect(viewOnlyWhitelist.length).toBe(1);
+  await expect(viewOnlyWhitelist[0]).toBe(mockCustomModal.dataElement);
+
+  await window.instance.UI.openElements(['customModal']);
+  const customModalInitial = await canvas.findByText('Custom Modal Test');
+  await expect(customModalInitial).toBeVisible();
+
+  await window.instance.UI.enableViewOnlyMode();
+
+  await window.instance.UI.openElements(['customModal']);
+  const customModalViewOnly = await canvas.findByText('Custom Modal Test');
+  await expect(customModalViewOnly).toBeVisible();
+
+  await window.instance.UI.disableViewOnlyMode();
+
+  await window.instance.UI.openElements(['customModal']);
+  const customModalNoViewOnly = await canvas.findByText('Custom Modal Test');
+  await expect(customModalNoViewOnly).toBeVisible();
+};
+
+CustomModalViewOnly.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
 };

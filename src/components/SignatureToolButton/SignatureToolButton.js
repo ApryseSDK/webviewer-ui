@@ -7,7 +7,7 @@ import defaultTool from 'constants/defaultTool';
 import DataElements from 'constants/dataElement';
 import '../ToolGroupButton/ToolGroupButton.scss';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -20,6 +20,7 @@ const SignatureToolButton = () => {
     ],
     shallowEqual,
   );
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const handleClick = () => {

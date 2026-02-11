@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect, useCallback } from 'react';
 import Draggable from 'react-draggable';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import FormFieldEditPopup from './FormFieldEditPopup';
 import FormFieldEditSignaturePopup from './FormFieldEditSignaturePopup';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -25,6 +25,7 @@ const propTypes = {
 };
 
 function FormFieldEditPopupContainer({ annotation }) {
+  const { core } = useCore();
   const formFieldCreationManager = core.getFormFieldCreationManager();
   const [fieldName, setFieldName] = useState('');
   const [fieldValue, setFieldValue] = useState('');

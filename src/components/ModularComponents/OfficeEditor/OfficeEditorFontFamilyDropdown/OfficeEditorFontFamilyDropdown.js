@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import selectors from 'selectors';
@@ -16,6 +16,7 @@ const propTypes = {
 };
 
 const OfficeEditorFontFamilyDropdown = (props) => {
+  const { core } = useCore();
   const { isFlyoutItem, activeFlyout } = props;
   const dispatch = useDispatch(props);
   const [

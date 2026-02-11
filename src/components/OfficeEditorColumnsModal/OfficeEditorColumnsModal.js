@@ -34,7 +34,7 @@ const OfficeEditorColumnsModal = () => {
     columns,
     equalColumns,
     maxAllowedColumns,
-    commitColumnAmount,
+    resetColumnAmountInput,
     changeColumnAmount,
     commitColumnValue,
     toggleEqualColumns,
@@ -56,14 +56,14 @@ const OfficeEditorColumnsModal = () => {
     setDisplayColumns(formatColumnsForDisplay(columns));
   }, [columns, currentUnit]);
 
-  const handleColumnBlur = (event, index, type) => {
+  const handleColumnBlur = async (event, index, type) => {
     const numericValue = Number.parseFloat(event.target.value);
     if (!Number.isFinite(numericValue)) {
       setDisplayColumns(formatColumnsForDisplay(columns));
       return;
     }
     const valueInPoints = convertInputToPoints(numericValue);
-    const newColumns = commitColumnValue(valueInPoints, index, type);
+    const newColumns = await commitColumnValue(valueInPoints, index, type);
     setDisplayColumns(formatColumnsForDisplay(newColumns));
   };
 
@@ -114,7 +114,7 @@ const OfficeEditorColumnsModal = () => {
             <Input
               type='number'
               id='columnAmountInput'
-              onBlur={(e) => commitColumnAmount(e.target.valueAsNumber)}
+              onBlur={(e) => resetColumnAmountInput(e.target.valueAsNumber)}
               onChange={(e) => changeColumnAmount(e.target.value)}
               value={columnAmount}
               min='1'

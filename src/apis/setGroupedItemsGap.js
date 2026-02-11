@@ -1,5 +1,5 @@
 /**
- * Sets the gap of Grouped Items
+ * Sets the gap of Grouped Items.
  * @method UI.setGroupedItemsGap
  * @param {number} gap The gap in pixels between the items in the group.
  * @param {Object} [selectors] An object that contains selectors for the Grouped Items.

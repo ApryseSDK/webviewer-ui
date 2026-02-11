@@ -3,7 +3,8 @@ import SettingsModal from './SettingsModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
-import hotkeysManager, { ShortcutKeys , SHORTCUT_CONFIGS } from 'helpers/hotkeysManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { ShortcutKeys, SHORTCUT_CONFIGS } from 'helpers/hotkeysUtils';
 import { userEvent, within, expect } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 

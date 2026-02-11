@@ -3,14 +3,14 @@ import { setClickMiddleWare as _setClickMiddleware } from 'helpers/clickTracker'
 /**
  * @name UI.ClickedItemTypes
  * @enum {string}
- * @property {string} BUTTON button type
+ * @property {string} BUTTON Button type.
  */
 
 /**
  * @callback UI.clickMiddleware
- * @param {string} dataElement The dataElement of the clicked item
+ * @param {string} dataElement The dataElement of the clicked item.
  * @param {object} info
- * @param {string} info.type The type of the clicked item. Will be one of {@link UI.ClickedItemTypes}
+ * @param {string} info.type The type of the clicked item. Will be one of {@link UI.ClickedItemTypes}.
  */
 
 /**

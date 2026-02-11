@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Measure from 'react-measure';
 import throttle from 'lodash/throttle';
 import debounce from 'lodash/debounce';
+/* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import { isIE, isIE11 } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';

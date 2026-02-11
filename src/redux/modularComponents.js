@@ -12,7 +12,6 @@ import { panelNames } from 'constants/panel';
 
 const defaultModularHeaders = {
   'default-top-header': {
-    dataElement: 'default-top-header',
     placement: 'top',
     grow: 0,
     gap: 12,
@@ -34,7 +33,6 @@ const defaultModularHeaders = {
     ]
   },
   'tools-header': {
-    dataElement: 'tools-header',
     placement: 'top',
     justifyContent: 'center',
     grow: 0,
@@ -89,7 +87,6 @@ const defaultModularHeaders = {
 };
 const defaultModularComponents = {
   comparePanelToggle: {
-    dataElement: 'comparePanelToggle',
     title: 'action.comparePages',
     label: 'action.comparePages',
     icon: 'icon-header-compare',
@@ -97,7 +94,6 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.COMPARE,
   },
   filePickerButton: {
-    dataElement: 'filePickerButton',
     title: 'action.openFile',
     label: 'action.openFile',
     icon: 'icon-header-file-picker-line',
@@ -105,7 +101,6 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.FILE_PICKER,
   },
   downloadButton: {
-    dataElement: 'downloadButton',
     title: 'action.download',
     label: 'action.download',
     icon: 'icon-download',
@@ -113,7 +108,6 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.DOWNLOAD,
   },
   saveAsButton: {
-    dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
     label: 'saveModal.saveAs',
     icon: 'icon-save',
@@ -121,16 +115,13 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.SAVE_AS,
   },
   printButton: {
-    dataElement: 'printButton',
     title: 'action.print',
     label: 'action.print',
     icon: 'icon-header-print-line',
     type: 'presetButton',
     buttonType: PRESET_BUTTON_TYPES.PRINT,
   },
-  undefined: {},
   createPortfolioButton: {
-    dataElement: 'createPortfolioButton',
     title: 'portfolio.createPDFPortfolio',
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
@@ -138,7 +129,6 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.CREATE_PORTFOLIO,
   },
   settingsButton: {
-    dataElement: 'settingsButton',
     title: 'option.settings.settings',
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
@@ -146,43 +136,36 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.SETTINGS,
   },
   'divider-0.1': {
-    dataElement: 'divider-0.1',
-    type: 'divider'
+    type: 'divider',
   },
   'leftPanelButton': {
     dataElement: DataElements.LEFT_PANEL_BUTTON,
     title: 'component.leftPanel',
     type: 'toggleButton',
     img: 'icon-header-sidebar-line',
-    toggleElement: 'tabPanel'
+    toggleElement: 'tabPanel',
   },
   'view-controls': {
-    dataElement: 'view-controls',
     type: 'viewControls',
     title: 'component.viewControls',
-    icon: 'icon-header-page-manipulation-line'
+    icon: 'icon-header-page-manipulation-line',
   },
   'divider-0.3': {
-    dataElement: 'divider-0.3',
-    type: 'divider'
+    type: 'divider',
   },
   'zoom-container': {
-    dataElement: 'zoom-container',
-    type: 'zoom'
+    type: 'zoom',
   },
   'divider-0.2': {
-    dataElement: 'divider-0.2',
-    type: 'divider'
+    type: 'divider',
   },
   panToolButton: {
-    dataElement: 'panToolButton',
     type: 'toolButton',
-    toolName: 'Pan'
+    toolName: 'Pan',
   },
   annotationEditToolButton: {
-    dataElement: 'annotationEditToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationEdit'
+    toolName: 'AnnotationEdit',
   },
   'menuButton': {
     dataElement: DataElements.MENU_OVERLAY_BUTTON,
@@ -192,7 +175,6 @@ const defaultModularComponents = {
     type: 'toggleButton',
   },
   groupedLeftHeaderButtons: {
-    dataElement: 'groupedLeftHeaderButtons',
     items: [
       'menuButton',
       'divider-0.1',
@@ -208,108 +190,79 @@ const defaultModularComponents = {
     grow: 1,
     gap: 12,
     alwaysVisible: true,
-    style: {}
+    style: {},
   },
   'toolbarGroup-View': {
-    dataElement: 'toolbarGroup-View',
     title: 'View',
     type: 'ribbonItem',
     label: 'View',
     groupedItems: [],
-    toolbarGroup: 'toolbarGroup-View'
+    toolbarGroup: 'toolbarGroup-View',
   },
   'toolbarGroup-Annotate': {
-    dataElement: 'toolbarGroup-Annotate',
     title: 'Annotate',
     type: 'ribbonItem',
     label: 'Annotate',
-    groupedItems: [
-      'annotateGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Annotate'
+    groupedItems: ['annotateGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Annotate',
   },
   'toolbarGroup-Shapes': {
-    dataElement: 'toolbarGroup-Shapes',
     title: 'Shapes',
     type: 'ribbonItem',
     label: 'Shapes',
-    groupedItems: [
-      'shapesGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Shapes'
+    groupedItems: ['shapesGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Shapes',
   },
   'toolbarGroup-Insert': {
-    dataElement: 'toolbarGroup-Insert',
     title: 'Insert',
     type: 'ribbonItem',
     label: 'Insert',
-    groupedItems: [
-      'insertGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Insert'
+    groupedItems: ['insertGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Insert',
   },
   'toolbarGroup-Measure': {
-    dataElement: 'toolbarGroup-Measure',
     title: 'Measure',
     type: 'ribbonItem',
     label: 'Measure',
-    groupedItems: [
-      'measureGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Measure'
+    groupedItems: ['measureGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Measure',
   },
   'toolbarGroup-Redact': {
-    dataElement: 'toolbarGroup-Redact',
     title: 'Redact',
     type: 'ribbonItem',
     label: 'Redact',
-    groupedItems: [
-      'redactionGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Redact'
+    groupedItems: ['redactionGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Redact',
   },
   'toolbarGroup-Edit': {
-    dataElement: 'toolbarGroup-Edit',
     title: 'Edit',
     type: 'ribbonItem',
     label: 'Edit',
-    groupedItems: [
-      'editGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Edit'
+    groupedItems: ['editGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Edit',
   },
   'toolbarGroup-EditText': {
-    dataElement: 'toolbarGroup-EditText',
     title: 'Content Edit',
     type: 'ribbonItem',
     label: 'Content Edit',
-    groupedItems: [
-      'contentEditGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-EditText'
+    groupedItems: ['contentEditGroupedItems'],
+    toolbarGroup: 'toolbarGroup-EditText',
   },
   'toolbarGroup-FillAndSign': {
-    dataElement: 'toolbarGroup-FillAndSign',
     title: 'Fill and Sign',
     type: 'ribbonItem',
     label: 'Fill and Sign',
-    groupedItems: [
-      'fillAndSignGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-FillAndSign'
+    groupedItems: ['fillAndSignGroupedItems'],
+    toolbarGroup: 'toolbarGroup-FillAndSign',
   },
   'toolbarGroup-Forms': {
-    dataElement: 'toolbarGroup-Forms',
     title: 'Forms',
     type: 'ribbonItem',
     label: 'Forms',
-    groupedItems: [
-      'formsGroupedItems'
-    ],
-    toolbarGroup: 'toolbarGroup-Forms'
+    groupedItems: ['formsGroupedItems'],
+    toolbarGroup: 'toolbarGroup-Forms',
   },
   'default-ribbon-group': {
-    dataElement: 'default-ribbon-group',
     items: [
       'toolbarGroup-View',
       'toolbarGroup-Annotate',
@@ -320,115 +273,96 @@ const defaultModularComponents = {
       'toolbarGroup-Edit',
       'toolbarGroup-EditText',
       'toolbarGroup-FillAndSign',
-      'toolbarGroup-Forms'
+      'toolbarGroup-Forms',
     ],
     type: 'ribbonGroup',
     justifyContent: 'start',
     grow: 2,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   searchPanelToggle: {
-    dataElement: 'searchPanelToggle',
     title: 'component.searchPanel',
     type: 'toggleButton',
     img: 'icon-header-search',
-    toggleElement: 'searchPanel'
+    toggleElement: 'searchPanel',
   },
   notesPanelToggle: {
-    dataElement: 'notesPanelToggle',
     title: 'component.notesPanel',
     type: 'toggleButton',
     img: 'icon-header-chat-line',
-    toggleElement: 'notesPanel'
+    toggleElement: 'notesPanel',
   },
   highlightToolButton: {
-    dataElement: 'highlightToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateTextHighlight'
+    toolName: 'AnnotationCreateTextHighlight',
   },
   underlineToolButton: {
-    dataElement: 'underlineToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateTextUnderline'
+    toolName: 'AnnotationCreateTextUnderline',
   },
   strikeoutToolButton: {
-    dataElement: 'strikeoutToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateTextStrikeout'
+    toolName: 'AnnotationCreateTextStrikeout',
   },
   squigglyToolButton: {
-    dataElement: 'squigglyToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateTextSquiggly'
+    toolName: 'AnnotationCreateTextSquiggly',
   },
   freeTextToolButton: {
-    dataElement: 'freeTextToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateFreeText'
+    toolName: 'AnnotationCreateFreeText',
   },
   markInsertTextToolButton: {
-    dataElement: 'markInsertTextToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateMarkInsertText'
+    toolName: 'AnnotationCreateMarkInsertText',
   },
   markReplaceTextToolButton: {
-    dataElement: 'markReplaceTextToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateMarkReplaceText'
+    toolName: 'AnnotationCreateMarkReplaceText',
   },
   freeHandToolButton: {
-    dataElement: 'freeHandToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateFreeHand'
+    toolName: 'AnnotationCreateFreeHand',
   },
   freeHandHighlightToolButton: {
-    dataElement: 'freeHandHighlightToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateFreeHandHighlight'
+    toolName: 'AnnotationCreateFreeHandHighlight',
   },
   stickyToolButton: {
-    dataElement: 'stickyToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateSticky'
+    toolName: 'AnnotationCreateSticky',
   },
   calloutToolButton: {
-    dataElement: 'calloutToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateCallout'
+    toolName: 'AnnotationCreateCallout',
   },
   'divider-0.4': {
-    dataElement: 'divider-0.4',
-    type: 'divider'
+    type: 'divider',
   },
   stylePanelToggle: {
-    dataElement: 'stylePanelToggle',
     title: 'action.style',
     type: 'toggleButton',
     img: 'icon-style-panel-toggle',
-    toggleElement: 'stylePanel'
+    toggleElement: 'stylePanel',
   },
   indexPanelListToggle: {
-    dataElement: 'indexPanelListToggle',
     title: 'component.indexPanel',
     type: 'toggleButton',
     img: 'icon-index-panel-list',
-    toggleElement: 'indexPanel'
+    toggleElement: 'indexPanel',
   },
   'divider-0.5': {
-    dataElement: 'divider-0.5',
-    type: 'divider'
+    type: 'divider',
   },
   undoButton: {
-    dataElement: 'undoButton',
     type: 'presetButton',
-    buttonType: 'undoButton'
+    buttonType: 'undoButton',
   },
   redoButton: {
-    dataElement: 'redoButton',
     type: 'presetButton',
-    buttonType: 'redoButton'
+    buttonType: 'redoButton',
   },
   toggleAccessibilityModeButton: {
     dataElement: DataElements.TOGGLE_ACCESSIBILITY_MODE_PRESET_BUTTON,
@@ -436,26 +370,18 @@ const defaultModularComponents = {
     buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
   },
   eraserToolButton: {
-    dataElement: 'eraserToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationEraserTool'
+    toolName: 'AnnotationEraserTool',
   },
   defaultAnnotationUtilities: {
-    dataElement: 'defaultAnnotationUtilities',
-    items: [
-      'divider-0.5',
-      'undoButton',
-      'redoButton',
-      'eraserToolButton'
-    ],
+    items: ['divider-0.5', 'undoButton', 'redoButton', 'eraserToolButton'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   annotateToolsGroupedItems: {
-    dataElement: 'annotateToolsGroupedItems',
     items: [
       'highlightToolButton',
       'underlineToolButton',
@@ -474,65 +400,50 @@ const defaultModularComponents = {
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   annotateGroupedItems: {
-    dataElement: 'annotateGroupedItems',
-    items: [
-      'annotateToolsGroupedItems',
-      'divider-0.4',
-      'stylePanelToggle',
-      'defaultAnnotationUtilities',
-    ],
+    items: ['annotateToolsGroupedItems', 'divider-0.4', 'stylePanelToggle', 'defaultAnnotationUtilities'],
     type: 'groupedItems',
     justifyContent: 'center',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   rectangleToolButton: {
-    dataElement: 'rectangleToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateRectangle'
+    toolName: 'AnnotationCreateRectangle',
   },
   ellipseToolButton: {
-    dataElement: 'ellipseToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateEllipse'
+    toolName: 'AnnotationCreateEllipse',
   },
   arcToolButton: {
-    dataElement: 'arcToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateArc'
+    toolName: 'AnnotationCreateArc',
   },
   polygonToolButton: {
-    dataElement: 'polygonToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreatePolygon'
+    toolName: 'AnnotationCreatePolygon',
   },
   cloudToolButton: {
-    dataElement: 'cloudToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreatePolygonCloud'
+    toolName: 'AnnotationCreatePolygonCloud',
   },
   lineToolButton: {
-    dataElement: 'lineToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateLine'
+    toolName: 'AnnotationCreateLine',
   },
   polylineToolButton: {
-    dataElement: 'polylineToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreatePolyline'
+    toolName: 'AnnotationCreatePolyline',
   },
   arrowToolButton: {
-    dataElement: 'arrowToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateArrow'
+    toolName: 'AnnotationCreateArrow',
   },
   shapesToolsGroupedItems: {
-    dataElement: 'shapesToolsGroupedItems',
     items: [
       'rectangleToolButton',
       'ellipseToolButton',
@@ -547,60 +458,69 @@ const defaultModularComponents = {
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   shapesGroupedItems: {
-    dataElement: 'shapesGroupedItems',
-    items: [
-      'shapesToolsGroupedItems',
-      'divider-0.4',
-      'stylePanelToggle',
-      'defaultAnnotationUtilities'
-    ],
+    items: ['shapesToolsGroupedItems', 'divider-0.4', 'stylePanelToggle', 'defaultAnnotationUtilities'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   rubberStampToolButton: {
-    dataElement: 'rubberStampToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateRubberStamp'
+    toolName: 'AnnotationCreateRubberStamp',
   },
   signatureCreateToolButton: {
-    dataElement: 'signatureCreateToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateSignature'
+    toolName: 'AnnotationCreateSignature',
   },
   fileAttachmentButton: {
-    dataElement: 'fileAttachmentButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateFileAttachment'
+    toolName: 'AnnotationCreateFileAttachment',
   },
   stampToolButton: {
-    dataElement: 'stampToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateStamp'
+    toolName: 'AnnotationCreateStamp',
   },
   insertToolsGroupedItems: {
-    dataElement: 'insertToolsGroupedItems',
-    items: [
-      'rubberStampToolButton',
-      'signatureCreateToolButton',
-      'fileAttachmentButton',
-      'stampToolButton',
-    ],
+    items: ['rubberStampToolButton', 'signatureCreateToolButton', 'fileAttachmentButton', 'stampToolButton'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   insertGroupedItems: {
-    dataElement: 'insertGroupedItems',
+    items: ['insertToolsGroupedItems', 'divider-0.4', 'stylePanelToggle', 'defaultAnnotationUtilities'],
+    type: 'groupedItems',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {},
+  },
+  redactionToolButton: {
+    type: 'toolButton',
+    toolName: 'AnnotationCreateRedaction',
+  },
+  pageRedactionToggleButton: {
+    title: 'action.redactPages',
+    type: 'toggleButton',
+    img: 'icon-tool-page-redact',
+    toggleElement: 'pageRedactionModal',
+  },
+  redactionPanelToggle: {
+    type: 'toggleButton',
+    img: 'icon-redact-panel',
+    toggleElement: 'redactionPanel',
+    title: 'component.redactionPanel',
+  },
+  redactionGroupedItems: {
     items: [
-      'insertToolsGroupedItems',
+      'redactionToolButton',
+      'pageRedactionToggleButton',
+      'redactionPanelToggle',
       'divider-0.4',
       'stylePanelToggle',
       'defaultAnnotationUtilities',
@@ -609,80 +529,37 @@ const defaultModularComponents = {
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
-  },
-  redactionToolButton: {
-    dataElement: 'redactionToolButton',
-    type: 'toolButton',
-    toolName: 'AnnotationCreateRedaction'
-  },
-  pageRedactionToggleButton: {
-    dataElement: 'pageRedactionToggleButton',
-    title: 'action.redactPages',
-    type: 'toggleButton',
-    img: 'icon-tool-page-redact',
-    toggleElement: 'pageRedactionModal'
-  },
-  redactionPanelToggle: {
-    dataElement: 'redactionPanelToggle',
-    type: 'toggleButton',
-    img: 'icon-redact-panel',
-    toggleElement: 'redactionPanel',
-    title: 'component.redactionPanel'
-  },
-  redactionGroupedItems: {
-    dataElement: 'redactionGroupedItems',
-    items: [
-      'redactionToolButton',
-      'pageRedactionToggleButton',
-      'redactionPanelToggle',
-      'divider-0.4',
-      'stylePanelToggle',
-      'defaultAnnotationUtilities'
-    ],
-    type: 'groupedItems',
-    grow: 0,
-    gap: 12,
-    alwaysVisible: false,
-    style: {}
+    style: {},
   },
   distanceMeasurementToolButton: {
-    dataElement: 'distanceMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateDistanceMeasurement'
+    toolName: 'AnnotationCreateDistanceMeasurement',
   },
   arcMeasurementToolButton: {
-    dataElement: 'arcMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateArcMeasurement'
+    toolName: 'AnnotationCreateArcMeasurement',
   },
   perimeterMeasurementToolButton: {
-    dataElement: 'perimeterMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreatePerimeterMeasurement'
+    toolName: 'AnnotationCreatePerimeterMeasurement',
   },
   areaMeasurementToolButton: {
-    dataElement: 'areaMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateAreaMeasurement'
+    toolName: 'AnnotationCreateAreaMeasurement',
   },
   ellipseMeasurementToolButton: {
-    dataElement: 'ellipseMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateEllipseMeasurement'
+    toolName: 'AnnotationCreateEllipseMeasurement',
   },
   rectangularAreaMeasurementToolButton: {
-    dataElement: 'rectangularAreaMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateRectangularAreaMeasurement'
+    toolName: 'AnnotationCreateRectangularAreaMeasurement',
   },
   countMeasurementToolButton: {
-    dataElement: 'countMeasurementToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateCountMeasurement'
+    toolName: 'AnnotationCreateCountMeasurement',
   },
   measureGroupedItems: {
-    dataElement: 'measureGroupedItems',
     items: [
       'distanceMeasurementToolButton',
       'arcMeasurementToolButton',
@@ -693,91 +570,70 @@ const defaultModularComponents = {
       'countMeasurementToolButton',
       'divider-0.4',
       'stylePanelToggle',
-      'defaultAnnotationUtilities'
+      'defaultAnnotationUtilities',
     ],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   cropToolButton: {
-    dataElement: 'cropToolButton',
     type: 'toolButton',
-    toolName: 'CropPage'
+    toolName: 'CropPage',
   },
   snippingToolButton: {
-    dataElement: 'snippingToolButton',
     type: 'toolButton',
-    toolName: 'SnippingTool'
+    toolName: 'SnippingTool',
   },
   editGroupedItems: {
-    dataElement: 'editGroupedItems',
-    items: [
-      'cropToolButton',
-      'snippingToolButton',
-    ],
+    items: ['cropToolButton', 'snippingToolButton'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   addParagraphToolGroupButton: {
-    dataElement: 'addParagraphToolGroupButton',
     type: 'toolButton',
-    toolName: 'AddParagraphTool'
+    toolName: 'AddParagraphTool',
   },
   addImageContentToolGroupButton: {
-    dataElement: 'addImageContentToolGroupButton',
     type: 'toolButton',
-    toolName: 'AddImageContentTool'
+    toolName: 'AddImageContentTool',
   },
   'divider-0.6': {
-    dataElement: 'divider-0.6',
-    type: 'divider'
+    type: 'divider',
   },
   contentEditButton: {
-    dataElement: 'contentEditButton',
     type: 'presetButton',
-    buttonType: 'contentEditButton'
+    buttonType: 'contentEditButton',
   },
   contentEditGroupedItems: {
-    dataElement: 'contentEditGroupedItems',
-    items: [
-      'addParagraphToolGroupButton',
-      'addImageContentToolGroupButton',
-      'divider-0.6',
-      'contentEditButton'
-    ],
+    items: ['addParagraphToolGroupButton', 'addImageContentToolGroupButton', 'divider-0.6', 'contentEditButton'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   crossStampToolButton: {
-    dataElement: 'crossStampToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateCrossStamp'
+    toolName: 'AnnotationCreateCrossStamp',
   },
   checkStampToolButton: {
-    dataElement: 'checkStampToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateCheckStamp'
+    toolName: 'AnnotationCreateCheckStamp',
   },
   dotStampToolButton: {
-    dataElement: 'dotStampToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateDotStamp'
+    toolName: 'AnnotationCreateDotStamp',
   },
   calendarToolButton: {
-    dataElement: 'calendarToolButton',
     type: 'toolButton',
-    toolName: 'AnnotationCreateDateFreeText'
+    toolName: 'AnnotationCreateDateFreeText',
   },
   fillAndSignGroupedItems: {
-    dataElement: 'fillAndSignGroupedItems',
     items: [
       'signatureCreateToolButton',
       'freeTextToolButton',
@@ -788,62 +644,53 @@ const defaultModularComponents = {
       'calendarToolButton',
       'divider-0.4',
       'stylePanelToggle',
-      'defaultAnnotationUtilities'
+      'defaultAnnotationUtilities',
     ],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   signatureFieldButton: {
-    dataElement: 'signatureFieldButton',
     type: 'toolButton',
-    toolName: 'SignatureFormFieldCreateTool'
+    toolName: 'SignatureFormFieldCreateTool',
   },
   textFieldButton: {
-    dataElement: 'textFieldButton',
     type: 'toolButton',
-    toolName: 'TextFormFieldCreateTool'
+    toolName: 'TextFormFieldCreateTool',
   },
   checkboxFieldButton: {
-    dataElement: 'checkboxFieldButton',
     type: 'toolButton',
-    toolName: 'CheckBoxFormFieldCreateTool'
+    toolName: 'CheckBoxFormFieldCreateTool',
   },
   radioFieldButton: {
-    dataElement: 'radioFieldButton',
     type: 'toolButton',
-    toolName: 'RadioButtonFormFieldCreateTool'
+    toolName: 'RadioButtonFormFieldCreateTool',
   },
   listBoxFieldButton: {
-    dataElement: 'listBoxFieldButton',
     type: 'toolButton',
-    toolName: 'ListBoxFormFieldCreateTool'
+    toolName: 'ListBoxFormFieldCreateTool',
   },
   comboBoxFieldButton: {
-    dataElement: 'comboBoxFieldButton',
     type: 'toolButton',
-    toolName: 'ComboBoxFormFieldCreateTool'
+    toolName: 'ComboBoxFormFieldCreateTool',
   },
   'divider-0.7': {
-    dataElement: 'divider-0.7',
-    type: 'divider'
+    type: 'divider',
   },
   formFieldEditButton: {
-    dataElement: 'formFieldEditButton',
     type: 'presetButton',
-    buttonType: 'formFieldEditButton'
+    buttonType: 'formFieldEditButton',
   },
   'divider-0.8': {
-    dataElement: 'divider-0.8',
-    type: 'divider'
+    type: 'divider',
   },
   formsToolsGroupedItems: {
-    dataElement: 'formsToolsGroupedItems',
     items: [
       'signatureFieldButton',
       'textFieldButton',
+
       'freeTextToolButton',
       'checkboxFieldButton',
       'radioFieldButton',
@@ -856,27 +703,64 @@ const defaultModularComponents = {
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   formsGroupedItems: {
-    dataElement: 'formsGroupedItems',
-    items: [
-      'formsToolsGroupedItems',
-      'divider-0.8',
-      'stylePanelToggle',
-      'indexPanelListToggle'
-    ],
+    items: ['formsToolsGroupedItems', 'divider-0.8', 'stylePanelToggle', 'indexPanelListToggle'],
     type: 'groupedItems',
     grow: 0,
     gap: 12,
     alwaysVisible: false,
-    style: {}
+    style: {},
   },
   'page-controls-container': {
-    dataElement: 'page-controls-container',
     type: 'pageControls',
     title: 'component.pageControls',
-    icon: 'icon-page-controls'
+    icon: 'icon-page-controls',
+  },
+  continuousPageTransitionButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.CONTINUOUS_PAGE_TRANSITION,
+  },
+  defaultPageTransitionButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.DEFAULT_PAGE_TRANSITION,
+  },
+  readerPageTransitionButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+  },
+  rotateClockwiseButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.ROTATE_CLOCKWISE,
+  },
+  rotateCounterClockwiseButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.ROTATE_COUNTERCLOCKWISE,
+  },
+  singleLayoutButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.SINGLE_LAYOUT,
+  },
+  doubleLayoutButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.DOUBLE_LAYOUT,
+  },
+  coverLayoutButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.COVER_LAYOUT,
+  },
+  toggleCompareModeButton: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+  },
+  [DataElements.FULLSCREEN_BUTTON]: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
+  },
+  [PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE]: {
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
   }
 };
 const defaultPanels = [
@@ -1006,7 +890,7 @@ const defaultFlyoutMap = {
         'label': 'action.newDocument',
         'title': 'action.newDocument',
         'type': 'presetButton',
-        'buttonType': 'newDocumentButton'
+        'buttonType': 'newDocumentButton',
       },
       {
         'dataElement': 'filePickerButton',
@@ -1015,7 +899,7 @@ const defaultFlyoutMap = {
         'label': 'action.openFile',
         'title': 'action.openFile',
         'type': 'presetButton',
-        'buttonType': 'filePickerButton'
+        'buttonType': 'filePickerButton',
       },
       {
         'dataElement': 'downloadButton',
@@ -1024,7 +908,7 @@ const defaultFlyoutMap = {
         'label': 'action.download',
         'title': 'action.download',
         'type': 'presetButton',
-        'buttonType': 'downloadButton'
+        'buttonType': 'downloadButton',
       },
       {
         'dataElement': 'fullscreenButton',
@@ -1033,7 +917,7 @@ const defaultFlyoutMap = {
         'label': 'action.enterFullscreen',
         'title': 'action.enterFullscreen',
         'type': 'presetButton',
-        'buttonType': 'fullscreenButton'
+        'buttonType': 'fullscreenButton',
       },
       {
         'dataElement': 'saveAsButton',
@@ -1042,7 +926,7 @@ const defaultFlyoutMap = {
         'label': 'saveModal.saveAs',
         'title': 'saveModal.saveAs',
         'type': 'presetButton',
-        'buttonType': 'saveAsButton'
+        'buttonType': 'saveAsButton',
       },
       {
         'dataElement': 'printButton',
@@ -1051,7 +935,7 @@ const defaultFlyoutMap = {
         'label': 'action.print',
         'title': 'action.print',
         'type': 'presetButton',
-        'buttonType': 'printButton'
+        'buttonType': 'printButton',
       },
       'divider',
       {
@@ -1061,7 +945,7 @@ const defaultFlyoutMap = {
         'label': 'portfolio.createPDFPortfolio',
         'title': 'portfolio.createPDFPortfolio',
         'type': 'presetButton',
-        'buttonType': 'createPortfolioButton'
+        'buttonType': 'createPortfolioButton',
       },
       'divider',
       {
@@ -1071,10 +955,78 @@ const defaultFlyoutMap = {
         'label': 'option.settings.settings',
         'title': 'option.settings.settings',
         'type': 'presetButton',
-        'buttonType': 'settingsButton'
+        'buttonType': 'settingsButton',
       },
       'divider',
-    ]
+    ],
+  },
+  [DataElements.VIEW_CONTROLS_FLYOUT]: {
+    dataElement: DataElements.VIEW_CONTROLS_FLYOUT,
+    className: 'ViewControlsFlyout',
+    items: [
+      'option.displayMode.pageTransition',
+      {
+        dataElement: 'continuousPageTransitionButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.CONTINUOUS_PAGE_TRANSITION,
+      },
+      {
+        dataElement: 'defaultPageTransitionButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.DEFAULT_PAGE_TRANSITION,
+      },
+      {
+        dataElement: 'readerPageTransitionButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+      },
+      'divider',
+      'action.rotate',
+      {
+        dataElement: 'rotateClockwiseButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.ROTATE_CLOCKWISE,
+      },
+      {
+        dataElement: 'rotateCounterClockwiseButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.ROTATE_COUNTERCLOCKWISE,
+      },
+      'divider',
+      'option.displayMode.layout',
+      {
+        dataElement: 'singleLayoutButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.SINGLE_LAYOUT,
+      },
+      {
+        dataElement: 'doubleLayoutButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.DOUBLE_LAYOUT,
+      },
+      {
+        dataElement: 'coverLayoutButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.COVER_LAYOUT,
+      },
+      {
+        dataElement: 'toggleCompareModeButton',
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+      },
+      'divider',
+      {
+        dataElement: DataElements.FULLSCREEN_BUTTON,
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
+      },
+      'divider',
+      {
+        dataElement: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+        type: ITEM_TYPE.PRESET_BUTTON,
+        buttonType: PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
+      },
+    ],
   },
 };
 

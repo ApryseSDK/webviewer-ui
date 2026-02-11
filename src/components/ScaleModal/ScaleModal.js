@@ -12,7 +12,7 @@ import {
   ifFractionalPrecision,
   initialScale
 } from 'constants/measurementScale';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import ScaleCustom from './ScaleCustom';
@@ -35,6 +35,7 @@ export const scaleOptions = {
 };
 
 const ScaleModal = ({ annotations, selectedTool }) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
 

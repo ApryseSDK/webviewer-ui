@@ -1,5 +1,7 @@
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
+// Class component
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import PropTypes from 'prop-types';
 import React from 'react';

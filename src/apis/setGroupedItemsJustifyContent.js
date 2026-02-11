@@ -1,7 +1,7 @@
 /**
  * Sets the justifyContent property of Grouped Items. This property is analogous to the CSS justify-content property.
  * @method UI.setGroupedItemsJustifyContent
-  * @param {'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the group
+  * @param {'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the group.
   * @param {Object} [selectors]  An object that contains the selectors to filter the Grouped Items to set the justify content property on.
  * @example
  * WebViewer(...)

@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
     "unpostedComment": "Comentario no publicado",
     "lockedLayer": "La capa está bloqueada",
-    "layerVisibililtyNoChange": "La visibilidad de la capa no se puede cambiar",
+    "layerVisibilityNoChange": "La visibilidad de la capa no se puede cambiar",
     "noLayers": "Este documento no tiene capas.",
     "noSignatureFields": "Este documento no tiene campos de firma.",
     "untitled": "Intitulado",
@@ -488,11 +488,13 @@
       "replace": "Reemplazar",
       "replaceAll": "Reemplaza todo",
       "replaceText": "Reemplazar texto",
+      "replaceOptions": "Opciones de reemplazo",
       "confirmMessageReplaceAll": "¿Está seguro de que desea reemplazar todo el texto?",
       "confirmMessageReplaceOne": "¿Está seguro de que desea reemplazar este texto?",
       "moreOptions": "Mas opciones",
       "lessOptions": "Menos opciones",
-      "confirm": "Confirmar"
+      "confirm": "Confirmar",
+      "filter": "Filtrar"
     },
     "toolsOverlay": {
       "currentStamp": "Sello Actual",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Familia de fuentes"
     },
-    "blankSheet": "Hoja en blanco",
+    "blankSheet": "Hoja",
     "insertImage": "Insertar imagen"
   },
   "insertPageModal": {

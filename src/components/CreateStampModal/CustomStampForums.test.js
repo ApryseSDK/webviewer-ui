@@ -2,9 +2,8 @@ import CustomStampForums from 'components/CreateStampModal/CustomStampForums';
 import CreateStampModal from 'components/CreateStampModal/CreateStampModal';
 import { render, fireEvent, screen } from '@testing-library/react';
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 
 const ModalBodyWithI18n = withProviders(CustomStampForums);
 
@@ -71,12 +70,12 @@ const initialState = {
   },
 };
 
-function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
+function rootReducer(state = initialState) {
   return state;
 }
 
 // Apply the thunk middleware
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = configureStore({ reducer: rootReducer });
 
 function withMockRedux(Component) {
   return function WithMockReduxWrapper(props) {
@@ -98,7 +97,8 @@ jest.mock('core', () => ({
     mockCustomStampTool
   ],
   deselectAllAnnotations: noop,
-  getCurrentUser: () => 'Guest'
+  getCurrentUser: () => 'Guest',
+  getDocumentViewer: jest.fn(),
 }));
 
 describe('Custom Stamp Modal Body Tests', () => {

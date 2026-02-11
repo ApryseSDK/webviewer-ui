@@ -1,8 +1,8 @@
 /**
- * Sets the current width of a panel
+ * Sets the current width of a panel.
  * @method UI.setPanelWidth
- * @param {string} dataElement Panel element to set width of
- * @param {number} width Width to set the panel to
+ * @param {string} dataElement Panel element to set width of.
+ * @param {number} width Width to set the panel to.
  * @example
  WebViewer(...)
  .then(function(instance) {

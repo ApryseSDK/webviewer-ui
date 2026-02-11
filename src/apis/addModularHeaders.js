@@ -1,7 +1,7 @@
 /**
- * Adds new custom Header(s) to the Header list
+ * Adds new custom Header(s) to the Header list.
  * @method UI.addModularHeaders
- * @param {array<UI.Components.ModularHeader>} headerList The list of headers to be added on the application
+ * @param {array<UI.Components.ModularHeader>} headerList The list of headers to be added on the application.
  * @example
  * WebViewer(...)
   .then(function (instance) {

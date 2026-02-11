@@ -5,7 +5,7 @@ import SignatureAddBtn from 'components/SignatureStylePopup/SignatureAddBtn';
 import ToolsDropdown from 'components/ToolsDropdown';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import SignatureModes from 'constants/signatureModes';
 import { useTranslation } from 'react-i18next';
 
@@ -31,6 +31,7 @@ const SelectedSignatureRow = () => {
       selectors.getSignatureMode(state),
     ],
   );
+  const { core } = useCore();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 

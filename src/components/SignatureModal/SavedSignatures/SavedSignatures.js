@@ -7,11 +7,12 @@ import SignatureModes from 'constants/signatureModes';
 import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 
 
 const SavedSignatures = ({ selectedIndex, setSelectedIndex }) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [

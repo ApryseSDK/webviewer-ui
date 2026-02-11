@@ -151,6 +151,7 @@ import {
   enableAttachmentPreview,
   disableAttachmentPreview,
   disableMultiSelect as notesPanelDisableMultiSelect,
+  enableMultiSelect as notesPanelEnableMultiSelect,
   setAttachmentHandler,
   enableMeasurementAnnotationFilter,
   disableMeasurementAnnotationFilter,
@@ -264,6 +265,8 @@ import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
 import enterMultiViewerMode from './enterMultiViewerMode';
 import exitMultiViewerMode from './exitMultiViewerMode';
+import getActiveDocumentViewerKey from './getActiveDocumentViewerKey';
+import setActiveDocumentViewerKey from './setActiveDocumentViewerKey';
 import setPanelWidth from './setPanelWidth';
 import setModularHeaders from './setModularHeaders';
 import importModularComponents from './importModularComponents';
@@ -288,7 +291,7 @@ import {
   updateViewOnlyShortcuts,
   getViewOnlyShortcuts
 } from 'src/apis/viewOnlyMode';
-import { Shortcuts } from 'helpers/hotkeysManager';
+import { Shortcuts } from 'helpers/hotkeysUtils';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -448,6 +451,7 @@ export default (store) => {
       enableAttachmentPreview: enableAttachmentPreview(store),
       disableAttachmentPreview: disableAttachmentPreview(store),
       disableMultiSelect: notesPanelDisableMultiSelect(store),
+      enableMultiSelect: notesPanelEnableMultiSelect(store),
       setAttachmentHandler: setAttachmentHandler(store),
       enableMeasurementAnnotationFilter: enableMeasurementAnnotationFilter(store),
       disableMeasurementAnnotationFilter: disableMeasurementAnnotationFilter(store),
@@ -603,6 +607,8 @@ export default (store) => {
     getDocumentViewer,
     enterMultiViewerMode: enterMultiViewerMode(store),
     exitMultiViewerMode: exitMultiViewerMode(store),
+    getActiveDocumentViewerKey: getActiveDocumentViewerKey(store),
+    setActiveDocumentViewerKey: setActiveDocumentViewerKey(store),
     startTextComparison: startTextComparison(store),
     stopTextComparison,
     closeTooltip,

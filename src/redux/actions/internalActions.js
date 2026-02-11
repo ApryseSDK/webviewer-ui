@@ -309,9 +309,9 @@ export const setDisplayMode = (displayMode) => ({
   type: 'SET_DISPLAY_MODE',
   payload: { displayMode },
 });
-export const setCurrentPage = (currentPage) => ({
+export const setCurrentPage = (currentPage, documentViewerKey = 1) => ({
   type: 'SET_CURRENT_PAGE',
-  payload: { currentPage },
+  payload: { currentPage, documentViewerKey },
 });
 export const setFullScreen = (isFullScreen) => ({
   type: 'SET_FULL_SCREEN',

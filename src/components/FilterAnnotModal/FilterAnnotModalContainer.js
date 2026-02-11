@@ -1,8 +1,9 @@
 import React from 'react';
 import FilterAnnotModal from './FilterAnnotModal';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 function FilterAnnotModalContainer() {
+  const { core } = useCore();
   const isInFormBuilderMode = core.getAnnotationManager().getFormFieldCreationManager().isInFormFieldCreationMode();
   return <FilterAnnotModal isInFormBuilderMode={isInFormBuilderMode}/>;
 }

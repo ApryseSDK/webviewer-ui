@@ -1,5 +1,5 @@
 /**
- * An instance of PageManipulationOverlay that can be used to add, update, or retrieve page manipulation operations in the overlay
+ * An instance of PageManipulationOverlay that can be used to add, update, or retrieve page manipulation operations in the overlay.
  * @name UI.pageManipulationOverlay
  * @type {UI.PageManipulationOverlay}
  * @example
@@ -46,26 +46,26 @@ const PageManipulationOverlayAPI = {
     return this;
   },
   /**
-   * @typedef {Object} UI.PageManipulationOverlay.PageManipulationSection
-   * @property {string} type The type of section. Use 'customPageOperation' for custom operations or 'divider' for separators.
-   * @property {string} [header] Header text to be displayed in the UI for this section. Required if type is 'customPageOperation'.
-   * @property {string} [dataElement] Unique data element identifier. Required if type is 'customPageOperation'.
-   * @property {Array.<UI.PageManipulationOverlay.PageOperation>} [operations] The operations that will be available under this section. Required if type is 'customPageOperation'.
+  * @typedef {Object} UI.PageManipulationOverlay.PageManipulationSection
+  * @property {string} type The type of section. Use 'customPageOperation' for custom operations or 'divider' for separators.
+  * @property {string} [header] Header text to be displayed in the UI for this section. Required if type is 'customPageOperation'.
+  * @property {string} [dataElement] Unique data element identifier. Required if type is 'customPageOperation'.
+  * @property {Array.<UI.PageManipulationOverlay.PageOperation>} [operations] The operations that will be available under this section. Required if type is 'customPageOperation'.
    */
   /**
-   * @typedef {Object} UI.PageManipulationOverlay.PageOperation
-   * @property {string} title Title to be displayed for the operation
-   * @property {string} img Path to the image to be used as an icon for the operation
-   * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter
-   * @property {string} dataElement Unique data element identifier for this operation
+  * @typedef {Object} UI.PageManipulationOverlay.PageOperation
+  * @property {string} title Title to be displayed for the operation.
+  * @property {string} img Path to the image to be used as an icon for the operation.
+  * @property {function(Array.<number>): void} onClick Click handler function that receives an array of selected page numbers as a parameter.
+  * @property {string} dataElement Unique data element identifier for this operation.
    */
   /**
-   * Adds page manipulation operations to the overlay. If a dataElement parameter is provided, the new operations will be added after that element. Otherwise, they will be added at the beginning.
+  * Adds page manipulation operations to the overlay. If a dataElement parameter is provided, the new operations will be added after that element. Otherwise, they will be added at the beginning.
    * @method UI.PageManipulationOverlay#add
    * @memberof UI.PageManipulationOverlay
-   * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} operations Array of sections to be added, each with its individual operations
+  * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} operations Array of sections to be added, each with its individual operations.
    * @param {string} [dataElementToInsertAfter] The data element of the item to insert after. Can be 'pageRotationControls', 'pageManipulationControls', or a custom data element. If not provided, items will be added at the beginning. Call {@link UI.PageManipulationOverlay#getItems getItems} to see existing items and their data elements.
-   * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining
+  * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining.
    * @example
 WebViewer(...)
   .then(function (instance) {
@@ -118,12 +118,12 @@ WebViewer(...)
   },
 
   /**
-   * Replaces all operations in the PageManipulationOverlay with a new list of operations
+   * Replaces all operations in the PageManipulationOverlay with a new list of operations.
    * To update an individual item, use {@link UI.updateElement}.
    * @method UI.PageManipulationOverlay#update
    * @memberof UI.PageManipulationOverlay
    * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} operations The list of page manipulation sections that will be rendered in the overlay. If not provided, the overlay will be cleared.
-   * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining
+   * @returns {UI.PageManipulationOverlay} The PageManipulationOverlay instance for chaining.
    * @see UI.updateElement
    * @example
 WebViewer(...)

@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 
 import ToggleElementButton from 'components/ToggleElementButton';
@@ -16,6 +16,7 @@ import './ToggleZoomOverlay.scss';
 import { useTranslation } from 'react-i18next';
 
 const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
 
   const elementName = documentViewerKey ? `zoomOverlay${documentViewerKey}` : DataElements.ZOOM_OVERLAY;

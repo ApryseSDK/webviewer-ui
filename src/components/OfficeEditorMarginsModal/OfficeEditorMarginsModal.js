@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
 import ModalWrapper from 'components/ModalWrapper';
@@ -27,6 +27,7 @@ const SIDES = [MARGIN_SIDES.LEFT, MARGIN_SIDES.RIGHT, MARGIN_SIDES.TOP, MARGIN_S
 const OfficeEditorMarginsModal = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const { core } = useCore();
 
   const currentUnit = useSelector(selectors.getOfficeEditorUnitMeasurement);
   const [initialUnit, setInitialUnit] = useState(currentUnit);
@@ -81,7 +82,6 @@ const OfficeEditorMarginsModal = () => {
       console.error('Error applying margins:', e);
       showPageLayoutWarning(dispatch, actions, PAGE_LAYOUT_WARNING_TYPE.MARGIN);
     }
-
   };
 
   const closeModal = () => {

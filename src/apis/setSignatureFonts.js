@@ -15,7 +15,7 @@ WebViewer(...)
 
 /**
  * @callback UI.setSignatureFontsCallback
- * @param {Array.<string>} fonts current font families
+ * @param {Array.<string>} fonts Current font families.
  * @returns {Array.<string>} fonts to set.
  */
 

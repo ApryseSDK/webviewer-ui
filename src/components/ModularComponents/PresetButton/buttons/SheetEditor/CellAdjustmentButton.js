@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { CELL_ADJUSTMENT_BUTTONS } from 'constants/customizationVariables';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const propTypes = {
   type: PropTypes.string,
@@ -30,6 +30,8 @@ const CellAdjustmentButton = forwardRef((props, ref) => {
     img: icon = menuItems[buttonType].icon,
     title = menuItems[buttonType].title,
   } = props;
+
+  const { core } = useCore();
 
   const isActive = false;
 

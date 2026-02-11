@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Damga metni boş olamaz",
     "unpostedComment": "Yayınlanmamış Yorum",
     "lockedLayer": "Katman kilitli",
-    "layerVisibililtyNoChange": "Katman görünürlüğü değiştirilemez",
+    "layerVisibilityNoChange": "Katman görünürlüğü değiştirilemez",
     "noLayers": "Bu belgenin katmanı yok.",
     "noSignatureFields": "Bu belgede imza alanı yok.",
     "untitled": "başlıksız",
@@ -488,11 +488,13 @@
       "replace": "Yer değiştirmek",
       "replaceAll": "Hepsini değiştir",
       "replaceText": "Metni Değiştir",
+      "replaceOptions": "Değiştirme Seçenekleri",
       "confirmMessageReplaceAll": "Tüm metni değiştirmek istediğinizden emin misiniz?",
       "confirmMessageReplaceOne": "Bu metni değiştirmek istediğinizden emin misiniz?",
       "moreOptions": "Daha fazla seçenek",
       "lessOptions": "Daha az seçenek",
-      "confirm": "Onaylamak"
+      "confirm": "Onaylamak",
+      "filter": "Filtrele"
     },
     "toolsOverlay": {
       "currentStamp": "Geçerli Damga",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Yazı Tipi Ailesi"
     },
-    "blankSheet": "Boş Sayfa",
+    "blankSheet": "Çarşaf",
     "insertImage": "Resim ekle"
   },
   "insertPageModal": {

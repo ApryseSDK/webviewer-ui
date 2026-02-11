@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useImperativeHandle, useCallback } 
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import selectors from 'selectors';
-import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
 import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +12,7 @@ import Choice from 'components/Choice';
 import getRootNode from 'helpers/getRootNode';
 import findFocusableElements from 'helpers/findFocusableElements';
 import useIsRTL from 'src/hooks/useIsRTL';
+import useCore from 'hooks/useCore';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
@@ -46,6 +46,7 @@ const Thumbnail = React.forwardRef((props, ref) => {
     panelSelector,
     parentKeyListener,
   } = props;
+  const { core } = useCore();
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
   const thumbContainerRef = useRef(null);

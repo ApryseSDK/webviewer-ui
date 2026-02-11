@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
@@ -131,100 +131,15 @@ function CustomModal() {
     let bodyDiv = null;
     let footerDiv = null;
 
-    const appendToComponent = (el, ref) => {
-      if (isDOMNode(el)) {
-        ref.appendChild(el);
-      }
-    };
-
-    const createElementsForModal = (innerHTML, ref, children) => {
-      if (innerHTML) {
-        appendToComponent(innerHTML, ref);
-      } else if (children && children.length) {
-        children.forEach((child, i) => {
-          let div;
-          if (isDOMNode(child)) {
-            child.classList.add(`customEl${i}`);
-            div = child;
-          } else {
-            const { title, button, style, onClick = null } = child;
-            let { className } = child;
-            div = (button) ? document.createElement('button') : document.createElement('div');
-            className = (button) ? `Button ${className}` : className;
-            className?.split(' ').forEach((name) => div.classList.add(name));
-
-            div.classList.add(`customEl${i}`);
-            div.innerText = title;
-            div.onclick = onClick;
-
-            if (style) {
-              div.style = (Object.entries(style).map(([k, v]) => (Number.isInteger(v) ? `${k}:${v}px` : `${k}:${v}`)).join(';'));
-            }
-          }
-          const el = ref.querySelector(`.customEl${i}`);
-          if (el) {
-            ref.replaceChild(div, el);
-          } else {
-            ref.appendChild(div);
-          }
-        });
-      }
-    };
-
-    if (header) {
-      const { className, style, innerHTML = null } = header;
-      let { title } = header;
-      title = (title && !innerHTML) ? <p>{title}</p> : null;
-
-      headerDiv = <div
-        ref={(ref) => {
-          const { header } = customModalItem;
-          const { children = [], innerHTML = null } = header;
-          createElementsForModal(innerHTML, ref, children);
-        }}
-        className={`CustomModal-header ${className}`}
-        style={style}
-      >{title}</div>;
-    }
-
-    if (body) {
-      const { className, style, innerHTML = null } = body;
-      let { title } = body;
-      title = (title && !innerHTML) ? <p>{title}</p> : null;
-
-      bodyDiv = <div
-        ref={(ref) => {
-          const { body } = customModalItem;
-          const { children = [], innerHTML = null } = body;
-          createElementsForModal(innerHTML, ref, children);
-        }}
-        className={`CustomModal-body ${className}`}
-        style={style}
-      >{title}</div>;
-    }
-
-    if (footer) {
-      const { className, style, innerHTML = null } = footer;
-      let { title } = footer;
-      title = (title && !innerHTML) ? <p>{title}</p> : null;
-
-      footerDiv = <div
-        ref={(ref) => {
-          const { footer } = customModalItem;
-          const { children = [], innerHTML = null } = footer;
-          createElementsForModal(innerHTML, ref, children);
-        }}
-        className={`CustomModal-footer ${className}`}
-        style={style}
-      >{title}</div>;
-    }
+    headerDiv = <ModalSection type="header" data={header}  />;
+    bodyDiv = <ModalSection type="body" data={body} />;
+    footerDiv = <ModalSection type="footer" data={footer} />;
 
     let element = null;
     if (header || body || footer) {
       element = <React.Fragment>{headerDiv}{bodyDiv}{footerDiv}</React.Fragment>;
       render = null;
     }
-
     return (
       <CustomModalItem
         key={dataElement}
@@ -239,5 +154,76 @@ function CustomModal() {
     );
   }).filter(Boolean);
 }
+
+const ModalSection = ({ type, data }) => {
+  if (!data) {
+    return null;
+  }
+
+  const ref = React.useRef(null);
+
+  const { className, style, innerHTML = null, children = [] } = data;
+  let { title } = data;
+  const titleElement = (title && !innerHTML) ? <p>{title}</p> : null;
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+
+    createElementsForModal(innerHTML, el, children);
+  }, [innerHTML, children]);
+
+  return (
+    <div
+      ref={ref}
+      className={`CustomModal-${type} ${className}` || ''}
+      style={style}
+    >{titleElement}</div>
+  );
+
+};
+
+const appendToComponent = (el, ref) => {
+  if (isDOMNode(el)) {
+    ref.appendChild(el);
+  }
+};
+
+const createElementsForModal = (innerHTML, ref, children) => {
+  if (innerHTML) {
+    appendToComponent(innerHTML, ref);
+  } else if (children && children.length) {
+    children.forEach((child, i) => {
+      let div;
+      if (isDOMNode(child)) {
+        child.classList.add(`customEl${i}`);
+        div = child;
+      } else {
+        const { title, button, style, onClick = null } = child;
+        let { className } = child;
+        div = (button) ? document.createElement('button') : document.createElement('div');
+        className = (button) ? `Button ${className}` : className;
+        className?.split(' ').forEach((name) => div.classList.add(name));
+
+        div.classList.add(`customEl${i}`);
+        div.innerText = title;
+        div.onclick = onClick;
+
+        if (style) {
+          div.style = (Object.entries(style).map(([k, v]) => (Number.isInteger(v) ? `${k}:${v}px` : `${k}:${v}`)).join(';'));
+        }
+      }
+
+      const el = ref.querySelector(`.customEl${i}`);
+      if (el) {
+        ref.replaceChild(div, el);
+      } else {
+        ref.appendChild(div);
+      }
+    });
+  }
+};
 
 export default React.memo(CustomModal);

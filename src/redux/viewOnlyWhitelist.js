@@ -1,5 +1,5 @@
 import { panelNames } from 'constants/panel';
-import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
+import { PRESET_BUTTON_TYPES, ROTATE_DOCUMENT_BUTTONS, CHANGE_DISPLAY_BUTTONS } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 
 const { ToolNames } = window.Core.Tools;
@@ -32,6 +32,9 @@ export default {
     PRESET_BUTTON_TYPES.SETTINGS,
     PRESET_BUTTON_TYPES.TOGGLE_ACCESSIBILITY_MODE,
     PRESET_BUTTON_TYPES.COMPARE,
+    PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE,
+    ...Object.values(ROTATE_DOCUMENT_BUTTONS),
+    ...Object.values(CHANGE_DISPLAY_BUTTONS),
   ],
   modal: [
     DataElements.PRINT_MODAL,
@@ -55,5 +58,5 @@ export default {
     DataElements.COPY_TEXT_BUTTON,
     DataElements.PAN_TOOL_BUTTON,
   ],
-  overlay: []
+  overlay: [],
 };

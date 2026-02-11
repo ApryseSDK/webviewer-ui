@@ -8,31 +8,8 @@ import {
 import {
   COLUMN_INPUT_TYPES,
   DEFAULT_COLUMN_SPACING_IN_POINTS,
-  MINIMUM_COLUMN_WIDTH_IN_POINTS,
   LAYOUT_UNITS,
 } from 'constants/officeEditor';
-
-const clampValue = (value, minValue, maxValue) => {
-  const candidate = value || minValue; // sanitize undefined, null, '', or 0
-  const lowerBounded = Math.max(candidate, minValue);
-  return Math.min(lowerBounded, maxValue);
-};
-
-const clampColumnWidthToPageLimits = (value, columnCount, availablePageWidth, equalColumns) => {
-  const minValue = MINIMUM_COLUMN_WIDTH_IN_POINTS;
-  const maxValue = equalColumns
-    ? availablePageWidth / columnCount
-    : availablePageWidth - ((columnCount - 1) * MINIMUM_COLUMN_WIDTH_IN_POINTS);
-  return clampValue(value, minValue, maxValue);
-};
-
-const clampSpacingToPageLimits = (value, columnCount, availablePageWidth, equalColumns) => {
-  const minValue = 0;
-  const maxValue = equalColumns
-    ? (availablePageWidth - (MINIMUM_COLUMN_WIDTH_IN_POINTS * columnCount)) / (columnCount - 1)
-    : availablePageWidth - (MINIMUM_COLUMN_WIDTH_IN_POINTS * columnCount);
-  return clampValue(value, minValue, maxValue);
-};
 
 const convertWidthsAndSpacingToColumns = (widthsAndSpacing) => {
   const columns = [];
@@ -48,19 +25,15 @@ export const useOfficeEditorColumnsModal = () => {
   const [columnAmount, setColumnAmount] = useState(0);
   const [columns, setColumns] = useState([]); // [{ width: 0, spacing: 0 }]
   const [equalColumns, setEqualColumns] = useState(true);
-  const [availablePageWidth, setAvailablePageWidth] = useState(0);
   const [maxAllowedColumns, setMaxAllowedColumns] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const pageNumber = await core.getOfficeEditor().getEditingPageNumber();
-      const availablePageWidth = await core.getOfficeEditor().getAvailablePageWidth(pageNumber, LAYOUT_UNITS.PHYSICAL_POINT);
       const sectionColumns = await core.getOfficeEditor().getSectionColumns(LAYOUT_UNITS.PHYSICAL_POINT);
       const parsedColumns = convertWidthsAndSpacingToColumns(sectionColumns);
       const allColumnsEqual = checkEqualColumnWidths(sectionColumns);
 
-      setAvailablePageWidth(availablePageWidth);
-      setMaxAllowedColumns(Math.floor(availablePageWidth / MINIMUM_COLUMN_WIDTH_IN_POINTS));
+      setMaxAllowedColumns(await core.getOfficeEditor().getMaxColumns());
       setColumnAmount(Math.ceil(sectionColumns.length / 2));
       setEqualColumns(allColumnsEqual);
       setColumns(parsedColumns);
@@ -73,14 +46,14 @@ export const useOfficeEditorColumnsModal = () => {
     }
   }, [equalColumns]);
 
-  const commitColumnAmount = (value) => {
+  const resetColumnAmountInput = (value) => {
     if (value === columns.length) {
       return;
     }
     setColumnAmount(columns.length);
   };
 
-  const changeColumnAmount = (value) => {
+  const changeColumnAmount = async (value) => {
     if (value === '') {
       setColumnAmount(value);
       return;
@@ -95,11 +68,12 @@ export const useOfficeEditorColumnsModal = () => {
     if (!Number.isFinite(newColumnAmount) || newColumnAmount < 0) {
       newColumnAmount = 1;
     }
-    newColumnAmount = Math.min(newColumnAmount, maxAllowedColumns);
+    const maxColumns = await core.getOfficeEditor().getMaxColumns();
+    newColumnAmount = Math.min(newColumnAmount, maxColumns);
 
     setColumnAmount(newColumnAmount);
     const newColumns = addOrRemoveColumns(newColumnAmount, columns);
-    rebalanceColumnWidthAndSpacingEvenly(newColumns);
+    await rebalanceColumnWidthAndSpacingEvenly(newColumns);
   };
 
   const addOrRemoveColumns = (newColumnAmount, prevColumns) => {
@@ -122,39 +96,38 @@ export const useOfficeEditorColumnsModal = () => {
     return newColumns;
   };
 
-  const rebalanceColumnWidthAndSpacingEvenly = (columns) => {
+  const rebalanceColumnWidthAndSpacingEvenly = async (columns) => {
     const columnCount = columns.length;
     if (columnCount === 0) {
       return;
     }
     const referenceSpacing = columns[0].spacing;
     const widthAndSpacing =
-      window.Core.Document.OfficeEditor.Layout.buildEqualColumnsConfig(columnCount, availablePageWidth, referenceSpacing);
-
+      await core.getOfficeEditor().buildEqualColumnsConfig(columnCount, referenceSpacing, LAYOUT_UNITS.PHYSICAL_POINT);
     const newColumns = convertWidthsAndSpacingToColumns(widthAndSpacing);
     setColumns(newColumns);
   };
 
-  const commitColumnValue = (value, index, type) => {
+  const commitColumnValue = async (value, index, type) => {
     const newBoundedValue = type === COLUMN_INPUT_TYPES.WIDTH
-      ? clampColumnWidthToPageLimits(value, columns.length, availablePageWidth, equalColumns)
-      : clampSpacingToPageLimits(value, columns.length, availablePageWidth, equalColumns);
+      ? await core.getOfficeEditor().clampColumnWidthToSectionLimits(value, columns.length, equalColumns, LAYOUT_UNITS.PHYSICAL_POINT)
+      : await core.getOfficeEditor().clampColumnSpacingToSectionLimits(value, columns.length, equalColumns, LAYOUT_UNITS.PHYSICAL_POINT);
 
     const newColumns = equalColumns ?
-      rebalanceInputsEqually(newBoundedValue, type, columns) :
-      rebalanceInputs(newBoundedValue, index, type, columns);
+      await rebalanceInputsEqually(newBoundedValue, type, columns) :
+      await rebalanceInputs(newBoundedValue, index, type, columns);
     setColumns(newColumns);
     return newColumns;
   };
 
-  const rebalanceInputsEqually = (newValue, type, initialColumns) => {
+  const rebalanceInputsEqually = async (newValue, type, initialColumns) => {
     const widthAndSpacing = type === COLUMN_INPUT_TYPES.WIDTH ?
-      window.Core.Document.OfficeEditor.Layout.buildEqualColumnsConfigFromWidth(newValue, initialColumns.length, availablePageWidth) :
-      window.Core.Document.OfficeEditor.Layout.buildEqualColumnsConfig(initialColumns.length, availablePageWidth, newValue);
+      await core.getOfficeEditor().buildEqualColumnsConfigFromWidth(newValue, initialColumns.length, LAYOUT_UNITS.PHYSICAL_POINT) :
+      await core.getOfficeEditor().buildEqualColumnsConfig(initialColumns.length, newValue, LAYOUT_UNITS.PHYSICAL_POINT);
     return convertWidthsAndSpacingToColumns(widthAndSpacing);
   };
 
-  const rebalanceInputs = (newValue, index, type, initialColumns) => {
+  const rebalanceInputs = async (newValue, index, type, initialColumns) => {
     let newColumns = [...initialColumns];
     const columnCount = initialColumns.length;
 
@@ -163,9 +136,9 @@ export const useOfficeEditorColumnsModal = () => {
       spacing: (type === COLUMN_INPUT_TYPES.SPACING ? newValue : newColumns[index].spacing),
     };
     // Calculate excess amount.
-    const lastColumnSpacing = newColumns[columnCount - 1].spacing;
-    const totalWidthAndSpacing = newColumns.reduce((acc, column) => acc + column.width + column.spacing, -lastColumnSpacing); // Ignore last column spacing
-    let excessAmount = totalWidthAndSpacing - availablePageWidth;
+    const lastColumnSpacing = Number.parseFloat(newColumns[columnCount - 1].spacing);
+    const totalWidthAndSpacing = newColumns.reduce((acc, column) => acc + Number.parseFloat(column.width) + Number.parseFloat(column.spacing), -lastColumnSpacing); // Ignore last column spacing
+    let excessAmount = totalWidthAndSpacing - await core.getOfficeEditor().getAvailableCurrentSectionWidth(LAYOUT_UNITS.PHYSICAL_POINT);
     let modifiedResults = {};
 
     // take from or add to subsequent widths
@@ -267,7 +240,7 @@ export const useOfficeEditorColumnsModal = () => {
     equalColumns,
     maxAllowedColumns,
     changeColumnAmount,
-    commitColumnAmount,
+    resetColumnAmountInput,
     commitColumnValue,
     toggleEqualColumns,
     commitColumnSettings,

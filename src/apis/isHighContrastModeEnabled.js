@@ -1,10 +1,10 @@
 import selectors from 'selectors';
 
 /**
- * Checks whether high contrast mode is enabled
+ * Checks whether high contrast mode is enabled.
  * @method UI.isHighContrastModeEnabled
  * @memberof UI
- * @returns {boolean} True if high contrast mode is enabled, false otherwise
+ * @returns {boolean} True if high contrast mode is enabled, false otherwise.
  * @see UI.enableHighContrastMode
  * @see UI.disableHighContrastMode
  * @example

@@ -12,7 +12,7 @@ import AdvancedTab from './AdvancedTab';
 import { SearchContext } from './SearchWrapper';
 import Icon from 'components/Icon';
 import ModalWrapper from 'components/ModalWrapper';
-import { EditorModes } from 'src/helpers/hotkeysManager';
+import { EditorModes } from 'src/helpers/hotkeysUtils';
 import './SettingsModal.scss';
 
 const TABS_ID = DataElements.SETTINGS_MODAL;

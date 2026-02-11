@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "ڈاک ٹکٹ خالی نہیں ہو سکتا",
     "unpostedComment": "غیر پوسٹ شدہ تبصرہ",
     "lockedLayer": "پرت مقفل ہے۔",
-    "layerVisibililtyNoChange": "پرت کی مرئیت کو تبدیل نہیں کیا جا سکتا",
+    "layerVisibilityNoChange": "پرت کی مرئیت کو تبدیل نہیں کیا جا سکتا",
     "noLayers": "اس دستاویز کی کوئی تہہ نہیں ہے۔",
     "noSignatureFields": "اس دستاویز میں کوئی دستخطی فیلڈ نہیں ہے۔",
     "untitled": "بلا عنوان",
@@ -488,11 +488,13 @@
       "replace": "بدل دیں۔",
       "replaceAll": "سبھی کو تبدیل کریں۔",
       "replaceText": "متن کو تبدیل کریں۔",
+      "replaceOptions": "متبادل اختیارات",
       "confirmMessageReplaceAll": "کیا آپ واقعی تمام متن کو تبدیل کرنا چاہتے ہیں؟",
       "confirmMessageReplaceOne": "کیا آپ واقعی اس متن کو تبدیل کرنا چاہتے ہیں؟",
       "moreOptions": "مزید اختیارات",
       "lessOptions": "کم اختیارات",
-      "confirm": "تصدیق کریں۔"
+      "confirm": "تصدیق کریں۔",
+      "filter": "فلٹر"
     },
     "toolsOverlay": {
       "currentStamp": "موجودہ ڈاک ٹکٹ",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "فونٹ فیملی"
     },
-    "blankSheet": "خالی شیٹ",
+    "blankSheet": "چادر",
     "insertImage": "تصویر داخل کریں۔"
   },
   "insertPageModal": {

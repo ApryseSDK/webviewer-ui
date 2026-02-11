@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -9,6 +9,7 @@ import DataElements from 'constants/dataElement';
 import { RESIZE_BAR_WIDTH } from 'constants/panel';
 
 function SearchPanelContainer(props) {
+  const { core } = useCore();
   const { dataElement = DataElements.SEARCH_PANEL, parentDataElement = undefined } = props;
   const isMobile = isMobileSize();
 

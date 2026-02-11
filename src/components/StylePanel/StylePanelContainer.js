@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getStylePanelComponent } from './StylePanelFactory';
 import DataElementWrapper from '../DataElementWrapper';
 import NoToolStylePanel from './panels/NoToolStylePanel';
@@ -22,6 +22,7 @@ const propTypes = {
 };
 
 const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout = false }) => {
+  const { core } = useCore();
   const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'stylePanel'));
   const annotationCreateToolNames = getAnnotationCreateToolNames();
 

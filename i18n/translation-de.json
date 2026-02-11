@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unveröffentlichter Kommentar",
     "lockedLayer": "Ebene ist gesperrt",
-    "layerVisibililtyNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
+    "layerVisibilityNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
     "noLayers": "Dieses Dokument hat keine Ebenen.",
     "noSignatureFields": "Dieses Dokument hat keine Signaturfelder.",
     "untitled": "Ohne Titel",
@@ -488,11 +488,13 @@
       "replace": "Ersetzen",
       "replaceAll": "Alles ersetzen",
       "replaceText": "Texte ersetzen",
+      "replaceOptions": "Ersetzen Sie die Optionen",
       "confirmMessageReplaceAll": "Möchten Sie wirklich den gesamten Text ersetzen?",
       "confirmMessageReplaceOne": "Möchten Sie diesen Text wirklich ersetzen?",
       "moreOptions": "Mehr Optionen",
       "lessOptions": "Weniger Optionen",
-      "confirm": "Bestätigen"
+      "confirm": "Bestätigen",
+      "filter": "Filter"
     },
     "toolsOverlay": {
       "currentStamp": "Aktueller Stempel",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Schriftfamilie"
     },
-    "blankSheet": "Leeres Blatt",
+    "blankSheet": "Blatt",
     "insertImage": "Bild einfügen"
   },
   "insertPageModal": {

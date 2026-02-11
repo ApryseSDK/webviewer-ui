@@ -5,7 +5,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
 import hotkeysManager from 'helpers/hotkeysManager';
@@ -42,6 +42,7 @@ const ToolButton = ({
     ],
     shallowEqual,
   );
+  const { core } = useCore();
   const dispatch = useDispatch();
   const { group = '', ...restObjectData } = toolButtonObject;
 

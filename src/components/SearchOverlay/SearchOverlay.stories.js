@@ -151,7 +151,7 @@ export function SearchAndReplaceEnabled() {
 
 SearchAndReplaceEnabled.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const toggleReplaceInputButton = await canvas.getByRole('button', { name: getTranslatedText('message.toggleReplaceInput') });
+  const toggleReplaceInputButton = await canvas.getByRole('button', { name: getTranslatedText('option.searchPanel.replaceOptions') });
   expect(toggleReplaceInputButton).toBeInTheDocument();
   await userEvent.click(toggleReplaceInputButton);
   const replaceInput = await canvas.getByRole('textbox', { name: getTranslatedText('action.replace') });

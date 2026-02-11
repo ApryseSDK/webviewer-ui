@@ -1,4 +1,4 @@
-import core from 'core';
+import useCore from 'hooks/useCore';
 import getNumberOfDecimalPlaces from 'helpers/getNumberOfDecimalPlaces';
 import { isMobileDevice } from 'src/helpers/device';
 import { precisionFractions } from 'constants/measurementScale';
@@ -58,6 +58,7 @@ const propTypes = {
 };
 
 function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool, canModify }) {
+  const { core } = useCore();
   const { t } = useTranslation();
 
   const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));

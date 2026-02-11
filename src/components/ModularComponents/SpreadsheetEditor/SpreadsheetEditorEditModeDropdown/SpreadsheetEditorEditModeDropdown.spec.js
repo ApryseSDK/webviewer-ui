@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import SpreadsheetEditorEditModeDropdown from './SpreadsheetEditorEditModeDropdown';
 import * as reactRedux from 'react-redux';
 import selectors from 'selectors';
-
+import rootReducer from 'src/redux/reducers/rootReducer';
 const mockSetEditMode = jest.fn();
 
 jest.mock('core', () => ({
@@ -28,10 +28,11 @@ jest.mock('core', () => ({
 jest.mock('selectors', () => ({
   getActiveFlyout: jest.fn(),
   getSpreadsheetEditorEditMode: jest.fn(),
+  getActiveDocumentViewerKey: jest.fn(),
 }));
 
 const store = configureStore({
-  reducer: () => ({})
+  reducer: rootReducer,
 });
 
 describe('SpreadsheetEditorEditModeDropdown', () => {

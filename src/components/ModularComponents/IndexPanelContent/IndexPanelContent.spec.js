@@ -9,6 +9,7 @@ jest.mock('core', () => ({
   canModifyContents: () => true,
   addEventListener: () => { },
   removeEventListener: () => { },
+  getDocumentViewer: jest.fn(),
 }));
 
 describe('IndexPanelContent Component', () => {

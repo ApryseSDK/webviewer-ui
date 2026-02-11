@@ -35,7 +35,9 @@ const initialState = {
     flyoutPosition: null,
     openFlyout: null,
   },
-  search: {},
+  search: {
+    status: 'SEARCH_NOT_INITIATED',
+  },
   featureFlags: {
     customizableUI: true
   },
@@ -61,7 +63,7 @@ SearchPanelLeft.play = async ({ canvasElement }) => {
   const searchInput = await canvas.findByRole('textbox', { name: getTranslatedText('message.searchDocumentPlaceholder') });
   expect(searchInput).toBeInTheDocument();
 
-  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('message.toggleReplaceInput') });
+  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('option.searchPanel.replaceOptions') });
   await replaceToggleButton.click();
 };
 
@@ -88,7 +90,7 @@ SearchPanelRight.play = async ({ canvasElement }) => {
   const clearSearchButton = await canvas.findByRole('button', { name: getTranslatedText('message.clearSearchResults') });
   expect(clearSearchButton).toBeInTheDocument();
 
-  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('message.toggleReplaceInput') });
+  const replaceToggleButton = canvas.getByRole('button', { name: getTranslatedText('option.searchPanel.replaceOptions') });
   await replaceToggleButton.click();
 };
 

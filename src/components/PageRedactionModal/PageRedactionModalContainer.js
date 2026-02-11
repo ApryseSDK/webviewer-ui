@@ -3,7 +3,7 @@ import DataElements from 'constants/dataElement';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { createPageRedactions, redactPages } from 'helpers/pageManipulationFunctions';
 import PageRedactionModal from 'components/PageRedactionModal/PageRedactionModal';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import './PageRedactionModal.scss';
 const MAX_CANVAS_COUNT = 10;
 
 const PageRedactionModalContainer = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [isOpen, currentPage, selectedIndexes, pageLabels, activeToolName, activeToolStyles] = useSelector((state) => [
     selectors.isElementOpen(state, DataElements.PAGE_REDACT_MODAL),

@@ -1,7 +1,7 @@
 /**
- * Returns the minimum zoom level
+ * Returns the minimum zoom level.
  * @method UI.getMinZoomLevel
- * @return {number} Minimum zoom level
+ * @return {number} Minimum zoom level.
  * @example
 WebViewer(...)
   .then(function(instance) {

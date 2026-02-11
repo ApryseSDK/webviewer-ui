@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import actions from 'actions';
 import { createPortal } from 'react-dom';
@@ -34,6 +34,7 @@ const propTypes = {
 };
 
 const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPanelOpen }) => {
+  const { core } = useCore();
   const [
     topHeadersHeight,
     bottomHeadersHeight,

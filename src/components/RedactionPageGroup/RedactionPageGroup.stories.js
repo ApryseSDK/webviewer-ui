@@ -1,25 +1,12 @@
 import React from 'react';
 import RedactionPageGroup from './RedactionPageGroup';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'src/redux/reducers/rootReducer';
 
-const initialState = {
-  viewer: {
-    currentLanguage: 'en',
-    disabledElements: {},
-    customElementOverrides: {},
-    panelWidths: {
-      redactionPanel: 330,
-    },
-  }
-};
-function rootReducer(state = initialState) {
-  return state;
-}
-
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const RedactionPageGroupWithRedux = (props) => {
   const context = {

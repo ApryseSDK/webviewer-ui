@@ -1,4 +1,4 @@
-import core from 'core';
+import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -118,6 +118,7 @@ function Dropdown({
   onFocus = null,
   stopPropagationOnMouseDown = false,
 }) {
+  const { core } = useCore();
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);

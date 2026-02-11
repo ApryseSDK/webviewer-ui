@@ -123,7 +123,7 @@ describe('PageNumberInput component', () => {
     const input = screen.getByRole('textbox');
 
     // We type some numbers, two valid ones and an invalid one
-    userEvent.type(input, '1, 3, 1945');
+    userEvent.type(input, '1, 3, 1945, 6.7');
     fireEvent.blur(input);
     expect(input.value).toEqual(expectedNumberString);
   });
@@ -141,7 +141,7 @@ describe('PageNumberInput component', () => {
     const input = screen.getByRole('textbox');
 
     // We type some invalid values
-    userEvent.type(input, '65, easter bunny, 55');
+    userEvent.type(input, '65, easter bunny, 55, 6.7');
     fireEvent.blur(input);
     expect(input.value).toEqual('');
   });
@@ -174,7 +174,7 @@ describe('PageNumberInput component', () => {
     const input = screen.getByRole('textbox');
 
     // We type some numbers, a mix of valid and invalid
-    userEvent.type(input, '1, 3, 2, 15, 2024, easter bunny');
+    userEvent.type(input, '1, 3, 2, 15, 2024, easter bunny, 6.7');
     fireEvent.blur(input);
     // Handler should be called only with valid numbers
     expect(props.onSelectedPageNumbersChange).toBeCalledWith([1, 2, 3]);
@@ -240,12 +240,19 @@ describe('PageNumberInput component', () => {
 
     const input = screen.getByRole('textbox');
 
-    userEvent.type(input, '1-10');
-    fireEvent.blur(input);
+    const checkForWarning = (pageLabel, invalidPageLabel) => {
+      userEvent.type(input, pageLabel);
+      fireEvent.blur(input);
 
-    expect(input).toHaveValue('');
-    expect(warnSpy).toHaveBeenCalledWith('10 is not a valid page label');
-    const errorElement = screen.getByText('Invalid page number. Limit is 9.');
-    expect(errorElement).toBeVisible();
+      expect(input).toHaveValue('');
+      expect(warnSpy).toHaveBeenCalledWith(`${invalidPageLabel} is not a valid page label`);
+      const errorElement = screen.getByText('Invalid page number. Limit is 9.');
+      expect(errorElement).toBeVisible();
+      warnSpy.mockClear();
+    };
+
+    checkForWarning('1-10', '10');
+    checkForWarning('1.', '1.');
+    checkForWarning('z', 'z');
   });
 });

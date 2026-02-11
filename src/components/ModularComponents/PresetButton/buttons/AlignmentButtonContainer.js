@@ -1,23 +1,23 @@
 /**
- * The preset button for left alignment
+ * A button that aligns text to the left.
  * @name alignLeftButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for center alignment
+ * A button that aligns text to the center.
  * @name alignCenterButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for right alignment
+ * A button that aligns text to the right.
  * @name alignRightButton
  * @memberof UI.Components.PresetButton
  */
 
 /**
- * The preset button for justified alignment
+ * A button that justifies text alignment.
  * @name justifyBothButton
  * @memberof UI.Components.PresetButton
  */

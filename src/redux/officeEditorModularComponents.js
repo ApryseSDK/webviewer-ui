@@ -210,7 +210,6 @@ const defaultOfficeEditorModularComponents = {
     type: 'presetButton',
     buttonType: 'redoButton'
   },
-  undefined: {},
   'divider-0.1': {
     dataElement: 'divider-0.1',
     type: 'divider'
@@ -366,7 +365,7 @@ const defaultOfficeEditorModularComponents = {
   },
   commentPanelToggle: {
     dataElement: 'commentPanelToggle',
-    title: 'component.commentPanel',
+    title: 'component.notesPanel',
     type: 'toggleButton',
     img: 'icon-header-chat-line',
     toggleElement: DataElements.OFFICE_EDITOR_COMMENT_PANEL,

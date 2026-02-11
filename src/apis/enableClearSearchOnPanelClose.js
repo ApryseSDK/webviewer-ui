@@ -1,7 +1,7 @@
 import actions from 'actions';
 
 /**
- * Enable clearing search results when user closes search panel. When this is enabled and user closes search panel
+ * Enable clearing search results when user closes search panel. When this is enabled and user closes search panel,
  * all search results are cleared.
  *
  * Note, mobile devices never clear search results even if this setting is enabled. This is because the panel needs to be closed to view the search results on the document.

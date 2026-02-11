@@ -6,7 +6,7 @@ import Icon from 'components/Icon';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from 'components/DataElementWrapper';
 import FormulaOverlay from 'components/FormulaOverlay/FormulaOverlay';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import './FormulaBar.scss';
 
 const FormulaBar = (props) => {
@@ -20,6 +20,7 @@ const FormulaBar = (props) => {
   } = props;
 
   const { t } = useTranslation();
+  const { core } = useCore();
   const formulaBarValue = cellFormula || stringCellValue || '';
 
   const [inputValue, setInputValue] = useState(formulaBarValue);

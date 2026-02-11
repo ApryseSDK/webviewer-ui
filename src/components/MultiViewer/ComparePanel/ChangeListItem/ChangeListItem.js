@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors/index';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
@@ -22,6 +22,7 @@ const propTypes = {
 };
 
 const ChangeListItem = (props) => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [syncViewer] = useSelector((state) => [

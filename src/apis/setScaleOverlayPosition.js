@@ -1,7 +1,7 @@
 /**
  * Sets the position of the scale overlay.
  * @method UI.setScaleOverlayPosition
- * @param {string} newPosition Must be one of the following: 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+ * @param {string} newPosition Must be one of the following: 'top-left', 'top-right', 'bottom-left', 'bottom-right'.
  * @example
  WebViewer(...)
  .then(function(instance) {

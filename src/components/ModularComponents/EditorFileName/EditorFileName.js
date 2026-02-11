@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 import useOnDocumentFileNameEdit from 'hooks/useOnDocumentFileNameEdit';
 import Button from 'components/Button';
@@ -12,6 +12,7 @@ import { FILESAVERJS_MAX_NAME_LENTH } from 'src/constants/fileName';
 
 
 const EditorFileName = ({ dataElement }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const {
     viewOnly,

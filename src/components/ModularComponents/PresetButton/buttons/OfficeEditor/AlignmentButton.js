@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import ActionButton from 'components/ActionButton';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ const propTypes = {
 };
 
 const AlignmentButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const {
     isFlyoutItem,
     alignment,

@@ -26,13 +26,14 @@ import {
   renamePortfolioFile,
   reorderPortfolioFile
 } from 'helpers/portfolio';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import '../../constants/bookmarksOutlinesShared.scss';
 import './PortfolioPanel.scss';
 import { menuTypes } from 'helpers/outlineFlyoutHelper';
 
 const PortfolioPanel = () => {
+  const { core } = useCore();
   const [
     isDisabled,
     tabManager,

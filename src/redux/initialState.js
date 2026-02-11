@@ -1,5 +1,6 @@
 import React from 'react';
 import actions from 'actions';
+// eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import TrackChangeOverlay from 'components/TrackChangeOverlay';
@@ -30,12 +31,19 @@ import SignatureModes from 'constants/signatureModes';
 import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import defaultToolsWithInlineComment from 'constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { PANEL_SIZES } from 'constants/panel';
-import { ShortcutKeys } from 'helpers/hotkeysManager';
+import { ShortcutKeys } from 'helpers/hotkeysUtils';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { getInstanceID } from 'helpers/getRootNode';
 import { defaultBackgroundColor, initialColors, initialTextColors } from 'helpers/initialColorStates';
-import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap, defaultPanels, defaultPopups } from './modularComponents';
+import {
+  defaultModularComponents,
+  defaultModularHeaders,
+  defaultFlyoutMap,
+  defaultPanels,
+  defaultPopups
+} from './modularComponents';
+import { addDataElementFromKey } from 'helpers/modularComponentsHelper';
 import viewOnlyWhitelist from './viewOnlyWhitelist';
 
 const { ToolNames } = window.Core.Tools;
@@ -1944,7 +1952,10 @@ export default {
     fitMode: '',
     rotation: 0,
     displayMode: 'Single',
-    currentPage: 1,
+    currentPage: {
+      1: 1,
+      2: 1,
+    },
     sortStrategy: 'position',
     isFullScreen: false,
     isMultipleViewerMerging: false,
@@ -2077,9 +2088,10 @@ export default {
     replyAttachmentHandler: null,
     customSettings: [],
     modularComponentStash: {},
-    modularHeaders: defaultModularHeaders,
-    modularComponents: defaultModularComponents,
+    modularHeaders: addDataElementFromKey(defaultModularHeaders),
+    modularComponents: addDataElementFromKey(defaultModularComponents),
     modularPopups: defaultPopups,
+    flyoutMap: addDataElementFromKey(defaultFlyoutMap),
     modularComponentFunctions: {},
     activeGroupedItems: [],
     activeCustomRibbon: '',
@@ -2100,7 +2112,6 @@ export default {
     toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
     annotationToolStyleSyncingEnabled: false,
     shortcutKeyMap: { ...ShortcutKeys },
-    flyoutMap: defaultFlyoutMap,
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: null,
     flyoutToggleElement: null,
@@ -2130,6 +2141,7 @@ export default {
     isSearchInProgress: false,
     isAmbientString: false,
     clearSearchPanelOnClose: false,
+    status: 'SEARCH_NOT_INITIATED',
     results: [],
     redactionSearchPatterns: {
       creditCards: {

@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
     "unpostedComment": "Comentariu nepostat",
     "lockedLayer": "Stratul este blocat",
-    "layerVisibililtyNoChange": "Vizibilitatea stratului nu poate fi modificată",
+    "layerVisibilityNoChange": "Vizibilitatea stratului nu poate fi modificată",
     "noLayers": "Acest document nu are straturi.",
     "noSignatureFields": "Acest document nu are câmpuri de semnătură.",
     "untitled": "Fără titlu",
@@ -488,11 +488,13 @@
       "replace": "A inlocui",
       "replaceAll": "Înlocuiește-le pe toate",
       "replaceText": "Înlocuiește textul",
+      "replaceOptions": "Opțiuni de înlocuire",
       "confirmMessageReplaceAll": "Sigur doriți să înlocuiți tot textul?",
       "confirmMessageReplaceOne": "Sigur doriți să înlocuiți acest text?",
       "moreOptions": "Mai multe opțiuni",
       "lessOptions": "Mai puține opțiuni",
-      "confirm": "A confirma"
+      "confirm": "A confirma",
+      "filter": "Filtra"
     },
     "toolsOverlay": {
       "currentStamp": "Ştampila curentă",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Familia de fonturi"
     },
-    "blankSheet": "Foaie goală",
+    "blankSheet": "Foaie",
     "insertImage": "Inserează imaginea"
   },
   "insertPageModal": {

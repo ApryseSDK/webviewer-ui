@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { saveAs } from 'file-saver';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
@@ -64,6 +64,7 @@ const AnnotationPopupContainer = ({
   closePopup,
   widgetThatOpenedPopupRef,
 }) => {
+  const { core } = useCore();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP));
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.ANNOTATION_POPUP));
   const isContextMenuPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));

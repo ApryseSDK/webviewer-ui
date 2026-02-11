@@ -7,7 +7,7 @@ import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
@@ -23,6 +23,7 @@ const propTypes = {
 };
 
 const IndexPanel = ({ widgets }) => {
+  const { core } = useCore();
   const [
     isOpen,
     isDisabled,

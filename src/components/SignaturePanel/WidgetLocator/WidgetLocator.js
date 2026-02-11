@@ -1,13 +1,11 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState, } from 'react';
 import ReactDOM from 'react-dom';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 import getRootNode from 'helpers/getRootNode';
 
 const WidgetLocator = ({ rect }) => {
+  const { core } = useCore();
   const [show, setShow] = useState(false);
 
   useEffect(() => {

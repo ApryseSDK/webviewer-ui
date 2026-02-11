@@ -1,5 +1,5 @@
 /**
- * The preset button for inserting an image in the Spreadsheet Editor
+ * A button that inserts an image into the spreadsheet.
  * @name spreadsheetEditorInsertImageButton
  * @memberof UI.Components.PresetButton
  */
@@ -9,7 +9,7 @@ import InsertImageButton from 'components/InsertImageButton';
 import { menuItems } from '../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import fileToBase64 from 'helpers/fileToBase64';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -17,6 +17,7 @@ import DataElements from 'constants/dataElement';
 import { SPREADSHEET_EDITOR_IMAGE_FORMATS } from 'src/constants/spreadsheetEditor';
 
 const SpreadsheetEditorInsertImageButton = forwardRef((props, ref) => {
+  const { core } = useCore();
   const menuItem = menuItems[PRESET_BUTTON_TYPES.INSERT_IMAGE];
   const dispatch = useDispatch();
   const activeFlyout = useSelector(selectors.getActiveFlyout);

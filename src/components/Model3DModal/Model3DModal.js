@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Choice from 'components/Choice';
 
 import { Swipeable } from 'react-swipeable';
@@ -21,6 +21,7 @@ const Model3DModal = ({
   isDisabled,
   isOpen,
 }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
 
   const [typeOfInput, setTypeOfInput] = useState('url');

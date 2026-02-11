@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState, useRef, } from 'react';
 import './IndexPanelContent.scss';
 import actions from 'actions';
 import Button from 'components/Button';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import Input from 'components/Input';
 import mapValidationResponseToTranslation from 'src/helpers/mapValidationResponseToTranslation';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
@@ -39,6 +39,7 @@ const IndexPanelContent = forwardRef(({
   childWidgets,
   selectingWidgets,
 }, ref) => {
+  const { core } = useCore();
 
   const [t] = useTranslation();
   const [isDefault, setIsDefault] = useState(false);

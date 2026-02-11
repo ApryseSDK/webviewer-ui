@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
@@ -25,6 +25,7 @@ import './FilterAnnotModal.scss';
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = ({ isInFormBuilderMode }) => {
+  const { core } = useCore();
   const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters,
     isMeasurementAnnotationFilterEnabled, customNoteFilter] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),

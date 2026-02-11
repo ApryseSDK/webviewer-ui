@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector, } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import setVerificationResult from 'helpers/setVerificationResult';
 
@@ -15,6 +15,7 @@ import Icon from 'components/Icon';
 import { panelData, panelNames } from 'constants/panel';
 
 const SignaturePanel = () => {
+  const { core } = useCore();
   const dispatch = useDispatch();
   const [fields, setFields] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);

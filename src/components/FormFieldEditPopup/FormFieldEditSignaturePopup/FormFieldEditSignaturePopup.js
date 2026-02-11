@@ -12,6 +12,7 @@ import TextInput from 'components/TextInput';
 
 import '../FormFieldEditPopup.scss';
 import { createDimensionChangeHandlers } from 'helpers/formFieldEditPopupHelpers';
+import useCore from 'hooks/useCore';
 
 const propTypes = {
   fields: PropTypes.array,
@@ -40,6 +41,7 @@ const FormFieldEditSignaturePopup = ({
   getSignatureOptionHandler,
   indicator,
 }) => {
+  const { core } = useCore();
   const { t } = useTranslation();
   const className = classNames({
     Popup: true,
@@ -54,7 +56,8 @@ const FormFieldEditSignaturePopup = ({
     getPageWidth,
     getPageHeight,
     setWidth,
-    setHeight
+    setHeight,
+    core,
   );
 
   const [indicatorPlaceholder, setIndicatorPlaceholder] = useState(t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${getSignatureOptionHandler(annotation)}`));

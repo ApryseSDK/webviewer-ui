@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 import NoteContent from 'components/NoteContent';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import classNames from 'classnames';
@@ -19,6 +19,7 @@ const NoteGroupSection = ({
   groupAnnotations,
   isMultiSelectMode,
 }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [isViewingGroupAnnots, setIsViewingGroupAnnots] = useState(false);

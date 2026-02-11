@@ -8,7 +8,7 @@ import ColorPalettePicker from 'components/ColorPalettePicker/ColorPalettePicker
 import Events from 'constants/events';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import './CustomStampForums.scss';
 import { getInstanceNode } from 'helpers/getRootNode';
@@ -63,6 +63,7 @@ const CustomStampForums = ({
   stampTool,
   userName,
 }) => {
+  const { core } = useCore();
   const updateTimestampLabel = (usernameChk, dateChk, dateTime) => {
     let tmpText = '';
     if (usernameChk) {

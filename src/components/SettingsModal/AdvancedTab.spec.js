@@ -19,6 +19,7 @@ jest.mock('selectors', () => ({
   isToolDefaultStyleUpdateFromAnnotationPopupEnabled: jest.fn().mockReturnValue(false),
   isWidgetHighlightingEnabled: jest.fn().mockReturnValue(true),
   getUIConfiguration: jest.fn().mockReturnValue('default'),
+  getActiveDocumentViewerKey: jest.fn().mockReturnValue(1),
 }));
 jest.mock('react-i18next', () => ({
   useTranslation: () => [
@@ -35,6 +36,7 @@ jest.mock('core', () => ({
       disableWidgetHighlighting: jest.fn(),
     })),
   })),
+  getDocumentViewer: jest.fn(),
 }));
 
 jest.mock('actions', () => ({

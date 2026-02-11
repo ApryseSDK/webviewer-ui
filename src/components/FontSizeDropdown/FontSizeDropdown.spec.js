@@ -15,10 +15,12 @@ jest.mock('core', () => ({
   }),
 }));
 
+const FontSizeDropdownWithProviders = withProviders(FontSizeDropdown);
+
 describe('FontSizeDropdown component', () => {
   it('Should select items and input correctly', () => {
     const mockOnFontSizeChange = jest.fn();
-    render(<FontSizeDropdown onFontSizeChange={mockOnFontSizeChange} />);
+    render(<FontSizeDropdownWithProviders onFontSizeChange={mockOnFontSizeChange} />);
 
     // make sure dropdown items are hidden
     const listBox = screen.getByRole('listbox');
@@ -47,7 +49,7 @@ describe('FontSizeDropdown component', () => {
   });
   it('Should render the correct amount of items', () => {
     const items = 5;
-    render(<FontSizeDropdown onFontSizeChange={noop} maxFontSize={items} incrementMap={{ 0: 1 }} />);
+    render(<FontSizeDropdownWithProviders onFontSizeChange={noop} maxFontSize={items} incrementMap={{ 0: 1 }} />);
 
     const comboBox = screen.getByRole('combobox');
     userEvent.click(comboBox);
@@ -57,7 +59,7 @@ describe('FontSizeDropdown component', () => {
 
   });
   it('Should account for increment map correctly', () => {
-    render(<FontSizeDropdown onFontSizeChange={noop} fontSize={1} maxFontSize={200} incrementMap={{ 0: 1, 10: 10, 100: 100 }} />);
+    render(<FontSizeDropdownWithProviders onFontSizeChange={noop} fontSize={1} maxFontSize={200} incrementMap={{ 0: 1, 10: 10, 100: 100 }} />);
 
     const comboBox = screen.getByRole('combobox');
     userEvent.click(comboBox);

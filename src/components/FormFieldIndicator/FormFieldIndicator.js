@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAnnotationPosition } from 'helpers/getPopupPosition';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import './FormFieldIndicator.scss';
 
@@ -9,6 +9,7 @@ const INDICATOR_WIDTH = 100;
 const INDICATOR_PADDING = 20;
 
 const FormFieldIndicator = ({ annotation, parameters }) => {
+  const { core } = useCore();
   const { displayMode, viewerBoundingRect, appBoundingRect, scrollLeft, scrollTop } = parameters;
 
   const setIndicatorYPosition = (annotation) => {

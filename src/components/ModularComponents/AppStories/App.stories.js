@@ -484,11 +484,11 @@ AppWithRTLSwitchBehaviour.play = async ({ canvasElement }) => {
 
     // Switch to an unsupported language.
     window.instance.UI.setLanguage('hy');
-    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Language with ISO code "hy" is not supported.'));
+    expect(warnSpy).not.toHaveBeenCalled();
 
     // Switch to a non-existent language.
     window.instance.UI.setLanguage('hello');
-    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Language with ISO code "hello" is not supported.'));
+    expect(warnSpy).not.toHaveBeenCalled();
   } finally {
     console.warn = originalConsoleWarn;
   }

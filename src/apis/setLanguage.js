@@ -18,7 +18,6 @@ import dayjs from 'dayjs';
 import languageRules from 'constants/languageRules';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
-import getAvailableLanguages from './getAvailableLanguages';
 import textToolNames from 'constants/textToolNames';
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
@@ -28,14 +27,6 @@ let pendingLanguageTimeout;
 export default (store) => async (language) => {
   if (pendingLanguageTimeout) {
     clearTimeout(pendingLanguageTimeout);
-  }
-
-  const isDefaultLanguage = getAvailableLanguages().includes(language);
-  const isCustomLanguage = i18next.hasResourceBundle(language, 'translation');
-  const isUnsupported = !isDefaultLanguage && !isCustomLanguage;
-  if (isUnsupported) {
-    console.warn(`Language with ISO code "${language}" is not supported.`);
-    return;
   }
 
   await new Promise((resolve) => {

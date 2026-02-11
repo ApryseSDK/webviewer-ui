@@ -11,14 +11,21 @@ function useSearch(activeDocumentViewerKey) {
   const searchValue = useSelector(selectors.getSearchValue);
   const caseSensitive = useSelector(selectors.isCaseSensitive);
   const wholeWord = useSelector(selectors.isWholeWord);
+  const searchStatus = useSelector(selectors.getSearchStatus);
   const [searchResults, setSearchResults] = useState([]);
   const [activeSearchResult, setActiveSearchResult] = useState();
   const [activeSearchResultIndex, setActiveSearchResultIndex] = useState(0);
-  const [searchStatus, setSearchStatus] = useState('SEARCH_NOT_INITIATED');
   const dispatch = useDispatch();
   const documentViewers = core.getDocumentViewers();
   const documentViewersCount = documentViewers.length;
   const debounceTime = 500;
+
+  const setSearchStatus = async (status) => {
+    dispatch(actions.setSearchStatus(status));
+    if (status === 'SEARCH_IN_PROGRESS') {
+      dispatch(actions.setSearchInProgress(true));
+    }
+  };
 
   const spreadsheetSearch = async (searchValue, modes) => {
     if (!searchValue) {
@@ -26,7 +33,6 @@ function useSearch(activeDocumentViewerKey) {
       return;
     }
 
-    dispatch(actions.setSearchInProgress(true));
     setSearchStatus('SEARCH_IN_PROGRESS');
 
     const searchModes = buildSearchModeArray(modes);

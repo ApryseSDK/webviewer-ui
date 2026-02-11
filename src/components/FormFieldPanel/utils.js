@@ -1,5 +1,4 @@
 import getToolStyles from 'src/helpers/getToolStyles';
-import core from 'core';
 
 const { Annotations, Tools } = window.Core;
 
@@ -21,7 +20,7 @@ export const defaultFlags = {
   MultiSelect: false,
 };
 
-export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdownDisabled) => {
+export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdownDisabled, core) => {
   const currentTool = core.getToolMode();
   const panelFields = [];
 
@@ -59,7 +58,7 @@ export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdo
   return panelFields;
 };
 
-export const handleFlagsCreation = (annotation, flags) => {
+export const handleFlagsCreation = (annotation, flags, core) => {
   const fieldFlags = [flags['READ_ONLY'], flags['REQUIRED']];
   const currentTool = core.getToolMode();
 
@@ -76,7 +75,7 @@ export const handleFlagsCreation = (annotation, flags) => {
   return fieldFlags;
 };
 
-export const isRenderingOptions = (annotation) => {
+export const isRenderingOptions = (annotation, core) => {
   const currentTool = core.getToolMode();
   const isRenderingOptionsForWidget = annotation instanceof Annotations.ListWidgetAnnotation || annotation instanceof Annotations.ChoiceWidgetAnnotation;
   const isToolWithFieldOptions = currentTool instanceof Tools.ComboBoxFormFieldCreateTool || currentTool instanceof Tools.ListBoxFormFieldCreateTool;
@@ -84,7 +83,7 @@ export const isRenderingOptions = (annotation) => {
   return isRenderingOptionsForTool || isRenderingOptionsForWidget;
 };
 
-export const getSignatureOption = (widget) => {
+export const getSignatureOption = (widget, core) => {
   const formFieldCreationManager = core.getFormFieldCreationManager();
   if (widget) {
     return formFieldCreationManager.getSignatureOption(widget);
@@ -94,11 +93,11 @@ export const getSignatureOption = (widget) => {
   return toolStyles?.signatureType || '';
 };
 
-export const redrawAnnotation = (annotation) => {
+export const redrawAnnotation = (annotation, core) => {
   core.getAnnotationManager().drawAnnotationsFromList([annotation]);
 };
 
-export const triggerAnnotationChangedEventWithModify = (annotations) => {
+export const triggerAnnotationChangedEventWithModify = (annotations, core) => {
   core.getAnnotationManager().trigger('annotationChanged', [
     annotations,
     'modify',
@@ -106,11 +105,11 @@ export const triggerAnnotationChangedEventWithModify = (annotations) => {
   ]);
 };
 
-export const getPageHeight = () => {
+export const getPageHeight = (core) => {
   return core.getPageHeight(core.getCurrentPage());
 };
 
-export const getPageWidth = () => {
+export const getPageWidth = (core) => {
   return core.getPageWidth(core.getCurrentPage());
 };
 
@@ -143,12 +142,12 @@ export const createFlags = (handleFlagChange, fieldFlags) => {
   };
 };
 
-export const createFields = (options) => {
+export const createFields = (options, core) => {
   const { onFieldNameChange, onFieldValueChange, fieldProperties, onSignatureOptionChange, getSignatureOption, annotation } = options;
   return {
     NAME: {
       label: 'formField.formFieldPopup.fieldName',
-      onChange: onFieldNameChange,
+      onChange: (e) => onFieldNameChange(e, core),
       value: fieldProperties.name,
       required: true,
       type: 'text',
@@ -156,24 +155,24 @@ export const createFields = (options) => {
     },
     DEFAULT_VALUE: {
       label: 'formField.formFieldPopup.fieldValue',
-      onChange: onFieldValueChange,
+      onChange: (e) => onFieldValueChange(e, core),
       value: fieldProperties.defaultValue,
       type: 'text',
     },
     RADIO_GROUP: {
       label: 'formField.formFieldPopup.fieldName',
-      onChange: onFieldNameChange,
+      onChange: (e) => onFieldNameChange(e, core),
       value: fieldProperties.name,
       required: true,
       type: 'select',
     },
     SIGNATURE_OPTION: {
       label: 'formField.formFieldPopup.signatureOption',
-      onChange: onSignatureOptionChange,
-      value: getSignatureOption(annotation),
+      onChange: (e) => onSignatureOptionChange(e, core),
+      value: getSignatureOption(annotation, core),
       required: false,
       type: 'signatureOption',
-    }
+    },
   };
 };
 

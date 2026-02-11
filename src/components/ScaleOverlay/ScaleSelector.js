@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import Button from 'components/Button';
 
@@ -23,6 +23,7 @@ const propTypes = {
 const Scale = window.Core.Scale;
 
 const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAddingNewScale, ariaLabelledBy, isScaleModalEnabled }) => {
+  const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
 

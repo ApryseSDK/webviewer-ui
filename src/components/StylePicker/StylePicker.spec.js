@@ -39,7 +39,8 @@ jest.mock('core', () => ({
   getTool: () => '',
   addEventListener: () => { },
   getType: () => '',
-  getDocument: () => ({ getType: () => 'pdf' })
+  getDocument: () => ({ getType: () => 'pdf' }),
+  getDocumentViewer: jest.fn(),
 }));
 
 const style = {

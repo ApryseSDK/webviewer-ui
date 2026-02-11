@@ -29,7 +29,7 @@
 /**
  * Callback that gets passed to {@link UI.disableReplyForAnnotations disableReplyForAnnotations}.
  * @callback UI.disableReplyForAnnotationsCallback
- * @param {Core.Annotations.Annotation} annotation Annotation object
+ * @param {Core.Annotations.Annotation} annotation Annotation object.
  * @returns {boolean} True if replies for the annotation passed in should be disabled. False otherwise.
  */
 

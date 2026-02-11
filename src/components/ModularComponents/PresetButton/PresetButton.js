@@ -1,12 +1,16 @@
 import React, { forwardRef, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
-import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_FLYOUT_ITEMS, CELL_FORMAT_BUTTONS, STYLE_TOGGLE_OPTIONS, CELL_TEXT_WRAP_FLYOUT_ITEMS } from 'constants/customizationVariables';
-import { JUSTIFICATION_OPTIONS } from 'constants/officeEditor';
 import {
-  CELL_ACTION_OPTIONS,
-  checkIfArrayContains,
-  CELL_ALIGNMENT_OPTIONS
-} from 'src/constants/spreadsheetEditor';
+  PRESET_BUTTON_TYPES,
+  CELL_ADJUSTMENT_FLYOUT_ITEMS,
+  CELL_FORMAT_BUTTONS,
+  STYLE_TOGGLE_OPTIONS,
+  CELL_TEXT_WRAP_FLYOUT_ITEMS,
+  CHANGE_DISPLAY_BUTTONS,
+  ROTATE_DOCUMENT_BUTTONS
+} from 'constants/customizationVariables';
+import { JUSTIFICATION_OPTIONS } from 'constants/officeEditor';
+import { CELL_ACTION_OPTIONS, checkIfArrayContains, CELL_ALIGNMENT_OPTIONS } from 'src/constants/spreadsheetEditor';
 import NewDocumentButton from './buttons/NewDocument';
 import FilePickerButton from './buttons/FilePicker';
 import UndoButton from './buttons/Undo';
@@ -33,6 +37,9 @@ import './buttons/SheetEditor/SheetEditor.scss';
 import StyleButtonContainer from './buttons/StyleButtonContainer';
 import SpreadsheetEditorInsertImageButton from 'src/components/ModularComponents/SpreadsheetEditorInsertImageButton';
 import CellTextWrapButton from './buttons/SheetEditor/CellTextWrapButton';
+import ChangeDisplayModeButton from 'components/ModularComponents/PresetButton/buttons/ChangeDisplayModeButton';
+import RotateButton from 'components/ModularComponents/PresetButton/buttons/RotateButton';
+import ToggleMultiViewerMode from 'components/ModularComponents/PresetButton/buttons/ToggleMultiViewerMode';
 // Lazy load sheet editor components
 const VerticalAlignmentButton = lazy(() => import('./buttons/SheetEditor/VerticalAlignmentButton'));
 const CellAdjustmentButton = lazy(() => import('./buttons/SheetEditor/CellAdjustmentButton'));
@@ -69,6 +76,8 @@ const PresetButton = forwardRef((props, ref) => {
             return <SettingsButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.FORM_FIELD_EDIT:
             return <FormFieldEditButton {...props} ref={ref} />;
+          case PRESET_BUTTON_TYPES.TOGGLE_MULTI_VIEWER_MODE:
+            return <ToggleMultiViewerMode ref={ref} {...props} />;
 
           case PRESET_BUTTON_TYPES.ALIGN_TOP:
             return <VerticalAlignmentButton {...props} ref={ref} alignment={CELL_ALIGNMENT_OPTIONS.Top} />;
@@ -128,6 +137,10 @@ const PresetButton = forwardRef((props, ref) => {
               return <CellFormatButton {...props} ref={ref} formatType={buttonType} />;
             } else if (checkIfArrayContains(Object.values(CELL_TEXT_WRAP_FLYOUT_ITEMS), buttonType)) {
               return <CellTextWrapButton {...props} wrapText={buttonType} ref={ref} />;
+            } else if (checkIfArrayContains(Object.values(CHANGE_DISPLAY_BUTTONS), buttonType)) {
+              return <ChangeDisplayModeButton ref={ref} {...props} />;
+            } else if (checkIfArrayContains(Object.values(ROTATE_DOCUMENT_BUTTONS), buttonType)) {
+              return <RotateButton ref={ref} {...props} />;
             }
 
             console.warn(`${buttonType} is not a valid item type.`);

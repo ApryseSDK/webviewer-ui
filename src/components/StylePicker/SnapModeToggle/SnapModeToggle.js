@@ -1,6 +1,6 @@
 import React from 'react';
 import { workerTypes } from 'constants/types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import i18next from 'i18next';
 import Choice from 'components/Choice';
 import getMeasurementTools from 'helpers/getMeasurementTools';
@@ -12,6 +12,7 @@ const SnapModeToggle = ({
   Precision,
   isSnapModeEnabled,
 }) => {
+  const { core } = useCore();
   const dispatch = useDispatch();
 
   const wasDocumentSwappedToClientSide =

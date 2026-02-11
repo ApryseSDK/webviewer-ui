@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -48,6 +48,7 @@ const propTypes = {
 };
 
 const MeasurementOverlay = (props) => {
+  const { core } = useCore();
   const { annotation } = props;
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.MEASUREMENT_OVERLAY));
 

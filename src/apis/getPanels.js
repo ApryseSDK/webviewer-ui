@@ -1,7 +1,7 @@
 /**
- * Returns a list of panels that are currently in the UI
+ * Returns a list of panels that are currently in the UI.
  * @method UI.getPanels
- * @return {Array<UI.Components.Panel | UI.Components.TabPanel>} Array of Panel objects
+ * @return {Array<UI.Components.Panel | UI.Components.TabPanel>} Array of Panel objects.
  * @example
  WebViewer(...)
  .then(function(instance) {
@@ -21,7 +21,7 @@ export default (store) => () => {
 };
 
 /**
- * Represents a panel abstraction that can be used to manipulate a panel in the UI
+ * Represents a panel abstraction that can be used to manipulate a panel in the UI.
  * @name Panel
  * @memberOf UI.Components
  * @class UI.Components.Panel
@@ -52,9 +52,9 @@ export class Panel {
   }
 
   /**
-   * Sets the location of the panel in the UI
+  * Sets the location of the panel in the UI.
    * @method UI.Components.Panel#setLocation
-   * @param {string} location The location of the panel, setting this will update the panel in the UI. It can be either 'left' or 'right'
+  * @param {string} location The location of the panel, setting this will update the panel in the UI. It can be either 'left' or 'right'.
    * @example
    * WebViewer(...)
    *  .then(function(instance) {
@@ -77,7 +77,7 @@ export class Panel {
   }
 
   /**
-   * Deletes the panel from the UI
+  * Deletes the panel from the UI.
    * @method UI.Components.Panel#delete
    * @example
    * WebViewer(...)

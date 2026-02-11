@@ -1,7 +1,7 @@
 /**
- * Returns the maximum zoom level
+ * Returns the maximum zoom level.
  * @method UI.getMaxZoomLevel
- * @return {number} Maximum zoom level
+ * @return {number} Maximum zoom level.
  * @example
 WebViewer(...)
   .then(function(instance) {

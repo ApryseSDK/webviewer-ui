@@ -9,7 +9,7 @@ import Button from 'components/Button';
 import { getInstanceNode } from 'helpers/getRootNode';
 import ModalWrapper from 'components/ModalWrapper';
 
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 import { insertAbove, insertBelow, exitPageInsertionWarning } from '../../helpers/pageManipulationFunctions';
 import InsertBlankPagePanel from './InsertBlankPagePanel';
@@ -22,6 +22,7 @@ import './InsertPageModal.scss';
 const options = { loadAsPDF: true };
 
 const InsertPageModal = ({ loadedDocumentPageCount }) => {
+  const { core } = useCore();
   const [selectedPageIndexes, currentPage, selectedTab] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.getCurrentPage(state),
@@ -130,7 +131,9 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
           <TabPanel dataElement={DataElements.INSERT_FROM_FILE_PANEL}>
             <div className='panel-body'>
               <FilePickerPanel
-                onFileProcessed={fileProcessedHandler} />
+                onFileProcessed={fileProcessedHandler}
+                allowMultiple={true}
+              />
             </div>
           </TabPanel>
         </Tabs>

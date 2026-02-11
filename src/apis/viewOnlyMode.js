@@ -1,11 +1,8 @@
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
-import hotkeysManager, {
-  Shortcuts,
-  setViewOnlyShortcuts,
-  getViewOnlyShortcuts as getShortcuts
-} from 'helpers/hotkeysManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { getViewOnlyShortcuts as getShortcuts, setViewOnlyShortcuts, Shortcuts } from 'helpers/hotkeysUtils';
 
 const { checkTypes, TYPES } = window.Core;
 
@@ -51,7 +48,8 @@ export const disableViewOnlyMode = (store) => () => toggleViewOnlyMode(store, fa
 /**
  * Adds an element to the view-only whitelist, which makes the element visible and usable in view-only mode.
  * @method UI.addToViewOnlyWhitelist
- * @param {Array.<string>} dataElements Array of data-element attribute values for DOM elements to whitelist in view-only mode. To find data-element of a DOM element, refer to <a href='https://docs.apryse.com/documentation/web/guides/hiding-elements/#finding-dataelement-attribute-values' target='_blank'>Finding data-element attribute values</a>. * @example
+ * @param {Array.<string>} dataElements Array of data-element attribute values for DOM elements to whitelist in view-only mode. To find data-element of a DOM element, refer to <a href='https://docs.apryse.com/documentation/web/guides/hiding-elements/#finding-dataelement-attribute-values' target='_blank'>Finding data-element attribute values</a>.
+ * @example
  WebViewer(...)
  .then(function(instance) {
  instance.UI.addToViewOnlyWhitelist(['toolbarGroup-View']);
@@ -87,7 +85,7 @@ export const removeFromViewOnlyWhitelist = (store) => (dataElements) => {
 };
 
 /**
- * Gets the current view-only custom dataElement whitelist
+ * Gets the current view-only custom dataElement whitelist.
  * @method UI.getViewOnlyWhitelist
  * @returns {Array.<string>} Array of data-elements that have been added to the custom whitelist in view-only mode.
  * @example
@@ -119,7 +117,7 @@ export const updateViewOnlyWhitelist = (store) => (dataElements) => {
 /**
  * Updates the shortcut whitelist for view-only mode.
  * @method UI.updateViewOnlyShortcuts
- * @param {Array.<string>} shortcuts Array of shortcut names to whitelist in view-only mode. Must be one of UI.Shortcuts
+ * @param {Array.<string>} shortcuts Array of shortcut names to whitelist in view-only mode. Must be one of UI.Shortcuts.
  * @example
  * WebViewer(...)
  * .then(function(instance) {
@@ -140,7 +138,7 @@ export const updateViewOnlyShortcuts = (store) => (shortcuts) => {
 /**
  * Gets the current shortcut whitelist for view-only mode.
  * @method UI.getViewOnlyShortcuts
- * @returns {Array.<string>} Array of shortcut names that have been added to the shortcut whitelist in view-only mode. Each name is one of UI.Shortcuts
+ * @returns {Array.<string>} Array of shortcut names that have been added to the shortcut whitelist in view-only mode. Each name is one of UI.Shortcuts.
  * @example
  * WebViewer(...)
  * .then(function(instance) {

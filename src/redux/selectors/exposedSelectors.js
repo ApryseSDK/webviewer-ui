@@ -609,7 +609,10 @@ const hydrateItems = (itemIds, components) => {
       return null;
     }
 
-    const hydratedItem = { ...item };
+    const hydratedItem = {
+      dataElement: itemId,
+      ...item,
+    };
 
     if (item.items && item.items.length > 0) {
       hydratedItem.items = hydrateItems(item.items, components);
@@ -860,7 +863,7 @@ export const getZoom = (state, documentViewerKey = 1) => state.viewer.zoomLevels
 
 export const getDisplayMode = (state) => state.viewer.displayMode;
 
-export const getCurrentPage = (state) => state.viewer.currentPage;
+export const getCurrentPage = (state, documentViewerKey = 1) => state.viewer.currentPage?.[documentViewerKey];
 
 export const getCurrentPageLabel = (state) => {
   const pageLabels = getPageLabels(state);
@@ -1095,6 +1098,8 @@ export const getServerUrl = (state) => state.advanced.serverUrl;
 
 // search
 export const getSearchValue = (state) => state.search.value;
+
+export const getSearchStatus = (state) => state.search.status;
 
 export const shouldClearSearchPanelOnClose = (state) => state.search.clearSearchPanelOnClose;
 

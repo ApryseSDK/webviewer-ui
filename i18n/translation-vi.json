@@ -331,7 +331,7 @@
     "emptyCustomStampInput": "Văn bản tem không thể trống",
     "unpostedComment": "Nhận Xét Chưa Đăng",
     "lockedLayer": "Lớp bị khóa",
-    "layerVisibililtyNoChange": "Không thể thay đổi độ hiển thị lớp",
+    "layerVisibilityNoChange": "Không thể thay đổi độ hiển thị lớp",
     "noLayers": "Tài liệu này không có lớp.",
     "noSignatureFields": "Tài liệu này không có trường chữ ký.",
     "untitled": "Không có tiêu đề",
@@ -488,11 +488,13 @@
       "replace": "Thay thế",
       "replaceAll": "Thay thế tất cả",
       "replaceText": "Thay thế văn bản",
+      "replaceOptions": "Thay thế các tùy chọn",
       "confirmMessageReplaceAll": "Bạn có chắc chắn muốn thay thế tất cả văn bản không?",
       "confirmMessageReplaceOne": "Bạn có chắc chắn muốn thay thế văn bản này không?",
       "moreOptions": "Lựa chọn khác",
       "lessOptions": "Ít tùy chọn hơn",
-      "confirm": "Xác nhận"
+      "confirm": "Xác nhận",
+      "filter": "Lọc"
     },
     "toolsOverlay": {
       "currentStamp": "Tem Hiện Tại",
@@ -1536,7 +1538,7 @@
     "fontFamily": {
       "dropdownLabel": "Họ phông chữ"
     },
-    "blankSheet": "Tờ giấy trắng",
+    "blankSheet": "Tờ giấy",
     "insertImage": "Chèn hình ảnh"
   },
   "insertPageModal": {

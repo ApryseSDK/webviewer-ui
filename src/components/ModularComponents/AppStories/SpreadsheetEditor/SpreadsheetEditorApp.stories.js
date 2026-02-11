@@ -168,6 +168,7 @@ EditingModeHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
 
 export const ViewOnlyUI = createTemplate({
   headers: defaultSpreadsheetEditorHeaders,
+  uiConfiguration: VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR,
   components: defaultSpreadsheetEditorComponents,
   flyoutMap: defaultSpreadsheetFlyoutMap,
   viewerRedux: {
