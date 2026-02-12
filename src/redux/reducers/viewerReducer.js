@@ -188,6 +188,7 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isMultiViewerMode: payload.isMultiViewerMode,
+        activeDocumentViewerKey: payload.isMultiViewerMode ? state.activeDocumentViewerKey : 1,
       };
     case 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE':
       return {
