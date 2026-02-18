@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import core from 'core';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions/index';
@@ -20,12 +20,12 @@ function useSearch(activeDocumentViewerKey) {
   const documentViewersCount = documentViewers.length;
   const debounceTime = 500;
 
-  const setSearchStatus = async (status) => {
+  const setSearchStatus = useCallback(async (status) => {
     dispatch(actions.setSearchStatus(status));
     if (status === 'SEARCH_IN_PROGRESS') {
       dispatch(actions.setSearchInProgress(true));
     }
-  };
+  }, [dispatch]);
 
   const spreadsheetSearch = async (searchValue, modes) => {
     if (!searchValue) {
