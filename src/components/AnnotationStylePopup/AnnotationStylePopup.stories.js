@@ -6,6 +6,7 @@ import viewerReducer from 'reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import { mapAnnotationToKey } from 'constants/map';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/AnnotationStylePopup',
@@ -62,7 +63,7 @@ Basic.args = {
   hasBackToMenu: true,
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 const distanceMeasurementAnnot = new window.Core.Annotations.LineAnnotation();
 distanceMeasurementAnnot['Measure'] = {
@@ -124,7 +125,7 @@ const measurementProperties = {
   StrokeStyle: 'solid'
 };
 
-DistanceMeasurement.parameters = window.storybook.disableRtlMode;
+DistanceMeasurement.parameters = disableRtlModeParameters;
 
 DistanceMeasurement.args = {
   annotations: [distanceMeasurementAnnot],
@@ -149,7 +150,7 @@ const freeTextProperties = {
   StrokeStyle: 'solid',
 };
 
-FreeText.parameters = window.storybook.disableRtlMode;
+FreeText.parameters = disableRtlModeParameters;
 
 FreeText.args = {
   annotations: [freeTextAnnot],
@@ -173,4 +174,4 @@ WidgetAnnotation.args = {
   colorMapKey: mapAnnotationToKey(textWidgetAnnotation),
 };
 
-WidgetAnnotation.parameters = window.storybook.disableRtlMode;
+WidgetAnnotation.parameters = disableRtlModeParameters;

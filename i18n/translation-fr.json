@@ -354,7 +354,11 @@
     "listEmptyValue": "Un ou plusieurs champs ont une valeur vide.",
     "listDuplicateValue": "Plusieurs champs ont les valeurs suivantes :",
     "networkError": "Un problème est survenu lors du chargement de ce composant. Veuillez vérifier votre connexion réseau et actualiser la page.",
-    "refreshPage": "Veuillez vérifier votre connexion réseau et actualiser la page."
+    "refreshPage": "Veuillez vérifier votre connexion réseau et actualiser la page.",
+    "renderErrors": {
+      "error": "Quelque chose a mal tourné.",
+      "refreshPanel": "Vous pouvez continuer à travailler. Essayez de rouvrir le panneau."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Liste des ordres de tri",
       "position": "Position",
+      "linePosition": "Position",
       "time": "Temps",
       "status": "Statut",
       "author": "Auteur",
@@ -483,6 +488,7 @@
       "markForRedaction": "Caviarder"
     },
     "searchPanel": {
+      "searchResults": "Résultats de recherche",
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet",
       "wildcard": "Caractère générique",
@@ -1316,6 +1322,7 @@
     "bold": "Gras",
     "italic": "Italique",
     "underline": "Souligner",
+    "strikeout": "Retrait sur trois prises",
     "textColor": "Couleur du texte",
     "leftAlign": "Alignement à gauche",
     "centerAlign": "Aligner au centre",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Afficher sans suggestions",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles.",
     "previewAllChanges": "Aperçu de toutes les modifications",
+    "changes": "Modifications",
+    "comments": "Commentaires",
+    "commentsAndChangesTabs": "Onglets Commentaires et Modifications",
     "accept": "Accepter",
     "reject": "Rejeter",
     "pastingTitle": "Collage non disponible",

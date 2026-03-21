@@ -3,6 +3,7 @@ import PageNumberInput from './PageNumberInput';
 import { userEvent, expect } from 'storybook/test';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 function noop() { }
 
@@ -34,7 +35,7 @@ Basic.args = {
   pageCount: 10,
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const BasicWithError = PageNumberInputTemplate.bind({});
 BasicWithError.args = {
@@ -43,7 +44,7 @@ BasicWithError.args = {
   pageCount: 10,
 };
 
-BasicWithError.parameters = window.storybook.disableRtlMode;
+BasicWithError.parameters = disableRtlModeParameters;
 
 BasicWithError.play = async ()  => {
   const textInput = await document.querySelector('.page-number-input');

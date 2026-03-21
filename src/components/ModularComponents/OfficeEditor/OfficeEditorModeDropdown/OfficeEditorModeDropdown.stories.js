@@ -6,6 +6,7 @@ import OfficeEditorModeDropdown from './OfficeEditorModeDropdown';
 import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/OfficeEditorModeDropdown',
@@ -31,14 +32,14 @@ export function Editing() {
   return prepareEditModeDropdownStory();
 }
 
-Editing.parameters = window.storybook.disableRtlMode;
+Editing.parameters = disableRtlModeParameters;
 
 export function Reviewing() {
   initialState.officeEditor.editMode = OfficeEditorEditMode.REVIEWING;
   return prepareEditModeDropdownStory();
 }
 
-Reviewing.parameters = window.storybook.disableRtlMode;
+Reviewing.parameters = disableRtlModeParameters;
 
 export function ViewingOpen() {
   initialState.officeEditor.editMode = OfficeEditorEditMode.VIEW_ONLY;

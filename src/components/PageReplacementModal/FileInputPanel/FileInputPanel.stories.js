@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import FileInputPanel from './FileInputPanel';
 import { within, expect, userEvent } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const noop = () => {};
 
@@ -37,7 +38,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function WithDefaultValue() {
   const props = {
@@ -51,7 +52,7 @@ export function WithDefaultValue() {
   );
 }
 
-WithDefaultValue.parameters = window.storybook.disableRtlMode;
+WithDefaultValue.parameters = disableRtlModeParameters;
 
 export function BasicWithError() {
   const props = {
@@ -66,7 +67,7 @@ export function BasicWithError() {
   );
 }
 
-BasicWithError.parameters = window.storybook.disableRtlMode;
+BasicWithError.parameters = disableRtlModeParameters;
 
 export function LongInputWithError() {
   const props = {
@@ -81,7 +82,7 @@ export function LongInputWithError() {
   );
 }
 
-LongInputWithError.parameters = window.storybook.disableRtlMode;
+LongInputWithError.parameters = disableRtlModeParameters;
 
 export function WithDropdown() {
   const props = {
@@ -97,7 +98,7 @@ export function WithDropdown() {
   );
 }
 
-WithDropdown.parameters = window.storybook.disableRtlMode;
+WithDropdown.parameters = disableRtlModeParameters;
 
 WithDropdown.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

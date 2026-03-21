@@ -18,6 +18,7 @@ const context = {
   pendingAttachmentMap: { /* mocked values */ },
   isSelected: true, // Change to true if needed
   searchInput: 'mockedSearchInput',
+  isOfficeEditorCommentAnnotation: false,
 };
 
 jest.mock('core');

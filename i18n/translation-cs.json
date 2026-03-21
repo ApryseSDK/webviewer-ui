@@ -354,7 +354,11 @@
     "listEmptyValue": "Jedno nebo více polí má prázdnou hodnotu.",
     "listDuplicateValue": "Více polí má následující hodnoty:",
     "networkError": "Při načítání této komponenty došlo k chybě. Zkontrolujte prosím připojení k síti a obnovte stránku.",
-    "refreshPage": "Zkontrolujte prosím připojení k síti a obnovte stránku."
+    "refreshPage": "Zkontrolujte prosím připojení k síti a obnovte stránku.",
+    "renderErrors": {
+      "error": "Něco se tu pokazilo.",
+      "refreshPanel": "Můžete pokračovat v práci. Zkuste panel znovu otevřít."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Seznam pořadí řazení",
       "position": "Pozice",
+      "linePosition": "Pozice",
       "time": "Čas",
       "status": "Postavení",
       "author": "Autor",
@@ -483,6 +488,7 @@
       "markForRedaction": "Označit k redakci"
     },
     "searchPanel": {
+      "searchResults": "Výsledky vyhledávání",
       "caseSensitive": "Citlivý na velká písmena",
       "wholeWordOnly": "Celé slovo",
       "wildcard": "Divoká karta",
@@ -1316,6 +1322,7 @@
     "bold": "tučně",
     "italic": "kurzíva",
     "underline": "Zdůraznit",
+    "strikeout": "Přeškrtnutí",
     "textColor": "Barva textu",
     "leftAlign": "Zarovnat doleva",
     "centerAlign": "Zarovnání na střed",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Zobrazit bez návrhů",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních.",
     "previewAllChanges": "Náhled všech změn",
+    "changes": "Změny",
+    "comments": "Komentáře",
+    "commentsAndChangesTabs": "Karty Komentáře a změny",
     "accept": "Akceptovat",
     "reject": "Odmítnout",
     "pastingTitle": "Vkládání není k dispozici",

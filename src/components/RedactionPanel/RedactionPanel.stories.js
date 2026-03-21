@@ -12,6 +12,7 @@ import { mockHeadersNormalized, mockModularComponents } from '../ModularComponen
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp } from 'helpers/storybookHelper';
 import { default as mockAppInitialState } from 'src/redux/initialState';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const noop = () => { };
 
@@ -234,7 +235,7 @@ export function RedactionLeftGenericPanel() {
   );
 }
 
-RedactionLeftGenericPanel.parameters = window.storybook.disableRtlMode;
+RedactionLeftGenericPanel.parameters = disableRtlModeParameters;
 
 export function RedactionRightGenericPanel() {
   return (
@@ -250,7 +251,7 @@ export function RedactionRightGenericPanel() {
   );
 }
 
-RedactionRightGenericPanel.parameters = window.storybook.disableRtlMode;
+RedactionRightGenericPanel.parameters = disableRtlModeParameters;
 
 
 export function RightPanelWithRedactionItems() {
@@ -267,7 +268,7 @@ export function RightPanelWithRedactionItems() {
   );
 }
 
-RightPanelWithRedactionItems.parameters = window.storybook.disableRtlMode;
+RightPanelWithRedactionItems.parameters = disableRtlModeParameters;
 
 export function LeftPanelWithRedactionItems() {
   return (
@@ -283,7 +284,7 @@ export function LeftPanelWithRedactionItems() {
   );
 }
 
-LeftPanelWithRedactionItems.parameters = window.storybook.disableRtlMode;
+LeftPanelWithRedactionItems.parameters = disableRtlModeParameters;
 
 const RedactSearchPanelInApp = (location, panelSize) => {
   const mockState = {

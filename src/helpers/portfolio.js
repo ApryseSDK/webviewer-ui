@@ -1,4 +1,3 @@
-import core from 'core';
 import { saveAs } from 'file-saver';
 import { getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
 
@@ -38,12 +37,12 @@ const getNextLargestValue = (files) => {
   return Math.max(...files.map((a) => a.order)) + 1;
 };
 
-export const getPortfolioFiles = async () => {
+export const getPortfolioFiles = async (core) => {
   if (!core.isFullPDFEnabled()) {
     return [];
   }
 
-  const { embeddedFiles } = await getFileAttachments();
+  const { embeddedFiles } = await getFileAttachments(core);
   const unsortedPortfolioFiles = embeddedFiles.map(({ filename, fileObject, id, order }) => ({
     id,
     order,
@@ -59,7 +58,7 @@ export const getPortfolioFiles = async () => {
   return unsortedPortfolioFiles.sort((a, b) => a.order - b.order);
 };
 
-export const addFile = async (pdfDoc, file, order = undefined) => {
+export const addFile = async ({ core, pdfDoc, file, order = undefined }) => {
   const PDFNet = window.Core.PDFNet;
 
   // Create FileSpec dict
@@ -74,8 +73,10 @@ export const addFile = async (pdfDoc, file, order = undefined) => {
   const embeddedStream = await pdfDoc.createIndirectStream(await file.arrayBuffer(), flateFilter);
   ef.put('F', embeddedStream);
 
-  if (order === undefined) {
-    order = getNextLargestValue(await getPortfolioFiles());
+  if (order === undefined && core) {
+    order = getNextLargestValue(await getPortfolioFiles(core));
+  } else if (order === undefined) {
+    order = 0;
   }
 
   // Add internal order
@@ -163,7 +164,7 @@ const addCollection = async (pdfDoc, defaultFile = '') => {
   await root.put(PORTFOLIO_CONSTANTS.COLLECTION, collection);
 };
 
-export const createPortfolio = async (files) => {
+export const createPortfolio = async (core, files) => {
   const documentViewer = core.getDocumentViewer();
   const accessibleReadingOrderManager = documentViewer?.getAccessibleReadingOrderManager();
   accessibleReadingOrderManager?.endAccessibleReadingOrderMode();
@@ -178,7 +179,7 @@ export const createPortfolio = async (files) => {
     if (index === 0) {
       firstFileName = file.name;
     }
-    await addFile(pdfDoc, file, index);
+    await addFile({ core, pdfDoc, file, order: index });
   }
   await addCoverPage(pdfDoc);
   await addCollection(pdfDoc, firstFileName);
@@ -186,7 +187,7 @@ export const createPortfolio = async (files) => {
   return pdfDoc;
 };
 
-const getPDFNetFiles = async () => {
+const getPDFNetFiles = async (core) => {
   let files = null;
   if (core.isFullPDFEnabled()) {
     const PDFNet = window.Core.PDFNet;
@@ -207,9 +208,9 @@ const getPDFNetFiles = async () => {
   return null;
 };
 
-export const findPDFNetPortfolioItem = async (id) => {
+export const findPDFNetPortfolioItem = async (core, id) => {
   let target = null;
-  const files = await getPDFNetFiles();
+  const files = await getPDFNetFiles(core);
   if (!files) {
     return;
   }
@@ -228,8 +229,8 @@ export const findPDFNetPortfolioItem = async (id) => {
   return target;
 };
 
-export const renamePortfolioFile = async (id, newName) => {
-  const target = await findPDFNetPortfolioItem(id);
+export const renamePortfolioFile = async (core, id, newName) => {
+  const target = await findPDFNetPortfolioItem(core, id);
   if (!target) {
     return;
   }
@@ -239,9 +240,9 @@ export const renamePortfolioFile = async (id, newName) => {
   await filesIteratorValue.putText('UF', newName);
 };
 
-export const deletePortfolioFile = async (id) => {
-  const target = await findPDFNetPortfolioItem(id);
-  const files = await getPDFNetFiles();
+export const deletePortfolioFile = async (core, id) => {
+  const target = await findPDFNetPortfolioItem(core, id);
+  const files = await getPDFNetFiles(core);
   if (!target || !files) {
     return;
   }
@@ -258,8 +259,8 @@ export const downloadPortfolioFile = async (portfolioItem) => {
   }
 };
 
-export const reorderPortfolioFile = async (id, newOrder) => {
-  const target = await findPDFNetPortfolioItem(id);
+export const reorderPortfolioFile = async (core, id, newOrder) => {
+  const target = await findPDFNetPortfolioItem(core, id);
   if (!target) {
     return;
   }

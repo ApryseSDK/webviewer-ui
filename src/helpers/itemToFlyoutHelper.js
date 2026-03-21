@@ -97,7 +97,11 @@ export const itemToFlyout = (item, {
       const zoomOptionsList = selectors.getZoomList(store.getState());
       flyoutItem.className = 'ZoomFlyoutMenu';
       flyoutItem.icon = 'icon-magnifying-glass';
-      flyoutItem.children = getZoomFlyoutItems({ zoomOptionsList, dispatch: store.dispatch, size: 1, core });
+      flyoutItem.children = getZoomFlyoutItems({
+        zoomOptionsList,
+        store,
+        size: 1,
+      });
       break;
     }
     case ITEM_TYPE.RIBBON_GROUP:
@@ -140,9 +144,10 @@ export const itemToFlyout = (item, {
     case ITEM_TYPE.PAGE_NAVIGATION_BUTTON: {
       const state = store.getState();
       const activeDocumentViewerKey = state.viewer.activeDocumentViewerKey;
+      const currentPage = core.getCurrentPage(activeDocumentViewerKey);
       const isDisabled = flyoutItem.dataElement === DataElements.PREVIOUS_PAGE_BUTTON ?
-        core.getCurrentPage() === 1 :
-        core.getCurrentPage() === state.document.totalPages[activeDocumentViewerKey];
+        currentPage === 1 :
+        currentPage === state.document.totalPages[activeDocumentViewerKey];
       flyoutItem.disabled = isDisabled;
       break;
     }

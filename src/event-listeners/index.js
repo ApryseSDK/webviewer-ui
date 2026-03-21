@@ -30,7 +30,6 @@ import onSignatureSaved from './onSignatureSaved';
 import onSignatureDeleted from './onSignatureDeleted';
 import onFormFieldCreationModeStarted from './onFormFieldCreationModeStarted';
 import onFormFieldCreationModeEnded from './onFormFieldCreationModeEnded';
-import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
 import onLayersUpdated from './onLayersUpdated';
 import onImageContentAdded from './onImageContentAdded';
 import onInitialSaved from './onInitialSaved';
@@ -49,6 +48,7 @@ import onAccessibleReadingOrderModeNoStructure from './onAccessibleReadingOrderM
 import onUserBookmarksChanged from './onUserBookmarksChanged';
 import onDocumentLoaded, {
   enableRedactionElements,
+  syncDisplayModeMultiviewer,
   addPageLabelsToRedux,
   handlePasswordModal,
   showProgressModal,
@@ -68,6 +68,7 @@ import { openSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorLoaded';
 import { closeSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorReady';
 import onWidgetHighlightingChanged from './onWidgetHighlightingChanged';
 import onSelectedRangeStyleChanged from './onSelectedRangeStyleChanged';
+import onOfficeEditorCommentAdded from './onOfficeEditorCommentAdded';
 
 export {
   onSignatureSaved,
@@ -103,7 +104,6 @@ export {
   onFileAttachmentDataAvailable,
   onFormFieldCreationModeStarted,
   onFormFieldCreationModeEnded,
-  onDigitalSignatureAvailable,
   onLayersUpdated,
   onImageContentAdded,
   onInitialSaved,
@@ -121,6 +121,7 @@ export {
   onAccessibleReadingOrderModeNoStructure,
   onUserBookmarksChanged,
   enableRedactionElements,
+  syncDisplayModeMultiviewer,
   addPageLabelsToRedux,
   handlePasswordModal,
   showProgressModal,
@@ -139,4 +140,5 @@ export {
   onWidgetHighlightingChanged,
   onSelectedRangeStyleChanged,
   initializeLayersVisibility,
+  onOfficeEditorCommentAdded,
 };

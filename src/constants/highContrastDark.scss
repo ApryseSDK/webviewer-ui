@@ -23,6 +23,8 @@
   --gray-12: #ffffff;
 
   --yellow-1: #e1b90080;
+  --yellow-2: #191100;
+  --yellow-3: #ffd889;
   --red: red;
   /* stylelint-enable color-no-hex */
 
@@ -38,6 +40,9 @@
 
   --error-text-color: var(--red);
   --error-border-color: var(--red);
+  --warning-background: var(--yellow-2);
+  --warning-border: var(--yellow-3);
+  --warning-text: var(--yellow-3);
 
   --ribbons-background: var(--gray-1);
   --box-shadow: var(--gray-5);

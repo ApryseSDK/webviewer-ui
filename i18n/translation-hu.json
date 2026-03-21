@@ -354,7 +354,11 @@
     "listEmptyValue": "Egy vagy több mező üres értékkel rendelkezik.",
     "listDuplicateValue": "Több mező a következő értékekkel rendelkezik:",
     "networkError": "Hiba történt a komponens betöltése során. Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt.",
-    "refreshPage": "Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt."
+    "refreshPage": "Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt.",
+    "renderErrors": {
+      "error": "Valami itt félrement.",
+      "refreshPanel": "Folytathatja a munkát. Próbálja meg újra megnyitni a panelt."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Rendezési lista",
       "position": "Pozíció",
+      "linePosition": "Pozíció",
       "time": "Idő",
       "status": "Állapot",
       "author": "Szerző",
@@ -483,6 +488,7 @@
       "markForRedaction": "Jelölje meg szerkesztésre"
     },
     "searchPanel": {
+      "searchResults": "Keresési eredmények",
       "caseSensitive": "Kis-nagybetű érzékeny",
       "wholeWordOnly": "Egész világ",
       "wildcard": "Helyettesítő karakter",
@@ -1316,6 +1322,7 @@
     "bold": "Bátor",
     "italic": "Dőlt",
     "underline": "Aláhúzás",
+    "strikeout": "Áthúzni",
     "textColor": "Szöveg szín",
     "leftAlign": "Balra igazítás",
     "centerAlign": "Középre igazítás",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Megtekintés javaslatok nélkül",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön.",
     "previewAllChanges": "Tekintse meg az összes módosítás előnézetét",
+    "changes": "Változások",
+    "comments": "Hozzászólások",
+    "commentsAndChangesTabs": "Megjegyzések és változtatások fülek",
     "accept": "Elfogad",
     "reject": "Elutasít",
     "pastingTitle": "A beillesztés nem elérhető",

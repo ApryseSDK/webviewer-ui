@@ -15,6 +15,7 @@ import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
 import getType from 'core/getType';
 import { isOfficeEditorMode } from './officeEditor';
+import { addHeaderItems, resetHeaderItems } from 'helpers/multiViewerHelper';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -362,7 +363,13 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       dataElements: ['comparePanelToggle'],
       fn: () => {
         store.dispatch(actions.setComparePagesButtonEnabled(enable));
-      }
+        const isMultiViewerMode = selectors.isMultiViewerMode(store.getState());
+        if (enable && isMultiViewerMode) {
+          addHeaderItems(store);
+        } else {
+          resetHeaderItems(store);
+        }
+      },
     },
     [Feature.Initials]: {
       dataElements: [

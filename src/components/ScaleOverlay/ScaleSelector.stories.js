@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import core from 'core';
 import './ScaleOverlay.scss';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/ScaleOverlay/ScaleSelector',
@@ -103,7 +104,7 @@ export function NotModifiable() {
   );
 }
 
-NotModifiable.parameters = window.storybook.disableRtlMode;
+NotModifiable.parameters = disableRtlModeParameters;
 
 export function UndefinedCoreScales() {
   const [selectedScales, setSelectedScales] = useState(presetScales);
@@ -129,4 +130,4 @@ export function UndefinedCoreScales() {
   );
 }
 
-UndefinedCoreScales.parameters = window.storybook.disableRtlMode;
+UndefinedCoreScales.parameters = disableRtlModeParameters;

@@ -16,7 +16,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
-import { PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
 import getRootNode from 'helpers/getRootNode';
 import { ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 import AnnotationPopup from './AnnotationPopup';
@@ -373,9 +373,6 @@ const AnnotationPopupContainer = ({
     dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
   };
 
-  /* CLEAR APPEARANCE SIGNATURE */
-  const showClearSignatureButton = canModify && isAppearanceSignature && !showFormFieldButton;
-
   const onClearAppearanceSignature = () => {
     focusedAnnotation.clearSignature(annotManager);
     closePopup();
@@ -424,12 +421,14 @@ const AnnotationPopupContainer = ({
       dispatch(actions.disableElement(PRIORITY_THREE));
       dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
     } else {
-      dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+      dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_TWO));
     }
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
     dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
   };
 
+  /* CLEAR APPEARANCE SIGNATURE */
+  const showClearSignatureButton = canModify && isAppearanceSignature && !showFormFieldButton;
   /* DELETE ANNOTATION */
   const showDeleteButton = canModify && !showClearSignatureButton;
 

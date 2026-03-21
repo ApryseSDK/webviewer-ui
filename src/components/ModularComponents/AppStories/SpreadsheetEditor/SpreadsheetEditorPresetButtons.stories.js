@@ -6,6 +6,7 @@ import {
 } from 'src/redux/spreadsheetEditorComponents';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 import App from 'components/App';
+import { disableRtlModeParameters, disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'SpreadsheetEditor/App/PresetButtons',
@@ -63,7 +64,7 @@ export const PresetButtonsInTheApp = createTemplate({
 
 PresetButtonsInTheApp.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const PresetButtonsWithCanUndoAndRedo = createTemplate({
@@ -77,4 +78,4 @@ export const PresetButtonsWithCanUndoAndRedo = createTemplate({
 
 // This story does not yet show any undo/redo buttons so we won't baseline it in chromatic
 // until that is implemented.
-PresetButtonsWithCanUndoAndRedo.parameters = window.storybook.disableChromatic;
+PresetButtonsWithCanUndoAndRedo.parameters = disableChromaticParameters;

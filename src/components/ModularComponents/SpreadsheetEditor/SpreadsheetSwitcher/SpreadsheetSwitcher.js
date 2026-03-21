@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useWindowDimensions from 'helpers/useWindowsDimensions';
@@ -13,6 +13,24 @@ import './SpreadsheetSwitcher.scss';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import useTabKeyboardNavigation from 'hooks/useArrowNavigation';
+
+const isEditableElement = (target) => {
+  if (
+    !target ||
+    !(target instanceof HTMLElement)
+  ) {
+    return false;
+  }
+
+  const tagName = target.tagName;
+  const role = target.getAttribute('role');
+
+  return target.isContentEditable ||
+    tagName === 'INPUT' ||
+    tagName === 'TEXTAREA' ||
+    tagName === 'SELECT' ||
+    role === 'textbox';
+};
 
 const SpreadsheetSwitcher = (props) => {
   const {
@@ -50,10 +68,14 @@ const SpreadsheetSwitcher = (props) => {
     return [tabs.slice(0, breakpoint), tabs.slice(breakpoint)];
   }, [tabs, breakpoint]);
 
+  const shouldIgnoreKeydown = useCallback((e) => isEditableElement(e.target), []);
+
   const tabListRef = useRef();
   const {
     currentFocusIndex,
-  } = useTabKeyboardNavigation(tabListRef, [slicedTabs, labelBeingEdited]);
+  } = useTabKeyboardNavigation(tabListRef, [slicedTabs, labelBeingEdited], {
+    shouldIgnoreKeydown,
+  });
 
   const tabElements = slicedTabs.map((item, i) => (
     <SheetTab

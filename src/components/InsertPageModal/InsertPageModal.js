@@ -23,6 +23,7 @@ const options = { loadAsPDF: true };
 
 const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const { core } = useCore();
+  const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const [selectedPageIndexes, currentPage, selectedTab] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.getCurrentPage(state),
@@ -55,11 +56,11 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const apply = () => {
     if (insertNewPageBelow) {
       for (let i = 0; i < numberOfBlankPagesToInsert; ++i) {
-        insertBelow(insertNewPageIndexes.map((page, index) => page + (index + 1) * i), insertPageWidth, insertPageHeight);
+        insertBelow(insertNewPageIndexes.map((page, index) => page + (index + 1) * i), insertPageWidth, insertPageHeight, documentViewerKey);
       }
     } else {
       for (let i = 0; i < numberOfBlankPagesToInsert; ++i) {
-        insertAbove(insertNewPageIndexes.map((page, index) => page + (index + 1) * i), insertPageWidth, insertPageHeight);
+        insertAbove(insertNewPageIndexes.map((page, index) => page + (index + 1) * i), insertPageWidth, insertPageHeight, documentViewerKey);
       }
     }
     closeModal();

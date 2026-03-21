@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import ColorPalettePicker from './ColorPalettePicker';
 import { useTranslation } from 'react-i18next';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/ColorPalettePicker',
@@ -32,4 +33,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

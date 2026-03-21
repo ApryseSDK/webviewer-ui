@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import DataElements from 'constants/dataElement';
 
 export default function useOnFreeTextEdit(saveEditorInstance) {
   const dispatch = useDispatch();
+  const { core } = useCore();
 
   const [annotation, setAnnotation] = useState(null);
   const [editor, setEditor] = useState(null);
@@ -33,7 +34,7 @@ export default function useOnFreeTextEdit(saveEditorInstance) {
     return () => {
       core.removeEventListener('editorFocus', handleEditorFocus);
     };
-  }, [dispatch]);
+  }, [dispatch, core]);
 
   return { editor, annotation };
 }

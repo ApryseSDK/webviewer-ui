@@ -1,14 +1,16 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
-import core from 'core';
+import useCore from 'hooks/useCore';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import SearchStatus from 'constants/searchStatus';
 
 function useOnRedactionSearchCompleted() {
+  const { core, documentViewer } = useCore();
   const [searchStatus, setSearchStatus] = useState(SearchStatus['SEARCH_NOT_INITIATED']);
   const [redactionSearchResults, setRedactionSearchResults] = useState([]);
   const [isProcessingRedactionResults, setIsProcessingRedactionResults] = useState(false);
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const redactionSearchPatterns = useSelector((state) => selectors.getRedactionSearchPatterns(state), shallowEqual);
 
   const searchPatterns = useMemo(() => {
@@ -42,9 +44,16 @@ function useOnRedactionSearchCompleted() {
 
   const clearRedactionSearchResults = useCallback(() => {
     setRedactionSearchResults([]);
-    core.clearSearchResults();
+    documentViewer.clearSearchResults();
     setIsProcessingRedactionResults(false);
-  });
+  }, [documentViewer]);
+
+  useEffect(() => {
+    setSearchStatus(SearchStatus['SEARCH_NOT_INITIATED']);
+    setRedactionSearchResults([]);
+    documentViewer.clearSearchResults();
+    setIsProcessingRedactionResults(false);
+  }, [activeDocumentViewerKey, documentViewer]);
 
   useEffect(() => {
     function onSearchResultsChanged(results) {
@@ -57,7 +66,7 @@ function useOnRedactionSearchCompleted() {
     return () => {
       core.removeEventListener('searchResultsChanged', onSearchResultsChanged);
     };
-  }, [searchStatus]);
+  }, [core, mapResultToType]);
 
   useEffect(() => {
     function searchInProgressEventHandler(isSearching) {
@@ -82,7 +91,7 @@ function useOnRedactionSearchCompleted() {
     return () => {
       core.removeEventListener('searchInProgress', searchInProgressEventHandler);
     };
-  }, []);
+  }, [core]);
 
   return {
     redactionSearchResults,

@@ -2,6 +2,7 @@ import React from 'react';
 import IndexPanelContent from './IndexPanelContent';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const noop = () => { };
 
@@ -76,14 +77,14 @@ export const Basic = () => {
   return renderComponent();
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 export const Selecting = () => {
   return renderComponent(selectProps);
 };
 
-Selecting.parameters = window.storybook.disableRtlMode;
+Selecting.parameters = disableRtlModeParameters;
 export const MultiSelecting = () => {
   return renderComponent(multiSelectProps);
 };
 
-MultiSelecting.parameters = window.storybook.disableRtlMode;
+MultiSelecting.parameters = disableRtlModeParameters;

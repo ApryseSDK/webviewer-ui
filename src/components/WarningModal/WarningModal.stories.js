@@ -6,6 +6,7 @@ import actions from 'actions';
 import rootReducer from 'reducers/rootReducer';
 import DataElements from 'constants/dataElement';
 import { within, expect } from 'storybook/test';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 
 export default {
@@ -40,7 +41,7 @@ const Basic = () => {
 
 export const DefaultWarningModal = Basic;
 export const DefaultWarningModalMobile = Basic;
-DefaultWarningModalMobile.parameters = window.storybook?.MobileParameters;
+DefaultWarningModalMobile.parameters = mobileStoryParameters;
 
 const store = configureStore({ reducer: rootReducer });
 

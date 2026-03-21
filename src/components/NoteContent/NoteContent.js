@@ -21,6 +21,7 @@ import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import setReactQuillContent from 'helpers/setReactQuillContent';
 import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
+import { updateOfficeEditorCommentMessage } from 'helpers/officeEditorCommentHelper';
 import { isMobile } from 'helpers/device';
 import useCore from 'hooks/useCore';
 import { getDataWithKey, mapAnnotationToKey, annotationMapKeys } from 'constants/map';
@@ -41,7 +42,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
   isEditing: PropTypes.bool,
   setIsEditing: PropTypes.func,
-  noteIndex: PropTypes.number,
+  editingKey: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isUnread: PropTypes.bool,
   isNonReplyNoteRead: PropTypes.bool,
   onReplyClicked: PropTypes.func,
@@ -56,7 +57,7 @@ const NoteContent = ({
   annotation,
   isEditing,
   setIsEditing,
-  noteIndex,
+  editingKey,
   isUnread,
   isNonReplyNoteRead,
   onReplyClicked,
@@ -87,7 +88,8 @@ const NoteContent = ({
     onTopNoteContentClicked,
     sortStrategy,
     showAnnotationNumbering,
-    setPendingEditText
+    setPendingEditText,
+    noteFlyoutIdSuffix,
   } = useContext(NoteContext);
 
   const dispatch = useDispatch();
@@ -358,7 +360,7 @@ const NoteContent = ({
           {(isEditing && isSelected) ? (
             <ContentArea
               annotation={annotation}
-              noteIndex={noteIndex}
+              editingKey={editingKey}
               setIsEditing={setIsEditing}
               textAreaValue={textAreaValue}
               onTextAreaValueChange={setPendingEditText}
@@ -430,7 +432,7 @@ const NoteContent = ({
           renderAuthorName={renderAuthorName}
           isNoteStateDisabled={isNoteStateDisabled}
           isEditing={isEditing}
-          noteIndex={noteIndex}
+          editingKey={editingKey}
           sortStrategy={sortStrategy}
           activeTheme={activeTheme}
           handleMultiSelect={handleMultiSelect}
@@ -440,9 +442,10 @@ const NoteContent = ({
           showAnnotationNumbering={showAnnotationNumbering}
           timezone={timezone}
           isTrackedChange={isTrackedChange}
+          flyoutIdSuffix={noteFlyoutIdSuffix}
         />
       );
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone, isTrackedChange]
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, editingKey, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone, isTrackedChange, noteFlyoutIdSuffix]
   );
 
   return (
@@ -461,20 +464,21 @@ export default NoteContent;
 // a component that contains the content textarea, the save button and the cancel button
 const ContentArea = ({
   annotation,
-  noteIndex,
+  editingKey,
   setIsEditing,
   textAreaValue,
   onTextAreaValueChange,
   pendingText
 }) => {
   const [
-    autoFocusNoteOnAnnotationSelection,
+    autoFocusNoteOnAnnotationSelectionEnabled,
     isMentionEnabled,
     isInlineCommentDisabled,
     isInlineCommentOpen,
     isNotesPanelOpen,
     activeDocumentViewerKey,
     isAnyCustomPanelOpen,
+    isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector((state) => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
@@ -483,6 +487,7 @@ const ContentArea = ({
     selectors.isElementOpen(state, DataElements.NOTES_PANEL),
     selectors.getActiveDocumentViewerKey(state),
     selectors.isAnyCustomPanelOpen(state),
+    selectors.getIsNoteEditing(state),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
@@ -492,10 +497,13 @@ const ContentArea = ({
     pendingAttachmentMap,
     deleteAttachment,
     clearAttachments,
-    addAttachments
+    addAttachments,
+    isOfficeEditorCommentAnnotation,
   } = useContext(NoteContext);
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
+  const autoFocusNoteOnAnnotationSelection =
+    autoFocusNoteOnAnnotationSelectionEnabled && (!isOfficeEditorCommentAnnotation || isNoteEditingTriggeredByAnnotationPopup);
   const { core } = useCore();
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -522,7 +530,7 @@ const ContentArea = ({
             }
           }
 
-          if (shouldNotFocusOnInput) {
+          if (shouldNotFocusOnInput || !autoFocusNoteOnAnnotationSelection) {
             return;
           }
 
@@ -539,7 +547,7 @@ const ContentArea = ({
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
 
-      if (shouldNotFocusOnInput) {
+      if (shouldNotFocusOnInput || !autoFocusNoteOnAnnotationSelection) {
         return;
       }
 
@@ -549,7 +557,7 @@ const ContentArea = ({
         }
       }, 100);
     }
-  }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);
+  }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput, autoFocusNoteOnAnnotationSelection]);
 
   useEffect(() => {
     if (isReply && pendingAttachments.length === 0) {
@@ -577,7 +585,18 @@ const ContentArea = ({
       annotation.disableSkipAutoLink();
     }
 
-    if (isMentionEnabled) {
+    if (isOfficeEditorCommentAnnotation) {
+      const didUpdate = await updateOfficeEditorCommentMessage({
+        annotation,
+        text: textAreaValue,
+        core,
+      });
+      if (!didUpdate) {
+        return;
+      }
+    }
+
+    if (isMentionEnabled && !isOfficeEditorCommentAnnotation) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
       // If modified, double check for ids
@@ -607,7 +626,7 @@ const ContentArea = ({
       core.drawAnnotationsFromList([annotation]);
     }
 
-    setIsEditing(false, noteIndex);
+    setIsEditing(false, editingKey);
     // Only set comment to unposted state if it is not empty
     if (textAreaValue !== '') {
       onTextAreaValueChange(undefined, annotation.Id);
@@ -656,7 +675,7 @@ const ContentArea = ({
           label={t('action.cancel')}
           onClick={(e) => {
             e.stopPropagation();
-            setIsEditing(false, noteIndex);
+            setIsEditing(false, editingKey);
             // Clear pending text
             onTextAreaValueChange(undefined, annotation.Id);
             clearAttachments(annotation.Id);
@@ -677,7 +696,7 @@ const ContentArea = ({
 };
 
 ContentArea.propTypes = {
-  noteIndex: PropTypes.number.isRequired,
+  editingKey: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   annotation: PropTypes.object.isRequired,
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,

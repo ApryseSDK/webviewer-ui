@@ -4,6 +4,7 @@ import { redactionTypeMap } from 'constants/redactionTypes';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/RedactionSearchPanel/RedactionSearchResult',
@@ -27,7 +28,7 @@ export function Text() {
     </Provider>
   );
 }
-Text.parameters = window.storybook.disableRtlMode;
+Text.parameters = disableRtlModeParameters;
 
 export function CreditCard() {
   const props = {
@@ -41,7 +42,7 @@ export function CreditCard() {
     </Provider>
   );
 }
-CreditCard.parameters = window.storybook.disableRtlMode;
+CreditCard.parameters = disableRtlModeParameters;
 
 export function Image() {
   const props = {
@@ -55,7 +56,7 @@ export function Image() {
     </Provider>
   );
 }
-Image.parameters = window.storybook.disableRtlMode;
+Image.parameters = disableRtlModeParameters;
 
 export function PhoneNumber() {
   const props = {
@@ -69,7 +70,7 @@ export function PhoneNumber() {
     </Provider>
   );
 }
-PhoneNumber.parameters = window.storybook.disableRtlMode;
+PhoneNumber.parameters = disableRtlModeParameters;
 
 
 export function Email() {
@@ -84,4 +85,4 @@ export function Email() {
     </Provider>
   );
 }
-Email.parameters = window.storybook.disableRtlMode;
+Email.parameters = disableRtlModeParameters;

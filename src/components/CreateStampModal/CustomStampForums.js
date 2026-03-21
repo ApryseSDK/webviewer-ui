@@ -364,7 +364,7 @@ const CustomStampForums = ({
             <Button
               dataElement="stampTextStrikeoutButton"
               onClick={toggleStrikeout}
-              img="icon-tool-text-manipulation-strikethrough"
+              img="icon-text-strikeout"
               title="option.richText.strikeout"
               isActive={state.strikeout}
               ariaPressed={state.strikeout}

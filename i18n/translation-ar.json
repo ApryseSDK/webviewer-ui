@@ -354,7 +354,11 @@
     "listEmptyValue": "يحتوي حقل واحد أو أكثر على قيمة فارغة.",
     "listDuplicateValue": "تحتوي حقول متعددة على القيم التالية:",
     "networkError": "حدث خطأ ما أثناء تحميل هذا المكون:",
-    "refreshPage": "يرجى التحقق من اتصالك بالشبكة وتحديث الصفحة."
+    "refreshPage": "يرجى التحقق من اتصالك بالشبكة وتحديث الصفحة.",
+    "renderErrors": {
+      "error": "حدث خطأ ما هنا.",
+      "refreshPanel": "يمكنك متابعة العمل. حاول إعادة فتح اللوحة."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "قائمة ترتيب الفرز",
       "position": "موضع",
+      "linePosition": "موضع",
       "time": "وقت",
       "status": "حالة",
       "author": "مؤلف",
@@ -483,6 +488,7 @@
       "markForRedaction": "وضع علامة للطمس"
     },
     "searchPanel": {
+      "searchResults": "نتائج البحث",
       "caseSensitive": "حساس لحالة الأحرف",
       "wholeWordOnly": "الكلمة كاملة",
       "wildcard": "أحرف البدل",
@@ -1316,6 +1322,7 @@
     "bold": "غامق",
     "italic": "مائل",
     "underline": "تسطير",
+    "strikeout": "خط يتوسط النص",
     "textColor": "لون النص",
     "leftAlign": "محاذاة إلى اليسار",
     "centerAlign": "محاذاة المركز",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "عرض دون اقتراحات",
     "notSupportedOnMobile": "لا يتم دعم تحرير Office على الأجهزة المحمولة.",
     "previewAllChanges": "معاينة جميع التغييرات",
+    "changes": "التغييرات",
+    "comments": "تعليقات",
+    "commentsAndChangesTabs": "علامات تبويب التعليقات والتغييرات",
     "accept": "قبول",
     "reject": "رفض",
     "pastingTitle": "اللصق غير متاح",

@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import Panel from 'components/Panel';
 import React from 'react';
 import SignaturePanelComponent from './SignaturePanel';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/SignaturePanel',
@@ -40,4 +41,4 @@ export function SignaturePanelEmpty() {
   );
 }
 
-SignaturePanelEmpty.parameters = window.storybook.disableRtlMode;
+SignaturePanelEmpty.parameters = disableRtlModeParameters;

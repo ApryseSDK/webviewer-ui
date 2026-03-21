@@ -11,6 +11,7 @@ const PagesToCropOptions = ({
   selectedPages,
   handlePageNumbersChanged,
   handlePageNumberError,
+  pageInputKey,
 }) => {
   const { t } = useTranslation();
 
@@ -51,6 +52,7 @@ const PagesToCropOptions = ({
         <>
           <div className="document-crop-page-input-container">
             <PageNumberInput
+              key={pageInputKey}
               data-element="multiPageCropPageNumberInput"
               selectedPageNumbers={selectedPages}
               pageCount={loadedDocumentPageCount}
@@ -75,4 +77,5 @@ PagesToCropOptions.propTypes = {
   selectedPages: PropTypes.array,
   handlePageNumbersChanged: PropTypes.func.isRequired,
   handlePageNumberError: PropTypes.func.isRequired,
+  pageInputKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
 };

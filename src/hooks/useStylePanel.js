@@ -35,16 +35,9 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   const colorProperties = ['StrokeColor', 'FillColor'];
   const dispatch = useDispatch();
 
-
-  const [
-    toolButtonObject,
-    isAnnotationToolStyleSyncingEnabled,
-    activeDocumentViewerKey,
-  ] = useSelector((state) => [
-    selectors.getToolButtonObjects(state),
-    selectors.isAnnotationToolStyleSyncingEnabled(state),
-    selectors.getActiveDocumentViewerKey(state),
-  ]);
+  const toolButtonObject = useSelector(selectors.getToolButtonObjects);
+  const isAnnotationToolStyleSyncingEnabled = useSelector(selectors.isAnnotationToolStyleSyncingEnabled);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const selectedAnnotation = selectedAnnotations?.[0];
 
@@ -183,7 +176,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       updateFromTool(currentTool);
       setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
     }
-  }, [selectedAnnotation, currentTool, selectedAnnotations, i18n.language]);
+  }, [selectedAnnotation, currentTool, selectedAnnotations, i18n.language, activeDocumentViewerKey]);
 
   const getColorFromHex = (hex) => {
     const colorRGB = hexToRGBA(hex);
@@ -221,7 +214,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
         if (annotation instanceof Annotations.FreeTextAnnotation && ['FontSize', 'Font', 'StrokeThickness'].includes(property)) {
           adjustFreeTextBoundingBox(annotation);
         }
-        core.getAnnotationManager().redrawAnnotation(annotation);
+        core.getAnnotationManager(activeDocumentViewerKey).redrawAnnotation(annotation);
         if (annotation instanceof Annotations.WidgetAnnotation) {
           annotation.refresh();
         }
@@ -292,7 +285,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
           const trimContents = (text?.length > 0 && text?.endsWith('\n')) ? text.slice(0, -1) : text;
           annotation.setContents(trimContents);
         }
-        handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont);
+        handleFreeTextAutoSizeToggle(annotation, setIsAutoSizeFont, isAutoSizeFont, activeDocumentViewerKey);
       });
     } else if (currentTool) {
       setToolStyles(currentTool.name, 'isAutoSizeFont', !isAutoSizeFont);

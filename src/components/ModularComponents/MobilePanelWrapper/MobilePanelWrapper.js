@@ -16,14 +16,7 @@ const propTypes = {
 
 const MOBILE_PANEL_WRAPPER = 'MobilePanelWrapper';
 
-const minimumSizeForPanel = {
-  'notesPanel': PANEL_SIZES.HALF_SIZE,
-  'stylePanel': PANEL_SIZES.HALF_SIZE,
-  'textEditingPanel': PANEL_SIZES.HALF_SIZE,
-  'tabPanel': PANEL_SIZES.HALF_SIZE,
-  [panelNames.FORM_FIELD]: PANEL_SIZES.HALF_SIZE,
-  [panelNames.INDEX]: PANEL_SIZES.HALF_SIZE
-};
+const  smallSizedPanels = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP];
 
 const MobilePanelWrapper = ({ children }) => {
   const isMobile = isMobileSize();
@@ -44,23 +37,8 @@ const MobilePanelWrapper = ({ children }) => {
   const [wrapperRef, dimensions] = useResizeObserver();
 
   useEffect(() => {
-    const panelsStartingAtHalfSize = [
-      panelNames.RUBBER_STAMP,
-      panelNames.STYLE,
-      panelNames.NOTES,
-      panelNames.SEARCH,
-      panelNames.TABS,
-      panelNames.TEXT_EDITING,
-      panelNames.REDACTION,
-      panelNames.FORM_FIELD,
-      panelNames.INDEX,
-    ];
     if (isOpen) {
-      if (panelsStartingAtHalfSize.includes(contentElement)) {
-        setMobilePanelSize(PANEL_SIZES.HALF_SIZE);
-      } else {
-        setMobilePanelSize(PANEL_SIZES.SMALL_SIZE);
-      }
+      setMobilePanelSize(PANEL_SIZES.HALF_SIZE);
     }
   }, [isOpen]);
 
@@ -104,18 +82,15 @@ const MobilePanelWrapper = ({ children }) => {
   const onSwipedDown = () => {
     let currentMobilePanelSize = mobilePanelSize;
 
-    if (currentMobilePanelSize === minimumSizeForPanel[contentElement]) {
-      currentMobilePanelSize = PANEL_SIZES.SMALL_SIZE;
-    }
-
     const isSearchPanelActiveWithSearchAndReplace = !isSearchAndReplaceDisabled && contentElement === panelNames.SEARCH;
+    const isPanelAllowedToBeSmallSize = smallSizedPanels.includes(contentElement);
 
     switch (currentMobilePanelSize) {
       case PANEL_SIZES.FULL_SIZE:
         setMobilePanelSize(PANEL_SIZES.HALF_SIZE);
         break;
       case PANEL_SIZES.HALF_SIZE:
-        if (isSearchPanelActiveWithSearchAndReplace) {
+        if (isSearchPanelActiveWithSearchAndReplace || !isPanelAllowedToBeSmallSize) {
           closePanel();
         } else {
           setMobilePanelSize(PANEL_SIZES.SMALL_SIZE);

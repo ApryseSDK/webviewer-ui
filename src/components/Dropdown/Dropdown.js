@@ -7,7 +7,7 @@ import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import isNumber from 'lodash/isNumber';
-
+import { css } from '@emotion/react';
 import './Dropdown.scss';
 
 const DEFAULT_WIDTH = 100;
@@ -347,9 +347,16 @@ function Dropdown({
   const getDropdownStyles = (item, maxheight) => {
     const dropdownItemStyles = getCustomItemStyle(item);
     if (maxheight) {
-      dropdownItemStyles.lineHeight = `${height || DEFAULT_HEIGHT}px`;
+      return {
+        '&&&&&&': {
+          ...dropdownItemStyles,
+          lineHeight: `${height || DEFAULT_HEIGHT}px`,
+        }
+      };
     }
-    return dropdownItemStyles;
+    return {
+      '&&&&&&': dropdownItemStyles
+    };
   };
 
   const renderDropdownImages = () => images.map((image, i) => {
@@ -416,6 +423,7 @@ function Dropdown({
     .map((item, i) => {
       const key = getKey(item);
       const translatedDisplayValue = getTranslatedDisplayValue(item);
+      const dropdownItemCss = css(getDropdownStyles(item, maxHeight) || {});
 
       // This is a corner case for the text signatures
       // because the font family is not displayed in the dropdown, but the signature is.
@@ -430,11 +438,11 @@ function Dropdown({
           aria-selected={key === currentSelectionKey}
           dataElement={`dropdown-item-${key}`}
           className={classNames('Dropdown__item', { selected: key === currentSelectionKey, active: i === activeIndex })}
+          css={dropdownItemCss}
           onClick={(e) => onClickDropdownItem(e, key, i, translatedDisplayValue)}
           onMouseDown={stopPropagationCheck}
           tabIndex={isOpen ? 0 : -1}
           ref={(el) => optionRefs.current[i] = el}
-          style={getDropdownStyles(item, maxHeight)}
         >
           {renderItem(item, getTranslatedDisplayValue)}
         </DataElementWrapper>
@@ -484,20 +492,26 @@ function Dropdown({
     renderItem,
   ]);
 
-
   // Make it so the combo and listbox have the same widths
-  const comboBoxStyle = { width: `${width}px` };
-  if (height) {
-    comboBoxStyle.height = `${height}px`;
-  }
+  const comboBoxStyles = useMemo(() => css({
+    '&&': {
+      width: typeof width === 'number' ? `${width}px` : width,
+      ...(height ? { height: typeof height === 'number' ? `${height}px` : height } : {}),
+    },
+  }), [width, height]);
 
-  const listBoxStyle = {};
-  if (maxHeight) {
-    listBoxStyle.maxHeight = `${maxHeight}px`;
-  }
-  if (width !== DEFAULT_WIDTH) {
-    listBoxStyle.width = `${width}px`;
-  }
+  const listBoxCss = useMemo(() => {
+    const style = {};
+    if (maxHeight) {
+      style.maxHeight = `${maxHeight}px`;
+    }
+    if (width !== DEFAULT_WIDTH) {
+      style['&&&'] = {
+        width: typeof width === 'number' ? `${width}px` : width,
+      };
+    }
+    return css(style);
+  }, [maxHeight, width]);
 
   const createDropdownButton = useCallback((value) => {
     if (isOpen && hasInput) {
@@ -712,11 +726,8 @@ function Dropdown({
     <DataElementWrapper id={id} className={`Dropdown__wrapper ${className} ${isOpen ? 'open' : ''}`} dataElement={dataElement} disabled={disabled}>
       {!displayButton &&
         <div
-          className={classNames({
-            'Dropdown': true,
-            [className]: className,
-            'disabled': disabled,
-          })}
+          className={classNames('Dropdown', className, { 'disabled': disabled })}
+          css={comboBoxStyles}
           role='combobox'
           aria-haspopup="listbox"
           aria-describedby={images.length > 0 ? activeDescendantId : null}
@@ -725,7 +736,6 @@ function Dropdown({
           aria-labelledby={labelledById}
           aria-label={ariaLabel}
           aria-controls={`${id}-dropdown`}
-          style={comboBoxStyle}
           onMouseDown={onToggle}
           onTouchEnd={onToggle}
           onKeyDown={onComboBoxKeyDown}
@@ -737,7 +747,9 @@ function Dropdown({
           <div className="picked-option">
             <div
               className="picked-option-text"
-              style={(optionIsSelected && applyCustomStyleToButton) ? getCustomItemStyle(selectedItem) : {}}
+              css={(optionIsSelected && applyCustomStyleToButton) ? css({
+                '&&&&&&': getCustomItemStyle(selectedItem)
+              }) : undefined}
             >
               {createDropdownButton(optionIsSelected ? selectedItemDisplay : (placeholder || ''))}
             </div>
@@ -768,7 +780,7 @@ function Dropdown({
         ref={overlayRef}
         role="listbox"
         id={`${id}-dropdown`}
-        style={listBoxStyle}
+        css={listBoxCss}
       >
         <div role="group" aria-labelledby={labelledById}>
           {showLabelInList && <div className="Dropdown__label" id={labelledById}>{t(`${translationPrefix}.dropdownLabel`)}</div>}
@@ -793,7 +805,7 @@ function Dropdown({
           }
         </div>
       </div>
-      <div aria-live="polite" style={{ position: 'absolute', insetInlineStart: '-9999px' }}>
+      <div aria-live="polite" className='noMatchMessage'>
         {noMatchMessage}
       </div>
     </DataElementWrapper>

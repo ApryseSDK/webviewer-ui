@@ -354,7 +354,11 @@
     "listEmptyValue": "One or more fields have an empty value.",
     "listDuplicateValue": "Multiple fields have the following values: ",
     "networkError": "Something went wrong loading this component:  ",
-    "refreshPage": "Please check your network connection and refresh the page."
+    "refreshPage": "Please check your network connection and refresh the page.",
+    "renderErrors": {
+      "error": "Something went wrong here.",
+      "refreshPanel": "You can continue working. Try reopening the panel."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sort Order List",
       "position": "Position",
+      "linePosition": "Position",
       "time": "Time",
       "status": "Status",
       "author": "Author",
@@ -483,6 +488,7 @@
       "markForRedaction": "Mark for redaction"
     },
     "searchPanel": {
+      "searchResults": "Search results",
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word",
       "wildcard": "Wildcard",
@@ -1316,6 +1322,7 @@
     "bold": "Bold",
     "italic": "Italic",
     "underline": "Underline",
+    "strikeout": "Strikeout",
     "textColor": "Text color",
     "leftAlign": "Left align",
     "centerAlign": "Center align",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "View without suggestions",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices.",
     "previewAllChanges": "Preview all changes",
+    "changes": "Changes",
+    "comments": "Comments",
+    "commentsAndChangesTabs": "Comments and Changes Tabs",
     "accept": "Accept",
     "reject": "Reject",
     "pastingTitle": "Pasting not available",

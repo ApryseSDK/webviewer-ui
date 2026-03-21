@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
-export default function useOnCropAnnotationChangedOrSelected(openSnippingPopup) {
+export default function useOnSnippingAnnotationChangedOrSelected(openSnippingPopup) {
+  const { core } = useCore();
   const [snippingAnnotation, setSnippingAnnotation] = useState(null);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function useOnCropAnnotationChangedOrSelected(openSnippingPopup) 
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('annotationSelected', onAnnotationSelected);
     };
-  }, []);
+  }, [core, openSnippingPopup]);
 
   return snippingAnnotation;
 }

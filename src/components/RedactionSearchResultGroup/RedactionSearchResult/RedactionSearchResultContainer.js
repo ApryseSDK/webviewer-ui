@@ -21,7 +21,7 @@ const RedactionSearchResultContainer = (props) => {
 
   const onClickResult = useCallback(() => {
     core.setActiveSearchResult(searchResult);
-  }, [searchResult]);
+  }, [searchResult, core]);
 
   return (
     <RedactionSearchResult

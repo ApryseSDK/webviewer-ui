@@ -5,6 +5,7 @@ import SpreadsheetEditorFontFamilyDropdown from './SpreadsheetFontFamilyDropdown
 import initialState from 'src/redux/initialState';
 import { cssFontValues } from 'src/constants/fonts/fonts';
 import { availableSpreadsheetEditorFonts } from 'src/constants/fonts/spreadsheetEditorFonts';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'SpreadsheetEditor/FontFamilyDropdown',
@@ -50,4 +51,4 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

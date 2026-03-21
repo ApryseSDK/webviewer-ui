@@ -22,6 +22,9 @@
   --gray-12: #ffffff;
 
   --yellow-1: #e1b90080;
+  --yellow-2: #191100;
+  --yellow-3: #FFD889;
+
   --red: red;
   /* stylelint-enable color-no-hex */
 
@@ -36,6 +39,11 @@
 
   --error-text-color: var(--red);
   --error-border-color: var(--red);
+
+  --warning-background: var(--yellow-2);
+  --warning-border: var(--yellow-3);
+  --warning-text: var(--yellow-3);
+
 
   --ribbons-background: var(--gray-2);
   --box-shadow: var(--gray-5);
@@ -128,9 +136,25 @@
   --tab-background-color-hover: var(--popup-button-hover);
   --tab-color-selected: var(--border);
   --tab-text-color-selected: var(--text-color);
+  --tab-inline-comment-divider-color: var(--gray-7);
 
   --disabled-button-color: rgba(173, 181, 189, 0.5);
   --tab-footer-button-color: var(--primary-button-text);
+  --x-button-hover-color: var(--view-header-button-hover);
+
+  --slider-height: 2px;
+  --slider-thumb-size: 9px;
+  --slider-thumb-margin: -2px;
+
+  --slider-filler: none;
+  --style-icon-color: var(--selected-icon-color);
+  --cell-border-size: 28px;
+  --cell-outer-border-size: 26px;
+  --button-icon-color-active: var(--blue-6);
+  --slider-svg-hieght: 18px;
+  --slider-input-focus: var(--focus-border);
+  --colorpicker-tool-shadow: none;
+  --colorpicker-tool-bg: none;
 
   --input-switch-default-color: var(--gray-3);
 

@@ -62,10 +62,10 @@ const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LI
   }, [savedSignatures, savedInitials, displayedSignaturesFilterFunction]);
 
   useEffect(() => {
-    if (mobilePanelSize !== PANEL_SIZES.SMALL_SIZE && isMobile) {
+    if (mobilePanelSize !== PANEL_SIZES.SMALL_SIZE && isMobile && savedSignaturesAndInitials.length > 0) {
       dispatch(actions.setMobilePanelSize(PANEL_SIZES.SMALL_SIZE));
     }
-  }, [selectedSignatureIndex]);
+  }, [selectedSignatureIndex, savedSignaturesAndInitials]);
 
   useEffect(() => {
     const onVisibilityChanged = (e) => {

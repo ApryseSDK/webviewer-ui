@@ -354,7 +354,11 @@
     "listEmptyValue": "Unul sau mai multe câmpuri au o valoare goală.",
     "listDuplicateValue": "Câmpurile multiple au următoarele valori:",
     "networkError": "Ceva nu a funcționat la încărcarea acestei componente. Verificați conexiunea la rețea și actualizați pagina.",
-    "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina."
+    "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina.",
+    "renderErrors": {
+      "error": "Ceva nu a mers bine aici.",
+      "refreshPanel": "Puteți continua să lucrați. Încercați să redeschideți panoul."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Listă de ordine de sortare",
       "position": "Poziţie",
+      "linePosition": "Poziţie",
       "time": "Timp",
       "status": "stare",
       "author": "Autor",
@@ -483,6 +488,7 @@
       "markForRedaction": "Marcați pentru redactare"
     },
     "searchPanel": {
+      "searchResults": "rezultatele cautarii",
       "caseSensitive": "Caz sensibil",
       "wholeWordOnly": "Intregul cuvant",
       "wildcard": "Wildcard",
@@ -1316,6 +1322,7 @@
     "bold": "Îndrăzneţ",
     "italic": "Cursiv",
     "underline": "Subliniați",
+    "strikeout": "Strikeout",
     "textColor": "Culoarea textului",
     "leftAlign": "Aliniere la stânga",
     "centerAlign": "Alinierea la centru",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Vizualizați fără sugestii",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile.",
     "previewAllChanges": "Previzualizează toate modificările",
+    "changes": "Modificări",
+    "comments": "Comentarii",
+    "commentsAndChangesTabs": "Filele Comentarii și Modificări",
     "accept": "Accept",
     "reject": "Respinge",
     "pastingTitle": "Lipirea nu este disponibilă",

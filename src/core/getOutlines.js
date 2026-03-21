@@ -5,6 +5,6 @@ import core from 'core';
  */
 export default (callback, documentViewerKey = 1) => {
   core.getDocumentViewer(documentViewerKey).getDocument().getBookmarks().then((outlines) => {
-    callback(outlines);
+    callback(outlines, documentViewerKey);
   });
 };

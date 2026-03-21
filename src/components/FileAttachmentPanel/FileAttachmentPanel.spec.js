@@ -6,8 +6,7 @@ import { render, waitFor, fireEvent, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 
-const noop = () => {
-};
+const noop = () => {};
 
 class TabManagerMock {
   addTab = jest.fn().mockResolvedValue('mockTabId');
@@ -20,7 +19,6 @@ const initialState = {
     TabManager: new TabManagerMock()
   }
 };
-
 
 jest.mock('core', () => ({
   addEventListener: noop,
@@ -37,46 +35,34 @@ jest.mock('core', () => ({
   selectAnnotation: () => {}
 }));
 
-jest.mock('actions', () => {
-  return {
-    openElement: () => ({
-      type: 'OPEN_ELEMENT',
-      payload: {
-        element: 'MockPayload'
-      },
-    }),
-    closeElement: () => ({
-      type: 'CLOSE_ELEMENT',
-      payload: {
-        element: 'MockPayload'
-      }
-    })
-  };
-});
+jest.mock('actions', () => ({
+  openElement: () => ({
+    type: 'OPEN_ELEMENT',
+    payload: { element: 'MockPayload' }
+  }),
+  closeElement: () => ({
+    type: 'CLOSE_ELEMENT',
+    payload: { element: 'MockPayload' }
+  })
+}));
 
-jest.mock('helpers/getFileAttachments', () => {
-  return {
-    getFileAttachments: () => ({
-      embeddedFiles: [],
-      fileAttachmentAnnotations: {
-        1: [
-          {
-            filename: 'C:\\Windows\\TEMP\\mock 1.pdf',
-            getFileData: () => ({
-              filename: 'C:\\Windows\\TEMP\\mock 1.pdf'
-            })
-          },
-          {
-            filename: 'C:/Windows/TEMP/mock 2.docx',
-            getFileData: () => ({
-              filename: 'C:/Windows/TEMP/mock 2.docx'
-            })
-          }
-        ]
-      }
-    }),
-  };
-});
+jest.mock('helpers/getFileAttachments', () => ({
+  getFileAttachments: () => ({
+    embeddedFiles: [],
+    fileAttachmentAnnotations: {
+      1: [
+        {
+          filename: 'C:\\Windows\\TEMP\\mock 1.pdf',
+          getFileData: () => ({ filename: 'C:\\Windows\\TEMP\\mock 1.pdf' })
+        },
+        {
+          filename: 'C:/Windows/TEMP/mock 2.docx',
+          getFileData: () => ({ filename: 'C:/Windows/TEMP/mock 2.docx' })
+        }
+      ]
+    }
+  })
+}));
 
 describe('File attachment panel', () => {
   const renderComponent = () => {
@@ -113,16 +99,15 @@ describe('File attachment panel', () => {
       );
 
       await waitFor(() => component.getByText('[PDF] mock 1.pdf'));
-
       const button = component.getByText('[PDF] mock 1.pdf');
       expect(button).toBeInTheDocument();
 
       await waitFor(() => component.getByText('[DOCX] mock 2.docx'));
-
       const button2 = component.getByText('[DOCX] mock 2.docx');
       expect(button2).toBeInTheDocument();
     });
   });
+
   it('should trigger open new tab function in multi tab mode', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
@@ -133,7 +118,6 @@ describe('File attachment panel', () => {
       );
 
       await waitFor(() => component.getByText('[PDF] mock 1.pdf'));
-
       const button = component.getByText('[PDF] mock 1.pdf');
       expect(button).toBeInTheDocument();
 
@@ -144,6 +128,7 @@ describe('File attachment panel', () => {
       });
     });
   });
+
   it('should have role attribute attached to the file attachment item', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
@@ -161,6 +146,7 @@ describe('File attachment panel', () => {
       });
     });
   });
+
   it('Should have h2 on header', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
@@ -177,6 +163,7 @@ describe('File attachment panel', () => {
       expect(element.tagName.toLocaleLowerCase()).toEqual('h2');
     });
   });
+
   it('should trigger open new tab function on keypress', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
@@ -187,7 +174,6 @@ describe('File attachment panel', () => {
       );
 
       await waitFor(() => component.getByText('[PDF] mock 1.pdf'));
-
       const button = component.getByText('[PDF] mock 1.pdf');
       expect(button).toBeInTheDocument();
 
@@ -215,4 +201,83 @@ describe('File attachment panel', () => {
       });
     });
   });
+
+  describe('MultiViewerMode compatibility', () => {
+    it('should fetch attachments when switching between document viewers', async () => {
+      const mockGetFileAttachmentsForViewer1 = jest.fn().mockResolvedValue({
+        embeddedFiles: [],
+        fileAttachmentAnnotations: {
+          1: [{
+            filename: 'C:\\Windows\\TEMP\\viewer1-file.pdf',
+            getFileData: () => ({ filename: 'C:\\Windows\\TEMP\\viewer1-file.pdf' })
+          }]
+        }
+      });
+
+      const mockGetFileAttachmentsForViewer2 = jest.fn().mockResolvedValue({
+        embeddedFiles: [],
+        fileAttachmentAnnotations: {
+          1: [{
+            filename: 'C:\\Windows\\TEMP\\viewer2-file.docx',
+            getFileData: () => ({ filename: 'C:\\Windows\\TEMP\\viewer2-file.docx' })
+          }]
+        }
+      });
+
+      const getFileAttachments = require('helpers/getFileAttachments');
+      const originalGetFileAttachments = getFileAttachments.getFileAttachments;
+
+      let currentViewerKey = 1;
+      getFileAttachments.getFileAttachments = jest.fn(() => {
+        return currentViewerKey === 1
+          ? mockGetFileAttachmentsForViewer1()
+          : mockGetFileAttachmentsForViewer2();
+      });
+
+      await act(async () => {
+        const initialStateViewer1 = {
+          viewer: {
+            isMultiViewerMode: true,
+            activeDocumentViewerKey: 1,
+            TabManager: new TabManagerMock()
+          }
+        };
+        const store = configureStore({ reducer: (state = initialStateViewer1) => state });
+        const { rerender, getByText, queryByText } = render(
+          <Provider store={store}>
+            <FileAttachmentPanel />
+          </Provider>
+        );
+
+        await waitFor(() => {
+          expect(getByText('[PDF] viewer1-file.pdf')).toBeInTheDocument();
+        });
+        expect(queryByText('[DOCX] viewer2-file.docx')).not.toBeInTheDocument();
+
+        currentViewerKey = 2;
+        const stateViewer2 = {
+          viewer: {
+            isMultiViewerMode: true,
+            activeDocumentViewerKey: 2,
+            TabManager: new TabManagerMock()
+          }
+        };
+        const store2 = configureStore({ reducer: (state = stateViewer2) => state });
+
+        rerender(
+          <Provider store={store2}>
+            <FileAttachmentPanel />
+          </Provider>
+        );
+
+        await waitFor(() => {
+          expect(getByText('[DOCX] viewer2-file.docx')).toBeInTheDocument();
+        });
+        expect(queryByText('[PDF] viewer1-file.pdf')).not.toBeInTheDocument();
+      });
+
+      getFileAttachments.getFileAttachments = originalGetFileAttachments;
+    });
+  });
 });
+

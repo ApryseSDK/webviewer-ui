@@ -1,5 +1,4 @@
 import { isMac } from './device';
-import { ShortcutToToolNameMap } from './hotkeysManager';
 
 export const EditorModes = {
   DEFAULT: 'viewer',
@@ -491,6 +490,8 @@ export function generateShortcutToToolNameMap() {
   }, {});
 }
 
+let _shortcutToToolNameMap = null;
+
 /**
   * @ignore
   * Check if a shortcut's associated tool is in the provided tool name list
@@ -505,7 +506,10 @@ export function isShortcutInToolList(shortcut, toolNames) {
   if (!shortcut || !Array.isArray(toolNames)) {
     return false;
   }
-  const toolName = ShortcutToToolNameMap[shortcut];
+  if (!_shortcutToToolNameMap) {
+    _shortcutToToolNameMap = generateShortcutToToolNameMap();
+  }
+  const toolName = _shortcutToToolNameMap[shortcut];
   return toolName && toolNames.includes(toolName);
 }
 

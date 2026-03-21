@@ -10,6 +10,7 @@ import { MockApp, createStore, waitForTimeout } from 'helpers/storybookHelper';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { within, userEvent, expect, waitFor } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -48,9 +49,9 @@ const EmptyStylePanel = (location) => {
 };
 
 export const EmptyStylePanelOnTheLeft = () => EmptyStylePanel('left');
-EmptyStylePanelOnTheLeft.parameters = window.storybook.disableRtlMode;
+EmptyStylePanelOnTheLeft.parameters = disableRtlModeParameters;
 export const EmptyStylePanelOnTheRight = () => EmptyStylePanel('right');
-EmptyStylePanelOnTheRight.parameters = window.storybook.disableRtlMode;
+EmptyStylePanelOnTheRight.parameters = disableRtlModeParameters;
 
 const StylePanelInApp = (context, location) => {
   const { addonRtl } = context.globals;
@@ -95,7 +96,7 @@ StylePanelInAppLeft.parameters = {
 StylePanelInAppRight.parameters = {
   layout: 'fullscreen',
 };
-StylePanelInAppMobileVersion.parameters = window.storybook.MobileParameters;
+StylePanelInAppMobileVersion.parameters = mobileStoryParameters;
 
 const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
   useEffect(() => {
@@ -190,7 +191,7 @@ StylePanelTextTool.play = async ({ canvasElement }) => {
 };
 
 export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
-StylePanelFreeTextToolMobileVersion.parameters = window.storybook.MobileParameters;
+StylePanelFreeTextToolMobileVersion.parameters = mobileStoryParameters;
 
 export const StylePanelFreehandTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -370,7 +371,7 @@ StylePanelTooltipOnColors.play = async ({ canvasElement }) => {
   await expect(await document.body.querySelector('.tooltip__content')).not.toBeNull();
 };
 
-StylePanelTooltipOnColors.parameters = window.storybook.disableRtlMode;
+StylePanelTooltipOnColors.parameters = disableRtlModeParameters;
 
 export const ToggleAllSectionsInShapeTool = StylePanelShapeTool.bind({});
 ToggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
@@ -420,7 +421,7 @@ ToggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
   });
 };
 
-ToggleAllSectionsInShapeTool.parameters = window.storybook.disableRtlMode;
+ToggleAllSectionsInShapeTool.parameters = disableRtlModeParameters;
 
 export const ToggleAllSectionsInFreeTextTool = StylePanelTextTool.bind({});
 ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
@@ -472,4 +473,4 @@ ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
 
 };
 
-ToggleAllSectionsInFreeTextTool.parameters = window.storybook.disableRtlMode;
+ToggleAllSectionsInFreeTextTool.parameters = disableRtlModeParameters;

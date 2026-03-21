@@ -8,6 +8,7 @@ import App from 'components/App';
 import { createTemplate, MockApp } from 'helpers/storybookHelper';
 import { mockCustomModal } from 'helpers/mockCustomModal';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -67,7 +68,7 @@ CustomModalWithAPI.play = async ({ canvasElement }) => {
 
 CustomModalWithAPI.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export function CustomModalViewOnly() {

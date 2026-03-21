@@ -37,7 +37,7 @@ const PageManipulationFlyout = () => {
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
     };
-  }, [store]);
+  }, [store, core]);
 
   return null;
 };

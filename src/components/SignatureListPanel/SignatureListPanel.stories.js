@@ -5,6 +5,7 @@ import SignatureListPanel from './SignatureListPanel';
 import { mockSavedSignatures, mockSavedInitials } from '../SignatureStylePopup/mockedSignatures';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/SignatureListPanel',
@@ -81,6 +82,6 @@ SignatureListPanelWithSignaturesAndInitials.parameters = {
 SignatureListPanelWithSignaturesAndInitialsInAppRight.parameters = {
   layout: 'fullscreen',
 };
-SignatureListPanelInMobile.parameters = window.storybook.MobileParameters;
+SignatureListPanelInMobile.parameters = mobileStoryParameters;
 
-EmptySignatureListPanelInMobile.parameters = window.storybook.MobileParameters;
+EmptySignatureListPanelInMobile.parameters = mobileStoryParameters;

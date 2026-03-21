@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { postCssLoader, createProdThemeRule } = require('./webpack.helpers');
 let NodePolyfillPlugin;
 try {
   NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
@@ -13,7 +14,6 @@ module.exports = (env = {}) => {
   // Use --env UI_BUILD flag to determine which mini-css-extract-plugin to use
   // UI_BUILD flag means building from src/ui with webpack 5 (use local plugin v0.8.0)
   // Otherwise, building from root with webpack 4 (use root plugin ^0.4.4)
-  console.log(`UI_BUILD=${env.UI_BUILD}`);
   const MiniCssExtractPlugin = env.UI_BUILD
     ? require('mini-css-extract-plugin')
     : require(require.resolve('mini-css-extract-plugin', { paths: [path.resolve(__dirname, '..')] }));
@@ -75,7 +75,13 @@ module.exports = (env = {}) => {
               ],
               sourceType: 'unambiguous',
               presets: [
-                '@babel/preset-react',
+                [
+                  '@babel/preset-react',
+                  {
+                    runtime: 'automatic',
+                    importSource: '@emotion/react',
+                  },
+                ],
                 [
                   '@babel/preset-env',
                   {
@@ -91,13 +97,14 @@ module.exports = (env = {}) => {
                 '@babel/plugin-proposal-throw-expressions',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-optional-chaining',
+                require.resolve('@emotion/babel-plugin'),
               ],
             },
           },
           include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
           exclude: function (modulePath) {
             return /node_modules/.test(modulePath) &&
-              !(/node_modules[\\/](react-dnd|react-quill-new|quill-mention|quill)[\\/]/.test(modulePath));
+              !(/node_modules[\\/](react-dnd|react-quill-new|quill-mention|quill|react-error-boundary)[\\/]/.test(modulePath));
           },
         },
         {
@@ -105,24 +112,24 @@ module.exports = (env = {}) => {
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: (loader) => [
-                  require('postcss-import')({ root: loader.resourcePath }),
-                  require('postcss-preset-env')({
-                    features: {
-                      'logical-properties-and-values': false, // ⛔ disable polyfill!
-                    },
-                  }),
-                  require('cssnano')(),
-                ],
-              },
-            },
+            postCssLoader,
             'sass-loader',
           ],
           include: path.resolve(__dirname, 'src'),
+          exclude: path.resolve(__dirname, 'src/components/App/'),
+        },
+        {
+          test: /\.scss$/,
+          oneOf: [
+            createProdThemeRule(/theme-light-high-contrast/, 'highContrastLight.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(/theme-dark-high-contrast/, 'highContrastDark.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(/theme-light-modular/, 'lightWCAG.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(/theme-dark-modular/, 'darkWCAG.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(/theme-light/, 'light.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(/theme-dark/, 'dark.scss', MiniCssExtractPlugin, path),
+            createProdThemeRule(undefined, 'light.scss', MiniCssExtractPlugin, path),
+          ],
+          include: path.resolve(__dirname, 'src/components/App/'),
         },
         {
           test: /\.svg$/,
@@ -170,4 +177,4 @@ module.exports = (env = {}) => {
 
 // Export the default config for direct require() usage (e.g., in karma, scripts)
 // Webpack CLI will still use the function when running with --env flags
-module.exports.default = module.exports
+module.exports.default = module.exports;

@@ -2,6 +2,7 @@ import React from 'react';
 import FilterAnnotModal from './FilterAnnotModal';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/FilterAnnotModal',
@@ -266,7 +267,7 @@ export function MeasurementAnnotationsFilterEnabled() {
     </Provider>
   );
 }
-MeasurementAnnotationsFilterEnabled.parameters = window.storybook.disableRtlMode;
+MeasurementAnnotationsFilterEnabled.parameters = disableRtlModeParameters;
 
 export function DocumentFilterActive() {
   const props = {

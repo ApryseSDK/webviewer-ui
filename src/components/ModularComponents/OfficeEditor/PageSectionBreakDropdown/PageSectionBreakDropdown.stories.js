@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import PageSectionBreakDropdown from './PageSectionBreakDropdown';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/PageSectionBreakDropdown',
@@ -21,7 +22,7 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const DisabledInTable = () => {
   initialState.officeEditor.cursorProperties.locationProperties.inTable = true;
@@ -34,7 +35,7 @@ export const DisabledInTable = () => {
   );
 };
 
-DisabledInTable.parameters = window.storybook.disableRtlMode;
+DisabledInTable.parameters = disableRtlModeParameters;
 
 export const DisabledInHeader = () => {
   initialState.officeEditor.stream = 'header';
@@ -47,4 +48,4 @@ export const DisabledInHeader = () => {
   );
 };
 
-DisabledInHeader.parameters = window.storybook.disableRtlMode;
+DisabledInHeader.parameters = disableRtlModeParameters;

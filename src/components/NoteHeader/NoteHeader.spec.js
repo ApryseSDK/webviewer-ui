@@ -19,7 +19,10 @@ const initialState = {
     flyoutMap: {},
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
-  }
+  },
+  officeEditor: {
+    editMode: 'editing',
+  },
 };
 
 jest.mock('react-redux', () => ({

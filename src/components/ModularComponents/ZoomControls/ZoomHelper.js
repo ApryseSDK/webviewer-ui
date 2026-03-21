@@ -1,24 +1,28 @@
 import { fitToWidth, fitToPage, zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import actions from 'actions';
 import { FLYOUT_ITEM_TYPES } from 'src/constants/customizationVariables';
+import core from 'core';
+import selectors from 'selectors';
 
 const noop = () => {
 };
 export const getZoomFlyoutItems = ({
   zoomOptionsList,
+  store,
   isSpreadsheetEditorMode = false,
   isOfficeEditorMode = false,
-  dispatch,
   size = 0,
   onZoomChanged = noop,
-  core,
 }) => {
+  const { dispatch } = store;
+  const state = store.getState();
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(state);
   const {
     onMarqueeZoom,
     onZoomInClicked,
     onZoomOutClicked,
     onClickZoomLevelOption
-  } = getZoomHandlers(dispatch, size, onZoomChanged, core);
+  } = getZoomHandlers(store, size, onZoomChanged);
 
   const fitToWidthButton = {
     icon: 'icon-header-zoom-fit-to-width',
@@ -26,7 +30,7 @@ export const getZoomFlyoutItems = ({
     title: 'action.fitToWidth',
     dataElement: 'fitToWidthButton',
     onClick: () => {
-      fitToWidth();
+      fitToWidth(documentViewerKey);
       dispatch(actions.closeElement('zoom-containerFlyout'));
     },
   };
@@ -36,7 +40,7 @@ export const getZoomFlyoutItems = ({
     title: 'action.fitToPage',
     dataElement: 'fitToPageButton',
     onClick: () => {
-      fitToPage();
+      fitToPage(documentViewerKey);
       dispatch(actions.closeElement('zoom-containerFlyout'));
     },
     type: 'customButton',
@@ -112,9 +116,13 @@ export const getZoomFlyoutItems = ({
   return zoomItems;
 };
 
-export const getZoomHandlers = (dispatch, size = 0, onZoomChanged = noop, core) => {
+export const getZoomHandlers = (store, size = 0, onZoomChanged = noop) => {
+  const { dispatch } = store;
+  const state = store.getState();
+  const isMultViewerMode = selectors.isMultiViewerMode(state);
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(state);
   const onClickZoomLevelOption = (zoomLevel) => {
-    zoomTo(zoomLevel);
+    zoomTo(zoomLevel, isMultViewerMode, documentViewerKey);
     (size === 0 || size === 1) && dispatch(actions.closeElement('zoom-containerFlyout'));
   };
 
@@ -123,16 +131,16 @@ export const getZoomHandlers = (dispatch, size = 0, onZoomChanged = noop, core) 
   };
 
   const getCurrentZoom = () => {
-    return Math.ceil(core.getZoom() * 100).toString();
+    return Math.ceil(core.getZoom(documentViewerKey) * 100).toString();
   };
 
   const onZoomInClicked = () => {
-    zoomIn();
+    zoomIn(isMultViewerMode, documentViewerKey);
     onZoomChanged(getCurrentZoom());
   };
 
   const onZoomOutClicked = () => {
-    zoomOut();
+    zoomOut(isMultViewerMode, documentViewerKey);
     onZoomChanged(getCurrentZoom());
   };
 

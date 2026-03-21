@@ -8,6 +8,7 @@ import { userEvent, within, expect } from 'storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 import { defaultFlyoutMap } from 'src/redux/modularComponents';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ViewControlsFlyout',
@@ -218,7 +219,7 @@ ViewControlsToggleButtonInsideAFlyout.play = async (context) => {
 
 ViewControlsToggleButtonInsideAFlyout.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const ViewControlsFlyoutOnMobile = () => {
@@ -226,5 +227,5 @@ export const ViewControlsFlyoutOnMobile = () => {
 };
 
 ViewControlsFlyoutOnMobile.parameters = {
-  ...window.storybook?.MobileParameters
+  ...mobileStoryParameters
 };

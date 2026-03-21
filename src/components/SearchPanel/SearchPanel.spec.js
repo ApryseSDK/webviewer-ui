@@ -5,6 +5,7 @@ import SearchPanelWithOutI18n from './SearchPanel';
 import SearchPanelContainerWithOutI18n from './SearchPanelContainer';
 import useMedia from 'hooks/useMedia';
 import useSearch from 'hooks/useSearch';
+import useCore from 'hooks/useCore';
 import actions from 'actions';
 import core from 'core';
 
@@ -14,6 +15,7 @@ const SearchPanelContainer = withI18n(SearchPanelContainerWithOutI18n);
 jest.mock('core');
 jest.mock('hooks/useMedia');
 jest.mock('hooks/useSearch');
+jest.mock('hooks/useCore');
 jest.mock('actions');
 
 jest.mock('components/SearchOverlay', () => {
@@ -34,16 +36,48 @@ jest.mock('components/SearchResult', () => {
 });
 
 function createDisabledStateForDataElement(dataElement) {
-  const state = { viewer: { disabledElements: {} }, search: { isSearchInProgress: false } };
+  const state = createState();
   state.viewer.disabledElements[dataElement] = { disabled: true };
   return state;
+}
+
+function createState(overrides = {}) {
+  const {
+    viewer: viewerOverrides = {},
+    search: searchOverrides = {},
+    ...rest
+  } = overrides;
+  return {
+    viewer: {
+      openElements: { searchPanel: true },
+      disabledElements: {},
+      panelWidths: { searchPanel: 330 },
+      pageLabels: [],
+      isInDesktopOnlyMode: false,
+      isMultiViewerMode: false,
+      activeDocumentViewerKey: 1,
+      ...viewerOverrides,
+    },
+    search: {
+      clearSearchPanelOnClose: false,
+      isSearchInProgress: false,
+      isProcessingSearchResults: false,
+      ...searchOverrides,
+    },
+    ...rest,
+  };
+}
+
+function mockUseSelectorWithState(state) {
+  jest.spyOn(reactRedux, 'useSelector').mockImplementation((selector) => selector(state));
 }
 
 describe('SearchPanel', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
-    jest.spyOn(reactRedux, 'useSelector').mockReturnValue(false);
+    mockUseSelectorWithState(createState());
+    useCore.mockReturnValue({ core });
     // test would break if we don't make default return from useSearch as code is trying to destruct undefined value
     useSearch.mockReturnValue({});
   });
@@ -60,10 +94,7 @@ describe('SearchPanel', () => {
 
   it('Should not render if component disabled', () => {
     const state = createDisabledStateForDataElement('searchPanel');
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function(selector) {
-      return selector(state);
-    });
+    mockUseSelectorWithState(state);
     const { container } = render(<SearchPanel />);
     expect(container.querySelector('.SearchPanel')).not.toBeInTheDocument();
   });
@@ -197,12 +228,8 @@ describe('SearchPanelContainer', () => {
     // test would break if we don't make default return from useSearch as code is trying to destruct undefined value
     useSearch.mockReturnValue({});
     jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    const isOpen = true;
-    const currentWidth = 1280;
-    const pageLabels = [];
-    const shouldClearSearchPanelOnClose = false;
-    useSelectorMock.mockReturnValue([isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose]);
+    useCore.mockReturnValue({ core });
+    mockUseSelectorWithState(createState());
   });
 
   afterEach(() => {
@@ -216,13 +243,14 @@ describe('SearchPanelContainer', () => {
   });
 
   it('Should clear search results if not open and enabled by API', () => {
-    const isOpen = false;
-    const shouldClear = true;
+    const state = createState({
+      viewer: { openElements: { searchPanel: false } },
+      search: { clearSearchPanelOnClose: true },
+    });
     const mockDispatch = jest.fn();
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue([isOpen, null, shouldClear, null, null, 1]);
+    mockUseSelectorWithState(state);
     const actionsSetSearchValueActionMock = jest.spyOn(actions, 'setSearchValue');
     const coreClearSearchResultsMock = jest.spyOn(core, 'clearSearchResults');
 
@@ -232,13 +260,14 @@ describe('SearchPanelContainer', () => {
   });
 
   it('Should not clear search results if not open but disabled by API', () => {
-    const isOpen = false;
-    const shouldClear = false;
+    const state = createState({
+      viewer: { openElements: { searchPanel: false } },
+      search: { clearSearchPanelOnClose: false },
+    });
     const mockDispatch = jest.fn();
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue([isOpen, null, null, shouldClear]);
+    mockUseSelectorWithState(state);
     const actionsSetSearchValueActionMock = jest.spyOn(actions, 'setSearchValue');
     const coreClearSearchResultsMock = jest.spyOn(core, 'clearSearchResults');
 
@@ -248,13 +277,14 @@ describe('SearchPanelContainer', () => {
   });
 
   it('Should not clear result if mobile device', () => {
-    const isOpen = false;
-    const shouldClear = true;
+    const state = createState({
+      viewer: { openElements: { searchPanel: false } },
+      search: { clearSearchPanelOnClose: true },
+    });
     const mockDispatch = jest.fn();
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue([isOpen, null, null, shouldClear]);
+    mockUseSelectorWithState(state);
     const actionsSetSearchValueActionMock = jest.spyOn(actions, 'setSearchValue');
     const coreClearSearchResultsMock = jest.spyOn(core, 'clearSearchResults');
     useMedia.mockReturnValue(true);

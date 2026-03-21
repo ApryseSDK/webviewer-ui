@@ -4,6 +4,7 @@ import core from 'core';
  * Imports user bookmarks
  * @method UI.importBookmarks
  * @param {object} bookmarks A dictionary with page numbers as keys and the bookmark text as the values. ex: {"1":"Bookmark 1","3":"Bookmark 2"}. Behaviour is undefined otherwise.
+ * @param {number} [documentViewerKey] The key of the document viewer to set the bookmarks for. Default: the active document viewer key.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -21,6 +22,8 @@ WebViewer(...)
     });
   });
  */
-export default (bookmarks) => {
-  core.setUserBookmarks(bookmarks);
+export default (store) => (bookmarks, documentViewerKey) => {
+  const activeDocumentViewerKey = store.getState().viewer.activeDocumentViewerKey;
+  documentViewerKey = documentViewerKey || activeDocumentViewerKey;
+  core.setUserBookmarks(bookmarks, documentViewerKey);
 };

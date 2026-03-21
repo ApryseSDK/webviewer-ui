@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 import Element from 'components/Element';
@@ -32,30 +32,17 @@ const propTypes = {
 
 const RichTextPopup = ({ annotation, editor }) => {
   const { core } = useCore();
-  const [
-    isDisabled,
-    isOpen,
-    isPaletteDisabled,
-    customColors,
-    isInDesktopOnlyMode,
-    isTextStylePickerOpen,
-    isColorPickerOpen,
-    fonts,
-    legacyPopup,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementDisabled(state, DataElements.RICH_TEXT_POPUP),
-      selectors.isElementOpen(state, DataElements.RICH_TEXT_POPUP),
-      selectors.isElementDisabled(state, 'colorPalette'),
-      selectors.getCustomColors(state, 'customColors'),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER),
-      selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER),
-      selectors.getFonts(state),
-      !selectors.isElementDisabled(state, DataElements.LEGACY_RICH_TEXT_POPUP),
-    ],
-    shallowEqual,
-  );
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.RICH_TEXT_POPUP));
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RICH_TEXT_POPUP));
+  const isPaletteDisabled = useSelector((state) => selectors.isElementDisabled(state, 'colorPalette'));
+  const customColors = useSelector((state) => selectors.getCustomColors(state, 'customColors'));
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
+  const isTextStylePickerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER));
+  const isColorPickerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER));
+  const fonts = useSelector((state) => selectors.getFonts(state));
+  const legacyPopup = useSelector((state) => !selectors.isElementDisabled(state, DataElements.LEGACY_RICH_TEXT_POPUP));
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
+
   const [symbolsVisible, setSymbolsVisible] = useState(false);
   const [cssPosition, setCssPosition] = useState({ left: 0, top: 0 });
   const [draggablePosition, setDraggablePosition] = useState({ x: 0, y: 0 });
@@ -413,7 +400,7 @@ const RichTextPopup = ({ annotation, editor }) => {
                     properties={propertiesRef.current}
                     stateless={true}
                     isFreeText={true}
-                    onFreeTextSizeToggle={() => handleFreeTextAutoSizeToggle(annotation, setAutoSizeFont, isAutoSizeFont)}
+                    onFreeTextSizeToggle={() => handleFreeTextAutoSizeToggle(annotation, setAutoSizeFont, isAutoSizeFont, activeDocumentViewerKey)}
                     isFreeTextAutoSize={isAutoSizeFont}
                     isRichTextEditMode={true}
                   />

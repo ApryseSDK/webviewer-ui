@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import RightPanel from 'components/RightPanel';
 
 import Wv3dPropertiesPanel from './Wv3dPropertiesPanel';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Wv3dPropertiesPanel',
@@ -274,11 +275,11 @@ export function DefaultStandard() {
   return <Default {...defaultArgs} />;
 }
 
-DefaultStandard.parameters = window.storybook.disableChromatic;
+DefaultStandard.parameters = disableChromaticParameters;
 
 export const DefaultWide = WideTemplate.bind({});
 
-DefaultWide.parameters = window.storybook.disableChromatic;
+DefaultWide.parameters = disableChromaticParameters;
 
 DefaultWide.args = {
   modelData: oneElement,
@@ -306,7 +307,7 @@ export function MultiplePropertiesElements() {
   return <MultipleElements {...multipleElementsArgs} />;
 }
 
-MultiplePropertiesElements.parameters = window.storybook.disableChromatic;
+MultiplePropertiesElements.parameters = disableChromaticParameters;
 
 const NoElementsSelected = StandardTemplate.bind({});
 
@@ -325,7 +326,7 @@ export function EmptyPanel() {
   return <NoElementsSelected {...noElementsSelectedArgs} />;
 }
 
-EmptyPanel.parameters = window.storybook.disableChromatic;
+EmptyPanel.parameters = disableChromaticParameters;
 
 const GroupOrderDefined = StandardTemplate.bind({});
 
@@ -347,7 +348,7 @@ export function GroupOrderSpecified() {
   return <GroupOrderDefined {...groupOrderDefinedArgs} />;
 }
 
-GroupOrderSpecified.parameters = window.storybook.disableChromatic;
+GroupOrderSpecified.parameters = disableChromaticParameters;
 
 const EmptyRowsRemoved = StandardTemplate.bind({});
 
@@ -369,7 +370,7 @@ export function RemoveEmptyRows() {
   return <EmptyRowsRemoved {...emptyRowsRemovedArgs} />;
 }
 
-RemoveEmptyRows.parameters = window.storybook.disableChromatic;
+RemoveEmptyRows.parameters = disableChromaticParameters;
 
 const EmptyGroupsRemoved = StandardTemplate.bind({});
 
@@ -392,7 +393,7 @@ export function RemoveEmptyGroups() {
   return <EmptyGroupsRemoved {...emptyRowsRemovedArgs} />;
 }
 
-RemoveEmptyGroups.parameters = window.storybook.disableChromatic;
+RemoveEmptyGroups.parameters = disableChromaticParameters;
 
 const NoRawValues = StandardTemplate.bind({});
 
@@ -414,4 +415,4 @@ export function RemoveRawValues() {
   return <NoRawValues {...noRawValuesArgs} />;
 }
 
-RemoveRawValues.parameters = window.storybook.disableChromatic;
+RemoveRawValues.parameters = disableChromaticParameters;

@@ -40,7 +40,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   const genericPanels = useSelector(selectors.getGenericPanels);
   const selectedTab = useSelector((state) => selectors.getActiveTabInPanel(state, tabPanelDataElement));
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
-  const portfolioFiles = useSelector((state) => selectors.getPortfolio(state));
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const portfolioFiles = useSelector((state) => selectors.getPortfolio(state, activeDocumentViewerKey));
   const disabledElements = useSelector(selectors.getDisabledElements);
   const enabledPanels = useSelector((state) => selectors.getEnabledTabPanelTabs(state, tabPanelDataElement));
 
@@ -321,7 +322,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
   };
 
   const closePanel = () => {
-    dispatch(actions.closeElement('tabPanel'));
+    dispatch(actions.closeElement(tabPanelDataElement));
   };
 
   const childElements = <>

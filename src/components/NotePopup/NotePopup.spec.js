@@ -7,11 +7,13 @@ import NotePopupWithOutI18n, { notePopupFlyoutItems } from './NotePopup';
 import NotePopupContainerWithOutI18n from './NotePopupContainer';
 import { Basic, DifferentStates } from './NotePopup.stories';
 import { configureStore } from '@reduxjs/toolkit';
+import NoteContext from 'components/Note/Context';
 
 const NotePopup = withI18n(NotePopupWithOutI18n);
 const NotePopupContainer = withProviders(NotePopupContainerWithOutI18n);
 const BasicStory = withI18n(Basic);
 const DifferentStatesStory = withI18n(DifferentStates);
+const noteContextValue = { isOfficeEditorCommentAnnotation: false };
 
 const DEFAULT_NOTES_PANEL_WIDTH = 293;
 
@@ -158,7 +160,9 @@ describe('NotePopupContainer', () => {
   it('Should attach updateAnnotationPermission event listener on mount', () => {
     const addEventListenerMock = jest.spyOn(core, 'addEventListener');
     render(
-      <NotePopupContainer/>
+      <NoteContext.Provider value={noteContextValue}>
+        <NotePopupContainer/>
+      </NoteContext.Provider>
     );
     expect(addEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), undefined, expect.any(Number));
   });
@@ -166,7 +170,9 @@ describe('NotePopupContainer', () => {
   it('Should remove updateAnnotationPermission event listener on unmount', () => {
     const removeEventListenerMock = jest.spyOn(core, 'removeEventListener');
     const { unmount } = render(
-      <NotePopupContainer />
+      <NoteContext.Provider value={noteContextValue}>
+        <NotePopupContainer />
+      </NoteContext.Provider>
     );
     unmount();
     expect(removeEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), expect.any(Number));

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { panelData } from 'src/constants/panel';
 import PropTypes from 'prop-types';
 import { expect, within } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ToggleElementButton',
@@ -62,7 +63,7 @@ export const ToggleElementButtonComponent = () => (
   </Provider>
 );
 
-ToggleElementButtonComponent.parameters = window.storybook.disableRtlMode;
+ToggleElementButtonComponent.parameters = disableRtlModeParameters;
 
 export const ToggleElementButtonWithLabelOnHoverState = () => (
   <Provider store={store}>
@@ -77,7 +78,7 @@ ToggleElementButtonWithLabelOnHoverState.play = async ({ canvasElement }) => {
 
 ToggleElementButtonWithLabelOnHoverState.parameters = {
   pseudo: { hover: true },
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 const togglePanelButtons = Object.keys(panelData).map((panel) => ({
@@ -100,7 +101,7 @@ TogglePanelButtons.propTypes = {
   dataElement: PropTypes.string,
 };
 
-TogglePanelButtons.parameters = window.storybook.disableRtlMode;
+TogglePanelButtons.parameters = disableRtlModeParameters;
 
 const activeStore = configureStore({ reducer: () => initialStateActive });
 
@@ -116,4 +117,4 @@ ToggleFlyoutButtonActive.play = async ({ canvasElement }) => {
   await expect(button.ariaExpanded).toBe('true');
 };
 
-ToggleFlyoutButtonActive.parameters = window.storybook.disableRtlMode;
+ToggleFlyoutButtonActive.parameters = disableRtlModeParameters;

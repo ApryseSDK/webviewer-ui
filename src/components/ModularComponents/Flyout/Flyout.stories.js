@@ -14,6 +14,7 @@ import { menuItems as MenuItemsForBookmarkOutlines, menuTypes } from 'helpers/ou
 import { setClickMiddleWare } from 'helpers/clickTracker';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/Flyout',
@@ -539,7 +540,7 @@ FlyoutClosingTest.play = async ({ canvasElement }) => {
 };
 FlyoutClosingTest.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 FlyoutComponent.play = async ({ canvasElement }) => {
@@ -638,7 +639,7 @@ StatefulButtonInFlyout.play = async ({ canvasElement }) => {
   await expect(imgTitle).toContainHTML('icon - header - page manipulation - page layout - single page - line');
 };
 
-StatefulButtonInFlyout.parameters = window.storybook.disableRtlMode;
+StatefulButtonInFlyout.parameters = disableRtlModeParameters;
 
 const portfolioFlyoutStore = configureStore({
   reducer: () => {
@@ -656,7 +657,7 @@ export const PortfolioFlyout = () => {
     </Provider>
   );
 };
-PortfolioFlyout.parameters = window.storybook.disableRtlMode;
+PortfolioFlyout.parameters = disableRtlModeParameters;
 
 const mockInitialState = {
   middleware: false,
@@ -699,7 +700,7 @@ export const FlyoutOverride = () => {
   );
 };
 
-FlyoutOverride.parameters = window.storybook.disableRtlMode;
+FlyoutOverride.parameters = disableRtlModeParameters;
 
 FlyoutOverride.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -862,5 +863,5 @@ export const FlyoutOverflow = createTemplate({
 });
 FlyoutOverflow.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };

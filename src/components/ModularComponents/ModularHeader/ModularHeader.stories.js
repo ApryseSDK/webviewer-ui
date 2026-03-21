@@ -18,6 +18,7 @@ import { mockModularComponents } from '../AppStories/mockAppState';
 import '../LeftHeader/LeftHeader.scss';
 import '../RightHeader/RightHeader.scss';
 import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ModularHeader',
@@ -79,7 +80,7 @@ export const TopHeader = (storyProps) => {
   );
 };
 
-TopHeader.parameters = window.storybook.disableRtlMode;
+TopHeader.parameters = disableRtlModeParameters;
 
 export const LeftHeader = (storyProps) => {
   const props = {
@@ -98,7 +99,7 @@ export const LeftHeader = (storyProps) => {
   );
 };
 
-LeftHeader.parameters = window.storybook.disableRtlMode;
+LeftHeader.parameters = disableRtlModeParameters;
 
 export const RightHeader = (storyProps) => {
   const props = {
@@ -118,7 +119,7 @@ export const RightHeader = (storyProps) => {
   );
 };
 
-RightHeader.parameters = window.storybook.disableRtlMode;
+RightHeader.parameters = disableRtlModeParameters;
 
 export const BottomHeader = (storyProps) => {
   const props = {
@@ -138,4 +139,4 @@ export const BottomHeader = (storyProps) => {
   );
 };
 
-BottomHeader.parameters = window.storybook.disableRtlMode;
+BottomHeader.parameters = disableRtlModeParameters;

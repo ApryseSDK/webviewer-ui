@@ -8,8 +8,8 @@ WebViewer(...)
   });
  */
 
-import actions from 'actions';
+import { cleanUpMultiViewer } from 'helpers/multiViewerHelper';
 
 export default (store) => () => {
-  store.dispatch(actions.setIsMultiViewerMode(false));
+  cleanUpMultiViewer(store);
 };

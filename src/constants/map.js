@@ -419,7 +419,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextSquigglyAnnotation,
   },
   [annotationMapKeys.STRIKEOUT]: {
-    icon: 'icon-tool-text-manipulation-strikethrough',
+    icon: 'icon-text-strikeout',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
     currentStyleTab: 'StrokeColor',
@@ -515,7 +515,9 @@ const map = {
       'AnnotationCreateSticky3',
       'AnnotationCreateSticky4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation
+      && !annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY)
+      && !annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY),
   },
   [annotationMapKeys.CHANGE_VIEW]: {
     icon: 'icon-tool-changeview',
@@ -784,7 +786,10 @@ const map = {
     currentStyleTab: null,
     styleTabs: [],
     toolNames: [],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation && annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY)
+    annotationCheck: (annotation) =>
+      (annotation instanceof window.Core.Annotations.TextHighlightAnnotation ||
+      annotation instanceof window.Core.Annotations.StickyAnnotation) &&
+      annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY)
   },
 };
 

@@ -82,6 +82,8 @@ import PageManipulationFlyout from 'components/ModularComponents/PageManipulatio
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 import useWidgetHighlightingSync from 'hooks/useWidgetHighlightingSync';
 import i18next from 'i18next';
+import { onOfficeEditorCommentAdded } from 'src/event-listeners';
+
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
@@ -434,15 +436,18 @@ const App = ({ removeEventHandlers, initialDirection }) => {
         dispatch(actions.setOfficeEditorCanUndo(canUndo));
         dispatch(actions.setOfficeEditorCanRedo(canRedo));
       };
+      const onOfficeEditorCommentAddedHandler = onOfficeEditorCommentAdded(store, core);
 
       core.getDocument().addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
       core.getDocument().addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
       core.getDocument().addEventListener('officeEditorUndoRedoStateChanged', onOfficeEditorUndoRedoStateChanged);
+      core.getDocument().addEventListener('commentThreadAddedDebounced', onOfficeEditorCommentAddedHandler);
 
       return () => {
         core.getDocument().removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
         core.getDocument().removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
         core.getDocument().removeEventListener('officeEditorUndoRedoStateChanged', onOfficeEditorUndoRedoStateChanged);
+        core.getDocument().removeEventListener('commentThreadAddedDebounced', onOfficeEditorCommentAddedHandler);
       };
     }
   }, [isOfficeEditorMode, customizableUI]);
@@ -460,7 +465,7 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       case panelNames.THUMBNAIL:
         return <LazyLoadWrapper Component={LazyLoadComponents.ThumbnailsPanel} dataElement={dataElement} />;
       case panelNames.LAYERS:
-        return <LayersPanel />;
+        return <LayersPanel dataElement={dataElement} />;
       case panelNames.TEXT_EDITING:
         return <TextEditingPanel dataElement={dataElement} />;
       case panelNames.CHANGE_LIST:

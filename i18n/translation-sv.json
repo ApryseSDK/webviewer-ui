@@ -354,7 +354,11 @@
     "listEmptyValue": "Ett eller flera fält har ett tomt värde.",
     "listDuplicateValue": "Flera fält har följande värden:",
     "networkError": "Något gick fel när den här komponenten laddades. Kontrollera din nätverksanslutning och uppdatera sidan.",
-    "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan."
+    "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan.",
+    "renderErrors": {
+      "error": "Något gick fel här.",
+      "refreshPanel": "Du kan fortsätta arbeta. Försök öppna panelen igen."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sorteringsordningslista",
       "position": "Placera",
+      "linePosition": "Placera",
       "time": "Tid",
       "status": "Status",
       "author": "Författare",
@@ -483,6 +488,7 @@
       "markForRedaction": "Markera för redigering"
     },
     "searchPanel": {
+      "searchResults": "Sökresultat",
       "caseSensitive": "Skiftlägeskänsliga",
       "wholeWordOnly": "Hela ord",
       "wildcard": "Jokertecken",
@@ -1316,6 +1322,7 @@
     "bold": "Djärv",
     "italic": "Kursiv",
     "underline": "Understrykning",
+    "strikeout": "Överstrykning",
     "textColor": "Text färg",
     "leftAlign": "Vänsterjustera",
     "centerAlign": "Centrera",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Visa utan förslag",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter.",
     "previewAllChanges": "Förhandsgranska alla ändringar",
+    "changes": "Ändringar",
+    "comments": "Kommentarer",
+    "commentsAndChangesTabs": "Flikar för kommentarer och ändringar",
     "accept": "Acceptera",
     "reject": "Avvisa",
     "pastingTitle": "Det går inte att klistra in",

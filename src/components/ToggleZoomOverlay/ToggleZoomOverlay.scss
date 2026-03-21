@@ -84,9 +84,23 @@
   border-radius: 4px;
   display: flex;
   align-items: center;
-  margin-inline-end: -8px;
+  inline-size: 5ch;  
   font-weight: bold;
   height: 100%;
   text-align: center;
+  container-type: inline-size;
   display: flex;
 }
+
+
+
+.OverlayText .textarea,
+.OverlayText span { font-size: var(--font-size-default); }
+
+.OverlayText[data-digits="3"] .textarea,
+.OverlayText[data-digits="3"] span { font-size: calc(var(--font-size-default) * 0.90); }
+
+.OverlayText[data-digits="4"] .textarea,
+.OverlayText[data-digits="4"] span { font-size: calc(var(--font-size-default) * 0.80); }
+
+

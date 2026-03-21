@@ -1,12 +1,15 @@
 import React from 'react';
-import * as reactRedux from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
 import useOnRedactionSearchCompleted from './useOnRedactionSearchCompleted';
 import core from 'core';
 import { act } from 'react-dom/test-utils';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import useCore from 'hooks/useCore';
+import selectors from 'selectors';
 
 jest.mock('core');
+jest.mock('hooks/useCore');
+jest.mock('selectors');
 
 // These patterns will be used for the tests
 const redactionSearchPatterns = {
@@ -64,10 +67,25 @@ const MockComponent = ({ children }) => (<div>{children}</div>);
 const wrapper = withProviders(MockComponent);
 
 describe('useOnRedactionSearchCompleted hook', () => {
+  let activeDocumentViewerKey = 1;
+  let mockClearSearchResults;
+  let currentDocumentViewer;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    activeDocumentViewerKey = 1;
+    mockClearSearchResults = jest.fn();
+    currentDocumentViewer = { clearSearchResults: mockClearSearchResults };
+    useCore.mockImplementation(() => ({
+      core,
+      documentViewer: currentDocumentViewer,
+    }));
+    selectors.getActiveDocumentViewerKey.mockImplementation(() => activeDocumentViewerKey);
+    selectors.getRedactionSearchPatterns.mockReturnValue(redactionSearchPatterns);
+  });
+
   it('adds event listeners to searchResultsChanged and searchInProgress', () => {
     core.addEventListener = jest.fn();
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue(redactionSearchPatterns);
 
     const { result } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
 
@@ -80,8 +98,6 @@ describe('useOnRedactionSearchCompleted hook', () => {
 
   it('removes event listeners to searchResultsChanged and searchInProgress when unmounted', () => {
     core.removeEventListener = jest.fn();
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue(redactionSearchPatterns);
 
     const { result, unmount } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
 
@@ -100,10 +116,6 @@ describe('useOnRedactionSearchCompleted hook', () => {
         onSearchResultsChangedHandler = handler;
       }
     };
-
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue(redactionSearchPatterns);
-
 
     const { result } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
     expect(result.error).toBeUndefined();
@@ -137,6 +149,7 @@ describe('useOnRedactionSearchCompleted hook', () => {
     act(() => result.current.clearRedactionSearchResults());
 
     expect(result.current.redactionSearchResults.length).toBe(0);
+    expect(mockClearSearchResults).toHaveBeenCalled();
   });
 
   it('sets the correct searchStatus in the searchInProgress callback', async () => {
@@ -162,5 +175,50 @@ describe('useOnRedactionSearchCompleted hook', () => {
     // If called with false our search is done
     act(() => onSearchInProgress(false));
     expect(result.current.searchStatus).toEqual('SEARCH_DONE');
+  });
+
+  it('resets redaction search state when active viewer changes', () => {
+    let onSearchInProgress;
+    let onSearchResultsChanged;
+    core.addEventListener = (event, handler) => {
+      if (event === 'searchInProgress') {
+        onSearchInProgress = handler;
+      }
+      if (event === 'searchResultsChanged') {
+        onSearchResultsChanged = handler;
+      }
+    };
+
+    const { result, rerender } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
+    expect(result.error).toBeUndefined();
+
+    act(() => {
+      onSearchInProgress(true);
+      onSearchResultsChanged(mockSearchResults);
+    });
+
+    expect(result.current.searchStatus).toEqual('SEARCH_IN_PROGRESS');
+    expect(result.current.redactionSearchResults.length).toEqual(mockSearchResults.length);
+    expect(result.current.isProcessingRedactionResults).toBe(true);
+
+    activeDocumentViewerKey = 2;
+    rerender();
+
+    expect(result.current.searchStatus).toEqual('SEARCH_NOT_INITIATED');
+    expect(result.current.redactionSearchResults).toEqual([]);
+    expect(result.current.isProcessingRedactionResults).toBe(false);
+    expect(mockClearSearchResults).toHaveBeenCalledTimes(2);
+  });
+
+  it('uses latest documentViewer instance when it changes', () => {
+    const firstClearSearchResults = mockClearSearchResults;
+    const secondClearSearchResults = jest.fn();
+    const { rerender } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
+
+    currentDocumentViewer = { clearSearchResults: secondClearSearchResults };
+    rerender();
+
+    expect(firstClearSearchResults).toHaveBeenCalledTimes(1);
+    expect(secondClearSearchResults).toHaveBeenCalledTimes(1);
   });
 });

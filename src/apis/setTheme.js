@@ -1,16 +1,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
-
-import { parse } from 'helpers/cssVariablesParser';
-
-import modularUILightModeString from '!!raw-loader!../constants/lightWCAG.scss';
-import modularUIDarkModeString from '!!raw-loader!../constants/darkWCAG.scss';
-import lightModeString from '!!raw-loader!../constants/light.scss';
-import highContastLightModeString from '!!raw-loader!../constants/highContrastLight.scss';
-import darkModeString from '!!raw-loader!../constants/dark.scss';
-import highContrastDarkModeString from '!!raw-loader!../constants/highContrastDark.scss';
 import Theme from '../constants/theme';
-import getRootNode from 'helpers/getRootNode';
+import { getInternalTheme, searchForThemeElements, enableThemeElements, disableThemeElements, importTheme } from 'helpers/setThemeHelper';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
@@ -24,11 +15,69 @@ WebViewer(...)
     instance.UI.setTheme(theme.DARK);
   });
  */
-
 export default (store) => {
+  let previousInternalTheme = null; // default; no theme is loaded initially
   let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
   let previousIsCustomizableUI = false; // default
+
+  /**
+   * Maps internal theme strings to arrays of the corresponding DOM <style> or <link> elements
+   * {[key: string]: Array<HTMLStyleElement | HTMLLinkElement>}
+   * @ignore
+   */
+  const loadedThemes = {};
+  let currentlyLoadingTheme = null;
+
+  /**
+   * Promise queue to ensure only one theme update runs at a time
+   * @ignore
+   */
+  let updateThemeQueue = Promise.resolve();
+
+  /**
+   * Updates the active theme by doing the following:
+   *    - If theme did not change or is in the process of being loaded, do nothing.
+   *    - Else if theme has never been loaded before, import it and then disable the previous theme's styles.
+   *    - Else if theme was already loaded, enable its styles and disable the previous theme's styles.
+   * @param {UI.Theme} newTheme
+   * @param {boolean} newIsHighContrastMode
+   * @param {boolean} newIsCustomizableUI
+   * @ignore
+   */
+  const updateTheme = async (
+    newTheme = previousActiveTheme,
+    newIsHighContrastMode = previousIsHighContrastMode,
+    newIsCustomizableUI = previousIsCustomizableUI
+  ) => {
+    const internalTheme = getInternalTheme(newTheme, newIsHighContrastMode, newIsCustomizableUI);
+    const isLoading = currentlyLoadingTheme === internalTheme;
+    const isActive = previousInternalTheme === internalTheme;
+    if (isLoading || isActive) {
+      return;
+    }
+
+    currentlyLoadingTheme = internalTheme;
+    try {
+      if (previousInternalTheme && !loadedThemes[previousInternalTheme]) {
+        searchForThemeElements(previousInternalTheme, loadedThemes);
+      }
+      const isAlreadyLoaded = loadedThemes[internalTheme];
+      if (isAlreadyLoaded) {
+        enableThemeElements(internalTheme, loadedThemes);
+      } else {
+        await importTheme(internalTheme);
+      }
+
+      disableThemeElements(previousInternalTheme, loadedThemes);
+      previousInternalTheme = internalTheme;
+      previousActiveTheme = newTheme;
+      previousIsHighContrastMode = newIsHighContrastMode;
+      previousIsCustomizableUI = newIsCustomizableUI;
+    } finally {
+      currentlyLoadingTheme = null;
+    }
+  };
 
   store.subscribe(() => {
     const state = store.getState();
@@ -36,12 +85,19 @@ export default (store) => {
     const isHighContrastMode = selectors.getIsHighContrastMode(state);
     const isCustomizableUI = state.featureFlags.customizableUI;
 
-    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || previousIsCustomizableUI !== isCustomizableUI) {
-      previousActiveTheme = activeTheme;
-      previousIsHighContrastMode = isHighContrastMode;
-      previousIsCustomizableUI = isCustomizableUI;
-      updateColors(activeTheme, isHighContrastMode, isCustomizableUI);
-    }
+    updateThemeQueue = updateThemeQueue.then(() => {
+      const shouldUpdateTheme = previousActiveTheme !== activeTheme
+        || previousIsHighContrastMode !== isHighContrastMode
+        || window.isApryseWebViewerWebComponent
+        || previousIsCustomizableUI !== isCustomizableUI;
+
+      if (shouldUpdateTheme) {
+        // Chain the update onto the queue to serialize theme updates
+        return updateTheme(activeTheme, isHighContrastMode, isCustomizableUI);
+      }
+    }).catch((error) => {
+      console.error('Theme update failed:', error);
+    });
   });
   return (theme) => {
     const values = Object.values(Theme);
@@ -50,27 +106,4 @@ export default (store) => {
     }
     store.dispatch(actions.setActiveTheme(theme));
   };
-};
-
-const setVariables = (themeVarString = '') => {
-  let root = document.documentElement;
-  if (window.isApryseWebViewerWebComponent) {
-    root = getRootNode().host;
-  }
-  const themeVariables = parse(themeVarString, {});
-  Object.keys(themeVariables).forEach((key) => {
-    const themeVariable = themeVariables[key];
-    root.style.setProperty(`--${key}`, themeVariable);
-  });
-};
-
-const updateColors = (activeTheme, isHighContrastMode, isCustomizableUI) => {
-  const isThemeLight = activeTheme === Theme.LIGHT;
-  if (isCustomizableUI) {
-    setVariables(isThemeLight ? modularUILightModeString : modularUIDarkModeString);
-  } else if (isHighContrastMode) {
-    setVariables( isThemeLight ? highContastLightModeString : highContrastDarkModeString);
-  } else {
-    setVariables(isThemeLight ? lightModeString : darkModeString);
-  }
 };

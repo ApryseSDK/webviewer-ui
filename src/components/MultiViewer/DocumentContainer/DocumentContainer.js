@@ -12,6 +12,7 @@ import throttle from 'lodash/throttle';
 import useCore from 'hooks/useCore';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import getRootNode from 'helpers/getRootNode';
+import { createTouchEventManager } from 'helpers/TouchEventManager';
 
 import './DocumentContainer.scss';
 
@@ -19,7 +20,6 @@ const propTypes = {
   documentViewerKey: PropTypes.number.isRequired,
   activeDocumentViewerKey: PropTypes.number.isRequired,
   container: PropTypes.object.isRequired,
-  onReady: PropTypes.func,
 };
 
 // TODO compare: check display mode scrolling
@@ -27,13 +27,13 @@ const DocumentContainer = ({
   documentViewerKey,
   activeDocumentViewerKey,
   container,
-  onReady,
   docLoaded,
 }) => {
   const { core } = useCore(documentViewerKey);
   const documentViewer = core.getDocumentViewer();
   const dispatch = useDispatch();
   const document = useRef();
+  const touchManagerRef = useRef(null);
   const [
     isMouseWheelZoomEnabled,
   ] = useSelector((state) => [
@@ -41,19 +41,26 @@ const DocumentContainer = ({
   ]);
 
   useEffect(() => {
+    if (!touchManagerRef.current) {
+      touchManagerRef.current = createTouchEventManager();
+    }
+    const touchManager = touchManagerRef.current;
     const removeListeners = () => {
       if (container?.current) {
         container.current.removeEventListener('dragover', preventDefault);
         container.current.removeEventListener('drop', onDrop);
         container.current.removeEventListener('wheel', onWheel, { passive: false });
       }
+      if (touchManager) {
+        touchManager.terminate();
+      }
     };
     documentViewer.setScrollViewElement(container.current);
     documentViewer.setViewerElement(document.current);
+    touchManager.initialize(document.current, container.current, documentViewerKey);
     container.current.addEventListener('dragover', preventDefault);
     container.current.addEventListener('drop', onDrop);
     container.current.addEventListener('wheel', onWheel, { passive: false });
-    onReady(documentViewerKey);
     return removeListeners;
   }, []);
 

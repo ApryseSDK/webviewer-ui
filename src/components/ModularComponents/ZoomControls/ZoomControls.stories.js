@@ -10,6 +10,7 @@ import initialState from 'src/redux/initialState';
 import { expect } from 'storybook/test';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ZoomControls',
@@ -47,7 +48,7 @@ export const SmallSize = () => {
   );
 };
 
-SmallSize.parameters = window.storybook.disableRtlMode;
+SmallSize.parameters = disableRtlModeParameters;
 
 export const ZoomInSheetEditorMode = () => {
   let preloadedState = {
@@ -71,7 +72,7 @@ export const ZoomInSheetEditorMode = () => {
   );
 };
 
-ZoomInSheetEditorMode.parameters = window.storybook.disableRtlMode;
+ZoomInSheetEditorMode.parameters = disableRtlModeParameters;
 
 export const ZoomInOfficeEditorMode = (args, context) => {
   core.getDocument = () => ({

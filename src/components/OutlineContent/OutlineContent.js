@@ -73,11 +73,11 @@ const propTypes = {
   outlinePath: PropTypes.string,
   isAdding: PropTypes.bool,
   isExpanded: PropTypes.bool,
-  setIsExpanded: PropTypes.func,
-  isOutlineRenaming: PropTypes.bool,
-  setOutlineRenaming: PropTypes.func,
-  isOutlineChangingDest: PropTypes.bool,
-  setOutlineChangingDest: PropTypes.func,
+  updateIsExpanded: PropTypes.func,
+  isRenaming: PropTypes.bool,
+  updateIsRenaming: PropTypes.func,
+  isChangingDest: PropTypes.bool,
+  updateIsChangingDest: PropTypes.func,
   onCancel: PropTypes.func,
   textColor: PropTypes.string,
   children: PropTypes.array,
@@ -92,11 +92,11 @@ const OutlineContent = ({
   outlinePath,
   isAdding,
   isExpanded,
-  setIsExpanded,
-  isOutlineRenaming,
-  setOutlineRenaming,
-  isOutlineChangingDest,
-  setOutlineChangingDest,
+  updateIsExpanded,
+  isRenaming,
+  updateIsRenaming,
+  isChangingDest,
+  updateIsChangingDest,
   onCancel,
   textColor,
   children,
@@ -110,8 +110,6 @@ const OutlineContent = ({
   const {
     currentDestPage,
     currentDestText,
-    editingOutlines,
-    setEditingOutlines,
     isMultiSelectMode,
     isOutlineEditable,
     addNewOutline,
@@ -123,18 +121,18 @@ const OutlineContent = ({
   } = outlineContext || {};
 
   const { core } = useCore();
-
+  const [t] = useTranslation();
+  const inputRef = useRef();
   const outlineScrollParentRef = outlineContext?.outlineScrollParentRef;
 
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const featureFlags = useSelector((state) => selectors.getFeatureFlags(state), shallowEqual);
   const customizableUI = featureFlags.customizableUI;
-
-  const [t] = useTranslation();
   const TOOL_NAME = 'OutlineDestinationCreateTool';
 
-  const [isDefault, setIsDefault] = useState(false);
   const [outlineText, setOutlineText] = useState(text);
-  const inputRef = useRef();
+  const isDefault = !isAdding && !isRenaming && !isChangingDest;
+  const isSelected = selectedOutlines?.includes(outlinePath) || false;
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -142,7 +140,7 @@ const OutlineContent = ({
       if (isAdding) {
         onAddOutline();
       }
-      if (isOutlineRenaming && !isRenameButtonDisabled()) {
+      if (isRenaming && !isRenameButtonDisabled()) {
         onRenameOutline();
       }
     }
@@ -151,25 +149,23 @@ const OutlineContent = ({
     }
   };
 
-  const isSelected = selectedOutlines?.includes(outlinePath) || false;
-
   const onAddOutline = () => {
-    addNewOutline(outlineText.trim() === '' ? '' : outlineText);
+    addNewOutline(outlineText.trim() === '' ? '' : outlineText, activeDocumentViewerKey);
   };
 
   const onRenameOutline = () => {
-    setOutlineRenaming(false);
     renameOutline(outlinePath, outlineText);
+    updateIsRenaming(false);
   };
 
   const onCancelOutline = () => {
     updateOutlines();
-    if (isOutlineRenaming) {
-      setOutlineRenaming(false);
+    if (isRenaming) {
+      updateIsRenaming(false);
       setOutlineText(text);
     }
-    if (isOutlineChangingDest) {
-      setOutlineChangingDest(false);
+    if (isChangingDest) {
+      updateIsChangingDest(false);
     }
     if (isAdding) {
       onCancel();
@@ -187,24 +183,11 @@ const OutlineContent = ({
   }, [text]);
 
   useEffect(() => {
-    if (isAdding || isOutlineRenaming) {
+    if (isAdding || isRenaming) {
       inputRef.current.focus();
       inputRef.current.select();
     }
-
-    setIsDefault(!isAdding && !isOutlineRenaming && !isOutlineChangingDest);
-  }, [isOutlineRenaming, isOutlineChangingDest]);
-
-  useEffect(() => {
-    const editingOutlinesClone = { ...editingOutlines };
-    const isOutlineEditing = isOutlineRenaming || isOutlineChangingDest;
-    if (isOutlineEditing) {
-      editingOutlinesClone[outlinePath] = (isOutlineEditing);
-    } else {
-      delete editingOutlinesClone[outlinePath];
-    }
-    setEditingOutlines({ ...editingOutlinesClone });
-  }, [isOutlineRenaming, isOutlineChangingDest]);
+  }, [isRenaming, isChangingDest]);
 
   const textStyle = {
     color: textColor || 'auto'
@@ -213,32 +196,32 @@ const OutlineContent = ({
   const handleOnClick = async (val) => {
     switch (val) {
       case menuTypes.RENAME:
-        setOutlineRenaming(true);
+        updateIsRenaming(true);
         break;
       case menuTypes.SETDEST:
-        setOutlineChangingDest(true);
+        updateIsChangingDest(true);
         core.setToolMode(TOOL_NAME);
         break;
       case menuTypes.DELETE:
         removeOutlines([outlinePath]);
         break;
       case menuTypes.MOVE_UP: {
-        await outlineUtils.moveOutlineUp(outlinePath);
+        await outlineUtils.moveOutlineUp(outlinePath, activeDocumentViewerKey);
         updateOutlines();
         break;
       }
       case menuTypes.MOVE_DOWN: {
-        await outlineUtils.moveOutlineDown(outlinePath);
+        await outlineUtils.moveOutlineDown(outlinePath, activeDocumentViewerKey);
         updateOutlines();
         break;
       }
       case menuTypes.MOVE_LEFT: {
-        await outlineUtils.moveOutlineOutward(outlinePath);
+        await outlineUtils.moveOutlineOutward(outlinePath, activeDocumentViewerKey);
         updateOutlines();
         break;
       }
       case menuTypes.MOVE_RIGHT: {
-        await outlineUtils.moveOutlineInward(outlinePath);
+        await outlineUtils.moveOutlineInward(outlinePath, activeDocumentViewerKey);
         updateOutlines();
         break;
       }
@@ -276,7 +259,7 @@ const OutlineContent = ({
 
   const onDoubleClick = () => {
     if (isOutlineEditable) {
-      setOutlineRenaming(true);
+      updateIsRenaming(true);
     }
   };
 
@@ -325,7 +308,7 @@ const OutlineContent = ({
           {t('component.newOutlineTitle')}
         </div>
       }
-      {isOutlineRenaming &&
+      {isRenaming &&
         <div className="bookmark-outline-label">
           {t('component.outlineTitle')}
         </div>
@@ -342,7 +325,7 @@ const OutlineContent = ({
           contentMenuFlyoutOptions={contentMenuFlyoutOptions}
           contextMenuMoreButtonOptions={contextMenuMoreButtonOptions}
           expanded={isExpanded}
-          setIsExpandedHandler={setIsExpanded}
+          setIsExpandedHandler={updateIsExpanded}
           virtualizedChildrenCount={childOutlines.length}
           virtualizedChildrenRenderer={childOutlines.length ? renderVirtualizedChildren : null}
         >
@@ -350,7 +333,7 @@ const OutlineContent = ({
         </PanelListItem>
       }
 
-      {isOutlineChangingDest &&
+      {isChangingDest &&
         <div
           className="bookmark-outline-text outline-text"
           style={textStyle}
@@ -359,7 +342,7 @@ const OutlineContent = ({
         </div>
       }
 
-      {(isAdding || isOutlineRenaming) &&
+      {(isAdding || isRenaming) &&
         <input
           type="text"
           name="outline"
@@ -373,14 +356,14 @@ const OutlineContent = ({
         />
       }
 
-      {(isAdding || isOutlineChangingDest) &&
+      {(isAdding || isChangingDest) &&
         <div className="outline-destination">
           {t('component.destination')}: {t('component.bookmarkPage')} {currentDestPage},
           <span style={{ fontStyle: 'italic' }}> “{currentDestText}”</span>
         </div>
       }
 
-      {(isAdding || isOutlineRenaming || isOutlineChangingDest) &&
+      {(isAdding || isRenaming || isChangingDest) &&
         <div className="bookmark-outline-editing-controls">
           <TextButton
             className="bookmark-outline-cancel-button"
@@ -396,7 +379,7 @@ const OutlineContent = ({
               onClick={onAddOutline}
             />
           }
-          {isOutlineRenaming &&
+          {isRenaming &&
             <Button
               className="bookmark-outline-save-button"
               label={t('action.save')}
@@ -405,13 +388,13 @@ const OutlineContent = ({
               onClick={onRenameOutline}
             />
           }
-          {isOutlineChangingDest &&
+          {isChangingDest &&
             <Button
               className="bookmark-outline-save-button"
               label={t('action.save')}
               isSubmitType={true}
               onClick={() => {
-                setOutlineChangingDest(false);
+                updateIsChangingDest(false);
                 updateOutlineDest(outlinePath);
               }}
             />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import selectors from 'selectors';
@@ -6,13 +6,14 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import Icon from 'components/Icon';
 import actions from 'actions';
 import './Panel.scss';
-import { panelMinWidth, panelNames, RESIZE_BAR_WIDTH } from 'constants/panel';
+import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
 import ResizeBar from 'components/ResizeBar';
 import { isIE } from 'helpers/device';
 import MobilePanelWrapper from '../ModularComponents/MobilePanelWrapper';
 import PropTypes from 'prop-types';
 import { isElementOnLeftSide, isElementOnRightSide } from 'src/helpers/rightToLeft';
 import useIsRTL from 'hooks/useIsRTL';
+import { css } from '@emotion/react';
 
 const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
@@ -33,13 +34,13 @@ const DesktopPanel = ({ children }) => {
   const dispatch = useDispatch();
   const isRightToLeft = useIsRTL();
 
-  let style = {};
-  if (currentWidth && (isInDesktopOnlyMode || !isMobile)) {
-    const widthStyle = isCustom ? currentWidth - RESIZE_BAR_WIDTH : currentWidth;
-    style = { width: `${widthStyle}px`, minWidth: `${widthStyle}px` };
-  } else {
-    style = { minWidth: `${panelMinWidth}px` };
-  }
+  const containerCss = useMemo(() => {
+    if (currentWidth && (isInDesktopOnlyMode || !isMobile)) {
+      const widthStyle = isCustom ? currentWidth - RESIZE_BAR_WIDTH : currentWidth;
+      return css({ width: `${widthStyle}px`, minWidth: `${widthStyle}px` });
+    }
+    return css({ minWidth: `${panelMinWidth}px` });
+  }, [currentWidth, isInDesktopOnlyMode, isMobile, isCustom, panelMinWidth]);
 
   const isVisible = !(!isOpen || isDisabled);
   const isPanelOnLeftSide = isElementOnLeftSide(location);
@@ -86,13 +87,14 @@ const DesktopPanel = ({ children }) => {
         'multi-tab-active': isMultiTabActive,
         'right-to-left': isRightToLeft,
       })}
+      tabIndex="-1"
       data-element={dataElement}
       onDragOver={onDragOver}
     >
       {isCustom && isPanelOnRightSide && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
           leftDirection={true} />}
-      <div className={`ModularPanel-container ${dataElement}`} style={style}>
+      <div className={`ModularPanel-container ${dataElement}`} css={containerCss}>
         {!isInDesktopOnlyMode && isMobile && (
           <div className="close-container">
             <div
@@ -136,21 +138,8 @@ const Panel = (props) => {
     location: location,
   });
 
-  const panelsWithMobileVersion = [
-    panelNames.SIGNATURE_LIST,
-    panelNames.RUBBER_STAMP,
-    panelNames.STYLE,
-    panelNames.NOTES,
-    panelNames.SEARCH,
-    panelNames.TEXT_EDITING,
-    panelNames.TABS,
-    panelNames.REDACTION,
-    panelNames.FORM_FIELD,
-    panelNames.INDEX,
-  ];
-
   if (isOpen) {
-    if (isMobile && panelsWithMobileVersion.includes(dataElement)) {
+    if (isMobile) {
       dispatch(actions.openElement('MobilePanelWrapper'));
       return (
         <MobilePanelWrapper>

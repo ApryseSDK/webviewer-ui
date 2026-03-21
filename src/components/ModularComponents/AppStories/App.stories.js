@@ -9,6 +9,7 @@ import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import { getTranslatedText } from 'helpers/testTranslationHelper';
 
 import React from 'react';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 export default {
   title: 'ModularComponents/App',
   component: App,
@@ -120,7 +121,7 @@ ActiveGroupHeaderTest.play = async ({ canvasElement }) => {
 
 ActiveGroupHeaderTest.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 
@@ -281,7 +282,7 @@ export const VerticalHeaderKeyboardNavigationTest = createTemplate({
 
 VerticalHeaderKeyboardNavigationTest.parameters = {
   ...VerticalHeaderKeyboardNavigationTest.parameters,
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 VerticalHeaderKeyboardNavigationTest.play = async ({ canvasElement }) => {
@@ -494,7 +495,7 @@ AppWithRTLSwitchBehaviour.play = async ({ canvasElement }) => {
   }
 };
 
-AppWithRTLSwitchBehaviour.parameters = window.storybook.disableRtlMode;
+AppWithRTLSwitchBehaviour.parameters = disableRtlModeParameters;
 
 export const AppFlyoutResponsiveTest = (args, context) => {
   const { addonRtl } = context.globals;

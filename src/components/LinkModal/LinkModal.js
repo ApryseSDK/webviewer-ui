@@ -209,7 +209,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
         }
       }
 
-      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : '1');
+      setPageLabel(pageLabels?.length > 0 ? pageLabels[0] : '1');
     }
   }, [totalPages, isOpen]);
 

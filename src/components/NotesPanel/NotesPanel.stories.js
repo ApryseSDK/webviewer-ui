@@ -12,6 +12,7 @@ import { MockApp, createStore, setupNotesPanelCoreMocks } from 'helpers/storyboo
 import core from 'core';
 import { userEvent, within, expect, waitFor, fn } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/NotesPanel/NotesPanel',
@@ -113,7 +114,7 @@ export function BasicInGenericPanel() {
     </Provider>
   );
 }
-BasicInGenericPanel.parameters = window.storybook.disableRtlMode;
+BasicInGenericPanel.parameters = disableRtlModeParameters;
 
 export function BasicInGenericPanelOnLeft() {
   initialState.viewer.notesPanelCustomEmptyPanel = undefined;
@@ -126,7 +127,7 @@ export function BasicInGenericPanelOnLeft() {
     </Provider>
   );
 }
-BasicInGenericPanelOnLeft.parameters = window.storybook.disableRtlMode;
+BasicInGenericPanelOnLeft.parameters = disableRtlModeParameters;
 
 export function EmptyWithCustomIconAndMessage() {
   initialState.viewer.notesPanelCustomEmptyPanel = {
@@ -229,7 +230,7 @@ const NotesPanelInApp = (context, location, panelSize) => {
 
 export const NotesPanelInMobile = (args, context) => NotesPanelInApp(context, 'right');
 
-NotesPanelInMobile.parameters = window.storybook?.MobileParameters;
+NotesPanelInMobile.parameters = mobileStoryParameters;
 
 const createTestAnnotations = () => {
   const rectangle = new window.Core.Annotations.RectangleAnnotation();
@@ -489,7 +490,8 @@ export function NotesPanelMultiSelectToggle() {
       ...mockAppState.viewer,
       openElements: {
         notesPanel: true,
-      }
+      },
+      isNotesPanelMultiSelectEnabled: true,
     }
   };
 
@@ -498,7 +500,7 @@ export function NotesPanelMultiSelectToggle() {
   const { rectangle1, rectangle2 } = createTestMultiSelectAnnotations();
   setupNotesPanelCoreMocks(core, [rectangle1, rectangle2], []);
 
-  return  (
+  return (
     <MockApp initialState={mockState} store={store} />
   );
 }
@@ -510,6 +512,10 @@ NotesPanelMultiSelectToggle.parameters = {
       'Dark theme': { disable: true },
     },
   },
+  test: {
+    // For issues with mocks that are unrelated to the test
+    dangerouslyIgnoreUnhandledErrors: true,
+  }
 };
 
 NotesPanelMultiSelectToggle.play = async ({ canvasElement }) => {
@@ -518,7 +524,7 @@ NotesPanelMultiSelectToggle.play = async ({ canvasElement }) => {
   const multiSelectButton = await canvas.findByRole('button', { name: getTranslatedText('component.multiSelectButton') });
   expect(multiSelectButton).toBeVisible();
 
-  userEvent.click(multiSelectButton);
+  await userEvent.click(multiSelectButton);
 
   const listItems = await canvas.findAllByRole('listitem');
   expect(listItems.length).toBe(2);
@@ -526,6 +532,43 @@ NotesPanelMultiSelectToggle.play = async ({ canvasElement }) => {
   // Checks if checkboxes are present (should be as multi select is on)
   let checkboxes = await canvas.findAllByRole('checkbox');
   expect(checkboxes.length).toBe(2);
+
+  await userEvent.click(checkboxes[0]);
+
+  const assertTooltipTopClass = async (button, expectedTooltipText) => {
+    await userEvent.hover(button);
+    await waitFor(() => {
+      const tooltip = canvasElement.ownerDocument.querySelector('[data-element="tooltip"]');
+      expect(tooltip).toBeInTheDocument();
+      expect(tooltip).toHaveClass('tooltip--top');
+      if (expectedTooltipText) {
+        expect(tooltip).toHaveTextContent(expectedTooltipText);
+      }
+    });
+
+    await userEvent.unhover(button);
+
+    await waitFor(() => {
+      const tooltip = canvasElement.ownerDocument.querySelector('[data-element="tooltip"]');
+      expect(tooltip).not.toBeInTheDocument();
+    });
+  };
+
+  const tooltipTextKeys = [
+    'action.style',
+    'option.notesOrder.status',
+    'action.comment',
+    'action.group',
+    'action.delete',
+  ];
+
+  for (const tooltipTextKey of tooltipTextKeys) {
+    const translatedText = getTranslatedText(tooltipTextKey);
+    const button = await canvas.findByRole('button', {
+      name: translatedText,
+    });
+    await assertTooltipTopClass(button, translatedText);
+  }
 
   window.instance.UI.NotesPanel.disableMultiSelect();
 

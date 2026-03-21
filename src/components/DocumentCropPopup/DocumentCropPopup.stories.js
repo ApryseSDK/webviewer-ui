@@ -8,6 +8,7 @@ import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import initialState from 'src/redux/initialState';
 import { userEvent, within, expect } from 'storybook/test';
 import { getTranslatedText } from 'helpers/testTranslationHelper';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/DocumentCropPopup',
@@ -182,7 +183,7 @@ export function DocumentCropPopupMobile() {
   );
 }
 
-DocumentCropPopupMobile.parameters = window.storybook?.MobileParameters;
+DocumentCropPopupMobile.parameters = mobileStoryParameters;
 
 export function PopupInApp(args, context) {
   const { addonRtl } = context.globals;

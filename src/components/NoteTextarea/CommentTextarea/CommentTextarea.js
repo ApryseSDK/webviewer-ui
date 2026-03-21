@@ -94,6 +94,7 @@ const CommentTextarea = React.forwardRef(
     const languageKey = i18n.resolvedLanguage || i18n.language;
 
     const isAddReplyAttachmentDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON));
+    const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
 
     globalUserData = userData;
 
@@ -135,7 +136,7 @@ const CommentTextarea = React.forwardRef(
           onKeyDown={onKeyDown}
           formats={formats}
         />
-        {isReply && !isAddReplyAttachmentDisabled &&
+        {isReply && !isAddReplyAttachmentDisabled && !isOfficeEditorMode &&
           <Button
             className='add-attachment'
             dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}

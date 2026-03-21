@@ -2,6 +2,7 @@ import React from 'react';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import FormulaHelperOverlay from './FormulaHelperOverlay';
+import { disableRtlModeParameters, disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'SpreadsheetEditor/FormulaHelperOverlay',
@@ -43,7 +44,7 @@ Default.args = {
   labelId: 'formula-overlay-label',
 };
 
-Default.parameters = window.storybook.disableRtlMode;
+Default.parameters = disableRtlModeParameters;
 
 export const FrenchTranslation = Template.bind({});
 FrenchTranslation.args = {
@@ -57,4 +58,4 @@ FrenchTranslation.decorators = [
   },
 ];
 
-FrenchTranslation.parameters = window.storybook.disableChromatic;
+FrenchTranslation.parameters = disableChromaticParameters;

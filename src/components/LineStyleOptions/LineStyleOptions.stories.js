@@ -3,6 +3,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import LineStyleOptions from './LineStyleOptions';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/LineStyleOptions',
@@ -30,4 +31,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

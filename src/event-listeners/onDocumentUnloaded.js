@@ -5,9 +5,13 @@ import selectors from 'selectors';
 import { PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
 import { ELEMENTS_TO_DISABLE_IN_OFFICE_EDITOR, ELEMENTS_TO_ENABLE_IN_OFFICE_EDITOR } from 'constants/officeEditor';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import { ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR, ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR } from 'src/constants/spreadsheetEditor';
+import {
+  ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
+  ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR
+} from 'src/constants/spreadsheetEditor';
 
-export default (dispatch, store, documentViewerKey) => () => {
+export default (store, documentViewerKey) => () => {
+  const { dispatch } = store;
   const isSpreadsheetEditorEnabled = selectors.isSpreadsheetEditorModeEnabled(store.getState());
 
   dispatch(
@@ -89,14 +93,17 @@ export default (dispatch, store, documentViewerKey) => () => {
 
   // TODO Compare: Integrate with panels
   if (documentViewerKey === 1) {
-    dispatch(actions.setOutlines(null));
-    dispatch(actions.setBookmarks({}));
-    dispatch(actions.setPortfolio([]));
-    dispatch(actions.setTotalPages(0));
     dispatch(actions.setSearchValue(''));
-    dispatch(actions.setLayers(null));
     core.clearSearchResults();
   }
+
+  dispatch(actions.setBookmarks({}, documentViewerKey));
+  dispatch(actions.setOutlines(null, documentViewerKey));
+  dispatch(actions.setLayers(null, documentViewerKey));
+  dispatch(actions.setVerificationResult({}, documentViewerKey));
+  dispatch(actions.setPortfolio([], documentViewerKey));
+  dispatch(actions.setDocumentLoaded(false, documentViewerKey));
+  dispatch(actions.setTotalPages(0, documentViewerKey));
   dispatch(actions.setZoom(1, documentViewerKey));
   dispatch(actions.setCompareAnnotationsMap({}));
 };

@@ -9,6 +9,7 @@ import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from 'storybook/test';
 import { uiWithFlyout } from '../storyModularUIConfigs';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/NoteStateFlyout',
@@ -77,7 +78,7 @@ export const CancelledStateDisabled = () => {
     </ReduxWrapper>
   );
 };
-CancelledStateDisabled.parameters = window.storybook.disableRtlMode;
+CancelledStateDisabled.parameters = disableRtlModeParameters;
 
 export const RejectedStateDisabled = () => {
   const ReduxWrapper = createReduxWrapper('noteStateFlyoutRejectedOption', true);
@@ -87,7 +88,7 @@ export const RejectedStateDisabled = () => {
     </ReduxWrapper>
   );
 };
-RejectedStateDisabled.parameters = window.storybook.disableRtlMode;
+RejectedStateDisabled.parameters = disableRtlModeParameters;
 
 export const NoteStateFlyoutTest = createTemplate({
   headers: uiWithFlyout.modularHeaders,
@@ -107,7 +108,7 @@ export const NoteStateFlyoutTest = createTemplate({
 });
 NoteStateFlyoutTest.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 NoteStateFlyoutTest.play = async (context) => {
@@ -125,5 +126,5 @@ export const NoteStateFlyoutOnMobile = () => {
 };
 
 NoteStateFlyoutOnMobile.parameters = {
-  ...window.storybook?.MobileParameters
+  ...mobileStoryParameters
 };

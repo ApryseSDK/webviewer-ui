@@ -50,7 +50,8 @@ const propTypes = {
 
 const WidgetInfo = ({ name, field }) => {
   const { core } = useCore();
-  const verificationResult = useSelector((state) => selectors.getVerificationResult(state, name));
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const verificationResult = useSelector((state) => selectors.getVerificationResult(state, name, activeDocumentViewerKey));
   const [locatorRect, setLocatorRect] = useState(null);
   const [signatureDetailsExpanded, setSignatureDetailsExpanded] = useState(false);
   const { VerificationResult, VerificationOptions } = window.Core.PDFNet;

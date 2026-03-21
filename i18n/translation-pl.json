@@ -354,7 +354,11 @@
     "listEmptyValue": "Jedno lub więcej pól ma pustą wartość.",
     "listDuplicateValue": "Pola wielokrotne mają następujące wartości:",
     "networkError": "Wystąpił błąd podczas ładowania tego komponentu. Sprawdź połączenie sieciowe i odśwież stronę.",
-    "refreshPage": "Sprawdź połączenie sieciowe i odśwież stronę."
+    "refreshPage": "Sprawdź połączenie sieciowe i odśwież stronę.",
+    "renderErrors": {
+      "error": "Coś tu poszło nie tak.",
+      "refreshPanel": "Możesz kontynuować pracę. Spróbuj ponownie otworzyć panel."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sortuj listę kolejności",
       "position": "Pozycja",
+      "linePosition": "Pozycja",
       "time": "Czas",
       "status": "Status",
       "author": "Autor",
@@ -483,6 +488,7 @@
       "markForRedaction": "Oznacz do redakcji"
     },
     "searchPanel": {
+      "searchResults": "Wyniki wyszukiwania",
       "caseSensitive": "Rozróżnianie wielkości liter",
       "wholeWordOnly": "Całe słowo",
       "wildcard": "Dzika karta",
@@ -1316,6 +1322,7 @@
     "bold": "Pogrubiony",
     "italic": "italski",
     "underline": "Podkreślać",
+    "strikeout": "Wykreślić",
     "textColor": "Kolor tekstu",
     "leftAlign": "Wyrównaj do lewej",
     "centerAlign": "Wyrównaj do środka",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Zobacz bez sugestii",
     "notSupportedOnMobile": "Edycja pakietu Office nie jest obsługiwana na urządzeniach mobilnych.",
     "previewAllChanges": "Podgląd wszystkich zmian",
+    "changes": "Zmiany",
+    "comments": "Uwagi",
+    "commentsAndChangesTabs": "Karty komentarzy i zmian",
     "accept": "Zaakceptować",
     "reject": "Odrzucić",
     "pastingTitle": "Wklejanie niedostępne",

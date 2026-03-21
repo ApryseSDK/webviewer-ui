@@ -86,7 +86,7 @@ const RichTextStyleEditor = ({
       core.removeEventListener('editorTextChanged', handleTextChange);
       dispatch(actions.enableElements([DataElements.ANNOTATION_STYLE_POPUP]));
     };
-  }, []);
+  }, [core]);
 
   useEffect(() => {
     editorRef.current = editor;
@@ -144,7 +144,7 @@ const RichTextStyleEditor = ({
       core.removeEventListener('editorBlur', handleEditorBlur);
       core.removeEventListener('editorFocus', handleEditorFocus);
     };
-  }, [dispatch]);
+  }, [core]);
 
 
   const getFormat = (range) => {

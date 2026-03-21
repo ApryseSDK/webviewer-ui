@@ -2,6 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ViewControlsOverlay from './ViewControlsOverlay';
+import { disableRtlModeParameters, disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/ViewControlsOverlay',
@@ -42,7 +43,7 @@ export const Default = () => {
     </Provider>
   );
 };
-Default.parameters = window.storybook.disableRtlMode;
+Default.parameters = disableRtlModeParameters;
 
 const initialStateWithMultiTab = {
   ...initialState,
@@ -69,4 +70,4 @@ export const WithMultiTab = () => {
   );
 };
 
-WithMultiTab.parameters = window.storybook.disableChromatic;
+WithMultiTab.parameters = disableChromaticParameters;

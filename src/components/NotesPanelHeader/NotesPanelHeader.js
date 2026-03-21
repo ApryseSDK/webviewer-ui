@@ -14,7 +14,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
-import { getSortStrategies } from 'constants/sortStrategies';
+import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
@@ -118,6 +118,14 @@ function NotesPanelHeader({
     setSearchInputHandler(value);
   }, 500);
 
+  const sortStrategyItems = isOfficeEditorMode ? OFFICE_EDITOR_SORT_STRATEGIES : BASE_SORT_STRATEGIES;
+
+  useEffect(() => {
+    if (!sortStrategyItems.includes(sortStrategy)) {
+      dispatch(actions.setNotesPanelSortStrategy(sortStrategyItems[0]));
+    }
+  }, [dispatch, sortStrategy, sortStrategyItems]);
+
   const sortContainer = (
     <div className="sort-container" data-element={SORT_CONTAINER_ELEMENT}>
       <div className="label" id="notesSortLabel">{`${t('message.sort')}:`}</div>
@@ -127,7 +135,7 @@ function NotesPanelHeader({
         dataElement="notesOrderDropdown"
         disabled={notes.length === 0 || isPreviewingTrackedChanges}
         ariaLabel={`${t('message.sortBy')} ${sortStrategy}`}
-        items={Object.keys(getSortStrategies())}
+        items={sortStrategyItems}
         translationPrefix="option.notesOrder"
         currentSelectionKey={sortStrategy}
         onClickItem={(strategy) => {

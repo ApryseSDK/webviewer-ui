@@ -6,6 +6,7 @@ import Flyout from '../Flyout/Flyout';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import { oePartialState } from 'src/helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/RibbonGroup',
@@ -127,7 +128,7 @@ export const OverflowFlyout = (props) => {
     </Provider>
   );
 };
-OverflowFlyout.parameters = window.storybook.disableRtlMode;
+OverflowFlyout.parameters = disableRtlModeParameters;
 
 const noIconsStore = configureStore({
   reducer: () => {
@@ -158,7 +159,7 @@ export const NoIconsOverflowFlyout = (props) => {
     </Provider>
   );
 };
-NoIconsOverflowFlyout.parameters = window.storybook.disableRtlMode;
+NoIconsOverflowFlyout.parameters = disableRtlModeParameters;
 
 const translatedStore = configureStore({
   reducer: () => {

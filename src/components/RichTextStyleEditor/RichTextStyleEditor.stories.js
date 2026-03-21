@@ -6,6 +6,7 @@ import RichTextStyleEditor from './RichTextStyleEditor';
 import Panel from '../Panel';
 import '../StylePicker/StylePicker.scss';
 import { initialTextColors } from 'helpers/initialColorStates';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/RichTextStyleEditor',
@@ -125,7 +126,7 @@ Basic.args = {
   ...baseProps,
   isRedaction: false,
 };
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const WidgetLayout = BasicComponent.bind({
   ...baseObject
@@ -135,7 +136,7 @@ WidgetLayout.args = {
   isWidget: true,
   isRedaction: false,
 };
-WidgetLayout.parameters = window.storybook.disableRtlMode;
+WidgetLayout.parameters = disableRtlModeParameters;
 
 export const RedactionLayout = BasicComponent.bind({
   ...baseObject
@@ -145,4 +146,4 @@ RedactionLayout.args = {
   isRedaction: true,
   isContentEditing: false,
 };
-RedactionLayout.parameters = window.storybook.disableRtlMode;
+RedactionLayout.parameters = disableRtlModeParameters;

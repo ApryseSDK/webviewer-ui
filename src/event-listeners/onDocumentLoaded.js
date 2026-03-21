@@ -1,4 +1,5 @@
 import core from 'core';
+import { createWrappedCore } from 'hooks/useCore/useCore';
 import getHashParameters from 'helpers/getHashParameters';
 import { getLeftPanelDataElements } from 'helpers/isDataElementPanel';
 import actions from 'actions';
@@ -43,6 +44,7 @@ export default (store, documentViewerKey) => async () => {
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom(documentViewerKey), documentViewerKey));
   dispatch(actions.setThumbnailSelectingPages(false));
+  dispatch(actions.setDocumentLoaded(true, documentViewerKey));
 };
 
 export const enableRedactionElements = (dispatch) => () => {
@@ -61,6 +63,7 @@ export const enableRedactionElements = (dispatch) => () => {
 
 export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
+  const core = createWrappedCore(documentViewerKey);
   const docViewer = core.getDocumentViewer(documentViewerKey);
   if (core.isFullPDFEnabled()) {
     const PDFNet = window.Core.PDFNet;
@@ -102,7 +105,7 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
         try {
           checkIfDocumentClosed();
           totalPageCount = await pdfDoc.getPageCount();
-          const displayedPageCount = core.getTotalPages();
+          const displayedPageCount = core.getTotalPages(documentViewerKey);
           if (totalPageCount !== displayedPageCount) {
             const errorLoadingDocument = i18next.t('message.errorLoadingDocument', {
               totalPageCount,
@@ -136,9 +139,9 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
 
       checkIfDocumentClosed();
       const defaultPageLabels = getDefaultPageLabels(totalPageCount);
-      const newPageLabels = selectors.getPageLabels(getState());
+      const newPageLabels = selectors.getPageLabels(getState(), documentViewerKey);
       if (newPageLabels.every((newLabel, index) => newLabel === defaultPageLabels[index])) {
-        dispatch(actions.setPageLabels(pageLabels));
+        dispatch(actions.setPageLabels(pageLabels, documentViewerKey));
       }
     });
   }
@@ -215,8 +218,16 @@ export const checkDocumentForTools = (dispatch) => () => {
 
 export const updateOutlines = (dispatch, documentViewerKey) => () => {
   const doc = core.getDocument(documentViewerKey);
-  doc.addEventListener('bookmarksUpdated', () => core.getOutlines((outlines) => dispatch(actions.setOutlines(outlines)), documentViewerKey));
-  outlineUtils.setDoc(core.getDocument(documentViewerKey));
+  const updateOutlinesInRedux = () => {
+    core.getOutlines(
+      (outlines, documentViewerKey) => {
+        dispatch(actions.setOutlines(outlines, documentViewerKey));
+      },
+      documentViewerKey,
+    );
+  };
+  doc.addEventListener('bookmarksUpdated', updateOutlinesInRedux);
+  outlineUtils.setDoc(doc, documentViewerKey);
 };
 
 export const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel, store) => {
@@ -244,10 +255,11 @@ export const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel, sto
   }
 };
 
-export const updatePortfolio = (store) => async () => {
+export const updatePortfolio = (store, documentViewerKey) => async () => {
   const { dispatch } = store;
-  const portfolio = await getPortfolioFiles();
-  dispatch(actions.setPortfolio(portfolio));
+  const core = createWrappedCore(documentViewerKey);
+  const portfolio = await getPortfolioFiles(core);
+  dispatch(actions.setPortfolio(portfolio, documentViewerKey));
   if (portfolio.length === 0) {
     setNextActivePanelDueToEmptyCurrentPanel(DataElements.PORTFOLIO_PANEL, store);
   }
@@ -258,6 +270,16 @@ export const setupCompositionInput = (documentViewerKey) => () => {
   const enableCompositionInput = getHashParameters('enableCompositionInput', false);
   if (enableCompositionInput) {
     docViewer.enableCompositionInput();
+  }
+};
+
+export const syncDisplayModeMultiviewer = (documentViewerKey) => () => {
+  if (core.getDocumentViewers().length > 1) {
+    if (documentViewerKey === 1) {
+      core.setDisplayMode(core.getDisplayMode(2), documentViewerKey);
+    } else {
+      core.setDisplayMode(core.getDisplayMode(1), documentViewerKey);
+    }
   }
 };
 

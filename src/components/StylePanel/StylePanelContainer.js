@@ -60,7 +60,7 @@ const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout 
     return () => {
       handleChange.cancel();
     };
-  }, [isPanelOpen, isFlyout]);
+  }, [isPanelOpen, isFlyout, core]);
 
   useEffect(() => {
     core.addEventListener('annotationSelected', handleChange);
@@ -71,7 +71,7 @@ const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout 
       core.removeEventListener('toolModeUpdated', handleChange);
       handleChange.cancel();
     };
-  }, []);
+  }, [core]);
 
   const getComponent = () => {
     const hideStyles = selectedAnnotations.length > 0 ?

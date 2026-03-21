@@ -73,7 +73,7 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
 
   useEffect(() => {
     const updateFileAttachments = async () => {
-      const attachments = await getFileAttachments();
+      const attachments = await getFileAttachments(core);
       setFileAttachments(attachments);
     };
     const clearSpinner = () => {
@@ -88,7 +88,7 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
       core.removeEventListener('documentLoaded', updateFileAttachments);
       core.removeEventListener('fileAttachmentDataAvailable', clearSpinner);
     };
-  }, []);
+  }, [core]);
 
   if (
     fileAttachments.embeddedFiles.length === 0 &&

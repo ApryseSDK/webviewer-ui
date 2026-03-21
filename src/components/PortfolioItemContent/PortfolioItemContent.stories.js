@@ -5,6 +5,7 @@ import PortfolioItemContent from './PortfolioItemContent';
 import PortfolioContext from '../PortfolioPanel/PortfolioContext';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
 import '../LeftPanel/LeftPanel.scss';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const NOOP = () => { };
 
@@ -124,7 +125,7 @@ export const Adding = () => {
     </ReduxProvider>
   );
 };
-Adding.parameters = window.storybook.disableRtlMode;
+Adding.parameters = disableRtlModeParameters;
 
 export const Renaming = () => {
   return (

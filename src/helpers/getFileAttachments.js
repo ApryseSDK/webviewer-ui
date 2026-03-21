@@ -1,7 +1,6 @@
-import core from 'core';
 import { PORTFOLIO_CONSTANTS } from './portfolio';
 
-export async function getFileAttachments() {
+export async function getFileAttachments(core) {
   const attachments = {
     fileAttachmentAnnotations: [],
     embeddedFiles: [],

@@ -22,7 +22,7 @@ const FormFieldEditButton = forwardRef((props, ref) => {
     img: icon = menuItems.formFieldEditButton.icon,
     title = menuItems.formFieldEditButton.title,
   } = props;
-  const [active, setActive] = useState(core.getFormFieldCreationManager().isInFormFieldCreationMode());
+  const [active, setActive] = useState(core?.getFormFieldCreationManager()?.isInFormFieldCreationMode());
 
   useEffect(() => {
     const formFieldCreationManager = core.getFormFieldCreationManager();
@@ -35,15 +35,19 @@ const FormFieldEditButton = forwardRef((props, ref) => {
         formFieldCreationManager.removeEventListener('formFieldCreationModeEnded', updateState);
       };
     }
-  }, []);
+  }, [core]);
 
   const handleClick = () => {
     const formFieldCreationManager = core.getFormFieldCreationManager();
     const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
     if (isInFormFieldCreationMode) {
-      formFieldCreationManager.endFormFieldCreationMode();
+      core.getDocumentViewers().forEach((viewer) => {
+        viewer.getAnnotationManager().getFormFieldCreationManager().endFormFieldCreationMode();
+      });
     } else {
-      formFieldCreationManager.startFormFieldCreationMode();
+      core.getDocumentViewers().forEach((viewer) => {
+        viewer.getAnnotationManager().getFormFieldCreationManager().startFormFieldCreationMode();
+      });
     }
   };
 

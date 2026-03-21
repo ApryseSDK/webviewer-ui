@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import MenuOverlay from './MenuOverlay';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/MenuOverlay',
@@ -52,7 +53,7 @@ export const MenuOverlayXOD = () => {
   );
 };
 
-MenuOverlayXOD.parameters = window.storybook.disableRtlMode;
+MenuOverlayXOD.parameters = disableRtlModeParameters;
 
 export const MenuOverlayPDF = () => {
   return (
@@ -64,5 +65,5 @@ export const MenuOverlayPDF = () => {
   );
 };
 
-MenuOverlayPDF.parameters = window.storybook.disableRtlMode;
+MenuOverlayPDF.parameters = disableRtlModeParameters;
 

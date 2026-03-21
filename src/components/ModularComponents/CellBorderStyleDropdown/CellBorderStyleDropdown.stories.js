@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import { userEvent, within, expect } from 'storybook/test';
 import { getTranslatedText } from 'helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'SpreadsheetEditor/CellBorderStyleDropdown',
@@ -50,7 +51,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function Open() {
   return Basic();
@@ -76,4 +77,4 @@ Open.play = async ({ canvasElement }) => {
   expect(dottedOption).toBeInTheDocument();
 };
 
-Open.parameters = window.storybook.disableRtlMode;
+Open.parameters = disableRtlModeParameters;

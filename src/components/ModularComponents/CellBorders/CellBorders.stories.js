@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import { within, expect } from 'storybook/test';
 import { getTranslatedText } from 'helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const createMockDocumentViewer = (getSelectedCellRange, cells) => () => ({
   getSpreadsheetEditorManager: () => ({
@@ -157,7 +158,7 @@ const createStory = (dataElement, mockConfig, checkAll = false) => {
   story.decorators = [createMockDecorator(mockConfig)];
   story.play = createPlayFunction(checkAll);
   if (!checkAll) {
-    story.parameters = window.storybook.disableRtlMode;
+    story.parameters = disableRtlModeParameters;
   }
   return story;
 };

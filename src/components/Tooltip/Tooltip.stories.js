@@ -7,6 +7,7 @@ import hotkeysManager, { getCloseToolTipFunc } from 'helpers/hotkeysManager';
 import { within, userEvent, expect } from 'storybook/test';
 import withI18n from '../../../jest/withI18n';
 import i18next from 'i18next';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Tooltip',
@@ -32,7 +33,7 @@ const createTooltip = (title = 'This is a tooltip') => {
 
 export const Basic = createTooltip();
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const DismissWithHotkey = createTooltip();
 DismissWithHotkey.play = async ({ canvasElement }) => {
@@ -46,7 +47,7 @@ DismissWithHotkey.play = async ({ canvasElement }) => {
   await expect(await document.body.querySelector('.tooltip__content')).toBeNull();
 };
 
-DismissWithHotkey.parameters = window.storybook.disableRtlMode;
+DismissWithHotkey.parameters = disableRtlModeParameters;
 
 export const DismissWithBlur = createTooltip();
 DismissWithBlur.play = async ({ canvasElement }) => {
@@ -58,7 +59,7 @@ DismissWithBlur.play = async ({ canvasElement }) => {
   await expect(await document.body.querySelector('.tooltip__content')).toBeNull();
 };
 
-DismissWithBlur.parameters = window.storybook.disableRtlMode;
+DismissWithBlur.parameters = disableRtlModeParameters;
 
 export const StayVisibleOnTooltipHover = createTooltip();
 StayVisibleOnTooltipHover.play = async ({ canvasElement }) => {
@@ -70,7 +71,7 @@ StayVisibleOnTooltipHover.play = async ({ canvasElement }) => {
   await expect(await body.findByText('This is a tooltip')).not.toBeNull();
 };
 
-StayVisibleOnTooltipHover.parameters = window.storybook.disableRtlMode;
+StayVisibleOnTooltipHover.parameters = disableRtlModeParameters;
 
 export const UrduTooltip = withI18n(createTooltip('annotation.signature'));
 UrduTooltip.play = async ({ canvasElement }) => {
@@ -82,4 +83,4 @@ UrduTooltip.play = async ({ canvasElement }) => {
   await expect(await body.findByText(i18next.t('annotation.signature'))).not.toBeNull();
   await expect(await body.findByText('(S)')).not.toBeNull();
 };
-UrduTooltip.parameters = window.storybook.disableRtlMode;
+UrduTooltip.parameters = disableRtlModeParameters;

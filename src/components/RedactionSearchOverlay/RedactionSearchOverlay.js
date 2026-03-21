@@ -1,34 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import DataElementWrapper from '../DataElementWrapper';
 import RedactionSearchMultiSelect from './RedactionSearchMultiSelect';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import './RedactionSearchOverlay.scss';
 import { useTranslation } from 'react-i18next';
-
-const buildSearchOptions = (searchTerms) => {
-  const options = {
-    textSearch: [],
-    caseSensitive: true,
-  };
-
-  if (!searchTerms) {
-    return options;
-  }
-
-  searchTerms.forEach((searchTerm) => {
-    const { type } = searchTerm;
-    if (type === redactionTypeMap['TEXT']) {
-      options.textSearch.push(searchTerm.label);
-    } else {
-      options[type] = true;
-    }
-    if (searchTerm.regex) {
-      options.caseSensitive = options.caseSensitive && !searchTerm.regex.ignoreCase;
-    }
-  });
-
-  return options;
-};
+import { buildSearchOptions, parseRegexLiteral } from 'helpers/redactionSearchOptions';
 
 const RedactionSearchOverlay = (props) => {
   const {
@@ -37,9 +13,11 @@ const RedactionSearchOverlay = (props) => {
     setSearchTerms,
     executeRedactionSearch,
     activeTheme,
+    activeDocumentViewerKey,
     redactionSearchOptions,
   } = props;
   const [t] = useTranslation();
+  const previousDocumentViewerKeyRef = useRef(activeDocumentViewerKey);
 
   const translatedOptions = redactionSearchOptions.map((option) => ({
     ...option,
@@ -53,19 +31,33 @@ const RedactionSearchOverlay = (props) => {
   };
 
   const handleCreate = (newValue) => {
+    const parsedRegex = parseRegexLiteral(newValue);
     const textTerm = {
       label: newValue,
       value: newValue,
-      type: redactionTypeMap['TEXT']
+      type: redactionTypeMap['TEXT'],
+      isRegex: Boolean(parsedRegex),
+      regex: parsedRegex || undefined,
     };
     // Initially search terms are null so we safeguard against this
     const nonNullSearchTerms = searchTerms || [];
     const updatedSearchTerms = [...nonNullSearchTerms, textTerm];
     setSearchTerms(updatedSearchTerms);
     const options = buildSearchOptions(updatedSearchTerms);
-    options.caseSensitive = false;
     executeRedactionSearch(options);
   };
+
+  useEffect(() => {
+    const previousDocumentViewerKey = previousDocumentViewerKeyRef.current;
+    const hasViewerSwitched = previousDocumentViewerKey !== activeDocumentViewerKey;
+    if (hasViewerSwitched) {
+      const emptySearchTerms = [];
+      setSearchTerms(emptySearchTerms);
+      const options = buildSearchOptions(emptySearchTerms);
+      executeRedactionSearch(options);
+      previousDocumentViewerKeyRef.current = activeDocumentViewerKey;
+    }
+  }, [activeDocumentViewerKey, executeRedactionSearch, setSearchTerms]);
 
   return (
     <DataElementWrapper

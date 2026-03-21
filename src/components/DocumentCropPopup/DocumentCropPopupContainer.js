@@ -21,7 +21,7 @@ export function focusActiveIcon(e) {
 }
 
 function DocumentCropPopupContainer() {
-  const { core } = useCore();
+  const { core, documentViewer } = useCore();
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
   const activeToolName = useSelector(selectors.getActiveToolName);
   const isDocumentCropPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.DOCUMENT_CROP_POPUP));
@@ -37,7 +37,7 @@ function DocumentCropPopupContainer() {
 
   const openDocumentCropPopup = () => {
     dispatch(actions.openElement(DataElements.DOCUMENT_CROP_POPUP));
-    setSelectedPages(cropCreateTool.getPagesToCrop());
+    setSelectedPages(cropCreateTool.getPagesToCrop() || []);
     // eslint-disable-next-line no-undef
     dispatch(actions.closeElements(elementsToClose));
     setIsCropping(cropCreateTool.getIsCropping());
@@ -64,7 +64,7 @@ function DocumentCropPopupContainer() {
       cropCreateTool.removeEventListener('cropModeChanged', handleCropModeChange);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
     };
-  }, []);
+  }, [core]);
 
   const disableHeader = () => {
     const header = getRootNode().querySelector('[data-element=header]');
@@ -108,9 +108,10 @@ function DocumentCropPopupContainer() {
   const [cropMode, setCropMode] = useState(null);
 
   useEffect(() => {
-    cropCreateTool.setCropMode('ALL_PAGES');
-    setCropMode('ALL_PAGES');
-  }, []);
+    const modeToSet = cropMode || 'ALL_PAGES';
+    cropCreateTool.setCropMode(modeToSet);
+    setCropMode(modeToSet);
+  }, [cropCreateTool]);
 
   const onCropModeChange = (cropName) => {
     cropCreateTool.setCropMode(cropName);
@@ -133,13 +134,10 @@ function DocumentCropPopupContainer() {
 
   const cropPopupRef = useRef();
   const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds } = useDraggablePosition('top-right');
-  const documentViewer = core.getDocumentViewer(1);
 
   const closeAndReset = () => {
     cropCreateTool.reset();
     if (cropMode === 'MULTI_PAGE') {
-      // eslint-disable-next-line no-undef
-      setPagesToCrop([]);
       cropCreateTool.setPagesToCrop([]);
     }
     dispatch(actions.closeElement(DataElements.DOCUMENT_CROP_POPUP));
@@ -147,10 +145,13 @@ function DocumentCropPopupContainer() {
     core.setToolMode(window.Core.Tools.ToolNames.CROP);
   };
 
-  const closeDocumentCropPopup = useCallback((e) => {
-    closeAndReset();
-    focusActiveIcon(e);
-  }, []);
+  const closeDocumentCropPopup = useCallback(
+    (e) => {
+      closeAndReset();
+      focusActiveIcon(e);
+    },
+    [core, cropCreateTool, dispatch, closeAndReset, focusActiveIcon],
+  );
 
   // disable/enable the 'apply' button when cropping
   useEffect(() => {
@@ -169,29 +170,26 @@ function DocumentCropPopupContainer() {
       return core.getPageWidth(pageNumber);
     }
     return core.getPageHeight(pageNumber);
-  }, []);
+  }, [core]);
 
   const getPageWidth = useCallback((pageNumber) => {
     if (isPageRotated(pageNumber)) {
       return core.getPageHeight(pageNumber);
     }
     return core.getPageWidth(pageNumber);
-  }, []);
+  }, [core]);
 
   const isPageRotated = useCallback((pageNumber) => {
-    // eslint-disable-next-line no-undef
     return documentViewer?.getDocument().getPageRotation(pageNumber) % 180 !== 0;
-  });
+  }, [documentViewer]);
 
   const getPageCount = useCallback(() => {
-    // eslint-disable-next-line no-undef
     return documentViewer?.getPageCount();
-  });
+  }, [documentViewer]);
 
   const getCurrentPage = useCallback(() => {
-    // eslint-disable-next-line no-undef
     return documentViewer?.getCurrentPage();
-  });
+  }, [documentViewer]);
 
   const redrawCropAnnotations = useCallback((rect) => {
     const cropAnnotations = core
@@ -204,7 +202,9 @@ function DocumentCropPopupContainer() {
       annot.setRect(rect);
       core.getAnnotationManager().drawAnnotationsFromList([annot]);
     });
-  }, []);
+  }, [core]);
+
+  const isMobile = isMobileSize();
 
   const props = {
     cropAnnotation,
@@ -224,9 +224,8 @@ function DocumentCropPopupContainer() {
     onSelectedPagesChange,
     shouldShowApplyCropWarning,
     presetCropDimensions,
+    isMobile,
   };
-
-  const isMobile = isMobileSize();
 
   if (isOpen && core.getDocument()) {
     if (isMobile && !isInDesktopOnlyMode) {

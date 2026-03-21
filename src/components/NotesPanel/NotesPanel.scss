@@ -16,6 +16,15 @@
   position: relative;
   overflow-y: visible;
 
+  &.notes-panel-container--error {
+    flex-direction: column;
+
+    .NotesPanelWarningBanner {
+      width: auto;
+      margin: 16px;
+    }
+  }
+
   @include tablet {
     border-inline-start: 1px solid var(--side-panel-border);
   }

@@ -276,6 +276,7 @@ const OfficeEditorToolsHeader = () => {
   const isBold = properties.bold;
   const isItalic = properties.italic;
   const isUnderline = properties.underlineStyle === 'single';
+  const isStrikeout = properties.strikethrough;
   const fontFace = properties.fontFace || '';
   const pointSize = properties.pointSize;
   const pointSizeSelectionKey = pointSize === undefined ? '' : pointSize.toString();
@@ -401,7 +402,8 @@ const OfficeEditorToolsHeader = () => {
                         activeStates={{
                           bold: isBold,
                           italic: isItalic,
-                          underline: isUnderline
+                          underline: isUnderline,
+                          strikeout: isStrikeout,
                         }}
                       />
                     </>
@@ -526,7 +528,8 @@ const OfficeEditorToolsHeader = () => {
                                     activeStates={{
                                       bold: isBold,
                                       italic: isItalic,
-                                      underline: isUnderline
+                                      underline: isUnderline,
+                                      strikeout: isStrikeout,
                                     }}
                                   />
                                   <div className='divider' />

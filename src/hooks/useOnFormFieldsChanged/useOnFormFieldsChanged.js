@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 const { Annotations } = window.Core;
 
 export default function useOnFormFieldsChanged() {
+  const { core } = useCore();
   const [formFieldAnnotationsList, setFormFieldAnnotationsList] = useState([]);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export default function useOnFormFieldsChanged() {
       core.removeEventListener('annotationChanged', setFormFieldIndicators);
       core.removeEventListener('pageNumberUpdated', setFormFieldIndicators);
     };
-  });
+  }, [core]);
 
   return formFieldAnnotationsList;
 }

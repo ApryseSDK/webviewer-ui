@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import selectors from 'selectors';
 import actions from 'actions';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
 import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
@@ -12,6 +12,7 @@ import { defaultZoomList } from 'constants/zoomFactors';
 import useCore from 'hooks/useCore';
 
 const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className }) => {
+  const store = useStore();
   const { core } = useCore();
   const flyoutElement = `${dataElement}Flyout`;
   const [zoomValue, setZoomValue] = useState('100');
@@ -34,10 +35,9 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
         zoomOptionsList: zoomList,
         isSpreadsheetEditorMode,
         isOfficeEditorMode: isOfficeEditorMode(),
-        dispatch,
+        store,
         size,
         onZoomChanged: setZoomValue,
-        core,
       }),
     };
     dispatch(actions.setZoomList(zoomList));
@@ -61,20 +61,24 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   useSizeStore({ dataElement, elementRef, headerDirection });
 
   useEffect(() => {
-    const onDocumentLoaded = () => {
-      setZoomValue(Math.ceil(core.getZoom() * 100).toString());
-      updateZoomItems();
+    const onUpdate = () => {
+      if (core.getDocument()) {
+        setZoomValue(Math.ceil(core.getZoom() * 100).toString());
+        updateZoomItems();
+      } else {
+        setZoomValue('100');
+      }
     };
-    const onDocumentUnloaded = () => setZoomValue('100');
-    core.addEventListener('documentLoaded', onDocumentLoaded);
-    core.addEventListener('documentUnloaded', onDocumentUnloaded);
-    updateZoomItems();
+    const unLoad = () => setZoomValue('100');
+    core.addEventListener('documentLoaded', onUpdate);
+    core.addEventListener('documentUnloaded', unLoad);
+    onUpdate();
 
     return () => {
-      core.removeEventListener('documentLoaded', onDocumentLoaded);
-      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+      core.removeEventListener('documentLoaded', onUpdate);
+      core.removeEventListener('documentUnloaded', unLoad);
     };
-  }, []);
+  }, [core]);
 
   useEffect(() => {
     const onZoomUpdated = () => {
@@ -83,7 +87,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
 
     core.addEventListener('zoomUpdated', onZoomUpdated);
     return () => core.removeEventListener('zoomUpdated', onZoomUpdated);
-  }, [size]);
+  }, [size, core]);
 
   // This is necessary because the button triggering the flyout menu is not the element we want to set as the trigger for positioning it
   const setFlyoutTriggerRef = () => {
@@ -95,7 +99,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   const {
     onZoomInClicked,
     onZoomOutClicked,
-  } = getZoomHandlers(dispatch, size, setZoomValue, core);
+  } = getZoomHandlers(store, size, setZoomValue);
 
   const getCurrentZoom = () => {
     return Math.ceil(core.getZoom() * 100).toString();
@@ -103,7 +107,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
 
   useEffect(() => {
     updateZoomItems();
-  }, [size]);
+  }, [size, core]);
 
   const zoomProps = {
     isActive: isActive,

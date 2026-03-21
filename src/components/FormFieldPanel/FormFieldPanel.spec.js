@@ -9,7 +9,6 @@ const TestFormFieldEditPanel = withProviders(FormFieldPanel);
 
 function noop() { }
 
-
 describe('FormFieldPanel', () => {
   describe('Component', () => {
     it('Story should not throw any errors', () => {
@@ -203,6 +202,28 @@ describe('FormFieldPanel', () => {
       expect(titleElement.tagName).toBe('H2');
 
       screen.getByRole('group', { name: 'Properties' });
+    });
+
+    it('should not have form field indicator property in multiviewer', () => {
+      render(
+        <TestFormFieldEditPanel
+          fields={inputFields}
+          flags={sampleFlags}
+          closeFormFieldEditPopup={noop}
+          isOpen
+          isValid
+          annotation={createMockAnnotation()}
+          redrawAnnotation={noop}
+          getPageHeight={noop}
+          getPageWidth={noop}
+          indicator={indicator}
+          isMultiViewerMode={true}
+        />,
+      );
+
+      const formFieldIndicator = screen.queryByText('Document Field Indicators');
+
+      expect(formFieldIndicator).not.toBeInTheDocument();
     });
   });
 });

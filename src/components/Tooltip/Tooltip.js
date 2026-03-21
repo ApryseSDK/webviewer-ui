@@ -10,6 +10,7 @@ import fireEvent from 'helpers/fireEvent';
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 import getRootNode from 'helpers/getRootNode';
 import Events from 'constants/events';
+import { css } from '@emotion/react';
 import './Tooltip.scss';
 
 const propTypes = {
@@ -266,7 +267,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
         ReactDOM.createPortal(
           <div
             className={`tooltip--${location}`}
-            style={{ opacity, ...position }}
+            css={css({
+              opacity,
+              ...position,
+            })}
             ref={tooltipRef}
             data-element="tooltip"
           >

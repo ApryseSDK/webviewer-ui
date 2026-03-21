@@ -3,6 +3,7 @@ import initialState from 'src/redux/initialState';
 import RubberStampPanel from './RubberStampPanel';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/RubberStampPanel',
@@ -43,7 +44,7 @@ const RubberStampPanelInApp = (context, location) => {
 
 export const RubberStampPanelInleft = (args, context) => RubberStampPanelInApp(context, 'left');
 export const RubberStampPanelInRight = (args, context) => RubberStampPanelInApp(context, 'right');
-RubberStampPanelInRight.parameters = window.storybook.disableRtlMode;
+RubberStampPanelInRight.parameters = disableRtlModeParameters;
 
 export const RubberStampPanelInMobile = (args, context) => RubberStampPanelInApp(context, );
 
@@ -53,4 +54,4 @@ RubberStampPanelInleft.parameters = {
 RubberStampPanelInRight.parameters = {
   layout: 'fullscreen',
 };
-RubberStampPanelInMobile.parameters = window.storybook.MobileParameters;
+RubberStampPanelInMobile.parameters = mobileStoryParameters;

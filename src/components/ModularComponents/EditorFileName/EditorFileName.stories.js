@@ -8,6 +8,7 @@ import { OEModularUIMockState, string280Chars } from 'helpers/storybookHelper';
 import { FILESAVERJS_MAX_NAME_LENTH } from 'constants/fileName';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/EditorFileName',
@@ -64,14 +65,14 @@ FileNameButton.play = async ({ canvasElement }) => {
   expect(inputCap).toBe(FILESAVERJS_MAX_NAME_LENTH);
 };
 
-FileNameButton.parameters = window.storybook.disableRtlMode;
+FileNameButton.parameters = disableRtlModeParameters;
 
 export function OfficeEditorDisabledFileName() {
   initialState.officeEditor.editMode = OfficeEditorEditMode.VIEW_ONLY;
   return prepareButtonStory();
 }
 
-OfficeEditorDisabledFileName.parameters = window.storybook.disableRtlMode;
+OfficeEditorDisabledFileName.parameters = disableRtlModeParameters;
 
 export function SpreadsheetEditorDisabledFileName() {
   initialState.viewer.isSpreadsheetEditorModeEnabled = true;
@@ -79,4 +80,4 @@ export function SpreadsheetEditorDisabledFileName() {
   return prepareButtonStory('spreadsheetEditorFileName');
 }
 
-SpreadsheetEditorDisabledFileName.parameters = window.storybook.disableRtlMode;
+SpreadsheetEditorDisabledFileName.parameters = disableRtlModeParameters;

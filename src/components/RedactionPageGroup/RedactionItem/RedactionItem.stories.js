@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 import { initialColors } from 'helpers/initialColorStates';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -61,7 +62,7 @@ export function TextRedactionItem() {
   );
 }
 
-TextRedactionItem.parameters = window.storybook.disableRtlMode;
+TextRedactionItem.parameters = disableRtlModeParameters;
 
 export function RegionRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
@@ -82,7 +83,7 @@ export function RegionRedactionItem() {
   );
 }
 
-RegionRedactionItem.parameters = window.storybook.disableRtlMode;
+RegionRedactionItem.parameters = disableRtlModeParameters;
 
 export function FullPageRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
@@ -103,7 +104,7 @@ export function FullPageRedactionItem() {
   );
 }
 
-FullPageRedactionItem.parameters = window.storybook.disableRtlMode;
+FullPageRedactionItem.parameters = disableRtlModeParameters;
 
 export function CreditCardRedactionItem() {
   const mockCreditCardRedaction = getMockRedactionAnnotation();
@@ -124,7 +125,7 @@ export function CreditCardRedactionItem() {
   );
 }
 
-CreditCardRedactionItem.parameters = window.storybook.disableRtlMode;
+CreditCardRedactionItem.parameters = disableRtlModeParameters;
 
 export function PhoneNumberRedactionItem() {
   const mockPhoneNumberRedaction = getMockRedactionAnnotation();
@@ -145,7 +146,7 @@ export function PhoneNumberRedactionItem() {
   );
 }
 
-PhoneNumberRedactionItem.parameters = window.storybook.disableRtlMode;
+PhoneNumberRedactionItem.parameters = disableRtlModeParameters;
 
 export function EmailRedactionItem() {
   const mockEmailRedaction = getMockRedactionAnnotation();
@@ -165,7 +166,7 @@ export function EmailRedactionItem() {
   );
 }
 
-EmailRedactionItem.parameters = window.storybook.disableRtlMode;
+EmailRedactionItem.parameters = disableRtlModeParameters;
 
 export function RedactionItemWithLabelText() {
   const labelTextRedaction = getMockRedactionAnnotation();
@@ -187,4 +188,4 @@ export function RedactionItemWithLabelText() {
   );
 }
 
-RedactionItemWithLabelText.parameters = window.storybook.disableRtlMode;
+RedactionItemWithLabelText.parameters = disableRtlModeParameters;

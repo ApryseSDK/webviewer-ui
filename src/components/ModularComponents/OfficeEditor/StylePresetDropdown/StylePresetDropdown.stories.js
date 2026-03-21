@@ -7,6 +7,7 @@ import StylePresetDropdown from './StylePresetDropdown';
 import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/StylePresetDropdown',
@@ -41,7 +42,7 @@ export function NormalText() {
   return prepareDropdownStory();
 }
 
-NormalText.parameters = window.storybook.disableChromatic;
+NormalText.parameters = disableChromaticParameters;
 
 NormalText.play = async ({ canvasElement }) => {
   // open the dropdown and check the active item
@@ -60,7 +61,7 @@ export function Heading1() {
   return prepareDropdownStory();
 }
 
-Heading1.parameters = window.storybook.disableChromatic;
+Heading1.parameters = disableChromaticParameters;
 
 Heading1.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

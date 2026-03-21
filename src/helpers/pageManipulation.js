@@ -5,19 +5,19 @@ import fireEvent from './fireEvent';
 import Events from 'constants/events';
 import DataElements from 'src/constants/dataElement';
 
-export const extractPagesToMerge = (pageNumbers) => {
+export const extractPagesToMerge = (pageNumbers, documentViewerKey = 1) => {
   // extract pages and put the data on the iFrame window element for another instance of WebViewer to access
-  window.extractedDataPromise = extractPagesWithAnnotations(pageNumbers);
+  window.extractedDataPromise = extractPagesWithAnnotations(pageNumbers, documentViewerKey);
   window.pagesExtracted = pageNumbers;
 };
 
-export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true) => (dispatch) => {
+export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true, documentViewerKey = 1) => (dispatch) => {
   dispatch(actions.openElement(DataElements.LOADING_MODAL));
 
   return new Promise((resolve, reject) => {
-    core.mergeDocument(srcToMerge, mergeToPage).then((mergeResults) => {
+    core.mergeDocument(srcToMerge, mergeToPage, documentViewerKey).then((mergeResults) => {
       dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-      core.setCurrentPage(mergeToPage);
+      core.setCurrentPage(mergeToPage, documentViewerKey);
 
       if (shouldFireEvent) {
         fireEvent(Events.DOCUMENT_MERGED, mergeResults);
@@ -31,7 +31,7 @@ export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true) =
   });
 };
 
-export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => (dispatch) => {
+export const mergeExternalWebViewerDocument = (viewerID, mergeToPage, documentViewerKey = 1) => (dispatch) => {
   return new Promise((resolve, reject) => {
     const otherWebViewerIframe = window.parent.document.querySelector(`#${viewerID}`);
     if (!otherWebViewerIframe) {
@@ -52,7 +52,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => (dispat
 
     dispatch(actions.openElement(DataElements.LOADING_MODAL));
     extractedDataPromise.then((docToMerge) => {
-      dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
+      dispatch(mergeDocument(docToMerge, mergeToPage, false, documentViewerKey)).then(({ filename, pages }) => {
         fireEvent(Events.DOCUMENT_MERGED, { filename, pages: contentWindow.pagesExtracted });
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
         resolve({ filename, pages });

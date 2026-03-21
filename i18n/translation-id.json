@@ -354,7 +354,11 @@
     "listEmptyValue": "Satu atau lebih bidang memiliki nilai kosong.",
     "listDuplicateValue": "Beberapa bidang memiliki nilai berikut:",
     "networkError": "Terjadi kesalahan saat memuat komponen ini. Silakan periksa koneksi jaringan Anda dan segarkan halaman.",
-    "refreshPage": "Silakan periksa koneksi jaringan Anda dan segarkan halaman."
+    "refreshPage": "Silakan periksa koneksi jaringan Anda dan segarkan halaman.",
+    "renderErrors": {
+      "error": "Terjadi kesalahan di sini.",
+      "refreshPanel": "Anda dapat melanjutkan pekerjaan. Coba buka kembali panelnya."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Urutkan Daftar Pesanan",
       "position": "Posisi",
+      "linePosition": "Posisi",
       "time": "Waktu",
       "status": "Status",
       "author": "Pengarang",
@@ -483,6 +488,7 @@
       "markForRedaction": "Tandai untuk redaksi"
     },
     "searchPanel": {
+      "searchResults": "Hasil Pencarian",
       "caseSensitive": "Hal - hal sensitif",
       "wholeWordOnly": "Seluruh kata",
       "wildcard": "Wildcard",
@@ -1316,6 +1322,7 @@
     "bold": "Berani",
     "italic": "Miring",
     "underline": "Menggarisbawahi",
+    "strikeout": "Coretan",
     "textColor": "Warna teks",
     "leftAlign": "Rata kiri",
     "centerAlign": "Rata tengah",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Lihat tanpa saran",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler.",
     "previewAllChanges": "Pratinjau semua perubahan",
+    "changes": "Perubahan",
+    "comments": "Komentar",
+    "commentsAndChangesTabs": "Tab Komentar dan Perubahan",
     "accept": "Menerima",
     "reject": "Menolak",
     "pastingTitle": "Penempelan tidak tersedia",

@@ -39,16 +39,28 @@ const reducer = () => {
   };
 };
 
+const changingDestReducer = () => {
+  return {
+    ...reducer(),
+    viewer: {
+      ...reducer().viewer,
+      outlinesStateMap: {
+        1: {
+          '0': { isChangingDest: true },
+        },
+      },
+    },
+  };
+};
+
 export const Basic = () => {
   return (
-    <ReduxProvider store={createStore(reducer)}>
+    <ReduxProvider store={createStore(changingDestReducer)}>
       <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container default'>
             <OutlineContext.Provider
               value={{
-                setEditingOutlines: NOOP,
-                editingOutlines: {},
                 isMultiSelectMode: false,
                 isOutlineEditable: true,
                 addNewOutline: NOOP,
@@ -60,10 +72,9 @@ export const Basic = () => {
               <OutlineContent
                 outlinePath='0'
                 text='A test outline'
-                // isAdding={true}
                 setIsHovered={NOOP}
-                isOutlineChangingDest={true}
                 onCancel={NOOP}
+                isChangingDest={true}
               />
             </OutlineContext.Provider>
           </div>
@@ -83,8 +94,6 @@ export const Adding = () => {
               value={{
                 currentDestPage: 1,
                 currentDestText: 'Full Page',
-                setEditingOutlines: NOOP,
-                editingOutlines: {},
                 isMultiSelectMode: false,
                 isOutlineEditable: true,
                 addNewOutline: NOOP,
@@ -98,7 +107,7 @@ export const Adding = () => {
                 text=''
                 isAdding={true}
                 setIsHovered={NOOP}
-                isOutlineRenaming={false}
+                isRenaming={false}
                 onCancel={NOOP}
               />
             </OutlineContext.Provider>
@@ -117,8 +126,6 @@ export const Renaming = () => {
           <div className='bookmark-outline-single-container editing'>
             <OutlineContext.Provider
               value={{
-                setEditingOutlines: NOOP,
-                editingOutlines: {},
                 isMultiSelectMode: false,
                 isOutlineEditable: true,
                 addNewOutline: NOOP,
@@ -131,7 +138,7 @@ export const Renaming = () => {
                 outlinePath='0'
                 text='A test outline'
                 setIsHovered={NOOP}
-                isOutlineRenaming={true}
+                isRenaming={true}
                 onCancel={NOOP}
               />
             </OutlineContext.Provider>
@@ -144,14 +151,12 @@ export const Renaming = () => {
 
 export const ChangingDestination = () => {
   return (
-    <ReduxProvider store={createStore(reducer)}>
+    <ReduxProvider store={createStore(changingDestReducer)}>
       <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container editing'>
             <OutlineContext.Provider
               value={{
-                setEditingOutlines: NOOP,
-                editingOutlines: {},
                 isMultiSelectMode: false,
                 isOutlineEditable: true,
                 addNewOutline: NOOP,
@@ -166,8 +171,8 @@ export const ChangingDestination = () => {
                 outlinePath='0'
                 text='A test outline'
                 setIsHovered={NOOP}
-                isOutlineChangingDest={true}
                 onCancel={NOOP}
+                isChangingDest={true}
               />
             </OutlineContext.Provider>
           </div>
@@ -179,14 +184,12 @@ export const ChangingDestination = () => {
 
 export const ColoredOutline = () => {
   return (
-    <ReduxProvider store={createStore(reducer)}>
+    <ReduxProvider store={createStore(changingDestReducer)}>
       <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container default'>
             <OutlineContext.Provider
               value={{
-                setEditingOutlines: NOOP,
-                editingOutlines: {},
                 isMultiSelectMode: false,
                 isOutlineEditable: true,
                 addNewOutline: NOOP,
@@ -198,9 +201,9 @@ export const ColoredOutline = () => {
               <OutlineContent
                 outlinePath='0'
                 text='A colored outline'
+                isChangingDest={true}
                 setIsHovered={NOOP}
                 textColor="rgb(213, 42, 42)"
-                isOutlineChangingDest={true}
                 onCancel={NOOP}
               />
             </OutlineContext.Provider>

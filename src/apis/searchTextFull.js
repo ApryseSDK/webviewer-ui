@@ -54,8 +54,9 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-const searchTextFullFactory = (store) => async (searchValue, options, isUserTriggered = true) => {
-  const dispatch = store?.dispatch;
+const searchTextFullFactory = (store) => async (searchValue, options, isUserTriggered = true, config = {}) => {
+  const { shouldDispatchUIActions = true } = config;
+  const dispatch = shouldDispatchUIActions ? store?.dispatch : undefined;
   // Store is optional. Default activeDocumentViewerKey is 1
   const activeDocumentViewerKey = store ? selectors.getActiveDocumentViewerKey(store.getState()) : 1;
   if (dispatch) {

@@ -20,7 +20,6 @@ import FocusStackManager from 'helpers/focusStackManager';
 import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 import { panelNames } from 'src/constants/panel';
 import {
-  generateShortcutToToolNameMap,
   getViewOnlyShortcuts,
   keyMap,
   Keys,
@@ -31,8 +30,6 @@ import {
 } from './hotkeysUtils';
 
 const NOOP = () => { };
-
-export const ShortcutToToolNameMap = generateShortcutToToolNameMap();
 
 export const defaultHotkeysScope = 'viewer';
 

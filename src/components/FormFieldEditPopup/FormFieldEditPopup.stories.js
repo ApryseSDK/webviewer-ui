@@ -3,6 +3,7 @@ import FormFieldEditPopup from './FormFieldEditPopup';
 import { configureStore } from '@reduxjs/toolkit';
 
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/FormFieldEditPopup',
@@ -93,4 +94,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

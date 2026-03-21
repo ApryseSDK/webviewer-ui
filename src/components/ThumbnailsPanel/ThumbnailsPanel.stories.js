@@ -28,7 +28,7 @@ const myState = {
       leftPanel: 264,
       thumbnailsPanel: 300,
     },
-    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    pageLabels: { 1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
     multiPageManipulationControls: [
       { dataElement: 'leftPanelPageTabsRotate' },
       { type: 'divider' },

@@ -5,6 +5,7 @@ import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Flyout from '../ModularComponents/Flyout';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/NotesPanel/NotePopup',
@@ -74,7 +75,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function DifferentLanguages() {
   const annotation = {};
@@ -114,7 +115,7 @@ export function DifferentLanguages() {
   );
 }
 
-DifferentLanguages.parameters = window.storybook.disableRtlMode;
+DifferentLanguages.parameters = disableRtlModeParameters;
 
 export function DifferentStates() {
   const annotation = {};
@@ -155,4 +156,4 @@ export function DifferentStates() {
   );
 }
 
-DifferentStates.parameters = window.storybook.disableRtlMode;
+DifferentStates.parameters = disableRtlModeParameters;

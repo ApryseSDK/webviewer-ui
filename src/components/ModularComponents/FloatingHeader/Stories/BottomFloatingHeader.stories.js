@@ -14,6 +14,7 @@ import {
 } from '../../Helpers/mockHeaders';
 import { MockDocumentContainer } from 'helpers/storybookHelper';
 import { expect } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/FloatingHeader/BottomHeader',
@@ -60,7 +61,7 @@ BottomHeaderWithDefaultAndFloaties.args = {
     floatEndBottomHeader,
   },
 };
-BottomHeaderWithDefaultAndFloaties.parameters = window.storybook.disableRtlMode;
+BottomHeaderWithDefaultAndFloaties.parameters = disableRtlModeParameters;
 
 export const FloatBottomStartHeader = Template.bind({});
 FloatBottomStartHeader.args = {
@@ -70,7 +71,7 @@ FloatBottomStartHeader.args = {
   },
 };
 
-FloatBottomStartHeader.parameters = window.storybook.disableRtlMode;
+FloatBottomStartHeader.parameters = disableRtlModeParameters;
 
 export const FloatBottomCenterHeader = Template.bind({});
 floatCenterTopHeaderDynamic.placement = 'bottom';
@@ -80,7 +81,7 @@ FloatBottomCenterHeader.args = {
     floatCenterTopHeaderDynamic,
   },
 };
-FloatBottomCenterHeader.parameters = window.storybook.disableRtlMode;
+FloatBottomCenterHeader.parameters = disableRtlModeParameters;
 
 FloatBottomCenterHeader.play = async ()  => {
   const textInput = await document.querySelector('.opacity-mode-dynamic');
@@ -98,4 +99,4 @@ FloatBottomEndHeader.args = {
     floatEndBottomHeader,
   },
 };
-FloatBottomEndHeader.parameters = window.storybook.disableRtlMode;
+FloatBottomEndHeader.parameters = disableRtlModeParameters;

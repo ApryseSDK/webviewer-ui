@@ -2,22 +2,18 @@ import core from 'core';
 import actions from 'actions';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
-export default (dispatch) => ({ added, removed, moved }) => {
+export default (dispatch, documentViewerKey) => ({ added, removed, moved }) => {
   const movedKeys = Object.keys(moved);
   if (added.length || removed.length || movedKeys.length) {
-    dispatch(actions.setTotalPages(core.getTotalPages()));
+    const totalPages = core.getTotalPages(documentViewerKey);
+    dispatch(actions.setTotalPages(totalPages, documentViewerKey));
 
-    setTimeout(() => {
-      const totalPages = core.getTotalPages();
-      dispatch(actions.setTotalPages(totalPages));
-      core.getOutlines((outlines) => {
-        dispatch(actions.setOutlines(outlines));
-      });
+    core.getOutlines((outlines, key) => {
+      dispatch(actions.setOutlines(outlines, key));
+    }, documentViewerKey);
 
-      // this 'onLayoutChange' handler get trigger before the other 'onLayoutChange' event handler in core (that added by annotationManager to update page numbers) gets triggered
-      // use 'setTimeout' so the other 'onLayoutChange' handler finishes before we call 'setPageLabels'
-      dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
-      dispatch(actions.disableCustomPageLabels());
-    }, 0);
+    const defaultPageLabels = getDefaultPageLabels(totalPages);
+    dispatch(actions.setPageLabels(defaultPageLabels, documentViewerKey));
+    dispatch(actions.disableCustomPageLabels(documentViewerKey));
   }
 };

@@ -5,7 +5,7 @@ import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import TextStylePicker from './TextStylePicker';
-import core from 'core';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/TextStylePicker',
@@ -46,7 +46,7 @@ TextStylePickerSection.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
-TextStylePickerSection.parameters = window.storybook.disableRtlMode;
+TextStylePickerSection.parameters = disableRtlModeParameters;
 
 export const TextStylePickerFreeTextDisabled = BasicComponent.bind({});
 TextStylePickerFreeTextDisabled.args = {
@@ -58,7 +58,7 @@ TextStylePickerFreeTextDisabled.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
-TextStylePickerFreeTextDisabled.parameters = window.storybook.disableRtlMode;
+TextStylePickerFreeTextDisabled.parameters = disableRtlModeParameters;
 
 export const TextStylePickerFreeTextEnabled = BasicComponent.bind({});
 TextStylePickerFreeTextEnabled.args = {
@@ -70,7 +70,7 @@ TextStylePickerFreeTextEnabled.args = {
   isRedaction: false,
   onPropertyChange: noop
 };
-TextStylePickerFreeTextEnabled.parameters = window.storybook.disableRtlMode;
+TextStylePickerFreeTextEnabled.parameters = disableRtlModeParameters;
 
 export const WidgetLayoutEnabled = BasicComponent.bind({});
 WidgetLayoutEnabled.args = {
@@ -83,7 +83,7 @@ WidgetLayoutEnabled.args = {
   onPropertyChange: noop,
   isWidget: true
 };
-WidgetLayoutEnabled.parameters = window.storybook.disableRtlMode;
+WidgetLayoutEnabled.parameters = disableRtlModeParameters;
 
 export const RedactionLayoutEnabled = BasicComponent.bind({});
 RedactionLayoutEnabled.args = {
@@ -95,7 +95,7 @@ RedactionLayoutEnabled.args = {
   isRedaction: true,
   onPropertyChange: noop,
 };
-RedactionLayoutEnabled.parameters = window.storybook.disableRtlMode;
+RedactionLayoutEnabled.parameters = disableRtlModeParameters;
 
 export const ContentEditLayoutEnabled = BasicComponent.bind({});
 ContentEditLayoutEnabled.args = {
@@ -107,4 +107,4 @@ ContentEditLayoutEnabled.args = {
   isContentEditing: true,
   onPropertyChange: noop,
 };
-ContentEditLayoutEnabled.parameters = window.storybook.disableRtlMode;
+ContentEditLayoutEnabled.parameters = disableRtlModeParameters;

@@ -5,8 +5,10 @@ import PresetButton from '../../PresetButton';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
-import { expect, within } from 'storybook/test';
+import { expect, within, waitFor, fn } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/PresetButton',
@@ -15,7 +17,7 @@ export default {
 
 const initialState = OEModularUIMockState;
 
-
+const updateSelectionAndCursorStyleMock = fn((style) => style);
 const prepareButtonStory = (buttonsToRender, initialState, enableNonPrintingCharacters = false) => {
   const store = configureStore({ reducer: () => initialState });
 
@@ -23,6 +25,7 @@ const prepareButtonStory = (buttonsToRender, initialState, enableNonPrintingChar
     isTextSelected: () => false,
     isCursorInTable: () => false,
     getIsNonPrintingCharactersEnabled: () => enableNonPrintingCharacters,
+    updateSelectionAndCursorStyle: updateSelectionAndCursorStyleMock,
   });
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
@@ -53,6 +56,7 @@ const officeEditorButtons = [
   PRESET_BUTTON_TYPES.BOLD,
   PRESET_BUTTON_TYPES.ITALIC,
   PRESET_BUTTON_TYPES.UNDERLINE,
+  PRESET_BUTTON_TYPES.STRIKEOUT,
   PRESET_BUTTON_TYPES.ALIGN_LEFT,
   PRESET_BUTTON_TYPES.ALIGN_CENTER,
   PRESET_BUTTON_TYPES.ALIGN_RIGHT,
@@ -62,6 +66,13 @@ const officeEditorButtons = [
   PRESET_BUTTON_TYPES.OE_COLOR_PICKER,
   PRESET_BUTTON_TYPES.INSERT_IMAGE,
   PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
+];
+
+const officeEditorStyleTypes = [
+  'bold',
+  'italic',
+  'underline',
+  'strikeout',
 ];
 
 export const OfficeEditorPresetButtons = () => {
@@ -75,9 +86,17 @@ OfficeEditorPresetButtons.play = async ({ canvasElement }) => {
   const colorPickerButton = canvas.getByRole('button', { name: '#00FF00' });
   const colorPickerButtonIcon = colorPickerButton.querySelector('.Icon');
   expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
+
+  for (const style of officeEditorStyleTypes) {
+    const button = await canvas.findByRole('button', { name: getTranslatedText(`spreadsheetEditor.${style}`) });
+    await button.click();
+    await waitFor(() => {
+      expect(updateSelectionAndCursorStyleMock).toHaveBeenCalledWith(expect.objectContaining({ [style]: true }));
+    });
+  }
 };
 
-OfficeEditorPresetButtons.parameters = window.storybook.disableRtlMode;
+OfficeEditorPresetButtons.parameters = disableRtlModeParameters;
 
 export const OfficeEditorPresetButtonsActive = () => {
   const initialStateWithActiveStyles = {
@@ -89,6 +108,7 @@ export const OfficeEditorPresetButtonsActive = () => {
         bold: true,
         italic: true,
         underlineStyle: 'single',
+        strikethrough: true,
         paragraphProperties: {
           ...initialState.officeEditor.cursorProperties.paragraphProperties,
           justification: 'center',
@@ -99,4 +119,4 @@ export const OfficeEditorPresetButtonsActive = () => {
   return prepareButtonStory(officeEditorButtons, initialStateWithActiveStyles, true);
 };
 
-OfficeEditorPresetButtonsActive.parameters = window.storybook.disableRtlMode;
+OfficeEditorPresetButtonsActive.parameters = disableRtlModeParameters;

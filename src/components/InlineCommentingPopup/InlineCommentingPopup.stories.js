@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BASIC_PALETTE } from 'constants/commonColors';
 import core from 'core';
 import { setupNotesPanelCoreMocks } from 'src/helpers/storybookHelper';
+import { mobileStoryGlobals } from 'helpers/storybookParams';
 
 const noop = () => { };
 
@@ -86,8 +87,4 @@ export const Mobile = () => {
   );
 };
 
-Mobile.parameters = {
-  viewport: {
-    defaultViewport: 'Mobile',
-  },
-};
+Mobile.globals = mobileStoryGlobals;

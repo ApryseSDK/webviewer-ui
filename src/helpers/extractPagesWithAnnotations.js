@@ -1,8 +1,8 @@
 import { isIE } from 'helpers/device';
 import core from 'core';
 
-export default async (pageNumbersToExtract) => {
-  const documentViewer = core.getDocumentViewer();
+export default async (pageNumbersToExtract, documentViewerKey = 1) => {
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
   const doc = documentViewer.getDocument();
   const annotManager = documentViewer.getAnnotationManager();
 

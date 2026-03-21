@@ -7,6 +7,7 @@ import { PRESET_BUTTON_TYPES, CELL_ADJUSTMENT_BUTTONS } from 'src/constants/cust
 import { expect, within } from 'storybook/test';
 import core from 'core';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/PresetButton',
@@ -60,7 +61,7 @@ export const ModularUIPresetButtons = () => {
   );
 };
 
-ModularUIPresetButtons.parameters = window.storybook.disableRtlMode;
+ModularUIPresetButtons.parameters = disableRtlModeParameters;
 
 export const ModularUIPresetButtonsWithStyle = () => {
   const mockInitialState = {
@@ -88,7 +89,7 @@ export const ModularUIPresetButtonsWithStyle = () => {
   );
 };
 
-ModularUIPresetButtonsWithStyle.parameters = window.storybook.disableRtlMode;
+ModularUIPresetButtonsWithStyle.parameters = disableRtlModeParameters;
 
 let eventList = [];
 let inMode = true;
@@ -129,7 +130,7 @@ FormFieldEditToggle.play = async ({ canvasElement }) => {
   await expect(button.ariaPressed).toBe('false');
 };
 
-FormFieldEditToggle.parameters = window.storybook.disableRtlMode;
+FormFieldEditToggle.parameters = disableRtlModeParameters;
 
 
 export function ContentEditToggle() {
@@ -166,7 +167,7 @@ ContentEditToggle.play = async ({ canvasElement }) => {
   await expect(button.ariaPressed).toBe('false');
 };
 
-ContentEditToggle.parameters = window.storybook.disableRtlMode;
+ContentEditToggle.parameters = disableRtlModeParameters;
 
 export function CellAdjustmentButtons() {
   const mockInitialState = {
@@ -186,7 +187,7 @@ export function CellAdjustmentButtons() {
   );
 }
 
-CellAdjustmentButtons.parameters = window.storybook.disableRtlMode;
+CellAdjustmentButtons.parameters = disableRtlModeParameters;
 
 let startDiffCalled;
 const setupCompareCoreMock = () => {
@@ -237,7 +238,7 @@ CompareButtonNotStarted.play = async ({ canvasElement }) => {
   // Should start diff when not started
   await expect(startDiffCalled).toBe(true);
 };
-CompareButtonNotStarted.parameters = window.storybook.disableRtlMode;
+CompareButtonNotStarted.parameters = disableRtlModeParameters;
 
 export function CompareButtonAlreadyStarted() {
   const mockInitialState = {
@@ -265,7 +266,7 @@ CompareButtonAlreadyStarted.play = async ({ canvasElement }) => {
   // Should not start diff again
   await expect(startDiffCalled).toBe(false);
 };
-CompareButtonAlreadyStarted.parameters = window.storybook.disableRtlMode;
+CompareButtonAlreadyStarted.parameters = disableRtlModeParameters;
 
 export function HiddenPresetButtons() {
   const BUTTONS_THAT_HIDE = [

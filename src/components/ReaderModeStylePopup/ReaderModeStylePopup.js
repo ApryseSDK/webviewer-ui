@@ -27,7 +27,7 @@ const ReaderModeStylePopup = (props) => {
     <Draggable cancel=".Button, .cell, .sliders-container svg, select">
       <div
         className="ReaderModeStylePopup"
-        style={position}
+        css={position}
         ref={popupRef}
       >
         <StylePopup

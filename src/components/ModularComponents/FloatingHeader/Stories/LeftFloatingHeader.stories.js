@@ -13,6 +13,7 @@ import {
   mockModularComponents
 } from '../../Helpers/mockHeaders';
 import { MockDocumentContainer } from 'helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/FloatingHeader/LeftHeader',
@@ -60,7 +61,7 @@ LeftHeaderWithDefaultAndFloaties.args = {
     floatEndLeftHeader,
   },
 };
-LeftHeaderWithDefaultAndFloaties.parameters = window.storybook.disableRtlMode;
+LeftHeaderWithDefaultAndFloaties.parameters = disableRtlModeParameters;
 
 export const FloatLeftStartHeader = Template.bind({});
 FloatLeftStartHeader.args = {
@@ -69,7 +70,7 @@ FloatLeftStartHeader.args = {
     secondFloatStartLeftHeader,
   },
 };
-FloatLeftStartHeader.parameters = window.storybook.disableRtlMode;
+FloatLeftStartHeader.parameters = disableRtlModeParameters;
 
 export const FloatLeftCenterHeader = Template.bind({});
 FloatLeftCenterHeader.args = {
@@ -77,7 +78,7 @@ FloatLeftCenterHeader.args = {
     floatCenterLeftHeader,
   },
 };
-FloatLeftCenterHeader.parameters = window.storybook.disableRtlMode;
+FloatLeftCenterHeader.parameters = disableRtlModeParameters;
 
 export const FloatLeftEndHeader = Template.bind({});
 FloatLeftEndHeader.args = {
@@ -85,4 +86,4 @@ FloatLeftEndHeader.args = {
     floatEndLeftHeader,
   },
 };
-FloatLeftEndHeader.parameters = window.storybook.disableRtlMode;
+FloatLeftEndHeader.parameters = disableRtlModeParameters;

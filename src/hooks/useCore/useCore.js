@@ -6,6 +6,7 @@ import selectors from 'selectors';
 
 export const createWrappedCore = (key) => ({
   ...core,
+  getFormFieldCreationManager: () => core.getFormFieldCreationManager(key),
   getSelectedAnnotations: () => core.getSelectedAnnotations(key),
   getToolMode: () => core.getToolMode(key),
   getAnnotationManager: () => core.getAnnotationManager(key),
@@ -51,6 +52,7 @@ export const createWrappedCore = (key) => ({
   setUserBookmarks: (bookmarks) => core.setUserBookmarks(bookmarks, key),
   addUserBookmark: (pageNumber, text) => core.addUserBookmark(pageNumber, text, key),
   removeUserBookmark: (pageNumber) => core.removeUserBookmark(pageNumber, key),
+  setBookmarkIconShortcutVisibility: (isVisible) => core.setBookmarkIconShortcutVisibility(isVisible, key),
   getSemanticDiffAnnotations: () => core.getSemanticDiffAnnotations(key),
   rotateClockwise: () => core.rotateClockwise(key),
   rotateCounterClockwise: () => core.rotateCounterClockwise(key),
@@ -62,8 +64,15 @@ export const createWrappedCore = (key) => ({
   getViewerElement: () => core.getViewerElement(key),
   createAndApplyScale: (scale, applyTo) => core.createAndApplyScale(scale, applyTo, key),
   getScales: () => core.getScales(key),
+  setActiveSearchResult: (result) => core.setActiveSearchResult(result, key),
   deleteScale: (scale) => core.deleteScale(scale, key),
   getScalePrecision: (scale) => core.getScalePrecision(scale, key),
+  getPageWidth: (pageNumber) => core.getPageWidth(pageNumber, key),
+  getPageHeight: (pageNumber) => core.getPageHeight(pageNumber, key),
+  setAnnotationCanvasTransform: (ctx, zoom, rotation) => core.setAnnotationCanvasTransform(ctx, zoom, rotation, key),
+  movePages: (pageArray, newLocation) => core.movePages(pageArray, newLocation, key),
+  cancelLoadThumbnail: (requestId) => core.cancelLoadThumbnail(requestId, key),
+  goToOutline: (outline) => core.goToOutline(outline, key),
 });
 
 const useCore = (overrideDocumentViewerKey) => {

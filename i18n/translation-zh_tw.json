@@ -354,7 +354,11 @@
     "listEmptyValue": "一個或多個欄位具有空值。",
     "listDuplicateValue": "多個欄位具有以下值：",
     "networkError": "載入此組件時出現錯誤。請檢查您的網路連線並重新整理頁面。",
-    "refreshPage": "請檢查您的網路連線並重新整理頁面。"
+    "refreshPage": "請檢查您的網路連線並重新整理頁面。",
+    "renderErrors": {
+      "error": "這裡出問題了。",
+      "refreshPanel": "您可以繼續工作。請嘗試重新打開面板。"
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "排序訂單清單",
       "position": "位置",
+      "linePosition": "位置",
       "time": "時間",
       "status": "狀態",
       "author": "作者",
@@ -483,6 +488,7 @@
       "markForRedaction": "標示為修訂"
     },
     "searchPanel": {
+      "searchResults": "搜尋結果",
       "caseSensitive": "區分大小寫",
       "wholeWordOnly": "全字相符",
       "wildcard": "通配符",
@@ -1316,6 +1322,7 @@
     "bold": "大膽的",
     "italic": "斜體",
     "underline": "強調",
+    "strikeout": "刪除線",
     "textColor": "文字顏色",
     "leftAlign": "左對齊",
     "centerAlign": "居中對齊",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "查看無建議",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。",
     "previewAllChanges": "預覽所有更改",
+    "changes": "變化",
+    "comments": "評論",
+    "commentsAndChangesTabs": "評論和更改選項卡",
     "accept": "接受",
     "reject": "拒絕",
     "pastingTitle": "無法貼上",

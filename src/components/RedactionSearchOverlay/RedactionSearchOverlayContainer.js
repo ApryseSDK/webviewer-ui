@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { useStore, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 
@@ -16,17 +16,20 @@ const RedactionSearchOverlayContainer = (props) => {
   const { setIsRedactionSearchActive } = useContext(RedactionPanelContext);
   const store = useStore();
   const activeTheme = useSelector((state) => selectors.getActiveTheme(state));
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
   const redactionSearchPatterns = useSelector((state) => selectors.getRedactionSearchPatterns(state), shallowEqual);
   const redactionSearchOptions = Object.values(redactionSearchPatterns).map((pattern) => ({
     ...pattern,
     value: pattern.type,
   }));
+  const executeRedactionSearchCallback = useCallback((options = {}) => executeRedactionSearch(options, store), [store]);
 
   return (
     <RedactionSearchOverlay
       setIsRedactionSearchActive={setIsRedactionSearchActive}
-      executeRedactionSearch={(options = {}) => executeRedactionSearch(options, store)}
+      executeRedactionSearch={executeRedactionSearchCallback}
       activeTheme={activeTheme}
+      activeDocumentViewerKey={activeDocumentViewerKey}
       redactionSearchOptions={redactionSearchOptions}
       {...props}
     />);

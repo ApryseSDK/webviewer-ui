@@ -23,6 +23,9 @@
   --gray-13: #000000;
 
   --yellow-1: #face0080;
+  --yellow-2: #fff6e4;
+  --yellow-3: #765100;
+
   --red: #d52a2a;
   --green: #006d41;
   /* stylelint-enable color-no-hex */
@@ -36,6 +39,10 @@
 
   --error-text-color: var(--red);
   --error-border-color: var(--red);
+
+  --warning-background: var(--yellow-2);
+  --warning-border: var(--yellow-3);
+  --warning-text: var(--yellow-3);
 
   --panel-background: var(--gray-0);
   --panel-list-item: var(--gray-0);
@@ -159,6 +166,7 @@
   --tab-background-color-hover: var(--faded-component-background);
   --tab-color-selected: var(--blue-5);
   --tab-text-color-selected: var(--gray-0);
+  --tab-inline-comment-divider-color: var(--gray-4);
   --dropdown-item-hover: var(--blue-6);
   --dropdown-item-active: var(--blue-5);
   --dropdown-item-text-hover: var(--gray-0);

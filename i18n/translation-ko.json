@@ -354,7 +354,11 @@
     "listEmptyValue": "하나 이상의 필드에 빈 값이 있습니다.",
     "listDuplicateValue": "여러 필드에는 다음 값이 있습니다.",
     "networkError": "이 구성 요소를 로드하는 중에 오류가 발생했습니다. 네트워크 연결을 확인하고 페이지를 새로 고치세요.",
-    "refreshPage": "네트워크 연결을 확인하고 페이지를 새로고침하세요."
+    "refreshPage": "네트워크 연결을 확인하고 페이지를 새로고침하세요.",
+    "renderErrors": {
+      "error": "여기서 뭔가 잘못됐어요.",
+      "refreshPanel": "계속 작업하셔도 됩니다. 패널을 다시 열어보세요."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "정렬목록",
       "position": "페이지",
+      "linePosition": "페이지",
       "time": "작성시간",
       "status": "상태",
       "author": "작성자",
@@ -483,6 +488,7 @@
       "markForRedaction": "민감정보표시"
     },
     "searchPanel": {
+      "searchResults": "검색 결과",
       "caseSensitive": "대/소문자 구분",
       "wholeWordOnly": "전체단어로 검색",
       "wildcard": "와일드 카드",
@@ -1316,6 +1322,7 @@
     "bold": "용감한",
     "italic": "이탤릭체",
     "underline": "밑줄",
+    "strikeout": "스트라이크아웃",
     "textColor": "텍스트 색상",
     "leftAlign": "왼쪽 정렬",
     "centerAlign": "중앙 정렬",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "제안 없이 보기",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다.",
     "previewAllChanges": "모든 변경사항 미리보기",
+    "changes": "변경 사항",
+    "comments": "댓글",
+    "commentsAndChangesTabs": "댓글 및 변경 사항 탭",
     "accept": "수용하다",
     "reject": "거부하다",
     "pastingTitle": "붙여넣을 수 없음",

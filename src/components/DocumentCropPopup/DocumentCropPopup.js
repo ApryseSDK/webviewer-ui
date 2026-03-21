@@ -35,7 +35,7 @@ const DocumentCropPopup = ({
   shouldShowApplyCropWarning,
   presetCropDimensions,
 }) => {
-  const { core } = useCore();
+  const { core, documentViewer } = useCore();
   const { t } = useTranslation();
 
   const className = classNames({
@@ -45,6 +45,7 @@ const DocumentCropPopup = ({
   });
 
   const loadedDocumentPageCount = getPageCount();
+  const pageInputKey = documentViewer ? documentViewer.id || documentViewer : 'no-viewer';
 
   const handlePageNumbersChanged = (pageNumbers) => {
     if (pageNumbers.length > 0) {
@@ -352,6 +353,7 @@ const DocumentCropPopup = ({
             selectedPages={selectedPages}
             handlePageNumbersChanged={handlePageNumbersChanged}
             handlePageNumberError={handlePageNumberError}
+            pageInputKey={pageInputKey}
           />
         </div>
       </div>

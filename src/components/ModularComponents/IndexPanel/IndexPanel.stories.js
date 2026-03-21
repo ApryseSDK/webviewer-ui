@@ -7,6 +7,7 @@ import { MockApp } from 'helpers/storybookHelper';
 import IndexPanelContainer from './IndexPanelContainer';
 import IndexPanel from './IndexPanel';
 import { widgets } from './helper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/IndexPanel',
@@ -57,7 +58,7 @@ export function Basic() {
       </div></div>
   );
 }
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function WithWidgets() {
   const store = configureStore({ reducer: () => mockState });
@@ -77,4 +78,4 @@ const IndexPanelInApp = (location) => {
 };
 
 export const IndexPanelInMobile = () => IndexPanelInApp();
-IndexPanelInMobile.parameters = window.storybook?.MobileParameters;
+IndexPanelInMobile.parameters = mobileStoryParameters;

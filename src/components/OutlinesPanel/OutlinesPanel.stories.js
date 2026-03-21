@@ -62,7 +62,7 @@ const Template = (args) => {
       disabledElements: {},
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
-      pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      pageLabels: { 1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
       flyoutMap: {
       },
       activeFlyout: 'bookmarkOutlineFlyout',
@@ -73,7 +73,7 @@ const Template = (args) => {
       ...argsViewer,
     },
     document: {
-      outlines: getDefaultOutlines(),
+      outlines: { 1: getDefaultOutlines() },
       ...argsDocument,
     },
     featureFlags: {
@@ -119,7 +119,7 @@ export const Expanded = createTemplate({
 export const NoOutlines = createTemplate({
   initialState: {
     document: {
-      outlines: [],
+      outlines: { 1: [] },
     },
   }
 });
@@ -127,7 +127,7 @@ export const NoOutlines = createTemplate({
 export const LoadingOutlines = createTemplate({
   initialState: {
     document: {
-      outlines: null,
+      outlines: { 1: null },
     }
   }
 });
@@ -135,7 +135,7 @@ export const LoadingOutlines = createTemplate({
 export const AddingOutline = createTemplate({
   initialState: {
     document: {
-      outlines: [],
+      outlines: { 1: [] },
     }
   }
 });
@@ -152,7 +152,7 @@ const MAX_OUTLINES = 100;
 export const ManyNestedOutlinesPanel = createTemplate({
   initialState: {
     document: {
-      outlines: createOutlines([
+      outlines: { 1: createOutlines([
         ...Array.from({ length: MAX_OUTLINES }, (_, i) => {
           const rootNum = i + 1;
           return {
@@ -183,10 +183,10 @@ export const ManyNestedOutlinesPanel = createTemplate({
             ],
           };
         })
-      ]),
+      ]) },
     },
     viewer: {
-      outlinesStateMap: {},
+      outlinesStateMap: { 1: {} },
     }
   }
 });

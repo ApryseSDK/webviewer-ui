@@ -16,7 +16,7 @@ import './ToggleZoomOverlay.scss';
 import { useTranslation } from 'react-i18next';
 
 const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
-  const { core } = useCore();
+  const { core } = useCore(documentViewerKey);
   const [t] = useTranslation();
 
   const elementName = documentViewerKey ? `zoomOverlay${documentViewerKey}` : DataElements.ZOOM_OVERLAY;
@@ -85,7 +85,7 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
     }
   };
 
-  const inputWidth = value ? (value.length + 1) * 8 : 0;
+  const digits = value.length;
 
   return (
     <div className="zoom-overlay">
@@ -103,7 +103,7 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
             }}
             tabIndex={0}
           >
-            <div className="OverlayText" onClick={() => dispatch(actions.toggleElement(elementName))}>
+            <div className="OverlayText"  data-digits={digits} onClick={() => dispatch(actions.toggleElement(elementName))}>
               <input
                 type="text"
                 className="textarea"
@@ -112,7 +112,6 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
                 onKeyPress={onKeyPress}
                 onBlur={onBlur}
                 tabIndex={-1}
-                style={{ width: inputWidth }}
                 aria-label={t('action.zoomSet')}
               />
               <span>%</span>

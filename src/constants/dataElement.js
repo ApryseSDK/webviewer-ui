@@ -6,6 +6,7 @@ const DataElements = {
   ANNOTATION_STYLE_POPUP_BACK_BUTTON_CONTAINER: 'annotationStylePopupBackButtonContainer',
   INLINE_COMMENT_POPUP_EXPAND_BUTTON: 'inlineCommentPopupExpandButton',
   INLINE_COMMENT_POPUP_CLOSE_BUTTON: 'inlineCommentPopupCloseButton',
+  INLINE_COMMENT_POPUP_TABS: 'inlineCommentPopupTabs',
 
   LOGO_BAR: 'logoBar',
   COLOR_PALETTE: 'colorPalette',
@@ -286,6 +287,8 @@ const DataElements = {
   OFFICE_EDITOR_COLUMN_UNIT: 'officeEditorColumnUnit',
   OFFICE_EDITOR_COMMENT_PANEL: 'officeEditorCommentPanel',
   OFFICE_EDITOR_COMMENT_ADD_NEW_BUTTON: 'officeEditorCommentAddNewButton',
+  OFFICE_EDITOR_INLINE_COMMENT_POPUP_TAB_CHANGES: 'officeEditorInlineCommentPopupTabChanges',
+  OFFICE_EDITOR_INLINE_COMMENT_POPUP_TAB_COMMENT: 'officeEditorInlineCommentPopupTabComment',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',

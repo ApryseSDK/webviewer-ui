@@ -23,6 +23,9 @@
   --gray-13: #ffffff;
 
   --yellow-1: #face0080;
+  --yellow-2: #191100;
+  --yellow-3: #ffd889;
+
   --red: #d52a2a;
   --green: #006d41;
   /* stylelint-enable color-no-hex */
@@ -36,6 +39,10 @@
 
   --error-text-color: var(--red);
   --error-border-color: var(--red);
+
+  --warning-background: var(--yellow-2);
+  --warning-border: var(--yellow-3);
+  --warning-text: var(--yellow-3);
 
   --panel-background: var(--gray-0);
   --panel-list-item: var(--gray-2);

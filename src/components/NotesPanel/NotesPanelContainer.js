@@ -7,9 +7,13 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
+import NotesPanelErrorBoundary from './NotesPanelErrorBoundary';
+
+const getPanelDataElement = ({ parentDataElement, dataElement }) => parentDataElement || dataElement || DataElements.NOTES_PANEL;
 
 function NotesPanelContainer(props) {
   const { isCustomPanelOpen, parentDataElement = undefined, dataElement } = props;
+  const panelDataElement = getPanelDataElement({ parentDataElement, dataElement });
   const [
     isOpen,
     notesInLeftPanel,
@@ -19,7 +23,7 @@ function NotesPanelContainer(props) {
     isOfficeEditorMode,
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, parentDataElement || dataElement || DataElements.NOTES_PANEL),
+      selectors.isElementOpen(state, panelDataElement),
       selectors.getNotesInLeftPanel(state),
       selectors.getIsNotesPanelMultiSelectEnabled(state),
       selectors.isMultiViewerMode(state),
@@ -227,16 +231,21 @@ function NotesPanelContainer(props) {
     setScrollToSelectedAnnot,
   };
 
-  // We wrap the element in a div so the tooltip works properly
-  return (
-    <NotesPanel {...props} {...passProps} />
-  );
+  return <NotesPanel {...props} {...passProps} />;
 }
 
 function NotesPanelWrapper(props) {
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
+  const panelDataElement = getPanelDataElement(props);
+  const boundaryResetKey = `${activeDocumentViewerKey}-${panelDataElement}`;
+
   return (
     <MultiViewerWrapper wrapOnlyInMultiViewerMode>
-      <NotesPanelContainer {...props}/>
+      <NotesPanelErrorBoundary
+        resetKey={boundaryResetKey}
+      >
+        <NotesPanelContainer {...props}/>
+      </NotesPanelErrorBoundary>
     </MultiViewerWrapper>
   );
 }

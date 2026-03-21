@@ -354,7 +354,11 @@
     "listEmptyValue": "ایک یا زیادہ فیلڈز کی قدر خالی ہے۔",
     "listDuplicateValue": "متعدد شعبوں میں درج ذیل اقدار ہیں: ",
     "networkError": "اس جزو کو لوڈ کرنے میں کچھ غلط ہو گیا۔ براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور صفحہ ریفریش کریں۔",
-    "refreshPage": "براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور صفحہ ریفریش کریں۔"
+    "refreshPage": "براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور صفحہ ریفریش کریں۔",
+    "renderErrors": {
+      "error": "یہاں کچھ غلط ہو گیا۔",
+      "refreshPanel": "آپ کام جاری رکھ سکتے ہیں۔ پینل کو دوبارہ کھولنے کی کوشش کریں۔"
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "ترتیب کی فہرست",
       "position": "پوزیشن",
+      "linePosition": "پوزیشن",
       "time": "وقت",
       "status": "حیثیت",
       "author": "مصنف",
@@ -483,6 +488,7 @@
       "markForRedaction": "ترمیم کے لیے نشان زد کریں۔"
     },
     "searchPanel": {
+      "searchResults": "تلاش کے نتائج",
       "caseSensitive": "کیس حساس",
       "wholeWordOnly": "پورا لفظ",
       "wildcard": "وائلڈ کارڈ",
@@ -1316,6 +1322,7 @@
     "bold": "بولڈ",
     "italic": "ترچھا",
     "underline": "انڈر لائن",
+    "strikeout": "اسٹرائیک آؤٹ",
     "textColor": "متن کا رنگ",
     "leftAlign": "بائیں سیدھ کریں۔",
     "centerAlign": "بیچ میں سیدھ کریں۔",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "تجاویز کے بغیر دیکھیں",
     "notSupportedOnMobile": "آفس ایڈیٹنگ موبائل آلات پر تعاون یافتہ نہیں ہے۔",
     "previewAllChanges": "تمام تبدیلیوں کا جائزہ لیں۔",
+    "changes": "تبدیلیاں",
+    "comments": "تبصرے",
+    "commentsAndChangesTabs": "تبصرے اور تبدیلیاں ٹیبز",
     "accept": "قبول کریں۔",
     "reject": "رد کرنا",
     "pastingTitle": "چسپاں کرنا دستیاب نہیں ہے۔",

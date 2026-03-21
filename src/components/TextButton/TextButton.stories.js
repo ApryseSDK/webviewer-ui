@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import TextButtonComponent from './TextButton';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -36,4 +37,4 @@ Button.args = {
   onClick: () => console.log('Button clicked'),
 };
 
-Button.parameters = window.storybook.disableChromatic;
+Button.parameters = disableChromaticParameters;

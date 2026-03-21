@@ -354,7 +354,11 @@
     "listEmptyValue": "1 つ以上のフィールドに空の値があります。",
     "listDuplicateValue": "複数のフィールドには次の値が設定されます。",
     "networkError": "このコンポーネントの読み込み中に問題が発生しました。ネットワーク接続を確認し、ページを更新してください。",
-    "refreshPage": "ネットワーク接続を確認し、ページを更新してください。"
+    "refreshPage": "ネットワーク接続を確認し、ページを更新してください。",
+    "renderErrors": {
+      "error": "問題が発生しました。",
+      "refreshPanel": "作業は続行できます。パネルを再度開いてみてください。"
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "ソート順リスト",
       "position": "位置",
+      "linePosition": "位置",
       "time": "時刻",
       "status": "ステータス",
       "author": "作成者",
@@ -483,6 +488,7 @@
       "markForRedaction": "墨消しマーク"
     },
     "searchPanel": {
+      "searchResults": "の検索結果",
       "caseSensitive": "大文字と小文字を区別",
       "wholeWordOnly": "単語全体",
       "wildcard": "ワイルドカード",
@@ -1316,6 +1322,7 @@
     "bold": "大胆な",
     "italic": "イタリック",
     "underline": "下線",
+    "strikeout": "三振",
     "textColor": "テキストの色",
     "leftAlign": "左揃え",
     "centerAlign": "中央揃え",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "提案なしで表示",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。",
     "previewAllChanges": "すべての変更をプレビュー",
+    "changes": "変更点",
+    "comments": "コメント",
+    "commentsAndChangesTabs": "コメントと変更タブ",
     "accept": "受け入れる",
     "reject": "拒否する",
     "pastingTitle": "貼り付けは利用できません",

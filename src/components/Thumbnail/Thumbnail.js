@@ -42,7 +42,6 @@ const Thumbnail = React.forwardRef((props, ref) => {
     canLoad,
     isThumbnailSelectingPages,
     thumbnailSelectionMode,
-    activeDocumentViewerKey,
     panelSelector,
     parentKeyListener,
   } = props;
@@ -61,7 +60,9 @@ const Thumbnail = React.forwardRef((props, ref) => {
 
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
 
-  let loadTimeout = null;
+  const loadTimeoutRef = useRef(null);
+  const loadRequestIdRef = useRef(null);
+  const loadGenerationRef = useRef(0);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -82,24 +83,49 @@ const Thumbnail = React.forwardRef((props, ref) => {
     rtlRef.current = isRightToLeft;
   }, [isRightToLeft]);
 
+  const cancelPendingLoad = () => {
+    clearTimeout(loadTimeoutRef.current);
+    loadTimeoutRef.current = null;
+    // Bump generation so any in-flight drawComplete callback is invalidated
+    loadGenerationRef.current++;
+    if (loadRequestIdRef.current !== null) {
+      const doc = core.getDocument();
+      if (doc) {
+        doc.cancelLoadCanvas(loadRequestIdRef.current);
+      }
+      loadRequestIdRef.current = null;
+    }
+  };
+
   const loadThumbnailAsync = () => {
-    loadTimeout = setTimeout(() => {
+    cancelPendingLoad();
+    loadTimeoutRef.current = setTimeout(() => {
+      loadTimeoutRef.current = null;
       const thumbnailContainer = getRootNode().querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
       const isRTL = rtlRef.current;
 
       const pageNum = index + 1;
       const viewerRotation = core.getRotation(pageNum);
 
-      const doc = core.getDocument(activeDocumentViewerKey);
+      const doc = core.getDocument();
       // Possible race condition can happen where we try to render a thumbnail for a page that has
       // been deleted. Prevent that by checking if pageInfo exists
 
       if (doc && doc.getPageInfo(pageNum)) {
+        const generation = ++loadGenerationRef.current;
         const id = doc.loadCanvas({
           pageNumber: pageNum,
           width: thumbSize,
           height: thumbSize,
           drawComplete: async (thumb) => {
+            // If this load was superseded by a newer one, discard the result.
+            // Uses a generation token set before loadCanvas is called so the
+            // guard works even if drawComplete fires synchronously.
+            if (loadGenerationRef.current !== generation) {
+              return;
+            }
+            loadRequestIdRef.current = null;
+
             const thumbnailContainer = getRootNode().querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
             if (thumbnailContainer) {
               const childElement = thumbnailContainer.querySelector('.page-image');
@@ -110,8 +136,10 @@ const Thumbnail = React.forwardRef((props, ref) => {
               thumb.className = `page-image ${isRTL ? 'right-to-left' : ''}`;
 
               const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
-              thumb.style.width = `${thumb.width * ratio}px`;
-              thumb.style.height = `${thumb.height * ratio}px`;
+              const scaledWidth = thumb.width * ratio;
+              const scaledHeight = thumb.height * ratio;
+              thumb.style.width = `${scaledWidth}px`;
+              thumb.style.height = `${scaledHeight}px`;
               setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
 
               if (isRTL) {
@@ -145,6 +173,7 @@ const Thumbnail = React.forwardRef((props, ref) => {
           },
           allowUseOfOptimizedThumbnail: true,
         });
+        loadRequestIdRef.current = id;
         onLoad(index, thumbnailContainer, id);
       }
     }, THUMBNAIL_LOAD_DELAY);
@@ -178,16 +207,27 @@ const Thumbnail = React.forwardRef((props, ref) => {
 
     core.addEventListener('pagesUpdated', onPagesUpdated);
     core.addEventListener('rotationUpdated', onRotationUpdated);
+    setLoaded(false);
     if (canLoad) {
       loadThumbnailAsync();
     }
     return () => {
       core.removeEventListener('pagesUpdated', onPagesUpdated);
       core.removeEventListener('rotationUpdated', onRotationUpdated);
-      clearTimeout(loadTimeout);
+      cancelPendingLoad();
       onRemove(index);
     };
-  }, []);
+  }, [core]);
+
+  // When canLoad transitions to true after the initial [core] effect already ran
+  // (e.g. heavy file finishes main rendering), trigger thumbnail loading.
+  // Only triggers when no load is already in progress to avoid cancelling in-flight requests.
+  useEffect(() => {
+    const hasLoadInProgress = loadTimeoutRef.current !== null || loadRequestIdRef.current !== null;
+    if (canLoad && !loaded && !hasLoadInProgress) {
+      loadThumbnailAsync();
+    }
+  }, [canLoad]);
 
   const handleClick = (e) => {
     const checkboxToggled = e.target.type && e.target.type === 'checkbox';

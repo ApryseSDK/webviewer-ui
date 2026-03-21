@@ -549,15 +549,17 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_AUTO_EXPAND_OUTLINES':
       return { ...state, autoExpandOutlines: payload.autoExpandOutlines };
     case 'SET_OUTLINES_PANEL_STATE': {
-      const { outlinePath, outlineState } = payload;
-      const [[stateKey, stateValue]] = Object.entries(outlineState);
+      const { outlinePath, outlineState, documentViewerKey } = payload;
       return {
         ...state,
         outlinesStateMap: {
           ...state.outlinesStateMap,
-          [outlinePath]: {
-            ...state.outlinesStateMap[outlinePath],
-            [stateKey]: stateValue,
+          [documentViewerKey]: {
+            ...state.outlinesStateMap?.[documentViewerKey],
+            [outlinePath]: {
+              ...state.outlinesStateMap?.[documentViewerKey]?.[outlinePath],
+              ...outlineState,
+            },
           },
         },
       };
@@ -706,12 +708,29 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'USE_CLIENT_SIDE_PRINT':
       return { ...state, useClientSidePrint: payload.useClientSidePrint };
-    case 'SET_PAGE_LABELS':
-      return { ...state, pageLabels: [...payload.pageLabels] };
+    case 'SET_PAGE_LABELS': {
+      return {
+        ...state,
+        pageLabels: {
+          ...state.pageLabels,
+          [payload.documentViewerKey]: [...payload.pageLabels],
+        }
+      };
+    }
     case 'ENABLE_CUSTOM_PAGE_LABELS':
-      return { ...state, isCustomPageLabelsEnabled: true };
+      return { ...state,
+        isCustomPageLabelsEnabled: {
+          ...state.isCustomPageLabelsEnabled,
+          [payload.documentViewerKey]: true
+        }
+      };
     case 'DISABLE_CUSTOM_PAGE_LABELS':
-      return { ...state, isCustomPageLabelsEnabled: false };
+      return { ...state,
+        isCustomPageLabelsEnabled: {
+          ...state.isCustomPageLabelsEnabled,
+          [payload.documentViewerKey]: false
+        }
+      };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
     case 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX':

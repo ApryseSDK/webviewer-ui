@@ -24,7 +24,6 @@ function NoteStateContainer(props) {
     annotation.addReply(stateAnnotation);
     const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
     annotationManager.addAnnotation(stateAnnotation);
-    annotationManager.trigger('addReply', [stateAnnotation, annotation, annotationManager.getRootAnnotation(annotation)]);
   }, [annotation, activeDocumentViewerKey]));
 
   return (!isNoteStateDisabled &&

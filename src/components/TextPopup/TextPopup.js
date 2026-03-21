@@ -86,7 +86,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
       })}
       data-element={DataElements.TEXT_POPUP}
       ref={popupRef}
-      style={{ ...position }}
+      css={position}
       onClick={onClose}
       aria-label={t('component.textPopup')}
     >
@@ -132,7 +132,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               className="main-menu-button"
               label={isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
-              img="icon-tool-text-manipulation-strikethrough"
+              img="icon-text-strikeout"
               onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
               dataElement="textStrikeoutToolButton"
             />

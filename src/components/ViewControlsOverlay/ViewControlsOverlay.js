@@ -10,10 +10,10 @@ import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
-import actions from 'actions';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import DataElements from 'src/constants/dataElement';
 import { isIE11, isIOS, isIOSFullScreenSupported } from 'helpers/device';
+import { cleanUpMultiViewer, setupMultiViewer } from 'helpers/multiViewerHelper';
 
 function ViewControlsOverlay() {
   const { core } = useCore();
@@ -51,9 +51,7 @@ function ViewControlsOverlay() {
     isPageTransitionEnabled = true;
   }
   const showCompareButton = !isIE11 && !isMultiTab && isMultiViewerModeAvailable;
-  const toggleCompareMode = () => {
-    store.dispatch(actions.setIsMultiViewerMode(!isMultiViewerMode));
-  };
+  const toggleCompareMode = () => isMultiViewerMode ? cleanUpMultiViewer(store) : setupMultiViewer(store);
 
   const handleClick = (pageTransition, layout) => {
     const setDisplayMode = () => {

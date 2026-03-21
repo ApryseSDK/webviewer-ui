@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
+import { isAnnotationInView } from 'helpers/getPopupPosition';
 import DataElements from 'constants/dataElement';
 import debounce from 'lodash/debounce';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
+import { getOverlappingOfficeEditorAnnotations } from 'helpers/inlineCommentingOfficeEditorOverlap';
 
 export default function useOnInlineCommentPopupOpen() {
   const [
@@ -15,9 +17,9 @@ export default function useOnInlineCommentPopupOpen() {
     activeLeftPanel,
     inlineCommentFilter,
     activeDocumentViewerKey,
-    isModularUIReviewPanelOpen,
     isOfficeEditorMode,
-    isOfficeEditorCommentPanelOpen,
+    isReviewPanelOpen,
+    isCommentPanelOpen,
     featureFlags,
   ] = useSelector(
     (state) => [
@@ -27,8 +29,8 @@ export default function useOnInlineCommentPopupOpen() {
       selectors.getActiveLeftPanel(state),
       selectors.getInlineCommentFilter(state),
       selectors.getActiveDocumentViewerKey(state),
-      selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_REVIEW_PANEL),
       selectors.getIsOfficeEditorMode(state),
+      selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_REVIEW_PANEL),
       selectors.isElementOpen(state, DataElements.OFFICE_EDITOR_COMMENT_PANEL),
       selectors.getFeatureFlags(state),
     ],
@@ -39,22 +41,57 @@ export default function useOnInlineCommentPopupOpen() {
   const [annotation, setAnnotation] = useState(null);
   const [isFreeTextAnnotationAdded, setFreeTextAnnotationAdded] = useState(false);
   const [reopenFlag, setReopenFlag] = useState(false);
+  const [lastAnnotationsUnderMouse, setLastAnnotationsUnderMouse] = useState(null);
   const { ToolNames } = window.Core.Tools;
 
   const isNotesActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
-  const reviewPanelOpen = featureFlags?.customizableUI ? isModularUIReviewPanelOpen : leftPanelOpen;
+  const reviewPanelOpen = featureFlags?.customizableUI ? isReviewPanelOpen : leftPanelOpen;
 
   const annotationKey = annotation ? mapAnnotationToKey(annotation) : null;
-  const isTrackedChange = annotationKey === annotationMapKeys.TRACKED_CHANGE;
-  const isOfficeComment = annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
-  const isTrackedChangeBlocked = isOfficeEditorMode && isTrackedChange && reviewPanelOpen;
-  const isOfficeCommentBlocked = isOfficeEditorMode && isOfficeComment && isOfficeEditorCommentPanelOpen;
 
-  const shouldBlockPopup = isNotesActive || isTrackedChangeBlocked || isOfficeCommentBlocked;
+  const hasRequiredOverlap = useMemo(() => {
+    if (!annotation || !isOfficeEditorMode) {
+      return true;
+    }
+
+    const isTrackedChange = annotationKey === annotationMapKeys.TRACKED_CHANGE;
+    const isOfficeEditorComment = annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+    if (!isTrackedChange && !isOfficeEditorComment) {
+      return true;
+    }
+
+    if (isTrackedChange && !reviewPanelOpen) {
+      return true;
+    }
+
+    if (isOfficeEditorComment && !isCommentPanelOpen) {
+      return true;
+    }
+
+    const overlapping = getOverlappingOfficeEditorAnnotations({
+      commentingAnnotation: annotation,
+      annotations: core.getAnnotationsList(),
+      documentViewerKey: activeDocumentViewerKey,
+      annotationsUnderMouse: lastAnnotationsUnderMouse,
+      mapAnnotationToKeyFn: mapAnnotationToKey,
+    });
+
+    return Boolean(overlapping);
+  }, [
+    annotation,
+    isOfficeEditorMode,
+    reviewPanelOpen,
+    isCommentPanelOpen,
+    activeDocumentViewerKey,
+    lastAnnotationsUnderMouse,
+  ]);
+
+  const shouldBlockPopup = isNotesActive || !hasRequiredOverlap;
   const closeAndReset = () => {
     dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
     setAnnotation(null);
     setFreeTextAnnotationAdded(false);
+    setLastAnnotationsUnderMouse(null);
   };
 
   const isFreeTextAnnotation = (annot) => {
@@ -105,7 +142,10 @@ export default function useOnInlineCommentPopupOpen() {
       // clicking on the selected annotation is considered clicking outside of this component
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
-      const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
+      const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
+      const annotationsUnderMouse = annotationManager.getAnnotationsByMouseEvent(e);
+      const annotUnderMouse = annotationsUnderMouse[0] || null;
+      setLastAnnotationsUnderMouse(annotationsUnderMouse.length ? annotationsUnderMouse : null);
       if (annotation) {
         if (!annotUnderMouse) {
           closeAndReset();
@@ -136,10 +176,16 @@ export default function useOnInlineCommentPopupOpen() {
 
   useEffect(() => {
     if (!shouldBlockPopup && annotation && inlineCommentFilter(annotation)) {
-      dispatch(actions.openElement(DataElements.INLINE_COMMENT_POPUP));
+      // Only open the popup if the annotation is within the visible scroll area.
+      // Reopening it while the annotation is off-screen, could cause
+      // Quill's focus to scroll ancestor containers, resulting in a blank App.
+      const scrollContainer = core.getScrollViewElement(activeDocumentViewerKey);
+      if (isAnnotationInView(annotation, scrollContainer, activeDocumentViewerKey)) {
+        dispatch(actions.openElement(DataElements.INLINE_COMMENT_POPUP));
+      }
     }
     // reopenFlag is needed here in order to re-open the popup on scroll
-  }, [annotation, inlineCommentFilter, reopenFlag, shouldBlockPopup]);
+  }, [annotation, inlineCommentFilter, reopenFlag, shouldBlockPopup, activeDocumentViewerKey]);
 
   useEffect(() => {
     if (annotation && shouldBlockPopup) {
@@ -157,5 +203,5 @@ export default function useOnInlineCommentPopupOpen() {
     return () => scrollViewElement?.removeEventListener('scroll', onScroll);
   }, [activeDocumentViewerKey]);
 
-  return { annotation, closeAndReset };
+  return { annotation, closeAndReset, lastAnnotationsUnderMouse };
 }

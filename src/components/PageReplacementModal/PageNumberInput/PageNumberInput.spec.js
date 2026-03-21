@@ -11,8 +11,12 @@ function noop() { }
 
 const initialState = {
   viewer: {
-    isCustomPageLabelsEnabled: false,
-    pageLabels: [],
+    isCustomPageLabelsEnabled: {
+      1: false,
+    },
+    pageLabels: {
+      1: [],
+    },
   }
 };
 
@@ -189,8 +193,12 @@ describe('PageNumberInput component', () => {
 
     const state = {
       viewer: {
-        isCustomPageLabelsEnabled: true,
-        pageLabels: ['Label1', 'Label2', '3', '4', '5'],
+        isCustomPageLabelsEnabled: {
+          1: true,
+        },
+        pageLabels: {
+          1: ['Label1', 'Label2', '3', '4', '5'],
+        },
       }
     };
 
@@ -214,8 +222,12 @@ describe('PageNumberInput component', () => {
 
     const state = {
       viewer: {
-        isCustomPageLabelsEnabled: true,
-        pageLabels: ['91', '92', '93', '94', '95', '96', '97', '98', '99'],
+        isCustomPageLabelsEnabled: {
+          1: true,
+        },
+        pageLabels: {
+          1: ['91', '92', '93', '94', '95', '96', '97', '98', '99'],
+        },
       }
     };
     render(<ControlledPageNumberInput {...props} state={state} />);

@@ -27,7 +27,15 @@ const FontStyleToggleButton = forwardRef((props, ref) => {
     img: icon = menuItem.icon,
     title = menuItem.title,
   } = props;
-  const isActive = useSelector((state) => selectors.isStyleButtonActive(state, styleType));
+  let convertedStyleType;
+  switch (styleType) {
+    case 'strikeout':
+      convertedStyleType = 'strikethrough';
+      break;
+    default:
+      convertedStyleType = styleType;
+  }
+  const isActive = useSelector((state) => selectors.isStyleButtonActive(state, convertedStyleType));
 
   const handleClick = () => {
     core.getOfficeEditor().updateSelectionAndCursorStyle({ [styleType]: true });

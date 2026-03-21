@@ -48,7 +48,7 @@ function IndexPanelContainer(props) {
     } else {
       setWidgets([]);
     }
-  }, [isOpen]);
+  }, [isOpen, core]);
 
   const passProps = {
     widgets,

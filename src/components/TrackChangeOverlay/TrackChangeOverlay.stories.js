@@ -3,6 +3,7 @@ import TrackChangeOverlay from './TrackChangeOverlay';
 import { Provider } from 'react-redux';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/TrackChangeOverlay',
@@ -43,4 +44,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

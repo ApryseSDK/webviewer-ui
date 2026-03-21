@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import TextInputComponent from './TextInput';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -44,7 +45,7 @@ export const Basic = () => {
   return <BasicComponent {...props} />;
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const ErrorComponent = () => {
   const props = {
@@ -58,6 +59,6 @@ export const ErrorComponent = () => {
   return <BasicComponent {...props} />;
 };
 
-ErrorComponent.parameters = window.storybook.disableRtlMode;
+ErrorComponent.parameters = disableRtlModeParameters;
 
 

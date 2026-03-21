@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import core from 'core';
+import useCore from 'hooks/useCore';
 
 export default function useOnCropAnnotationChangedOrSelected(openDocumentCropPopup) {
+  const { core } = useCore();
   const [cropAnnotation, setCropAnnotation] = useState(null);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function useOnCropAnnotationChangedOrSelected(openDocumentCropPop
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('annotationSelected', onAnnotationSelected);
     };
-  }, []);
+  }, [core, openDocumentCropPopup]);
 
   return cropAnnotation;
 }

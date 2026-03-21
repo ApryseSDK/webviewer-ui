@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import Panel from 'components/Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import initialState from 'src/redux/initialState';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/PortfolioPanel',
@@ -59,4 +60,4 @@ export function PortfolioPanelRight() {
   );
 }
 
-PortfolioPanelRight.parameters = window.storybook.disableRtlMode;
+PortfolioPanelRight.parameters = disableRtlModeParameters;

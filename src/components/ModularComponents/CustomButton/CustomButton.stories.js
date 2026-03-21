@@ -4,6 +4,7 @@ import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { expect, within } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/CustomButton',
@@ -34,7 +35,7 @@ DefaultButton.args = {
   }
 };
 
-DefaultButton.parameters = window.storybook.disableRtlMode;
+DefaultButton.parameters = disableRtlModeParameters;
 
 export const DefaultButtonOnHover = BasicComponent.bind({});
 DefaultButtonOnHover.args = {
@@ -50,7 +51,7 @@ DefaultButtonOnHover.args = {
 
 DefaultButtonOnHover.parameters = {
   pseudo: { hover: true },
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const ConfirmButton = BasicComponent.bind({});
@@ -64,7 +65,7 @@ ConfirmButton.args = {
   }
 };
 
-ConfirmButton.parameters = window.storybook.disableRtlMode;
+ConfirmButton.parameters = disableRtlModeParameters;
 
 export const CancelButton = BasicComponent.bind({});
 CancelButton.args = {
@@ -77,7 +78,7 @@ CancelButton.args = {
   }
 };
 
-CancelButton.parameters = window.storybook.disableRtlMode;
+CancelButton.parameters = disableRtlModeParameters;
 
 export const CustomButtonWithStyle = BasicComponent.bind({});
 CustomButtonWithStyle.args = {
@@ -95,7 +96,7 @@ CustomButtonWithStyle.args = {
   },
   className: 'custom-class',
 };
-CustomButtonWithStyle.parameters = window.storybook.disableRtlMode;
+CustomButtonWithStyle.parameters = disableRtlModeParameters;
 
 CustomButtonWithStyle.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

@@ -79,7 +79,7 @@ const ColorPickerOverlay = ({
         open: isOpen,
         closed: !isOpen
       })}
-      style={position}
+      css={position}
       ref={overlayRef}
     >
       <ColorPalette

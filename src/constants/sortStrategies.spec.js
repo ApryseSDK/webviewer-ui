@@ -1,4 +1,5 @@
-import { getSortStrategies } from './sortStrategies';
+import core from 'core';
+import { getSortStrategies, getExtendedSortStrategies } from './sortStrategies';
 
 const notes = [
   new Core.Annotations.FreeTextAnnotation('', {
@@ -23,6 +24,61 @@ const notes = [
 ];
 
 describe('Sort Strategies', () => {
+  describe('sort by line position', () => {
+    const originalGetRotation = core.getRotation;
+    const originalGetPageInfo = core.getPageInfo;
+    const originalGetTotalPages = core.getTotalPages;
+
+    beforeEach(() => {
+      core.getRotation = () => 0;
+      core.getPageInfo = () => ({ width: 100, height: 100 });
+      core.getTotalPages = () => 1;
+    });
+
+    afterEach(() => {
+      core.getRotation = originalGetRotation;
+      core.getPageInfo = originalGetPageInfo;
+      core.getTotalPages = originalGetTotalPages;
+    });
+
+    it('should sort left to right for notes on the same line', () => {
+      const notesForLineSort = [
+        {
+          Id: 'a',
+          PageNumber: 1,
+          X: 10,
+          Y: 10,
+          Width: 5,
+          Height: 10,
+          getQuads: () => [{ x1: 10, y1: 10 }],
+        },
+        {
+          Id: 'c',
+          PageNumber: 1,
+          X: 20,
+          Y: 5,
+          Width: 5,
+          Height: 10,
+          getQuads: () => [{ x1: 20, y1: 5 }],
+        },
+        {
+          Id: 'b',
+          PageNumber: 1,
+          X: 30,
+          Y: 15,
+          Width: 5,
+          Height: 10,
+          getQuads: () => [{ x1: 30, y1: 15 }],
+        },
+      ];
+
+      const sorted = getExtendedSortStrategies().linePosition.getSortedNotes([...notesForLineSort]);
+      const sortedIds = sorted.map((note) => note.Id);
+
+      expect(sortedIds).toEqual(['a', 'c', 'b']);
+    });
+  });
+
   describe('sort by color', () => {
     it('should sort by text color for free text annotations', () => {
       const sortStrategies = getSortStrategies();

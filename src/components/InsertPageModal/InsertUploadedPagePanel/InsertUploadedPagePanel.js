@@ -26,6 +26,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
   const [insertAbove, setInsertAbove] = useState(true);
   const [hasPageNumberError, setHasPageNumberError] = useState(false);
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+  const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   useEffect(() => {
     const pageCount = sourceDocument.getPageCount();
@@ -80,7 +81,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
         insertBeforeThisPage = null;
       }
 
-      insertPages(sourceDocument, getSelectedPages(), insertBeforeThisPage);
+      insertPages(sourceDocument, getSelectedPages(), insertBeforeThisPage, documentViewerKey);
     }
 
     closeModal();

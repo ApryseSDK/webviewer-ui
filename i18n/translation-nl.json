@@ -354,7 +354,11 @@
     "listEmptyValue": "Eén of meer velden hebben een lege waarde.",
     "listDuplicateValue": "Meerdere velden hebben de volgende waarden:",
     "networkError": "Er is iets misgegaan bij het laden van dit onderdeel. Controleer uw netwerkverbinding en vernieuw de pagina.",
-    "refreshPage": "Controleer uw netwerkverbinding en vernieuw de pagina."
+    "refreshPage": "Controleer uw netwerkverbinding en vernieuw de pagina.",
+    "renderErrors": {
+      "error": "Hier is iets misgegaan.",
+      "refreshPanel": "Je kunt gewoon doorwerken. Probeer het paneel opnieuw te openen."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sorteer Bestellijst",
       "position": "Positie",
+      "linePosition": "Positie",
       "time": "Tijd",
       "status": "Toestand",
       "author": "Auteur",
@@ -483,6 +488,7 @@
       "markForRedaction": "Markeren voor redactie"
     },
     "searchPanel": {
+      "searchResults": "Zoekresultaten",
       "caseSensitive": "Hoofdlettergevoelig",
       "wholeWordOnly": "Hele woorden",
       "wildcard": "wildcard",
@@ -1316,6 +1322,7 @@
     "bold": "Vetgedrukt",
     "italic": "Cursief",
     "underline": "Onderstrepen",
+    "strikeout": "Strike-out",
     "textColor": "Tekst kleur",
     "leftAlign": "Links uitlijnen",
     "centerAlign": "Midden uitlijnen",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Bekijk zonder suggesties",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten.",
     "previewAllChanges": "Bekijk een voorbeeld van alle wijzigingen",
+    "changes": "Wijzigingen",
+    "comments": "Opmerkingen",
+    "commentsAndChangesTabs": "Tabbladen voor opmerkingen en wijzigingen",
     "accept": "Aanvaarden",
     "reject": "Afwijzen",
     "pastingTitle": "Plakken niet beschikbaar",

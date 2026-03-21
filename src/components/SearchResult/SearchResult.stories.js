@@ -104,8 +104,8 @@ export function SearchResultSpreadsheetMode() {
 
 SearchResultSpreadsheetMode.play = async ({ canvasElement, globals }) => {
   const canvas = within(canvasElement);
-  const searchResultsGrid = canvas.getByLabelText('grid');
-  expect(searchResultsGrid).toBeTruthy();
+  const searchResultsList = canvas.getByRole('list');
+  expect(searchResultsList).toBeTruthy();
   const isRtl = globals.addonRtl === 'rtl';
   const searchResultLabel = isRtl ? `Revenue growth metrics:C3 ${getTranslatedText('action.goToResult')}` : `${getTranslatedText('action.goToResult')} C3:Revenue growth metrics`;
   expect(await canvas.findByLabelText(`${searchResultLabel}`)).toBeTruthy();

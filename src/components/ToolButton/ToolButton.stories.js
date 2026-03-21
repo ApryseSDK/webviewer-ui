@@ -5,6 +5,7 @@ import ToolButtonComponent from './index';
 import initialState from 'src/redux/initialState';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 import { initialColors } from 'helpers/initialColorStates';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer)
@@ -32,4 +33,4 @@ ToolButton.args = {
   color: initialColors[0],
 };
 
-ToolButton.parameters = window.storybook.disableRtlMode;
+ToolButton.parameters = disableRtlModeParameters;

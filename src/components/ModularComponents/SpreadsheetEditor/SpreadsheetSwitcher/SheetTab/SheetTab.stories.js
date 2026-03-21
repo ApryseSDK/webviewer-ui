@@ -2,6 +2,7 @@ import React from 'react';
 import SheetTab from './SheetTab';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const customViewports = {
   ViewOptionOne: {
@@ -17,12 +18,20 @@ const customViewports = {
 export default {
   title: 'SpreadsheetEditor/SheetTab',
   component: SheetTab,
+
   parameters: {
     viewport: {
-      viewports: customViewports,
-      defaultViewport: 'ViewOptionOne'
-    }
+      options: customViewports,
+    },
+    chromatic: {
+      modes: {
+        'Light theme RTL': { disable: true },
+      },
+    },
   },
+  globals: {
+    viewport: { value: 'ViewOptionOne', isRotated: false },
+  }
 };
 
 const initialState = {
@@ -61,5 +70,4 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
-
+Basic.parameters = disableRtlModeParameters;

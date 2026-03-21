@@ -7,6 +7,7 @@ import core from 'core';
 import { createStore } from 'helpers/storybookHelper';
 import '../HeaderItems/HeaderItems.scss';
 import { within, expect, userEvent } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/StylePopup',
@@ -91,7 +92,7 @@ StylePopupInFormBuilder.args = {
   onLineStyleChange: noop,
 };
 
-StylePopupInFormBuilder.parameters = window.storybook.disableRtlMode;
+StylePopupInFormBuilder.parameters = disableRtlModeParameters;
 
 export const StylePopupForRedactionToolInHeaderItem = () => {
   const props = {
@@ -155,7 +156,7 @@ export const StylePopupForRedactionToolInHeaderItem = () => {
   );
 };
 
-StylePopupForRedactionToolInHeaderItem.parameters = window.storybook.disableRtlMode;
+StylePopupForRedactionToolInHeaderItem.parameters = disableRtlModeParameters;
 
 
 export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
@@ -312,7 +313,7 @@ export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
     ) : <>Loading...</>;
 };
 
-StylePopupForDistanceMeasurementToolInHeaderItem.parameters = window.storybook.disableRtlMode;
+StylePopupForDistanceMeasurementToolInHeaderItem.parameters = disableRtlModeParameters;
 
 StylePopupForDistanceMeasurementToolInHeaderItem.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -383,4 +384,4 @@ export const StylePopupForFreeTextToolInHeaderItem = () => {
   );
 };
 
-StylePopupForFreeTextToolInHeaderItem.parameters = window.storybook.disableRtlMode;
+StylePopupForFreeTextToolInHeaderItem.parameters = disableRtlModeParameters;

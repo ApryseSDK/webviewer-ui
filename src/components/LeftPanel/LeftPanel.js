@@ -66,7 +66,7 @@ const LeftPanel = () => {
       selectors.getFeatureFlags(state),
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
-      selectors.getPortfolio(state),
+      selectors.getPortfolio(state, selectors.getActiveDocumentViewerKey(state)),
       selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual,

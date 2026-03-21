@@ -6,6 +6,7 @@ import { workerTypes } from 'constants/types';
 import { EditingStreamType } from 'constants/officeEditor';
 import ContextMenuPopup from './ContextMenuPopup';
 import { defaultPopups } from 'src/redux/modularComponents';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 export default {
   title: 'Components/ContextMenuPopup',
   component: ContextMenuPopup,
@@ -55,7 +56,7 @@ export const BasicHorizontal = () => {
   );
 };
 
-BasicHorizontal.parameters = window.storybook.disableRtlMode;
+BasicHorizontal.parameters = disableRtlModeParameters;
 
 export const BasicVertical = () => {
   mockInitialState.viewer.enableRightClickAnnotationPopup = true;
@@ -113,7 +114,7 @@ export const OfficeEditorTable = () => {
   );
 };
 
-OfficeEditorTable.parameters = window.storybook.disableRtlMode;
+OfficeEditorTable.parameters = disableRtlModeParameters;
 
 export const OfficeEditorHeaderStream = () => {
   core.getOfficeEditor = () => ({
@@ -137,4 +138,4 @@ export const OfficeEditorHeaderStream = () => {
   );
 };
 
-OfficeEditorHeaderStream.parameters = window.storybook.disableRtlMode;
+OfficeEditorHeaderStream.parameters = disableRtlModeParameters;

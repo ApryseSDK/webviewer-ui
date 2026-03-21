@@ -354,7 +354,11 @@
     "listEmptyValue": "Một hoặc nhiều trường có giá trị trống.",
     "listDuplicateValue": "Nhiều trường có các giá trị sau:",
     "networkError": "Đã xảy ra lỗi khi tải thành phần này. Vui lòng kiểm tra kết nối mạng và làm mới trang.",
-    "refreshPage": "Vui lòng kiểm tra kết nối mạng của bạn và làm mới trang."
+    "refreshPage": "Vui lòng kiểm tra kết nối mạng của bạn và làm mới trang.",
+    "renderErrors": {
+      "error": "Đã xảy ra lỗi ở đây.",
+      "refreshPanel": "Bạn có thể tiếp tục làm việc. Hãy thử mở lại bảng điều khiển."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sắp Xếp Danh Sách Lệnh",
       "position": "Vị trí",
+      "linePosition": "Vị trí",
       "time": "Thời gian",
       "status": "Trạng thái",
       "author": "Tác giả",
@@ -483,6 +488,7 @@
       "markForRedaction": "Đánh dấu để biên tập"
     },
     "searchPanel": {
+      "searchResults": "kết quả tìm kiếm",
       "caseSensitive": "Nhạy cảm viết hoa",
       "wholeWordOnly": "Toàn bộ từ",
       "wildcard": "Wildcard",
@@ -1316,6 +1322,7 @@
     "bold": "In đậm",
     "italic": "chữ nghiêng",
     "underline": "gạch dưới",
+    "strikeout": "Strikeout",
     "textColor": "Văn bản màu",
     "leftAlign": "Căn trái",
     "centerAlign": "Căn giữa",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Xem không có đề xuất",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động.",
     "previewAllChanges": "Xem trước tất cả các thay đổi",
+    "changes": "Thay đổi",
+    "comments": "Bình luận",
+    "commentsAndChangesTabs": "Các tab Bình luận và Thay đổi",
     "accept": "Chấp nhận",
     "reject": "Từ chối",
     "pastingTitle": "Dán không có sẵn",

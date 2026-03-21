@@ -1,9 +1,11 @@
-import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
+import { createWrappedCore } from 'hooks/useCore/useCore';
 
-export default ({ dispatch, getState }) => (annotation) => {
+export default (store, documentViewerKey) => (annotation) => {
+  const { dispatch, getState } = store;
+  const core = createWrappedCore(documentViewerKey);
   const state = getState();
   const isNotesPanelDisabled = selectors.isElementDisabled(state, DataElements.NOTES_PANEL);
   const isNotesPanelOpen = selectors.isElementOpen(state, DataElements.NOTES_PANEL);

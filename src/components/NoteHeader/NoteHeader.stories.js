@@ -4,6 +4,7 @@ import NoteHeader from 'components/NoteHeader';
 import NoteContext from '../Note/Context';
 import { Provider } from 'react-redux';
 import { initialColors } from 'helpers/initialColorStates';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Note/NoteHeader',
@@ -19,7 +20,10 @@ const initialState = {
     activeDocumentViewerKey: 1,
     openElements: {},
     flyoutMap: {},
-  }
+  },
+  officeEditor: {
+    editMode: 'editing',
+  },
 };
 function rootReducer(state = initialState, action) {
   return state;
@@ -82,7 +86,7 @@ export function Basic() {
     </Provider>
   );
 }
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 
 export const testPropsWithAnnotationNumbering = {
@@ -99,7 +103,7 @@ export function BasicWithAnnotationNumbering() {
     </Provider>
   );
 }
-BasicWithAnnotationNumbering.parameters = window.storybook.disableRtlMode;
+BasicWithAnnotationNumbering.parameters = disableRtlModeParameters;
 
 
 export const testPropsWithTrackedChange = {
@@ -117,5 +121,5 @@ export function BasicWithTrackedChange() {
     </Provider>
   );
 }
-BasicWithTrackedChange.parameters = window.storybook.disableRtlMode;
+BasicWithTrackedChange.parameters = disableRtlModeParameters;
 

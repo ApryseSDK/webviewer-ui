@@ -31,7 +31,7 @@ function SearchResultListSeparator(props) {
 
   if (isFirstListItem || isInDifferentPage || isInDifferentSheet) {
     return (
-      <div role="cell">
+      <div aria-hidden="true">
         <ListSeparator isBoldHeader={isSpreadsheetEditorMode()}>{listSeparatorText}</ListSeparator>
       </div>
     );
@@ -53,7 +53,7 @@ const SearchResultListItemPropTypes = {
 function SearchResultListItem(props) {
   const [t] = useTranslation();
   const [customizableUI] = useSelector((state) => [state.featureFlags.customizableUI]);
-  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey, title } = props;
+  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey, title, pageLabel, 'aria-posinset': ariaPosinset, 'aria-setsize': ariaSetsize } = props;
   const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
   const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
   const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
@@ -63,12 +63,15 @@ function SearchResultListItem(props) {
   if (isSpreadsheetEditorMode()) {
     ariaLabel = isRtl ? `${ambientStr}:${result.cell} ${t('action.goToResult')}` : `${t('action.goToResult')} ${result.cell}:${ambientStr}`;
   } else {
-    ariaLabel = isRtl ? `${ambientStr}:${t('action.goToResult')}` : `${t('action.goToResult')}:${ambientStr}`;
+    const pageInfo = pageLabel ? `${t('option.shared.page')} ${pageLabel}, ` : '';
+    ariaLabel = isRtl ? `${ambientStr}:${pageInfo}${t('action.goToResult')}` : `${t('action.goToResult')}:${pageInfo}${ambientStr}`;
   }
   return (
     <button
+      role="listitem"
+      aria-posinset={ariaPosinset}
+      aria-setsize={ariaSetsize}
       aria-label={ariaLabel}
-      role="cell"
       className={classNames({
         'SearchResult': true,
         'selected': currentResultIndex === activeResultIndex,
@@ -142,17 +145,23 @@ function SearchResult(props) {
         rowIndex={index}
       >
         {({ registerChild }) => (
-          <div role="row" ref={registerChild} style={style}>
+          <div
+            role="presentation"
+            ref={registerChild}
+            style={style}>
             <SearchResultListSeparator
               listSeparatorText={listSeparatorText}
               currentResultIndex={index}
               searchResults={searchResults}
             />
             <SearchResultListItem
+              aria-posinset={index + 1}
+              aria-setsize={searchResults.length}
               title={isSpreadsheetEditorMode ? result.cell : undefined}
               result={result}
               currentResultIndex={index}
               activeResultIndex={activeResultIndex}
+              pageLabel={pageLabels[result.pageNum - 1]}
               onSearchResultClick={onClickResult}
               activeDocumentViewerKey={activeDocumentViewerKey}
             />
@@ -188,6 +197,8 @@ function SearchResult(props) {
 
   return (
     <VirtualizedList
+      role='list'
+      aria-label={t('option.searchPanel.searchResults')}
       width={200}
       height={height}
       tabIndex={-1}

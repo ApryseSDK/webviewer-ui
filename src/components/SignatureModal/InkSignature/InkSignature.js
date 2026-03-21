@@ -32,7 +32,11 @@ const InkSignature = ({
   enableCreateButton,
   isInitialsModeEnabled = false
 }) => {
-  const { core } = useCore();
+  // useCore must be called with 1 so that InkSignature always uses the
+  // viewer-1 signature tool. In MultiViewer, the active viewer key may be 2,
+  // but the signature tool of viewer 1 controls the shared signature list
+  // panel and propagates annotation state to all viewers.
+  const { core } = useCore(1);
   const fullSignatureCanvas = useRef();
   const initialsCanvas = useRef();
   // the ref holds the path points of the underlying freehand annotation

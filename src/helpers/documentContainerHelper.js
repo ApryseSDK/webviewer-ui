@@ -95,3 +95,16 @@ export const handleWindowResize = ({ isLeftPanelOpen, isRightPanelOpen, leftPane
 
   container.style.width = `${width}px`;
 };
+
+export const getLogicalMargins = (isRTL, leftMargin, rightMargin) => {
+  if (isRTL) {
+    return {
+      startMargin: rightMargin,
+      endMargin: leftMargin,
+    };
+  }
+  return {
+    startMargin: leftMargin,
+    endMargin: rightMargin,
+  };
+};

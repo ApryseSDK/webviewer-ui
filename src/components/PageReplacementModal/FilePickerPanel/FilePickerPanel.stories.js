@@ -3,6 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import FilePickerPanel from './FilePickerPanel';
 import { expect } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/FilePickerPanel',
@@ -27,7 +28,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 Basic.play = async ({ canvasElement }) => {
   const input = canvasElement.querySelector('input[type="file"]');
@@ -47,7 +48,7 @@ export function BasicWithMultiple() {
   );
 }
 
-BasicWithMultiple.parameters = window.storybook.disableRtlMode;
+BasicWithMultiple.parameters = disableRtlModeParameters;
 BasicWithMultiple.play = async ({ canvasElement }) => {
   const input = canvasElement.querySelector('input[type="file"]');
   expect(input).toBeInTheDocument();

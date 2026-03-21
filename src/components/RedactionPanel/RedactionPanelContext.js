@@ -40,7 +40,7 @@ const RedactionPanelProvider = ({ children }) => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('activeSearchResultChanged', activeSearchResultChanged);
     };
-  }, []);
+  }, [core]);
 
   const value = {
     selectedRedactionItemId,

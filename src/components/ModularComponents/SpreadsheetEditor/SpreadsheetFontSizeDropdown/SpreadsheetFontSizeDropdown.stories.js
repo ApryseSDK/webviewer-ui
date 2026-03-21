@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import SpreadsheetEditorFontSizeDropdown from './SpreadsheetFontSizeDropdown';
 import initialState from 'src/redux/initialState';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'SpreadsheetEditor/FontSizeDropdown',
@@ -44,4 +45,4 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

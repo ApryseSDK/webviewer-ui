@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line custom/use-core-hook-in-components
-import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import sizeManager from 'helpers/responsivenessHelper';
 import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
 import PageControls from './PageControls';
-import useDidUpdate from 'hooks/useDidUpdate';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FLYOUT_ITEM_TYPES, ITEM_TYPE, PLACEMENT, OPACITY_LEVELS } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
+import useCore from 'src/hooks/useCore';
 
 const PageControlsContainer = ({ dataElement = 'page-controls-container', headerPlacement, headerDirection, className }) => {
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
-  const totalPages = useSelector(selectors.getTotalPages);
-  const currentPage = useSelector(selectors.getCurrentPage);
   const shouldFadePageNavigationComponent = useSelector(selectors.shouldFadePageNavigationComponent);
-
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [isFirstPage, setIsFirstPage] = useState(false);
-  const [isLastPage, setIsLastPage] = useState(false);
+  const { core } = useCore();
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const totalPages = useSelector((state) => selectors.getTotalPages(state, activeDocumentViewerKey));
+  const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === totalPages;
   const elementRef = useRef();
 
   useEffect(() => {
@@ -54,15 +54,19 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     const pageControlsFlyout = {
       dataElement: 'pageControlsFlyout',
       className: 'pageControlsFlyout',
-      items: [{
-        dataElement: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
-        totalPages,
-        type: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
-      }, previousPageButton, nextPageButton]
+      items: [
+        {
+          dataElement: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
+          totalPages,
+          type: FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT,
+        },
+        previousPageButton,
+        nextPageButton
+      ]
     };
 
     dispatch(actions.updateFlyout(pageControlsFlyout.dataElement, pageControlsFlyout));
-  }, [totalPages]);
+  }, [totalPages, currentPage]);
 
   useEffect(() => {
     if (size === 0) {
@@ -77,16 +81,10 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     dispatch(actions.disableElement('pageNavOverlay'));
   }, []);
 
-  useDidUpdate(() => {
-    const documentViewer = core.getDocumentViewer();
-    setIsFirstPage(documentViewer.getCurrentPage() === 1);
-    setIsLastPage(documentViewer.getCurrentPage() === documentViewer.getPageCount());
-  }, [currentPage, totalPages]);
-
   const previousPageButton = {
     onClick: () => {
-      if (core.getCurrentPage() - 1 > 0) {
-        core.setCurrentPage(Math.max(core.getCurrentPage() - 1, 1));
+      if (currentPage - 1 > 0) {
+        core.setCurrentPage(Math.max(currentPage - 1, 1), activeDocumentViewerKey);
       }
     },
     dataElement: DataElements.PREVIOUS_PAGE_BUTTON,
@@ -101,9 +99,8 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
 
   const nextPageButton = {
     onClick: () => {
-      const documentViewer = core.getDocumentViewer();
-      if (documentViewer.getCurrentPage() + 1 <= documentViewer.getPageCount()) {
-        documentViewer.setCurrentPage(Math.min(documentViewer.getCurrentPage() + 1, documentViewer.getPageCount()));
+      if (currentPage + 1 <= totalPages) {
+        core.setCurrentPage(Math.min(currentPage + 1, totalPages), activeDocumentViewerKey);
       }
     },
     dataElement: DataElements.NEXT_PAGE_BUTTON,

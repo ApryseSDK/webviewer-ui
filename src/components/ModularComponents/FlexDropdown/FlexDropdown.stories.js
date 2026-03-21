@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import core from 'core';
 import initialState from 'src/redux/initialState';
 import Icon from 'components/Icon';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/FlexDropdown',
@@ -150,17 +151,17 @@ const FlexDropdownWrapper = ({ isBottomAligned, arrowDirection, direction, heigh
 };
 
 const Template = (args) => <FlexDropdownWrapper {...args} />;
-Template.parameters = window.storybook.disableRtlMode;
+Template.parameters = disableRtlModeParameters;
 
 export const Basic = Template.bind({});
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const BottomAligned = Template.bind({});
 BottomAligned.args = {
   isBottomAligned: true,
   arrowDirection: 'up',
 };
-BottomAligned.parameters = window.storybook.disableRtlMode;
+BottomAligned.parameters = disableRtlModeParameters;
 
 export const Vertical = Template.bind({});
 Vertical.args = {
@@ -169,7 +170,7 @@ Vertical.args = {
   width: 68,
   arrowDirection: 'left',
 };
-Vertical.parameters = window.storybook.disableRtlMode;
+Vertical.parameters = disableRtlModeParameters;
 
 export const VerticalBottomAligned = Template.bind({});
 VerticalBottomAligned.args = {
@@ -179,4 +180,4 @@ VerticalBottomAligned.args = {
   width: 68,
   arrowDirection: 'right',
 };
-VerticalBottomAligned.parameters = window.storybook.disableRtlMode;
+VerticalBottomAligned.parameters = disableRtlModeParameters;

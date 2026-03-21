@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import core from 'core';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions/index';
@@ -20,12 +20,14 @@ function useSearch(activeDocumentViewerKey) {
   const documentViewersCount = documentViewers.length;
   const debounceTime = 500;
 
-  const setSearchStatus = async (status) => {
+  const setSearchStatus = useCallback(async (status) => {
     dispatch(actions.setSearchStatus(status));
     if (status === 'SEARCH_IN_PROGRESS') {
       dispatch(actions.setSearchInProgress(true));
+    } else {
+      dispatch(actions.setSearchInProgress(false));
     }
-  };
+  }, [dispatch]);
 
   const spreadsheetSearch = async (searchValue, modes) => {
     if (!searchValue) {
@@ -47,6 +49,19 @@ function useSearch(activeDocumentViewerKey) {
   };
 
   const debouncedSearch = useMemo(() => debounce(spreadsheetSearch, debounceTime), []);
+
+  const refreshSpreadsheetLabelsAndSearch = useCallback(() => {
+    const workbook = core.getDocument().getSpreadsheetEditorDocument().getWorkbook();
+    const sheetNames = [];
+    for (let i = 0; i < workbook.sheetCount; i++) {
+      const sheet = workbook.getSheetAt(i);
+      sheetNames.push(sheet.name);
+    }
+
+    dispatch(actions.setPageLabels(sheetNames));
+    debouncedSearch(searchValue, { wholeWord, caseSensitive });
+  }, [searchValue, wholeWord, caseSensitive]);
+
   useEffect(() => {
     // First time useSearch is mounted we check if core has results
     // and if it has, we make sure those are set. This will make sure if external search is done
@@ -72,19 +87,26 @@ function useSearch(activeDocumentViewerKey) {
     }
   }, []);
 
-  useEffect(()=>{
-    if (isSpreadsheetEditorMode()) {
-      const workbook = core.getDocument().getSpreadsheetEditorDocument().getWorkbook();
-      const sheetNames = [];
-      for (let i=0; i<workbook.sheetCount; i++) {
-        const sheet = workbook.getSheetAt(i);
-        sheetNames.push(sheet.name);
+  useEffect(() => {
+    if (!isSpreadsheetEditorMode()) {
+      return;
+    }
+
+    const onSpreadsheetSheetChanged = () => {
+      if (!searchValue) {
+        return;
       }
 
-      dispatch(actions.setPageLabels(sheetNames));
-      debouncedSearch(searchValue, { wholeWord, caseSensitive });
-    }
-  }, [searchValue, wholeWord, caseSensitive]);
+      refreshSpreadsheetLabelsAndSearch();
+    };
+
+    refreshSpreadsheetLabelsAndSearch();
+
+    core.addEventListener('sheetChanged', onSpreadsheetSheetChanged);
+    return () => {
+      core.removeEventListener('sheetChanged', onSpreadsheetSheetChanged);
+    };
+  }, [searchValue, refreshSpreadsheetLabelsAndSearch]);
 
   useEffect(() => {
     const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
@@ -152,6 +174,7 @@ function useSearch(activeDocumentViewerKey) {
     searchResults,
     activeSearchResult,
     activeSearchResultIndex,
+    refreshSpreadsheetLabelsAndSearch,
     setActiveSearchResultIndex,
     setSearchStatus,
   };

@@ -169,6 +169,11 @@
   }
 }
 
+.noMatchMessage{
+  position: absolute;
+  inset-inline-start: -9999px;
+}
+
 [data-element='endLineStyleDropdown'] .picked-option-text {
   flex: 0.95 !important;
 }

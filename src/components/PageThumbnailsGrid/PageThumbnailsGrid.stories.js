@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageThumbnailsGrid from './PageThumbnailsGrid';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/PageThumbnailsGrid',
@@ -27,7 +28,7 @@ export const EmptyGrid = () => (
   </Provider>
 );
 
-EmptyGrid.parameters = window.storybook.disableRtlMode;
+EmptyGrid.parameters = disableRtlModeParameters;
 
 const mockDocument = {
   getPageCount: () => 10,
@@ -62,4 +63,4 @@ export const FileLoadedGrid = () => {
   );
 };
 
-FileLoadedGrid.parameters = window.storybook.disableRtlMode;
+FileLoadedGrid.parameters = disableRtlModeParameters;

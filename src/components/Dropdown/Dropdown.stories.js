@@ -6,6 +6,7 @@ import { DEFAULT_POINT_SIZE, FONT_SIZE, AVAILABLE_POINT_SIZES } from 'constants/
 import VisuallyHiddenLabel from '../VisuallyHiddenLabel';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 
 export default {
@@ -35,7 +36,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function ImageDropdown() {
   const images = [
@@ -66,7 +67,7 @@ export function ImageDropdown() {
     </ReduxProvider>
   );
 }
-ImageDropdown.parameters = window.storybook.disableRtlMode;
+ImageDropdown.parameters = disableRtlModeParameters;
 
 export function DropdownWithInput() {
   const translationPrefix = 'option.notesOrder';
@@ -149,7 +150,7 @@ export function DropdownWithInput() {
   );
 }
 
-DropdownWithInput.parameters = window.storybook.disableRtlMode;
+DropdownWithInput.parameters = disableRtlModeParameters;
 export function DropdownWithInputAndNoSearch() {
 
   const [pointSizeSelectionKey, setPointSizeSelectionKey] = React.useState(DEFAULT_POINT_SIZE.toString());
@@ -190,7 +191,7 @@ export function DropdownWithInputAndNoSearch() {
 
 }
 
-DropdownWithInputAndNoSearch.parameters = window.storybook.disableRtlMode;
+DropdownWithInputAndNoSearch.parameters = disableRtlModeParameters;
 
 export function DropdownWithCustomDisplay({ disabled = false }) {
   const translationPrefix = 'option.notesOrder';
@@ -224,13 +225,13 @@ DropdownWithCustomDisplay.propTypes = {
   disabled: PropTypes.bool,
 };
 
-DropdownWithCustomDisplay.parameters = window.storybook.disableRtlMode;
+DropdownWithCustomDisplay.parameters = disableRtlModeParameters;
 
 export function DropdownWithCustomDisplayAndDisabled() {
   return <DropdownWithCustomDisplay disabled={true} />;
 }
 
-DropdownWithCustomDisplayAndDisabled.parameters = window.storybook.disableRtlMode;
+DropdownWithCustomDisplayAndDisabled.parameters = disableRtlModeParameters;
 
 export function DropdownWithNoItems() {
   const images = [];
@@ -247,4 +248,4 @@ export function DropdownWithNoItems() {
   );
 }
 
-DropdownWithNoItems.parameters = window.storybook.disableRtlMode;
+DropdownWithNoItems.parameters = disableRtlModeParameters;

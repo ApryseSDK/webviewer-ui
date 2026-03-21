@@ -1,5 +1,6 @@
 import React from 'react';
 import DimensionInput from './DimensionInput';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/DimensionInput',
@@ -25,4 +26,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

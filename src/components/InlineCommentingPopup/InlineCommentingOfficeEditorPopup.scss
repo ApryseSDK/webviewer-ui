@@ -1,0 +1,46 @@
+@import '../../constants/styles.scss';
+@import '../../constants/tabs';
+
+.InlineCommentingOfficeEditorPopup {
+  .inline-comment-tabs {
+    padding: 12px;
+    border-bottom: 1px solid var(--tab-inline-comment-divider-color);
+
+    @extend %tab-list;
+
+    .tab-list {
+      height: 32px;
+    }
+
+    .tab-options-button {
+      border-color: var(--tab-color-selected);
+      border-style: solid;
+      border-width: 1px;
+
+      &:first-child {
+        border-right-width: 0;
+      }
+
+      &:last-child {
+        border-left-width: 0;
+      }
+
+      &:dir(rtl) {
+        &:first-child {
+          border-right-width: 1px;
+          border-left-width: 0;
+        }
+
+        &:last-child {
+          border-left-width: 1px;
+          border-right-width: 0;
+        }
+      }
+
+      &.selected {
+        border-color: var(--tab-color-selected);
+        color: var(--tab-text-color-selected);
+      }
+    }
+  }
+}

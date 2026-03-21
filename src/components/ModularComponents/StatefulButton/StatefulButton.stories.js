@@ -3,6 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import StatefulButtonComponent from './StatefulButton';
 import { expect, within } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -51,7 +52,7 @@ StatefulButtonCounter.args = {
   mount: () => {},
 };
 
-StatefulButtonCounter.parameters = window.storybook.disableRtlMode;
+StatefulButtonCounter.parameters = disableRtlModeParameters;
 
 export const StatefulButtonStates = BasicComponent.bind({});
 StatefulButtonStates.args = {
@@ -77,7 +78,7 @@ StatefulButtonStates.args = {
   mount: () => {},
 };
 
-StatefulButtonStates.parameters = window.storybook.disableRtlMode;
+StatefulButtonStates.parameters = disableRtlModeParameters;
 
 
 export const StatefulButtonWithStyleAndClass = BasicComponent.bind({});
@@ -116,4 +117,4 @@ StatefulButtonWithStyleAndClass.play = async ({ canvasElement }) => {
   expect(button.classList.contains('custom-class')).toBe(true);
 };
 
-StatefulButtonWithStyleAndClass.parameters = window.storybook.disableRtlMode;
+StatefulButtonWithStyleAndClass.parameters = disableRtlModeParameters;

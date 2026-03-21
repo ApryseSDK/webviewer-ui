@@ -354,7 +354,11 @@
     "listEmptyValue": "Bir veya daha fazla alanda boş değer var.",
     "listDuplicateValue": "Birden fazla alanın değerleri aşağıdaki gibidir:",
     "networkError": "Bu bileşen yüklenirken bir sorun oluştu. Lütfen ağ bağlantınızı kontrol edin ve sayfayı yenileyin.",
-    "refreshPage": "Lütfen ağ bağlantınızı kontrol edin ve sayfayı yenileyin."
+    "refreshPage": "Lütfen ağ bağlantınızı kontrol edin ve sayfayı yenileyin.",
+    "renderErrors": {
+      "error": "Burada bir sorun oluştu.",
+      "refreshPanel": "Çalışmaya devam edebilirsiniz. Paneli yeniden açmayı deneyin."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sıralama Listesi",
       "position": "Konum",
+      "linePosition": "Konum",
       "time": "Zaman",
       "status": "Durum",
       "author": "Yazar",
@@ -483,6 +488,7 @@
       "markForRedaction": "Redaksiyon için işaretle"
     },
     "searchPanel": {
+      "searchResults": "Arama Sonuçları",
       "caseSensitive": "Harfe duyarlı",
       "wholeWordOnly": "Tüm dünya",
       "wildcard": "joker karakter",
@@ -1316,6 +1322,7 @@
     "bold": "Gözü pek",
     "italic": "İtalik",
     "underline": "Altını çizmek",
+    "strikeout": "Vuruş",
     "textColor": "metin rengi",
     "leftAlign": "Sola hizala",
     "centerAlign": "Ortaya hizala",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Öneriler olmadan görüntüle",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez.",
     "previewAllChanges": "Tüm değişiklikleri önizleyin",
+    "changes": "Değişiklikler",
+    "comments": "Yorumlar",
+    "commentsAndChangesTabs": "Yorumlar ve Değişiklikler Sekmeleri",
     "accept": "Kabul etmek",
     "reject": "Reddetmek",
     "pastingTitle": "Yapıştırma kullanılamıyor",

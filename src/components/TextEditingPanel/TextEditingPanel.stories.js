@@ -6,6 +6,7 @@ import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 const noop = () => { };
 
@@ -148,4 +149,4 @@ LeftSide.parameters = { layout: 'fullscreen' };
 
 export const TextEditingPanelInMobile = (args, context) => TextEditingPanelInApp(context, 'textEditingPanel', 'right');
 
-TextEditingPanelInMobile.parameters = window.storybook.MobileParameters;
+TextEditingPanelInMobile.parameters = mobileStoryParameters;

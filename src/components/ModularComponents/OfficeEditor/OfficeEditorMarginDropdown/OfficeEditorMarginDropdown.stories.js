@@ -5,6 +5,7 @@ import { userEvent, within, expect } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 import OfficeEditorMarginDropdown from './OfficeEditorMarginDropdown';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/OfficeEditorMarginDropdown',
@@ -23,7 +24,7 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const Expanded = () => <Basic />;
 Expanded.play = async ({ canvasElement }) => {

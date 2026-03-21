@@ -7,6 +7,7 @@ import OfficeEditorFontSizeDropdown from './OfficeEditorFontSizeDropdown';
 import { userEvent, expect, within } from 'storybook/test';
 import { OEModularUIMockState } from 'helpers/storybookHelper';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/FontSizeDropdown',
@@ -62,4 +63,4 @@ CustomPointSize.play = async ({ canvasElement }) => {
   expect(dropdownItem.classList.contains('active')).toBe(true);
 };
 
-CustomPointSize.parameters = window.storybook.disableRtlMode;
+CustomPointSize.parameters = disableRtlModeParameters;

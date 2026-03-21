@@ -910,14 +910,17 @@ export const setMobilePanelSize = (panelSize) => ({
   payload: { panelSize },
 });
 
-export const setPageLabels = (pageLabels) => (dispatch) => {
-  if (pageLabels.length !== core.getTotalPages()) {
+export const setPageLabels = (pageLabels, documentViewerKey = 1) => (dispatch) => {
+  if (pageLabels.length !== core.getTotalPages(documentViewerKey)) {
     console.warn('Number of page labels do not match with the total pages.');
     return;
   }
   dispatch({
     type: 'SET_PAGE_LABELS',
-    payload: { pageLabels: pageLabels.map(String) },
+    payload: {
+      pageLabels: pageLabels.map(String),
+      documentViewerKey
+    },
   });
 };
 export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => {
@@ -1044,9 +1047,9 @@ export const setAnnotationReadState = ({ isRead, annotationId }) => ({
   type: 'SET_ANNOTATION_READ_STATE',
   payload: { isRead, annotationId },
 });
-export const addTrustedCertificates = (certificates) => ({
+export const addTrustedCertificates = (certificates, documentViewerKey = 1) => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
-  payload: { certificates },
+  payload: { certificates, documentViewerKey },
 });
 export const setTrustListKey = (trustListKey) => ({
   type: 'SET_TRUST_LIST_KEY',

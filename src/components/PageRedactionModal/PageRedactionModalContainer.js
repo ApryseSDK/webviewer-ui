@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DataElements from 'constants/dataElement';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import useCore from 'hooks/useCore';
@@ -15,14 +15,13 @@ const MAX_CANVAS_COUNT = 10;
 const PageRedactionModalContainer = () => {
   const { core } = useCore();
   const dispatch = useDispatch();
-  const [isOpen, currentPage, selectedIndexes, pageLabels, activeToolName, activeToolStyles] = useSelector((state) => [
-    selectors.isElementOpen(state, DataElements.PAGE_REDACT_MODAL),
-    selectors.getCurrentPage(state),
-    selectors.getSelectedThumbnailPageIndexes(state),
-    selectors.getPageLabels(state),
-    selectors.getActiveToolName(state),
-    selectors.getActiveToolStyles(state)
-  ]);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.PAGE_REDACT_MODAL));
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
+  const selectedIndexes = useSelector(selectors.getSelectedThumbnailPageIndexes);
+  const pageLabels = useSelector((state) => selectors.getPageLabels(state, activeDocumentViewerKey));
+  const activeToolName = useSelector(selectors.getActiveToolName);
+  const activeToolStyles = useSelector(selectors.getActiveToolStyles, shallowEqual);
   const renderCanvasesCount = useRef(0);
 
   const selectedPages = selectedIndexes.map((index) => index + 1);
@@ -43,12 +42,12 @@ const PageRedactionModalContainer = () => {
   const { t } = useTranslation();
 
   const onRedact = (pageNumbers) => {
-    redactPages(pageNumbers, getRedactionStyles());
+    redactPages(pageNumbers, getRedactionStyles(), activeDocumentViewerKey);
     closeModal();
   };
 
   const markPages = (pageNumbers) => {
-    createPageRedactions(pageNumbers, getRedactionStyles());
+    createPageRedactions(pageNumbers, getRedactionStyles(), activeDocumentViewerKey);
     closeModal();
   };
 

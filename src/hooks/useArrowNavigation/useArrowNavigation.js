@@ -9,6 +9,7 @@ export default function useArrowNavigation(
   {
     orientation = 'horizontal',
     manageContainerTabIndex = false,
+    shouldIgnoreKeydown,
   } = {}
 ) {
   const [lastFocusIndex, setLastFocusIndex] = useState(-1);
@@ -131,6 +132,10 @@ export default function useArrowNavigation(
   }, [moveFocus]);
 
   const handleKeyDown = useCallback((e) => {
+    if (shouldIgnoreKeydown?.(e)) {
+      return;
+    }
+
     const keyActions = {
       Tab: () => handleTabKey(e),
       Home: () => handleHomeKey(e),
@@ -159,7 +164,7 @@ export default function useArrowNavigation(
         verticalActions[e.key]();
       }
     }
-  }, [handleTabKey, handleHomeKey, handleEndKey, handleArrowKey, isHorizontal]);
+  }, [handleTabKey, handleHomeKey, handleEndKey, handleArrowKey, isHorizontal, shouldIgnoreKeydown]);
 
   const handleFocusIn = useCallback(() => {
     if (!containerRef.current) {
@@ -229,6 +234,7 @@ export default function useArrowNavigation(
   }, [containerRef, focusableElements, lastFocusIndex, updateTabIndexes]);
 
   return {
+    currentFocusIndex,
     focusableElements,
   };
 }

@@ -47,9 +47,9 @@ const DEFAULT_REVOCATION_PROXY_PREFIX = 'https://proxy.pdftron.com';
  * Invalid.
  * @ignore
  */
-export default async (doc, certificates, trustLists, currentLanguage, revocationChecking, revocationProxyPrefix, dispatch) => {
+export default async (doc, certificates, trustLists, currentLanguage, revocationChecking, revocationProxyPrefix, dispatch, documentViewerKey = 1) => {
   const verificationResult = await getVerificationResult(doc, certificates, trustLists, currentLanguage, revocationChecking, revocationProxyPrefix);
-  dispatch(actions.setVerificationResult(verificationResult));
+  dispatch(actions.setVerificationResult(verificationResult, documentViewerKey));
   return verificationResult;
 };
 

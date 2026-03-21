@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { userEvent, within, waitFor, expect } from 'storybook/test';
 import core from 'core';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/HeaderFooterControlsOverlay',
@@ -29,7 +30,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 Basic.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement.parentNode);
@@ -60,4 +61,4 @@ export function HeaderFooterBarPositionFallback() {
   );
 }
 
-HeaderFooterBarPositionFallback.parameters = window.storybook.disableRtlMode;
+HeaderFooterBarPositionFallback.parameters = disableRtlModeParameters;

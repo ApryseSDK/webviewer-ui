@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import InlineCommentingPopup from './InlineCommentingPopup';
+import InlineCommentingOfficeEditorPopupContainer from './InlineCommentingOfficeEditorPopupContainer';
 import useCore from 'hooks/useCore';
 import { getAnnotationPopupPositionBasedOn as getPopupPosition } from 'helpers/getPopupPosition';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
@@ -13,13 +14,16 @@ import getRootNode from 'helpers/getRootNode';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 import { workerTypes } from 'constants/types';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 
 const propTypes = {
   annotation: PropTypes.object,
   closeAndReset: PropTypes.func,
+  lastAnnotationsUnderMouse: PropTypes.arrayOf(PropTypes.object),
 };
 
-const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
+
+const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotationsUnderMouse }) => {
   const { core } = useCore();
   const [
     isNotesPanelOpen,
@@ -30,6 +34,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     sortStrategy,
     isDocumentReadOnly,
     activeDocumentViewerKey,
+    isOfficeEditorMode,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
@@ -40,6 +45,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
       selectors.getSortStrategy(state),
       selectors.isDocumentReadOnly(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual,
   );
@@ -52,27 +58,56 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && isLeftPanelOpen && activeLeftPanel === 'notesPanel');
   const sixtyFramesPerSecondIncrement = 16;
 
-  useOnClickOutside(popupRef, (e) => {
-    const notesPanel = getRootNode().querySelector('[data-element="notesPanel"]');
-    const clickedInNotesPanel = notesPanel?.contains(e.target);
-    const noteStateFlyout = getRootNode().querySelector(`[data-element="noteStateFlyout-${annotation.Id}"]`);
-    const clickedInNoteStateFlyout = noteStateFlyout?.contains(e.target);
-    const datePicker = getDatePicker();
-    const warningModal = getOpenedWarningModal();
-    const colorPicker = getOpenedColorPicker();
+  const buildFlyoutSelector = (prefix, suffix) => `[data-element^="${prefix}-"][data-element$="-${suffix}"]`;
+  const noteFlyoutIdSuffix = 'inlineCommentPopup';
 
-    // the notes panel has mousedown handlers to handle the opening/closing states of this component
-    // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up
-    // for example: click on a note will call core.selectAnnotation which triggers the annotationSelected event
-    // and opens this component. If we don't exclude the notes panel this handler will run and close it after
-    if (!clickedInNotesPanel && !clickedInNoteStateFlyout && !warningModal && !colorPicker && !datePicker) {
+  useOnClickOutside(popupRef, (e) => {
+    const root = getRootNode();
+    const notesPanel = root.querySelector('[data-element="notesPanel"]');
+    const reviewPanel = root.querySelector('[data-element="officeEditorReviewPanel"]');
+    const commentPanel = root.querySelector('[data-element="officeEditorCommentPanel"]');
+    const clickedInNotesPanel = notesPanel?.contains(e.target);
+    const clickedInReviewPanel = reviewPanel?.contains(e.target);
+    const clickedInCommentPanel = commentPanel?.contains(e.target);
+    const clickedInNoteStateFlyout = !!e.target?.closest(
+      buildFlyoutSelector('noteStateFlyout', noteFlyoutIdSuffix),
+    );
+    const clickedInNotePopupFlyout = !!e.target?.closest(
+      buildFlyoutSelector('notePopupFlyout', noteFlyoutIdSuffix),
+    );
+
+    const hasOpenModal = getOpenedWarningModal();
+    const hasOpenColorPicker = getOpenedColorPicker();
+    const hasOpenDatePicker = getDatePicker();
+
+    const clickedInProtectedArea =
+      clickedInNotesPanel ||
+      clickedInReviewPanel ||
+      clickedInCommentPanel ||
+      clickedInNoteStateFlyout ||
+      clickedInNotePopupFlyout ||
+      hasOpenModal ||
+      hasOpenColorPicker ||
+      hasOpenDatePicker;
+
+    // Avoid closing when interacting with panels/flyouts that manage this popup state themselves (e.g., notes panel mousedown handlers)
+    if (!clickedInProtectedArea) {
       dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
     }
   });
 
   const isNotesPanelClosed = !isNotesPanelOpenOrActive;
 
+  const annotationKey = annotation ? mapAnnotationToKey(annotation) : null;
+  const shouldUseOfficeEditorPopup = isOfficeEditorMode && (
+    annotationKey === annotationMapKeys.TRACKED_CHANGE ||
+    annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT
+  );
+
   const setPopupPosition = () => {
+    if (!annotation) {
+      return;
+    }
     if (isNotesPanelClosed && popupRef.current && !isMobile) {
       setPosition(getPopupPosition(annotation, popupRef, activeDocumentViewerKey));
     }
@@ -146,8 +181,15 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     }
   };
 
+  if (!annotation) {
+    return null;
+  }
+
+  const isOfficeEditorCommentAnnotation = annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+
   const contextValue = {
     searchInput: '',
+    noteFlyoutIdSuffix,
     resize: () => {
       if (core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR) {
         setPosition(getPopupPosition(annotation, popupRef, activeDocumentViewerKey));
@@ -155,6 +197,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     },
     isSelected: true,
     isContentEditable: core.canModifyContents(annotation) && !annotation.getContents(),
+    isOfficeEditorCommentAnnotation,
     pendingEditTextMap,
     setPendingEditText,
     pendingReplyMap,
@@ -172,19 +215,26 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     deleteAttachment,
   };
 
-  return (
-    <InlineCommentingPopup
-      isMobile={isMobile}
-      isUndraggable={isUndraggable}
-      isNotesPanelClosed={isNotesPanelClosed}
-      popupRef={popupRef}
-      position={position}
-      closeAndReset={closeAndReset}
-      commentingAnnotation={annotation}
-      contextValue={contextValue}
-      annotationForAttachment={annotationForAttachment}
-      addAttachments={addAttachments}
+  const popupProps = {
+    isMobile,
+    isUndraggable,
+    isNotesPanelClosed,
+    popupRef,
+    position,
+    closeAndReset,
+    commentingAnnotation: annotation,
+    contextValue,
+    annotationForAttachment,
+    addAttachments,
+  };
+
+  return shouldUseOfficeEditorPopup ? (
+    <InlineCommentingOfficeEditorPopupContainer
+      {...popupProps}
+      annotationsUnderMouse={lastAnnotationsUnderMouse}
     />
+  ) : (
+    <InlineCommentingPopup {...popupProps} />
   );
 };
 

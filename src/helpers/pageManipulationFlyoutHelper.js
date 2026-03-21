@@ -17,6 +17,7 @@ import i18next from 'i18next';
 
 export const getPageAdditionalControls = (store, warn = false) => {
   const dispatch = store.dispatch;
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
   return [
     'option.thumbnailsControlOverlay.move',
     {
@@ -29,7 +30,7 @@ export const getPageAdditionalControls = (store, warn = false) => {
         if (warn && noPagesSelectedWarning(pageNumbers, dispatch)) {
           return;
         }
-        movePagesToTop(pageNumbers);
+        movePagesToTop(pageNumbers, documentViewerKey);
         isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
@@ -43,8 +44,8 @@ export const getPageAdditionalControls = (store, warn = false) => {
         if (warn && noPagesSelectedWarning(pageNumbers, dispatch)) {
           return;
         }
-        movePagesToBottom(pageNumbers);
-        isMobile() && dispatch(actions.closeElement);
+        movePagesToBottom(pageNumbers, documentViewerKey);
+        isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
   ];
@@ -52,6 +53,7 @@ export const getPageAdditionalControls = (store, warn = false) => {
 
 export const getPageRotationControls = (store, warn = false) => {
   const dispatch = store.dispatch;
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
   return [
     'action.rotate',
     {
@@ -64,7 +66,7 @@ export const getPageRotationControls = (store, warn = false) => {
         if (warn && noPagesSelectedWarning(pageNumbers, dispatch)) {
           return;
         }
-        rotateClockwise(pageNumbers);
+        rotateClockwise(pageNumbers, documentViewerKey);
         isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
@@ -78,7 +80,7 @@ export const getPageRotationControls = (store, warn = false) => {
         if (warn && noPagesSelectedWarning(pageNumbers, dispatch)) {
           return;
         }
-        rotateCounterClockwise(pageNumbers);
+        rotateCounterClockwise(pageNumbers, documentViewerKey);
         isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
@@ -88,6 +90,7 @@ export const getPageRotationControls = (store, warn = false) => {
 export const getPageManipulationControls = (store, warn = false) => {
   const t = i18next.getFixedT();
   const dispatch = store.dispatch;
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
   return [
     'action.pageManipulation',
     {
@@ -131,7 +134,7 @@ export const getPageManipulationControls = (store, warn = false) => {
         if (warn && noPagesSelectedWarning(pageNumbers, dispatch)) {
           return;
         }
-        extractPages(pageNumbers, dispatch);
+        extractPages(pageNumbers, dispatch, documentViewerKey);
         isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
@@ -147,31 +150,34 @@ export const getPageManipulationControls = (store, warn = false) => {
           return;
         }
         const isPageDeletionConfirmationModalEnabled = selectors.pageDeletionConfirmationModalEnabled(store.getState());
-        deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled);
+        deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled, documentViewerKey);
         isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION));
       },
     },
   ];
 };
 
-export const getPageCustomControlsFlyout = (store, customControls) => [
-  customControls.header,
-  ...customControls.operations.map((operation) => ({
-    dataElement: operation.dataElement,
-    label: operation.label || operation.title,
-    title: operation.title,
-    icon: operation.img,
-    onClick: () => {
-      const pageNumbers = getPageNumbers(store);
-      operation.onClick(pageNumbers);
-    },
-  })),
-];
+export const getPageCustomControlsFlyout = (store, customControls) => {
+  return [
+    customControls.header,
+    ...customControls.operations.map((operation) => ({
+      dataElement: operation.dataElement,
+      label: operation.label || operation.title,
+      title: operation.title,
+      icon: operation.img,
+      onClick: () => {
+        const pageNumbers = getPageNumbers(store, false);
+        operation.onClick(pageNumbers);
+      },
+    })),
+  ];
+};
 
 export const getPageNumbers = (store, warn = false) => {
   const state = store.getState();
+  const documentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
   const selectedPageIndexes = selectors.getSelectedThumbnailPageIndexes(state);
-  const currentPage = selectors.getCurrentPage(state);
+  const currentPage = selectors.getCurrentPage(state, documentViewerKey);
   const defaultPageNumbers = warn ? [] : [currentPage];
   return selectedPageIndexes.length > 0 ? selectedPageIndexes.map((i) => i + 1) : defaultPageNumbers;
 };

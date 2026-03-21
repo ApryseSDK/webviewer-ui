@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect, useLayoutEffect, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { useState, useCallback, useContext, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -60,15 +60,19 @@ const Outline = forwardRef(
     },
     ref
   ) {
-    const outlines = useSelector((state) => selectors.getOutlines(state));
     const { core } = useCore();
-    const outlinesStateMap = useSelector(selectors.getOutlinesStateMap, shallowEqual);
+    const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
+    const outlinePath = outlineUtils.getPath(outline);
+    const outlineState = useSelector(
+      (state) => selectors.getOutlinesStateMap(state, activeDocumentViewerKey)?.[outlinePath],
+      shallowEqual
+    );
 
     const {
       setActiveOutlinePath,
       activeOutlinePath,
       isOutlineActive,
-      setAddingNewOutline,
+      setIsAddingNewOutline,
       isAddingNewOutline,
       isMultiSelectMode,
       shouldAutoExpandOutlines,
@@ -76,13 +80,10 @@ const Outline = forwardRef(
       updateOutlines,
     } = useContext(OutlineContext);
 
-    const outlinePath = outlineUtils.getPath(outline);
-    const isOutlineExpanded = outlinesStateMap[outlinePath]?.isExpanded || false;
-    const isOutlineRenaming = outlinesStateMap[outlinePath]?.isRenaming || false;
+    const isExpanded = shouldAutoExpandOutlines || outlineState?.isExpanded || false;
+    const isRenaming = outlineState?.isRenaming || false;
+    const isChangingDest = outlineState?.isChangingDest || false;
 
-    const [isExpanded, setIsExpanded] = useState(shouldAutoExpandOutlines || isOutlineExpanded);
-    const [isRenaming, setIsRenaming] = useState(isOutlineRenaming);
-    const [isChangingDest, setChangingDest] = useState(false);
     const [clearSingleClick, setClearSingleClick] = useState(undefined);
 
     const dispatch = useDispatch();
@@ -96,42 +97,26 @@ const Outline = forwardRef(
       getNode: () => elementRef.current,
     }));
 
+    const updateIsExpanded = useCallback((isExpanded) => {
+      dispatch(actions.setOutlinesStateMap(outlinePath, { isExpanded }, activeDocumentViewerKey));
+    }, [dispatch, outlinePath, activeDocumentViewerKey]);
+
+    const updateIsRenaming = useCallback((isRenaming) => {
+      dispatch(actions.setOutlinesStateMap(outlinePath, { isRenaming }, activeDocumentViewerKey));
+    }, [dispatch, outlinePath, activeDocumentViewerKey]);
+
+    const updateIsOutlineChangingDest = useCallback((isChangingDest) => {
+      dispatch(actions.setOutlinesStateMap(outlinePath, { isChangingDest }, activeDocumentViewerKey));
+    }, [dispatch, outlinePath, activeDocumentViewerKey]);
+
     useEffect(() => {
-      if (shouldExpandOutline(activeOutlinePath, outlinePath) || isOutlineExpanded) {
-        setIsExpanded(true);
+      if (shouldExpandOutline(activeOutlinePath, outlinePath)) {
+        updateIsExpanded(true);
       }
-    }, [activeOutlinePath, isAddingNewOutline, outlinePath]);
-
-    useLayoutEffect(() => {
-      setIsExpanded(shouldAutoExpandOutlines);
-    }, [shouldAutoExpandOutlines]);
-
-    useLayoutEffect(() => {
-      setIsRenaming(isOutlineRenaming);
-      setChangingDest(false);
-
       if (isAddingNewOutline && activeOutlinePath === outlinePath) {
-        setIsExpanded(true);
+        updateIsExpanded(true);
       }
-    }, [outlines]);
-
-    useEffect(() => {
-      const isExpandedStateUpdated = isExpanded === isOutlineExpanded;
-      if (isExpandedStateUpdated) {
-        return;
-      }
-
-      dispatch(actions.setOutlinesStateMap(outlinePath, { isExpanded }));
-    }, [isExpanded]);
-
-    useEffect(() => {
-      const isRenamingStateUpdated = isRenaming === isOutlineRenaming;
-      if (isRenamingStateUpdated) {
-        return;
-      }
-
-      dispatch(actions.setOutlinesStateMap(outlinePath, { isRenaming }));
-    }, [isRenaming]);
+    }, [activeOutlinePath, isAddingNewOutline, outlinePath, updateIsExpanded]);
 
     const onSingleClick = useCallback(() => {
       core.goToOutline(outline);
@@ -142,14 +127,14 @@ const Outline = forwardRef(
 
 
       if (isAddingNewOutline) {
-        setAddingNewOutline(false);
+        setIsAddingNewOutline(false);
         updateOutlines();
       }
 
       if (isMobile()) {
         dispatch(actions.closeElement('leftPanel'));
       }
-    }, [dispatch, setActiveOutlinePath, activeOutlinePath, isAddingNewOutline, outline]);
+    }, [dispatch, setActiveOutlinePath, activeOutlinePath, isAddingNewOutline, core, outline]);
 
     const isActive = isOutlineActive(outline);
 
@@ -194,14 +179,14 @@ const Outline = forwardRef(
           <OutlineContent
             text={outline.getName()}
             outlinePath={outlinePath}
-            isOutlineRenaming={isRenaming}
-            setOutlineRenaming={setIsRenaming}
-            isOutlineChangingDest={isChangingDest}
-            setOutlineChangingDest={setChangingDest}
+            isRenaming={isRenaming}
+            isExpanded={isExpanded}
+            updateIsExpanded={updateIsExpanded}
+            updateIsRenaming={updateIsRenaming}
+            isChangingDest={isChangingDest}
+            updateIsChangingDest={updateIsOutlineChangingDest}
             textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
             setMultiSelected={setMultiSelected}
-            isExpanded={isExpanded}
-            setIsExpanded={setIsExpanded}
             moveOutlineInward={moveOutlineInward}
             moveOutlineBeforeTarget={moveOutlineBeforeTarget}
             moveOutlineAfterTarget={moveOutlineAfterTarget}
@@ -221,7 +206,7 @@ const Outline = forwardRef(
             <OutlineContent
               isAdding={true}
               text={''}
-              onCancel={() => setAddingNewOutline(false)}
+              onCancel={() => setIsAddingNewOutline(false)}
             />
           </DataElementWrapper>
         )}

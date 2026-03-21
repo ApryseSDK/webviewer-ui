@@ -7,6 +7,7 @@ import OfficeEditorToolsHeader from './OfficeEditorToolsHeader';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 import { allModes } from '../../../.storybook/modes';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/LegacyOfficeEditorToolsHeader',
@@ -49,7 +50,7 @@ export function Basic() {
 }
 Basic.parameters = {
   mode: allModes.viewport1400,
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export function Overflow() {

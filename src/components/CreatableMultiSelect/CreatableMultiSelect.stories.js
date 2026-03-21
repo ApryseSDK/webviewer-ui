@@ -1,6 +1,7 @@
 import React from 'react';
 import CreatableMultiSelect from './CreatableMultiSelect';
 import { components } from 'react-select';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/CreatableMultiSelect',
@@ -61,7 +62,7 @@ export function Basic() {
     />);
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function WithCustomStyles() {
   return (
@@ -89,7 +90,7 @@ export function WithCustomStyles() {
     />);
 }
 
-WithCustomStyles.parameters = window.storybook.disableRtlMode;
+WithCustomStyles.parameters = disableRtlModeParameters;
 
 export function WithCustomComponents() {
   const MultiValueLabel = ({ data }) => {
@@ -119,7 +120,7 @@ export function WithCustomComponents() {
     />);
 }
 
-WithCustomComponents.parameters = window.storybook.disableRtlMode;
+WithCustomComponents.parameters = disableRtlModeParameters;
 
 export function MultiSelectGroups() {
   return (
@@ -130,4 +131,4 @@ export function MultiSelectGroups() {
     />);
 }
 
-MultiSelectGroups.parameters = window.storybook.disableRtlMode;
+MultiSelectGroups.parameters = disableRtlModeParameters;

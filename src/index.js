@@ -34,6 +34,7 @@ import { addDocumentViewer, setupOpenURLHandler } from 'helpers/documentViewerHe
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 import getRootNode from 'helpers/getRootNode';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import EmotionProvider from './emotion/EmotionProvider';
 
 import './index.scss';
 import importModularComponents from 'src/apis/importModularComponents';
@@ -341,21 +342,28 @@ if (window.CanvasRenderingContext2D) {
       lng: language,
     });
 
-    const appElement = getRootNode().getElementById('app');
+    const rootNode = getRootNode();
+    const appElement = rootNode.getElementById('app');
+
+    const app = (
+      <EmotionProvider rootNode={rootNode}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <I18nextProvider i18n={i18next}>
+              <DndProvider backend={HTML5Backend}>
+                <App removeEventHandlers={removeEventHandlers}/>
+              </DndProvider>
+            </I18nextProvider>
+          </PersistGate>
+        </Provider>
+      </EmotionProvider>
+    );
 
     ReactDOM.render(
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <I18nextProvider i18n={i18next}>
-            <DndProvider backend={HTML5Backend}>
-              <App removeEventHandlers={removeEventHandlers}/>
-            </DndProvider>
-          </I18nextProvider>
-        </PersistGate>
-      </Provider>,
+      app,
       appElement,
     );
-    window.isApryseWebViewerWebComponent && retargetEvents(getRootNode());
+    window.isApryseWebViewerWebComponent && retargetEvents(rootNode);
   });
   addEventHandlers();
 }

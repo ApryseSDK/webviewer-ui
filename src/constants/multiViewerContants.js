@@ -1,5 +1,5 @@
-export const DISABLED_TOOL_GROUPS = ['toolbarGroup-Edit', 'toolbarGroup-Forms', 'toolbarGroup-EditText'];
-export const DISABLED_TOOLS_KEYWORDS = ['Content', 'AddParagraphTool', 'FormField', 'Crop'];
+export const DISABLED_TOOL_GROUPS = ['toolbarGroup-Edit', 'toolbarGroup-EditText'];
+export const DISABLED_TOOLS_KEYWORDS = ['Content', 'AddParagraphTool', 'Crop'];
 
 export const SYNC_MODES = {
   'SYNC': 'SYNC',

@@ -6,6 +6,7 @@ import LineSpacingFlyout from './LineSpacingFlyout';
 import { getLineSpacingFlyoutItems } from 'helpers/officeEditor';
 import Flyout from 'components/ModularComponents/Flyout';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/LineSpacingFlyout',
@@ -62,4 +63,4 @@ export function ActiveDouble() {
   return prepareFlyoutStory();
 }
 
-ActiveDouble.parameters = window.storybook.disableRtlMode;
+ActiveDouble.parameters = disableRtlModeParameters;

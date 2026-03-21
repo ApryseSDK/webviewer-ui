@@ -354,7 +354,11 @@
     "listEmptyValue": "Ein oder mehrere Felder haben einen leeren Wert.",
     "listDuplicateValue": "Mehrere Felder haben die folgenden Werte:",
     "networkError": "Beim Laden dieser Komponente ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite.",
-    "refreshPage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite."
+    "refreshPage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite.",
+    "renderErrors": {
+      "error": "Hier ist etwas schiefgelaufen.",
+      "refreshPanel": "Sie können weiterarbeiten. Versuchen Sie, das Bedienfeld erneut zu öffnen."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Sortierreihenfolge Liste",
       "position": "Position",
+      "linePosition": "Position",
       "time": "Zeit",
       "status": "Status",
       "author": "Autor",
@@ -483,6 +488,7 @@
       "markForRedaction": "Zum Schwärzen markieren"
     },
     "searchPanel": {
+      "searchResults": "Suchergebnisse",
       "caseSensitive": "Groß-/Kleinschreibung beachten",
       "wholeWordOnly": "Ganzes Wort",
       "wildcard": "Platzhalter",
@@ -1316,6 +1322,7 @@
     "bold": "Fett",
     "italic": "Kursiv",
     "underline": "Unterstreichen",
+    "strikeout": "Durchgestrichen",
     "textColor": "Textfarbe",
     "leftAlign": "Links ausrichten",
     "centerAlign": "Zentrieren",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Ohne Vorschläge anzeigen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt.",
     "previewAllChanges": "Vorschau aller Änderungen",
+    "changes": "Änderungen",
+    "comments": "Kommentare",
+    "commentsAndChangesTabs": "Registerkarten „Kommentare“ und „Änderungen“",
     "accept": "Akzeptieren",
     "reject": "Ablehnen",
     "pastingTitle": "Einfügen nicht verfügbar",

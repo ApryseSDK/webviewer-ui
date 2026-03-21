@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from './Icon';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Icon',
@@ -14,7 +15,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function Colorized() {
   return (
@@ -27,7 +28,7 @@ export function Colorized() {
   );
 }
 
-Colorized.parameters = window.storybook.disableRtlMode;
+Colorized.parameters = disableRtlModeParameters;
 
 export function Disabled() {
   return (
@@ -38,4 +39,4 @@ export function Disabled() {
   );
 }
 
-Disabled.parameters = window.storybook.disableRtlMode;
+Disabled.parameters = disableRtlModeParameters;

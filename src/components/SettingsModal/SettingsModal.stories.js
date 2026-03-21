@@ -7,6 +7,7 @@ import hotkeysManager from 'helpers/hotkeysManager';
 import { ShortcutKeys, SHORTCUT_CONFIGS } from 'helpers/hotkeysUtils';
 import { userEvent, within, expect } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/SettingsModal',
@@ -251,7 +252,7 @@ SpreadsheetKeyboardShortcuts.play = async ({ canvasElement }) => {
 
 
 export const KeyboardShortcutInMobile = () => KeyboardShortcut();
-KeyboardShortcutInMobile.parameters = window.storybook?.MobileParameters;
+KeyboardShortcutInMobile.parameters = mobileStoryParameters;
 
 export function ViewOnlyKeyboardShortcuts() {
   const store = getStore(2);

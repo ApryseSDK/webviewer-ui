@@ -8,6 +8,8 @@ import './FileSelectedPanel.scss';
 import PageThumbnailsGrid from 'src/components/PageThumbnailsGrid';
 import { isMobileSize, isTabletSize } from 'helpers/getDeviceSize';
 import ModalWrapper from 'components/ModalWrapper';
+import selectors from 'selectors';
+import { useSelector } from 'react-redux';
 
 const MAX_NAME_LENGTH_BEFORE_TRUNCATION = 25;
 const TRUNCATION_LENGTH = 10;
@@ -35,6 +37,7 @@ const FileSelectedPanel = React.forwardRef((
   const [sourceDocumentPageCount, setSourceDocumentPageCount] = useState(0);
   const [hasPageNumberError, setHasPageNumberError] = useState(false);
   const [sourceDocPagesNumberError, setSourceDocPagesNumberError] = useState('');
+  const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const isTablet = isTabletSize();
 
@@ -92,7 +95,7 @@ const FileSelectedPanel = React.forwardRef((
 
   const replacePages = () => {
     const pagesToReplaceIntoDocument = getPageNumbersFromSelectedThumbnails();
-    replacePagesHandler(sourceDocument, currentDocSelectedPageNumbers, pagesToReplaceIntoDocument);
+    replacePagesHandler(sourceDocument, currentDocSelectedPageNumbers, pagesToReplaceIntoDocument, documentViewerKey);
     closeThisModal();
   };
 

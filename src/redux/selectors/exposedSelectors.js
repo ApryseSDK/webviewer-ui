@@ -135,7 +135,10 @@ export const getEnabledTabPanelTabs = (state, tabPanelDataElement) => {
     const isPanelDisabled = disabledElements[panel.render]?.disabled;
     const isPanelTabDisabled = disabledElements[`${panel.render}-${tabPanelDataElement}`]?.disabled;
     const isPanelDisabledViewOnly = isDisabledViewOnly(state, panel.render);
-    const isPortfolioPanelNotAvailable = panel.render === panelNames.PORTFOLIO && state.document?.portfolio?.length === 0;
+    const activeDocumentViewerKey = getActiveDocumentViewerKey(state);
+    const isPortfolioPanelNotAvailable =
+      panel.render === panelNames.PORTFOLIO &&
+      ((state.document?.portfolio?.[activeDocumentViewerKey]?.length ?? 0) === 0);
     return !isPanelDisabled && !isPanelTabDisabled && !isPanelDisabledViewOnly && !isPortfolioPanelNotAvailable;
   });
   return enabledPanels;
@@ -301,26 +304,10 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [
-    panelNames.SIGNATURE_LIST,
-    panelNames.RUBBER_STAMP,
-    panelNames.STYLE,
-    panelNames.NOTES,
-    panelNames.SEARCH,
-    panelNames.TEXT_EDITING,
-    panelNames.TABS,
-    panelNames.REDACTION,
-    panelNames.FORM_FIELD,
-    panelNames.INDEX
-  ];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {
-      if (!isMobile()) {
-        return isEquivalentPanelLocation(location, item.location);
-      }
-      // when we are on mobile, if the panel has a mobile version, we don't need to count on this panel measurement
-      return isEquivalentPanelLocation(location, item.location) && !panelsWithMobileVersion.includes(item.dataElement);
+      return !isMobile() && isEquivalentPanelLocation(location, item.location);
     });
   }
 
@@ -865,9 +852,9 @@ export const getDisplayMode = (state) => state.viewer.displayMode;
 
 export const getCurrentPage = (state, documentViewerKey = 1) => state.viewer.currentPage?.[documentViewerKey];
 
-export const getCurrentPageLabel = (state) => {
-  const pageLabels = getPageLabels(state);
-  const currentPage = getCurrentPage(state);
+export const getCurrentPageLabel = (state, documentViewerKey = 1) => {
+  const pageLabels = getPageLabels(state, documentViewerKey);
+  const currentPage = getCurrentPage(state, documentViewerKey);
   return pageLabels?.[currentPage - 1] ?? '';
 };
 
@@ -891,9 +878,9 @@ export const getCustomPanels = (state) => state.viewer.customPanels;
 
 export const getCustomModals = (state) => state.viewer.customModals;
 
-export const getPageLabels = (state) => state.viewer.pageLabels;
+export const getPageLabels = (state, documentViewerKey = 1) => state.viewer.pageLabels?.[documentViewerKey];
 
-export const isCustomPageLabelsEnabled = (state) => state.viewer.isCustomPageLabelsEnabled;
+export const isCustomPageLabelsEnabled = (state, documentViewerKey = 1) => state.viewer.isCustomPageLabelsEnabled?.[documentViewerKey];
 
 export const getSelectedThumbnailPageIndexes = (state) => state.viewer.selectedThumbnailPageIndexes;
 
@@ -923,7 +910,7 @@ export const useClientSidePrint = (state) => state.viewer.useClientSidePrint;
 
 export const shouldAutoExpandOutlines = (state) => state.viewer.autoExpandOutlines;
 
-export const getOutlinesStateMap = (state) => state.viewer.outlinesStateMap;
+export const getOutlinesStateMap = (state, documentViewerKey = 1) => state.viewer.outlinesStateMap?.[documentViewerKey] || {};
 
 export const isAnnotationNumberingEnabled = (state) => {
   return state.viewer.isAnnotationNumberingEnabled;
@@ -1011,13 +998,13 @@ export const getEnableMouseWheelZoom = (state) => state.viewer.enableMouseWheelZ
 
 export const isReaderMode = (state) => state.viewer.isReaderMode;
 
-export const getCertificates = (state) => state.digitalSignatureValidation.certificates;
+export const getCertificates = (state, documentViewerKey = 1) => state.digitalSignatureValidation?.certificates?.[documentViewerKey] ?? [];
 
 export const getTrustListKey = (state) => state.digitalSignatureValidation.trustListKey;
 
 export const getValidationModalWidgetName = (state) => state.digitalSignatureValidation.validationModalWidgetName;
 
-export const getVerificationResult = (state, fieldName) => state.digitalSignatureValidation.verificationResult[fieldName] || {};
+export const getVerificationResult = (state, fieldName, documentViewerKey = 1) => state.digitalSignatureValidation?.verificationResult?.[documentViewerKey]?.[fieldName] || {};
 
 export const getIsRevocationCheckingEnabled = (state) => state.digitalSignatureValidation.isRevocationCheckingEnabled;
 
@@ -1070,6 +1057,9 @@ export const getErrorMessage = (state) => state.viewer.errorMessage || '';
 export const getErrorTitle = (state) => state.viewer.errorTitle || '';
 
 // document
+export const isDocumentLoaded = (state, documentViewerKey) =>
+  state.document?.documentLoadedMap?.[documentViewerKey || getActiveDocumentViewerKey(state) || 1] ?? false;
+
 export const getPasswordAttempts = (state) => state.document.passwordAttempts;
 
 export const getPrintQuality = (state) => state.document.printQuality;
@@ -1078,15 +1068,15 @@ export const getDefaultPrintOptions = (state) => state.document.defaultPrintOpti
 
 export const getTotalPages = (state, documentViewerKey = 1) => state.document.totalPages[documentViewerKey];
 
-export const getOutlines = (state) => state.document.outlines;
+export const getOutlines = (state, documentViewerKey = 1) => state.document.outlines?.[documentViewerKey] || null;
 
 export const getOutlineEditingEnabled = (state) => state.viewer.isOutlineEditingEnabled;
 
-export const getBookmarks = (state) => state.document.bookmarks;
+export const getBookmarks = (state, documentViewerKey = 1) => state.document.bookmarks?.[documentViewerKey] || {};
 
-export const getPortfolio = (state) => state.document.portfolio;
+export const getPortfolio = (state, documentViewerKey = 1) => state.document?.portfolio?.[documentViewerKey] ?? [];
 
-export const getLayers = (state) => state.document.layers;
+export const getLayers = (state, documentViewerKey = 1) => state.document?.layers?.[documentViewerKey] ?? null;
 
 export const getLoadingProgress = (state) => state.document.loadingProgress;
 

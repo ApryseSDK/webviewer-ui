@@ -17,15 +17,12 @@ function SnippingToolPopupContainer() {
   const { core } = useCore();
   const snippingToolName = window.Core.Tools.ToolNames['SNIPPING'];
   const snippingCreateTool = core.getTool(snippingToolName);
-  const [
-    isOpen,
-    isInDesktopOnlyMode,
-    shouldShowApplySnippingWarning,
-  ] = useSelector((state) => [
-    selectors.getActiveToolName(state) === snippingToolName && selectors.isElementOpen(state, DataElements.SNIPPING_TOOL_POPUP),
-    selectors.isInDesktopOnlyMode(state),
-    selectors.shouldShowApplySnippingWarning(state),
-  ]);
+  const activeToolName = useSelector(selectors.getActiveToolName);
+  const isSnippingPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SNIPPING_TOOL_POPUP));
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const shouldShowApplySnippingWarning = useSelector(selectors.shouldShowApplySnippingWarning);
+
+  const isOpen = activeToolName === snippingToolName && isSnippingPopupOpen;
   const dispatch = useDispatch();
   const [isSnipping, setIsSnipping] = useState(snippingCreateTool.getIsSnipping());
 
@@ -46,7 +43,7 @@ function SnippingToolPopupContainer() {
         newTool.addEventListener(window.Core.Tools.SnippingCreateTool.Events['SNIPPING_CANCELLED'], handleSnippingCancellation);
         openSnippingPopup();
       } else if (oldTool instanceof Core.Tools.SnippingCreateTool) { // eslint-disable-line no-undef
-        newTool.removeEventListener(window.Core.Tools.SnippingCreateTool.Events['SNIPPING_CANCELLED'], handleSnippingCancellation);
+        oldTool.removeEventListener(window.Core.Tools.SnippingCreateTool.Events['SNIPPING_CANCELLED'], handleSnippingCancellation);
         setIsSnipping(false);
         snippingCreateTool.reset();
         reenableHeader();
@@ -102,9 +99,10 @@ function SnippingToolPopupContainer() {
   const [snippingMode, setSnippingMode] = useState(null);
 
   useEffect(() => {
-    snippingCreateTool.setSnippingMode('CLIPBOARD');
-    setSnippingMode('CLIPBOARD');
-  }, []);
+    const modeToSet = snippingMode || 'CLIPBOARD';
+    snippingCreateTool.setSnippingMode(modeToSet);
+    setSnippingMode(modeToSet);
+  }, [snippingCreateTool]);
 
   const onSnippingModeChange = (option) => {
     snippingCreateTool.setSnippingMode(option);
@@ -124,7 +122,7 @@ function SnippingToolPopupContainer() {
   const closeSnippingPopup = useCallback((e) => {
     closeAndReset();
     focusActiveIcon(e);
-  }, []);
+  }, [core, snippingCreateTool, dispatch, closeAndReset, focusActiveIcon]);
 
   // disable/enable the 'apply' button when snipping
   useEffect(() => {
@@ -138,6 +136,8 @@ function SnippingToolPopupContainer() {
     focusActiveIcon(e);
   };
 
+  const isMobile = isMobileSize();
+
   const props = {
     snippingMode,
     onSnippingModeChange,
@@ -146,9 +146,8 @@ function SnippingToolPopupContainer() {
     isSnipping,
     isInDesktopOnlyMode,
     shouldShowApplySnippingWarning,
+    isMobile,
   };
-
-  const isMobile = isMobileSize();
 
   if (isOpen && core.getDocument()) {
     if (isMobile && !isInDesktopOnlyMode) {

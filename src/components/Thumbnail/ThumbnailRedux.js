@@ -8,6 +8,7 @@ import { isMobile } from 'helpers/device';
 import Thumbnail from './Thumbnail';
 
 const ThumbnailRedux = React.forwardRef((props, ref) => {
+  const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const [
     currentPage,
     pageLabels,
@@ -22,8 +23,8 @@ const ThumbnailRedux = React.forwardRef((props, ref) => {
     selectionModes
   ] = useSelector(
     (state) => [
-      selectors.getCurrentPage(state),
-      selectors.getPageLabels(state),
+      selectors.getCurrentPage(state, documentViewerKey),
+      selectors.getPageLabels(state, documentViewerKey),
       selectors.getSelectedThumbnailPageIndexes(state),
       selectors.isThumbnailMultiselectEnabled(state),
       selectors.isReaderMode(state),

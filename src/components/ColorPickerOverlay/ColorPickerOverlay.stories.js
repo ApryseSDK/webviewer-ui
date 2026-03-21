@@ -3,6 +3,7 @@ import ColorPickerOverlay from './ColorPickerOverlay';
 import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/ColorPickerOverlay',
@@ -29,4 +30,4 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

@@ -8,6 +8,7 @@ import ToggleElementButton from '../ModularComponents/ToggleElementButton';
 import Flyout from '../ModularComponents/Flyout';
 import { noteStateFlyoutItems } from '../ModularComponents/NoteStateFlyout/NoteStateFlyout';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/NotesPanel/NoteState',
@@ -85,7 +86,7 @@ export function Basic() {
     </div>
   );
 }
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 
 export function OpenFlyout() {
@@ -103,7 +104,7 @@ export function OpenFlyout() {
   );
 }
 
-OpenFlyout.parameters = window.storybook.disableRtlMode;
+OpenFlyout.parameters = disableRtlModeParameters;
 
 OpenFlyout.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

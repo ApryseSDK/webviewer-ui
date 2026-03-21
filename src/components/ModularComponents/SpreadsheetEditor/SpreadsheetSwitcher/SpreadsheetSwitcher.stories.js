@@ -3,12 +3,13 @@ import SpreadsheetSwitcher
   from 'components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher/SpreadsheetSwitcher';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { within, expect, userEvent, fireEvent } from 'storybook/test';
+import { within, expect, userEvent, fireEvent, waitFor } from 'storybook/test';
 import rootReducer from 'reducers/rootReducer';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import actions from 'actions';
 import WarningModal from 'components/WarningModal';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const customViewports = {
   ViewOptionOne: {
@@ -23,16 +24,20 @@ const customViewports = {
 export default {
   title: 'SpreadsheetEditor/SpreadsheetSwitcher',
   component: SpreadsheetSwitcher,
+
   parameters: {
     viewport: {
-      viewports: customViewports,
-      defaultViewport: 'ViewOptionOne'
+      options: customViewports,
+      defaultViewport: 'ViewOptionOne',
     },
     test: {
       // For some flyout errors that might happen but are unrelated
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
+  globals: {
+    viewport: { value: 'ViewOptionOne', isRotated: false },
+  }
 };
 
 const initialState = {
@@ -212,4 +217,25 @@ Edit.play = async ({ canvasElement }) => {
   await expect(await canvas.findByRole('tab', { name: /Sheet 2 Test/i })).toBeInTheDocument();
 };
 
-Edit.parameters = window.storybook.disableRtlMode;
+Edit.parameters = disableRtlModeParameters;
+
+export const RenameInputArrowKeysKeepFocus = Edit.bind({});
+RenameInputArrowKeysKeepFocus.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await expect(canvas.getByRole('tab', { name: /Sheet 2/i })).toBeInTheDocument();
+  const moreOptionsButtonLabel = `${getTranslatedText('option.searchPanel.moreOptions')} Sheet 2`;
+  await userEvent.click(canvas.getByRole('button', { name: moreOptionsButtonLabel }));
+  await userEvent.click(await canvas.findByRole('button', { name: getTranslatedText('action.rename') }));
+
+  const input = await canvas.findByRole('textbox');
+  await waitFor(() => expect(input).toHaveFocus());
+
+  await userEvent.keyboard('{ArrowLeft}');
+  await expect(input).toHaveFocus();
+
+  await userEvent.keyboard('{ArrowRight}');
+  await expect(input).toHaveFocus();
+};
+
+RenameInputArrowKeysKeepFocus.parameters = disableRtlModeParameters;

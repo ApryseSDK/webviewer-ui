@@ -169,12 +169,15 @@ const MultiSelectControls = ({
     );
   }
 
+  const multiSelectTooltipPosition = 'top';
+
   const isMultiStyleButtonDisabled = modifiableMultiSelectAnnotations.length === 0;
   const multiStyleButtonProps = {
     dataElement: DataElements.NOTE_MULTI_STYLE_BUTTON,
     img: 'icon-menu-style-line',
     disabled: isMultiStyleButtonDisabled,
-    title: 'action.style'
+    title: 'action.style',
+    forceTooltipPosition: multiSelectTooltipPosition,
   };
 
   return (
@@ -188,6 +191,7 @@ const MultiSelectControls = ({
             setShowMultiReply(true);
           }}
           title="action.comment"
+          forceTooltipPosition={multiSelectTooltipPosition}
         />
         <ToggleElementButton
           dataElement={DataElements.NOTE_MULTI_STATE_BUTTON}
@@ -195,6 +199,7 @@ const MultiSelectControls = ({
           img={'icon-annotation-status-none'}
           toggleElement={DataElements.NOTE_STATE_FLYOUT}
           disabled={modifiableMultiSelectAnnotations.length === 0}
+          forceTooltipPosition={multiSelectTooltipPosition}
         />
         <NoteStateFlyout
           isMultiSelectMode={true}
@@ -229,6 +234,7 @@ const MultiSelectControls = ({
               core.groupAnnotations(multiSelectedAnnotations[0], multiSelectedAnnotations);
             }}
             title="action.group"
+            forceTooltipPosition={multiSelectTooltipPosition}
           />}
         {canUngroup &&
           <Button
@@ -238,6 +244,7 @@ const MultiSelectControls = ({
               core.ungroupAnnotations(multiSelectedAnnotations);
             }}
             title="action.ungroup"
+            forceTooltipPosition={multiSelectTooltipPosition}
           />}
         <Button
           dataElement={DataElements.NOTE_MULTI_DELETE_BUTTON}
@@ -259,6 +266,7 @@ const MultiSelectControls = ({
             dispatch(actions.showWarningMessage(warning));
           }}
           title="action.delete"
+          forceTooltipPosition={multiSelectTooltipPosition}
         />
       </div>
       <div
@@ -271,6 +279,7 @@ const MultiSelectControls = ({
           }}
           img='ic_close_black_24px'
           ariaLabel={t('option.documentControls.closeTooltip')}
+          forceTooltipPosition={multiSelectTooltipPosition}
         />
       </div>
     </div>

@@ -187,6 +187,7 @@ export const OEModularUIMockState = {
       bold: false,
       italic: false,
       underlineStyle: 'none',
+      strikethrough: false,
       pointSize: DEFAULT_POINT_SIZE,
       fontFace: 'Arial',
       color: {
@@ -276,7 +277,9 @@ export const setupNotesPanelCoreMocks = (core, annotations, selectedAnnotations)
       })
     }),
     getCompleteRotation: () => 0,
-    getAnnotationManager: () => { },
+    getAnnotationManager: () => ({
+      isReadOnlyModeEnabled: () => false,
+    }),
     getDisplayModeManager: () => ({
       isVirtualDisplayEnabled: () => true,
       getDisplayMode: () => ({

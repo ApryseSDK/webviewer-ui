@@ -3,6 +3,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import NotesPanelHeader from './NotesPanelHeader';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/NotesPanel/NotesPanelHeader',
@@ -56,7 +57,7 @@ export function Basic(args) {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function CustomHeaderOverwriteDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {
@@ -78,7 +79,7 @@ export function CustomHeaderOverwriteDefault() {
   );
 }
 
-CustomHeaderOverwriteDefault.parameters = window.storybook.disableRtlMode;
+CustomHeaderOverwriteDefault.parameters = disableRtlModeParameters;
 
 export function CustomHeaderPrependToDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {
@@ -100,7 +101,7 @@ export function CustomHeaderPrependToDefault() {
   );
 }
 
-CustomHeaderPrependToDefault.parameters = window.storybook.disableRtlMode;
+CustomHeaderPrependToDefault.parameters = disableRtlModeParameters;
 
 function customHeaderRenderFunction(notes) {
   const div = document.createElement('div');

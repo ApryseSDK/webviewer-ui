@@ -37,12 +37,14 @@ const PortfolioPanel = () => {
   const [
     isDisabled,
     tabManager,
+    activeDocumentViewerKey,
     portfolioFiles,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL),
       selectors.getTabManager(state),
-      selectors.getPortfolio(state),
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.getPortfolio(state, selectors.getActiveDocumentViewerKey(state)),
     ],
     shallowEqual,
   );
@@ -80,7 +82,7 @@ const PortfolioPanel = () => {
         if (doc) {
           const pdfDoc = await doc.getPDFDoc();
           if (pdfDoc) {
-            await addFile(pdfDoc, file);
+            await addFile({ core, pdfDoc, file });
             refreshPortfolio();
           }
         }
@@ -97,12 +99,12 @@ const PortfolioPanel = () => {
   };
 
   const renamePortfolioItem = async (id, newName) => {
-    await renamePortfolioFile(id, newName);
+    await renamePortfolioFile(core, id, newName);
     refreshPortfolio();
   };
 
   const refreshPortfolio = async () => {
-    dispatch(actions.setPortfolio(await getPortfolioFiles()));
+    dispatch(actions.setPortfolio(await getPortfolioFiles(core), activeDocumentViewerKey));
     setAddingNewFolder(false);
   };
 
@@ -116,7 +118,7 @@ const PortfolioPanel = () => {
       title,
       confirmBtnText,
       onConfirm: async () => {
-        await deletePortfolioFile(id);
+        await deletePortfolioFile(core, id);
         refreshPortfolio();
       },
     };
@@ -170,13 +172,13 @@ const PortfolioPanel = () => {
     fileArray.splice(moveToIndex, 0, fileArray.splice(fromIndex, 1)[0]);
     for (const [index, file] of fileArray.entries()) {
       if (file.order !== index) {
-        await reorderPortfolioFile(file.id, index);
+        await reorderPortfolioFile(core, file.id, index);
       }
     }
   };
 
   const movePortfolio = async (fileId, direction) => {
-    const portfolioFiles = await getPortfolioFiles();
+    const portfolioFiles = await getPortfolioFiles(core);
     const fromIndex = portfolioFiles.findIndex((file) => file.id === fileId);
     const outOfBound = (fromIndex === 0 && direction === menuTypes.MOVE_UP)
       || (fromIndex === portfolioFiles.length - 1 && direction === menuTypes.MOVE_DOWN);
@@ -187,7 +189,7 @@ const PortfolioPanel = () => {
     portfolioFiles.splice(moveToIndex, 0, portfolioFiles.splice(fromIndex, 1)[0]);
     for (const [index, file] of portfolioFiles.entries()) {
       if (file.order !== index) {
-        await reorderPortfolioFile(file.id, index);
+        await reorderPortfolioFile(core, file.id, index);
       }
     }
     await refreshPortfolio();
@@ -196,12 +198,12 @@ const PortfolioPanel = () => {
   const movePortfolioBeforeTarget = useCallback(async (dragItemId, dropItemId) => {
     await moveFileInArray(portfolioFiles, dragItemId, dropItemId, MoveDirection.ABOVE_TARGET);
     refreshPortfolio();
-  }, [portfolioFiles]);
+  }, [portfolioFiles, core]);
 
   const movePortfolioAfterTarget = useCallback(async (dragItemId, dropItemId) => {
     await moveFileInArray(portfolioFiles, dragItemId, dropItemId, MoveDirection.BELOW_TARGET);
     refreshPortfolio();
-  }, [portfolioFiles]);
+  }, [portfolioFiles, core]);
 
   return isDisabled ? null : (
     <DataElementWrapper

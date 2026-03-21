@@ -21,21 +21,24 @@ const PageControlsInput = forwardRef((props, ref) => {
 
   const inputRef = useRef();
   const mountedRef = useRef(true);
-  const totalPages = useSelector(selectors.getTotalPages);
-  const pageLabels = useSelector(selectors.getPageLabels, shallowEqual);
-  const allowPageNavigation = useSelector(selectors.getAllowPageNavigation);
-  const currentPageLabel = useSelector(selectors.getCurrentPageLabel);
 
-  const [isFocused, setIsFocused] = useState(false);
-  const [input, setInput] = useState(currentPageLabel);
-  const [inputWidth, setInputWidth] = useState(0);
+  const allowPageNavigation = useSelector(selectors.getAllowPageNavigation);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const totalPages = useSelector((state) => selectors.getTotalPages(state, activeDocumentViewerKey));
+  const pageLabels = useSelector((state) => selectors.getPageLabels(state, activeDocumentViewerKey), shallowEqual);
+  const currentPageLabel = useSelector((state) => selectors.getCurrentPageLabel(state, activeDocumentViewerKey));
 
   const { t } = useTranslation();
   const isMobile = isMobileSize();
+  const [isFocused, setIsFocused] = useState(false);
+  const [input, setInput] = useState(currentPageLabel);
+  const inputWidth = input ? input.length * (isMobile ? 10 : 11.5) : 0;
 
   useDidUpdate(() => {
-    setInput(currentPageLabel);
-  }, [currentPageLabel]);
+    if (!isFocused) {
+      setInput(currentPageLabel);
+    }
+  }, [currentPageLabel, isFocused]);
 
   useEffect(() => {
     // Mark the component as mounted
@@ -46,12 +49,6 @@ const PageControlsInput = forwardRef((props, ref) => {
       mountedRef.current = false;
     };
   }, []);
-
-  useEffect(() => {
-    if (input) {
-      setInputWidth(input.length * (isMobile ? 10 : 11.5));
-    }
-  }, [input]);
 
   const onClick = () => {
     if (isIOS) {

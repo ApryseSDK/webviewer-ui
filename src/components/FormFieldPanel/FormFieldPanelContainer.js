@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import DataElementWrapper from 'components/DataElementWrapper';
 import DataElements from 'constants/dataElement';
-import { PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_TWO } from 'constants/actionPriority';
 import getToolStyles from 'helpers/getToolStyles';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -43,6 +43,7 @@ const propTypes = {
 const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const { core } = useCore();
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.FORM_FIELD_PANEL));
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const toolButtonObject = useSelector(selectors.getToolButtonObjects, shallowEqual);
   const isSignatureOptionsDropdownDisabled = useSelector((state) => selectors.isElementDisabled(state, 'signatureOptionsDropdown'));
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
@@ -73,7 +74,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const [fieldOptions, setFieldOptions] = useState(annotation?.getFieldOptions() ?? []);
   const [panelTitle, setPanelTitle] = useState();
   function closeAndReset() {
-    dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_TWO));
     dispatch(actions.closeElement(DataElements.FORM_FIELD_PANEL));
     setFieldProperties(defaultProperties);
     setFieldDimension(defaultDimension);
@@ -114,12 +115,12 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     } else {
       closeAndReset();
     }
-  }, [toolButtonObject, i18n.language]);
+  }, [toolButtonObject, i18n.language, core]);
 
   useEffect(() => {
     const currentTool = core.getToolMode();
     setPanelTitleForTool(currentTool.name);
-  }, [i18n.language]);
+  }, [i18n.language, core]);
 
   useEffect(() => {
     updateRadioGroupsForRadioAnnotation();
@@ -154,7 +155,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
     };
-  }, []);
+  }, [core]);
 
   const handleOptionsSettings = (annotation) => {
     const options = annotation.getFieldOptions();
@@ -224,7 +225,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     });
     setPanelTitle(t(`formField.formFieldPanel.${field.getFieldType()}`));
     setValidationMessage(validationMessage);
-  }, [isOpen, annotation, isRTL, i18n.language]);
+  }, [isOpen, annotation, isRTL, i18n.language, core]);
 
   const onFieldNameChange = useCallback((name) => {
     const validatedResponse = formFieldCreationManager.setFieldName(annotation, name);
@@ -264,7 +265,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       flags[flagName] = value;
       setToolStyles(currentTool.name, 'flags', flags);
     }
-  }, [annotation]);
+  }, [annotation, core]);
 
   const onFieldValueChange = useCallback((defaultValue) => {
     setFieldProperties((previousFieldProperties) => ({
@@ -277,7 +278,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       const currentTool = core.getToolMode();
       setToolStyles(currentTool.name, 'defaultValue', defaultValue);
     }
-  }, [annotation]);
+  }, [annotation, core]);
 
   const onFieldOptionsChange = useCallback((options) => {
     annotation.setFieldOptions(options);
@@ -299,7 +300,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       const currentTool = core.getToolMode();
       setToolStyles(currentTool.name, 'showIndicator', showIndicator);
     }
-  }, [annotation]);
+  }, [annotation, core]);
 
   const onFieldIndicatorTextChange = useCallback((indicatorText) => {
     setIndicator((previousIndicator) => ({
@@ -312,7 +313,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       const currentTool = core.getToolMode();
       setToolStyles(currentTool.name, 'indicatorText', indicatorText);
     }
-  }, [annotation]);
+  }, [annotation, core]);
 
   const closeFormFieldEditPanel = useCallback(() => {
     closeAndReset();
@@ -386,7 +387,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       const currentTool = core.getToolMode();
       setToolStyles(currentTool.name, 'signatureType', value);
     }
-  }, [annotation]);
+  }, [annotation, core]);
 
   const closeFormFieldPanel = () => {
     dispatch(actions.closeElement(DataElements.FORM_FIELD_PANEL));
@@ -442,6 +443,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
         onCancelEmptyFieldName={onCancelEmptyFieldName}
         closeFormFieldEditPanel={onCloseRadioButtonPanel}
         shouldShowOptions={shouldShowOptions}
+        isMultiViewerMode={isMultiViewerMode}
       />
     );
   };

@@ -148,7 +148,7 @@ const baseMenuItems = {
   [PRESET_BUTTON_TYPES.STRIKETHROUGH]: {
     dataElement: 'strikethroughButton',
     presetDataElement: DataElements.STRIKETHROUGH_PRESET_BUTTON,
-    icon: 'icon-tool-text-manipulation-strikethrough',
+    icon: 'icon-text-strikeout',
     label: 'spreadsheetEditor.strikethrough',
     title: 'spreadsheetEditor.strikethrough',
     hidden: false,
@@ -156,7 +156,7 @@ const baseMenuItems = {
   [PRESET_BUTTON_TYPES.STRIKEOUT]: {
     dataElement: 'strikeoutButton',
     presetDataElement: DataElements.STRIKEOUT_PRESET_BUTTON,
-    icon: 'icon-tool-text-manipulation-strikethrough',
+    icon: 'icon-text-strikeout',
     label: 'spreadsheetEditor.strikeout',
     title: 'spreadsheetEditor.strikeout',
     hidden: false,

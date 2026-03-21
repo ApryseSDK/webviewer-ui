@@ -3,20 +3,21 @@ import core from 'core';
 /**
  * @ignore
  * handler for auto size font toggle
- * @param {FreeTextAnnotation} annotation annotation to toggle auto size font
+ * @param {FreeTextAnnotation} freeTextAnnot annotation to toggle auto size font
  * @param {function} setAutoSizeFont function to set auto size font
  * @param {boolean} isAutoSizeFont current auto size font value
+ * @param {number} [documentViewerKey=1] key identifying the document viewer whose annotation manager should be used (defaults to 1)
  */
-export default (annotation, setAutoSizeFont, isAutoSizeFont) => {
-  const freeTextAnnot = annotation;
+export default (freeTextAnnot, setAutoSizeFont, isAutoSizeFont, documentViewerKey = 1) => {
   if (isAutoSizeFont) {
     freeTextAnnot.switchOutFromAutoFontSize();
   } else {
     freeTextAnnot.switchToAutoFontSize();
   }
-  core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
+  const annotationManager = core.getAnnotationManager(documentViewerKey);
+  annotationManager.trigger('annotationChanged', [[freeTextAnnot], 'modify', {}]);
 
   setAutoSizeFont(!isAutoSizeFont);
-  core.getAnnotationManager().redrawAnnotation(freeTextAnnot);
+  annotationManager.redrawAnnotation(freeTextAnnot);
 };
 

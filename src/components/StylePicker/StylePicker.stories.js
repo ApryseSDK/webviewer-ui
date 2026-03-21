@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import StylePickerComponent from './StylePicker';
 import { within, userEvent, expect } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/StylePicker',
@@ -43,7 +44,7 @@ export const StylePicker = () => {
   );
 };
 
-StylePicker.parameters = window.storybook.disableRtlMode;
+StylePicker.parameters = disableRtlModeParameters;
 
 export const NoNegativeValuesInStyleSliders = StylePicker.bind({});
 
@@ -66,4 +67,4 @@ NoNegativeValuesInStyleSliders.play = async ({ canvasElement }) => {
   expect(updatedOpacityInput.value).toBe('0%');
 };
 
-NoNegativeValuesInStyleSliders.parameters = window.storybook.disableRtlMode;
+NoNegativeValuesInStyleSliders.parameters = disableRtlModeParameters;

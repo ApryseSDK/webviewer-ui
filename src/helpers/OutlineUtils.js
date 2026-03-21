@@ -2,11 +2,20 @@ import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 
 const OutlineUtils = {
-  setDoc(doc) {
-    this.doc = doc;
+  setDoc(doc, documentViewerKey = 1) {
+    if (!this.doc) {
+      this.doc = {};
+    }
+    this.doc = {
+      ...this.doc,
+      [documentViewerKey]: doc,
+    };
   },
-  async setOutlineName(path, newName) {
-    const target = await this.findPDFNetOutline(path);
+  getDoc(documentViewerKey = 1) {
+    return this.doc?.[documentViewerKey];
+  },
+  async setOutlineName(path, newName, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return;
@@ -22,17 +31,20 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return path;
   },
-  async setOutlineDestination(path, pageNum, x, y, zoom) {
-    const target = await this.findPDFNetOutline(path);
+  async setOutlineDestination(path, pageNum, x, y, zoom, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return;
     }
 
     const PDFNet = window.Core.PDFNet;
-    const document = await this.doc.getPDFDoc();
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
     return PDFNet.runWithCleanup(async () => {
-      const page = await document.getPage(pageNum);
+      const page = await doc.getPage(pageNum);
       const destination = await PDFNet.Destination.createXYZ(page, x, y, zoom);
       target.setAction(await PDFNet.Action.createGoto(destination));
       const bookmarkEventObject = {
@@ -44,9 +56,12 @@ const OutlineUtils = {
       fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     });
   },
-  async addRootOutline(newName, pageNum, x, y, zoom) {
-    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom);
-    const doc = await this.doc.getPDFDoc();
+  async addRootOutline(newName, pageNum, x, y, zoom, documentViewerKey = 1) {
+    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom, documentViewerKey);
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
 
     await doc.addRootBookmark(newOutline);
 
@@ -59,28 +74,28 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return '0';
   },
-  async addNewOutline(newName, path, pageNum, x, y, zoom) {
+  async addNewOutline(newName, path, pageNum, x, y, zoom, documentViewerKey = 1) {
     let target;
 
     const hasActiveOutline = !!path;
     if (hasActiveOutline) {
-      target = await this.findPDFNetOutline(path);
+      target = await this.findPDFNetOutline(path, documentViewerKey);
     } else {
-      target = await this.getLastOutline();
+      target = await this.getLastOutline(documentViewerKey);
     }
 
     if (!target) {
       return null;
     }
 
-    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom);
+    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom, documentViewerKey);
     if (hasActiveOutline) {
       await target.addChild(newOutline);
     } else {
       await target.addNext(newOutline);
     }
 
-    const addedOutlinePath = await this.findPathInTree(newOutline);
+    const addedOutlinePath = await this.findPathInTree(newOutline, documentViewerKey);
     const bookmarkEventObject = {
       ...newOutline,
       bookmark: newOutline,
@@ -90,9 +105,12 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return addedOutlinePath;
   },
-  async createOutlineXYZ(newName, pageNum, x, y, zoom) {
+  async createOutlineXYZ(newName, pageNum, x, y, zoom, documentViewerKey = 1) {
     const PDFNet = window.Core.PDFNet;
-    const doc = await this.doc.getPDFDoc();
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
     return PDFNet.runWithCleanup(async () => {
       const newOutline = await PDFNet.Bookmark.create(doc, newName);
 
@@ -103,8 +121,8 @@ const OutlineUtils = {
       return newOutline;
     });
   },
-  async deleteOutline(path) {
-    const target = await this.findPDFNetOutline(path);
+  async deleteOutline(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return;
@@ -123,8 +141,8 @@ const OutlineUtils = {
 
     return null;
   },
-  async moveOutlineUp(path) {
-    const target = await this.findPDFNetOutline(path);
+  async moveOutlineUp(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return;
@@ -138,7 +156,7 @@ const OutlineUtils = {
     const copy = await target.copy();
     await target.delete();
     await prev.addPrev(copy);
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -146,10 +164,10 @@ const OutlineUtils = {
       action: 'moveOutlineUp'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineDown(path) {
-    const target = await this.findPDFNetOutline(path);
+  async moveOutlineDown(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return path;
@@ -164,7 +182,7 @@ const OutlineUtils = {
     await target.delete();
     await next.addNext(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -172,11 +190,11 @@ const OutlineUtils = {
       action: 'moveOutlineDown'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineBeforeTarget(path, targetPath) {
-    const currTarget = await this.findPDFNetOutline(path);
-    const target = await this.findPDFNetOutline(targetPath);
+  async moveOutlineBeforeTarget(path, targetPath, documentViewerKey = 1) {
+    const currTarget = await this.findPDFNetOutline(path, documentViewerKey);
+    const target = await this.findPDFNetOutline(targetPath, documentViewerKey);
     if (!target || !currTarget) {
       return path;
     }
@@ -184,7 +202,7 @@ const OutlineUtils = {
     await currTarget.delete();
     await target.addPrev(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -192,11 +210,11 @@ const OutlineUtils = {
       action: 'moveOutlineBeforeTarget'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineAfterTarget(path, targetPath) {
-    const currTarget = await this.findPDFNetOutline(path);
-    const target = await this.findPDFNetOutline(targetPath);
+  async moveOutlineAfterTarget(path, targetPath, documentViewerKey = 1) {
+    const currTarget = await this.findPDFNetOutline(path, documentViewerKey);
+    const target = await this.findPDFNetOutline(targetPath, documentViewerKey);
     if (!target || !currTarget) {
       return path;
     }
@@ -204,7 +222,7 @@ const OutlineUtils = {
     await currTarget.delete();
     await target.addNext(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -212,10 +230,10 @@ const OutlineUtils = {
       action: 'moveOutlineAfterTarget'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineOutward(path) {
-    const target = await this.findPDFNetOutline(path);
+  async moveOutlineOutward(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target || (await target.getIndent()) === 1) {
       return path;
@@ -227,7 +245,7 @@ const OutlineUtils = {
 
     await parent.addNext(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -235,10 +253,10 @@ const OutlineUtils = {
       action: 'moveOutlineOutward'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineOutwardBeforeParent(path) {
-    const target = await this.findPDFNetOutline(path);
+  async moveOutlineOutwardBeforeParent(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target || (await target.getIndent()) === 1) {
       return path;
@@ -250,7 +268,7 @@ const OutlineUtils = {
 
     await parent.addPrev(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -258,11 +276,11 @@ const OutlineUtils = {
       action: 'moveOutlineOutwardBeforeParent'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineOutwardBeforeAncestor(path, ancestorPath) {
-    const target = await this.findPDFNetOutline(path);
-    const ancestorTarget = await this.findPDFNetOutline(ancestorPath);
+  async moveOutlineOutwardBeforeAncestor(path, ancestorPath, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
+    const ancestorTarget = await this.findPDFNetOutline(ancestorPath, documentViewerKey);
 
     if (!target || (await target.getIndent()) === 1 || !ancestorTarget) {
       return path;
@@ -273,7 +291,7 @@ const OutlineUtils = {
 
     await ancestorTarget.addPrev(copy);
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -281,11 +299,11 @@ const OutlineUtils = {
       action: 'moveOutlineOutwardBeforeAncestor'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineInTarget(path, targetPath) {
-    const target = await this.findPDFNetOutline(path);
-    const targetOutline = await this.findPDFNetOutline(targetPath);
+  async moveOutlineInTarget(path, targetPath, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
+    const targetOutline = await this.findPDFNetOutline(targetPath, documentViewerKey);
     if (!target || !targetOutline) {
       return path;
     }
@@ -304,7 +322,7 @@ const OutlineUtils = {
       await targetOutline.addChild(copy);
     }
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -312,10 +330,10 @@ const OutlineUtils = {
       action: 'moveOutlineInTarget'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async moveOutlineInward(path) {
-    const target = await this.findPDFNetOutline(path);
+  async moveOutlineInward(path, documentViewerKey = 1) {
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return path;
@@ -336,7 +354,7 @@ const OutlineUtils = {
       await prev.addChild(copy);
     }
 
-    const changedOutlinePath = await this.findPathInTree(copy);
+    const changedOutlinePath = await this.findPathInTree(copy, documentViewerKey);
     const bookmarkEventObject = {
       ...copy,
       bookmark: copy,
@@ -344,11 +362,11 @@ const OutlineUtils = {
       action: 'moveOutlineInward'
     };
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
-    return this.findPathInTree(copy);
+    return this.findPathInTree(copy, documentViewerKey);
   },
-  async getCanMoveState(path) {
+  async getCanMoveState(path, documentViewerKey = 1) {
     const state = { up: false, down: false, outward: false, inward: false };
-    const target = await this.findPDFNetOutline(path);
+    const target = await this.findPDFNetOutline(path, documentViewerKey);
 
     if (!target) {
       return state;
@@ -378,8 +396,11 @@ const OutlineUtils = {
 
     return `${path}${this.getSplitter()}${name}`;
   },
-  async getLastOutline() {
-    const doc = await this.doc.getPDFDoc();
+  async getLastOutline(documentViewerKey = 1) {
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
     return window.Core.PDFNet.runWithCleanup(async () => {
       const root = await doc.getFirstBookmark();
 
@@ -391,8 +412,11 @@ const OutlineUtils = {
       return (await this.isValid(curr)) ? curr : null;
     });
   },
-  async findPathInTree(target) {
-    const doc = await this.doc.getPDFDoc();
+  async findPathInTree(target, documentViewerKey = 1) {
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
     const root = await doc.getFirstBookmark();
     const queue = [];
 
@@ -431,13 +455,16 @@ const OutlineUtils = {
 
     return null;
   },
-  async findPDFNetOutline(path) {
+  async findPDFNetOutline(path, documentViewerKey = 1) {
     if (!path) {
       return Promise.resolve(null);
     }
 
     const paths = path.split(this.getSplitter());
-    const doc = await this.doc.getPDFDoc();
+    const doc = await this.getDoc(documentViewerKey)?.getPDFDoc();
+    if (!doc) {
+      return;
+    }
     return window.Core.PDFNet.runWithCleanup(async () => {
       const rootOutline = await doc.getFirstBookmark();
 

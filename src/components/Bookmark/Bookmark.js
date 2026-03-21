@@ -50,14 +50,12 @@ const Bookmark = ({
   const [clearSingleClick, setClearSingleClick] = useState(undefined);
   const inputRef = useRef();
 
-  const isRenameButtonDisabled = () => {
-    return !bookmarkText || text === bookmarkText;
-  };
+  const isRenameButtonDisabled = !bookmarkText || text === bookmarkText;
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.stopPropagation();
-      if (isAdding || (isEditing && !isRenameButtonDisabled())) {
+      if (isAdding || (isEditing && !isRenameButtonDisabled)) {
         onSaveBookmark();
       }
     }
@@ -206,7 +204,7 @@ const Bookmark = ({
                 className="bookmark-outline-save-button"
                 label={t('action.save')}
                 isSubmitType
-                disabled={isRenameButtonDisabled()}
+                disabled={isRenameButtonDisabled}
                 onClick={onSaveBookmark}
                 ariaLabel={`${t('action.save')} ${t('component.bookmarkPanel')}`}
               />

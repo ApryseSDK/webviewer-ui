@@ -3,6 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import ButtonComponent from './Button';
 import { initialColors } from 'helpers/initialColorStates';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const initialState = {
   viewer: {
@@ -39,7 +40,7 @@ export function BasicButton(props) {
   );
 }
 
-BasicButton.parameters = window.storybook.disableRtlMode;
+BasicButton.parameters = disableRtlModeParameters;
 
 export default {
   title: 'Components/Buttons',
@@ -56,4 +57,4 @@ Button.args = {
   strokeColor: initialColors[0],
   dataElement: 'test',
 };
-Button.parameters = window.storybook.disableRtlMode;
+Button.parameters = disableRtlModeParameters;

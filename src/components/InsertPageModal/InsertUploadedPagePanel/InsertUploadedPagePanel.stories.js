@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import '../../../constants/modal.scss';
 import '../InsertPageModal.scss';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/InsertPageModal/InsertUploadedPagePanel',
@@ -89,5 +90,5 @@ export const FileLoadingDesktop = () => <FileLoading />;
 export const FileLoadedDesktop = () => <FileLoaded />;
 export const FileLoadingMobile = () => <FileLoading />;
 export const FileLoadedMobile = () => <FileLoaded />;
-FileLoadingMobile.parameters = window.storybook?.MobileParameters;
-FileLoadedMobile.parameters = window.storybook?.MobileParameters;
+FileLoadingMobile.parameters = mobileStoryParameters;
+FileLoadedMobile.parameters = mobileStoryParameters;

@@ -5,6 +5,7 @@ import { initialColors } from 'helpers/initialColorStates';
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Note/NoteContent',
@@ -23,7 +24,10 @@ const initialState = {
       '1': initialColors[0]
     },
     flyoutMap: {},
-  }
+  },
+  officeEditor: {
+    editMode: 'editing',
+  },
 };
 function rootReducer(state = initialState, action) {
   return state;
@@ -111,7 +115,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function BasicWithSkipAutoLink() {
   return (
@@ -125,4 +129,4 @@ export function BasicWithSkipAutoLink() {
   );
 }
 
-BasicWithSkipAutoLink.parameters = window.storybook.disableRtlMode;
+BasicWithSkipAutoLink.parameters = disableRtlModeParameters;

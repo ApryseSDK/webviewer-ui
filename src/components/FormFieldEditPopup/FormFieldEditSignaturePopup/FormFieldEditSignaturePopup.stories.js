@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 
 export default {
@@ -77,4 +78,4 @@ export function SignatureFieldPopup() {
   );
 }
 
-SignatureFieldPopup.parameters = window.storybook.disableRtlMode;
+SignatureFieldPopup.parameters = disableRtlModeParameters;

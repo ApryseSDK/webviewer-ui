@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
@@ -17,8 +18,9 @@ import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
-import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
+import { OFFICE_EDITOR_TRACKED_CHANGE_KEY, OfficeEditorEditMode } from 'constants/officeEditor';
 import { COMMON_COLORS } from 'constants/commonColors';
+import selectors from 'selectors';
 
 import './NoteHeader.scss';
 
@@ -39,7 +41,7 @@ const propTypes = {
   renderAuthorName: PropTypes.func,
   isNoteStateDisabled: PropTypes.bool,
   isEditing: PropTypes.bool,
-  noteIndex: PropTypes.number,
+  editingKey: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   sortStrategy: PropTypes.string,
   activeTheme: PropTypes.string,
   isMultiSelected: PropTypes.bool,
@@ -48,6 +50,7 @@ const propTypes = {
   isGroupMember: PropTypes.bool,
   showAnnotationNumbering: PropTypes.bool,
   isTrackedChange: PropTypes.bool,
+  flyoutIdSuffix: PropTypes.string,
 };
 
 /**
@@ -156,7 +159,7 @@ function NoteHeader(props) {
     renderAuthorName,
     isNoteStateDisabled,
     isEditing,
-    noteIndex,
+    editingKey,
     sortStrategy,
     activeTheme,
     isMultiSelected,
@@ -166,10 +169,18 @@ function NoteHeader(props) {
     showAnnotationNumbering,
     timezone,
     isTrackedChange,
+    flyoutIdSuffix,
   } = props;
   const { core } = useCore();
 
   const [t] = useTranslation();
+
+  const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
+  const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
+  const isOfficeEditorViewOnly = isOfficeEditorMode && (
+    officeEditorEditMode === OfficeEditorEditMode.VIEW_ONLY ||
+    officeEditorEditMode === OfficeEditorEditMode.PREVIEW
+  );
 
   let date = getDateCreatedInTimezone(sortStrategy, notesShowLastUpdatedDate, annotation, timezone);
   const noteDateAndTime = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
@@ -198,7 +209,8 @@ function NoteHeader(props) {
   };
 
   const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
-  const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
+  const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isOfficeEditorViewOnly;
+  const flyoutId = flyoutIdSuffix ? `${annotation.Id}-${flyoutIdSuffix}` : annotation.Id;
 
   return (
     <div className={noteHeaderClass}>
@@ -252,14 +264,16 @@ function NoteHeader(props) {
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}
+                flyoutId={flyoutId}
               />
             }
             {showNotePopup &&
               <NotePopup
-                noteIndex={noteIndex}
+                editingKey={editingKey}
                 annotation={annotation}
                 setIsEditing={setIsEditing}
                 isReply={isReply}
+                flyoutId={flyoutId}
               />
             }
             {isSelected && isTrackedChange && !isMultiSelectMode &&

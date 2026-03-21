@@ -21,6 +21,7 @@ export default function useOnAnnotationPopupOpen() {
   const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
   const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
   const isScaleOverlayContainerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER));
+  const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const dispatch = useDispatch();
@@ -152,6 +153,10 @@ export default function useOnAnnotationPopupOpen() {
       }
 
       if (action === 'selected') {
+        if (isOfficeEditorMode) {
+          // In Office Editor, we don't always want opened comment to steal focus from document
+          dispatch(actions.finishNoteEditing());
+        }
         if (!isRightClickAnnotationPopupEnabledRef.current) {
           setFocusedAnnotation(annotations[0]);
         }
@@ -189,8 +194,8 @@ export default function useOnAnnotationPopupOpen() {
     core.addEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
-      core.removeEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
+      core.removeEventListener('annotationSelected', onAnnotationSelected, activeDocumentViewerKey);
+      core.removeEventListener('documentUnloaded', closePopup, activeDocumentViewerKey);
     };
   }, [focusedAnnotation, isNotesPanelOpen, isDatePickerOpen, activeDocumentViewerKey]);
 
@@ -229,8 +234,8 @@ export default function useOnAnnotationPopupOpen() {
     core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
+      core.removeEventListener('annotationChanged', onAnnotationChanged, activeDocumentViewerKey);
+      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, activeDocumentViewerKey);
     };
   }, [canModify, focusedAnnotation, isScaleOverlayContainerOpen, activeDocumentViewerKey]);
 
@@ -258,7 +263,7 @@ export default function useOnAnnotationPopupOpen() {
     };
 
     core.addEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
-    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp, activeDocumentViewerKey);
   }, [focusedAnnotation, isStylePopupOpen, activeDocumentViewerKey]);
 
   useEffect(() => {

@@ -227,7 +227,7 @@ const ContextMenuPopup = ({
       })}
       ref={popupRef}
       data-element={DataElements.CONTEXT_MENU_POPUP}
-      style={{ ...position }}
+      css={position}
       onClick={() => dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP))}
     >
       <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>

@@ -73,13 +73,17 @@ const Ribbons = () => {
   const shouldPickTool = (toolbarGroup) => toolbarGroup !== 'toolbarGroup-Edit' && toolbarGroup !== 'toolbarGroup-EditText';
 
   const toggleFormFieldCreationMode = (toolGroup) => {
-    const formFieldCreationManager = core.getFormFieldCreationManager();
+    const formFieldCreationManagers = core.getDocumentViewers().map((viewer) => viewer.getAnnotationManager().getFormFieldCreationManager());
     if (toolGroup === 'toolbarGroup-Forms') {
-      if (!formFieldCreationManager.isInFormFieldCreationMode()) {
-        formFieldCreationManager.startFormFieldCreationMode();
+      const shouldStart = formFieldCreationManagers.some((manager) => !manager.isInFormFieldCreationMode());
+      if (shouldStart) {
+        formFieldCreationManagers.forEach((manager) => manager.startFormFieldCreationMode());
       }
-    } else if (formFieldCreationManager.isInFormFieldCreationMode()) {
-      formFieldCreationManager.endFormFieldCreationMode();
+    } else {
+      const shouldEnd = formFieldCreationManagers.some((manager) => manager.isInFormFieldCreationMode());
+      if (shouldEnd) {
+        formFieldCreationManagers.forEach((manager) => manager.endFormFieldCreationMode());
+      }
     }
   };
 

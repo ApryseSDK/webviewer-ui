@@ -34,6 +34,7 @@ const FormFieldPanel = ({
   shouldShowOptions = false,
   fieldProperties,
   onRadioFieldNameChange,
+  isMultiViewerMode,
 }) => {
   const { core } = useCore();
   const { t } = useTranslation();
@@ -64,7 +65,7 @@ const FormFieldPanel = ({
     }
     const currentTool = core.getToolMode();
     return getIndicatorPlaceholderFromTool(currentTool);
-  }, [annotation, t]);
+  }, [annotation, t, core]);
 
   const [indicatorPlaceholder, setIndicatorPlaceholder] = useState(getIndicatorPlaceholder());
 
@@ -171,7 +172,7 @@ const FormFieldPanel = ({
             aria-checked={flag.isChecked}
           />
         ))}
-        <FormFieldEditPanelIndicator indicator={indicator} indicatorPlaceholder={indicatorPlaceholder} />
+        {!isMultiViewerMode && <FormFieldEditPanelIndicator indicator={indicator} indicatorPlaceholder={indicatorPlaceholder} />}
       </div>
     </div>
   );
@@ -268,6 +269,7 @@ FormFieldPanel.propTypes = {
   shouldShowOptions: PropTypes.bool,
   fieldProperties: PropTypes.object,
   onRadioFieldNameChange: PropTypes.func,
+  isMultiViewerMode: PropTypes.bool.isRequired,
 };
 
 export default FormFieldPanel;

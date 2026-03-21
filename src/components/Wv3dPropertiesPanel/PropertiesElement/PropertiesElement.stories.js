@@ -5,6 +5,7 @@ import RightPanel from 'components/RightPanel';
 import '../Wv3dPropertiesPanel.scss';
 import '../../Panel/Panel.scss';
 import PropertiesElement from './PropertiesElement';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Wv3dPropertiesPanel/PropertiesElement/PropertiesElement',
@@ -162,4 +163,4 @@ Default.args = {
   schema: baseSchema,
 };
 
-Default.parameters = window.storybook.disableChromatic;
+Default.parameters = disableChromaticParameters;

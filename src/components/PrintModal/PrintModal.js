@@ -28,6 +28,7 @@ const PrintModal = ({
   isApplyWatermarkDisabled,
   isFullAPIEnabled,
   currentPage,
+  activeDocumentViewerKey,
   printQuality,
   isGrayscale,
   setIsGrayscale,
@@ -64,6 +65,7 @@ const PrintModal = ({
     isApplyWatermarkDisabled: PropTypes.bool,
     isFullAPIEnabled: PropTypes.bool,
     currentPage: PropTypes.number,
+    activeDocumentViewerKey: PropTypes.number.isRequired,
     printQuality: PropTypes.number,
     isGrayscale: PropTypes.bool,
     setIsGrayscale: PropTypes.func,
@@ -206,10 +208,10 @@ const PrintModal = ({
     });
 
     return () => {
-      core.setWatermark(existingWatermarksRef.current);
+      core.setWatermark(existingWatermarksRef.current, activeDocumentViewerKey);
       setIsWatermarkModalVisible(false);
     };
-  }, [core]);
+  }, [core, activeDocumentViewerKey, pageRange, embedPrintValid, layoutMode, currentPage, specifiedPages]);
 
   useEffect(() => {
     (core.getDocument().getType() !== 'xod' && useEmbeddedPrint) ? setEmbedPrintValid(true) : setEmbedPrintValid(false);
@@ -233,6 +235,7 @@ const PrintModal = ({
     <>
       <WatermarkModal
         isVisible={!!(isOpen && isWatermarkModalVisible)}
+        activeDocumentViewerKey={activeDocumentViewerKey}
         // pageIndex starts at index 0 and getCurrPage number starts at index 1
         pageIndexToView={currentPage - 1}
         modalClosed={setWatermarkModalVisibility}

@@ -1,7 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
+import actions from 'actions';
 import DocumentCropPopup from './DocumentCropPopup';
 import { Basic } from './DocumentCropPopup.stories';
+import useCore from 'hooks/useCore';
 
 const BasicDocumentCropPopupStory = withI18n(Basic);
 
@@ -9,7 +14,34 @@ const TestDocumentCropPopup = withProviders(DocumentCropPopup);
 
 function noop() { }
 
+let currentCore;
+let currentDocumentViewer;
+
 jest.mock('core');
+jest.mock('hooks/useCore', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+const createMockCore = (cropMode = 'ALL_PAGES') => {
+  const mockCropTool = {
+    getCropMode: jest.fn(() => cropMode),
+    setCropMode: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    getIsCropping: jest.fn(() => false),
+    getPagesToCrop: jest.fn(() => []),
+    setPagesToCrop: jest.fn(),
+    reset: jest.fn(),
+  };
+
+  return {
+    getTool: jest.fn(() => mockCropTool),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    getDocument: jest.fn(() => ({})),
+  };
+};
 
 const createMockAnnotation = () => {
   return {
@@ -127,7 +159,8 @@ const popupProps = {
   },
   selectedPages: [],
   onSelectedPagesChange: noop,
-  presetCropDimensions: CROP_DIMENSIONS
+  presetCropDimensions: CROP_DIMENSIONS,
+  shouldShowApplyCropWarning: false
 };
 
 const testPopup = (
@@ -137,6 +170,15 @@ const testPopup = (
 );
 
 describe('DocumentCropPopup', () => {
+  beforeEach(() => {
+    currentDocumentViewer = {};
+    currentCore = createMockCore();
+    useCore.mockReturnValue({
+      core: currentCore,
+      documentViewer: currentDocumentViewer
+    });
+  });
+
   describe('Component', () => {
     it('Story should not throw any errors', () => {
       expect(() => {
@@ -226,5 +268,201 @@ describe('Dimensions Input Menu', () => {
     fireEvent.click(collapsibleMenu);
     const autoTrimDropdown = screen.getAllByRole('option', { name: DEFAULT_AUTO_TRIM })[0];
     expect(autoTrimDropdown).toBeEnabled();
+  });
+});
+
+describe('Multiviewer mode', () => {
+  let store;
+  let mockCore1;
+  let mockCore2;
+  let mockDocViewer1;
+  let mockDocViewer2;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Mock document viewers with unique IDs
+    mockDocViewer1 = { id: 'viewer-1', getPageCount: () => 10, getCurrentPage: () => 1 };
+    mockDocViewer2 = { id: 'viewer-2', getPageCount: () => 10, getCurrentPage: () => 1 };
+
+    // Create mock cores for each viewer
+    mockCore1 = createMockCore('ALL_PAGES');
+    mockCore2 = createMockCore('SINGLE_PAGE');
+
+    store = configureStore({
+      reducer: rootReducer,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+
+    store.dispatch(actions.setIsMultiViewerMode(true));
+    store.dispatch(actions.setActiveDocumentViewerKey(1));
+
+    // Set initial mock for viewer 1
+    useCore.mockReturnValue({
+      core: mockCore1,
+      documentViewer: mockDocViewer1,
+    });
+  });
+
+  // Helper to create default DocumentCropPopup props
+  const createCropPopupProps = (overrides = {}) => ({
+    cropMode: 'MULTI_PAGE',
+    onCropModeChange: jest.fn(),
+    closeDocumentCropPopup: jest.fn(),
+    applyCrop: jest.fn(),
+    isCropping: true,
+    getPageHeight: jest.fn(() => 792),
+    getPageWidth: jest.fn(() => 612),
+    isPageRotated: jest.fn(() => false),
+    redrawCropAnnotations: jest.fn(),
+    isInDesktopOnlyMode: false,
+    getPageCount: jest.fn(() => 10),
+    getCurrentPage: jest.fn(() => 1),
+    selectedPages: [],
+    onSelectedPagesChange: jest.fn(),
+    shouldShowApplyCropWarning: false,
+    presetCropDimensions: {},
+    ...overrides,
+  });
+
+  const TestDocumentCropPopupContainer = withProviders(require('./DocumentCropPopupContainer').default);
+  const TestDocumentCropPopup = withProviders(require('./DocumentCropPopup').default);
+
+  const renderCropPopupContainer = (store) => {
+    return render(
+      <Provider store={store}>
+        <TestDocumentCropPopupContainer />
+      </Provider>,
+    );
+  };
+
+  const renderCropPopup = (store, propsOverrides = {}) => {
+    return render(
+      <Provider store={store}>
+        <TestDocumentCropPopup {...createCropPopupProps(propsOverrides)} />
+      </Provider>,
+    );
+  };
+
+  it('updates event listeners when switching viewers', () => {
+    const { rerender } = renderCropPopupContainer(store);
+
+    const mockCropTool1 = mockCore1.getTool();
+    expect(mockCropTool1.addEventListener).toHaveBeenCalledWith('cropModeChanged', expect.any(Function));
+    expect(mockCore1.addEventListener).toHaveBeenCalledWith('toolModeUpdated', expect.any(Function));
+
+    // Switch to viewer 2
+    useCore.mockReturnValue({
+      core: mockCore2,
+      documentViewer: mockDocViewer2,
+    });
+    store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+    rerender(
+      <Provider store={store}>
+        <TestDocumentCropPopupContainer />
+      </Provider>,
+    );
+
+    const mockCropTool2 = mockCore2.getTool();
+    expect(mockCropTool1.removeEventListener).toHaveBeenCalledWith('cropModeChanged', expect.any(Function));
+    expect(mockCore1.removeEventListener).toHaveBeenCalledWith('toolModeUpdated', expect.any(Function));
+    expect(mockCropTool2.addEventListener).toHaveBeenCalledWith('cropModeChanged', expect.any(Function));
+    expect(mockCore2.addEventListener).toHaveBeenCalledWith('toolModeUpdated', expect.any(Function));
+  });
+
+  it('fetches crop tool from correct viewer core', () => {
+    const { rerender } = renderCropPopupContainer(store);
+
+    expect(mockCore1.getTool).toHaveBeenCalledWith(window.Core.Tools.ToolNames['CROP']);
+
+    // Switch to viewer 2
+    useCore.mockReturnValue({
+      core: mockCore2,
+      documentViewer: mockDocViewer2,
+    });
+    store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+    rerender(
+      <Provider store={store}>
+        <TestDocumentCropPopupContainer />
+      </Provider>,
+    );
+
+    expect(mockCore2.getTool).toHaveBeenCalledWith(window.Core.Tools.ToolNames['CROP']);
+  });
+
+  it('applies popup crop mode to all viewers', () => {
+    const { rerender } = renderCropPopupContainer(store);
+
+    const mockCropTool1 = mockCore1.getTool();
+    // Verify viewer 1 initializes with default ALL_PAGES
+    expect(mockCropTool1.setCropMode).toHaveBeenCalledWith('ALL_PAGES');
+
+    // Simulate the mode being changed in the popup (e.g., user selects SINGLE_PAGE)
+    const cropModeChangedHandler = mockCropTool1.addEventListener.mock.calls.find(
+      (call) => call[0] === 'cropModeChanged'
+    )[1];
+
+    cropModeChangedHandler('SINGLE_PAGE');
+
+    // Switch to viewer 2 - should get the changed mode (SINGLE_PAGE), not the default
+    jest.clearAllMocks();
+    useCore.mockReturnValue({
+      core: mockCore2,
+      documentViewer: mockDocViewer2,
+    });
+    store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerender(
+      <Provider store={store}>
+        <TestDocumentCropPopupContainer />
+      </Provider>,
+    );
+
+    const mockCropTool2 = mockCore2.getTool();
+    // Verify viewer 2 gets SINGLE_PAGE (the changed mode)
+    expect(mockCropTool2.setCropMode).toHaveBeenCalledWith('SINGLE_PAGE');
+
+    // Switch back to viewer 1 - should still have the changed mode
+    jest.clearAllMocks();
+    useCore.mockReturnValue({
+      core: mockCore1,
+      documentViewer: mockDocViewer1,
+    });
+    store.dispatch(actions.setActiveDocumentViewerKey(1));
+    rerender(
+      <Provider store={store}>
+        <TestDocumentCropPopupContainer />
+      </Provider>,
+    );
+
+    expect(mockCropTool1.setCropMode).toHaveBeenCalledWith('SINGLE_PAGE');
+  });
+
+  it('clears page number input error state when switching viewers via key prop change', () => {
+    const { rerender } = renderCropPopup(store);
+
+    // Enter invalid text to trigger error
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'invalid123' } });
+    fireEvent.blur(input);
+
+    // Verify error is shown
+    expect(screen.getByText(/invalid page number/i)).toBeInTheDocument();
+
+    // Simulate change to viewer 2 (which changes the key prop for the page number input and causes it to remount)
+    useCore.mockReturnValue({
+      core: mockCore2,
+      documentViewer: mockDocViewer2,
+    });
+
+    rerender(
+      <Provider store={store}>
+        <TestDocumentCropPopup {...createCropPopupProps()} />
+      </Provider>
+    );
+
+    // Error should be cleared due to component remounting with new key
+    expect(screen.queryByText(/invalid page number/i)).not.toBeInTheDocument();
   });
 });

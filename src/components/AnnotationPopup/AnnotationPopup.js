@@ -466,10 +466,11 @@ const AnnotationPopup = ({
         stylePopupOpen: isStylePopupOpen,
         'is-vertical': isRightClickMenu,
         'is-horizontal': !isRightClickMenu,
+        'is-hidden': isVisible === false,
       })}
       ref={popupRef}
       data-element={DataElements.ANNOTATION_POPUP}
-      style={{ ...position, visibility: isVisible || isVisible === undefined ? 'visible' : 'hidden' }}
+      css={position}
     >
       {renderPopup()}
     </div>

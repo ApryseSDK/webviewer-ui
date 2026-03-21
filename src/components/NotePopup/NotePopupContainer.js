@@ -1,48 +1,55 @@
-import React from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import useCore from 'hooks/useCore';
 import NotePopup from './NotePopup';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
+import { deleteOfficeEditorComment } from 'helpers/officeEditorCommentHelper';
+import NoteContext from 'components/Note/Context';
+import { useDispatch } from 'react-redux';
+import actions from 'actions';
 
 function NotePopupContainer(props) {
-  const [
-    activeDocumentViewerKey,
-  ] = useSelector((state) => [
-    selectors.getActiveDocumentViewerKey(state),
-  ]);
-  const { annotation, setIsEditing, noteIndex } = props;
+  const { annotation, setIsEditing, editingKey, flyoutId } = props;
   const { core } = useCore();
-  const [canModify, setCanModify] = React.useState(core.canModify(annotation));
-  const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
+  const { isOfficeEditorCommentAnnotation } = useContext(NoteContext);
+  const dispatch = useDispatch();
+  const isReadOnly = core.getIsReadOnly();
+  const [canModify, setCanModify] = useState((isOfficeEditorCommentAnnotation && !isReadOnly) || core.canModify(annotation));
+  const [canModifyContents, setCanModifyContents] = useState(core.canModifyContents(annotation));
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onUpdateAnnotationPermission() {
-      setCanModify(core.canModify(annotation, activeDocumentViewerKey));
-      setCanModifyContents(core.canModifyContents(annotation, activeDocumentViewerKey));
+      const officeEditorCanDelete = isOfficeEditorCommentAnnotation && !isReadOnly;
+      setCanModify(officeEditorCanDelete || core.canModify(annotation));
+      setCanModifyContents(core.canModifyContents(annotation));
     }
 
     onUpdateAnnotationPermission();
-    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, undefined, activeDocumentViewerKey);
-    return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, activeDocumentViewerKey);
-  }, [annotation, activeDocumentViewerKey]);
+    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+  }, [annotation, isOfficeEditorCommentAnnotation, isReadOnly, core]);
 
-  const handleEdit = React.useCallback(() => {
+  const handleEdit = useCallback(() => {
     const isFreeText = annotation instanceof window.Core.Annotations.FreeTextAnnotation;
-    if (isFreeText && core.getAnnotationManager(activeDocumentViewerKey).isFreeTextEditingEnabled()) {
-      core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationDoubleClicked', annotation);
+    if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
+      core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
-      setIsEditing(true, noteIndex);
+      if (isOfficeEditorCommentAnnotation) {
+        dispatch(actions.triggerNoteEditing());
+      }
+      setIsEditing(true, editingKey);
     }
-  }, [annotation, setIsEditing, noteIndex]);
+  }, [annotation, setIsEditing, editingKey, core]);
 
-  const handleDelete = React.useCallback(() => {
-    core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()], undefined, activeDocumentViewerKey);
-  }, [annotation]);
+  const handleDelete = useCallback(() => {
+    if (isOfficeEditorCommentAnnotation) {
+      return deleteOfficeEditorComment({ annotation, core });
+    }
+
+    core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()]);
+  }, [annotation, core, isOfficeEditorCommentAnnotation]);
 
   const isEditable = canModifyContents;
   const isDeletable = canModify && !annotation?.NoDelete;
-  const noteId = (annotation) ? annotation.Id : '';
-
+  const noteId = flyoutId || ((annotation) ? annotation.Id : '');
   const passProps = {
     handleEdit,
     handleDelete,

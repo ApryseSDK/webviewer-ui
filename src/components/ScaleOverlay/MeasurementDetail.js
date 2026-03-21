@@ -24,12 +24,16 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool, canModify }) => {
 
   const data = useMemo(() => {
     const key = annotation ? mapAnnotationToKey(annotation) : mapToolNameToKey(selectedTool.name);
+    let contents = 0;
+    if (annotation) {
+      contents = annotation.getContents?.() || annotation.getMeasurementTextWithScaleAndUnits?.();
+    }
 
     return {
       key,
       icon: getDataWithKey(key).icon,
       color: annotation ? annotation.Color.toHexString() : selectedTool?.defaults?.StrokeColor?.toHexString(),
-      contents: annotation ? annotation.getMeasurementTextWithScaleAndUnits?.() : 0,
+      contents: contents,
       precision: !annotation ? selectedTool?.defaults?.Precision : annotation.Precision,
     };
   });

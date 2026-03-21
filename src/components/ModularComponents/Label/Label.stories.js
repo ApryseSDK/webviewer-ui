@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import rootReducer from 'reducers/rootReducer';
 import { expect, within } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/Label',
@@ -18,7 +19,7 @@ export const LabelComponent = () => (
   </Provider>
 );
 
-LabelComponent.parameters = window.storybook.disableRtlMode;
+LabelComponent.parameters = disableRtlModeParameters;
 
 export const LabelWithStyle = () => (
   <Provider store={store}>
@@ -33,4 +34,4 @@ LabelWithStyle.play = async ({ canvasElement }) => {
   expect(labelElement.classList.contains('label-custom-class')).toBe(true);
 };
 
-LabelWithStyle.parameters = window.storybook.disableRtlMode;
+LabelWithStyle.parameters = disableRtlModeParameters;

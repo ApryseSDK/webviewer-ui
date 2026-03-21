@@ -354,7 +354,11 @@
     "listEmptyValue": "Uno o più campi contengono un valore vuoto.",
     "listDuplicateValue": "Più campi hanno i seguenti valori:",
     "networkError": "Si è verificato un errore durante il caricamento di questo componente. Controlla la connessione di rete e aggiorna la pagina.",
-    "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina."
+    "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina.",
+    "renderErrors": {
+      "error": "Qualcosa è andato storto.",
+      "refreshPanel": "Puoi continuare a lavorare. Prova a riaprire il pannello."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Ordina elenco",
       "position": "Posizione",
+      "linePosition": "Posizione",
       "time": "Tempo",
       "status": "Stato",
       "author": "Autore",
@@ -483,6 +488,7 @@
       "markForRedaction": "Contrassegna per redazione"
     },
     "searchPanel": {
+      "searchResults": "Risultati di ricerca",
       "caseSensitive": "Che tiene conto del maiuscolo o minuscolo",
       "wholeWordOnly": "Parola intera",
       "wildcard": "Carta jolly",
@@ -1316,6 +1322,7 @@
     "bold": "Grassetto",
     "italic": "Corsivo",
     "underline": "Sottolineare",
+    "strikeout": "Barrato",
     "textColor": "Colore del testo",
     "leftAlign": "Allineamento a sinistra",
     "centerAlign": "Allineamento al centro",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Visualizza senza suggerimenti",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili.",
     "previewAllChanges": "Anteprima di tutte le modifiche",
+    "changes": "Cambiamenti",
+    "comments": "Commenti",
+    "commentsAndChangesTabs": "Schede Commenti e Modifiche",
     "accept": "Accettare",
     "reject": "Rifiutare",
     "pastingTitle": "Incolla non disponibile",

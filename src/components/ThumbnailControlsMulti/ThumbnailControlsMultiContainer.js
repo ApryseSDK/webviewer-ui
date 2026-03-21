@@ -13,7 +13,6 @@ import {
   movePagesToTop
 } from 'helpers/pageManipulationFunctions';
 import { workerTypes } from 'constants/types';
-import core from 'src/core';
 import DataElements from 'constants/dataElement';
 import { panelMinWidth } from 'constants/panel';
 import { isMobile as isInMobile } from 'helpers/device';
@@ -31,12 +30,14 @@ import {
 import './ThumbnailControlsMulti.scss';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import useCore from 'src/hooks/useCore';
 
 // Values come from the CSS
 const WIDTH_MARGINS = 16 + 8 + 16 + 16 + 16 + 16;
 
 function ThumbnailControlsMultiContainer({ parentElement }) {
   const store = useStore();
+  const { core } = useCore();
   const dispatch = useDispatch();
   const isMobile = isInMobile();
   const selectedPageIndexes = useSelector(selectors.getSelectedThumbnailPageIndexes);
@@ -45,6 +46,7 @@ function ThumbnailControlsMultiContainer({ parentElement }) {
   const isDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const items = useSelector(selectors.getMultiPageManipulationControlsItems, shallowEqual);
   const [displayFlyout, setDisplayFlyout] = useState(false);
+  const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const pageNumbers = useMemo(() =>
     selectedPageIndexes.map((index) => index + 1), [selectedPageIndexes]);
@@ -56,13 +58,13 @@ function ThumbnailControlsMultiContainer({ parentElement }) {
 
   const childProps = useMemo(() => {
     const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch);
-    const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch);
-    const onDeletePages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, deleteModalEnabled);
-    const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers);
-    const onRotateCounterClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers);
+    const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch, documentViewerKey);
+    const onDeletePages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, deleteModalEnabled, documentViewerKey);
+    const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers, documentViewerKey);
+    const onRotateCounterClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers, documentViewerKey);
     const onInsert = () => !noPagesSelectedWarning(pageNumbers, dispatch) && openInsertPageModal();
-    const moveToTop = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToTop(pageNumbers);
-    const moveToBottom = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToBottom(pageNumbers);
+    const moveToTop = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToTop(pageNumbers, documentViewerKey);
+    const moveToBottom = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToBottom(pageNumbers, documentViewerKey);
     return {
       onReplace,
       onExtractPages,
@@ -74,7 +76,7 @@ function ThumbnailControlsMultiContainer({ parentElement }) {
       moveToBottom,
       pageNumbers,
     };
-  }, [pageNumbers, deleteModalEnabled]);
+  }, [pageNumbers, deleteModalEnabled, documentViewerKey]);
 
   const { onRotateClockwise, onRotateCounterClockwise } = childProps;
 

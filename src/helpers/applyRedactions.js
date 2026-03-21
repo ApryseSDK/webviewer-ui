@@ -2,17 +2,19 @@ import core from 'core';
 import i18next from 'i18next';
 
 import actions from 'actions';
+import selectors from 'selectors';
 import { fireError } from 'helpers/fireEvent';
 import downloadPdf from 'helpers/downloadPdf';
 
 function noop() { }
 
-export default (annotations, onRedactionCompleted = noop, activeDocumentViewerKey = 1) => (dispatch) => {
+export default (annotations, onRedactionCompleted = noop, activeDocumentViewerKey) => (dispatch, getState) => {
+  const resolvedDocumentViewerKey = activeDocumentViewerKey ?? selectors.getActiveDocumentViewerKey(getState());
   if (core.isWebViewerServerDocument()) {
     // when are using Webviewer Server, it'll download the redacted document
-    return webViewerServerApply(annotations, dispatch, activeDocumentViewerKey);
+    return webViewerServerApply(annotations, dispatch, resolvedDocumentViewerKey);
   }
-  return webViewerApply(annotations, onRedactionCompleted, dispatch, activeDocumentViewerKey);
+  return webViewerApply(annotations, onRedactionCompleted, dispatch, resolvedDocumentViewerKey);
 };
 
 const webViewerServerApply = (annotations, dispatch, activeDocumentViewerKey) => core.applyRedactions(annotations, activeDocumentViewerKey).then((results) => {

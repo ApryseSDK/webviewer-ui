@@ -12,12 +12,14 @@ import { createPortfolio } from 'helpers/portfolio';
 import loadDocument from 'helpers/loadDocument';
 import ModalWrapper from 'components/ModalWrapper';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import useCore from 'hooks/useCore';
 
 import './CreatePortfolioModal.scss';
 
 const CreatePortfolioModal = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const { core } = useCore();
 
   const [
     isDisabled,
@@ -46,7 +48,7 @@ const CreatePortfolioModal = () => {
   };
 
   const create = useCallback(async () => {
-    const pdfDoc = await createPortfolio(items);
+    const pdfDoc = await createPortfolio(core, items);
     if (isMultiTab) {
       const blob = new Blob([await pdfDoc.saveMemoryBuffer(0)], { type: 'application/pdf' });
       await tabManager.addTab(blob, {
@@ -57,7 +59,7 @@ const CreatePortfolioModal = () => {
       loadDocument(dispatch, pdfDoc);
     }
     closeCreatePortfolioModalAfterCreate();
-  }, [items, isMultiTab, tabManager]);
+  }, [items, isMultiTab, tabManager, core]);
 
   const addFiles = (files) => {
     if (files.length > 0) {

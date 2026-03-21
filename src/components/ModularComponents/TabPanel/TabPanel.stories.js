@@ -7,9 +7,10 @@ import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
-import { expect, within , userEvent } from 'storybook/test';
+import { expect, within, userEvent } from 'storybook/test';
 import viewOnlyWhitelist from 'src/redux/viewOnlyWhitelist';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/TabPanel',
@@ -161,7 +162,10 @@ const mockState = {
   },
   document: {
     bookmarks: [],
-    portfolio: [{ id: 1, name: 'Portfolio Item 1' }],
+    portfolio: {
+      1: [{ id: 1, name: 'Portfolio Item 1' }],
+      2: [],
+    },
   },
   featureFlags: {
     customizableUI: true,
@@ -181,13 +185,13 @@ const tabPanelTemplate = (dataElement, width) => {
 };
 
 export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly', 320));
-TabPanelWithIconsOnly.parameters = window.storybook.disableRtlMode;
+TabPanelWithIconsOnly.parameters = disableRtlModeParameters;
 
 export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
-TabPanelWithLabelsOnly.parameters = window.storybook.disableRtlMode;
+TabPanelWithLabelsOnly.parameters = disableRtlModeParameters;
 
 export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
-TabPanelIconsAndLabels.parameters = window.storybook.disableRtlMode;
+TabPanelIconsAndLabels.parameters = disableRtlModeParameters;
 
 const initialStateThumbnailsOnly = {
   viewer: {
@@ -239,6 +243,10 @@ const initialStateThumbnailsOnly = {
     bookmarks: [],
     totalPages: {
       1: 0,
+    },
+    portfolio: {
+      1: [],
+      2: [],
     }
   },
   featureFlags: {
@@ -376,12 +384,12 @@ export const TabPanelWithSignatureInMobile = (args, context) => (TabPanelInApp(c
 
 export const TabPanelWithFileAttachmentInMobile = (args, context) => (TabPanelInApp(context, 'left', 'fileAttachmentPanel'));
 
-TabPanelWithThumbnailsInMobile.parameters = window.storybook.MobileParameters;
-TabPanelWithOutlinesInMobile.parameters = window.storybook.MobileParameters;
-TabPanelWithBookmarksInMobile.parameters = window.storybook.MobileParameters;
-TabPanelWithLayersInMobile.parameters = window.storybook.MobileParameters;
-TabPanelWithSignatureInMobile.parameters = window.storybook.MobileParameters;
-TabPanelWithFileAttachmentInMobile.parameters = window.storybook.MobileParameters;
+TabPanelWithThumbnailsInMobile.parameters = mobileStoryParameters;
+TabPanelWithOutlinesInMobile.parameters = mobileStoryParameters;
+TabPanelWithBookmarksInMobile.parameters = mobileStoryParameters;
+TabPanelWithLayersInMobile.parameters = mobileStoryParameters;
+TabPanelWithSignatureInMobile.parameters = mobileStoryParameters;
+TabPanelWithFileAttachmentInMobile.parameters = mobileStoryParameters;
 
 const PANELS_META = [
   { key: 'component.thumbnailsPanel', className: 'ThumbnailsPanel', panelName: panelNames.THUMBNAIL },
@@ -422,7 +430,7 @@ TabPanelInApplication.play = async ({ canvasElement }) => {
 export const ViewOnlyTabPanel = (args, context) => (TabPanelInApp(context, 'left', 'viewOnlyPanel'));
 ViewOnlyTabPanel.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 ViewOnlyTabPanel.play = async ({ canvasElement }) => {
@@ -449,7 +457,7 @@ ViewOnlyTabPanel.play = async ({ canvasElement }) => {
 };
 
 export const TabPanelWithNoVisibleTabs = (args, context) => (TabPanelInApp(context, 'left', 'viewOnlyPanel'));
-TabPanelWithNoVisibleTabs.parameters = window.storybook.disableRtlMode;
+TabPanelWithNoVisibleTabs.parameters = disableRtlModeParameters;
 
 TabPanelWithNoVisibleTabs.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

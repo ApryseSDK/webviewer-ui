@@ -2,6 +2,7 @@ import React from 'react';
 import MobilePopupWrapper from './MobilePopupWrapper';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { mobileStoryParameters, mobileStoryGlobals, disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/MobilePopupWrapper',
@@ -45,7 +46,13 @@ export function Basic() {
 }
 
 Basic.parameters = {
-  viewport: {
-    defaultViewport: 'Mobile',
+  ...mobileStoryParameters,
+  ...disableRtlModeParameters,
+  chromatic: {
+    ...mobileStoryParameters.chromatic,
+    ...disableRtlModeParameters.chromatic,
+    disableSnapshot: false,
   },
 };
+
+Basic.globals = mobileStoryGlobals;

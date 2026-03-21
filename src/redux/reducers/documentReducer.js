@@ -2,6 +2,14 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_IS_DOCUMENT_LOADED':
+      return {
+        ...state,
+        documentLoadedMap: {
+          ...state.documentLoadedMap,
+          [payload.documentViewerKey]: payload.isDocumentLoaded,
+        }
+      };
     case 'SET_DOCUMENT_FILE':
       return { ...state, file: payload.documentFile, path: payload.documentFile.name, pdfDoc: null };
     case 'SET_PAGE_NUMBER':
@@ -15,15 +23,39 @@ export default (initialState) => (state = initialState, action) => {
         }
       };
     case 'SET_OUTLINES':
-      return { ...state, outlines: payload.outlines };
+      return {
+        ...state,
+        outlines: {
+          ...state.outlines,
+          [payload.documentViewerKey]: payload.outlines,
+        }
+      };
     case 'SET_BOOKMARKS':
     {
-      return { ...state, bookmarks: payload.bookmarks };
+      return {
+        ...state,
+        bookmarks: {
+          ...state.bookmarks,
+          [payload.documentViewerKey]: payload.bookmarks,
+        }
+      };
     }
     case 'SET_PORTFOLIO':
-      return { ...state, portfolio: payload.portfolio };
+      return {
+        ...state,
+        portfolio: {
+          ...state.portfolio,
+          [payload.documentViewerKey]: payload.portfolio,
+        }
+      };
     case 'SET_LAYERS':
-      return { ...state, layers: payload.layers };
+      return {
+        ...state,
+        layers: {
+          ...state.layers,
+          [payload.documentViewerKey]: payload.layers,
+        }
+      };
     case 'SET_PASSWORD_ATTEMPTS':
       return { ...state, passwordAttempts: payload.attempt };
     case 'SET_PRINT_QUALITY':

@@ -1,7 +1,35 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { InsertBlankPagePanel, InsertUploadedPagePanel } from './InsertPageModal.stories';
+import { InsertBlankPagePanel, InsertUploadedPagePanel as InsertUploadedPagePanelStory } from './InsertPageModal.stories';
 import userEvent from '@testing-library/user-event';
+import { insertAbove } from 'helpers/pageManipulationFunctions';
+import InsertPageModalComponent from './InsertPageModal';
+import InsertUploadedPagePanel from './InsertUploadedPagePanel/InsertUploadedPagePanel';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import actions from 'src/redux/actions';
+
+jest.mock('helpers/pageManipulationFunctions', () => ({
+  ...jest.requireActual('helpers/pageManipulationFunctions'),
+  insertAbove: jest.fn(),
+  insertBelow: jest.fn(),
+  exitPageInsertionWarning: jest.fn(),
+}));
+
+jest.mock('src/helpers/isDataElementLeftPanel', () => ({
+  __esModule: true,
+  default: jest.fn(() => true),
+}));
+
+jest.mock('core', () => ({
+  getDocumentViewer: () => ({
+    getAnnotationManager: jest.fn(),
+    getDocument: jest.fn(),
+  }),
+  getAllowedFileExtensions: jest.fn(),
+  insertBlankPages: jest.fn(),
+}));
 
 describe('InsertPageModal', () => {
   describe('Storybook component', () => {
@@ -13,7 +41,7 @@ describe('InsertPageModal', () => {
 
     it('Renders InsertUploadedPagePanel StoryBook component with file selected with no errors', async () => {
       expect(() => {
-        render(<InsertUploadedPagePanel />);
+        render(<InsertUploadedPagePanelStory />);
       }).not.toThrow();
     });
 
@@ -78,7 +106,7 @@ describe('InsertPageModal', () => {
     });
 
     it('Add pages button is disabled by default in the upload page panel', () => {
-      render(<InsertUploadedPagePanel />);
+      render(<InsertUploadedPagePanelStory />);
       const addButton = screen.getByRole('button', { name: 'Add Page(s)' });
       expect(addButton).toBeDisabled();
     });
@@ -104,6 +132,80 @@ describe('InsertPageModal', () => {
 
       expect(warnSpy).toHaveBeenCalled();
       warnSpy.mockRestore();
+    });
+  });
+
+  describe('MultiViewer mode', () => {
+    let store;
+
+    beforeEach(() => {
+      store = configureStore({
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
+      });
+      store.dispatch(actions.setIsMultiViewerMode(true));
+      store.dispatch(actions.setActiveDocumentViewerKey(1));
+    });
+
+    afterEach(() => {
+      store = null;
+      jest.clearAllMocks();
+    });
+
+    it('inserts blank page into the active document viewer', async () => {
+      const props = { isOpen: true, loadedDocumentPageCount: 9 };
+      render(
+        <Provider store={store}>
+          <InsertPageModalComponent {...props} />
+        </Provider>
+      );
+
+      let addPageButton = await screen.findByRole('button', { name: 'Add Page(s)' });
+      userEvent.click(addPageButton);
+      expect(insertAbove).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 1);
+
+      store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+      addPageButton = await screen.findByRole('button', { name: 'Add Page(s)' });
+      userEvent.click(addPageButton);
+      expect(insertAbove).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 2);
+      expect(insertAbove).toHaveBeenCalledTimes(2);
+    });
+
+    it('inserts uploaded page into the active document viewer', async () => {
+      const insertPages = jest.fn();
+      const mockDocument = {
+        getPageCount: () => 20,
+        getFilename: () => 'helloDarknessMyOldFriend.pdf',
+        loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: 'https://placekitten.com/200/300?image=2' }))),
+        cancelLoadThumbnail: () => {},
+      };
+      const props = {
+        insertPages,
+        loadedDocumentPageCount: 10,
+        sourceDocument: mockDocument,
+        closeModal: () => {},
+        clearLoadedFile: () => {},
+        closeModalWarning: () => {},
+      };
+      store.dispatch(actions.setSelectedTab('insertUploadedPagePanelButton', 'insertPageModal'));
+
+      render(
+        <Provider store={store}>
+          <InsertUploadedPagePanel {...props} />
+        </Provider>
+      );
+
+      let addPageButton = await screen.findByRole('button', { name: 'Add Page(s)' });
+      userEvent.click(addPageButton);
+      expect(insertPages).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 1);
+
+      store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+      addPageButton = await screen.findByRole('button', { name: 'Add Page(s)' });
+      userEvent.click(addPageButton);
+      expect(insertPages).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 2);
+      expect(insertPages).toHaveBeenCalledTimes(2);
     });
   });
 });

@@ -12,7 +12,7 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import DataElementWrapper from '../DataElementWrapper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import DataElements from 'constants/dataElement';
-import { PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_TWO } from 'constants/actionPriority';
 import throttle from 'lodash/throttle';
 import './FormFieldEditPopup.scss';
 import debounce from 'lodash/debounce';
@@ -57,7 +57,7 @@ function FormFieldEditPopupContainer({ annotation }) {
   });
 
   function closeAndReset() {
-    dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_TWO));
     dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
     setFieldName('');
     setFieldValue('');
@@ -502,7 +502,7 @@ function FormFieldEditPopupContainer({ annotation }) {
         closed: !isOpen,
       })}
       data-element={DataElements.FORM_FIELD_EDIT_POPUP}
-      style={{ ...position }}
+      css={position}
       ref={popupRef}
     >
       {isOpen && renderPopUp()}

@@ -8,7 +8,13 @@ export default (initialState) => (state = initialState, action) => {
         validationModalWidgetName: payload.validationModalWidgetName,
       };
     case 'SET_VERIFICATION_RESULT':
-      return { ...state, verificationResult: payload.result };
+      return {
+        ...state,
+        verificationResult: {
+          ...state.verificationResult,
+          [payload.documentViewerKey]: payload.result,
+        }
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates
@@ -17,7 +23,13 @@ export default (initialState) => (state = initialState, action) => {
        */
       return {
         ...state,
-        certificates: [...state.certificates, ...payload.certificates],
+        certificates: {
+          ...state.certificates,
+          [payload.documentViewerKey]: [
+            ...(state.certificates?.[payload.documentViewerKey] || []),
+            ...payload.certificates,
+          ],
+        },
       };
     case 'SET_TRUST_LIST_KEY':
       return {

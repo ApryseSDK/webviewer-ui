@@ -16,6 +16,8 @@ function multiSearch(store) {
     }, {});
 
 
+    // Core only supports a single search term, so we join multiple terms with '|'
+    // and always run the search as regex. Plain text terms are pre-escaped.
     const options = {
       regex: true,
       caseSensitive: searchTerms.caseSensitive,
@@ -37,12 +39,13 @@ function multiSearch(store) {
     // If search string is empty we return and clear searches or we send the search logic
     // into an infinte loop
     if (searchString === '') {
-      core.clearSearchResults();
+      const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+      core.clearSearchResults(activeDocumentViewerKey);
       return;
     }
 
-    const searchTextFull = searchTextFullFactory();
-    searchTextFull(searchString, options);
+    const searchTextFull = searchTextFullFactory(store);
+    searchTextFull(searchString, options, true, { shouldDispatchUIActions: false });
   };
 }
 

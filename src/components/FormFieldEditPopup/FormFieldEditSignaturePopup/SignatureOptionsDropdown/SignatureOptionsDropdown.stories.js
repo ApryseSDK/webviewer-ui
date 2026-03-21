@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 
 export default {
@@ -37,4 +38,4 @@ export function SignatureOptions() {
   );
 }
 
-SignatureOptions.parameters = window.storybook.disableRtlMode;
+SignatureOptions.parameters = disableRtlModeParameters;

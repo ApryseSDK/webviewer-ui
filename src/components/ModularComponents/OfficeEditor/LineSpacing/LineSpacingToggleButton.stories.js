@@ -7,6 +7,7 @@ import { OfficeEditorEditMode } from 'src/constants/officeEditor';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 import LineSpacingToggleButton from './LineSpacingToggleButton';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/LineSpacingToggleButton',
@@ -100,7 +101,7 @@ export function InactiveButton() {
   return prepareButtonStory(initialStateWithDisabledElements);
 }
 
-InactiveButton.parameters = window.storybook.disableChromatic;
+InactiveButton.parameters = disableChromaticParameters;
 
 export function ActiveButton() {
   const initialStateWithActiveElements = {
@@ -116,4 +117,4 @@ export function ActiveButton() {
   return prepareButtonStory(initialStateWithActiveElements);
 }
 
-ActiveButton.parameters = window.storybook.disableChromatic;
+ActiveButton.parameters = disableChromaticParameters;

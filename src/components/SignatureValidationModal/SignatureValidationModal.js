@@ -24,9 +24,10 @@ const SignatureValidationModal = () => {
   const [isOpen, verificationResult] = useSelector(
     (state) => {
       const { validationModalWidgetName } = state.digitalSignatureValidation;
+      const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
       return [
         selectors.isElementOpen(state, DataElements.SIGNATURE_VALIDATION_MODAL),
-        selectors.getVerificationResult(state, validationModalWidgetName),
+        selectors.getVerificationResult(state, validationModalWidgetName, activeDocumentViewerKey),
       ];
     },
     shallowEqual,
@@ -50,28 +51,6 @@ const SignatureValidationModal = () => {
       );
     }
   }, [dispatch, isOpen]);
-
-  /**
-   * @todo Figure out if this useEffect is still needed? Component appears to be
-   * operating normally without it.
-   */
-  /*
-  useEffect(() => {
-    const onDigitalSignatureAvailable = widget => {
-      setWidgetName(widget.getField().name);
-      dispatch(actions.openElements(['signatureValidationModal']));
-    };
-
-    core.addEventListener(
-      'digitalSignatureAvailable',
-      onDigitalSignatureAvailable,
-    );
-    return () => core.removeEventListener(
-      'digitalSignatureAvailable',
-      onDigitalSignatureAvailable,
-    );
-  }, [dispatch]);
-  */
 
   const {
     badgeIcon,

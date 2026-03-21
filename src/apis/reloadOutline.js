@@ -24,8 +24,8 @@ WebViewer(...)
 import core from 'core';
 import actions from 'actions';
 
-export default (store) => () => {
+export default (store, documentViewerKey = 1) => () => {
   core.getOutlines((outlines) => {
-    store.dispatch(actions.setOutlines(outlines));
-  });
+    store.dispatch(actions.setOutlines(outlines, documentViewerKey));
+  }, documentViewerKey);
 };

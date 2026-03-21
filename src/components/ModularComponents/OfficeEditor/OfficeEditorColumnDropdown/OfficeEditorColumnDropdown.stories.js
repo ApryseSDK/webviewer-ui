@@ -7,6 +7,7 @@ import DataElements from 'constants/dataElement';
 import OfficeEditorColumnDropdown from './OfficeEditorColumnDropdown';
 import WarningModal from 'src/components/WarningModal';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/OfficeEditorColumnDropdown',
@@ -25,7 +26,7 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const Expanded = () => <Basic />;
 Expanded.play = async ({ canvasElement }) => {

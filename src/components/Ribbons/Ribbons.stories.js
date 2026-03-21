@@ -3,6 +3,7 @@ import RibbonsComponent from './Ribbons';
 import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableChromaticParameters } from 'helpers/storybookParams';
 
 const store = configureStore({
   reducer: () => initialState
@@ -26,11 +27,11 @@ const BasicComponent = (props) => {
 
 export const Ribbons = BasicComponent.bind({});
 
-Ribbons.parameters = window.storybook.disableChromatic;
+Ribbons.parameters = disableChromaticParameters;
 
 export const MobileRibbons = BasicComponent.bind({});
 MobileRibbons.args = {
   containerWidth: '300px',
 };
 
-MobileRibbons.parameters = window.storybook.disableChromatic;
+MobileRibbons.parameters = disableChromaticParameters;

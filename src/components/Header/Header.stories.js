@@ -3,6 +3,7 @@ import Header from './Header';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Header',
@@ -34,4 +35,4 @@ DefaultHeader.args = {
   isMultiTab: true,
 };
 
-DefaultHeader.parameters = window.storybook.disableRtlMode;
+DefaultHeader.parameters = disableRtlModeParameters;

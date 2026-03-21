@@ -13,6 +13,7 @@ import {
   mockModularComponents,
 } from '../../Helpers/mockHeaders';
 import { MockDocumentContainer , createTemplate } from 'helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/FloatingHeader/RightHeader',
@@ -59,7 +60,7 @@ const modularHeadersWithRightHeader = {
 export const RightHeaderWithDefaultAndFloaties = createTemplate({ headers: modularHeadersWithRightHeader, components: mockModularComponents });
 RightHeaderWithDefaultAndFloaties.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const FloatRightStartHeader = Template.bind({});

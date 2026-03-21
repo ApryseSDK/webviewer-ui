@@ -8,6 +8,13 @@ import Icon from 'components/Icon';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
 const RedactionSearchPanel = (props) => {
+  const {
+    redactionSearchResults,
+    isProcessingRedactionResults,
+    clearRedactionSearchResults,
+    searchStatus,
+  } = props;
+
   const dispatch = useDispatch();
   const [searchTerms, setSearchTerms] = useState([]);
   const { isRedactionSearchActive, setIsRedactionSearchActive } = useContext(RedactionPanelContext);
@@ -16,13 +23,6 @@ const RedactionSearchPanel = (props) => {
     clearRedactionSearchResults();
     setIsRedactionSearchActive(false);
   };
-
-  const {
-    redactionSearchResults,
-    isProcessingRedactionResults,
-    clearRedactionSearchResults,
-    searchStatus,
-  } = props;
 
   const isMobile = isMobileSize();
 

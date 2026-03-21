@@ -99,7 +99,9 @@ const RibbonItem = forwardRef((props, ref) => {
       core.setToolMode(ribbonItemTool);
 
       if (groupedItems.length < 1) {
-        core.getFormFieldCreationManager().endFormFieldCreationMode();
+        core.getDocumentViewers().forEach((viewer) => {
+          viewer.getAnnotationManager().getFormFieldCreationManager().endFormFieldCreationMode();
+        });
         core.getContentEditManager().endContentEditMode();
       }
     }

@@ -7,20 +7,22 @@ import DataElements from 'constants/dataElement';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
-  handleStateChange: PropTypes.func
+  handleStateChange: PropTypes.func,
+  flyoutId: PropTypes.string,
 };
 
 function NoteState(props) {
   const {
     annotation,
     handleStateChange = () => { },
+    flyoutId,
   } = props;
 
   const [t] = useTranslation();
 
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
-  const id = annotation.Id;
+  const id = flyoutId || annotation.Id;
 
   return (
     <>

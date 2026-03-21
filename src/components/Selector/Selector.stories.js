@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Selector from './Selector';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Selector',
@@ -26,7 +27,7 @@ export function Basic() {
   );
 }
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function Placeholder() {
   const items = ['ITEM 1', 'ITEM 2'];
@@ -48,4 +49,4 @@ export function Placeholder() {
   );
 }
 
-Placeholder.parameters = window.storybook.disableRtlMode;
+Placeholder.parameters = disableRtlModeParameters;

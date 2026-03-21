@@ -17,8 +17,9 @@ import TextButton from 'components/TextButton';
 /* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import DataElements from 'constants/dataElement';
-import { getSortStrategies } from 'constants/sortStrategies';
+import getNotesPanelSortStrategy from 'helpers/getNotesPanelSortStrategy';
 import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -48,7 +49,6 @@ const NotesPanel = ({
   isLeftSide,
   currentLeftPanelWidth,
 }) => {
-
   const sortStrategy = useSelector(selectors.getSortStrategy);
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NOTES_PANEL));
@@ -151,7 +151,8 @@ const NotesPanel = ({
     return shouldRender;
   };
 
-  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes).filter(filterNote);
+  const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
+  const notesToRender = activeSortStrategy.getSortedNotes(notes).filter(filterNote);
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -258,7 +259,7 @@ const NotesPanel = ({
     resize = () => { },
   ) => {
     let listSeparator = null;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
+    const { shouldRenderSeparator, getSeparatorContent } = activeSortStrategy;
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
@@ -284,6 +285,7 @@ const NotesPanel = ({
       resize,
       isSelected: selectedNoteIds[currNote.Id],
       isContentEditable: core.canModifyContents(currNote, activeDocumentViewerKey) && !currNote.getContents(),
+      isOfficeEditorCommentAnnotation: mapAnnotationToKey(currNote) === annotationMapKeys.OFFICE_EDITOR_COMMENT,
       pendingEditTextMap,
       setPendingEditText,
       pendingReplyMap,
@@ -333,7 +335,7 @@ const NotesPanel = ({
                   _multiSelectedMap[groupAnnot.Id] = groupAnnot;
                 });
                 setMultiSelectedMap(_multiSelectedMap);
-                core.selectAnnotations(groupAnnots);
+                core.selectAnnotations(groupAnnots, activeDocumentViewerKey);
               } else {
                 const _multiSelectedMap = { ...multiSelectedMap };
                 const groupAnnots = core.getGroupAnnotations(currNote, activeDocumentViewerKey);
@@ -341,7 +343,7 @@ const NotesPanel = ({
                   delete _multiSelectedMap[groupAnnot.Id];
                 });
                 setMultiSelectedMap(_multiSelectedMap);
-                core.deselectAnnotations([currNote, ...groupAnnots]);
+                core.deselectAnnotations([currNote, ...groupAnnots], activeDocumentViewerKey);
               }
             }}
           />
@@ -507,7 +509,7 @@ const NotesPanel = ({
           {/* These two placeholders need to exist so that MultiSelectControls can
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
-          {showPlaceHolder ?? placeHolder}
+          {showPlaceHolder ? placeHolder : null}
           {showReviewPanelFooter && (
             <div className='office-editor-footer'>
               <div className='divider' />

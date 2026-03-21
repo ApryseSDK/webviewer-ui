@@ -345,11 +345,13 @@ export const setCustomHeadersAdditionalProperties = (customHeader, additionalPro
   type: 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES',
   payload: { customHeader, additionalProperties },
 });
-export const enableCustomPageLabels = () => ({
-  type: 'ENABLE_CUSTOM_PAGE_LABELS'
+export const enableCustomPageLabels = (documentViewerKey = 1) => ({
+  type: 'ENABLE_CUSTOM_PAGE_LABELS',
+  payload: { documentViewerKey },
 });
-export const disableCustomPageLabels = () => ({
-  type: 'DISABLE_CUSTOM_PAGE_LABELS'
+export const disableCustomPageLabels = (documentViewerKey = 1) => ({
+  type: 'DISABLE_CUSTOM_PAGE_LABELS',
+  payload: { documentViewerKey },
 });
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',
@@ -545,13 +547,17 @@ export const setPanelWidth = (dataElement, width) => ({
 });
 
 // document
+export const setDocumentLoaded = (isDocumentLoaded, documentViewerKey = 1) => ({
+  type: 'SET_IS_DOCUMENT_LOADED',
+  payload: { isDocumentLoaded, documentViewerKey },
+});
 export const setTotalPages = (totalPages, documentViewerKey = 1) => ({
   type: 'SET_TOTAL_PAGES',
   payload: { totalPages, documentViewerKey },
 });
-export const setOutlines = (outlines) => ({
+export const setOutlines = (outlines, documentViewerKey = 1) => ({
   type: 'SET_OUTLINES',
-  payload: { outlines },
+  payload: { outlines, documentViewerKey },
 });
 export const setIsOutlineEditing = (isOutlineEditingEnabled = true) => ({
   type: 'SET_OUTLINE_EDITING',
@@ -561,29 +567,29 @@ export const setAutoExpandOutlines = (autoExpandOutlines = false) => ({
   type: 'SET_AUTO_EXPAND_OUTLINES',
   payload: { autoExpandOutlines },
 });
-export const setOutlinesStateMap = (outlinePath, outlineState) => ({
+export const setOutlinesStateMap = (outlinePath, outlineState, documentViewerKey = 1) => ({
   type: 'SET_OUTLINES_PANEL_STATE',
-  payload: { outlinePath, outlineState },
+  payload: { outlinePath, outlineState, documentViewerKey },
 });
 export const setAnnotationNumbering = (isAnnotationNumberingEnabled = false) => ({
   type: 'SET_ANNOTATION_NUMBERING',
   payload: { isAnnotationNumberingEnabled },
 });
-export const setBookmarks = (bookmarks) => ({
+export const setBookmarks = (bookmarks, documentViewerKey = 1) => ({
   type: 'SET_BOOKMARKS',
-  payload: { bookmarks },
+  payload: { bookmarks, documentViewerKey },
 });
 export const setBookmarkIconShortcutVisibility = (bookmarkIconShortcutVisibility) => ({
   type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
   payload: { bookmarkIconShortcutVisibility },
 });
-export const setPortfolio = (portfolio) => ({
+export const setPortfolio = (portfolio, documentViewerKey = 1) => ({
   type: 'SET_PORTFOLIO',
-  payload: { portfolio },
+  payload: { portfolio, documentViewerKey },
 });
-export const setLayers = (layers) => ({
+export const setLayers = (layers, documentViewerKey = 1) => ({
   type: 'SET_LAYERS',
-  payload: { layers },
+  payload: { layers, documentViewerKey },
 });
 export const setPasswordAttempts = (attempt) => ({
   type: 'SET_PASSWORD_ATTEMPTS',
@@ -605,9 +611,9 @@ export const resetLoadingProgress = () => ({
   type: 'SET_LOADING_PROGRESS',
   payload: { progress: 0 },
 });
-export const setVerificationResult = (result) => ({
+export const setVerificationResult = (result, documentViewerKey = 1) => ({
   type: 'SET_VERIFICATION_RESULT',
-  payload: { result },
+  payload: { result, documentViewerKey },
 });
 export const setIsRevocationCheckingEnabled = (isRevocationCheckingEnabled = false) => ({
   type: 'SET_IS_REVOCATION_CHECKING_ENABLED',

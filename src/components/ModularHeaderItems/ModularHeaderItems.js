@@ -11,6 +11,7 @@ import actions from 'actions';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { css } from '@emotion/react';
 
 const ModularHeaderItems = (props) => {
   const dispatch = useDispatch();
@@ -95,6 +96,14 @@ const ModularHeaderItems = (props) => {
     return <InnerItem key={key} {...itemProps} headerDirection={headerDirection} />;
   }), [items, size, disabledElements]);
 
+  const wrapperCss = useMemo(() => css({
+    gap: `${itemsGap}px`,
+    flexDirection: headerDirection,
+    justifyContent: justifyContent,
+    ...(maxWidth ? { maxWidth: `${maxWidth}px` } : {}),
+    ...(maxHeight ? { maxHeight: `${maxHeight}px` } : {}),
+  }), [itemsGap, headerDirection, justifyContent, maxWidth, maxHeight]);
+
   return (
     <div className={classNames({
       'ModularHeaderItems': true,
@@ -102,13 +111,7 @@ const ModularHeaderItems = (props) => {
       'empty-header': isHeaderEmpty,
     })}
     ref={elementRef}
-    style={{
-      gap: `${itemsGap}px`,
-      flexDirection: headerDirection,
-      justifyContent: justifyContent,
-      maxWidth: `${maxWidth}px`,
-      maxHeight: `${maxHeight}px`,
-    }}>
+    css={wrapperCss}>
       <ResponsiveContainer headerDirection={headerDirection} elementRef={elementRef} parentDataElement={headerId}
         items={items}>
         {headerItems}

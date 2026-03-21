@@ -4,8 +4,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import useOnRedactionAnnotationChanged from './useOnRedactionAnnotationChanged';
 import core from 'core';
 import { act } from 'react-dom/test-utils';
+import useCore from 'hooks/useCore';
+import selectors from 'selectors';
+import DataElements from 'constants/dataElement';
 
 jest.mock('core');
+jest.mock('hooks/useCore');
+jest.mock('selectors');
 
 // To test a hook with a redux dependency we need to provide a wrapper for it to run.
 // The wrapper must also have a redux provider
@@ -15,6 +20,13 @@ const MockComponent = ({ children }) => (<div>{children}</div>);
 const wrapper = withProviders(MockComponent);
 
 describe('useOnRedactionAnnotationChanged hook', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useCore.mockReturnValue({ core });
+    core.getAnnotationsList = jest.fn(() => []);
+    selectors.isElementOpen = jest.fn(() => false);
+  });
+
   it('adds event listeners to Annotation Changed', () => {
     core.addEventListener = jest.fn();
 
@@ -86,10 +98,17 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
 
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     const isNotesPanelOpen = true;
     const isSearchPanelOpen = false;
-    useSelectorMock.mockReturnValue([isNotesPanelOpen, isSearchPanelOpen]);
+    selectors.isElementOpen.mockImplementation((state, dataElement) => {
+      if (dataElement === DataElements.NOTES_PANEL) {
+        return isNotesPanelOpen;
+      }
+      if (dataElement === DataElements.SEARCH_PANEL) {
+        return isSearchPanelOpen;
+      }
+      return false;
+    });
 
     core.getAnnotationsList = () => [new window.Core.Annotations.PolygonAnnotation(), new window.Core.Annotations.LineAnnotation(), ...mockRedactionAnnotations];
 
@@ -119,10 +138,17 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
 
-    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     const isNotesPanelOpen = false;
     const isSearchPanelOpen = true;
-    useSelectorMock.mockReturnValue([isNotesPanelOpen, isSearchPanelOpen]);
+    selectors.isElementOpen.mockImplementation((state, dataElement) => {
+      if (dataElement === DataElements.NOTES_PANEL) {
+        return isNotesPanelOpen;
+      }
+      if (dataElement === DataElements.SEARCH_PANEL) {
+        return isSearchPanelOpen;
+      }
+      return false;
+    });
 
     core.getAnnotationsList = () => [{ Subject: 'Polygon' }, { Subject: 'PolyLine' }, ...mockRedactionAnnotations];
 

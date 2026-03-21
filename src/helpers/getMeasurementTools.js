@@ -10,10 +10,15 @@ const imperialConverter = {
 
 export default () => {
   const tools = [];
-  const toolModeMap = core.getToolModeMap();
-  Object.values(toolModeMap).forEach((tool) => {
-    if (isMeasurementTool(tool)) {
-      tools.push(tool);
+  const documentViewers = core.getDocumentViewers();
+  documentViewers.forEach((viewer, index) => {
+    const toolModeMap = core.getToolModeMap(index + 1);
+    if (toolModeMap) {
+      Object.values(toolModeMap).forEach((tool) => {
+        if (isMeasurementTool(tool)) {
+          tools.push(tool);
+        }
+      });
     }
   });
   return tools;

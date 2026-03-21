@@ -11,8 +11,6 @@ import Button from 'components/Button';
 
 import DataElements from 'src/constants/dataElement';
 
-import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
-
 import './InlineCommentingPopup.scss';
 
 const propTypes = {
@@ -26,6 +24,9 @@ const propTypes = {
   contextValue: PropTypes.object,
   annotationForAttachment: PropTypes.string,
   addAttachments: PropTypes.func,
+  containerClassName: PropTypes.string,
+  renderTabs: PropTypes.func,
+  isTrackedChange: PropTypes.bool,
 };
 
 const InlineCommentingPopup = ({
@@ -39,11 +40,12 @@ const InlineCommentingPopup = ({
   contextValue,
   annotationForAttachment,
   addAttachments,
+  containerClassName,
+  renderTabs,
+  isTrackedChange = false,
 }) => {
   const [t] = useTranslation();
   const [isExpanded, setExpanded] = useState(false);
-
-  const isTrackedChange = mapAnnotationToKey(commentingAnnotation) === annotationMapKeys.TRACKED_CHANGE;
 
   const inlineCommentPopup = (
     <div
@@ -52,10 +54,10 @@ const InlineCommentingPopup = ({
         InlineCommentingPopup: true,
         open: isNotesPanelClosed,
         trackedChangePopup: isTrackedChange,
-      })}
+      }, containerClassName)}
       ref={popupRef}
       data-element={DataElements.INLINE_COMMENT_POPUP}
-      style={{ ...position }}
+      css={position}
       onMouseMove={(e) => {
         e.stopPropagation();
       }}
@@ -82,6 +84,7 @@ const InlineCommentingPopup = ({
           }
         }}
       >
+        {typeof renderTabs === 'function' ? renderTabs() : null}
         {isMobile && (
           <div className='inline-comment-header'>
             <Button

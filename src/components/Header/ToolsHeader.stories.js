@@ -5,6 +5,7 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 import featureFlagsReducer from 'src/redux/reducers/featureFlagsReducer';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/Header/ToolsHeader',
@@ -32,7 +33,7 @@ export const ToolsHeaderNoPreset = () => {
   return (<BasicComponent store={store} />);
 };
 
-ToolsHeaderNoPreset.parameters = window.storybook.disableRtlMode;
+ToolsHeaderNoPreset.parameters = disableRtlModeParameters;
 
 const mockInitialViewerState = {
   ...initialState.viewer,
@@ -52,4 +53,4 @@ export const ToolsHeaderToolActive = () => {
   return (<BasicComponent store={storeWithToolSelected} />);
 };
 
-ToolsHeaderToolActive.parameters = window.storybook.disableRtlMode;
+ToolsHeaderToolActive.parameters = disableRtlModeParameters;

@@ -12,6 +12,7 @@ import { MockDocumentContainer, oePartialState, createStore } from 'helpers/stor
 import { expect, within, userEvent } from 'storybook/test';
 import PropTypes from 'prop-types';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const leftChevron = {
   onClick: () => { },
@@ -52,12 +53,13 @@ const initialState = {
     genericPanels: [],
     activeDocumentViewerKey: 1,
     currentPage: { 1: 2, 2: 1 },
-    totalPages: 9,
+    totalPages: { 1: 9, 2: 9 },
     activeFlyout: 'pageControlsFlyout',
     activeTabInPanel: {},
     flyoutPosition: { x: 0, y: 0 },
     fixedGroupedItems: ['grouped-item-ABC'],
-    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    pageLabels: { 1: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], 2: ['1', '2', '3', '4', '5', '6', '7', '8', '9'] },
+    isCustomPageLabelsEnabled: { 1: false, 2: false },
     allowPageNavigation: true,
     customElementSizes: {
       PageNavigationTool: 0,
@@ -90,7 +92,7 @@ const initialState = {
     }
   },
   document: {
-    totalPages: { 1: 9 },
+    totalPages: { 1: 9, 2: 9 },
   },
   featureFlags: {
     customizableUI: true,
@@ -156,7 +158,7 @@ PageControlsStory.propTypes = {
 export const Basic = (storyProps) => {
   return <PageControlsStory store={store} storyProps={storyProps} />;
 };
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const PageControlsInHeader = (storyProps) => {
   const pageControlsTools = {
@@ -185,7 +187,7 @@ export const PageControlsInHeader = (storyProps) => {
     </Provider>
   );
 };
-PageControlsInHeader.parameters = window.storybook.disableRtlMode;
+PageControlsInHeader.parameters = disableRtlModeParameters;
 
 PageControlsInHeader.play = async ({ canvasElement }) => {
   const pageControls = canvasElement.querySelector('[data-element="pageControlsTools"]');
@@ -206,7 +208,7 @@ const docxStore = createStore(initialState);
 export const PageControlsInputDocx = (storyProps) => {
   return <PageControlsStory store={docxStore} storyProps={storyProps} />;
 };
-PageControlsInputDocx.parameters = window.storybook.disableRtlMode;
+PageControlsInputDocx.parameters = disableRtlModeParameters;
 
 /**
  * This story demonstrates the functionality of the PageControlsInput component

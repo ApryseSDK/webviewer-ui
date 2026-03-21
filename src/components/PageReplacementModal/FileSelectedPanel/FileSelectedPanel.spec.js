@@ -1,8 +1,12 @@
 import React from 'react';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 import FileSelectedPanel from './FileSelectedPanel';
 import { FileSelectedDesktop, ProcessingFileDesktop } from './FileSelectedPanel.stories';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import actions from 'src/redux/actions';
 
 const getMockDocument = ({ pageCount, documentName = 'test.pdf' }) => {
   return {
@@ -222,8 +226,8 @@ describe('FileSelectedPanel', () => {
       const replaceButton = screen.getByRole('button', { name: 'Replace' });
       userEvent.click(replaceButton);
       // Replace handler signature (all in page numbers)
-      // replacePages(sourceDocument, pageToRemove, pagesToReplaceIntoDocument)
-      expect(replaceHandler).toBeCalledWith(mockSourceDocument, selectedPageNumbersToReplace, [1, 2, 4]);
+      // replacePages(sourceDocument, pageToRemove, pagesToReplaceIntoDocument, documentViewerKey)
+      expect(replaceHandler).toBeCalledWith(mockSourceDocument, selectedPageNumbersToReplace, [1, 2, 4], 1);
     });
 
     it('when a user presses "Deselect All"  button  it unticks all the checkboxes and clears the input', async () => {
@@ -465,6 +469,79 @@ describe('FileSelectedPanel', () => {
       userEvent.click(replaceButton);
       expect(replacePagesMock).toBeCalled();
       expect(closeModalMock).toBeCalled();
+    });
+  });
+
+  describe('Multiviewer mode', () => {
+    let store;
+
+    beforeEach(() => {
+      store = configureStore({
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
+      });
+      store.dispatch(actions.setIsMultiViewerMode(true));
+      store.dispatch(actions.setActiveDocumentViewerKey(1));
+    });
+
+    afterEach(() => {
+      store = null;
+      jest.clearAllMocks();
+    });
+
+    const filename = 'https://pdftron.s3.amazonaws.com/downloads/pl/demo.pdf';
+    const props = {
+      closeThisModal: () => {},
+      clearLoadedFile: () => {},
+      closeModalWarning: () => {},
+      replacePagesHandler: () => {},
+      pageIndicesToReplace: [1],
+      documentInViewer: {
+        filename,
+        getFilename: () => filename,
+        getPageCount: () => 9,
+      },
+      sourceDocument: {
+        filename,
+        getFilename: () => filename,
+        getPageCount: () => 9,
+        loadThumbnail: () => {},
+        cancelLoadThumbnail: () => {},
+      },
+    };
+
+    it('Renders FileSelectedPanel component in multiviewer mode with no errors', async () => {
+      expect(() => {
+        render(
+          <Provider store={store}>
+            <FileSelectedPanel {...props} />
+          </Provider>
+        );
+      }).not.toThrow();
+    });
+
+    it('calls replacePagesHandler with the correct documentViewerKey', async () => {
+      const replacePagesHandler = jest.fn();
+      const propsWithReplaceHandler = {
+        ...props,
+        replacePagesHandler,
+      };
+
+      render(
+        <Provider store={store}>
+          <FileSelectedPanel {...propsWithReplaceHandler} />
+        </Provider>
+      );
+
+      let replaceButton = screen.getByRole('button', { name: 'Replace' });
+      userEvent.click(replaceButton);
+      expect(replacePagesHandler).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 1);
+
+      store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+      replaceButton = screen.getByRole('button', { name: 'Replace' });
+      userEvent.click(replaceButton);
+      expect(replacePagesHandler).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.anything(), 2);
     });
   });
 });

@@ -23,9 +23,10 @@ function PageControls(props) {
     className,
   } = props;
 
-  const totalPages = useSelector(selectors.getTotalPages);
-  const currentPage = useSelector(selectors.getCurrentPage);
-  const isCustomPageLabelsEnabled = useSelector(selectors.isCustomPageLabelsEnabled);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const totalPages = useSelector((state) => selectors.getTotalPages(state, activeDocumentViewerKey));
+  const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
+  const isCustomPageLabelsEnabled = useSelector((state) => selectors.isCustomPageLabelsEnabled(state, activeDocumentViewerKey));
   const [currentPageOfTotal, setCurrentPageOfTotal] = useState(currentPage);
   const { t } = useTranslation();
 
@@ -35,7 +36,7 @@ function PageControls(props) {
       label = `${currentPage} / ${totalPages}`;
     }
     setCurrentPageOfTotal(label);
-  }, [totalPages,currentPage, isCustomPageLabelsEnabled]);
+  }, [totalPages, currentPage, isCustomPageLabelsEnabled]);
 
   return (
     <div className={classNames({ PageControlsWrapper: true, [className]: true })}

@@ -1,0 +1,29 @@
+.WarningBanner {
+  display: flex;
+  gap: 10px;
+  background: var(--warning-background);
+  color: var(--warning-text);
+  border: 1px solid var(--warning-border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+
+  .WarningBanner__icon {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+    margin-top: 2px;
+
+    * {
+      fill: var(--warning-border);
+      color: var(--warning-border);
+    }
+  }
+
+  .WarningBanner__messages {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.4;
+  }
+}

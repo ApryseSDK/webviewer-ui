@@ -152,9 +152,9 @@ const PrintModalContainer = () => {
     setCount(0);
 
     if (allowWatermarkModal) {
-      core.setWatermark(watermarkModalOptions);
+      core.setWatermark(watermarkModalOptions, activeDocumentViewerKey);
     } else {
-      core.setWatermark(existingWatermarksRef.current);
+      core.setWatermark(existingWatermarksRef.current,activeDocumentViewerKey);
     }
 
     const isCurrentView = pageRange === PAGE_RANGES.CURRENT_VIEW;
@@ -215,6 +215,7 @@ const PrintModalContainer = () => {
       isApplyWatermarkDisabled={isApplyWatermarkDisabled}
       isFullAPIEnabled={core.isFullPDFEnabled()}
       currentPage={currentPage}
+      activeDocumentViewerKey={activeDocumentViewerKey}
       printQuality={printQuality}
       isGrayscale={isGrayscale}
       setIsGrayscale={setIsGrayscale}

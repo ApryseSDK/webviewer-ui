@@ -354,7 +354,11 @@
     "listEmptyValue": "Satu atau lebih medan mempunyai nilai kosong.",
     "listDuplicateValue": "Medan berbilang mempunyai nilai berikut: ",
     "networkError": "Kesilapan telah berlaku semasa memuatkan komponen ini. Sila semak sambungan rangkaian anda dan muat semula halaman.",
-    "refreshPage": "Sila semak sambungan rangkaian anda dan muat semula halaman."
+    "refreshPage": "Sila semak sambungan rangkaian anda dan muat semula halaman.",
+    "renderErrors": {
+      "error": "Ada sesuatu yang tidak kena di sini.",
+      "refreshPanel": "Anda boleh teruskan kerja. Cuba buka semula panel itu."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "Isih Senarai Pesanan",
       "position": "kedudukan",
+      "linePosition": "Kedudukan",
       "time": "Masa",
       "status": "Status",
       "author": "Pengarang",
@@ -483,6 +488,7 @@
       "markForRedaction": "Tandakan untuk redaksi"
     },
     "searchPanel": {
+      "searchResults": "Keputusan Carian",
       "caseSensitive": "Sensitif huruf besar",
       "wholeWordOnly": "Seluruh perkataan",
       "wildcard": "Kad bebas",
@@ -1316,6 +1322,7 @@
     "bold": "berani",
     "italic": "Italic",
     "underline": "Garis bawah",
+    "strikeout": "Strikeout",
     "textColor": "Warna teks",
     "leftAlign": "Jajar ke kiri",
     "centerAlign": "Jajaran tengah",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "Lihat tanpa cadangan",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih.",
     "previewAllChanges": "Pratonton semua perubahan",
+    "changes": "Perubahan",
+    "comments": "Komen",
+    "commentsAndChangesTabs": "Tab Komen dan Perubahan",
     "accept": "Terima",
     "reject": "Tolak",
     "pastingTitle": "Menampal tidak tersedia",

@@ -8,6 +8,7 @@ import initialState from 'src/redux/initialState';
 import { expect, within } from 'storybook/test';
 import core from 'core';
 import actions from 'actions';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ToolButton',
@@ -46,7 +47,7 @@ export function AllToolButtons() {
   );
 }
 
-AllToolButtons.parameters = window.storybook.disableRtlMode;
+AllToolButtons.parameters = disableRtlModeParameters;
 
 export const OverrideToolButtonProps = () => {
   const props = {
@@ -62,7 +63,7 @@ export const OverrideToolButtonProps = () => {
   );
 };
 
-OverrideToolButtonProps.parameters = window.storybook.disableRtlMode;
+OverrideToolButtonProps.parameters = disableRtlModeParameters;
 
 export const WithCustomStyle = () => {
   const props = {
@@ -90,7 +91,7 @@ WithCustomStyle.play = async ({ canvasElement }) => {
   expect(button.classList.contains('arc-measurement-class')).toBe(true);
 };
 
-WithCustomStyle.parameters = window.storybook.disableRtlMode;
+WithCustomStyle.parameters = disableRtlModeParameters;
 
 let toolStyles;
 const ReduxStory = () => {
@@ -151,7 +152,7 @@ ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
   await expect(button.firstChild.style.color).toBe('rgb(100, 0, 100)');
 };
 
-ChangingToolStylesShouldRerender.parameters = window.storybook.disableRtlMode;
+ChangingToolStylesShouldRerender.parameters = disableRtlModeParameters;
 
 export const getsDisabledWithTool = createTemplate({
   headers: {

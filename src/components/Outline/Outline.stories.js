@@ -8,6 +8,7 @@ import { DndProvider } from 'react-dnd';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
 import '../LeftPanel/LeftPanel.scss';
 import thunk from 'redux-thunk';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 const NOOP = () => { };
 
@@ -38,6 +39,7 @@ export const createOutline = (outline, parent, i) => {
     getIndex: () => i,
     parent,
     getParent: () => parent,
+    ...outline,
   };
 
   outline.children.forEach((child, i) => children.push(createOutline(child, copy, i)));
@@ -125,8 +127,7 @@ export const Basic = () => {
               setActiveOutlinePath: NOOP,
               activeOutlinePath: '',
               isOutlineActive: NOOP,
-              setAddingNewOutline: NOOP,
-              setEditingOutlines: NOOP,
+              setIsAddingNewOutline: NOOP,
               selectedOutlines: [],
               outlineScrollParentRef: { current: null },
             }}
@@ -147,4 +148,4 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

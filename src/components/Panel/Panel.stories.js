@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Panel from './Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 export default {
   title: 'Components/Panel',
   component: Panel,
@@ -42,7 +43,7 @@ export function Basic() {
     </Provider>
   );
 }
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export function PanelOnRightSide() {
   mockInitialState.viewer.panelCustomEmptyPanel = undefined;
@@ -56,7 +57,7 @@ export function PanelOnRightSide() {
     </Provider>
   );
 }
-PanelOnRightSide.parameters = window.storybook.disableRtlMode;
+PanelOnRightSide.parameters = disableRtlModeParameters;
 // Should not be cutoff
 export function PanelWithHeaders() {
   const state = {

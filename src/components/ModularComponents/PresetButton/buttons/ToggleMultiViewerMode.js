@@ -8,17 +8,17 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import { isIE11 } from 'helpers/device';
-import actions from 'actions';
+import { cleanUpMultiViewer, setupMultiViewer } from 'helpers/multiViewerHelper';
 
 
 const ToggleMultiViewerMode = forwardRef((props, ref) => {
   const { isFlyoutItem, dataElement, className, style, buttonType } = props;
 
-  const dispatch = useDispatch();
+  const store = useStore();
   const isMultiTab = useSelector(selectors.getIsMultiTab);
   const isMultiViewerModeAvailable = useSelector(selectors.getIsMultiViewerModeAvailable);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
@@ -28,7 +28,7 @@ const ToggleMultiViewerMode = forwardRef((props, ref) => {
   const icon = 'icon-header-compare';
   const label = 'action.comparePages';
   const title = 'action.comparePages';
-  const onClick = () => dispatch(actions.setIsMultiViewerMode(!isMultiViewerMode));
+  const onClick = () => isMultiViewerMode ? cleanUpMultiViewer(store) : setupMultiViewer(store);
   const isActive = isMultiViewerMode;
 
   if (!shouldShow) {

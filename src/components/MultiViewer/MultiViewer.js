@@ -3,43 +3,31 @@ import './MultiViewer.scss';
 import selectors from 'selectors';
 import actions from 'actions';
 import useCore from 'hooks/useCore';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import useIsRTL from 'hooks/useIsRTL';
+import { useSelector, useDispatch } from 'react-redux';
 import DropArea from 'components/MultiViewer/DropArea';
 import ResizeBar from 'components/ResizeBar';
 import DocumentHeader from 'components/MultiViewer/DocumentHeader';
 import DocumentContainer from 'components/MultiViewer/DocumentContainer';
 import classNames from 'classnames';
 import CompareZoomOverlay from 'components/MultiViewer/CompareZoomOverlay';
-import eventHandler from 'helpers/eventHandler';
 import throttle from 'lodash/throttle';
-import ComparisonButton from 'components/MultiViewer/ComparisonButton';
-import {
-  addDocumentViewer,
-  syncDocumentViewers,
-  removeDocumentViewer,
-  setupOpenURLHandler,
-} from 'helpers/documentViewerHelper';
-import fireEvent from 'helpers/fireEvent';
-import Events from 'constants/events';
 import fireActiveDocumentViewerChanged from 'helpers/fireActiveDocumentViewerChanged';
-import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
-import DataElements from 'constants/dataElement';
 import multiViewerHelper, { useMultiViewerSync } from 'helpers/multiViewerHelper';
+import { getLogicalMargins } from 'src/helpers/documentContainerHelper';
 
 const MIN_WIDTH = 350;
 
 const MultiViewer = () => {
-  const { core } = useCore();
   const { core: coreLeftViewer } = useCore(1);
   const { core: coreRightViewer } = useCore(2);
+  const isRTL = useIsRTL();
   const dispatch = useDispatch();
-  const store = useStore();
   const [initialSetup, setInitialSetup] = useState(false);
-  const oldHeaderItems = useRef({});
   const container = useRef();
   const container2 = useRef();
-  const [doc1Loaded, setDoc1Loaded] = useState(false);
-  const [doc2Loaded, setDoc2Loaded] = useState(false);
+  const doc1Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 1));
+  const doc2Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 2));
   const [width, setWidth] = useState(0);
   const [width2, setWidth2] = useState(0);
   const funcRefs = useRef({
@@ -61,172 +49,70 @@ const MultiViewer = () => {
           setWidth2(width2 + diff / 2);
         }
       }
-      const readyStateCurrent = readyState.current;
-      if (readyStateCurrent.viewer) {
-        funcRefs.current.updateScrollView();
-      }
+      funcRefs.current.updateScrollView();
     }, 100, { leading: true }),
   });
   const rootContainerRef = useRef();
-  const resizeOberver = useRef(new ResizeObserver(funcRefs.current.resizeObserverFunc));
-  const removeHandlersRef = useRef();
-  const readyDefaultState = { 1: false, 2: false, viewer: false, eventFired: false };
-  const readyState = useRef(readyDefaultState);
+  const resizeObserver = useRef(new ResizeObserver(funcRefs.current.resizeObserverFunc));
 
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
-  const isComparisonDisabled = useSelector(selectors.isComparisonDisabled);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const documentContainerWidth = useSelector(selectors.getDocumentContainerWidth);
   const documentContentContainerWidthStyle = useSelector(selectors.getDocumentContentContainerWidthStyle);
   const zoom = useSelector((state) => selectors.getZoom(state, 1));
   const zoom2 = useSelector((state) => selectors.getZoom(state, 2));
-  const activeToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
-  const activeToolName = useSelector(selectors.getActiveToolName);
   const documentContainerLeftMargin = useSelector(selectors.getDocumentContainerLeftMargin);
-  const isShowComparisonButtonEnabled = useSelector(selectors.getIsShowComparisonButtonEnabled);
+  const documentContainerRightMargin = useSelector(selectors.getDocumentContainerRightMargin);
+  const { startMargin, endMargin } = getLogicalMargins(
+    isRTL,
+    documentContainerLeftMargin,
+    documentContainerRightMargin,
+  );
 
   useEffect(() => {
-    const setupMultiViewer = () => {
-      if (DISABLED_TOOL_GROUPS.includes(activeToolbarGroup)) {
-        dispatch(actions.setToolbarGroup('toolbarGroup-View', false));
-      }
-      for (const keyWord of DISABLED_TOOLS_KEYWORDS) {
-        if (activeToolName.match(keyWord)) {
-          core.setToolMode(window.Core.Tools.ToolNames.EDIT);
-        }
-      }
-      const isDoc1Loaded = !!coreLeftViewer.getDocumentViewer().getDocument();
-      setDoc1Loaded(isDoc1Loaded);
-      addDocumentViewer(2);
-      const newDocViewer = coreRightViewer.getDocumentViewer();
-      setupOpenURLHandler(newDocViewer, store);
-
-      syncDocumentViewers(1, 2);
-      const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
-      removeHandlersRef.current = removeEventHandlers;
-      addEventHandlers();
+    const setup = () => {
+      setInitialSetup(true);
       const width = rootContainerRef.current.clientWidth;
       setWidth(width / 2);
       setWidth2(width / 2);
-      resizeOberver.current.observe(rootContainerRef.current);
-      !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems();
-      setInitialSetup(true);
-      onReady('viewer');
-      dispatch(actions.setIsMultiViewerReady(true));
+      resizeObserver.current.observe(rootContainerRef.current);
     };
-    const cleanUpMultiViewer = () => {
-      dispatch(actions.setIsMultiViewerReady(false));
+    const cleanUp = () => {
       stopSyncing();
       setInitialSetup(false);
-      if (activeDocumentViewerKey === 2) {
-        setActiveDocumentViewerKey(1);
-      }
-      setDoc2Loaded(false);
-      removeHandlersRef.current();
-      removeDocumentViewer(2);
-      coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
-      resizeOberver.current.disconnect();
-      !isComparisonDisabled && resetHeaderItems();
-      readyState.current = readyDefaultState;
-      dispatch(actions.closeElement('comparePanel'));
-    };
-    const addHeaderItems = () => {
-      const headerItems = selectors.getDefaultHeaderItems(store.getState());
-      const zoomOverlay = headerItems.find((item) => item.dataElement === DataElements.ZOOM_OVERLAY_BUTTON);
-      const index = headerItems.indexOf(zoomOverlay);
-      if (index !== -1) {
-        oldHeaderItems.current = {
-          zoomOverlay,
-          index,
-        };
-        headerItems.splice(index, 1, {
-          type: 'customElement',
-          render: () => <ComparisonButton/>,
-          dataElement: 'comparisonToggleButton',
-          hiddenOnMobileDevices: true,
-        });
-      }
-      if (!headerItems.find((item) => item.dataElement === 'comparePanelToggleButton')) {
-        headerItems.splice(headerItems.length - 3, 0, {
-          dataElement: 'comparePanelToggleButton',
-          hiddenOnMobileDevices: true,
-          img: 'icon-header-compare',
-          type: 'toggleElementButton',
-          element: 'comparePanel',
-          title: 'component.comparePanel',
-          hidden: ['small-mobile'],
-        });
-      }
-      dispatch(actions.setHeaderItems('default', [...headerItems]));
-      dispatch(actions.disableElement('comparePanelToggleButton'));
-    };
-    const resetHeaderItems = () => {
-      const headerItems = selectors.getDefaultHeaderItems(store.getState());
-      const index = oldHeaderItems.current.index;
-      if (index && index !== -1) {
-        headerItems.splice(index, 1, oldHeaderItems.current.zoomOverlay);
-        oldHeaderItems.current = {
-          index: null,
-          zoomOverlay: null,
-        };
-      }
-      const indexOfButton = headerItems.indexOf(headerItems.find((item) => item?.dataElement === 'comparePanelToggleButton'));
-      indexOfButton !== -1 && headerItems.splice(indexOfButton, 1);
-      dispatch(actions.setHeaderItems('default', [...headerItems]));
+      resizeObserver.current.disconnect();
     };
     const removeListeners = () => {
-      coreLeftViewer.removeEventListener('documentLoaded', onLoaded1);
       coreLeftViewer.removeEventListener('documentUnloaded', unLoaded1);
       const hasSecondViewer = !!coreRightViewer.getDocumentViewer();
       if (hasSecondViewer) {
-        coreRightViewer.removeEventListener('documentLoaded', onLoaded2);
         coreRightViewer.removeEventListener('documentUnloaded', unLoaded2);
       }
     };
-    const addEventListeners = () => {
-      coreLeftViewer.addEventListener('documentLoaded', onLoaded1, undefined);
-      coreLeftViewer.addEventListener('documentUnloaded', unLoaded1, undefined);
-      coreRightViewer.addEventListener('documentUnloaded', unLoaded2, undefined);
-      coreRightViewer.addEventListener('documentLoaded', onLoaded2, undefined);
-    };
-    const onLoaded1 = () => {
-      setDoc1Loaded(true);
-    };
-    const onLoaded2 = () => {
-      setDoc2Loaded(true);
-    };
     const unLoaded1 = () => {
       stopSyncing();
-      setDoc1Loaded(false);
       multiViewerHelper.matchedPages = null;
       coreRightViewer.deleteAnnotations(coreRightViewer.getSemanticDiffAnnotations(), { force: true });
     };
     const unLoaded2 = () => {
       stopSyncing();
-      setDoc2Loaded(false);
       multiViewerHelper.matchedPages = null;
       coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
     };
     if (!isMultiViewerMode) {
       if (initialSetup) {
-        cleanUpMultiViewer();
+        cleanUp();
         return removeListeners;
       }
       return;
     }
     if (!initialSetup) {
-      setupMultiViewer();
+      setup();
+      coreLeftViewer.addEventListener('documentUnloaded', unLoaded1, undefined);
+      coreRightViewer.addEventListener('documentUnloaded', unLoaded2, undefined);
     }
-
-    if (isMultiViewerMode && isShowComparisonButtonEnabled && initialSetup) {
-      addHeaderItems();
-    } else if (initialSetup) {
-      resetHeaderItems();
-    }
-
-    addEventListeners();
     return removeListeners;
-  }, [isMultiViewerMode, isShowComparisonButtonEnabled]);
+  }, [isMultiViewerMode]);
 
   useEffect(() => {
     if (isMultiViewerMode && initialSetup) {
@@ -234,11 +120,6 @@ const MultiViewer = () => {
     }
   }, [width, width2]);
 
-  useEffect(() => {
-    if (initialSetup && isMultiViewerMode) {
-      onReady('viewer');
-    }
-  }, [initialSetup]);
   const setActiveDocumentViewerKey = (documentViewerKey) => {
     const previousDocumentViewerKey = activeDocumentViewerKey;
     dispatch(actions.setActiveDocumentViewerKey(documentViewerKey));
@@ -256,25 +137,15 @@ const MultiViewer = () => {
 
   const { stopSyncing, isSyncing } = useMultiViewerSync(container, container2);
 
-  const onReady = (key) => {
-    readyState.current[key] = true;
-    if (readyState.current[1] && readyState.current[2] && readyState.current.viewer && !readyState.current.eventFired) {
-      readyState.current.eventFired = true;
-      // Fix for event not firing on some devices
-      setTimeout(() => {
-        fireEvent(Events.MULTI_VIEWER_READY);
-      }, 300);
-    }
-  };
-
   return (
     <div className={classNames('MultiViewer', { hidden: !isMultiViewerMode })} style={{
       width: documentContentContainerWidthStyle,
-      marginLeft: `${documentContainerLeftMargin}px`,
+      marginInlineStart: `${startMargin}px`,
+      marginInlineEnd: `${endMargin}px`,
     }}
     ref={rootContainerRef}
     >
-      {isMultiViewerMode && initialSetup && <>
+      {isMultiViewerMode && <>
         <div className={classNames('CompareContainer', { active: activeDocumentViewerKey === 1 })} id="container1"
           style={{ padding: !doc1Loaded ? '16px' : '0', width }}
           onPointerDownCapture={setFirstViewerActive}
@@ -286,7 +157,7 @@ const MultiViewer = () => {
         >
           {!doc1Loaded && <DropArea documentViewerKey={1} />}
           <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing}/>
-          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} onReady={onReady} docLoaded={doc1Loaded}/>
+          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} docLoaded={doc1Loaded}/>
           <div className={'custom-container-1'} style={{ width: '100%' }}/>
           <div style={{ width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
         </div>
@@ -312,7 +183,7 @@ const MultiViewer = () => {
         >
           {!doc2Loaded && <DropArea documentViewerKey={2} />}
           <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
-          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady} docLoaded={doc2Loaded}/>
+          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} docLoaded={doc2Loaded}/>
           <div className={'custom-container-2'} style={{ width: '100%' }}/>
           <div style={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
         </div>

@@ -3,6 +3,7 @@ import NoteContext from '../Note/Context';
 import NoteTextarea from './NoteTextarea';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/NotesPanel/NoteTextarea',
@@ -76,4 +77,4 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;

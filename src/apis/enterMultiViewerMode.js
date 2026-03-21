@@ -11,6 +11,7 @@ WebViewer(...)
 import actions from 'actions';
 import selectors from 'selectors';
 import { shouldEndAccessibleReadingOrderMode } from 'helpers/accessibility';
+import { setupMultiViewer } from 'helpers/multiViewerHelper';
 
 export default (store) => () => {
   shouldEndAccessibleReadingOrderMode();
@@ -23,5 +24,5 @@ export default (store) => () => {
     store.dispatch(actions.setActiveTab(0));
   }
 
-  store.dispatch(actions.setIsMultiViewerMode(true));
+  setupMultiViewer(store);
 };

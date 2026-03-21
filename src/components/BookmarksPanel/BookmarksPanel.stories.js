@@ -10,24 +10,27 @@ import { menuItems } from 'helpers/outlineFlyoutHelper';
 import { expect, within } from 'storybook/test';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/BookmarksPanel',
   component: BookmarksPanel,
 };
 
-const pageLabels = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-];
+const pageLabels = {
+  1: [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+  ],
+};
 
 export const Basic = () => {
   const initialState = {
@@ -35,7 +38,7 @@ export const Basic = () => {
       disabledElements: {},
       customElementOverrides: {},
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeCustomRibbon: 'toolbarGroup-Annotate',
       flyoutMap: {
         'bookmarkFlyout-outlinePath': {
@@ -51,8 +54,10 @@ export const Basic = () => {
     lastActiveToolForRibbon: {},
     document: {
       bookmarks: {
-        0: 'B1',
-        1: 'B2',
+        1: {
+          0: 'B1',
+          1: 'B2',
+        }
       }
     },
     featureFlags: {
@@ -71,7 +76,7 @@ export const Basic = () => {
   );
 };
 
-Basic.parameters = window.storybook.disableRtlMode;
+Basic.parameters = disableRtlModeParameters;
 
 export const NoBookmarks = () => {
   const initialState = {
@@ -80,7 +85,7 @@ export const NoBookmarks = () => {
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-View',
     },
@@ -103,7 +108,7 @@ export const NoBookmarks = () => {
   );
 };
 
-NoBookmarks.parameters = window.storybook.disableRtlMode;
+NoBookmarks.parameters = disableRtlModeParameters;
 
 // Custom panels
 const DEFAULT_NOTES_PANEL_WIDTH = 293;
@@ -134,7 +139,7 @@ export const CustomBasic = (args, context) => {
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
       activeToolName: 'AnnotationCreateTextHighlight',
@@ -143,8 +148,10 @@ export const CustomBasic = (args, context) => {
     document: {
       ...initialState.document,
       bookmarks: {
-        0: 'B1',
-        1: 'B2',
+        1: {
+          0: 'B1',
+          1: 'B2',
+        }
       }
     },
     featureFlags: {
@@ -182,7 +189,7 @@ export const CustomBasicNoBookmarks = (args, context) => {
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeCustomRibbon: 'toolbarGroup-View',
       activeTheme: context.globals.theme,
     },
@@ -227,15 +234,17 @@ export const CustomRightSide = (args, context) => {
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeCustomRibbon: 'toolbarGroup-View',
       activeTheme: context.globals.theme,
     },
     document: {
       ...initialState.document,
       bookmarks: {
-        0: 'B1',
-        1: 'B2',
+        1: {
+          0: 'B1',
+          1: 'B2',
+        }
       }
     },
     featureFlags: {
@@ -248,7 +257,7 @@ export const CustomRightSide = (args, context) => {
 
 CustomRightSide.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const CustomRightSideNoBookmarks = (args, context) => {
@@ -277,7 +286,7 @@ export const CustomRightSideNoBookmarks = (args, context) => {
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
-      currentPage: 3,
+      currentPage: { 1: 3 },
       activeCustomRibbon: 'toolbarGroup-View',
       activeToolName: 'AnnotationCreateTextHighlight',
       activeTheme: context.globals.theme,
@@ -296,7 +305,7 @@ export const CustomRightSideNoBookmarks = (args, context) => {
 
 CustomRightSideNoBookmarks.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export const ViewOnlyMode = createTemplate({
@@ -307,8 +316,10 @@ export const ViewOnlyMode = createTemplate({
   },
   documentRedux: {
     bookmarks: {
-      0: 'B1',
-      1: 'B2',
+      1: {
+        0: 'B1',
+        1: 'B2',
+      }
     }
   }
 });
@@ -342,5 +353,5 @@ ViewOnlyMode.play = async ({ canvasElement }) => {
 
 ViewOnlyMode.parameters = {
   layout: 'fullscreen',
-  ...window.storybook.disableRtlMode
+  ...disableRtlModeParameters
 };

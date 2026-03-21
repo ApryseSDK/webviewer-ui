@@ -354,7 +354,11 @@
     "listEmptyValue": "שדה אחד או יותר מכילים ערך ריק.",
     "listDuplicateValue": "שדות מרובים מכילים את הערכים הבאים:",
     "networkError": "משהו השתבש בעת טעינת רכיב זה. אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
-    "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף."
+    "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
+    "renderErrors": {
+      "error": "משהו השתבש כאן.",
+      "refreshPanel": "אתה יכול להמשיך לעבוד. נסה לפתוח מחדש את הפאנל."
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "סדר מיון רשימה",
       "position": "מצב",
+      "linePosition": "מַצָב",
       "time": "זמן",
       "status": "סטטוס",
       "author": "מחבר",
@@ -483,6 +488,7 @@
       "markForRedaction": "סמן להסתרה"
     },
     "searchPanel": {
+      "searchResults": "תוצאות חיפוש",
       "caseSensitive": "תלוי רישיות",
       "wholeWordOnly": "מילה שלמה",
       "wildcard": "תו כללי",
@@ -1316,6 +1322,7 @@
     "bold": "מודגש",
     "italic": "נטוי",
     "underline": "קו תחתי",
+    "strikeout": "סטרייקאאוט",
     "textColor": "צבע הטקסט",
     "leftAlign": "יישור שמאלה",
     "centerAlign": "יישור מרכז",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "הצג ללא הצעות",
     "notSupportedOnMobile": "עריכה ב-Office אינה נתמכת במכשירים ניידים.",
     "previewAllChanges": "תצוגה מקדימה של כל השינויים",
+    "changes": "שינויים",
+    "comments": "הערות",
+    "commentsAndChangesTabs": "כרטיסיות הערות ושינויים",
     "accept": "קבל",
     "reject": "דחה",
     "pastingTitle": "הדבקה אינה זמינה",

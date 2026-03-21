@@ -8,32 +8,27 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import Panel from 'components/Panel';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/LayersPanel',
   component: LayersPanel,
 };
 
-const layers = [
-  {
-    'name': 'Layer 1',
-    'id': 'layer1',
-    'children': [
-      {
-        'name': 'SubLayer 1',
-        'id': 'sublayer1',
-      },
-    ],
-  },
-  {
-    'name': 'Layer 2',
-    'id': 'layer2',
-  },
-  {
-    'name': 'Layer 3',
-    'id': 'layer3',
-  },
-];
+const layers = {
+  1: [
+    {
+      'name': 'Layer 1',
+      'id': 'layer1',
+      'children': [
+        { 'name': 'SubLayer 1', 'id': 'sublayer1', },
+      ],
+    },
+    { 'name': 'Layer 2', 'id': 'layer2', },
+    { 'name': 'Layer 3', 'id': 'layer3', },
+  ],
+  2: [],
+};
 
 export function Basic(args, context) {
   const { addonRtl } = context.globals;
@@ -220,5 +215,5 @@ export const Loading = () => {
   </Provider>;
 };
 
-Loading.parameters = window.storybook.disableRtlMode;
+Loading.parameters = disableRtlModeParameters;
 

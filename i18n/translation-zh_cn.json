@@ -354,7 +354,11 @@
     "listEmptyValue": "一个或多个字段具有空值。",
     "listDuplicateValue": "多个字段具有以下值：",
     "networkError": "加载此组件时出现错误。请检查您的网络连接并刷新页面。",
-    "refreshPage": "请检查您的网络连接并刷新页面。"
+    "refreshPage": "请检查您的网络连接并刷新页面。",
+    "renderErrors": {
+      "error": "这里出问题了。",
+      "refreshPanel": "您可以继续工作。请尝试重新打开面板。"
+    }
   },
   "option": {
     "type": {
@@ -385,6 +389,7 @@
     "notesOrder": {
       "dropdownLabel": "排序订单清单",
       "position": "位置",
+      "linePosition": "位置",
       "time": "时间",
       "status": "状态",
       "author": "作者",
@@ -483,6 +488,7 @@
       "markForRedaction": "标记为编辑"
     },
     "searchPanel": {
+      "searchResults": "搜索结果",
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语",
       "wildcard": "通配符",
@@ -1316,6 +1322,7 @@
     "bold": "大胆的",
     "italic": "斜体",
     "underline": "强调",
+    "strikeout": "删除线",
     "textColor": "文字颜色",
     "leftAlign": "左对齐",
     "centerAlign": "居中对齐",
@@ -1350,6 +1357,9 @@
     "viewOnlyDescription": "不带建议查看",
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。",
     "previewAllChanges": "预览所有更改",
+    "changes": "变化",
+    "comments": "评论",
+    "commentsAndChangesTabs": "评论和更改选项卡",
     "accept": "接受",
     "reject": "拒绝",
     "pastingTitle": "无法粘贴",

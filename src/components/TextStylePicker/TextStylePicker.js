@@ -310,7 +310,7 @@ const TextStylePicker = ({
               <Button
                 dataElement={currentConfig.strikeout.dataElement}
                 onClick={currentConfig.strikeout.onClick}
-                img="icon-tool-text-manipulation-strikethrough"
+                img="icon-text-strikeout"
                 title="option.richText.strikeout"
                 isActive={currentConfig.strikeout.isActive}
                 disabled={isDisabled}

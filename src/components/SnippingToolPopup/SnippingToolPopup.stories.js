@@ -7,6 +7,7 @@ import initialState from 'src/redux/initialState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { userEvent, within, expect } from 'storybook/test';
 import { getTranslatedText } from 'helpers/testTranslationHelper';
+import { mobileStoryParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/SnippingToolPopup',
@@ -68,7 +69,7 @@ export function BasicMobile() {
   );
 }
 
-BasicMobile.parameters = window.storybook?.MobileParameters;
+BasicMobile.parameters = mobileStoryParameters;
 
 export function PopupInApp(args, context) {
   const { addonRtl } = context.globals;

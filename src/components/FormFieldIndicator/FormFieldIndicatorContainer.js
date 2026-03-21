@@ -30,7 +30,7 @@ const FormFieldIndicatorContainer = () => {
   ]);
   const formFieldAnnotationsList = useOnFormFieldsChanged();
   const [indicators, setIndicators] = useState([]);
-
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const getIndicators = () => {
     if (!core.getDocument()) {
       return [];
@@ -97,7 +97,7 @@ const FormFieldIndicatorContainer = () => {
     return <FormFieldIndicator key={`indicator_${annotation.Id}`} annotation={annotation} parameters={payload} />;
   };
 
-  if (isOpen && !isDisabled) {
+  if (isOpen && !isDisabled && !isMultiViewerMode) {
     return (
       <>
         {createPortal(

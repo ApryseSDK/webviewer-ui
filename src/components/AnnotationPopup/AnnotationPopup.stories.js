@@ -6,6 +6,7 @@ import getAnnotationStyles from 'src/helpers/getAnnotationStyles';
 import core from 'core';
 import { BASIC_PALETTE } from 'constants/commonColors';
 import initialState from 'src/redux/initialState';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 const noop = () => { };
 
 export default {
@@ -83,7 +84,7 @@ export const BasicVertical = () => {
   );
 };
 
-BasicVertical.parameters = window.storybook.disableRtlMode;
+BasicVertical.parameters = disableRtlModeParameters;
 
 export const IsReadOnlyMode = (props) => {
   core.getIsReadOnly = () => true;
@@ -101,7 +102,7 @@ export const IsReadOnlyMode = (props) => {
   );
 };
 
-IsReadOnlyMode.parameters = window.storybook.disableRtlMode;
+IsReadOnlyMode.parameters = disableRtlModeParameters;
 
 const readOnlySignatureAnnotationProps = {
   isOpen: true,
@@ -128,7 +129,7 @@ export const SignatureReadOnlyPopUp = () => {
   );
 };
 
-SignatureReadOnlyPopUp.parameters = window.storybook.disableRtlMode;
+SignatureReadOnlyPopUp.parameters = disableRtlModeParameters;
 
 const readOnlySignatureAnnotationPropsDisabled = {
   ...readOnlySignatureAnnotationProps,
@@ -143,7 +144,7 @@ export const SignatureReadOnlyDisablePopUp = () => {
   );
 };
 
-SignatureReadOnlyDisablePopUp.parameters = window.storybook.disableRtlMode;
+SignatureReadOnlyDisablePopUp.parameters = disableRtlModeParameters;
 
 export const CustomizedAnnotationPopup = () => {
   const stateWithMockedPopups = {
@@ -199,4 +200,4 @@ export const CustomizedAnnotationPopup = () => {
   );
 };
 
-CustomizedAnnotationPopup.parameters = window.storybook.disableRtlMode;
+CustomizedAnnotationPopup.parameters = disableRtlModeParameters;

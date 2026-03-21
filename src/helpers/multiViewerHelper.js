@@ -1,9 +1,24 @@
 import { useStore, useSelector } from 'react-redux';
-import { SYNC_MODES } from 'constants/multiViewerContants';
+import { SYNC_MODES, DISABLED_TOOL_GROUPS, DISABLED_TOOLS_KEYWORDS } from 'constants/multiViewerContants';
 import { zoomTo } from 'helpers/zoom';
+//eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import selectors from 'selectors';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  addDocumentViewer,
+  setupOpenURLHandler,
+  syncDocumentViewers,
+  removeDocumentViewer
+} from 'helpers/documentViewerHelper';
+import eventHandler from 'helpers/eventHandler';
+import actions from 'actions';
+import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
+import { createWrappedCore } from 'hooks/useCore/useCore';
+import DataElements from 'constants/dataElement';
+import ComparisonButton from 'components/MultiViewer/ComparisonButton';
+import defaultTool from 'constants/defaultTool';
 
 const multiViewerHelper = {
   matchedPages: null,
@@ -263,4 +278,135 @@ export const useMultiViewerSync = (container, container2) => {
     stopSyncing,
     isSyncing,
   };
+};
+
+
+let removeHandlers;
+let isSetup;
+
+export const setupMultiViewer = (store) => {
+  if (isSetup) {
+    return;
+  }
+  const { dispatch, getState } = store;
+  const state = getState();
+  const activeToolbarGroup = selectors.getCurrentToolbarGroup(state);
+  const activeToolName = selectors.getActiveToolName(state);
+  const isComparisonDisabled = selectors.isComparisonDisabled(state);
+  const isShowComparisonButtonEnabled = selectors.getIsShowComparisonButtonEnabled(state);
+
+  if (DISABLED_TOOL_GROUPS.includes(activeToolbarGroup)) {
+    dispatch(actions.setToolbarGroup('toolbarGroup-View', false));
+  }
+  for (const keyWord of DISABLED_TOOLS_KEYWORDS) {
+    if (activeToolName.match(keyWord)) {
+      core.setToolMode(window.Core.Tools.ToolNames.EDIT);
+    }
+  }
+  addDocumentViewer(2);
+  const newDocViewer = core.getDocumentViewer(2);
+  setupOpenURLHandler(newDocViewer, store);
+
+  syncDocumentViewers(1, 2);
+  const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
+  removeHandlers = removeEventHandlers;
+  addEventHandlers();
+  !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems(store);
+  isSetup = true;
+
+  dispatch(actions.setIsMultiViewerMode(true));
+  dispatch(actions.setIsMultiViewerReady(true));
+  fireEvent(Events.MULTI_VIEWER_READY);
+};
+
+export const cleanUpMultiViewer = (store) => {
+  if (!isSetup) {
+    return;
+  }
+  const { dispatch, getState } = store;
+  const state = getState();
+  const isComparisonDisabled = selectors.isComparisonDisabled(state);
+  const coreLeftViewer = createWrappedCore(1);
+
+  dispatch(actions.setIsMultiViewerReady(false));
+  removeHandlers && removeHandlers();
+  removeHandlers = null;
+  dispatch(actions.setIsMultiViewerMode(false));
+  dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
+  core.setToolMode(defaultTool);
+  for (const documentViewerKey of documentViewerKeys) {
+    core.getFormFieldCreationManager(documentViewerKey).endFormFieldCreationMode();
+    if (documentViewerKey !== 1) {
+      removeDocumentViewer(documentViewerKey);
+      dispatch(actions.setPortfolio([], documentViewerKey));
+      dispatch(actions.setDocumentLoaded(false, documentViewerKey));
+      dispatch(actions.setTotalPages(0, documentViewerKey));
+      dispatch(actions.setZoom(1, documentViewerKey));
+    }
+  }
+  core.getContentEditManager().endContentEditMode();
+  dispatch(actions.setCompareAnnotationsMap({}));
+  coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
+  !isComparisonDisabled && resetHeaderItems(store);
+  isSetup = false;
+};
+
+// TODO: Remove the two legacy header functions below when legacy UI is removed
+let oldHeaderItems;
+export const addHeaderItems = (store) => {
+  const { dispatch, getState } = store;
+  if (selectors.getFeatureFlags(getState()).customizableUI) {
+    return;
+  }
+
+  const headerItems = selectors.getDefaultHeaderItems(getState());
+  const zoomOverlay = headerItems.find((item) => item.dataElement === DataElements.ZOOM_OVERLAY_BUTTON);
+  const index = headerItems.indexOf(zoomOverlay);
+  if (index !== -1) {
+    oldHeaderItems = {
+      zoomOverlay,
+      index,
+    };
+    headerItems.splice(index, 1, {
+      type: 'customElement',
+      render: () => <ComparisonButton/>,
+      dataElement: 'comparisonToggleButton',
+      hiddenOnMobileDevices: true,
+    });
+  }
+  if (!headerItems.find((item) => item.dataElement === 'comparePanelToggleButton')) {
+    headerItems.splice(headerItems.length - 3, 0, {
+      dataElement: 'comparePanelToggleButton',
+      hiddenOnMobileDevices: true,
+      img: 'icon-header-compare',
+      type: 'toggleElementButton',
+      element: 'comparePanel',
+      title: 'component.comparePanel',
+      hidden: ['small-mobile'],
+    });
+  }
+  dispatch(actions.setHeaderItems('default', [...headerItems]));
+  dispatch(actions.disableElement('comparePanelToggleButton'));
+};
+export const resetHeaderItems = (store) => {
+  if (!oldHeaderItems) {
+    return;
+  }
+  const { dispatch, getState } = store;
+  if (selectors.getFeatureFlags(getState()).customizableUI) {
+    return;
+  }
+
+  const headerItems = selectors.getDefaultHeaderItems(getState());
+  const index = oldHeaderItems.index;
+  if (index && index !== -1) {
+    headerItems.splice(index, 1, oldHeaderItems.zoomOverlay);
+    oldHeaderItems = {
+      index: null,
+      zoomOverlay: null,
+    };
+  }
+  const indexOfButton = headerItems.indexOf(headerItems.find((item) => item?.dataElement === 'comparePanelToggleButton'));
+  indexOfButton !== -1 && headerItems.splice(indexOfButton, 1);
+  dispatch(actions.setHeaderItems('default', [...headerItems]));
 };

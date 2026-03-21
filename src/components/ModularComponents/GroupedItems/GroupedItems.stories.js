@@ -19,6 +19,7 @@ import rootReducer from 'reducers/rootReducer';
 import actions from 'actions';
 import selectors from 'selectors';
 import { expect } from 'storybook/test';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/GroupedItems',
@@ -49,7 +50,7 @@ export const GroupWithFormBuilderTools = () => {
   );
 };
 
-GroupWithFormBuilderTools.parameters = window.storybook.disableRtlMode;
+GroupWithFormBuilderTools.parameters = disableRtlModeParameters;
 
 const items = [
   button1,
@@ -104,4 +105,4 @@ GroupShouldUpdateFlyout.play = async () => {
   await expect(getFlyoutItems().map((i) => i.dataElement)).toEqual([button5, button4, button3, button2, button1].map((i) => i.dataElement));
 };
 
-GroupShouldUpdateFlyout.parameters = window.storybook.disableRtlMode;
+GroupShouldUpdateFlyout.parameters = disableRtlModeParameters;

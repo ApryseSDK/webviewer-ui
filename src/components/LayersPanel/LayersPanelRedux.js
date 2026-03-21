@@ -14,12 +14,13 @@ function LayersPanelRedux(props) {
   const dispatch = useDispatch();
 
   const store = useStore();
-  const layers = useSelector(selectors.getLayers);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const layers = useSelector((state) => selectors.getLayers(state, activeDocumentViewerKey));
   const documentLoaded = useDocumentLoadState();
   const layersNotFetched = layers === null;
 
   function setLayers(updatedLayers) {
-    dispatch(actions.setLayers(updatedLayers));
+    dispatch(actions.setLayers(updatedLayers, activeDocumentViewerKey));
   }
 
   useEffect(() => {
@@ -27,13 +28,13 @@ function LayersPanelRedux(props) {
     const updateLayers = async () => {
       if (!doc.isWebViewerServerDocument()) {
         const newLayers = await doc.getLayersArray();
-        const currentLayers = selectors.getLayers(store.getState());
-        onLayersUpdated(newLayers, currentLayers, dispatch);
+        const currentLayers = selectors.getLayers(store.getState(), activeDocumentViewerKey);
+        onLayersUpdated(newLayers, currentLayers, dispatch, activeDocumentViewerKey);
       }
     };
     doc?.addEventListener('layersUpdated', updateLayers);
     return () => doc?.removeEventListener('layersUpdated', updateLayers);
-  }, [documentLoaded]);
+  }, [documentLoaded, core]);
 
   useEffect(() => {
     if (layersNotFetched && documentLoaded) {
@@ -41,15 +42,15 @@ function LayersPanelRedux(props) {
       if (!doc.isWebViewerServerDocument()) {
         doc.getLayersArray()?.then((layers) => {
           if (layers.length === 0) {
-            dispatch(actions.setLayers([]));
+            dispatch(actions.setLayers([], activeDocumentViewerKey));
             setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
           } else {
-            onLayersUpdated(layers, undefined, dispatch);
+            onLayersUpdated(layers, undefined, dispatch, activeDocumentViewerKey);
           }
         });
       }
     }
-  }, [layersNotFetched, documentLoaded]);
+  }, [layersNotFetched, documentLoaded, core]);
 
   useEffect(() => {
     const documentViewer = core.getDocumentViewer();
@@ -71,7 +72,7 @@ function LayersPanelRedux(props) {
         documentViewer.updateView();
       }
     }
-  }, [layers]);
+  }, [layers, core]);
 
   const reduxProps = {
     layers: layers || [],

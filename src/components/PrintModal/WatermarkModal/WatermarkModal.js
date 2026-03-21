@@ -75,6 +75,7 @@ const WATERMARK_API_LOCATIONS = {
 class WatermarkModal extends React.PureComponent {
   static propTypes = {
     isVisible: PropTypes.bool,
+    activeDocumentViewerKey: PropTypes.number.isRequired,
     pageIndexToView: PropTypes.number,
     watermarkLocations: PropTypes.object,
     modalClosed: PropTypes.func,
@@ -125,20 +126,20 @@ class WatermarkModal extends React.PureComponent {
         },
         async () => {
           // Store the pre-existing watermark (if any) before we overwrite it
-          this.preExistingWatermark = await core.getWatermark();
+          this.preExistingWatermark = await core.getWatermark(this.props.activeDocumentViewerKey);
           this.addWatermarks();
         },
       );
     } else {
       this.removeWatermarkCreatedByModal();
-      core.setWatermark(this.preExistingWatermark);
+      core.setWatermark(this.preExistingWatermark, this.props.activeDocumentViewerKey);
     }
   };
 
   addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
     const { t } = this.props;
-    core.setWatermark(watermarkOptions);
+    core.setWatermark(watermarkOptions, this.props.activeDocumentViewerKey, { skipRefresh: true });
 
     const pageHeight = core.getPageHeight(this.props.pageIndexToView + 1);
     const pageWidth = core.getPageWidth(this.props.pageIndexToView + 1);
@@ -149,7 +150,7 @@ class WatermarkModal extends React.PureComponent {
     const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
     const pageNumber = this.props.pageIndexToView + 1;
 
-    core.getDocument().loadCanvas({
+    core.getDocumentViewer(this.props.activeDocumentViewerKey).getDocument().loadCanvas({
       pageNumber: pageNumber,
       zoom: desiredZoom,
       drawComplete: (canvas) => {
@@ -195,7 +196,6 @@ class WatermarkModal extends React.PureComponent {
 
   createWatermarks = () => {
     const watermarks = {};
-
     Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
       const temp = this.constructWatermarkOption(
         this.state.locationSettings[key],
@@ -208,7 +208,7 @@ class WatermarkModal extends React.PureComponent {
 
   // eslint-disable-next-line class-methods-use-this
   removeWatermarkCreatedByModal = () => {
-    core.setWatermark({});
+    core.setWatermark({}, this.props.activeDocumentViewerKey, { skipRefresh: true });
   };
 
   closeModal = () => {

@@ -159,6 +159,11 @@ const defaultOfficeEditorModularComponents = {
     type: 'presetButton',
     buttonType: 'underlineButton'
   },
+  strikeoutButton: {
+    dataElement: 'strikeoutButton',
+    type: 'presetButton',
+    buttonType: 'strikeoutButton'
+  },
   officeEditorModeDropdown: {
     dataElement: 'officeEditorModeDropdown',
     type: 'officeEditorModeDropdown',
@@ -293,7 +298,7 @@ const defaultOfficeEditorModularComponents = {
       'officeEditorModeDropdown',
       'divider-0.3',
       'searchPanelToggle',
-      // 'commentPanelToggle',
+      'commentPanelToggle',
     ],
     type: 'groupedItems',
     grow: 0,
@@ -380,6 +385,7 @@ const defaultOfficeEditorModularComponents = {
       'boldButton',
       'italicButton',
       'underlineButton',
+      'strikeoutButton',
       'divider-0.3',
       'officeEditorColorPicker',
       'divider-0.4',

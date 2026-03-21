@@ -5,6 +5,7 @@ import { LIST_OPTIONS } from 'src/constants/officeEditor';
 import core from 'core';
 import ListToggleButton from './ListToggleButton';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/OfficeEditor/ListToggleButton',
@@ -36,14 +37,14 @@ export function InactiveOrderedListButton() {
   return prepareButtonStory(LIST_OPTIONS.Ordered);
 }
 
-InactiveOrderedListButton.parameters = window.storybook.disableRtlMode;
+InactiveOrderedListButton.parameters = disableRtlModeParameters;
 
 export function ActiveOrderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Ordered; // set active state
   return prepareButtonStory(LIST_OPTIONS.Ordered);
 }
 
-ActiveOrderedListButton.parameters = window.storybook.disableRtlMode;
+ActiveOrderedListButton.parameters = disableRtlModeParameters;
 
 export function InactiveOrderedListHover() {
   return prepareButtonStory(LIST_OPTIONS.Ordered);
@@ -51,7 +52,7 @@ export function InactiveOrderedListHover() {
 
 InactiveOrderedListHover.parameters = {
   pseudo: { hover: true },
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };
 
 export function InactiveUnorderedListButton() {
@@ -59,14 +60,14 @@ export function InactiveUnorderedListButton() {
   return prepareButtonStory(LIST_OPTIONS.Unordered);
 }
 
-InactiveUnorderedListButton.parameters = window.storybook.disableRtlMode;
+InactiveUnorderedListButton.parameters = disableRtlModeParameters;
 
 export function ActiveUnorderedListButton() {
   initialState.officeEditor.cursorProperties.paragraphProperties.listType = LIST_OPTIONS.Unordered; // set active state
   return prepareButtonStory(LIST_OPTIONS.Unordered);
 }
 
-ActiveUnorderedListButton.parameters = window.storybook.disableRtlMode;
+ActiveUnorderedListButton.parameters = disableRtlModeParameters;
 
 export function InactiveUnorderedListHover() {
   return prepareButtonStory(LIST_OPTIONS.Unordered);
@@ -74,5 +75,5 @@ export function InactiveUnorderedListHover() {
 
 InactiveUnorderedListHover.parameters = {
   pseudo: { hover: true },
-  ...window.storybook.disableRtlMode,
+  ...disableRtlModeParameters,
 };

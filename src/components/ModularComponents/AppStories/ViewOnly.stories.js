@@ -11,6 +11,7 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 import { defaultFlyoutMap } from 'src/redux/modularComponents';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'ModularComponents/ViewOnly',
@@ -232,7 +233,7 @@ ToolButtonsHeader.play = async ({ canvasElement }) => {
   const toolButtons = await canvas.findAllByRole('button');
   expect(toolButtons.length).toBe(3);
 };
-ToolButtonsHeader.parameters = window.storybook.disableRtlMode;
+ToolButtonsHeader.parameters = disableRtlModeParameters;
 
 const presetComponents = {};
 Object.values(PRESET_BUTTON_TYPES).forEach((presetType) => {
@@ -265,5 +266,5 @@ PresetButtonsHeader.play = async ({ canvasElement }) => {
   const presetButtons = await canvas.findAllByRole('button');
   expect(presetButtons.length).toBe(12); // Compare and Filepicker are disabled by default
 };
-PresetButtonsHeader.parameters = window.storybook.disableRtlMode;
+PresetButtonsHeader.parameters = disableRtlModeParameters;
 
