@@ -3,8 +3,8 @@ import { render, fireEvent, waitFor, configure, act } from '@testing-library/rea
 import MultiViewer from './MultiViewer';
 import * as multiViewerHelper from 'helpers/multiViewerHelper';
 import useCore from 'hooks/useCore';
+import actions from 'actions';
 import initialState from 'src/redux/initialState';
-import ThumbnailsPanel from '../ThumbnailsPanel';
 
 jest.mock('core');
 jest.mock('hooks/useCore');
@@ -183,6 +183,28 @@ describe('MultiViewer', () => {
         expect(header2).toBeInTheDocument();
       });
     });
+
+    it('should render sync buttons when both documents are loaded', async () => {
+      const { findAllByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: true,
+        doc2Loaded: true,
+      });
+
+      const syncButtons = await findAllByRole('button', { name: /sync/i });
+      expect(syncButtons).toHaveLength(2);
+    });
+
+    it('should not render sync buttons when one document is not loaded', async () => {
+      const { findAllByRole, queryByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: true,
+        doc2Loaded: false,
+      });
+
+      await findAllByRole('button', { name: /close document/i });
+      expect(queryByRole('button', { name: /sync/i })).not.toBeInTheDocument();
+    });
   });
 
   describe('Active Document Viewer', () => {
@@ -276,6 +298,7 @@ describe('MultiViewer', () => {
 
     it('should call stopSyncing when document is unloaded', async () => {
       const mockStopSyncing = jest.fn();
+      const setSyncViewerSpy = jest.spyOn(actions, 'setSyncViewer');
       multiViewerHelper.useMultiViewerSync.mockReturnValue({
         stopSyncing: mockStopSyncing,
         isSyncing: true,
@@ -295,6 +318,7 @@ describe('MultiViewer', () => {
       unloadedCallback();
 
       expect(mockStopSyncing).toHaveBeenCalled();
+      expect(setSyncViewerSpy).toHaveBeenCalledWith(null);
     });
 
     it('should delete semantic diff annotations when document is unloaded', async () => {

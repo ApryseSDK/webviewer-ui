@@ -28,6 +28,7 @@ const MultiViewer = () => {
   const container2 = useRef();
   const doc1Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 1));
   const doc2Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 2));
+  const canSync = doc1Loaded && doc2Loaded;
   const [width, setWidth] = useState(0);
   const [width2, setWidth2] = useState(0);
   const funcRefs = useRef({
@@ -90,11 +91,13 @@ const MultiViewer = () => {
       }
     };
     const unLoaded1 = () => {
+      dispatch(actions.setSyncViewer(null));
       stopSyncing();
       multiViewerHelper.matchedPages = null;
       coreRightViewer.deleteAnnotations(coreRightViewer.getSemanticDiffAnnotations(), { force: true });
     };
     const unLoaded2 = () => {
+      dispatch(actions.setSyncViewer(null));
       stopSyncing();
       multiViewerHelper.matchedPages = null;
       coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
@@ -156,7 +159,7 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setFirstViewerActive()}
         >
           {!doc1Loaded && <DropArea documentViewerKey={1} />}
-          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing}/>
+          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing} canSync={canSync}/>
           <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} docLoaded={doc1Loaded}/>
           <div className={'custom-container-1'} style={{ width: '100%' }}/>
           <div style={{ width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
@@ -182,7 +185,7 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setSecondViewerActive()}
         >
           {!doc2Loaded && <DropArea documentViewerKey={2} />}
-          <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
+          <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} canSync={canSync}/>
           <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} docLoaded={doc2Loaded}/>
           <div className={'custom-container-2'} style={{ width: '100%' }}/>
           <div style={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />

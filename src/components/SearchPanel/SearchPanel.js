@@ -58,15 +58,15 @@ function SearchPanel(props) {
     }
   }, [closeSearchPanel]);
 
-  const onClickResult = React.useCallback(function onClickResult(resultIndex, result, activeDocumentViewerKey) {
+  const onClickResult = React.useCallback(function onClickResult(resultIndex, result) {
     setActiveSearchResultIndex(resultIndex);
-    setActiveResult(result, activeDocumentViewerKey);
+    setActiveResult(result);
     if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
     }
 
     setNextResultValue(result);
-  }, [closeSearchPanel, isMobile]);
+  }, [closeSearchPanel, isMobile, setActiveResult, setActiveSearchResultIndex, isInDesktopOnlyMode, setNextResultValue]);
 
   const isSearchInProgress = useSelector((state) => selectors.isSearchInProgress(state));
 
@@ -150,7 +150,6 @@ function SearchPanel(props) {
         pageLabels={pageLabels}
         isProcessingSearchResults={isProcessingSearchResults}
         isSearchInProgress={isSearchInProgress}
-        activeDocumentViewerKey={activeDocumentViewerKey}
       />
     </DataElementWrapper>
   );

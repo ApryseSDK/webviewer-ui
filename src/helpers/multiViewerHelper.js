@@ -55,8 +55,11 @@ export const useMultiViewerSync = (container, container2) => {
   const customMultiViewerSyncHandler = useSelector(selectors.getCustomMultiViewerSyncHandler);
   const syncViewer = useSelector(selectors.getSyncViewer);
   const multiViewerSyncScrollMode = useSelector(selectors.getMultiViewerSyncScrollMode);
+  const doc1Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 1));
+  const doc2Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 2));
   const [isSyncing, setIsSyncing] = useState(false);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
+  const canSync = doc1Loaded && doc2Loaded;
 
   const shouldSkipSyncEvent = () => {
     const state = store.getState();
@@ -265,14 +268,26 @@ export const useMultiViewerSync = (container, container2) => {
   };
 
   useEffect(() => {
-    if (isMultiViewerMode) {
-      if (syncViewer && !isSyncing) {
-        startSyncing(syncViewer);
-      } else if (!syncViewer && isSyncing) {
+    if (!isMultiViewerMode) {
+      return;
+    }
+
+    if (!canSync) {
+      if (isSyncing) {
         stopSyncing();
       }
+      if (syncViewer) {
+        store.dispatch(actions.setSyncViewer(null));
+      }
+      return;
     }
-  }, [syncViewer]);
+
+    if (syncViewer && !isSyncing) {
+      startSyncing(syncViewer);
+    } else if (!syncViewer && isSyncing) {
+      stopSyncing();
+    }
+  }, [syncViewer, isMultiViewerMode, canSync, isSyncing]);
 
   return {
     stopSyncing,

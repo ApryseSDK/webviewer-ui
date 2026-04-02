@@ -62,30 +62,30 @@ function useSearch(activeDocumentViewerKey) {
     debouncedSearch(searchValue, { wholeWord, caseSensitive });
   }, [searchValue, wholeWord, caseSensitive]);
 
+  // Update search results on first mount and when active viewer changes
+  // If results already exist in core, use those
   useEffect(() => {
-    // First time useSearch is mounted we check if core has results
-    // and if it has, we make sure those are set. This will make sure if external search is done
-    // that the result will reflect on the UI those set in core
     const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
     const coreSearchResults = activeDocumentViewer.getPageSearchResults() || [];
+    setSearchResults(coreSearchResults);
     if (coreSearchResults.length > 0) {
-      const activeSearchResult = core.getActiveSearchResult();
-      if (activeSearchResult) {
-        const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
-          return core.isSearchResultEqual(searchResult, activeSearchResult);
-        });
-        setSearchResults(coreSearchResults);
-        if (newActiveSearchResultIndex >= 0) {
-          setActiveSearchResult(coreSearchResults[newActiveSearchResultIndex]);
-          setActiveSearchResultIndex(newActiveSearchResultIndex);
-        }
+      const activeSearchResult = activeDocumentViewer.getActiveSearchResult();
+      const newActiveSearchResultIndex = activeSearchResult ? coreSearchResults.findIndex((searchResult) => {
+        return core.isSearchResultEqual(searchResult, activeSearchResult);
+      }) : -1;
+      if (newActiveSearchResultIndex >= 0) {
+        setActiveSearchResult(coreSearchResults[newActiveSearchResultIndex]);
+        setActiveSearchResultIndex(newActiveSearchResultIndex);
       } else {
-        setSearchResults(coreSearchResults);
+        // No active search result, so default to first
         setActiveSearchResult(coreSearchResults[0]);
         setActiveSearchResultIndex(0);
       }
+    } else {
+      setActiveSearchResult(undefined);
+      setActiveSearchResultIndex(-1);
     }
-  }, []);
+  }, [activeDocumentViewerKey]);
 
   useEffect(() => {
     if (!isSpreadsheetEditorMode()) {

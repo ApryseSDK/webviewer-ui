@@ -23,8 +23,12 @@ describe('useSearch', () => {
   let mockDocumentViewer;
   let mockStore;
   let eventListeners;
+  let wrapper;
 
   beforeEach(() => {
+    wrapper = ({ children }) => (
+      <Provider store={mockStore}>{children}</Provider>
+    );
     eventListeners = {};
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(jest.fn());
@@ -98,15 +102,12 @@ describe('useSearch', () => {
   });
 
   afterEach(() => {
+    wrapper = null;
     jest.clearAllMocks();
   });
 
   describe('useSearch - searchResultsChanged event', () => {
     it('should call searchResultsChanged handler when documentViewer triggers searchResultsChanged event', () => {
-      const wrapper = ({ children }) => (
-        <Provider store={mockStore}>{children}</Provider>
-      );
-
       const { result } = renderHook(() => useSearch(1), { wrapper });
 
       expect(mockDocumentViewer.addEventListener).toHaveBeenCalledWith(
@@ -130,10 +131,6 @@ describe('useSearch', () => {
     });
 
     it('should clear activeSearchResult when empty results are triggered', () => {
-      const wrapper = ({ children }) => (
-        <Provider store={mockStore}>{children}</Provider>
-      );
-
       const { result } = renderHook(() => useSearch(1), { wrapper });
 
       act(() => {
@@ -154,10 +151,6 @@ describe('useSearch', () => {
     });
 
     it('should not re-register event listeners on re-render when dependencies are stable (core regression test)', () => {
-
-      const wrapper = ({ children }) => (
-        <Provider store={mockStore}>{children}</Provider>
-      );
 
       const { rerender } = renderHook(() => useSearch(1), { wrapper });
 
@@ -199,10 +192,6 @@ describe('useSearch', () => {
 
   describe('useSearch - refreshSpreadsheetLabelsAndSearch', () => {
     it('dispatches sheet labels and triggers search', () => {
-      const wrapper = ({ children }) => (
-        <Provider store={mockStore}>{children}</Provider>
-      );
-
       const { result } = renderHook(() => useSearch(1), { wrapper });
 
       act(() => {
@@ -224,10 +213,6 @@ describe('useSearch', () => {
         delete coreEventListeners[eventName];
       });
 
-      const wrapper = ({ children }) => (
-        <Provider store={mockStore}>{children}</Provider>
-      );
-
       renderHook(() => useSearch(1), { wrapper });
 
       actions.setPageLabels.mockClear();
@@ -244,4 +229,114 @@ describe('useSearch', () => {
     });
   });
 
+  describe('MultiViewer mode', () => {
+    const mockGetDocumentViewerWithResults = (mockResultsForViewer1 = [], mockResultsForViewer2 = []) => {
+      core.getDocumentViewer.mockImplementation((key) => {
+        if (key === 1) {
+          return {
+            ...mockDocumentViewer,
+            getPageSearchResults: jest.fn(() => mockResultsForViewer1),
+            getActiveSearchResult: jest.fn(() => mockResultsForViewer1?.[0]),
+          };
+        } else if (key === 2) {
+          return {
+            ...mockDocumentViewer,
+            getPageSearchResults: jest.fn(() => mockResultsForViewer2),
+            getActiveSearchResult: jest.fn(() => mockResultsForViewer2?.[0]),
+          };
+        }
+        return mockDocumentViewer;
+      });
+    };
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should update search results when active viewer changes and results length is 0', () => {
+      let activeKey = 1;
+      const mockResultsForViewer1 = [{ pageNum: 0, resultStr: 'abc', ambientStr: 'abc' }];
+      const mockResultsForViewer2 = [];
+      mockGetDocumentViewerWithResults(mockResultsForViewer1, mockResultsForViewer2);
+
+      const { result, rerender } = renderHook(() => useSearch(activeKey), { wrapper });
+
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(activeKey);
+      expect(result.current.searchResults).toEqual(mockResultsForViewer1);
+      expect(result.current.activeSearchResult).toBe(mockResultsForViewer1[0]);
+      expect(result.current.activeSearchResultIndex).toBe(0);
+
+      activeKey = 2;
+      rerender();
+
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(activeKey);
+      expect(result.current.searchResults).toEqual(mockResultsForViewer2);
+      expect(result.current.activeSearchResult).toBeUndefined();
+      expect(result.current.activeSearchResultIndex).toBe(-1);
+    });
+
+
+    it('should update search results when active viewer changes and results length is greater than 0', () => {
+      let activeKey = 1;
+      const mockResultsForViewer1 = [];
+      const mockResultsForViewer2 = [{ pageNum: 0, resultStr: 'def', ambientStr: 'def' }];
+      mockGetDocumentViewerWithResults(mockResultsForViewer1, mockResultsForViewer2);
+
+      const { result, rerender } = renderHook(() => useSearch(activeKey), { wrapper });
+
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(activeKey);
+      expect(result.current.searchResults).toEqual([]);
+      expect(result.current.activeSearchResult).toBeUndefined();
+      expect(result.current.activeSearchResultIndex).toBe(-1);
+
+      activeKey = 2;
+      rerender();
+
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(activeKey);
+      expect(result.current.searchResults).toEqual(mockResultsForViewer2);
+      expect(result.current.activeSearchResult).toEqual(mockResultsForViewer2[0]);
+      expect(result.current.activeSearchResultIndex).toBe(0);
+    });
+
+    it('should default to first result when active result from viewer is not found in its search results', () => {
+      let activeKey = 1;
+      const mockResultsForViewer1 = [{ pageNum: 0, resultStr: 'abc', ambientStr: 'abc' }];
+      const staleActiveResult = { pageNum: 5, resultStr: 'stale', ambientStr: 'stale' };
+      const mockResultsForViewer2 = [
+        { pageNum: 1, resultStr: 'def', ambientStr: 'def' },
+        { pageNum: 2, resultStr: 'ghi', ambientStr: 'ghi' },
+      ];
+
+      core.getDocumentViewer.mockImplementation((key) => {
+        if (key === 1) {
+          return {
+            ...mockDocumentViewer,
+            getPageSearchResults: jest.fn(() => mockResultsForViewer1),
+            getActiveSearchResult: jest.fn(() => mockResultsForViewer1[0]),
+          };
+        } else if (key === 2) {
+          return {
+            ...mockDocumentViewer,
+            getPageSearchResults: jest.fn(() => mockResultsForViewer2),
+            getActiveSearchResult: jest.fn(() => staleActiveResult),
+          };
+        }
+        return mockDocumentViewer;
+      });
+
+      const { result, rerender } = renderHook(() => useSearch(activeKey), { wrapper });
+
+      expect(result.current.searchResults).toEqual(mockResultsForViewer1);
+      expect(result.current.activeSearchResult).toBe(mockResultsForViewer1[0]);
+      expect(result.current.activeSearchResultIndex).toBe(0);
+
+      activeKey = 2;
+      rerender();
+
+      // Should fall back to first result since staleActiveResult is not in mockResultsForViewer2
+      expect(result.current.searchResults).toEqual(mockResultsForViewer2);
+      expect(result.current.activeSearchResult).toBe(mockResultsForViewer2[0]);
+      expect(result.current.activeSearchResultIndex).toBe(0);
+    });
+  });
 });

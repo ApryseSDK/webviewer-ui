@@ -46,14 +46,13 @@ const SearchResultListItemPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
   activeResultIndex: PropTypes.number.isRequired,
   onSearchResultClick: PropTypes.func,
-  activeDocumentViewerKey: PropTypes.number,
   title: PropTypes.string
 };
 
 function SearchResultListItem(props) {
   const [t] = useTranslation();
   const [customizableUI] = useSelector((state) => [state.featureFlags.customizableUI]);
-  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey, title, pageLabel, 'aria-posinset': ariaPosinset, 'aria-setsize': ariaSetsize } = props;
+  const { result, currentResultIndex, activeResultIndex, onSearchResultClick, title, pageLabel, 'aria-posinset': ariaPosinset, 'aria-setsize': ariaSetsize } = props;
   const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
   const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
   const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
@@ -79,7 +78,7 @@ function SearchResultListItem(props) {
       })}
       onClick={() => {
         if (onSearchResultClick) {
-          onSearchResultClick(currentResultIndex, result, activeDocumentViewerKey);
+          onSearchResultClick(currentResultIndex, result);
         }
       }}
       aria-current={currentResultIndex === activeResultIndex}
@@ -104,11 +103,10 @@ const SearchResultPropTypes = {
   t: PropTypes.func.isRequired,
   onClickResult: PropTypes.func,
   pageLabels: PropTypes.arrayOf(PropTypes.any),
-  activeDocumentViewerKey: PropTypes.number
 };
 
 function SearchResult(props) {
-  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults, isSearchInProgress, activeDocumentViewerKey } = props;
+  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults, isSearchInProgress } = props;
   const cellMeasureCache = useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
@@ -163,7 +161,6 @@ function SearchResult(props) {
               activeResultIndex={activeResultIndex}
               pageLabel={pageLabels[result.pageNum - 1]}
               onSearchResultClick={onClickResult}
-              activeDocumentViewerKey={activeDocumentViewerKey}
             />
           </div>
         )}
