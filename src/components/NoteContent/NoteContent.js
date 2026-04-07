@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -555,6 +555,23 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
     return () => debouncedSetContents.flush();
   }, [debouncedSetContents]);
 
+  // Always keep a ref to the latest setContents so the unmount cleanup can call it
+  const setContentsRef = useRef(setContents);
+  useLayoutEffect(() => {
+    setContentsRef.current = setContents;
+  });
+
+  const hasUnsavedEditsRef = useRef(false);
+
+  useLayoutEffect(() => {
+    return () => {
+      if (textareaRef.current && hasUnsavedEditsRef.current) {
+        debouncedSetContents.flush();
+        setContentsRef.current({ preventDefault: () => {}, type: 'blur' });
+      }
+    };
+  }, []);
+
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isAnyCustomPanelOpen || ((isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current)) {
@@ -666,6 +683,8 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
       core.drawAnnotationsFromList([annotation]);
     }
 
+    hasUnsavedEditsRef.current = false;
+
     if (e && e.type === 'blur') {
       if (textAreaValue !== '') {
         onTextAreaValueChange(undefined, annotation.Id);
@@ -699,6 +718,7 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
   const handleChange = (value) => {
     onTextAreaValueChange(value, annotation.Id);
     setSavedState(AnnotationSavedState.UNSAVED_EDITS);
+    hasUnsavedEditsRef.current = true;
 
     try {
       const storageKey = `annotation_draft_${annotation.Id}`;
