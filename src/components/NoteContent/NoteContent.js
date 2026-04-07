@@ -561,19 +561,11 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
     setContentsRef.current = setContents;
   });
 
-  // Track whether the user has made unsaved edits — used by the unmount cleanup
-  // to avoid triggering annotationChanged (and SET_CAN_UNDO/SET_CAN_REDO) on scroll
   const hasUnsavedEditsRef = useRef(false);
 
-  // Save annotation when ContentArea unmounts (panel closed, annotation deselected, etc.).
-  // handleBlur cannot fire here because the component unmounts before the browser dispatches
-  // the blur event (mousedown on PDF → Redux deselect → unmount → blur never fires).
-  // useLayoutEffect cleanup runs synchronously before DOM removal, so textareaRef is still valid.
-  // Only saves if the user actually typed something to avoid spurious undo/redo history entries.
   useLayoutEffect(() => {
     return () => {
       if (textareaRef.current && hasUnsavedEditsRef.current) {
-        console.log('ContentArea unmounting with unsaved edits — saving annotation');
         debouncedSetContents.flush();
         setContentsRef.current({ preventDefault: () => {}, type: 'blur' });
       }
@@ -702,7 +694,6 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
   };
 
   const handleBlur = (e) => {
-    console.log('handleBlur called with event:', e);
     debouncedSetContents.flush();
 
     setCurAnnotId(undefined);
