@@ -46,9 +46,11 @@ const RedactionSearchResult = (props) => {
           onChange={onChange}
         />
       </div>
-      <div style={{ paddingRight: '14px' }}>
-        <Icon glyph={icon} />
-      </div>
+      {icon && (
+        <div style={{ paddingRight: '14px' }}>
+          <Icon glyph={icon} />
+        </div>
+      )}
       <div className="redaction-search-result-info">
         {displayResult}
       </div>
