@@ -67,8 +67,7 @@ distanceMeasurementAnnot['Precision'] = 0.01;
 
 const freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
 
-const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
-widgetPlaceHolderAnnot.setCustomData('trn-form-field-type', 'TextFormField');
+const widgetPlaceHolderAnnot = new window.Core.Annotations.TextWidgetAnnotation();
 
 describe('AnnotationStylePopup component', () => {
   beforeEach(() => {
