@@ -130,7 +130,7 @@ describe('AnnotationStylePopup component', () => {
       style={getAnnotationStyles(widgetPlaceHolderAnnot)}
       closeElement={() => { }}
       properties={{}}
-      colorMapKey={mapAnnotationToKey(widgetPlaceHolderAnnot)}
+      colorMapKey="textField"
     />);
 
     container.querySelectorAll('.palette-options-button')[2].click();
