@@ -271,7 +271,7 @@ describe('FileSelectedPanel', () => {
       // Ensure all thumbnails are not checked
       thumbnails.forEach((thumb) => expect(thumb.checked).toBeFalsy());
       // And check the input was cleared
-      waitFor(() => expect(sourceDocInput).toHaveValue(''));
+      await waitFor(() => expect(sourceDocInput).toHaveValue(''));
     });
 
     it('renders an abbreviated filename correctly if filename longer than set threshold', async () => {

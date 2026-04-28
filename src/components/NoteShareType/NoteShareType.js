@@ -59,6 +59,11 @@ function NoteShareType(props) {
     }
   };
 
+  const preventEditorBlur = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   useOnClickOutside(wrapperRef, () => {
     onClose();
   });
@@ -85,7 +90,7 @@ function NoteShareType(props) {
       }}
       ref={wrapperRef}
     >
-      <button className="share-type-icon-button" onClick={togglePopup}>
+      <button className="share-type-icon-button" onMouseDown={preventEditorBlur} onClick={togglePopup}>
         <ShareTypeIcon shareType={shareType} label={annotationTooltip} />
       </button>
 

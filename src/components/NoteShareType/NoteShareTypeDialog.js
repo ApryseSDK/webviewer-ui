@@ -22,6 +22,10 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
   const [t] = useTranslation();
 
   const preventAutoClose = (e) => e.stopPropagation();
+  const preventEditorBlur = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   const sharePermissions = getSharePermissions();
 
@@ -36,7 +40,7 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
         }
       }}
     >
-      <div className="note-share-type-popup" onClick={preventAutoClose}>
+      <div className="note-share-type-popup" onMouseDown={preventEditorBlur} onClick={preventAutoClose}>
         {/* None */}
         {sharePermissions.includes('NONE') && (
           <DataElementWrapper
@@ -44,6 +48,7 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
             dataElement="notePopupStateAssessors"
             type="button"
             className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.NONE })}
+            onMouseDown={preventEditorBlur}
             onClick={() => onSelect(ShareTypes.NONE)}
           >
             <ShareTypeIcon shareType={ShareTypes.NONE} />
@@ -58,6 +63,7 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
             dataElement="notePopupStateParticipants"
             type="button"
             className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.PARTICIPANTS })}
+            onMouseDown={preventEditorBlur}
             onClick={() => onSelect(ShareTypes.PARTICIPANTS)}
           >
             <ShareTypeIcon shareType={ShareTypes.PARTICIPANTS} />
@@ -72,6 +78,7 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
             dataElement="notePopupStateAssessor"
             type="button"
             className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.ASSESSORS })}
+            onMouseDown={preventEditorBlur}
             onClick={() => onSelect(ShareTypes.ASSESSORS)}
           >
             <ShareTypeIcon shareType={ShareTypes.ASSESSORS} />
@@ -86,6 +93,7 @@ const NoteShareTypeDialog = forwardRef(({ onClose, onSelect, positionStyle, sele
             dataElement="notePopupStateAll"
             type="button"
             className={classNames('note-sharetype-option', { selected: selectedShareType === ShareTypes.ALL })}
+            onMouseDown={preventEditorBlur}
             onClick={() => onSelect(ShareTypes.ALL)}
           >
             <ShareTypeIcon shareType={ShareTypes.ALL} />
