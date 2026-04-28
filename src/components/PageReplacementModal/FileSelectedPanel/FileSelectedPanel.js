@@ -165,6 +165,7 @@ const FileSelectedPanel = React.forwardRef((
   return (
     <div className="fileSelectedPanel container" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
       <ModalWrapper
+        isOpen
         title={t('component.pageReplaceModalTitle')}
         closeButtonDataElement={'pageReplacementModalClose'}
         onCloseClick={onCloseHandler}
