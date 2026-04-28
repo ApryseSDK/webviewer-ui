@@ -68,6 +68,7 @@ const initialState = {
       panel: true,
     },
     currentLanguage: 'en',
+    activeTheme: 'light',
     panelWidths: {
       redactionPanel: 330,
       panel: 300,
