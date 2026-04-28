@@ -2,7 +2,7 @@ import React from 'react';
 import TabPanel from './TabPanel';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -192,11 +192,13 @@ describe('TabPanel', () => {
       screen.getByRole('button', { name: panel.name });
     }
   });
-  it('should render each panel when clicked', () => {
+  it('should render each panel when clicked', async () => {
     const { container } = render(<TabPanelWithRedux initialState={mockInitialState}/>);
     for (const panel of panelsToCheck) {
       const button = screen.getByRole('button', { name: panel.name });
-      button.click();
+      await act(async () => {
+        button.click();
+      });
       expect(container.querySelector(`.${panel.className}`)).toBeInTheDocument();
     }
   });
