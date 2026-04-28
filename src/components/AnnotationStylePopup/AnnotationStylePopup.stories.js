@@ -161,5 +161,5 @@ WidgetPlaceHolder.args = {
   properties: {
     StrokeStyle: 'solid'
   },
-  colorMapKey: mapAnnotationToKey(widgetPlaceHolderAnnot),
+  colorMapKey: 'textField',
 };
