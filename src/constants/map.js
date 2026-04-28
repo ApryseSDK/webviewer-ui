@@ -685,8 +685,7 @@ const map = {
       'TextFormFieldCreateTool3',
       'TextFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'TextFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextWidgetAnnotation
   },
   [annotationMapKeys.SIGNATURE_FORM_FIELD]: {
     icon: 'icon-form-field-signature',
@@ -700,8 +699,7 @@ const map = {
       'SignatureFormFieldCreateTool3',
       'SignatureFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'SignatureFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation
   },
   [annotationMapKeys.CHECK_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-checkbox',
@@ -710,8 +708,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['CheckBoxFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'CheckBoxFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.CheckButtonWidgetAnnotation
   },
   [annotationMapKeys.RADIO_BUTTON_FORM_FIELD]: {
     icon: 'icon-form-field-radiobutton',
@@ -720,8 +717,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['RadioButtonFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'RadioButtonFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RadioButtonWidgetAnnotation
   },
   [annotationMapKeys.LIST_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-listbox',
@@ -735,8 +731,7 @@ const map = {
       'ListBoxFormFieldCreateTool3',
       'ListBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'ListBoxFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ListWidgetAnnotation
   },
   [annotationMapKeys.COMBO_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-combobox',
@@ -750,8 +745,7 @@ const map = {
       'ComboBoxFormFieldCreateTool3',
       'ComboBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
-      annotation.getCustomData('trn-form-field-type') === 'ComboBoxFormField'
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ChoiceWidgetAnnotation
   },
   [annotationMapKeys.TRACKED_CHANGE]: {
     icon: 'ic-edit-page',

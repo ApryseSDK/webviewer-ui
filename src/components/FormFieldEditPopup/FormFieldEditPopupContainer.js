@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import core from 'core';
 import FormFieldEditPopup from './FormFieldEditPopup';
 import FormFieldEditSignaturePopup from './FormFieldEditSignaturePopup';
+import getFormFieldAnnotationType from 'helpers/getFormFieldAnnotationType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -36,15 +37,7 @@ function FormFieldEditPopupContainer({ annotation }) {
   const mountedRef = useRef(true);
   const sixtyFramesPerSecondIncrement = 16;
 
-  const { RectangleAnnotation, EllipseAnnotation } = window.Core.Annotations;
-
-  function validateEditingPlaceHolder(annot) {
-    return (
-      (annot instanceof RectangleAnnotation || annot instanceof EllipseAnnotation) &&
-        !!annot.getCustomData(formFieldCreationManager.getFieldLabels().WIDGET_ID)
-    );
-  }
-  const isEditingPlaceHolder = validateEditingPlaceHolder(annotation);
+  const isEditingPlaceHolder = false;
 
   const [isOpen] = useSelector(
     (state) => [selectors.isElementOpen(state, DataElements.FORM_FIELD_EDIT_POPUP)],
@@ -81,18 +74,15 @@ function FormFieldEditPopupContainer({ annotation }) {
 
   function handleFieldConfirmation() {
     const ToolNames = window.Core.Tools.ToolNames;
-    const fieldName = formFieldCreationManager.getFieldName(annotation);
+    const fieldName = annotation.getFieldName?.() ?? '';
     const existingField = core.getAnnotationManager().getFieldManager().getField(fieldName);
-    const widget = formFieldCreationManager.getWidgetFromPlaceholder(annotation);
     const isCopying = annotation.getCustomData(fieldLabels.IS_DATA_PLACEHOLDER_COPY) === 'true';
-    const isCreatingRadioFieldWithExistingGroup = existingField && annotation.ToolName === ToolNames.RADIO_FORM_FIELD && !validateEditingPlaceHolder(annotation);
+    const isCreatingRadioFieldWithExistingGroup = existingField && annotation.ToolName === ToolNames.RADIO_FORM_FIELD;
 
-    if ((!existingField || isCreatingRadioFieldWithExistingGroup || isCopying)) {
-      formFieldCreationManager.createFormField(annotation);
-    } else if (widget) {
-      formFieldCreationManager.applyChangesToFormField(widget, annotation);
+    if (!existingField || isCreatingRadioFieldWithExistingGroup || isCopying) {
+      formFieldCreationManager.createFormField?.(annotation);
     } else {
-      formFieldCreationManager.createFormField(annotation);
+      formFieldCreationManager.applyChangesToFormField?.(null, annotation);
     }
   }
 
@@ -119,10 +109,10 @@ function FormFieldEditPopupContainer({ annotation }) {
   // but not yet added as fields
   useEffect(() => {
     const radioButtons = core.getAnnotationsList().filter((annotation) => {
-      return annotation.isFormFieldPlaceholder() && annotation.getFormFieldPlaceholderType() === 'RadioButtonFormField';
+      return annotation.isWidget?.() && annotation instanceof window.Core.Annotations.RadioButtonWidgetAnnotation;
     });
     const radioGroups = radioButtons.map((radioButton) => {
-      return formFieldCreationManager.getFieldName(radioButton);
+      return radioButton.getFieldName?.() ?? '';
     });
     const dedupedRadioGroups = [...(new Set([...radioGroups]))];
     setRadioButtonGroups(dedupedRadioGroups);
@@ -155,12 +145,13 @@ function FormFieldEditPopupContainer({ annotation }) {
   useLayoutEffect(() => {
     if (isOpen && annotation) {
       setPopupPosition();
-      setFieldName(formFieldCreationManager.getFieldName(annotation));
-      setFieldValue(formFieldCreationManager.getFieldValue(annotation));
-      setReadOnly(formFieldCreationManager.getFieldFlag(annotation, fieldLabels.READ_ONLY));
-      setMultiLine(formFieldCreationManager.getFieldFlag(annotation, fieldLabels.MULTI_LINE));
-      setIsRequired(formFieldCreationManager.getFieldFlag(annotation, fieldLabels.REQUIRED));
-      setIsMultiSelect(formFieldCreationManager.getFieldFlag(annotation, fieldLabels.MULTI_SELECT));
+      const flags = annotation.getFieldFlags?.() ?? {};
+      setFieldName(annotation.getFieldName?.() ?? '');
+      setFieldValue(annotation.getValue?.() ?? '');
+      setReadOnly(flags.ReadOnly ?? false);
+      setMultiLine(flags.Multiline ?? false);
+      setIsRequired(flags.Required ?? false);
+      setIsMultiSelect(flags.MultiSelect ?? false);
       const dedupedRadioGroups = [...(new Set([...radioButtonGroups, ...formFieldCreationManager.getRadioButtonGroups()]))];
       setRadioButtonGroups(dedupedRadioGroups);
       setShowIndicator(formFieldCreationManager.getShowIndicator(annotation));
@@ -204,27 +195,27 @@ function FormFieldEditPopupContainer({ annotation }) {
   };
 
   const onFieldValueChange = useCallback((value) => {
-    formFieldCreationManager.setFieldValue(annotation, value);
+    annotation.setValue?.(value);
   }, [annotation]);
 
   const confirmReadOnlyChange = useCallback((isReadOnly) => {
-    formFieldCreationManager.setFieldFlag(annotation, fieldLabels.READ_ONLY, isReadOnly);
+    annotation.setFieldFlag?.(window.Core.Annotations.WidgetAnnotation.READ_ONLY, isReadOnly);
   }, [annotation]);
 
   const confirmMultiLineChange = useCallback((isMultiLine) => {
-    formFieldCreationManager.setFieldFlag(annotation, fieldLabels.MULTI_LINE, isMultiLine);
+    annotation.setFieldFlag?.(window.Core.Annotations.WidgetAnnotation.MULTILINE, isMultiLine);
   }, [annotation]);
 
   const confirmRequiredChange = useCallback((isRequired) => {
-    formFieldCreationManager.setFieldFlag(annotation, fieldLabels.REQUIRED, isRequired);
+    annotation.setFieldFlag?.(window.Core.Annotations.WidgetAnnotation.REQUIRED, isRequired);
   }, [annotation]);
 
   const confirmMultiSelectChange = useCallback((isMultiSelect) => {
-    formFieldCreationManager.setFieldFlag(annotation, fieldLabels.MULTI_SELECT, isMultiSelect);
+    annotation.setFieldFlag?.(window.Core.Annotations.WidgetAnnotation.MULTI_SELECT, isMultiSelect);
   }, [annotation]);
 
   const confirmFieldOptionsChange = useCallback((options) => {
-    formFieldCreationManager.setFieldOptions(annotation, options);
+    annotation.setFieldOptions?.(options);
   }, [annotation]);
 
   const confirmShowFieldIndicatorChange = useCallback((showIndicator) => {
@@ -240,14 +231,7 @@ function FormFieldEditPopupContainer({ annotation }) {
   }, []);
 
   const onCancelEmptyFieldName = useCallback((placeholderAnnotation) => {
-    const widget = formFieldCreationManager.getWidgetFromPlaceholder(placeholderAnnotation);
-    if (widget) {
-      // Reset name field to widget's original name.
-      onFieldNameChange(widget.getField().name);
-    } else {
-      deleteFormFieldPlaceholder(placeholderAnnotation);
-    }
-
+    deleteFormFieldPlaceholder(placeholderAnnotation);
     closeFormFieldEditPopup();
   }, []);
 
@@ -487,7 +471,7 @@ function FormFieldEditPopupContainer({ annotation }) {
   };
 
   const renderPopUp = () => {
-    const intent = annotation?.getFormFieldPlaceholderType();
+    const intent = getFormFieldAnnotationType(annotation);
     if (intent === 'TextFormField') {
       return renderTextFormFieldEditPopup();
     }

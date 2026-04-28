@@ -34,8 +34,8 @@ export default (annotation) => {
     style.Opacity = null;
   }
 
-  // widget don't support opacity
-  if (annotation.isFormFieldPlaceholder()) {
+  // widgets don't support opacity
+  if (annotation.isWidget?.()) {
     style.Opacity = null;
   }
 

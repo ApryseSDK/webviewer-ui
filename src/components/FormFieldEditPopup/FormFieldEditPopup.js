@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
+import getFormFieldAnnotationType from 'helpers/getFormFieldAnnotationType';
 import CreatableDropdown from '../CreatableDropdown';
 import FormFieldPopupDimensionsInput from './FormFieldPopupDimensionsInput';
 import HorizontalDivider from '../HorizontalDivider';
@@ -224,7 +225,7 @@ const FormFieldEditPopup = ({
     );
   }
 
-  const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getFormFieldPlaceholderType()}`);
+  const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${getFormFieldAnnotationType(annotation)}`);
 
   return (
     <div className={className} ref={popupRef}>

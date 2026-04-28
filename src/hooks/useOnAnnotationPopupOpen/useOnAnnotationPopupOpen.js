@@ -114,7 +114,7 @@ export default function useOnAnnotationPopupOpen() {
         }
 
         setSelectedMultipleAnnotations(annotations.length > 1);
-        setIncludesFormFieldAnnotation(annotations.some((annotation) => annotation.isFormFieldPlaceholder()));
+        setIncludesFormFieldAnnotation(annotations.some((annotation) => annotation.isWidget?.()));
         setCanModify(canAnnotationBeModified(annotations[0]));
 
         if (isNotesPanelOpen) {

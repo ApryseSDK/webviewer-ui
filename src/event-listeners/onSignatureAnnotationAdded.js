@@ -7,7 +7,7 @@ export default (documentViewerKey) => (signatureAnnotation) => {
   const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
   signatureToolArray.forEach((tool) => {
     tool.hidePreview();
-    tool.annot = null;
+    tool.setAssociatedSignatureAnnotation?.(null);
   });
   // This had not been working and was fixed when the signature list panel was added
   // however it now causes issues with the annotation popup being out of place. Once that is

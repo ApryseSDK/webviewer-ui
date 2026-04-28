@@ -10,7 +10,7 @@ export default function useOnFormFieldsChanged() {
       const annotations = core.getAnnotationsList();
       const formFieldCreationManager = core.getFormFieldCreationManager();
       if (formFieldCreationManager.isInFormFieldCreationMode()) {
-        const formFieldPlaceholders = annotations.filter((annotation) => annotation.isFormFieldPlaceholder());
+        const formFieldPlaceholders = annotations.filter((annotation) => annotation.isWidget?.());
         formFieldIndicators = [
           ...formFieldPlaceholders
             .reduce(

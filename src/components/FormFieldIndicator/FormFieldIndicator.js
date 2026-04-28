@@ -50,7 +50,7 @@ const FormFieldIndicator = ({ annotation, parameters }) => {
       break;
   }
 
-  const isPlaceholder = annotation.isFormFieldPlaceholder();
+  const isPlaceholder = annotation.isWidget?.();
   const isPageVisible = visiblePages.includes(annotation.PageNumber);
   const indicatorText = annotation.getCustomData('trn-form-field-indicator-text');
 

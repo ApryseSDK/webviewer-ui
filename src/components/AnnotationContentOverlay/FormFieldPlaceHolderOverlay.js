@@ -3,13 +3,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
 import DataElements from 'constants/dataElement';
+import getFormFieldAnnotationType from 'helpers/getFormFieldAnnotationType';
 
 const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }) => {
   const [t] = useTranslation();
 
   const formFieldCreationManager = core.getFormFieldCreationManager();
-  const formFieldPlaceHolderName = formFieldCreationManager.getFieldName(annotation);
-  const formFieldPlaceHolderType = annotation.getFormFieldPlaceholderType();
+  const formFieldPlaceHolderName = annotation.getFieldName?.() ?? formFieldCreationManager.getIndicatorText?.(annotation) ?? '';
+  const formFieldPlaceHolderType = getFormFieldAnnotationType(annotation);
 
   const mapPlaceHolderTypeToTranslation = (formFieldPlaceHolderType) => {
     switch (formFieldPlaceHolderType) {

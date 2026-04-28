@@ -125,7 +125,7 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     return null;
   }
 
-  if (annotation.isFormFieldPlaceholder() && isOverlayOpen) {
+  if (annotation.isWidget?.() && isOverlayOpen) {
     return (
       <FormFieldPlaceHolderOverlay
         annotation={annotation}

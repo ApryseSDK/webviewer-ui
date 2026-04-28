@@ -35,15 +35,10 @@ export default function useOnFormFieldAnnotationAddedOrSelected() {
         return;
       }
       const annotation = annotations[0];
-      if (action === 'add' && annotation.isFormFieldPlaceholder() && annotation.getCustomData('trn-editing-widget-id') === '') {
-        // If for some reason we are drawing a new form field place holder before filling the name for the previous one, we will not switch
-        // to the new annotation until that name is filled
-        if (currentFormAnnotation?.getCustomData('trn-form-field-name') === '') {
-          return;
-        }
+      if (action === 'add' && annotation.isWidget?.()) {
         setCurrentlyEditingFormAnnotation(annotations[0]);
         openFormFieldPopup();
-      } else if (action === 'delete' && annotation.isFormFieldPlaceholder()) {
+      } else if (action === 'delete' && annotation.isWidget?.()) {
         closeFormFieldPopup();
         setCurrentlyEditingFormAnnotation(null);
       }
@@ -54,15 +49,7 @@ export default function useOnFormFieldAnnotationAddedOrSelected() {
         return;
       }
 
-      if (action === 'selected' && annotations.length && annotations[0].isFormFieldPlaceholder()) {
-        // If the currently set form field annotation has no name set, we don't want to switch it out
-        // as the form field edit popup will show the info for the wrong annotation, as we added logic to prevent
-        // the popup from closing when the field name is empty
-        if (currentFormAnnotation?.getCustomData('trn-form-field-name') === '') {
-          // de-select the form field annotation that was recently selected to avoid confusion
-          core.deselectAnnotation(annotations[0]);
-          return;
-        }
+      if (action === 'selected' && annotations.length && annotations[0].isWidget?.()) {
         setCurrentlyEditingFormAnnotation(annotations[0]);
       }
     };
@@ -82,7 +69,7 @@ export default function useOnFormFieldAnnotationAddedOrSelected() {
       }
 
       const annotUnderMouse = core.getAnnotationByMouseEvent(e);
-      if (annotUnderMouse && annotUnderMouse !== currentFormAnnotation && annotUnderMouse.isFormFieldPlaceholder()) {
+      if (annotUnderMouse && annotUnderMouse !== currentFormAnnotation && annotUnderMouse.isWidget?.()) {
         setCurrentlyEditingFormAnnotation(annotUnderMouse);
       }
     }, [currentFormAnnotation, isRightClickAnnotationPopupEnabled])

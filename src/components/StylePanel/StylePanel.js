@@ -135,7 +135,7 @@ const StylePanel = () => {
       extraStyles['TextAlign'] = annot.TextAlign;
     }
 
-    if (annot instanceof Annotations.RectangleAnnotation && annot.isFormFieldPlaceholder() && annot.FontSize !== undefined) {
+    if (annot.isWidget?.() && annot.FontSize !== undefined) {
       extraStyles.FontSize = annot.FontSize;
     }
 
