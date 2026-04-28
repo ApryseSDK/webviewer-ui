@@ -150,7 +150,8 @@ FreeText.args = {
   isFreeText: true,
 };
 
-const widgetPlaceHolderAnnot = new window.Core.Annotations.TextWidgetAnnotation();
+const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
+widgetPlaceHolderAnnot.isWidget = () => true;
 
 export const WidgetPlaceHolder = BasicTemplate.bind({});
 WidgetPlaceHolder.args = {
