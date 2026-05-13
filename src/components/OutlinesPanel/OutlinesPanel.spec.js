@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 // import { Editable } from './OutlinesPanel.stories';
 import outlineUtils from '../../helpers/OutlineUtils';
+import * as outlinesPanelHelper from '../../helpers/outlinesPanelHelper';
 import { createOutlines } from '../Outline/Outline.stories';
 import core from 'core';
 import { workerTypes } from 'constants/types';
@@ -31,6 +32,7 @@ jest.mock('core', () => ({
     getDocument: () => ({
       getViewerCoordinates: () => ({ x: 0, y: 0 }),
       getPageRotation: () => 0,
+      getPageInfo: () => ({ width: 612, height: 792 }),
       getType: () => 'PDF',
     }),
     getAccessibleReadingOrderManager: NOOP,
@@ -41,7 +43,12 @@ jest.mock('core', () => ({
     deselectAnnotation: NOOP,
     deselectAnnotations: NOOP,
   }),
-  getDocument: jest.fn(() => null),
+  getDocument: jest.fn(() => {
+    return {
+      getPageRotation: () => 0,
+      getPageInfo: () => ({ width: 612, height: 792 }),
+    };
+  }),
   // Add root-level mocks for direct calls
   isFullPDFEnabled: () => true,
   isAnnotationSelected: () => false,
@@ -200,6 +207,23 @@ describe('OutlinesPanel basic tests', () => {
 describe('OutlinesPanel in MultiViewer mode', () => {
   let store;
 
+  // Helper function to render the OutlinesPanel with necessary providers and return a cleanup function that re-renders it
+  const renderOutlinesPanel = () => {
+    const { unmount } = render(
+      <Provider store={store}>
+        <div>
+          <OutlinesPanel isTest />
+          <ConditionalFlyout store={store} />
+        </div>
+      </Provider>
+    );
+
+    return () => {
+      unmount();
+      renderOutlinesPanel();
+    };
+  };
+
   beforeEach(() => {
     core.getType.mockReturnValue(workerTypes.PDF);
     store = configureStore({
@@ -228,19 +252,16 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   });
 
   it('should render the outlines of the active document viewer', async () => {
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     expect(await screen.findByText('Lion')).toBeInTheDocument();
     expect(screen.queryByText('Goat')).not.toBeInTheDocument();
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+
+    // Virtuoso in JSDOM doesn't reliably update rendered items when data changes,
+    // so unmount and re-render to verify the correct outlines for viewer 2.
+    rerenderOutlinesPanel();
 
     expect(await screen.findByText('Goat')).toBeInTheDocument();
     expect(screen.queryByText('Lion')).not.toBeInTheDocument();
@@ -249,14 +270,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   it('should rename the outlines of the active document viewer', async () => {
     const setOutlineNameSpy = jest.spyOn(outlineUtils, 'setOutlineName').mockImplementation(() => {});
 
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     let moreOptionsButton = await screen.findByRole('button', { name: /More options Lion/i });
     userEvent.click(moreOptionsButton);
@@ -271,6 +285,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     expect(setOutlineNameSpy).toHaveBeenNthCalledWith(1, expect.anything(), expect.anything(), 1);
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerenderOutlinesPanel();
 
     moreOptionsButton = await screen.findByRole('button', { name: /More options Goat/i });
     userEvent.click(moreOptionsButton);
@@ -288,14 +303,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   it('should set the destination of the outlines of the active document viewer', async () => {
     const setDestinationSpy = jest.spyOn(outlineUtils, 'setOutlineDestination').mockImplementation(() => {});
 
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     let moreOptionsButton = await screen.findByRole('button', { name: /More options Lion/i });
     userEvent.click(moreOptionsButton);
@@ -309,6 +317,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     expect(setDestinationSpy).toHaveBeenNthCalledWith(1, expect.anything(), expect.anything(), expect.anything(), expect.anything(), expect.anything(), 1);
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerenderOutlinesPanel();
 
     moreOptionsButton = await screen.findByRole('button', { name: /More options Goat/i });
     userEvent.click(moreOptionsButton);
@@ -326,14 +335,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     const showWarningSpy = jest.spyOn(actions, 'showWarningMessage');
     const deleteOutlineSpy = jest.spyOn(outlineUtils, 'deleteOutline').mockImplementation(() => {});
 
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     let moreOptionsButton = await screen.findByRole('button', { name: /More options Lion/i });
     userEvent.click(moreOptionsButton);
@@ -348,6 +350,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     expect(deleteOutlineSpy).toHaveBeenNthCalledWith(1, expect.anything(), 1);
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerenderOutlinesPanel();
 
     moreOptionsButton = await screen.findByRole('button', { name: /More options Goat/i });
     userEvent.click(moreOptionsButton);
@@ -365,14 +368,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   it('should move the outlines of the active document viewer', async () => {
     const moveOutlineSpy = jest.spyOn(outlineUtils, 'moveOutlineUp').mockImplementation(() => {});
 
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     let moreOptionsButton = await screen.findByRole('button', { name: /More options Lion/i });
     userEvent.click(moreOptionsButton);
@@ -383,6 +379,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     expect(moveOutlineSpy).toHaveBeenNthCalledWith(1, expect.anything(), 1);
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerenderOutlinesPanel();
 
     moreOptionsButton = await screen.findByRole('button', { name: /More options Goat/i });
     userEvent.click(moreOptionsButton);
@@ -398,14 +395,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     const goToOutlineSpy = jest.spyOn(core, 'goToOutline').mockImplementation(() => {});
     store.dispatch(actions.setCurrentPage(7, 1));
     store.dispatch(actions.setCurrentPage(7, 2));
-    render(
-      <Provider store={store}>
-        <div>
-          <OutlinesPanel isTest />
-          <ConditionalFlyout store={store} />
-        </div>
-      </Provider>
-    );
+    const rerenderOutlinesPanel = renderOutlinesPanel();
 
     const lionOutline = await screen.findByText(/Lion/i);
     userEvent.click(lionOutline);
@@ -417,6 +407,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     expect(param.pageNumber).toBe(2);
 
     store.dispatch(actions.setActiveDocumentViewerKey(2));
+    rerenderOutlinesPanel();
 
     const goatOutline = await screen.findByText(/Goat/i);
     userEvent.click(goatOutline);
@@ -426,5 +417,91 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     param = goToOutlineSpy.mock.calls[1][0];
     expect(param.pageNumber).toBe(3);
     jest.useRealTimers();
+  });
+});
+
+describe('OutlinesPanel coordinate conversion', () => {
+  let store;
+
+  beforeEach(() => {
+    core.getType.mockReturnValue(workerTypes.PDF);
+    store = configureStore({
+      reducer: rootReducer,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false })
+    });
+    const outlines = createOutlines([{
+      name: 'TestOutline',
+      children: [],
+      pageNumber: 1,
+    }]);
+    store.dispatch(actions.setOutlines(outlines, 1));
+  });
+
+  afterEach(() => {
+    store = null;
+    jest.resetAllMocks();
+  });
+
+  // Verify that annotation coordinates from the outlineSetDestination event
+  // are correctly passed through to convertToPDFDestCoord when saving a destination.
+  // The actual conversion logic is tested in outlinesPanelHelper.spec.js.
+  const cornerTestCases = [
+    { description: 'top-left corner', destCoord: { x: 0, y: 0 } },
+    { description: 'top-right corner', destCoord: { x: 600, y: 0 } },
+    { description: 'bottom-left corner', destCoord: { x: 0, y: 700 } },
+    { description: 'bottom-right corner', destCoord: { x: 600, y: 700 } },
+  ];
+
+  cornerTestCases.forEach(({ description, destCoord }) => {
+    it(`should pass ${description} annotation coordinates to convertToPDFDestCoord`, async () => {
+      // Capture the outlineSetDestination listener so we can fire it with custom coordinates
+      const eventListeners = {};
+      jest.spyOn(core, 'addEventListener').mockImplementation((event, cb) => {
+        eventListeners[event] = cb;
+      });
+      jest.spyOn(core, 'removeEventListener').mockImplementation(() => {});
+
+      // Spy on convertToPDFDestCoord to verify it receives the correct inputs
+      const convertSpy = jest.spyOn(outlinesPanelHelper, 'convertToPDFDestCoord')
+        .mockReturnValue({ x: 0, y: 0 });
+
+      jest.spyOn(outlineUtils, 'setOutlineDestination').mockImplementation(() => {});
+
+      render(
+        <Provider store={store}>
+          <div>
+            <OutlinesPanel isTest />
+            <ConditionalFlyout store={store} />
+          </div>
+        </Provider>
+      );
+
+      // Simulate the OutlineDestinationCreateTool firing with custom coordinates
+      if (eventListeners['outlineSetDestination']) {
+        eventListeners['outlineSetDestination']({
+          IsText: false,
+          X: destCoord.x,
+          Y: destCoord.y,
+          PageNumber: 1,
+          getCustomData: () => '',
+        });
+      }
+
+      const moreOptionsButton = await screen.findByRole('button', { name: /More options TestOutline/i });
+      userEvent.click(moreOptionsButton);
+      store.dispatch(actions.setActiveFlyout(DataElements.BOOKMARK_OUTLINE_FLYOUT));
+
+      const setDestinationButton = await screen.findByRole('button', { name: /Set Destination/i });
+      userEvent.click(setDestinationButton);
+
+      const saveButton = await screen.findByRole('button', { name: /Save/i });
+      userEvent.click(saveButton);
+
+      expect(convertSpy).toHaveBeenCalledWith(
+        expect.anything(), // doc
+        1,                 // pageNumber
+        destCoord          // the annotation coordinates passed through unchanged
+      );
+    });
   });
 });

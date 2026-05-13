@@ -9,11 +9,13 @@ import { connect } from 'react-redux';
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 import ReaderModeStylePopup from 'components/ReaderModeStylePopup';
 import getRootNode from 'helpers/getRootNode';
-
+import './ReaderModeViewer.scss';
+import ReaderModePageMode from 'constants/readerModePageMode';
 class ReaderModeViewer extends React.PureComponent {
   static propTypes = {
     containerWidth: PropTypes.number.isRequired,
-    enableFadePageNavigation: PropTypes.bool.isRequired
+    enableFadePageNavigation: PropTypes.bool.isRequired,
+    readerPageMode: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -24,6 +26,7 @@ class ReaderModeViewer extends React.PureComponent {
     this.setAnnotStyleCb = undefined;
     this.doneSetAnnotColorCb = undefined;
     this.originalEnableFadePageNavigation = props.enableFadePageNavigation;
+    this.continuousBaseWidth = undefined;
 
     this.state = {
       colorMapKey: undefined,
@@ -69,6 +72,16 @@ class ReaderModeViewer extends React.PureComponent {
     if (this.props.containerWidth > 0 && prevProps.containerWidth !== this.props.containerWidth) {
       this.updateMaxZoom();
     }
+
+    if (prevProps.readerPageMode !== this.props.readerPageMode) {
+      this.continuousBaseWidth = undefined;
+      this.setState({
+        showStylePopup: false,
+        colorMapKey: undefined,
+        style: undefined,
+        annotPosition: undefined,
+      }, this.renderDocument);
+    }
   }
 
   render() {
@@ -77,13 +90,12 @@ class ReaderModeViewer extends React.PureComponent {
         <div
           className="reader-mode-viewer"
           ref={this.viewer}
-          style={{ height: '100%', width: '100%' }}
         >
         </div>
         {this.state.showStylePopup && (
           <ReaderModeStylePopup
             colorMapKey={this.state.colorMapKey}
-            style={this.state.style}
+            annotationStyle={this.state.style}
             onStyleChange={this.handleColorChange}
             onSliderChange={this.handleOpacityChange}
             onClose={this.handleStylePopupClose}
@@ -97,6 +109,8 @@ class ReaderModeViewer extends React.PureComponent {
 
   renderDocument = () => {
     import('@pdftron/webviewer-reading-mode').then(({ default: WebViewerReadingMode }) => {
+      const isSinglePageMode = this.props.readerPageMode === ReaderModePageMode.SINGLE;
+
       if (!this.wvReadingMode) {
         // eslint-disable-next-line no-undef
         this.wvReadingMode = WebViewerReadingMode.initialize(window.Core.PDFNet);
@@ -112,6 +126,7 @@ class ReaderModeViewer extends React.PureComponent {
           pageNum: core.getCurrentPage(),
           editStyleHandler: this.onEditStyle,
           rootNode: getRootNode(),
+          isSinglePageMode
         }
       );
       this.setZoom(core.getZoom());
@@ -123,6 +138,39 @@ class ReaderModeViewer extends React.PureComponent {
     this.wvReadingMode?.goToPage(pageNum);
   };
 
+  applyPageWidth = (readerModeElement, width) => {
+    const pageElements = readerModeElement.querySelectorAll('[id^="read-mode-page-"], [id^="rm-page-"]');
+    if (!pageElements.length) {
+      return;
+    }
+
+    pageElements.forEach((pageElement) => {
+      pageElement.style.width = `${width}px`;
+      pageElement.style.maxWidth = `${width}px`;
+      pageElement.style.margin = '0 auto';
+    });
+  };
+
+  alignSpinner = (readerModeElement, width) => {
+    const spinnerWrapper = readerModeElement.querySelector('.reader-mode-spinner-wrapper');
+    if (!spinnerWrapper) {
+      return;
+    }
+
+    readerModeElement.style.position = 'relative';
+
+    // Force container-relative overlay positioning so spinner tracks doc movement
+    // when panels open/close (even if runtime CSS still sets `position: fixed`).
+    spinnerWrapper.style.position = 'absolute';
+    spinnerWrapper.style.top = '0';
+    spinnerWrapper.style.bottom = '0';
+    spinnerWrapper.style.left = '50%';
+    spinnerWrapper.style.right = 'auto';
+    spinnerWrapper.style.transform = 'translateX(-50%)';
+    spinnerWrapper.style.width = `${width}px`;
+    spinnerWrapper.style.padding = '0';
+  };
+
   setZoom = (zoom) => {
     if (!this.wvReadingMode) {
       return;
@@ -131,8 +179,37 @@ class ReaderModeViewer extends React.PureComponent {
     const pageWidth = core.getDocumentViewer().getPageWidth(1);
     const readerModeElement = this.viewer.current.firstChild;
     if (pageWidth && readerModeElement) {
-      readerModeElement.style.padding = `0 ${(this.props.containerWidth - pageWidth * zoom) / 2}px`;
+      const scaledPageWidth = Math.max(0, pageWidth * zoom);
+      const isSinglePageMode = this.props.readerPageMode === ReaderModePageMode.SINGLE;
+      if (isSinglePageMode) {
+        this.styleSinglePageMode(readerModeElement, scaledPageWidth);
+      } else {
+        this.styleContinousModePages(readerModeElement, scaledPageWidth);
+      }
     }
+  };
+
+  styleSinglePageMode = (readerModeElement, scaledPageWidth) => {
+    const horizontalPadding = Math.max(0, (this.props.containerWidth - scaledPageWidth) / 2);
+    readerModeElement.style.padding =  `0 ${horizontalPadding}px`;
+    this.alignSpinner(readerModeElement, scaledPageWidth);
+  };
+
+  styleContinousModePages = (readerModeElement, scaledPageWidth) => {
+    const candidateBaseWidth = Math.max(0, scaledPageWidth);
+    this.continuousBaseWidth = this.continuousBaseWidth === undefined
+      ? candidateBaseWidth
+      : Math.max(this.continuousBaseWidth, candidateBaseWidth);
+
+    const continuousTargetWidth = Math.max(0, Math.min(this.continuousBaseWidth, this.props.containerWidth));
+    readerModeElement.style.boxSizing = 'border-box';
+    readerModeElement.style.width = `${continuousTargetWidth}px`;
+    readerModeElement.style.maxWidth = `${continuousTargetWidth}px`;
+    readerModeElement.style.margin = '0 auto';
+    readerModeElement.style.padding = '0';
+
+    this.applyPageWidth(readerModeElement, continuousTargetWidth);
+    this.alignSpinner(readerModeElement, continuousTargetWidth);
   };
 
   updateMaxZoom() {
@@ -254,7 +331,8 @@ class ReaderModeViewer extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   containerWidth: selectors.getDocumentContainerWidth(state),
-  enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state)
+  enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state),
+  readerPageMode: selectors.getReaderPageMode(state)
 });
 
 export default connect(mapStateToProps)(ReaderModeViewer);

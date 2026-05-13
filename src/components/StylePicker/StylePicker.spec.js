@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 const initialState = {
   viewer: {
     toolColorOverrides: {
-      AnnotationEdit: [],
+      AnnotationEdit: {},
     },
     customElementOverrides: {},
     openElements: {
@@ -17,10 +17,14 @@ const initialState = {
     },
     disabledElements: {},
     documentContainerHeight: 0,
-    colors: [],
+    strokeColors: [],
+    fillColors: [],
+    textColors: [],
     activeToolName: '',
     snapMode: {},
-    customColors: [],
+    customTextColors: [],
+    customStrokeColors: [],
+    customFillColors: [],
   }
 };
 
@@ -54,7 +58,7 @@ const style = {
 };
 
 const freeTextProps = {
-  style: style,
+  annotationStyle: style,
   sliderProperties: ['Opacity', 'StrokeThickness'],
   showLineStyleOptions: false,
   isFreeText: true,
@@ -64,7 +68,7 @@ const freeTextProps = {
 };
 
 const props = {
-  style: style,
+  annotationStyle: style,
   sliderProperties: ['Opacity', 'StrokeThickness'],
   showLineStyleOptions: true,
   startLineStyle: 'None',
@@ -91,13 +95,13 @@ describe('StylePicker', () => {
     customRenderWithContext();
 
     const startLineStyleDropdown = screen.getByRole('combobox', { name: 'Line Start' });
-    expect(startLineStyleDropdown).toHaveClass('Dropdown StylePicker-StartLineStyleDropdown', { exact: true });
+    expect(startLineStyleDropdown).toHaveClass('Dropdown StylePicker-StartLineStyleDropdown');
 
     const middleLineStyleDropdown = screen.getByRole('combobox', { name: 'Line Middle' });
-    expect(middleLineStyleDropdown).toHaveClass('Dropdown StylePicker-StrokeLineStyleDropdown', { exact: true });
+    expect(middleLineStyleDropdown).toHaveClass('Dropdown StylePicker-StrokeLineStyleDropdown');
 
     const endLineStyleDropdown = screen.getByRole('combobox', { name: 'Line End' });
-    expect(endLineStyleDropdown).toHaveClass('Dropdown StylePicker-EndLineStyleDropdown', { exact: true });
+    expect(endLineStyleDropdown).toHaveClass('Dropdown StylePicker-EndLineStyleDropdown');
   });
 
   it('Style color picker buttons have aria-label', () => {

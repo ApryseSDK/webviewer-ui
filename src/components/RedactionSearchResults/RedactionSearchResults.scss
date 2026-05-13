@@ -1,5 +1,9 @@
 @import '../../constants/styles';
 
+.redaction-search-spinner-container {
+  flex-grow: 1;
+}
+
 .redaction-search-counter-controls {
   display: flex;
   flex-direction: row;

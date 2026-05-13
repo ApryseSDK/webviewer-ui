@@ -6,7 +6,6 @@ import Events from 'constants/events';
 import DataElements from 'constants/dataElement';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { getEventHandler } from 'helpers/fireEvent';
-import { isSpreadsheetEditorMode } from 'helpers/officeEditor';
 
 const useAddColorHandler = ({
   colors,
@@ -21,9 +20,10 @@ const useAddColorHandler = ({
 }) => {
   const dispatch = useDispatch();
   const store = useStore();
-  const customColors = useSelector(selectors.getCustomColors);
+  const customColors = useSelector((state) => selectors.getCustomColors(state, type));
+  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const spreadsheetCustomColors = useSelector((state) => {
-    if (isSpreadsheetEditorMode()) {
+    if (isSpreadsheetEditorModeEnabled) {
       return selectors[spreadsheetGetter](state);
     }
     return [];
@@ -36,7 +36,7 @@ const useAddColorHandler = ({
       const { element, isVisible } = e.detail;
 
       if (element === DataElements.COLOR_PICKER_MODAL && !isVisible) {
-        const colorObject = getCustomColorAndRemove(dispatch, store);
+        const colorObject = getCustomColorAndRemove(dispatch, store, type);
         const color = parseColor(colorObject);
         const newColor = useHex ? color : colorObject;
         if (color) {
@@ -48,9 +48,9 @@ const useAddColorHandler = ({
             setColors(newColors);
             setSelectedColor(newColor);
             onColorChange(newColor);
-            const actionToDispatch = isSpreadsheetEditorMode() ?
+            const actionToDispatch = isSpreadsheetEditorModeEnabled ?
               actions[spreadsheetSetter]([...spreadsheetCustomColors, color]) :
-              actions.setCustomColors([...customColors, color]);
+              actions.setCustomColors(type, [...customColors, color]);
             dispatch(actionToDispatch);
           }
         }

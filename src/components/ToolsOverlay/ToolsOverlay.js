@@ -167,12 +167,6 @@ class ToolsOverlay extends React.PureComponent {
       Component = (
         <SelectedRubberStamp />
       );
-    } else if (activeToolGroup === 'model3DTools') {
-      Component = (
-        <div className="model-3D-btn add-btn" onClick={() => this.props.openElement('Model3DModal')}>
-          {t('Model3D.add3D')}
-        </div>
-      );
     } else if (noPresets || !showPresets) {
       Component = (
         <div className="no-presets">

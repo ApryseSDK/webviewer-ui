@@ -32,7 +32,7 @@ const ContentEditLinkModal = ({
             <Button img="icon-close" onClick={closeModal} title="action.close" />
           </div>
         </div>
-        <div className="tab-panel">
+        <div className="tab-panel selected">
           <div className="panel-body">
             <div className="add-url-link">
               <form onSubmit={addURLLink}>

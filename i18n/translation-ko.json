@@ -52,7 +52,6 @@
     "remove": "제거하다",
     "ok": "확인",
     "rotate": "회전",
-    "rotate3D": "3D회전",
     "rotateClockwise": "오른쪽으로 회전",
     "rotateCounterClockwise": "왼쪽으로 회전",
     "rotatedClockwise": "시계 방향으로 회전",
@@ -92,7 +91,6 @@
     "formFieldEdit": "폼편집",
     "formFieldEditMode": "양식 필드 편집",
     "contentEditMode": "콘텐츠 편집",
-    "viewShortCutKeysFor3D": "3D 단축키 보기",
     "markAllRead": "모두 읽은상태로 표시",
     "pageInsertion": "페이지 삽입",
     "insertPage": "페이지 삽입",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "콤보박스",
     "link": "링크",
     "other": "더보기",
-    "3D": "3D",
     "sound": "소리",
     "changeView": "보기 변경",
     "newImage": "새 이미지",
@@ -381,7 +378,6 @@
       "strikeout": "취소선",
       "underline": "밑줄",
       "squiggly": "물결선",
-      "3D": "3D",
       "other": "더보기",
       "initials": "머리 글자",
       "saved": "저장됨"
@@ -902,6 +898,10 @@
       "title": "보안 경고",
       "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- uri}}\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
     },
+    "submitForm": {
+      "title": "보안 경고",
+      "message": "이 문서는 다음 주소로 양식을 제출하려고 합니다: \n\n{{- uri}}\n\n 이 문서를 신뢰하는 경우, 양식을 제출하려면 확인을 클릭하십시오."
+    },
     "sheetTabRenameIssueOne": {
       "title": "시트 이름 편집",
       "message": "이미 존재하는 이름입니다. 다른 이름을 입력하세요."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + 끌기",
-    "zoom3D": "Shift + 스크롤"
+    }
   },
   "tool": {
     "pan": "이동",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "링크 또는 페이지 삽입",
     "enterpage": "연결하려는 페이지 번호를 입력하세요.",
     "urlLink": "URL 링크"
-  },
-  "Model3D": {
-    "add3D": "URL을 입력하여 3D 주석 추가",
-    "enterurl": "3D개체의 URL을 glTF 형식으로 입력하세요.",
-    "enterurlOrLocalFile": "URL을 입력하거나 glTF 형식으로 3D개체를 업로드합니다.",
-    "formatError": "glTF (.glb) 형식 만 지원됩니다."
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "URL을 입력하거나 WebViewer에 로드할 파일을 선택하세요.",
@@ -1288,11 +1280,6 @@
       "pattern": "패턴",
       "start": "검색시작"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "속성",
-    "miscValuesHeader": "모두",
-    "emptyPanelMessage": "속성을 보려면 요소를 선택하십시오."
   },
   "portfolio": {
     "createPDFPortfolio": "PDF 포트폴리오 만들기",

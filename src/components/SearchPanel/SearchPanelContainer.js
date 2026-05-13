@@ -13,24 +13,12 @@ function SearchPanelContainer(props) {
   const { dataElement = DataElements.SEARCH_PANEL, parentDataElement = undefined } = props;
   const isMobile = isMobileSize();
 
-  const [
-    isOpen,
-    pageLabels,
-    shouldClearSearchPanelOnClose,
-    isInDesktopOnlyMode,
-    isProcessingSearchResults,
-    activeDocumentViewerKey,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementOpen(state, dataElement),
-      selectors.getPageLabels(state),
-      selectors.shouldClearSearchPanelOnClose(state),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.isProcessingSearchResults(state),
-      selectors.getActiveDocumentViewerKey(state),
-    ],
-    shallowEqual,
-  );
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, dataElement), shallowEqual);
+  const shouldClearSearchPanelOnClose = useSelector((state) => selectors.shouldClearSearchPanelOnClose(state), shallowEqual);
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state), shallowEqual);
+  const isProcessingSearchResults = useSelector((state) => selectors.isProcessingSearchResults(state), shallowEqual);
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state), shallowEqual);
+  const pageLabels = useSelector((state) => selectors.getPageLabels(state, activeDocumentViewerKey), shallowEqual);
   let currentWidth = useSelector((state) => (
     !parentDataElement && dataElement === DataElements.SEARCH_PANEL ?
       selectors.getSearchPanelWidth(state) :
@@ -59,12 +47,10 @@ function SearchPanelContainer(props) {
     [dispatch],
   );
 
-  const setActiveResult = React.useCallback(function setActiveResult(result, activeDocumentViewerKey) {
-    if (activeDocumentViewerKey) {
-      const activeDocumentviewer = core.getDocumentViewer(activeDocumentViewerKey);
-      return activeDocumentviewer.setActiveSearchResult(result);
-    }
-  }, []);
+  const setActiveResult = React.useCallback(function setActiveResult(result) {
+    const activeDocumentViewer = core.getDocumentViewer();
+    return activeDocumentViewer.setActiveSearchResult(result);
+  }, [core]);
 
   /*
   React.useEffect(function SearchPanelVisibilityChangedEffect() {
@@ -107,7 +93,7 @@ function SearchPanelContainer(props) {
         clearSearchInputValue();
       }
     },
-    [isMobile, isOpen, shouldClearSearchPanelOnClose, isInDesktopOnlyMode],
+    [isMobile, isOpen, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, core],
   );
 
   React.useEffect(() => {
@@ -123,7 +109,7 @@ function SearchPanelContainer(props) {
         clearSearchInputValue();
       }
     };
-  }, [isMobile, shouldClearSearchPanelOnClose, isInDesktopOnlyMode]);
+  }, [isMobile, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, core]);
 
   if (dataElement !== DataElements.SEARCH_PANEL) {
     // Adjust width for custom panels

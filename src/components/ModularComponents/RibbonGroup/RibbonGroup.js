@@ -15,7 +15,6 @@ import Icon from 'components/Icon';
 import useRibbonActions from 'hooks/useRibbonActions';
 import './RibbonGroup.scss';
 import { useTranslation } from 'react-i18next';
-
 const DEFAULT_DROPDOWN_HEIGHT = 72;
 
 const validateItems = (items, enabledRibbonItems) => {
@@ -216,13 +215,13 @@ const RibbonGroup = (props) => {
   if (!isRibbonGroupDisabled && validatedRibbonItems && validatedRibbonItems.length) {
     return (
       <div ref={elementRef} className={'RibbonGroupContainer'} data-element={dataElement}
-        style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
+        css={{ flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
         <div
           className={classNames({
             'RibbonGroup': true,
             'hidden': size >= MIN_SIZE,
           })}
-          style={{
+          css={{
             gap: `${itemsGap}px`,
             flexDirection: headerDirection,
           }}

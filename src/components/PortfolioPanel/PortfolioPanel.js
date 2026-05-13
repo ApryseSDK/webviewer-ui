@@ -227,8 +227,8 @@ const PortfolioPanel = () => {
 
           <input
             ref={fileInputRef}
-            style={{ display: 'none' }}
             type="file"
+            hidden
             onChange={(event) => {
               addNewFile(event);
               event.target.value = null;

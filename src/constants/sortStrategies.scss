@@ -1,0 +1,12 @@
+.sort-separator-color {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .sort-separator-color__swatch {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-inline-start: 10px;
+  }
+}

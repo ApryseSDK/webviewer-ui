@@ -52,7 +52,6 @@
     "remove": "Удалять",
     "ok": "OK",
     "rotate": "Повернуть",
-    "rotate3D": "Повернуть",
     "rotateClockwise": "По часовой",
     "rotateCounterClockwise": "Против часовой",
     "rotatedClockwise": "повернут по часовой стрелке",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Изменить поле формы",
     "formFieldEditMode": "Редактировать поля формы",
     "contentEditMode": "Редактировать контент",
-    "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные",
     "pageInsertion": "Вставка страницы",
     "insertPage": "Вставка страницы",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Поле со списком",
     "link": "Ссылка на сайт",
     "other": "Другие",
-    "3D": "3D",
     "sound": "Звук",
     "changeView": "Сменить вид",
     "newImage": "Новое изображение",
@@ -381,7 +378,6 @@
       "strikeout": "Вычеркнутый",
       "underline": "Подчеркивание",
       "squiggly": "Волнистый",
-      "3D": "3D",
       "other": "Другой",
       "initials": "Инициалы",
       "saved": "Сохранено"
@@ -902,6 +898,10 @@
       "title": "Предупреждение безопасности",
       "message": "Этот документ пытается подключиться к:\n\n{{- uri}}\n\n Если вы доверяете этому документу, нажмите «Подтвердить», чтобы открыть его."
     },
+    "submitForm": {
+      "title": "Предупреждение системы безопасности",
+      "message": "Этот документ пытается отправить форму по адресу: \n\n{{- uri}}\n\n Если вы доверяете этому документу, нажмите Подтвердить, чтобы отправить форму."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Изменить имя листа",
       "message": "Это имя уже существует. Введите другое имя."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + перетащить",
-    "zoom3D": "Shift + прокрутка"
+    }
   },
   "tool": {
     "pan": "Панорамирование",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Вставить ссылку или страницу",
     "enterpage": "Введите номер страницы, на которую вы хотите дать ссылку",
     "urlLink": "URL-ссылка"
-  },
-  "Model3D": {
-    "add3D": "Добавьте 3D-аннотацию, введя URL",
-    "enterurl": "Введите URL-адрес 3D-объекта в формате glTF",
-    "enterurlOrLocalFile": "Введите URL или загрузите 3D-объект в формате glTF",
-    "formatError": "Поддерживается только формат glTF (.glb)"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Введите URL-адрес или выберите файл для загрузки в WebViewer.",
@@ -1288,11 +1280,6 @@
       "pattern": "Узоры",
       "start": "Начните поиск"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Свойства",
-    "miscValuesHeader": "Все",
-    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства."
   },
   "portfolio": {
     "createPDFPortfolio": "Создать PDF-портфолио",

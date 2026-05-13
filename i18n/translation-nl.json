@@ -52,7 +52,6 @@
     "remove": "Verwijderen",
     "ok": "OK",
     "rotate": "Roteren",
-    "rotate3D": "Draaien",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "rotatedClockwise": "met de klok mee gedraaid",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Formulierveld bewerken",
     "formFieldEditMode": "Formuliervelden bewerken",
     "contentEditMode": "Inhoud bewerken",
-    "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
     "markAllRead": "Markeer alles als gelezen",
     "pageInsertion": "Pagina-invoeging",
     "insertPage": "Pagina invoegen",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Veld met invoervak",
     "link": "Koppeling",
     "other": "Andere",
-    "3D": "3D",
     "sound": "Geluid",
     "changeView": "Verander perspectief",
     "newImage": "Nieuw beeld",
@@ -381,7 +378,6 @@
       "strikeout": "Doorhalen",
       "underline": "Onderstrepen",
       "squiggly": "kronkelig",
-      "3D": "3D",
       "other": "Ander",
       "initials": "initialen",
       "saved": "Opgeslagen"
@@ -902,6 +898,10 @@
       "title": "Veiligheidswaarschuwing",
       "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     },
+    "submitForm": {
+      "title": "Beveiligingswaarschuwing",
+      "message": "Dit document probeert een formulier te verzenden naar: \n\n{{- uri}}\n\n Als u dit document vertrouwt, klik dan op Bevestigen om het formulier te verzenden."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Bladnaam bewerken",
       "message": "Deze naam bestaat al. Voer een andere naam in."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + slepen",
-    "zoom3D": "Shift + Scroll"
+    }
   },
   "tool": {
     "pan": "Schuiven",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Link of pagina invoegen",
     "enterpage": "Voer het paginanummer in waarnaar u wilt linken",
     "urlLink": "URL-link"
-  },
-  "Model3D": {
-    "add3D": "Voeg een 3D-annotatie toe door een URL in te voeren",
-    "enterurl": "Voer de URL voor het 3D-object in glTF-indeling in",
-    "enterurlOrLocalFile": "Voer de URL in of upload een 3D-object in glTF-indeling",
-    "formatError": "Alleen het glTF-formaat (.glb) wordt ondersteund"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Voer een URL in of kies een bestand om in WebViewer te laden",
@@ -1288,11 +1280,6 @@
       "pattern": "Patronen",
       "start": "Begin met zoeken"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Eigenschappen",
-    "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken."
   },
   "portfolio": {
     "createPDFPortfolio": "PDF-portfolio maken",

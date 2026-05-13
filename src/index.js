@@ -29,11 +29,17 @@ import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
+import getCspNonce from 'helpers/getCspNonce';
 import getHashParameters from 'helpers/getHashParameters';
-import { addDocumentViewer, setupOpenURLHandler } from 'helpers/documentViewerHelper';
+import {
+  addDocumentViewer,
+  setupOpenURLHandler,
+  setupFormSubmissionHandler,
+} from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 import getRootNode from 'helpers/getRootNode';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import ensureReactDraggableStyleEl from 'helpers/ensureReactDraggableStyleEl';
 import EmotionProvider from './emotion/EmotionProvider';
 
 import './index.scss';
@@ -93,6 +99,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (window.CanvasRenderingContext2D) {
+  const cspNonce = getCspNonce();
+  ensureReactDraggableStyleEl(cspNonce);
+
   let fullAPIReady = Promise.resolve();
   const state = store.getState();
 
@@ -171,6 +180,7 @@ if (window.CanvasRenderingContext2D) {
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
   setupOpenURLHandler(documentViewer, store);
+  setupFormSubmissionHandler(documentViewer, store);
 
   if (getHashParameters('hideDetachedReplies', false)) {
     documentViewer.getAnnotationManager().hideDetachedReplies();
@@ -380,14 +390,15 @@ window.addEventListener('hashchange', () => {
 function onTab(event) {
   if (event.key === 'Tab') {
     const documentElement = window.isApryseWebViewerWebComponent ? getRootNode().host : document.documentElement;
-    documentElement.setAttribute('data-tabbing', 'true');
+    documentElement.dataset.tabbing = 'true';
     window.removeEventListener('keydown', onTab);
     window.addEventListener('mousedown', onMouse);
   }
 }
 
 function onMouse() {
-  document.documentElement.removeAttribute('data-tabbing');
+  const documentElement = window.isApryseWebViewerWebComponent ? getRootNode().host : document.documentElement;
+  delete documentElement.dataset.tabbing;
   window.removeEventListener('mousedown', onMouse);
   window.addEventListener('keydown', onTab);
 }

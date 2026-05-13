@@ -38,6 +38,9 @@ const observable = (() => {
   };
 })();
 
+const supportsFocusVisibleSelector =
+  window.CSS?.supports?.('selector(:focus-visible)');
+
 
 const Choice = forwardRef(({
   label,
@@ -56,11 +59,13 @@ const Choice = forwardRef(({
   disabled,
   name,
   dataElement,
+  forceFocusVisible,
   ...props
 }, ref) => {
   const inputRef = useRef(null);
   const isUserTabbing = useAccessibleFocus();
   const { focused, handleOnFocus, handleOnBlur } = useFocus(onFocus, onBlur);
+  const [isFocusVisible, setIsFocusVisible] = useState(false);
   const choiceID = useID(id);
 
   const [checked, setChecked] = useState(controlledChecked);
@@ -91,6 +96,21 @@ const Choice = forwardRef(({
     }
   }, [checked, name, radio]);
 
+  const handleChoiceFocus = (event) => {
+    const focusVisible =
+      typeof event.target?.matches === 'function' &&
+      supportsFocusVisibleSelector &&
+      event.target.matches(':focus-visible');
+
+    setIsFocusVisible(focusVisible);
+    handleOnFocus(event);
+  };
+
+  const handleChoiceBlur = (event) => {
+    setIsFocusVisible(false);
+    handleOnBlur(event);
+  };
+
   const choiceClass = classNames(
     'ui__base ui__choice',
     {
@@ -107,16 +127,18 @@ const Choice = forwardRef(({
     'ui__choice__input--switch': isSwitch,
   });
 
+  const shouldShowFocusStyle = focused && (isUserTabbing || isFocusVisible || forceFocusVisible);
+
   const checkClass = isSwitch
     ? classNames('ui__choice__input__switch', {
       'ui__choice__input__switch--checked': checked,
       'ui__choice__input__switch--disabled': disabled,
-      'ui__choice__input__switch--focus': isUserTabbing && focused,
+      'ui__choice__input__switch--focus': shouldShowFocusStyle,
     })
     : classNames('ui__choice__input__check', {
       'ui__choice__input__check--checked': checked,
       'ui__choice__input__check--disabled': disabled,
-      'ui__choice__input__check--focus': isUserTabbing && focused,
+      'ui__choice__input__check--focus': shouldShowFocusStyle,
     });
 
   const labelClass = classNames('ui__choice__label', {
@@ -160,8 +182,8 @@ const Choice = forwardRef(({
           disabled={disabled}
           name={name}
           onChange={handleOnChange}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
+          onFocus={handleChoiceFocus}
+          onBlur={handleChoiceBlur}
         >
           {children}
         </input>
@@ -190,6 +212,7 @@ Choice.propTypes = {
   disabled: PropTypes.bool,
   name: PropTypes.string,
   children: PropTypes.node,
+  forceFocusVisible: PropTypes.bool,
 };
 
 export default Choice;

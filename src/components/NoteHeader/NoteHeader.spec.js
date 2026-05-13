@@ -1,10 +1,23 @@
 import React from 'react';
 import { render, getByText } from '@testing-library/react';
 import NoteHeader from './NoteHeader';
+import NoteContext from '../Note/Context';
 import * as reactRedux from 'react-redux';
 import { testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
 
-const TestNoteHeader = withProviders(NoteHeader);
+const NoteHeaderWithProviders = withProviders(NoteHeader);
+const noteContextValue = {
+  pendingEditTextMap: {},
+  pendingReplyMap: {},
+  pendingAttachmentMap: {},
+};
+
+const TestNoteHeader = (props) => (
+  <NoteContext.Provider value={noteContextValue}>
+    <NoteHeaderWithProviders {...props} />
+  </NoteContext.Provider>
+);
+
 const notSelectedProps = {
   ...testProps,
   isSelected: false,
@@ -35,12 +48,6 @@ describe('NoteHeader Component', () => {
     // We mock the redux call to always return "false" for isElementDisabled
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockImplementation((callback) => callback(initialState));
-    // Mock some context items
-    jest.spyOn(React, 'useContext').mockReturnValue({
-      pendingEditTextMap: {},
-      pendingReplyMap: {},
-      pendingAttachmentMap: {}
-    });
   });
 
   afterEach(() => {

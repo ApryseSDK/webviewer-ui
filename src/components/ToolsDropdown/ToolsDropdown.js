@@ -3,7 +3,7 @@ import Icon from 'components/Icon';
 import classNames from 'classnames';
 
 import './ToolsDropdown.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 
 const ToolsDropdown = ({ isActive, isDisabled, onClick, style }) => {
   return (

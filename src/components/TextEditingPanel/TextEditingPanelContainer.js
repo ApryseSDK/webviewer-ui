@@ -7,12 +7,14 @@ import DataElementWrapper from '../DataElementWrapper';
 import Icon from 'components/Icon';
 import TextEditingPanel from './TextEditingPanel';
 import DataElements from 'constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getInstanceNode }  from 'src/helpers/getRootNode';
 import handleSelectionChange from './TextEditingPanelHelpers/handleSelectionChange';
+import { css } from '@emotion/react';
 
 const conversionMap = {
   Font: 'fontName',
@@ -33,7 +35,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     shallowEqual,
   );
 
-  const customColors = useSelector(selectors.getCustomColors);
+  const customColors = useSelector((state) => selectors.getCustomColors(state, COLOR_PALETTE_STYLES.TextColor.type));
   const undoRedoProperties = useOnContentEditHistoryUndoRedoChanged();
   const isMobile = isMobileSize();
   const dispatch = useDispatch();
@@ -133,7 +135,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
   useEffect(() => {
     const handleContentEditModeStart = () => {
-      dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel', 'wv3dPropertiesPanel']));
+      dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel']));
     };
 
     const handleContentEditModeEnd = () => {
@@ -284,7 +286,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const handleAddActiveColor = () => {
     if (rgbColor?.toHexString) {
       const arrayOfColors = new Set([...customColors, rgbColor.toHexString().toLowerCase()]);
-      dispatch(actions.setCustomColors([...arrayOfColors]));
+      dispatch(actions.setCustomColors(COLOR_PALETTE_STYLES.TextColor.type, [...arrayOfColors]));
     }
   };
 
@@ -352,7 +354,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const style =
     !isInDesktopOnlyMode && isMobile
       ? {}
-      : { width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` };
+      : css({ width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` });
 
   const [renderNull, setRenderNull] = useState(false);
 
@@ -372,7 +374,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const rgbColor = format?.color || DEFAULT_COLOR;
 
   return (
-    <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" style={style}>
+    <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" css={ style }>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
         undoRedoProperties={undoRedoProperties}

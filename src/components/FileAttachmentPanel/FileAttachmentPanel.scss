@@ -45,6 +45,11 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+
         .spinner {
           margin: 0px;
         }

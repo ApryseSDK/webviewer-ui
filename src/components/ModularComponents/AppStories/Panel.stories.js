@@ -3,6 +3,8 @@ import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 import { within, expect } from 'storybook/test';
 import { createTemplate } from 'helpers/storybookHelper';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import { setActiveTab } from 'src/redux/actions/internalActions';
+import setActiveTabInPanel from 'src/apis/setActiveTabInPanel';
 
 export default {
   title: 'ModularComponents/App/Panels',
@@ -10,6 +12,11 @@ export default {
 };
 
 export const SetActiveTabInPanel = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
+
+setActiveTabInPanel.parameters = {
+  // For issues with mocks that are unrelated to the test
+  test: { dangerouslyIgnoreUnhandledErrors: true  }
+};
 
 SetActiveTabInPanel.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);

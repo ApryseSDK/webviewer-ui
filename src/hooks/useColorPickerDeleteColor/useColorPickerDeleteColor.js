@@ -1,10 +1,10 @@
 import { parseColor } from 'helpers/colorPickerHelper';
-import { isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 
 const useColorPickerDeleteColor = ({
+  type,
   selectedColor,
   colors,
   transformFn = (color) => color,
@@ -15,9 +15,10 @@ const useColorPickerDeleteColor = ({
   spreadsheetGetter
 }) => {
   const dispatch = useDispatch();
-  const customColors = useSelector(selectors.getCustomColors);
+  const customColors = useSelector((state) => selectors.getCustomColors(state, type));
+  const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const spreadsheetCustomColors = useSelector((state) => {
-    if (isSpreadsheetEditorMode()) {
+    if (isSpreadsheetEditorModeEnabled) {
       return selectors[spreadsheetGetter](state);
     }
     return [];
@@ -36,11 +37,11 @@ const useColorPickerDeleteColor = ({
         setSelectedColor(newColors[nextIndex]);
       }
       onColorChange(nextColor);
-      const currentCustomColors = isSpreadsheetEditorMode() ? spreadsheetCustomColors : customColors;
+      const currentCustomColors = isSpreadsheetEditorModeEnabled ? spreadsheetCustomColors : customColors;
       const updatedCustomColors = currentCustomColors.filter((color) => color !== newColors[indexToDelete]);
-      const actionToDispatch = isSpreadsheetEditorMode()
+      const actionToDispatch = isSpreadsheetEditorModeEnabled
         ? actions[spreadsheetSetter](updatedCustomColors)
-        : actions.setCustomColors(updatedCustomColors);
+        : actions.setCustomColors(type, updatedCustomColors);
       dispatch(actionToDispatch);
       newColors.splice(indexToDelete, 1);
       updateColorsAction(newColors);

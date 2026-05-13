@@ -52,7 +52,6 @@
     "remove": "Entfernen",
     "ok": "OK",
     "rotate": "Drehen",
-    "rotate3D": "3D Drehen",
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
     "rotatedClockwise": "im Uhrzeigersinn gedreht",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Formularfeld bearbeiten",
     "formFieldEditMode": "Formularfelder bearbeiten",
     "contentEditMode": "Inhalt bearbeiten",
-    "viewShortCutKeysFor3D": "Tastenkombinationen für 3D anzeigen",
     "markAllRead": "Als Gelesen markieren",
     "pageInsertion": "Seiteneinfügung",
     "insertPage": "Seite einfügen",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",
     "other": "Andere",
-    "3D": "3D",
     "sound": "Klang",
     "changeView": "Ansicht ändern",
     "newImage": "Neues Bild",
@@ -381,7 +378,6 @@
       "strikeout": "Durchstreichen",
       "underline": "Unterstreichen",
       "squiggly": "Gewellte Linie",
-      "3D": "3D",
       "other": "Sonstige",
       "initials": "Initialen",
       "saved": "Gerettet"
@@ -902,6 +898,10 @@
       "title": "Sicherheitswarnung",
       "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
     },
+    "submitForm": {
+      "title": "Sicherheitswarnung",
+      "message": "Dieses Dokument versucht, ein Formular zu senden an: \n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um das Formular zu senden."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Blattnamen bearbeiten",
       "message": "Dieser Name ist bereits vorhanden. Bitte geben Sie einen anderen Namen ein."
@@ -952,9 +952,7 @@
       "italic": "(Strg I)",
       "underline": "(Strg U)",
       "strikeout": "(Strg K)"
-    },
-    "rotate3D": "Umschalt + Maus",
-    "zoom3D": "Umschalt + Rollen"
+    }
   },
   "tool": {
     "pan": "Hand",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Link oder Seite einfügen",
     "enterpage": "Geben Sie die Seitennummer ein, auf die Sie verlinken möchten",
     "urlLink": "URL-Link"
-  },
-  "Model3D": {
-    "add3D": "Fügen Sie eine 3D-Anmerkung hinzu, indem Sie die URL eingeben",
-    "enterurl": "Geben Sie die URL für das 3D-Objekt im glTF-Format ein",
-    "enterurlOrLocalFile": "Geben Sie die URL ein oder laden Sie ein 3D-Objekt im glTF-Format hoch",
-    "formatError": "Es wird nur das glTF-Format (.glb) unterstützt"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Geben Sie eine URL ein oder wählen Sie eine Datei aus, die in WebViewer geladen werden soll",
@@ -1288,11 +1280,6 @@
       "pattern": "Muster",
       "start": "Starten Sie Ihre Suche"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Eigenschaften",
-    "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen."
   },
   "portfolio": {
     "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",

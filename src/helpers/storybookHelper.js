@@ -13,7 +13,6 @@ import { cssFontValues } from 'src/constants/fonts/fonts';
 import { availableOfficeEditorFonts } from 'src/constants/fonts/officeEditorFonts';
 import { DEFAULT_POINT_SIZE, EditingStreamType, LAYOUT_UNITS, OfficeEditorEditMode } from 'constants/officeEditor';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
-
 const noop = () => { };
 
 export const createStore = (preloadedState) => {
@@ -66,9 +65,9 @@ export const MockApp = ({ initialState, width, height, isOffset, storeRef = null
 
   return !store ? null : (
     <Provider store={store}>
-      <div style={divStyle}>
+      <div css={divStyle}>
         {isOffset && <div
-          style={{
+          css={{
             width: '100px',
             backgroundColor: 'lightblue',
             flexShrink: 0,
@@ -163,7 +162,7 @@ export const MockDocumentContainer = ({
   children
 }) => {
   return (
-    <div style={{ width: width, height: height, display: display, justifyContent: justifyContent, alignItems: alignItems, flexDirection: flexDirection }}>
+    <div css={{ width: width, height: height, display: display, justifyContent: justifyContent, alignItems: alignItems, flexDirection: flexDirection }}>
       {children}
       Mock Document Container
     </div>

@@ -8,11 +8,12 @@ import capitalize from 'helpers/capitalize';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import performClipboardActionOnCells from 'src/helpers/performClipboardActionOnCells';
-
 const propTypes = {
   actionType: PropTypes.oneOf(Object.values(CELL_ACTION_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,
@@ -20,7 +21,8 @@ const propTypes = {
 };
 
 const CopyPasteCutButton = forwardRef((props, ref) => {
-  const { isFlyoutItem, actionType, style, className } = props;
+  const { isFlyoutItem, actionType, buttonStyle, className } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const buttonSelector = `cell${capitalize(actionType)}`;
   const {
     dataElement = menuItems[buttonSelector].dataElement,
@@ -60,7 +62,7 @@ const CopyPasteCutButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isActive}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         />
       )

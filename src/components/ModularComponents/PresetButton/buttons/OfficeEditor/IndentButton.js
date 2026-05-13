@@ -16,11 +16,12 @@ import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import classNames from 'classnames';
-
 const propTypes = {
   isIncreaseIndent: PropTypes.bool.isRequired,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,
@@ -29,7 +30,8 @@ const propTypes = {
 
 const IndentButton = forwardRef((props, ref) => {
   const { core } = useCore();
-  const { isFlyoutItem, isIncreaseIndent, style, className } = props;
+  const { isFlyoutItem, isIncreaseIndent, buttonStyle, className } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const menuItem = isIncreaseIndent ? menuItems.increaseIndentButton : menuItems.decreaseIndentButton;
   const {
     dataElement = menuItem.dataElement,
@@ -64,7 +66,7 @@ const IndentButton = forwardRef((props, ref) => {
           onClick={async () => {
             await handleClick();
           }}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
         />
       )
   );

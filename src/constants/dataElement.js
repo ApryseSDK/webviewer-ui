@@ -26,8 +26,6 @@ const DataElements = {
   REDACTION_PANEL: 'redactionPanel',
   REDACTION_PANEL_TOGGLE: 'redactionPanelToggle',
   REDACT_ALL_MARKED_BUTTON: 'redactAllMarkedButton',
-  WV3D_PROPERTIES_PANEL: 'wv3dPropertiesPanel',
-  WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
   LEFT_PANEL: 'leftPanel',
   LEFT_PANEL_BUTTON: 'leftPanelButton',
   STROKE_STYLE_CONTAINER: 'strokeStyleContainer',
@@ -46,6 +44,7 @@ const DataElements = {
   OUTLINE_MOVE_LEFT_BUTTON: 'outlineMoveLeftButton',
   OUTLINE_MOVE_RIGHT_BUTTON: 'outlineMoveRightButton',
   BOOKMARK_PANEL: 'bookmarksPanel',
+  BOOKMARK_PANEL_BUTTON: 'bookmarksPanelButton',
   BOOKMARK_MULTI_SELECT: 'bookmarkMultiSelect',
   BOOKMARK_SHORTCUT_OPTION: 'bookmarkShortcutOption',
   BOOKMARK_ADD_NEW_BUTTON_CONTAINER: 'addNewBookmarkButtonContainer',
@@ -63,6 +62,7 @@ const DataElements = {
   LAYERS_PANEL: 'layersPanel',
   LAYERS_PANEL_BUTTON: 'layersPanelButton',
   SIGNATURE_PANEL: 'signaturePanel',
+  SIGNATURE_PANEL_BUTTON: 'signaturePanelButton',
   ATTACHMENT_PANEL: 'attachmentPanel',
   MOBILE_PANEL_WRAPPER: 'MobilePanelWrapper',
   PORTFOLIO_ADD_FILE: 'portfolioAddFile',
@@ -199,7 +199,6 @@ const DataElements = {
   LOADING_MODAL: 'loadingModal',
   PROGRESS_MODAL: 'progressModal',
   WARNING_MODAL: 'warningModal',
-  MODEL3D_MODAL: 'Model3DModal',
   COLOR_PICKER_MODAL: 'ColorPickerModal',
   OPEN_FILE_MODAL: 'OpenFileModal',
   CUSTOM_MODAL: 'customModal',
@@ -424,7 +423,6 @@ const DataElements = {
   LINK_BUTTON: 'linkButton',
   FILE_ATTACHMENT_DOWNLOAD: 'fileAttachmentDownload',
   ANNOTATION_DELETE_BUTTON: 'annotationDeleteButton',
-  SHORTCUT_KEYS_FOR_3D: 'shortCutKeysFor3D',
   PLAY_SOUND_BUTTON: 'playSoundButton',
   OPEN_ALIGNMENT_BUTTON: 'openAlignmentButton',
 
@@ -438,6 +436,7 @@ const DataElements = {
 
   // Context Menu Popup
   PAN_TOOL_BUTTON: 'panToolButton',
+  SELECT_TOOL_BUTTON: 'selectToolButton',
   STICKY_TOOL_BUTTON: 'stickyToolButton',
   HIGHLIGHT_TOOL_BUTTON: 'highlightToolButton',
   FREE_HAND_TOOL_BUTTON: 'freeHandToolButton',
@@ -445,6 +444,19 @@ const DataElements = {
   FREE_TEXT_TOOL_BUTTON: 'freeTextToolButton',
   MARK_INSERT_TEXT_TOOL_BUTTON: 'markInsertTextToolButton',
   MARK_REPLACE_TEXT_TOOL_BUTTON: 'markReplaceTextToolButton',
+  CALLOUT_TOOL_BUTTON: 'calloutToolButton',
+  ERASER_TOOL_BUTTON: 'eraserToolButton',
+  UNDO_BUTTON: 'undoButton',
+  REDO_BUTTON: 'redoButton',
+
+  // Tool Group Buttons
+  STICKY_TOOL_GROUP_BUTTON: 'stickyToolGroupButton',
+  FREE_TEXT_TOOL_GROUP_BUTTON: 'freeTextToolGroupButton',
+  MARK_INSERT_TEXT_GROUP_BUTTON: 'markInsertTextGroupButton',
+  MARK_REPLACE_TEXT_GROUP_BUTTON: 'markReplaceTextGroupButton',
+  SHAPE_TOOL_GROUP_BUTTON: 'shapeToolGroupButton',
+  FREE_HAND_TOOL_GROUP_BUTTON: 'freeHandToolGroupButton',
+  FREE_HAND_HIGHLIGHT_TOOL_GROUP_BUTTON: 'freeHandHighlightToolGroupButton',
 
   SPREADSHEET_EDITOR_INSERT_IMAGE_BUTTON: 'spreadsheetEditorInsertImageButton',
 };

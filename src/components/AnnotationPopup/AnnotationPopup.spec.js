@@ -169,10 +169,5 @@ describe('AnnotationPopup in read-only mode', () => {
       const rectangleAnnotation = new window.Core.Annotations.RectangleAnnotation();
       shouldOnlyRenderCommentButton(rectangleAnnotation);
     });
-
-    it('for Model3DAnnotation', () => {
-      const Model3DAnnotation = new window.Core.Annotations.Model3DAnnotation();
-      shouldOnlyRenderCommentButton(Model3DAnnotation);
-    });
   });
 });

@@ -17,6 +17,7 @@ import {
   getVisibleTabPanelTabs
 } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'constants/commonColors';
 import { OPACITY_LEVELS } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
@@ -399,18 +400,6 @@ export const setTextEditingPanelWidth = (width) => ({
   type: 'SET_TEXT_EDITING_PANEL_WIDTH',
   payload: { width },
 });
-export const setWv3dPropertiesPanelWidth = (width) => ({
-  type: 'SET_WV3D_PROPERTIES_PANEL_WIDTH',
-  payload: { width },
-});
-export const setWv3dPropertiesPanelModelData = (modelData) => ({
-  type: 'SET_WV3D_PROPERTIES_PANEL_MODEL_DATA',
-  payload: { modelData },
-});
-export const setWv3dPropertiesPanelSchema = (schema) => ({
-  type: 'SET_WV3D_PROPERTIES_PANEL_SCHEMA',
-  payload: { schema },
-});
 export const setOfficeEditorCursorProperties = (cursorProperties) => ({
   type: 'SET_OFFICE_EDITOR_CURSOR_PROPERTIES',
   payload: { cursorProperties },
@@ -634,7 +623,7 @@ export const closeElements = (dataElements) => (dispatch) => {
   }
 };
 
-const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel'];
+const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'textEditingPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
@@ -1070,6 +1059,11 @@ export const setNotesPanelTextCollapsing = (enableNotesPanelTextCollapsing) => (
   payload: { enableNotesPanelTextCollapsing },
 });
 
+export const setStatusList = (statusList) => ({
+  type: 'SET_STATUS_LIST',
+  payload: { statusList },
+});
+
 export const setNotesPanelRepliesCollapsing = (enableNotesPanelRepliesCollapsing) => ({
   type: 'SET_NOTES_PANEL_REPLIES_COLLAPSING',
   payload: { enableNotesPanelRepliesCollapsing },
@@ -1219,18 +1213,28 @@ export const setEnableMeasurementAnnotationsFilter = (isEnabled) => ({
   payload: { isEnabled },
 });
 
+const shouldUpdateToolColors = (state, tool, type, updateOnly) => {
+  if (!updateOnly) {
+    return true;
+  }
+  const toolColorOverrides = state.viewer.toolColorOverrides[tool];
+  return toolColorOverrides?.[COLOR_PALETTE_STYLES[type].stateKey];
+};
+
 export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, getState) => {
-  type = type ? type.toLowerCase() : type;
+  if (!type) {
+    return;
+  }
   const state = getState();
-  if (tool && (!updateOnly || (updateOnly && state.viewer.toolColorOverrides[tool]))) {
+  if (tool && shouldUpdateToolColors(state, tool, type, updateOnly)) {
     return dispatch({
-      type: 'SET_COLORS',
+      type: COLOR_PALETTE_STYLES[type].action,
       payload: { tool, colors },
     });
   }
   dispatch({
-    type: 'SET_COLORS',
-    payload: type === 'text' ? { textColors: colors } : { colors },
+    type: COLOR_PALETTE_STYLES[type].action,
+    payload: { colors },
   });
 };
 
@@ -1279,4 +1283,8 @@ export const setBorderColors = (colors) => ({
 export const setCustomBorderColors = (customColors) => ({
   type: 'SET_CUSTOM_BORDER_COLORS',
   payload: { customColors },
+});
+export const setReaderPageMode = (readerPageMode) => ({
+  type: 'SET_READER_PAGE_MODE',
+  payload: { readerPageMode },
 });

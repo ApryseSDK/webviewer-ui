@@ -52,7 +52,6 @@
     "remove": "Távolítsa el",
     "ok": "rendben",
     "rotate": "Oldaltájolás",
-    "rotate3D": "Forog",
     "rotateClockwise": "Forgatás az óramutató járásával megegyező irányba",
     "rotateCounterClockwise": "Forgatás az óramutató járásával ellentétes irányba",
     "rotatedClockwise": "az óramutató járásával megegyező irányba forgatva",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Űrlapmező szerkesztése",
     "formFieldEditMode": "Űrlapmezők szerkesztése",
     "contentEditMode": "Tartalom szerkesztése",
-    "viewShortCutKeysFor3D": "Gyorsbillentyűk megtekintése",
     "markAllRead": "összes megjelölése olvasottként",
     "pageInsertion": "Oldal beillesztése",
     "insertPage": "Oldal beillesztése",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Kombinált doboz mező",
     "link": "Link",
     "other": "Egyéb",
-    "3D": "3D",
     "sound": "Hang",
     "changeView": "Válts nézőpontot",
     "newImage": "Új kép",
@@ -381,7 +378,6 @@
       "strikeout": "Áthúzni",
       "underline": "Aláhúzás",
       "squiggly": "kacskaringós",
-      "3D": "3D",
       "other": "Egyéb",
       "initials": "Monogram",
       "saved": "Mentett"
@@ -902,6 +898,10 @@
       "title": "Biztonsági figyelmeztetés",
       "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     },
+    "submitForm": {
+      "title": "Biztonsági figyelmeztetés",
+      "message": "Ez a dokumentum egy űrlapot próbál elküldeni ide: \n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra az űrlap elküldéséhez."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Munkalap nevének szerkesztése",
       "message": "Ez a név már létezik. Kérjük, adjon meg egy másik nevet."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Drag",
-    "zoom3D": "Shift + Scroll"
+    }
   },
   "tool": {
     "pan": "Pán",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Hivatkozás vagy oldal beszúrása",
     "enterpage": "Adja meg az oldalszámot, amelyre hivatkozni szeretne",
     "urlLink": "URL link"
-  },
-  "Model3D": {
-    "add3D": "3D objektum hozzáadása",
-    "enterurl": "Adja meg a 3D objektum URL-jét glTF formátumban",
-    "enterurlOrLocalFile": "Adja meg az URL-t, vagy töltsön fel egy 3D objektumot glTF formátumban",
-    "formatError": "Csak a glTF (.glb) formátum támogatott"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Adjon meg egy URL-t, vagy válasszon egy fájlt a WebViewerbe betölteni",
@@ -1288,11 +1280,6 @@
       "pattern": "Minták",
       "start": "Kezdje el a keresést"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Tulajdonságok",
-    "miscValuesHeader": "Összes",
-    "emptyPanelMessage": "Jelöljön ki egy elemet a tulajdonságainak megtekintéséhez"
   },
   "portfolio": {
     "createPDFPortfolio": "PDF-portfólió létrehozása",

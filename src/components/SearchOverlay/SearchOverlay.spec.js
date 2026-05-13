@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen, act } from '@testing-library/react';
 import SearchOverlay from './SearchOverlay';
 import { Basic } from './SearchOverlay.stories';
 import { executeSearch, selectNextResult, selectPreviousResult } from './SearchOverlayContainer';
@@ -9,6 +9,7 @@ import Flyout from '../ModularComponents/Flyout/Flyout';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import actions from 'actions';
 import { configureStore } from '@reduxjs/toolkit';
+import DataElements from 'constants/dataElement';
 
 
 // To create mocks of something that executeSearch uses we need to first import them
@@ -305,6 +306,199 @@ describe('SearchOverlay', () => {
 
     it('Should render wild card checkbox and execute search when checkbox changed', async () => {
       await testCheckboxTriggerSearch(/Wildcard/i);
+    });
+
+    it('Should keep focus inside search options flyout when navigating with arrow keys', async () => {
+      const { TestSearchOverlayWithCustomStore, customStore } = createTestSearchOverlayWithStore();
+      const handlers = createMockHandlers(customStore);
+
+      const originalSetTimeout = global.setTimeout;
+      const setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback, _delay, ...args) => {
+        return originalSetTimeout(callback, 0, ...args);
+      });
+
+      try {
+        const { container } = render(
+          <TestSearchOverlayWithCustomStore
+            searchValue="test"
+            setSearchValue={noop}
+            setReplaceValue={noop}
+            isPanelOpen={true}
+            {...handlers}
+          />
+        );
+
+        const searchInput = screen.getByRole('textbox', { name: 'Search document' });
+        await waitFor(() => {
+          expect(searchInput).toHaveFocus();
+        });
+
+        const caseSensitiveCheckbox = await openFlyoutAndGetCheckbox(screen, container, /Case Sensitive/i);
+        const wholeWordCheckbox = screen.getByRole('checkbox', { name: /Whole word/i });
+        const wildcardCheckbox = screen.getByRole('checkbox', { name: /Wildcard/i });
+
+        act(() => {
+          caseSensitiveCheckbox.focus();
+        });
+        expect(caseSensitiveCheckbox).toHaveFocus();
+
+        fireEvent.click(caseSensitiveCheckbox);
+        await waitFor(() => {
+          expect(searchInput).not.toHaveFocus();
+          expect(caseSensitiveCheckbox).toHaveFocus();
+        });
+
+        fireEvent.keyDown(caseSensitiveCheckbox, { key: 'ArrowDown', code: 'ArrowDown' });
+        await waitFor(() => {
+          expect(wholeWordCheckbox).toHaveFocus();
+        });
+
+        fireEvent.keyDown(wholeWordCheckbox, { key: 'ArrowDown', code: 'ArrowDown' });
+        await waitFor(() => {
+          expect(wildcardCheckbox).toHaveFocus();
+        });
+
+        fireEvent.keyDown(wildcardCheckbox, { key: 'ArrowUp', code: 'ArrowUp' });
+        await waitFor(() => {
+          expect(wholeWordCheckbox).toHaveFocus();
+        });
+      } finally {
+        setTimeoutSpy.mockRestore();
+      }
+    });
+
+    it('Should show focus highlight when search options flyout is first opened via keyboard', async () => {
+      const { TestSearchOverlayWithCustomStore, customStore } = createTestSearchOverlayWithStore();
+      const handlers = createMockHandlers(customStore);
+
+      render(
+        <TestSearchOverlayWithCustomStore
+          searchValue="test"
+          setSearchValue={noop}
+          setReplaceValue={noop}
+          isPanelOpen={true}
+          {...handlers}
+        />
+      );
+
+      const filterButton = screen.getByRole('button', { name: 'Filter' });
+      act(() => {
+        filterButton.focus();
+      });
+
+      await act(async () => {
+        fireEvent.keyDown(filterButton, { key: 'Enter', code: 'Enter' });
+      });
+      customStore.dispatch(actions.setFlyoutToggleElement('searchOptionsButton'));
+      customStore.dispatch(actions.toggleElement(DataElements.SEARCH_OPTIONS_FLYOUT));
+
+      const caseSensitiveCheckbox = await waitFor(() => {
+        const target = screen.getByRole('checkbox', { name: /Case Sensitive/i });
+        expect(target).toBeInTheDocument();
+        return target;
+      });
+
+      act(() => {
+        caseSensitiveCheckbox.focus();
+      });
+
+      const checkElement = caseSensitiveCheckbox.parentElement?.querySelector('.ui__choice__input__check');
+      expect(checkElement).toHaveClass('ui__choice__input__check--focus');
+    });
+
+    it('Should not keep forced focus highlight when search options flyout is reopened via mouse', async () => {
+      const { TestSearchOverlayWithCustomStore, customStore } = createTestSearchOverlayWithStore();
+      const handlers = createMockHandlers(customStore);
+
+      const { container } = render(
+        <TestSearchOverlayWithCustomStore
+          searchValue="test"
+          setSearchValue={noop}
+          setReplaceValue={noop}
+          isPanelOpen={true}
+          {...handlers}
+        />
+      );
+
+      const filterButton = screen.getByRole('button', { name: 'Filter' });
+
+      await act(async () => {
+        fireEvent.keyDown(filterButton, { key: 'Enter', code: 'Enter' });
+      });
+      customStore.dispatch(actions.setFlyoutToggleElement('searchOptionsButton'));
+      customStore.dispatch(actions.toggleElement(DataElements.SEARCH_OPTIONS_FLYOUT));
+
+      const caseSensitiveCheckbox = await waitFor(() => {
+        const target = screen.getByRole('checkbox', { name: /Case Sensitive/i });
+        expect(target).toBeInTheDocument();
+        return target;
+      });
+
+      fireEvent.keyDown(caseSensitiveCheckbox, { key: 'Escape', code: 'Escape' });
+      await waitFor(() => {
+        expect(container.querySelector('.FlyoutContainer')).not.toBeInTheDocument();
+      });
+
+      await act(async () => {
+        fireEvent.mouseUp(filterButton);
+      });
+      customStore.dispatch(actions.setFlyoutToggleElement('searchOptionsButton'));
+      customStore.dispatch(actions.toggleElement(DataElements.SEARCH_OPTIONS_FLYOUT));
+
+      const caseSensitiveCheckboxAfterMouseOpen = await waitFor(() => {
+        const target = screen.getByRole('checkbox', { name: /Case Sensitive/i });
+        expect(target).toBeInTheDocument();
+        return target;
+      });
+
+      act(() => {
+        caseSensitiveCheckboxAfterMouseOpen.focus();
+      });
+
+      const checkElement = caseSensitiveCheckboxAfterMouseOpen.parentElement?.querySelector('.ui__choice__input__check');
+      expect(checkElement).not.toHaveClass('ui__choice__input__check--focus');
+    });
+
+    it('Should close search options flyout when tab is pressed during keyboard navigation', async () => {
+      const { TestSearchOverlayWithCustomStore, customStore } = createTestSearchOverlayWithStore();
+      const handlers = createMockHandlers(customStore);
+
+      const { container } = render(
+        <TestSearchOverlayWithCustomStore
+          searchValue="test"
+          setSearchValue={noop}
+          setReplaceValue={noop}
+          isPanelOpen={true}
+          {...handlers}
+        />
+      );
+
+      const filterButton = screen.getByRole('button', { name: 'Filter' });
+      act(() => {
+        filterButton.focus();
+      });
+
+      await act(async () => {
+        fireEvent.keyDown(filterButton, { key: 'Enter', code: 'Enter' });
+      });
+      customStore.dispatch(actions.setFlyoutToggleElement('searchOptionsButton'));
+      customStore.dispatch(actions.toggleElement(DataElements.SEARCH_OPTIONS_FLYOUT));
+
+      const caseSensitiveCheckbox = await waitFor(() => {
+        const target = screen.getByRole('checkbox', { name: /Case Sensitive/i });
+        expect(target).toBeInTheDocument();
+        return target;
+      });
+
+      act(() => {
+        caseSensitiveCheckbox.focus();
+      });
+
+      fireEvent.keyDown(caseSensitiveCheckbox, { key: 'Tab', code: 'Tab' });
+
+      await waitFor(() => {
+        expect(container.querySelector('.FlyoutContainer')).not.toBeInTheDocument();
+      });
     });
 
     it('Should not be focused on mount', () => {

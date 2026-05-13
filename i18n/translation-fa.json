@@ -52,7 +52,6 @@
     "remove": "حذف",
     "ok": "باشه",
     "rotate": "جهت صفحه",
-    "rotate3D": "چرخش",
     "rotateClockwise": "چرخش در جهت عقربه‌های ساعت",
     "rotateCounterClockwise": "چرخش در خلاف جهت عقربه‌های ساعت",
     "rotatedClockwise": "در جهت عقربه‌های ساعت چرخید",
@@ -92,7 +91,6 @@
     "formFieldEdit": "ویرایش فیلد فرم",
     "formFieldEditMode": "ویرایش فیلدهای فرم",
     "contentEditMode": "ویرایش محتوا",
-    "viewShortCutKeysFor3D": "مشاهده کلیدهای میانبر",
     "markAllRead": "علامت گذاری همه به عنوان خوانده شده",
     "pageInsertion": "درج صفحه",
     "insertPage": "درج صفحه",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "فیلد جعبه ترکیبی",
     "link": "پیوند",
     "other": "دیگر",
-    "3D": "سه بعدی",
     "sound": "صدا",
     "changeView": "تغییر نما",
     "newImage": "تصویر جدید",
@@ -381,7 +378,6 @@
       "strikeout": "اعتصاب",
       "underline": "زیرخط دار",
       "squiggly": "کج و معوج",
-      "3D": "سه بعدی",
       "other": "دیگر",
       "initials": "حروف اول",
       "saved": "ذخیره شده"
@@ -902,6 +898,10 @@
       "title": "هشدار امنیتی",
       "message": "این سند در تلاش است به آدرس زیر متصل شود:\n\n{{- uri}}\n\nاگر به این سند اعتماد دارید، برای باز کردن آن روی تأیید کلیک کنید."
     },
+    "submitForm": {
+      "title": "هشدار امنیتی",
+      "message": "این سند در حال تلاش برای ارسال فرم به این نشانی است: \n\n{{- uri}}\n\n اگر به این سند اعتماد دارید، برای ارسال فرم روی تأیید کلیک کنید."
+    },
     "sheetTabRenameIssueOne": {
       "title": "ویرایش نام برگه",
       "message": "این نام از قبل وجود دارد. لطفاً نام دیگری وارد کنید."
@@ -952,9 +952,7 @@
       "italic": "(کنترل ۱)",
       "underline": "(کنترل U)",
       "strikeout": "(کنترل K)"
-    },
-    "rotate3D": "شیفت + کشیدن",
-    "zoom3D": "شیفت + اسکرول"
+    }
   },
   "tool": {
     "pan": "تابه",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "درج لینک یا صفحه",
     "enterpage": "شماره صفحه‌ای که می‌خواهید به آن لینک دهید را وارد کنید",
     "urlLink": "لینک آدرس اینترنتی"
-  },
-  "Model3D": {
-    "add3D": "اضافه کردن شیء سه بعدی",
-    "enterurl": "آدرس اینترنتی شیء سه‌بعدی را با فرمت glTF وارد کنید",
-    "enterurlOrLocalFile": "URL را وارد کنید یا یک شیء سه‌بعدی را با فرمت glTF بارگذاری کنید",
-    "formatError": "فقط فرمت glTF (.glb) پشتیبانی می‌شود"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "یک URL وارد کنید یا یک فایل را برای بارگذاری در WebViewer انتخاب کنید",
@@ -1288,11 +1280,6 @@
       "pattern": "الگوها",
       "start": "جستجوی خود را شروع کنید"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "خواص",
-    "miscValuesHeader": "همه",
-    "emptyPanelMessage": "برای مشاهده ویژگی‌های یک عنصر، آن را انتخاب کنید."
   },
   "portfolio": {
     "createPDFPortfolio": "ایجاد نمونه کارهای PDF",

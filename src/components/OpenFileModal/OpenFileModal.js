@@ -18,7 +18,6 @@ import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
 import PropTypes from 'prop-types';
 import useCore from 'src/hooks/useCore';
-
 const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
   const { core } = useCore();
   const { t } = useTranslation();
@@ -48,7 +47,6 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
         DataElements.LOADING_MODAL,
         DataElements.PROGRESS_MODAL,
         DataElements.ERROR_MODAL,
-        DataElements.MODEL3D_MODAL,
       ]);
     } else {
       setSrc('');
@@ -144,7 +142,6 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
           swipeToClose
           closeHandler={closeModal}
         >
-          <div className="swipe-indicator" />
           <Tabs className="open-file-modal-tabs" id="openFileModal">
             <div className="tabs-header-container">
               <div role="tablist" className="tab-list">
@@ -192,7 +189,6 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
               className="modal-btn"
               dataElement="linkSubmitButton"
               label={t('OpenFile.addTab')}
-              style={{ width: 90 }}
               onClick={useFocusOnClose(() => handleAddTab(src, extension, filename, size))}
               disabled={selectedTab !== 'urlInputPanelButton' || (!src.length || !extension?.length)}
             />

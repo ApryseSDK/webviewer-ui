@@ -22,7 +22,7 @@ import './ToolStylePopup.scss';
 import getToolStyles from 'helpers/getToolStyles';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 class ToolStylePopup extends React.PureComponent {
   static propTypes = {
     activeToolName: PropTypes.string,
@@ -202,7 +202,7 @@ class ToolStylePopup extends React.PureComponent {
         key={activeToolName}
         toolName={activeToolName}
         colorMapKey={colorMapKey}
-        style={activeToolStyle}
+        annotationStyle={activeToolStyle}
         isFreeText={isFreeText}
         isEllipse={isEllipse}
         isFreeTextAutoSize={properties.isAutosizeFont}
@@ -243,7 +243,6 @@ class ToolStylePopup extends React.PureComponent {
         data-element="toolStylePopup"
         ref={this.popup}
       >
-        {/* {isMobile && <div className="swipe-indicator" />} */}
         {Component}
       </div>
     );

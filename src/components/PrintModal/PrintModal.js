@@ -254,7 +254,6 @@ const PrintModal = ({
           swipeToClose
           closeHandler={closePrintModal}
         >
-          <div className="swipe-indicator" />
           {isPrinting && (
             <div className="spinner-container">
               <Spinner

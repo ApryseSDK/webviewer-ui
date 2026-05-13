@@ -156,3 +156,7 @@
   z-index: 10;
   background: rgba(255, 255, 255, 0);
 }
+
+.ThumbnailsPanel .thumbnailAutoScrollArea:last-of-type {
+  inset-block-end: 70px;
+}

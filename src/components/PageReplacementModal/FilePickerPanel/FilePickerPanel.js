@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import useCore from 'hooks/useCore';
 import FilePicker from 'components/FilePicker';
 
+const CREATE_DOCUMENT_OPTIONS = { loadAsPDF: true };
+
+const isCoreDocument = (source) => {
+  const CoreDocument = window?.Core?.Document;
+
+  return source instanceof CoreDocument;
+};
 const FilePickerPanel = ({
   onFileProcessed,
   shouldShowIcon,
@@ -11,44 +18,39 @@ const FilePickerPanel = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [acceptFormats, setAcceptFormats] = useState('');
 
+  const loadDocumentForPageManipulation = (source) => (
+    isCoreDocument(source) ? source : core.createDocument(source, CREATE_DOCUMENT_OPTIONS)
+  );
+
   useEffect(() => {
     setAcceptFormats(core.getAllowedFileExtensions());
   }, []);
 
   const onFileAdded = async (files) => {
-    const processedFile = files.length > 1
-      ? await mergeDocuments(files)
-      : files[0];
+    try {
+      setErrorMessage('');
+      const processedFile = files.length > 1
+        ? await mergeDocuments(files)
+        : files[0];
 
-    onFileProcessed(processedFile);
+      onFileProcessed(processedFile);
+    } catch (error) {
+      setErrorMessage(error?.message ?? String(error));
+    }
   };
 
-  // recursive function with promise for merging files
-  // could maybe live in a helper file
-  async function mergeDocuments(sourceArray, nextCount = 1, document = null) {
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async (resolve) => {
-      if (!document) {
-        document = await core.createDocument(sourceArray[0]);
-      }
-      const newDocument = await core.createDocument(sourceArray[nextCount]);
-      const newDocumentPageCount = newDocument.getPageCount();
-      const pages = Array.from({ length: newDocumentPageCount }, (v, k) => k + 1);
-      const pageIndexToInsert = document.getPageCount() + 1;
+  async function mergeDocuments(sourceArray) {
+    let mergedDocument = await loadDocumentForPageManipulation(sourceArray[0]);
 
-      document.insertPages(newDocument, pages, pageIndexToInsert).then(() => {
-        resolve({
-          next: sourceArray.length - 1 > nextCount,
-          document,
-        });
-      });
-    }).then((response) => {
-      return response.next ?
-        mergeDocuments(sourceArray, nextCount + 1, response.document) :
-        response.document;
-    }).catch((error) => {
-      setErrorMessage(error);
-    });
+    for (let index = 1; index < sourceArray.length; index++) {
+      const sourceDocument = await loadDocumentForPageManipulation(sourceArray[index]);
+      const pages = Array.from({ length: sourceDocument.getPageCount() }, (_, pageIndex) => pageIndex + 1);
+      const pageIndexToInsert = mergedDocument.getPageCount() + 1;
+
+      await mergedDocument.insertPages(sourceDocument, pages, pageIndexToInsert);
+    }
+
+    return mergedDocument;
   }
 
   return (

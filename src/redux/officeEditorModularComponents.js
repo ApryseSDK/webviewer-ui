@@ -468,6 +468,28 @@ const defaultOfficeEditorModularComponents = {
     type: 'pageControls'
   }
 };
+
+const OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER = 'officeEditorContextMenuTableDivider';
+
+const defaultOfficeEditorPopups = {
+  [DataElements.CONTEXT_MENU_POPUP]: [
+    { dataElement: DataElements.OFFICE_EDITOR_CUT },
+    { dataElement: DataElements.OFFICE_EDITOR_COPY },
+    { dataElement: DataElements.OFFICE_EDITOR_PASTE },
+    { dataElement: DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING },
+    { dataElement: DataElements.OFFICE_EDITOR_ADD_COMMENT },
+    { dataElement: DataElements.OFFICE_EDITOR_DELETE },
+    { dataElement: OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER, type: ITEM_TYPE.DIVIDER },
+    { dataElement: DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE },
+    { dataElement: DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW },
+    { dataElement: DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT },
+    { dataElement: DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT },
+    { dataElement: DataElements.OFFICE_EDITOR_DELETE_ROW },
+    { dataElement: DataElements.OFFICE_EDITOR_DELETE_COLUMN },
+    { dataElement: DataElements.OFFICE_EDITOR_DELETE_TABLE },
+  ],
+};
+
 const defaultOfficeEditorPanels = [
   {
     dataElement: DataElements.OFFICE_EDITOR_REVIEW_PANEL,
@@ -486,4 +508,10 @@ const defaultOfficeEditorPanels = [
   },
 ];
 
-export { defaultOfficeEditorModularHeaders, defaultOfficeEditorModularComponents, defaultOfficeEditorPanels };
+export {
+  defaultOfficeEditorModularHeaders,
+  defaultOfficeEditorModularComponents,
+  OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER,
+  defaultOfficeEditorPopups,
+  defaultOfficeEditorPanels,
+};

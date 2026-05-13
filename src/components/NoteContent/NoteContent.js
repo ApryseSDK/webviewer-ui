@@ -35,9 +35,9 @@ import { COMMON_COLORS } from 'constants/commonColors';
 import Button from 'components/Button';
 
 import './NoteContent.scss';
+import { css } from '@emotion/react';
 
 dayjs.extend(LocalizedFormat);
-
 const propTypes = {
   annotation: PropTypes.object.isRequired,
   isEditing: PropTypes.bool,
@@ -195,7 +195,12 @@ const NoteContent = ({
 
             const text = trackedChangeLabels[annotation['TrackedChangeType']];
             return text && (
-              <span style={{ color: annotation.FillColor.toString(), fontWeight: 700 }}>{text}</span>
+              <span
+                className="tracked-change-label"
+                css={css({ color: annotation.FillColor.toString() })}
+              >
+                {text}
+              </span>
             );
           };
 
@@ -206,7 +211,7 @@ const NoteContent = ({
               renderRichText={renderRichText}
               richTextStyle={richTextStyle}
               resize={resize}
-              style={fontColor}
+              textStyle={fontColor}
               beforeContent={beforeContent}
             >
               {contents}
@@ -409,7 +414,7 @@ const NoteContent = ({
         );
       }
       return (
-        <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
+        <div className="selected-text-preview">
           {highlightSearchResult}
         </div>
       );
@@ -715,7 +720,7 @@ const getRichTextSpan = (text, richTextStyle, key) => {
     style.textDecoration = style.textDecoration.replace('word', 'underline');
   }
   return (
-    <span style={style} key={key}>{text}</span>
+    <span css={css({ ...style })} key={key}>{text}</span>
   );
 };
 

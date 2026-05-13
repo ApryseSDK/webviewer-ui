@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIOS } from 'helpers/device';
 
-
 const PageControlsInput = forwardRef((props, ref) => {
   const {
     icon,
@@ -117,7 +116,7 @@ const PageControlsInput = forwardRef((props, ref) => {
         onMouseOver={onBlur}
         onFocus={onFocus}
         disabled={!allowPageNavigation}
-        style={style}
+        css={style}
       />
     </form>;
 

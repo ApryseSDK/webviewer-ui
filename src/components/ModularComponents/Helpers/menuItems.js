@@ -10,7 +10,6 @@ import {
 import Button from 'components/Button';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
-
 const baseMenuItems = {
   [PRESET_BUTTON_TYPES.UNDO]: {
     dataElement: 'undoButton',
@@ -406,7 +405,8 @@ export const menuItems = {
 };
 
 export const getPresetButtonDOM = (presetButtonProperties) => {
-  const { buttonType, isDisabled, onClick, isFullScreen, isActive, style, className } = presetButtonProperties;
+  const { buttonType, isDisabled, onClick, isFullScreen, isActive, buttonStyle, className } = presetButtonProperties;
+  const resolvedButtonStyle = buttonStyle ?? presetButtonProperties.style;
   const menuItem = { ...menuItems[buttonType] };
   if (buttonType === PRESET_BUTTON_TYPES.FULLSCREEN) {
     menuItem.icon = isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen';
@@ -429,7 +429,7 @@ export const getPresetButtonDOM = (presetButtonProperties) => {
       onClick={onClick}
       disabled={isDisabled}
       isActive={isActive}
-      style={style}
+      buttonStyle={resolvedButtonStyle}
       onClickAnnouncement={getButtonPressedAnnouncement(title)}
     />
   );

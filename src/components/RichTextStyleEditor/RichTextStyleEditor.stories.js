@@ -39,13 +39,22 @@ const state = {
     customElementOverrides: {},
     panelWidths: { panel: 264 },
     /* eslint-disable custom/no-hex-colors */
-    colors: [
+    strokeColors: [
       '#fdac0f', '#fa9933', '#f34747', '#21905b', '#c531a4',
       '#e5631a', '#3e5ece', '#dc9814', '#c27727', '#b11c1c',
       '#13558c', '#76287b', '#347842', '#318f29', '#ffffff',
       '#cdcdcd', '#9c9c9c', '#696969', '#272727', '#000000'
     ],
-    customColors: [],
+    /* eslint-disable custom/no-hex-colors */
+    fillColors: [
+      '#fdac0f', '#fa9933', '#f34747', '#21905b', '#c531a4',
+      '#e5631a', '#3e5ece', '#dc9814', '#c27727', '#b11c1c',
+      '#13558c', '#76287b', '#347842', '#318f29', '#ffffff',
+      '#cdcdcd', '#9c9c9c', '#696969', '#272727', '#000000'
+    ],
+    customStrokeColors: [],
+    customFillColors: [],
+    customTextColors: [],
     /* eslint-enable custom/no-hex-colors */
     textColors: initialTextColors,
     toolColorOverrides: {},
@@ -61,7 +70,7 @@ const state = {
 const baseProps = {
   currentStyleTab: 'StrokeColor',
   isInFormBuilderAndNotFreeText: true,
-  style: {
+  annotationStyle: {
     'FillColor': new window.Core.Annotations.Color(212, 211, 211),
     'StrokeColor': new window.Core.Annotations.Color(0, 0, 0),
     'TextColor': new window.Core.Annotations.Color(0, 0, 0),

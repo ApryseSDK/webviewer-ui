@@ -265,11 +265,15 @@ export const updatePortfolio = (store, documentViewerKey) => async () => {
   }
 };
 
-export const setupCompositionInput = (documentViewerKey) => () => {
+export const setupCompositionInput = (documentViewerKey) => async () => {
   const docViewer = core.getDocumentViewer(documentViewerKey);
   const enableCompositionInput = getHashParameters('enableCompositionInput', false);
   if (enableCompositionInput) {
-    docViewer.enableCompositionInput();
+    try {
+      await docViewer.enableCompositionInputAsync();
+    } catch (e) {
+      console.error('Failed to enable composition input', e);
+    }
   }
 };
 

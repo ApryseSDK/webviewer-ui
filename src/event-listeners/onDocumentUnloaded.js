@@ -24,7 +24,6 @@ export default (store, documentViewerKey) => () => {
       'audioPlaybackPopup',
       'redactionPanel',
       'textEditingPanel',
-      'wv3dPropertiesPanel',
       ...overlays,
     ]),
   );

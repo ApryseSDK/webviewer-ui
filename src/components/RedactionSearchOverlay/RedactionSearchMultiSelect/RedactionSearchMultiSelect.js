@@ -7,7 +7,7 @@ import { COMMON_COLORS, CUSTOM_UI_VARS } from 'constants/commonColors';
 import PropTypes from 'prop-types';
 import './RedactionSearchMultiSelect.scss';
 import { isMobileSize } from 'helpers/getDeviceSize';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const getColorForMode = (isDarkMode, darkModeColor, lightModeColor, isFocused = true) => {
   if (isFocused) {
     return isDarkMode ? darkModeColor : lightModeColor;
@@ -156,7 +156,7 @@ RedactionOption.propTypes = {
 
 const MultiValueLabel = ({ data }) => {
   return (
-    <div tabIndex={0} style={{ display: 'flex', height: '18px' }}>
+    <div tabIndex={0} className="redaction-multi-value-label">
       {renderRedactionOption(data.icon, data.label)}
     </div>
   );

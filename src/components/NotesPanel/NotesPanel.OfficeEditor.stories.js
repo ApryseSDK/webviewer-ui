@@ -22,6 +22,7 @@ const initialState = {
     disabledElements: {
       logoBar: { disabled: true },
       noteStateFlyout: { disabled: true },
+      annotationNoteConnectorLine: { disabled: true },
     },
     flyoutMap: {},
     openElements: {

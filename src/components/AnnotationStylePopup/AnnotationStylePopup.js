@@ -14,12 +14,16 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import handleFreeTextAutoSizeToggle from 'src/helpers/handleFreeTextAutoSizeToggle';
-
 import './AnnotationStylePopup.scss';
 
 const propTypes = {
   annotations: PropTypes.array.isRequired,
-  style: PropTypes.object.isRequired,
+  annotationStyle: PropTypes.object,
+  /**
+   * @deprecated Use annotationStyle instead.
+   * @ignore
+   */
+  style: PropTypes.object,
   properties: PropTypes.object.isRequired,
   isRedaction: PropTypes.bool,
   isFreeText: PropTypes.bool,
@@ -31,7 +35,7 @@ const propTypes = {
 const AnnotationStylePopup = (props) => {
   const {
     annotations,
-    style,
+    annotationStyle,
     isRedaction,
     isFreeText,
     isEllipse,
@@ -44,6 +48,7 @@ const AnnotationStylePopup = (props) => {
     hasBackToMenu,
     onBackToMenu
   } = props;
+  const resolvedAnnotationStyle = annotationStyle ?? props.style;
   const { core } = useCore();
 
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.ANNOTATION_STYLE_POPUP));
@@ -173,7 +178,7 @@ const AnnotationStylePopup = (props) => {
           <StylePopup
             hideSnapModeCheckbox={hideSnapModeCheckbox}
             colorMapKey={colorMapKey}
-            style={style}
+            annotationStyle={resolvedAnnotationStyle}
             isFreeText={isFreeText}
             isFreeTextAutoSize={isAutoSizeFont}
             onFreeTextSizeToggle={() => handleFreeTextAutoSizeToggle(annotations[0], setAutoSizeFont, isAutoSizeFont, activeDocumentViewerKey)}

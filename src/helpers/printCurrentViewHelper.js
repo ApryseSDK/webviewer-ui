@@ -1,5 +1,3 @@
-import getRootNode, { getInstanceNode } from './getRootNode';
-
 /**
  * @ignore
  * Utility function that returns a bounding box of the current view of WebViewer.
@@ -11,32 +9,20 @@ function getCurrentViewRect(core, pageNumber) {
   const displayMode = core.getDisplayModeObject();
   const containerElement = core.getScrollViewElement();
   const documentElement = core.getViewerElement();
-  const documentContainerElement = getRootNode().querySelector('[aria-label="Document Content"]');
-  const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
-  let innerWidth = documentContainerElement ? documentContainerElement.clientWidth : window.innerWidth;
-  let innerHeight = documentContainerElement ? documentContainerElement.clientHeight : window.innerHeight;
-  let containerScrollLeft = containerElement.scrollLeft;
-  let documentElementOffsetLeft = documentElement.offsetLeft;
+  const containerRect = containerElement.getBoundingClientRect();
+  const documentRect = documentElement.getBoundingClientRect();
+  const { scrollLeft, scrollTop } = containerElement;
 
-  if (isApryseWebViewerWebComponent) {
-    const instanceRect = getInstanceNode().getBoundingClientRect();
-    innerWidth = instanceRect.width;
-    innerHeight = instanceRect.height;
-    containerScrollLeft = containerElement.scrollLeft;
-    documentElementOffsetLeft = documentElement.offsetLeft;
-  }
-
-  const coordinates = [];
-
-  coordinates[0] = displayMode.windowToPageNoRotate({
-    x: Math.max(containerScrollLeft, documentElementOffsetLeft),
-    y: Math.max(containerElement.scrollTop, 0)
-  }, pageNumber);
-
-  coordinates[1] = displayMode.windowToPageNoRotate({
-    x: Math.min(innerWidth, documentElementOffsetLeft + documentElement.offsetWidth) + containerScrollLeft,
-    y: innerHeight + containerElement.scrollTop
-  }, pageNumber);
+  const coordinates = [
+    displayMode.windowToPageNoRotate({
+      x: scrollLeft + Math.max(containerRect.left, documentRect.left),
+      y: scrollTop + Math.max(containerRect.top, documentRect.top)
+    }, pageNumber),
+    displayMode.windowToPageNoRotate({
+      x: scrollLeft + Math.min(containerRect.right, documentRect.right),
+      y: scrollTop + Math.min(containerRect.bottom, documentRect.bottom)
+    }, pageNumber),
+  ];
 
   const x1 = Math.min(coordinates[0].x, coordinates[1].x);
   const y1 = Math.min(coordinates[0].y, coordinates[1].y);

@@ -141,7 +141,6 @@ const PageReplacementModal = ({
           swipeToClose
           closeHandler={closeThisModal}
         >
-          <div className="swipe-indicator" />
           <Tabs className="page-replacement-tabs" id="pageReplacementModal">
             <div className="tabs-header-container">
               <div role="tablist" className="tab-list">

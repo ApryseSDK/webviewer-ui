@@ -153,3 +153,76 @@ describe('MultiViewerMode Tests', function() {
     expect(getByText('Widget2')).toBeInTheDocument();
   });
 });
+
+describe('Radio Button Group Tests', function() {
+  let mockCore;
+  let mockWidgetAnnotation;
+  let consoleSpy;
+
+  beforeEach(() => {
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    mockWidgetAnnotation = function() {};
+    window.Core = {
+      Annotations: {
+        WidgetAnnotation: mockWidgetAnnotation,
+      }
+    };
+
+    mockCore = {
+      getAnnotationsList: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      getSelectedAnnotations: jest.fn(() => []),
+    };
+
+    useSelector.mockImplementation((selector) => {
+      return selector({ viewer: { openElements: { 'indexPanel': true } } });
+    });
+    useDispatch.mockReturnValue(jest.fn());
+
+    selectors.isElementOpen.mockReturnValue(true);
+    selectors.isElementDisabled.mockReturnValue(false);
+    selectors.getFlyoutMap.mockReturnValue({});
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    consoleSpy.mockRestore();
+  });
+
+  it('renders multiple radio groups on the same page without duplicate React key warnings', () => {
+
+    const createRadioGroup = (groupName, idPrefix, pageNumber) => {
+      const children = [
+        { Id: `${idPrefix}-1`, fieldName: groupName, PageNumber: pageNumber },
+        { Id: `${idPrefix}-2`, fieldName: groupName, PageNumber: pageNumber },
+      ];
+      return children.map((child) => {
+        const widget = Object.create(mockWidgetAnnotation.prototype);
+        widget.fieldName = groupName;
+        widget.Id = child.Id;
+        widget.PageNumber = pageNumber;
+        widget.getField = jest.fn(() => ({ name: groupName, widgets: children }));
+        return widget;
+      });
+    };
+
+    const allWidgets = [
+      ...createRadioGroup('Radio Group A', 'rga', 1),
+      ...createRadioGroup('Radio Group B', 'rgb', 1),
+    ];
+
+    mockCore.getAnnotationsList.mockReturnValue(allWidgets);
+    useCore.mockReturnValue({ core: mockCore });
+
+    render(<IndexPanelContainer dataElement="indexPanel" />);
+
+    expect(screen.getAllByText('Radio Group A')).toHaveLength(1);
+    expect(screen.getAllByText('Radio Group B')).toHaveLength(1);
+
+    const duplicateKeyWarnings = consoleSpy.mock.calls.filter(
+      ([msg]) => typeof msg === 'string' && msg.includes('same key')
+    );
+    expect(duplicateKeyWarnings).toHaveLength(0);
+  });
+});

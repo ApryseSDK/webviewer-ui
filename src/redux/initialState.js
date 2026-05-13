@@ -125,7 +125,6 @@ export default {
       indexPanel: 293,
       redactionPanel: 330,
       textEditingPanel: 330,
-      wv3dPropertiesPanel: 307,
       comparePanel: 330,
       stylePanel: 330,
       signatureListPanel: 330,
@@ -507,14 +506,6 @@ export default {
           toolGroup: 'calloutTools',
           dataElement: 'calloutToolGroupButton',
           title: 'annotation.callout',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'model3DTools',
-          img: 'icon-tool-model3d',
-          dataElement: 'threeDToolGroupButton',
-          title: 'annotation.3D',
-          showColor: 'never',
         },
         {
           type: 'toolGroupButton',
@@ -1599,13 +1590,6 @@ export default {
         group: 'fileAttachmentTools',
         showColor: 'never',
       },
-      AnnotationCreateThreeD: {
-        dataElement: 'threeDToolGroupButton',
-        title: 'annotation.3D',
-        img: 'icon-tool-model3d',
-        group: 'model3DTools',
-        showColor: 'never',
-      },
       AnnotationCreateStamp: {
         dataElement: 'stampToolButton',
         title: 'annotation.stamp',
@@ -1940,9 +1924,17 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    customColors:
-      localStorageManager.isLocalStorageEnabled() && localStorageManager.getItemSynchronous(`${instanceId}-customColors`)
-        ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customColors`))
+    customTextColors:
+      localStorageManager.isLocalStorageEnabled() && localStorageManager.getItemSynchronous(`${instanceId}-customTextColors`)
+        ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customTextColors`))
+        : [],
+    customFillColors:
+      localStorageManager.isLocalStorageEnabled() && localStorageManager.getItemSynchronous(`${instanceId}-customFillColors`)
+        ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customFillColors`))
+        : [],
+    customStrokeColors:
+      localStorageManager.isLocalStorageEnabled() && localStorageManager.getItemSynchronous(`${instanceId}-customStrokeColors`)
+        ? JSON.parse(localStorageManager.getItemSynchronous(`${instanceId}-customStrokeColors`))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeTabInPanel: {},
@@ -1971,6 +1963,7 @@ export default {
     enableNoteSubmissionWithEnter: false,
     isNotesPanelTextCollapsingEnabled: true,
     isNotesPanelRepliesCollapsingEnabled: true,
+    statusList: null,
     isMeasurementAnnotationFilterEnabled: false,
     isCommentThreadExpansionEnabled: false,
     enableMouseWheelZoom: true,
@@ -2032,6 +2025,7 @@ export default {
     annotationContentOverlayHandler: null,
     snapMode: {},
     isReaderMode: false,
+    readerPageMode: 'Single',
     unreadAnnotationIdSet: new Set(),
     watermarkModalOptions: null,
     fonts: [...defaultFonts, ...webFonts],
@@ -2127,7 +2121,8 @@ export default {
     isOfficeEditorMode: false,
     isOfficeEditorHeaderEnabled: false,
     isSpreadsheetEditorModeEnabled: false,
-    colors: initialColors,
+    strokeColors: initialColors,
+    fillColors: initialColors,
     textColors: initialTextColors,
     toolColorOverrides: {},
     defaultPrintMargins: '0',
@@ -2216,18 +2211,6 @@ export default {
   },
   featureFlags: {
     customizableUI: false,
-  },
-  wv3dPropertiesPanel: {
-    modelData: [],
-    schema: {
-      headerName: 'Name',
-      defaultValues: {},
-      groups: {},
-      groupOrder: [],
-      removeEmptyRows: false,
-      removeEmptyGroups: false,
-      createRawValueGroup: true,
-    },
   },
   officeEditor: {
     canUndo: false,

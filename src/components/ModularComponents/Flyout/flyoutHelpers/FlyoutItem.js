@@ -151,7 +151,11 @@ const StaticItem = React.forwardRef((props, ref) => {
       return <StatefulButton ref={ref} key={`stateful-button-${index}`} {...allProps} isFlyoutItem/>;
     }
     case FLYOUT_ITEM_TYPES.CUSTOM_ELEMENT: {
-      return <CustomElement key={`custom-element-${index}`} {...flyoutItem} isFlyoutItem/>;
+      const renderArguments = [
+        ...(flyoutItem.renderArguments || []),
+        onKeyDownHandler,
+      ];
+      return <CustomElement key={`custom-element-${index}`} {...flyoutItem} renderArguments={renderArguments} isFlyoutItem />;
     }
     case FLYOUT_ITEM_TYPES.LABEL: {
       if (typeof flyoutItem === 'object') {

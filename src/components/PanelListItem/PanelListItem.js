@@ -13,7 +13,6 @@ import { menuItems, menuTypes } from 'helpers/outlineFlyoutHelper';
 import { getEndFacingChevronIcon } from 'helpers/rightToLeft';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
-
 const PanelListChildren = ({ children }) => {
   const items = React.Children.toArray(children);
   if (items.length === 0) {
@@ -53,7 +52,7 @@ const PanelItemContent = React.memo(({
     <div className={'panel-list-text-container'}>
       <div className="panel-list-label-header">
         <Button
-          style={{ color: textColor || 'inherit' }}
+          buttonStyle={{ color: textColor || 'inherit' }}
           ariaLabel={labelHeader}
           label={labelHeader}
           onDoubleClick={onDoubleClick}
@@ -168,7 +167,7 @@ const PanelListItem = ({
         <div className={classNames(`panel-list-row${checkboxOptions ? ' with-checkbox' : ''}`, 'focusable-container')}>
           {showCheckBox && (
             <div
-              style={{ '--checkbox-left': `${-32 * currentNestingLevel + 4}px` }}
+              css={{ '--checkbox-left': `${-32 * currentNestingLevel + 4}px` }}
               className="checkbox"
             >
               <Choice

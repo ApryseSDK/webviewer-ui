@@ -61,7 +61,9 @@ describe('AnnotationContentOverlay - offset calculations', () => {
     // Use waitFor to wait until the overlay element's style has been updated
     await waitFor(() => {
       const overlayElement = document.querySelector('.AnnotationContentOverlay');
-      const { left, top } = overlayElement.style;
+      const computedStyle = window.getComputedStyle(overlayElement);
+      const left = computedStyle.left;
+      const top = computedStyle.top;
 
       // Check that offsets are calculated as expected
       expect(parseInt(left, 10)).toBeGreaterThan(0); // Ensure it's within the correct bounds
@@ -95,10 +97,10 @@ describe('AnnotationContentOverlay - offset calculations', () => {
     // Use waitFor to wait until the overlay element has the updated styles
     await waitFor(() => {
       const overlayElement = document.querySelector('.AnnotationContentOverlay');
-
       // Verify that the offsets are adjusted based on the web component's host
-      const left = overlayElement.style.left;
-      const top = overlayElement.style.top;
+      const computedStyle = window.getComputedStyle(overlayElement);
+      const left = computedStyle.left;
+      const top = computedStyle.top;
 
       // Computation is based on the clientXY values and the gap which is 20
       // So for example if the clientXY is 800, the left is 800 + 20, minus 100 for the host offsetLeft

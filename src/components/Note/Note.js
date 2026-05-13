@@ -33,6 +33,24 @@ const propTypes = {
 };
 
 let currId = 0;
+const INTERACTIVE_NOTE_SELECTOR = [
+  'button',
+  'a',
+  'input',
+  'select',
+  'textarea',
+  'label',
+  'summary',
+  '[role="button"]',
+  '[role="link"]',
+  '[role="checkbox"]',
+  '[role="menuitem"]',
+  '[role="option"]',
+  '[role="radio"]',
+  '[role="switch"]',
+  '[contenteditable]:not([contenteditable="false"])',
+  '[data-note-interactive]',
+].join(', ');
 
 const Note = ({
   annotation,
@@ -227,6 +245,26 @@ const Note = ({
   };
 
   const hasUnreadReplies = unreadReplyIdSet.size > 0;
+  const isInteractiveNoteTarget = (target) => target instanceof Element && !!target.closest(INTERACTIVE_NOTE_SELECTOR);
+
+  const handleNoteContainerClick = (e) => {
+    if (isInteractiveNoteTarget(e.target)) {
+      e.stopPropagation();
+      return;
+    }
+    handleNoteClick(e);
+  };
+
+  const handleNoteContainerKeyDown = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    if (isInteractiveNoteTarget(e.target)) {
+      return;
+    }
+    e.preventDefault();
+    handleNoteClick(e);
+  };
 
   const noteClass = classNames({
     Note: true,
@@ -297,6 +335,8 @@ const Note = ({
       ref={containerRef}
       className={noteClass}
       id={`note_${annotation.Id}`}
+      onClick={handleNoteContainerClick}
+      onKeyDown={handleNoteContainerKeyDown}
     >
       <Button
         className='note-button'

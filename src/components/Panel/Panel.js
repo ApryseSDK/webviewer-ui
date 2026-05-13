@@ -45,6 +45,7 @@ const DesktopPanel = ({ children }) => {
   const isVisible = !(!isOpen || isDisabled);
   const isPanelOnLeftSide = isElementOnLeftSide(location);
   const isPanelOnRightSide = isElementOnRightSide(location);
+  const shouldUseMobilePanel = isMobile && !isInDesktopOnlyMode;
 
   // TODO: For whoever is refactoring the LeftPanel to make it generic, review if this is the best approach
   // Once we move to the new UI we can remove the legacy stuff
@@ -95,7 +96,7 @@ const DesktopPanel = ({ children }) => {
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
           leftDirection={true} />}
       <div className={`ModularPanel-container ${dataElement}`} css={containerCss}>
-        {!isInDesktopOnlyMode && isMobile && (
+        {shouldUseMobilePanel && (
           <div className="close-container">
             <div
               className="close-icon-container"
@@ -130,6 +131,8 @@ const Panel = (props) => {
   const isMobile = isMobileSize();
 
   const [isOpen] = useSelector((state) => [selectors.isElementOpen(state, dataElement)]);
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const shouldUseMobilePanel = isMobile && !isInDesktopOnlyMode;
   const dispatch = useDispatch();
 
   const children = React.cloneElement(props.children, {
@@ -139,7 +142,7 @@ const Panel = (props) => {
   });
 
   if (isOpen) {
-    if (isMobile) {
+    if (shouldUseMobilePanel) {
       dispatch(actions.openElement('MobilePanelWrapper'));
       return (
         <MobilePanelWrapper>

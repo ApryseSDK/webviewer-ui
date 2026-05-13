@@ -52,7 +52,6 @@
     "remove": "Alih keluar",
     "ok": "okey",
     "rotate": "Orientasi Halaman",
-    "rotate3D": "Putar",
     "rotateClockwise": "Putar mengikut arah jam",
     "rotateCounterClockwise": "Putar lawan jam",
     "rotatedClockwise": "diputar mengikut arah jam",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Edit Medan Borang",
     "formFieldEditMode": "Edit Medan Borang",
     "contentEditMode": "Edit Kandungan",
-    "viewShortCutKeysFor3D": "Lihat Kekunci Pintasan",
     "markAllRead": "Tandai semua sebagai dibaca",
     "pageInsertion": "Sisipan Halaman",
     "insertPage": "Sisipan Halaman",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Padang Kotak Kombo",
     "link": "Pautan",
     "other": "Lain-lain",
-    "3D": "3D",
     "sound": "Bunyi",
     "changeView": "Tukar Pandangan",
     "newImage": "Imej Baharu",
@@ -381,7 +378,6 @@
       "strikeout": "Strikeout",
       "underline": "Garis bawah",
       "squiggly": "Dengan berlekuk-lekuk",
-      "3D": "3D",
       "other": "Lain-lain",
       "initials": "Inisial",
       "saved": "Disimpan"
@@ -902,6 +898,10 @@
       "title": "Amaran keselamatan",
       "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
     },
+    "submitForm": {
+      "title": "Amaran Keselamatan",
+      "message": "Dokumen ini cuba menghantar borang ke: \n\n{{- uri}}\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk menghantar borang."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Edit Nama Helaian",
       "message": "Nama ini sudah wujud. Sila masukkan nama lain."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Seret",
-    "zoom3D": "Shift + Tatal"
+    }
   },
   "tool": {
     "pan": "kuali",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Sisipkan Pautan atau Halaman",
     "enterpage": "Masukkan nombor halaman yang anda ingin pautkan",
     "urlLink": "pautan URL"
-  },
-  "Model3D": {
-    "add3D": "Tambah objek 3D",
-    "enterurl": "Masukkan URL objek 3D dalam format glTF",
-    "enterurlOrLocalFile": "Masukkan URL atau muat naik objek 3D dalam format glTF",
-    "formatError": "Hanya format glTF (.glb) disokong"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Masukkan URL atau pilih fail untuk dimuatkan ke dalam WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Corak",
       "start": "Mula membuat carian anda"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Properties",
-    "miscValuesHeader": "Semua",
-    "emptyPanelMessage": "Pilih elemen untuk melihat sifatnya."
   },
   "portfolio": {
     "createPDFPortfolio": "Cipta Portfolio PDF",

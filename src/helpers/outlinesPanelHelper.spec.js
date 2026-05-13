@@ -1,34 +1,197 @@
 import {
-  getCurrentDestViewerCoord,
+  getPageWidthAndHeight,
+  getDefaultDestCoord,
+  convertToPDFDestCoord,
   getOutlineName,
-  normalizeOutlineCoord,
 } from './outlinesPanelHelper';
 
 describe('outlinesPanelHelper', () => {
-  describe('getCurrentDestViewerCoord', () => {
-    it('returns the document viewer coordinates', () => {
-      const doc = {
-        getViewerCoordinates: jest.fn(() => ({ x: 10, y: 20 })),
-      };
-      const { x, y } = getCurrentDestViewerCoord(doc, 5, { x: 1, y: 2 });
-      expect({ x, y }).toEqual({ x: 10, y: 20 });
-    });
-  });
-
-  describe('normalizeOutlineCoord', () => {
+  describe('getPageWidthAndHeight', () => {
     const testCases = [
-      { rotation: window.Core.PageRotation.E_0, input: { x: 3, y: 7 }, expected: { x: 3, y: 7 } },
-      { rotation: window.Core.PageRotation.E_90, input: { x: 3, y: 7 }, expected: { x: 7, y: 3 } },
-      { rotation: window.Core.PageRotation.E_180, input: { x: 3, y: 7 }, expected: { x: 3, y: 7 } },
-      { rotation: window.Core.PageRotation.E_270, input: { x: 3, y: 7 }, expected: { x: 7, y: 3 } },
+      {
+        description: 'should return width and height from getPageInfo when page is not rotated',
+        doc: {
+          getPageRotation: () => 0,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { width: 612, height: 792 },
+      },
+      {
+        description: 'should swap width and height from getPageInfo when page is rotated 90 degrees',
+        doc: {
+          getPageRotation: () => 90,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { width: 792, height: 612 },
+      },
+      {
+        description: 'should return width and height from getPageInfo when page is rotated 180 degrees',
+        doc: {
+          getPageRotation: () => 180,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { width: 612, height: 792 },
+      },
+      {
+        description: 'should swap width and height from getPageInfo when page is rotated 270 degrees',
+        doc: {
+          getPageRotation: () => 270,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { width: 792, height: 612 },
+      },
+      {
+        description: 'should return 0 for width and height if doc is null',
+        doc: null,
+        expected: { width: 0, height: 0 },
+      },
+      {
+        description: 'should return 0 for width and height if doc does not have getPageRotation',
+        doc: {
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { width: 0, height: 0 },
+      }
     ];
 
-    testCases.forEach(({ rotation, input, expected }) => {
-      it(`returns ${JSON.stringify(expected)} for rotation ${rotation}`, () => {
-        const result = normalizeOutlineCoord(input, rotation);
+    for (const { description, doc, expected } of testCases) {
+      it(description, () => {
+        const result = getPageWidthAndHeight(doc, 1);
         expect(result).toEqual(expected);
       });
-    });
+    }
+  });
+
+  describe('getDefaultDestCoord', () => {
+    const testCases = [
+      {
+        description: 'should return correct default destination coordinates for unrotated page',
+        doc: {
+          getPageRotation: () => 0,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { x: 0, y: 0 }, // top-left of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return correct default destination coordinates for page rotated 90 degrees',
+        doc: {
+          getPageRotation: () => 90,
+          getPageInfo: () => ({ width: 792, height: 612 }),
+        },
+        expected: { x: 0, y: 792 }, // bottom-left of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return correct default destination coordinates for page rotated 180 degrees',
+        doc: {
+          getPageRotation: () => 180,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { x: 612, y: 792 }, // bottom-right of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return correct default destination coordinates for page rotated 270 degrees',
+        doc: {
+          getPageRotation: () => 270,
+          getPageInfo: () => ({ width: 792, height: 612 }),
+        },
+        expected: { x: 612, y: 0 }, // top-right of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return {x: 0, y: 0} if doc is null',
+        doc: null,
+        expected: { x: 0, y: 0 }, // top-left of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return {x: 0, y: 0} if doc does not have getPageRotation',
+        doc: {
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { x: 0, y: 0 }, // top-left of unrotated page in viewer coordinates
+      },
+      {
+        description: 'should return { x: 0, y: 0} if doc.getPageRotation does not return a number',
+        doc: {
+          getPageRotation: () => null,
+          getPageInfo: () => ({ width: 612, height: 792 }),
+        },
+        expected: { x: 0, y: 0 }, // top-left of unrotated page in viewer coordinates
+      }
+    ];
+
+    for (const { description, doc, expected } of testCases) {
+      it(description, () => {
+        const result = getDefaultDestCoord(doc, 1);
+        expect(result).toEqual(expected);
+      });
+    }
+  });
+
+  describe('convertToPDFDestCoord', () => {
+    const testCases = [
+      {
+        description: 'Drawing outline on top-left corner of PDF page',
+        docParams: {
+          pageRotation: 0,
+          height: 792,
+          width: 612,
+        },
+        pageNum: 1,
+        currentDestCoord: { x: 0, y: 0 },
+        expectedViewerCoord: { x: 0, y: 792 },
+      },
+      {
+        description: 'Drawing outline on top-right corner of PDF page',
+        docParams: {
+          pageRotation: 0,
+          height: 792,
+          width: 612,
+        },
+        pageNum: 1,
+        currentDestCoord: { x: 600, y: 0 },
+        expectedViewerCoord: { x: 600, y: 792 },
+      },
+      {
+        description: 'Drawing outline on bottom-left corner of PDF page',
+        docParams: {
+          pageRotation: 0,
+          height: 792,
+          width: 612,
+        },
+        pageNum: 1,
+        currentDestCoord: { x: 0, y: 700 },
+        expectedViewerCoord: { x: 0, y: 92 },
+      },
+      {
+        description: 'Drawing outline on bottom-right corner of PDF page',
+        docParams: {
+          pageRotation: 0,
+          height: 792,
+          width: 612,
+        },
+        pageNum: 1,
+        currentDestCoord: { x: 600, y: 700 },
+        expectedViewerCoord: { x: 600, y: 92 },
+      },
+    ];
+
+    for (const { description, docParams, pageNum, currentDestCoord, expectedViewerCoord } of testCases) {
+      for (const rotation of [0, 90, 180, 270]) {
+        it(`${description} with page rotation ${rotation}`, () => {
+          const doc = {
+            getPageRotation: () => rotation,
+            getPageInfo: () => {
+              if (rotation === 90 || rotation === 270) {
+                return { height: docParams.width, width: docParams.height };
+              } else {
+                return { height: docParams.height, width: docParams.width };
+              }
+            },
+          };
+          const result = convertToPDFDestCoord(doc, pageNum, currentDestCoord);
+          expect(result).toEqual(expectedViewerCoord);
+        });
+      }
+    }
   });
 
   describe('getOutlineName', () => {

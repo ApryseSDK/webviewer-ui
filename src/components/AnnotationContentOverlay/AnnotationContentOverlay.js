@@ -92,7 +92,7 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     <div
       className="Overlay AnnotationContentOverlay"
       data-element={DataElements.ANNOTATION_CONTENT_OVERLAY}
-      style={{ ...overlayPosition }}
+      css={overlayPosition}
       ref={overlayRef}
     >
       <div className="author">{core.getDisplayAuthor(annotation['Author'])}</div>
@@ -119,7 +119,7 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
         <div
           className="Overlay AnnotationContentOverlay"
           data-element={DataElements.ANNOTATION_CONTENT_OVERLAY}
-          style={{ ...overlayPosition }}
+          css={overlayPosition}
           ref={overlayRef}
         >
           <CustomElement render={customRender} />

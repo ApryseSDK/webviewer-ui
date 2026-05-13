@@ -148,7 +148,7 @@ const CreatePortfolioModal = () => {
           <input
             ref={fileInputRef}
             multiple
-            style={{ display: 'none' }}
+            hidden
             type="file"
             onChange={(event) => {
               addFiles(event.target.files);

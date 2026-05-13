@@ -52,7 +52,6 @@
     "remove": "Odstranit",
     "ok": "OK",
     "rotate": "Orientace stránky",
-    "rotate3D": "Točit se",
     "rotateClockwise": "Otáčet po směru hodinových ručiček",
     "rotateCounterClockwise": "Otočte proti směru hodinových ručiček",
     "rotatedClockwise": "otočený ve směru hodinových ručiček",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Upravit pole formuláře",
     "formFieldEditMode": "Upravit pole formuláře",
     "contentEditMode": "Upravit obsah",
-    "viewShortCutKeysFor3D": "Zobrazit klávesové zkratky",
     "markAllRead": "označit vše jako přečtené",
     "pageInsertion": "Vkládání stránky",
     "insertPage": "Vkládání stránky",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Pole Combo Box",
     "link": "Odkaz",
     "other": "jiný",
-    "3D": "3D",
     "sound": "Zvuk",
     "changeView": "Změnit zobrazení",
     "newImage": "Nový vzhled",
@@ -381,7 +378,6 @@
       "strikeout": "Přeškrtnutí",
       "underline": "Zdůraznit",
       "squiggly": "Zkrouceně",
-      "3D": "3D",
       "other": "jiný",
       "initials": "Iniciály",
       "saved": "Uložené"
@@ -902,6 +898,10 @@
       "title": "Bezpečnostní varování",
       "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     },
+    "submitForm": {
+      "title": "Bezpečnostní upozornění",
+      "message": "Tento dokument se pokouší odeslat formulář na: \n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, klikněte na Potvrdit a formulář odešlete."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Upravit název listu",
       "message": "Toto jméno již existuje. Zadejte prosím jiné jméno."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + tažení",
-    "zoom3D": "Shift + Scroll"
+    }
   },
   "tool": {
     "pan": "Pánev",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Vložit odkaz nebo stránku",
     "enterpage": "Zadejte číslo stránky, na kterou chcete odkazovat",
     "urlLink": "URL odkaz"
-  },
-  "Model3D": {
-    "add3D": "Přidejte 3D objekt",
-    "enterurl": "Zadejte adresu URL 3D objektu ve formátu glTF",
-    "enterurlOrLocalFile": "Zadejte adresu URL nebo nahrajte 3D objekt ve formátu glTF",
-    "formatError": "Podporován je pouze formát glTF (.glb)."
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Zadejte adresu URL nebo vyberte soubor, který se má načíst do WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Vzory",
       "start": "Začněte hledat"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Vlastnosti",
-    "miscValuesHeader": "Všechno",
-    "emptyPanelMessage": "Vyberte prvek pro zobrazení jeho vlastností"
   },
   "portfolio": {
     "createPDFPortfolio": "Vytvořte portfolio PDF",

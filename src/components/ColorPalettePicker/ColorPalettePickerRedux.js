@@ -15,7 +15,7 @@ function ColorPickerModalRedux(props) {
   const [colorToBeDeleted, setColorToBeDeleted] = useState('');
 
   const activeCustomColor = useSelector(selectors.getCustomColor);
-  const customColors = useSelector(selectors.getCustomColors);
+  const customColors = useSelector((state) => selectors.getCustomColors(state, property));
 
   useEffect(() => {
     if (activeCustomColor && color && (modifyColorMode || getHexColor(activeCustomColor) !== getHexColor(color))) {
@@ -25,7 +25,7 @@ function ColorPickerModalRedux(props) {
 
   const handleDeleteColor = () => {
     const updatedCustomColors = customColors.filter((color) => color !== colorToBeDeleted);
-    dispatch(actions.setCustomColors(updatedCustomColors));
+    dispatch(actions.setCustomColors(property, updatedCustomColors));
     setColorToBeDeleted('');
     dispatch(actions.setCustomColor(null));
   };
@@ -70,7 +70,7 @@ function ColorPickerModalRedux(props) {
       if (modifyColorMode === 'add') {
         // add to the list if the new color doesn't exist
         if (!newColorExist) {
-          dispatch(actions.setCustomColors([...customColors, newColorHex]));
+          dispatch(actions.setCustomColors(property, [...customColors, newColorHex]));
         }
         // if the new color exist, then auto-selected it using (onStyleChange)
       } else if (modifyColorMode === 'update') {
@@ -79,7 +79,7 @@ function ColorPickerModalRedux(props) {
         if (!newColorExist) {
           const updatedCustomColors = [...customColors];
           updatedCustomColors[selectedColorindex] = newColorHex;
-          dispatch(actions.setCustomColors(updatedCustomColors));
+          dispatch(actions.setCustomColors(property, updatedCustomColors));
         }
         // if the new color does exist then selected the existing one using (onStyleChange)
       }

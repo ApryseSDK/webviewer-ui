@@ -52,7 +52,6 @@
     "remove": "取り除く",
     "ok": "OK",
     "rotate": "ページの方向",
-    "rotate3D": "回転する",
     "rotateClockwise": "右90°回転",
     "rotateCounterClockwise": "左90°回転",
     "rotatedClockwise": "時計回りに回転",
@@ -92,7 +91,6 @@
     "formFieldEdit": "フォームフィールドの編集",
     "formFieldEditMode": "フォームフィールドの編集",
     "contentEditMode": "コンテンツの編集",
-    "viewShortCutKeysFor3D": "ショートカットキーを表示する",
     "markAllRead": "すべて既読にする",
     "pageInsertion": "ページの挿入",
     "insertPage": "ページ挿入",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "コンボボックスフィールド",
     "link": "リンク",
     "other": "その他",
-    "3D": "3D",
     "sound": "サウンド",
     "changeView": "ビューを変更",
     "newImage": "新しいイメージ",
@@ -381,7 +378,6 @@
       "strikeout": "取り消し線",
       "underline": "下線",
       "squiggly": "波線",
-      "3D": "3D",
       "other": "その他",
       "initials": "イニシャル",
       "saved": "保存しました"
@@ -902,6 +898,10 @@
       "title": "セキュリティ警告 ",
       "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
     },
+    "submitForm": {
+      "title": "セキュリティ警告",
+      "message": "このドキュメントは次の宛先にフォームを送信しようとしています: \n\n{{- uri}}\n\n このドキュメントを信頼する場合は、確認をクリックしてフォームを送信してください。"
+    },
     "sheetTabRenameIssueOne": {
       "title": "シート名の編集",
       "message": "この名前は既に存在します。別の名前を入力してください。"
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + ドラッグ",
-    "zoom3D": "Shift + スクロール"
+    }
   },
   "tool": {
     "pan": "パン",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "リンクまたはページを挿入",
     "enterpage": "リンク先のページ番号を入力してください",
     "urlLink": "URLリンク"
-  },
-  "Model3D": {
-    "add3D": "3Dオブジェクトを追加",
-    "enterurl": "3DオブジェクトのURLをglTF形式で入力します",
-    "enterurlOrLocalFile": "glTF形式のURLを入力するか、3Dオブジェクトをアップロードします",
-    "formatError": "glTF（.glb）形式のみがサポートされています"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "URLを入力するか、WebViewerに読み込むファイルを選択してください",
@@ -1288,11 +1280,6 @@
       "pattern": "パターン",
       "start": "検索を開始します"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "プロパティ",
-    "miscValuesHeader": "すべて",
-    "emptyPanelMessage": "プロパティを表示する要素を選択してください."
   },
   "portfolio": {
     "createPDFPortfolio": "PDF ポートフォリオを作成する",

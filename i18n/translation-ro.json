@@ -52,7 +52,6 @@
     "remove": "Elimina",
     "ok": "O.K",
     "rotate": "Orientarea paginii",
-    "rotate3D": "Roti",
     "rotateClockwise": "Roteste in sensul acelor de ceasornic",
     "rotateCounterClockwise": "Rotiți în sens invers acelor de ceasornic",
     "rotatedClockwise": "rotit în sensul acelor de ceasornic",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Editați câmpul formularului",
     "formFieldEditMode": "Editați câmpurile formularului",
     "contentEditMode": "Editați conținutul",
-    "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
     "pageInsertion": "Inserarea paginii",
     "insertPage": "Inserarea paginii",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Câmp de casetă combinată",
     "link": "Legătură",
     "other": "Alte",
-    "3D": "3D",
     "sound": "Sunet",
     "changeView": "Schimbă privirea",
     "newImage": "Imagine noua",
@@ -381,7 +378,6 @@
       "strikeout": "Strikeout",
       "underline": "Subliniați",
       "squiggly": "Squiggly",
-      "3D": "3D",
       "other": "Alte",
       "initials": "Inițiale",
       "saved": "Salvat"
@@ -902,6 +898,10 @@
       "title": "Avertizare de securitate",
       "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     },
+    "submitForm": {
+      "title": "Avertisment de securitate",
+      "message": "Acest document încearcă să trimită un formular către: \n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a trimite formularul."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Editați numele foii",
       "message": "Acest nume există deja. Vă rugăm să introduceți un alt nume."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Trage",
-    "zoom3D": "Shift + Derulare"
+    }
   },
   "tool": {
     "pan": "Tigaie",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Inserați link sau pagină",
     "enterpage": "Introduceți numărul paginii la care doriți să vă conectați",
     "urlLink": "link URL"
-  },
-  "Model3D": {
-    "add3D": "Adăugați obiect 3D",
-    "enterurl": "Introduceți adresa URL a obiectului 3D în format glTF",
-    "enterurlOrLocalFile": "Introduceți adresa URL sau încărcați un obiect 3D în format glTF",
-    "formatError": "Numai formatul glTF (.glb) este acceptat"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Introduceți o adresă URL sau alegeți un fișier de încărcat în WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Modele",
       "start": "Începeți să căutați"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Proprietăți",
-    "miscValuesHeader": "Toate",
-    "emptyPanelMessage": "Selectați un element pentru a-i vedea proprietățile"
   },
   "portfolio": {
     "createPDFPortfolio": "Creați portofoliu PDF",

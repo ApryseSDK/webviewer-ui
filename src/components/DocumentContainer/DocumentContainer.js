@@ -52,7 +52,6 @@ class DocumentContainer extends React.PureComponent {
     isInDesktopOnlyMode: PropTypes.bool,
     isRedactionPanelOpen: PropTypes.bool,
     isTextEditingPanelOpen: PropTypes.bool,
-    isWv3dPropertiesPanelOpen: PropTypes.bool,
     featureFlags: PropTypes.object,
     bottomHeaderHeight: PropTypes.number,
     activeDocumentViewerKey: PropTypes.number,
@@ -343,10 +342,9 @@ class DocumentContainer extends React.PureComponent {
     }
 
     const ariaLabelledById = currentTabs.length > 0 ? `tab-${fileName}-${activeTab}` : undefined;
-
     return (
       <div
-        style={style}
+        css={ style }
         id={`document-container-${fileName}`}
         role="tabpanel"
         aria-labelledby={ariaLabelledById}
@@ -373,7 +371,7 @@ class DocumentContainer extends React.PureComponent {
               {this.props.isReaderMode && <ReaderModeViewer />}
               <div
                 className="footer"
-                style={footerStyle}
+                css={ footerStyle }
               >
                 {showPageNav && (
                   <PageNavOverlay
@@ -414,7 +412,6 @@ const mapStateToProps = (state) => ({
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
   isTextEditingPanelOpen: selectors.isElementOpen(state, 'textEditingPanel'),
-  isWv3dPropertiesPanelOpen: selectors.isElementOpen(state, 'wv3dPropertiesPanel'),
   featureFlags: selectors.getFeatureFlags(state),
   bottomHeaderHeight: selectors.getBottomHeadersHeight(state),
   activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),

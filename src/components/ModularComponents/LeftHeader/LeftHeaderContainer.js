@@ -41,7 +41,7 @@ function LeftHeaderContainer() {
     }
   }, [dimensions.width]);
 
-  const style = useMemo(() => ({
+  const headerWrapperStyle = useMemo(() => ({
     ...(leftPanelOpen && { transform: `translateX(${leftPanelWidth}px)` }),
     ...(bottomHeadersHeight !== 0 && { height: `calc(100% - ${bottomHeadersHeight}px)` }),
     ...userDefinedStyle
@@ -49,10 +49,11 @@ function LeftHeaderContainer() {
 
   const renderedHeader = useMemo(() => {
     if (leftHeader) {
-      const { dataElement } = leftHeader;
-      return (<ModularHeader ref={elementRef} {...leftHeader} key={dataElement} style={style}/>);
+      const { dataElement, ...leftHeaderProps } = leftHeader;
+      delete leftHeaderProps.style;
+      return (<ModularHeader ref={elementRef} {...leftHeaderProps} dataElement={dataElement} key={dataElement} wrapperStyle={headerWrapperStyle}/>);
     }
-  }, [leftHeader, style]);
+  }, [leftHeader, headerWrapperStyle]);
 
   if (!customizableUI || !leftHeaders.length) {
     return null;

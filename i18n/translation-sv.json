@@ -52,7 +52,6 @@
     "remove": "Ta bort",
     "ok": "OK",
     "rotate": "Sidorientering",
-    "rotate3D": "Rotera",
     "rotateClockwise": "Rotera klockvis",
     "rotateCounterClockwise": "Rotera moturs",
     "rotatedClockwise": "roteras medurs",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Redigera formulärfält",
     "formFieldEditMode": "Redigera formulärfält",
     "contentEditMode": "Redigera innehåll",
-    "viewShortCutKeysFor3D": "Visa kortkommandon",
     "markAllRead": "Markera allt som läst",
     "pageInsertion": "Sidinsättning",
     "insertPage": "Sidinsättning",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Kombinationsrutafält",
     "link": "Länk",
     "other": "Övrig",
-    "3D": "3D",
     "sound": "Ljud",
     "changeView": "Ändra vy",
     "newImage": "Ny bild",
@@ -381,7 +378,6 @@
       "strikeout": "Överstrykning",
       "underline": "Understrykning",
       "squiggly": "Snyggt",
-      "3D": "3D",
       "other": "Övrig",
       "initials": "Initialer",
       "saved": "Sparad"
@@ -902,6 +898,10 @@
       "title": "Säkerhetsvarning",
       "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     },
+    "submitForm": {
+      "title": "Säkerhetsvarning",
+      "message": "Det här dokumentet försöker skicka ett formulär till: \n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att skicka formuläret."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Redigera arknamn",
       "message": "Det här namnet finns redan. Ange ett annat namn."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Skift + Dra",
-    "zoom3D": "Skift + Scroll"
+    }
   },
   "tool": {
     "pan": "Panorera",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Infoga länk eller sida",
     "enterpage": "Ange sidnumret du vill länka till",
     "urlLink": "URL-länk"
-  },
-  "Model3D": {
-    "add3D": "Lägg till 3D-objekt",
-    "enterurl": "Ange URL-adressen till 3D-objektet i glTF-format",
-    "enterurlOrLocalFile": "Ange URL:en eller ladda upp ett 3D-objekt i glTF-format",
-    "formatError": "Endast formatet glTF (.glb) stöds"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Ange en URL eller välj en fil att ladda in i WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Mönster",
       "start": "Börja göra din sökning"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Egenskaper",
-    "miscValuesHeader": "Allt",
-    "emptyPanelMessage": "Välj ett element för att se dess egenskaper"
   },
   "portfolio": {
     "createPDFPortfolio": "Skapa PDF-portfölj",

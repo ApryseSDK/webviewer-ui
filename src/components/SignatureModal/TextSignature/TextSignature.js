@@ -13,6 +13,7 @@ import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
 
 import './TextSignature.scss';
 import getRootNode from 'helpers/getRootNode';
+import { css } from '@emotion/react';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -289,10 +290,8 @@ const TextSignature = ({
   const renderHiddenSignatureElements = () => {
     return (
       <div
-        className={classNames({
-          'text-signature-text': true,
-        })}
-        style={{ fontFamily: selectedFontFamily, fontSize: FONT_SIZE, color: fontColor.toHexString() }}
+        className={classNames('text-signature-text', 'text-signature-font')}
+        css={{ fontFamily: selectedFontFamily, fontSize: FONT_SIZE, color: fontColor.toHexString() }}
       >
         <div
           className="text-container"
@@ -342,7 +341,11 @@ const TextSignature = ({
   };
 
   const isDisabled = !(isModalOpen && isTabPanelSelected);
-  const initialsInputStyle = isInitialsModeEnabled ? {} : { display: 'none' };
+  const textSignatureInputStyle = css({
+    fontFamily: `${selectedFontFamily || fonts} !important`,
+    fontSize,
+    color: fontColor.toHexString(),
+  });
 
   return (
     <div className="text-signature">
@@ -356,7 +359,7 @@ const TextSignature = ({
               type="text"
               value={fullSignature}
               onChange={handleFullSignatureChange}
-              style={{ fontFamily: selectedFontFamily || fonts, fontSize, color: fontColor.toHexString() }}
+              css={textSignatureInputStyle}
               disabled={isDisabled}
             />
           </label>
@@ -377,7 +380,7 @@ const TextSignature = ({
             </button>
           </div>
         </div>
-        <div className="signature-input initials" style={initialsInputStyle}>
+        <div className={classNames('signature-input initials', { 'text-signature-initials-hidden': !isInitialsModeEnabled })}>
           <label>
             <input
               className="text-signature-input"
@@ -385,7 +388,7 @@ const TextSignature = ({
               value={initials}
               aria-label={t('option.signatureModal.typeInitial')}
               onChange={handleInitialsChange}
-              style={{ fontFamily: selectedFontFamily || fonts, fontSize, color: fontColor.toHexString() }}
+              css={textSignatureInputStyle}
               disabled={isDisabled}
             />
           </label>

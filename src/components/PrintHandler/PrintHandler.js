@@ -9,6 +9,7 @@ import selectors from 'selectors';
 
 import './PrintHandler.scss';
 import getRootNode from 'helpers/getRootNode';
+import getCspNonce from 'helpers/getCspNonce';
 
 const PrintHandler = () => {
   const { core } = useCore();
@@ -37,13 +38,19 @@ const PrintHandler = () => {
 
   useEffect(() => {
     const rootElement = window.isApryseWebViewerWebComponent ? getRootNode() : document.head;
+    const cspNonce = getCspNonce();
     if (rootElement) {
       const marginStyleID = 'margin-style';
       let element = rootElement.querySelector(`#${marginStyleID}`);
       if (!element) {
         element = document.createElement('style');
         element.id = marginStyleID;
+        if (cspNonce) {
+          element.nonce = cspNonce;
+        }
         rootElement.appendChild(element);
+      } else if (cspNonce && element.nonce !== cspNonce) {
+        element.nonce = cspNonce;
       }
       element.textContent = `
         @page {

@@ -24,10 +24,38 @@ const getSafeScale = () => {
   return { scaleX, scaleY };
 };
 
+const getWindowScroll = () => ({
+  scrollX: window.pageXOffset || window.scrollX || 0,
+  scrollY: window.pageYOffset || window.scrollY || 0,
+});
+
+const getRtlSafeScrollLeft = (element) => {
+  if (!element) {
+    return 0;
+  }
+  const coreScrollLeft = window.Core?.getScrollLeft?.(element);
+  if (Number.isFinite(coreScrollLeft)) {
+    return coreScrollLeft;
+  }
+  return Number.isFinite(element.scrollLeft) ? element.scrollLeft : 0;
+};
+
+/** @ignore */
+const getScrollContainerDocRect = (scrollContainer) => {
+  const { top, left, width, height } = scrollContainer.getBoundingClientRect();
+  const { scrollX, scrollY } = getWindowScroll();
+  const docTop = top + scrollY + scrollContainer.scrollTop;
+  const docLeft = left + scrollX + getRtlSafeScrollLeft(scrollContainer);
+  return {
+    top: docTop,
+    left: docLeft,
+    bottom: docTop + height,
+    right: docLeft + width,
+  };
+};
+
 /**
  * Returns true if any part of the annotation is within the visible area of the scroll container.
- * Coordinates from `getAnnotationPosition` are in scroll-content space (via `pageToWindow`).
- * `getBoundingClientRect` returns viewport-relative values, so scroll offsets are added to convert them to the same coordinate space before comparing.
  * @ignore
  * @param {object} annotation The annotation to check.
  * @param {HTMLElement} scrollContainer The scroll container element.
@@ -40,13 +68,14 @@ export const isAnnotationInView = (annotation, scrollContainer, documentViewerKe
     return false;
   }
 
-  const { top, bottom, left, right } = scrollContainer.getBoundingClientRect();
-  const { scrollTop, scrollLeft } = scrollContainer;
+  const visibleRegion = getScrollContainerDocRect(scrollContainer);
 
-  const isVerticallyVisible = bottomRight.y > top + scrollTop && topLeft.y < bottom + scrollTop;
-  const isHorizontallyVisible = bottomRight.x > left + scrollLeft && topLeft.x < right + scrollLeft;
-
-  return isVerticallyVisible && isHorizontallyVisible;
+  return (
+    bottomRight.y > visibleRegion.top &&
+    topLeft.y < visibleRegion.bottom &&
+    bottomRight.x > visibleRegion.left &&
+    topLeft.x < visibleRegion.right
+  );
 };
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1, gap = defaultGap) => {
@@ -326,22 +355,37 @@ const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentVie
   return { left, top };
 };
 
+/** @ignore */
+const getContainingBlockDocOffset = () => {
+  const { scrollX, scrollY } = getWindowScroll();
+  const hostContainer = window.isApryseWebViewerWebComponent ? getRootNode()?.host : null;
+  if (!hostContainer || typeof hostContainer.getBoundingClientRect !== 'function') {
+    return { top: scrollY, left: scrollX };
+  }
+  const { top, left } = hostContainer.getBoundingClientRect();
+  return {
+    top: (Number.isFinite(top) ? top : 0) + scrollY,
+    left: (Number.isFinite(left) ? left : 0) + scrollX,
+  };
+};
+
 export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey) => {
   if (!hasValidBounds({ topLeft, bottomRight })) {
     return fallbackPosition.left;
   }
 
   const scrollViewElement = core.getScrollViewElement(documentViewerKey);
-  const scrollLeft = Number.isFinite(scrollViewElement?.scrollLeft) ? scrollViewElement.scrollLeft : 0;
-  const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
+  const scrollLeft = scrollViewElement ? getRtlSafeScrollLeft(scrollViewElement) : 0;
+  const containingBlockLeft = getContainingBlockDocOffset().left;
 
-  width /= getSafeScale().scaleX;
-  let left = center - width / 2;
+  const annotCenter = (topLeft.x + bottomRight.x) / 2;
+  const scaledWidth = width / getSafeScale().scaleX;
+  let left = annotCenter - scrollLeft - containingBlockLeft - scaledWidth / 2;
 
   if (left < 0) {
     left = 0;
-  } else if (left + width > window.innerWidth) {
-    left = window.innerWidth - width;
+  } else if (left + scaledWidth > window.innerWidth) {
+    left = window.innerWidth - scaledWidth;
   }
 
   return Math.round(left);
@@ -358,53 +402,33 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewe
     return fallbackPosition.top;
   }
 
-  const padding = 5;
   const scrollContainer = core.getScrollViewElement(documentViewerKey);
   if (!scrollContainer || typeof scrollContainer.getBoundingClientRect !== 'function') {
     return fallbackPosition.top;
   }
 
-  const boundingBox = scrollContainer.getBoundingClientRect();
-  const visibleRegion = {
-    left: boundingBox.left + scrollContainer.scrollLeft,
-    right: boundingBox.left + scrollContainer.scrollLeft + boundingBox.width,
-    top: boundingBox.top + scrollContainer.scrollTop,
-    bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
-  };
-
-  const scaleY = getSafeScale().scaleY;
-  const isWebComponent = window.isApryseWebViewerWebComponent;
-  if (isWebComponent) {
-    const rootNode = getRootNode();
-    const hostContainer = rootNode && rootNode.host;
-    if (hostContainer && typeof hostContainer.getBoundingClientRect === 'function') {
-      const containerBox = hostContainer.getBoundingClientRect();
-      visibleRegion.top = (visibleRegion.top - containerBox.top) / scaleY;
-      visibleRegion.bottom = (visibleRegion.bottom - containerBox.top) / scaleY;
-    }
-  }
-
+  const padding = 5;
+  const visibleRegion = getScrollContainerDocRect(scrollContainer);
+  const scaledHeight = height / getSafeScale().scaleY;
   const annotTop = topLeft.y - gap;
   const annotBottom = bottomRight.y + gap;
 
-  height /= scaleY;
+  const fitsBelow = annotBottom + scaledHeight < visibleRegion.bottom;
+  const fitsAbove = annotTop - scaledHeight > visibleRegion.top;
+  const moreRoomAbove = annotTop > visibleRegion.bottom - annotBottom;
 
   let top;
-  if (annotBottom + height < visibleRegion.bottom) {
+  if (fitsBelow) {
     top = annotBottom;
-  } else if (annotTop - height > visibleRegion.top) {
-    top = annotTop - height;
+  } else if (fitsAbove) {
+    top = annotTop - scaledHeight;
+  } else if (moreRoomAbove) {
+    top = visibleRegion.top + padding;
   } else {
-    // if there is no enough room to fit the style popup in either way (top or bottom)
-    // We want to place it on the side that has more space
-    if (annotTop > visibleRegion.bottom - annotBottom) { // if top has more space, place it to top
-      top = visibleRegion.top + padding;
-    } else { // otherwise, place it to bottom
-      top = visibleRegion.bottom - padding - height;
-    }
+    top = visibleRegion.bottom - padding - scaledHeight;
   }
 
-  return Math.round(top - scrollContainer.scrollTop);
+  return Math.round(top - scrollContainer.scrollTop - getContainingBlockDocOffset().top);
 };
 
 export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) => {
@@ -421,8 +445,7 @@ export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) 
   }
   top = Math.round(top + viewerRect.top);
 
-  const paddingLeft = parseFloat(viewer.current.firstChild.style.paddingLeft);
-  const center = (annotPosition.left + annotPosition.right) / 2 + paddingLeft;
+  const center = (annotPosition.left + annotPosition.right) / 2;
   let left = center - width / 2;
   if (left < 0) {
     left = 0;

@@ -21,7 +21,6 @@ import { COMMON_COLORS } from 'constants/commonColors';
 import ModalWrapper from 'components/ModalWrapper';
 
 import './FilterAnnotModal.scss';
-
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = ({ isInFormBuilderMode }) => {
@@ -378,7 +377,7 @@ const FilterAnnotModal = ({ isInFormBuilderMode }) => {
                   }}
                 />
               </Tooltip>
-              <div className="colorCell" style={{ background: getHexToRgbaString(val) }}></div>
+              <div className="colorCell" css={{ background: getHexToRgbaString(val) }}></div>
             </div>
           );
         })}
@@ -507,7 +506,6 @@ const FilterAnnotModal = ({ isInFormBuilderMode }) => {
             </div>
           ) : (
             <div>
-              <div className="swipe-indicator" />
               <div className="message">{t('message.noAnnotationsFilter')}</div>
             </div>
           )}

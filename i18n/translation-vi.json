@@ -52,7 +52,6 @@
     "remove": "Di dời",
     "ok": "OK",
     "rotate": "Hướng Trang",
-    "rotate3D": "Xoay",
     "rotateClockwise": "Xoay theo Chiều Kim Đồng Hồ",
     "rotateCounterClockwise": "Xoay Ngược Chiều Kim Đồng Hồ",
     "rotatedClockwise": "xoay theo chiều kim đồng hồ",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Chỉnh Sửa Trường Biểu Mẫu",
     "formFieldEditMode": "Chỉnh sửa trường biểu mẫu",
     "contentEditMode": "Chỉnh sửa nội dung",
-    "viewShortCutKeysFor3D": "Xem Phím Tắt",
     "markAllRead": "Đánh dấu tất cả là đọc",
     "pageInsertion": "Chèn trang",
     "insertPage": "Chèn Trang",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Trường Hộp Kết Hợp",
     "link": "Liên kết",
     "other": "Khác",
-    "3D": "3D",
     "sound": "Âm thanh",
     "changeView": "Thay đổi góc nhìn",
     "newImage": "Hình ảnh mới",
@@ -381,7 +378,6 @@
       "strikeout": "Gạch bỏ",
       "underline": "Gạch chân",
       "squiggly": "Nguệch ngoạc",
-      "3D": "3D",
       "other": "Khác",
       "initials": "Tên viết tắt",
       "saved": "Đã lưu"
@@ -902,6 +898,10 @@
       "title": "Cảnh báo an ninh",
       "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     },
+    "submitForm": {
+      "title": "Cảnh báo bảo mật",
+      "message": "Tài liệu này đang cố gửi một biểu mẫu đến: \n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để gửi biểu mẫu."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Chỉnh sửa tên trang tính",
       "message": "Tên này đã tồn tại. Vui lòng nhập tên khác."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Kéo",
-    "zoom3D": "Shift + Lăn"
+    }
   },
   "tool": {
     "pan": "Quét",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Chèn liên kết hoặc trang",
     "enterpage": "Nhập số trang bạn muốn liên kết đến",
     "urlLink": "liên kết URL"
-  },
-  "Model3D": {
-    "add3D": "Thêm đối tượng 3D",
-    "enterurl": "Nhập URL của đối tượng 3D ở định dạng glTF",
-    "enterurlOrLocalFile": "Nhập URL hoặc tải lên đối tượng 3D ở định dạng glTF",
-    "formatError": "Chỉ có định dạng glTF (.glb) được hỗ trợ"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Nhập URL hoặc chọn tệp để tải vào WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "mẫu",
       "start": "Bắt đầu thực hiện tìm kiếm của bạn"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Thuộc tính",
-    "miscValuesHeader": "Tất cả",
-    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó."
   },
   "portfolio": {
     "createPDFPortfolio": "Tạo danh mục đầu tư PDF",

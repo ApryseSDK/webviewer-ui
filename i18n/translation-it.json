@@ -52,7 +52,6 @@
     "remove": "Rimuovere",
     "ok": "ok",
     "rotate": "Ruotare",
-    "rotate3D": "Ruotare",
     "rotateClockwise": "Senso orario",
     "rotateCounterClockwise": "Antiorario",
     "rotatedClockwise": "ruotato in senso orario",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Modifica campo modulo",
     "formFieldEditMode": "Modifica campi modulo",
     "contentEditMode": "Modifica contenuto",
-    "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
     "markAllRead": "segna tutto come letto",
     "pageInsertion": "Inserimento pagina",
     "insertPage": "Inserimento pagina",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Campo casella combinata",
     "link": "Collegamento",
     "other": "Altro",
-    "3D": "3D",
     "sound": "Suono",
     "changeView": "Cambia punto di vista",
     "newImage": "Nuova immagine",
@@ -381,7 +378,6 @@
       "strikeout": "barrato",
       "underline": "Sottolineare",
       "squiggly": "ondulato",
-      "3D": "3D",
       "other": "Altro",
       "initials": "Iniziali",
       "saved": "Salvato"
@@ -902,6 +898,10 @@
       "title": "Avviso di sicurezza",
       "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     },
+    "submitForm": {
+      "title": "Avviso di sicurezza",
+      "message": "Questo documento sta tentando di inviare un modulo a: \n\n{{- uri}}\n\n Se ti fidi di questo documento, fai clic su Conferma per inviare il modulo."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Modifica nome foglio",
       "message": "Questo nome esiste già. Inserisci un altro nome."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Maiusc + trascina",
-    "zoom3D": "Maiusc + Scorrimento"
+    }
   },
   "tool": {
     "pan": "Padella",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Inserisci collegamento o pagina",
     "enterpage": "Inserisci il numero di pagina a cui desideri collegarti",
     "urlLink": "Collegamento all'URL"
-  },
-  "Model3D": {
-    "add3D": "Aggiungi un'annotazione 3D inserendo l'URL",
-    "enterurl": "Immettere l'URL per l'oggetto 3D in formato glTF",
-    "enterurlOrLocalFile": "Inserisci l'URL o carica un oggetto 3D in formato glTF",
-    "formatError": "È supportato solo il formato glTF (.glb)"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Inserisci un URL o scegli un file da caricare in WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Modelli",
       "start": "Inizia a fare la tua ricerca"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Proprietà",
-    "miscValuesHeader": "Tutti",
-    "emptyPanelMessage": "Seleziona un elemento per visualizzarne le proprietà."
   },
   "portfolio": {
     "createPDFPortfolio": "Crea portafoglio PDF",

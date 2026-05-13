@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 import Icon from 'components/Icon';
 import EmbeddedJSPopupMenu from './EmbeddedJSPopupMenu';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const EmbeddedJSPopupSubMenu = ({ title, onClick, popUpMenuItems, scrollTop = 0 }) => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const [position, setPosition] = useState({ left: undefined, top: undefined });

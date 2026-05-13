@@ -7,7 +7,7 @@ import { ItemTypes, DropLocation } from 'constants/dnd';
 import PortfolioItemContent from 'components/PortfolioItemContent';
 
 import './PortfolioItem.scss';
-
+import classNames from 'classnames';
 const propTypes = {
   portfolioItem: PropTypes.object.isRequired,
   connectDragSource: PropTypes.func,
@@ -34,7 +34,6 @@ const PortfolioItem = forwardRef(({
   connectDragSource(elementRef);
   connectDragPreview(getEmptyImage(), { captureDraggingState: true });
   connectDropTarget(elementRef);
-  const opacity = isDragging ? 0.5 : 1;
   useImperativeHandle(ref, () => ({
     getNode: () => elementRef.current,
   }));
@@ -43,17 +42,27 @@ const PortfolioItem = forwardRef(({
   return (
     <div
       ref={elementRef}
-      className="outline-drag-container"
-      style={{ opacity }}
+      className={classNames({
+        'outline-drag-container': true,
+        'isDragging': isDragging,
+      })}
     >
-      <div className="outline-drag-line" style={{ opacity: isDraggedUpwards ? 1 : 0 }} />
+      <div
+        className={classNames({
+          'outline-drag-line': true,
+          'visible': isDraggedUpwards,
+        })}/>
       <PortfolioItemContent
         movePortfolio={movePortfolio}
         portfolioItem={portfolioItem}
         isPortfolioRenaming={isRenaming}
         setPortfolioRenaming={setIsRenaming}
       />
-      <div className="outline-drag-line" style={{ opacity: isDraggedDownwards ? 1 : 0 }} />
+      <div
+        className={classNames({
+          'outline-drag-line': true,
+          'visible': isDraggedDownwards,
+        })}/>
     </div>
   );
 });

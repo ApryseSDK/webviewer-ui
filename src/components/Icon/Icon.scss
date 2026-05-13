@@ -24,7 +24,23 @@
     fill: currentColor;
   }
 
+  .icon-current {
+    fill: currentColor;
+  }
+
+  .icon-current-stroke {
+    stroke: currentColor;
+  }
+
   &:not(.disabled) {
+    .icon-default {
+      fill: var(--icon-color);
+    }
+
+    .icon-default-stroke {
+      stroke: var(--icon-color);
+    }
+
     path[fill='default'] {
       fill: var(--icon-color);
     }
@@ -35,6 +51,16 @@
 
     path {
       fill: var(--disabled-icon);
+    }
+
+    .icon-current,
+    .icon-default {
+      fill: var(--disabled-icon);
+    }
+
+    .icon-current-stroke,
+    .icon-default-stroke {
+      stroke: var(--disabled-icon);
     }
   }
 

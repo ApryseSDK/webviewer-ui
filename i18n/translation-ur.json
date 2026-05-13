@@ -52,7 +52,6 @@
     "remove": "ہٹا دیں۔",
     "ok": "ٹھیک ہے",
     "rotate": "صفحہ کی سمت بندی",
-    "rotate3D": "گھمائیں۔",
     "rotateClockwise": "گھڑی کی سمت گھمائیں۔",
     "rotateCounterClockwise": "گھڑی کے مخالف سمت میں گھمائیں۔",
     "rotatedClockwise": "گھڑی کی سمت میں گھمایا",
@@ -92,7 +91,6 @@
     "formFieldEdit": "فارم فیلڈ میں ترمیم کریں۔",
     "formFieldEditMode": "فارم فیلڈز میں ترمیم کریں۔",
     "contentEditMode": "مواد میں ترمیم کریں۔",
-    "viewShortCutKeysFor3D": "شارٹ کٹ کیز دیکھیں",
     "markAllRead": "سبھی کو پڑھا ہوا نشان زد کریں۔",
     "pageInsertion": "صفحہ داخل کرنا",
     "insertPage": "صفحہ داخل کریں۔",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "کومبو باکس فیلڈ",
     "link": "لنک",
     "other": "دیگر",
-    "3D": "3D",
     "sound": "آواز",
     "changeView": "منظر تبدیل کریں۔",
     "newImage": "نئی تصویر",
@@ -381,7 +378,6 @@
       "strikeout": "اسٹرائیک آؤٹ",
       "underline": "انڈر لائن",
       "squiggly": "دھڑلے سے",
-      "3D": "3D",
       "other": "دیگر",
       "initials": "ابتدائیہ",
       "saved": "محفوظ کیا گیا۔"
@@ -902,6 +898,10 @@
       "title": "سیکیورٹی وارننگ",
       "message": "یہ دستاویز اس سے مربوط ہونے کی کوشش کر رہی ہے: \n\n{{- uri}}\n\n اگر آپ کو اس دستاویز پر بھروسہ ہے تو اسے کھولنے کے لیے تصدیق پر کلک کریں۔"
     },
+    "submitForm": {
+      "title": "سیکیورٹی وارننگ",
+      "message": "یہ دستاویز اس پتے پر فارم جمع کرانے کی کوشش کر رہی ہے: \n\n{{- uri}}\n\n اگر آپ اس دستاویز پر بھروسہ کرتے ہیں تو فارم جمع کرانے کے لیے تصدیق پر کلک کریں۔"
+    },
     "sheetTabRenameIssueOne": {
       "title": "شیٹ کے نام میں ترمیم کریں۔",
       "message": "یہ نام پہلے سے موجود ہے۔ براہ کرم کوئی دوسرا نام درج کریں۔"
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "شفٹ + گھسیٹیں۔",
-    "zoom3D": "شفٹ + سکرول"
+    }
   },
   "tool": {
     "pan": "پین",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "لنک یا صفحہ داخل کریں۔",
     "enterpage": "وہ صفحہ نمبر درج کریں جس سے آپ لنک کرنا چاہتے ہیں۔",
     "urlLink": "URL لنک"
-  },
-  "Model3D": {
-    "add3D": "3D آبجیکٹ شامل کریں۔",
-    "enterurl": "glTF فارمیٹ میں 3D آبجیکٹ کا URL درج کریں۔",
-    "enterurlOrLocalFile": "URL درج کریں یا glTF فارمیٹ میں 3D آبجیکٹ اپ لوڈ کریں۔",
-    "formatError": "صرف glTF (.glb) فارمیٹ تعاون یافتہ ہے۔"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "ایک URL درج کریں یا WebViewer میں لوڈ کرنے کے لیے فائل کا انتخاب کریں۔",
@@ -1288,11 +1280,6 @@
       "pattern": "پیٹرن",
       "start": "اپنی تلاش شروع کریں۔"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "پراپرٹیز",
-    "miscValuesHeader": "تمام",
-    "emptyPanelMessage": "اس کی خصوصیات دیکھنے کے لیے ایک عنصر کو منتخب کریں۔"
   },
   "portfolio": {
     "createPDFPortfolio": "پی ڈی ایف پورٹ فولیو بنائیں",

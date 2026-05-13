@@ -7,7 +7,6 @@ import i18next from 'i18next';
 import useCore from 'hooks/useCore';
 
 import './ImageSignature.scss';
-
 const propTypes = {
   isModalOpen: PropTypes.bool,
   isTabPanelSelected: PropTypes.bool,
@@ -195,7 +194,7 @@ const ImageSignature = ({
     );
   };
 
-  const renderFullSignatureImage = () => (<img src={fullSignatureImage} alt={t('option.signatureModal.imageSignature')} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
+  const renderFullSignatureImage = () => (<img src={fullSignatureImage} alt={t('option.signatureModal.imageSignature')} className="image-signature-img" />);
 
   const renderFullSignaturePicker = () => (
     <div
@@ -229,7 +228,7 @@ const ImageSignature = ({
     </div>
   );
 
-  const renderInitialsImage = () => (<img src={initialsImage} alt={t('option.signatureModal.imageInitial')} style={{ maxWidth: '100%', maxHeight: '100%' }} />);
+  const renderInitialsImage = () => (<img src={initialsImage} alt={t('option.signatureModal.imageInitial')} className="image-signature-img" />);
 
   const renderInitialsPicker = () => (
     <div
@@ -268,7 +267,7 @@ const ImageSignature = ({
   const initialsFileSizeCheck = !hasLimit || initialsFileSize < acceptedFileSize;
   const fullSignatureContainerClass = classNames('image-signature-upload-container', { mobile: isMobile(), dragging: draggingSignatureType === signatureType.FULL_SIGNATURE });
   const initialsContainerClass = classNames('image-signature-upload-container', { mobile: isMobile(), dragging: draggingSignatureType === signatureType.INITIALS });
-  const initialsInputStyle = isInitialsModeEnabled ? {} : { display: 'none' };
+  const initialsInputClass = isInitialsModeEnabled ? '' : 'image-signature-initials-hidden';
   return (
     <div className="image-signature">
       <div className="signature-and-initials-container">
@@ -278,7 +277,7 @@ const ImageSignature = ({
             renderFullSignaturePicker()
           }
         </div>
-        <div className="signature-input image initials" style={initialsInputStyle}>
+        <div className={classNames('signature-input image initials', initialsInputClass)}>
           {initialsImage && initialsFileSizeCheck ?
             renderInitialsImage() :
             renderInitialsPicker()}

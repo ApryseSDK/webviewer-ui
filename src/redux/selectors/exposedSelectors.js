@@ -3,6 +3,7 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE, PANEL_LOCATION } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import { getBasicItemsFromGroupedItems } from 'helpers/modularUIHelpers';
 import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
 import getHashParameters from 'helpers/getHashParameters';
@@ -167,11 +168,10 @@ export const getModularComponent = (state, dataElement) => state.viewer.modularC
 export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;
 export const getColors = (state, tool, type) => {
-  type = type ? type.toLowerCase() : type;
-  if (tool && state.viewer.toolColorOverrides[tool]) {
-    return state.viewer.toolColorOverrides[tool];
+  if (tool && state.viewer.toolColorOverrides[tool]?.[COLOR_PALETTE_STYLES[type].stateKey]) {
+    return state.viewer.toolColorOverrides[tool]?.[COLOR_PALETTE_STYLES[type].stateKey] || [];
   }
-  return type === 'text' ? state.viewer.textColors : state.viewer.colors;
+  return state.viewer[COLOR_PALETTE_STYLES[type]?.stateKey] || [];
 };
 export const getCustomElementSize = (state, dataElement) => state.viewer.customElementSizes?.[dataElement] || 0;
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
@@ -245,8 +245,6 @@ export const getDeleteScaleInfo = (state) => state.viewer.deleteScale;
 
 export const getRedactionPanelWidth = (state) => state.viewer.panelWidths.redactionPanel;
 
-export const getWv3dPropertiesPanelWidth = (state) => state.viewer.panelWidths.wv3dPropertiesPanel;
-
 export const getComparePanelWidth = (state) => state.viewer.panelWidths.comparePanel;
 
 export const getTextEditingPanelWidth = (state) => state.viewer.panelWidths.textEditingPanel;
@@ -261,7 +259,6 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const searchPanelWidth = getSearchPanelWidthWithResizeBar(state);
   const leftPanelWidth = getLeftPanelWidthWithResizeBar(state);
   const textEditingPanelWidth = getTextEditingPanelWidth(state);
-  const wv3dPropertiesPanelWidth = getWv3dPropertiesPanelWidth(state);
   const comparePanelWidth = getComparePanelWidthWithResizeBar(state);
   const redactionPanelWidth = getRedactionPanelWidth(state);
   const notesInLeftPanel = getNotesInLeftPanel(state);
@@ -271,7 +268,6 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
   const isRedactionPanelOpen = isElementOpen(state, 'redactionPanel');
   const isTextEditingPanelOpen = isElementOpen(state, 'textEditingPanel');
-  const isWv3dPropertiesPanelOpen = isElementOpen(state, 'wv3dPropertiesPanel');
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
 
   const genericPanelOnLeft = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
@@ -287,7 +283,6 @@ export const getDocumentContentContainerWidthStyle = (state) => {
       (isSearchPanelOpen ? searchPanelWidth : 0) +
       (isRedactionPanelOpen ? redactionPanelWidth : 0) +
       (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
-      (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
       (isComparePanelOpen ? comparePanelWidth : 0)
     )
     +
@@ -791,6 +786,10 @@ export const isNotesPanelTextCollapsingEnabled = (state) => {
   return state.viewer.isNotesPanelTextCollapsingEnabled;
 };
 
+export const getStatusList = (state) => {
+  return state.viewer.statusList;
+};
+
 export const isNotesPanelRepliesCollapsingEnabled = (state) => {
   return state.viewer.isNotesPanelRepliesCollapsingEnabled;
 };
@@ -834,7 +833,9 @@ export const getActiveToolStyles = (state) => state.viewer.activeToolStyles;
 
 export const getCustomColor = (state) => state.viewer.customColor;
 
-export const getCustomColors = (state) => state.viewer.customColors;
+export const getCustomColors = (state, type) => {
+  return state.viewer?.[COLOR_PALETTE_STYLES[type]?.customKey] || [];
+};
 
 export const getActiveLeftPanel = (state) => state.viewer.activeLeftPanel;
 
@@ -1176,10 +1177,6 @@ export const getActiveSoundAnnotation = (state) => state.viewer.activeSoundAnnot
 
 export const getEmbeddedJSPopupStyle = (state) => state.viewer.embeddedJSPopupStyle;
 
-export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPanel.modelData;
-
-export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
-
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
 export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state).locationProperties.inTable;
@@ -1244,7 +1241,6 @@ export const getOpenRightPanelWidth = (state) => {
     { name: DataElements.NOTES_PANEL, isOpen: isElementOpen, getWidth: getNotesPanelWidthWithResizeBar },
     { name: DataElements.SEARCH_PANEL, isOpen: isElementOpen, getWidth: getSearchPanelWidthWithResizeBar },
     { name: DataElements.TEXT_EDITING_PANEL, isOpen: isElementOpen, getWidth: getTextEditingPanelWidth },
-    { name: DataElements.WV3D_PROPERTIES_PANEL, isOpen: isElementOpen, getWidth: getWv3dPropertiesPanelWidth },
     { name: DataElements.COMPARE_PANEL, isOpen: isElementOpen, getWidth: getComparePanelWidthWithResizeBar },
     { name: DataElements.REDACTION_PANEL, isOpen: isElementOpen, getWidth: getRedactionPanelWidth },
   ];
@@ -1369,4 +1365,8 @@ export const getIsPanelInFlyout = (state, panelType, flyoutsToExclude = []) => {
   }
 
   return null;
+};
+
+export const getReaderPageMode = (state) => {
+  return state.viewer.readerPageMode;
 };

@@ -6,12 +6,13 @@ import { menuItems } from '../../../Helpers/menuItems';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import setCellFormatString from '../../../../../helpers/setCellFormatString';
-
 const propTypes = {
   formatType: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   secondaryLabel: PropTypes.string,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   selector: PropTypes.func,
@@ -24,12 +25,13 @@ const CellFormatButton = forwardRef((props, ref) => {
     isFlyoutItem,
     formatType,
     secondaryLabel,
-    style,
+    buttonStyle,
     className,
     dataElement = menuItems[formatType].dataElement,
     img: icon = menuItems[formatType].icon,
     title = menuItems[formatType].title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const currentFormatType = useSelector((state) => selectors.getActiveCellFormatType(state));
   const isActive = formatType === currentFormatType;
 
@@ -55,7 +57,7 @@ const CellFormatButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isActive}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         />
       )

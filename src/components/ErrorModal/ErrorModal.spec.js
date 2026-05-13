@@ -14,6 +14,7 @@ jest.mock('selectors', () => ({
   getFeatureFlags: jest.fn(),
   getCustomElementOverrides: jest.fn(),
   getActiveDocumentViewerKey: jest.fn(),
+  isInDesktopOnlyMode: jest.fn(),
 }));
 
 jest.mock('react-i18next', () => ({

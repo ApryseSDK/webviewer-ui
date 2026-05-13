@@ -6,6 +6,43 @@ import withI18n from './withI18n';
 import withMockRedux from './withMockRedux';
 import 'jest-canvas-mock';
 
+
+if (typeof CSSStyleSheet === 'undefined') {
+  global.CSSStyleSheet = function CSSStyleSheet() {
+    this.cssRules = [];
+  };
+}
+
+if (!CSSStyleSheet.prototype.replaceSync) {
+  CSSStyleSheet.prototype.replaceSync = function() {};
+}
+
+if (!CSSStyleSheet.prototype.replace) {
+  CSSStyleSheet.prototype.replace = function() {
+    return Promise.resolve(this);
+  };
+}
+
+function defineAdoptedStyleSheets(proto, backingField) {
+  if (proto && !('adoptedStyleSheets' in proto)) {
+    Object.defineProperty(proto, 'adoptedStyleSheets', {
+      get() {
+        return this[backingField] || [];
+      },
+      set(sheets) {
+        this[backingField] = sheets;
+      },
+    });
+  }
+}
+
+defineAdoptedStyleSheets(Document.prototype, '_adoptedStyleSheets');
+
+defineAdoptedStyleSheets(
+  typeof ShadowRoot === 'undefined' ? undefined : ShadowRoot.prototype,
+  '_shadowAdoptedStyleSheets',
+);
+
 global.withI18n = withI18n;
 global.withMockRedux = withMockRedux;
 

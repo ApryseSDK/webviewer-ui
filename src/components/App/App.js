@@ -563,15 +563,6 @@ const App = ({ removeEventHandlers, initialDirection }) => {
               dataElement={DataElements.REDACTION_PANEL}
               redactionAnnotationsList={redactionAnnotationsList} />
           </RightPanel>}
-          {!customizableUI && <RightPanel
-            dataElement={DataElements.WV3D_PROPERTIES_PANEL}
-            onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
-          >
-            <LazyLoadWrapper
-              Component={LazyLoadComponents.Wv3dPropertiesPanel}
-              dataElement={DataElements.WV3D_PROPERTIES_PANEL}
-            />
-          </RightPanel>}
           <MultiTabEmptyPage />
           {!customizableUI && <RightPanel
             dataElement="textEditingPanel"
@@ -724,7 +715,6 @@ const App = ({ removeEventHandlers, initialDirection }) => {
         <ProgressModal />
 
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
         <LazyLoadWrapper
           Component={LazyLoadComponents.ColorPickerModal}
           dataElement={DataElements.COLOR_PICKER_MODAL}

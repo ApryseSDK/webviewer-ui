@@ -284,6 +284,74 @@ const disableMeasurementAnnotationFilter = (store) => () => {
   store.dispatch(actions.setEnableMeasurementAnnotationsFilter(false));
 };
 
+/**
+ * An enum containing the standard annotation statuses available in the Notes Panel.
+ *
+ * @name UI.NotesPanel.StatusList
+ * @enum {string}
+ * @property {string} ACCEPTED Accepted
+ * @property {string} REJECTED Rejected
+ * @property {string} CANCELLED Cancelled
+ * @property {string} COMPLETED Completed
+ * @property {string} NONE None
+ * @property {string} MARKED Marked
+ * @property {string} UNMARKED Unmarked
+ * @example
+ * WebViewer(...).then(function(instance) {
+ *   const { StatusList } = instance.UI.NotesPanel;
+ *   console.log(StatusList.ACCEPTED); // 'Accepted'
+ * });
+ */
+const StatusList = Object.freeze({
+  ACCEPTED: 'Accepted',
+  REJECTED: 'Rejected',
+  CANCELLED: 'Cancelled',
+  COMPLETED: 'Completed',
+  NONE: 'None',
+  MARKED: 'Marked',
+  UNMARKED: 'Unmarked',
+});
+
+const VALID_STATUSES = Object.values(StatusList);
+
+/**
+ * Sets the list of annotation statuses that are available in the Notes Panel status dropdown.
+ * Only standard statuses from {@link UI.NotesPanel.StatusList} are supported.
+ * Any unrecognized statuses will be ignored.
+ *
+ * @method UI.NotesPanel.setStatusList
+ * @param {string[]} statuses An array of {@link UI.NotesPanel.StatusList} values to display.
+ * @example
+ * WebViewer(...).then(function(instance) {
+ *   const { StatusList } = instance.UI.NotesPanel;
+ *   // Only show Accepted and Rejected statuses
+ *   instance.UI.NotesPanel.setStatusList([
+ *     StatusList.ACCEPTED,
+ *     StatusList.REJECTED,
+ *   ]);
+ * });
+ * @example
+ * WebViewer(...).then(function(instance) {
+ *   const { StatusList } = instance.UI.NotesPanel;
+ *   // Reset to show all statuses
+ *   instance.UI.NotesPanel.setStatusList(Object.values(StatusList));
+ * });
+ */
+const setStatusList = (store) => (statuses) => {
+  if (!Array.isArray(statuses)) {
+    console.warn('UI.NotesPanel.setStatusList: statuses must be an array of strings.');
+    return;
+  }
+  const validStatuses = statuses.filter((status) => {
+    const isValid = VALID_STATUSES.includes(status);
+    if (!isValid) {
+      console.warn(`UI.NotesPanel.setStatusList: "${status}" is not a recognized status and will be ignored. Valid statuses are: ${VALID_STATUSES.join(', ')}`);
+    }
+    return isValid;
+  });
+  const uniqueStatuses = [...new Set(validStatuses)];
+  store.dispatch(actions.setStatusList(uniqueStatuses));
+};
 
 export {
   enableTextCollapse,
@@ -301,4 +369,6 @@ export {
   setAttachmentHandler,
   enableMeasurementAnnotationFilter,
   disableMeasurementAnnotationFilter,
+  setStatusList,
+  StatusList,
 };

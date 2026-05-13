@@ -276,7 +276,6 @@ const AnnotationPopupContainer = ({
   const isAppearanceSignature =
     focusedAnnotation instanceof Annotations.SignatureWidgetAnnotation
     && focusedAnnotation.isSignedByAppearance();
-  const isInReadOnlyMode = core.getIsReadOnly();
 
   const showCommentButton = (
     (!isNotesPanelDisabled || !isInlineCommentingDisabled)
@@ -350,7 +349,6 @@ const AnnotationPopupContainer = ({
     && (!isAnnotationStylePopupDisabled || customizableUI)
     && (!multipleAnnotationsSelected || canUngroup || (multipleAnnotationsSelected && !isFocusedAnnotationSelected))
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
-    && !(focusedAnnotation instanceof Annotations.Model3DAnnotation)
     && !focusedAnnotation.isContentEditPlaceholder()
     && !isAppearanceSignature
     && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation)
@@ -611,7 +609,6 @@ const AnnotationPopupContainer = ({
       customizableUI={customizableUI}
       toggleStylePanel={toggleStylePanel}
       isStylePanelOpen={isStylePanelOpen}
-      isInReadOnlyMode={isInReadOnlyMode}
 
       showAlignButton={showAlignButton}
       onOpenAlignmentModal={onOpenAlignmentModal}

@@ -86,6 +86,97 @@ describe('Icon component', () => {
     expect(icon).not.toHaveStyle(`color: ${color}`);
   });
 
+  it('Should convert hardcoded fill colors to currentColor when color prop is set', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const color = '#3366FF';
+    // eslint-disable-next-line custom/no-hex-colors
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="#8c8c8c"/></svg>';
+    const { container } = render(<Icon glyph={svg} color={color} />);
+
+    const icon = container.querySelector('.Icon');
+    const path = container.querySelector('.Icon svg path');
+    expect(icon).toHaveStyle(`color: ${color}`);
+    expect(path).toHaveAttribute('fill', 'currentColor');
+  });
+
+  it('Should preserve white fills when color prop is set', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const color = '#3366FF';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="white"/></svg>';
+    const { container } = render(<Icon glyph={svg} color={color} />);
+
+    const path = container.querySelector('.Icon svg path');
+    expect(path).toHaveAttribute('fill', 'white');
+  });
+
+  it('Should convert neutral hardcoded fill colors to currentColor even without color prop', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="#abb0c4"/></svg>';
+    const { container } = render(<Icon glyph={svg} />);
+
+    const path = container.querySelector('.Icon svg path');
+    expect(path).toHaveAttribute('fill', 'currentColor');
+  });
+
+  it('Should replace all fill="none" targets when fillColor is provided', () => {
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" fill="none"/><circle cx="18" cy="18" r="3" fill="none"/></svg>';
+    const { container } = render(<Icon glyph={svg} fillColor="AABBCC" />);
+
+    // eslint-disable-next-line custom/no-hex-colors
+    const filledElements = container.querySelectorAll('.Icon svg [fill="#AABBCC"]');
+    expect(filledElements.length).toBe(2);
+  });
+
+  it('Should preserve default-marked parts and map non-default fills to currentColor when color is provided', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const color = '#3366FF';
+    // eslint-disable-next-line custom/no-hex-colors
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="0" y="0" width="10" height="2" fill="#abb0c4"/><path d="M0 0h4v4H0z" fill="default"/></svg>';
+    const { container } = render(<Icon glyph={svg} color={color} />);
+
+    const path = container.querySelector('.Icon svg path');
+    const rect = container.querySelector('.Icon svg rect');
+
+    expect(path).toHaveAttribute('fill', 'default');
+    expect(rect).toHaveAttribute('fill', 'currentColor');
+  });
+
+  it('Should convert hardcoded stroke colors to currentColor when color prop is set', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const color = '#3366FF';
+    // eslint-disable-next-line custom/no-hex-colors
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" stroke="#8c8c8c"/></svg>';
+    const { container } = render(<Icon glyph={svg} color={color} />);
+
+    const icon = container.querySelector('.Icon');
+    const path = container.querySelector('.Icon svg path');
+    expect(path).toHaveAttribute('stroke', 'currentColor');
+  });
+
+  it('Should not convert hardcoded stroke colors to currentColor when color prop is set and disabled is true', () => {
+    // eslint-disable-next-line custom/no-hex-colors
+    const color = '#3366FF';
+    // eslint-disable-next-line custom/no-hex-colors
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" stroke="#8c8c8c"/></svg>';
+    const { container } = render(<Icon glyph={svg} color={color} disabled />);
+
+    const icon = container.querySelector('.Icon');
+    const path = container.querySelector('.Icon svg path');
+    expect(path).toHaveAttribute('stroke', '#8c8c8c'); // eslint-disable-line custom/no-hex-colors
+    expect(path).not.toHaveAttribute('stroke', 'currentColor');
+  });
+
+  it('Should sanitize and decode ariaLabel when provided', () => {
+    const maliciousAriaLabel = '"><svg/onload=alert(1)><!--onmouseover=alert(1337) data-x="';
+    const sanitizedDecodedAriaLabel = '">';
+
+    const { container } = render(<Icon glyph={'icon-menu-checkmark'} ariaLabel={maliciousAriaLabel} />);
+
+    const icon = container.querySelector('.Icon svg');
+    const ariaLabel = icon.getAttribute('aria-label');
+    expect(ariaLabel).toBe(sanitizedDecodedAriaLabel);
+  });
+
   describe('Security tests', () => {
     it.skip('Should not execute embedded scripts in SVG', () => {
       const maliciousSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

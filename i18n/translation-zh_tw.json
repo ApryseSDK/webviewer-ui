@@ -52,7 +52,6 @@
     "remove": "消除",
     "ok": "OK",
     "rotate": "旋轉",
-    "rotate3D": "旋轉",
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
     "rotatedClockwise": "順時針旋轉",
@@ -92,7 +91,6 @@
     "formFieldEdit": "編輯表格欄位",
     "formFieldEditMode": "編輯表單字段",
     "contentEditMode": "編輯內容",
-    "viewShortCutKeysFor3D": "查看快捷鍵",
     "markAllRead": "將所有內容標記為已讀",
     "pageInsertion": "頁面插入",
     "insertPage": "頁面插入",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "組合框字段",
     "link": "鏈接",
     "other": "其他",
-    "3D": "3D",
     "sound": "聲音",
     "changeView": "更改視圖",
     "newImage": "新圖片",
@@ -381,7 +378,6 @@
       "strikeout": "三振",
       "underline": "強調",
       "squiggly": "彎彎曲曲的",
-      "3D": "3D",
       "other": "其他",
       "initials": "縮寫",
       "saved": "已保存"
@@ -902,6 +898,10 @@
       "title": "安全警告",
       "message": "該文檔正在嘗試連接到：\n\n{{- uri}}\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
     },
+    "submitForm": {
+      "title": "安全性警告",
+      "message": "此文件正嘗試將表單提交至：\n\n{{- uri}}\n\n 如果您信任此文件，請按一下「確認」以提交此表單。"
+    },
     "sheetTabRenameIssueOne": {
       "title": "編輯工作表名稱",
       "message": "此名稱已存在。請輸入其他名稱。"
@@ -952,9 +952,7 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    },
-    "rotate3D": "Shift +拖動",
-    "zoom3D": "Shift +滾動"
+    }
   },
   "tool": {
     "pan": "移動瀏覽",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "插入連結或頁面",
     "enterpage": "輸入您想要連結到的頁碼",
     "urlLink": "網址連結"
-  },
-  "Model3D": {
-    "add3D": "通過輸入URL添加3D註釋",
-    "enterurl": "輸入glTF格式的3D對象的URL",
-    "enterurlOrLocalFile": "輸入URL或以glTF格式上傳3D對象",
-    "formatError": "僅支持glTF（.glb）格式"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "輸入 URL 或選擇要加載到 WebViewer 的文件",
@@ -1288,11 +1280,6 @@
       "pattern": "圖案",
       "start": "開始搜索"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "屬性",
-    "miscValuesHeader": "全部",
-    "emptyPanelMessage": "選擇一個元素來查看它的屬性."
   },
   "portfolio": {
     "createPDFPortfolio": "創建 PDF 包",

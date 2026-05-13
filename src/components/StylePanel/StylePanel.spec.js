@@ -6,6 +6,9 @@ import initialState from 'src/redux/initialState';
 import StylePanel from './index';
 import core from 'core';
 import i18next from 'i18next';
+import actions from 'actions';
+import viewerReducer from 'reducers/viewerReducer';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 
 const getTool = () => ({
   name: 'AnnotationCreateRectangle',
@@ -67,6 +70,21 @@ const renderStylePanel = () => {
   return store;
 };
 
+const DEFAULT_CUSTOM_TEXT_COLORS = ['#111111']; // eslint-disable-line custom/no-hex-colors
+const DEFAULT_CUSTOM_STROKE_COLORS = ['#222222']; // eslint-disable-line custom/no-hex-colors
+const DEFAULT_CUSTOM_FILL_COLORS = ['#333333']; // eslint-disable-line custom/no-hex-colors
+const SAMPLE_TOOL_OVERRIDE_COLORS = ['#AAAAAA']; // eslint-disable-line custom/no-hex-colors
+const SAMPLE_REPLACEMENT_COLORS = ['#444444']; // eslint-disable-line custom/no-hex-colors
+
+const createViewerStore = (viewerStateOverrides = {}) => configureStore({
+  reducer: {
+    viewer: viewerReducer({
+      ...initialState.viewer,
+      ...viewerStateOverrides,
+    }),
+  },
+});
+
 describe('StylePanel', () => {
   let getSelectedAnnotationsSpy;
 
@@ -127,5 +145,46 @@ describe('StylePanel', () => {
     fireEvent.touchEnd(slider);
     expect(core.setAnnotationStyles).toHaveBeenCalledTimes(2);
 
+  });
+
+  it('should not mutate Stroke/Text custom palettes when adding a custom Fill color', () => {
+    const store = createViewerStore({
+      customTextColors: DEFAULT_CUSTOM_TEXT_COLORS,
+      customStrokeColors: DEFAULT_CUSTOM_STROKE_COLORS,
+      customFillColors: DEFAULT_CUSTOM_FILL_COLORS,
+    });
+    const previousState = store.getState().viewer;
+    const previousCustomTextColors = previousState.customTextColors;
+    const previousCustomStrokeColors = previousState.customStrokeColors;
+    const nextFillColors = SAMPLE_REPLACEMENT_COLORS;
+
+    store.dispatch(actions.setCustomColors(COLOR_PALETTE_STYLES.FillColor.type, nextFillColors));
+
+    const nextState = store.getState().viewer;
+    expect(nextState.customFillColors).toEqual(nextFillColors);
+    expect(nextState.customTextColors).toBe(previousCustomTextColors);
+    expect(nextState.customStrokeColors).toBe(previousCustomStrokeColors);
+  });
+
+  it('should not overwrite the corresponding global palette when updating per-tool palette', () => {
+    const toolName = 'AnnotationCreateRectangle';
+    const nextFillColors = SAMPLE_REPLACEMENT_COLORS;
+    const store = createViewerStore({
+      fillColors: DEFAULT_CUSTOM_FILL_COLORS,
+      toolColorOverrides: {
+        [toolName]: {
+          fillColors: SAMPLE_TOOL_OVERRIDE_COLORS,
+        },
+      },
+    });
+
+    const previousGlobalFillColors = store.getState().viewer.fillColors;
+
+    store.dispatch(actions.setColors(nextFillColors, toolName, COLOR_PALETTE_STYLES.FillColor.type));
+
+    const nextState = store.getState().viewer;
+    expect(nextState.fillColors).toBe(previousGlobalFillColors);
+    expect(nextState.fillColors).toEqual(DEFAULT_CUSTOM_FILL_COLORS);
+    expect(nextState.toolColorOverrides[toolName].fillColors).toEqual(nextFillColors);
   });
 });

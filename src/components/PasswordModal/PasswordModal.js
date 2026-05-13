@@ -9,6 +9,7 @@ import ModalWrapper from '../ModalWrapper';
 import { escapePressListener } from 'helpers/accessibility';
 import DataElements from 'constants/dataElement';
 import { fireError } from 'helpers/fireEvent';
+import { createStructuredLoadError } from 'helpers/loadError';
 
 import './PasswordModal.scss';
 
@@ -23,6 +24,11 @@ let cancelPasswordCheckCallback = () => {
 };
 export const setCancelPasswordCheckCallback = (fn) => {
   cancelPasswordCheckCallback = fn;
+};
+
+const PASSWORD_MODAL_ERROR_TYPES = {
+  ATTEMPTS_EXCEEDED: 'PasswordAttemptsExceeded',
+  USER_CANCELLED: 'PasswordUserCancelled',
 };
 
 const PasswordModal = () => {
@@ -94,11 +100,21 @@ const PasswordModal = () => {
   const renderContent = () => {
     const userExceedsMaxAttempts = attempt === maxAttempts;
     if (userExceedsMaxAttempts) {
-      fireError(t('message.encryptedAttemptsExceeded'));
+      fireError(createStructuredLoadError({
+        message: t('message.encryptedAttemptsExceeded'),
+        type: PASSWORD_MODAL_ERROR_TYPES.ATTEMPTS_EXCEEDED,
+        filename: 'PasswordModal',
+        functionName: 'renderContent',
+      }));
       return getErrorModal('message.encryptedAttemptsExceeded');
     }
     if (userCancelled) {
-      fireError(t('message.encryptedUserCancelled'));
+      fireError(createStructuredLoadError({
+        message: t('message.encryptedUserCancelled'),
+        type: PASSWORD_MODAL_ERROR_TYPES.USER_CANCELLED,
+        filename: 'PasswordModal',
+        functionName: 'renderContent',
+      }));
       return getErrorModal('message.encryptedUserCancelled');
     }
 

@@ -20,7 +20,6 @@ import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
 import useCore from 'hooks/useCore';
-
 const Flyout = () => {
   const { core } = useCore();
   const { t } = useTranslation();
@@ -37,6 +36,8 @@ const Flyout = () => {
   const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
   const currentPage = useSelector(selectors.getCurrentPage);
   const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
+  const shouldUseMobileFlyout = isMobile && !isInDesktopOnlyMode;
 
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
@@ -254,51 +255,57 @@ const Flyout = () => {
     if (e.shiftKey && e.key === 'Tab') {
       e.preventDefault();
       closeFlyout();
-    } else {
-      switch (e.code) {
-        case 'ArrowDown':
-        case 'ArrowRight':
-          e.preventDefault();
-          moveFocus(1);
-          break;
-        case 'ArrowUp':
-        case 'ArrowLeft':
-          e.preventDefault();
-          moveFocus(-1);
-          break;
-        case 'Home':
-          e.preventDefault();
-          setCurrentFocusIndex(0);
-          break;
-        case 'End':
-          e.preventDefault();
-          setCurrentFocusIndex(itemsToRender.length - 1);
-          break;
-        case 'Escape':
-        case 'Tab':
-          e.preventDefault();
-          closeFlyout();
-          break;
-        case 'Enter':
-        case 'Space': {
-          e.preventDefault();
+      return;
+    }
 
-          if (elementType === 'button') {
-            // Trigger the button's onClick handler directly, passing an additional flag to identify it as a keyboard action
-            const syntheticEvent = new Event('click', { bubbles: true, cancelable: true });
-            syntheticEvent.isKeyboardAction = true;
-            targetElement.dispatchEvent(syntheticEvent);
-          } else if (elementType === 'input') {
+    switch (e.code) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+        e.preventDefault();
+        moveFocus(1);
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        e.preventDefault();
+        moveFocus(-1);
+        break;
+      case 'Home':
+        e.preventDefault();
+        setCurrentFocusIndex(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        setCurrentFocusIndex(itemsToRender.length - 1);
+        break;
+      case 'Escape':
+      case 'Tab':
+        e.preventDefault();
+        closeFlyout();
+        break;
+      case 'Enter':
+      case 'Space': {
+        e.preventDefault();
+
+        if (elementType === 'button') {
+          // Trigger the button's onClick handler directly, passing an additional flag to identify it as a keyboard action
+          const syntheticEvent = new Event('click', { bubbles: true, cancelable: true });
+          syntheticEvent.isKeyboardAction = true;
+          targetElement.dispatchEvent(syntheticEvent);
+        } else if (elementType === 'input') {
+          const inputType = targetElement.type?.toLowerCase();
+          if (inputType === 'checkbox' || inputType === 'radio') {
+            targetElement.click();
+          } else {
             targetElement.parentNode.dispatchEvent(new Event('submit', { bubbles: true }));
           }
-          break;
         }
-        default:
-          if (elementType === 'input') {
-            setInputValue(targetElement.value);
-          }
-          break;
+        break;
       }
+      default:
+        if (elementType === 'input') {
+          setInputValue(targetElement.value);
+        }
+        break;
     }
   };
 
@@ -372,20 +379,20 @@ const Flyout = () => {
         className={classNames({
           'Flyout': true,
           'legacy-ui': !customizableUI,
-          'mobile': isMobile,
+          'mobile': shouldUseMobileFlyout,
         })}
         data-element={dataElement}
         ref={flyoutRef}
-        style={!isMobile ? flyoutStyles : undefined}
+        css={isMobile ? undefined : flyoutStyles}
       >
-        {isMobile && <div className="swipe-indicator" />}
+        {shouldUseMobileFlyout && <div className="swipe-indicator" />}
         <menu
           id='FlyoutContainer'
           className={classNames({
             FlyoutContainer: true,
             [className]: true,
+            'overflow': shouldOverflow,
           })}
-          style={shouldOverflow ? { overflowY: 'auto' } : undefined}
         >
           {activeItem ? (
             <>

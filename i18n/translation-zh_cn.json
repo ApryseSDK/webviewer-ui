@@ -52,7 +52,6 @@
     "remove": "消除",
     "ok": "好的",
     "rotate": "旋转",
-    "rotate3D": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "rotatedClockwise": "顺时针旋转",
@@ -92,7 +91,6 @@
     "formFieldEdit": "编辑表格栏位",
     "formFieldEditMode": "编辑表单字段",
     "contentEditMode": "编辑内容",
-    "viewShortCutKeysFor3D": "查看快捷键",
     "markAllRead": "将所有内容标记为已读",
     "pageInsertion": "页面插入",
     "insertPage": "页面插入",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "组合框字段",
     "link": "链接",
     "other": "其他",
-    "3D": "3D",
     "sound": "声音",
     "changeView": "更改视图",
     "newImage": "新图片",
@@ -381,7 +378,6 @@
       "strikeout": "三振",
       "underline": "强调",
       "squiggly": "弯弯曲曲的",
-      "3D": "3D",
       "other": "其他",
       "initials": "缩写",
       "saved": "已保存"
@@ -902,6 +898,10 @@
       "title": "安全警告",
       "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
     },
+    "submitForm": {
+      "title": "安全警告",
+      "message": "此文档正尝试将表单提交到：\n\n{{- uri}}\n\n 如果您信任此文档，请点击“确认”以提交表单。"
+    },
     "sheetTabRenameIssueOne": {
       "title": "编辑工作表名称",
       "message": "此名称已存在。请输入其他名称。"
@@ -952,9 +952,7 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    },
-    "rotate3D": "Shift + 拖动",
-    "zoom3D": "Shift + 滚动"
+    }
   },
   "tool": {
     "pan": "移动",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "插入链接或页面",
     "enterpage": "输入您想要链接到的页码",
     "urlLink": "URL 链接"
-  },
-  "Model3D": {
-    "add3D": "通过输入URL添加3D注释",
-    "enterurl": "输入glTF格式的3D对象的URL",
-    "enterurlOrLocalFile": "输入URL或以glTF格式上传3D对象",
-    "formatError": "仅支持glTF（.glb）格式"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "输入 URL 或选择要加载到 WebViewer 的文件",
@@ -1288,11 +1280,6 @@
       "pattern": "模式",
       "start": "开始搜索"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "属性",
-    "miscValuesHeader": "全部",
-    "emptyPanelMessage": "选择一个元素来查看它的属性."
   },
   "portfolio": {
     "createPDFPortfolio": "创建 PDF 包",

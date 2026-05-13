@@ -6,7 +6,6 @@ import './Label.scss';
 import Tooltip from 'components/Tooltip';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-
 const Label = (props) => {
   const {
     dataElement,
@@ -28,10 +27,18 @@ const Label = (props) => {
 
   return (
     <Tooltip content={t(title)}>
-      <div className={classNames('Label', {
-        'flyout-label': isFlyoutItem,
-        [className]: true,
-      })} style={style} data-element={dataElement} id={id}>
+      <div
+        className={
+          classNames(
+            'Label',
+            {
+              'flyout-label': isFlyoutItem,
+              [className]: !!className,
+            }
+          )}
+        css={style}
+        data-element={dataElement}
+        id={id}>
         {t(label)}
       </div>
     </Tooltip>

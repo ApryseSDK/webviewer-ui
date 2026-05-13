@@ -53,9 +53,16 @@ const BASIC_PALETTE = [
   'transparency',
 ];
 
+const COLOR_PALETTE_STYLES = {
+  TextColor:   { type: 'TextColor',   stateKey: 'textColors',   customKey: 'customTextColors',   action: 'SET_TEXT_COLORS', customAction: 'SET_CUSTOM_TEXT_COLORS' },
+  StrokeColor: { type: 'StrokeColor', stateKey: 'strokeColors', customKey: 'customStrokeColors', action: 'SET_STROKE_COLORS', customAction: 'SET_CUSTOM_STROKE_COLORS' },
+  FillColor:   { type: 'FillColor',   stateKey: 'fillColors',   customKey: 'customFillColors',   action: 'SET_FILL_COLORS', customAction: 'SET_CUSTOM_FILL_COLORS' },
+};
+
 /* eslint-enable custom/no-hex-colors */
 export {
   COMMON_COLORS,
   CUSTOM_UI_VARS,
   BASIC_PALETTE,
+  COLOR_PALETTE_STYLES
 };

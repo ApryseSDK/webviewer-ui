@@ -8,7 +8,6 @@ import FloatingHeaderContainer from '../FloatingHeader';
 import useResizeObserver from 'hooks/useResizeObserver';
 import { PLACEMENT } from 'constants/customizationVariables';
 import { useTranslation } from 'react-i18next';
-
 function RightHeaderContainer() {
 
   //* Selectors *//
@@ -44,7 +43,7 @@ function RightHeaderContainer() {
   }, [dimensions]);
 
   // Memoize the style calculations
-  const style = useMemo(() => {
+  const headerWrapperStyle = useMemo(() => {
     const styleObject = {
       ...(rightPanelOpen && { transform: `translateX(-${rightPanelWidth}px)` }),
       ...(bottomHeadersHeight !== 0 && { height: `calc(100% - ${bottomHeadersHeight}px)` }),
@@ -55,10 +54,11 @@ function RightHeaderContainer() {
 
   const renderedHeader = useMemo(() => {
     if (rightHeader) {
-      const { dataElement } = rightHeader;
-      return (<ModularHeader ref={elementRef} {...rightHeader} key={dataElement} style={style}/>);
+      const { dataElement, ...rightHeaderProps } = rightHeader;
+      delete rightHeaderProps.style;
+      return (<ModularHeader ref={elementRef} {...rightHeaderProps} dataElement={dataElement} key={dataElement} wrapperStyle={headerWrapperStyle}/>);
     }
-  }, [rightHeader, style]);
+  }, [rightHeader, headerWrapperStyle]);
 
   if (!customizableUI || !rightHeaders.length) {
     return null;

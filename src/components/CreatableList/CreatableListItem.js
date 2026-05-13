@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
 
 import './CreatableList.scss';
-
+import classNames from 'classnames';
 const CreatableListItem = ({
   option,
   index,
@@ -94,10 +94,13 @@ const CreatableListItem = ({
 
   drag(drop(ref));
 
-  const opacity = isDragging ? 0 : 1;
-
   return (
-    <div ref={ref} style={{ opacity }} className="creatable-list-item">
+    <div
+      ref={ref}
+      className={classNames({
+        'creatable-list-item': true,
+        'transparent': isDragging,
+      })}>
       <div className="icon-handle">
         <Icon
           glyph="icon-drag-handle"

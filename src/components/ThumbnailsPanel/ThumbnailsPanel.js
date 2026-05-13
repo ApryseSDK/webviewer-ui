@@ -25,6 +25,8 @@ import { useTranslation } from 'react-i18next';
 import useIsRTL from 'hooks/useIsRTL';
 import useDidUpdate from 'src/hooks/useDidUpdate';
 
+import { css } from '@emotion/react';
+
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
 const ZOOM_RANGE_MIN = '100';
@@ -629,7 +631,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     });
     const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly || isViewOnly);
     return (
-      <div role="row" aria-label="row" className={className} key={key} style={style}>
+      <div role="row" aria-label="row" className={className} key={key} css={ style }>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
           const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
@@ -687,9 +689,9 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
-  const thumbnailAutoScrollAreaStyle = {
+  const thumbnailAutoScrollAreaStyle = css({
     'height': `${hoverAreaHeight}px`,
-  };
+  });
 
   const onSliderChange = (_, value) => {
     let zoomValue = Number(value) * ZOOM_RANGE_MAX;
@@ -769,7 +771,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
           <div className={`Panel ThumbnailsPanel ${panelSelector}`} id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
               {isDragging ?
-                <div className="thumbnailAutoScrollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ''
+                <div className="thumbnailAutoScrollArea" onDragOver={scrollUp} css={ thumbnailAutoScrollAreaStyle }></div> : ''
               }
               <List
                 ref={listRef}
@@ -792,7 +794,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
                 tabIndex={-1}
               />
               {isDragging ?
-                <div className="thumbnailAutoScrollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''
+                <div className="thumbnailAutoScrollArea" onDragOver={scrollDown} css={ thumbnailAutoScrollAreaStyle }></div> : ''
               }
             </div>
           </div>

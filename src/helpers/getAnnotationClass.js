@@ -59,9 +59,6 @@ export const getAnnotationClass = (annotation) => {
   if (annotation instanceof window.Core.Annotations.TextSquigglyAnnotation) {
     return 'squiggly';
   }
-  if (annotation instanceof window.Core.Annotations.Model3DAnnotation) {
-    return '3D';
-  }
   if (annotation instanceof window.Core.Annotations.TextWidgetAnnotation) {
     return 'textField';
   }

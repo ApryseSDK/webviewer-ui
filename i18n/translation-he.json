@@ -52,7 +52,6 @@
     "remove": "הסר",
     "ok": "אשר",
     "rotate": "כיוון העמוד",
-    "rotate3D": "סובב",
     "rotateClockwise": "סיבוב עם כיוון השעון",
     "rotateCounterClockwise": "סיבוב נגד כיוון השעון",
     "rotatedClockwise": "סובב עם כיוון השעון",
@@ -92,7 +91,6 @@
     "formFieldEdit": "עריכת שדה טופס",
     "formFieldEditMode": "עריכת שדות טופס",
     "contentEditMode": "עריכת תוכן",
-    "viewShortCutKeysFor3D": "הצג מקשי קיצור",
     "markAllRead": "סמן הכל כנקרא",
     "pageInsertion": "הכנסת עמוד",
     "insertPage": "הוסף עמוד",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "שדה תיבה משולבת",
     "link": "קישור",
     "other": "אחר",
-    "3D": "תלת-ממד",
     "sound": "קול",
     "changeView": "שנה תצוגה",
     "newImage": "תמונה חדשה",
@@ -381,7 +378,6 @@
       "strikeout": "סטרייקאאוט",
       "underline": "לשים דגש",
       "squiggly": "מתפתל",
-      "3D": "תלת-ממד",
       "other": "אחר",
       "initials": "ראשי תיבות",
       "saved": "נשמר"
@@ -902,6 +898,10 @@
       "title": "אזהרת אבטחה",
       "message": "מסמך זה מנסה להתחבר אל: \n\n{{- uri}}\n\nאם אתה בוטח במסמך זה, לחץ על אישור כדי לפתוח אותו."
     },
+    "submitForm": {
+      "title": "אזהרת אבטחה",
+      "message": "מסמך זה מנסה לשלוח טופס אל: \n\n{{- uri}}\n\n אם אתה סומך על מסמך זה, לחץ על אישור כדי לשלוח את הטופס."
+    },
     "sheetTabRenameIssueOne": {
       "title": "עריכת שם גיליון",
       "message": "שם זה כבר קיים. אנא הזן שם אחר."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + גרירה",
-    "zoom3D": "Shift + גלילה"
+    }
   },
   "tool": {
     "pan": "פאן",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "הכנס קישור או דף",
     "enterpage": "הזן את מספר העמוד שאליו תרצה לקשר",
     "urlLink": "קישור כתובת URL"
-  },
-  "Model3D": {
-    "add3D": "הוסף אובייקט תלת-ממדי",
-    "enterurl": "הזן את כתובת ה-URL של האובייקט התלת-ממדי בפורמט glTF",
-    "enterurlOrLocalFile": "הזן את כתובת ה-URL או העלה אובייקט תלת-ממדי בפורמט glTF",
-    "formatError": "רק פורמט glTF (.glb) נתמך"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "הזן כתובת URL או בחר קובץ לטעינה לתוך WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "תבניות",
       "start": "התחל לבצע את החיפוש שלך"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "מאפיינים",
-    "miscValuesHeader": "כל",
-    "emptyPanelMessage": "בחר אלמנט כדי להציג את המאפיינים שלו."
   },
   "portfolio": {
     "createPDFPortfolio": "צור תיק  PDF",

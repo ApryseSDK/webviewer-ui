@@ -8,6 +8,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import FormulaOverlay from 'components/FormulaOverlay/FormulaOverlay';
 import useCore from 'hooks/useCore';
 import './FormulaBar.scss';
+import { css } from '@emotion/react';
 
 const FormulaBar = (props) => {
   const {
@@ -205,7 +206,7 @@ const FormulaBar = (props) => {
         <div className='FormulaInputMask'>
           {
             formulaSegments.map((item, index) => {
-              return (<span key={`${item.text}-${index}`} style={{ color: item.color }}>{item.text}</span>);
+              return (<span key={`${item.text}-${index}`} css={css({ color: item.color })}>{item.text}</span>);
             })
           }
         </div>

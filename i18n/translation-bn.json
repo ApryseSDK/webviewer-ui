@@ -52,7 +52,6 @@
     "remove": "সরান",
     "ok": "ঠিক আছে",
     "rotate": "পৃষ্ঠা ওরিয়েন্টেশন",
-    "rotate3D": "আবর্তিত",
     "rotateClockwise": "ঘড়ির কাঁটার দিকে ঘোরান",
     "rotateCounterClockwise": "বামাবর্তে ঘোরাতে",
     "rotatedClockwise": "ঘড়ির কাঁটার দিকে ঘোরানো",
@@ -92,7 +91,6 @@
     "formFieldEdit": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
     "formFieldEditMode": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
     "contentEditMode": "বিষয়বস্তু সম্পাদনা করুন",
-    "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
     "pageInsertion": "পৃষ্ঠা সন্নিবেশ",
     "insertPage": "পৃষ্ঠা সন্নিবেশ",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "কম্বো বক্স ক্ষেত্র",
     "link": "লিঙ্ক",
     "other": "অন্যান্য",
-    "3D": "3D",
     "sound": "শব্দ",
     "changeView": "পরিবর্তন দেখুন",
     "newImage": "নতুন ছবি",
@@ -381,7 +378,6 @@
       "strikeout": "স্ট্রাইকআউট",
       "underline": "আন্ডারলাইন করুন",
       "squiggly": "স্কুইগ্লি",
-      "3D": "3D",
       "other": "অন্যান্য",
       "initials": "আদ্যক্ষর",
       "saved": "সংরক্ষিত"
@@ -902,6 +898,10 @@
       "title": "নিরাপত্তা সতর্কতা",
       "message": "এই নথিতে সংযোগ করার চেষ্টা করছে:\n\n{{- uri}}\n\n আপনি যদি এই নথিতে বিশ্বাস করেন তবে এটি খুলতে নিশ্চিত করুন ক্লিক করুন৷"
     },
+    "submitForm": {
+      "title": "নিরাপত্তা সতর্কতা",
+      "message": "এই নথিটি একটি ফর্ম পাঠানোর চেষ্টা করছে: \n\n{{- uri}}\n\n আপনি যদি এই নথিটিকে বিশ্বাস করেন, ফর্ম জমা দিতে নিশ্চিত করুন-এ ক্লিক করুন।"
+    },
     "sheetTabRenameIssueOne": {
       "title": "পত্রকের নাম সম্পাদনা করুন",
       "message": "এই নামটি ইতিমধ্যেই বিদ্যমান। অনুগ্রহ করে অন্য একটি নাম লিখুন।"
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "শিফট + টেনে আনুন",
-    "zoom3D": "শিফট + স্ক্রোল"
+    }
   },
   "tool": {
     "pan": "প্যান",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "লিঙ্ক বা পৃষ্ঠা ঢোকান",
     "enterpage": "আপনি লিঙ্ক করতে চান পৃষ্ঠা নম্বর লিখুন",
     "urlLink": "URL লিঙ্ক"
-  },
-  "Model3D": {
-    "add3D": "3D অবজেক্ট যোগ করুন",
-    "enterurl": "glTF ফরম্যাটে 3D অবজেক্টের URL লিখুন",
-    "enterurlOrLocalFile": "URL লিখুন বা glTF ফর্ম্যাটে একটি 3D অবজেক্ট আপলোড করুন",
-    "formatError": "শুধুমাত্র glTF (.glb) ফর্ম্যাট সমর্থিত"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "একটি URL লিখুন বা WebViewer এ লোড করার জন্য একটি ফাইল চয়ন করুন৷",
@@ -1288,11 +1280,6 @@
       "pattern": "নিদর্শন",
       "start": "আপনার অনুসন্ধান করা শুরু করুন"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Уласцівасці",
-    "miscValuesHeader": "Усе",
-    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці."
   },
   "portfolio": {
     "createPDFPortfolio": "PDF পোর্টফোলিও তৈরি করুন",

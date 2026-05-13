@@ -254,7 +254,7 @@ const IndexPanel = ({ widgets }) => {
     const childrenWidgetIds = childWidgets ? childWidgets.map((child) => child['Id']) : [];
     return (
       <IndexPanelContent
-        key={widget['Id']}
+        key={widget['Id'] ?? `${widget['fieldName']}-${widget['PageNumber']}`}
         ref={(element) => generateRefList(element, widgetId, childrenWidgetIds)}
         isMultiSelectionMode={isMultiSelectionMode}
         fieldName={fieldName}

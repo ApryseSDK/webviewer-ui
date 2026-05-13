@@ -85,7 +85,7 @@ OfficeEditorPresetButtons.play = async ({ canvasElement }) => {
   // eslint-disable-next-line custom/no-hex-colors
   const colorPickerButton = canvas.getByRole('button', { name: '#00FF00' });
   const colorPickerButtonIcon = colorPickerButton.querySelector('.Icon');
-  expect(colorPickerButtonIcon.style.color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
+  expect(getComputedStyle(colorPickerButtonIcon).color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
 
   for (const style of officeEditorStyleTypes) {
     const button = await canvas.findByRole('button', { name: getTranslatedText(`spreadsheetEditor.${style}`) });

@@ -36,8 +36,8 @@ const basicMockState = {
 
 const mockStore = createStore(basicMockState);
 
-const StylePanelTemplate = ({ mockState = basicMockState, location = 'left' }) => (
-  <Provider store={mockStore}>
+const StylePanelTemplate = ({ mockState = mockStore, location = 'left' }) => (
+  <Provider store={mockState}>
     <Panel location={location} dataElement={'stylePanel'} isCustom>
       <StylePanelContainer dataElement="stylePanel" />
     </Panel>
@@ -192,6 +192,30 @@ StylePanelTextTool.play = async ({ canvasElement }) => {
 
 export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
 StylePanelFreeTextToolMobileVersion.parameters = mobileStoryParameters;
+
+export const StylePanelTextToolWithCustomColors = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+  useToolHook(window.Core.Tools.FreeTextCreateTool, window.Core.Tools.ToolNames.FREETEXT, setShouldRender, FreeTextDefaults);
+  // eslint-disable-next-line custom/no-hex-colors
+  const customStrokeColors = ['#BCA270'];
+  // eslint-disable-next-line custom/no-hex-colors
+  const customTextColors = ['#60FDB3'];
+  // eslint-disable-next-line custom/no-hex-colors
+  const customFillColors = ['#40226D'];
+  const customState = {
+    ...basicMockState,
+    viewer: {
+      ...basicMockState.viewer,
+      customStrokeColors,
+      customTextColors,
+      customFillColors,
+      strokeColors: [initialColors[0]],
+      fillColors: [initialColors[0]],
+      textColors: [initialTextColors[0]],
+    }
+  };
+  return shouldRender ? <StylePanelTemplate mockState={createStore(customState)}/> : <>Loading...</>;
+};
 
 export const StylePanelFreehandTool = () => {
   const [shouldRender, setShouldRender] = useState(false);

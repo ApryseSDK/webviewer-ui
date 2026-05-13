@@ -27,6 +27,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/react';
 
 import './NotesPanel.scss';
 
@@ -152,7 +153,7 @@ const NotesPanel = ({
   };
 
   const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
-  const notesToRender = activeSortStrategy.getSortedNotes(notes).filter(filterNote);
+  const notesToRender = activeSortStrategy.getSortedNotes(notes, activeDocumentViewerKey).filter(filterNote);
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -263,8 +264,8 @@ const NotesPanel = ({
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote))) {
-      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
+    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, { pageLabels }, activeDocumentViewerKey))) {
+      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels }, activeDocumentViewerKey)} />;
     }
 
     // Collapse an expanded note when the top non-reply NoteContent is clicked
@@ -364,7 +365,7 @@ const NotesPanel = ({
   const ariaLiveResultsContainer = () => {
     const message = t(notesPanelConfig.title);
     return (
-      <p aria-live="assertive" style={{ position: 'absolute', left: '-9999px' }}>
+      <p aria-live="assertive" className='visually-hidden'>
         {notesToRender.length > 0 ? `${message} ${notesToRender.length}` : t('message.noResults')}
       </p>
     );
@@ -419,10 +420,10 @@ const NotesPanel = ({
     }
   }
 
-  let style = {};
-  if (!isCustomPanel && (isInDesktopOnlyMode || !isMobile)) {
-    style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
-  }
+  const panelWidthVars = !isCustomPanel && (isInDesktopOnlyMode || !isMobile)
+    ? css({ '--panel-width': currentWidth ? `${currentWidth}px` : '100%' })
+    : css({});
+
 
   const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel || isCustomPanel);
   const showPlaceHolder = isMultiSelectMode && !isDocumentReadOnly;
@@ -453,7 +454,7 @@ const NotesPanel = ({
           Panel: true,
           NotesPanel: true,
         })}
-        style={style}
+        css={panelWidthVars}
         data-element="notesPanel"
         onMouseUp={() => core.deselectAllAnnotations}
       >

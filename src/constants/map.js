@@ -44,7 +44,6 @@ export const annotationMapKeys = {
   CROP_PAGE: 'cropPage',
   FILE_ATTACHMENT: 'fileattachment',
   SOUND: 'sound',
-  THREE_D_ANNOTATION: 'threeDAnnotation',
   TEXT_FIELD: 'textField',
   SIGNATURE_FORM_FIELD: 'signatureFormField',
   CHECK_BOX_FORM_FIELD: 'checkBoxFormField',
@@ -667,15 +666,6 @@ const map = {
     toolNames: [],
     annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.SoundAnnotation,
   },
-  [annotationMapKeys.THREE_D_ANNOTATION]: {
-    icon: 'icon-tool-model3d',
-    iconColor: null,
-    validStyleTabs: [],
-    currentStyleTab: null,
-    styleTabs: [],
-    toolNames: ['AnnotationCreateThreeD'],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.Model3DAnnotation,
-  },
   [annotationMapKeys.TEXT_FIELD]: {
     icon: 'icon-form-field-text',
     iconColor: 'TextColor',
@@ -917,7 +907,6 @@ export const updateAnnotationStylePopupTabs = (annotationKey, newAnnotationStyle
  * @property {string} CROP_PAGE The key represents the crop page annotation.
  * @property {string} FILE_ATTACHMENT The key represents the file attachment annotation.
  * @property {string} SOUND The key represents the sound annotation.
- * @property {string} THREE_D_ANNOTATION The key represents the 3D annotation.
  * @property {string} TEXT_FIELD The key represents the text field annotation.
  * @property {string} SIGNATURE_FORM_FIELD The key represents the signature form field annotation.
  * @property {string} CHECK_BOX_FORM_FIELD The key represents the check box form field annotation.
@@ -967,7 +956,6 @@ export const AnnotationKeys = {
   CROP_PAGE: 'cropPage',
   FILE_ATTACHMENT: 'fileAttachment',
   SOUND: 'sound',
-  THREE_D_ANNOTATION: 'threeDAnnotation',
   TEXT_FIELD: 'textField',
   SIGNATURE_FORM_FIELD: 'signatureFormField',
   CHECK_BOX_FORM_FIELD: 'checkBoxFormField',

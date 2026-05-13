@@ -103,7 +103,7 @@ StatefulButtonWithStyleAndClass.args = {
     },
   },
   mount: () => {},
-  style: {
+  buttonStyle: {
     background: 'pink',
     color: 'darkblue',
     border: '2px solid green',

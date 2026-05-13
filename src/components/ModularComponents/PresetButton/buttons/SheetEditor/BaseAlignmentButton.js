@@ -5,11 +5,10 @@ import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import setCellAlignment from 'src/helpers/setCellAlignment';
 import PropTypes from 'prop-types';
-
 const BaseAlignmentButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
-    style,
+    buttonStyle,
     className,
     alignment,
     selector,
@@ -19,6 +18,7 @@ const BaseAlignmentButton = forwardRef((props, ref) => {
     title = menuItems[buttonType].title,
     ...rest
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
 
   const currentAlignment = useSelector(selector);
   const isActive = alignment === currentAlignment;
@@ -44,7 +44,7 @@ const BaseAlignmentButton = forwardRef((props, ref) => {
       title={title}
       img={icon}
       onClick={handleClick}
-      style={style}
+      buttonStyle={resolvedButtonStyle}
       className={className}
     />
   );
@@ -55,6 +55,8 @@ BaseAlignmentButton.displayName = 'BaseAlignmentButton';
 BaseAlignmentButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   alignment: PropTypes.string.isRequired,

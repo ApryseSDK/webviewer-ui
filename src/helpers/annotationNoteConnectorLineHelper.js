@@ -5,20 +5,15 @@ import core from 'core';
 // Ideally, this is long enough to get away from the edge.
 const LINE_WIDTH_RATIO = 0.75;
 
-const adjustPointForWebcomponent = (coordinates, add = false) => {
+const adjustPointForWebcomponent = (coordinates) => {
   const { isApryseWebViewerWebComponent = false } = window;
   if (!isApryseWebViewerWebComponent) {
     return coordinates;
   }
   const appRect = getRootNode().getElementById('app').getBoundingClientRect();
-  const rootLeft = appRect.left;
-  const rootTop = appRect.top;
-  return add ? {
-    x: coordinates.x + rootLeft,
-    y: coordinates.y + rootTop,
-  } :{
-    x: coordinates.x - rootLeft,
-    y: coordinates.y - rootTop,
+  return {
+    x: coordinates.x - appRect.left,
+    y: coordinates.y - appRect.top,
   };
 };
 
@@ -30,7 +25,20 @@ export const getConnectorLines = ({
   topHeadersHeight,
   activeDocumentViewerKey,
 }) => {
-  const { scrollTop, scrollLeft } = core.getScrollViewElement(activeDocumentViewerKey);
+  const scrollView = core.getScrollViewElement(activeDocumentViewerKey);
+  let scrollLeft = scrollView.scrollLeft || 0;
+  let scrollTop = scrollView.scrollTop || 0;
+  let node = scrollView;
+  while (node) {
+    const root = node.getRootNode?.();
+    const parent = node.parentElement || (root instanceof ShadowRoot ? root.host : null);
+    if (!parent) {
+      break;
+    }
+    scrollLeft += parent.scrollLeft || 0;
+    scrollTop += parent.scrollTop || 0;
+    node = parent;
+  }
   const noteContainerRect = noteContainerRef.current.getBoundingClientRect();
   const containerRect = noteContainerRef.current.closest('.normal-notes-container, .virtualized-notes-container')?.getBoundingClientRect();
   if (noteContainerRect.bottom < containerRect?.top || noteContainerRect.top > containerRect?.bottom) {
@@ -41,8 +49,6 @@ export const getConnectorLines = ({
       isPanelOnLeft: false,
     };
   }
-  annotationTopLeft = adjustPointForWebcomponent(annotationTopLeft, true);
-  annotationBottomRight = adjustPointForWebcomponent(annotationBottomRight, true);
   const annotationHeight = annotationTopLeft.y - annotationBottomRight.y;
   const isPanelOnLeft = (annotationTopLeft.x - scrollLeft) > noteContainerRect.left;
   let horizontalDistanceToAnnotation;

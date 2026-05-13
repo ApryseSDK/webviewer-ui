@@ -13,6 +13,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
 import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
 import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
 import DataElementWrapper from 'components/DataElementWrapper';
+import { css } from '@emotion/react';
 
 const TRANSPARENT_COLOR = 'transparent';
 
@@ -39,7 +40,7 @@ const ColorPicker = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const defaultColors = useSelector((state) => selectors.getColors(state, activeToolName, type));
-  const customColors = useSelector(selectors.getCustomColors);
+  const customColors = useSelector((state) => selectors.getCustomColors(state, type));
   const colors = Array.from(new Set([...defaultColors, ...customColors]));
   const [selectedColor, setSelectedColor] = useState();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,6 +57,7 @@ const ColorPicker = ({
   }, [color]);
 
   const handleAddColor = useColorPickerAddColor({
+    type: type,
     colors: colors,
     setSelectedColor,
     onColorChange,
@@ -66,6 +68,7 @@ const ColorPicker = ({
   const openColorPickerModalWithFocus = useFocusHandler(handleAddColor);
 
   const handleDelete = useColorPickerDeleteColor({
+    type: type,
     selectedColor,
     colors,
     setSelectedColor,
@@ -133,7 +136,9 @@ const ColorPicker = ({
                       cell: true,
                       border: true,
                     })}
-                    style={{ backgroundColor: color }}
+                    css={css({
+                      backgroundColor: color
+                    })}
                   >
                     {color === TRANSPARENT_COLOR && transparentIcon}
                   </div>

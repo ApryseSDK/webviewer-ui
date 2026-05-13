@@ -7,11 +7,12 @@ import PropTypes from 'prop-types';
 import { JUSTIFICATION_OPTIONS } from 'constants/officeEditor';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
-
 const propTypes = {
   alignment: PropTypes.oneOf(Object.values(JUSTIFICATION_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   buttonType: PropTypes.string.isRequired,
@@ -24,13 +25,14 @@ const AlignmentButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
     alignment,
-    style,
+    buttonStyle,
     className,
     buttonType,
     dataElement = menuItems[buttonType].dataElement,
     img: icon = menuItems[buttonType].icon,
     title = menuItems[buttonType].title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const isActive = useSelector((state) => selectors.isJustificationButtonActive(state, alignment));
 
   const handleClick = () => {
@@ -55,7 +57,7 @@ const AlignmentButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           onClick={handleClick}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         />
       )

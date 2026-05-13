@@ -82,9 +82,11 @@ describe('InsertPageModal', () => {
       expect(letterOption).toBeInTheDocument();
       fireEvent.click(letterOption);
 
-      expect(unitSelector).not.toBeVisible();
-      expect(widthInput).not.toBeVisible();
-      expect(heightInput).not.toBeVisible();
+      // JSDOM does not apply CSS from stylesheets, so toBeVisible() cannot
+      // detect class-based hiding. Assert on the 'hidden' class instead.
+      expect(unitSelector.closest('.input-container')).toHaveClass('hidden');
+      expect(widthInput.closest('.section')).toHaveClass('hidden');
+      expect(heightInput.closest('.section')).toHaveClass('hidden');
     });
 
     it('Can use arrows to increment number of pages', () => {

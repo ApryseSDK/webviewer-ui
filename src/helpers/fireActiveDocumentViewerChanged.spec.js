@@ -17,29 +17,36 @@ describe('fireActiveDocumentViewerChanged', () => {
     const mockDeselectAllAnnotations3 = jest.fn();
     const mockDeselectAllAnnotations4 = jest.fn();
 
+
+    const createMockTool = () => ({
+      annotation: null,
+      reset: jest.fn(),
+      clearPendingAnnotations: jest.fn(),
+    });
+
     const mockViewer1 = {
-      getTool: jest.fn(),
+      getTool: jest.fn(() => createMockTool()),
       getAnnotationManager: jest.fn(() => ({
         deselectAllAnnotations: mockDeselectAllAnnotations1,
       })),
     };
 
     const mockViewer2 = {
-      getTool: jest.fn(),
+      getTool: jest.fn(() =>  createMockTool()),
       getAnnotationManager: jest.fn(() => ({
         deselectAllAnnotations: mockDeselectAllAnnotations2,
       })),
     };
 
     const mockViewer3 = {
-      getTool: jest.fn(),
+      getTool: jest.fn(() =>  createMockTool()),
       getAnnotationManager: jest.fn(() => ({
         deselectAllAnnotations: mockDeselectAllAnnotations3,
       })),
     };
 
     const mockViewer4 = {
-      getTool: jest.fn(),
+      getTool: jest.fn(() =>  createMockTool()),
       getAnnotationManager: jest.fn(() => ({
         deselectAllAnnotations: mockDeselectAllAnnotations4,
       })),
@@ -70,12 +77,12 @@ describe('fireActiveDocumentViewerChanged', () => {
     const mockViewer1 = {
       getTool: jest.fn((toolName) => {
         if (toolName === window.Core.Tools.ToolNames['CROP']) {
-          return { reset: mockResetCrop };
+          return { annotation: null, reset: mockResetCrop };
         }
         if (toolName === window.Core.Tools.ToolNames['SNIPPING']) {
-          return { reset: mockResetSnipping };
+          return { annotation: null, reset: mockResetSnipping };
         }
-        return null;
+        return { annotation: null, reset: jest.fn() };
       }),
       getAnnotationManager: jest.fn(() => ({ deselectAllAnnotations: jest.fn() })),
     };
@@ -91,6 +98,45 @@ describe('fireActiveDocumentViewerChanged', () => {
     expect(mockResetCrop).toHaveBeenCalledTimes(1);
     expect(mockResetSnipping).toHaveBeenCalledTimes(1);
     // Viewer 2 is active, so its tools should not be reset
+    expect(mockViewer2.getTool).not.toHaveBeenCalled();
+  });
+
+  it('should reset polyline tool in inactive viewers when switching', () => {
+    const { PolylineCreateTool } = window.Core.Tools;
+
+    class TestPolylineTool extends PolylineCreateTool {
+      constructor() {
+        super({}, 'TestPolyline');
+      }
+    }
+
+    const mockReset = jest.fn();
+
+    const polylineToolInstance = new TestPolylineTool();
+    polylineToolInstance.annotation = {};
+    polylineToolInstance.reset = mockReset;
+
+    const mockViewer1 = {
+      getTool: jest.fn((toolName) => {
+        if (toolName === window.Core.Tools.ToolNames['POLYLINE']) {
+          return polylineToolInstance;
+        }
+        return { annotation: null, reset: jest.fn() };
+      }),
+      getAnnotationManager: jest.fn(() => ({ deselectAllAnnotations: jest.fn() })),
+    };
+
+    const mockViewer2 = {
+      getTool: jest.fn(),
+      getAnnotationManager: jest.fn(() => ({ deselectAllAnnotations: jest.fn() })),
+    };
+    core.getDocumentViewers.mockReturnValue([mockViewer1, mockViewer2]);
+
+    fireActiveDocumentViewerChanged(1, 2);
+
+    // Viewer 1 is inactive, so its polyline tool should clear pending annotations
+    expect(mockReset).toHaveBeenCalledTimes(1);
+    // Viewer 2 is active, so its tools should not be interacted with
     expect(mockViewer2.getTool).not.toHaveBeenCalled();
   });
 });

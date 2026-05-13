@@ -115,4 +115,17 @@
     inset-inline-end: 0px;
     margin: 0px 5px 5px 0px;
   }
+
+  .image-signature-img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .image-signature-initials-hidden {
+    display: none !important;
+  }
+
+  .image-signature-dnd {
+    text-align: center;
+  }
 }

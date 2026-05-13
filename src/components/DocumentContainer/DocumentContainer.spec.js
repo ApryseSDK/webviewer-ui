@@ -93,7 +93,6 @@ describe('DocumentContainer', () => {
     isInDesktopOnlyMode: false,
     isRedactionPanelOpen: false,
     isTextEditingPanelOpen: false,
-    isWv3dPropertiesPanelOpen: false,
     featureFlags: { customizableUI: false },
     bottomHeaderHeight: 40,
     activeDocumentViewerKey: 1,

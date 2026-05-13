@@ -6,6 +6,7 @@ import './StylePicker.scss';
 import ColorPicker from './ColorPicker';
 import Slider from 'components/Slider';
 import DataElements from 'constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import { getStrokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
 import SnapModeToggle from './SnapModeToggle';
 import actions from 'actions';
@@ -44,7 +45,7 @@ const propTypes = {
   sliderProperties: PropTypes.arrayOf(PropTypes.string),
   startLineStyle: PropTypes.string,
   strokeStyle: PropTypes.string,
-  style: PropTypes.object.isRequired,
+  annotationStyle: PropTypes.object.isRequired,
   toolName: PropTypes.string,
   annotationTypes: PropTypes.arrayOf(PropTypes.string),
 };
@@ -53,7 +54,7 @@ const MAX_STROKE_THICKNESS = 23;
 
 const StylePicker = ({
   onStyleChange,
-  style,
+  annotationStyle,
   isFreeText,
   isRedaction,
   showLineStyleOptions,
@@ -67,13 +68,20 @@ const StylePicker = ({
   hasParentPicker,
   annotationTypes,
 }) => {
+  const adjustedAnnotationStyle = isRedaction
+    ? {
+      ...annotationStyle,
+      Opacity: null,
+      StrokeThickness: null,
+    }
+    : annotationStyle;
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [strokeColor, setStrokeColor] = useState(style.StrokeColor);
+  const [strokeColor, setStrokeColor] = useState(adjustedAnnotationStyle.StrokeColor);
   const [startingLineStyle, setStartingLineStyle] = useState(startLineStyle);
   const [endingLineStyle, setEndingLineStyle] = useState(endLineStyle);
   const [strokeLineStyle, setStrokeLineStyle] = useState(strokeStyle);
-  const [fillColor, setFillColor] = useState(style.FillColor);
+  const [fillColor, setFillColor] = useState(adjustedAnnotationStyle.FillColor);
 
   const checkAnyAnnotationTypes = (checkFunction) => {
     if (annotationTypes && annotationTypes.length > 0) {
@@ -105,12 +113,12 @@ const StylePicker = ({
   }, [activeTool]);
 
   useEffect(() => {
-    setStrokeColor(style.StrokeColor);
-    setFillColor(style.FillColor);
-  }, [strokeColor, fillColor, style]);
+    setStrokeColor(adjustedAnnotationStyle.StrokeColor);
+    setFillColor(adjustedAnnotationStyle.FillColor);
+  }, [adjustedAnnotationStyle.StrokeColor, adjustedAnnotationStyle.FillColor]);
 
   useEffect(() => {
-    setStrokeColor(style.StrokeColor);
+    setStrokeColor(adjustedAnnotationStyle.StrokeColor);
     setStartingLineStyle(startLineStyle);
     setStrokeLineStyle(strokeStyle);
     setEndingLineStyle(endLineStyle);
@@ -145,11 +153,6 @@ const StylePicker = ({
     onStyleChange?.(property, value, doneStyleChange);
   };
 
-  // We do not have sliders to show up for redaction annots
-  if (isRedaction) {
-    style.Opacity = null;
-    style.StrokeThickness = null;
-  }
 
   const {
     isSnapModeEnabled,
@@ -163,7 +166,7 @@ const StylePicker = ({
   } = useStylePanelSections();
 
   const getSliderProps = (type) => {
-    const { Opacity, StrokeThickness, FontSize } = style;
+    const { Opacity, StrokeThickness, FontSize } = adjustedAnnotationStyle;
 
     switch (type.toLowerCase()) {
       case 'opacity':
@@ -316,7 +319,7 @@ const StylePicker = ({
                   color={fillColor}
                   hasTransparentColor={!shouldHideTransparentFillColor(activeTool)}
                   activeTool={activeTool}
-                  type={'Fill'}
+                  type={COLOR_PALETTE_STYLES.FillColor.type}
                   ariaTypeLabel={t('option.annotationColor.FillColor')}
                 />
               </div>
@@ -346,7 +349,7 @@ const StylePicker = ({
           {/* to avoid inline styling when there's no divider */}
           {!showFillColorAndCollapsablePanelSections && <div className="spacer" />}
           <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.SNAP_MODE_CONTAINER}>
-            <SnapModeToggle Scale={style.Scale} Precision={style.Precision} isSnapModeEnabled={isSnapModeEnabled} />
+            <SnapModeToggle Scale={adjustedAnnotationStyle.Scale} Precision={adjustedAnnotationStyle.Precision} isSnapModeEnabled={isSnapModeEnabled} />
           </DataElementWrapper>
         </>
       )}

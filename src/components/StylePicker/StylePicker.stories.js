@@ -27,7 +27,7 @@ const style = {
 
 export const StylePicker = () => {
   const props = {
-    style: style,
+    annotationStyle: style,
     sliderProperties: ['Opacity', 'StrokeThickness'],
     showLineStyleOptions: true,
     startLineStyle: 'None',

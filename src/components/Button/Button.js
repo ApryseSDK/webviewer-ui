@@ -9,7 +9,7 @@ import { shortcutAria } from 'helpers/hotkeysUtils';
 import selectors from 'selectors';
 import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
 import { createAnnouncement } from 'helpers/accessibility';
-
+import { css } from '@emotion/react';
 import './Button.scss';
 
 const NOOP = (e) => {
@@ -26,6 +26,9 @@ const propTypes = {
   color: PropTypes.string,
   dataElement: PropTypes.string,
   className: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
+  style: PropTypes.object,
   onClick: PropTypes.func,
   onDoubleClick: PropTypes.func,
   onMouseUp: PropTypes.func,
@@ -69,7 +72,8 @@ const Button = (props) => {
     onMouseUp,
     className,
     title,
-    style,
+    buttonStyle,
+    style: legacyStyle,
     ariaLabel,
     ariaLabelledby,
     ariaControls,
@@ -90,6 +94,7 @@ const Button = (props) => {
     onKeyDownHandler,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
+  const resolvedButtonStyle = buttonStyle ?? legacyStyle;
 
   const customOverrideClasses = {};
   if (customOverrides && customOverrides.hidden && customOverrides.hidden.length) {
@@ -145,7 +150,11 @@ const Button = (props) => {
         'modular-ui': isCustomUI,
         'icon-only': isGlyph && !label,
       })}
-      style={style}
+      css={css({
+        '&&&&&&&': {
+          ...resolvedButtonStyle
+        }
+      })}
       data-element={dataElement}
       // Can't use button disabled property here.
       // Because mouse events won't fire and we want them to

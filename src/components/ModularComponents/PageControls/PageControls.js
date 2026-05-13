@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import './PageControls.scss';
 import DataElements from 'src/constants/dataElement';
 import PageControlsInput from './PageControlsInput';
-
 function PageControls(props) {
   const {
     size,
@@ -39,9 +38,16 @@ function PageControls(props) {
   }, [totalPages, currentPage, isCustomPageLabelsEnabled]);
 
   return (
-    <div className={classNames({ PageControlsWrapper: true, [className]: true })}
+    <div
+      className={
+        classNames({
+          PageControlsWrapper: true,
+          [className]: true,
+          'horizontal': headerDirection === DIRECTION.ROW,
+          'vertical': headerDirection === DIRECTION.COLUMN,
+        })
+      }
       data-element={dataElement}
-      style={{ flexDirection: headerDirection }}
       ref={elementRef}>
       {size === 0 && <>
         <CustomButton {...previousPageButton} />

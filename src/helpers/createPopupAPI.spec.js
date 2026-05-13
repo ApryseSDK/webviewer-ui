@@ -94,7 +94,6 @@ describe('createPopupAPI', () => {
       { dataElement: DataElements.LINK_BUTTON },
       { dataElement: DataElements.FILE_ATTACHMENT_DOWNLOAD },
       { dataElement: DataElements.ANNOTATION_DELETE_BUTTON },
-      { dataElement: DataElements.SHORTCUT_KEYS_FOR_3D },
       { dataElement: DataElements.PLAY_SOUND_BUTTON },
       { dataElement: DataElements.OPEN_ALIGNMENT_BUTTON },
     ]);
@@ -129,7 +128,6 @@ describe('createPopupAPI', () => {
       { dataElement: DataElements.LINK_BUTTON },
       { dataElement: DataElements.FILE_ATTACHMENT_DOWNLOAD },
       { dataElement: DataElements.ANNOTATION_DELETE_BUTTON },
-      { dataElement: DataElements.SHORTCUT_KEYS_FOR_3D },
       { dataElement: DataElements.PLAY_SOUND_BUTTON },
       { dataElement: DataElements.OPEN_ALIGNMENT_BUTTON },
     ]);

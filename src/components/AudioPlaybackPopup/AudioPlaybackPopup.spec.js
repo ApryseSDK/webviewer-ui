@@ -80,7 +80,8 @@ describe('AudioPlaybackPopup', () => {
        * Until then, will use a test-id for this assertion.
        */
       const audioElement = screen.getByTestId('hidden-audio-element');
-      expect(audioElement.style.display).toEqual('none');
+      const styles = getComputedStyle(audioElement);
+      expect(styles.display).toBe('none');
     });
 
     it('Should call close handler when close button is pressed', () => {

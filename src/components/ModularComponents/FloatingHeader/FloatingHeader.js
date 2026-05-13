@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './FloatingHeader.scss';
 import classNames from 'classnames';
 import ModularHeaderItems from 'components/ModularHeaderItems';
@@ -17,8 +18,9 @@ const FloatingHeader = (props) => {
     opacity = OPACITY_LEVELS.FULL,
     maxWidth,
     maxHeight,
-    style,
+    wrapperStyle,
   } = props;
+  const resolvedWrapperStyle = wrapperStyle ?? props.style;
   const { core } = useCore();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -57,7 +59,7 @@ const FloatingHeader = (props) => {
   return (
     <DataElementWrapper
       dataElement={dataElement}
-      style={style}
+      wrapperStyle={resolvedWrapperStyle}
       className={className}>
       <ModularHeaderItems
         items={items}
@@ -68,6 +70,20 @@ const FloatingHeader = (props) => {
         maxHeight={maxHeight} />
     </DataElementWrapper >
   );
+};
+
+FloatingHeader.propTypes = {
+  dataElement: PropTypes.string,
+  placement: PropTypes.string,
+  items: PropTypes.array,
+  gap: PropTypes.number,
+  opacityMode: PropTypes.string,
+  opacity: PropTypes.string,
+  maxWidth: PropTypes.number,
+  maxHeight: PropTypes.number,
+  wrapperStyle: PropTypes.object,
+  /** @deprecated Use wrapperStyle instead. */
+  style: PropTypes.object,
 };
 
 export default FloatingHeader;

@@ -6,11 +6,12 @@ import { menuItems } from '../../../Helpers/menuItems';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import setCellTextWrap from 'src/helpers/setCellTextWrap';
-
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   buttonType: PropTypes.string,
@@ -23,7 +24,7 @@ const CellTextWrapButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
     type,
-    style,
+    buttonStyle,
     className,
     buttonType,
     wrapText,
@@ -31,6 +32,7 @@ const CellTextWrapButton = forwardRef((props, ref) => {
     img: icon = menuItems[buttonType].icon,
     title = menuItems[buttonType].title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const currentWrapText = useSelector((state) => selectors.getActiveCellRangeWrapText(state));
   const isActive = wrapText === currentWrapText;
 
@@ -55,7 +57,7 @@ const CellTextWrapButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isActive}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         />
       )

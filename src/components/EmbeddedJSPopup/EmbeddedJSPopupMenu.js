@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import EmbeddedJSPopupOption from './EmbeddedJSPopupOption';
@@ -45,7 +45,8 @@ const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0
     }
   };
 
-  const customMenuStyle = embeddedJSPopupStyle || {};
+  const outerCss = useMemo(() => ({ left, top, flexDirection: 'column' }), [left, top]);
+  const innerCss = useMemo(() => ({ overflowY: 'auto', maxHeight, ...(embeddedJSPopupStyle || {}) }), [maxHeight, embeddedJSPopupStyle]);
 
   return (
     <div
@@ -56,10 +57,10 @@ const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0
         open: isSubOpen,
         closed: !isSubOpen,
       })}
-      style={{ left, top, flexDirection: 'column' }}
+      css={outerCss}
       data-element={dataElement}
     >
-      <div ref={containerRef} style={{ overflowY: 'auto', maxHeight, ...customMenuStyle }} onScroll={onScrollContainer}>
+      <div ref={containerRef} css={innerCss} onScroll={onScrollContainer}>
         {
           popUpMenuItems.map((popUpMenuItem, index) => {
             if (typeof popUpMenuItem === 'string' || popUpMenuItem instanceof String) {

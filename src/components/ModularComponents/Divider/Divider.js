@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import './Divider.scss';
 import PropTypes from 'prop-types';
 import DataElementWrapper from 'src/components/DataElementWrapper';
+import { css } from '@emotion/react';
 
 const Divider = ({ headerDirection, style, className, dataElement }) => {
   const dividerClasses = classNames({
@@ -15,7 +16,9 @@ const Divider = ({ headerDirection, style, className, dataElement }) => {
     <DataElementWrapper
       dataElement={dataElement}
       className={dividerClasses}
-      style={style}
+      css={css({
+        ...style
+      })}
     />
   );
 };

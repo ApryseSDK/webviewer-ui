@@ -52,7 +52,6 @@
     "remove": "Remove",
     "ok": "OK",
     "rotate": "Page Orientation",
-    "rotate3D": "Rotate",
     "rotateClockwise": "Rotate Clockwise",
     "rotateCounterClockwise": "Rotate Counterclockwise",
     "rotatedClockwise": "rotated clockwise",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Edit Form Field",
     "formFieldEditMode": "Edit Form Fields",
     "contentEditMode": "Edit Content",
-    "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read",
     "pageInsertion": "Page Insertion",
     "insertPage": "Insert Page",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Combo Box Field",
     "link": "Link",
     "other": "Other",
-    "3D": "3D",
     "sound": "Sound",
     "changeView": "Change View",
     "newImage": "New Image",
@@ -381,7 +378,6 @@
       "strikeout": "Strikeout",
       "underline": "Underline",
       "squiggly": "Squiggly",
-      "3D": "3D",
       "other": "Other",
       "initials": "Initials",
       "saved": "Saved"
@@ -902,6 +898,10 @@
       "title": "Security Warning",
       "message": "This document is trying to connect to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to open it."
     },
+    "submitForm": {
+      "title": "Security Warning",
+      "message": "This document is trying to submit a form to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to submit the form."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Edit Sheet Name",
       "message": "This name already exists. Please enter another name."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Drag",
-    "zoom3D": "Shift + Scroll"
+    }
   },
   "tool": {
     "pan": "Pan",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Insert Link or Page",
     "enterpage": "Enter the page number you would like to link to",
     "urlLink": "URL link"
-  },
-  "Model3D": {
-    "add3D": "Add 3D object",
-    "enterurl": "Enter the URL of the 3D object in glTF format",
-    "enterurlOrLocalFile": "Enter the URL or upload a 3D object in glTF format",
-    "formatError": "Only glTF (.glb) format is supported"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Enter a URL or choose a file to load into WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "Patterns",
       "start": "Start making your search"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Properties",
-    "miscValuesHeader": "All",
-    "emptyPanelMessage": "Select an element to view its properties."
   },
   "portfolio": {
     "createPDFPortfolio": "Create PDF Portfolio",

@@ -22,8 +22,22 @@
 
   // color for svgs
   &.active {
-    path[fill='default'] {
-      fill: var(--selected-icon-color);
+    .Icon {
+      .icon-default {
+        fill: var(--selected-icon-color);
+      }
+
+      .icon-default-stroke {
+        stroke: var(--selected-icon-color);
+      }
+
+      [fill='default'] {
+        fill: var(--selected-icon-color);
+      }
+
+      [stroke='default'] {
+        stroke: var(--selected-icon-color);
+      }
     }
 
     // hack for pan tool and annot select tool
@@ -34,7 +48,7 @@
   }
 
   &.active {
-    .Icon {
+    .Icon:not(.has-default-markers) {
       color: var(--selected-icon-color);
     }
   }

@@ -57,6 +57,7 @@ function SearchOverlay(props) {
   const [isReplacementRegexValid, setReplacementRegexValid] = useState(true);
   const [allowInitialSearch, setAllowInitialSearch] = useState(false);
   const [isReplaceInputActive, setisReplaceInputActive] = useState(false);
+  const [isSearchOptionsFlyoutKeyboardTriggered, setSearchOptionsFlyoutKeyboardTriggered] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
@@ -88,15 +89,17 @@ function SearchOverlay(props) {
     if (searchTextInputRef.current && isPanelOpen) {
       // give time for the search panel to open before focusing on the input
       setTimeout(() => {
-        searchTextInputRef.current.focus();
-        setAllowInitialSearch(true);
+        if (searchTextInputRef.current) {
+          searchTextInputRef.current.focus();
+          setAllowInitialSearch(true);
+        }
       }, waitTime);
     }
 
     if (!isSearchAndReplaceDisabled && !isReplacementRegexValid && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
     }
-  }, [isPanelOpen, isCaseSensitive]);
+  }, [isPanelOpen]);
 
   useEffect(() => {
     if (searchValue && searchValue.length > 0) {
@@ -255,6 +258,16 @@ function SearchOverlay(props) {
     setisReplaceInputActive(!isReplaceInputActive);
   };
 
+  const onSearchOptionsButtonKeyDown = useCallback((event) => {
+    if (event.key === 'Enter' || event.code === 'Space') {
+      setSearchOptionsFlyoutKeyboardTriggered(true);
+    }
+  }, []);
+
+  const onSearchOptionsButtonMouseUp = useCallback(() => {
+    setSearchOptionsFlyoutKeyboardTriggered(false);
+  }, []);
+
   const retriggerSearch = () => {
     if (isOfficeEditorMode()) {
       search(searchParamsRef.current.searchValue);
@@ -388,6 +401,8 @@ function SearchOverlay(props) {
             img={shouldShowDotOnFilterButton ? 'ic-filter-with-dot' : 'ic-filter-alt'}
             className={'search-options-button'}
             toggleElement={DataElements.SEARCH_OPTIONS_FLYOUT}
+            onKeyDownHandler={onSearchOptionsButtonKeyDown}
+            onMouseUp={onSearchOptionsButtonMouseUp}
           />
           {
             shouldShowReplaceToggleButton ?
@@ -442,6 +457,7 @@ function SearchOverlay(props) {
         isWholeWord={isWholeWord}
         isWildcard={isWildcard}
         isPanelOpen={isPanelOpen}
+        isKeyboardTriggered={isSearchOptionsFlyoutKeyboardTriggered}
         onCaseSensitiveSearchOptionChange={caseSensitiveSearchOptionOnChange}
         wholeWordSearchOptionOnChange={wholeWordSearchOptionOnChange}
         wildcardOptionOnChange={wildcardOptionOnChange}

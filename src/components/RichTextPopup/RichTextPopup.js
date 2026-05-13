@@ -20,10 +20,12 @@ import selectors from 'selectors';
 
 import './RichTextPopup.scss';
 import DataElements from 'constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import i18next from 'i18next';
 import Icon from 'components/Icon';
 import TextStylePicker from 'components/TextStylePicker';
 import handleFreeTextAutoSizeToggle from 'src/helpers/handleFreeTextAutoSizeToggle';
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -35,7 +37,7 @@ const RichTextPopup = ({ annotation, editor }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.RICH_TEXT_POPUP));
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.RICH_TEXT_POPUP));
   const isPaletteDisabled = useSelector((state) => selectors.isElementDisabled(state, 'colorPalette'));
-  const customColors = useSelector((state) => selectors.getCustomColors(state, 'customColors'));
+  const customColors = useSelector((state) => selectors.getCustomColors(state, COLOR_PALETTE_STYLES.TextColor.type));
   const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
   const isTextStylePickerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER));
   const isColorPickerOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER));

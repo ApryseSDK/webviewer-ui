@@ -1,10 +1,12 @@
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import { ITEM_TYPE, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
+import { COLOR_PALETTE_STYLES } from 'constants/commonColors';
 import { defaultPanels } from '../modularComponents';
 import {
   defaultOfficeEditorModularHeaders,
   defaultOfficeEditorModularComponents,
+  defaultOfficeEditorPopups,
   defaultOfficeEditorPanels,
 } from '../officeEditorModularComponents';
 
@@ -55,14 +57,40 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         defaultPrintMargins: payload.margins,
       };
-    case 'SET_COLORS':
+    case 'SET_TEXT_COLORS':
       return {
         ...state,
-        colors: payload.tool || !payload.colors ? state.colors : [...payload.colors],
-        textColors: payload.textColors ? [...payload.textColors] : state.textColors,
+        textColors: (payload.tool || !payload.colors) ? state.textColors : [...payload.colors],
         toolColorOverrides: payload.tool ? {
           ...state.toolColorOverrides,
-          [payload.tool]: [...payload.colors],
+          [payload.tool]: {
+            ...state.toolColorOverrides?.[payload.tool],
+            textColors: [...payload.colors],
+          },
+        } : state.toolColorOverrides,
+      };
+    case 'SET_STROKE_COLORS':
+      return {
+        ...state,
+        strokeColors: (payload.tool || !payload.colors) ? state.strokeColors : [...payload.colors],
+        toolColorOverrides: payload.tool ? {
+          ...state.toolColorOverrides,
+          [payload.tool]: {
+            ...state.toolColorOverrides?.[payload.tool],
+            strokeColors: [...payload.colors],
+          },
+        } : state.toolColorOverrides,
+      };
+    case 'SET_FILL_COLORS':
+      return {
+        ...state,
+        fillColors: (payload.tool || !payload.colors) ? state.fillColors : [...payload.colors],
+        toolColorOverrides: payload.tool ? {
+          ...state.toolColorOverrides,
+          [payload.tool]: {
+            ...state.toolColorOverrides?.[payload.tool],
+            fillColors: [...payload.colors],
+          },
         } : state.toolColorOverrides,
       };
     case 'SET_PANEL_WIDTH':
@@ -408,14 +436,6 @@ export default (initialState) => (state = initialState, action) => {
           textEditingPanel: payload.width,
         },
       };
-    case 'SET_WV3D_PROPERTIES_PANEL_WIDTH':
-      return {
-        ...state,
-        panelWidths: {
-          ...state.panelWidths,
-          wv3dPropertiesPanel: payload.width,
-        },
-      };
     case 'SET_SELECTED_SCALE':
       return {
         ...state,
@@ -511,14 +531,30 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, activeToolStyles: { ...payload.toolStyles } };
     case 'SET_CUSTOM_COLOR':
       return { ...state, customColor: payload.customColor };
-    case 'SET_CUSTOM_COLORS':
+    case 'SET_CUSTOM_TEXT_COLORS':
       if (localStorageManager.isLocalStorageEnabled()) {
         const instanceId = getInstanceID();
-        localStorageManager.setItemSynchronous(`${instanceId}-customColors`, JSON.stringify(payload.customColors));
+        localStorageManager.setItemSynchronous(`${instanceId}-${COLOR_PALETTE_STYLES.TextColor.customKey}`, JSON.stringify(payload.customColors));
       } else {
-        console.error('localStorage is disabled, customColors cannot be restored');
+        console.error('localStorage is disabled, customTextColors cannot be restored');
       }
-      return { ...state, customColors: payload.customColors };
+      return { ...state, customTextColors: payload.customColors };
+    case 'SET_CUSTOM_STROKE_COLORS':
+      if (localStorageManager.isLocalStorageEnabled()) {
+        const instanceId = getInstanceID();
+        localStorageManager.setItemSynchronous(`${instanceId}-${COLOR_PALETTE_STYLES.StrokeColor.customKey}`, JSON.stringify(payload.customColors));
+      } else {
+        console.error('localStorage is disabled, customStrokeColors cannot be restored');
+      }
+      return { ...state, customStrokeColors: payload.customColors };
+    case 'SET_CUSTOM_FILL_COLORS':
+      if (localStorageManager.isLocalStorageEnabled()) {
+        const instanceId = getInstanceID();
+        localStorageManager.setItemSynchronous(`${instanceId}-${COLOR_PALETTE_STYLES.FillColor.customKey}`, JSON.stringify(payload.customColors));
+      } else {
+        console.error('localStorage is disabled, customFillColors cannot be restored');
+      }
+      return { ...state, customFillColors: payload.customColors };
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return {
         ...state,
@@ -1039,6 +1075,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing,
       };
+    case 'SET_STATUS_LIST':
+      return {
+        ...state,
+        statusList: payload.statusList,
+      };
     case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
       return {
         ...state,
@@ -1259,6 +1300,7 @@ export default (initialState) => (state = initialState, action) => {
       const { UIMode } = payload;
       const modularHeaders = { ...state.modularHeaders };
       const modularComponents = { ...state.modularComponents };
+      const modularPopups = { ...state.modularPopups };
       const panels = [...state.genericPanels];
       const flyoutMap = { ...state.flyoutMap };
       const updatedModularComponentStash = {
@@ -1266,6 +1308,7 @@ export default (initialState) => (state = initialState, action) => {
         [UIMode]: {
           modularHeaders,
           modularComponents,
+          modularPopups,
           panels,
           flyoutMap,
         }
@@ -1283,6 +1326,7 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...initialState.modularHeaders },
               modularComponents: { ...initialState.modularComponents },
+              modularPopups: { ...initialState.modularPopups },
               genericPanels: [...initialState.genericPanels],
               flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
@@ -1292,6 +1336,10 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...defaultOfficeEditorModularHeaders },
               modularComponents: { ...defaultOfficeEditorModularComponents },
+              modularPopups: {
+                ...initialState.modularPopups,
+                ...defaultOfficeEditorPopups,
+              },
               genericPanels: [...defaultOfficeEditorPanels],
               flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
@@ -1301,6 +1349,7 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...defaultSpreadsheetEditorHeaders },
               modularComponents: { ...defaultSpreadsheetEditorComponents },
+              modularPopups: { ...initialState.modularPopups },
               genericPanels: [...defaultSpreadsheetEditorPanels],
               flyoutMap: { ...state.flyoutMap, ...defaultSpreadsheetFlyoutMap },
             };
@@ -1310,7 +1359,13 @@ export default (initialState) => (state = initialState, action) => {
         }
       }
 
-      const { modularHeaders, modularComponents, panels, flyoutMap } = modularComponentStash[UIMode];
+      const {
+        modularHeaders,
+        modularComponents,
+        modularPopups = initialState.modularPopups,
+        panels,
+        flyoutMap,
+      } = modularComponentStash[UIMode];
       // Delete the stash after restoring
       const updatedModularComponentStash = Object.keys(modularComponentStash).reduce((result, key) => {
         if (key !== UIMode) {
@@ -1324,6 +1379,7 @@ export default (initialState) => (state = initialState, action) => {
         modularComponentStash: updatedModularComponentStash,
         modularHeaders: { ...modularHeaders },
         modularComponents: { ...modularComponents },
+        modularPopups: { ...modularPopups },
         genericPanels: [...panels],
         flyoutMap: { ...flyoutMap },
       };
@@ -1347,6 +1403,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isWidgetHighlightingEnabled: false,
+      };
+    case 'SET_READER_PAGE_MODE':
+      return {
+        ...state,
+        readerPageMode: payload.readerPageMode,
       };
     default:
       return state;

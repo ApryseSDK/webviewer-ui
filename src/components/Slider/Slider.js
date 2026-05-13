@@ -207,7 +207,6 @@ function Slider(props) {
         <div className='slider-input'>
           <input
             ref={sliderRef}
-            style={{ width: '100%' }}
             aria-label={label}
             aria-valuemin={min}
             aria-valuemax={max}

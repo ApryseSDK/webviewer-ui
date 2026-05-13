@@ -39,6 +39,13 @@
       outline: var(--focus-visible-outline) !important;
     }
   }
+
+  &.horizontal {
+    flex-direction: row;
+  }
+  &.vertical {
+    flex-direction: column;
+  }
 }
 
 .page-nav-display {

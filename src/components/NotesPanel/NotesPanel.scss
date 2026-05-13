@@ -37,7 +37,8 @@
   }
 
   .NotesPanel {
-    width: 100%;
+    width: var(--panel-width, 100%);      
+    min-width: var(--panel-width, 100%);
     padding-inline-start: 16px;
     padding-bottom: 0px;
     display: flex;
@@ -154,6 +155,9 @@
 
     .virtualized-notes-container {
       overflow: hidden;
+      .List {
+        outline: none;
+      }
     }
 
     .normal-notes-container {

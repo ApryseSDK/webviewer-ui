@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import FocusTrap from 'components/FocusTrap';
 
 import ActionButton from 'components/ActionButton';
@@ -17,7 +16,6 @@ import DataElements from 'constants/dataElement';
 
 import './AnnotationPopup.scss';
 import getRootNode from 'helpers/getRootNode';
-
 const propTypes = {
   isMobile: PropTypes.bool,
   isIE: PropTypes.bool,
@@ -92,7 +90,6 @@ const propTypes = {
 
   customizableUI: PropTypes.bool,
   toggleStylePanel: PropTypes.func,
-  isInReadOnlyMode: PropTypes.bool,
 };
 
 const AnnotationPopup = ({
@@ -169,14 +166,10 @@ const AnnotationPopup = ({
 
   customizableUI,
   toggleStylePanel,
-  isInReadOnlyMode,
 }) => {
-  const [t] = useTranslation();
-  const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
 
   const commentButtonLabel = isDateFreeTextCanEdit ? 'action.changeDate' : 'action.comment';
   const commentButtonImg = isDateFreeTextCanEdit ? 'icon-tool-fill-and-sign-calendar' : 'icon-header-chat-line';
-  const show3DShortCutButton = !isInReadOnlyMode && focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
   const isRectangle = focusedAnnotation instanceof window.Core.Annotations.RectangleAnnotation;
   const isEllipse = focusedAnnotation instanceof window.Core.Annotations.EllipseAnnotation;
   const isPolygon = focusedAnnotation instanceof window.Core.Annotations.PolygonAnnotation;
@@ -249,7 +242,7 @@ const AnnotationPopup = ({
         return (
           <AnnotationStylePopup
             annotations={[focusedAnnotation]}
-            style={annotationStyle}
+            annotationStyle={annotationStyle}
             isOpen={isOpen}
             onResize={onResize}
             isFreeText={isFreeText}
@@ -270,14 +263,6 @@ const AnnotationPopup = ({
         );
       case isCalibrationPopupOpen:
         return <CalibrationPopup annotation={focusedAnnotation} />;
-      case shortCutKeysFor3DVisible && focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation:
-        return (
-          <div className="shortCuts3D">
-            <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
-            <div className="row">{t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span></div>
-            <div className="row">{t('action.zoom')} <span>{t('shortcut.zoom3D')}</span></div>
-          </div>
-        );
       default:
         return (
           <FocusTrap
@@ -427,16 +412,6 @@ const AnnotationPopup = ({
                     title={!isRightClickMenu ? 'action.fileAttachmentDownload' : ''}
                     img="icon-download"
                     onClick={() => downloadFileAttachment(focusedAnnotation)}
-                  />
-                )}
-                {show3DShortCutButton && (
-                  <ActionButton
-                    className="main-menu-button"
-                    dataElement="shortCutKeysFor3D"
-                    label={isRightClickMenu ? 'action.viewShortCutKeysFor3D' : ''}
-                    title={!isRightClickMenu ? 'action.viewShortCutKeysFor3D' : ''}
-                    img="icon-keyboard"
-                    onClick={() => setShortCutKeysFor3DVisible(true)}
                   />
                 )}
                 {showAudioPlayButton && (

@@ -5,7 +5,6 @@ import ToggleElementButton from '../ToggleElementButton';
 import CustomButton from '../CustomButton';
 import { useTranslation } from 'react-i18next';
 import './ZoomControls.scss';
-
 function ZoomControls(props) {
   const { componentProps, dataElement, elementRef } = props;
   const {
@@ -19,7 +18,7 @@ function ZoomControls(props) {
     onZoomInClicked,
     onZoomOutClicked,
     getCurrentZoom,
-    style,
+    zoomControlsStyle,
     className,
   } = componentProps;
 
@@ -56,10 +55,14 @@ function ZoomControls(props) {
   };
 
   return (
-    <div className={classNames('ZoomContainerWrapper', {
-      [`size${size}`]: true,
-      [className]: true,
-    })} data-element={dataElement} ref={elementRef} style={{ ...style }}>
+    <div
+      className={classNames('ZoomContainerWrapper', {
+        [`size${size}`]: true,
+        [className]: true,
+      })}
+      data-element={dataElement}
+      ref={elementRef}
+      css={zoomControlsStyle}>
       {size === 0 && <>
         <div className="ToggleZoomMenu">
           <div tabIndex={-1}
@@ -140,7 +143,7 @@ ZoomControls.propTypes = {
     onZoomInClicked: PropTypes.func,
     onZoomOutClicked: PropTypes.func,
     getCurrentZoom: PropTypes.func,
-    style: PropTypes.object,
+    zoomControlsStyle: PropTypes.object,
     className: PropTypes.string,
   })
 };

@@ -8,6 +8,7 @@ import ColorPalette from 'components/ColorPalette';
 import ColorPalettePicker from 'components/ColorPalettePicker';
 import Button from 'components/Button';
 import HorizontalDivider from 'components/HorizontalDivider';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 
 const TextEditingPanel = ({
   addActiveColor,
@@ -26,7 +27,6 @@ const TextEditingPanel = ({
   customColors = [],
   isCustomUI,
 }) => {
-  const currentPalette = 'TextColor';
   const FONT_PLACEHOLDER = 'Font';
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const TextEditingPanel = ({
         <ColorPalette
           colorMapKey="freeText"
           color={rgbColor}
-          property={currentPalette}
+          property={COLOR_PALETTE_STYLES.TextColor.type}
           onStyleChange={handleColorChange}
           overridePalette2={[rgbColor?.toHexString()]}
           disabled={imageSelectMode}
@@ -118,7 +118,7 @@ const TextEditingPanel = ({
         <div className="text-editing-row custom-colors-pallete">
           <ColorPalettePicker
             color={rgbColor}
-            property={currentPalette}
+            property={COLOR_PALETTE_STYLES.TextColor.type}
             onStyleChange={handleColorChange}
             disableTitle
             enableEdit
@@ -157,9 +157,9 @@ const TextEditingPanel = ({
     <>
       <div className="text-editing-panel">
         {textStylesSection}
-        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
+        <HorizontalDivider className='divider' />
         {colorPaletteSection}
-        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
+        <HorizontalDivider className='divider' />
         {undoRedoProperties ? undoRedoSection : undefined }
       </div>
     </>

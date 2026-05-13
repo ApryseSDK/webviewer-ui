@@ -14,7 +14,6 @@ import './ColorPaletteHeader.scss';
 
 class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
-    style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     colorMapKey: PropTypes.string.isRequired,
     setActivePalette: PropTypes.func.isRequired,

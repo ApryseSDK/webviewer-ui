@@ -6,11 +6,12 @@ import selectors from 'selectors';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import mergeCellRange from 'src/helpers/mergeCellRange';
-
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,
@@ -25,12 +26,13 @@ const MergeToggleButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
     type,
-    style,
+    buttonStyle,
     className,
     dataElement = menuItem.dataElement,
     img: icon = menuItem.icon,
     title = menuItem.title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
 
   const handleClick = () => {
     mergeCellRange(!isMerged);
@@ -54,7 +56,7 @@ const MergeToggleButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isMerged}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
           disabled={isCellRangeMergeDisabled}
         />

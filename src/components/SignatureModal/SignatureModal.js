@@ -197,7 +197,6 @@ const SignatureModal = () => {
           className={classNames('container', { 'include-initials': isInitialsModeEnabled })}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <div className="swipe-indicator" />
           <Tabs id="signatureModal">
             <div className="tabs-header-container">
               <div className="tab-list">

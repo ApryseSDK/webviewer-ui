@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { PasswordModal, PasswordManyAttemptsErrorModal } from './PasswordModal.stories';
 import { fireError } from 'helpers/fireEvent';
+import { createStructuredLoadError } from 'helpers/loadError';
 
 jest.mock('helpers/fireEvent', () => ({
   __esModule: true,
@@ -25,7 +26,12 @@ describe('PasswordModal', () => {
 
     await waitFor(() => {
       expect(fireError).toHaveBeenCalledTimes(1);
-      expect(fireError).toHaveBeenCalledWith(i18next.t('message.encryptedUserCancelled'));
+      expect(fireError).toHaveBeenCalledWith(createStructuredLoadError({
+        message: i18next.t('message.encryptedUserCancelled'),
+        type: 'PasswordUserCancelled',
+        filename: 'PasswordModal',
+        functionName: 'renderContent',
+      }));
     });
   });
 
@@ -35,7 +41,12 @@ describe('PasswordModal', () => {
 
     await waitFor(() => {
       expect(fireError).toHaveBeenCalledTimes(1);
-      expect(fireError).toHaveBeenCalledWith(i18next.t('message.encryptedAttemptsExceeded'));
+      expect(fireError).toHaveBeenCalledWith(createStructuredLoadError({
+        message: i18next.t('message.encryptedAttemptsExceeded'),
+        type: 'PasswordAttemptsExceeded',
+        filename: 'PasswordModal',
+        functionName: 'renderContent',
+      }));
     });
   });
 });

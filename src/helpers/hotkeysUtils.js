@@ -513,4 +513,107 @@ export function isShortcutInToolList(shortcut, toolNames) {
   return toolName && toolNames.includes(toolName);
 }
 
+export const EventTypes = {
+  KEYDOWN: 'keydown',
+  KEYUP: 'keyup',
+};
+
+const VALID_EVENT_TYPES = new Set([EventTypes.KEYDOWN, EventTypes.KEYUP]);
+
+/**
+ * @ignore
+ * Normalizes and validates an eventType string.
+ * @param {string} eventType - The event type to validate
+ * @returns {{ valid: boolean, normalized: string }} The validation result with the normalized value
+ */
+export function normalizeEventType(eventType) {
+  const normalized = String(eventType).toLowerCase().trim();
+  return { valid: VALID_EVENT_TYPES.has(normalized), normalized };
+}
+
+/**
+ * @ignore
+ * Finds the shortcut name whose current key binding contains the given key combo.
+ * @param {string} keyCombo - A key combo string (e.g. 'ctrl+b')
+ * @param {Object} shortcutKeyMap - The current shortcut key map from the store
+ * @returns {string|null} The shortcut name (e.g. 'bookmark'), or null if not found
+ */
+export function resolveShortcutByKeyCombo(keyCombo, shortcutKeyMap) {
+  const normalized = keyCombo.trim().toLowerCase();
+  for (const [name, keyBinding] of Object.entries(shortcutKeyMap)) {
+    if (!keyBinding) {
+      continue;
+    }
+    const individualKeys = splitKey(keyBinding.toLowerCase());
+    if (individualKeys.some((k) => k.trim() === normalized)) {
+      return name;
+    }
+  }
+  return null;
+}
+
+/**
+ * @ignore
+ * Checks whether a shortcut is currently active (not disabled via off()).
+ * @param {string} shortcutName - The shortcut name (e.g. 'bookmark')
+ * @param {Object} shortcutKeyMap - The current shortcut key map from the store
+ * @param {Object} activeHotkeysMap - The map tracking enabled/disabled state per key
+ * @returns {boolean} True if at least one of the shortcut's keys is active
+ */
+export function isShortcutKeyActive(shortcutName, shortcutKeyMap, activeHotkeysMap) {
+  const currentKeyBinding = shortcutKeyMap[shortcutName] || ShortcutKeys[shortcutName];
+  if (!currentKeyBinding) {
+    return true;
+  }
+  const individualKeys = splitKey(currentKeyBinding.toLowerCase());
+  return individualKeys.some((k) => activeHotkeysMap[k.trim()] !== false);
+}
+
+/**
+ * @ignore
+ * Creates a synthetic keyboard event object for programmatic shortcut triggering.
+ * @param {string} eventType - 'keydown' or 'keyup'
+ * @returns {Object} A synthetic event with preventDefault/stopPropagation stubs
+ */
+export function createSyntheticKeyEvent(eventType) {
+  return {
+    type: eventType,
+    key: '',
+    keyCode: 0,
+    ctrlKey: false,
+    metaKey: false,
+    shiftKey: false,
+    altKey: false,
+    preventDefault: () => {},
+    stopPropagation: () => {},
+  };
+}
+
+/**
+ * @ignore
+ * Invokes a shortcut handler with a synthetic event.
+ * @param {Function|Object} handler - The handler (function or {keydown, keyup} object)
+ * @param {string} eventType - 'keydown' or 'keyup'
+ * @param {Object} syntheticEvent - The synthetic event to pass to the handler
+ * @returns {string|null} A warning message if the handler couldn't be invoked, or null on success
+ */
+export function invokeShortcutHandler(handler, eventType, syntheticEvent) {
+  if (typeof handler === 'object' && handler !== null) {
+    const fn = handler[eventType];
+    if (typeof fn === 'function') {
+      fn(syntheticEvent);
+      return null;
+    }
+    return `no "${eventType}" handler`;
+  }
+  if (typeof handler === 'function') {
+    if (eventType === 'keydown') {
+      handler(syntheticEvent);
+      return null;
+    }
+    return 'only has a keydown handler';
+  }
+  return 'invalid handler type';
+}
+
 

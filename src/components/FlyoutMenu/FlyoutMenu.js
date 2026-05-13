@@ -12,7 +12,6 @@ import useArrowFocus from '../../hooks/useArrowFocus';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import './FlyoutMenu.scss';
-
 const MENUS = [
   DataElements.MENU_OVERLAY,
   'groupOverlay',
@@ -153,7 +152,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       <div
         className={overlayClass}
         data-element={menu}
-        style={!isMobile || isInDesktopOnlyMode ? position : undefined}
+        css={(!isMobile || isInDesktopOnlyMode) ? position : undefined}
         ref={overlayRef}
         role="listbox"
         aria-label={ariaLabel}

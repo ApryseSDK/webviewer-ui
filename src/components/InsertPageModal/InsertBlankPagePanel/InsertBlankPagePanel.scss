@@ -25,6 +25,10 @@
       padding-bottom: 16px;
       gap: 16px;
 
+      &.hidden {
+        display: none;
+      }
+
       &.extra-space-section {
         height: 98px;
       }
@@ -37,6 +41,10 @@
       .input-container {
         display: flex;
         flex-direction: column;
+
+        &.hidden {
+          visibility: hidden;
+        }
 
         label {
           margin: 0;

@@ -12,7 +12,6 @@ import DataElements from 'constants/dataElement';
 
 import './FileAttachmentPanel.scss';
 import { panelData, panelNames } from 'constants/panel';
-
 const getActualFileName = (filename) => {
   const fileNameRegex = /[^\\\/]+$/g;
   return filename.match(fileNameRegex)[0];
@@ -35,7 +34,6 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
           className='embedSpinner'
           onClick={onClickCallback}
           onKeyDown={handleKeyDown}
-          style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
           type="button"
         >
           {`[${fileExtension}] ${filename}`}<Spinner inPanel height={'15px'} width={'15px'}/>
@@ -49,7 +47,6 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
         className='embedSpinner'
         onClick={onClickCallback}
         onKeyDown={handleKeyDown}
-        style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
         type="button"
       >
         {`[${fileExtension}] ${filename}`}

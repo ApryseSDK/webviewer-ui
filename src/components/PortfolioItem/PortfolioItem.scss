@@ -1,0 +1,13 @@
+.outline-drag-container {
+  &.isDragging {
+    opacity: 0.5;
+  }
+
+  .outline-drag-line {
+    opacity: 0;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+}

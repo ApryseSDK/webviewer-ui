@@ -118,7 +118,6 @@ ViewOnlyApp.play = async ({ canvasElement }) => {
     DataElements.INSERT_PAGE_MODAL,
     DataElements.LOADING_MODAL,
     DataElements.WARNING_MODAL,
-    DataElements.MODEL3D_MODAL,
     DataElements.COLOR_PICKER_MODAL,
     DataElements.OPEN_FILE_MODAL,
     DataElements.CUSTOM_MODAL,

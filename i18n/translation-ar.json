@@ -52,7 +52,6 @@
     "remove": "إزالة",
     "ok": "نعم",
     "rotate": "اتجاه دوران الصفحة",
-    "rotate3D": "دوران الصفحة ثلاثي الأبعاد",
     "rotateClockwise": "تدوير في اتجاه عقارب الساعة",
     "rotateCounterClockwise": "تدوير عكس اتجاه عقارب الساعة",
     "rotatedClockwise": "تم التدوير في اتجاه عقارب الساعة",
@@ -92,7 +91,6 @@
     "formFieldEdit": "تحرير حقل النموذج",
     "formFieldEditMode": "تحرير حقول النموذج",
     "contentEditMode": "تحرير المحتوى",
-    "viewShortCutKeysFor3D": "عرض مفاتيح الاختصار",
     "markAllRead": "وضع علامة مقروء على الكل",
     "pageInsertion": "إدراج الصفحة",
     "insertPage": "إدراج صفحة",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "حقل مربع تحرير وسرد",
     "link": "رابط",
     "other": "آخر",
-    "3D": "ثلاثي الأبعاد",
     "sound": "صوت",
     "changeView": "تغيير طريقة العرض",
     "newImage": "صورة جديدة",
@@ -381,7 +378,6 @@
       "strikeout": "نص يتوسطه خط",
       "underline": "تسطير النص",
       "squiggly": "خط متعرج",
-      "3D": "ثلاثي الأبعاد",
       "other": "آخر",
       "initials": "الأحرف الأولى",
       "saved": "تم الحفظ"
@@ -902,6 +898,10 @@
       "title": "تحذير أمني",
       "message": "يحاول هذا المستند الاتصال بـ:\n\n{{- uri}}\n\nإذا كنت تثق بهذا المستند، فانقر على \"تأكيد\" لفتحه."
     },
+    "submitForm": {
+      "title": "تحذير أمني",
+      "message": "يحاول هذا المستند إرسال نموذج إلى: \n\n{{- uri}}\n\n إذا كنت تثق بهذا المستند، فانقر على تأكيد لإرسال النموذج."
+    },
     "sheetTabRenameIssueOne": {
       "title": "تحرير اسم الورقة",
       "message": "هذا الاسم موجود سابقاً. يُرجى إدخال اسم آخر."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Drag",
-    "zoom3D": "Shift + Scroll"
+    }
   },
   "tool": {
     "pan": "أداة تحريك الصفحة",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "إدراج رابط أو صفحة",
     "enterpage": "أدخل رقم الصفحة التي تريد الارتباط بها",
     "urlLink": "عنوان الرابط"
-  },
-  "Model3D": {
-    "add3D": "إضافة كائن ثلاثي الأبعاد",
-    "enterurl": "أدخل رابط للكائن ثلاثي الأبعاد بصيغة glTF",
-    "enterurlOrLocalFile": "أدخل رابط أو ملف للكائن ثلاثي الأبعاد بصيغة glTF",
-    "formatError": "الصيغة المدعومة هي فقط glTF (.glb)"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "أدخل رابطاً أو اختر ملفًا لتحميله",
@@ -1288,11 +1280,6 @@
       "pattern": "أنماط",
       "start": "ابدأ في إجراء بحثك"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "خصائص",
-    "miscValuesHeader": "الجميع",
-    "emptyPanelMessage": "حدد عنصرًا لعرض خصائصه."
   },
   "portfolio": {
     "createPDFPortfolio": "إنشاء محفظة PDF",

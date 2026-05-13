@@ -52,7 +52,6 @@
     "remove": "ลบ",
     "ok": "ตกลง",
     "rotate": "การวางแนวหน้า",
-    "rotate3D": "หมุน",
     "rotateClockwise": "หมุนตามเข็มนาฬิกา",
     "rotateCounterClockwise": "หมุนทวนเข็มนาฬิกา",
     "rotatedClockwise": "หมุนตามเข็มนาฬิกา",
@@ -92,7 +91,6 @@
     "formFieldEdit": "แก้ไขแบบฟอร์มฟิลด์",
     "formFieldEditMode": "แก้ไขฟิลด์แบบฟอร์ม",
     "contentEditMode": "แก้ไขเนื้อหา",
-    "viewShortCutKeysFor3D": "ดูปุ่มลัด",
     "markAllRead": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
     "pageInsertion": "การแทรกหน้า",
     "insertPage": "การแทรกหน้า",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "สนามคอมโบบ็อกซ์",
     "link": "ลิงค์",
     "other": "อื่น",
-    "3D": "3D",
     "sound": "เสียง",
     "changeView": "เปลี่ยนมุมมอง",
     "newImage": "ภาพใหม่",
@@ -381,7 +378,6 @@
       "strikeout": "สไตรค์เอาท์",
       "underline": "ขีดเส้นใต้",
       "squiggly": "ไก่เขี่ย",
-      "3D": "3D",
       "other": "อื่น",
       "initials": "ชื่อย่อ",
       "saved": "บันทึกแล้ว"
@@ -902,6 +898,10 @@
       "title": "คำเตือนความปลอดภัย",
       "message": "เอกสารนี้พยายามเชื่อมต่อกับ:\n\n{{- uri}}\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อเปิด"
     },
+    "submitForm": {
+      "title": "คำเตือนด้านความปลอดภัย",
+      "message": "เอกสารนี้กำลังพยายามส่งแบบฟอร์มไปที่: \n\n{{- uri}}\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อส่งแบบฟอร์ม"
+    },
     "sheetTabRenameIssueOne": {
       "title": "แก้ไขชื่อชีต",
       "message": "ชื่อนี้มีอยู่แล้ว กรุณาใส่ชื่ออื่น"
@@ -952,9 +952,7 @@
       "italic": "(Ctrl ฉัน)",
       "underline": "(Ctrl ยู)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Shift + Drag",
-    "zoom3D": "Shift + เลื่อน"
+    }
   },
   "tool": {
     "pan": "กระทะ",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "แทรกลิงค์หรือเพจ",
     "enterpage": "กรอกหมายเลขหน้าที่คุณต้องการลิงค์ไป",
     "urlLink": "ลิงค์ URL"
-  },
-  "Model3D": {
-    "add3D": "เพิ่มวัตถุ 3 มิติ",
-    "enterurl": "ป้อน URL ของวัตถุ 3 มิติในรูปแบบ glTF",
-    "enterurlOrLocalFile": "ป้อน URL หรืออัปโหลดวัตถุ 3 มิติในรูปแบบ glTF",
-    "formatError": "รองรับเฉพาะรูปแบบ glTF (.glb) เท่านั้น"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "ป้อน URL หรือเลือกไฟล์ที่จะโหลดลงใน WebViewer",
@@ -1288,11 +1280,6 @@
       "pattern": "รูปแบบ",
       "start": "เริ่มทำการค้นหาของคุณ"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "คุณสมบัติ",
-    "miscValuesHeader": "ทั้งหมด",
-    "emptyPanelMessage": "เลือกองค์ประกอบเพื่อดูคุณสมบัติของมัน"
   },
   "portfolio": {
     "createPDFPortfolio": "สร้างผลงาน PDF",

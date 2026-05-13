@@ -12,7 +12,6 @@ import './AlignmentPopup.scss';
 import DataElementWrapper from '../DataElementWrapper';
 import DataElements from 'src/constants/dataElement';
 import { alignmentConfig, distributeConfig } from './AlignmentConfig';
-
 const propTypes = {
   annotation: PropTypes.object,
 };
@@ -86,7 +85,7 @@ const AlignmentPopupContainer = ({
     <DataElementWrapper
       dataElement={DataElements.ANNOTATION_ALIGNMENT_POPUP}
       className={className}
-      style={{ ...position }}
+      wrapperStyle={position}
       ref={popupRef}
     >
       <AlignmentPopup

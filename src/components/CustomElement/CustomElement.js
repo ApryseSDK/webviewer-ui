@@ -7,6 +7,7 @@ import Tooltip from 'components/Tooltip';
 import selectors from 'selectors';
 
 import './CustomElement.scss';
+import { css } from '@emotion/react';
 
 const propTypes = {
   className: PropTypes.string,
@@ -83,7 +84,7 @@ const CustomElement = ({
       })}
       ref={wrapperRef}
       data-element={dataElement}
-      style={{ display, ...style }}
+      css={css({ display, ...style })}
     >
       {reactComponent}
     </div>

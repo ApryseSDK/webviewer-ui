@@ -4,10 +4,10 @@
 <g id="ic-combo-box">
 <path id="fill" fill-rule="evenodd" clip-rule="evenodd" d="M20 2L20.2041 2.01074C21.2128 2.113 22 2.96435 22 4V8L21.9893 8.2041C21.8938 9.14565 21.1457 9.8938 20.2041 9.98926L20 10H15V20L14.9893 20.2041C14.8938 21.1457 14.1457 21.8938 13.2041 21.9893L13 22H4L3.7959 21.9893C2.85435 21.8938 2.1062 21.1457 2.01074 20.2041L2 20V4C2 2.96435 2.78722 2.113 3.7959 2.01074L4 2H20ZM4 10V20H13V10H4ZM4 8H13V4H4V8ZM15 8H20V4H15V8Z"/>
 <g id="shape">
-<path d="M11 12V14H6V12H11Z" fill="default"/>
-<path d="M11 16V18H6V16H11Z" fill="default"/>
-<path d="M11 5V7H6V5H11Z" fill="default"/>
-<path d="M19 5H16L17.5 7L19 5Z" fill="default"/>
+<path class="icon-default" d="M11 12V14H6V12H11Z" fill="default"/>
+<path class="icon-default" d="M11 16V18H6V16H11Z" fill="default"/>
+<path class="icon-default" d="M11 5V7H6V5H11Z" fill="default"/>
+<path class="icon-default" d="M19 5H16L17.5 7L19 5Z" fill="default"/>
 </g>
 </g>
 </svg>

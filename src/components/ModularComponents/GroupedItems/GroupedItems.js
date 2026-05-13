@@ -10,7 +10,6 @@ import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
 import useCore from 'hooks/useCore';
-
 const GroupedItems = (props) => {
   const { core } = useCore();
   const {
@@ -24,7 +23,6 @@ const GroupedItems = (props) => {
     style,
   } = props;
   const dispatch = useDispatch();
-  const [itemsGap, setItemsGap] = useState(gap);
 
   const validItems = useMemo(() => {
     const itemValidTypes = Object.values(ITEM_TYPE);
@@ -122,10 +120,6 @@ const GroupedItems = (props) => {
     flyout.items.length > 0 ? dispatch(actions.updateFlyout(flyoutDataElement, flyout)) : dispatch(actions.removeFlyout(flyoutDataElement));
   }, [size, validItems]);
 
-  useEffect(() => {
-    setItemsGap(gap);
-  }, [gap]);
-
   const renderedItems = useMemo(() => {
     return validItems.map((item, index) => {
       const hasToShrink = size > 0;
@@ -146,8 +140,8 @@ const GroupedItems = (props) => {
       <div className={'GroupedItems'}
         ref={elementRef}
         data-element={dataElement}
-        style={{
-          gap: `${itemsGap}px`,
+        css={{
+          gap: `${gap}px`,
           flexDirection: headerDirection,
           justifyContent: justifyContent,
           flexGrow: grow,

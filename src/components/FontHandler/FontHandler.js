@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import webFonts from 'constants/webFonts';
 import loadFont from 'src/helpers/loadFont';
 import selectors from 'selectors';
-
+import './FontHandler.scss';
 // this component is used to preload the font(s) that are used in Annotations and the SignatureModal(TextSignature)
 // if the font(s) isn't loaded in advanced, we will see the signature text filled with the sans-serif font
 // we could use <link rel="preload" href="/path/some.woff2" as="font"> to preload a font but this hasn't been supported in all the browsers
@@ -50,9 +50,9 @@ const FontHandler = () => {
   }, []);
 
   return isWebComponent ? null : (
-    <div style={{ opacity: 0 }}>
+    <div className="font-handler-hidden">
       {signatureFonts.map((font) => (
-        <span key={font} style={{ fontFamily: font }}></span>
+        <span key={font} css={{ fontFamily: font }}></span>
       ))}
     </div>
   );

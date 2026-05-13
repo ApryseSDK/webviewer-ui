@@ -13,6 +13,7 @@ import {
 import { stylePanelSectionTitles } from 'helpers/stylePanelHelper';
 import DataElementWrapper from 'src/components/DataElementWrapper';
 import DataElements from 'src/constants/dataElement';
+import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 
 const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
@@ -57,7 +58,7 @@ const StrokePanelSection = ({
               onStyleChange={onStyleChange}
               color={strokeColor}
               activeTool={activeTool}
-              type={'Stroke'}
+              type={COLOR_PALETTE_STYLES.StrokeColor.type}
               ariaTypeLabel={t('option.annotationColor.StrokeColor')}
             />
           </div>

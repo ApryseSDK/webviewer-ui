@@ -5,7 +5,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './CustomModal.scss';
-
 function isDOMNode(element) {
   try {
     return (
@@ -179,7 +178,7 @@ const ModalSection = ({ type, data }) => {
     <div
       ref={ref}
       className={`CustomModal-${type} ${className}` || ''}
-      style={style}
+      css={style}
     >{titleElement}</div>
   );
 

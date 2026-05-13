@@ -52,7 +52,6 @@
     "remove": "Kaldırmak",
     "ok": "Tamam",
     "rotate": "Sayfa yönlendirmesi",
-    "rotate3D": "Döndür",
     "rotateClockwise": "Saat Yönünde Döndür",
     "rotateCounterClockwise": "Saat yönünün tersine çevirin",
     "rotatedClockwise": "saat yönünde döndürüldü",
@@ -92,7 +91,6 @@
     "formFieldEdit": "Form Alanını Düzenle",
     "formFieldEditMode": "Form Alanlarını Düzenle",
     "contentEditMode": "İçeriği Düzenle",
-    "viewShortCutKeysFor3D": "Kısayol Tuşlarını Görüntüle",
     "markAllRead": "Tümünü okundu olarak işaretle",
     "pageInsertion": "Sayfa Ekleme",
     "insertPage": "Sayfa Ekleme",
@@ -202,7 +200,6 @@
     "comboBoxFormField": "Birleşik Kutu Alanı",
     "link": "Bağlantı",
     "other": "Diğer",
-    "3D": "3 boyutlu",
     "sound": "Ses",
     "changeView": "Görünümü değiştir",
     "newImage": "Yeni görüntü",
@@ -381,7 +378,6 @@
       "strikeout": "üstü çizili",
       "underline": "Altını çizmek",
       "squiggly": "dalgalı",
-      "3D": "3 boyutlu",
       "other": "Diğer",
       "initials": "baş harfler",
       "saved": "kaydedildi"
@@ -902,6 +898,10 @@
       "title": "Güvenlik uyarısı",
       "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     },
+    "submitForm": {
+      "title": "Güvenlik Uyarısı",
+      "message": "Bu belge şu adrese bir form göndermeye çalışıyor: \n\n{{- uri}}\n\n Bu belgeye güveniyorsanız, formu göndermek için Onayla seçeneğine tıklayın."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Sayfa Adını Düzenle",
       "message": "Bu isim zaten mevcut. Lütfen başka bir isim girin."
@@ -952,9 +952,7 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    },
-    "rotate3D": "Üst Karakter + Sürükle",
-    "zoom3D": "Üst Karakter + Kaydır"
+    }
   },
   "tool": {
     "pan": "Tava",
@@ -974,12 +972,6 @@
     "insertLinkOrPage": "Bağlantı veya Sayfa Ekle",
     "enterpage": "Bağlanmak istediğiniz sayfa numarasını girin",
     "urlLink": "URL bağlantısı"
-  },
-  "Model3D": {
-    "add3D": "3B nesne ekle",
-    "enterurl": "3B nesnenin URL'sini glTF formatında girin",
-    "enterurlOrLocalFile": "URL'yi girin veya glTF formatında bir 3D nesne yükleyin",
-    "formatError": "Yalnızca glTF (.glb) biçimi desteklenir"
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Bir URL girin veya WebViewer'a yüklemek için bir dosya seçin",
@@ -1288,11 +1280,6 @@
       "pattern": "Desenler",
       "start": "Aramanızı yapmaya başlayın"
     }
-  },
-  "wv3dPropertiesPanel": {
-    "propertiesHeader": "Özellikler",
-    "miscValuesHeader": "Tümü",
-    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin."
   },
   "portfolio": {
     "createPDFPortfolio": "PDF Portföyü Oluştur",

@@ -17,7 +17,6 @@ import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
-
 const { ToolNames } = window.Core.Tools;
 
 const ToolButton = forwardRef((props, ref) => {
@@ -34,8 +33,9 @@ const ToolButton = forwardRef((props, ref) => {
     isFlyoutItem = false,
     groupedItem,
     allFlyoutItems = [],
-    style
+    buttonStyle
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const { core } = useCore();
 
   // use this so that state gets updated when active tool styles change
@@ -217,7 +217,7 @@ const ToolButton = forwardRef((props, ref) => {
       strokeColor={strokeColor}
       ariaCurrent={isButtonActive}
       ariaPressed={isButtonActive}
-      style={style}
+      buttonStyle={resolvedButtonStyle}
     />
   );
 });
@@ -236,6 +236,8 @@ ToolButton.propTypes = {
   disabled: PropTypes.bool,
   groupedItem: PropTypes.string,
   allFlyoutItems: PropTypes.array,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
 };
 

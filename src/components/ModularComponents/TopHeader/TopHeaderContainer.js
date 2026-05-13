@@ -48,10 +48,11 @@ const TopHeaderContainer = () => {
   }, [dimensions, floatingHeaders.length]);
 
   const modularHeaders = useMemo(() => sortedTopHeaders.map((header, index) => {
-    const { dataElement } = header;
+    const { dataElement, style: legacyStyle, wrapperStyle, ...headerProps } = header;
+    const resolvedWrapperStyle = wrapperStyle ?? legacyStyle;
     const autoHide = index === 0 ? false : header.autoHide;
     return (
-      <ModularHeader {...header} key={dataElement} autoHide={autoHide}/>
+      <ModularHeader {...headerProps} key={dataElement} dataElement={dataElement} autoHide={autoHide} wrapperStyle={resolvedWrapperStyle}/>
     );
   }), [sortedTopHeaders]);
 

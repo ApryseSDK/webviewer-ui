@@ -8,6 +8,7 @@ import ToolbarGroup from 'constants/toolbar';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
+import ReaderModePageMode from 'constants/readerModePageMode';
 import { languageEnum } from 'constants/languages';
 import { panelNames } from 'constants/panel';
 import addSearchListener from './addSearchListener';
@@ -63,8 +64,6 @@ import removeSearchListener from './removeSearchListener';
 import saveAnnotations from './saveAnnotations';
 import searchText from './searchText';
 import searchTextFull from './searchTextFull';
-import setWv3dPropertiesPanelModelData from './setWv3dPropertiesPanelModelData';
-import setWv3dPropertiesPanelSchema from './setWv3dPropertiesPanelSchema';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setTimezone from './setTimezone';
 import setActivePalette from './setActivePalette';
@@ -155,6 +154,8 @@ import {
   setAttachmentHandler,
   enableMeasurementAnnotationFilter,
   disableMeasurementAnnotationFilter,
+  setStatusList,
+  StatusList,
 } from './notesPanel';
 import {
   enableMultiSelect,
@@ -292,6 +293,7 @@ import {
   getViewOnlyShortcuts
 } from 'src/apis/viewOnlyMode';
 import { Shortcuts } from 'helpers/hotkeysUtils';
+import setReaderPageMode from './setReaderPageMode';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -313,6 +315,7 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
+    ReaderModePageMode,
     JustifyContent: JUSTIFY_CONTENT,
     PRESET_BUTTON_TYPES: PRESET_BUTTON_TYPES,
     addSearchListener,
@@ -322,8 +325,6 @@ export default (store) => {
     closeElements: closeElements(store),
     contextMenuPopup: contextMenuPopup(store),
     disableElements: disableElements(store),
-    setWv3dPropertiesPanelModelData: setWv3dPropertiesPanelModelData(store),
-    setWv3dPropertiesPanelSchema: setWv3dPropertiesPanelSchema(store),
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
     disableReplyForAnnotations: disableReplyForAnnotations(store),
@@ -424,6 +425,8 @@ export default (store) => {
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
 
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
+
+    setReaderPageMode: setReaderPageMode(store),
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
@@ -455,6 +458,8 @@ export default (store) => {
       setAttachmentHandler: setAttachmentHandler(store),
       enableMeasurementAnnotationFilter: enableMeasurementAnnotationFilter(store),
       disableMeasurementAnnotationFilter: disableMeasurementAnnotationFilter(store),
+      setStatusList: setStatusList(store),
+      StatusList,
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),

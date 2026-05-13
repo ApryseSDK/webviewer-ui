@@ -142,6 +142,38 @@ describe('getPopupPosition', () => {
     expect(left).toBe(150);
   });
 
+  it('calcPopupLeft uses Core.getScrollLeft to handle RTL scroll positions', () => {
+    const originalGetScrollLeft = window.Core.getScrollLeft;
+    window.Core.getScrollLeft = jest.fn().mockReturnValue(-200);
+    core.getScrollViewElement.mockReturnValue({ scrollLeft: 200 });
+
+    const left = calcPopupLeft(
+      { topLeft: { x: 100, y: 20 }, bottomRight: { x: 300, y: 40 } },
+      { width: 100 },
+      1,
+    );
+    // annotCenter (200) - scrollLeft (-200) - scaledWidth/2 (50) = 350
+    expect(left).toBe(350);
+
+    window.Core.getScrollLeft = originalGetScrollLeft;
+  });
+
+  it('calcPopupLeft preserves a Core.getScrollLeft return value of 0 (RTL rightmost)', () => {
+    const originalGetScrollLeft = window.Core.getScrollLeft;
+    window.Core.getScrollLeft = jest.fn().mockReturnValue(0);
+    core.getScrollViewElement.mockReturnValue({ scrollLeft: 500 });
+
+    const left = calcPopupLeft(
+      { topLeft: { x: 100, y: 20 }, bottomRight: { x: 300, y: 40 } },
+      { width: 100 },
+      1,
+    );
+    // annotCenter (200) - scrollLeft (0) - scaledWidth/2 (50) = 150
+    expect(left).toBe(150);
+
+    window.Core.getScrollLeft = originalGetScrollLeft;
+  });
+
   describe('isAnnotationInView', () => {
     const createScrollContainer = ({ scrollTop = 0, scrollLeft = 0 } = {}) => ({
       getBoundingClientRect: () => ({
@@ -149,6 +181,8 @@ describe('getPopupPosition', () => {
         bottom: 600,
         left: 0,
         right: 800,
+        width: 800,
+        height: 600,
       }),
       scrollTop,
       scrollLeft,

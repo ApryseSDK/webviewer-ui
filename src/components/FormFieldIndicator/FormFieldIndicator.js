@@ -7,7 +7,6 @@ import './FormFieldIndicator.scss';
 const INDICATOR_HEIGHT = 40;
 const INDICATOR_WIDTH = 100;
 const INDICATOR_PADDING = 20;
-
 const FormFieldIndicator = ({ annotation, parameters }) => {
   const { core } = useCore();
   const { displayMode, viewerBoundingRect, appBoundingRect, scrollLeft, scrollTop } = parameters;
@@ -59,7 +58,7 @@ const FormFieldIndicator = ({ annotation, parameters }) => {
   return (
     <div
       className={`formFieldIndicator ${isRightSidePage ? 'rightSidePage' : ''}`}
-      style={{
+      css={{
         top: yOffset,
         left: xOffset,
         opacity: isInFormBuilderMode ? 0.5 : 1,

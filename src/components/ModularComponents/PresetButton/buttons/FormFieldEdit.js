@@ -6,7 +6,6 @@ import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
-
 /**
  * A button that toggles form field edit mode.
  * @name formFieldEditButton
@@ -16,12 +15,13 @@ const FormFieldEditButton = forwardRef((props, ref) => {
   const { core } = useCore();
   const {
     isFlyoutItem,
-    style,
+    buttonStyle,
     className,
     dataElement = menuItems.formFieldEditButton.dataElement,
     img: icon = menuItems.formFieldEditButton.icon,
     title = menuItems.formFieldEditButton.title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const [active, setActive] = useState(core?.getFormFieldCreationManager()?.isInFormFieldCreationMode());
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const FormFieldEditButton = forwardRef((props, ref) => {
           img={icon}
           onClick={handleClick}
           isActive={active}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           ariaPressed={active}
           onClickAnnouncement={getButtonPressedAnnouncement(title)}
         />
@@ -77,6 +77,8 @@ const FormFieldEditButton = forwardRef((props, ref) => {
 FormFieldEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,
