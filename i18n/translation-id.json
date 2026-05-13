@@ -902,6 +902,10 @@
       "title": "Peringatan keamanan",
       "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
     },
+    "submitForm": {
+      "title": "Peringatan Keamanan",
+      "message": "Dokumen ini mencoba mengirimkan formulir ke: \n\n{{- uri}}\n\n Jika Anda memercayai dokumen ini, klik Konfirmasi untuk mengirim formulir."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Edit Nama Lembar",
       "message": "Nama ini sudah ada. Silakan masukkan nama lain."

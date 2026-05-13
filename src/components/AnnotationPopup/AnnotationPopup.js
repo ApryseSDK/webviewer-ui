@@ -17,7 +17,6 @@ import DataElements from 'constants/dataElement';
 
 import './AnnotationPopup.scss';
 import getRootNode from 'helpers/getRootNode';
-
 const propTypes = {
   isMobile: PropTypes.bool,
   isIE: PropTypes.bool,
@@ -249,7 +248,7 @@ const AnnotationPopup = ({
         return (
           <AnnotationStylePopup
             annotations={[focusedAnnotation]}
-            style={annotationStyle}
+            annotationStyle={annotationStyle}
             isOpen={isOpen}
             onResize={onResize}
             isFreeText={isFreeText}

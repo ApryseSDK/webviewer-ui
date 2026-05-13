@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './MathSymbolsPicker.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const symbols = [
   '\u002B',
   '\u2212',

@@ -3,8 +3,8 @@ import { render, fireEvent, waitFor, configure, act } from '@testing-library/rea
 import MultiViewer from './MultiViewer';
 import * as multiViewerHelper from 'helpers/multiViewerHelper';
 import useCore from 'hooks/useCore';
+import actions from 'actions';
 import initialState from 'src/redux/initialState';
-import ThumbnailsPanel from '../ThumbnailsPanel';
 
 jest.mock('core');
 jest.mock('hooks/useCore');
@@ -183,6 +183,28 @@ describe('MultiViewer', () => {
         expect(header2).toBeInTheDocument();
       });
     });
+
+    it('should render sync buttons when both documents are loaded', async () => {
+      const { findAllByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: true,
+        doc2Loaded: true,
+      });
+
+      const syncButtons = await findAllByRole('button', { name: /sync/i });
+      expect(syncButtons).toHaveLength(2);
+    });
+
+    it('should not render sync buttons when one document is not loaded', async () => {
+      const { findAllByRole, queryByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: true,
+        doc2Loaded: false,
+      });
+
+      await findAllByRole('button', { name: /close document/i });
+      expect(queryByRole('button', { name: /sync/i })).not.toBeInTheDocument();
+    });
   });
 
   describe('Active Document Viewer', () => {
@@ -276,6 +298,7 @@ describe('MultiViewer', () => {
 
     it('should call stopSyncing when document is unloaded', async () => {
       const mockStopSyncing = jest.fn();
+      const setSyncViewerSpy = jest.spyOn(actions, 'setSyncViewer');
       multiViewerHelper.useMultiViewerSync.mockReturnValue({
         stopSyncing: mockStopSyncing,
         isSyncing: true,
@@ -295,6 +318,7 @@ describe('MultiViewer', () => {
       unloadedCallback();
 
       expect(mockStopSyncing).toHaveBeenCalled();
+      expect(setSyncViewerSpy).toHaveBeenCalledWith(null);
     });
 
     it('should delete semantic diff annotations when document is unloaded', async () => {
@@ -673,14 +697,15 @@ describe('MultiViewer', () => {
       });
     });
 
-    it('should set custom containers to full width', async () => {
+    it('should set custom containers to full width via CSS class without inline styles', async () => {
       const { container } = await renderMultiViewer({ isMultiViewerMode: true });
-
       await waitFor(() => {
         const customContainer1 = container.querySelector('.custom-container-1');
         const customContainer2 = container.querySelector('.custom-container-2');
-        expect(customContainer1).toHaveStyle({ width: '100%' });
-        expect(customContainer2).toHaveStyle({ width: '100%' });
+        expect(customContainer1).toHaveClass('custom-container-1');
+        expect(customContainer2).toHaveClass('custom-container-2');
+        expect(customContainer1).not.toHaveAttribute('style');
+        expect(customContainer2).not.toHaveAttribute('style');
       });
     });
   });

@@ -902,6 +902,10 @@
       "title": "安全警告",
       "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
     },
+    "submitForm": {
+      "title": "安全警告",
+      "message": "此文档正尝试将表单提交到：\n\n{{- uri}}\n\n 如果您信任此文档，请点击“确认”以提交表单。"
+    },
     "sheetTabRenameIssueOne": {
       "title": "编辑工作表名称",
       "message": "此名称已存在。请输入其他名称。"

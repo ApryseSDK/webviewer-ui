@@ -9,6 +9,7 @@ import Dropdown from 'components/Dropdown';
 import SignatureModes from 'constants/signatureModes';
 import useCore from 'hooks/useCore';
 import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
+import classNames from 'classnames';
 
 import './InkSignature.scss';
 
@@ -201,7 +202,6 @@ const InkSignature = ({
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const toolStyles = signatureTool.defaults;
-  const initialsContainerStyle = isInitialsModeEnabled ? {} : { display: 'none' };
 
   return (
     <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
@@ -234,7 +234,7 @@ const InkSignature = ({
                   </button>
                 </div>
               </div>
-              <div className='signature-input initials' style={initialsContainerStyle}>
+              <div className={classNames('signature-input initials', { 'ink-signature-initials-hidden': !isInitialsModeEnabled })}>
                 <canvas
                   className="ink-signature-canvas"
                   onMouseUp={handleFinishDrawingInitials}

@@ -8,6 +8,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
 
 import './ColorPalettePicker.scss';
 import '../ColorPalette/ColorPalette.scss';
+import { css } from '@emotion/react';
 
 
 const propTypes = {
@@ -100,7 +101,9 @@ const ColorPalettePicker = ({
                       cell: true,
                       border: true,
                     })}
-                    style={{ backgroundColor: bg }}
+                    css={css({
+                      backgroundColor: bg
+                    })}
                   >
                     {bg === 'transparency' && undefined}
                   </div>

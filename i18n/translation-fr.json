@@ -902,6 +902,10 @@
       "title": "Avertissement de sécurité",
       "message": "Ce document tente de se connecter à :\n\n{{- uri}}\n\n Si vous faites confiance à ce document, cliquez sur Confirmer pour l'ouvrir."
     },
+    "submitForm": {
+      "title": "Avertissement de sécurité",
+      "message": "Ce document tente de soumettre un formulaire à : \n\n{{- uri}}\n\n Si vous faites confiance à ce document, cliquez sur Confirmer pour soumettre le formulaire."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Modifier le nom de la feuille",
       "message": "Ce nom existe déjà. Veuillez en saisir un autre."

@@ -18,7 +18,7 @@ const { Annotations } = window.Core;
 
 const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   const { t, i18n } = useTranslation();
-  const [style, setStyle] = useState({
+  const [annotationStyle, setAnnotationStyle] = useState({
     StrokeColor: null,
     StrokeThickness: null,
     Opacity: null,
@@ -130,7 +130,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       extraStyles.FontSize = annotation.FontSize;
     }
 
-    setStyle((previousStyle) => {
+    setAnnotationStyle((previousStyle) => {
       return {
         ...previousStyle,
         StrokeColor: annotation.StrokeColor ?? null,
@@ -155,7 +155,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       setIsAutoSizeFont(styles.isAutoSizeFont);
     }
 
-    setStyle(styles || {});
+    setAnnotationStyle(styles || {});
     setStartLineStyle(styles?.StartLineStyle || '');
     setEndLineStyle(styles?.EndLineStyle || '');
     setStrokeStyle(styles?.StrokeStyle || '');
@@ -185,7 +185,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   };
 
   const onStyleChange = (property, value, doneStyleChange = true) => {
-    setStyle((previousStyle) => {
+    setAnnotationStyle((previousStyle) => {
       return { ...previousStyle, [property]: value };
     });
 
@@ -294,7 +294,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   };
 
   const handleRichTextStyleChange = (property, value) => {
-    const richStyle = style.RichTextStyle?.[0] || {};
+    const richStyle = annotationStyle.RichTextStyle?.[0] || {};
     const newValue = ['underline', 'line-through'].includes(property)
       ? getTextDecoration({ [property]: value }, richStyle)
       : value;
@@ -314,14 +314,14 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       setToolStyles(currentTool.name, 'RichTextStyle', richTextStyle);
     }
 
-    setStyle((previousStyle) => {
+    setAnnotationStyle((previousStyle) => {
       return { ...previousStyle, RichTextStyle: richTextStyle };
     });
   };
 
   return {
     panelTitle,
-    style,
+    annotationStyle: annotationStyle,
     strokeStyle,
     startLineStyle,
     endLineStyle,

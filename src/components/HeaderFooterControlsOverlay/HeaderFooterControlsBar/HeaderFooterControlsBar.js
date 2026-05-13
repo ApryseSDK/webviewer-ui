@@ -14,7 +14,7 @@ import HeaderFooterModalState from 'helpers/headerFooterModalState';
 import { HEADER_FOOTER_BAR_DEFAULT_POSITION, OfficeEditorEditMode, EditOperationSource } from 'constants/officeEditor';
 
 import './HeaderFooterControlsBar.scss';
-
+import { css } from '@emotion/react';
 const propTypes = {
   type: PropTypes.oneOf(['header', 'footer']),
   pageNumber: PropTypes.number,
@@ -237,7 +237,14 @@ const HeaderFooterControlsBar = ({ type, pageNumber, isActive }) => {
   );
 
   return (
-    <div className={barClassName} id={barId} style={containerStyle}>
+    <div
+      className={barClassName}
+      id={barId}
+      css={css({
+        '&&&': {
+          ...containerStyle
+        }
+      })}>
       <div className='box-shadow-div' ref={blockerRef}></div>
       <div className='label'>{barLabel}</div>
 

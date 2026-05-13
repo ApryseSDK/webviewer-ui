@@ -5,6 +5,7 @@ import { defaultPanels } from '../modularComponents';
 import {
   defaultOfficeEditorModularHeaders,
   defaultOfficeEditorModularComponents,
+  defaultOfficeEditorPopups,
   defaultOfficeEditorPanels,
 } from '../officeEditorModularComponents';
 
@@ -1039,6 +1040,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing,
       };
+    case 'SET_STATUS_LIST':
+      return {
+        ...state,
+        statusList: payload.statusList,
+      };
     case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
       return {
         ...state,
@@ -1259,6 +1265,7 @@ export default (initialState) => (state = initialState, action) => {
       const { UIMode } = payload;
       const modularHeaders = { ...state.modularHeaders };
       const modularComponents = { ...state.modularComponents };
+      const modularPopups = { ...state.modularPopups };
       const panels = [...state.genericPanels];
       const flyoutMap = { ...state.flyoutMap };
       const updatedModularComponentStash = {
@@ -1266,6 +1273,7 @@ export default (initialState) => (state = initialState, action) => {
         [UIMode]: {
           modularHeaders,
           modularComponents,
+          modularPopups,
           panels,
           flyoutMap,
         }
@@ -1283,6 +1291,7 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...initialState.modularHeaders },
               modularComponents: { ...initialState.modularComponents },
+              modularPopups: { ...initialState.modularPopups },
               genericPanels: [...initialState.genericPanels],
               flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
@@ -1292,6 +1301,10 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...defaultOfficeEditorModularHeaders },
               modularComponents: { ...defaultOfficeEditorModularComponents },
+              modularPopups: {
+                ...initialState.modularPopups,
+                ...defaultOfficeEditorPopups,
+              },
               genericPanels: [...defaultOfficeEditorPanels],
               flyoutMap: { ...state.flyoutMap, ...initialState.flyoutMap },
             };
@@ -1301,6 +1314,7 @@ export default (initialState) => (state = initialState, action) => {
               ...state,
               modularHeaders: { ...defaultSpreadsheetEditorHeaders },
               modularComponents: { ...defaultSpreadsheetEditorComponents },
+              modularPopups: { ...initialState.modularPopups },
               genericPanels: [...defaultSpreadsheetEditorPanels],
               flyoutMap: { ...state.flyoutMap, ...defaultSpreadsheetFlyoutMap },
             };
@@ -1310,7 +1324,13 @@ export default (initialState) => (state = initialState, action) => {
         }
       }
 
-      const { modularHeaders, modularComponents, panels, flyoutMap } = modularComponentStash[UIMode];
+      const {
+        modularHeaders,
+        modularComponents,
+        modularPopups = initialState.modularPopups,
+        panels,
+        flyoutMap,
+      } = modularComponentStash[UIMode];
       // Delete the stash after restoring
       const updatedModularComponentStash = Object.keys(modularComponentStash).reduce((result, key) => {
         if (key !== UIMode) {
@@ -1324,6 +1344,7 @@ export default (initialState) => (state = initialState, action) => {
         modularComponentStash: updatedModularComponentStash,
         modularHeaders: { ...modularHeaders },
         modularComponents: { ...modularComponents },
+        modularPopups: { ...modularPopups },
         genericPanels: [...panels],
         flyoutMap: { ...flyoutMap },
       };
@@ -1347,6 +1368,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isWidgetHighlightingEnabled: false,
+      };
+    case 'SET_READER_PAGE_MODE':
+      return {
+        ...state,
+        readerPageMode: payload.readerPageMode,
       };
     default:
       return state;

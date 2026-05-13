@@ -15,8 +15,10 @@ import throttle from 'lodash/throttle';
 import fireActiveDocumentViewerChanged from 'helpers/fireActiveDocumentViewerChanged';
 import multiViewerHelper, { useMultiViewerSync } from 'helpers/multiViewerHelper';
 import { getLogicalMargins } from 'src/helpers/documentContainerHelper';
+import { css } from '@emotion/react';
 
 const MIN_WIDTH = 350;
+const MIN_WIDTH_RATIO = 0.33;
 
 const MultiViewer = () => {
   const { core: coreLeftViewer } = useCore(1);
@@ -28,6 +30,7 @@ const MultiViewer = () => {
   const container2 = useRef();
   const doc1Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 1));
   const doc2Loaded = useSelector((state) => selectors.isDocumentLoaded(state, 2));
+  const canSync = doc1Loaded && doc2Loaded;
   const [width, setWidth] = useState(0);
   const [width2, setWidth2] = useState(0);
   const funcRefs = useRef({
@@ -68,6 +71,7 @@ const MultiViewer = () => {
     documentContainerLeftMargin,
     documentContainerRightMargin,
   );
+  const minWidth = documentContainerWidth < 2 *  MIN_WIDTH ? documentContainerWidth * MIN_WIDTH_RATIO : MIN_WIDTH;
 
   useEffect(() => {
     const setup = () => {
@@ -90,11 +94,13 @@ const MultiViewer = () => {
       }
     };
     const unLoaded1 = () => {
+      dispatch(actions.setSyncViewer(null));
       stopSyncing();
       multiViewerHelper.matchedPages = null;
       coreRightViewer.deleteAnnotations(coreRightViewer.getSemanticDiffAnnotations(), { force: true });
     };
     const unLoaded2 = () => {
+      dispatch(actions.setSyncViewer(null));
       stopSyncing();
       multiViewerHelper.matchedPages = null;
       coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
@@ -137,17 +143,21 @@ const MultiViewer = () => {
 
   const { stopSyncing, isSyncing } = useMultiViewerSync(container, container2);
 
+  const compareContainerPadding = (containerWidth, docLoaded) => {
+    return css({ padding: docLoaded ? '0' : '16px', width: containerWidth });
+  };
+
   return (
-    <div className={classNames('MultiViewer', { hidden: !isMultiViewerMode })} style={{
-      width: documentContentContainerWidthStyle,
-      marginInlineStart: `${startMargin}px`,
-      marginInlineEnd: `${endMargin}px`,
-    }}
-    ref={rootContainerRef}
-    >
+    <div className={classNames('MultiViewer', { hidden: !isMultiViewerMode })}
+      css={{
+        width: documentContentContainerWidthStyle,
+        marginInlineStart: `${startMargin}px`,
+        marginInlineEnd: `${endMargin}px`,
+      }}
+      ref={rootContainerRef}>
       {isMultiViewerMode && <>
         <div className={classNames('CompareContainer', { active: activeDocumentViewerKey === 1 })} id="container1"
-          style={{ padding: !doc1Loaded ? '16px' : '0', width }}
+          css={compareContainerPadding(width, doc1Loaded)}
           onPointerDownCapture={setFirstViewerActive}
           onMouseDownCapture={setFirstViewerActive}
           onTouchStartCapture={setFirstViewerActive}
@@ -156,24 +166,28 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setFirstViewerActive()}
         >
           {!doc1Loaded && <DropArea documentViewerKey={1} />}
-          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing}/>
+          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing} canSync={canSync}/>
           <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} docLoaded={doc1Loaded}/>
-          <div className={'custom-container-1'} style={{ width: '100%' }}/>
-          <div style={{ width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
+          <div className={'custom-container-1'}/>
+          <div css={{ width: width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
         </div>
         <ResizeBar
           dataElement="compareResizeBar"
-          minWidth={MIN_WIDTH}
+          minWidth={minWidth}
+          currentWidth={width}
           onResize={(_width) => {
-            let maxAllowedWidth = documentContainerWidth;
-            maxAllowedWidth -= MIN_WIDTH;
-            const minValue = Math.min(_width, maxAllowedWidth);
-            setWidth(minValue);
-            setWidth2(documentContainerWidth - minValue);
+            let newLeftWidth = Math.max(minWidth, Math.min(_width, documentContainerWidth - minWidth));
+            let newRightWidth = documentContainerWidth - newLeftWidth;
+            if (newRightWidth < minWidth) {
+              newRightWidth = minWidth;
+              newLeftWidth = documentContainerWidth - minWidth;
+            }
+            setWidth(newLeftWidth);
+            setWidth2(newRightWidth);
           }}
         />
         <div className={classNames('CompareContainer', { active: activeDocumentViewerKey === 2 })} id="container2"
-          style={{ padding: !doc2Loaded ? '16px' : '0', width: width2 }}
+          css={compareContainerPadding(width2, doc2Loaded)}
           onPointerDownCapture={setSecondViewerActive}
           onMouseDownCapture={setSecondViewerActive}
           onTouchStartCapture={setSecondViewerActive}
@@ -182,10 +196,10 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setSecondViewerActive()}
         >
           {!doc2Loaded && <DropArea documentViewerKey={2} />}
-          <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
+          <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} canSync={canSync}/>
           <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} docLoaded={doc2Loaded}/>
-          <div className={'custom-container-2'} style={{ width: '100%' }}/>
-          <div style={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
+          <div className={'custom-container-2'}/>
+          <div css={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
         </div>
         <CompareZoomOverlay zoom1={zoom} zoom2={zoom2} />
       </>}

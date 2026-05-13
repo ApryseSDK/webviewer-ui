@@ -27,6 +27,8 @@
         display: flex;
         justify-content: space-between;
         cursor: pointer;
+        background: none;
+        border: none;
 
         &:hover {
           background-color: var(--blue-4);

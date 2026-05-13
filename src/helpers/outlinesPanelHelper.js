@@ -1,27 +1,65 @@
 /**
- * Converts annotation coordinates to viewer coordinates because PDFNet uses PDF coordinates
- * @param {*} doc The PDF document
- * @param {number} pageNum The page number
- * @param {{x: number, y: number}} coordinates The coordinates to convert
- * @returns {{x: number, y: number}} Viewer coordinates
+ * Gets the page width and height. If the page is rotated 90 or 270 degrees, the width and height are swapped.
+ * @param {*} doc The document (Core.Document)
+ * @param {*} pageNum The page number (1-indexed)
+ * @returns {{width: number, height: number}} The width and height of the page
  * @ignore
  */
-export const getCurrentDestViewerCoord = (doc, pageNum, { x, y }) => {
-  return doc.getViewerCoordinates(pageNum, x, y);
+export const getPageWidthAndHeight = (doc, pageNum) => {
+  if (!doc?.getPageRotation) {
+    return { width: 0, height: 0 };
+  }
+  const pageRotation = doc.getPageRotation(pageNum) / 90;
+  const pageInfo = doc.getPageInfo(pageNum);
+  const shouldSwapWidthAndHeight = pageRotation === window.Core.PageRotation.E_90 || pageRotation === window.Core.PageRotation.E_270;
+  const width = shouldSwapWidthAndHeight ? pageInfo.height : pageInfo.width;
+  const height = shouldSwapWidthAndHeight ? pageInfo.width : pageInfo.height;
+  return { width, height };
 };
 
 /**
- * Normalizes outline coordinates based on page rotation. For 90 and 270 degree rotations, x and y coordinates are swapped
- * @param {{x: number, y: number}} coordinates The coordinates to normalize
- * @param {number} pageRotation The rotation of the page the coordinates are on
- * @returns {{x: number, y: number}} Normalized coordinates based on page rotation
+ * Gets the default destination coordinates. The default destination is the top-left of the
+ * page's current rotation, which may be different from the top-left of the unrotated page (0,0).
+ * @param {*} doc The document (Core.Document)
+ * @param {number} pageNum The page number (1-indexed)
+ * @returns {{x: number, y: number}} The default destination coordinates (origin at top-left of unrotated page)
  * @ignore
  */
-export const normalizeOutlineCoord = ({ x, y }, pageRotation) => {
-  if (pageRotation === window.Core.PageRotation.E_90 || pageRotation === window.Core.PageRotation.E_270) {
-    return { x: y, y: x };
+export const getDefaultDestCoord = (doc, pageNum) => {
+  if (!doc?.getPageRotation) {
+    return { x: 0, y: 0 };
   }
-  return { x, y };
+  const pageRotation = doc.getPageRotation(pageNum) / 90;
+  const { width, height } = getPageWidthAndHeight(doc, pageNum);
+  if (pageRotation === 0) { // default: top-left of unrotated page
+    return { x: 0, y: 0 };
+  } else if (pageRotation === window.Core.PageRotation.E_90) { // default: bottom-left of unrotated page
+    return { x: 0, y: height };
+  } else if (pageRotation === window.Core.PageRotation.E_180) { // default: bottom-right of unrotated page
+    return { x: width, y: height };
+  } else if (pageRotation === window.Core.PageRotation.E_270) { // default: top-right of unrotated page
+    return { x: width, y: 0 };
+  }
+  return { x: 0, y: 0 };
+};
+
+/**
+ * Converts unrotated viewer coordinates (Y-down from the unrotated top-left) to PDF user space
+ * coordinates (origin at unrotated bottom-left, Y-up) for use with PDFNet.Destination.createXYZ.
+ *
+ * The worker applies the inverse of this conversion when reading back destinations, so the
+ * round-trip preserves the original displayed coordinates:
+ *   original coords → convertToPDFDestCoord → createXYZ → worker reads back → original coords
+ *
+ * @param {*} doc The document (Core.Document)
+ * @param {number} pageNum The page number (1-indexed)
+ * @param {{x: number, y: number}} coordinates The unrotated viewer coordinates to convert, in viewer page coordinates (origin at unrotated top-left, Y-down)
+ * @returns {{x: number, y: number}} PDF user space coordinates suitable for PDFNet.Destination.createXYZ(page, x, y, zoom)
+ * @ignore
+ */
+export const convertToPDFDestCoord = (doc, pageNum, { x, y }) => {
+  const { height } = getPageWidthAndHeight(doc, pageNum);
+  return { x: x, y: height - y };
 };
 
 /**

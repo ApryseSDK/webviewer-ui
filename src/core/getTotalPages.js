@@ -6,5 +6,12 @@ import core from 'core';
 export default (documentViewerKey = 1) => {
   const document = core.getDocument(documentViewerKey);
   const isSpreadsheetEditorMode = document?.getType() === 'spreadsheetEditor';
-  return isSpreadsheetEditorMode ? document.getSpreadsheetEditorDocument().getWorkbook()?.sheetCount : core.getDocumentViewer(documentViewerKey).getPageCount();
+  if (isSpreadsheetEditorMode) {
+    const workbook = document.getSpreadsheetEditorDocument?.()?.getWorkbook?.();
+    if (!workbook) {
+      return 0;
+    }
+    return workbook.sheetCount;
+  }
+  return core.getDocumentViewer(documentViewerKey).getPageCount();
 };

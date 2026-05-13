@@ -5,11 +5,12 @@ import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { CELL_ADJUSTMENT_BUTTONS } from 'constants/customizationVariables';
 import useCore from 'hooks/useCore';
-
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   buttonType: PropTypes.string,
@@ -23,13 +24,14 @@ const CellAdjustmentButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
     type,
-    style,
+    buttonStyle,
     className,
     buttonType,
     dataElement = menuItems[buttonType].dataElement,
     img: icon = menuItems[buttonType].icon,
     title = menuItems[buttonType].title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
 
   const { core } = useCore();
 
@@ -102,7 +104,7 @@ const CellAdjustmentButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           ariaPressed={isActive}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         />
       )

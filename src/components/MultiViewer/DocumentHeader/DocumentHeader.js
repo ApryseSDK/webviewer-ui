@@ -17,6 +17,7 @@ const propTypes = {
   documentViewerKey: PropTypes.number.isRequired,
   docLoaded: PropTypes.bool.isRequired,
   isSyncing: PropTypes.bool.isRequired,
+  canSync: PropTypes.bool.isRequired,
 };
 
 // Todo Compare: Make stories for this component
@@ -24,6 +25,7 @@ const DocumentHeader = ({
   documentViewerKey,
   docLoaded,
   isSyncing,
+  canSync,
 }) => {
   const { t } = useTranslation();
   const { core } = useCore(documentViewerKey);
@@ -38,7 +40,7 @@ const DocumentHeader = ({
     core.addEventListener('documentLoaded', onLoaded, undefined, documentViewerKey);
     core.addEventListener('documentUnloaded', unLoaded, undefined, documentViewerKey);
     core.addEventListener('displayModeUpdated', stopSyncing, undefined, documentViewerKey);
-    setFileName(core.getDocument(1)?.getFilename() || 'Untitled');
+    setFileName(core.getDocument()?.getFilename() || 'Untitled');
     return () => {
       core.removeEventListener('documentLoaded', onLoaded, documentViewerKey);
       core.removeEventListener('documentUnloaded', unLoaded, documentViewerKey);
@@ -61,7 +63,9 @@ const DocumentHeader = ({
         {!saveButtonDisabled &&
           <Button img="icon-save" onClick={onSaveDocument} dataElement={DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON} title={t('multiViewer.save')} />
         }
-        <Button img="icon-sync" onClick={onClickSync} isActive={isSyncing} title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)} />
+        { canSync &&
+          <Button img="icon-sync" onClick={onClickSync} isActive={isSyncing} title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)} />
+        }
         <Button img="icon-close" onClick={closeDocument} title={t('multiViewer.closeDocument')} />
       </div>
     </div>

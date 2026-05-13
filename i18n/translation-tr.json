@@ -902,6 +902,10 @@
       "title": "Güvenlik uyarısı",
       "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     },
+    "submitForm": {
+      "title": "Güvenlik Uyarısı",
+      "message": "Bu belge şu adrese bir form göndermeye çalışıyor: \n\n{{- uri}}\n\n Bu belgeye güveniyorsanız, formu göndermek için Onayla seçeneğine tıklayın."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Sayfa Adını Düzenle",
       "message": "Bu isim zaten mevcut. Lütfen başka bir isim girin."

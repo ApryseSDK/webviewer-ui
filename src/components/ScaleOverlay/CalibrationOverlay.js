@@ -36,6 +36,7 @@ const CalibrationOverlay = ({ tempScale, onCancelCalibrationMode, onApplyCalibra
         <button
           className="calibration-cancel"
           onMouseDown={onCancelCalibrationMode}
+          onTouchStart={onCancelCalibrationMode}
         >
           {t('action.cancel')}
         </button>

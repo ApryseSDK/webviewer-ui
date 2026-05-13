@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import './DimensionInput.scss';
-
 const DimensionInput = ({ id, className, label, initialValue, onChange, unit, maxLength = 10, disabled }) => {
   const [value, setValue] = useState(initialValue);
 
@@ -50,7 +49,7 @@ const DimensionInput = ({ id, className, label, initialValue, onChange, unit, ma
             step={0.01}
             onChange={handleDimensionChange}
             disabled={disabled}
-            style={{ width: `${resizeInput(value)}ch` }}
+            css={{ width: `${resizeInput(value)}ch` }}
             value={value}
           />
           <span className="dimension-unit">

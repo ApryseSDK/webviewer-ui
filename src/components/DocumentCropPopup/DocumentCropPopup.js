@@ -11,6 +11,7 @@ import DocumentCropPopupMobile from './DocumentCropPopupMobile';
 import PagesToCropOptions from './PagesToCropOptions';
 import CollapsibleSection from '../CollapsibleSection';
 import useFocusHandler from 'hooks/useFocusHandler';
+import { convertUnit } from 'constants/measurementScale';
 
 import './DocumentCropPopup.scss';
 import useCore from 'hooks/useCore';
@@ -59,16 +60,9 @@ const DocumentCropPopup = ({
   };
 
   const supportedUnits = {
-    'Inches (in)': '"',
+    'Inches (in)': 'in',
     'Centimeters (cm)': 'cm',
     'Millimeters (mm)': 'mm',
-  };
-
-  const unitConversions = {
-    '"': 1,
-    'cm': 2.54,
-    'mm': 25.4,
-    'pt': 72,
   };
 
   // set default to whichever unit is listed first in unitConversions
@@ -85,20 +79,20 @@ const DocumentCropPopup = ({
   const [isCropDimensionsContainerActive, setCropDimensionsContainerActive] = useState(false);
 
   const convertUnitsToPt = (val) => {
-    const unitToConvertTo = unitConversions[supportedUnits[unit]];
-    const pt = unitConversions['pt'];
-    return (val / unitToConvertTo) * pt;
+    return convertUnit(val, supportedUnits[unit], 'pt');
   };
 
   const convertPtToUnits = (val, unitToConvertTo) => {
-    val /= unitConversions['pt'];
-    return val * unitConversions[supportedUnits[unitToConvertTo]];
+    return convertUnit(val, 'pt', supportedUnits[unitToConvertTo || unit]);
   };
 
   const truncateInput = (input) => {
     const INPUT_MAX_LENGTH = 5;
-    if (input) {
-      input = input.toString();
+    const ROUND_DECIMAL_PLACES = 5;
+    const numericInput = Number(input);
+    if (Number.isFinite(numericInput)) {
+      const roundedInput = Number(numericInput.toFixed(ROUND_DECIMAL_PLACES));
+      input = roundedInput.toString();
 
       // if there is a decimal, allow an additional char to keep amount of other chars at INPUT_MAX_LENGTH
       let specialChars = 0;
@@ -246,10 +240,10 @@ const DocumentCropPopup = ({
       setAutoTrim(autoTrim);
       setAutoTrimActive(true);
 
-      const y = autoTrimDimensions[autoTrim]['yOffset'] * unitConversions[supportedUnits[unit]];
-      const h = Math.max(0, autoTrimDimensions[autoTrim]['height'] * unitConversions[supportedUnits[unit]]);
-      const x = autoTrimDimensions[autoTrim]['xOffset'] * unitConversions[supportedUnits[unit]];
-      const w = Math.max(0, autoTrimDimensions[autoTrim]['width'] * unitConversions[supportedUnits[unit]]);
+      const y = convertUnit(autoTrimDimensions[autoTrim]['yOffset'], 'in', supportedUnits[unit]);
+      const h = Math.max(0, convertUnit(autoTrimDimensions[autoTrim]['height'], 'in', supportedUnits[unit]));
+      const x = convertUnit(autoTrimDimensions[autoTrim]['xOffset'], 'in', supportedUnits[unit]);
+      const w = Math.max(0, convertUnit(autoTrimDimensions[autoTrim]['width'], 'in', supportedUnits[unit]));
 
       cropAnnotation.setY(convertUnitsToPt(y));
       setYOffset(truncateInput(y));

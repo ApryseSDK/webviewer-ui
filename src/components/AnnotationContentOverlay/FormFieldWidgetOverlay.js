@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import PropTypes from 'prop-types';
-
+import './FormFieldWidgetOverlay.scss';
 const propTypes = {
   annotation: PropTypes.object,
   overlayPosition: PropTypes.object,
@@ -39,15 +38,15 @@ const FormFieldWidgetOverlay = ({ annotation, overlayPosition, overlayRef }) => 
     <div
       className="Overlay AnnotationContentOverlay"
       data-element={DataElements.ANNOTATION_CONTENT_OVERLAY}
-      style={{ ...overlayPosition }}
+      css={overlayPosition}
       ref={overlayRef}
     >
       <div>
-        <span style={{ 'fontWeight': 'bold' }}>{t('formField.type')}: </span>
+        <span className="form-field-bold-label">{t('formField.type')}: </span>
         {t(mapWidgetypeToTranslation(annotation))}
       </div>
       <div>
-        <span style={{ 'fontWeight': 'bold' }}>{t('formField.formFieldPopup.fieldName')}: </span>
+        <span className="form-field-bold-label">{t('formField.formFieldPopup.fieldName')}: </span>
         {formFieldWidgetName}
       </div>
     </div>

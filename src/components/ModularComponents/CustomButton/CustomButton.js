@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { PLACEMENT } from 'constants/customizationVariables';
+import { css } from '@emotion/react';
 
 const CustomButton = (props) => {
   const { title, dataElement, label, img, onClick, disabled, className, preset, headerPlacement, ariaLabel, style } = props;
@@ -31,7 +32,9 @@ const CustomButton = (props) => {
       disabled={disabled}
       forceTooltipPosition={forceTooltipPosition}
       ariaLabel={ariaLabel}
-      style={style}
+      css={css({
+        ...style
+      })}
     ></Button>
   );
 };

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
 import FocusTrap from 'components/FocusTrap';
 import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
-import Icon from 'components/Icon';
+import OfficeActionItem from './OfficeActionItem';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
@@ -18,55 +19,27 @@ import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { EditingStreamType } from 'constants/officeEditor';
+import { ITEM_TYPE } from 'constants/customizationVariables';
+import { OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER } from 'src/redux/officeEditorModularComponents';
 
 import './ContextMenuPopup.scss';
-
-const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', disabled = false }) => {
-  const [t] = useTranslation();
-  const dispatch = useDispatch();
-
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter' && !disabled) {
-      onClick();
-      dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP));
-    }
-  };
-
-  return (
-    <div
-      className={classNames('office-action-item', { disabled })}
-      onClick={(e) => {
-        if (!disabled) {
-          onClick();
-          dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP));
-        }
-        // prevent bubbling up click event to control when context menu is closed within this component
-        e.stopPropagation();
-      }}
-      tabIndex={disabled ? -1 : 0}
-      data-element={dataElement}
-      onKeyDown={onKeyDown}
-    >
-      <div className="icon-title">
-        {img && <Icon glyph={img} disabled={disabled} />}
-        {!img && <span className="Icon"></span>}
-        <div>{t(title)}</div>
-      </div>
-      <div className="shortcut">{shortcut}</div>
-    </div>
-  );
-};
 
 const ContextMenuPopup = ({
   clickPosition,
 }) => {
   const { core } = useCore();
+  const isOfficeEditor = isOfficeEditorMode();
+  const officeEditor = isOfficeEditor ? core.getOfficeEditor() : null;
 
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP));
   const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const popupItems = useSelector(
+    (state) => selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
+    shallowEqual,
+  );
   const isCursorInTable = useSelector(selectors.isCursorInTable);
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
@@ -212,6 +185,130 @@ const ContextMenuPopup = ({
 
   };
 
+  const getTableActionItem = (title, onClick) => ({ title, onClick });
+
+  const getTableOnlyOfficePopupItem = (dataElement) => {
+    switch (dataElement) {
+      case OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER:
+        return { type: ITEM_TYPE.DIVIDER };
+      case DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE:
+        return getTableActionItem('officeEditor.insertRowAbove', () => officeEditor.insertRows(true));
+      case DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW:
+        return getTableActionItem('officeEditor.insertRowBelow', () => officeEditor.insertRows(false));
+      case DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT:
+        return getTableActionItem('officeEditor.insertColumnRight', () => officeEditor.insertColumns(true));
+      case DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT:
+        return getTableActionItem('officeEditor.insertColumnLeft', () => officeEditor.insertColumns(false));
+      case DataElements.OFFICE_EDITOR_DELETE_ROW:
+        return getTableActionItem('officeEditor.deleteRow', () => officeEditor.removeRows());
+      case DataElements.OFFICE_EDITOR_DELETE_COLUMN:
+        return getTableActionItem('officeEditor.deleteColumn', () => officeEditor.removeColumns());
+      case DataElements.OFFICE_EDITOR_DELETE_TABLE:
+        return getTableActionItem('officeEditor.deleteTable', () => officeEditor.removeTable());
+      default:
+        return undefined;
+    }
+  };
+
+  // `null` means the item should be explicitly hidden for current context.
+  // `undefined` means there is no built-in default mapping, so caller can still render custom action items.
+  const getDefaultOfficePopupItemProps = (dataElement) => {
+    const tableOnlyItem = getTableOnlyOfficePopupItem(dataElement);
+    if (tableOnlyItem) {
+      return isCursorInTable ? tableOnlyItem : null;
+    }
+
+    if (dataElement === DataElements.OFFICE_EDITOR_DELETE && isCursorInTable) {
+      return null;
+    }
+
+    switch (dataElement) {
+      case DataElements.OFFICE_EDITOR_CUT:
+        return {
+          title: 'action.cut',
+          img: 'icon-cut',
+          onClick: () => officeEditor.cutSelectedText(),
+          shortcut: `${modifierKeyShort}+X`,
+          disabled: !officeEditor.isTextSelected(),
+        };
+      case DataElements.OFFICE_EDITOR_COPY:
+        return {
+          title: 'action.copy',
+          img: 'icon-copy',
+          onClick: () => officeEditor.copySelectedText(),
+          shortcut: `${modifierKeyShort}+C`,
+          disabled: !officeEditor.isTextSelected(),
+        };
+      case DataElements.OFFICE_EDITOR_PASTE:
+        return {
+          title: 'action.paste',
+          img: 'icon-paste',
+          onClick: () => handlePaste(),
+          shortcut: `${modifierKeyShort}+V`,
+        };
+      case DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING:
+        return {
+          title: 'action.pasteWithoutFormatting',
+          img: 'icon-paste-without-formatting',
+          onClick: () => handlePaste(false),
+          shortcut: `${modifierKeyShort}+Shift+V`,
+        };
+      case DataElements.OFFICE_EDITOR_ADD_COMMENT:
+        return {
+          title: 'action.addComment',
+          img: 'icon-tool-comment-line',
+          onClick: () => officeEditor.getCommentManager().addCommentThreadAtCurrentRange(''),
+          disabled: activeStream !== EditingStreamType.BODY,
+        };
+      case DataElements.OFFICE_EDITOR_DELETE:
+        return {
+          title: 'action.delete',
+          img: 'icon-delete-line',
+          onClick: () => officeEditor.removeSelection(),
+          disabled: !(officeEditor.isTextSelected() || officeEditor.isImageSelected()),
+        };
+      default:
+        return undefined;
+    }
+  };
+
+  const renderOfficePopupItem = (item, index) => {
+    const mediaQueryClassName = item.hidden?.map((screen) => `hide-in-${screen}`).join(' ');
+    const key = `${item.type || 'actionButton'}-${item.dataElement || index}`;
+    const defaultOfficeItemProps = item.dataElement ? getDefaultOfficePopupItemProps(item.dataElement) : undefined;
+    const shouldHideItem = defaultOfficeItemProps === null; // we explicitly filter out null items but allow undefined items that can be custom action items from the user
+    if (shouldHideItem) {
+      return null;
+    }
+
+    const officePopupItem = {
+      ...defaultOfficeItemProps,
+      ...item,
+      mediaQueryClassName,
+    };
+
+    if (officePopupItem.type === 'divider' || officePopupItem.type === 'spacer') {
+      return (
+        <div
+          key={key}
+          data-element={officePopupItem.dataElement}
+          className={classNames(officePopupItem.type === 'spacer' ? 'spacer' : 'divider', mediaQueryClassName)}
+        />
+      );
+    }
+
+    if (defaultOfficeItemProps || officePopupItem.type === 'actionButton') {
+      return (
+        <OfficeActionItem
+          key={key}
+          {...officePopupItem}
+        />
+      );
+    }
+
+    return null;
+  };
+
   if (isDisabled) {
     return null;
   }
@@ -221,9 +318,9 @@ const ContextMenuPopup = ({
       className={classNames('Popup', 'ContextMenuPopup', {
         open: isOpen,
         closed: !isOpen,
-        isOfficeEditor: isOfficeEditorMode(),
-        'is-vertical': isRightClickAnnotationPopupEnabled && !isOfficeEditorMode(),
-        'is-horizontal': !isRightClickAnnotationPopupEnabled && !isOfficeEditorMode(),
+        isOfficeEditor,
+        'is-vertical': isRightClickAnnotationPopupEnabled && !isOfficeEditor,
+        'is-horizontal': !isRightClickAnnotationPopupEnabled && !isOfficeEditor,
       })}
       ref={popupRef}
       data-element={DataElements.CONTEXT_MENU_POPUP}
@@ -232,95 +329,8 @@ const ContextMenuPopup = ({
     >
       <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
-          {isOfficeEditorMode() ? (
-            <>
-              <OfficeActionItem
-                title="action.cut"
-                img="icon-cut"
-                dataElement={DataElements.OFFICE_EDITOR_CUT}
-                onClick={() => core.getOfficeEditor().cutSelectedText()}
-                shortcut={`${modifierKeyShort}+X`}
-                disabled={!core.getOfficeEditor().isTextSelected()}
-              />
-              <OfficeActionItem
-                title="action.copy"
-                img="icon-copy"
-                dataElement={DataElements.OFFICE_EDITOR_COPY}
-                onClick={() => core.getOfficeEditor().copySelectedText()}
-                shortcut={`${modifierKeyShort}+C`}
-                disabled={!core.getOfficeEditor().isTextSelected()}
-              />
-              <OfficeActionItem
-                title="action.paste"
-                img="icon-paste"
-                dataElement={DataElements.OFFICE_EDITOR_PASTE}
-                onClick={() => handlePaste()}
-                shortcut={`${modifierKeyShort}+V`}
-              />
-              <OfficeActionItem
-                title="action.pasteWithoutFormatting"
-                img="icon-paste-without-formatting"
-                dataElement={DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING}
-                onClick={() => handlePaste(false)}
-                shortcut={`${modifierKeyShort}+Shift+V`}
-              />
-              <OfficeActionItem
-                title="action.addComment"
-                img="icon-tool-comment-line"
-                dataElement={DataElements.OFFICE_EDITOR_ADD_COMMENT}
-                onClick={() => core.getOfficeEditor().getCommentManager().addCommentThreadAtCurrentRange('')}
-                disabled={activeStream !== EditingStreamType.BODY}
-              />
-              {!isCursorInTable && (
-                <OfficeActionItem
-                  title="action.delete"
-                  img="icon-delete-line"
-                  dataElement={DataElements.OFFICE_EDITOR_DELETE}
-                  onClick={() => core.getOfficeEditor().removeSelection()}
-                  disabled={!(core.getOfficeEditor().isTextSelected() || core.getOfficeEditor().isImageSelected())}
-                />
-              )}
-              {isCursorInTable && (
-                <>
-                  <div className="divider"></div>
-                  <OfficeActionItem
-                    title="officeEditor.insertRowAbove"
-                    dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE}
-                    onClick={() => core.getOfficeEditor().insertRows(1, true)}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.insertRowBelow"
-                    dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW}
-                    onClick={() => core.getOfficeEditor().insertRows(1, false)}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.insertColumnRight"
-                    dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT}
-                    onClick={() => core.getOfficeEditor().insertColumns(1, true)}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.insertColumnLeft"
-                    dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT}
-                    onClick={() => core.getOfficeEditor().insertColumns(1, false)}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.deleteRow"
-                    dataElement={DataElements.OFFICE_EDITOR_DELETE_ROW}
-                    onClick={() => core.getOfficeEditor().removeRows()}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.deleteColumn"
-                    dataElement={DataElements.OFFICE_EDITOR_DELETE_COLUMN}
-                    onClick={() => core.getOfficeEditor().removeColumns()}
-                  />
-                  <OfficeActionItem
-                    title="officeEditor.deleteTable"
-                    dataElement={DataElements.OFFICE_EDITOR_DELETE_TABLE}
-                    onClick={() => core.getOfficeEditor().removeTable()}
-                  />
-                </>
-              )}
-            </>
+          {isOfficeEditor ? (
+            popupItems.map(renderOfficePopupItem)
           ) : (
             <CustomizablePopup
               dataElement={DataElements.CONTEXT_MENU_POPUP}
@@ -407,6 +417,13 @@ const ContextMenuPopup = ({
   ) : (
     <Draggable cancel=".Button, .cell, .sliders-container svg, select, button, input">{contextMenuPopup}</Draggable>
   );
+};
+
+ContextMenuPopup.propTypes = {
+  clickPosition: PropTypes.shape({
+    left: PropTypes.number,
+    top: PropTypes.number,
+  }).isRequired,
 };
 
 export default React.memo(ContextMenuPopup);

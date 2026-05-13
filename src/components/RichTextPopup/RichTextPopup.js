@@ -24,6 +24,7 @@ import i18next from 'i18next';
 import Icon from 'components/Icon';
 import TextStylePicker from 'components/TextStylePicker';
 import handleFreeTextAutoSizeToggle from 'src/helpers/handleFreeTextAutoSizeToggle';
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 
 const propTypes = {
   annotation: PropTypes.object,

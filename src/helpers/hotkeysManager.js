@@ -20,9 +20,15 @@ import FocusStackManager from 'helpers/focusStackManager';
 import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 import { panelNames } from 'src/constants/panel';
 import {
+  createSyntheticKeyEvent,
+  EventTypes,
   getViewOnlyShortcuts,
+  invokeShortcutHandler,
+  isShortcutKeyActive,
   keyMap,
   Keys,
+  normalizeEventType,
+  resolveShortcutByKeyCombo,
   ShortcutKeys,
   Shortcuts,
   splitKey,
@@ -674,6 +680,44 @@ WebViewer(...)
       if (disabledHotkeys[Keys[property]] === false) {
         this.off(Keys[property]);
       }
+    }
+  },
+
+  trigger(shortcut, eventType = EventTypes.KEYDOWN) {
+    if (!shortcut || typeof shortcut !== 'string') {
+      console.warn('hotkeys.trigger: a key combo string is required (e.g. "ctrl+b", "command+b")');
+      return;
+    }
+
+    if (!this.store) {
+      console.warn('hotkeys.trigger: hotkeysManager is not yet initialized');
+      return;
+    }
+
+    const { valid, normalized: normalizedEventType } = normalizeEventType(eventType);
+    if (!valid) {
+      console.warn(`hotkeys.trigger: eventType must be "keydown" or "keyup", received "${eventType}"`);
+      return;
+    }
+
+    const currentShortcutKeyMap = this.getShortcutKeyMap();
+    const shortcutName = resolveShortcutByKeyCombo(shortcut, currentShortcutKeyMap);
+    const defaultCombo = shortcutName ? ShortcutKeys[shortcutName] : null;
+    const handler = defaultCombo ? this.keyHandlerMap[defaultCombo] : null;
+
+    if (!handler) {
+      console.warn(`hotkeys.trigger: no handler found for key combo "${shortcut}". Provide a valid key combo string (e.g. "ctrl+c", "command+b").`);
+      return;
+    }
+
+    if (!isShortcutKeyActive(shortcutName, currentShortcutKeyMap, this.activeHotkeysMap)) {
+      console.warn(`hotkeys.trigger: the shortcut bound to "${shortcut}" is currently disabled`);
+      return;
+    }
+
+    const warning = invokeShortcutHandler(handler, normalizedEventType, createSyntheticKeyEvent(normalizedEventType));
+    if (warning) {
+      console.warn(`hotkeys.trigger: shortcut "${shortcut}" ${warning}`);
     }
   },
 

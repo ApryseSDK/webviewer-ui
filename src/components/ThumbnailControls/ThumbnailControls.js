@@ -125,8 +125,7 @@ const ThumbnailControls = ({ index }) => {
 
   if (isXod || isOffice || document?.isWebViewerServerDocument()) {
     return (
-      <div className="thumbnailControls-overlay" data-element={dataElementName}
-        style={{ display: 'flex' }}
+      <div className="thumbnailControls-overlay flex" data-element={dataElementName}
       >
         <Button
           img="icon-header-page-manipulation-page-rotation-counterclockwise-line"

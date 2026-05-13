@@ -13,6 +13,7 @@ import useFocusHandler from 'hooks/useFocusHandler';
 import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
 import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
 import DataElementWrapper from 'components/DataElementWrapper';
+import { css } from '@emotion/react';
 
 const TRANSPARENT_COLOR = 'transparent';
 
@@ -133,7 +134,9 @@ const ColorPicker = ({
                       cell: true,
                       border: true,
                     })}
-                    style={{ backgroundColor: color }}
+                    css={css({
+                      backgroundColor: color
+                    })}
                   >
                     {color === TRANSPARENT_COLOR && transparentIcon}
                   </div>

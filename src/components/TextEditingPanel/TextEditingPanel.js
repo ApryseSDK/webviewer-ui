@@ -157,9 +157,9 @@ const TextEditingPanel = ({
     <>
       <div className="text-editing-panel">
         {textStylesSection}
-        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
+        <HorizontalDivider className='divider' />
         {colorPaletteSection}
-        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
+        <HorizontalDivider className='divider' />
         {undoRedoProperties ? undoRedoSection : undefined }
       </div>
     </>

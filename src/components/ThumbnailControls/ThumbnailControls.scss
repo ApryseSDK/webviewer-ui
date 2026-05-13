@@ -5,6 +5,11 @@
   @include ie11 {
     display: flex;
   }
+
+  &.flex {
+    display: flex;
+  }
+
   text-align: center;
   z-index: 2;
   margin-top: 5px;

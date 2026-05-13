@@ -253,7 +253,7 @@ function DocumentCropPopupContainer() {
             containerRef.current = el;
             setOverlayRef(el);
           }}
-          style={initialOffset}
+          css={initialOffset}
         >
           <DocumentCropPopup {...props} />
         </div>

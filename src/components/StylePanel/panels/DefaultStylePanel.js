@@ -13,7 +13,7 @@ const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
   const [t] = useTranslation();
 
   const {
-    style,
+    annotationStyle,
     panelTitle,
     strokeStyle,
     startLineStyle,
@@ -40,7 +40,7 @@ const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
         <StylePicker
           {...toolTypeProps}
           sliderProperties={['Opacity', 'StrokeThickness']}
-          style={style}
+          annotationStyle={annotationStyle}
           onStyleChange={onStyleChange}
           showLineStyleOptions={showLineStyleOptions}
           startLineStyle={startLineStyle}

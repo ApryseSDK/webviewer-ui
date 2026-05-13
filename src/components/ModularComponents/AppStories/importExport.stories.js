@@ -46,14 +46,16 @@ ImportingWithCustomStyleAndClassName.play = async ({ canvasElement }) => {
   window.instance.UI.importModularComponents(uiWithCustomStyleAndClass);
 
   const leftPanelToggleButton = canvas.getByRole('button', { name: getTranslatedText('component.leftPanel') });
-  await expect(leftPanelToggleButton.style.borderRadius).toBe('8px');
+  const leftPanelToggleButtonStyle = window.getComputedStyle(leftPanelToggleButton);
+  await expect(leftPanelToggleButtonStyle.borderRadius).toBe('8px');
 
   const panToolButton = await canvas.findByRole('button', { name: getTranslatedText('tool.pan') });
   await expect(panToolButton.classList.contains('my-new-class-for-tools')).toBe(true);
 
   const annotateRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Annotate') });
   await expect(annotateRibbon.classList.contains('annotate-ribbon')).toBe(true);
-  await expect(annotateRibbon.style.border).toBe('2px dotted blue');
+  const annotateRibbonStyle = window.getComputedStyle(annotateRibbon);
+  await expect(annotateRibbonStyle.border).toBe('2px dotted rgb(0, 0, 255)');
 
   const exportedConfig = window.instance.UI.exportModularComponents();
   await expect(exportedConfig).toEqual(uiWithCustomStyleAndClass);

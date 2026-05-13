@@ -29,7 +29,7 @@ class NetworkErrorWrapper extends React.Component {
 
   render() {
     if (this.checkIsChunkLoadError()) {
-      return <div role='alert' className='ErrorToast' style={{ zIndex: this.state.zIndex }} >
+      return <div role='alert' className='ErrorToast' css={{ zIndex: this.state.zIndex }} >
         <div>{this.t('message.networkError')} &quot;{this.props.dataElement}&quot;</div>
         <div>{this.t('message.refreshPage')}</div>
       </div>;

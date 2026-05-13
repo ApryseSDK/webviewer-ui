@@ -6,12 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 import './Wv3dPropertiesPanel.scss';
 import '../Panel/Panel.scss';
 import PropertiesElement from './PropertiesElement/PropertiesElement';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const Wv3dPropertiesPanel = (props) => {
   const { currentWidth, isInDesktopOnlyMode, isMobile = false, closeWv3dPropertiesPanel, schema, modelData } = props;
 
   const { t } = useTranslation();
-  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
+  const wrapperStyle = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
 
   const renderMobileCloseButton = () => {
     return (
@@ -43,7 +43,7 @@ const Wv3dPropertiesPanel = (props) => {
   }
 
   return (
-    <DataElementWrapper dataElement="wv3dPropertiesPanel" className="Panel wv3d-properties-panel" style={style}>
+    <DataElementWrapper dataElement="wv3dPropertiesPanel" className="Panel wv3d-properties-panel" wrapperStyle={wrapperStyle}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       {propertiesCollection}
     </DataElementWrapper>

@@ -1,12 +1,6 @@
 import core from 'core';
 
-const { MeasurementUnits } = window.Core.Annotations.Annotation;
 const isMeasurementTool = (tool) => !!(tool && tool.Measure);
-
-const imperialConverter = {
-  'ft': MeasurementUnits.PRIME_FT,
-  'in': MeasurementUnits.DOUBLE_PRIME_IN,
-};
 
 export default () => {
   const tools = [];
@@ -24,4 +18,4 @@ export default () => {
   return tools;
 };
 
-export { isMeasurementTool, imperialConverter, MeasurementUnits };
+export { isMeasurementTool };

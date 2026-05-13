@@ -153,7 +153,7 @@ const FontSizeDropdown = ({
     />
   );
 
-  return applyOnlyOnBlur ? <div onBlur={blur} style={{ width: '100%' }}>{dropdown}</div> : dropdown;
+  return applyOnlyOnBlur ? <div onBlur={blur} className="font-size-blur-wrapper">{dropdown}</div> : dropdown;
 };
 
 FontSizeDropdown.propTypes = propTypes;

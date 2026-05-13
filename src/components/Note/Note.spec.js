@@ -5,6 +5,8 @@ import Note from './Note';
 import NoteContext from './Context';
 
 const mockDispatch = jest.fn();
+let mockNoteTransformFunction = null;
+let mockCustomNoteSelectionFunction = null;
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => [(key) => key],
@@ -15,6 +17,7 @@ jest.mock('hooks/useCore', () => () => ({
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     getGroupAnnotations: jest.fn(() => []),
+    deselectAllAnnotations: jest.fn(),
   },
 }));
 
@@ -28,8 +31,8 @@ jest.mock('react-redux', () => {
 });
 
 jest.mock('selectors', () => ({
-  getNoteTransformFunction: () => null,
-  getCustomNoteSelectionFunction: () => null,
+  getNoteTransformFunction: () => mockNoteTransformFunction,
+  getCustomNoteSelectionFunction: () => mockCustomNoteSelectionFunction,
   getUnreadAnnotationIdSet: () => new Set(),
   isCommentThreadExpansionEnabled: () => false,
   isRightClickAnnotationPopupEnabled: () => true,
@@ -42,8 +45,8 @@ jest.mock('components/NoteContent', () => {
   return function MockNoteContent({ annotation, editingKey, isEditing, setIsEditing }) {
     return (
       <button
-        data-testid={`note-content-${annotation.Id}`}
-        data-is-editing={Boolean(isEditing)}
+        aria-label={`note-content ${annotation.Id}`}
+        aria-pressed={Boolean(isEditing)}
         onClick={() => setIsEditing(true, editingKey)}
       >
         {annotation.Id}
@@ -54,14 +57,19 @@ jest.mock('components/NoteContent', () => {
 
 jest.mock('components/Note/ReplyArea', () => {
   return function MockReplyArea() {
-    return <div data-testid="reply-area" />;
+    return <div aria-label="reply-area" />;
   };
 });
 
 jest.mock('components/Button', () => {
   return function MockButton({ onClick, dataElement, className, label }) {
     return (
-      <button data-element={dataElement} className={className} onClick={onClick}>
+      <button
+        aria-label={label || dataElement}
+        data-element={dataElement}
+        className={className}
+        onClick={onClick}
+      >
         {label}
       </button>
     );
@@ -108,6 +116,114 @@ const baseContext = {
 };
 
 describe('Note', () => {
+  beforeEach(() => {
+    mockDispatch.mockClear();
+    mockNoteTransformFunction = null;
+    mockCustomNoteSelectionFunction = null;
+  });
+
+  it('should trigger custom note selection when note container is clicked', async () => {
+    const annotation = createAnnotation(() => []);
+    const onCustomNoteSelect = jest.fn();
+    mockCustomNoteSelectionFunction = onCustomNoteSelect;
+
+    render(
+      <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+        <Note
+          annotation={annotation}
+          isMultiSelected={false}
+          isMultiSelectMode={false}
+          isInNotesPanel={false}
+          isCustomPanelOpen={false}
+          shouldHideConnectorLine
+          handleMultiSelect={jest.fn()}
+        />
+      </NoteContext.Provider>
+    );
+
+    const expandNoteButton = screen.getByRole('button', { name: 'expandNoteButton' });
+    const noteContainer = expandNoteButton.parentElement;
+    expect(noteContainer).not.toBeNull();
+    await userEvent.click(noteContainer);
+    expect(onCustomNoteSelect).toHaveBeenCalledWith(annotation);
+  });
+
+  it('should not trigger custom note selection when clicking an interactive descendant', async () => {
+    const annotation = createAnnotation(() => []);
+    const onCustomNoteSelect = jest.fn();
+    mockCustomNoteSelectionFunction = onCustomNoteSelect;
+
+    render(
+      <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+        <Note
+          annotation={annotation}
+          isMultiSelected={false}
+          isMultiSelectMode={false}
+          isInNotesPanel={false}
+          isCustomPanelOpen={false}
+          shouldHideConnectorLine
+          handleMultiSelect={jest.fn()}
+        />
+      </NoteContext.Provider>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'note-content note-1' }));
+    expect(onCustomNoteSelect).not.toHaveBeenCalled();
+  });
+
+  it('should not bubble click events to parent when clicking the note container', async () => {
+    const annotation = createAnnotation(() => []);
+    const onParentClick = jest.fn();
+
+    render(
+      <div onClick={onParentClick}>
+        <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+          <Note
+            annotation={annotation}
+            isMultiSelected={false}
+            isMultiSelectMode={false}
+            isInNotesPanel={false}
+            isCustomPanelOpen={false}
+            shouldHideConnectorLine
+            handleMultiSelect={jest.fn()}
+          />
+        </NoteContext.Provider>
+      </div>
+    );
+
+    const expandNoteButton = screen.getByRole('button', { name: 'expandNoteButton' });
+    const noteContainer = expandNoteButton.parentElement;
+    expect(noteContainer).not.toBeNull();
+    await userEvent.click(noteContainer);
+
+    expect(onParentClick).not.toHaveBeenCalled();
+  });
+
+  it('should not bubble click events to parent when clicking an interactive descendant', async () => {
+    const annotation = createAnnotation(() => []);
+    const onParentClick = jest.fn();
+
+    render(
+      <div onClick={onParentClick}>
+        <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+          <Note
+            annotation={annotation}
+            isMultiSelected={false}
+            isMultiSelectMode={false}
+            isInNotesPanel={false}
+            isCustomPanelOpen={false}
+            shouldHideConnectorLine
+            handleMultiSelect={jest.fn()}
+          />
+        </NoteContext.Provider>
+      </div>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'note-content note-1' }));
+
+    expect(onParentClick).not.toHaveBeenCalled();
+  });
+
   it('should be able to edit reply after a reply above is deleted', async () => {
     const reply1 = createReply('reply-1', 1);
     const reply2 = createReply('reply-2', 2);
@@ -133,8 +249,8 @@ describe('Note', () => {
     );
 
     // Enter reply edit mode on the lower reply
-    await userEvent.click(screen.getByTestId('note-content-reply-3'));
-    expect(screen.getByTestId('note-content-reply-3')).toHaveAttribute('data-is-editing', 'true');
+    await userEvent.click(screen.getByRole('button', { name: 'note-content reply-3' }));
+    expect(screen.getByRole('button', { name: 'note-content reply-3' })).toHaveAttribute('aria-pressed', 'true');
 
     // Simulate deleting a reply above it and rerender thread
     currentReplies = [reply2, reply3];
@@ -145,6 +261,6 @@ describe('Note', () => {
     );
 
     // The lower reply should still be in editing state after indices shift.
-    expect(screen.getByTestId('note-content-reply-3')).toHaveAttribute('data-is-editing', 'true');
+    expect(screen.getByRole('button', { name: 'note-content reply-3' })).toHaveAttribute('aria-pressed', 'true');
   });
 });

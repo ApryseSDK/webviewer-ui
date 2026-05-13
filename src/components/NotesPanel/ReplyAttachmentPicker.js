@@ -26,7 +26,7 @@ const ReplyAttachmentPicker = ({ annotationId, addAttachments }) => {
     <input
       id="reply-attachment-picker"
       type="file"
-      style={{ display: 'none' }}
+      hidden
       onChange={onChange}
       onClick={(e) => {
         e.target.value = '';

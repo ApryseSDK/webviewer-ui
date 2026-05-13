@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import DOMPurify from 'dompurify';
 
 import './Icon.scss';
+import { css } from '@emotion/react';
+import { transformSvgMarkup } from './iconHelper';
 
 class Icon extends React.PureComponent {
   static propTypes = {
@@ -17,37 +18,6 @@ class Icon extends React.PureComponent {
     ariaHidden: PropTypes.bool,
     ariaLabel: PropTypes.string,
   };
-
-
-  constructor() {
-    super();
-    this.icon = React.createRef();
-  }
-
-  componentDidMount() {
-    this.updateSvg();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.glyph !== prevProps.glyph) {
-      this.updateSvg();
-    }
-  }
-
-  updateSvg() {
-    if (this.isInlineSvg()) {
-      const domElement = this.icon.current;
-
-      // remove existing svg
-      while (domElement.firstChild) {
-        domElement.removeChild(domElement.firstChild);
-      }
-
-      // innerHTML also works, but not in IE...
-      const svg = (new DOMParser()).parseFromString(this.props.glyph, 'image/svg+xml').querySelector('svg');
-      domElement.appendChild(svg);
-    }
-  }
 
   isInlineSvg() {
     const { glyph } = this.props;
@@ -67,37 +37,35 @@ class Icon extends React.PureComponent {
       svgElement = undefined;
     }
 
-    const style = {
-      filter
-    };
+    svgElement = transformSvgMarkup(svgElement, {
+      color,
+      fillColor,
+      strokeColor,
+      disabled,
+      ariaLabel,
+    });
 
-    if (!disabled) {
-      // eslint-disable-next-line custom/no-hex-colors
-      style.color = (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color;
-      if (fillColor) {
-        svgElement = svgElement.replace('fill="none"', `fill="#${fillColor}"`);
-      }
-      if (strokeColor) {
-        svgElement = svgElement.replaceAll('fill="stroke"', `fill="#${strokeColor}"`);
-      }
-    }
-
-    // Deque required aria-label to be on the SVG element rather than the wrapping div
-    if (ariaLabel) {
-      const sanitizedAriaLabel = DOMPurify.sanitize(ariaLabel, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
-      svgElement = svgElement.replace('<svg', `<svg aria-label="${sanitizedAriaLabel}"`);
-    }
+    const hasDefaultMarkers = !!svgElement && (
+      /\bfill\s*=\s*(['"])default\1/i.test(svgElement)
+      || /\bstroke\s*=\s*(['"])default\1/i.test(svgElement)
+      || /\bclass=(['"])[^'"]*\bicon-default\b[^'"]*\1/i.test(svgElement)
+      || /\bclass=(['"])[^'"]*\bicon-default-stroke\b[^'"]*\1/i.test(svgElement)
+    );
 
     return (
       <div
-        ref={this.icon}
         className={classNames({
           Icon: true,
+          'has-default-markers': hasDefaultMarkers,
           [className]: true,
           [fillColor]: true,
           disabled,
         })}
-        style={style}
+        css={css({ '&&&&&&': {
+          ...(filter && { filter }),
+          // eslint-disable-next-line custom/no-hex-colors
+          ...(!disabled && { color: color === 'rgba(0, 0, 0, 0)' ? '#808080' : color }),
+        } })}
         data-element={dataElement}
         aria-hidden={this.props.ariaHidden}
         /* eslint-disable react/no-danger */

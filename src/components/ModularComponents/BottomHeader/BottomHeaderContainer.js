@@ -49,9 +49,10 @@ const BottomHeaderContainer = () => {
   }, [dimensions, floatingHeaders.length]);
 
   const modularHeaders = useMemo(() => fullLengthHeaders.map((header) => {
-    const { dataElement } = header;
+    const { dataElement, style: legacyStyle, wrapperStyle, ...headerProps } = header;
+    const resolvedWrapperStyle = wrapperStyle ?? legacyStyle;
     return (
-      <ModularHeader {...header} key={dataElement}/>
+      <ModularHeader {...headerProps} dataElement={dataElement} key={dataElement} wrapperStyle={resolvedWrapperStyle}/>
     );
   }), [fullLengthHeaders]);
 

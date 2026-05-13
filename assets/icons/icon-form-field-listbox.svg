@@ -4,12 +4,12 @@
 <g id="ic-list-box">
 <path id="fill" fill-rule="evenodd" clip-rule="evenodd" d="M19.2041 4.01074C20.2128 4.113 21 4.96435 21 6V18C21 19.0357 20.2128 19.887 19.2041 19.9893L19 20H5L4.7959 19.9893C3.78722 19.887 3 19.0357 3 18V6C3 4.96435 3.78722 4.113 4.7959 4.01074L5 4H19L19.2041 4.01074ZM5 18H19V6H5V18Z"/>
 <g id="shape">
-<path d="M7 8H9V10H7V8Z" fill="default"/>
-<path d="M10 8H17V10H10V8Z" fill="default"/>
-<path d="M7 11H9V13H7V11Z" fill="default"/>
-<path d="M10 11H17V13H10V11Z" fill="default"/>
-<path d="M7 14H9V16H7V14Z" fill="default"/>
-<path d="M10 14H17V16H10V14Z" fill="default"/>
+<path class="icon-default" d="M7 8H9V10H7V8Z" fill="default"/>
+<path class="icon-default" d="M10 8H17V10H10V8Z" fill="default"/>
+<path class="icon-default" d="M7 11H9V13H7V11Z" fill="default"/>
+<path class="icon-default" d="M10 11H17V13H10V11Z" fill="default"/>
+<path class="icon-default" d="M7 14H9V16H7V14Z" fill="default"/>
+<path class="icon-default" d="M10 14H17V16H10V14Z" fill="default"/>
 </g>
 </g>
 </svg>

@@ -169,9 +169,9 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     } = lineProperties;
     return (
       <LineConnectorPortal>
-        <div className="horizontalLine" style={topLineStyle}/>
-        <div className="verticalLine" style={verticalLineStyle}/>
-        <div className="horizontalLine" style={bottomLineStyle}>
+        <div className="horizontalLine" css={topLineStyle}/>
+        <div className="verticalLine" css={verticalLineStyle}/>
+        <div className="horizontalLine" css={bottomLineStyle}>
           <div className={classNames('arrowHead', { 'arrow-right': isPanelOnLeft })} />
         </div>
       </LineConnectorPortal>

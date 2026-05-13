@@ -170,9 +170,9 @@ export const RibbonItemsWithCustomStyleAndClass = () => {
   return (
     <Provider store={store}>
       <div style={{ display: 'flex', gap: '8px', backgroundColor: 'white' }}>
-        <RibbonItem {...item1Props} style={{ borderStyle: 'dotted' }} className='ribbon-class'/>
-        <RibbonItem {...item2Props} style={{ color: 'hotpink' }} className='ribbon-class'/>
-        <RibbonItem {...item3Props} style={{ border: '2px dotted blue' }} className='ribbon-class'/>
+        <RibbonItem {...item1Props} buttonStyle={{ borderStyle: 'dotted' }} className='ribbon-class'/>
+        <RibbonItem {...item2Props} buttonStyle={{ color: 'hotpink' }} className='ribbon-class'/>
+        <RibbonItem {...item3Props} buttonStyle={{ border: '2px dotted blue' }} className='ribbon-class'/>
       </div>
     </Provider>
   );
@@ -253,7 +253,6 @@ RibbonItemsWithCustomTitlesAndLabels.play = async ({ canvasElement }) => {
 
 
 };
-
 
 
 

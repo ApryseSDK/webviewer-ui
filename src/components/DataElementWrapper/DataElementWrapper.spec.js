@@ -64,6 +64,28 @@ describe('DataElementWrapper', () => {
     expect(element).toHaveAttribute('data-element', dataElement);
   });
 
+  it('Should not forward legacy style prop as inline style attribute', () => {
+    const { container } = render(
+      <DataElementWrapper style={{ width: '100px' }}>
+        Child
+      </DataElementWrapper>,
+    );
+    const element = container.querySelector('div');
+    expect(element).toBeInTheDocument();
+    expect(element).not.toHaveAttribute('style');
+  });
+
+  it('Should not forward wrapperStyle prop as inline style attribute', () => {
+    const { container } = render(
+      <DataElementWrapper wrapperStyle={{ width: '100px' }}>
+        Child
+      </DataElementWrapper>,
+    );
+    const element = container.querySelector('div');
+    expect(element).toBeInTheDocument();
+    expect(element).not.toHaveAttribute('style');
+  });
+
   it('Forward ref should be assigned', () => {
     const dataElement = 'unit-test-with-ref';
     let myRef;

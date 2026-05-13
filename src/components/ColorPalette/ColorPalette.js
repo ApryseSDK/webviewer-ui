@@ -10,6 +10,7 @@ import DataElements from 'constants/dataElement';
 import { transparentIcon } from 'helpers/colorPickerHelper';
 
 import './ColorPalette.scss';
+import { css } from '@emotion/react';
 
 const DEFAULT_GRID_COLS = 7;
 
@@ -221,7 +222,9 @@ const ColorPalette = ({
         'ColorPalette': true,
         padding: hasPadding,
       })}
-      style={style}
+      css={css({
+        ...style
+      })}
     >
       {palette.map((buttonColor, i) => (
         !buttonColor
@@ -248,7 +251,9 @@ const ColorPalette = ({
               >
                 <div
                   className='cell border'
-                  style={{ backgroundColor: buttonColor }}
+                  css={css({
+                    backgroundColor: buttonColor
+                  })}
                 >
                   {buttonColor === 'transparency' && transparentIcon}
                 </div>

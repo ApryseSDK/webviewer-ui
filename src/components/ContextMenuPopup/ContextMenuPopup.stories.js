@@ -6,23 +6,30 @@ import { workerTypes } from 'constants/types';
 import { EditingStreamType } from 'constants/officeEditor';
 import ContextMenuPopup from './ContextMenuPopup';
 import { defaultPopups } from 'src/redux/modularComponents';
+import { defaultOfficeEditorPopups } from 'src/redux/officeEditorModularComponents';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+
 export default {
   title: 'Components/ContextMenuPopup',
   component: ContextMenuPopup,
 };
 
-const mockInitialState = {
+const createMockState = ({
+  isRightClickAnnotationPopupEnabled = false,
+  isCursorInTable = false,
+  officeEditorStream = EditingStreamType.BODY,
+  modularPopups = defaultPopups,
+} = {}) => ({
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
-    modularPopups: defaultPopups,
+    modularPopups,
     customPanels: [],
     genericPanels: [],
     openElements: {
       contextMenuPopup: true,
     },
-    enableRightClickAnnotationPopup: false,
+    enableRightClickAnnotationPopup: isRightClickAnnotationPopupEnabled,
   },
   featureFlags: {
     customizableUI: true,
@@ -31,111 +38,82 @@ const mockInitialState = {
     cursorProperties: {
       paragraphProperties: {},
       locationProperties: {
-        inTable: false,
+        inTable: isCursorInTable,
       },
     },
-    stream: EditingStreamType.BODY,
+    stream: officeEditorStream,
   },
   spreadsheetEditor: {
     editMode: 'editing',
-  }
+  },
+});
+
+const renderWithState = (state) => (
+  <Provider store={configureStore({ reducer: () => state })}>
+    <ContextMenuPopup
+      clickPosition={{ left: 0, top: 0 }}
+    />
+  </Provider>
+);
+
+const getOfficeEditorMock = (isTextSelected = true) => ({
+  isTextSelected: () => isTextSelected,
+  isImageSelected: () => false,
+});
+
+const getOfficeEditorModularPopups = () => ({
+  ...defaultPopups,
+  ...defaultOfficeEditorPopups,
+});
+
+const setDocumentType = (documentType) => {
+  core.getDocument = () => ({
+    getType: () => documentType,
+  });
 };
 
 export const BasicHorizontal = () => {
-  mockInitialState.viewer.enableRightClickAnnotationPopup = false;
-  core.getDocument = () => ({
-    getType: () => workerTypes.PDF,
-  });
-
-  return (
-    <Provider store={configureStore({ reducer: () => mockInitialState })}>
-      <ContextMenuPopup
-        clickPosition={{ left: 0, top: 0 }}
-      />
-    </Provider>
-  );
+  setDocumentType(workerTypes.PDF);
+  return renderWithState(createMockState());
 };
 
 BasicHorizontal.parameters = disableRtlModeParameters;
 
 export const BasicVertical = () => {
-  mockInitialState.viewer.enableRightClickAnnotationPopup = true;
-  core.getDocument = () => ({
-    getType: () => workerTypes.PDF,
-  });
-
-  return (
-    <Provider store={configureStore({ reducer: () => mockInitialState })}>
-      <ContextMenuPopup
-        clickPosition={{ left: 0, top: 0 }}
-      />
-    </Provider>
-  );
+  setDocumentType(workerTypes.PDF);
+  return renderWithState(createMockState({ isRightClickAnnotationPopupEnabled: true }));
 };
 
 export const OfficeEditor = () => {
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => true,
-    isImageSelected: () => false,
-  });
-  core.getDocument = () => ({
-    getType: () => workerTypes.OFFICE_EDITOR,
-  });
+  setDocumentType(workerTypes.OFFICE_EDITOR);
+  core.getOfficeEditor = () => getOfficeEditorMock(true);
 
-  mockInitialState.viewer.enableRightClickAnnotationPopup = false;
-  mockInitialState.officeEditor.stream = EditingStreamType.BODY;
-
-  return (
-    <Provider store={configureStore({ reducer: () => mockInitialState })}>
-      <ContextMenuPopup
-        clickPosition={{ left: 0, top: 0 }}
-      />
-    </Provider>
-  );
+  return renderWithState(createMockState({
+    officeEditorStream: EditingStreamType.BODY,
+    modularPopups: getOfficeEditorModularPopups(),
+  }));
 };
 
 export const OfficeEditorTable = () => {
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => false,
-  });
-  core.getDocument = () => ({
-    getType: () => workerTypes.OFFICE_EDITOR,
-  });
+  setDocumentType(workerTypes.OFFICE_EDITOR);
+  core.getOfficeEditor = () => getOfficeEditorMock(false);
 
-  mockInitialState.viewer.enableRightClickAnnotationPopup = false;
-  mockInitialState.officeEditor.cursorProperties.locationProperties.inTable = true;
-
-  return (
-    <Provider store={configureStore({ reducer: () => mockInitialState })}>
-      <ContextMenuPopup
-        clickPosition={{ left: 0, top: 0 }}
-      />
-    </Provider>
-  );
+  return renderWithState(createMockState({
+    isCursorInTable: true,
+    modularPopups: getOfficeEditorModularPopups(),
+  }));
 };
 
 OfficeEditorTable.parameters = disableRtlModeParameters;
 
 export const OfficeEditorHeaderStream = () => {
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => true,
-    isImageSelected: () => false,
-  });
-  core.getDocument = () => ({
-    getType: () => workerTypes.OFFICE_EDITOR,
-  });
+  setDocumentType(workerTypes.OFFICE_EDITOR);
+  core.getOfficeEditor = () => getOfficeEditorMock(true);
 
-  mockInitialState.viewer.enableRightClickAnnotationPopup = false;
-  mockInitialState.officeEditor.cursorProperties.locationProperties.inTable = false;
-  mockInitialState.officeEditor.stream = EditingStreamType.HEADER;
-
-  return (
-    <Provider store={configureStore({ reducer: () => mockInitialState })}>
-      <ContextMenuPopup
-        clickPosition={{ left: 0, top: 0 }}
-      />
-    </Provider>
-  );
+  return renderWithState(createMockState({
+    officeEditorStream: EditingStreamType.HEADER,
+    modularPopups: getOfficeEditorModularPopups(),
+  }));
 };
 
 OfficeEditorHeaderStream.parameters = disableRtlModeParameters;

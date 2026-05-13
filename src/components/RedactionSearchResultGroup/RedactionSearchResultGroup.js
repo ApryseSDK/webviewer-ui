@@ -4,7 +4,7 @@ import Choice from 'components/Choice';
 import { useTranslation } from 'react-i18next';
 import CollapsibleSection from 'components/CollapsibleSection';
 import './RedactionSearchResultGroup.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const RedactionSearchResultGroup = (props) => {
   const {
     pageNumber,
@@ -46,10 +46,6 @@ const RedactionSearchResultGroup = (props) => {
     );
   };
 
-  const style = {
-    width: '100%',
-  };
-
   return (
     <div className="redaction-search-results-page-number">
       <Choice
@@ -61,7 +57,7 @@ const RedactionSearchResultGroup = (props) => {
           checkAllResults(event);
         }}
       />
-      <CollapsibleSection header={header} style={style} expansionDescription={`${t('option.shared.page')} ${pageNumber}`}>
+      <CollapsibleSection className="redaction-search-results-section" header={header} expansionDescription={`${t('option.shared.page')} ${pageNumber}`}>
         <ul className="redaction-search-results">
           {searchResults.map((searchResult, index) => (
             <RedactionSearchResult

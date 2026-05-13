@@ -7,6 +7,7 @@ import actions from 'actions';
 import DocumentCropPopup from './DocumentCropPopup';
 import { Basic } from './DocumentCropPopup.stories';
 import useCore from 'hooks/useCore';
+import { convertUnit } from 'src/constants/measurementScale';
 
 const BasicDocumentCropPopupStory = withI18n(Basic);
 
@@ -269,6 +270,42 @@ describe('Dimensions Input Menu', () => {
     const autoTrimDropdown = screen.getAllByRole('option', { name: DEFAULT_AUTO_TRIM })[0];
     expect(autoTrimDropdown).toBeEnabled();
   });
+
+  const inputList = [
+    'width-input',
+    'height-input',
+    'xOffset-input',
+    'yOffset-input'
+  ];
+  const expectedValue = 4;
+  const decimalPlaces = 4;
+  const expectedValueInInches = Number((convertUnit(expectedValue, 'cm', 'in')).toFixed(decimalPlaces));
+
+  for (const input of inputList) {
+    it(`Should keep expected ${input} value when switching between units`, () => {
+      currentDocumentViewer = {};
+      currentCore = createMockCore();
+      useCore.mockReturnValue({
+        core: currentCore,
+        documentViewer: currentDocumentViewer
+      });
+      render(testPopup);
+      const collapsibleMenu = screen.getByText('Crop Dimensions');
+      fireEvent.click(collapsibleMenu);
+      const unitDropdown = screen.getByRole('combobox', { name: 'Unit' });
+      fireEvent.click(unitDropdown);
+      fireEvent.click(screen.getByRole('option', { name: 'Centimeters (cm)' }));
+      fireEvent.change(screen.getByTestId(input), { target: { value: expectedValue } });
+
+      fireEvent.click(unitDropdown);
+      fireEvent.click(screen.getByRole('option', { name: 'Inches (in)' }));
+      expect(screen.getByTestId(input)).toHaveValue(expectedValueInInches);
+
+      fireEvent.click(unitDropdown);
+      fireEvent.click(screen.getByRole('option', { name: 'Centimeters (cm)' }));
+      expect(screen.getByTestId(input)).toHaveValue(expectedValue);
+    });
+  }
 });
 
 describe('Multiviewer mode', () => {

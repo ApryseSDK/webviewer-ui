@@ -902,6 +902,10 @@
       "title": "Avviso di sicurezza",
       "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     },
+    "submitForm": {
+      "title": "Avviso di sicurezza",
+      "message": "Questo documento sta tentando di inviare un modulo a: \n\n{{- uri}}\n\n Se ti fidi di questo documento, fai clic su Conferma per inviare il modulo."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Modifica nome foglio",
       "message": "Questo nome esiste già. Inserisci un altro nome."

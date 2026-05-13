@@ -902,6 +902,10 @@
       "title": "Biztonsági figyelmeztetés",
       "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     },
+    "submitForm": {
+      "title": "Biztonsági figyelmeztetés",
+      "message": "Ez a dokumentum egy űrlapot próbál elküldeni ide: \n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra az űrlap elküldéséhez."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Munkalap nevének szerkesztése",
       "message": "Ez a név már létezik. Kérjük, adjon meg egy másik nevet."

@@ -11,7 +11,6 @@ import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
 import { useTranslation } from 'react-i18next';
-
 /**
  * A button that toggles Content Edit Mode.
  * @name contentEditButton
@@ -20,12 +19,13 @@ import { useTranslation } from 'react-i18next';
 const ContentEditButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
-    style,
+    buttonStyle,
     className,
     dataElement = menuItems.contentEditButton.dataElement,
     img: icon = menuItems.contentEditButton.icon,
     title = menuItems.contentEditButton.title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const dispatch = useDispatch();
@@ -103,7 +103,7 @@ const ContentEditButton = forwardRef((props, ref) => {
           img={icon}
           onClick={handleClick}
           isActive={active}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           ariaPressed={active}
           onClickAnnouncement={getButtonPressedAnnouncement(title)}
         />
@@ -114,6 +114,8 @@ const ContentEditButton = forwardRef((props, ref) => {
 ContentEditButton.propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,

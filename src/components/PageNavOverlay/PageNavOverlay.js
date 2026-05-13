@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 
 // Class component
 // eslint-disable-next-line custom/use-core-hook-in-components

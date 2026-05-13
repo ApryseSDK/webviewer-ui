@@ -121,7 +121,7 @@ function AudioPlaybackPopup({
         <audio
           data-testid="hidden-audio-element"
           ref={audioElementRef}
-          style={{ display: 'none' }}
+          hidden
           onLoadedMetadata={handleLoadedAudioMetadata}
           onTimeUpdate={handleAudioTimeUpdate}
           onEnded={handleAudioFinished}

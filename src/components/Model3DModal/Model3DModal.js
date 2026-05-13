@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import selectors from 'selectors';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
@@ -6,6 +7,8 @@ import useCore from 'hooks/useCore';
 import Choice from 'components/Choice';
 
 import { Swipeable } from 'react-swipeable';
+import { isMobileSize } from 'src/helpers/getDeviceSize';
+import { useSelector } from 'react-redux';
 import './Model3DModal.scss';
 
 const Model3DModal = ({
@@ -23,6 +26,10 @@ const Model3DModal = ({
 }) => {
   const { core } = useCore();
   const [t] = useTranslation();
+  const isMobile = isMobileSize();
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
+  const shouldUseMobileModal = isMobile && !isInDesktopOnlyMode;
+
 
   const [typeOfInput, setTypeOfInput] = useState('url');
   const [base64, setBase64] = useState('');
@@ -156,7 +163,7 @@ const Model3DModal = ({
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <div className={modalClass} data-element="Model3DModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
-          <div className="swipe-indicator" />
+          { shouldUseMobileModal && <div className="swipe-indicator" /> }
           <form onSubmit={drawModel3DHandler}>
             <div className="col">{t('Model3D.enterurlOrLocalFile')}</div>
             <Choice

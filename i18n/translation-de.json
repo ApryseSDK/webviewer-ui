@@ -902,6 +902,10 @@
       "title": "Sicherheitswarnung",
       "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
     },
+    "submitForm": {
+      "title": "Sicherheitswarnung",
+      "message": "Dieses Dokument versucht, ein Formular zu senden an: \n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um das Formular zu senden."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Blattnamen bearbeiten",
       "message": "Dieser Name ist bereits vorhanden. Bitte geben Sie einen anderen Namen ein."

@@ -141,7 +141,7 @@ function RedactionSearchResults(props) {
     <>
       <div className="redaction-search-counter-controls">
         {searchStatus === SearchStatus['SEARCH_IN_PROGRESS'] && (
-          <div style={{ flexGrow: 1 }}>
+          <div className="redaction-search-spinner-container">
             <Spinner height="18px" width="18px" />
           </div>)}
         {shouldShowResultsCounterOptions && (

@@ -4,6 +4,10 @@
 .NoteContent {
   --note-content-right-padding-width: 12px;
 
+  .tracked-change-label {
+    font-weight: 700;
+  }
+
   position: relative;
   display: flex;
   flex-direction: column;

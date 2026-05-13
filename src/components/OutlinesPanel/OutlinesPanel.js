@@ -28,7 +28,7 @@ import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
 import Spinner from 'components/Spinner';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
-import { getCurrentDestViewerCoord, getOutlineName, normalizeOutlineCoord } from 'src/helpers/outlinesPanelHelper';
+import { convertToPDFDestCoord, getDefaultDestCoord, getOutlineName } from 'src/helpers/outlinesPanelHelper';
 
 const createOutlinesPanelComponents = (outlineScrollParentRef) => {
   const Scroller = React.forwardRef((props, ref) => {
@@ -79,10 +79,9 @@ const OutlinesPanel = ({ isTest = false }) => {
 
   const defaultDestText = 'Full Page';
   const areaDestinationText = 'Area Selection';
-  const defaultDestCoord = { x: 0, y: 0 };
   const [currentDestPage, setCurrentDestPage] = useState(currentPage);
   const [currentDestText, setCurrentDestText] = useState(defaultDestText);
-  const [currentDestCoord, setCurrentDestCoord] = useState(defaultDestCoord);
+  const [currentDestCoord, setCurrentDestCoord] = useState(() => getDefaultDestCoord(core.getDocument(), currentPage));
 
   const customizableUI = featureFlags.customizableUI;
   const outlinesNotLoaded = outlines === null || outlines === undefined;
@@ -177,6 +176,7 @@ const OutlinesPanel = ({ isTest = false }) => {
       setSelectedOutlines([]);
       setCurrentDestPage(currentPage);
       setCurrentDestText(defaultDestText);
+      const defaultDestCoord = getDefaultDestCoord(core.getDocument(), currentPage);
       setCurrentDestCoord(defaultDestCoord);
       setActiveOutlinePath(null);
 
@@ -248,9 +248,7 @@ const OutlinesPanel = ({ isTest = false }) => {
     });
 
     const doc = core.getDocumentViewer().getDocument();
-    const viewerCoords = getCurrentDestViewerCoord(doc, currentDestPage, currentDestCoord);
-    const pageRotation = doc.getPageRotation(currentDestPage) / 90;
-    const { x, y } = normalizeOutlineCoord(viewerCoords, pageRotation);
+    const { x, y } = convertToPDFDestCoord(doc, currentDestPage, currentDestCoord);
     if (outlines.length === 0) {
       await outlineUtils.addRootOutline(outlineName, currentDestPage, x, y, 0, activeDocumentViewerKey);
     } else {
@@ -271,6 +269,7 @@ const OutlinesPanel = ({ isTest = false }) => {
   const clearOutlineDestination = () => {
     core.setToolMode(defaultTool);
     setCurrentDestText(defaultDestText);
+    const defaultDestCoord = getDefaultDestCoord(core.getDocument(), currentPage);
     setCurrentDestCoord(defaultDestCoord);
     setCurrentDestPage(currentPage);
     tool.clearOutlineDestination();
@@ -278,9 +277,7 @@ const OutlinesPanel = ({ isTest = false }) => {
 
   const updateOutlineDest = async (outlinePath) => {
     const doc = core.getDocumentViewer().getDocument();
-    const pageRotation = doc.getPageRotation(currentDestPage) / 90;
-    const viewerCoords = getCurrentDestViewerCoord(doc, currentDestPage, currentDestCoord);
-    const { x, y } = normalizeOutlineCoord(viewerCoords, pageRotation);
+    const { x, y } = convertToPDFDestCoord(doc, currentDestPage, currentDestCoord);
     await outlineUtils.setOutlineDestination(outlinePath, currentDestPage, x, y, 0, activeDocumentViewerKey);
     nextPathRef.current = outlinePath;
     updateOutlines();
@@ -289,6 +286,8 @@ const OutlinesPanel = ({ isTest = false }) => {
   useEffect(() => {
     if (currentDestText === defaultDestText) {
       setCurrentDestPage(currentPage);
+      const defaultDestCoord = getDefaultDestCoord(core.getDocument(), currentPage);
+      setCurrentDestCoord(defaultDestCoord);
     }
   }, [currentDestText, currentPage]);
 

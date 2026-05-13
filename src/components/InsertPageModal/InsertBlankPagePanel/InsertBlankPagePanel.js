@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import Choice from 'components/Choice';
@@ -170,7 +171,7 @@ const InsertBlankPagePanel = ({
               items={[...presetPageDimensions, CUSTOM_PAGE_DIMENSIONS]}
             />
           </div>
-          <div className="input-container" style={{ visibility: openCustomDimensions ? 'visible' : 'hidden' }}>
+          <div className={classNames('input-container', { 'hidden': !openCustomDimensions })}>
             <label id="insert-blank-pages-dimensions-label" htmlFor='pageDimensionsUnit'>{t('insertPageModal.pageDimensions.units')}</label>
             <Dropdown
               id="pageDimensionsUnit"
@@ -182,7 +183,7 @@ const InsertBlankPagePanel = ({
             />
           </div>
         </div>
-        <div className="section" style={{ display: openCustomDimensions ? 'flex' : 'none' }}>
+        <div className={classNames('section', { 'hidden': !openCustomDimensions })}>
           <div className="input-container">
             <label htmlFor='pageWidthInput'>{t('formField.formFieldPopup.width')}</label>
             <DimensionInput id='pageWidthInput'

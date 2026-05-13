@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 const propTypes = {
   annotation: PropTypes.object,
   editor: PropTypes.object,
-  style: PropTypes.shape({
+  annotationStyle: PropTypes.shape({
     TextColor: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
@@ -33,7 +33,7 @@ const propTypes = {
 
 const RichTextStyleEditor = ({
   annotation, editor,
-  style,
+  annotationStyle,
   isFreeTextAutoSize,
   onFreeTextSizeToggle,
   onPropertyChange,
@@ -266,7 +266,7 @@ const RichTextStyleEditor = ({
 
   let properties = {};
 
-  const { RichTextStyle } = style;
+  const { RichTextStyle } = annotationStyle;
   const defaults = {
     bold: RichTextStyle?.[0]?.['font-weight'] === 'bold' ?? false,
     italic: RichTextStyle?.[0]?.['font-style'] === 'italic' ?? false,
@@ -278,7 +278,7 @@ const RichTextStyleEditor = ({
   };
 
   properties = {
-    ...style,
+    ...annotationStyle,
     ...defaults,
   };
 
@@ -335,7 +335,7 @@ const RichTextStyleEditor = ({
         onColorChange={(color) => {
           handleColorChange('TextColor', new window.Core.Annotations.Color(color));
         }}
-        color={isRichTextEditMode ? format.color : style['TextColor']}
+        color={isRichTextEditMode ? format.color : annotationStyle['TextColor']}
         activeTool={activeTool}
         type={'Text'}
         ariaTypeLabel={t('option.stylePopup.textStyle')}

@@ -902,6 +902,10 @@
       "title": "Ostrzeżenie bezpieczeństwa",
       "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
     },
+    "submitForm": {
+      "title": "Ostrzeżenie bezpieczeństwa",
+      "message": "Ten dokument próbuje przesłać formularz do: \n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby przesłać formularz."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Edytuj nazwę arkusza",
       "message": "Ta nazwa już istnieje. Wprowadź inną nazwę."

@@ -9,7 +9,6 @@ import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { triggerSelectedRangeStyleChangedWithLatestStyle } from 'src/helpers/undoRedoSpreadsheetHelpers';
-
 // Configuration map for undo/redo operations
 const getUndoRedoConfig = (core) => ({
   undo: {
@@ -53,12 +52,13 @@ const UndoRedoButton = forwardRef((props, ref) => {
   const {
     type, // 'undo' or 'redo'
     isFlyoutItem,
-    style,
+    buttonStyle,
     className,
     dataElement,
     img: icon,
     title,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
 
   const UNDO_REDO_CONFIG = getUndoRedoConfig(core);
   const config = UNDO_REDO_CONFIG[type];
@@ -121,7 +121,7 @@ const UndoRedoButton = forwardRef((props, ref) => {
           onClick={handleClick}
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
           disabled={disabled}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           onClickAnnouncement={getButtonPressedAnnouncement(finalTitle)}
         />
       )
@@ -132,6 +132,8 @@ UndoRedoButton.propTypes = {
   type: PropTypes.oneOf(['undo', 'redo']).isRequired,
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   img: PropTypes.string,

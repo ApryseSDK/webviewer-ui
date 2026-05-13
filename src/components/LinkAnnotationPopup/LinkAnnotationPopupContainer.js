@@ -125,7 +125,7 @@ const LinkAnnotationPopupContainer = ({
     <DataElementWrapper
       dataElement={DataElements.LINK_ANNOTATION_POPUP}
       className={className}
-      style={{ ...position }}
+      css={position}
       ref={popupRef}
     >
       <LinkAnnotationPopup

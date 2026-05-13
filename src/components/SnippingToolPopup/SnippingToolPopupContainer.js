@@ -173,7 +173,7 @@ function SnippingToolPopupContainer() {
             containerRef.current = el;
             setOverlayRef(el);
           }}
-          style={initialOffset}
+          css={initialOffset}
         >
           <SnippingToolPopup {...props} />
         </div>

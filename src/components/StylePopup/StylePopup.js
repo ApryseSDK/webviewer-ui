@@ -26,12 +26,16 @@ import getMeasurementTools from 'helpers/getMeasurementTools';
 // Class component
 // eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
-
 import './StylePopup.scss';
 
 class StylePopup extends React.PureComponent {
   static propTypes = {
-    style: PropTypes.object.isRequired,
+    annotationStyle: PropTypes.object,
+    /**
+     * @deprecated Use annotationStyle instead.
+     * @ignore
+     */
+    style: PropTypes.object,
     onStyleChange: PropTypes.func.isRequired,
     onPropertyChange: PropTypes.func.isRequired,
     onSliderChange: PropTypes.func.isRequired,
@@ -118,8 +122,8 @@ class StylePopup extends React.PureComponent {
   };
 
   renderSliders = () => {
+    const annotationStyle = this.props.annotationStyle ?? this.props.style;
     const {
-      style: { Opacity, StrokeThickness, FontSize },
       onSliderChange,
       isMeasure = false,
       // TODO: Actually disable these elements
@@ -128,6 +132,7 @@ class StylePopup extends React.PureComponent {
       isFontSizeSliderDisabled,
       currentStyleTab,
     } = this.props;
+    const { Opacity, StrokeThickness, FontSize } = annotationStyle;
 
     const sliderProps = {};
     if (!isOpacitySliderDisabled) {
@@ -228,7 +233,7 @@ class StylePopup extends React.PureComponent {
       toolName,
       isColorPaletteDisabled,
       currentStyleTab,
-      style,
+      annotationStyle,
       colorMapKey,
       onStyleChange,
       isStyleOptionDisabled,
@@ -254,14 +259,16 @@ class StylePopup extends React.PureComponent {
       onFreeTextSizeToggle,
       isFreeTextAutoSize
     } = this.props;
+    const resolvedAnnotationStyle = annotationStyle ?? this.props.style;
 
     // We do not have sliders to show up for redaction annots
+    const popupStyle = { ...resolvedAnnotationStyle };
     if (isRedaction) {
-      style.Opacity = null;
-      style.StrokeThickness = null;
+      popupStyle.Opacity = null;
+      popupStyle.StrokeThickness = null;
     }
 
-    const { Scale, Precision, Style } = style;
+    const { Scale, Precision, Style } = popupStyle;
 
     const textMenuItems = {
       [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: isTextStyleContainerActive,
@@ -311,7 +318,6 @@ class StylePopup extends React.PureComponent {
             <ColorPaletteHeader
               colorPalette={currentStyleTab}
               colorMapKey={colorMapKey}
-              style={style}
               toolName={toolName}
               disableSeparator={disableSeparator}
             />
@@ -369,14 +375,14 @@ class StylePopup extends React.PureComponent {
             {showColorPicker && (
               <>
                 <ColorPalette
-                  color={style[currentStyleTab]}
+                  color={popupStyle[currentStyleTab]}
                   property={currentStyleTab}
                   onStyleChange={onStyleChange}
                   colorMapKey={colorMapKey}
                   useMobileMinMaxWidth
                 />
                 <ColorPalettePicker
-                  color={style[currentStyleTab]}
+                  color={popupStyle[currentStyleTab]}
                   property={currentStyleTab}
                   onStyleChange={onStyleChange}
                   enableEdit

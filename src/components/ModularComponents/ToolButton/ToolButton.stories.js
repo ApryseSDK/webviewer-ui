@@ -72,7 +72,7 @@ export const WithCustomStyle = () => {
     img: 'icon-tool-measurement-arc',
     title: 'Arc measurement',
     className: 'arc-measurement-class',
-    style: {
+    buttonStyle: {
       backgroundColor: 'darksalmon',
       color: 'white',
       borderRadius: '50%',
@@ -139,7 +139,7 @@ export const ChangingToolStylesShouldRerender = () => (
 ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button', { name: /Rectangle/i });
-  await expect(button.firstChild.style.color).toBe('rgb(0, 122, 59)');
+  await expect(getComputedStyle(button.firstChild).color).toBe('rgb(0, 122, 59)');
   toolStyles.StrokeColor = {
     R: 100,
     G: 0,
@@ -149,7 +149,7 @@ ChangingToolStylesShouldRerender.play = async ({ canvasElement }) => {
     toHexString: () => '#640064',
   };
   store.dispatch(actions.setActiveToolStyles(toolStyles));
-  await expect(button.firstChild.style.color).toBe('rgb(100, 0, 100)');
+  await expect(getComputedStyle(button.firstChild).color).toBe('rgb(100, 0, 100)');
 };
 
 ChangingToolStylesShouldRerender.parameters = disableRtlModeParameters;

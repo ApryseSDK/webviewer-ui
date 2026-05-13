@@ -902,6 +902,10 @@
       "title": "Avertizare de securitate",
       "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     },
+    "submitForm": {
+      "title": "Avertisment de securitate",
+      "message": "Acest document încearcă să trimită un formular către: \n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a trimite formularul."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Editați numele foii",
       "message": "Acest nume există deja. Vă rugăm să introduceți un alt nume."

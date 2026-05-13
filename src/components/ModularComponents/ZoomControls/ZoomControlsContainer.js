@@ -11,7 +11,7 @@ import { isOfficeEditorMode } from 'src/helpers/officeEditor';
 import { defaultZoomList } from 'constants/zoomFactors';
 import useCore from 'hooks/useCore';
 
-const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className }) => {
+const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection, className, style: zoomControlsStyle }) => {
   const store = useStore();
   const { core } = useCore();
   const flyoutElement = `${dataElement}Flyout`;
@@ -121,7 +121,8 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
     onZoomOutClicked: onZoomOutClicked,
     setFlyoutTriggerRef: setFlyoutTriggerRef,
     size: size,
-    className: className
+    className: className,
+    zoomControlsStyle: zoomControlsStyle,
   };
   return (
     <ZoomControls
@@ -136,6 +137,7 @@ ZoomControlsContainer.propTypes = {
   dataElement: PropTypes.string,
   headerDirection: PropTypes.string,
   className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default ZoomControlsContainer;

@@ -13,6 +13,7 @@ import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistor
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getInstanceNode }  from 'src/helpers/getRootNode';
 import handleSelectionChange from './TextEditingPanelHelpers/handleSelectionChange';
+import { css } from '@emotion/react';
 
 const conversionMap = {
   Font: 'fontName',
@@ -352,7 +353,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const style =
     !isInDesktopOnlyMode && isMobile
       ? {}
-      : { width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` };
+      : css({ width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` });
 
   const [renderNull, setRenderNull] = useState(false);
 
@@ -372,7 +373,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const rgbColor = format?.color || DEFAULT_COLOR;
 
   return (
-    <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" style={style}>
+    <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" css={ style }>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
         undoRedoProperties={undoRedoProperties}

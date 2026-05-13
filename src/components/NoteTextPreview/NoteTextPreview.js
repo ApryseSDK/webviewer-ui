@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-
+import { css } from '@emotion/react';
 import './NoteTextPreview.scss';
 
 function NoteTextPreview(props) {
@@ -14,11 +14,12 @@ function NoteTextPreview(props) {
     renderRichText,
     richTextStyle,
     resize,
-    style,
+    textStyle,
     /* If text being previewed is a comment it gets a darker font color */
     comment = false,
     beforeContent = () => {},
   } = props;
+  const resolvedTextStyle = textStyle ?? props.style;
   const [expanded, setExpand] = useState(false);
   const [previewElementWidth, setPreviewWidth] = useState(null);
   const [charsPerLine, setCharsperLine] = useState(null);
@@ -61,7 +62,7 @@ function NoteTextPreview(props) {
   }, [text, previewElementWidth]);
 
   return (
-    <div className={noteTextPreviewClass} ref={ref} style={style} aria-live="polite">
+    <div className={noteTextPreviewClass} ref={ref} css={css({ '&&&&&&': { ...resolvedTextStyle } })} aria-live="polite">
       {beforeContent()}
       {renderRichText && richTextStyle
         ? renderRichText(textToDisplay, richTextStyle, 0)
@@ -76,6 +77,8 @@ NoteTextPreview.propTypes = {
   renderRichText: PropTypes.func,
   richTextStyle: PropTypes.any,
   resize: PropTypes.func,
+  textStyle: PropTypes.any,
+  /** @deprecated Use textStyle instead. */
   style: PropTypes.any,
   comment: PropTypes.bool,
   beforeContent: PropTypes.func,

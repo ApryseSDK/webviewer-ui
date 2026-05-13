@@ -20,10 +20,12 @@ jest.mock('./hotkeysUtils', () => ({
 }));
 
 describe('hotkeysManager', () => {
-  const shortcutKeyMap = {
+  const DEFAULT_SHORTCUT_KEY_MAP = {
     [Shortcuts.COPY]: Keys.CTRL_C,
     [Shortcuts.SQUIGGLY]: Keys.G,
+    [Shortcuts.SWITCH_PAN]: Keys.SPACE,
   };
+  let shortcutKeyMap;
   const mockStore = {
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
@@ -31,6 +33,7 @@ describe('hotkeysManager', () => {
     })),
   };
   beforeEach(() => {
+    shortcutKeyMap = { ...DEFAULT_SHORTCUT_KEY_MAP };
     const getTool = () => ({
       setStyles: jest.fn(),
       name: 'AnnotationCreateRectangle',
@@ -261,6 +264,156 @@ describe('hotkeysManager', () => {
     it('should return false if the shortcut is not associated with a tool', () => {
       const isInToolList = isShortcutInToolList(Shortcuts.ERASER, ['Pan']);
       expect(isInToolList).toBe(false);
+    });
+  });
+
+  describe('trigger', () => {
+    it('should invoke the keydown handler for a valid key combo', () => {
+      const copyKey = ShortcutKeys[Shortcuts.COPY];
+      const mockHandler = jest.fn();
+      hotkeysManager.keyHandlerMap[copyKey] = mockHandler;
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('ctrl+c');
+
+      expect(mockHandler).toHaveBeenCalledTimes(1);
+      expect(mockHandler).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'keydown',
+        preventDefault: expect.any(Function),
+        stopPropagation: expect.any(Function),
+      }));
+    });
+
+    it('should invoke the keyup handler when eventType is keyup', () => {
+      const switchPanKey = ShortcutKeys[Shortcuts.SWITCH_PAN];
+      const keydownFn = jest.fn();
+      const keyupFn = jest.fn();
+      hotkeysManager.keyHandlerMap[switchPanKey] = { keydown: keydownFn, keyup: keyupFn };
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('space', 'keyup');
+
+      expect(keyupFn).toHaveBeenCalledTimes(1);
+      expect(keydownFn).not.toHaveBeenCalled();
+    });
+
+    it('should invoke keydown handler on object-style handlers by default', () => {
+      const switchPanKey = ShortcutKeys[Shortcuts.SWITCH_PAN];
+      const keydownFn = jest.fn();
+      const keyupFn = jest.fn();
+      hotkeysManager.keyHandlerMap[switchPanKey] = { keydown: keydownFn, keyup: keyupFn };
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('space');
+
+      expect(keydownFn).toHaveBeenCalledTimes(1);
+      expect(keyupFn).not.toHaveBeenCalled();
+    });
+
+    it('should warn and not invoke handler when shortcut is disabled', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const copyKey = ShortcutKeys[Shortcuts.COPY];
+      const mockHandler = jest.fn();
+      hotkeysManager.keyHandlerMap[copyKey] = mockHandler;
+
+      hotkeysManager.off();
+      hotkeysManager.trigger('ctrl+c');
+
+      expect(mockHandler).not.toHaveBeenCalled();
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('currently disabled'));
+      warnSpy.mockRestore();
+    });
+
+    it('should warn when called with an unknown key combo', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      hotkeysManager.trigger('ctrl+shift+alt+z');
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('no handler found'));
+      warnSpy.mockRestore();
+    });
+
+    it('should warn when called with no arguments', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      hotkeysManager.trigger();
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('key combo string is required'));
+      warnSpy.mockRestore();
+    });
+
+    it('should warn when called with a non-string argument', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      hotkeysManager.trigger(123);
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('key combo string is required'));
+      warnSpy.mockRestore();
+    });
+
+    it('should warn when called with an invalid eventType', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const copyKey = ShortcutKeys[Shortcuts.COPY];
+      hotkeysManager.keyHandlerMap[copyKey] = jest.fn();
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('ctrl+c', 'click');
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('eventType must be'));
+      warnSpy.mockRestore();
+    });
+
+    it('should warn when trying keyup on a function-only handler', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const copyKey = ShortcutKeys[Shortcuts.COPY];
+      hotkeysManager.keyHandlerMap[copyKey] = jest.fn();
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('ctrl+c', 'keyup');
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('only has a keydown handler'));
+      warnSpy.mockRestore();
+    });
+
+    it('should match key combo case-insensitively', () => {
+      const copyKey = ShortcutKeys[Shortcuts.COPY];
+      const mockHandler = jest.fn();
+      hotkeysManager.keyHandlerMap[copyKey] = mockHandler;
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('Ctrl+C');
+
+      expect(mockHandler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should trigger handler via remapped key combo string', () => {
+      const bookmarkDefault = ShortcutKeys[Shortcuts.BOOKMARK];
+      const mockHandler = jest.fn();
+      hotkeysManager.keyHandlerMap[bookmarkDefault] = mockHandler;
+
+      shortcutKeyMap[Shortcuts.BOOKMARK] = 'command+[';
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('command+[');
+
+      expect(mockHandler).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not trigger remapped shortcut via old key combo', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const bookmarkDefault = ShortcutKeys[Shortcuts.BOOKMARK];
+      const mockHandler = jest.fn();
+      hotkeysManager.keyHandlerMap[bookmarkDefault] = mockHandler;
+
+      shortcutKeyMap[Shortcuts.BOOKMARK] = 'command+[';
+
+      hotkeysManager.on();
+      hotkeysManager.trigger('ctrl+b');
+
+      expect(mockHandler).not.toHaveBeenCalled();
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('no handler found'));
+
+      warnSpy.mockRestore();
     });
   });
 });

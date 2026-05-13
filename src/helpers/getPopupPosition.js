@@ -421,8 +421,7 @@ export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) 
   }
   top = Math.round(top + viewerRect.top);
 
-  const paddingLeft = parseFloat(viewer.current.firstChild.style.paddingLeft);
-  const center = (annotPosition.left + annotPosition.right) / 2 + paddingLeft;
+  const center = (annotPosition.left + annotPosition.right) / 2;
   let left = center - width / 2;
   if (left < 0) {
     left = 0;

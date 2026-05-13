@@ -902,6 +902,10 @@
       "title": "Cảnh báo an ninh",
       "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     },
+    "submitForm": {
+      "title": "Cảnh báo bảo mật",
+      "message": "Tài liệu này đang cố gửi một biểu mẫu đến: \n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để gửi biểu mẫu."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Chỉnh sửa tên trang tính",
       "message": "Tên này đã tồn tại. Vui lòng nhập tên khác."

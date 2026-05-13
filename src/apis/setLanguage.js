@@ -11,7 +11,6 @@
  */
 /* eslint-disable no-unsanitized/method */
 import i18next from 'i18next';
-import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import dayjs from 'dayjs';
@@ -22,6 +21,7 @@ import textToolNames from 'constants/textToolNames';
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import setToolStyles from 'helpers/setToolStyles';
+import core from 'core';
 
 let pendingLanguageTimeout;
 export default (store) => async (language) => {
@@ -51,9 +51,8 @@ export default (store) => async (language) => {
           next: language,
         };
         store.dispatch(actions.setLanguage(language));
-        const pendingLanguagePromise = i18next.changeLanguage(language);
-        setDatePickerLocale(pendingLanguagePromise, language);
-        await pendingLanguagePromise;
+        const t = await i18next.changeLanguage(language);
+        setDatePickerLocale(t, language);
 
         updateTextToolDefaults();
 
@@ -64,22 +63,18 @@ export default (store) => async (language) => {
   });
 };
 
-const setDatePickerLocale = (i18nextPromise, language) => {
-  i18nextPromise.then((t) => {
-    const { DatePickerWidgetAnnotation } = window.Core.Annotations;
-    const obj = t('datePicker', { 'returnObjects': true });
-    const options = DatePickerWidgetAnnotation.datePickerOptions;
-    options['i18n'] = obj;
-    options['local'] = language;
+const setDatePickerLocale = (t, language) => {
+  const { DatePickerWidgetAnnotation } = window.Core.Annotations;
+  const obj = t('datePicker', { 'returnObjects': true });
+  const options = DatePickerWidgetAnnotation.datePickerOptions;
+  options['i18n'] = obj;
+  options['locale'] = language;
 
-    DatePickerWidgetAnnotation.datePickerOptions = options;
-
-    core.getAnnotationsList()
-      .filter((annot) => annot instanceof DatePickerWidgetAnnotation)
-      .forEach((widget) => {
-        widget.refreshDatePicker();
-      });
-  });
+  core.getAnnotationsList()
+    .filter((annot) => annot instanceof DatePickerWidgetAnnotation)
+    .forEach((widget) => {
+      widget.refreshDatePicker();
+    });
 };
 
 const applyTextToolDirectionalDefaults = (toolName, directionSpecificStyles) => {

@@ -902,6 +902,10 @@
       "title": "Veiligheidswaarschuwing",
       "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     },
+    "submitForm": {
+      "title": "Beveiligingswaarschuwing",
+      "message": "Dit document probeert een formulier te verzenden naar: \n\n{{- uri}}\n\n Als u dit document vertrouwt, klik dan op Bevestigen om het formulier te verzenden."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Bladnaam bewerken",
       "message": "Deze naam bestaat al. Voer een andere naam in."

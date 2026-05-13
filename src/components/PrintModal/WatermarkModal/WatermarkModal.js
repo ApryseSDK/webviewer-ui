@@ -16,7 +16,7 @@ import DataElementWrapper from 'src/components/DataElementWrapper';
 import Dropdown from 'src/components/Dropdown';
 
 import { isMobile } from 'helpers/device';
-
+import { css } from '@emotion/react';
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
@@ -419,8 +419,6 @@ class WatermarkModal extends React.PureComponent {
           swipeToClose
           closeHandler={this.closeModal}
         >
-          <div className="swipe-indicator" />
-
           <div className="form-content-container">
             <div
               className="canvas-container"
@@ -515,9 +513,11 @@ class WatermarkModal extends React.PureComponent {
                       // eslint-disable-next-line custom/no-hex-colors
                       className={`colorSelect ${hexColor === '#FFFFFF' ? 'white-color' : ''}`}
                       ariaLabel="colorSelectButton"
-                      style={{
-                        backgroundColor: hexColor,
-                      }}
+                      css={css({
+                        '&&&&&': {
+                          backgroundColor: hexColor,
+                        }
+                      })}
                       onClick={() => this.setColorPaletteVisibility(
                         !this.state.isColorPaletteVisible,
                       )

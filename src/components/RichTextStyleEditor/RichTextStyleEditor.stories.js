@@ -61,7 +61,7 @@ const state = {
 const baseProps = {
   currentStyleTab: 'StrokeColor',
   isInFormBuilderAndNotFreeText: true,
-  style: {
+  annotationStyle: {
     'FillColor': new window.Core.Annotations.Color(212, 211, 211),
     'StrokeColor': new window.Core.Annotations.Color(0, 0, 0),
     'TextColor': new window.Core.Annotations.Color(0, 0, 0),

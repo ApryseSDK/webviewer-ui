@@ -19,7 +19,7 @@ describe('RichTextStyleEditor', () => {
       getSelection: () => ({}),
       getFormat: () => ({}),
     },
-    style: {},
+    annotationStyle: {},
   };
 
   beforeEach(() => {

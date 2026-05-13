@@ -1070,6 +1070,11 @@ export const setNotesPanelTextCollapsing = (enableNotesPanelTextCollapsing) => (
   payload: { enableNotesPanelTextCollapsing },
 });
 
+export const setStatusList = (statusList) => ({
+  type: 'SET_STATUS_LIST',
+  payload: { statusList },
+});
+
 export const setNotesPanelRepliesCollapsing = (enableNotesPanelRepliesCollapsing) => ({
   type: 'SET_NOTES_PANEL_REPLIES_COLLAPSING',
   payload: { enableNotesPanelRepliesCollapsing },
@@ -1279,4 +1284,8 @@ export const setBorderColors = (colors) => ({
 export const setCustomBorderColors = (customColors) => ({
   type: 'SET_CUSTOM_BORDER_COLORS',
   payload: { customColors },
+});
+export const setReaderPageMode = (readerPageMode) => ({
+  type: 'SET_READER_PAGE_MODE',
+  payload: { readerPageMode },
 });

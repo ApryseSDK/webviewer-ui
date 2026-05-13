@@ -13,7 +13,6 @@ import useCore from 'hooks/useCore';
 import './CustomStampForums.scss';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { COMMON_COLORS } from 'constants/commonColors';
-
 const FALLBACK_DATE_TIME_FORMAT = {
   date: 'MM/DD/YYYY',
   time: 'hh:mm A',
@@ -454,14 +453,6 @@ const CustomStampForums = ({
             type="button"
             tabIndex="0"
             onKeyDown={handleKeyDown}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: 0,
-              display: 'flex',
-              alignItems: 'flex-start', // Aligns the content to the top
-              cursor: 'pointer'
-            }}
           >
             <Icon glyph="icon-info" />
             {tooltipVisible &&

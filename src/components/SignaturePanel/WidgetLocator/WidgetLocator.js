@@ -1,9 +1,8 @@
 import React, { useEffect, useState, } from 'react';
 import ReactDOM from 'react-dom';
-
+import './WidgetLocator.scss';
 import useCore from 'hooks/useCore';
 import getRootNode from 'helpers/getRootNode';
-
 const WidgetLocator = ({ rect }) => {
   const { core } = useCore();
   const [show, setShow] = useState(false);
@@ -35,19 +34,15 @@ const WidgetLocator = ({ rect }) => {
     show &&
     ReactDOM.createPortal(
       <div
-        style={{
-          position: 'absolute',
+        className="widget-locator-overlay"
+        css={{
           top: rect.y1,
           left: rect.x1,
           width: rect.x2 - rect.x1,
           height: rect.y2 - rect.y1,
-          // eslint-disable-next-line custom/no-hex-colors
-          border: '1px solid #00a5e4',
-          // don't appear above the signature properties modal
-          zIndex: 99,
         }}
       />,
-      getRootNode().querySelector('#app')
+      getRootNode().querySelector('#app'),
     )
   );
 };

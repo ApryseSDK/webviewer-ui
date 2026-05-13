@@ -8,11 +8,12 @@ import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import { COMMON_COLORS } from './commonColors';
+import './sortStrategies.scss';
 
-function getDocumentCenter(pageNumber) {
+function getDocumentCenter(pageNumber, documentViewerKey = 1) {
   let result;
-  if (pageNumber <= core.getTotalPages()) {
-    result = core.getPageInfo(pageNumber);
+  if (pageNumber <= core.getTotalPages(documentViewerKey)) {
+    result = core.getPageInfo(pageNumber, documentViewerKey);
   } else {
     result = {
       width: 0,
@@ -22,8 +23,8 @@ function getDocumentCenter(pageNumber) {
   return { x: result.width / 2, y: result.height / 2 };
 }
 
-function getRotationRad(pageNumber) {
-  const orientation = core.getRotation(pageNumber);
+function getRotationRad(pageNumber, documentViewerKey = 1) {
+  const orientation = core.getRotation(pageNumber, documentViewerKey);
   return (4 - orientation) * (Math.PI / 2);
 }
 
@@ -41,9 +42,9 @@ function getNoteColor(note) {
   return color;
 }
 
-function getRotatedBounds(note) {
-  const rotation = getRotationRad(note.PageNumber);
-  const center = getDocumentCenter(note.PageNumber);
+function getRotatedBounds(note, documentViewerKey = 1) {
+  const rotation = getRotationRad(note.PageNumber, documentViewerKey);
+  const center = getDocumentCenter(note.PageNumber, documentViewerKey);
 
   const rotated = [
     rotateRad(center.x, center.y, note.X, note.Y, rotation),
@@ -80,12 +81,12 @@ function getFirstQuadPosition(note) {
 }
 
 const linePositionSortStrategy = {
-  getSortedNotes: (notes) => notes.sort((a, b) => {
+  getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
     if (a.PageNumber !== b.PageNumber) {
       return a.PageNumber - b.PageNumber;
     }
-    const boundsA = getRotatedBounds(a);
-    const boundsB = getRotatedBounds(b);
+    const boundsA = getRotatedBounds(a, documentViewerKey);
+    const boundsB = getRotatedBounds(b, documentViewerKey);
 
     const overlapsY = boundsA.maxY >= boundsB.minY && boundsB.maxY >= boundsA.minY;
 
@@ -100,8 +101,8 @@ const linePositionSortStrategy = {
       return boundsA.minX - boundsB.minX;
     }
 
-    const rotation = getRotationRad(a.PageNumber);
-    const center = getDocumentCenter(a.PageNumber);
+    const rotation = getRotationRad(a.PageNumber, documentViewerKey);
+    const center = getDocumentCenter(a.PageNumber, documentViewerKey);
     const rotatedA = rotateRad(center.x, center.y, quadA.x1, quadA.y1, rotation);
     const rotatedB = rotateRad(center.x, center.y, quadB.x1, quadB.y1, rotation);
 
@@ -113,21 +114,24 @@ const linePositionSortStrategy = {
 
 const sortStrategies = {
   position: {
-    getSortedNotes: (notes) => notes.sort((a, b) => {
+    getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
-        const boundsA = getRotatedBounds(a);
-        const boundsB = getRotatedBounds(b);
-
+        const boundsA = getRotatedBounds(a, documentViewerKey);
+        const boundsB = getRotatedBounds(b, documentViewerKey);
         return boundsA.minY - boundsB.minY;
       }
       return a.PageNumber - b.PageNumber;
     }),
-    shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (_prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => currNote.PageNumber !== prevNote.PageNumber,
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (_prevNote, currNote, { pageLabels }, _documentViewerKey = 1) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    getSortedNotes: (notes) => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
-    shouldRenderSeparator: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
       if (prevNoteDate && currNoteDate) {
@@ -141,7 +145,8 @@ const sortStrategies = {
 
       return true;
     },
-    getSeparatorContent: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const createdDate = currNote.DateCreated;
       if (createdDate) {
         const dayFormat = 'MMM D, YYYY';
@@ -162,8 +167,10 @@ const sortStrategies = {
     },
   },
   modifiedDate: {
-    getSortedNotes: (notes) => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
-    shouldRenderSeparator: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const prevNoteDate = getLatestActivityDate(prevNote);
       const currNoteDate = getLatestActivityDate(currNote);
       if (prevNoteDate && currNoteDate) {
@@ -177,7 +184,8 @@ const sortStrategies = {
 
       return true;
     },
-    getSeparatorContent: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const latestActivityDate = getLatestActivityDate(currNote);
       if (latestActivityDate) {
         const dayFormat = 'MMM D, YYYY';
@@ -198,7 +206,8 @@ const sortStrategies = {
     },
   },
   status: {
-    getSortedNotes: (notes) => notes.sort((a, b) => {
+    // eslint-disable-next-line no-unused-vars
+    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => {
       const statusA =
           a.getStatus() === ''
             ? i18next.t('option.state.none').toUpperCase()
@@ -209,58 +218,67 @@ const sortStrategies = {
             : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
       return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
     }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
-    getSeparatorContent: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => prevNote.getStatus() !== currNote.getStatus(),
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       return currNote.getStatus() === ''
         ? i18next.t('option.state.none')
         : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
     },
   },
   author: {
-    getSortedNotes: (notes) => notes.sort((a, b) => {
-      const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
-      const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
+    getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
+      const authorA = core.getDisplayAuthor(a['Author'], documentViewerKey)?.toUpperCase();
+      const authorB = core.getDisplayAuthor(b['Author'], documentViewerKey)?.toUpperCase();
       return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
     }),
-    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
-    getSeparatorContent: (prevNote, currNote) => {
-      return core.getDisplayAuthor(currNote['Author']);
+    shouldRenderSeparator: (prevNote, currNote, _options, documentViewerKey = 1) => core.getDisplayAuthor(prevNote['Author'], documentViewerKey) !== core.getDisplayAuthor(currNote['Author'], documentViewerKey),
+    getSeparatorContent: (_prevNote, currNote, _options, documentViewerKey = 1) => {
+      return core.getDisplayAuthor(currNote['Author'], documentViewerKey);
     },
   },
   type: {
-    getSortedNotes: (notes) => notes.sort((a, b) => {
+    // eslint-disable-next-line no-unused-vars
+    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => {
       const typeA = getAnnotationClass(a);
       const typeB = getAnnotationClass(b);
       return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
     }),
-    shouldRenderSeparator: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
     },
-    getSeparatorContent: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       return i18next.t(`option.type.${getAnnotationClass(currNote)}`);
     },
   },
   color: {
-    getSortedNotes: (notes) => notes.sort((prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((prevNote, currNote) => {
       const colorA = getNoteColor(currNote);
       const colorB = getNoteColor(prevNote);
 
       return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
     }),
-    shouldRenderSeparator: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const colorA = getNoteColor(currNote);
       const colorB = getNoteColor(prevNote);
 
       return colorA !== colorB;
     },
-    getSeparatorContent: (prevNote, currNote) => {
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
       const color = getNoteColor(currNote);
 
       return (
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <div className="sort-separator-color">
           {i18next.t('option.notesOrder.color')}
           <div
-            style={{ background: color, width: '7px', height: '7px', borderRadius: '10000000px', marginLeft: '10px' }}
+            className="sort-separator-color__swatch"
+            css={{ background: color }}
           ></div>
         </div>
       );

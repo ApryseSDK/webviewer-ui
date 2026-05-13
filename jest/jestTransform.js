@@ -2,11 +2,15 @@ const config = {
   babelrc: false,
   presets: [
     "@babel/preset-env",
-    "@babel/preset-react",
+    ["@babel/preset-react", {
+      runtime: "automatic",
+      importSource: "@emotion/react",
+    }],
   ],
   plugins: [
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties",
+    "@emotion/babel-plugin",
   ],
 };
 

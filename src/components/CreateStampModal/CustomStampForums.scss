@@ -272,6 +272,12 @@ $container-margin: 16px;
 
       margin-inline-start: 2px;
       position: relative;
+      background: none;
+      border: none;
+      padding: 0px;
+      display: flex;
+      align-items: flex-start;
+      cursor: pointer;
 
       .date-format-description {
         display: flex;

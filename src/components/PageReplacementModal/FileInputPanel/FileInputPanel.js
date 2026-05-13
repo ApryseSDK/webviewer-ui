@@ -7,7 +7,6 @@ import Dropdown from 'components/Dropdown';
 import Icon from 'components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
 const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, setExtension, error }) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(defaultValue || '');
@@ -35,7 +34,6 @@ const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, 
             'file-input--error': !!error,
           })
           }
-          style={{ width: '100%', height: 32, paddingLeft: 8, fontSize: 13, boxSizing: 'border-box' }}
           value={value}
           onChange={onChange}
           placeholder={(customizableUI) ? '' : t('link.urlLink')}

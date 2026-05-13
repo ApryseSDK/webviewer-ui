@@ -32,7 +32,7 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
 
   const {
     panelTitle,
-    style,
+    annotationStyle,
     strokeStyle,
     onStyleChange,
     onLineStyleChange,
@@ -87,11 +87,11 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
               {isRedaction && (
                 <DataElementWrapper dataElement={DataElements.StylePanel.REDACTION_TEXT_LABEL} className="PanelSubsection RedactionTextLabel">
                   <div className="menu-subtitle">{t('stylePanel.headings.redactionTextLabel')}</div>
-                  <LabelTextEditor properties={style} onPropertyChange={onStyleChange} placeholderText={' '}/>
+                  <LabelTextEditor properties={annotationStyle} onPropertyChange={onStyleChange} placeholderText={' '}/>
                 </DataElementWrapper>
               )}
               <RichTextStyleEditor
-                style={style}
+                annotationStyle={annotationStyle}
                 {...onOpenProps}
                 property={'TextColor'}
                 colorMapKey={'freeText'}
@@ -115,7 +115,7 @@ const TextStylePanel = ({ selectedAnnotations, currentTool }) => {
           {...toolTypeProps}
           hasParentPicker
           sliderProperties={['Opacity', 'StrokeThickness']}
-          style={style}
+          annotationStyle={annotationStyle}
           onStyleChange={onStyleChange}
           strokeStyle={strokeStyle}
           onLineStyleChange={onLineStyleChange}

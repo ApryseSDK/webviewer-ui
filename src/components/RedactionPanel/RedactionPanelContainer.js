@@ -12,6 +12,7 @@ import DataElementWrapper from '../DataElementWrapper';
 import Icon from 'components/Icon';
 import RedactionSearchPanel from 'components/RedactionSearchPanel';
 import { defaultRedactionTypes } from 'constants/redactionTypes';
+import { css } from '@emotion/react';
 
 export const RedactionPanelContainer = (props) => {
   const { core } = useCore();
@@ -75,7 +76,7 @@ export const RedactionPanelContainer = (props) => {
 
   const style = isCustomPanel || (!isInDesktopOnlyMode && isMobile)
     ? {}
-    : { width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px` };
+    : css({ width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px` });
 
   const { isRedactionSearchActive } = useContext(RedactionPanelContext);
 
@@ -97,7 +98,7 @@ export const RedactionPanelContainer = (props) => {
   const dataElementToUse = isCustomPanel ? dataElement : 'redactionPanel';
 
   return (
-    <DataElementWrapper dataElement={dataElementToUse} className="Panel RedactionPanel" style={style}>
+    <DataElementWrapper dataElement={dataElementToUse} className="Panel RedactionPanel" css={ style }>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <RedactionSearchPanel />
       {!isRedactionSearchActive && (

@@ -2,16 +2,6 @@ import React from 'react';
 import { useDragLayer } from 'react-dnd';
 import { ItemTypes } from 'constants/dnd';
 
-const layerStyles = {
-  position: 'fixed',
-  pointerEvents: 'none',
-  zIndex: 99999,
-  left: 0,
-  top: 0,
-  width: '100%',
-  height: '100%'
-};
-
 const getItemStyles = (initialOffset, currentOffset) => {
   if (!initialOffset || !currentOffset) {
     return {
@@ -65,10 +55,10 @@ export const OutlinesDragLayer = () => {
   }
 
   return (
-    <div style={layerStyles}>
+    <div className="layer-style">
       <div
         className="bookmark-outline-single-container preview"
-        style={getItemStyles(initialOffset, currentOffset)}
+        css={getItemStyles(initialOffset, currentOffset)}
       >
         {renderDragItem()}
       </div>

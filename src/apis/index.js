@@ -8,6 +8,7 @@ import ToolbarGroup from 'constants/toolbar';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
+import ReaderModePageMode from 'constants/readerModePageMode';
 import { languageEnum } from 'constants/languages';
 import { panelNames } from 'constants/panel';
 import addSearchListener from './addSearchListener';
@@ -155,6 +156,8 @@ import {
   setAttachmentHandler,
   enableMeasurementAnnotationFilter,
   disableMeasurementAnnotationFilter,
+  setStatusList,
+  StatusList,
 } from './notesPanel';
 import {
   enableMultiSelect,
@@ -292,6 +295,7 @@ import {
   getViewOnlyShortcuts
 } from 'src/apis/viewOnlyMode';
 import { Shortcuts } from 'helpers/hotkeysUtils';
+import setReaderPageMode from './setReaderPageMode';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -313,6 +317,7 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
+    ReaderModePageMode,
     JustifyContent: JUSTIFY_CONTENT,
     PRESET_BUTTON_TYPES: PRESET_BUTTON_TYPES,
     addSearchListener,
@@ -424,6 +429,8 @@ export default (store) => {
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
 
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
+
+    setReaderPageMode: setReaderPageMode(store),
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
@@ -455,6 +462,8 @@ export default (store) => {
       setAttachmentHandler: setAttachmentHandler(store),
       enableMeasurementAnnotationFilter: enableMeasurementAnnotationFilter(store),
       disableMeasurementAnnotationFilter: disableMeasurementAnnotationFilter(store),
+      setStatusList: setStatusList(store),
+      StatusList,
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),

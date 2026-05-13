@@ -13,6 +13,7 @@ import useCore from 'hooks/useCore';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import getRootNode from 'helpers/getRootNode';
 import { createTouchEventManager } from 'helpers/TouchEventManager';
+import { css } from '@emotion/react';
 
 import './DocumentContainer.scss';
 
@@ -140,7 +141,7 @@ const DocumentContainer = ({
     const pagesToNavigate = getNumberOfPagesToNavigate();
     _setCurrentPage(currentPage + pagesToNavigate, documentViewerKey);
   };
-  const style = (!docLoaded) ? { position: 'relative' } : {};
+  const style = (docLoaded) ? undefined : css({ position: 'relative' });
   return (
     <div
       className={classNames('DocumentContainer', {
@@ -149,7 +150,7 @@ const DocumentContainer = ({
       ref={container}
       id={`DocumentContainer${documentViewerKey}`}
       onScroll={handleScroll}
-      style={style}
+      css={style}
       tabIndex="-1"
     >
       <div className={'document'} ref={document} id={`Document${documentViewerKey}`} />

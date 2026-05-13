@@ -13,7 +13,6 @@ import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivenessHelper';
 import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../FlyoutItemContainer';
-
 const RibbonItem = forwardRef((props, ref) => {
   const { core } = useCore();
   const elementRef = useRef();
@@ -31,9 +30,10 @@ const RibbonItem = forwardRef((props, ref) => {
     isFlyoutItem,
     toolbarGroup,
     ariaCurrent,
-    style,
+    buttonStyle,
     className,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
 
   const activeGroupedItems = useSelector(selectors.getActiveGroupedItems);
   const activeCustomRibbon = useSelector(selectors.getActiveCustomRibbon);
@@ -162,7 +162,7 @@ const RibbonItem = forwardRef((props, ref) => {
           onClick={onClick}
           disabled={disabled}
           ariaCurrent={ariaCurrent || isActive}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={className}
         >
         </Button>
@@ -183,6 +183,8 @@ RibbonItem.propTypes = {
   iconDOMElement: PropTypes.any,
   toolbarGroup: PropTypes.string,
   ariaCurrent: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
 };

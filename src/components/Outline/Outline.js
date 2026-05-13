@@ -92,7 +92,6 @@ const Outline = forwardRef(
     connectDragSource(elementRef);
     connectDragPreview(getEmptyImage(), { captureDraggingState: true });
     connectDropTarget(elementRef);
-    const opacity = isDragging ? 0.5 : 1;
     useImperativeHandle(ref, () => ({
       getNode: () => elementRef.current,
     }));
@@ -118,7 +117,7 @@ const Outline = forwardRef(
       }
     }, [activeOutlinePath, isAddingNewOutline, outlinePath, updateIsExpanded]);
 
-    const onSingleClick = useCallback(() => {
+    const onSingleClick = () => {
       core.goToOutline(outline);
 
       outlinePath === activeOutlinePath
@@ -134,7 +133,7 @@ const Outline = forwardRef(
       if (isMobile()) {
         dispatch(actions.closeElement('leftPanel'));
       }
-    }, [dispatch, setActiveOutlinePath, activeOutlinePath, isAddingNewOutline, core, outline]);
+    };
 
     const isActive = isOutlineActive(outline);
 
@@ -148,10 +147,9 @@ const Outline = forwardRef(
     return (
       <div
         ref={(!isAddingNewOutline && isMultiSelectMode && isOutlineEditable) ? elementRef : null}
-        className="outline-drag-container"
-        style={{ opacity }}
+        className={classNames('outline-drag-container', { 'outline-dragging': isDragging })}
       >
-        <div className="outline-drag-line" style={{ opacity: isDraggedUpwards ? 1 : 0 }} />
+        <div className={classNames('outline-drag-line', { 'outline-dragged': isDraggedUpwards })} />
         <DataElementWrapper
           className={classNames({
             'bookmark-outline-single-container': true,
@@ -195,13 +193,13 @@ const Outline = forwardRef(
           </OutlineContent>
         </DataElementWrapper>
 
-        <div className="outline-drag-line" style={{ opacity: isDraggedDownwards ? 1 : 0 }} />
+        <div className={classNames('outline-drag-line', { 'outline-dragged': isDraggedDownwards })} />
 
         {isAddingNewOutline && isActive && (
           <DataElementWrapper className="bookmark-outline-single-container editing">
             <div
               className="outline-treeview-toggle"
-              style={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
+              css={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
             ></div>
             <OutlineContent
               isAdding={true}

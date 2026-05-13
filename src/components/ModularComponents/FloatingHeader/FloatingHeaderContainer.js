@@ -5,11 +5,11 @@ import './FloatingHeader.scss';
 import classNames from 'classnames';
 import { PLACEMENT, POSITION, DEFAULT_GAP } from 'constants/customizationVariables';
 import useIsRTL from 'hooks/useIsRTL';
-
+import { css } from '@emotion/react';
 const FloatSection = ({ position, isVertical, children, gap = DEFAULT_GAP }) => {
   const className = classNames('FloatSection', position, { 'vertical': isVertical });
   return (
-    <div className={className} style={{ gap: `${gap}px` }}>
+    <div className={className} css={css({ gap: `${gap}px` })}>
       {children}
     </div>
   );
@@ -21,7 +21,7 @@ const FloatingHeaderContainer = React.forwardRef((props, ref) => {
   const selectors = useFloatingHeaderSelectors();
   const isRTL = useIsRTL();
 
-  const style = useMemo(() => computeFloatContainerStyle({
+  const containerCss = useMemo(() => computeFloatContainerStyle({
     ...selectors,
     isHorizontalHeader,
     placement,
@@ -40,7 +40,7 @@ const FloatingHeaderContainer = React.forwardRef((props, ref) => {
   return (
     <div
       className={classNames('FloatingHeaderContainer', placement, { 'vertical': !isHorizontalHeader })}
-      style={style}
+      css={containerCss}
       ref={ref}
     >
       {renderHeaders(floatingHeaders.filter((h) => h.position === POSITION.START), POSITION.START)}

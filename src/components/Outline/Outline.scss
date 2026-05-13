@@ -9,6 +9,10 @@
       border-color: var(--focus-border);
     }
   }
+
+  &.outline-dragging {
+    opacity: 0.5;
+  }
 }
 
 .outline-treeview-toggle {
@@ -40,6 +44,7 @@
   margin-inline-end: var(--padding);
   border-top: 1px solid var(--focus-border);
   position: relative;
+  opacity: 0;
 
   &::before {
     content: '';
@@ -51,5 +56,9 @@
     inset-inline-start: 0;
     background-color: var(--focus-border);
     border-radius: 50%;
+  }
+
+  &.outline-dragged {
+    opacity: 1;
   }
 }

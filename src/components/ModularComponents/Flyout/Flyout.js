@@ -20,7 +20,6 @@ import Icon from 'components/Icon';
 import './Flyout.scss';
 import { Swipeable } from 'react-swipeable';
 import useCore from 'hooks/useCore';
-
 const Flyout = () => {
   const { core } = useCore();
   const { t } = useTranslation();
@@ -37,6 +36,8 @@ const Flyout = () => {
   const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
   const currentPage = useSelector(selectors.getCurrentPage);
   const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
+  const shouldUseMobileFlyout = isMobile && !isInDesktopOnlyMode;
 
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
@@ -372,20 +373,20 @@ const Flyout = () => {
         className={classNames({
           'Flyout': true,
           'legacy-ui': !customizableUI,
-          'mobile': isMobile,
+          'mobile': shouldUseMobileFlyout,
         })}
         data-element={dataElement}
         ref={flyoutRef}
-        style={!isMobile ? flyoutStyles : undefined}
+        css={isMobile ? undefined : flyoutStyles}
       >
-        {isMobile && <div className="swipe-indicator" />}
+        {shouldUseMobileFlyout && <div className="swipe-indicator" />}
         <menu
           id='FlyoutContainer'
           className={classNames({
             FlyoutContainer: true,
             [className]: true,
+            'overflow': shouldOverflow,
           })}
-          style={shouldOverflow ? { overflowY: 'auto' } : undefined}
         >
           {activeItem ? (
             <>

@@ -35,16 +35,21 @@ const NoteStateFlyout = (props) => {
   const selectorSuffix = isMultiSelectMode ? '' : `-${noteId}`;
   const flyoutSelector = `${DataElements.NOTE_STATE_FLYOUT}${selectorSuffix}`;
   const currentFlyout = useSelector((state) => selectors.getFlyout(state, flyoutSelector));
+  const statusList = useSelector((state) => selectors.getStatusList(state));
 
   const handleClick = (noteState) => {
     handleStateChange(noteState);
   };
 
   useLayoutEffect(() => {
+    const filteredItems = statusList
+      ? noteStateFlyoutItems.filter((item) => statusList.includes(item.option))
+      : noteStateFlyoutItems;
+
     const noteStateFlyout = {
       dataElement: flyoutSelector,
       className: 'NoteStateFlyout',
-      items: noteStateFlyoutItems.map((item) => {
+      items: filteredItems.map((item) => {
         return {
           ...item,
           onClick: () => handleClick(item.option),
@@ -57,7 +62,7 @@ const NoteStateFlyout = (props) => {
     } else {
       dispatch(actions.updateFlyout(noteStateFlyout.dataElement, noteStateFlyout));
     }
-  }, [handleStateChange]);
+  }, [handleStateChange, statusList]);
 
   return null;
 };

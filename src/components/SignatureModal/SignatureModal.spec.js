@@ -44,11 +44,11 @@ describe('ImageSignature', () => {
     }).not.toThrow();
   });
 
-  it('Should render document controls if enabled and role', () => {
+  it('Should include buttons for choosing a signature and initials', () => {
     render(<ImageSignatureMock />);
 
-    const fullSignatureButton = screen.getByRole('button', { description: 'Choose a Signature' });
-    const initialSignatureButton = screen.getByRole('button', { description: 'Choose Initials' });
+    const fullSignatureButton = screen.getByRole('button', { name: 'Choose a signature' });
+    const initialSignatureButton = screen.getByRole('button', { name: 'Choose Initials' });
     expect(fullSignatureButton).toBeInTheDocument();
     expect(initialSignatureButton).toBeInTheDocument();
   });

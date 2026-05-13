@@ -790,7 +790,7 @@ function Dropdown({
                 displayDropdownAsList(dropdownItems, columns) :
                 dropdownItems
               ) :
-              <>
+              isOpen && <>
                 <div
                   role="option"
                   id='id-no-result'

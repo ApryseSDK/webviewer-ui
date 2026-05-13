@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const RedactionItem = (props) => {
   // Remove if we get rid of legacy UI along with stylesheet changes
   const [isCustomUI] = useSelector(
@@ -94,7 +94,7 @@ const RedactionItem = (props) => {
       </div>
       <Button
         className='redaction-item-delete'
-        style={{ marginLeft: 'auto' }}
+        buttonStyle={{ marginLeft: 'auto' }}
         img={'icon-close'}
         onClick={onRedactionItemDelete}
         ariaLabel={`${redactionPreview} ${dateAndAuthor} ${t('action.delete')}`}

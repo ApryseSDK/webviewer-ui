@@ -43,6 +43,18 @@ describe('getHashParameters', () => {
     expect(result).toBe(JSON.stringify('alias-doc'));
   });
 
+  it('requests cspNonce attribute for cspNonce parameter', () => {
+    const getAttribute = jest.fn().mockReturnValue('nonce-value');
+    getInstanceNode.mockReturnValue({
+      getAttribute,
+    });
+
+    const result = getHashParameter('cspNonce', '');
+
+    expect(getAttribute).toHaveBeenCalledWith('cspNonce');
+    expect(result).toBe('nonce-value');
+  });
+
   it('returns true or false when a boolean default is provided', () => {
     getInstanceNode.mockReturnValue({
       getAttribute: jest.fn().mockReturnValue('1'),

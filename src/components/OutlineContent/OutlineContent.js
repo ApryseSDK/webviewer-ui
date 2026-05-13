@@ -18,12 +18,12 @@ import outlineUtils from 'helpers/OutlineUtils';
 const Outline = lazy(() => import('../Outline'));
 
 export const createOutlineVirtuosoComponents = (scrollParent) => {
-  const List = React.forwardRef(({ className = '', style, ...listProps }, ref) => (
+  const List = React.forwardRef(({ className = '', style: virtuosoStyle, ...listProps }, ref) => (
     <ul
       {...listProps}
       ref={ref}
       className={className ? `${className} panel-list-children` : 'panel-list-children'}
-      style={{ ...style, margin: 0 }}
+      css={{ margin: 0, ...virtuosoStyle }}
     />
   ));
   List.displayName = 'OutlineChildrenList';
@@ -32,8 +32,8 @@ export const createOutlineVirtuosoComponents = (scrollParent) => {
     style: PropTypes.object,
   };
 
-  const Item = React.forwardRef(({ children: itemChildren, style, ...itemProps }, ref) => (
-    <li {...itemProps} ref={ref} style={style}>
+  const Item = React.forwardRef(({ children: itemChildren, style: virtuosoStyle, ...itemProps }, ref) => (
+    <li {...itemProps} ref={ref} css={virtuosoStyle}>
       {itemChildren}
     </li>
   ));
@@ -43,20 +43,17 @@ export const createOutlineVirtuosoComponents = (scrollParent) => {
     style: PropTypes.object,
   };
 
-  const Scroller = React.forwardRef(({ style, ...scrollerProps }, ref) => {
-    const scrollerStyle = {
-      ...style,
-      overflowY: 'hidden',
-      overflowX: 'visible',
-    };
-    if (scrollerStyle.height === 0 || scrollerStyle.height === '0px') {
-      scrollerStyle.height = scrollParent?.clientHeight || style?.height || '100%';
+  const Scroller = React.forwardRef(({ style: virtuosoStyle, ...scrollerProps }, ref) => {
+    const resolvedStyle = { ...virtuosoStyle };
+    if (resolvedStyle.height === 0 || resolvedStyle.height === '0px') {
+      resolvedStyle.height = scrollParent?.clientHeight || resolvedStyle.height || '100%';
     }
     return (
       <div
+        className='outline-children-scroller'
         {...scrollerProps}
         ref={ref}
-        style={scrollerStyle}
+        css={resolvedStyle}
       />
     );
   });
@@ -336,7 +333,7 @@ const OutlineContent = ({
       {isChangingDest &&
         <div
           className="bookmark-outline-text outline-text"
-          style={textStyle}
+          css={textStyle}
         >
           {text}
         </div>
@@ -359,7 +356,7 @@ const OutlineContent = ({
       {(isAdding || isChangingDest) &&
         <div className="outline-destination">
           {t('component.destination')}: {t('component.bookmarkPage')} {currentDestPage},
-          <span style={{ fontStyle: 'italic' }}> “{currentDestText}”</span>
+          <span className="outline-destination-italic"> “{currentDestText}”</span>
         </div>
       }
 

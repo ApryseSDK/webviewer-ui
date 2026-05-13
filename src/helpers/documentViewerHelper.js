@@ -50,3 +50,22 @@ export const setupOpenURLHandler = (docViewer, store) => {
       }));
     });
 };
+
+export const setupFormSubmissionHandler = (docViewer, store) => {
+  docViewer.setSubmitFormHandler(
+    (uri, options) => {
+      store.dispatch(actions.showWarningMessage({
+        title: 'warning.submitForm.title',
+        message: 'warning.submitForm.message',
+        onConfirm: () => options.cancel(),
+        onSecondary: () => options.submit(),
+        confirmBtnText: 'action.cancel',
+        secondaryBtnText: 'action.confirm',
+        secondaryBtnClass: 'secondary-btn-custom',
+        templateStrings: {
+          uri,
+        },
+        modalClass: 'connect-to-url-modal'
+      }));
+    });
+};

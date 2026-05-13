@@ -89,9 +89,9 @@ export const TabPanel = ({ children, dataElement }) => {
 
   return isDisabled ? null : (
     <div
-      className="tab-panel"
+      className={classNames('tab-panel')}
       data-element={dataElement}
-      style={{ display: isSelected ? '' : 'none' }}
+      hidden={!isSelected}
     >
       {typeof children.type === 'function'
         ? React.cloneElement(children, { isTabPanelSelected: isSelected })

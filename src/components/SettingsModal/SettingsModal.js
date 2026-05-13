@@ -89,7 +89,6 @@ const SettingsModal = () => {
           swipeToClose
         >
           <div className="container">
-            <div className="swipe-indicator" />
             <div className="header">
               <div className="settings-search-input">
                 <Icon glyph="icon-header-search" />

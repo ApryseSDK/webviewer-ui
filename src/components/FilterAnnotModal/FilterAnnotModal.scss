@@ -59,12 +59,13 @@
         .filter-options {
           height: 200px;
           width: 100%;
+          @extend %tab-panel;
 
           .tab-panel {
             height: 100%;
             width: 100%;
-            display: flex;
             flex-direction: column;
+            align-items: stretch;
 
             .include-replies {
               display: flex;

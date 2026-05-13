@@ -4,67 +4,108 @@ import Icon from 'components/Icon';
 import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 import Events from 'constants/events';
+import PropTypes from 'prop-types';
+import useIsRTL from 'hooks/useIsRTL';
 
 import './ResizeBar.scss';
 import { getWebViewerRect } from 'src/helpers/getRootNode';
 
-const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
+const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidth }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const isMouseDownRef = useRef(false);
+  const initialMouseXRef = useRef(0);
+  const initialWidthRef = useRef(0);
+  const resizeAnimationFrameRef = useRef(null);
+  const pendingWidthRef = useRef(null);
+  const isRTL = useIsRTL();
+  const onResizeRef = useRef(onResize);
 
   useEffect(() => {
-    // this listener is throttled because the notes panel listens to the panel width
-    // change in order to rerender to have the correct width and we don't want
-    // it to rerender too often
+    onResizeRef.current = onResize;
+  }, [onResize]);
 
-    // Removed throttle for now. It was causing jitterness when resizing.
-    // Maybe throttle is necessary because other components listening to the width would re-render too often?
+  useEffect(() => {
+    const scheduleResize = (newWidth) => {
+      pendingWidthRef.current = newWidth;
+      if (resizeAnimationFrameRef.current !== null) {
+        return;
+      }
+      resizeAnimationFrameRef.current = window.requestAnimationFrame(() => {
+        resizeAnimationFrameRef.current = null;
+        if (pendingWidthRef.current !== null) {
+          onResizeRef.current(pendingWidthRef.current);
+          fireEvent(Events.PANEL_RESIZED, { element: dataElement, width: pendingWidthRef.current });
+          pendingWidthRef.current = null;
+        }
+      });
+    };
+    const cancelScheduledResize = () => {
+      if (resizeAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(resizeAnimationFrameRef.current);
+        resizeAnimationFrameRef.current = null;
+      }
+      pendingWidthRef.current = null;
+    };
     const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current) {
-        const windowRect = getWebViewerRect();
-
+        const deltaX = clientX - initialMouseXRef.current;
         let newWidth;
 
-        if (leftDirection) {
-          // Resizing from the right
-          const elementOffset = windowRect.right;
-          newWidth = Math.max(minWidth, Math.min(window.innerWidth, elementOffset - clientX));
+        if (typeof currentWidth === 'number') {
+          newWidth = initialWidthRef.current + (isRTL ? -deltaX : deltaX);
         } else {
-          // Resizing from the left
-          const elementOffset = windowRect.left;
-          newWidth = Math.max(minWidth, Math.min(window.innerWidth, clientX - elementOffset));
-        }
 
-        // Call the onResize and dispatch events with the new width
-        onResize(newWidth);
-        fireEvent(Events.PANEL_RESIZED, { element: dataElement, width: newWidth });
+          const windowRect = getWebViewerRect();
+          if (leftDirection) {
+            const elementOffset = windowRect.right;
+            newWidth = Math.max(minWidth, Math.min(window.innerWidth, elementOffset - clientX));
+          } else {
+            const elementOffset = windowRect.left;
+            newWidth = Math.max(minWidth, Math.min(window.innerWidth, clientX - elementOffset));
+          }
+        }
+        newWidth = Math.max(minWidth, newWidth);
+        scheduleResize(newWidth);
       }
     };
-
-    document.addEventListener('mousemove', dragMouseMove);
-    return () => document.removeEventListener('mousemove', dragMouseMove);
-  }, [leftDirection, minWidth, onResize]);
-
-  useEffect(() => {
     const finishDrag = () => {
       isMouseDownRef.current = false;
+      cancelScheduledResize();
     };
-
+    document.addEventListener('mousemove', dragMouseMove);
     document.addEventListener('mouseup', finishDrag);
-    return () => document.removeEventListener('mouseup', finishDrag);
-  }, []);
+    return () => {
+      cancelScheduledResize();
+      document.removeEventListener('mousemove', dragMouseMove);
+      document.removeEventListener('mouseup', finishDrag);
+    };
+  }, [isRTL, leftDirection, minWidth, currentWidth, dataElement]);
 
-  return isDisabled ? null : (
+  if (isDisabled) {
+    return null;
+  }
+
+  return (
     <div
       data-element={dataElement}
       className="resize-bar"
-      onMouseDown={() => {
+      onMouseDown={(e) => {
         isMouseDownRef.current = true;
+        initialMouseXRef.current = e.clientX;
+        initialWidthRef.current = typeof currentWidth === 'number' ? currentWidth : 0;
       }}
     >
       <Icon glyph="icon-detach-toolbar" />
     </div>
   );
+};
+
+ResizeBar.propTypes = {
+  onResize: PropTypes.func.isRequired,
+  minWidth: PropTypes.number.isRequired,
+  leftDirection: PropTypes.bool,
+  dataElement: PropTypes.string.isRequired,
+  currentWidth: PropTypes.number,
 };
 
 export default ResizeBar;

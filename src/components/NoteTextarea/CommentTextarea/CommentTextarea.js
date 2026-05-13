@@ -10,9 +10,10 @@ import selectors from 'selectors';
 import getRootNode from 'helpers/getRootNode';
 import transformTextForQuill from 'helpers/convertNewlinesToParagraphs';
 import { CustomKeyboard, BlurInputModule, QuillPasteExtra } from 'helpers/quillModules';
+import { createRefHandler } from './CommentTextareaHelper';
 import '../../../constants/quill.scss';
 import './CommentTextarea.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 let globalUserData = [];
 
 // These are the formats that will be accepted by quill
@@ -114,6 +115,7 @@ const CommentTextarea = React.forwardRef(
 
     value = transformTextForQuill(value);
     const baseModule = { blurInput: {} };
+    const handleRef = createRefHandler({ isReply, t, externalRefHandler: ref });
 
     // onBlur and onFocus have to be outside in the div because of quill bug
     return (
@@ -121,13 +123,7 @@ const CommentTextarea = React.forwardRef(
         <ReactQuill
           key={languageKey}
           className='comment-textarea ql-container ql-editor'
-          style={{ overflowY: 'visible' }}
-          ref={(ele) => {
-            if (ele) {
-              ele.getEditor().root.ariaLabel = `${isReply ? t('action.reply') : t('action.comment')}`;
-            }
-            return ref(ele);
-          }}
+          ref={handleRef}
           modules={userData && userData.length > 0 ? { ...baseModule, ...mentionModule } : baseModule }
           theme="snow"
           value={value}

@@ -5,7 +5,10 @@ import Button from 'components/Button';
 import FocusTrap from 'components/FocusTrap';
 import PropTypes from 'prop-types';
 import './ModalWrapper.scss';
+import selectors from 'selectors';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import { isMobileSize } from 'helpers/getDeviceSize';
+import { useSelector } from 'react-redux';
 
 const SwipeableWrapper = ({
   onSwipedDown,
@@ -38,6 +41,9 @@ SwipeableWrapper.propTypes = {
 const ModalWrapper = React.forwardRef((props, ref) => {
   const [t] = useTranslation();
   const onCloseHandler = useFocusOnClose(props.onCloseClick);
+  const isMobile = isMobileSize();
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const shouldUseMobileWrapper = isMobile && !isInDesktopOnlyMode;
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -97,7 +103,11 @@ const ModalWrapper = React.forwardRef((props, ref) => {
       >
         <div className="wrapper">
           <SwipeableWrapper {...props}>
-            <div className="swipe-indicator" />
+            {
+              shouldUseMobileWrapper && (
+                <div className="swipe-indicator" />
+              )
+            }
             {renderHeader()}
           </SwipeableWrapper>
           {props.children}

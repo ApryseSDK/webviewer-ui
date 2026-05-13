@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './MobilePanelWrapper.scss';
 import { Swipeable } from 'react-swipeable';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -9,7 +9,6 @@ import actions from 'actions';
 import classNames from 'classnames';
 import { PANEL_SIZES, panelNames } from 'constants/panel';
 import useResizeObserver from 'hooks/useResizeObserver';
-
 const propTypes = {
   children: PropTypes.node,
 };
@@ -28,13 +27,17 @@ const MobilePanelWrapper = ({ children }) => {
   const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
 
-  const [wrapperBodyStyle, setWrapperBodyStyle] = useState({});
-
   const setMobilePanelSize = (size) => {
     dispatch(actions.setMobilePanelSize(size));
   };
 
   const [wrapperRef, dimensions] = useResizeObserver();
+
+  const wrapperBodyStyle = dimensions.height === null ? {} : {
+    display: 'flex',
+    flexDirection: 'column',
+    height: dimensions.height - 16, // 16px is the padding of the mobile panel body
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -47,17 +50,6 @@ const MobilePanelWrapper = ({ children }) => {
       dispatch(actions.closeElement(MOBILE_PANEL_WRAPPER));
     }
   }, [isContentOpen]);
-
-  useEffect(() => {
-    if (dimensions.height !== null) {
-      // 16px is the padding of the mobile panel body
-      setWrapperBodyStyle({
-        display: 'flex',
-        flexDirection: 'column',
-        height: dimensions.height - 16,
-      });
-    }
-  }, [dimensions]);
 
   const closePanel = () => {
     dispatch(actions.closeElement(MOBILE_PANEL_WRAPPER));
@@ -123,7 +115,7 @@ const MobilePanelWrapper = ({ children }) => {
           <div className="swipe-indicator" />
         </div>
       </Swipeable>
-      <div className="mobile-panel-body" style={wrapperBodyStyle}>
+      <div className="mobile-panel-body" css={wrapperBodyStyle}>
         {React.Children.map(children, (child) => React.cloneElement(child, { panelSize: mobilePanelSize }))}
       </div>
     </div>

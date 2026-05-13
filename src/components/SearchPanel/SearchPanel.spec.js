@@ -293,6 +293,48 @@ describe('SearchPanelContainer', () => {
     expect(actionsSetSearchValueActionMock).not.toHaveBeenCalled();
     expect(coreClearSearchResultsMock).not.toHaveBeenCalled();
   });
+
+  it('should call setActiveSearchResult on the correct document viewer when switching viewers', () => {
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(() => {});
+    useSearch.mockReturnValue({ setActiveSearchResultIndex: () => null });
+
+    const mockSetActiveSearchResult1 = jest.fn();
+    const mockSetActiveSearchResult2 = jest.fn();
+    const mockGetDocumentViewer = (key) => {
+      return { setActiveSearchResult: key === 2 ? mockSetActiveSearchResult2 : mockSetActiveSearchResult1 };
+    };
+
+    let activeKey = 1;
+    useCore.mockImplementation(() => ({
+      core: {
+        ...core,
+        getDocumentViewer: () => mockGetDocumentViewer(activeKey),
+        clearSearchResults: core.clearSearchResults,
+      },
+    }));
+    mockUseSelectorWithState(createState({ viewer: { activeDocumentViewerKey: 1 } }));
+    const { container, rerender } = render(<SearchPanelContainer />);
+
+    // Click the mock result button to trigger setActiveResult
+    const activeResultButton = container.querySelector('.mock-active-result');
+    expect(activeResultButton).toBeInTheDocument();
+    fireEvent.click(activeResultButton);
+
+    expect(mockSetActiveSearchResult1).toHaveBeenCalled();
+    expect(mockSetActiveSearchResult2).not.toHaveBeenCalled();
+
+    activeKey = 2;
+    mockSetActiveSearchResult1.mockClear();
+    mockUseSelectorWithState(createState({ viewer: { activeDocumentViewerKey: 2 } }));
+
+    rerender(<SearchPanelContainer />);
+
+    const activeResultButton2 = container.querySelector('.mock-active-result');
+    fireEvent.click(activeResultButton2);
+
+    expect(mockSetActiveSearchResult2).toHaveBeenCalled();
+    expect(mockSetActiveSearchResult1).not.toHaveBeenCalled();
+  });
 });
 
 describe('adjustSpreadsheetTableWidth', () => {

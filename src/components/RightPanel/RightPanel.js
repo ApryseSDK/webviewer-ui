@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import DataElements from 'constants/dataElement';
 
 import './RightPanel.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const RightPanel = ({ children, dataElement, onResize }) => {
   const [
     currentToolbarGroup,

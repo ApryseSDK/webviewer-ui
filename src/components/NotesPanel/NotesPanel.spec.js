@@ -8,6 +8,7 @@ import NotesPanelContainer from './NotesPanelContainer';
 import core from 'core';
 import selectors from 'selectors';
 import userEvent from '@testing-library/user-event';
+import { getExtendedSortStrategies } from 'src/constants/sortStrategies';
 
 jest.mock('components/MultiSelectControls', () => {
   const MockMultiSelectControls = () => <div data-testid="multi-select-controls" />;
@@ -265,6 +266,36 @@ describe('NotesPanel', () => {
       await userEvent.click(checkbox);
 
       expect(mockSelectAnnotations).toHaveBeenCalledWith([mockAnnot], initialState.viewer.activeDocumentViewerKey);
+    });
+
+    it('NotesPanel should call sort stratgies with current viewer key', () => {
+      const mockGetSortedNotes = jest.fn(() => []);
+      const mockShouldRenderSeparator = jest.fn();
+      const mockGetSeparatorContent = jest.fn();
+
+      const sortStrategies = getExtendedSortStrategies();
+      sortStrategies.position.getSortedNotes = mockGetSortedNotes;
+      sortStrategies.position.shouldRenderSeparator = mockShouldRenderSeparator;
+      sortStrategies.position.getSeparatorContent = mockGetSeparatorContent;
+
+      const testInitialState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          activeDocumentViewerKey: 2,
+        },
+      };
+
+      jest.spyOn(selectors, 'getActiveDocumentViewerKey').mockReturnValue(2);
+      jest.spyOn(selectors, 'getNotesInLeftPanel').mockReturnValue([]);
+
+      render(
+        <Provider store={configureStore({ reducer: () => testInitialState })}>
+          <NotesPanelContainer/>
+        </Provider>
+      );
+
+      expect(mockGetSortedNotes).toHaveBeenCalledWith([],2);
     });
 
     describe('multi-select footer', () => {

@@ -343,10 +343,9 @@ class DocumentContainer extends React.PureComponent {
     }
 
     const ariaLabelledById = currentTabs.length > 0 ? `tab-${fileName}-${activeTab}` : undefined;
-
     return (
       <div
-        style={style}
+        css={ style }
         id={`document-container-${fileName}`}
         role="tabpanel"
         aria-labelledby={ariaLabelledById}
@@ -373,7 +372,7 @@ class DocumentContainer extends React.PureComponent {
               {this.props.isReaderMode && <ReaderModeViewer />}
               <div
                 className="footer"
-                style={footerStyle}
+                css={ footerStyle }
               >
                 {showPageNav && (
                   <PageNavOverlay

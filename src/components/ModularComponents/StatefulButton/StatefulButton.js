@@ -8,7 +8,8 @@ import FlyoutItemContainer from '../FlyoutItemContainer';
 import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 
 const StatefulButton = forwardRef((props, ref) => {
-  const { dataElement, disabled, mount, unmount, states, style, className, isFlyoutItem = false } = props;
+  const { dataElement, disabled, mount, unmount, states, buttonStyle, className, isFlyoutItem = false } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -81,7 +82,7 @@ const StatefulButton = forwardRef((props, ref) => {
       dataElement={dataElement}
       onClick={onClick}
       disabled={disabled}
-      style={style}
+      buttonStyle={resolvedButtonStyle}
     ></Button>
   );
 });
@@ -96,6 +97,8 @@ StatefulButton.propTypes = {
   initialState: PropTypes.string.isRequired,
   mount: PropTypes.func.isRequired,
   unmount: PropTypes.func,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   states: PropTypes.shape({

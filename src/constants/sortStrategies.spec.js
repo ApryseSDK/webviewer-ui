@@ -24,6 +24,24 @@ const notes = [
 ];
 
 describe('Sort Strategies', () => {
+
+  it('should pass documentViewerKey to sort strategy', () => {
+    const mockGetRotation = jest.spyOn(core, 'getRotation').mockImplementation(() => 0);
+    const mockGetPageInfo = jest.spyOn(core, 'getPageInfo').mockImplementation(() => ({ width: 100, height: 100 }));
+    const mockGetTotalPages = jest.spyOn(core, 'getTotalPages').mockReturnValue(1);
+    try {
+      const sortStrategies = getExtendedSortStrategies();
+      const positionStrategy = sortStrategies.position;
+      const activeDocumentViewerKey = 2;
+      positionStrategy.getSortedNotes(notes, activeDocumentViewerKey);
+      expect(mockGetTotalPages).toHaveBeenCalledWith(activeDocumentViewerKey);
+    } finally {
+      mockGetRotation.mockRestore();
+      mockGetPageInfo.mockRestore();
+      mockGetTotalPages.mockRestore();
+    }
+  });
+
   describe('sort by line position', () => {
     const originalGetRotation = core.getRotation;
     const originalGetPageInfo = core.getPageInfo;
@@ -114,6 +132,64 @@ describe('Sort Strategies', () => {
       expect(separators.length).toEqual(2);
       expect(separators[0]).toEqual(1);
       expect(separators[1]).toEqual(3);
+    });
+  });
+
+  describe('sort by author', () => {
+    const originalGetDisplayAuthor = core.getDisplayAuthor;
+
+    afterEach(() => {
+      core.getDisplayAuthor = originalGetDisplayAuthor;
+    });
+
+    it('should sort notes by display author', () => {
+      core.getDisplayAuthor = (userId) => userId;
+      const sortStrategies = getSortStrategies();
+      const authorNotes = [
+        { Author: 'Charlie' },
+        { Author: 'Alice' },
+        { Author: 'Bob' },
+      ];
+
+      const sorted = sortStrategies.author.getSortedNotes([...authorNotes]);
+      expect(sorted.map((n) => n.Author)).toEqual(['Alice', 'Bob', 'Charlie']);
+    });
+
+    it('should pass documentViewerKey correctly to getSeparatorContent', () => {
+      const mockGetDisplayAuthor = jest.spyOn(core, 'getDisplayAuthor').mockImplementation((userId) => userId);
+      try {
+        const sortStrategies = getSortStrategies();
+        const result = sortStrategies.author.getSeparatorContent(null, { Author: 'Alice' }, { pageLabels: [] }, 2);
+        expect(mockGetDisplayAuthor).toHaveBeenCalledWith('Alice', 2);
+        expect(result).toBe('Alice');
+      } finally {
+        mockGetDisplayAuthor.mockRestore();
+      }
+    });
+
+    it('should pass documentViewerKey correctly to shouldRenderSeparator', () => {
+      const mockGetDisplayAuthor = jest.spyOn(core, 'getDisplayAuthor').mockImplementation((userId) => userId);
+      try {
+        const sortStrategies = getSortStrategies();
+        sortStrategies.author.shouldRenderSeparator({ Author: 'Alice' }, { Author: 'Bob' }, { pageLabels: [] }, 2);
+        expect(mockGetDisplayAuthor).toHaveBeenCalledWith('Alice', 2);
+        expect(mockGetDisplayAuthor).toHaveBeenCalledWith('Bob', 2);
+      } finally {
+        mockGetDisplayAuthor.mockRestore();
+      }
+    });
+
+    it('should not crash when getDisplayAuthor returns undefined', () => {
+      core.getDisplayAuthor = () => undefined;
+      const sortStrategies = getSortStrategies();
+      const authorNotes = [
+        { Author: undefined },
+        { Author: 'Alice' },
+      ];
+
+      expect(() => {
+        sortStrategies.author.getSortedNotes([...authorNotes]);
+      }).not.toThrow();
     });
   });
 });

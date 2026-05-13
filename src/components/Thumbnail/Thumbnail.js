@@ -13,7 +13,6 @@ import getRootNode from 'helpers/getRootNode';
 import findFocusableElements from 'helpers/findFocusableElements';
 import useIsRTL from 'src/hooks/useIsRTL';
 import useCore from 'hooks/useCore';
-
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
 
@@ -409,20 +408,12 @@ const Thumbnail = React.forwardRef((props, ref) => {
       ref={thumbContainerRef}
       onKeyDown={(e) => handleKeyDown(e)}
       onClick={handleClick}
-      style={{
-        width: thumbSize,
-        cursor: 'pointer',
-        background: 'none',
-        border: 'none'
-      }}
+      css={{ width: thumbSize }}
       tabIndex={-1}
     >
       <div
         className="container"
-        style={{
-          height: thumbSize,
-          width: thumbSize,
-        }}
+        css={{ height: thumbSize, width: thumbSize }}
         onDragStart={(e) => onDragStart(e, index)}
         draggable={isDraggable}
         tabIndex={-1}

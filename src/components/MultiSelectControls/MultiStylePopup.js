@@ -18,7 +18,6 @@ import {
 
 
 import './MultiStylePopup.scss';
-
 const MultiStylePopup = ({
   annotations,
   triggerElementName,
@@ -43,9 +42,9 @@ const MultiStylePopup = ({
     }
   });
 
-  let style = {};
+  let annotationStyle = {};
   annotations.forEach((annotation) => {
-    style = { ...style, ...getAnnotationStyles(annotation) };
+    annotationStyle = { ...annotationStyle, ...getAnnotationStyles(annotation) };
   });
   const freeTextAnnotation = annotations.find((annotation) => {
     return (
@@ -72,9 +71,9 @@ const MultiStylePopup = ({
   // Update available palettesfor MultiStyle annotation type in map
   useEffect(() => {
     const availablePalettes = [];
-    style['TextColor'] && availablePalettes.push(AnnotationStylePopupTabs.TEXT_COLOR);
-    style['StrokeColor'] && availablePalettes.push(AnnotationStylePopupTabs.STROKE_COLOR);
-    style['FillColor'] && availablePalettes.push(AnnotationStylePopupTabs.FILL_COLOR);
+    annotationStyle['TextColor'] && availablePalettes.push(AnnotationStylePopupTabs.TEXT_COLOR);
+    annotationStyle['StrokeColor'] && availablePalettes.push(AnnotationStylePopupTabs.STROKE_COLOR);
+    annotationStyle['FillColor'] && availablePalettes.push(AnnotationStylePopupTabs.FILL_COLOR);
 
     const didUpdate =
       updateAnnotationStylePopupTabs(colorMapKey, availablePalettes, availablePalettes[0]);
@@ -107,7 +106,7 @@ const MultiStylePopup = ({
       >
         <AnnotationStylePopup
           annotations={annotations}
-          style={style}
+          annotationStyle={annotationStyle}
           isOpen
           onResize={updatePosition}
           isFreeText={!!freeTextAnnotation}

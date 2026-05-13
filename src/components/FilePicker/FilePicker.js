@@ -105,7 +105,7 @@ const FilePicker = ({
             <input
               ref={fileInputRef}
               multiple={allowMultiple}
-              style={{ display: 'none' }}
+              hidden
               type="file"
               accept={acceptFormats}
               onChange={(event) => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

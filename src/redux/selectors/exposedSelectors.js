@@ -791,6 +791,10 @@ export const isNotesPanelTextCollapsingEnabled = (state) => {
   return state.viewer.isNotesPanelTextCollapsingEnabled;
 };
 
+export const getStatusList = (state) => {
+  return state.viewer.statusList;
+};
+
 export const isNotesPanelRepliesCollapsingEnabled = (state) => {
   return state.viewer.isNotesPanelRepliesCollapsingEnabled;
 };
@@ -1369,4 +1373,8 @@ export const getIsPanelInFlyout = (state, panelType, flyoutsToExclude = []) => {
   }
 
   return null;
+};
+
+export const getReaderPageMode = (state) => {
+  return state.viewer.readerPageMode;
 };

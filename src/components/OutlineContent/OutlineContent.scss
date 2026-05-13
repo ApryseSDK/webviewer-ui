@@ -12,6 +12,15 @@
   margin-top: var(--padding-small);
 }
 
+.outline-children-scroller {
+  overflow-y: hidden;
+  overflow-x: visible;
+}
+
+.outline-destination-italic {
+  font-style: italic;
+}
+
 .bookmark-outline-label-row {
   .ToggleElementButton .Button {
     padding: 0px;

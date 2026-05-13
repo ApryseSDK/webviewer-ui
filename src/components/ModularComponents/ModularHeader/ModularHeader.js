@@ -8,7 +8,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import useArrowNavigation from 'hooks/useArrowNavigation';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const ModularHeader = React.forwardRef((props, ref) => {
   const {
     dataElement,
@@ -17,10 +17,12 @@ const ModularHeader = React.forwardRef((props, ref) => {
     items = [],
     gap = DEFAULT_GAP,
     justifyContent = JUSTIFY_CONTENT.START,
-    style,
+    wrapperStyle,
     autoHide = true,
     stroke,
   } = props;
+  const resolvedWrapperStyle = wrapperStyle ?? props.style;
+  const wrapperCss = resolvedWrapperStyle ? { '&&&&': resolvedWrapperStyle } : undefined;
 
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
 
@@ -69,7 +71,7 @@ const ModularHeader = React.forwardRef((props, ref) => {
         'stroke': stroke,
       }, `${position}`)}
       data-element={dataElement}
-      style={style}
+      css={wrapperCss}
       key={key}
       ref={headerRef}
       role="toolbar"
@@ -97,6 +99,8 @@ ModularHeader.propTypes = {
   items: PropTypes.array,
   gap: PropTypes.number,
   justifyContent: PropTypes.string,
+  wrapperStyle: PropTypes.object,
+  /** @deprecated Use wrapperStyle instead. */
   style: PropTypes.object,
   autoHide: PropTypes.bool,
   stroke: PropTypes.bool,

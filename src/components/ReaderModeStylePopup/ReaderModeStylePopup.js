@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import StylePopup from 'components/StylePopup';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import Draggable from 'react-draggable';
@@ -11,9 +12,9 @@ const ReaderModeStylePopup = (props) => {
   const [position, setPosition] = useState({});
   const popupRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setPosition(getReaderModePopupPositionBasedOn(props.annotPosition, popupRef, props.viewer));
-  }, []);
+  }, [props.annotPosition, props.viewer]);
 
   useOnClickOutside(popupRef, () => {
     const warningModal = getOpenedWarningModal();
@@ -32,11 +33,24 @@ const ReaderModeStylePopup = (props) => {
       >
         <StylePopup
           {...props}
+          annotationStyle={props.annotationStyle ?? props.style}
           disableSeparator
         />
       </div>
     </Draggable>
   );
+};
+
+ReaderModeStylePopup.propTypes = {
+  annotationStyle: PropTypes.object,
+  /**
+   * @deprecated Use annotationStyle instead.
+   * @ignore
+   */
+  style: PropTypes.object,
+  annotPosition: PropTypes.object,
+  viewer: PropTypes.object,
+  onClose: PropTypes.func,
 };
 
 export default ReaderModeStylePopup;

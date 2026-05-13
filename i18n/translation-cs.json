@@ -902,6 +902,10 @@
       "title": "Bezpečnostní varování",
       "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     },
+    "submitForm": {
+      "title": "Bezpečnostní upozornění",
+      "message": "Tento dokument se pokouší odeslat formulář na: \n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, klikněte na Potvrdit a formulář odešlete."
+    },
     "sheetTabRenameIssueOne": {
       "title": "Upravit název listu",
       "message": "Toto jméno již existuje. Zadejte prosím jiné jméno."

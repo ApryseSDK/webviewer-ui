@@ -10,6 +10,7 @@ import { panelMinWidth } from 'constants/panel';
 import Icon from 'components/Icon';
 import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/react';
 
 const specialChar = /([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/gm;
 
@@ -29,7 +30,7 @@ const ComparePanel = ({
   const isMobile = isMobileSize();
   const panelWidth = currentWidth ? currentWidth - 16 : panelMinWidth - 32;
   const [searchValue, setSearchValue] = React.useState('');
-  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${panelWidth}px`, minWidth: `${panelWidth}px` };
+  const panelCss = !isInDesktopOnlyMode && isMobile ? undefined : css({ width: `${panelWidth}px`, minWidth: `${panelWidth}px` });
   const changeListData = useRef(filteredListData);
   const filterfuncRef = useRef(
     throttle((searchValue) => {
@@ -89,7 +90,7 @@ const ComparePanel = ({
     <DataElementWrapper
       className={classNames('Panel', 'ComparePanel', { 'open': isOpen })}
       dataElement={dataElement}
-      style={style}
+      css={panelCss}
     >
       <div className="input-container">
         <Icon glyph="icon-header-search" />

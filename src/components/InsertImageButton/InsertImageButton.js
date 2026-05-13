@@ -4,10 +4,11 @@ import ActionButton from 'components/ActionButton';
 import FlyoutItemContainer from '../ModularComponents/FlyoutItemContainer';
 import ImageFilePickerHandler from 'components/ImageFilePickerHandler';
 import classNames from 'classnames';
-
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
   dataElement: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  /** @deprecated Use buttonStyle instead. */
   style: PropTypes.object,
   className: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -21,7 +22,7 @@ const propTypes = {
 const InsertImageButton = forwardRef((props, ref) => {
   const {
     isFlyoutItem,
-    style,
+    buttonStyle,
     className = '',
     dataElement,
     icon,
@@ -31,6 +32,7 @@ const InsertImageButton = forwardRef((props, ref) => {
     onFileInputChange,
     filePickerId,
   } = props;
+  const resolvedButtonStyle = buttonStyle ?? props.style;
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
@@ -52,7 +54,7 @@ const InsertImageButton = forwardRef((props, ref) => {
           title={title}
           img={icon}
           label={label}
-          style={style}
+          buttonStyle={resolvedButtonStyle}
           className={
             classNames({
               [className]: true,

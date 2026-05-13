@@ -195,7 +195,7 @@ const redactionAnnotations = [
     getStatus: () => '',
     isReply: () => false,
     StrokeColor: {
-      toString: () => 'rgba(0,100,0,1)'
+      toString: () => 'rgba(224, 120, 0, 1);'
     },
     getCustomData: () => '',
     getContents: () => 'duncan@dune.ca',

@@ -3,14 +3,12 @@ import './CollapsibleSection.scss';
 import Icon from 'components/Icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
 const CollapsibleSection = (props) => {
   const {
     header,
     children,
     className,
     role,
-    style,
     // use h2 as default heading level since we assume that this will be used with a parent component that should be using h1
     headingLevel = 2,
     isInitiallyExpanded = true,
@@ -25,7 +23,6 @@ const CollapsibleSection = (props) => {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     role: PropTypes.string,
-    style: PropTypes.object,
     headingLevel: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     isInitiallyExpanded: PropTypes.bool,
     isExpanded: PropTypes.bool,
@@ -56,7 +53,7 @@ const CollapsibleSection = (props) => {
   const ariaLabel = expansionDescription || header;
 
   return (
-    <div className={classNames({ CollapsibleSection: true, [className]: !!className })} role={role} style={style}>
+    <div className={classNames({ CollapsibleSection: true, [className]: !!className })} role={role}>
       <HeadingTag className="collapsible-page-group-header">
         <button onClick={handleToggle} aria-expanded={isExpanded} aria-controls={ariaControls} aria-label={ariaLabel}>
           {headerContent}

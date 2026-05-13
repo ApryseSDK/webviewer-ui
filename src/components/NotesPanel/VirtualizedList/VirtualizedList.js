@@ -79,7 +79,6 @@ const VirtualizedList = React.forwardRef(
     /* eslint-disable react/prop-types */
     const rowRenderer = ({ index, key, parent, style }) => {
       const currNote = notes[index];
-
       // Padding added to the right since virtualized list lets it get cut off on the right
       return (
         <CellMeasurer
@@ -90,7 +89,7 @@ const VirtualizedList = React.forwardRef(
           rowIndex={index}
         >
           {({ measure }) => (
-            <div style={{ ...style, paddingRight: '12px' }}>
+            <div css={ { ...style, paddingRight: '12px' } }>
               {children(notes, index, () => {
                 _resize(index);
                 measure();
@@ -114,7 +113,6 @@ const VirtualizedList = React.forwardRef(
           <div ref={measureRef} className="virtualized-notes-container">
             <List
               deferredMeasurementCache={cache}
-              style={{ outline: 'none' }}
               height={dimension.height - offset}
               width={dimension.width}
               overscanRowCount={10}

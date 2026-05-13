@@ -23,7 +23,7 @@ import { isIE } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 
 import './LeftPanel.scss';
-
+/* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const LeftPanel = () => {
   const { core } = useCore();
   const isMobile = isMobileSize();

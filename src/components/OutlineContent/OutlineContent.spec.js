@@ -30,6 +30,7 @@ describe('OutlineContent', () => {
     render(<ColoredOutline />);
 
     const outline = screen.getByText('A colored outline');
-    expect(outline.style.color).toBe('rgb(213, 42, 42)');
+    const computedColor = window.getComputedStyle(outline).color;
+    expect(computedColor).toBe('rgb(213, 42, 42)');
   });
 });

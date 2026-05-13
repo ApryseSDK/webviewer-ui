@@ -215,12 +215,14 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   }, [core, onAddingNewScale]);
 
   const isMobile = isMobileSize();
+  const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
+  const shouldUseMobilePanel = isMobile && !isInDesktopOnlyMode;
 
   if (isDisabled || isDisabledViewOnly || areToolsDisabledViewOnly) {
     return null;
   }
 
-  if (isMobile) {
+  if (shouldUseMobilePanel) {
     return (
       <MobilePopupWrapper>
         <ScaleOverlay
@@ -256,7 +258,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
             closed: !isOpen,
           })}
           data-element={DataElements.SCALE_OVERLAY_CONTAINER}
-          style={initialOffset}
+          css={initialOffset}
           ref={(node) => {
             containerRef.current = node;
             setOverlayRef(node);

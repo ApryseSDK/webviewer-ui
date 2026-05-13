@@ -68,6 +68,8 @@ export function FileAttachmentPanelLeftWithFiles() {
   );
 }
 
+FileAttachmentPanelLeftWithFiles.parameters = disableRtlModeParameters;
+
 export function FileAttachmentPanelRightWithFiles() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
