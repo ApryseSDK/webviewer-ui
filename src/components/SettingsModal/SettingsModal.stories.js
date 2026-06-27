@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import SettingsModal from './SettingsModal';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import hotkeysManager from 'helpers/hotkeysManager';
@@ -15,7 +15,7 @@ export default {
 };
 
 const getStore = (num) => {
-  let isHighContrastMode = false;
+  let isDarkTheme = false;
 
   const initialState = {
     viewer: {
@@ -37,11 +37,11 @@ const getStore = (num) => {
       activeTheme: 'light',
       customSettings: [
         {
-          label: 'Enable High Contrast Mode',
-          description: 'Turns high contrast mode on to help with accessibility.',
-          isChecked: () => isHighContrastMode,
-          onToggled: (enable) => {
-            isHighContrastMode = enable;
+          label: 'Switch theme',
+          description: 'Switch between light and dark themes.',
+          isChecked: () => isDarkTheme,
+          onToggled: (checked) => {
+            isDarkTheme = checked;
           }
         }
       ],
@@ -101,7 +101,7 @@ const getStore = (num) => {
     }
   }
 
-  return createStore(rootReducer);
+  return configureStore({ reducer: rootReducer });
 };
 
 // Helper function to create spreadsheet store

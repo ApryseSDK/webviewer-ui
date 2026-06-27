@@ -5,6 +5,6 @@ import core from 'core';
  * @fires annotationChanged(Modify) on AnnotationManager
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  */
-export default (annotation, style, documentViewerKey = 1) => {
+export default (annotation, style, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().setAnnotationRichTextStyle(annotation, style);
 };

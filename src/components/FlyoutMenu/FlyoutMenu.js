@@ -22,7 +22,6 @@ const MENUS = [
   'zoomOverlay1',
   'zoomOverlay2',
   'redactionOverlay',
-  'toolStylePopup',
   DataElements.PAGE_MANIPULATION_OVERLAY,
   DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP,
   DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL,
@@ -55,7 +54,8 @@ const propTypes = {
   ariaLabel: PropTypes.string,
 };
 
-const viewerHeight = window.isApryseWebViewerWebComponent ? getRootNode()?.host.clientHeight : window.innerHeight;
+// During Web Component module evaluation, the root can be unset until `createUIInstance` pins it.
+const viewerHeight = window.isApryseWebViewerWebComponent ? getRootNode()?.host?.clientHeight || window.innerHeight : window.innerHeight;
 
 function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const dispatch = useDispatch();

@@ -8,16 +8,8 @@ import './RedactionItem.scss';
 import RedactionTextPreview from 'components/RedactionTextPreview';
 import classNames from 'classnames';
 import { redactionTypeMap } from 'constants/redactionTypes';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
 /* eslint-disable react/forbid-dom-props, react/forbid-component-props */
 const RedactionItem = (props) => {
-  // Remove if we get rid of legacy UI along with stylesheet changes
-  const [isCustomUI] = useSelector(
-    (state) => [
-      selectors.getFeatureFlags(state)?.customizableUI,
-    ]
-  );
   const {
     iconColor,
     annotation,
@@ -41,7 +33,7 @@ const RedactionItem = (props) => {
 
   const formattedDate = date ? dayjs(date).locale(language).format(dateFormat) : t('option.notesPanel.noteContent.noDate');
   const dateAndAuthor = `${author} - ${formattedDate}`;
-  const className = classNames('redaction-item', { 'redaction-item-selected': isSelected }, { 'modular-ui': isCustomUI });
+  const className = classNames('redaction-item', { 'redaction-item-selected': isSelected });
   const {
     label,
     icon = 'icon-text-redaction', // Default icon if none provided

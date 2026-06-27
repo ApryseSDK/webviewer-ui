@@ -180,11 +180,6 @@
       }
     }
 
-    @extend %tab-list;
-    @include tab-border-defaults;
-  }
-
-  &.modular-ui {
     .thumb-card {
       border: none;
       box-shadow: inset 0 0 0 1px var(--lighter-border);
@@ -194,5 +189,8 @@
         background: var(--gray-1);
       }
     }
+
+    @extend %tab-list;
+    @include tab-border-defaults;
   }
 }

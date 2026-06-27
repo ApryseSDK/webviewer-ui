@@ -10,6 +10,6 @@ import core from 'core';
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  * @fires notify on DocumentViewer if requires delete notification
  */
-export default (annotation, options = undefined, documentViewerKey = 1) => {
+export default (annotation, options, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().deleteAnnotations(annotation, options);
 };

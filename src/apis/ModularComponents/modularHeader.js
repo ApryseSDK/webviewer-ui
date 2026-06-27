@@ -341,7 +341,7 @@ export class ModularHeader {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function modularHeaderFactory(props) {
   const propsWithStore = { ...props, store };
   return new ModularHeader(propsWithStore);
 };

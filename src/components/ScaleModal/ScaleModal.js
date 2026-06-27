@@ -8,6 +8,7 @@ import {
   PrecisionType,
   scalePresetPrecision,
   PresetMeasurementSystems,
+  Units,
   fractionalUnits,
   ifFractionalPrecision,
   initialScale
@@ -67,6 +68,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
   const [presetScale, setPresetScale] = useState(measurementScalePreset[PresetMeasurementSystems.METRIC][0]);
   const [customScale, setCustomScale] = useState(new Scale(''));
   const [hasScaleChanged, setHasScaleChanged] = useState(false);
+  const [isCurrentPageScaleFromCalibration, setIsCurrentPageScaleFromCalibration] = useState(false);
 
   const totalScalesCount = Object.keys(core.getScales()).length;
 
@@ -79,6 +81,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
 
   useEffect(() => {
     setScaleOption(scaleOptions.CUSTOM);
+    setIsCurrentPageScaleFromCalibration(false);
     setCustomScale(new Scale(selectedScale.getScaleRatioAsArray()));
 
     const precision = core.getScalePrecision(selectedScale);
@@ -93,9 +96,13 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     setPrecisionOption(precisionItem);
 
     // Update/Create button should be disabled until the user makes a change
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setHasScaleChanged(false);
     });
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [selectedScale]);
 
   useDidUpdate(() => {
@@ -133,6 +140,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
       // Triggered when calibration is applied
       setCustomScale(new Scale(tempScale));
       dispatch(actions.updateCalibrationInfo({ isCalibration: false }));
+      setIsCurrentPageScaleFromCalibration(true);
       setIsFractionalPrecision(isFractionalUnit);
     }
   }, [isHidden]);
@@ -148,6 +156,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
       setCustomScale(initialScale);
       setIsFractionalPrecision(false);
       setPrecisionOption(precisionOptions[PrecisionType.DECIMAL][0]);
+      setIsCurrentPageScaleFromCalibration(false);
     }
   }, [isOpen, isAddingNewScale]);
 
@@ -183,11 +192,11 @@ const ScaleModal = ({ annotations, selectedTool }) => {
       let precisionValue = precisionOption[1];
 
       if (!isFractionalPrecision) {
-        if (unit !== 'ft-in') {
+        if (unit !== Units.FT_IN) {
           temp = temp.toFixed((1 / precisionValue).toString().length - 1);
         }
       } else {
-        if (unit === 'ft-in') {
+        if (unit === Units.FT_IN) {
           precisionValue /= 12;
         }
         temp = Math.round(temp / precisionValue) * precisionValue;
@@ -198,7 +207,10 @@ const ScaleModal = ({ annotations, selectedTool }) => {
 
     if (isCustomOption) {
       const scale = customScale.getScaleRatioAsArray();
-      scale[0][0] = getPrecisionsValue(scale[0][0], scale[0][1]);
+
+      if (!isCurrentPageScaleFromCalibration) {
+        scale[0][0] = getPrecisionsValue(scale[0][0], scale[0][1]);
+      }
       scale[1][0] = getPrecisionsValue(scale[1][0], scale[1][1]);
       return scale;
     }
@@ -219,6 +231,13 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     );
   };
 
+  const onCustomScaleChange = (newScale, { didPageScaleChange } = {}) => {
+    if (didPageScaleChange) {
+      setIsCurrentPageScaleFromCalibration(false);
+    }
+    setCustomScale(newScale);
+  };
+
   const modalClass = classNames('Modal', 'ScaleModal', {
     open: !isHidden,
     closed: isHidden
@@ -235,6 +254,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
       <ModalWrapper
         title="option.measurementOption.scale"
         isOpen={isOpen}
+        modalDataElement={DataElements.SCALE_MODAL}
         onCloseClick={closeModal}
         closeHandler={closeModal}
         swipeToClose
@@ -262,7 +282,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
             {isCustomOption ? (
               <ScaleCustom
                 scale={customScale.getScaleRatioAsArray()}
-                onScaleChange={setCustomScale}
+                onScaleChange={onCustomScaleChange}
                 precision={precisionOption[1]}
               />
             ) : (

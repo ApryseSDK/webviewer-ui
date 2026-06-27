@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Swipeable } from 'react-swipeable';
 import Button from 'components/Button';
 import FocusTrap from 'components/FocusTrap';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
+import COMPONENT_TYPES from 'constants/componentTypes';
 import PropTypes from 'prop-types';
 import './ModalWrapper.scss';
 import selectors from 'selectors';
@@ -110,7 +112,12 @@ const ModalWrapper = React.forwardRef((props, ref) => {
             }
             {renderHeader()}
           </SwipeableWrapper>
-          {props.children}
+          <ErrorBoundaryComponent
+            dataElement={props.modalDataElement}
+            componentType={COMPONENT_TYPES.MODAL}
+          >
+            {props.children}
+          </ErrorBoundaryComponent>
         </div>
       </div>
     </FocusTrap>
@@ -120,6 +127,7 @@ const ModalWrapper = React.forwardRef((props, ref) => {
 ModalWrapper.propTypes = {
   title: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
+  modalDataElement: PropTypes.string.isRequired,
   closeButtonDataElement: PropTypes.string,
   backButtonDataElement: PropTypes.string,
   onBackClick: PropTypes.func,
@@ -129,6 +137,7 @@ ModalWrapper.propTypes = {
   accessibleLabel: PropTypes.string,
   onSwipedUp: PropTypes.func,
   onSwipedDown: PropTypes.func,
+  children: PropTypes.node,
 };
 
 ModalWrapper.displayName = 'ModalWrapper';

@@ -103,6 +103,7 @@ const OfficeEditorColumnsModal = () => {
     <div className='OfficeEditorColumnsModal' data-element={DataElements.OFFICE_EDITOR_COLUMNS_MODAL}>
       <ModalWrapper
         title={t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}columnsModal.title`)}
+        modalDataElement={DataElements.OFFICE_EDITOR_COLUMNS_MODAL}
         closehandler={closeModalAndFocus}
         onCloseClick={closeModalAndFocus}
         swipeToClose

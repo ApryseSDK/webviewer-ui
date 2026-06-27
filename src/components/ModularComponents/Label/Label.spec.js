@@ -19,7 +19,7 @@ describe('Label', () => {
   const dataElement = 'custom-label';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const { container } = render(
       <Provider store={store}>
         <Label
@@ -34,7 +34,7 @@ describe('Label', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createLabel = createLabelAPI(store);
 
     const label = createLabel({

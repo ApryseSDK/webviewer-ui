@@ -197,6 +197,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   "transform": {
     "^.+\.json": "./jest/jsonTransform.js",
+    "(^|[/\\\\])build[/\\\\]core[/\\\\]webviewer-core\\.min\\.js$": "./jest/coreBundleTransform.js",
     ".(js|jsx)": "./jest/jestTransform.js",
     "^.+\.svg": "./jest/svgTransform.js",
   },

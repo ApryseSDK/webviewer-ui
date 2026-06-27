@@ -51,7 +51,7 @@ class RibbonItem extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function ribbonItemFactory(props) {
   const propsWithStore = { ...props, store };
   return new RibbonItem(propsWithStore);
 };

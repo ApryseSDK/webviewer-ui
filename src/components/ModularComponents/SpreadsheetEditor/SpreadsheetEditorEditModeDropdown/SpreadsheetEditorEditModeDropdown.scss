@@ -1,3 +1,9 @@
+@import '../../../../constants/officeEditor.scss';
+
+.spreadsheet-editor-edit-mode-dropdown {
+  @include oe-modular-custom-dropdown;
+}
+
 .header-item {
   display: inline-flex;
   align-items: center;

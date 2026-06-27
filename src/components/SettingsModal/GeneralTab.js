@@ -24,13 +24,13 @@ const GeneralTab = () => {
     selectors.getCurrentLanguage(state),
     selectors.getActiveTheme(state)
   ]);
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const dispatch = useDispatch();
   const store = useStore();
 
   const changeLanguage = (value) => {
     if (value !== currentLanguage) {
-      setLanguage(store)(value);
+      setLanguage(store, i18n)(value);
     }
   };
 

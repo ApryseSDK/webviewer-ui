@@ -79,6 +79,7 @@ const PasswordModal = () => {
   const getErrorModal = (errorMessage) => {
     return (
       <ModalWrapper isOpen={isOpen} title={'message.error'}
+        modalDataElement={DataElements.PASSWORD_MODAL}
         closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={closeModal}
       >
@@ -135,6 +136,7 @@ const PasswordModal = () => {
 
     return (
       <ModalWrapper isOpen={isOpen} title={'message.passwordRequired'}
+        modalDataElement={DataElements.PASSWORD_MODAL}
         closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={() => {
           setUserCancelled(true);

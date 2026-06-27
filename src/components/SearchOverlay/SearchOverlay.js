@@ -7,7 +7,6 @@ import throttle from 'lodash/throttle';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import classNames from 'classnames';
 import DataElements from 'constants/dataElement';
 
 import Icon from 'components/Icon';
@@ -60,7 +59,6 @@ function SearchOverlay(props) {
   const [isSearchOptionsFlyoutKeyboardTriggered, setSearchOptionsFlyoutKeyboardTriggered] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
   const dispatch = useDispatch();
@@ -362,13 +360,10 @@ function SearchOverlay(props) {
   const shouldShowDotOnFilterButton = isCaseSensitive || isWholeWord || isWildcard;
 
   return (
-    <div className={classNames({
-      'SearchOverlay': true,
-      'modular-ui': customizableUI
-    })}>
+    <div className="SearchOverlay">
       <div className="search-input-row">
         <div className='input-container'>
-          {customizableUI && <Icon glyph="icon-header-search" />}
+          <Icon glyph="icon-header-search" />
           <input
             className='search-panel-input'
             ref={searchTextInputRef}
@@ -376,7 +371,6 @@ function SearchOverlay(props) {
             autoComplete="off"
             onChange={textInputOnChange}
             value={searchValue}
-            placeholder={customizableUI ? '' : t('message.searchDocumentPlaceholder')}
             aria-label={t('message.searchDocumentPlaceholder')}
             id="SearchPanel__input"
             tabIndex={isPanelOpen ? 0 : -1}

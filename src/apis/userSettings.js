@@ -15,14 +15,14 @@ WebViewer(...)
   .then(function(instance) {
     instance.UI.setCustomSettings([
       {
-        label: 'Enable High Contrast Mode',
-        description: 'Turns high contrast mode on to help with accessibility.',
-        isChecked: () => instance.UI.isHighContrastModeEnabled(),
-        onToggled: (enable) => {
-          if (enable) {
-            instance.UI.enableHighContrastMode();
+        label: 'Switch theme',
+        description: 'Switch between light and dark themes.',
+        isChecked: () => instance.UI.selectors.getActiveTheme() === 'dark',
+        onToggled: (checked) => {
+          if (checked) {
+            instance.UI.setTheme('dark');
           } else {
-            instance.UI.disableHighContrastMode();
+            instance.UI.setTheme('light');
           }
         }
       }
@@ -101,9 +101,9 @@ WebViewer(...)
     instance.UI.importUserSettings(newUserSettings);
   });
  */
-export const importUserSettings = (store) => (userSettings) => {
+export const importUserSettings = (store, instanceI18n) => (userSettings) => {
   if (SettingKeys.LANGUAGE in userSettings) {
-    setLanguage(store)(userSettings[SettingKeys.LANGUAGE]);
+    setLanguage(store, instanceI18n)(userSettings[SettingKeys.LANGUAGE]);
   }
   if (SettingKeys.THEME in userSettings) {
     store.dispatch(actions.setActiveTheme(userSettings[SettingKeys.THEME]));

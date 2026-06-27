@@ -51,7 +51,7 @@ function ViewControlsOverlay() {
     isPageTransitionEnabled = true;
   }
   const showCompareButton = !isIE11 && !isMultiTab && isMultiViewerModeAvailable;
-  const toggleCompareMode = () => isMultiViewerMode ? cleanUpMultiViewer(store) : setupMultiViewer(store);
+  const toggleCompareMode = async () => isMultiViewerMode ? await cleanUpMultiViewer(store) :  setupMultiViewer(store);
 
   const handleClick = (pageTransition, layout) => {
     const setDisplayMode = () => {

@@ -11,7 +11,6 @@ import {
   getEnabledRibbonItems,
   getGenericPanelsOnTheSameLocation,
   isElementOpen,
-  getIsCustomUIEnabled,
   getGenericPanels,
   isDisabledViewOnly,
   getVisibleTabPanelTabs
@@ -29,6 +28,15 @@ import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { areConfigsEquivalent } from 'helpers/compareObjects';
 import i18next from 'i18next';
 import { panelNames } from 'src/constants/panel';
+
+const getSafeDir = () => {
+  try {
+    return i18next.dir();
+  } catch (e) {
+    console.warn('i18next.dir() threw an error, defaulting to "ltr". Error:', e);
+    return 'ltr';
+  }
+};
 
 export const updateViewOnlyBlacklist = (dataElements) => ({
   type: 'UPDATE_VIEW_ONLY_BLACKLIST',
@@ -95,11 +103,6 @@ export const setEnableDesktopOnlyMode = (enableDesktopOnlyMode) => ({
   payload: { enableDesktopOnlyMode },
 });
 
-export const setHighContrastMode = (useHighContrastMode) => ({
-  type: 'SET_HIGH_CONTRAST_MODE',
-  payload: { useHighContrastMode },
-});
-
 export const setCanUndo = (canUndo, documentViewerKey = 1) => ({
   type: 'SET_CAN_UNDO',
   payload: { canUndo, documentViewerKey },
@@ -124,7 +127,7 @@ export const setStandardStamps = (t) => async (dispatch) => {
         canvasWidth,
         canvasHeight,
         text,
-        direction: i18next.dir(),
+        direction: getSafeDir(),
       };
 
       return rubberStampTool.getPreview(annotation, options);
@@ -156,7 +159,7 @@ export const setCustomStamps = (t) => async (dispatch) => {
         canvasWidth,
         canvasHeight,
         text,
-        direction: i18next.dir(),
+        direction: getSafeDir(),
       };
 
       return rubberStampTool.getPreview(annotation, options);
@@ -186,38 +189,18 @@ const stashEnabledRibbons = (ribbonItems) => (
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
   // Set default toolbar group to View
   dispatch(setToolbarGroup('toolbarGroup-View'));
-  let toolbarGroupsToDisable;
   const state = getState();
-  if (getIsCustomUIEnabled(state)) {
-    // we must remember these toolbar groups to re-enable them when we exit read-only mode
-    toolbarGroupsToDisable = getEnabledRibbonItems(state).filter((item) => item !== 'toolbarGroup-View');
-    dispatch(stashEnabledRibbons(toolbarGroupsToDisable));
-  } else {
-    toolbarGroupsToDisable = Object.keys(state.viewer.headers).filter(
-      (key) => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View',
-    );
-  }
+  // we must remember these toolbar groups to re-enable them when we exit read-only mode
+  const toolbarGroupsToDisable = getEnabledRibbonItems(state).filter((item) => item !== 'toolbarGroup-View');
+  dispatch(stashEnabledRibbons(toolbarGroupsToDisable));
 
   disableElements(toolbarGroupsToDisable, PRIORITY_TWO)(dispatch, getState);
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
   const state = getState();
-  // There can be a situation where we switch to FormBuilder mode and we get a race condition between setting
-  // the active toolbarGroup as what is in the current state and Forms, as redux hasnt dispatched the update to the Forms tool bar yet.
-  // We double check here if we are in form mode and set the correct tool bar group
-  // We enable ribbons when going into form mode, as we temporarily elevate the user's permissions
-  const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
-  const toolbarGroup = isInFormFieldCreationMode ? DataElements.FORMS_TOOLBAR_GROUP : state.viewer.toolbarGroup;
-  let toolbarGroupsToEnable;
-  const isCustomUIDisabled = !getIsCustomUIEnabled(state);
-  if (isCustomUIDisabled) {
-    dispatch(setToolbarGroup(toolbarGroup || DataElements.ANNOTATE_TOOLBAR_GROUP));
-    toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter((key) => key.includes('toolbarGroup-'));
-  } else {
-    // re-enable the stashed ribbons
-    toolbarGroupsToEnable = state.viewer.enabledRibbonsStash;
-  }
+  // re-enable the stashed ribbons
+  const toolbarGroupsToEnable = state.viewer.enabledRibbonsStash;
 
   enableElements(toolbarGroupsToEnable, PRIORITY_TWO)(dispatch, getState);
 };
@@ -332,7 +315,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
       });
     }
   }
-  dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+  dispatch(closeElements(['signatureOverlay']));
 
   dispatch({
     type: 'SET_TOOLBAR_GROUP',
@@ -544,18 +527,15 @@ export const openElement = (dataElement) => (dispatch, getState) => {
   if (isDataElementLeftPanel(dataElement, state) && dataElement !== DataElements.NOTES_PANEL) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
-      fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, ['leftPanel', true]);
     }
     dispatch(setActiveLeftPanel(dataElement));
   } else {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
-    fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
+    fireEvent(Events.VISIBILITY_CHANGED, [dataElement, true]);
 
     if (dataElement === 'leftPanel' && !isLeftPanelOpen) {
-      fireEvent(Events.VISIBILITY_CHANGED, {
-        element: state.viewer.activeLeftPanel,
-        isVisible: true,
-      });
+      fireEvent(Events.VISIBILITY_CHANGED, [state.viewer.activeLeftPanel, true]);
     }
   }
 };
@@ -583,10 +563,10 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
 
   if (isDataElementLeftPanel(dataElement, state) && state.viewer.openElements['leftPanel']) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
-    fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: false });
+    fireEvent(Events.VISIBILITY_CHANGED, ['leftPanel', false]);
   } else {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
-    fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: false });
+    fireEvent(Events.VISIBILITY_CHANGED, [dataElement, false]);
 
     if (isFlyoutElement) {
       dispatch({
@@ -606,10 +586,7 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
     }
 
     if (dataElement === 'leftPanel' && state.viewer.openElements['leftPanel']) {
-      fireEvent(Events.VISIBILITY_CHANGED, {
-        element: state.viewer.activeLeftPanel,
-        isVisible: false,
-      });
+      fireEvent(Events.VISIBILITY_CHANGED, [state.viewer.activeLeftPanel, false]);
     }
   }
 };
@@ -631,10 +608,8 @@ export const toggleElement = (dataElement) => (dispatch, getState) => {
     return;
   }
 
-  if (getIsCustomUIEnabled(state)) {
-    const isGenericPanel = getGenericPanels(state).find((item) => dataElement === item.dataElement);
-    isGenericPanel && closeOtherOpenPanelsInSameLocation(state, dispatch, dataElement);
-  }
+  const isGenericPanel = getGenericPanels(state).find((item) => dataElement === item.dataElement);
+  isGenericPanel && closeOtherOpenPanelsInSameLocation(state, dispatch, dataElement);
 
   if (!state.viewer.notesInLeftPanel) {
     if (rightPanelList.includes(dataElement)) {
@@ -673,7 +648,8 @@ const itemKeysToStore = [
   'groupedItems', 'grow', 'gap', 'position', 'placement', 'alwaysVisible',
   'style', 'headerDirection', 'icon', 'toolbarGroup', 'direction',
   'states', 'mount', 'unmount', 'initialState', 'hidden', 'toggleElement',
-  'toolName', 'color', 'buttonType', 'render', 'renderArguments', 'className'];
+  'toolName', 'color', 'buttonType', 'render', 'renderArguments', 'className',
+  'shouldToggleVisibility'];
 
 //* Recursively normalize the items in a header
 const normalizeItems = (items, componentsMap, existingComponentsMap) => {
@@ -832,12 +808,9 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
         type: 'CLOSE_ELEMENT',
         payload: { dataElement: state.viewer.activeLeftPanel },
       });
-      fireEvent(Events.VISIBILITY_CHANGED, {
-        element: state.viewer.activeLeftPanel,
-        isVisible: false,
-      });
+      fireEvent(Events.VISIBILITY_CHANGED, [state.viewer.activeLeftPanel, false]);
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
-      fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, [dataElement, true]);
     }
   } else {
     const panelDataElements = [
@@ -913,7 +886,7 @@ export const setPageLabels = (pageLabels, documentViewerKey = 1) => (dispatch) =
   });
 };
 export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => {
-  fireEvent(Events.SELECTED_THUMBNAIL_CHANGED, selectedThumbnailPageIndexes);
+  fireEvent(Events.SELECTED_THUMBNAIL_CHANGED, [selectedThumbnailPageIndexes]);
 
   return {
     type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
@@ -1284,6 +1257,16 @@ export const setCustomBorderColors = (customColors) => ({
   type: 'SET_CUSTOM_BORDER_COLORS',
   payload: { customColors },
 });
+export const setAutosaveEnabled = (enabled) => ({
+  type: 'SET_AUTOSAVE_ENABLED',
+  payload: { enabled },
+});
+
+export const setAutosaveInterval = (ms) => ({
+  type: 'SET_AUTOSAVE_INTERVAL',
+  payload: { ms },
+});
+
 export const setReaderPageMode = (readerPageMode) => ({
   type: 'SET_READER_PAGE_MODE',
   payload: { readerPageMode },

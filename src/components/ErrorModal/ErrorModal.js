@@ -72,6 +72,7 @@ const ErrorModal = () => {
       data-element={DataElements.ERROR_MODAL}
     >
       <ModalWrapper isOpen={isOpen} title={title || 'message.error'}
+        modalDataElement={DataElements.ERROR_MODAL}
         closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={closeErrorModal}
       >

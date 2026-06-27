@@ -7,10 +7,6 @@ import { getViewOnlyShortcuts as getShortcuts, setViewOnlyShortcuts, Shortcuts }
 const { checkTypes, TYPES } = window.Core;
 
 const toggleViewOnlyMode = (store, enable) => {
-  const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
-  if (!isCustomUI) {
-    console.error('View Only Mode can only be toggled when using the Default UI. Please enable the Default UI via WebViewer constructor options.');
-  }
   const { dispatch } = store;
   if (enable) {
     core.getFormFieldCreationManager().endFormFieldCreationMode();

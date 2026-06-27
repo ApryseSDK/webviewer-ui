@@ -30,7 +30,9 @@ describe('getTotalPages', () => {
   it('returns workbook sheet count in spreadsheet mode', () => {
     core.getDocument.mockReturnValue({
       getType: () => 'spreadsheetEditor',
-      getSpreadsheetEditorDocument: () => ({
+    });
+    core.getDocumentViewer.mockReturnValue({
+      getSpreadsheetEditorManager: () => ({
         getWorkbook: () => ({
           sheetCount: 5,
         }),
@@ -38,13 +40,14 @@ describe('getTotalPages', () => {
     });
 
     expect(getTotalPages()).toBe(5);
-    expect(core.getDocumentViewer).not.toHaveBeenCalled();
   });
 
   it('returns 0 when spreadsheet workbook is not ready yet', () => {
     core.getDocument.mockReturnValue({
       getType: () => 'spreadsheetEditor',
-      getSpreadsheetEditorDocument: () => ({
+    });
+    core.getDocumentViewer.mockReturnValue({
+      getSpreadsheetEditorManager: () => ({
         getWorkbook: () => undefined,
       }),
     });

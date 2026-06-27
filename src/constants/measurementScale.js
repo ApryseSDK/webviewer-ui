@@ -1,29 +1,54 @@
 const Scale = window.Core.Scale;
 
+// Keep key names aligned with core MeasurementUnits
+export const Units = Object.freeze({
+  MM: 'mm',
+  CM: 'cm',
+  M: 'm',
+  KM: 'km',
+  MI: 'mi',
+  YD: 'yd',
+  FT: 'ft',
+  IN: 'in',
+  FT_IN: 'ft-in',
+  PRIME_FT: 'ft\'',
+  DOUBLE_PRIME_IN: 'in"',
+  PT: 'pt'
+});
+
+export const UnitGroups = Object.freeze({
+  FRACTIONAL: Object.freeze([Units.IN, Units.FT_IN]),
+  METRIC: Object.freeze([Units.MM, Units.CM, Units.M, Units.KM])
+});
+
+export const HintKeys = Object.freeze({
+  FT_IN_DECIMAL: 'ft-in decimal'
+});
+
 export const PresetMeasurementSystems = {
   METRIC: 'metric',
   IMPERIAL: 'imperial'
 };
 
 const metricPreset = [
-  ['1:10', new Scale([[1, 'mm'], [10, 'mm']])],
-  ['1:20', new Scale([[1, 'mm'], [20, 'mm']])],
-  ['1:50', new Scale([[1, 'mm'], [50, 'mm']])],
-  ['1:100', new Scale([[1, 'mm'], [100, 'mm']])],
-  ['1:200', new Scale([[1, 'mm'], [200, 'mm']])],
-  ['1:500', new Scale([[1, 'mm'], [500, 'mm']])],
-  ['1:1000', new Scale([[1, 'mm'], [1000, 'mm']])]
+  ['1:10', new Scale([[1, Units.MM], [10, Units.MM]])],
+  ['1:20', new Scale([[1, Units.MM], [20, Units.MM]])],
+  ['1:50', new Scale([[1, Units.MM], [50, Units.MM]])],
+  ['1:100', new Scale([[1, Units.MM], [100, Units.MM]])],
+  ['1:200', new Scale([[1, Units.MM], [200, Units.MM]])],
+  ['1:500', new Scale([[1, Units.MM], [500, Units.MM]])],
+  ['1:1000', new Scale([[1, Units.MM], [1000, Units.MM]])]
 ];
 const imperialPreset = [
-  ['1/16"=1\'-0"', new Scale([[1 / 16, 'in'], [1, 'ft-in']])],
-  ['3/32"=1\'-0"', new Scale([[3 / 32, 'in'], [1, 'ft-in']])],
-  ['1/8"=1\'-0"', new Scale([[1 / 8, 'in'], [1, 'ft-in']])],
-  ['3/16"=1\'-0"', new Scale([[3 / 16, 'in'], [1, 'ft-in']])],
-  ['1/4"=1\'-0"', new Scale([[1 / 4, 'in'], [1, 'ft-in']])],
-  ['3/8"=1\'-0"', new Scale([[3 / 8, 'in'], [1, 'ft-in']])],
-  ['1/2"=1\'-0"', new Scale([[1 / 2, 'in'], [1, 'ft-in']])],
-  ['3/4"=1\'-0"', new Scale([[3 / 4, 'in'], [1, 'ft-in']])],
-  ['1"=1\'-0"', new Scale([[1, 'in'], [1, 'ft-in']])]
+  ['1/16"=1\'-0"', new Scale([[1 / 16, Units.IN], [1, Units.FT_IN]])],
+  ['3/32"=1\'-0"', new Scale([[3 / 32, Units.IN], [1, Units.FT_IN]])],
+  ['1/8"=1\'-0"', new Scale([[1 / 8, Units.IN], [1, Units.FT_IN]])],
+  ['3/16"=1\'-0"', new Scale([[3 / 16, Units.IN], [1, Units.FT_IN]])],
+  ['1/4"=1\'-0"', new Scale([[1 / 4, Units.IN], [1, Units.FT_IN]])],
+  ['3/8"=1\'-0"', new Scale([[3 / 8, Units.IN], [1, Units.FT_IN]])],
+  ['1/2"=1\'-0"', new Scale([[1 / 2, Units.IN], [1, Units.FT_IN]])],
+  ['3/4"=1\'-0"', new Scale([[3 / 4, Units.IN], [1, Units.FT_IN]])],
+  ['1"=1\'-0"', new Scale([[1, Units.IN], [1, Units.FT_IN]])]
 ];
 
 export const getMeasurementScalePreset = () => ({
@@ -104,31 +129,31 @@ export const parseFtInFractional = (valueStr) => {
   return sum;
 };
 
-export const fractionalUnits = ['in', 'ft-in'];
-export const metricUnits = ['mm', 'cm', 'm', 'km'];
+export const fractionalUnits = UnitGroups.FRACTIONAL;
+export const metricUnits = UnitGroups.METRIC;
 
 export const ifFractionalPrecision = (precision) => fractionalPrecisions.map((item) => item[0]).includes(precision) || fractionalPrecisions.map((item) => item[1]).includes(precision);
 
 export const hintValues = {
-  'in': 'eg. 1 1/2"',
-  'ft-in': 'eg. 1\'-1 1/2"',
-  'ft-in decimal': 'eg. 1ft-10.5in'
+  [Units.IN]: 'eg. 1 1/2"',
+  [Units.FT_IN]: 'eg. 1\'-1 1/2"',
+  [HintKeys.FT_IN_DECIMAL]: 'eg. 1ft-10.5in'
 };
 
 // the base unit is cm
 const unitConversion = {
-  'mm': 0.1,
-  'cm': 1,
-  'm': 100,
-  'km': 100000,
-  'mi': 160394,
-  'yd': 91.44,
-  'ft': 30.48,
-  'in': 2.54,
-  'ft\'': 30.48,
-  'in"': 2.54,
-  'pt': 2.54 / 72,
-  'ft-in': 30.48
+  [Units.MM]: 0.1,
+  [Units.CM]: 1,
+  [Units.M]: 100,
+  [Units.KM]: 100000,
+  [Units.MI]: 160394,
+  [Units.YD]: 91.44,
+  [Units.FT]: 30.48,
+  [Units.IN]: 2.54,
+  [Units.PRIME_FT]: 30.48,
+  [Units.DOUBLE_PRIME_IN]: 2.54,
+  [Units.PT]: 2.54 / 72,
+  [Units.FT_IN]: 30.48
 };
 
 export const convertUnit = (value, unit, newUnit) => {
@@ -147,4 +172,4 @@ export const scalePresetPrecision = {
   [imperialPreset[8][0]]: fractionalPrecisions[0]
 };
 
-export const initialScale = new Scale({ pageScale: { value: 1, unit: 'in' }, worldScale: { value: 1, unit: 'in' } });
+export const initialScale = new Scale({ pageScale: { value: 1, unit: Units.IN }, worldScale: { value: 1, unit: Units.IN } });

@@ -23,11 +23,9 @@ const StylePresetDropdown = (props) => {
   const dispatch = useDispatch();
   const [
     cursorStyleToPreset,
-    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getCursorStyleToPreset(state, AVAILABLE_STYLE_PRESET_MAP, COMMON_COLORS),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -39,7 +37,6 @@ const StylePresetDropdown = (props) => {
         'OfficeEditorStylePresetDropdown': true,
         'text-left': true,
         'flyout-item': isFlyoutItem,
-        'modular-ui': customizableUI,
       })}
       items={Object.keys(AVAILABLE_STYLE_PRESET_MAP)}
       onClickItem={async (item) => {

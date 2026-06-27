@@ -9,6 +9,8 @@ import actions from 'actions';
 import classNames from 'classnames';
 import { PANEL_SIZES, panelNames } from 'constants/panel';
 import useResizeObserver from 'hooks/useResizeObserver';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
+import COMPONENT_TYPES from 'constants/componentTypes';
 const propTypes = {
   children: PropTypes.node,
 };
@@ -116,7 +118,14 @@ const MobilePanelWrapper = ({ children }) => {
         </div>
       </Swipeable>
       <div className="mobile-panel-body" css={wrapperBodyStyle}>
-        {React.Children.map(children, (child) => React.cloneElement(child, { panelSize: mobilePanelSize }))}
+        {React.Children.map(children, (child) => (
+          <ErrorBoundaryComponent
+            dataElement={child.props.dataElement}
+            componentType={COMPONENT_TYPES.PANEL}
+          >
+            {React.cloneElement(child, { panelSize: mobilePanelSize })}
+          </ErrorBoundaryComponent>
+        ))}
       </div>
     </div>
   );

@@ -192,4 +192,53 @@ describe('Sort Strategies', () => {
       }).not.toThrow();
     });
   });
+
+  describe('sort by number', () => {
+    it('should sort by associated number', () => {
+      const sortStrategies = getSortStrategies();
+      const numberedNotes = [
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 2 : '',
+        },
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 1 : '',
+        },
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 3 : '',
+        },
+      ];
+
+      const sorted = sortStrategies.number.getSortedNotes([...numberedNotes]);
+      expect(sorted.map((n) => n.getCustomData('trn-associated-number'))).toEqual([1, 2, 3]);
+    });
+
+    it('should separate by associated number', () => {
+      const sortStrategies = getSortStrategies();
+      const shouldRenderSeparator = sortStrategies.number.shouldRenderSeparator;
+      const numberedNotes = [
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 1 : '',
+        },
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 1 : '',
+        },
+        {
+          getCustomData: (key) => key === 'trn-associated-number' ? 2 : '',
+        },
+      ];
+
+      const separators = [];
+
+      numberedNotes.forEach((note, index) => {
+        const prevNote = numberedNotes[index - 1];
+
+        if (prevNote && shouldRenderSeparator(prevNote, note)) {
+          separators.push(index);
+        }
+      });
+
+      expect(separators.length).toEqual(1);
+      expect(separators[0]).toEqual(2);
+    });
+  });
 });

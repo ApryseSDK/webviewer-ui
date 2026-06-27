@@ -9,6 +9,7 @@ import ModalWrapper from '../ModalWrapper';
 import getRootNode from 'helpers/getRootNode';
 import classNames from 'classnames';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import DataElements from 'constants/dataElement';
 
 import './EditKeyboardShortcutModal.scss';
 
@@ -122,7 +123,12 @@ const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandS
 
   return (
     <div className="Modal EditKeyboardShortcutModal open">
-      <ModalWrapper isOpen={true} title='option.settings.editKeyboardShortcut' onCloseClick={finishEditing}>
+      <ModalWrapper
+        isOpen={true}
+        title='option.settings.editKeyboardShortcut'
+        modalDataElement={DataElements.EDIT_KEYBOARD_SHORTCUT_MODAL}
+        onCloseClick={finishEditing}
+      >
         <div className="body">
           <div className={classNames({
             'keyboard-shortcut': true,

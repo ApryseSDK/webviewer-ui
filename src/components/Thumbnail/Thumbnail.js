@@ -13,6 +13,7 @@ import getRootNode from 'helpers/getRootNode';
 import findFocusableElements from 'helpers/findFocusableElements';
 import useIsRTL from 'src/hooks/useIsRTL';
 import useCore from 'hooks/useCore';
+
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
 
@@ -96,11 +97,17 @@ const Thumbnail = React.forwardRef((props, ref) => {
     }
   };
 
+  // Resolve the thumbnail container within THIS component's own DOM tree. The singleton getRootNode() helper returns the most recently registered WebViewer instance's root, so in multi-instance setups it would render thumbnails into the wrong viewer's panel. The ref's native getRootNode() always returns this instance's ShadowRoot (or document when not a WC).
+  const getThumbnailContainer = () => {
+    const root = thumbContainerRef.current?.getRootNode?.() || getRootNode();
+    return root.querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
+  };
+
   const loadThumbnailAsync = () => {
     cancelPendingLoad();
     loadTimeoutRef.current = setTimeout(() => {
       loadTimeoutRef.current = null;
-      const thumbnailContainer = getRootNode().querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
+      const thumbnailContainer = getThumbnailContainer();
       const isRTL = rtlRef.current;
 
       const pageNum = index + 1;
@@ -125,7 +132,7 @@ const Thumbnail = React.forwardRef((props, ref) => {
             }
             loadRequestIdRef.current = null;
 
-            const thumbnailContainer = getRootNode().querySelector(`.ThumbnailsPanel.${panelSelector} #pageThumb${index}`);
+            const thumbnailContainer = getThumbnailContainer();
             if (thumbnailContainer) {
               const childElement = thumbnailContainer.querySelector('.page-image');
               if (childElement) {

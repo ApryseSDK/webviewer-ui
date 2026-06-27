@@ -10,6 +10,7 @@ import { isMobileSize, isTabletSize } from 'helpers/getDeviceSize';
 import ModalWrapper from 'components/ModalWrapper';
 import selectors from 'selectors';
 import { useSelector } from 'react-redux';
+import DataElements from 'constants/dataElement';
 
 const MAX_NAME_LENGTH_BEFORE_TRUNCATION = 25;
 const TRUNCATION_LENGTH = 10;
@@ -162,6 +163,7 @@ const FileSelectedPanel = React.forwardRef((
     <div className="fileSelectedPanel container" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
       <ModalWrapper
         title={t('component.pageReplaceModalTitle')}
+        modalDataElement={DataElements.PAGE_REPLACEMENT_MODAL}
         closeButtonDataElement={'pageReplacementModalClose'}
         onCloseClick={onCloseHandler}
         swipeToClose

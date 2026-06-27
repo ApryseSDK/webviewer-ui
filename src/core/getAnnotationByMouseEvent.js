@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default (e, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getAnnotationManager().getAnnotationByMouseEvent(e);
+export default (e, documentViewerKey) => core.getDocumentViewer(documentViewerKey).getAnnotationManager().getAnnotationByMouseEvent(e);

@@ -48,7 +48,7 @@ describe('FormFieldIndicatorContainer', () => {
 
   beforeEach(() => {
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
     });
     jest.clearAllMocks();
   });

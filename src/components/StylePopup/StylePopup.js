@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import i18next from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
@@ -63,6 +63,7 @@ class StylePopup extends React.PureComponent {
     fonts: PropTypes.array,
     isSnapModeEnabled: PropTypes.bool,
     isInFormBuilderAndNotFreeText: PropTypes.bool,
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -257,7 +258,8 @@ class StylePopup extends React.PureComponent {
       isSnapModeEnabled,
       isInFormBuilderAndNotFreeText,
       onFreeTextSizeToggle,
-      isFreeTextAutoSize
+      isFreeTextAutoSize,
+      t,
     } = this.props;
     const resolvedAnnotationStyle = annotationStyle ?? this.props.style;
 
@@ -325,7 +327,7 @@ class StylePopup extends React.PureComponent {
               <>
                 <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={'toolbar'}>
                   <div className="menu-title">
-                    {i18next.t('option.stylePopup.labelText')}
+                    {t('option.stylePopup.labelText')}
                   </div>
                   <Icon glyph={`icon-chevron-${isLabelTextContainerActive ? 'up' : 'down'}`} />
                 </div>
@@ -341,7 +343,7 @@ class StylePopup extends React.PureComponent {
               <>
                 <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={'toolbar'}>
                   <div className="menu-title">
-                    {i18next.t('option.stylePopup.textStyle')}
+                    {t('option.stylePopup.textStyle')}
                   </div>
                   <Icon glyph={`icon-chevron-${isTextStyleContainerActive ? 'up' : 'down'}`} />
                 </div>
@@ -366,7 +368,7 @@ class StylePopup extends React.PureComponent {
               <>
                 <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={'toolbar'}>
                   <div className="menu-title">
-                    {i18next.t('option.stylePopup.colors')}
+                    {t('option.stylePopup.colors')}
                   </div>
                   <Icon glyph={`icon-chevron-${isColorsContainerActive ? 'up' : 'down'}`} />
                 </div>
@@ -398,7 +400,7 @@ class StylePopup extends React.PureComponent {
               dataElement="measurementSnappingOption"
               id="measurement-snapping"
               type="checkbox"
-              label={i18next.t('option.shared.enableSnapping')}
+              label={t('option.shared.enableSnapping')}
               checked={isSnapModeEnabled}
               onChange={this.onSnappingChange}
             />
@@ -446,7 +448,7 @@ const mapDispatchToProps = {
   openElement: actions.openElement,
   onSnapModeChange: actions.setEnableSnapMode,
 };
-const ConnectedStylePopup = connect(mapStateToProps, mapDispatchToProps)(StylePopup);
+const ConnectedStylePopup = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(StylePopup));
 
 const connectedComponent = (props) => {
   const isMobile = isMobileSize();

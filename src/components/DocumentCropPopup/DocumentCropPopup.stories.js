@@ -1,9 +1,9 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
+import { MockApp, createStore as createMockAppStore } from 'helpers/storybookHelper';
 import DocumentCropPopup from './DocumentCropPopup';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DimensionsInput from './DimensionsInput';
-import { MockApp, createStore as createMockAppStore } from 'helpers/storybookHelper';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import initialState from 'src/redux/initialState';
 import { userEvent, within, expect } from 'storybook/test';
@@ -26,7 +26,7 @@ function rootReducer(state = basicInitialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const createMockAnnotation = () => {
   return {

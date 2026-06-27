@@ -2,6 +2,7 @@
 
 .thumbnailControls-overlay {
   display: grid;
+
   @include ie11 {
     display: flex;
   }
@@ -28,7 +29,8 @@
     }
 
     &:hover {
-      background: var(--view-header-button-hover);
+      border-color: var(--focus-border);
+      background: var(--tools-button-hover);
       border-radius: 4px;
     }
 
@@ -38,13 +40,6 @@
       .Icon {
         color: var(--selected-icon-color);
       }
-    }
-  }
-
-  &.modular-ui {
-    .Button:hover {
-      border: 1px solid var(--focus-border);
-      background: var(--tools-button-hover);
     }
   }
 
@@ -87,7 +82,8 @@
     }
 
     &:hover {
-      background: var(--view-header-button-hover);
+      border-color: var(--focus-border);
+      background: var(--tools-button-hover);
       border-radius: 4px;
     }
   }

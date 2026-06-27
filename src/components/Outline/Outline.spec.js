@@ -51,7 +51,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
 
   beforeEach(() => {
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
     });
     store.dispatch(actions.setIsMultiViewerMode(true));

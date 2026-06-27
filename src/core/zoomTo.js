@@ -7,6 +7,6 @@ import core from 'core';
  * @fires zoomUpdated on DocumentViewer
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:zoomUpdated__anchor
  */
-export default (zoomFactor, x, y, documentViewerKey = 1) => {
+export default (zoomFactor, x, y, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).zoomTo(zoomFactor, x, y);
 };

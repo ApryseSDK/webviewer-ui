@@ -139,6 +139,7 @@ const CustomStampModal = () => {
         <ModalWrapper
           ref={modalWrapperRef}
           title={t('option.customStampModal.modalName')}
+          modalDataElement={DataElements.CUSTOM_STAMP_MODAL}
           closeHandler={closeModal}
           onCloseClick={closeModal}
           isOpen={isOpen}

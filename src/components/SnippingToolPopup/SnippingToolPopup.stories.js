@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
+import { MockApp } from 'helpers/storybookHelper';
 import SnippingToolPopup from './SnippingToolPopup';
-import { MockApp, createStore } from 'helpers/storybookHelper';
 import { Provider } from 'react-redux';
 import initialState from 'src/redux/initialState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
@@ -21,7 +21,8 @@ const basicInitialState = {
   },
 };
 
-function rootReducer(state = basicInitialState, action) {
+// Previously the story configured Redux as configureStore({ reducer: () => rootReducer }). That made the Redux state be the rootReducer function itself, not basicInitialState. So selectors like getCustomElementOverrides(state) saw state.viewer as undefined.
+function rootReducer(state = basicInitialState) {
   return state;
 }
 
@@ -89,7 +90,7 @@ export function PopupInApp(args, context) {
     },
   };
 
-  const mockAppStore = createStore(mockState);
+  const mockAppStore = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(mockAppStore);
 
   return (

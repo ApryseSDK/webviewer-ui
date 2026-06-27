@@ -7,7 +7,7 @@ import core from 'core';
  * @fires zoomUpdated on DocumentViewer
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:zoomUpdated__anchor
  */
-export default (zoomFactor, documentViewerKey = 1, mouseEvent) => {
+export default (zoomFactor, documentViewerKey, mouseEvent) => {
   // left panel width when it's not closed
   // it still maintains its width when closed
   const xOffset = document.querySelector('[data-element=leftPanel]:not(.closed)')?.offsetWidth || 0;

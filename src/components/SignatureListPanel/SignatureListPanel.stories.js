@@ -1,8 +1,9 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import SignatureListPanel from './SignatureListPanel';
-import { mockSavedSignatures, mockSavedInitials } from '../SignatureStylePopup/mockedSignatures';
+import { mockSavedSignatures, mockSavedInitials } from '../SignaturePanel/mockedSignatures';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import { mobileStoryParameters } from 'helpers/storybookParams';
@@ -48,7 +49,7 @@ const SignatureListPanelInApp = (context, location, signatures = [], initials = 
     },
   };
 
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} initialDirection={addonRtl} />;

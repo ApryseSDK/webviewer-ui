@@ -37,7 +37,7 @@ class Label extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function labelFactory(props) {
   const propsWithStore = { ...props, store };
   return new Label(propsWithStore);
 };

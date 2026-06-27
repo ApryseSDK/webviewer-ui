@@ -1,0 +1,2 @@
+import useSyncHiddenToolGroupVisibility from './useSyncHiddenToolGroupVisibility';
+export default useSyncHiddenToolGroupVisibility;

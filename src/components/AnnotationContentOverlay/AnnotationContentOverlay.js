@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import PropTypes from 'prop-types';
 import useCore from 'hooks/useCore';
 import selectors from 'selectors';
@@ -84,7 +85,7 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     }
   }, [annotation, clientXY, fitWindowSize]);
 
-  const numberOfReplies = annotation?.getReplies().length;
+  const numberOfReplies = annotation?.getReplies().filter((reply) => !isAutosaveDraftReply(reply)).length;
   const preRenderedElements = isUsingCustomHandler && annotation ? customHandler(annotation) : null;
   const customRender = useCallback(() => preRenderedElements, [preRenderedElements]);
 

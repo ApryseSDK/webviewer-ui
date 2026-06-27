@@ -3,12 +3,30 @@ import core from 'core';
 import { fireError } from 'helpers/fireEvent';
 import getFileExtension from 'helpers/getFileExtension';
 import getHashParameters from 'helpers/getHashParameters';
+import normalizeInitialEditMode from 'helpers/normalizeInitialEditMode';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
-import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_XLSX_EXTENSIONS } from 'constants/customizationVariables';
+import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_SPREADSHEET_EXTENSIONS } from 'constants/customizationVariables';
+import { SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   options = { ...getDefaultOptions(), ...options };
+
+  const normalizedSpreadsheetInitialEditMode = normalizeInitialEditMode(
+    options.spreadsheetEditorOptions?.initialEditMode,
+    Object.values(SpreadsheetEditorEditMode),
+    undefined,
+    SpreadsheetEditorEditMode.EDITING,
+  );
+  if (normalizedSpreadsheetInitialEditMode !== undefined) {
+    options = {
+      ...options,
+      spreadsheetEditorOptions: {
+        ...options.spreadsheetEditorOptions,
+        initialEditMode: normalizedSpreadsheetInitialEditMode,
+      },
+    };
+  }
 
   options.docId = options.docId || options.documentId || null;
   const customLoadingProgressFunction = options.onLoadingProgress;
@@ -36,7 +54,7 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
 
   if (isDOCXEditorMode && VALID_DOCX_EXTENSIONS.includes(extension)) {
     options.enableOfficeEditing = true;
-  } else if (isXLSXEditorMode && VALID_XLSX_EXTENSIONS.includes(extension)) {
+  } else if (isXLSXEditorMode && VALID_SPREADSHEET_EXTENSIONS.includes(extension)) {
     options.enableOfficeEditing = true;
   } else {
     options.enableOfficeEditing = false;
@@ -76,14 +94,15 @@ const getDefaultOptions = () => ({
   forceClientSideInit: getHashParameters('forceClientSideInit', false),
   disableWebsockets: getHashParameters('disableWebsockets', false),
   cacheKey: getHashParameters('cacheKey', null),
-  officeOptions: JSON.parse(getHashParameters('officeOptions', null)),
-  rasterizerOptions: JSON.parse(getHashParameters('rasterizerOptions', null)),
+  officeOptions: safeJsonParse(getHashParameters('officeOptions', null)),
+  rasterizerOptions: safeJsonParse(getHashParameters('rasterizerOptions', null)),
   streaming: getHashParameters('streaming', null),
   useDownloader: getHashParameters('useDownloader', true),
   backendType: getHashParameters('pdf', null),
   loadAsPDF: getHashParameters('loadAsPDF', null),
   initialMode: getHashParameters('initialMode', null),
   enableOfficeEditing: getHashParameters('enableOfficeEditing', false),
+  spreadsheetEditorOptions: safeJsonParse(getHashParameters('spreadsheetEditorOptions', '{}'), {}),
 });
 
 /**
@@ -146,4 +165,16 @@ const extractXodOptions = (options) => {
   }
 
   return xodOptions;
+};
+
+const safeJsonParse = (param, fallback = {}) => {
+  if (param === null) {
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(param);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : fallback;
+  } catch {
+    return fallback;
+  }
 };

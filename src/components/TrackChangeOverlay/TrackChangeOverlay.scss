@@ -3,7 +3,7 @@
 .track-change-overlay {
   @include oe-modular-custom-dropdown;
 
-  &.modular-ui.flyout-item {
+  &.flyout-item {
     width: 100%;
 
     & > .Dropdown__wrapper {

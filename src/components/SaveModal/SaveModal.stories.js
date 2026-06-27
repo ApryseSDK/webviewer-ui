@@ -1,7 +1,7 @@
+import { configureStore } from '@reduxjs/toolkit';
 
 import React, { useEffect } from 'react';
 import SaveModal from './SaveModal';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 export default {
@@ -24,7 +24,7 @@ const getStore = () => {
     return state;
   }
 
-  return createStore(rootReducer);
+  return configureStore({ reducer: rootReducer });
 };
 
 const spreadsheetStore = () => {

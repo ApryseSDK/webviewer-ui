@@ -32,9 +32,7 @@ const useAddColorHandler = ({
   const handleAddColor = useCallback(() => {
     dispatch(actions.openElement(DataElements.COLOR_PICKER_MODAL));
 
-    const onVisibilityChanged = (e) => {
-      const { element, isVisible } = e.detail;
-
+    const onVisibilityChanged = (element, isVisible) => {
       if (element === DataElements.COLOR_PICKER_MODAL && !isVisible) {
         const colorObject = getCustomColorAndRemove(dispatch, store, type);
         const color = parseColor(colorObject);

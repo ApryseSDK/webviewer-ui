@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor, configure, act } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import MultiViewer from './MultiViewer';
 import * as multiViewerHelper from 'helpers/multiViewerHelper';
 import useCore from 'hooks/useCore';
@@ -28,6 +29,7 @@ describe('MultiViewer', () => {
     scrollViewUpdated: jest.fn(),
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
+    closeDocument: jest.fn(),
     getDocumentViewer: jest.fn(() => ({
       setScrollViewElement: jest.fn(),
       setViewerElement: jest.fn(),
@@ -204,6 +206,54 @@ describe('MultiViewer', () => {
 
       await findAllByRole('button', { name: /close document/i });
       expect(queryByRole('button', { name: /sync/i })).not.toBeInTheDocument();
+    });
+
+    it('should persist secondary close state through tab manager when closing document 2', async () => {
+      const updateTab = jest.fn().mockResolvedValue();
+      const activeTab = 3;
+      const { findAllByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        isMultiTab: true,
+        activeTab,
+        TabManager: { updateTab },
+        doc1Loaded: true,
+        doc2Loaded: true,
+      });
+
+      const closeButtons = await findAllByRole('button', { name: /close document/i });
+      await userEvent.click(closeButtons[1]);
+
+      await waitFor(() => {
+        expect(updateTab).toHaveBeenCalledWith(activeTab, {
+          isMultiViewer: true,
+          clearDocumentForViewerKey: 2,
+        });
+      });
+      expect(mockCoreRightViewer.closeDocument).toHaveBeenCalledWith(2);
+    });
+
+    it('should persist primary close state through tab manager when closing document 1', async () => {
+      const updateTab = jest.fn().mockResolvedValue();
+      const activeTab = 3;
+      const { findAllByRole } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        isMultiTab: true,
+        activeTab,
+        TabManager: { updateTab },
+        doc1Loaded: true,
+        doc2Loaded: true,
+      });
+
+      const closeButtons = await findAllByRole('button', { name: /close document/i });
+      await userEvent.click(closeButtons[0]);
+
+      await waitFor(() => {
+        expect(updateTab).toHaveBeenCalledWith(activeTab, {
+          isMultiViewer: true,
+          clearPrimaryDocument: true,
+        });
+      });
+      expect(mockCoreLeftViewer.closeDocument).toHaveBeenCalledWith(1);
     });
   });
 
@@ -432,7 +482,7 @@ describe('MultiViewer', () => {
 
       await waitFor(() => {
         const multiViewerElement = container.querySelector('.MultiViewer');
-        expect(multiViewerElement).toHaveStyle({ width: 'calc(100% - 314px)' });
+        expect(multiViewerElement).toHaveStyle({ width: 'calc(100% - 300px)' });
       });
     });
 

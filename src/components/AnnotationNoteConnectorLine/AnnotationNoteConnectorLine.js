@@ -14,16 +14,24 @@ import classNames from 'classnames';
 import './AnnotationNoteConnectorLine.scss';
 import debounce from 'lodash/debounce';
 
-const LineConnectorPortal = ({ children }) => {
-  const mount = getRootNode().querySelector('#line-connector-root');
+const LineConnectorPortal = ({ children, anchorNode }) => {
+  // Resolve the mount target from a node that's already in this instance's React tree (anchorNode), using the DOM-level Node.getRootNode() so we get the local ShadowRoot/Document. The module-level `getRootNode()` helper returns the singleton last-registered root node, which in multi-WC mode points to the most-recently-mounted instance and would cause connector lines from one viewer to render inside another.
+  const localRoot = anchorNode?.getRootNode?.() || getRootNode();
+  const mount = localRoot.querySelector('#line-connector-root');
   const el = document.createElement('div');
   el.setAttribute('data-element', DataElements.ANNOTATION_NOTE_CONNECTOR_LINE);
 
   useEffect(() => {
+    if (!mount) {
+      return undefined;
+    }
     mount.appendChild(el);
     return () => mount.removeChild(el);
   }, [el, mount]);
 
+  if (!mount) {
+    return null;
+  }
   return createPortal(children, el);
 };
 
@@ -98,6 +106,8 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
       bottomHeadersHeight,
       topHeadersHeight,
       activeDocumentViewerKey,
+      // Resolve the local shadow root from a node already in this React tree so the helper computes coordinates against THIS instance's `#app`, not whichever instance the singleton currently points at.
+      rootNodeOverride: noteContainerRef.current.getRootNode?.(),
     });
     setLineProperties(newLines);
   }, 100, { leading: true, trailing: true });
@@ -168,7 +178,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
       isPanelOnLeft,
     } = lineProperties;
     return (
-      <LineConnectorPortal>
+      <LineConnectorPortal anchorNode={noteContainerRef?.current}>
         <div className="horizontalLine" css={topLineStyle}/>
         <div className="verticalLine" css={verticalLineStyle}/>
         <div className="horizontalLine" css={bottomLineStyle}>

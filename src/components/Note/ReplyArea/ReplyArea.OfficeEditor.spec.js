@@ -22,6 +22,7 @@ jest.mock('components/NoteTextarea', () => {
     const mockEditor = {
       getContents: () => ({ ops: [] }),
       getLength: () => 1,
+      setText: () => {}
     };
     const mockTextarea = {
       getEditor: () => mockEditor,
@@ -61,6 +62,8 @@ describe('ReplyArea (Office Editor)', () => {
     addCommentReplyMock = jest.fn().mockResolvedValue(undefined);
     useCore.mockReturnValue({
       core: {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
         getOfficeEditor: () => ({
           getCommentManager: () => ({ addCommentReply: addCommentReplyMock }),
         }),

@@ -85,7 +85,7 @@ describe('useFloatingHeaderSelectors hook', () => {
     };
 
     const store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       preloadedState: mockState,
     });
 

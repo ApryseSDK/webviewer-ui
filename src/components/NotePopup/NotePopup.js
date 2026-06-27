@@ -42,7 +42,6 @@ function NotePopup(props) {
     noteId,
   } = props;
 
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const flyoutSelector = `${DataElements.NOTE_POPUP_FLYOUT}-${noteId}`;
   const [t] = useTranslation();
 
@@ -59,7 +58,7 @@ function NotePopup(props) {
   }
 
   const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger');
-  const optionsClass = classNames('NotePopup options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
+  const optionsClass = classNames('NotePopup options note-popup-options', { 'options-reply': isReply });
   return (
     <div className={optionsClass}>
       <ToggleElementButton

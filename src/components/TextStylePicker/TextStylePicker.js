@@ -6,7 +6,7 @@ import Button from 'components/Button';
 import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 import parseFontSize from 'helpers/parseFontSize';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import DataElementWrapper from '../DataElementWrapper';
 
 const TextStylePicker = ({
@@ -26,6 +26,7 @@ const TextStylePicker = ({
   isDisabled = false,
   isWidget = false,
 }) => {
+  const [t] = useTranslation();
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
@@ -393,8 +394,8 @@ const TextStylePicker = ({
               className="row text-vertical-alignment auto-size-checkbox">
               <Choice
                 id="free-text-autosize-font-button"
-                label={i18next?.t('option.freeTextOption.autoSizeFont')}
-                aria-label={i18next.t('option.freeTextOption.autoSizeFont')}
+                label={t('option.freeTextOption.autoSizeFont')}
+                aria-label={t('option.freeTextOption.autoSizeFont')}
                 checked={isFreeTextAutoSize}
                 onChange={onFreeTextSizeToggle}
                 aria-pressed={isFreeTextAutoSize}

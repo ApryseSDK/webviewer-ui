@@ -153,6 +153,7 @@ const PageRedactionModal = ({
       <ModalWrapper
         title="action.redactPages"
         isOpen={isOpen}
+        modalDataElement={DataElements.PAGE_REDACT_MODAL}
         onCloseClick={closeModal}
         closeHandler={closeModal}
         onSwipedDown={onSwipe}

@@ -9,8 +9,8 @@ WebViewer(...)
     instance.UI.enterMultiViewerMode();
 
     // Listen for active document viewer changes
-    instance.UI.addEventListener(instance.UI.Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, (e) => {
-      console.log('Active viewer changed from', e.detail.previousDocumentViewerKey, 'to', e.detail.activeDocumentViewerKey);
+    instance.UI.addEventListener(instance.UI.Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, (activeDocumentViewerKey, previousDocumentViewerKey) => {
+      console.log('Active viewer changed from', previousDocumentViewerKey, 'to', activeDocumentViewerKey);
     });
 
     // Set the active document viewer to the second viewer

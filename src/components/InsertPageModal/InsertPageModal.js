@@ -155,6 +155,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
       <ModalWrapper
         title={selectedDoc ? null : t('insertPageModal.title')}
         isOpen={true}
+        modalDataElement={DataElements.INSERT_PAGE_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 import './TextEditingPanel.scss';
 import PropTypes from 'prop-types';
@@ -25,8 +25,8 @@ const TextEditingPanel = ({
   textEditProperties = {},
   undoRedoProperties,
   customColors = [],
-  isCustomUI,
 }) => {
+  const [t] = useTranslation();
   const FONT_PLACEHOLDER = 'Font';
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const TextEditingPanel = ({
   const textStylesSection = (
     <div className="text-editing-panel-section">
       <div className="top-panel text-editing-panel-menu-items">
-        <h2 className="text-editing-panel-heading" >{i18next.t('stylePanel.headings.textStyles')}</h2>
+        <h2 className="text-editing-panel-heading" >{t('stylePanel.headings.textStyles')}</h2>
         <div className={`text-editing-panel-text-style-picker ${contentSelectMode ? '' : 'inactive'}`}>
           <TextStylePicker
             fonts={fonts}
@@ -94,7 +94,7 @@ const TextEditingPanel = ({
 
   const colorPaletteSection = textPanelSectionWrapper(
     <div className="color-palette-section">
-      <h2 className="text-editing-panel-heading">{i18next.t('stylePanel.headings.currentColor')}</h2>
+      <h2 className="text-editing-panel-heading">{t('stylePanel.headings.currentColor')}</h2>
       <div className="text-editing-row">
         <ColorPalette
           colorMapKey="freeText"
@@ -107,14 +107,13 @@ const TextEditingPanel = ({
         <Button
           img="ic-copy-color"
           onClick={addActiveColor}
-          title={i18next.t('stylePanel.addColorToCustom')}
+          title={t('stylePanel.addColorToCustom')}
           dataElement={'addColorToCustom'}
-          className={isCustomUI ? '' : 'addToCustomButton'}
           disabled={imageSelectMode || isCopyBtnDisabled}
         />
       </div>
       <div className="custom-colors-section">
-        <h2 className="text-editing-panel-heading">{i18next.t('stylePanel.headings.customColors')}</h2>
+        <h2 className="text-editing-panel-heading">{t('stylePanel.headings.customColors')}</h2>
         <div className="text-editing-row custom-colors-pallete">
           <ColorPalettePicker
             color={rgbColor}
@@ -139,14 +138,14 @@ const TextEditingPanel = ({
             dataElement="textPanelUndoButton"
             disabled={!undoRedoProperties?.canUndo}
             onClick={undoRedoProperties?.handleUndo}
-            title={i18next.t('action.undo')}
+            title={t('action.undo')}
           />
           <Button
             img="icon-action-redo"
             dataElement="textPanelRedoButton"
             disabled={!undoRedoProperties?.canRedo}
             onClick={undoRedoProperties?.handleRedo}
-            title={i18next.t('action.redo')}
+            title={t('action.redo')}
           />
         </div>
       </div>
@@ -181,7 +180,6 @@ TextEditingPanel.propTypes = {
   textEditProperties: PropTypes.object,
   undoRedoProperties: PropTypes.object,
   customColors: PropTypes.array,
-  isCustomUI: PropTypes.bool,
 };
 
 export default TextEditingPanel;

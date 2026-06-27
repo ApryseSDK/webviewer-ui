@@ -68,10 +68,9 @@ const SignatureListPanel = ({ panelSize, dataElement = DataElements.SIGNATURE_LI
   }, [selectedSignatureIndex, savedSignaturesAndInitials]);
 
   useEffect(() => {
-    const onVisibilityChanged = (e) => {
+    const onVisibilityChanged = (element, isVisible) => {
       const activeTool = core.getToolMode();
       const activeToolName = activeTool?.name;
-      const { element, isVisible } = e.detail;
       if (element === panelNames.SIGNATURE_LIST && !isVisible) {
         if (activeToolName === TOOL_NAME || activeToolName === defaultTool) {
           setToolModeAndGroup(store, defaultTool);

@@ -10,6 +10,7 @@ import FilePicker from 'components/FilePicker';
 import PortfolioItemGrid from './PortfolioItemGrid';
 import { createPortfolio } from 'helpers/portfolio';
 import loadDocument from 'helpers/loadDocument';
+import { buildTabUpdateForViewer, getTargetTabId, isPrimaryDocumentViewer } from 'helpers/multiViewerTabUpdate';
 import ModalWrapper from 'components/ModalWrapper';
 import useFocusOnClose from 'hooks/useFocusOnClose';
 import useCore from 'hooks/useCore';
@@ -26,11 +27,17 @@ const CreatePortfolioModal = () => {
     isOpen,
     isMultiTab,
     tabManager,
+    activeTab,
+    activeDocumentViewerKey,
+    tabs,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_MODAL),
     selectors.isElementOpen(state, DataElements.CREATE_PORTFOLIO_MODAL),
     selectors.getIsMultiTab(state),
     selectors.getTabManager(state),
+    selectors.getActiveTab(state),
+    selectors.getActiveDocumentViewerKey(state),
+    selectors.getTabs(state),
   ], shallowEqual);
 
   const [items, setItems] = useState([]);
@@ -51,15 +58,37 @@ const CreatePortfolioModal = () => {
     const pdfDoc = await createPortfolio(core, items);
     if (isMultiTab) {
       const blob = new Blob([await pdfDoc.saveMemoryBuffer(0)], { type: 'application/pdf' });
-      await tabManager.addTab(blob, {
-        setActive: true,
-        extension: 'pdf',
-      });
+      if (isPrimaryDocumentViewer(activeDocumentViewerKey)) {
+        await tabManager.addTab(blob, {
+          setActive: true,
+          extension: 'pdf',
+        });
+      } else {
+        const targetTabId = getTargetTabId(activeTab, tabs);
+        if (targetTabId || targetTabId === 0) {
+          await tabManager.updateTab(targetTabId, buildTabUpdateForViewer({
+            documentViewerKey: activeDocumentViewerKey,
+            src: blob,
+            options: {
+              extension: 'pdf',
+            },
+            isMultiViewerMode: true,
+          }));
+        }
+      }
     } else {
       loadDocument(dispatch, pdfDoc);
     }
     closeCreatePortfolioModalAfterCreate();
-  }, [items, isMultiTab, tabManager, core]);
+  }, [
+    items,
+    isMultiTab,
+    tabManager,
+    activeTab,
+    activeDocumentViewerKey,
+    tabs,
+    core,
+  ]);
 
   const addFiles = (files) => {
     if (files.length > 0) {
@@ -106,6 +135,7 @@ const CreatePortfolioModal = () => {
       <ModalWrapper
         isOpen={isOpen}
         title={t('portfolio.createPDFPortfolio')}
+        modalDataElement={DataElements.CREATE_PORTFOLIO_MODAL}
         closehandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose

@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default (state) => {
-  core.setCurrentUser(state.user.name);
-  core.setIsAdminUser(state.user.isAdmin);
+export default (state, documentViewerKey) => {
+  core.setCurrentUser(state.user.name, documentViewerKey);
+  core.setIsAdminUser(state.user.isAdmin, documentViewerKey);
 };

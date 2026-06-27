@@ -38,11 +38,11 @@ function cancelPasswordCheckCallback(dispatch, store, passwordCheckCallback, suc
 async function checkPasswordCallback(dispatch, store, password, passwordCheckCallback, successPasswordCallback) {
   const isValidPassword = await passwordCheckCallback(password);
   if (isValidPassword) {
+    dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
+    dispatch(actions.setPasswordAttempts(0));
     await successPasswordCallback();
     removePasswordRequiredHeaderItem(dispatch, store);
     dispatch(actions.setToolbarGroup('toolbarGroup-EditText'));
-    dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
-    dispatch(actions.setPasswordAttempts(0));
     return;
   }
 
@@ -108,7 +108,6 @@ function addPasswordRequiredHeaderItem(dispatch, store, passwordCheckCallback, s
   };
 
   headerItems.splice(index, 0, passwordLockHeaderItem);
-  dispatch(actions.setHeaderItems('default', [...headerItems]));
 }
 
 /**
@@ -126,7 +125,6 @@ function removePasswordRequiredHeaderItem(dispatch, store) {
 
   const index = headerItems.indexOf(passwordRequiredButton);
   headerItems.splice(index, 1);
-  dispatch(actions.setHeaderItems('default', [...headerItems]));
 }
 
 export {

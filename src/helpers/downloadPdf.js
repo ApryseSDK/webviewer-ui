@@ -6,7 +6,6 @@ import Events from 'constants/events';
 import actions from 'actions';
 import { createRasterizedPrintPages } from 'helpers/rasterPrint';
 import selectors from 'selectors';
-import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import range from 'lodash/range';
@@ -17,10 +16,74 @@ import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getDownloadFilename, getDocumentFileExtension } from './downloadHelper';
 import { createWrappedCore } from 'hooks/useCore/useCore';
+import { getReplyDraftsForExport } from 'helpers/replyDraftExportStore';
+import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
+import { BEFORE_FILE_DOWNLOAD, AFTER_FILE_DOWNLOAD } from 'constants/downloads';
 
 let isDownloaded = false;
 let previousWatermarkSettings = { };
 let previousFileName = '';
+
+const getExportAnnotationList = (documentViewerKey) => {
+  const draftReplies = getReplyDraftsForExport(documentViewerKey);
+  if (!draftReplies.length) {
+    return null;
+  }
+
+  const annotationManager = core.getDocumentViewer(documentViewerKey).getAnnotationManager();
+  const existingAnnotations = annotationManager
+    .getAnnotationsList()
+    .filter((annotation) => !isAutosaveDraftReply(annotation));
+  const parentById = new Map(existingAnnotations.map((annotation) => [annotation.Id, annotation]));
+  const draftReplyAnnotations = [];
+
+  draftReplies.forEach((draftReply) => {
+    const parentAnnotation = parentById.get(draftReply.parentAnnotationId);
+    if (!parentAnnotation || !draftReply.replyText?.trim()) {
+      return;
+    }
+
+    const replyContents = draftReply.isMentionEnabled ? (draftReply.plainTextValue || '') : draftReply.replyText;
+    const replyAnnotation = new window.Core.Annotations.StickyAnnotation();
+    replyAnnotation['InReplyTo'] = parentAnnotation['Id'];
+    replyAnnotation['X'] = parentAnnotation['X'];
+    replyAnnotation['Y'] = parentAnnotation['Y'];
+    replyAnnotation['PageNumber'] = parentAnnotation['PageNumber'];
+    replyAnnotation['Author'] = core.getCurrentUser();
+    replyAnnotation.setContents(replyContents);
+
+    if (draftReply.isMentionEnabled) {
+      if (replyAnnotation.setCustomData) {
+        replyAnnotation.setCustomData('trn-mention', JSON.stringify({
+          contents: draftReply.replyText,
+          ids: draftReply.ids || [],
+        }));
+      }
+    } else if (replyAnnotation.setCustomData) {
+      replyAnnotation.setCustomData('trn-mention', '');
+    }
+    draftReplyAnnotations.push(replyAnnotation);
+  });
+
+  if (!draftReplyAnnotations.length) {
+    return null;
+  }
+
+  return [...existingAnnotations, ...draftReplyAnnotations];
+};
+
+const exportAnnotationsWithDraftReplies = (annotationExportOptions, documentViewerKey) => {
+  const annotationList = getExportAnnotationList(documentViewerKey);
+  if (!annotationList) {
+    return core.exportAnnotations(annotationExportOptions, documentViewerKey);
+  }
+
+  const annotationManager = core.getDocumentViewer(documentViewerKey).getAnnotationManager();
+  return annotationManager.exportAnnotations({
+    ...annotationExportOptions,
+    annotationList,
+  });
+};
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
   let doc = core.getDocument(documentViewerKey);
@@ -30,6 +93,18 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     console.warn('Document is not loaded');
     return;
   }
+
+  // Internal lifecycle signal: intentionally bypasses fireEvent/UI.Events and uses window dispatch directly.
+  window.dispatchEvent(new CustomEvent(BEFORE_FILE_DOWNLOAD, {
+    detail: { documentViewerKey },
+  }));
+
+  // Internal lifecycle signal: intentionally bypasses fireEvent/UI.Events and uses window dispatch directly.
+  const dispatchAfterFileDownload = () => {
+    window.dispatchEvent(new CustomEvent(AFTER_FILE_DOWNLOAD, {
+      detail: { documentViewerKey },
+    }));
+  };
 
   if (previousFileName !== doc?.getFilename()) {
     previousFileName = doc?.getFilename();
@@ -44,7 +119,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     isDownloaded = true;
     doc.enableWatermarkApplied();
   }
-
 
   const {
     filename = doc?.getFilename() || 'document',
@@ -277,6 +351,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     }
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
     fireEvent(Events.FILE_DOWNLOADED);
+    dispatchAfterFileDownload();
     return;
   }
 
@@ -289,15 +364,23 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     });
 
     downloadDataAsFile(data, workerTypes.PDF, options);
+    dispatchAfterFileDownload();
     return;
   }
 
   if (convertToPDF || includeComments) {
-    const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey);
+    if (!pages) {
+      pages = range(1, doc.getPageCount() + 1, 1);
+    }
+    const xfdfString = await exportAnnotationsWithDraftReplies({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey);
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: workerTypes.PDF });
     temporaryModifiedDoc = await core.createDocument(fileData, { extension: workerTypes.PDF, filename });
     if (includeComments) {
-      const canvas2pdf = await import('canvas2pdf');
+      const canvasToPdfModule = await import('@pdftron/canvas-to-pdf');
+      const getCanvas2PDFContext = canvasToPdfModule.getCanvas2PDFContext || canvasToPdfModule.default?.getCanvas2PDFContext;
+      if (!getCanvas2PDFContext) {
+        throw new Error('getCanvas2PDFContext is not available in the canvas-to-pdf module');
+      }
       const state = store.getState();
       const [sortStrategy, colorMap] = [selectors.getSortStrategy(state), selectors.getColorMap(state)];
       const pageWidth = 612;
@@ -318,7 +401,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         }
         const startX = padding;
         let startY = padding;
-        let ctx = new canvas2pdf.PdfContext(blobStream(), { font: 'Helvetica' });
+        let ctx = getCanvas2PDFContext({ font: 'Helvetica' });
         // eslint-disable-next-line no-inner-declarations
         async function savePage() {
           const blob = await new Promise((res) => {
@@ -345,7 +428,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         for (const annotation of annotationNotes) {
           if (y + 40 > pageHeight) {
             await savePage();
-            ctx = new canvas2pdf.PdfContext(blobStream(), { font: 'Helvetica' });
+            ctx = getCanvas2PDFContext({ font: 'Helvetica' });
             x = padding;
             y = padding;
           }
@@ -365,7 +448,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             const color = annotation[colorProperty || 'StrokeColor']?.toString();
             const iconKey = getDataWithKey(key).icon;
             // eslint-disable-next-line global-require,import/no-dynamic-require
-            const icon = require(`../../assets/icons/${iconKey}.svg`);
+            const iconResult = require(`../../assets/icons/${iconKey}.svg`);
+            // esbuild ESM wraps CJS as { default: ... }, webpack returns the string directly
+            const icon = (iconResult && typeof iconResult === 'object' && iconResult.default) ? iconResult.default : iconResult;
             const blob = new Blob([icon], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const img = new Image();
@@ -373,6 +458,10 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             img.src = url;
             img.onload = () => {
               ctx.drawImage(img, x, y, 24, 24);
+              URL.revokeObjectURL(url);
+              resolve();
+            };
+            img.onerror = () => {
               URL.revokeObjectURL(url);
               resolve();
             };
@@ -426,7 +515,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
               if (textSize.height + y > pageHeight - padding) {
                 drawRoundedRect(ctx, padding, startY, pageWidth - padding * 2, pageHeight - startY - padding, 4, 'bottom');
                 await savePage();
-                ctx = new canvas2pdf.PdfContext(blobStream(), { font: 'Helvetica' });
+                ctx = getCanvas2PDFContext({ font: 'Helvetica' });
                 ctx.fillStyle = fillStyle;
                 ctx.font = `${size}px ${font}`;
                 x = startX;
@@ -542,7 +631,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF(pages)).xfdfString);
     } else {
-      annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
+      annotationsPromise = exportAnnotationsWithDraftReplies({ useDisplayAuthor }, documentViewerKey);
     }
   } else if (!options.xfdfString && !includeAnnotations) {
     options.xfdfString = window.Core.EMPTY_XFDF;
@@ -574,9 +663,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     };
 
     const signatureWidgets = core.getAnnotationsList().filter((a) => a instanceof window.Core.Annotations.SignatureWidgetAnnotation);
-    const signedStatues = await Promise.all(signatureWidgets.map((a) => a.isSignedDigitally()));
-    const isSignedDigitally = signedStatues.includes(true);
-    if (isSignedDigitally) {
+    if (signatureWidgets.some((a) => a.isSignedByAppearance())) {
       clonedOptions.flags |= window.Core.SaveOptions.INCREMENTAL;
     }
 
@@ -600,6 +687,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
   }).catch((error) => {
     console.warn(error);
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+  }).finally(() => {
+    dispatchAfterFileDownload();
   });
 };
 

@@ -35,7 +35,10 @@ const SpreadsheetEditorInsertImageButton = forwardRef((props, ref) => {
       try {
         dispatch(actions.openElement(DataElements.LOADING_MODAL));
         const base64String = await fileToBase64(file);
-        const workbook = core.getDocumentViewer().getDocument().getSpreadsheetEditorDocument().getWorkbook();
+        const workbook = core.getDocumentViewer().getSpreadsheetEditorManager().getWorkbook();
+        if (!workbook) {
+          return;
+        }
         const activeSheetIndex = workbook.activeSheetIndex;
         const activeSheet = workbook.getSheetAt(activeSheetIndex);
         activeSheet.addImage(base64String);

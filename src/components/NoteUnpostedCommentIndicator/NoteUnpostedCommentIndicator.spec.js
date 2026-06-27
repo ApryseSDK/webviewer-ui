@@ -1,8 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import NoteUnpostedCommentIndicator from './NoteUnpostedCommentIndicator';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import Events from 'constants/events';
+import { AUTO_SAVE_INDICATOR_TIMEOUT } from 'src/constants/autosave';
 
 // wrap component with i18n provider, so component can use useTranslation()
 const TestNoteUnpostedCommentIndicator = withI18n(NoteUnpostedCommentIndicator);
@@ -51,6 +54,14 @@ describe('NoteUnpostedCommentIndicator component', () => {
   const attachmentMapWithNoUnpostedItem = {
     'one': undefined
   };
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('Should not throw errors when rendering', () => {
     expect(() => {
@@ -121,5 +132,34 @@ describe('NoteUnpostedCommentIndicator component', () => {
       </ReduxWrapper>,
     );
     expect(container.querySelector('.Icon')).toBeInTheDocument();
+  });
+
+  it('Should show checkmark for auto save indicator timeout duration after autosave then disappear when nothing is pending', () => {
+    const { container } = render(
+      <ReduxWrapper>
+        <TestNoteUnpostedCommentIndicator
+          annotationId={annotationId}
+          pendingEditTextMap={commentMapWithNoUnpostedComment}
+          pendingReplyMap={replyMapWithNoUnpostedReply}
+          pendingAttachmentMap={attachmentMapWithNoUnpostedItem}
+        />
+      </ReduxWrapper>,
+    );
+
+    expect(container.querySelector('.Icon')).not.toBeInTheDocument();
+
+    act(() => {
+      window.dispatchEvent(new CustomEvent(Events.NOTE_AUTOSAVED, {
+        detail: { annotationId },
+      }));
+    });
+
+    expect(container.querySelector('.Icon')).toBeInTheDocument();
+
+    act(() => {
+      jest.advanceTimersByTime(AUTO_SAVE_INDICATOR_TIMEOUT);
+    });
+
+    expect(container.querySelector('.Icon')).not.toBeInTheDocument();
   });
 });

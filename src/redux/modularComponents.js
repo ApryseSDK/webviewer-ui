@@ -676,6 +676,10 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'ComboBoxFormFieldCreateTool',
   },
+  datePickerFieldButton: {
+    type: 'toolButton',
+    toolName: 'DatePickerFormFieldCreateTool',
+  },
   'divider-0.7': {
     type: 'divider',
   },
@@ -690,6 +694,7 @@ const defaultModularComponents = {
     items: [
       'signatureFieldButton',
       'textFieldButton',
+      'datePickerFieldButton',
 
       'freeTextToolButton',
       'checkboxFieldButton',

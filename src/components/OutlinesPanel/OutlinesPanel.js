@@ -59,7 +59,6 @@ const OutlinesPanel = ({ isTest = false }) => {
   const hasMountedRef = useRef(false);
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const isViewOnly = useSelector(selectors.isViewOnly);
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL));
   const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
@@ -83,10 +82,16 @@ const OutlinesPanel = ({ isTest = false }) => {
   const [currentDestText, setCurrentDestText] = useState(defaultDestText);
   const [currentDestCoord, setCurrentDestCoord] = useState(() => getDefaultDestCoord(core.getDocument(), currentPage));
 
-  const customizableUI = featureFlags.customizableUI;
   const outlinesNotLoaded = outlines === null || outlines === undefined;
   const TOOL_NAME = 'OutlineDestinationCreateTool';
   const tool = core.getTool(TOOL_NAME);
+
+  useEffect(() => {
+    if (!documentLoaded && outlinesPromiseRef.current) {
+      outlinesPromiseRef.current.reject();
+      outlinesPromiseRef.current = null;
+    }
+  }, [documentLoaded]);
 
   useEffect(() => {
     if (!documentLoaded && outlinesPromiseRef.current) {
@@ -371,7 +376,7 @@ const OutlinesPanel = ({ isTest = false }) => {
 
   return (
     <div
-      className={classNames('Panel OutlinesPanel bookmark-outline-panel', { 'modular-ui-panel': customizableUI })}
+      className={classNames('Panel OutlinesPanel bookmark-outline-panel', { 'modular-ui-panel': true })}
       data-element={DataElements.OUTLINE_PANEL} ref={panelRef}
     >
       <div className="bookmark-outline-panel-header">

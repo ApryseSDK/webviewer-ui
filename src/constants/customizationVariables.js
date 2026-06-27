@@ -51,6 +51,7 @@ const ITEM_TYPE = {
   TOGGLE_BUTTON: 'toggleButton',
   RIBBON_GROUP: 'ribbonGroup',
   TOOL_BUTTON: 'toolButton',
+  TOOL_GROUP_TOGGLE_BUTTON: 'toolGroupToggleButton',
   ZOOM: 'zoom',
   FLYOUT: 'flyout',
   PAGE_CONTROLS: 'pageControls',
@@ -89,6 +90,7 @@ const FLYOUT_ITEM_TYPES = {
   RIBBON_ITEM: 'ribbonItem',
   TOOL_BUTTON: 'toolButton',
   TOGGLE_BUTTON: 'toggleButton',
+  TOOL_GROUP_TOGGLE_BUTTON: 'toolGroupToggleButton',
   ZOOM_OPTIONS_BUTTON: 'zoomOptionsButton',
   ZOOM_BUTTON: 'zoomButton',
   PAGE_NAVIGATION_INPUT: 'pageNavigationInput',
@@ -331,7 +333,7 @@ const VIEWER_CONFIGURATIONS = {
 };
 
 const VALID_DOCX_EXTENSIONS = ['docx', 'doc'];
-const VALID_XLSX_EXTENSIONS = ['xlsx'];
+const VALID_SPREADSHEET_EXTENSIONS = ['xlsx', 'xls', 'csv'];
 
 const CELL_ADJUSTMENT_BUTTONS = {
   INSERT_COLUMN_LEFT: 'insertColumnLeft',
@@ -429,7 +431,7 @@ export {
   CELL_BORDER_BUTTONS,
   CELL_FORMAT_BUTTONS,
   VALID_DOCX_EXTENSIONS,
-  VALID_XLSX_EXTENSIONS,
+  VALID_SPREADSHEET_EXTENSIONS,
   CELL_ADJUSTMENT_BUTTONS,
   PANEL_LOCATION,
   CELL_TEXT_WRAP_FLYOUT_ITEMS,

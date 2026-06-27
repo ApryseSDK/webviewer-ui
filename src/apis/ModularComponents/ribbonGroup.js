@@ -1,6 +1,5 @@
 import { GroupedItems } from './groupedItems';
 import { ITEM_TYPE } from 'constants/customizationVariables';
-import actions from 'actions';
 
 /**
  * Creates a new instance of RibbonGroup.
@@ -52,15 +51,8 @@ class RibbonGroup extends GroupedItems {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function ribbonGroupFactory(props) {
   const propsWithStore = { ...props, store };
-
-  // Adding the custom ribbon group items to the redux store
-  props.items.forEach((item) => {
-    if (item.groupedItems?.length) {
-      store.dispatch(actions.setHeaderItems(item.toolbarGroup, item.groupedItems));
-    }
-  });
 
   return new RibbonGroup(propsWithStore);
 };

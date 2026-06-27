@@ -5,4 +5,4 @@ import core from 'core';
  * @fires pagesUpdated on DocumentViewer
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:pagesUpdated
  */
-export default (pageArray, newLocation, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getDocument().movePages(pageArray, newLocation);
+export default (pageArray, newLocation, documentViewerKey) => core.getDocumentViewer(documentViewerKey).getDocument().movePages(pageArray, newLocation);

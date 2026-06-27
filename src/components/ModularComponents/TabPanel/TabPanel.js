@@ -363,7 +363,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     {getActivePanelRender()}
   </>;
 
-  return isMobile ? (<div className='tabPanelContainer'>{childElements}</div>) : childElements;
+  return <div className='tabPanelContainer'>{childElements}</div>;
 };
 
 TabPanel.propTypes = {

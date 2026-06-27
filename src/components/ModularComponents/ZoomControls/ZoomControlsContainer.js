@@ -4,7 +4,7 @@ import actions from 'actions';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
-import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
+import { getSizeManager, useSizeStore } from 'helpers/responsivenessHelper';
 import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
 import PropTypes from 'prop-types';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
@@ -45,8 +45,9 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   };
 
   useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
+    const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+    localSizeManager[dataElement] = {
+      ...(localSizeManager[dataElement] ? localSizeManager[dataElement] : {}),
       canGrow: size === 1,
       canShrink: size === 0,
       grow: () => {

@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 /* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import { isMac, isMobile } from 'helpers/device';
 import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
@@ -392,7 +392,7 @@ WebViewer(...)
           const currentPageIndex = core.getCurrentPage(activeDocumentViewerKey) - 1;
           // only add bookmark if page is not already bookmarked
           if (!bookmarks[currentPageIndex]) {
-            core.addUserBookmark(currentPageIndex, i18next.t('message.untitled'), activeDocumentViewerKey);
+            core.addUserBookmark(currentPageIndex, getCurrentT()('message.untitled'), activeDocumentViewerKey);
           }
         }
       },
@@ -485,7 +485,6 @@ WebViewer(...)
             DataElements.ANNOTATION_POPUP,
             DataElements.TEXT_POPUP,
             DataElements.CONTEXT_MENU_POPUP,
-            'toolStylePopup',
             DataElements.ANNOTATION_STYLE_POPUP,
             DataElements.SIGNATURE_MODAL,
             'customStampModal',

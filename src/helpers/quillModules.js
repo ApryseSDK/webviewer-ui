@@ -37,8 +37,11 @@ export class BlurInputModule {
     if (event.key === 'Escape') {
       this.blurQuill();
     } else if (event.key === 'Tab' && this.shouldSkipInput) {
-      event.preventDefault();
-      this.moveFocus(event.shiftKey);
+      const didMoveFocus = this.moveFocus(event.shiftKey);
+      if (didMoveFocus) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
     }
   };
 
@@ -49,19 +52,52 @@ export class BlurInputModule {
     this.quill.container.focus();
   }
 
+  isEditorInternalElement(element) {
+    if (!element) {
+      return false;
+    }
+
+    if (element === this.quill.container) {
+      return true;
+    }
+
+    // Skip formatting toolbar controls and note expand/select control when exiting editor focus.
+    if (element.closest('.ql-toolbar') || element.classList.contains('note-button')) {
+      return true;
+    }
+
+    return false;
+  }
+
   moveFocus(backwards) {
     // .ql-container.ql-snow is the quill editor selector
     const focusableElements = Array.from(
-      this.noteContainer.querySelectorAll('.ql-container.ql-snow, button.modular-ui')
+      this.noteContainer.querySelectorAll('.ql-container.ql-snow, button')
     );
-    const currentIndex = focusableElements.indexOf(this.quill.container);
+    const activeElement = document.activeElement;
+    const editorContainerFromActive = focusableElements.find((el) =>
+      el.classList?.contains('ql-container') && el.contains(activeElement)
+    );
+    const currentElement = editorContainerFromActive || this.quill.container;
+    const currentIndex = focusableElements.indexOf(currentElement);
+    let didMoveFocus = false;
 
     if (currentIndex !== -1) {
-      const newIndex = backwards ? currentIndex - 1 : currentIndex + 1;
-      focusableElements[newIndex]?.focus();
+      const step = backwards ? -1 : 1;
+      for (let i = currentIndex + step; i >= 0 && i < focusableElements.length; i += step) {
+        const nextElement = focusableElements[i];
+        if (this.isEditorInternalElement(nextElement)) {
+          continue;
+        }
+
+        nextElement.focus();
+        didMoveFocus = true;
+        break;
+      }
     }
 
     this.shouldSkipInput = false;
     this.quill.container.tabIndex = -1;
+    return didMoveFocus;
   }
 }

@@ -126,7 +126,7 @@ export class Flyout {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function flyoutFactory(props) {
   const propsWithStore = { ...props, store };
   return new Flyout(propsWithStore);
 };

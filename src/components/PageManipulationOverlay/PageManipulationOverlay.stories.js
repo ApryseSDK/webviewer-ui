@@ -1,8 +1,8 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import PageManipulationOverlay from './PageManipulationOverlay';
 import '../FlyoutMenu/FlyoutMenu.scss';
 
-import { createStore } from 'redux';
 
 import { Provider } from 'react-redux';
 
@@ -33,7 +33,7 @@ const testProps = {
   ]
 };
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 export function Basic() {
   return (

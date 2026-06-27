@@ -12,6 +12,7 @@ function useSearch(activeDocumentViewerKey) {
   const caseSensitive = useSelector(selectors.isCaseSensitive);
   const wholeWord = useSelector(selectors.isWholeWord);
   const searchStatus = useSelector(selectors.getSearchStatus);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const [searchResults, setSearchResults] = useState([]);
   const [activeSearchResult, setActiveSearchResult] = useState();
   const [activeSearchResultIndex, setActiveSearchResultIndex] = useState(0);
@@ -51,7 +52,10 @@ function useSearch(activeDocumentViewerKey) {
   const debouncedSearch = useMemo(() => debounce(spreadsheetSearch, debounceTime), []);
 
   const refreshSpreadsheetLabelsAndSearch = useCallback(() => {
-    const workbook = core.getDocument().getSpreadsheetEditorDocument().getWorkbook();
+    const workbook = core.getDocumentViewer(activeDocumentViewerKey).getSpreadsheetEditorManager().getWorkbook();
+    if (!workbook) {
+      return;
+    }
     const sheetNames = [];
     for (let i = 0; i < workbook.sheetCount; i++) {
       const sheet = workbook.getSheetAt(i);
@@ -60,7 +64,7 @@ function useSearch(activeDocumentViewerKey) {
 
     dispatch(actions.setPageLabels(sheetNames));
     debouncedSearch(searchValue, { wholeWord, caseSensitive });
-  }, [searchValue, wholeWord, caseSensitive]);
+  }, [searchValue, wholeWord, caseSensitive, activeDocumentViewerKey]);
 
   // Update search results on first mount and when active viewer changes
   // If results already exist in core, use those
@@ -153,21 +157,24 @@ function useSearch(activeDocumentViewerKey) {
         setSearchStatus('SEARCH_DONE');
       }
     }
-    const documentViewers = core.getDocumentViewers();
+    // MultiViewer mode listens to both DocumentViewers; otherwise scope to the active one.
+    const viewersToListen = isMultiViewerMode
+      ? core.getDocumentViewers()
+      : [core.getDocumentViewer(activeDocumentViewerKey)].filter(Boolean);
 
-    documentViewers.forEach((documentViewer) => {
+    viewersToListen.forEach((documentViewer) => {
       documentViewer.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
       documentViewer.addEventListener('searchResultsChanged', searchResultsChanged);
       documentViewer.addEventListener('searchInProgress', searchInProgressEventHandler);
     });
     return () => {
-      documentViewers.forEach((documentViewer) => {
+      viewersToListen.forEach((documentViewer) => {
         documentViewer.removeEventListener('activeSearchResultChanged', activeSearchResultChanged);
         documentViewer.removeEventListener('searchResultsChanged', searchResultsChanged);
         documentViewer.removeEventListener('searchInProgress', searchInProgressEventHandler);
       });
     };
-  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus, dispatch, documentViewersCount, activeDocumentViewerKey]);
+  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus, dispatch, documentViewersCount, activeDocumentViewerKey, isMultiViewerMode]);
 
   return {
     searchStatus,

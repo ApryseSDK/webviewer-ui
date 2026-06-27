@@ -12,11 +12,9 @@ import debounce from 'lodash/debounce';
 
 const TopHeaderContainer = () => {
 
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const topHeaders = useSelector(selectors.getTopHeaders, shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { customizableUI } = featureFlags;
   // Top headers can be either normal headers, or floating headers. You can have a max of two normal headers.
   // There is one float container that can hold as many floating headers as you want.
 
@@ -56,7 +54,7 @@ const TopHeaderContainer = () => {
     );
   }), [sortedTopHeaders]);
 
-  if (!customizableUI || !topHeaders.length) {
+  if (!topHeaders.length) {
     return null;
   }
 

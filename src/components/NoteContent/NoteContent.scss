@@ -138,13 +138,8 @@
         }
 
         &.disabled {
-          background: var(--gray-6) !important;
-          border-color: var(--gray-6) !important;
-          cursor: not-allowed;
-
-          span {
-            color: var(--primary-button-text);
-          }
+          @extend %default-button-disabled;
+          border: none;
         }
       }
 
@@ -202,20 +197,5 @@
 
   .reply-attachment-list {
     margin-bottom: 8px;
-  }
-
-  &.modular-ui {
-    .highlight {
-      font-weight: 700;
-      color: var(--blue-5);
-      background: none;
-    }
-
-    .edit-content .edit-buttons .save-button {
-      &.disabled {
-        @extend %default-button-disabled;
-        border: none;
-      }
-    }
   }
 }

@@ -4,27 +4,65 @@ import { useStore } from 'react-redux';
 import selectors from 'selectors';
 import getRootNode from 'helpers/getRootNode';
 
-const sizeManager = {};
+// Per-instance storage:
+// `sizeManager`, `ResizingPromises`, and `lastSizedElementMap` were previously module-level singletons keyed only by `dataElement`. In multi-WebComponent setups every instance shares the same `dataElement` strings (e.g. 'default-top-header'), so the two instances' header components stomp on each other's records and their `ResponsiveContainer`s end up dispatching shrink/grow into the wrong instance's Redux store -- producing an infinite SET_CUSTOM_ELEMENT_SIZE / UPDATE_FLYOUT loop.
+// We now partition every record by the owning root node (Document or ShadowRoot). Single-instance code paths and existing tests keep the original default-exported `sizeManager` / `ResizingPromises`, which alias the document-scoped bucket.
+const DEFAULT_ROOT = typeof document !== 'undefined' ? document : null;
+const rootBuckets = new WeakMap();
+const FALLBACK_BUCKET = createBucket();
+
+function createBucket() {
+  return { sizeManager: {}, ResizingPromises: {}, lastSizedElementMap: {} };
+}
+
+const resolveRoot = (root) => root || DEFAULT_ROOT;
+
+const getBucket = (root) => {
+  const key = resolveRoot(root);
+  if (!key) {
+    return FALLBACK_BUCKET;
+  }
+  let bucket = rootBuckets.get(key);
+  if (!bucket) {
+    bucket = createBucket();
+    rootBuckets.set(key, bucket);
+  }
+  return bucket;
+};
+
+const rootFromElement = (element) => {
+  if (!element || typeof element.getRootNode !== 'function') {
+    return DEFAULT_ROOT;
+  }
+  return element.getRootNode();
+};
+
+export const getSizeManager = (root) => getBucket(root).sizeManager;
+export const getResizingPromises = (root) => getBucket(root).ResizingPromises;
+const getLastSizedElementMap = (root) => getBucket(root).lastSizedElementMap;
+
+const sizeManager = getSizeManager(DEFAULT_ROOT);
 export default sizeManager;
 
-export const ResizingPromises = {};
+export const ResizingPromises = getResizingPromises(DEFAULT_ROOT);
 
 export const storeWidth = ({ dataElement, element, headerDirection, size }) => {
   if (element && element.sizeManagerSize === size) {
     const freeSpace = getCurrentFreeSpace({ headerDirection, element });
-    if (!sizeManager[dataElement]) {
-      sizeManager[dataElement] = {};
+    const localSizeManager = getSizeManager(rootFromElement(element));
+    if (!localSizeManager[dataElement]) {
+      localSizeManager[dataElement] = {};
     }
     const boundingRect = element.getBoundingClientRect();
-    sizeManager[dataElement].sizeToWidth = {
-      ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
+    localSizeManager[dataElement].sizeToWidth = {
+      ...(localSizeManager[dataElement].sizeToWidth ? localSizeManager[dataElement].sizeToWidth : {}),
       [size]: boundingRect.width - (headerDirection === DIRECTION.ROW ? freeSpace : 0),
     };
-    sizeManager[dataElement].sizeToHeight = {
-      ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
+    localSizeManager[dataElement].sizeToHeight = {
+      ...(localSizeManager[dataElement].sizeToHeight ? localSizeManager[dataElement].sizeToHeight : {}),
       [size]: boundingRect.height - (headerDirection === DIRECTION.COLUMN ? freeSpace : 0),
     };
-    resolvePromise(dataElement);
+    resolvePromise(dataElement, rootFromElement(element));
   }
 };
 
@@ -38,6 +76,7 @@ export const useSizeStore = ({
   const storeWidthWrapper = () =>
     storeWidth({ dataElement, element: elementRef.current, headerDirection, size: getSize() });
 
+  // We can't resolve the per-instance root until the element is mounted, so queue the initial promise in the fallback bucket; the post-mount effect below moves the record into the correct per-root bucket.
   if (!ResizingPromises[dataElement]) {
     queueResizingPromise(dataElement);
   }
@@ -49,11 +88,16 @@ export const useSizeStore = ({
   }, [getSize()]);
 
   useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
+    const root = rootFromElement(elementRef.current);
+    const localSizeManager = getSizeManager(root);
+    localSizeManager[dataElement] = {
+      ...(localSizeManager[dataElement] ? localSizeManager[dataElement] : {}),
       dataElement,
       storeWidth: storeWidthWrapper,
     };
+    if (!getResizingPromises(root)[dataElement]) {
+      queueResizingPromise(dataElement, root);
+    }
   }, []);
 
   useEffect(() => {
@@ -123,7 +167,7 @@ export const getCurrentFreeSpace = ({
 };
 
 const SIZE_CHANGE_TYPES = { GROW: 'grow', SHRINK: 'shrink' };
-const lastSizedElementMap = {};
+const lastSizedElementMap = getLastSizedElementMap(DEFAULT_ROOT);
 
 // To be used in the unit tests
 export const resetLastSizedElementMap = () => {
@@ -132,45 +176,68 @@ export const resetLastSizedElementMap = () => {
   });
 };
 
-export const findItemToResize = ({ items, freeSpace, headerDirection, parentDataElement }) => {
+const isItemEnabled = (dataElement, state) => {
+  if (!state) {
+    return true;
+  }
+  return !selectors.isElementDisabled(state, dataElement) && !selectors.isDisabledViewOnly(state, dataElement);
+};
+
+// Helper that checks if the last sized element is still available and enabled, and if so, returns a resize handler for it
+const getResizeHandlerForLastSizedElement = ({ lastSizedElement, parentDataElement,freeSpace, isVertical, root }) => {
+  const element = lastSizedElement.getElement();
+  const hasToShrink = (lastSizedElement.changeType === SIZE_CHANGE_TYPES.GROW && freeSpace < 0);
+  const hasToGrow = element.canGrow && (lastSizedElement.changeType === SIZE_CHANGE_TYPES.SHRINK && freeSpace > 0);
+  if (hasToGrow) {
+    const growSizeIncrease = getGrowSizeIncrease({ element, isVertical });
+    if (growSizeIncrease > freeSpace) {
+      return null;
+    }
+  }
+  if (hasToShrink || hasToGrow) {
+    return () => {
+      createSizeChange({
+        parentDataElement,
+        item: lastSizedElement,
+        changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
+        instanceRoot: root,
+      });
+    };
+  }
+  return undefined;
+};
+
+export const findItemToResize = ({ items, freeSpace, headerDirection, parentDataElement, instanceRoot, state }) => {
   if (freeSpace === 0 || !items || items.length === 0) {
     return null;
   }
+  const root = resolveRoot(instanceRoot);
+  const localSizeManager = getSizeManager(root);
+  const localLastSizedElementMap = getLastSizedElementMap(root);
   const isVertical = headerDirection === DIRECTION.COLUMN;
-  if (lastSizedElementMap[parentDataElement]) {
-    const lastSizedElement = lastSizedElementMap[parentDataElement];
+  if (localLastSizedElementMap[parentDataElement]) {
+    const lastSizedElement = localLastSizedElementMap[parentDataElement];
     const isLastElementStillAvailable = items.some((item) => item.dataElement === lastSizedElement.dataElement);
-    if (isLastElementStillAvailable) {
-      const element = lastSizedElement.getElement();
-      const hasToShrink = (lastSizedElement.changeType === SIZE_CHANGE_TYPES.GROW && freeSpace < 0);
-      const hasToGrow = element.canGrow && (lastSizedElement.changeType === SIZE_CHANGE_TYPES.SHRINK && freeSpace > 0);
-      if (hasToGrow) {
-        const growSizeIncrease = getGrowSizeIncrease({ element, isVertical });
-        if (growSizeIncrease > freeSpace) {
-          return null;
-        }
-      }
-      if (hasToShrink || hasToGrow) {
-        return () => {
-          createSizeChange({
-            parentDataElement,
-            item: lastSizedElement,
-            changeType: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
-          });
-        };
+    const isLastElementEnabled = isItemEnabled(lastSizedElement.dataElement, state);
+    if (isLastElementStillAvailable && isLastElementEnabled) {
+      const resizeHandler = getResizeHandlerForLastSizedElement({ lastSizedElement, parentDataElement, freeSpace, isVertical, root });
+      if (resizeHandler !== undefined) {
+        return resizeHandler;
       }
     } else {
-      lastSizedElementMap[parentDataElement] = null;
+      localLastSizedElementMap[parentDataElement] = null;
     }
   }
   const [itemList, groupedItemList] = sortResponsiveItems(items, parentDataElement);
+  const enabledItemList = itemList.filter((item) => isItemEnabled(item.dataElement, state));
+  const enabledGroupedItemList = groupedItemList.filter((item) => isItemEnabled(item.dataElement, state));
   const isGrowing = freeSpace > 0;
   if (isGrowing) {
-    const itemToGrow = findItemToGrow(itemList, groupedItemList);
+    const itemToGrow = findItemToGrow(enabledItemList, enabledGroupedItemList, localSizeManager);
     if (!itemToGrow) {
       return null;
     }
-    const sizeDifference = getGrowSizeIncrease({ element: sizeManager[itemToGrow.dataElement], isVertical });
+    const sizeDifference = getGrowSizeIncrease({ element: localSizeManager[itemToGrow.dataElement], isVertical });
     if (sizeDifference > freeSpace) {
       return null;
     }
@@ -179,10 +246,11 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
         parentDataElement,
         item: itemToGrow,
         changeType: SIZE_CHANGE_TYPES.GROW,
+        instanceRoot: root,
       });
     };
   }
-  const itemToShrink = findItemToShrink(itemList, groupedItemList);
+  const itemToShrink = findItemToShrink(enabledItemList, enabledGroupedItemList, localSizeManager);
   if (!itemToShrink) {
     return null;
   }
@@ -191,6 +259,7 @@ export const findItemToResize = ({ items, freeSpace, headerDirection, parentData
       parentDataElement,
       item: itemToShrink,
       changeType: SIZE_CHANGE_TYPES.SHRINK,
+      instanceRoot: root,
     });
   };
 };
@@ -214,11 +283,11 @@ const sortResponsiveItems = (items, parentDataElement) => {
   return [newItems, groupedItems];
 };
 
-const findItemToShrink = (items, groupedItems) => {
+const findItemToShrink = (items, groupedItems, localSizeManager = sizeManager) => {
   let searchIndex = 0;
   while (searchIndex < items.length) {
     const rawItem = items[searchIndex];
-    const item = sizeManager[rawItem.dataElement];
+    const item = localSizeManager[rawItem.dataElement];
     if (item?.canShrink) {
       return rawItem;
     }
@@ -227,7 +296,7 @@ const findItemToShrink = (items, groupedItems) => {
   searchIndex = 0;
   while (searchIndex < groupedItems.length) {
     const rawItem = groupedItems[searchIndex];
-    const item = sizeManager[rawItem.dataElement];
+    const item = localSizeManager[rawItem.dataElement];
     if (item?.canShrink) {
       return rawItem;
     }
@@ -235,11 +304,11 @@ const findItemToShrink = (items, groupedItems) => {
   }
 };
 
-const findItemToGrow = (items, groupedItems) => {
+const findItemToGrow = (items, groupedItems, localSizeManager = sizeManager) => {
   let searchIndex = groupedItems.length - 1;
   while (searchIndex >= 0) {
     const rawItem = groupedItems[searchIndex];
-    const item = sizeManager[rawItem.dataElement];
+    const item = localSizeManager[rawItem.dataElement];
     if (item?.canGrow) {
       return rawItem;
     }
@@ -248,7 +317,7 @@ const findItemToGrow = (items, groupedItems) => {
   searchIndex = items.length - 1;
   while (searchIndex >= 0) {
     const rawItem = items[searchIndex];
-    const item = sizeManager[rawItem.dataElement];
+    const item = localSizeManager[rawItem.dataElement];
     if (item?.canGrow) {
       return rawItem;
     }
@@ -262,24 +331,28 @@ const getGrowSizeIncrease = ({ element, isVertical }) => {
   return element[sizeToGet][currentSize - 1] - element[sizeToGet][currentSize];
 };
 
-const createSizeChange = ({ parentDataElement, item, changeType }) => {
+const createSizeChange = ({ parentDataElement, item, changeType, instanceRoot }) => {
+  const root = resolveRoot(instanceRoot);
+  const localSizeManager = getSizeManager(root);
+  const localLastSizedElementMap = getLastSizedElementMap(root);
   const { dataElement } = item;
-  const elementStack = getParentElements(dataElement);
-  queueResizingPromise(dataElement);
+  const elementStack = getParentElements(dataElement, root);
+  queueResizingPromise(dataElement, root);
   for (const element of elementStack) {
-    queueResizingPromise(element);
+    queueResizingPromise(element, root);
   }
-  lastSizedElementMap[parentDataElement] = {
+  localLastSizedElementMap[parentDataElement] = {
     changeType,
-    getElement: () => sizeManager[dataElement],
+    getElement: () => localSizeManager[dataElement],
     dataElement,
   };
-  sizeManager[item.dataElement][changeType]();
+  localSizeManager[item.dataElement][changeType]();
 };
 
-const getParentElements = (dataElement) => {
+const getParentElements = (dataElement, instanceRoot) => {
   const stack = [];
-  let element = getRootNode().querySelector(`[data-element="${dataElement}"]`);
+  const root = resolveRoot(instanceRoot) || getRootNode();
+  let element = root.querySelector?.(`[data-element="${dataElement}"]`);
   while (element?.parentElement) {
     element = element.parentElement;
     const dataElement = element.dataset.element;
@@ -293,20 +366,24 @@ const getParentElements = (dataElement) => {
   return stack;
 };
 
-const queueResizingPromise = (dataElement) => {
+const queueResizingPromise = (dataElement, instanceRoot) => {
+  const root = resolveRoot(instanceRoot);
+  const localSizeManager = getSizeManager(root);
+  const localPromises = getResizingPromises(root);
   const promiseCapability = {};
   promiseCapability.promise = new Promise((resolve, reject) => {
     // Timeout to auto resolve to prevent getting stuck
-    let timeout = setTimeout(() => sizeManager[dataElement].storeWidth(), 200);
+    let timeout = setTimeout(() => localSizeManager[dataElement]?.storeWidth?.(), 200);
     promiseCapability.resolve = () => {
       clearTimeout(timeout);
       resolve();
     };
     promiseCapability.reject = reject;
   });
-  ResizingPromises[dataElement] = promiseCapability;
+  localPromises[dataElement] = promiseCapability;
 };
 
-const resolvePromise = (dataElement) => {
-  ResizingPromises[dataElement].resolve();
+const resolvePromise = (dataElement, instanceRoot) => {
+  const localPromises = getResizingPromises(resolveRoot(instanceRoot));
+  localPromises[dataElement]?.resolve?.();
 };

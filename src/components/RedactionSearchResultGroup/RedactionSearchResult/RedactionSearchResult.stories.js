@@ -11,7 +11,7 @@ export default {
   component: RedactionSearchResult,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 export function Text() {
   const props = {

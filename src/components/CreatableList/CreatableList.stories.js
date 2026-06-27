@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import CreatableListContainer from './CreatableListContainer';
-import { createStore } from 'redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -22,7 +22,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const listOptions = [
   {

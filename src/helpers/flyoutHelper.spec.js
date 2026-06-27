@@ -1,6 +1,6 @@
 
 import * as getRootNodeModule from './getRootNode';
-import { getFlyoutPositionOnElement } from './flyoutHelper';
+import { getFlyoutPositionOnElement, isToggleScrolledOutOfAncestor } from './flyoutHelper';
 
 
 describe('FlyoutPosition', () => {
@@ -121,8 +121,8 @@ describe('FlyoutPosition', () => {
           closestId: 'LeftHeader',
           // In this case, the X should be the same as the left of the reference element - container left + the width of the reference element + the default offset
           expectedX: 56,
-          // the Y should be the same as the top of the reference element
-          expectedY: 200,
+          // the Y should be the bottom of the reference element - the height of the flyout - container top (app-relative)
+          expectedY: 150,
         }
       ],
     },
@@ -144,8 +144,8 @@ describe('FlyoutPosition', () => {
           closestId: 'RightHeader',
           // In this case, the X should be the same as the left of the reference element - container left - the width of the flyout - the default offset
           expectedX: 154,
-          // the Y should be bottom of the reference element - the height of the flyout
-          expectedY: 200,
+          // the Y should be the bottom of the reference element - the height of the flyout - container top (app-relative)
+          expectedY: 150,
         }
       ],
     },
@@ -167,8 +167,8 @@ describe('FlyoutPosition', () => {
           closestId: null,
           // In this case, the X should be the same as the left of the reference element - container left - left offset
           expectedX: 200,
-          // the Y should be top of the reference element - the height of the flyout - default padding
-          expectedY: 154,
+          // the Y should be top of the reference element - the height of the flyout - default offset - container top (app-relative)
+          expectedY: 104,
         }
       ]
     }
@@ -185,6 +185,165 @@ describe('FlyoutPosition', () => {
           expect(position.y).toEqual(test.expectedY);
         });
       });
+    });
+  });
+});
+
+describe('isToggleScrolledOutOfAncestor', () => {
+  const testCases = [
+    {
+      description: 'returns false when scrolledTarget is null',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: null,
+      expected: false,
+    },
+    {
+      description: 'returns false when scrolledTarget is not an element',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {},
+      expected: false,
+    },
+    {
+      description: 'returns false when scrolledTarget.nodeType is less than 1',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 0,
+      },
+      expected: false,
+    },
+    {
+      description: 'returns false when scrolledTarget.nodeType is greater than 1',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 2,
+      },
+      expected: false,
+    },
+    {
+      description: 'returns false when scrolledTarget does not contain toggle',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => false,
+        getBoundingClientRect: () => ({ top: 50, bottom: 200, left: 50, right: 200 }),
+      },
+      expected: false,
+    },
+    {
+      description: 'returns false when toggle is not clipped by scrolledTarget',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 80, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 90, left: 50, right: 200 }),
+      },
+      expected: false,
+    },
+    {
+      description: 'returns true when only toggle bottom is clipped by scrolledTarget',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 160, bottom: 200, left: 50, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when only toggle top is clipped by scrolledTarget',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 90, left: 50, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when only toggle right is clipped by scrolledTarget',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 100 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 200, left: 120, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when only toggle left is clipped by scrolledTarget',
+      toggle: {
+        getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }),
+      },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 200, left: 0, right: 90 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when toggle bottom exactly meets scrolledTarget top',
+      toggle: { getBoundingClientRect: () => ({ top: 50, bottom: 100, left: 100, right: 150 }) },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 100, bottom: 200, left: 50, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when toggle top exactly meets scrolledTarget bottom',
+      toggle: { getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }) },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 100, left: 50, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when toggle right exactly meets scrolledTarget left',
+      toggle: { getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 50, right: 100 }) },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 200, left: 100, right: 200 }),
+      },
+      expected: true,
+    },
+    {
+      description: 'returns true when toggle left exactly meets scrolledTarget right',
+      toggle: { getBoundingClientRect: () => ({ top: 100, bottom: 150, left: 100, right: 150 }) },
+      scrolledTarget: {
+        nodeType: 1,
+        contains: () => true,
+        getBoundingClientRect: () => ({ top: 50, bottom: 200, left: 0, right: 100 }),
+      },
+      expected: true,
+    },
+  ];
+
+  testCases.forEach(({ description, toggle, scrolledTarget, expected }) => {
+    it(description, () => {
+      expect(isToggleScrolledOutOfAncestor(toggle, scrolledTarget)).toBe(expected);
     });
   });
 });

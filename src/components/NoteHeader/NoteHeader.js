@@ -16,6 +16,8 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
+import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
+import { parseRecordId } from 'helpers/officeEditorCommentHelper';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY, OfficeEditorEditMode } from 'constants/officeEditor';
@@ -63,10 +65,11 @@ const propTypes = {
  *
  * @param {Object} annotation - The annotation object containing color and rich text style information.
  * @param {string} iconColor - The property name for the icon color in the annotation object.
+ * @param {string[]} majorityTextColors - An array of colors representing the majority text colors in the annotation's editor.
  * @returns {string|undefined} The determined color as a hex string, or undefined if not found.
  * @ignore
  */
-function getColorFromAnnotation(annotation, iconColor) {
+function getColorFromAnnotation(annotation, iconColor, majorityTextColors) {
   let color = annotation[iconColor]?.toHexString?.();
 
   const isFreeText = annotation instanceof Annotations.FreeTextAnnotation;
@@ -90,7 +93,7 @@ function getColorFromAnnotation(annotation, iconColor) {
     const richTextLength = textLength - Object.keys(richTextStyle)[0];
     color = richTextLength / textLength > 0.5 ? firstRichTextStyle.color : color;
   } else if (numberOfRichTextStyles > 1) {
-    const majorityColors = annotation.getEditor()?.getMajorityTextColors() || [];
+    const majorityColors = majorityTextColors || [];
     color = majorityColors.length < 1 ? color : majorityColors[0];
   }
 
@@ -185,9 +188,13 @@ function NoteHeader(props) {
   let date = getDateCreatedInTimezone(sortStrategy, notesShowLastUpdatedDate, annotation, timezone);
   const noteDateAndTime = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
 
-  const numberOfReplies = annotation.getReplies().length;
+  const editBoxManager = core.getAnnotationManager().getEditBoxManager();
+  const isFreeText = annotation instanceof Annotations.FreeTextAnnotation;
+  const existingEditor = isFreeText ? editBoxManager.getExistingEditor(annotation) : null;
+  const majorityTextColors = existingEditor ? existingEditor.getMajorityTextColors() : undefined;
+  let color = getColorFromAnnotation(annotation, iconColor, majorityTextColors);
+  const numberOfReplies = annotation.getReplies().filter((reply) => !isAutosaveDraftReply(reply)).length;
 
-  let color = getColorFromAnnotation(annotation, iconColor);
   if (color === '') {
     color = getColorFromTheme(activeTheme, color);
   }
@@ -200,12 +207,12 @@ function NoteHeader(props) {
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply && !isGroupMember });
 
   const acceptTrackedChange = (trackedChangeAnnot) => {
-    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    core.getOfficeEditor().acceptTrackedChange(trackedChangeId);
+    const trackedChangeId = parseRecordId(trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY));
+    core.getTrackedChangeManager().acceptTrackedChange(trackedChangeId);
   };
   const rejectTrackedChange = (trackedChangeAnnot) => {
-    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    core.getOfficeEditor().rejectTrackedChange(trackedChangeId);
+    const trackedChangeId = parseRecordId(trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY));
+    core.getTrackedChangeManager().rejectTrackedChange(trackedChangeId);
   };
 
   const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange;

@@ -1,5 +1,5 @@
 import core from 'core';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -29,9 +29,10 @@ const webViewerServerApply = (annotations, dispatch, activeDocumentViewerKey) =>
 });
 
 const webViewerApply = (annotations, onRedactionCompleted, dispatch, activeDocumentViewerKey) => {
-  const message = i18next.t('warning.redaction.applyMessage');
-  const title = i18next.t('warning.redaction.applyTile');
-  const confirmBtnText = i18next.t('action.apply');
+  const t = getCurrentT();
+  const message = t('warning.redaction.applyMessage');
+  const title = t('warning.redaction.applyTile');
+  const confirmBtnText = t('action.apply');
 
   const warning = {
     message,

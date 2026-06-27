@@ -1,10 +1,12 @@
-import { shouldDisableLayersPanel, updatePortfolio, syncDisplayModeMultiviewer, addPageLabelsToRedux } from './onDocumentLoaded';
+import { shouldDisableLayersPanel, updatePortfolio, syncDisplayModeMultiviewer, addPageLabelsToRedux, configureEditorMode } from './onDocumentLoaded';
 import { workerTypes } from '../constants/types';
 import * as useCore from '../hooks/useCore/useCore';
 import * as portfolioHelpers from '../helpers/portfolio';
+import * as officeEditorHelpers from '../helpers/officeEditor';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
+import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 
 describe('shouldDisableLayersPanel', function() {
   it('should return true if document is not client side initialized (forceClientSideInit is false) and WebViewer Server is running', async () => {
@@ -59,6 +61,9 @@ describe('syncDisplayModeMultiviewer', () => {
       getDocumentViewers: jest.fn(),
       getDocumentViewer: jest.fn(),
       getDisplayMode: jest.fn(),
+      getMultiViewerModeActive: jest.fn(),
+      hasDocumentViewer: jest.fn(),
+      setDisplayMode: jest.fn(),
     };
   });
 
@@ -89,7 +94,12 @@ describe('syncDisplayModeMultiviewer', () => {
     mockDocumentViewer2 = makeMockViewer(2);
     core.getDocumentViewers = jest.fn(() => [mockDocumentViewer1, mockDocumentViewer2]);
     core.getDocumentViewer = jest.fn((key) => core.getDocumentViewers()[key - 1]);
-    core.getDisplayMode = jest.fn((key) => core.getDocumentViewer(key).getDisplayMode());
+    core.getDisplayMode = jest.fn((key) => core.getDocumentViewer(key).getDisplayModeManager().getDisplayMode());
+    core.getMultiViewerModeActive = jest.fn(() => true);
+    core.hasDocumentViewer = jest.fn((key) => !!core.getDocumentViewers()[key - 1]);
+    core.setDisplayMode = jest.fn((mode, key) => {
+      core.getDocumentViewer(key).getDisplayModeManager().setDisplayMode(mode);
+    });
   });
 
   it('Newly loaded doc in second viewer should be the same display mode as what is stored', () => {
@@ -97,8 +107,9 @@ describe('syncDisplayModeMultiviewer', () => {
     run();
     const displayModeManager = mockDocumentViewer2.getDisplayModeManager();
     expect(displayModeManager.setDisplayMode).toHaveBeenCalledTimes(1);
-    const singleDisplayMode = new Core.VirtualDisplayMode(mockDocumentViewer2, 'Single');
-    expect(displayModeManager.setDisplayMode).toHaveBeenCalledWith(singleDisplayMode);
+    // Production calls core.setDisplayMode(core.getDisplayMode(sourceKey), targetKey), so the mode propagated to viewer2 is the exact VirtualDisplayMode instance held by viewer1.
+    const sourceDisplayMode = mockDocumentViewer1.getDisplayModeManager().getDisplayMode();
+    expect(displayModeManager.setDisplayMode).toHaveBeenCalledWith(sourceDisplayMode);
 
     expect(mockDocumentViewer2.getDisplayMode()).toEqual(mockDocumentViewer1.getDisplayMode());
   });
@@ -216,6 +227,73 @@ describe('addPageLabelsToRedux', function() {
     expect(mockCore.getTotalPages).toHaveBeenCalledWith(documentViewerKey);
     expect(selectors.getPageLabels).toHaveBeenCalledWith(expect.anything(), documentViewerKey);
     expect(setPageLabelsSpy).toHaveBeenCalledWith(mockPageLabels, documentViewerKey);
+  });
+});
+
+describe('configureEditorMode', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('dispatches setIsOfficeEditorHeaderEnabled(false) when spreadsheet mode is configured', () => {
+    const dispatched = [];
+    const mockStore = {
+      dispatch: (action) => dispatched.push(action),
+      getState: () => ({}),
+    };
+
+    jest.spyOn(core, 'getDocument').mockReturnValue({});
+    jest.spyOn(core, 'getTool').mockReturnValue({
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    });
+    jest.spyOn(core, 'getDocumentViewer').mockReturnValue({
+      getSpreadsheetEditorManager: () => ({
+        getEditMode: () => 'viewOnly',
+      }),
+    });
+
+    jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
+    jest.spyOn(officeEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
+    jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue('viewOnly');
+
+    configureEditorMode(mockStore, 1)();
+
+    expect(dispatched).toContainEqual({
+      type: 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED',
+      payload: { isOfficeEditorHeaderEnabled: false },
+    });
+  });
+
+  it('falls back to editing mode when spreadsheet initialEditMode is invalid', () => {
+    const dispatched = [];
+    const mockStore = {
+      dispatch: (action) => dispatched.push(action),
+      getState: () => ({}),
+    };
+
+    jest.spyOn(core, 'getDocument').mockReturnValue({});
+    jest.spyOn(core, 'getTool').mockReturnValue({
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    });
+    jest.spyOn(core, 'getDocumentViewer').mockReturnValue({
+      getSpreadsheetEditorManager: () => ({
+        getEditMode: () => 'not-a-valid-mode',
+      }),
+    });
+
+    jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
+    jest.spyOn(officeEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
+    jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue(undefined);
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    configureEditorMode(mockStore, 1)();
+
+    expect(warnSpy).toHaveBeenCalledWith('Invalid initialEditMode parameter: not-a-valid-mode. Default to Editing mode.');
+    expect(dispatched).toContainEqual(actions.setSpreadsheetEditorEditMode('editing'));
   });
 });
 

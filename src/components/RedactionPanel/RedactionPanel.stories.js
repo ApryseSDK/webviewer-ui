@@ -1,9 +1,8 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import RedactionPanel from './RedactionPanel';
 import RedactionPanelContainerWithProvider from './RedactionPanelContainer';
-import RightPanel from 'components/RightPanel';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { defaultRedactionTypes, redactionTypeMap } from 'constants/redactionTypes';
 import Panel from 'components/Panel';
@@ -20,7 +19,7 @@ export default {
   title: 'Components/RedactionPanel',
   component: RedactionPanel,
   includeStories: [
-    'EmptyList', 'PanelWithRedactionItems', 'RedactionPanelWithSearch',
+    'EmptyList', 'PanelWithRedactionItems',
     'RedactionLeftGenericPanel',
     'RedactionRightGenericPanel',
     'RightPanelWithRedactionItems',
@@ -107,7 +106,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const basicProps = {
   currentWidth: 330,
@@ -118,14 +117,11 @@ const basicProps = {
 export const RedactionPanelStoryWrapper = ({ children, mockContext }) => {
   return (
     <Provider store={store}>
-      <RightPanel
-        dataElement="redactionPanel"
-        onResize={noop}
-      >
+      <Panel location={'left'} dataElement={'redactionPanel'}>
         <RedactionContextMock mockContext={mockContext}>
           {children}
         </RedactionContextMock>
-      </RightPanel>
+      </Panel>
     </Provider >
   );
 };
@@ -133,7 +129,7 @@ export const RedactionPanelStoryWrapper = ({ children, mockContext }) => {
 export function EmptyList() {
   return (
     <RedactionPanelStoryWrapper>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionPanel {...basicProps} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -205,28 +201,19 @@ const redactionAnnotations = [
 export function PanelWithRedactionItems() {
   return (
     <RedactionPanelStoryWrapper>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '330px' }}>
+      <div className="RedactionPanel">
         <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
       </div>
     </RedactionPanelStoryWrapper>
   );
 }
 
-export function RedactionPanelWithSearch() {
-  return (
-    <RedactionPanelStoryWrapper>
-      <RedactionPanelContainerWithProvider redactionAnnotationsList={[]} />
-    </RedactionPanelStoryWrapper>
-  );
-}
-
-
 export function RedactionLeftGenericPanel() {
   return (
     <Provider store={store}>
       <Panel location={'left'} dataElement={'panel'}>
         <RedactionContextMock>
-          <div className="Panel RedactionPanel">
+          <div className="RedactionPanel">
             <RedactionPanel {...basicProps} />
           </div>
         </RedactionContextMock>
@@ -242,7 +229,7 @@ export function RedactionRightGenericPanel() {
     <Provider store={store}>
       <Panel location={'right'} dataElement={'panel'}>
         <RedactionContextMock>
-          <div className="Panel RedactionPanel">
+          <div className="RedactionPanel">
             <RedactionPanel {...basicProps} />
           </div>
         </RedactionContextMock>
@@ -259,7 +246,7 @@ export function RightPanelWithRedactionItems() {
     <Provider store={store}>
       <Panel location={'right'} dataElement={'panel'}>
         <RedactionContextMock>
-          <div className="Panel RedactionPanel">
+          <div className="RedactionPanel">
             <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
           </div>
         </RedactionContextMock>
@@ -275,7 +262,7 @@ export function LeftPanelWithRedactionItems() {
     <Provider store={store}>
       <Panel location={'left'} dataElement={'panel'}>
         <RedactionContextMock>
-          <div className="Panel RedactionPanel">
+          <div className="RedactionPanel">
             <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
           </div>
         </RedactionContextMock>
@@ -311,7 +298,7 @@ const RedactSearchPanelInApp = (location, panelSize) => {
     },
   };
 
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} />;

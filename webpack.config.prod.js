@@ -102,7 +102,7 @@ module.exports = (env = {}) => {
             },
           },
           include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
-          exclude: function (modulePath) {
+          exclude: function(modulePath) {
             return /node_modules/.test(modulePath) &&
               !(/node_modules[\\/](react-dnd|react-quill-new|quill-mention|quill|react-error-boundary)[\\/]/.test(modulePath));
           },
@@ -121,8 +121,6 @@ module.exports = (env = {}) => {
         {
           test: /\.scss$/,
           oneOf: [
-            createProdThemeRule(/theme-light-high-contrast/, 'highContrastLight.scss', MiniCssExtractPlugin, path),
-            createProdThemeRule(/theme-dark-high-contrast/, 'highContrastDark.scss', MiniCssExtractPlugin, path),
             createProdThemeRule(/theme-light-modular/, 'lightWCAG.scss', MiniCssExtractPlugin, path),
             createProdThemeRule(/theme-dark-modular/, 'darkWCAG.scss', MiniCssExtractPlugin, path),
             createProdThemeRule(/theme-light/, 'light.scss', MiniCssExtractPlugin, path),
@@ -177,4 +175,4 @@ module.exports = (env = {}) => {
 
 // Export the default config for direct require() usage (e.g., in karma, scripts)
 // Webpack CLI will still use the function when running with --env flags
-module.exports.default = module.exports;
+module.exports.default = module.exports();

@@ -68,7 +68,7 @@ describe('SnippingToolPopupContainer', () => {
       mockCore2 = createMockCore('DOWNLOAD');
 
       store = configureStore({
-        reducer: rootReducer,
+        reducer: rootReducer(),
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
       });
 

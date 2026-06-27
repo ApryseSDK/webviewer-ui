@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
@@ -15,6 +15,7 @@ import useFocusOnClose from 'hooks/useFocusOnClose';
 import './WarningModal.scss';
 
 const WarningModal = () => {
+  const [t, i18n] = useTranslation();
   const { core } = useCore();
   const doNotAskCheckboxRef = React.createRef();
 
@@ -57,7 +58,7 @@ const WarningModal = () => {
   const dispatch = useDispatch();
 
   const className = getClassName(`Modal WarningModal ${warningModalClass}`, { isOpen });
-  const label = i18next.t(confirmBtnText, templateStrings) || i18next.t('action.ok');
+  const label = t(confirmBtnText, templateStrings) || t('action.ok');
 
   useEffect(() => {
     core.addEventListener('documentUnloaded', cancel);
@@ -75,8 +76,8 @@ const WarningModal = () => {
   }, [isOpen]);
 
   const getMessageWithNewLine = () => {
-    const messageIsAValidStringKey = typeof message === 'string' && i18next.exists(message);
-    const translatedMessage = messageIsAValidStringKey ? i18next.t(message, templateStrings) : message;
+    const messageIsAValidStringKey = typeof message === 'string' && i18n.exists(message);
+    const translatedMessage = messageIsAValidStringKey ? t(message, templateStrings) : message;
     if (translatedMessage.includes?.('\n')) {
       return translatedMessage.split('\n').map((str, index) => (
         <React.Fragment key={index}>
@@ -120,12 +121,13 @@ const WarningModal = () => {
       onMouseDown={cancel}
       role="alertdialog"
       aria-modal="true"
-      aria-label={i18next.t(title, templateStrings)}
-      aria-describedby={i18next.t(title, templateStrings)}
+      aria-label={t(title, templateStrings)}
+      aria-describedby={t(title, templateStrings)}
     >
       <ModalWrapper
-        title={i18next.t(title, templateStrings)}
+        title={t(title, templateStrings)}
         isOpen={isOpen}
+        modalDataElement={DataElements.WARNING_MODAL}
         closeHandler={cancel}
         onCloseClick={cancel}
         swipeToClose>
@@ -141,7 +143,7 @@ const WarningModal = () => {
                 ref={doNotAskCheckboxRef}
                 id="do-not-ask-again-checkbox"
                 name="do-not-ask-again-checkbox"
-                label={i18next.t('message.doNotAskAgain')}
+                label={t('message.doNotAskAgain')}
                 onChange={(e) => setDisableWarning(e.target.checked)}
                 checked={disableWarning}
                 center
@@ -156,7 +158,7 @@ const WarningModal = () => {
                   [secondaryBtnClass]: secondaryBtnClass,
                 })}
                 dataElement="WarningModalClearButton"
-                label={i18next.t(secondaryBtnText, templateStrings)}
+                label={t(secondaryBtnText, templateStrings)}
                 onClick={secondary}
               />
             )}

@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import useCore from 'hooks/useCore';
 
 import './CustomStampForums.scss';
-import { getInstanceNode } from 'helpers/getRootNode';
+import { getEventHandler } from 'helpers/fireEvent';
 import { COMMON_COLORS } from 'constants/commonColors';
 const FALLBACK_DATE_TIME_FORMAT = {
   date: 'MM/DD/YYYY',
@@ -227,8 +227,7 @@ const CustomStampForums = ({
   const openPicker = (addNew, type) => {
     const isText = type === 'text';
     openColorPicker();
-    const handleVisiblityChanged = (e) => {
-      const { element, isVisible } = e.detail;
+    const handleVisibilityChanged = (element, isVisible) => {
       if (element === 'ColorPickerModal' && !isVisible) {
         const color = getCustomColorAndRemove();
         if (color) {
@@ -243,10 +242,10 @@ const CustomStampForums = ({
           };
           updateCanvas(stampTextInputValue, timestampFormat, state);
         }
-        getInstanceNode().instance.UI.removeEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
+        getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
       }
     };
-    getInstanceNode().instance.UI.addEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
+    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
   };
   const deleteColor = (type) => {
     const isText = type === 'text';

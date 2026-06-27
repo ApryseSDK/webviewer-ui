@@ -163,6 +163,12 @@ export const RibbonItemsWithHoverState = () => {
 };
 
 RibbonItemsWithHoverState.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
   pseudo: { hover: true },
 };
 
@@ -179,6 +185,12 @@ export const RibbonItemsWithCustomStyleAndClass = () => {
 };
 
 RibbonItemsWithCustomStyleAndClass.parameters = {
+  chromatic: {
+    modes: {
+      'Light theme RTL': { disable: true },
+      'Dark theme': { disable: true },
+    },
+  },
   pseudo: { hover: true },
 };
 

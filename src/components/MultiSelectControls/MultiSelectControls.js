@@ -65,7 +65,6 @@ const MultiSelectControls = ({
   const [t] = useTranslation();
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
-  const customizableUI = useSelector(selectors.getIsCustomUIEnabled);
 
   useEffect(() => {
     const handleAnnotationDelete = (annotations) => {
@@ -205,18 +204,10 @@ const MultiSelectControls = ({
           isMultiSelectMode={true}
           handleStateChange={handleStateChange}
         />
-        {customizableUI
-          ? <ToggleElementButton
-            {...multiStyleButtonProps}
-            toggleElement={DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT}
-          />
-          : <Button
-            {...multiStyleButtonProps}
-            onClick={() => {
-              setShowMultiStyle(!showMultiStyle);
-            }}
-          />
-        }
+        <ToggleElementButton
+          {...multiStyleButtonProps}
+          toggleElement={DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT}
+        />
         {showMultiStyle &&
           <MultiStylePopup
             annotations={modifiableMultiSelectAnnotations}

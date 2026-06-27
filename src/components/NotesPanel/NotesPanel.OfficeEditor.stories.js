@@ -188,7 +188,7 @@ const renderOfficeEditorCommentPanelStory = ({
     },
   };
   officeEditorStore = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: state,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
   });
@@ -212,6 +212,9 @@ const renderOfficeEditorCommentPanelStory = ({
   core.getAnnotationManager = () => ({
     getFormFieldCreationManager: () => ({
       isInFormFieldCreationMode: () => false,
+    }),
+    getEditBoxManager: () => ({
+      getEditor: () => null,
     }),
   });
   core.getIsReadOnly = () => annotationManagerReadOnly;

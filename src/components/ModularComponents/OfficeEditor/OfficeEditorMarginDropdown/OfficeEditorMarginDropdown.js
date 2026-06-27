@@ -50,7 +50,6 @@ const OfficeEditorMarginDropdown = ({
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const currentUnit = useSelector(selectors.getOfficeEditorUnitMeasurement);
 
   const convertedOptions = useMemo(() => {
@@ -107,7 +106,6 @@ const OfficeEditorMarginDropdown = ({
       className={classNames({
         'office-editor-margin-dropdown': true,
         'dropdown-text-icon': true,
-        'modular-ui': customizableUI,
         'flyout-item': isFlyoutItem,
       })}
       width={'auto'}

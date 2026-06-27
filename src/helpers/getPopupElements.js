@@ -8,6 +8,4 @@ export default () => [
   'signatureOverlay',
   DataElements.ZOOM_OVERLAY,
   'redactionOverlay',
-  'toolsOverlay',
-  'toolStylePopup',
 ];

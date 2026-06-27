@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import UndoButton from './Undo';
 import RedoButton from './Redo';
 import core from 'core';
@@ -6,6 +6,7 @@ import {
   renderWithRedux,
   getSpreadsheetEditorState
 } from './UndoRedoTestHelpers';
+import { triggerSelectedRangeStyleChangedWithLatestStyle } from 'src/helpers/undoRedoSpreadsheetHelpers';
 
 jest.mock('core');
 
@@ -50,8 +51,8 @@ describe('UndoRedo Buttons', () => {
     jest.clearAllMocks();
 
     mockSpreadsheetHistoryManager = {
-      undo: jest.fn(),
-      redo: jest.fn(),
+      undo: jest.fn().mockResolvedValue(undefined),
+      redo: jest.fn().mockResolvedValue(undefined),
       canUndo: jest.fn(),
       canRedo: jest.fn(),
     };
@@ -116,6 +117,19 @@ describe('UndoRedo Buttons', () => {
         fireEvent.click(button);
 
         expect(mockSpreadsheetHistoryManager[historyManagerMethod]).toHaveBeenCalledTimes(1);
+      });
+
+      it(`should refresh toolbar style after ${historyManagerMethod} completes`, async () => {
+        triggerSelectedRangeStyleChangedWithLatestStyle.mockClear();
+        renderWithRedux(Component, {}, spreadsheetEditorState.enabled);
+        const button = screen.getByRole('button', { name: buttonLabel });
+        fireEvent.click(button);
+
+        // Style refresh should only happen after the async undo/redo resolves
+        await waitFor(() => {
+          expect(triggerSelectedRangeStyleChangedWithLatestStyle).toHaveBeenCalledTimes(1);
+          expect(triggerSelectedRangeStyleChangedWithLatestStyle).toHaveBeenCalledWith(mockSpreadsheetEditorManager);
+        });
       });
     });
 

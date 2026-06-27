@@ -31,7 +31,6 @@ export default function useOnAnnotationPopupOpen() {
   const [selectedMultipleAnnotations, setSelectedMultipleAnnotations] = useState(false);
   const [canModify, setCanModify] = useState(false);
   const [focusedAnnotationStyle, setFocusedAnnotationStyle] = useState(null);
-  const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
   const [isDatePickerMount, setDatePickerMount] = useState(false);
   const [hasAssociatedLink, setHasAssociatedLink] = useState(true);
@@ -40,8 +39,7 @@ export default function useOnAnnotationPopupOpen() {
 
   const widgetThatOpenedPopupRef = useRef(null);
 
-  // calling this function will always rerender this component
-  // because the position state always has a new object reference
+  // calling this function will always rerender this component because the position state always has a new object reference
   const openPopup = () => {
     if (popupItems.length > 0) {
       dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
@@ -53,7 +51,6 @@ export default function useOnAnnotationPopupOpen() {
     setFocusedAnnotation(null);
     setSelectedMultipleAnnotations(false);
     setCanModify(false);
-    setIsStylePopupOpen(false);
     setDatePickerOpen(false);
     setDatePickerMount(false);
     setHasAssociatedLink(false);
@@ -133,17 +130,34 @@ export default function useOnAnnotationPopupOpen() {
     }
   };
 
-  const POPUP_RENDER_TIME = 100;
-
-  const autoFocusFirstButton = async () => {
-    await new Promise((resolve) => setTimeout(resolve, POPUP_RENDER_TIME));
+  const focusFirstPopupButton = () => {
     const popup = getRootNode().querySelector(`[data-element=${DataElements.ANNOTATION_POPUP}]`);
     if (popup) {
       const firstButton = popup.querySelector('button:not([disabled])');
       if (firstButton) {
         firstButton.focus();
       }
+      return true;
     }
+    return false;
+  };
+
+  const autoFocusFirstButton = () => {
+    if (focusFirstPopupButton()) {
+      return;
+    }
+
+    // Otherwise wait for React to render the popup.
+    const root = getRootNode();
+    const observer = new MutationObserver(() => {
+      if (focusFirstPopupButton()) {
+        observer.disconnect();
+      }
+    });
+    observer.observe(root, { childList: true, subtree: true });
+
+    // Safety: don't leak the observer if for any reason the popup never appears.
+    setTimeout(() => observer.disconnect(), 2000);
   };
 
   useEffect(() => {
@@ -255,16 +269,12 @@ export default function useOnAnnotationPopupOpen() {
           openPopup();
         }
 
-        // clicking on full page redactions again should close the stylePopup if it is already open
-        if (focusedAnnotation['redactionType'] === 'fullPage' && isStylePopupOpen) {
-          setIsStylePopupOpen(false);
-        }
       }
     };
 
     core.addEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
     return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp, activeDocumentViewerKey);
-  }, [focusedAnnotation, isStylePopupOpen, activeDocumentViewerKey]);
+  }, [focusedAnnotation, activeDocumentViewerKey]);
 
   useEffect(() => {
     const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
@@ -309,8 +319,6 @@ export default function useOnAnnotationPopupOpen() {
     selectedMultipleAnnotations,
     canModify,
     focusedAnnotationStyle,
-    isStylePopupOpen,
-    setIsStylePopupOpen,
     isDatePickerOpen,
     setDatePickerOpen,
     isDatePickerMount,

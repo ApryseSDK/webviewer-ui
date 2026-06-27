@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStore, combineReducers } from 'redux';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import AnnotationStylePopup from './AnnotationStylePopup';
 import viewerReducer from 'reducers/viewerReducer';
@@ -38,7 +38,7 @@ initialState.viewer.openElements.stylePopupColorsContainer = true;
 const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer),
 });
-const store = createStore(reducer);
+const store = configureStore({ reducer: reducer });
 
 const BasicTemplate = (args) => {
   return (
@@ -143,8 +143,8 @@ const freeTextProperties = {
   FontSize: freeTextAnnot.FontSize,
   TextAlign: freeTextAnnot.TextAlign,
   TextVerticalAlign: freeTextAnnot.TextVerticalAlign,
-  bold: richTextStyles?.[0]?.['font-weight'] === 'bold' ?? false,
-  italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
+  bold: richTextStyles?.[0]?.['font-weight'] === 'bold',
+  italic: richTextStyles?.[0]?.['font-style'] === 'italic',
   underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
   strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
   StrokeStyle: 'solid',

@@ -7,6 +7,14 @@ import NoteContext from './Context';
 const mockDispatch = jest.fn();
 let mockNoteTransformFunction = null;
 let mockCustomNoteSelectionFunction = null;
+let mockCanModify = true;
+let mockCanModifyContents = true;
+let mockIsOfficeEditorMode = false;
+let mockOfficeEditorCommentId = null;
+const mockMoveCursorToTrackedChange = jest.fn();
+const mockMoveCursorToComment = jest.fn();
+const mockSelectAnnotation = jest.fn();
+const mockJumpToAnnotation = jest.fn();
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => [(key) => key],
@@ -18,6 +26,19 @@ jest.mock('hooks/useCore', () => () => ({
     removeEventListener: jest.fn(),
     getGroupAnnotations: jest.fn(() => []),
     deselectAllAnnotations: jest.fn(),
+    canModify: jest.fn(() => mockCanModify),
+    canModifyContents: jest.fn(() => mockCanModifyContents),
+    selectAnnotation: (...args) => mockSelectAnnotation(...args),
+    jumpToAnnotation: (...args) => mockJumpToAnnotation(...args),
+    getOfficeEditor: () => ({
+      getCommentManager: () => ({
+        moveCursorToComment: (...args) => mockMoveCursorToComment(...args),
+      }),
+    }),
+    getAnnotationManager: () => ({
+      selectAnnotation: jest.fn(),
+      selectAnnotations: jest.fn(),
+    }),
   },
 }));
 
@@ -37,7 +58,7 @@ jest.mock('selectors', () => ({
   isCommentThreadExpansionEnabled: () => false,
   isRightClickAnnotationPopupEnabled: () => true,
   getActiveDocumentViewerKey: () => 1,
-  getIsOfficeEditorMode: () => false,
+  getIsOfficeEditorMode: () => mockIsOfficeEditorMode,
   getOfficeEditorEditMode: () => 'editing',
 }));
 
@@ -80,6 +101,10 @@ jest.mock('src/helpers/isAnnotationRenderedInDisplayMode', () => ({
   isAnnotationRenderedInDisplayMode: () => true,
 }));
 
+jest.mock('helpers/officeEditorCommentHelper', () => ({
+  getOfficeEditorCommentId: () => mockOfficeEditorCommentId,
+}));
+
 const createReply = (id, createdAt) => ({
   Id: id,
   DateCreated: createdAt,
@@ -118,8 +143,16 @@ const baseContext = {
 describe('Note', () => {
   beforeEach(() => {
     mockDispatch.mockClear();
+    mockMoveCursorToTrackedChange.mockClear();
+    mockMoveCursorToComment.mockClear();
+    mockSelectAnnotation.mockClear();
+    mockJumpToAnnotation.mockClear();
     mockNoteTransformFunction = null;
     mockCustomNoteSelectionFunction = null;
+    mockCanModify = true;
+    mockCanModifyContents = true;
+    mockIsOfficeEditorMode = false;
+    mockOfficeEditorCommentId = null;
   });
 
   it('should trigger custom note selection when note container is clicked', async () => {

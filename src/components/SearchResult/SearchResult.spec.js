@@ -35,7 +35,7 @@ describe('SearchResult', () => {
 
   it('should render with no errors', () => {
     const props = createMockProps();
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     expect(() => {
       render(
         <Provider store={store}>
@@ -63,7 +63,7 @@ describe('SearchResult', () => {
       }
     ];
     const props = createMockProps(searchResults);
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     render(
       <Provider store={store}>
         <SearchResult {...props} />

@@ -109,8 +109,8 @@ const RichTextStyleEditor = ({
         FontSize: annotation.FontSize,
         TextAlign: annotation.TextAlign,
         TextVerticalAlign: annotation.TextVerticalAlign,
-        bold: stylesTemp?.['font-weight'] === 'bold' ?? false,
-        italic: stylesTemp?.['font-style'] === 'italic' ?? false,
+        bold: stylesTemp?.['font-weight'] === 'bold',
+        italic: stylesTemp?.['font-style'] === 'italic',
         underline: stylesTemp?.['text-decoration']?.includes('underline')
           || stylesTemp?.['text-decoration']?.includes('word'),
         strikeout: stylesTemp?.['text-decoration']?.includes('line-through') ?? false,
@@ -269,8 +269,8 @@ const RichTextStyleEditor = ({
 
   const { RichTextStyle } = annotationStyle;
   const defaults = {
-    bold: RichTextStyle?.[0]?.['font-weight'] === 'bold' ?? false,
-    italic: RichTextStyle?.[0]?.['font-style'] === 'italic' ?? false,
+    bold: RichTextStyle?.[0]?.['font-weight'] === 'bold',
+    italic: RichTextStyle?.[0]?.['font-style'] === 'italic',
     underline: RichTextStyle?.[0]?.['text-decoration']?.includes('underline') || RichTextStyle?.[0]?.['text-decoration']?.includes('word'),
     strikeout: RichTextStyle?.[0]?.['text-decoration']?.includes('line-through') ?? false,
     font: RichTextStyle?.[0]?.['font-family'],

@@ -1,7 +1,7 @@
 import React from 'react';
 import { workerTypes } from 'constants/types';
 import useCore from 'hooks/useCore';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import Choice from 'components/Choice';
 import getMeasurementTools from 'helpers/getMeasurementTools';
 import actions from 'actions';
@@ -13,6 +13,7 @@ const SnapModeToggle = ({
   isSnapModeEnabled,
 }) => {
   const { core } = useCore();
+  const [t] = useTranslation();
   const dispatch = useDispatch();
 
   const wasDocumentSwappedToClientSide =
@@ -46,7 +47,7 @@ const SnapModeToggle = ({
             dataElement="measurementSnappingOption"
             id="measurement-snapping"
             type="checkbox"
-            label={i18next.t('option.shared.enableSnapping')}
+            label={t('option.shared.enableSnapping')}
             checked={isSnapModeEnabled}
             onChange={onSnappingChange}
           />

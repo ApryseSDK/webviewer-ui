@@ -513,6 +513,13 @@ export function isShortcutInToolList(shortcut, toolNames) {
   return toolName && toolNames.includes(toolName);
 }
 
+/**
+ * Available event types that can be passed to {@link UI.Hotkeys#trigger instance.UI.hotkeys.trigger}.
+ * @name UI.Hotkeys.EventTypes
+ * @enum {string}
+ * @property {string} KEYDOWN Trigger a keydown event for the given shortcut
+ * @property {string} KEYUP Trigger a keyup event for the given shortcut
+ */
 export const EventTypes = {
   KEYDOWN: 'keydown',
   KEYUP: 'keyup',

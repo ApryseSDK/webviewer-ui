@@ -240,6 +240,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
       <ModalWrapper
         title={t('link.insertLinkOrPage')}
         isOpen={isOpen}
+        modalDataElement={DataElements.LINK_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose>

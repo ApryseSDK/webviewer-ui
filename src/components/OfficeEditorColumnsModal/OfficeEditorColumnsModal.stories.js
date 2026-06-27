@@ -41,7 +41,7 @@ const officeEditorStub = (() => {
 
 core.getOfficeEditor = () => officeEditorStub;
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 const Template = () => (
   <Provider store={store}>

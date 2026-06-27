@@ -1,7 +1,7 @@
+import { configureStore } from '@reduxjs/toolkit';
 
 import React, { useState } from 'react';
 import RedactionSearchResultGroup from './RedactionSearchResultGroup';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { RedactionContextMock } from '../RedactionPanel/RedactionPanel.stories';
@@ -17,7 +17,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const RedactionSearchResultGroupWithRedux = (props) => {
   const mockContext = {

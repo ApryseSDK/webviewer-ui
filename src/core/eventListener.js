@@ -1,24 +1,21 @@
 import core from 'core';
 import Events from 'constants/events';
 
-export const addEventListener = (event, eventListener, options = null, documentViewerKey = 1) => {
+export const addEventListener = (event, eventListener, options, documentViewerKey) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
   options ? object.addEventListener(event, eventListener, options) : object.addEventListener(event, eventListener);
 };
 
-export const removeEventListener = (event, eventListener, documentViewerKey = 1) => {
-  if (!core.getDocumentViewer(documentViewerKey)) {
-    return;
-  }
+export const removeEventListener = (event, eventListener, documentViewerKey) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
   object.removeEventListener(event, eventListener);
 };
 
-const getEventToObjectMap = (documentViewerKey = 1) => {
+const getEventToObjectMap = (documentViewerKey) => {
   const documentViewer = core.getDocumentViewer(documentViewerKey);
   const annotManager = documentViewer.getAnnotationManager();
   const contentEditManager = documentViewer.getContentEditManager();
@@ -51,7 +48,6 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     mouseRightDown: documentViewer,
     mouseRightUp: documentViewer,
     pageComplete: documentViewer,
-    readOnlyModeChanged: documentViewer,
     searchInProgress: documentViewer,
     activeSearchResultChanged: documentViewer,
     searchResultsChanged: documentViewer,
@@ -113,6 +109,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     selectionChanged: spreadsheetEditorManager,
     sheetChanged: spreadsheetEditorManager,
     spreadsheetEditorEditModeChanged: spreadsheetEditorManager,
+    spreadsheetEditorHistoryChanged: spreadsheetEditorManager,
     activeSheetChanged: spreadsheetEditorManager,
     spreadsheetEditorLoaded: spreadsheetEditorManager,
     spreadsheetEditorReady: spreadsheetEditorManager,

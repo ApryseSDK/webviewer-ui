@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { isMobile } from 'helpers/device';
 import classNames from 'classnames';
-import i18next from 'i18next';
 import useCore from 'hooks/useCore';
 
 import './ImageSignature.scss';
@@ -22,7 +21,7 @@ const signatureType = {
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
 let acceptedFileSize = null;
 
-function readImageFile(file) {
+function readImageFile(file, t) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
 
@@ -38,7 +37,7 @@ function readImageFile(file) {
           fileSize: file.size,
         });
       } else {
-        reject(i18next.t('message.imageSignatureAcceptedFileTypes', {
+        reject(t('message.imageSignatureAcceptedFileTypes', {
           acceptedFileTypes: acceptedFileTypes.join(', '),
         }));
       }
@@ -125,7 +124,7 @@ const ImageSignature = ({
 
   const readFullSignatureFile = async (file) => {
     try {
-      const result = await readImageFile(file);
+      const result = await readImageFile(file, t);
       const { imageSource, fileSize } = result;
       setFullSignatureErrorMessage('');
       setFullSignatureImage(imageSource);
@@ -147,7 +146,7 @@ const ImageSignature = ({
 
   const readInitialsFile = async (file) => {
     try {
-      const result = await readImageFile(file);
+      const result = await readImageFile(file, t);
       const { imageSource, fileSize } = result;
       setInitialsErrorMessage('');
       setInitialsImage(imageSource);

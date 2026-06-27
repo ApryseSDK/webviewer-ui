@@ -72,5 +72,9 @@ export default (store) => async (options = { includeAnnotations: true }) => {
     };
   }
 
+  if (options.includeComments && !options.store) {
+    options.store = store;
+  }
+
   return downloadPdf(store.dispatch, options);
 };

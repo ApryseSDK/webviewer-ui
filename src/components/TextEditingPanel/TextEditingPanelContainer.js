@@ -24,13 +24,12 @@ const conversionMap = {
 
 const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const { core } = useCore();
-  const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode, isCustomUI] = useSelector(
+  const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode] = useSelector(
     (state) => [
       selectors.isElementOpen(state, dataElement),
       selectors.isElementDisabled(state, dataElement),
       selectors.getTextEditingPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual,
   );
@@ -391,7 +390,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         addActiveColor={handleAddActiveColor}
         rgbColor={rgbColor}
         customColors={customColors}
-        isCustomUI={isCustomUI}
       />
     </DataElementWrapper>
   );

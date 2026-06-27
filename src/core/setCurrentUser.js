@@ -5,6 +5,6 @@ import core from 'core';
  * @fires updateAnnotationPermission on AnnotationManager
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:updateAnnotationPermission__anchor
  */
-export default (userName, documentViewerKey = 1) => {
+export default (userName, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().setCurrentUser(userName);
 };

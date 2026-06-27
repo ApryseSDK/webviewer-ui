@@ -137,6 +137,7 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
         <ModalWrapper
           title={t('OpenFile.newTab')}
           isOpen={isOpen}
+          modalDataElement={DataElements.OPEN_FILE_MODAL}
           closeButtonDataElement={'openFileModalClose'}
           onCloseClick={closeModal}
           swipeToClose

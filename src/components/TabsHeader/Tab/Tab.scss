@@ -22,13 +22,16 @@
     padding: 0;
 
     .file-text {
-      min-width: 60%;
+      flex: 1 1 auto;
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      overflow: hidden;
       color: var(--multi-tab-text-color);
 
       p {
+        min-width: 0;
         max-width: 130px;
         padding-inline-start: 4px;
         font-size: var(--font-size-default);
@@ -58,6 +61,28 @@
     margin: 6px;
     height: 24px;
 
+    &.tab-compare-button {
+      width: auto;
+      gap: var(--padding-small);
+      padding: 0 var(--padding-small);
+      text-wrap: nowrap;
+
+      &:hover:not(:disabled):not(.disabled) {
+        box-shadow: none;
+        background: transparent;
+      }
+    }
+
+    .tab-compare-icon {
+      flex: 0 0 16px;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
+      align-self: center;
+      line-height: 0;
+    }
+
     .Icon {
       width: 16px;
       height: 16px;
@@ -71,6 +96,7 @@
     height: var(--multi-tab-divider-height);
     inset-block-start: var(--multi-tab-divider-top);
     position: absolute;
+    pointer-events: none;
   }
 
   &:not(.active) {
@@ -116,6 +142,7 @@
   .close-button-wrapper {
     display: grid;
     justify-items: end;
+    position: relative;
 
     .Button {
       width: 24px;

@@ -31,6 +31,9 @@ const DocumentHeader = ({
   const { core } = useCore(documentViewerKey);
   const dispatch = useDispatch();
   const [filename, setFileName] = useState('Untitled');
+  const tabManager = useSelector(selectors.getTabManager);
+  const activeTab = useSelector(selectors.getActiveTab);
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
   const [saveButtonDisabled] = useSelector((state) => [selectors.isElementDisabled(state, DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON)]);
 
   useEffect(() => {
@@ -48,7 +51,22 @@ const DocumentHeader = ({
     };
   }, [documentViewerKey]);
 
-  const closeDocument = () => core.closeDocument(documentViewerKey);
+  const closeDocument = async () => {
+    if (isMultiTab && tabManager && (activeTab || activeTab === 0)) {
+      if (documentViewerKey !== 1) {
+        await tabManager.updateTab(activeTab, {
+          isMultiViewer: true,
+          clearDocumentForViewerKey: documentViewerKey,
+        });
+      } else if (documentViewerKey === 1) {
+        await tabManager.updateTab(activeTab, {
+          isMultiViewer: true,
+          clearPrimaryDocument: true,
+        });
+      }
+    }
+    core.closeDocument(documentViewerKey);
+  };
   const onClickSync = () => dispatch(actions.setSyncViewer(isSyncing ? null : documentViewerKey));
   const onSaveDocument = () => downloadPdf(dispatch, undefined, documentViewerKey);
 

@@ -17,7 +17,7 @@ const noop = () => { };
 
 export const createStore = (preloadedState) => {
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: preloadedState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
   });
@@ -294,6 +294,7 @@ export const setupNotesPanelCoreMocks = (core, annotations, selectedAnnotations)
       removeEventListener: noop,
     }),
     addEventListener: () => {},
+    scrollViewUpdated: noop,
   };
   core.getDocumentViewer = () => documentViewer;
   core.canModifyContents = () => true;

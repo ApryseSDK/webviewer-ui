@@ -28,7 +28,12 @@ const storeStyle = (toolName, toolStyles) => {
     const instanceId = getInstanceID();
     localStorageManager.setItemSynchronous(`${instanceId}-toolData-${toolName}`, JSON.stringify(toolStyles));
     if (toolStyles.Font || toolStyles.TextAlign) {
-      const currentDir = i18next.dir();
+      let currentDir;
+      try {
+        currentDir = i18next.dir();
+      } catch {
+        currentDir = 'ltr';
+      }
       const key = `${instanceId}-toolData-${toolName}-${currentDir}`;
       const prevStyles = localStorageManager.getItemSynchronous(key);
       const newStyles = {

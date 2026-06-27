@@ -34,7 +34,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidt
         resizeAnimationFrameRef.current = null;
         if (pendingWidthRef.current !== null) {
           onResizeRef.current(pendingWidthRef.current);
-          fireEvent(Events.PANEL_RESIZED, { element: dataElement, width: pendingWidthRef.current });
+          fireEvent(Events.PANEL_RESIZED, [dataElement, pendingWidthRef.current]);
           pendingWidthRef.current = null;
         }
       });

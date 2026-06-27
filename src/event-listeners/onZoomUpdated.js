@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
@@ -11,7 +11,7 @@ export default (dispatch, documentViewerKey, store) => (zoom) => {
 
   if (customizableUI) {
     const currentZoom = Math.round(core.getZoom() * 100);
-    const zoomAnnouncement = `${i18next.t('action.zoomChanged')} ${currentZoom}%`;
+    const zoomAnnouncement = `${getCurrentT()('action.zoomChanged')} ${currentZoom}%`;
     createAnnouncement(zoomAnnouncement);
   }
 };

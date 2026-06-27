@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import { isElementOnLeftSide, isElementOnRightSide } from 'src/helpers/rightToLeft';
 import useIsRTL from 'hooks/useIsRTL';
 import { css } from '@emotion/react';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
+import COMPONENT_TYPES from 'constants/componentTypes';
 
 const DesktopPanel = ({ children }) => {
   const { dataElement, isCustom, location } = children.props;
@@ -23,11 +25,7 @@ const DesktopPanel = ({ children }) => {
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const isOpen = useSelector((state) => selectors.isElementOpen(state, dataElement));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
-  const currentToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
-  const isHeaderOpen = useSelector((state) => selectors.isElementOpen(state, 'header'));
-  const isToolsHeaderOpen = useSelector((state) => selectors.isElementOpen(state, 'toolsHeader'));
   const isLogoBarEnabled = useSelector((state) => !selectors.isElementDisabled(state, 'logoBar'));
-  const featureFlags = useSelector(selectors.getFeatureFlags);
   const activeTopHeaders = useSelector(selectors.getActiveTopHeaders);
   const activeBottomHeaders = useSelector(selectors.getActiveBottomHeaders);
   const isMultiTabActive = useSelector(selectors.getIsMultiTab);
@@ -46,13 +44,6 @@ const DesktopPanel = ({ children }) => {
   const isPanelOnLeftSide = isElementOnLeftSide(location);
   const isPanelOnRightSide = isElementOnRightSide(location);
   const shouldUseMobilePanel = isMobile && !isInDesktopOnlyMode;
-
-  // TODO: For whoever is refactoring the LeftPanel to make it generic, review if this is the best approach
-  // Once we move to the new UI we can remove the legacy stuff
-  const legacyToolsHeaderOpen = isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View';
-  const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
-
-  const customizableUI = featureFlags?.customizableUI;
 
   const onResize = (_width) => {
     let maxAllowedWidth = window.innerWidth;
@@ -81,10 +72,10 @@ const DesktopPanel = ({ children }) => {
         'closed': !isVisible,
         'left': isPanelOnLeftSide,
         'right': isPanelOnRightSide,
-        'tools-header-open': customizableUI ? isModularToolsHeaderOpen : legacyToolsHeaderOpen,
-        'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 && activeBottomHeaders.length === 0 : legacyAllHeadersHidden,
+        'tools-header-open': isModularToolsHeaderOpen,
+        'tools-header-and-header-hidden': activeTopHeaders.length === 0 && activeBottomHeaders.length === 0,
         'logo-bar-enabled': isLogoBarEnabled,
-        'modular-ui-panel': customizableUI,
+        'modular-ui-panel': true,
         'multi-tab-active': isMultiTabActive,
         'right-to-left': isRightToLeft,
       })}
@@ -108,7 +99,12 @@ const DesktopPanel = ({ children }) => {
             </div>
           </div>
         )}
-        {children}
+        <ErrorBoundaryComponent
+          dataElement={dataElement}
+          componentType={COMPONENT_TYPES.PANEL}
+        >
+          {children}
+        </ErrorBoundaryComponent>
       </div>
       {isCustom && isPanelOnLeftSide && !isInDesktopOnlyMode && !isMobile &&
         <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize} />}

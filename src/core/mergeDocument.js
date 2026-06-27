@@ -4,7 +4,7 @@ import core from 'core';
  * https://docs.apryse.com/api/web/Core.Document.html#mergeDocument__anchor
  */
 
-export default async (documentToMerge, position, documentViewerKey = 1) => {
+export default async (documentToMerge, position, documentViewerKey) => {
   const documentViewer = core.getDocumentViewer(documentViewerKey);
   if (documentViewer.getDocument()) {
     return documentViewer.getDocument().mergeDocument(documentToMerge, position);

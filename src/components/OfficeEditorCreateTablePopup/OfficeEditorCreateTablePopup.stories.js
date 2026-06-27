@@ -9,7 +9,7 @@ export default {
   component: OfficeEditorCreateTablePopup
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 export function Basic() {
   return (

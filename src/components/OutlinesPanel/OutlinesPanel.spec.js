@@ -171,7 +171,7 @@ describe.skip('OutlinesPanel', () => {
 });
 
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 const MockOutlinesPanel = (props) => (
   <Provider store={store}>
@@ -227,7 +227,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   beforeEach(() => {
     core.getType.mockReturnValue(workerTypes.PDF);
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
     });
     const outlinesForViewer1 = createOutlines([{
@@ -426,7 +426,7 @@ describe('OutlinesPanel coordinate conversion', () => {
   beforeEach(() => {
     core.getType.mockReturnValue(workerTypes.PDF);
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false })
     });
     const outlines = createOutlines([{

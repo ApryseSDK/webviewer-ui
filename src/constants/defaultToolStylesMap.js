@@ -345,6 +345,9 @@ export default {
   TextFormFieldCreateTool: {
     TextColor: { R: 0, G: 0, B: 0, A: 1 },
   },
+  DatePickerFormFieldCreateTool: {
+    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
   TextFormFieldCreateTool2: {
     TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },

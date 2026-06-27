@@ -11,10 +11,9 @@ import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { addSearchListener, removeSearchListener } from 'helpers/search';
 import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
-import getDocument from 'src/core/getDocument';
 import getRootNode from 'helpers/getRootNode';
 import { css } from '@emotion/react';
-
+import useCore from 'hooks/useCore';
 
 import './SearchPanel.scss';
 import useSearch from 'hooks/useSearch';
@@ -50,6 +49,8 @@ function SearchPanel(props) {
     isCustomPanel = false,
   } = props;
 
+  const { core } = useCore();
+
   const { t } = useTranslation();
   const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus, setActiveSearchResultIndex } = useSearch(activeDocumentViewerKey);
   const dispatch = useDispatch();
@@ -84,8 +85,9 @@ function SearchPanel(props) {
         const newWidth = `${window.innerWidth - (currentWidth)}px`;
         editorWrapper.style.width = newWidth;
       }
-      const editor = getDocument().getSpreadsheetEditorDocument().getEditor();
-      editor.onSizeChanged();
+
+      const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
+      spreadsheetEditorManager.onEditorSizeChanged();
     }
   };
 

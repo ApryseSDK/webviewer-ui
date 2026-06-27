@@ -1,11 +1,11 @@
 import React from 'react';
-import { legacy_createStore as createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import PortfolioItemContent from './PortfolioItemContent';
 import PortfolioContext from '../PortfolioPanel/PortfolioContext';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
-import '../LeftPanel/LeftPanel.scss';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+import Panel from 'components/Panel';
 
 const NOOP = () => { };
 
@@ -17,8 +17,20 @@ export default {
 const reducer = () => {
   return {
     viewer: {
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
+      openElements: {
+        portfolioPanel: true,
+        'bookmarkOutlineFlyout-0': true,
+      },
+      panelWidths: {
+        portfolioPanel: 330,
+      },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
       flyoutMap: {
         'bookmarkOutlineFlyout-0': {
           dataElement: 'bookmarkOutlineFlyout-0',
@@ -26,9 +38,6 @@ const reducer = () => {
         }
       },
       activeFlyout: 'bookmarkOutlineFlyout-0',
-      openElements: {
-        'bookmarkOutlineFlyout-0': true,
-      },
     },
   };
 };
@@ -61,116 +70,96 @@ const PortfolioContextValues = {
   isNameDuplicated: NOOP,
 };
 
-export const File = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container default'>
-            <PortfolioContext.Provider
-              value={PortfolioContextValues}
-            >
-              <PortfolioItemContent
-                portfolioItem={portfolioItem}
-                setIsHovered={NOOP}
-              />
-            </PortfolioContext.Provider>
-          </div>
-        </div>
+const renderInPortfolioPanel = (children) => (
+  <ReduxProvider store={configureStore({ reducer: reducer })}>
+    <Panel dataElement="portfolioPanel" location="left">
+      <div className='PortfolioPanel'>
+        {children}
       </div>
-    </ReduxProvider>
+    </Panel>
+  </ReduxProvider>
+);
+
+export const File = () => {
+  return renderInPortfolioPanel(
+    <div className='bookmark-outline-single-container default'>
+      <PortfolioContext.Provider
+        value={PortfolioContextValues}
+      >
+        <PortfolioItemContent
+          portfolioItem={portfolioItem}
+          setIsHovered={NOOP}
+        />
+      </PortfolioContext.Provider>
+    </div>
   );
 };
 
 export const Folder = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container default'>
-            <PortfolioContext.Provider
-              value={PortfolioContextValues}
-            >
-              <PortfolioItemContent
-                portfolioItem={portfolioItemFolder}
-                setIsHovered={NOOP}
-                isAdding={false}
-              />
-            </PortfolioContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInPortfolioPanel(
+    <div className='bookmark-outline-single-container default'>
+      <PortfolioContext.Provider
+        value={PortfolioContextValues}
+      >
+        <PortfolioItemContent
+          portfolioItem={portfolioItemFolder}
+          setIsHovered={NOOP}
+          isAdding={false}
+        />
+      </PortfolioContext.Provider>
+    </div>
   );
 };
 
 export const Adding = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <PortfolioContext.Provider
-              value={PortfolioContextValues}
-            >
-              <PortfolioItemContent
-                portfolioItem={portfolioFolderAdding}
-                isAdding={true}
-                setIsHovered={NOOP}
-              />
-            </PortfolioContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInPortfolioPanel(
+    <div className='bookmark-outline-single-container editing'>
+      <PortfolioContext.Provider
+        value={PortfolioContextValues}
+      >
+        <PortfolioItemContent
+          portfolioItem={portfolioFolderAdding}
+          isAdding={true}
+          setIsHovered={NOOP}
+        />
+      </PortfolioContext.Provider>
+    </div>
   );
 };
 Adding.parameters = disableRtlModeParameters;
 
 export const Renaming = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <PortfolioContext.Provider
-              value={PortfolioContextValues}
-            >
-              <PortfolioItemContent
-                portfolioItem={portfolioItem}
-                isPortfolioRenaming={true}
-                setPortfolioRenaming={NOOP}
-              />
-            </PortfolioContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInPortfolioPanel(
+    <div className='bookmark-outline-single-container editing'>
+      <PortfolioContext.Provider
+        value={PortfolioContextValues}
+      >
+        <PortfolioItemContent
+          portfolioItem={portfolioItem}
+          isPortfolioRenaming={true}
+          setPortfolioRenaming={NOOP}
+        />
+      </PortfolioContext.Provider>
+    </div>
   );
 };
 
 export const RenamingDuplicateError = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <PortfolioContext.Provider
-              value={{
-                ...PortfolioContextValues,
-                isNameDuplicated: () => true,
-              }}
-            >
-              <PortfolioItemContent
-                portfolioItem={portfolioItem}
-                isPortfolioRenaming={true}
-                setPortfolioRenaming={NOOP}
-                setIsHovered={NOOP}
-              />
-            </PortfolioContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInPortfolioPanel(
+    <div className='bookmark-outline-single-container editing'>
+      <PortfolioContext.Provider
+        value={{
+          ...PortfolioContextValues,
+          isNameDuplicated: () => true,
+        }}
+      >
+        <PortfolioItemContent
+          portfolioItem={portfolioItem}
+          isPortfolioRenaming={true}
+          setPortfolioRenaming={NOOP}
+          setIsHovered={NOOP}
+        />
+      </PortfolioContext.Provider>
+    </div>
   );
 };

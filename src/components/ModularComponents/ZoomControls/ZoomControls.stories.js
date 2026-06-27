@@ -18,7 +18,7 @@ export default {
 };
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducer(),
 });
 
 export const FullSize = () => {
@@ -61,7 +61,7 @@ export const ZoomInSheetEditorMode = () => {
 
   const store = configureStore({
     preloadedState: preloadedState,
-    reducer: rootReducer,
+    reducer: rootReducer(),
   });
 
   return (

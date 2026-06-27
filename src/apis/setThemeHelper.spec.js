@@ -12,64 +12,32 @@ describe('setThemeHelper', () => {
       {
         description: 'light theme with no flags',
         activeTheme: Theme.LIGHT,
-        isHighContrastMode: false,
         isCustomizableUI: false,
         expectedInternalTheme: 'light',
       },
       {
         description: 'dark theme with no flags',
         activeTheme: Theme.DARK,
-        isHighContrastMode: false,
         isCustomizableUI: false,
         expectedInternalTheme: 'dark',
       },
       {
-        description: 'light theme with high contrast mode enabled',
-        activeTheme: Theme.LIGHT,
-        isHighContrastMode: true,
-        isCustomizableUI: false,
-        expectedInternalTheme: 'light-high-contrast',
-      },
-      {
-        description: 'dark theme with high contrast mode enabled',
-        activeTheme: Theme.DARK,
-        isHighContrastMode: true,
-        isCustomizableUI: false,
-        expectedInternalTheme: 'dark-high-contrast',
-      },
-      {
         description: 'light theme with customizable UI enabled',
         activeTheme: Theme.LIGHT,
-        isHighContrastMode: false,
         isCustomizableUI: true,
         expectedInternalTheme: 'light-modular',
       },
       {
         description: 'dark theme with customizable UI enabled',
         activeTheme: Theme.DARK,
-        isHighContrastMode: false,
-        isCustomizableUI: true,
-        expectedInternalTheme: 'dark-modular',
-      },
-      {
-        description: 'light theme with customizable UI and high contrast mode enabled',
-        activeTheme: Theme.LIGHT,
-        isHighContrastMode: true,
-        isCustomizableUI: true,
-        expectedInternalTheme: 'light-modular',
-      },
-      {
-        description: 'dark theme with customizable UI and high contrast mode enabled',
-        activeTheme: Theme.DARK,
-        isHighContrastMode: true,
         isCustomizableUI: true,
         expectedInternalTheme: 'dark-modular',
       },
     ];
 
-    testCases.forEach(({ description, activeTheme, isHighContrastMode, isCustomizableUI, expectedInternalTheme }) => {
+    testCases.forEach(({ description, activeTheme, isCustomizableUI, expectedInternalTheme }) => {
       it(`should return correct internal theme string for ${description}`, () => {
-        expect(getInternalTheme(activeTheme, isHighContrastMode, isCustomizableUI)).toBe(expectedInternalTheme);
+        expect(getInternalTheme(activeTheme, isCustomizableUI)).toBe(expectedInternalTheme);
       });
     });
 

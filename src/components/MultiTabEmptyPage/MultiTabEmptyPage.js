@@ -19,7 +19,6 @@ const MultiTabEmptyPage = (props) => {
     if (isOpen) {
       closeElements([
         'documentContainer',
-        'pageNavOverlay',
         'notesPanel',
         'searchPanel',
         'leftPanel',

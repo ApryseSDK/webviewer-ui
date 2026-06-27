@@ -19,7 +19,9 @@ jest.mock('react', () => ({
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useStore: () => ({}),
+  useStore: () => ({
+    getState: () => ({}),
+  }),
 }));
 
 jest.spyOn(React, 'useLayoutEffect');
@@ -256,6 +258,166 @@ describe('Responsiveness Helper', () => {
       expect(typeof returnFunction).toBe('function');
       returnFunction();
       expect(sizeManager[parentDataElement].grow).toBeCalled();
+    });
+
+    test('should not return disabled items as items to resize', () => {
+      const freeSpace = -2;
+      const parentDataElement = 'default-top-header';
+      const parentDomElement = createHTMLElement('div', 160, 50, { dataElement: parentDataElement });
+      const highlightToolGroupToggleButtonDom = createHTMLElement('div', 40, 32, { dataElement: 'highlightToolGroupToggleButton' });
+      const calloutToolGroupToggleButtonDom = createHTMLElement('div', 40, 32, { dataElement: 'calloutToolGroupToggleButton' });
+      const highlightGroupedItemsDom = createHTMLElement('div', 150, 32, { dataElement: 'highlightGroupedItems' });
+      const calloutGroupedItemsDom = createHTMLElement('div', 150, 32, { dataElement: 'calloutGroupedItems' });
+      parentDomElement.appendChild(highlightToolGroupToggleButtonDom);
+      parentDomElement.appendChild(calloutToolGroupToggleButtonDom);
+      parentDomElement.appendChild(highlightGroupedItemsDom);
+      parentDomElement.appendChild(calloutGroupedItemsDom);
+
+      sizeManager['highlightToolGroupToggleButton'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 1,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      sizeManager['calloutToolGroupToggleButton'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 1,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      sizeManager['highlightGroupedItems'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 4,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      sizeManager['calloutGroupedItems'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 4,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      const itemsToResize = [
+        {
+          dataElement: 'highlightToolGroupToggleButton',
+          type: 'toolGroupToggleButton',
+        },
+        {
+          dataElement: 'calloutToolGroupToggleButton',
+          type: 'toolGroupToggleButton',
+        },
+        {
+          dataElement: 'highlightGroupedItems',
+          items: [],
+          type: 'groupedItems',
+        },
+        {
+          dataElement: 'calloutGroupedItems',
+          items: [],
+          type: 'groupedItems',
+        },
+      ];
+
+      const state = {
+        viewer: {
+          isViewOnly: false,
+          disabledElements: {
+            calloutGroupedItems: { disabled: true },
+          },
+          modularComponents: {},
+          viewOnlyWhitelist: {
+            dataElement: [],
+            dataElementBlacklist: [],
+          },
+          flyoutMap: {},
+        },
+      };
+
+      items[0].items = itemsToResize;
+      const returnFunction = findItemToResize({ items, freeSpace, headerDirection, parentDataElement, state });
+      expect(typeof returnFunction).toBe('function');
+      returnFunction();
+      expect(sizeManager['highlightGroupedItems'].shrink).toBeCalled();
+      expect(sizeManager['calloutGroupedItems'].shrink).not.toBeCalled();
+    });
+
+    test('should stop reusing the last sized item when it is disabled and continue with enabled fallback items', () => {
+      const freeSpace = -2;
+      const parentDataElement = 'default-top-header';
+      const itemsToResize = [
+        {
+          dataElement: 'highlightGroupedItems',
+          items: [],
+          type: 'groupedItems',
+        },
+        {
+          dataElement: 'calloutGroupedItems',
+          items: [],
+          type: 'groupedItems',
+        },
+      ];
+
+      sizeManager['highlightGroupedItems'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 4,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      sizeManager['calloutGroupedItems'] = {
+        canGrow: true,
+        canShrink: true,
+        size: 4,
+        shrink: jest.fn(),
+        grow: jest.fn(),
+      };
+
+      items[0].items = itemsToResize;
+
+      const enabledState = {
+        viewer: {
+          isViewOnly: false,
+          disabledElements: {
+            calloutGroupedItems: { disabled: true },
+          },
+          modularComponents: {},
+          viewOnlyWhitelist: {
+            dataElement: [],
+            dataElementBlacklist: [],
+          },
+          flyoutMap: {},
+        },
+      };
+
+      const initialResize = findItemToResize({ items, freeSpace, headerDirection, parentDataElement, state: enabledState });
+      expect(typeof initialResize).toBe('function');
+      initialResize();
+      expect(sizeManager['highlightGroupedItems'].shrink).toBeCalledTimes(1);
+
+      const disabledState = {
+        ...enabledState,
+        viewer: {
+          ...enabledState.viewer,
+          disabledElements: {
+            highlightGroupedItems: { disabled: true },
+          },
+        },
+      };
+
+      const disabledResize = findItemToResize({ items, freeSpace, headerDirection, parentDataElement, state: disabledState });
+      expect(typeof disabledResize).toBe('function');
+      disabledResize();
+      expect(sizeManager['highlightGroupedItems'].shrink).toBeCalledTimes(1);
+      expect(sizeManager['calloutGroupedItems'].shrink).toBeCalledTimes(1);
     });
   });
 });

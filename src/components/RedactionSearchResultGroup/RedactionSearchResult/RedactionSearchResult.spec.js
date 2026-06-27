@@ -15,7 +15,7 @@ import rootReducer from 'src/redux/reducers/rootReducer';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 describe('RedactionSearchResult', () => {
   describe('storybook components', () => {

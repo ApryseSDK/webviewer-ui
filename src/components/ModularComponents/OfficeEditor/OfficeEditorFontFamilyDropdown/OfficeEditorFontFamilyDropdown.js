@@ -24,14 +24,12 @@ const OfficeEditorFontFamilyDropdown = (props) => {
     availableFontFaces,
     cssFontValues,
     currentFontFace,
-    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getOfficeEditorCursorProperties(state),
       selectors.getAvailableFontFaces(state),
       selectors.getCSSFontValues(state),
       selectors.getCurrentFontFace(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -49,7 +47,6 @@ const OfficeEditorFontFamilyDropdown = (props) => {
         'OfficeEditorFontFamilyDropdown': true,
         'text-left': true,
         'flyout-item': isFlyoutItem,
-        'modular-ui': customizableUI,
       })}
       items={availableFontFaces}
       onClickItem={async (fontFace) => {

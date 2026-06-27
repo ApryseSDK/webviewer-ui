@@ -37,6 +37,7 @@ jest.mock('core', () => ({
   getGroupAnnotations: jest.fn(),
   getTool: jest.fn(),
   setToolMode: jest.fn(),
+  getMultiViewerModeActive: jest.fn(),
   getOfficeEditor: jest.fn(),
   getDocumentViewer: jest.fn(),
   getZoom: jest.fn(),
@@ -82,6 +83,7 @@ describe('useCore', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    core.getMultiViewerModeActive.mockReturnValue(false);
   });
 
   describe('Key Selection', () => {
@@ -192,7 +194,23 @@ describe('useCore', () => {
       expect(core.deselectAllAnnotations).toHaveBeenCalledWith();
     });
 
-    it('should wrap setToolMode without key', () => {
+    it('should wrap setToolMode through the keyed DocumentViewer', () => {
+      const mockTool = { name: 'AnnotationEdit' };
+      const mockDocumentViewer = {
+        getTool: jest.fn().mockReturnValue(mockTool),
+        setToolMode: jest.fn(),
+      };
+      core.getDocumentViewer.mockReturnValue(mockDocumentViewer);
+
+      result.current.core.setToolMode('AnnotationEdit');
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(2);
+      expect(mockDocumentViewer.getTool).toHaveBeenCalledWith('AnnotationEdit');
+      expect(mockDocumentViewer.setToolMode).toHaveBeenCalledWith(mockTool);
+      expect(core.setToolMode).not.toHaveBeenCalled();
+    });
+
+    it('should wrap setToolMode without key in MultiViewer mode', () => {
+      core.getMultiViewerModeActive.mockReturnValue(true);
       result.current.core.setToolMode('AnnotationEdit');
       expect(core.setToolMode).toHaveBeenCalledWith('AnnotationEdit');
     });

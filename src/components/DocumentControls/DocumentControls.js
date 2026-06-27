@@ -5,7 +5,6 @@ import Button from 'components/Button';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import selectors from 'selectors';
 import actions from 'actions';
-import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import { useTranslation } from 'react-i18next';
 import ThumbnailControlsMulti from 'src/components/ThumbnailControlsMulti';
 import useCore from 'hooks/useCore';
@@ -41,20 +40,17 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
     isDisabled,
     pageLabels,
     isThumbnailSelectingPages,
-    featureFlags,
   ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state, activeDocumentViewerKey),
     selectors.isThumbnailSelectingPages(state),
-    selectors.getFeatureFlags(state),
   ]);
 
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
   const [pageString, setPageString] = useState(initialPagesString);
   const [previousPageString, setPreviousPageString] = useState(initialPagesString);
-  const customizableUI = featureFlags.customizableUI;
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
@@ -106,23 +102,21 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
         <div className={'documentControls'}>
           <div className={'divider'}></div>
           {isThumbnailSelectingPages && <ThumbnailControlsMulti parentElement={parentElement}/>}
-          {customizableUI &&
-            <label className={'documentControlsLabel'} htmlFor="pageNumbersInput">
-              <span>
-                {t('option.thumbnailPanel.multiSelectPages')} -
-              </span>
-              <span className='multiSelectExampleLabel'>
-                {t('option.thumbnailPanel.multiSelectPagesExample')}
-              </span>
-            </label>
-          }
+          <label className={'documentControlsLabel'} htmlFor="pageNumbersInput">
+            <span>
+              {t('option.thumbnailPanel.multiSelectPages')} -
+            </span>
+            <span className='multiSelectExampleLabel'>
+              {t('option.thumbnailPanel.multiSelectPagesExample')}
+            </span>
+          </label>
           <div className={'documentControlsInput'}>
             <input
               name="pageNumbersInput"
               onBlur={onBlur}
               onChange={pageStringUpdate}
               value={pageString}
-              placeholder={customizableUI ? '' : pageNumberPlaceholder}
+              placeholder={''}
               aria-label={t('option.thumbnailPanel.enterPageNumbers')}
               className="pagesInput"
               type="text"

@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import AlignmentPopup from './AlignmentPopup';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 const noop = () => { };
@@ -27,7 +27,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 export const Basic = () => {
   const props = {

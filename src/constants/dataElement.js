@@ -203,6 +203,8 @@ const DataElements = {
   OPEN_FILE_MODAL: 'OpenFileModal',
   CUSTOM_MODAL: 'customModal',
   CREATE_PORTFOLIO_MODAL: 'createPortfolioModal',
+  WATERMARK_MODAL: 'watermarkModal',
+  EDIT_KEYBOARD_SHORTCUT_MODAL: 'editKeyboardShortcutModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',

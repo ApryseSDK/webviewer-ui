@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import CreatePortfolioModal from './CreatePortfolioModal';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
@@ -26,7 +26,7 @@ const getStore = () => {
     return state;
   }
 
-  return createStore(rootReducer);
+  return configureStore({ reducer: rootReducer });
 };
 
 export function Basic() {

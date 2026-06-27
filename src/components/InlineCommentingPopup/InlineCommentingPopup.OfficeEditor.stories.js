@@ -216,6 +216,7 @@ export const InlineCommentingPopupTabsWithChanges = () => {
     annotationsUnderMouse: [trackedChange, textHighlight],
   });
 };
+InlineCommentingPopupTabsWithChanges.parameters = { chromatic: { disableSnapshot: true } };
 
 
 InlineCommentingPopupTabsWithChanges.play = async ({ canvasElement }) => {

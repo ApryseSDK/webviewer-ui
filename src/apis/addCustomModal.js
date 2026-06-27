@@ -58,10 +58,10 @@ import actions from 'actions';
  * @param {string} options.dataElement Unique name of custom modal.
  * @param {boolean} [options.disableBackdropClick=false] Disable closing modal when user clicks outside of content area.
  * @param {boolean} [options.disableEscapeKeyDown=false] Disable closing modal when user hits escape from keyboard.
- * @param {UI.renderCustomModal} options.render Function rendering custom model contents. This is optional.
- * @param {object} options.header JSON object with title, className, style and children parameter.
- * @param {object} options.body JSON object with title, className, style and children parameter.
- * @param {object} options.footer JSON object with title, className, style and children parameter.
+ * @param {UI.renderCustomModal} [options.render] Function rendering custom modal contents. Optional — if omitted, the modal renders its `header`, `body`, and `footer` children instead.
+ * @param {object} [options.header] JSON object with title, className, style and children parameter.
+ * @param {object} [options.body] JSON object with title, className, style and children parameter.
+ * @param {object} [options.footer] JSON object with title, className, style and children parameter.
  */
 const addCustomModal = (store) => (customModal) => {
   store.dispatch(actions.addCustomModal(customModal));

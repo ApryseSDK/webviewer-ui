@@ -16,6 +16,7 @@ import { workerTypes } from 'constants/types';
 import getType from 'core/getType';
 import { isOfficeEditorMode } from './officeEditor';
 import { addHeaderItems, resetHeaderItems } from 'helpers/multiViewerHelper';
+import { getTargetTabId } from 'helpers/multiViewerTabUpdate';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -67,7 +68,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'toolsButton',
         'linkButton',
         'toolsHeader',
-        'toolsOverlay',
         'default-ribbon-group',
         'tools-header',
         'notesPanelToggle',
@@ -320,11 +320,17 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         }
 
         if (enable) {
-          if (selectors.isMultiViewerMode(store.getState())) {
-            console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiViewerMode');
-            store.dispatch(actions.setIsMultiViewerMode(false));
-          }
           store.dispatch(enableMultiTab());
+          if (selectors.isMultiViewerMode(store.getState())) {
+            const state = store.getState();
+            const tabManager = selectors.getTabManager(state);
+            const activeTab = selectors.getActiveTab(state);
+            const tabs = selectors.getTabs(state);
+            const targetTabId = getTargetTabId(activeTab, tabs);
+            if (tabManager && (targetTabId || targetTabId === 0)) {
+              tabManager.updateTab(targetTabId, { isMultiViewer: true });
+            }
+          }
         } else {
           store.dispatch(actions.setMultiTab(false));
           store.dispatch(actions.setTabManager(null));
@@ -349,13 +355,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.MultiViewerMode]: {
       fn: () => {
-        if (enable && selectors.getIsMultiTab(store.getState())) {
-          console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiTab');
-          store.dispatch(actions.setMultiTab(false));
-          store.dispatch(actions.setTabManager(null));
-          store.dispatch(actions.setTabs([]));
-          store.dispatch(actions.setActiveTab(0));
-        }
         store.dispatch(actions.setIsMultiViewerModeAvailable(enable));
       }
     },

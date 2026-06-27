@@ -1,5 +1,5 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import StatefulButtonComponent from './StatefulButton';
 import { expect, within } from 'storybook/test';
@@ -16,7 +16,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const BasicComponent = (props) => {
   return (

@@ -41,6 +41,7 @@ import SpreadsheetEditorEditModeDropdown from '../../SpreadsheetEditor/Spreadshe
 import StylePanel from 'components/StylePanel';
 import RubberStampPanel from 'components/RubberStampPanel';
 import SignatureListPanel from 'components/SignatureListPanel';
+import ToolGroupToggleButton from '../../ToolGroupToggleButton/ToolGroupToggleButton';
 
 const propTypes = {
   flyoutItem: PropTypes.oneOfType([
@@ -174,6 +175,9 @@ const StaticItem = React.forwardRef((props, ref) => {
     }
     case FLYOUT_ITEM_TYPES.TOOL_BUTTON: {
       return <ToolButton {...allProps} isFlyoutItem={true} ref={ref} allFlyoutItems={itemsToRender} />;
+    }
+    case FLYOUT_ITEM_TYPES.TOOL_GROUP_TOGGLE_BUTTON: {
+      return <ToolGroupToggleButton {...allProps} isFlyoutItem={true} ref={ref} allFlyoutItems={itemsToRender} />;
     }
     case FLYOUT_ITEM_TYPES.PAGE_NAVIGATION_INPUT: {
       return <PageControlsInput {...allProps} isFlyoutItem={true} ref={ref} icon={icon} />;

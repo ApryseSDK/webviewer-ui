@@ -1,5 +1,5 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import ButtonComponent from './Button';
 import { initialColors } from 'helpers/initialColorStates';
@@ -15,7 +15,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const BasicComponent = (props) => {
 

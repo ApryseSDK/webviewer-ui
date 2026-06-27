@@ -41,14 +41,8 @@ const TrackChangeOverlay = ({
   const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [
-    editMode,
-    customizableUI,
-  ] = useSelector(
-    (state) => [
-      selectors.getOfficeEditorEditMode(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
-    ],
+  const editMode = useSelector(
+    (state) => selectors.getOfficeEditorEditMode(state),
     shallowEqual
   );
 
@@ -70,7 +64,6 @@ const TrackChangeOverlay = ({
   return (
     <div className={classNames({
       'track-change-overlay': true,
-      'modular-ui': customizableUI,
       'flyout-item': isFlyoutItem,
     })}>
       <Dropdown

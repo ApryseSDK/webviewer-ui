@@ -20,7 +20,7 @@ export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true, d
       core.setCurrentPage(mergeToPage, documentViewerKey);
 
       if (shouldFireEvent) {
-        fireEvent(Events.DOCUMENT_MERGED, mergeResults);
+        fireEvent(Events.DOCUMENT_MERGED, [mergeResults.filename, mergeResults.pages]);
       }
 
       resolve(mergeResults);
@@ -53,7 +53,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage, documentVi
     dispatch(actions.openElement(DataElements.LOADING_MODAL));
     extractedDataPromise.then((docToMerge) => {
       dispatch(mergeDocument(docToMerge, mergeToPage, false, documentViewerKey)).then(({ filename, pages }) => {
-        fireEvent(Events.DOCUMENT_MERGED, { filename, pages: contentWindow.pagesExtracted });
+        fireEvent(Events.DOCUMENT_MERGED, [filename, contentWindow.pagesExtracted]);
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
         resolve({ filename, pages });
       });

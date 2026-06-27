@@ -13,6 +13,8 @@ import isString from 'lodash/isString';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import getFilename from 'helpers/getFilename';
+import { setupMultiViewer, cleanUpMultiViewer, finalizeMultiViewerSetup } from 'helpers/multiViewerHelper';
+import { createWrappedCore } from 'hooks/useCore/useCore';
 
 const databaseID = `WebViewer Files-${Math.random()}`;
 
@@ -128,6 +130,10 @@ export function getNextNumberForUntitledDocument(tabs) {
   return nextUntitledNumber;
 }
 
+const isInvalidDocReferenceError = (error) => {
+  return error?.type === 'InvalidDocReference';
+};
+
 export default class TabManager {
   db;
   store;
@@ -176,6 +182,8 @@ export default class TabManager {
     this.store.dispatch(actions.setTabs(tabs));
     this.prepareTabEventListeners();
 
+    // Capture primary viewer document loads into tab state.
+    // Secondary viewer loads should not mutate primary tab source.
     core.addEventListener('documentLoaded', async () => {
       if (this.skipLoadCapture) {
         return;
@@ -184,6 +192,9 @@ export default class TabManager {
       const { tabs, activeTab } = state.viewer;
       const { dispatch } = store;
       const currentTab = tabs.find((tab) => tab.id === activeTab);
+      if (!currentTab) {
+        return;
+      }
       const documentType = await core.getDocument().getType();
 
       if (documentType === workerTypes.PDF || documentType === workerTypes.OFFICE) {
@@ -199,12 +210,17 @@ export default class TabManager {
           currentTab.useDB,
         );
         refreshedTab.saveData.docInDB = true;
+        if (currentTab.isMultiViewer) {
+          refreshedTab.setMultiViewerMode(true);
+          refreshedTab.viewerDocuments = { ...currentTab.viewerDocuments };
+        }
+        this.copyTabState(currentTab, refreshedTab);
         const indexOfTabToBeReplaced = tabs.findIndex((tab) => tab.id === currentTab.id);
         tabs[indexOfTabToBeReplaced] = refreshedTab;
         const newTabs = [...tabs];
         dispatch(actions.setTabs(newTabs));
       }
-    });
+    }, undefined, 1);
   }
 
   prepareTabEventListeners() {
@@ -212,13 +228,25 @@ export default class TabManager {
 
     // To control if the document was downloaded or not after any document changes
     documentViewer.addEventListener('finishedRendering', () => {
-      this.listenForAnnotChanges();
-      this.listenToDocumentDownloaded(documentViewer);
-      this.listenToPasswordError();
+      this.attachAllListeners();
     }, { once: true });
   }
 
+  attachAllListeners() {
+    this.listenForAnnotChanges(1);
+    this.listenToDocumentDownloaded(1);
+    this.listenToPasswordError();
+    const viewerCount = core.getDocumentViewers().length;
+    for (let viewerKey = 2; viewerKey <= viewerCount; viewerKey++) {
+      this.listenForAnnotChanges(viewerKey);
+    }
+  }
+
   async setActiveTab(id, saveCurrentActiveTabState = true) {
+    const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(this.store.getState());
+    if (activeDocumentViewerKey !== 1) {
+      this.store.dispatch(actions.setActiveDocumentViewerKey(1));
+    }
     this.store.dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
     this.store.dispatch(setLoadingProgress(0));
 
@@ -226,35 +254,57 @@ export default class TabManager {
     const { tabs, activeTab } = state.viewer;
     const currentTab = tabs.find((tab) => tab.id === activeTab);
     const isEmptyPageOpen = selectors.isElementOpen(state, DataElements.MULTITABS_EMPTY_PAGE);
-    this.prepareTabEventListeners();
     const newTab = tabs.find((tab) => tab.id === id);
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
     }
     await this.waitForTabToLoad();
-    await fireEvent(Events['BEFORE_TAB_CHANGED'], {
-      currentTab: currentTab ? {
+    await fireEvent(Events['BEFORE_TAB_CHANGED'], [
+      currentTab ? {
         src: currentTab.src,
         options: currentTab.options,
         id: currentTab.id,
         annotationsChanged: currentTab.changes.annotations,
         hasUnsavedChanges: currentTab.changes.hasUnsavedChanges
       } : null,
-      nextTab: {
+      {
         src: newTab.src,
         options: newTab.options,
         id: newTab.id,
       },
-    });
+    ]);
     const viewerState = this.getViewerState(state);
+    this.store.dispatch(actions.setActiveDocumentViewerKey(1));
     if (currentTab) {
       saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
       await core.closeDocument();
+      const viewerCount = core.getDocumentViewers().length;
+      for (let viewerKey = 2; viewerKey <= viewerCount; viewerKey++) {
+        await core.closeDocument(viewerKey);
+      }
     }
     this.store.dispatch(actions.setActiveTab(id));
     isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
-    this.tabLoadPromise = newTab.load(this.store.dispatch, this.db, viewerState);
-    await this.tabLoadPromise;
+    const hasPrimaryDocument = !!newTab.src;
+    const hasSecondaryDocument = Object.values(newTab.viewerDocuments || {}).some((tab) => !!tab?.src);
+    if (!hasPrimaryDocument && !hasSecondaryDocument) {
+      if (newTab.isMultiViewer) {
+        setupMultiViewer(this.store, true);
+      } else {
+        await cleanUpMultiViewer(this.store);
+      }
+      this.store.dispatch(actions.closeElement(DataElements.PROGRESS_MODAL));
+      this.attachAllListeners();
+      return;
+    }
+    this.skipLoadCapture = true;
+    try {
+      this.tabLoadPromise = newTab.load(this.store, this.db, viewerState);
+      await this.tabLoadPromise;
+    } finally {
+      this.skipLoadCapture = false;
+      this.attachAllListeners();
+    }
   }
 
   async waitForTabToLoad() {
@@ -316,11 +366,11 @@ export default class TabManager {
     } else {
       const [deletedTab] = tabs.filter((tab) => tab.id === id);
       const updatedTabs = tabs.filter((tab) => tab.id !== id);
-      await fireEvent(Events['BEFORE_TAB_DELETED'], {
-        src: deletedTab.src,
-        options: deletedTab.options,
-        id: deletedTab.id,
-      });
+      await fireEvent(Events['BEFORE_TAB_DELETED'], [
+        deletedTab.id,
+        deletedTab.src,
+        deletedTab.options,
+      ]);
       deletedTab.delete(this.db);
       this.store.dispatch(actions.setTabs(updatedTabs));
       deleteFileDataOptionsForTab(tabToDelete.id);
@@ -328,15 +378,19 @@ export default class TabManager {
         await this.setActiveTab(updatedTabs[0].id);
       } else if (updatedTabs.length === 0) {
         await this.waitForTabToLoad();
+        if (deletedTab.isMultiViewer) {
+          this.store.dispatch(actions.setActiveDocumentViewerKey(1));
+          await cleanUpMultiViewer(this.store);
+        }
         await core.closeDocument();
         this.store.dispatch(actions.setActiveTab(null));
       }
 
-      await fireEvent(Events['TAB_DELETED'], {
-        src: deletedTab.src,
-        options: deletedTab.options,
-        id: deletedTab.id,
-      });
+      await fireEvent(Events['TAB_DELETED'], [
+        deletedTab.id,
+        deletedTab.src,
+        deletedTab.options,
+      ]);
     }
   }
 
@@ -359,15 +413,19 @@ export default class TabManager {
     const tab = new Tab(currId + 1, src, this, options, useDB);
     const newTabs = [...tabs, tab];
     this.store.dispatch(actions.setTabs(newTabs));
+    const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(this.store.getState());
+    if (activeDocumentViewerKey !== 1) {
+      this.store.dispatch(actions.setActiveDocumentViewerKey(1));
+    }
     if (shouldLoadTab) {
       await this.setActiveTab(tab.id, saveCurrentTabState);
     }
 
-    await fireEvent(Events['TAB_ADDED'], {
-      src: tab.src,
-      options: tab.options,
-      id: tab.id,
-    });
+    await fireEvent(Events['TAB_ADDED'], [
+      tab.id,
+      tab.src,
+      tab.options,
+    ]);
     return tab.id;
   }
 
@@ -378,13 +436,194 @@ export default class TabManager {
     updatedTabs.splice(to, 0, tab);
     this.store.dispatch(actions.setTabs(updatedTabs));
 
-    fireEvent(Events['TAB_MOVED'], {
-      src: tab.src,
-      options: tab.options,
-      id: tab.id,
-      prevIndex: from,
-      newIndex: to,
+    fireEvent(Events['TAB_MOVED'], [
+      tab.id,
+      tab.src,
+      tab.options,
+      from,
+      to,
+    ]);
+  }
+
+  getTabUpdateDetails(tabProperties) {
+    const secondaryDocumentUpdates = {};
+    const dynamicDocumentEntries = Object.entries(tabProperties).filter(([key]) => /^document\d+$/.test(key) && key !== 'document1');
+    dynamicDocumentEntries.forEach(([key, value]) => {
+      const viewerKey = Number(key.replace('document', ''));
+      secondaryDocumentUpdates[viewerKey] = value;
     });
+
+    const clearSecondaryViewerKeys = Object.entries(tabProperties)
+      .filter(([key, value]) => /^clearDocument\d+$/.test(key) && key !== 'clearDocument1' && value === true)
+      .map(([key]) => Number(key.replace('clearDocument', '')))
+      .filter((viewerKey) => !Number.isNaN(viewerKey));
+
+    const clearDocumentForViewerKey = tabProperties.clearDocumentForViewerKey;
+    if (Array.isArray(clearDocumentForViewerKey)) {
+      clearDocumentForViewerKey.forEach((viewerKey) => {
+        const parsedViewerKey = Number(viewerKey);
+        if (!Number.isNaN(parsedViewerKey)) {
+          clearSecondaryViewerKeys.push(parsedViewerKey);
+        }
+      });
+    } else {
+      const parsedViewerKey = Number(clearDocumentForViewerKey);
+      if (!Number.isNaN(parsedViewerKey)) {
+        clearSecondaryViewerKeys.push(parsedViewerKey);
+      }
+    }
+
+    const updatedSecondaryViewerKeys = Object.keys(secondaryDocumentUpdates).map(Number);
+    const dedupedClearSecondaryViewerKeys = [...new Set(clearSecondaryViewerKeys)];
+
+    return {
+      secondaryDocumentUpdates,
+      updatedSecondaryViewerKeys,
+      clearSecondaryViewerKeys: dedupedClearSecondaryViewerKeys,
+      hasSecondaryDocumentUpdate: updatedSecondaryViewerKeys.length > 0,
+      hasSrcProp: Object.hasOwn(tabProperties, 'src'),
+      hasOptionsProp: Object.hasOwn(tabProperties, 'options'),
+      shouldClearPrimaryDocument: tabProperties.clearPrimaryDocument === true,
+      shouldClearSecondaryDocument: dedupedClearSecondaryViewerKeys.length > 0,
+    };
+  }
+
+  getUpdatedSource(existingTab, tabProperties, shouldClearPrimaryDocument, hasSrcProp) {
+    if (shouldClearPrimaryDocument) {
+      return null;
+    }
+    if (hasSrcProp) {
+      return tabProperties.src;
+    }
+    return existingTab.src;
+  }
+
+  updateSecondaryViewerDocument(newTab, id, tabUpdateDetails, useDB) {
+    const {
+      secondaryDocumentUpdates,
+      clearSecondaryViewerKeys,
+      hasSecondaryDocumentUpdate,
+      shouldClearSecondaryDocument,
+    } = tabUpdateDetails;
+
+    if (hasSecondaryDocumentUpdate) {
+      Object.entries(secondaryDocumentUpdates).forEach(([viewerKey, secondaryDocument]) => {
+        const numericViewerKey = Number(viewerKey);
+        const secondaryId = `${id}-${numericViewerKey}`;
+        const src = secondaryDocument?.src;
+        const options = secondaryDocument?.options;
+        newTab.setViewerDocumentTab(numericViewerKey, new Tab(secondaryId, src, this, options, useDB, true, numericViewerKey));
+      });
+    }
+
+    if (shouldClearSecondaryDocument) {
+      clearSecondaryViewerKeys.forEach((viewerKey) => newTab.removeViewerDocumentTab(viewerKey));
+    }
+  }
+
+  buildUpdatedTab(id, existingTab, tabProperties, tabUpdateDetails) {
+    const {
+      hasSecondaryDocumentUpdate,
+      hasSrcProp,
+      hasOptionsProp,
+      shouldClearPrimaryDocument,
+    } = tabUpdateDetails;
+
+    const newSrc = this.getUpdatedSource(existingTab, tabProperties, shouldClearPrimaryDocument, hasSrcProp);
+    const newOptions = { ...(hasOptionsProp ? tabProperties.options : existingTab.options) };
+    if (!shouldClearPrimaryDocument && newSrc !== existingTab.src && (!tabProperties.options || !('filename' in tabProperties.options))) {
+      newOptions['filename'] = this.getFilename(newSrc);
+    }
+    const useDB = newOptions['useDB'] === false ? newOptions['useDB'] && this.useDB : this.useDB;
+    const newTab = new Tab(id, newSrc, this, newOptions, useDB);
+
+    if (tabProperties.isMultiViewer || existingTab.isMultiViewer || hasSecondaryDocumentUpdate) {
+      let effectiveIsMultiViewer = existingTab.isMultiViewer ?? true;
+      if (tabProperties.isMultiViewer !== undefined) {
+        effectiveIsMultiViewer = tabProperties.isMultiViewer;
+      }
+      newTab.setMultiViewerMode(effectiveIsMultiViewer);
+      newTab.viewerDocuments = { ...existingTab.viewerDocuments };
+      this.updateSecondaryViewerDocument(newTab, id, tabUpdateDetails, useDB);
+    }
+
+    return newTab;
+  }
+
+  async runWithLoadCapture(loadAction) {
+    this.skipLoadCapture = true;
+    try {
+      await loadAction();
+    } finally {
+      this.skipLoadCapture = false;
+      this.attachAllListeners();
+    }
+  }
+
+  async handleActiveTabUpdate(id, existingTab, newTab, tabProperties, tabUpdateDetails) {
+    const {
+      hasSecondaryDocumentUpdate,
+      shouldClearPrimaryDocument,
+      shouldClearSecondaryDocument,
+      updatedSecondaryViewerKeys,
+    } = tabUpdateDetails;
+    const hasSrcUpdate = 'src' in tabProperties;
+    const hasOptionsUpdate = 'options' in tabProperties;
+    const hasOnlyMultiViewerFlagUpdate =
+      Object.hasOwn(tabProperties, 'isMultiViewer') &&
+      Object.keys(tabProperties).length === 1;
+
+    const hasPrimaryMutation = hasSrcUpdate || shouldClearPrimaryDocument;
+    const hasSecondaryMutation = hasSecondaryDocumentUpdate || shouldClearSecondaryDocument;
+
+    const isUpdatingPrimaryDocumentOnly = hasSrcUpdate && !shouldClearPrimaryDocument && !hasSecondaryMutation;
+    const isUpdatingSecondaryDocumentOnly = hasSecondaryDocumentUpdate && !hasPrimaryMutation && !hasOptionsUpdate;
+
+    const isClearingPrimaryDocumentOnly = shouldClearPrimaryDocument && !hasSecondaryMutation && !hasOptionsUpdate;
+    const isClearingSecondaryDocumentOnly = shouldClearSecondaryDocument && !hasPrimaryMutation && !hasOptionsUpdate;
+
+    const availableViewerKeys = new Set(
+      core.getDocumentViewers().map((_, index) => index + 1)
+    );
+    const updatedSecondaryViewerTabs = updatedSecondaryViewerKeys
+      .map((viewerKey) => ({ viewerKey, tab: newTab.getTabForViewerKey(viewerKey) }))
+      .filter(({ tab }) => !!tab);
+    const canInlineLoadSecondaryUpdates =
+      updatedSecondaryViewerTabs.length > 0
+      && updatedSecondaryViewerTabs.length === updatedSecondaryViewerKeys.length
+      && updatedSecondaryViewerTabs.every(({ viewerKey }) => availableViewerKeys.has(viewerKey));
+
+    if (hasOnlyMultiViewerFlagUpdate) {
+      this.attachAllListeners();
+      return;
+    }
+
+    const isHandlingActiveMultiViewerUpdate =
+      (newTab.isMultiViewer || existingTab.isMultiViewer) &&
+      (
+        (isUpdatingPrimaryDocumentOnly && !!newTab.src) ||
+        (isUpdatingSecondaryDocumentOnly && canInlineLoadSecondaryUpdates) ||
+        isClearingSecondaryDocumentOnly ||
+        isClearingPrimaryDocumentOnly
+      );
+
+    if (!isHandlingActiveMultiViewerUpdate) {
+      await this.setActiveTab(id, false);
+      return;
+    }
+
+    if (isUpdatingPrimaryDocumentOnly) {
+      await this.runWithLoadCapture(() => loadDocument(this.store.dispatch, newTab.src, newTab.options, 1));
+    } else if (isUpdatingSecondaryDocumentOnly) {
+      setupMultiViewer(this.store, true);
+      await this.runWithLoadCapture(async () => {
+        for (const { tab } of updatedSecondaryViewerTabs) {
+          await tab.load(this.store, this.db);
+        }
+      });
+    } else {
+      this.attachAllListeners();
+    }
   }
 
   async updateTab(id, tabProperties) {
@@ -396,46 +635,42 @@ export default class TabManager {
     }
 
     const existingTab = tabs[tabIndex];
-    const newSrc = tabProperties.src || existingTab.src;
-    const newOptions = tabProperties.options || existingTab.options;
-    if (newSrc !== existingTab.src && (!tabProperties.options || !('filename' in tabProperties.options))) {
-      newOptions['filename'] = this.getFilename(newSrc);
-    }
-    const useDB = newOptions['useDB'] === false ? newOptions['useDB'] && this.useDB : this.useDB;
+    const tabUpdateDetails = this.getTabUpdateDetails(tabProperties);
     const newTabs = [...tabs];
-    newTabs.splice(tabIndex, 1, new Tab(id, newSrc, this, newOptions, useDB));
+    const newTab = this.buildUpdatedTab(id, existingTab, tabProperties, tabUpdateDetails);
+    newTabs.splice(tabIndex, 1, newTab);
     this.store.dispatch(actions.setTabs(newTabs));
     if (activeTab === id) {
-      this.skipLoadCapture = true;
-      await this.setActiveTab(id, false);
-      this.skipLoadCapture = false;
+      await this.handleActiveTabUpdate(id, existingTab, newTab, tabProperties, tabUpdateDetails);
     }
   }
 
-  listenForAnnotChanges() {
-    const onAnnotChange = (_, __, info) => {
-      if (info.imported) {
-        return;
-      }
+  copyTabState(sourceTab, targetTab) {
+    targetTab.saveData = { ...sourceTab.saveData };
+    targetTab.changes = { ...sourceTab.changes };
+  }
+
+  listenForAnnotChanges(documentViewerKey = 1) {
+    const core = createWrappedCore(documentViewerKey);
+    const changesFound = () => {
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
       // if we switch between multiviewer and multitab amd have annotations being removed,
       // we can end up with a events fired for tabs that are no longer in the store
       if (tab) {
-        tab.changes.annotations = true;
         tab.changes.hasUnsavedChanges = true;
+        if (documentViewerKey === 1) {
+          tab.changes.annotations = true;
+        } else {
+          const viewerDocumentTab = tab.getTabForViewerKey(documentViewerKey);
+          viewerDocumentTab && (viewerDocumentTab.changes.annotations = true);
+          tab.changes.hasUnsavedChanges = true;
+        }
       }
       removeListeners();
     };
-    const onFieldChange = () => {
-      const { tabs, activeTab } = this.store.getState().viewer;
-      const tab = tabs.find((t) => t.id === activeTab);
-      if (tab) {
-        tab.changes.annotations = true;
-        tab.changes.hasUnsavedChanges = true;
-      }
-      removeListeners();
-    };
+    const onAnnotChange = (_, __, info) => !info.imported && changesFound();
+    const onFieldChange = () => changesFound();
 
     core.addEventListener('annotationChanged', onAnnotChange);
     core.addEventListener('fieldChanged', onFieldChange, { once: true });
@@ -447,7 +682,9 @@ export default class TabManager {
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
 
-  listenToDocumentDownloaded = async (documentViewer) => {
+  listenToDocumentDownloaded = (documentViewerKey = 1) => {
+    const core = createWrappedCore(documentViewerKey);
+    const documentViewer = core.getDocumentViewer();
     const { tabs, activeTab } = this.store.getState().viewer;
     const currentTab = tabs.find((tab) => tab.id === activeTab);
 
@@ -472,7 +709,7 @@ export default class TabManager {
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   };
 
-  listenToPasswordError = async () => {
+  listenToPasswordError = () => {
     const onPasswordError = () => {
       this.tabLoadPromise = Promise.resolve();
     };
@@ -533,12 +770,68 @@ export class Tab {
   useDB;
   tabManager;
 
-  constructor(id, src, tabManager, options = {}, useDB = true) {
+  isSecond = false;
+  viewerKey = 1;
+  isMultiViewer = false;
+  viewerDocuments = {};
+
+  constructor(id, src, tabManager, options = {}, useDB = true, isSecond = false, viewerKey = 1) {
     this.id = id;
     this.src = src;
     this.options = options;
     this.useDB = useDB;
     this.tabManager = tabManager;
+    this.isSecond = isSecond;
+    this.viewerKey = viewerKey;
+    if (viewerKey !== 1) {
+      this.isSecond = true;
+    }
+  }
+
+  get document2() {
+    return this.getTabForViewerKey(2);
+  }
+
+  set document2(tab) {
+    if (tab) {
+      this.setViewerDocumentTab(2, tab);
+    } else {
+      this.removeViewerDocumentTab(2);
+    }
+  }
+
+  getTabForViewerKey(viewerKey) {
+    return this.viewerDocuments?.[viewerKey];
+  }
+
+  setViewerDocumentTab(viewerKey, tab) {
+    this.viewerDocuments = {
+      ...this.viewerDocuments,
+      [viewerKey]: tab,
+    };
+  }
+
+  removeViewerDocumentTab(viewerKey) {
+    if (!this.viewerDocuments?.[viewerKey]) {
+      return;
+    }
+    const updatedDocuments = { ...this.viewerDocuments };
+    delete updatedDocuments[viewerKey];
+    this.viewerDocuments = updatedDocuments;
+  }
+
+  getPrimarySecondaryDocumentTab() {
+    const entries = Object.entries(this.viewerDocuments || {});
+    if (!entries.length) {
+      return undefined;
+    }
+    entries.sort(([a], [b]) => Number(a) - Number(b));
+    const [, tab] = entries[0];
+    return tab;
+  }
+
+  setMultiViewerMode(isMultiViewer) {
+    this.isMultiViewer = isMultiViewer;
   }
 
   async preLoad(db) {
@@ -550,33 +843,80 @@ export class Tab {
     await writeToDB(db, await file.arrayBuffer(), this.id);
   }
 
-  async load(dispatch, db, viewerState) {
+  async load(store, db, viewerState = null) {
+    const { dispatch } = store;
     const annotsChanged = (this.saveData.annotInDB || this.saveData.annots);
     this.options.loadAnnotations = !annotsChanged;
     this.restorePageDataOnLoad(viewerState, dispatch);
-    annotsChanged && await this.restoreAnnotDataOnLoad(db);
-    if (this.useDB && this.saveData.docInDB) {
-      await new Promise((resolve) => {
-        const tx = db.transaction('files', 'readonly');
-        const store = tx.objectStore('files');
-        const req = store.get(this.id);
-        if (this.id) {
-          this.options.docId = this.id.toString();
-        }
+    annotsChanged && this.restoreAnnotDataOnLoad(db);
+    await this.prepareMultiViewerBeforeLoad(store);
+    await this.loadPrimaryDocument(dispatch, db);
+    await this.loadSecondaryMultiViewerDocument(store, db);
+  }
 
-        req.onsuccess = async () => {
-          const doc = req.result;
-          await loadDocument(dispatch, doc, this.options);
-          resolve();
-        };
-        tx.commit();
-      });
-    } else {
-      await loadDocument(dispatch, this.src, this.options);
+  async prepareMultiViewerBeforeLoad(store) {
+    // Set up or tear down MultiViewer mode BEFORE loading the document so the
+    // UI transitions to the correct viewer layout immediately, avoiding a flash
+    // of the previous mode while the new document is still loading.
+    if (this.viewerKey !== 1) {
+      return;
     }
+    if (this.isMultiViewer) {
+      // deferReady=true: hold isMultiViewerReady=false until secondary doc loads
+      // so the second viewer pane isn't shown blank before its document is ready.
+      setupMultiViewer(store, true, true);
+      return;
+    }
+    await cleanUpMultiViewer(store);
+  }
+
+  async loadPrimaryDocument(dispatch, db) {
+    if (!(this.useDB && this.saveData.docInDB)) {
+      await loadDocument(dispatch, this.src, this.options, this.viewerKey);
+      return;
+    }
+
+    await new Promise((resolve) => {
+      const tx = db.transaction('files', 'readonly');
+      const store = tx.objectStore('files');
+      const req = store.get(this.id);
+      if (this.id) {
+        this.options.docId = this.id.toString();
+      }
+
+      req.onsuccess = async () => {
+        const doc = req.result;
+        await loadDocument(dispatch, doc, this.options, this.viewerKey);
+        resolve();
+      };
+      tx.commit();
+    });
+  }
+
+  async loadSecondaryMultiViewerDocument(store, db) {
+    if (this.viewerKey !== 1 || !this.isMultiViewer) {
+      return;
+    }
+
+    const secondaryDocumentTab = this.getPrimarySecondaryDocumentTab();
+    if (secondaryDocumentTab) {
+      await secondaryDocumentTab.load(store, db);
+    } else {
+      const secondaryViewerKeys = core
+        .getDocumentViewers()
+        .map((_, index) => index + 1)
+        .filter((viewerKey) => viewerKey !== 1);
+      for (const secondaryViewerKey of secondaryViewerKeys) {
+        await core.closeDocument(secondaryViewerKey);
+      }
+    }
+
+    // Secondary doc (or close) is done — now reveal the second viewer pane.
+    finalizeMultiViewerSetup(store);
   }
 
   async saveCurrentActiveTabState(db) {
+    const core = createWrappedCore(this.viewerKey);
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
@@ -591,10 +931,17 @@ export class Tab {
         await this.saveAnnotData();
       }
     }
+    if (this.isMultiViewer) {
+      const secondaryTabs = Object.values(this.viewerDocuments || {});
+      for (const secondaryTab of secondaryTabs) {
+        await secondaryTab.saveCurrentActiveTabState(db);
+      }
+    }
     this.disabled = false;
   }
 
   async saveFileData(db, document) {
+    const core = createWrappedCore(this.viewerKey);
     this.saveData.annotInDB = false;
     const xfdfString = await core.exportAnnotations();
     const state = this.tabManager.store.getState();
@@ -609,6 +956,7 @@ export class Tab {
   }
 
   async saveAnnotData() {
+    const core = createWrappedCore(this.viewerKey);
     this.saveData.annotInDB = false;
     const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
     if (annotData) {
@@ -617,6 +965,7 @@ export class Tab {
   }
 
   async saveAnnotDataInDB(db) {
+    const core = createWrappedCore(this.viewerKey);
     const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
     if (annotData) {
       const annots = annotData;
@@ -629,9 +978,10 @@ export class Tab {
   }
 
   savePageData() {
+    const core = createWrappedCore(this.viewerKey);
     const docContainer = getRootNode()
       .getElementById('app')
-      .getElementsByClassName('DocumentContainer')[0];
+      .getElementsByClassName('DocumentContainer')[this.viewerKey - 1];
     this.saveData.scrollTop = docContainer.scrollTop;
     this.saveData.scrollLeft = docContainer.scrollLeft;
     this.saveData.page = core.getCurrentPage();
@@ -640,54 +990,111 @@ export class Tab {
   }
 
   restorePageDataOnLoad(viewerState, dispatch) {
+    const core = createWrappedCore(this.viewerKey);
     const docContainer = getRootNode()
       .getElementById('app')
-      .getElementsByClassName('DocumentContainer')[0];
+      .getElementsByClassName('DocumentContainer')[this.viewerKey - 1];
+
+    const isCurrentViewerTabActive = () => {
+      const state = this.tabManager.store.getState();
+      const activeTabId = selectors.getActiveTab(state);
+      const activeTab = selectors.getTabs(state).find((tab) => tab.id === activeTabId);
+      if (!activeTab) {
+        return false;
+      }
+      if (this.viewerKey === 1) {
+        return activeTab.id === this.id;
+      }
+      const activeViewerTab = activeTab.getTabForViewerKey(this.viewerKey);
+      return activeViewerTab?.id === this.id;
+    };
+
+    let cancelled = false;
 
     const updateScroll = async () => {
-      await core.getDocument().getDocumentCompletePromise();
+      if (cancelled || !isCurrentViewerTabActive()) {
+        return;
+      }
+      const document = core.getDocument();
+      if (!document) {
+        return;
+      }
+      await document.getDocumentCompletePromise();
+      if (cancelled || !isCurrentViewerTabActive() || core.getDocument() !== document) {
+        return;
+      }
       docContainer.scrollTo({
         top: this.saveData.scrollTop,
         left: this.saveData.scrollLeft,
       });
     };
 
-    viewerState.isNotesPanelOpen && dispatch(actions.openElement('notesPanel'));
-    viewerState.isLeftPanelOpen && dispatch(actions.openElement('leftPanel'));
-    viewerState.isSearchPanelOpen && dispatch(actions.openElement('searchPanel'));
-    viewerState.activeToolName && core.setToolMode(viewerState.activeToolName);
+    if (this.viewerKey === 1) {
+      viewerState.isNotesPanelOpen && dispatch(actions.openElement('notesPanel'));
+      viewerState.isLeftPanelOpen && dispatch(actions.openElement('leftPanel'));
+      viewerState.isSearchPanelOpen && dispatch(actions.openElement('searchPanel'));
+      viewerState.activeToolName && core.setToolMode(viewerState.activeToolName);
+    }
 
     const updateViewer = async () => {
-      await core.getDocument().getDocumentCompletePromise();
+      const core = createWrappedCore(this.viewerKey);
+      if (cancelled || !isCurrentViewerTabActive()) {
+        return;
+      }
+      const document = core.getDocument();
+      if (!document) {
+        return;
+      }
+      await document.getDocumentCompletePromise();
+      if (cancelled || !isCurrentViewerTabActive() || core.getDocument() !== document) {
+        return;
+      }
       this.saveData.zoom && await core.zoomTo(this.saveData.zoom);
       this.saveData.page && await core.setCurrentPage(this.saveData.page);
 
-      await fireEvent(Events['AFTER_TAB_CHANGED'], {
-        currentTab: this.src ? {
+      this.viewerKey === 1 && await fireEvent(Events['AFTER_TAB_CHANGED'], [
+        this.src ? {
           src: this.src,
           options: this.options,
           id: this.id,
           annotationsChanged: this.changes.annotations,
           hasUnsavedChanges: this.changes.hasUnsavedChanges
         } : null
-      });
+      ]);
     };
 
     core.addEventListener('documentLoaded', updateViewer, { once: true });
 
-    !isNaN(this.saveData.scrollTop) && core.addEventListener('finishedRendering', updateScroll, { once: true });
-    const removeListeners = () => {
+    !Number.isNaN(this.saveData.scrollTop) && core.addEventListener('finishedRendering', updateScroll, { once: true });
+    const cancelAndRemoveListeners = () => {
+      cancelled = true;
       core.removeEventListener('documentLoaded', updateViewer);
       core.removeEventListener('finishedRendering', updateScroll);
     };
-    core.addEventListener('documentUnloaded', removeListeners, { once: true });
+    core.addEventListener('documentUnloaded', cancelAndRemoveListeners, { once: true });
   }
 
   async updateAnnotations(db) {
+    const core = createWrappedCore(this.viewerKey);
     const state = this.tabManager.store.getState();
     const activeTabId = selectors.getActiveTab(state);
-    if (activeTabId !== this.id) {
-      return selectors.getTabs(state).find((tab) => tab.id === activeTabId).updateAnnotations(db);
+    const activeTab = selectors.getTabs(state).find((tab) => tab.id === activeTabId);
+    const isCurrentViewerTabActive = () => {
+      if (!activeTab) {
+        return false;
+      }
+      if (this.viewerKey === 1) {
+        return activeTab.id === this.id;
+      }
+      const activeViewerTab = activeTab.getTabForViewerKey(this.viewerKey);
+      return activeViewerTab?.id === this.id;
+    };
+
+    if (!isCurrentViewerTabActive()) {
+      if (!activeTab) {
+        return;
+      }
+      return activeTab.updateAnnotations(db);
     }
 
     if (this.saveData.annotInDB) {
@@ -695,21 +1102,40 @@ export class Tab {
       const store = tx.objectStore('files');
       const annotReq = store.get(`${this.id}-annots`);
       annotReq.onsuccess = async () => {
-        await core.getDocument().getDocumentCompletePromise();
-        await core.getAnnotationManager().importAnnotations(annotReq.result);
+        try {
+          const document = core.getDocument();
+          if (!document) {
+            return;
+          }
+          await document.getDocumentCompletePromise();
+          await core.getAnnotationManager().importAnnotations(annotReq.result);
+        } catch (error) {
+          if (!isInvalidDocReferenceError(error)) {
+            throw error;
+          }
+        }
       };
       await tx.commit();
     } else if (this.saveData.annots) {
-      await core.getDocument().getDocumentCompletePromise();
-      await core.getAnnotationManager().importAnnotations(this.saveData.annots);
+      try {
+        const document = core.getDocument();
+        if (!document) {
+          return;
+        }
+        await document.getDocumentCompletePromise();
+        await core.getAnnotationManager().importAnnotations(this.saveData.annots);
+      } catch (error) {
+        if (!isInvalidDocReferenceError(error)) {
+          throw error;
+        }
+      }
     }
   }
 
   async restoreAnnotDataOnLoad(db) {
+    const core = createWrappedCore(this.viewerKey);
     const updateAnnotations = () => this.updateAnnotations(db);
-    const removeListeners = () => {
-      core.removeEventListener('documentLoaded', updateAnnotations);
-    };
+    const removeListeners = () => core.removeEventListener('documentLoaded', updateAnnotations);
     core.addEventListener('documentLoaded', updateAnnotations, { once: true });
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }

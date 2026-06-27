@@ -11,7 +11,7 @@ export default {
   component: OfficeEditorMarginsModal,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 const getMarginInputs = (canvas, labels) => ({
   left:   { element: canvas.getByLabelText(labels.left,   { exact: false }) },

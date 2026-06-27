@@ -1,11 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import MobilePanelWrapper from './MobilePanelWrapper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { MockApp } from 'src/helpers/storybookHelper';
-import { mockSavedSignatures } from 'src/components/SignatureStylePopup/mockedSignatures';
+import { mockSavedSignatures } from 'src/components/SignaturePanel/mockedSignatures';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { mobileStoryParameters, mobileStoryGlobals } from 'helpers/storybookParams';
+import { PANEL_SIZES } from 'constants/panel';
 
 const mobileWarningStyle = {
   height: '100vh',
@@ -129,3 +132,40 @@ export const MobilePanelWithCustomPanel = () => (
     />
   )
 );
+
+const ThrowOnRender = () => {
+  throw new Error('Storybook mobile panel crash test');
+};
+
+export const MobilePanelWithErrorBoundary = () => {
+  if (!isMobileSize()) {
+    return (
+      <div style={mobileWarningStyle}>
+        VIEW THIS STORY IN MOBILE MODE
+      </div>
+    );
+  }
+  const panelState = {
+    viewer: {
+      ...initialState.viewer,
+      openElements: {
+        MobilePanelWrapper: true,
+        throwingPanel: true,
+      },
+      mobilePanelSize: PANEL_SIZES.HALF_SIZE,
+      isInDesktopOnlyMode: false,
+    },
+    featureFlags: {
+      ...initialState.featureFlags,
+      customizableUI: true,
+    },
+  };
+  const store = configureStore({ reducer: () => panelState });
+  return (
+    <Provider store={store}>
+      <MobilePanelWrapper>
+        <ThrowOnRender dataElement="throwingPanel" />
+      </MobilePanelWrapper>
+    </Provider>
+  );
+};

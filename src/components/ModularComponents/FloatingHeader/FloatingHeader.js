@@ -27,22 +27,26 @@ const FloatingHeader = (props) => {
   const scrollViewContainer = core.getScrollViewElement();
 
   useEffect(() => {
+    if (!scrollViewContainer || opacityMode !== OPACITY_MODES.DYANMIC) {
+      return;
+    }
+
     const hideFloatingHeader = debounce(() => {
       setIsVisible(false);
     }, HIDE_FLOATING_HEADER_TIMEOUT);
 
     const handleScroll = () => {
-      if (opacityMode === OPACITY_MODES.DYANMIC) {
-        setIsVisible(true);
-        hideFloatingHeader();
-      }
+      setIsVisible(true);
+      hideFloatingHeader();
     };
 
-    if (opacityMode === OPACITY_MODES.DYANMIC) {
-      scrollViewContainer.addEventListener('scroll', handleScroll);
-    }
+    scrollViewContainer.addEventListener('scroll', handleScroll);
 
-    return () => scrollViewContainer.removeEventListener('scroll', handleScroll);
+    return () => {
+      scrollViewContainer.removeEventListener('scroll', handleScroll);
+      // Cancel any pending debounced setIsVisible to avoid setState-on-unmounted-component warnings.
+      hideFloatingHeader.cancel();
+    };
   }, [opacityMode]);
 
   const className = classNames(

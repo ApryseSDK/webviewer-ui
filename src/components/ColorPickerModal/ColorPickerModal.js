@@ -75,6 +75,7 @@ const ColorPickerModal = ({ isDisabled, isOpen, color, closeModal, handleChangeS
     <div className={modalClass} data-element={DataElements.COLOR_PICKER_MODAL} onMouseDown={closeModal}>
       <ModalWrapper
         isOpen={isOpen}
+        modalDataElement={DataElements.COLOR_PICKER_MODAL}
         closeHandler={closeModalHandler}
         onCloseClick={closeModalHandler}
         swipeToClose

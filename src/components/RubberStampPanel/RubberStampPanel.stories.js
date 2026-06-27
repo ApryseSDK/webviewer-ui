@@ -1,3 +1,4 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import initialState from 'src/redux/initialState';
 import RubberStampPanel from './RubberStampPanel';
@@ -36,7 +37,7 @@ const RubberStampPanelInApp = (context, location) => {
       customizableUI: true,
     },
   };
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} initialDirection={addonRtl} />;

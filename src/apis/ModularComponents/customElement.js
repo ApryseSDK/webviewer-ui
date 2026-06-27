@@ -39,7 +39,7 @@ class CustomElement extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function customElementFactory(props) {
   const propsWithStore = { ...props, store };
   return new CustomElement(propsWithStore);
 };

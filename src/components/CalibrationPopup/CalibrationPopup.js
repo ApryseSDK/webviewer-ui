@@ -24,6 +24,7 @@ import {
 import classNames from 'classnames';
 
 import './CalibrationPopup.scss';
+import { getDOMActiveElement } from 'src/helpers/webComponent';
 
 const Scale = window.Core.Scale;
 
@@ -189,7 +190,9 @@ const CalibrationPopup = ({ annotation }) => {
   }, [annotation]);
 
   useEffect(() => {
-    if (inputRef?.current !== document.activeElement) {
+    const activeElement = getDOMActiveElement();
+
+    if (inputRef?.current !== activeElement) {
       updateValueDisplay();
     }
   }, [tempScale, isFractionalUnit]);

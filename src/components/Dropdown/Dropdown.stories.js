@@ -22,7 +22,7 @@ export function Basic() {
     setCurrentSelectionKey(key);
   }
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: 100 }}>
         <Dropdown
           id='basic-story'
@@ -54,7 +54,7 @@ export function ImageDropdown() {
   }
 
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: dropdownWidth }}>
         <Dropdown
           id='image-dropdown-story'
@@ -131,7 +131,7 @@ export function DropdownWithInput() {
     }
   }
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: 200 }}>
         <label id="countries-dropdown">Countries</label>
         <Dropdown
@@ -156,7 +156,7 @@ export function DropdownWithInputAndNoSearch() {
   const [pointSizeSelectionKey, setPointSizeSelectionKey] = React.useState(DEFAULT_POINT_SIZE.toString());
 
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: 100 }}>
         <label id="font-size">Font Size</label>
         <Dropdown
@@ -201,7 +201,7 @@ export function DropdownWithCustomDisplay({ disabled = false }) {
     setCurrentSelectionKey(key);
   }
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: 100 }}>
         <VisuallyHiddenLabel id="notesSortLabel" label='Sort' />
         <Dropdown
@@ -237,7 +237,7 @@ export function DropdownWithNoItems() {
   const images = [];
   const dropdownWidth = 145;
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: dropdownWidth }}>
         <Dropdown
           width={dropdownWidth}

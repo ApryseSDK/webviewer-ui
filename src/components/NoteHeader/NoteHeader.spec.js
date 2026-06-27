@@ -4,6 +4,7 @@ import NoteHeader from './NoteHeader';
 import NoteContext from '../Note/Context';
 import * as reactRedux from 'react-redux';
 import { testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
+import useCore from 'hooks/useCore';
 
 const NoteHeaderWithProviders = withProviders(NoteHeader);
 const noteContextValue = {
@@ -38,13 +39,35 @@ const initialState = {
   },
 };
 
+jest.mock('hooks/useCore', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: () => jest.fn(),
 }));
 
 describe('NoteHeader Component', () => {
+  let getEditorMock;
+  let getExistingEditorMock;
+
   beforeEach(() => {
+    jest.clearAllMocks();
+    getEditorMock = jest.fn().mockReturnValue(null);
+    getExistingEditorMock = jest.fn().mockReturnValue(null);
+
+    useCore.mockReturnValue({
+      core: {
+        getAnnotationManager: jest.fn().mockReturnValue({
+          getEditBoxManager: jest.fn().mockReturnValue({
+            getEditor: getEditorMock,
+            getExistingEditor: getExistingEditorMock,
+          }),
+        }),
+      },
+    });
     // We mock the redux call to always return "false" for isElementDisabled
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockImplementation((callback) => callback(initialState));
@@ -82,5 +105,20 @@ describe('NoteHeader Component', () => {
     );
 
     getByText(container, `#${testPropsWithAnnotationNumbering.annotation.getAssociatedNumber()} -`);
+  });
+
+  it('uses getExistingEditor and does not call getEditor when reading freetext display color', () => {
+    const freeTextAnnotation = Object.create(window.Core.Annotations.FreeTextAnnotation.prototype);
+    Object.assign(freeTextAnnotation, notSelectedProps.annotation);
+
+    render(
+      <TestNoteHeader
+        {...notSelectedProps}
+        annotation={freeTextAnnotation}
+      />
+    );
+
+    expect(getExistingEditorMock).toHaveBeenCalledWith(freeTextAnnotation);
+    expect(getEditorMock).not.toHaveBeenCalled();
   });
 });

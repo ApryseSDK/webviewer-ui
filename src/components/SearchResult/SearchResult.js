@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
 import './SearchResult.scss';
-import VirtualizedList from 'react-virtualized/dist/commonjs/List';
-import CellMeasurer, { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
+import { List as VirtualizedList, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import ListSeparator from 'components/ListSeparator';
 import classNames from 'classnames';
 import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
@@ -51,7 +49,6 @@ const SearchResultListItemPropTypes = {
 
 function SearchResultListItem(props) {
   const [t] = useTranslation();
-  const [customizableUI] = useSelector((state) => [state.featureFlags.customizableUI]);
   const { result, currentResultIndex, activeResultIndex, onSearchResultClick, title, pageLabel, 'aria-posinset': ariaPosinset, 'aria-setsize': ariaSetsize } = props;
   const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
   const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
@@ -74,7 +71,6 @@ function SearchResultListItem(props) {
       className={classNames({
         'SearchResult': true,
         'selected': currentResultIndex === activeResultIndex,
-        'modular-ui': customizableUI
       })}
       onClick={() => {
         if (onSearchResultClick) {

@@ -36,7 +36,6 @@ beforeEach(() => {
   jest.clearAllMocks();
   actions.stashEnabledTools = jest.fn();
   selectors.isViewOnly.mockReturnValue(false);
-  selectors.getIsCustomUIEnabled.mockReturnValue(true);
   selectors.isElementDisabled.mockReturnValue(false);
   core.getIsReadOnly.mockReturnValue(false);
   core.setToolMode = jest.fn();

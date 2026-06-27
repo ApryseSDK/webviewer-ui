@@ -393,5 +393,5 @@ export default (store) => async (components, functions = {}) => {
     store.dispatch(actions.addFlyout(defaultFlyoutMap[DataElements.VIEW_CONTROLS_FLYOUT]));
   }
 
-  fireEvent(Events['MODULAR_UI_IMPORTED'], { importedComponents: components });
+  fireEvent(Events['MODULAR_UI_IMPORTED'], components);
 };

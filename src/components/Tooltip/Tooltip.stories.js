@@ -1,3 +1,4 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import Tooltip from './Tooltip';
 import { createStore, waitForTimeout } from 'helpers/storybookHelper';
@@ -14,7 +15,7 @@ export default {
   component: Tooltip,
 };
 
-const store = createStore(initialState);
+const store = configureStore({ reducer: () => initialState });
 hotkeysManager.initialize(store);
 
 const createTooltip = (title = 'This is a tooltip') => {

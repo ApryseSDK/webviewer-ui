@@ -29,7 +29,6 @@ const ThumbnailControls = ({ index }) => {
   const selectedIndexes = useSelector(selectors.getSelectedThumbnailPageIndexes, shallowEqual);
   const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
   const pageThumbnailControlMenuItems = useSelector(selectors.getThumbnailControlMenuItems, shallowEqual);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const isViewOnly = useSelector(selectors.isViewOnly);
 
   const dispatch = useDispatch();
@@ -39,7 +38,6 @@ const ThumbnailControls = ({ index }) => {
   let pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map((i) => i + 1) : [index + 1];
 
   const isCurrentPageInTheSelection = pageNumbers.includes(currentPage);
-  const customizableUI = featureFlags.customizableUI;
 
   if (!isCurrentPageInTheSelection) {
     pageNumbers = [currentPage];
@@ -151,7 +149,6 @@ const ThumbnailControls = ({ index }) => {
     <div className={classNames({
       'thumbnailControls-overlay': true,
       'custom-buttons': isCustomized,
-      'modular-ui': customizableUI,
     })}
     data-element={dataElementName}
     ref={buttonContainerRef}

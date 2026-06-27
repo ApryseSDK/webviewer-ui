@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import core from 'core';
 
 function createStateAnnotation(annotation, state, documentViewerKey = 1) {
@@ -22,8 +22,9 @@ function createStateAnnotation(annotation, state, documentViewerKey = 1) {
   stateAnnotation.enableSkipAutoLink();
 
   const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author'], documentViewerKey);
-  const stateMessage = i18next.t(`option.state.${state.toLowerCase()}`);
-  const contents = `${stateMessage} ${i18next.t('option.state.setBy')} ${displayAuthor}`;
+  const t = getCurrentT();
+  const stateMessage = t(`option.state.${state.toLowerCase()}`);
+  const contents = `${stateMessage} ${t('option.state.setBy')} ${displayAuthor}`;
   stateAnnotation.setContents(contents);
 
   return stateAnnotation;

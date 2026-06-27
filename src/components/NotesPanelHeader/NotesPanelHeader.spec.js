@@ -54,7 +54,7 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       screen.getByText('Sort:');
       screen.getByText('Comments (0)');
     });
@@ -68,9 +68,9 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      expect(screen.queryByPlaceholderText('Search comments')).not.toBeInTheDocument;
-      expect(screen.queryByText('Sort:')).not.toBeInTheDocument;
-      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument;
+      expect(screen.queryByLabelText('Search comments')).not.toBeInTheDocument();
+      expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
+      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument();
     });
 
     it('Should not render search input if disabled', () => {
@@ -85,7 +85,7 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      expect(screen.queryByPlaceholderText('Search comments')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('Search comments')).not.toBeInTheDocument();
       screen.getByText('Sort:');
       screen.getByText('Comments (0)');
     });
@@ -102,9 +102,9 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       screen.getByText('Sort:');
-      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument;
+      expect(screen.queryByText('Comments (0)')).not.toBeInTheDocument();
     });
 
     it('Should not render sorting row if disabled', () => {
@@ -120,7 +120,7 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
       screen.getByText('Comments (0)');
     });

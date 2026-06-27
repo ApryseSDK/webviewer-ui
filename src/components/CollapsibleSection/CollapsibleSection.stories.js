@@ -1,7 +1,7 @@
+import { configureStore } from '@reduxjs/toolkit';
 
 import React from 'react';
 import CollapsibleSection from './CollapsibleSection';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
@@ -15,7 +15,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const CollapsibleSectionWithRedux = (props) => {
   return (

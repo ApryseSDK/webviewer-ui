@@ -10,7 +10,7 @@ import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
 import './RibbonItem.scss';
-import sizeManager from 'helpers/responsivenessHelper';
+import { getSizeManager } from 'helpers/responsivenessHelper';
 import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../FlyoutItemContainer';
 const RibbonItem = forwardRef((props, ref) => {
@@ -46,7 +46,8 @@ const RibbonItem = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (elementRef.current) {
-      sizeManager[dataElement] = {
+      const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+      localSizeManager[dataElement] = {
         width: elementRef.current.clientWidth,
         height: elementRef.current.clientHeight,
         visible: true,

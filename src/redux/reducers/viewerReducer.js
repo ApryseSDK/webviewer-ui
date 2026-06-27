@@ -312,11 +312,6 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         thumbnailSelectingPages: payload.isSelecting,
       };
-    case 'SET_HIGH_CONTRAST_MODE':
-      return {
-        ...state,
-        highContrastMode: payload.useHighContrastMode,
-      };
     case 'SET_CAN_UNDO':
       return {
         ...state,
@@ -642,11 +637,6 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, printedNoteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
-    case 'SET_HEADER_ITEMS':
-      return {
-        ...state,
-        headers: { ...state.headers, [payload.header]: payload.headerItems },
-      };
     case 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES':
       return {
         ...state,
@@ -956,10 +946,15 @@ export default (initialState) => (state = initialState, action) => {
         return state;
       }
 
-      // Remove existing items and replace with new one
-      if (itemsDataElements) {
+      // Remove existing items and replace with new one (immutably — do NOT
+      // mutate state.modularComponents directly because on the very first
+      // dispatch it may still be the shared module-level initialState
+      // reference, which would leak across stores/tests).
+      let nextModularComponents = state.modularComponents;
+      if (itemsDataElements && itemsDataElements.length) {
+        nextModularComponents = { ...state.modularComponents };
         itemsDataElements.forEach((key) => {
-          delete state.modularComponents[key];
+          delete nextModularComponents[key];
         });
       }
 
@@ -975,7 +970,7 @@ export default (initialState) => (state = initialState, action) => {
           [headerDataElement]: updatedModularHeader,
         },
         modularComponents: {
-          ...state.modularComponents,
+          ...nextModularComponents,
           ...normalizedItems,
         },
       };
@@ -1403,6 +1398,16 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isWidgetHighlightingEnabled: false,
+      };
+    case 'SET_AUTOSAVE_ENABLED':
+      return {
+        ...state,
+        autosaveEnabled: payload.enabled,
+      };
+    case 'SET_AUTOSAVE_INTERVAL':
+      return {
+        ...state,
+        autosaveInterval: payload.ms,
       };
     case 'SET_READER_PAGE_MODE':
       return {

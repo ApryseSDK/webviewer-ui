@@ -15,6 +15,7 @@ jest.mock('actions', () => ({
   setZoom: jest.fn(),
   setCompareAnnotationsMap: jest.fn(),
   setActiveCustomRibbon: jest.fn(),
+  setActiveDocumentViewerKey: jest.fn(),
 }));
 jest.mock('selectors', () => ({
   getCurrentToolbarGroup: jest.fn(),
@@ -25,6 +26,11 @@ jest.mock('selectors', () => ({
   getDefaultHeaderItems: jest.fn(),
   isMultiViewerMode: jest.fn(),
   getSyncViewer: jest.fn(),
+  getIsMultiTab: jest.fn().mockReturnValue(false),
+  getTabManager: jest.fn(),
+  getActiveTab: jest.fn(),
+  getTabs: jest.fn().mockReturnValue([]),
+  getActiveDocumentViewerKey: jest.fn().mockReturnValue(1),
 }));
 jest.mock('hooks/useCore/useCore');
 jest.mock('core');
@@ -127,6 +133,7 @@ describe('cleanUpMultiViewer', () => {
     actions.setZoom.mockReset().mockReturnValue({ type: 'SET_ZOOM' });
     actions.setCompareAnnotationsMap.mockReset().mockReturnValue({ type: 'SET_COMPARE_ANNOTATIONS_MAP' });
     actions.setActiveCustomRibbon.mockReset().mockReturnValue({ type: 'SET_ACTIVE_CUSTOM_RIBBON' });
+    actions.setActiveDocumentViewerKey.mockReset().mockReturnValue({ type: 'SET_ACTIVE_DOCUMENT_VIEWER_KEY' });
 
     selectors.isComparisonDisabled.mockReset().mockReturnValue(false);
     selectors.getCurrentToolbarGroup.mockReset().mockReturnValue('toolbarGroup-View');
@@ -146,31 +153,32 @@ describe('cleanUpMultiViewer', () => {
     actions.setZoom.mockClear();
     actions.setCompareAnnotationsMap.mockClear();
     actions.setActiveCustomRibbon.mockClear();
+    actions.setActiveDocumentViewerKey.mockClear();
   });
 
   describe('dispatching portfolio, document loaded, total pages, and zoom actions', () => {
-    it('should dispatch setPortfolio with empty array for viewer key 2', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setPortfolio with empty array for viewer key 2', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setPortfolio).toHaveBeenCalledWith([], 2);
     });
 
-    it('should dispatch setDocumentLoaded with false for viewer key 2', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setDocumentLoaded with false for viewer key 2', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setDocumentLoaded).toHaveBeenCalledWith(false, 2);
     });
 
-    it('should dispatch setTotalPages with 0 for viewer key 2', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setTotalPages with 0 for viewer key 2', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setTotalPages).toHaveBeenCalledWith(0, 2);
     });
 
-    it('should dispatch setZoom with 1 for viewer key 2', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setZoom with 1 for viewer key 2', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setZoom).toHaveBeenCalledWith(1, 2);
     });
 
-    it('should dispatch all portfolio-related actions', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch all portfolio-related actions', async () => {
+      await cleanUpMultiViewer(mockStore);
 
       // Check that dispatch was called with the action results
       const dispatchCalls = mockDispatch.mock.calls;
@@ -185,41 +193,53 @@ describe('cleanUpMultiViewer', () => {
       expect(hasZoom).toBe(true);
     });
 
-    it('should call removeDocumentViewer for non-primary viewers', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should call removeDocumentViewer for non-primary viewers', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(documentViewerHelper.removeDocumentViewer).toHaveBeenCalledWith(2);
     });
 
-    it('should call endFormFieldCreationMode for all viewers', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should call endFormFieldCreationMode for all viewers', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(mockFormFieldCreationManager.endFormFieldCreationMode).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('other cleanup actions', () => {
-    it('should dispatch setIsMultiViewerReady with false', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setIsMultiViewerReady with false', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setIsMultiViewerReady).toHaveBeenCalledWith(false);
     });
 
-    it('should dispatch setIsMultiViewerMode with false', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setIsMultiViewerMode with false', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setIsMultiViewerMode).toHaveBeenCalledWith(false);
     });
 
-    it('should dispatch setCompareAnnotationsMap with empty object', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setCompareAnnotationsMap with empty object', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setCompareAnnotationsMap).toHaveBeenCalledWith({});
     });
 
-    it('should dispatch setActiveCustomRibbon with View Ribbon item for non-primary viewers', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should dispatch setActiveCustomRibbon with View Ribbon item for non-primary viewers', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(actions.setActiveCustomRibbon).toHaveBeenCalledWith('toolbarGroup-View');
     });
 
-    it('should set tool mode to default tool for all viewers', () => {
-      cleanUpMultiViewer(mockStore);
+    it('should set tool mode to default tool for all viewers', async () => {
+      await cleanUpMultiViewer(mockStore);
       expect(core.setToolMode).toHaveBeenCalledWith(defaultTool);
+    });
+
+    it('should reset the active document viewer key back to the primary viewer', () => {
+      cleanUpMultiViewer(mockStore);
+      expect(actions.setActiveDocumentViewerKey).toHaveBeenCalledWith(1);
+    });
+
+    it('should reset the active document viewer key before turning off MultiViewer mode', () => {
+      cleanUpMultiViewer(mockStore);
+      const setActiveKeyOrder = actions.setActiveDocumentViewerKey.mock.invocationCallOrder[0];
+      const setMultiViewerModeOrder = actions.setIsMultiViewerMode.mock.invocationCallOrder[0];
+      expect(setActiveKeyOrder).toBeLessThan(setMultiViewerModeOrder);
     });
   });
 });

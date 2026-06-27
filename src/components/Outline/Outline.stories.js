@@ -1,14 +1,13 @@
 import React from 'react';
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import Outline from './Outline';
 import OutlineContext from './Context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
-import '../LeftPanel/LeftPanel.scss';
-import thunk from 'redux-thunk';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+import Panel from 'components/Panel';
 
 const NOOP = () => { };
 
@@ -77,10 +76,22 @@ export const getDefaultOutlines = () => {
 const reducer = () => {
   return {
     viewer: {
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       autoExpandOutlines: true,
+      openElements: {
+        outlinesPanel: true,
+        'bookmarkOutlineFlyout-': true,
+      },
+      panelWidths: {
+        outlinesPanel: 330,
+      },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
       flyoutMap: {
         'bookmarkOutlineFlyout-': {
           dataElement: 'bookmarkOutlineFlyout-',
@@ -88,9 +99,6 @@ const reducer = () => {
         }
       },
       activeFlyout: 'bookmarkOutlineFlyout-',
-      openElements: {
-        'bookmarkOutlineFlyout-': true,
-      },
       outlinesStateMap: {},
     },
     document: {
@@ -119,31 +127,29 @@ const outline = createOutline({
 
 export const Basic = () => {
   return (
-    <ReduxProvider store={createStore(reducer, applyMiddleware(thunk))}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <OutlineContext.Provider
-            value={{
-              setActiveOutlinePath: NOOP,
-              activeOutlinePath: '',
-              isOutlineActive: NOOP,
-              setIsAddingNewOutline: NOOP,
-              selectedOutlines: [],
-              outlineScrollParentRef: { current: null },
-            }}
-          >
-            <DndProvider backend={HTML5Backend}>
-              <Outline
-                outline={outline}
-                setMultiSelected={NOOP}
-                moveOutlineInward={NOOP}
-                moveOutlineBeforeTarget={NOOP}
-                moveOutlineAfterTarget={NOOP}
-              />
-            </DndProvider>
-          </OutlineContext.Provider>
-        </div>
-      </div>
+    <ReduxProvider store={configureStore({ reducer })}>
+      <Panel dataElement="outlinesPanel" location="left">
+        <OutlineContext.Provider
+          value={{
+            setActiveOutlinePath: NOOP,
+            activeOutlinePath: '',
+            isOutlineActive: NOOP,
+            setIsAddingNewOutline: NOOP,
+            selectedOutlines: [],
+            outlineScrollParentRef: { current: null },
+          }}
+        >
+          <DndProvider backend={HTML5Backend}>
+            <Outline
+              outline={outline}
+              setMultiSelected={NOOP}
+              moveOutlineInward={NOOP}
+              moveOutlineBeforeTarget={NOOP}
+              moveOutlineAfterTarget={NOOP}
+            />
+          </DndProvider>
+        </OutlineContext.Provider>
+      </Panel>
     </ReduxProvider>
   );
 };

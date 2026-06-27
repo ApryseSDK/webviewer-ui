@@ -76,18 +76,28 @@ const loadFont = (font, fontType, isWebFont = false, fileName = null, style = {}
   const isWebComponent = window.isApryseWebViewerWebComponent;
   const fontStyle = { style: 'normal', weight: 'normal', ...style };
 
+  // In WebComponent mode, fonts are served from the ui/ subdirectory relative to webViewerPath (e.g. /lib/ui/assets/fonts/). Only prepend 'ui/' when using the default font directory — a custom fontPath set via setFontPath() is assumed to already be fully qualified.
+  const getBaseUrl = () => {
+    if (!isWebComponent) {
+      return './';
+    }
+    const base = window.webViewerPath || './';
+    if (!getFontPath()) {
+      return `${base}ui/`;
+    }
+    return base;
+  };
+
   let url = '';
 
   if (Array.isArray(fontType)) {
     const urls = fontType.map((type) => {
-      // eslint-disable-next-line no-undef, camelcase
-      const fontPath = `${isWebComponent ? __webpack_public_path__ : './'}${fontDirectoryPaht}${isWebFont ? 'webfonts/' : ''}${fileName}.${type}`;
+      const fontPath = `${getBaseUrl()}${fontDirectoryPaht}${isWebFont ? 'webfonts/' : ''}${fileName}.${type}`;
       return `url(${fontPath}) format(${fontTypes[type]})`;
     });
     url = urls.join();
   } else {
-    // eslint-disable-next-line no-undef, camelcase
-    const fontPath = `${isWebComponent ? __webpack_public_path__ : './'}${fontDirectoryPaht}${isWebFont ? 'webfonts/' : ''}${fileName}.${fontType}`;
+    const fontPath = `${getBaseUrl()}${fontDirectoryPaht}${isWebFont ? 'webfonts/' : ''}${fileName}.${fontType}`;
     url = `url(${fontPath}) format(${fontTypes[fontType]})`;
   }
 

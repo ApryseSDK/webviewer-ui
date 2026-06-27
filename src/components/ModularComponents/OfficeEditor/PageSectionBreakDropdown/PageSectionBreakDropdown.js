@@ -54,7 +54,6 @@ const PageSectionBreakDropdown = (props) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const isCursorInTable = useSelector(selectors.isCursorInTable);
   const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
@@ -109,7 +108,6 @@ const PageSectionBreakDropdown = (props) => {
         'office-editor-break-dropdown': true,
         'dropdown-text-icon': true,
         'flyout-item': isFlyoutItem,
-        'modular-ui': customizableUI,
       })}
       width={'auto'}
       isFlyoutItem={isFlyoutItem}

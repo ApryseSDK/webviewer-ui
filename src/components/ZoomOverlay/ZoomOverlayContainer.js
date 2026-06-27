@@ -11,12 +11,11 @@ import DataElements from 'src/constants/dataElement';
 function ZoomOverlayContainer() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [activeDocumentViewerKey] = useSelector((state) => [
-    selectors.getActiveDocumentViewerKey(state),
-  ]);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
 
   function onClickZoomLevelOption(zoomLevel) {
-    zoomTo(zoomLevel);
+    zoomTo(zoomLevel, isMultiViewerMode, activeDocumentViewerKey);
     dispatch(actions.closeElements([DataElements.ZOOM_OVERLAY]));
   }
 

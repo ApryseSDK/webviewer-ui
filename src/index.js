@@ -1,383 +1,63 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
-import i18next from 'i18next';
-import thunk from 'redux-thunk';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import rootReducer from 'reducers/rootReducer';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import retargetEvents from 'react-shadow-dom-retarget-events';
-// eslint-disable-next-line custom/use-core-hook-in-components
-import core from 'core';
-import actions from 'actions';
-import App from 'components/App';
-import { workerTypes } from 'constants/types';
-import defaultTool from 'constants/defaultTool';
-import defineWebViewerInstanceUIAPIs from 'src/apis';
-
-import getBackendPromise from 'helpers/getBackendPromise';
-import loadCustomCSS from 'helpers/loadCustomCSS';
-import loadScript, { loadConfig } from 'helpers/loadScript';
-import wildCardMatch from 'helpers/wildCardMatch';
-import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
-import eventHandler from 'helpers/eventHandler';
-import setupI18n from 'helpers/setupI18n';
-import setAutoSwitch from 'helpers/setAutoSwitch';
-import setUserPermission from 'helpers/setUserPermission';
-import logDebugInfo from 'helpers/logDebugInfo';
-import getCspNonce from 'helpers/getCspNonce';
-import getHashParameters from 'helpers/getHashParameters';
+import getRootNode, { setRootNode } from 'helpers/getRootNode';
 import {
-  addDocumentViewer,
-  setupOpenURLHandler,
-  setupFormSubmissionHandler,
-} from 'helpers/documentViewerHelper';
-import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
-import getRootNode from 'helpers/getRootNode';
-import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import ensureReactDraggableStyleEl from 'helpers/ensureReactDraggableStyleEl';
-import EmotionProvider from './emotion/EmotionProvider';
+  createInstanceI18n,
+  createInstanceStoreAndPersistor,
+  destroyUIInstance as destroyUIInstanceForWindow,
+  initializeCanvasInstance,
+  normalizeWebViewerPath,
+  setupHotModuleReplacement,
+  setupSpamToggleHelpers,
+} from 'helpers/indexHelper';
 
 import './index.scss';
-import importModularComponents from 'src/apis/importModularComponents';
-import localStorageManager from './helpers/localStorageManager';
 
 if (window.isApryseWebViewerWebComponent) {
-  if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
-    window.webViewerPath += '/';
-  }
-  // eslint-disable-next-line no-undef, camelcase
-  __webpack_public_path__ = `${window.webViewerPath}ui/`;
+  normalizeWebViewerPath();
 }
 
-const middleware = [thunk];
-
-let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
-  return middleware;
-};
-
-if (process.env.NODE_ENV === 'development') {
-  const isSpamDisabled = localStorageManager.getItemSynchronous('spamDisabled') === 'true';
-  if (!isSpamDisabled) {
-    // eslint-disable-next-line global-require
-    const { createLogger } = require('redux-logger');
-    middleware.push(createLogger({ collapsed: true }));
+/**
+ * Create and mount a single WebViewer UI instance.
+ *
+ * In **iframe mode** (the legacy default), this is called automatically at module evaluation with no arguments — it reads config from hash parameters and mounts into `document`. In **WebComponent multi-instance mode**, the host calls this once per `<apryse-webviewer>` element, passing the shadow root. Each call creates its own Redux store, React tree, DocumentViewer, and event handlers — no shared module-level singletons.
+ * @ignore
+ * @param {ShadowRoot} [instanceRootNode] – The shadow root to mount into. If omitted, falls back to the legacy getRootNode() scan.
+ * @returns {void}
+ */
+function createUIInstance(instanceRootNode) {
+  // If a specific root node was provided (factory path), set it so getRootNode() returns it for all code in this instance's initialization.
+  if (instanceRootNode) {
+    setRootNode(instanceRootNode);
   }
-  // eslint-disable-next-line global-require
-  const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
-  composeEnhancer = composeWithDevTools({});
+
+  normalizeWebViewerPath();
+
+  const { store, persistor, instanceId } = createInstanceStoreAndPersistor();
+  setupHotModuleReplacement(typeof module === 'undefined' ? undefined : module, store, instanceId);
+
+  // Create a per-instance i18next so language changes in one viewer don't bleed into another. Falls back to the global singleton for single-instance / iframe mode (backward compat).
+  const instanceI18n = createInstanceI18n();
+  setupSpamToggleHelpers();
+
+  if (!window.CanvasRenderingContext2D) {
+    return;
+  }
+
+  initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode });
 }
 
-
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
-const persistor = persistStore(store);
-window.store = store;
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  module.hot.accept('reducers/rootReducer', () => {
-    // eslint-disable-next-line global-require
-    const updatedReducer = require('reducers/rootReducer').default;
-    store.replaceReducer(updatedReducer);
-  });
-
-  module.hot.accept();
+// Backward compatibility
+// In iframe mode and legacy single-WC mode, auto-execute immediately (preserving existing behavior). In WC mode, the host calls createUIInstance() explicitly for each element.
+if (!window.__apryseWebComponentMode) {
+  createUIInstance();
 }
 
-if (process.env.NODE_ENV === 'development') {
-  window.disableSpam = () => {
-    localStorageManager.setItemSynchronous('spamDisabled', 'true');
-    location.reload();
-  };
+// Export for multi-instance WC mode (called from webviewer-wc.js)
+export { createUIInstance };
+export { destroyUIInstance } from 'helpers/indexHelper';
 
-  window.enableSpam = () => {
-    localStorageManager.setItemSynchronous('spamDisabled', 'false');
-    location.reload();
-  };
-}
-
-if (window.CanvasRenderingContext2D) {
-  const cspNonce = getCspNonce();
-  ensureReactDraggableStyleEl(cspNonce);
-
-  let fullAPIReady = Promise.resolve();
-  const state = store.getState();
-
-  if (state.advanced.fullAPI || state.viewer.isAccessibleMode) {
-    window.Core.enableFullPDF();
-    if (window.isApryseWebViewerWebComponent) {
-      fullAPIReady = loadScript(`${window.webViewerPath}core/pdf/PDFNet.js`);
-    } else {
-      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
-    }
-
-    if (state.viewer.isAccessibleMode) {
-      console.warn('FullAPI is required for accessibleMode. It has been automatically enabled to ensure accesible reading order mode will work.');
-    }
-  }
-
-
-  if (getHashParameters('disableLogs', false)) {
-    window.Core.disableLogs(true);
-  }
-
-  if (getHashParameters('disableObjectURLBlobs', false)) {
-    window.Core.disableObjectURLBlobs(getHashParameters('disableObjectURLBlobs', false));
-  }
-
-  window._disableStreaming = getHashParameters('disableStreaming', false);
-  if (window.isApryseWebViewerWebComponent) {
-    window.Core.setWorkerPath(`${window.webViewerPath}core`);
-    window.Core.setResourcesPath(`${window.webViewerPath}core/assets`);
-    loadScript(`${window.webViewerPath}core/pdf/PDFNetLean.js`);
-  } else {
-    window.Core.setWorkerPath('../core');
-    window.Core.setResourcesPath('../core/assets');
-    loadScript('../core/pdf/PDFNetLean.js');
-  }
-
-  try {
-    const isUsingSharedWorker = state.advanced.useSharedWorker === 'true' || state.advanced.useSharedWorker === true;
-    if (isUsingSharedWorker) {
-      let workerTransportPromise;
-      if (window.parent.WebViewer && !window.isApryseWebViewerWebComponent) {
-        workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
-      } else if (window.isApryseWebViewerWebComponent && window.apryseWorkerTransportPromise) {
-        workerTransportPromise = window.apryseWorkerTransportPromise;
-      }
-      // originally the option was just for the pdf worker transport promise, now it can be an object
-      // containing both the pdf and office promises
-      if (workerTransportPromise.pdf || workerTransportPromise.office) {
-        window.Core.setWorkerTransportPromise(workerTransportPromise);
-      } else {
-        window.Core.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
-      }
-    }
-  } catch (e) {
-    console.warn(e);
-    if (e.name === 'SecurityError') {
-      console.warn('workerTransportPromise option cannot be used with CORS');
-    }
-  }
-
-  const backendType = getHashParameters('pdf');
-  if (backendType) {
-    window.Core.forceBackendType(backendType);
-  }
-
-  const { enableOptimizedWorkers } = state.advanced;
-
-  if (!enableOptimizedWorkers) {
-    window.Core.disableOptimizedWorkers();
-  }
-
-  const { preloadWorker } = state.advanced;
-
-  loadCustomCSS(state.advanced.customCSS);
-
-  logDebugInfo();
-  const documentViewer = addDocumentViewer(1);
-  setupOpenURLHandler(documentViewer, store);
-  setupFormSubmissionHandler(documentViewer, store);
-
-  if (getHashParameters('hideDetachedReplies', false)) {
-    documentViewer.getAnnotationManager().hideDetachedReplies();
-  }
-
-  defineWebViewerInstanceUIAPIs(store);
-  setItemToFlyoutStore(store);
-
-  setupI18n(state);
-  setEnableAnnotationNumbering(state);
-  setUserPermission(state);
-  setAutoSwitch();
-  core.setToolMode(defaultTool);
-
-  const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-
-  const getWorkersToLoad = (preloadWorker) => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, ALL } = workerTypes;
-    if (preloadWorker === ALL) {
-      return [PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR];
-    }
-    const workersToLoad = [];
-
-    const shouldLoadOfficeWorker = Array.isArray(preloadWorker) && preloadWorker.includes(OFFICE)
-      || typeof preloadWorker === 'string' && preloadWorker.match(/(office[,|\s]|office$)/g);
-    if (shouldLoadOfficeWorker) {
-      workersToLoad.push(OFFICE);
-    }
-
-    [PDF, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR].forEach((workerType) => {
-      if (preloadWorker.includes(workerType)) {
-        workersToLoad.push(workerType);
-      }
-    });
-
-    return workersToLoad;
-  };
-
-  const initTransports = () => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, SPREADSHEET_EDITOR } = workerTypes;
-    const workersToLoad = getWorkersToLoad(preloadWorker);
-
-    if (workersToLoad.includes(PDF)) {
-      getBackendPromise(getHashParameters('pdf', 'auto')).then((pdfType) => {
-        window.Core.initPDFWorkerTransports(pdfType, {
-          workerLoadingProgress: (percent) => {
-            store.dispatch(actions.setLoadingProgress(percent));
-          },
-        });
-      });
-    }
-
-    if (workersToLoad.includes(OFFICE)) {
-      getBackendPromise(getHashParameters('office', 'auto')).then((officeType) => {
-        window.Core.initOfficeWorkerTransports(officeType, {
-          workerLoadingProgress: (percent) => {
-            store.dispatch(actions.setLoadingProgress(percent));
-          },
-        });
-      });
-    }
-
-    if (workersToLoad.includes(OFFICE_EDITOR)) {
-      window.Core.initOfficeEditorWorkerTransports({
-        workerLoadingProgress: (percent) => {
-          store.dispatch(actions.setLoadingProgress(percent));
-        },
-      });
-    }
-
-    if (workersToLoad.includes(LEGACY_OFFICE)) {
-      getBackendPromise(getHashParameters('legacyOffice', 'auto')).then((officeType) => {
-        window.Core.initLegacyOfficeWorkerTransports(officeType, {
-          workerLoadingProgress: (percent) => {
-            store.dispatch(actions.setLoadingProgress(percent));
-          },
-        });
-      });
-    }
-
-    if (workersToLoad.includes(CONTENT_EDIT)) {
-      window.Core.ContentEdit.preloadWorker(documentViewer.getContentEditManager());
-    }
-
-    if (workersToLoad.includes(SPREADSHEET_EDITOR)) {
-      window.Core.initSpreadsheetEditorWorkerTransports({
-        workerLoadingProgress: (percent) => {
-          store.dispatch(actions.setLoadingProgress(percent));
-        },
-      });
-    }
-  };
-
-  const validateUIConfigOrigin = async (uiConfigURL) => {
-    if (uiConfigURL.origin === window.location.origin) {
-      return true;
-    }
-
-    // Load allowed origins list from configorigin.txt (same mechanism used in loadConfig)
-    // https://github.com/XodoDocs/webviewer/blob/master/src/ui/src/helpers/loadScript.js
-    const response = await fetch('configorigin.txt');
-    let data = '';
-    if (response.ok) {
-      data = await response.text();
-    }
-    data = data.replaceAll('\r', '\n').replaceAll('\t', '\n');
-    const allowedOrigins = data.split('\n').filter(Boolean);
-
-    if (!wildCardMatch(allowedOrigins, uiConfigURL.origin)) {
-      console.warn(`uiConfig requested from origin ${uiConfigURL.origin}. Add this origin to lib/ui/configorigin.txt to allow loading this UI configuration.`);
-      return false;
-    }
-
-    return true;
-  };
-
-  fullAPIReady.then(() => loadConfig()).then(async () => {
-    if (preloadWorker) {
-      initTransports();
-    }
-
-    if (getHashParameters('disableVirtualDisplayMode', false)) {
-      const displayMode = documentViewer.getDisplayModeManager();
-      displayMode.disableVirtualDisplayMode();
-    }
-
-    if (getHashParameters('enableViewStateAnnotations', false)) {
-      const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
-      tool?.enableViewStateSaving();
-    }
-
-    const uiConfigPath = getHashParameters('uiConfig', '');
-    if (uiConfigPath) {
-      try {
-        // Normalize to a URL object to handle both absolute and relative paths
-        let uiConfigURL;
-        try {
-          uiConfigURL = new URL(uiConfigPath, window.location.href);
-        } catch {
-          // If URL parsing fails, uiConfigPath is likely a relative path.
-          // This is expected and can be safely handled by using the original path and current origin.
-          uiConfigURL = { href: uiConfigPath, origin: window.location.origin };
-        }
-
-        const isOriginAllowed = await validateUIConfigOrigin(uiConfigURL);
-        if (isOriginAllowed) {
-          const uiConfigRequest = await fetch(uiConfigURL.href);
-          const uiConfig = await uiConfigRequest.json();
-          await importModularComponents(store)(uiConfig);
-        }
-      } catch (e) {
-        console.error(`Failed to load uiConfiguration from: ${uiConfigPath}`);
-        console.error(e);
-      }
-    }
-
-    setupLoadAnnotationsFromServer(store);
-
-    const currentLanguage = store.getState().viewer.currentLanguage;
-
-    const defaultLanguage = getHashParameters('defaultLanguage', 'en');
-
-    const language = currentLanguage || defaultLanguage;
-
-    // nsSeparator is the colon. We do not currently use this we had a customer request to remove the colon from the namespace
-    // as it broke their labels
-    i18next.init({
-      nsSeparator: false,
-      lng: language,
-    });
-
-    const rootNode = getRootNode();
-    const appElement = rootNode.getElementById('app');
-
-    const app = (
-      <EmotionProvider rootNode={rootNode}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <I18nextProvider i18n={i18next}>
-              <DndProvider backend={HTML5Backend}>
-                <App removeEventHandlers={removeEventHandlers}/>
-              </DndProvider>
-            </I18nextProvider>
-          </PersistGate>
-        </Provider>
-      </EmotionProvider>
-    );
-
-    ReactDOM.render(
-      app,
-      appElement,
-    );
-    window.isApryseWebViewerWebComponent && retargetEvents(rootNode);
-  });
-  addEventHandlers();
-}
-
+// Also expose on window so that the webpack4 IIFE build (which doesn't preserve ES module exports for dynamic import()) can be called from webviewer-wc.js.
+window.createUIInstance = createUIInstance;
+window.destroyUIInstance = destroyUIInstanceForWindow;
 
 window.addEventListener('hashchange', () => {
   if (!window.isApryseWebViewerWebComponent) {

@@ -20,7 +20,7 @@ export function Basic() {
   };
 
   return (
-    <ReduxProvider store={configureStore({ reducer: rootReducer })}>
+    <ReduxProvider store={configureStore({ reducer: rootReducer() })}>
       <div style={{ width: 100 }}>
         <LineStyleOptions
           properties={properties}

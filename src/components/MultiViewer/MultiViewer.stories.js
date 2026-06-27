@@ -50,7 +50,7 @@ const containerStyle = {
 
 export const Basic = () => {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: createMockState({
       doc1Loaded: true,
       doc2Loaded: true,

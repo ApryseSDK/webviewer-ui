@@ -1,6 +1,6 @@
 import React from 'react';
 import PageReplacementModal from './PageReplacementModal';
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { expect, userEvent } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -25,7 +25,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 export function ReplaceURL() {
   function closeModal() {
@@ -83,7 +83,7 @@ const initialStateTwo = {
 function rootReducerTwo(state = initialStateTwo) {
   return state;
 }
-const storeTwo = createStore(rootReducerTwo);
+const storeTwo = configureStore({ reducer: rootReducerTwo });
 export function ReplaceUpload() {
   function closeModal() {
     console.log('closeModal');
@@ -114,7 +114,7 @@ const initialStateThree = {
 function rootReducerThree(state = initialStateThree) {
   return state;
 }
-const storeThree = createStore(rootReducerThree);
+const storeThree = configureStore({ reducer: rootReducerThree });
 export function ReplaceCustomFile() {
   function closeModal() {
     console.log('closeModal');

@@ -14,11 +14,9 @@ import DataElements from 'constants/dataElement';
 
 const BottomHeaderContainer = () => {
   //* Selectors *//
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const bottomHeaders = useSelector(selectors.getBottomHeaders, shallowEqual);
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const dispatch = useDispatch();
-  const { customizableUI } = featureFlags;
   const { t } = useTranslation();
 
   const [floatingHeaders, fullLengthHeaders] = useMemo(() => {
@@ -56,7 +54,7 @@ const BottomHeaderContainer = () => {
     );
   }), [fullLengthHeaders]);
 
-  if (!customizableUI || (!bottomHeaders.length && !isSpreadsheetEditorModeEnabled)) {
+  if (!bottomHeaders.length && !isSpreadsheetEditorModeEnabled) {
     return null;
   }
 

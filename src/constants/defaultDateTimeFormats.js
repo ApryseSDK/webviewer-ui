@@ -7,56 +7,41 @@ export default [
   {
     date: 'DD/MM/YYYY',
     time: 'h:mm A',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'DD/MM/YYYY',
     time: 'HH:mm',
-    timeFirst: false,
-  },
-  {
-    date: 'DD/MM/YYYY',
-    time: 'h:mm A',
-    timeFirst: false,
-  },
-  {
-    date: 'DD/MM/YYYY',
-    time: 'HH:mm',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'YYYY/MM/DD',
     time: 'h:mm A',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'YYYY/MM/DD',
     time: 'HH:mm',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'DD MMM YYYY',
     time: 'h:mm A',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'DD MMM YYYY',
     time: 'HH:mm',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'MMMM DD, YYYY',
     time: 'h:mm A',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'MMMM DD, YYYY',
     time: 'HH:mm',
-    timeFirst: false,
-  },
+    timeFirst: false },
   {
     date: 'MMM DD YYYY',
     time: 'h:mm A',
-    timeFirst: false,
-  },
+    timeFirst: false },
+  {
+    date: 'M/D/YY',
+    time: 'h:mm A',
+    timeFirst: false },
 ];

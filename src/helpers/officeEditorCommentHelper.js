@@ -1,19 +1,16 @@
 import { OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
 
-export const getOfficeEditorCommentId = (annotation) => {
-  if (!annotation) {
-    console.warn('Failed to resolve office editor comment', new Error('Missing annotation'));
+export const parseRecordId = (value) => {
+  if (!value) {
+    return null;
+  }
+  const id = Number(value);
+  if (Number.isNaN(id)) {
+    console.warn(`Invalid annotation id value: ${value}`);
     return null;
   }
 
-  const rawCommentId = annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY);
-  const commentId = Number(rawCommentId);
-  if (Number.isNaN(commentId)) {
-    console.warn('Invalid office editor comment id', new Error(`Invalid comment id value: ${rawCommentId}`));
-    return null;
-  }
-
-  return commentId;
+  return id;
 };
 
 const updateOfficeEditorCommentMessage = async ({
@@ -21,7 +18,11 @@ const updateOfficeEditorCommentMessage = async ({
   text,
   core,
 }) => {
-  const commentId = getOfficeEditorCommentId(annotation);
+  if (!annotation) {
+    console.warn('Missing annotation for office editor comment update');
+    return false;
+  }
+  const commentId = parseRecordId(annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY));
   if (commentId === null) {
     return false;
   }
@@ -39,7 +40,11 @@ const deleteOfficeEditorComment = async ({
   annotation,
   core,
 }) => {
-  const commentId = getOfficeEditorCommentId(annotation);
+  if (!annotation) {
+    console.warn('Missing annotation for office editor comment deletion');
+    return;
+  }
+  const commentId = parseRecordId(annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY));
   if (commentId === null) {
     return;
   }

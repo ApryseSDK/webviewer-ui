@@ -77,8 +77,6 @@ module.exports = {
       {
         test: /\.scss$/,
         oneOf: [
-          createDevThemeRule(/theme-light-high-contrast/, 'light-high-contrast', 'highContrastLight.scss', path),
-          createDevThemeRule(/theme-dark-high-contrast/, 'dark-high-contrast', 'highContrastDark.scss', path),
           createDevThemeRule(/theme-light-modular/, 'light-modular', 'lightWCAG.scss', path),
           createDevThemeRule(/theme-dark-modular/, 'dark-modular', 'darkWCAG.scss', path),
           createDevThemeRule(/theme-light/, 'light', 'light.scss', path),

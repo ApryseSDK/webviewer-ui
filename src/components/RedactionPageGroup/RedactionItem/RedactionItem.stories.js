@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import RedactionItem from './RedactionItem';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 import { initialColors } from 'helpers/initialColorStates';
@@ -19,7 +19,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const RedactionItemWithRedux = (props) => {
   return (

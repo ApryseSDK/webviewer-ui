@@ -71,7 +71,7 @@ export function StartSearch() {
   };
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -88,7 +88,7 @@ export function SearchInProgress() {
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -105,7 +105,7 @@ export function SearchInProgressWithIncomingResults() {
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -122,7 +122,7 @@ export function SearchCompleteWithResults() {
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -139,7 +139,7 @@ export function SearchCompleteNoResults() {
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
+      <div className="RedactionPanel">
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>

@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 function RightHeaderContainer() {
 
   //* Selectors *//
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state), shallowEqual);
   const rightHeaders = useSelector((state) => selectors.getRightHeader(state), shallowEqual);
   const bottomHeadersHeight = useSelector((state) => selectors.getBottomHeadersHeight(state));
   const rightPanelOpen = useSelector((state) => selectors.getOpenGenericPanel(state, PLACEMENT.RIGHT));
@@ -19,7 +18,6 @@ function RightHeaderContainer() {
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { customizableUI } = featureFlags;
 
   const [floatingHeaders, rightHeader] = useMemo(() => {
     const floatingHeaders = [];
@@ -60,7 +58,7 @@ function RightHeaderContainer() {
     }
   }, [rightHeader, headerWrapperStyle]);
 
-  if (!customizableUI || !rightHeaders.length) {
+  if (!rightHeaders.length) {
     return null;
   }
 

@@ -4,7 +4,7 @@ import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT, DIRECTION, ITEM_TYPE } from 'constants/customizationVariables';
 import ResponsiveContainer from 'components/ResponsiveContainer';
 import { useSelector, useDispatch } from 'react-redux';
-import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
+import { getSizeManager, useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -30,8 +30,9 @@ const ModularHeaderItems = (props) => {
   const disabledElements = useSelector(selectors.getDisabledElements);
 
   useEffect(() => {
-    sizeManager[headerId] = {
-      ...(sizeManager[headerId] ? sizeManager[headerId] : {}),
+    const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+    localSizeManager[headerId] = {
+      ...(localSizeManager[headerId] ? localSizeManager[headerId] : {}),
       canGrow: size > 0,
       canShrink: size < items.length,
       grow: () => {

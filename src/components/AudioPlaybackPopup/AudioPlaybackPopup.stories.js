@@ -1,5 +1,5 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import AudioPlaybackPopup from './AudioPlaybackPopup';
 import { RAW_AUDIO_RECORDED_PIANO } from './test-audio/recordedPiano';
@@ -28,7 +28,7 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 function createMockSoundAnnotation() {
   return {

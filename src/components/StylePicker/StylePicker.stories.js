@@ -12,7 +12,7 @@ export default {
 };
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducer(),
 });
 
 const style = {

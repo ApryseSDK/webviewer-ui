@@ -137,14 +137,14 @@ const searchAndReplaceEnabledStore = configureStore({
 
 export function Basic() {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
   });
   return <SearchOverlayWrapper store={store} />;
 }
 
 export function SearchAndReplaceEnabled() {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
   });
   return <SearchOverlayWrapper store={store} searchAndReplaceDisabled={false} />;
 }

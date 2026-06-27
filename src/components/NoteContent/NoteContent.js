@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import isString from 'lodash/isString';
 import escape from 'lodash/escape';
+import debounce from 'lodash/debounce';
 import NoteTextarea from 'components/NoteTextarea';
 import NoteContext from 'components/Note/Context';
 import NoteHeader from 'components/NoteHeader';
@@ -30,6 +31,8 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import Events from 'constants/events';
+import fireEvent from 'helpers/fireEvent';
 import DataElementWrapper from '../DataElementWrapper';
 import { COMMON_COLORS } from 'constants/commonColors';
 import Button from 'components/Button';
@@ -51,6 +54,60 @@ const propTypes = {
   handleMultiSelect: PropTypes.func,
   isGroupMember: PropTypes.bool,
   handleNoteClick: PropTypes.func,
+};
+
+// Keep edit-session baseline outside component lifecycle so autosave-triggered remounts
+// do not lose the pre-autosave value used by Cancel.
+// Keys are composite `${documentViewerKey}:${annotationId}` to avoid collisions across viewers.
+const editSessionBaselineByAnnotationId = new Map();
+const pendingBaselineCleanupTimeoutByAnnotationId = new Map();
+
+const makeBaselineKey = (viewerKey, annotationId) => `${viewerKey}:${annotationId}`;
+
+const clearEditSessionBaseline = (viewerKey, annotationId) => {
+  const key = makeBaselineKey(viewerKey, annotationId);
+  const pendingCleanupTimeout = pendingBaselineCleanupTimeoutByAnnotationId.get(key);
+  if (pendingCleanupTimeout) {
+    clearTimeout(pendingCleanupTimeout);
+    pendingBaselineCleanupTimeoutByAnnotationId.delete(key);
+  }
+  editSessionBaselineByAnnotationId.delete(key);
+};
+
+const cancelPendingBaselineCleanup = (viewerKey, annotationId) => {
+  const key = makeBaselineKey(viewerKey, annotationId);
+  const pendingCleanupTimeout = pendingBaselineCleanupTimeoutByAnnotationId.get(key);
+  if (pendingCleanupTimeout) {
+    clearTimeout(pendingCleanupTimeout);
+    pendingBaselineCleanupTimeoutByAnnotationId.delete(key);
+  }
+};
+
+const scheduleEditSessionBaselineCleanup = (viewerKey, annotationId) => {
+  cancelPendingBaselineCleanup(viewerKey, annotationId);
+  const key = makeBaselineKey(viewerKey, annotationId);
+  // Use a macrotask so an immediate unmount/remount in the same turn can cancel cleanup.
+  // This intentionally relies on setTimeout task ordering, not an arbitrary delay.
+  const cleanupTimeout = setTimeout(() => {
+    pendingBaselineCleanupTimeoutByAnnotationId.delete(key);
+    editSessionBaselineByAnnotationId.delete(key);
+  }, 0);
+  pendingBaselineCleanupTimeoutByAnnotationId.set(key, cleanupTimeout);
+};
+
+const clearAllBaselinesForViewer = (viewerKey) => {
+  const prefix = `${viewerKey}:`;
+  for (const key of pendingBaselineCleanupTimeoutByAnnotationId.keys()) {
+    if (key.startsWith(prefix)) {
+      clearTimeout(pendingBaselineCleanupTimeoutByAnnotationId.get(key));
+      pendingBaselineCleanupTimeoutByAnnotationId.delete(key);
+    }
+  }
+  for (const key of editSessionBaselineByAnnotationId.keys()) {
+    if (key.startsWith(prefix)) {
+      editSessionBaselineByAnnotationId.delete(key);
+    }
+  }
 };
 
 const NoteContent = ({
@@ -78,7 +135,8 @@ const NoteContent = ({
   const canCollapseReplyPreview = useSelector((state) => selectors.isNotesPanelRepliesCollapsingEnabled(state));
   const activeTheme = useSelector((state) => selectors.getActiveTheme(state));
   const timezone = useSelector((state) => selectors.getTimezone(state));
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
+  const isMentionEnabled = useSelector((state) => selectors.getIsMentionEnabled(state));
 
   const {
     isSelected,
@@ -100,6 +158,36 @@ const NoteContent = ({
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
 
   const [attachments, setAttachments] = useState([]);
+
+  useEffect(() => {
+    const baselineKey = makeBaselineKey(activeDocumentViewerKey, annotation.Id);
+    const existingBaseline = editSessionBaselineByAnnotationId.get(baselineKey);
+    const existingBaselineIsForCurrentAnnotation = existingBaseline && existingBaseline.annotationId === annotation.Id;
+    if (isEditing && (!existingBaseline || !existingBaselineIsForCurrentAnnotation)) {
+      const baselineContents = annotation.getContents() || '';
+      editSessionBaselineByAnnotationId.set(baselineKey, {
+        annotationId: annotation.Id,
+        contents: baselineContents,
+        mentionData: annotation.getCustomData('trn-mention'),
+      });
+    }
+  }, [isEditing, annotation, activeDocumentViewerKey]);
+
+  useEffect(() => {
+    if (!isEditing) {
+      clearEditSessionBaseline(activeDocumentViewerKey, annotation.Id);
+    }
+  }, [annotation.Id, isEditing, activeDocumentViewerKey]);
+
+  useEffect(() => {
+    const onDocumentTeardown = () => clearAllBaselinesForViewer(activeDocumentViewerKey);
+    core.addEventListener('beforeDocumentLoaded', onDocumentTeardown, undefined, activeDocumentViewerKey);
+    core.addEventListener('documentUnloaded', onDocumentTeardown, undefined, activeDocumentViewerKey);
+    return () => {
+      core.removeEventListener('beforeDocumentLoaded', onDocumentTeardown, activeDocumentViewerKey);
+      core.removeEventListener('documentUnloaded', onDocumentTeardown, activeDocumentViewerKey);
+    };
+  }, [core, activeDocumentViewerKey]);
 
   useEffect(() => {
     setAttachments(annotation.getAttachments());
@@ -143,7 +231,7 @@ const NoteContent = ({
     [searchInput],
   );
 
-  const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
+  const skipAutoLink = annotation.getSkipAutoLink?.();
 
   const trackedChangeLabels = {
     1: t('officeEditor.added'),
@@ -288,6 +376,12 @@ const NoteContent = ({
   }
 
   let contents = customData?.contents || annotation.getContents();
+  // Mentions are stored as raw markup (e.g. "@[John Doe](id)"). Seed the editor with the
+  // plain text ("@John Doe") so the markup isn't briefly shown. Ids and styling are
+  // restored on mount/save.
+  if (isMentionEnabled) {
+    contents = mentionsManager.extractMentionDataFromStr(contents).plainTextValue;
+  }
   contents = sanitizeContent(contents);
 
   // for link annotations we want to get their URL. We are unable to use "getContents" to get that data, need to use "getLinkDestination" instead
@@ -350,7 +444,6 @@ const NoteContent = ({
     isReply,
     unread: isUnread, // The note content itself is unread or it has unread replies
     clicked: isNonReplyNoteRead, // The top note content is read
-    'modular-ui': customizableUI,
   });
 
   const content = useMemo(
@@ -370,6 +463,7 @@ const NoteContent = ({
               textAreaValue={textAreaValue}
               onTextAreaValueChange={setPendingEditText}
               pendingText={pendingEditTextMap[annotation.Id]}
+              editSessionBaseline={editSessionBaselineByAnnotationId.get(makeBaselineKey(activeDocumentViewerKey, annotation.Id))}
             />
           ) : (
             contentsToRender && (
@@ -473,7 +567,8 @@ const ContentArea = ({
   setIsEditing,
   textAreaValue,
   onTextAreaValueChange,
-  pendingText
+  pendingText,
+  editSessionBaseline,
 }) => {
   const [
     autoFocusNoteOnAnnotationSelectionEnabled,
@@ -484,6 +579,8 @@ const ContentArea = ({
     activeDocumentViewerKey,
     isAnyCustomPanelOpen,
     isNoteEditingTriggeredByAnnotationPopup,
+    autosaveEnabled,
+    autosaveInterval,
   ] = useSelector((state) => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
@@ -493,6 +590,8 @@ const ContentArea = ({
     selectors.getActiveDocumentViewerKey(state),
     selectors.isAnyCustomPanelOpen(state),
     selectors.getIsNoteEditing(state),
+    selectors.getAutosaveEnabled(state),
+    selectors.getAutosaveInterval(state),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
@@ -504,12 +603,128 @@ const ContentArea = ({
     clearAttachments,
     addAttachments,
     isOfficeEditorCommentAnnotation,
+    setPendingEditText,
   } = useContext(NoteContext);
+  const [localValue, setLocalValue] = useState(textAreaValue || '');
+  const editSessionBaselineRef = useRef(editSessionBaseline);
+  const syncedAnnotationIdRef = useRef(annotation.Id);
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
   const autoFocusNoteOnAnnotationSelection =
     autoFocusNoteOnAnnotationSelectionEnabled && (!isOfficeEditorCommentAnnotation || isNoteEditingTriggeredByAnnotationPopup);
   const { core } = useCore();
+  const autosaveContextRef = useRef({});
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    cancelPendingBaselineCleanup(activeDocumentViewerKey, annotation.Id);
+
+    return () => {
+      scheduleEditSessionBaselineCleanup(activeDocumentViewerKey, annotation.Id);
+    };
+  }, [annotation.Id, activeDocumentViewerKey]);
+
+  autosaveContextRef.current = {
+    annotation,
+    isMentionEnabled,
+    isOfficeEditorCommentAnnotation,
+    pendingAttachmentMap,
+    setIsEditing,
+    editingKey,
+    setPendingEditText,
+    localValue,
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    editSessionBaselineRef.current = editSessionBaseline;
+    syncedAnnotationIdRef.current = annotation.Id;
+  }, [editingKey, annotation.Id, editSessionBaseline]);
+
+  useEffect(() => {
+    // Preserve the first available baseline for this edit session so Cancel can
+    // still restore pre-autosave content if the shared map is cleared by remount timing.
+    if (!editSessionBaselineRef.current && editSessionBaseline) {
+      editSessionBaselineRef.current = editSessionBaseline;
+    }
+  }, [editSessionBaseline]);
+
+  const syncMentionDataToAnnotation = useCallback((contentValue) => {
+    const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(contentValue);
+
+    // If modified, double check for ids
+    const annotMentionData = mentionsManager.extractMentionDataFromAnnot(annotation);
+    annotMentionData.mentions.forEach((mention) => {
+      if (plainTextValue.includes(mention.value)) {
+        ids.push(mention.id);
+      }
+    });
+
+    annotation.setCustomData('trn-mention', JSON.stringify({
+      contents: contentValue,
+      ids,
+    }));
+    annotation.setContents(plainTextValue);
+  }, [annotation]);
+
+  const stripNewLineFromEndOfText = useCallback((value = '') => {
+    const normalizedValue = value;
+    if (normalizedValue.length > 1 && normalizedValue.endsWith('\n')) {
+      return normalizedValue.slice(0, normalizedValue.length - 1);
+    }
+    return normalizedValue;
+  }, []);
+
+  const getEditorPlainText = useCallback((editor) => {
+    if (!editor) {
+      return '';
+    }
+
+    if (typeof editor.getText === 'function') {
+      return stripNewLineFromEndOfText(editor.getText());
+    }
+
+    if (typeof editor.getContents === 'function') {
+      return stripNewLineFromEndOfText(mentionsManager.getFormattedTextFromDeltas(editor.getContents()));
+    }
+
+    return '';
+  }, [stripNewLineFromEndOfText]);
+
+  const skipAutoLink = (annotation) => {
+    const shouldSkipAutoLink = annotation.getSkipAutoLink?.();
+    if (shouldSkipAutoLink) {
+      annotation.disableSkipAutoLink();
+    }
+  };
+
+  const checkOfficeEditorCommentAndUpdate = async (annotation, textAreaValue) => {
+    if (isOfficeEditorCommentAnnotation) {
+      const didUpdate = await updateOfficeEditorCommentMessage({
+        annotation,
+        text: textAreaValue,
+        core,
+      });
+      return didUpdate;
+    }
+    return true;
+  };
+
+  const triggerAnnotationChangedForEditor = useCallback(() => {
+    const isFreeTextAnnotation = annotation instanceof window.Core.Annotations.FreeTextAnnotation;
+    const source = isFreeTextAnnotation ? 'textChanged' : 'noteChanged';
+    core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
+
+    if (isFreeTextAnnotation) {
+      core.drawAnnotationsFromList([annotation]);
+    }
+  }, [annotation, core, activeDocumentViewerKey]);
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isAnyCustomPanelOpen || (isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
@@ -544,9 +759,12 @@ const ContentArea = ({
             const annotRichTextStyle = annotation.getRichTextStyle();
             if (annotRichTextStyle) {
               setReactQuillContent(annotation, editor);
+              // Store the styled HTML in localValue so a re-render doesn't re-inject the
+              // plain value and wipe the styling.
+              setLocalValue(editor.root.innerHTML);
             }
           }
-        }, 100);
+        }, 0);
       }
 
       const lastNewLineCharacterLength = 1;
@@ -560,9 +778,80 @@ const ContentArea = ({
         if (textLength) {
           editor.setSelection(textLength, textLength);
         }
-      }, 100);
+      }, 0);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput, autoFocusNoteOnAnnotationSelection]);
+
+  // Sync editor local state only when switching to a different annotation.
+  // Resyncing on every textAreaValue change can create autosave feedback loops.
+  useEffect(() => {
+    if (syncedAnnotationIdRef.current !== annotation.Id) {
+      syncedAnnotationIdRef.current = annotation.Id;
+      setLocalValue(textAreaValue || '');
+    }
+  }, [annotation.Id, textAreaValue]);
+
+  // Debounced autosave on localValue change
+  useEffect(() => {
+    if (!autosaveEnabled || isOfficeEditorCommentAnnotation) {
+      return;
+    }
+    const autosave = debounce(async () => {
+      const {
+        annotation,
+        isMentionEnabled,
+        isOfficeEditorCommentAnnotation,
+        pendingAttachmentMap,
+        setIsEditing,
+        editingKey,
+        setPendingEditText,
+        localValue,
+      } = autosaveContextRef.current;
+
+      // Update annotation as single source of truth, but do NOT close editor
+      const editor = textareaRef.current.getEditor();
+      let textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+      const editorPlainText = getEditorPlainText(editor);
+
+      const hasTrailingNewlineToRemove = textAreaValue.length > 1 && textAreaValue[textAreaValue.length - 1] === '\n';
+      if (hasTrailingNewlineToRemove) {
+        textAreaValue = textAreaValue.slice(0, textAreaValue.length - 1);
+      }
+
+      const localPlainText = stripNewLineFromEndOfText(localValue);
+      const savedPlainText = stripNewLineFromEndOfText(annotation.getContents() || '');
+      if (!localPlainText || !editorPlainText || localPlainText === savedPlainText || editorPlainText === savedPlainText) {
+        return;
+      }
+
+      setAnnotationRichTextStyle(editor, annotation);
+
+      skipAutoLink(annotation);
+
+      const didUpdate = await checkOfficeEditorCommentAndUpdate(annotation, textAreaValue);
+      if (!didUpdate) {
+        return;
+      }
+
+      if (isMentionEnabled && !isOfficeEditorCommentAnnotation) {
+        syncMentionDataToAnnotation(textAreaValue);
+      } else {
+        annotation.setContents(textAreaValue);
+      }
+
+      await setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
+      triggerAnnotationChangedForEditor();
+      fireEvent(Events.NOTE_AUTOSAVED, { annotationId: annotation.Id });
+      // Keep edit mode during autosave remounts, but never reopen after this editor unmounts.
+      if (isMountedRef.current) {
+        setIsEditing(true, editingKey);
+      }
+      setPendingEditText(undefined, annotation.Id);
+    }, autosaveInterval);
+
+    autosave();
+    return () => autosave.cancel();
+  }, [localValue, autosaveEnabled, autosaveInterval, getEditorPlainText, stripNewLineFromEndOfText, syncMentionDataToAnnotation, triggerAnnotationChangedForEditor]);
 
   useEffect(() => {
     if (isReply && pendingAttachments.length === 0) {
@@ -571,6 +860,23 @@ const ContentArea = ({
       addAttachments(annotation.Id, attachments);
     }
   }, []);
+
+  const onTextValueChange = (value, annotationId) => {
+    const editor = textareaRef.current?.getEditor?.();
+    const inputPlainText = editor ? getEditorPlainText(editor) : stripNewLineFromEndOfText(value);
+    const localPlainText = stripNewLineFromEndOfText(localValue);
+    const savedPlainText = stripNewLineFromEndOfText(annotation.getContents() || '');
+
+    if (inputPlainText === savedPlainText) {
+      return;
+    }
+
+    if (inputPlainText === localPlainText) {
+      return;
+    }
+    setLocalValue(value);
+    onTextAreaValueChange(value, annotationId);
+  };
 
   const setContents = async (e) => {
     // prevent the textarea from blurring out which will unmount these two buttons
@@ -585,38 +891,15 @@ const ContentArea = ({
       textAreaValue = textAreaValue.slice(0, textAreaValue.length - 1);
     }
 
-    const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
-    if (skipAutoLink) {
-      annotation.disableSkipAutoLink();
-    }
+    skipAutoLink(annotation);
 
-    if (isOfficeEditorCommentAnnotation) {
-      const didUpdate = await updateOfficeEditorCommentMessage({
-        annotation,
-        text: textAreaValue,
-        core,
-      });
-      if (!didUpdate) {
-        return;
-      }
+    const didUpdate = await checkOfficeEditorCommentAndUpdate(annotation, textAreaValue);
+    if (!didUpdate) {
+      return;
     }
 
     if (isMentionEnabled && !isOfficeEditorCommentAnnotation) {
-      const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
-
-      // If modified, double check for ids
-      const annotMentionData = mentionsManager.extractMentionDataFromAnnot(annotation);
-      annotMentionData.mentions.forEach((mention) => {
-        if (plainTextValue.includes(mention.value)) {
-          ids.push(mention.id);
-        }
-      });
-
-      annotation.setCustomData('trn-mention', JSON.stringify({
-        contents: textAreaValue,
-        ids,
-      }));
-      annotation.setContents(plainTextValue);
+      syncMentionDataToAnnotation(textAreaValue);
     } else {
       annotation.setContents(textAreaValue);
     }
@@ -631,6 +914,7 @@ const ContentArea = ({
       core.drawAnnotationsFromList([annotation]);
     }
 
+    clearEditSessionBaseline(activeDocumentViewerKey, annotation.Id);
     setIsEditing(false, editingKey);
     // Only set comment to unposted state if it is not empty
     if (textAreaValue !== '') {
@@ -667,8 +951,8 @@ const ContentArea = ({
         ref={(el) => {
           textareaRef.current = el;
         }}
-        value={textAreaValue}
-        onChange={(value) => onTextAreaValueChange(value, annotation.Id)}
+        value={localValue}
+        onChange={(value) => onTextValueChange(value, annotation.Id)}
         onSubmit={setContents}
         isReply={isReply}
         onBlur={onBlur}
@@ -680,15 +964,38 @@ const ContentArea = ({
           label={t('action.cancel')}
           onClick={(e) => {
             e.stopPropagation();
+
+            const baselineFromMap = editSessionBaselineByAnnotationId.get(
+              makeBaselineKey(activeDocumentViewerKey, annotation.Id),
+            );
+            const baselineToRestore = baselineFromMap || editSessionBaselineRef.current;
+
+            const valueToRestore = typeof baselineToRestore?.contents === 'string'
+              ? baselineToRestore.contents
+              : (annotation.getContents() || '');
+            const mentionDataToRestore = typeof baselineToRestore?.mentionData === 'string'
+              ? baselineToRestore.mentionData
+              : (annotation.getCustomData('trn-mention') || '');
+
             setIsEditing(false, editingKey);
+            annotation.setContents(valueToRestore);
+            annotation.setCustomData('trn-mention', mentionDataToRestore);
+            // Strip any mention markup before seeding the editor so the raw markdown
+            // (e.g. "@[John Doe](id)") is not briefly shown while edit mode is closing.
+            const editorValueToRestore = isMentionEnabled
+              ? mentionsManager.extractMentionDataFromStr(valueToRestore).plainTextValue
+              : valueToRestore;
+            setLocalValue(editorValueToRestore);
+            textareaRef.current?.getEditor()?.setText(editorValueToRestore);
             // Clear pending text
             onTextAreaValueChange(undefined, annotation.Id);
             clearAttachments(annotation.Id);
+            clearEditSessionBaseline(activeDocumentViewerKey, annotation.Id);
           }}
         />
         <Button
-          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
-          disabled={!textAreaValue}
+          className={`save-button${localValue ? '' : ' disabled'}`}
+          disabled={!localValue}
           label={t('action.save')}
           onClick={(e) => {
             e.stopPropagation();
@@ -706,7 +1013,11 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
-  pendingText: PropTypes.string
+  pendingText: PropTypes.string,
+  editSessionBaseline: PropTypes.shape({
+    contents: PropTypes.string,
+    mentionData: PropTypes.string,
+  }),
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {

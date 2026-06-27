@@ -14,21 +14,21 @@ const mockState = {
   },
 };
 
+const mockSpreadsheetEditorManager = {
+  getFormulaBarProvider: jest.fn(),
+  selectCellRange: jest.fn(),
+};
+
+const mockDocumentViewer = {
+  getSpreadsheetEditorManager: jest.fn(() => mockSpreadsheetEditorManager),
+};
+
 const FormulaBarDefaultComponent = withProviders(FormulaBarContainer, mockState);
 
 jest.mock('core', () => ({
   ...jest.requireActual('core'),
   getCellRange: jest.fn(),
-  getDocumentViewer: jest.fn(() => ({
-    getDocument: jest.fn(() => ({
-      getSpreadsheetEditorDocument: jest.fn(() => ({
-        selectCellRange: jest.fn(),
-      })),
-    })),
-    getSpreadsheetEditorManager: jest.fn(() => ({
-      getFormulaBarProvider: jest.fn(),
-    })),
-  })),
+  getDocumentViewer: jest.fn(() => mockDocumentViewer),
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
 }));
@@ -60,15 +60,13 @@ describe('Formula Bar Range Input Tests', () => {
       throw new Error('Invalid range format');
     });
 
-    const selectCellRangeMock = jest.spyOn(core.getDocumentViewer().getDocument().getSpreadsheetEditorDocument(), 'selectCellRange');
-
     const rangeInput = screen.getByRole('textbox', { name: 'Range' });
 
     userEvent.clear(rangeInput);
     userEvent.type(rangeInput, 'A-22:B2');
     userEvent.type(rangeInput, '{enter}');
 
-    expect(selectCellRangeMock).not.toHaveBeenCalled();
+    expect(mockSpreadsheetEditorManager.selectCellRange).not.toHaveBeenCalled();
     expect(getCellRangeSpy).toHaveBeenCalledTimes(1);
     expect(getCellRangeSpy).toHaveBeenCalledWith('A-22:B2');
     expect(consoleErrorSpy).toHaveBeenCalled();

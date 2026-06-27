@@ -12,7 +12,7 @@ export const createMockStore = (customState = {}) => {
   };
 
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: state,
   });
 };

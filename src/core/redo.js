@@ -1,5 +1,5 @@
 import core from 'core';
 
-export default (documentViewerKey = 1) => {
+export default (documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationHistoryManager().redo();
 };

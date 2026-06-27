@@ -83,6 +83,7 @@ const SettingsModal = () => {
       <div className={className} data-element={DataElements.SettingsModal}>
         <ModalWrapper
           title={t('option.settings.settings')}
+          modalDataElement={DataElements.SETTINGS_MODAL}
           closeHandler={closeModal}
           onCloseClick={closeModal}
           isOpen={isOpen}

@@ -5,12 +5,13 @@ import core from 'core';
 // Ideally, this is long enough to get away from the edge.
 const LINE_WIDTH_RATIO = 0.75;
 
-const adjustPointForWebcomponent = (coordinates) => {
+const adjustPointForWebcomponent = (coordinates, rootNodeOverride) => {
   const { isApryseWebViewerWebComponent = false } = window;
   if (!isApryseWebViewerWebComponent) {
     return coordinates;
   }
-  const appRect = getRootNode().getElementById('app').getBoundingClientRect();
+  const rootNode = rootNodeOverride || getRootNode();
+  const appRect = rootNode.getElementById('app').getBoundingClientRect();
   return {
     x: coordinates.x - appRect.left,
     y: coordinates.y - appRect.top,
@@ -24,6 +25,8 @@ export const getConnectorLines = ({
   bottomHeadersHeight,
   topHeadersHeight,
   activeDocumentViewerKey,
+  // Per-instance shadow root override. In multi-WC mode the singleton `getRootNode()` may resolve to the most-recently-mounted instance, which shifts annotation coordinates into the wrong shadow's `#app` rect and can flip `isPanelOnLeft`. Callers in React components should pass their local root (resolved via `node.getRootNode()` from a node already in their tree) so this math stays inside the correct instance.
+  rootNodeOverride,
 }) => {
   const scrollView = core.getScrollViewElement(activeDocumentViewerKey);
   let scrollLeft = scrollView.scrollLeft || 0;
@@ -66,7 +69,7 @@ export const getConnectorLines = ({
   const startPosition = adjustPointForWebcomponent({
     x: isPanelOnLeft ? noteContainerRect.right : noteContainerRect.left,
     y: noteContainerRect.top,
-  });
+  }, rootNodeOverride);
 
   const LINE_WIDTH = 2;
   const topLineStyle = {
@@ -83,7 +86,7 @@ export const getConnectorLines = ({
     verticalLineStyle.top = topLineStyle.top - verticalLineStyle.height;
   }
   let isAnnotationOffScreen = false;
-  const appRect = getRootNode().getElementById('app').getBoundingClientRect();
+  const appRect = (rootNodeOverride || getRootNode()).getElementById('app').getBoundingClientRect();
   const topLimit = topHeadersHeight;
   if (topLimit > verticalLineStyle.top) {
     const diff = verticalLineStyle.top - topLimit;

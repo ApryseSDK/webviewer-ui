@@ -20,7 +20,7 @@ describe('CustomElement', () => {
   const renderFn = () => document.createElement('div');
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const { container } = render(
       <Provider store={store}>
         <CustomElement
@@ -35,7 +35,7 @@ describe('CustomElement', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createElement = createCustomElementAPI(store);
 
     const customElement = createElement({

@@ -1,3 +1,4 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import StylePanelContainer from './StylePanelContainer';
@@ -6,7 +7,7 @@ import Panel from 'components/Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import core from 'core';
-import { MockApp, createStore, waitForTimeout } from 'helpers/storybookHelper';
+import { createStore, MockApp, waitForTimeout } from 'helpers/storybookHelper';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { within, userEvent, expect, waitFor } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -34,7 +35,62 @@ const basicMockState = {
   },
 };
 
-const mockStore = createStore(basicMockState);
+// The StylePanel stories use a shared mock store instead of the app's full root reducer. A static `() => basicMockState` reducer renders the initial panel, but it drops all actions dispatched by interactive play tests. In particular, the measurement snapping checkbox is controlled by redux (`viewer.snapMode`), so clicking it dispatches `SET_ENABLE_SNAP_MODE` but the checked state never changes unless the mock reducer applies that action. Keep this reducer intentionally small and only handle the actions these stories dispatch directly.
+const mockReducer = (state = basicMockState, action) => {
+  switch (action.type) {
+    case 'SET_ACTIVE_TOOL_NAME':
+      return {
+        ...state,
+        viewer: {
+          ...state.viewer,
+          activeToolName: action.payload.toolName,
+        },
+      };
+    case 'SET_ENABLE_SNAP_MODE':
+      return {
+        ...state,
+        viewer: {
+          ...state.viewer,
+          snapMode: {
+            ...state.viewer.snapMode,
+            [action.payload.toolName]: action.payload.isEnabled,
+          },
+        },
+      };
+    case 'OPEN_ELEMENT':
+      return {
+        ...state,
+        viewer: {
+          ...state.viewer,
+          openElements: {
+            ...state.viewer.openElements,
+            [action.payload.dataElement]: true,
+          },
+        },
+      };
+    case 'CLOSE_ELEMENT': {
+      const dataElements = Array.isArray(action.payload.dataElement) ? action.payload.dataElement : [action.payload.dataElement];
+      const openElements = { ...state.viewer.openElements };
+      dataElements.forEach((dataElement) => {
+        openElements[dataElement] = false;
+      });
+      return {
+        ...state,
+        viewer: {
+          ...state.viewer,
+          openElements,
+        },
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+const mockStore = configureStore({
+  reducer: mockReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+});
 
 const StylePanelTemplate = ({ mockState = mockStore, location = 'left' }) => (
   <Provider store={mockState}>
@@ -80,7 +136,7 @@ const StylePanelInApp = (context, location) => {
       customizableUI: true,
     },
   };
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} initialDirection={addonRtl} />;
@@ -277,7 +333,9 @@ StylePanelDistanceTool.play = async ({ canvasElement }) => {
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
-  expect(checkbox.checked).toBe(false);
+  await waitFor(() => {
+    expect(checkbox.checked).toBe(false);
+  });
 };
 export const StylePanelArcMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -293,7 +351,9 @@ StylePanelArcMeasurementTool.play = async ({ canvasElement }) => {
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
-  expect(checkbox.checked).toBe(false);
+  await waitFor(() => {
+    expect(checkbox.checked).toBe(false);
+  });
 };
 export const StylePanelAreaMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -310,7 +370,9 @@ StylePanelAreaMeasurementTool.play = async ({ canvasElement }) => {
   expect(checkbox).toBeInTheDocument();
   expect(checkbox.checked).toBe(true);
   await userEvent.click(checkbox);
-  expect(checkbox.checked).toBe(false);
+  await waitFor(() => {
+    expect(checkbox.checked).toBe(false);
+  });
 };
 export const StylePanelEllipseMeasurementTool = () => {
   const [shouldRender, setShouldRender] = useState(false);

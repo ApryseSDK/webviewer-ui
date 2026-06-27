@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getDocument().isWebViewerServerDocument();
+export default (documentViewerKey) => core.getDocumentViewer(documentViewerKey).getDocument().isWebViewerServerDocument();

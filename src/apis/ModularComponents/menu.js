@@ -25,7 +25,7 @@ class MainMenu extends Flyout {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function menuFactory(props) {
   const defaultItems = [
     {
       ...menuItems[PRESET_BUTTON_TYPES.NEW_DOCUMENT],

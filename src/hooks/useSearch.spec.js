@@ -53,19 +53,17 @@ describe('useSearch', () => {
       search: jest.fn(() => ({ getAll: jest.fn().mockResolvedValue([]) })),
       getPageSearchResults: jest.fn(() => []),
       getActiveSearchResult: jest.fn(() => null),
+      getSpreadsheetEditorManager: jest.fn(() => ({
+        getWorkbook: jest.fn(() => ({
+          sheetCount: 2,
+          getSheetAt: (index) => ({ name: index === 0 ? 'Sheet1' : 'Sheet2' }),
+        })),
+      })),
     };
 
     core.getDocumentViewers = jest.fn(() => [mockDocumentViewer]);
     core.getDocumentViewer = jest.fn(() => mockDocumentViewer);
     core.isSearchResultEqual = jest.fn((a, b) => a === b);
-    core.getDocument = jest.fn(() => ({
-      getSpreadsheetEditorDocument: () => ({
-        getWorkbook: () => ({
-          sheetCount: 2,
-          getSheetAt: (index) => ({ name: index === 0 ? 'Sheet1' : 'Sheet2' }),
-        }),
-      }),
-    }));
 
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockImplementation((selector) => {

@@ -45,10 +45,15 @@ function isCurrentZoomFactorInRange(zoomFactor, ranges) {
 }
 
 function getViewCenterAfterScale(scale, isMultiViewerMode = false, documentViewerKey = 1) {
-  const documentContainer = isMultiViewerMode ? getRootNode().querySelector(`#DocumentContainer${documentViewerKey}`)
-    : getRootNode().querySelectorAll('.DocumentContainer')[0];
-  const documentWrapper = isMultiViewerMode ? getRootNode().querySelector(`#Document${documentViewerKey}`)
-    : getRootNode().querySelectorAll('.document')[0];
+  // Prefer per-instance DOM nodes registered with the DocumentViewer (via `core.setScrollViewElement` / `core.setViewerElement` from `DocumentContainer.componentDidMount`). Falling back to a `getRootNode()` querySelector breaks in multi-WC mode where the singleton root flips to whichever instance was most recently mounted, so we'd compute the new view center against the wrong shadow's containers.
+  const documentContainer = core.getScrollViewElement(documentViewerKey)
+    || (isMultiViewerMode
+      ? getRootNode().querySelector(`#DocumentContainer${documentViewerKey}`)
+      : getRootNode().querySelectorAll('.DocumentContainer')[0]);
+  const documentWrapper = core.getViewerElement(documentViewerKey)
+    || (isMultiViewerMode
+      ? getRootNode().querySelector(`#Document${documentViewerKey}`)
+      : getRootNode().querySelectorAll('.document')[0]);
   const clientX = window.innerWidth / 2;
   const clientY = window.innerHeight / 2;
 

@@ -36,7 +36,7 @@ const lineAnnot = new window.Core.Annotations.LineAnnotation();
 
 function getMockOnAnnotationChangedHandler(state) {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: state,
   });
 

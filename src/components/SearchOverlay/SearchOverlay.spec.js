@@ -77,7 +77,7 @@ jest.mock('core', () => {
 
 const createMockStore = () => {
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
   });
 };
 

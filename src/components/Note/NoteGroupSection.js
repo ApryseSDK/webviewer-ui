@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
@@ -7,8 +7,6 @@ import NoteContent from 'components/NoteContent';
 import PropTypes from 'prop-types';
 import useCore from 'hooks/useCore';
 import actions from 'actions';
-import selectors from 'selectors';
-import classNames from 'classnames';
 
 const propTypes = {
   groupAnnotations: PropTypes.array.isRequired,
@@ -23,7 +21,6 @@ const NoteGroupSection = ({
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [isViewingGroupAnnots, setIsViewingGroupAnnots] = useState(false);
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   const upArrow = 'icon-chevron-up';
   const downArrow = 'icon-chevron-down';
@@ -57,10 +54,7 @@ const NoteGroupSection = ({
 
   return (
     <div
-      className={classNames({
-        'group-section': true,
-        'modular-ui': customizableUI,
-      })}
+      className="group-section"
     >
       {isViewingGroupAnnots ? CloseAllAnnotsButton : ViewAllAnnotsButton}
       {isViewingGroupAnnots &&

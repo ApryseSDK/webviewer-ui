@@ -25,16 +25,20 @@ class Icon extends React.PureComponent {
   }
 
   render() {
-    const { className = '', color, glyph, fillColor = '', strokeColor = '', disabled, dataElement, ariaLabel } = this.props;
+    const { className = '', color, glyph, fillColor = '', strokeColor = '', disabled, dataElement, ariaHidden, ariaLabel } = this.props;
     // eslint-disable-next-line custom/no-hex-colors
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
     let svgElement;
 
     try {
       // eslint-disable-next-line global-require,import/no-dynamic-require
-      svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/icons/${this.props.glyph}.svg`);
+      const result = this.isInlineSvg() ? glyph : require(`../../../assets/icons/${this.props.glyph}.svg`);
+      // Vite/ESM shim returns an object with a 'default' property.
+      // Webpack (depending on config) often returned just the string.
+      svgElement = (result && typeof result === 'object' && result.default) ? result.default : result;
     } catch {
       svgElement = undefined;
+      console.warn(`Icon not found: ${this.props.glyph}`);
     }
 
     svgElement = transformSvgMarkup(svgElement, {
@@ -67,7 +71,7 @@ class Icon extends React.PureComponent {
           ...(!disabled && { color: color === 'rgba(0, 0, 0, 0)' ? '#808080' : color }),
         } })}
         data-element={dataElement}
-        aria-hidden={this.props.ariaHidden}
+        aria-hidden={ariaHidden}
         /* eslint-disable react/no-danger */
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />

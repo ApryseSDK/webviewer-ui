@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
 import loadDocument from 'helpers/loadDocument';
+import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
 import { useDispatch, useSelector } from 'react-redux';
 import getHashParameters from 'helpers/getHashParameters';
 
@@ -17,27 +18,43 @@ const DropArea = ({ documentViewerKey }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fileInput = useRef();
-  const [
-    customMultiViewerAcceptedFileFormats,
-  ] = useSelector((state) => [
-    selectors.getCustomMultiViewerAcceptedFileFormats(state),
-  ]);
+  const customMultiViewerAcceptedFileFormats = useSelector(selectors.getCustomMultiViewerAcceptedFileFormats);
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
+  const tabManager = useSelector(selectors.getTabManager);
+  const activeTab = useSelector(selectors.getActiveTab);
+  const tabs = useSelector(selectors.getTabs);
 
   const browseFiles = () => fileInput.current.click();
 
+  const loadDoc = (files) => {
+    if (files.length) {
+      const targetTabId = getTargetTabId(activeTab, tabs);
+      if (isMultiTab && tabManager && (targetTabId || targetTabId === 0)) {
+        tabManager.updateTab(targetTabId, buildTabUpdateForViewer({
+          documentViewerKey,
+          src: files[0],
+          options: {},
+          isMultiViewerMode: true,
+        }));
+      } else if (isMultiTab && tabManager) {
+        tabManager.addTab(files[0], {
+          setActive: true,
+          saveCurrentActiveTabState: true,
+        });
+      } else {
+        loadDocument(dispatch, files[0], {}, documentViewerKey);
+      }
+    }
+  };
   const onDrop = (e) => {
     e.preventDefault();
     const { files } = e.dataTransfer;
-    if (files.length) {
-      loadDocument(dispatch, files[0], {}, documentViewerKey);
-    }
+    loadDoc(files);
   };
   const loadFile = (e) => {
     e.preventDefault();
     const { files } = e.target;
-    if (files.length) {
-      loadDocument(dispatch, files[0], {}, documentViewerKey);
-    }
+    loadDoc(files);
   };
 
   const wvServer = !!getHashParameters('webviewerServerURL', null);

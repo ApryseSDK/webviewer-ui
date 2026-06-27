@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import NoteTextarea from 'components/NoteTextarea';
-import classNames from 'classnames';
 import useCore from 'hooks/useCore';
 import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
@@ -17,12 +16,10 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
   const [
     isMentionEnabled,
     activeDocumentViewerKey,
-    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getIsMentionEnabled(state),
       selectors.getActiveDocumentViewerKey(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -61,19 +58,14 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
     onSubmit();
   };
 
-  const replyAreaClass = classNames({
-    'reply-area': true,
-  });
+  const replyAreaClass =  'reply-area';
 
   const handleNoteTextareaChange = (value) => {
     setPendingReply(value);
   };
 
   return (
-    <div className={classNames({
-      'reply-area-multi-container': true,
-      'modular-ui': customizableUI,
-    })}>
+    <div className="reply-area-multi-container">
       <div
         className="reply-area-multi-header"
       >

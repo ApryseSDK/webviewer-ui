@@ -38,7 +38,7 @@ const CellAdjustmentButton = forwardRef((props, ref) => {
   const isActive = false;
 
   const handleClick = () => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     const activeSheet = workbook?.getSheetAt(workbook.activeSheetIndex);
     if (!activeSheet) {
       return console.error(ERROR);

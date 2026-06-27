@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Button from 'components/Button';
 import selectors from 'selectors';
-
+import Choice from 'components/Choice';
 import './InsertUploadedPagePanel.scss';
 import PageThumbnailsGrid from 'components/PageThumbnailsGrid';
-import Choice from 'components/Choice';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
 import { useSelector } from 'react-redux';
 
@@ -25,18 +24,16 @@ const InsertUploadedPagePanel = React.forwardRef(({
   const [pageNumberToInsertAt, setPageNumberToInsertAt] = useState([insertNewPageIndexes[0]]);
   const [insertAbove, setInsertAbove] = useState(true);
   const [hasPageNumberError, setHasPageNumberError] = useState(false);
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   useEffect(() => {
-    const pageCount = sourceDocument.getPageCount();
+    const pageCount = sourceDocument?.getPageCount?.() ?? 0;
     const selectedPages = {};
     for (let i = 1; i <= pageCount; i++) {
       selectedPages[i] = true;
     }
     setSelectedThumbnails(selectedPages);
   }, [sourceDocument]);
-
 
   const onThumbnailSelected = (pageNumber) => {
     if (selectedThumbnails[pageNumber] === undefined) {
@@ -81,14 +78,14 @@ const InsertUploadedPagePanel = React.forwardRef(({
         insertBeforeThisPage = null;
       }
 
-      insertPages(sourceDocument, getSelectedPages(), insertBeforeThisPage, documentViewerKey);
+      insertPages?.(sourceDocument, getSelectedPages(), insertBeforeThisPage, documentViewerKey);
     }
 
-    closeModal();
+    closeModal?.();
   };
 
   const onCloseHandler = () => {
-    closeModalWarning();
+    closeModalWarning?.();
   };
 
   const handlePageNumberError = () => {
@@ -134,7 +131,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
           </div>
 
         </div>
-        <div className={classNames('modal-body-thumbnail-container', { isLoading, 'modular-ui': customizableUI })}>
+        <div className={classNames('modal-body-thumbnail-container', { isLoading })}>
           <PageThumbnailsGrid
             document={sourceDocument}
             onThumbnailSelected={onThumbnailSelected}
@@ -157,5 +154,6 @@ const InsertUploadedPagePanel = React.forwardRef(({
   );
 });
 
-InsertUploadedPagePanel.displayName = InsertUploadedPagePanel;
+InsertUploadedPagePanel.displayName = 'InsertUploadedPagePanel';
+
 export default InsertUploadedPagePanel;

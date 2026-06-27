@@ -10,8 +10,7 @@ import { mapToolNameToKey } from 'constants/map';
 import defaultTool from 'constants/defaultTool';
 import { ITEM_RENDER_PREFIXES, PLACEMENT } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import getToolStyles from 'helpers/getToolStyles';
-import getColor from 'helpers/getColor';
+import getToolButtonColors from 'helpers/getToolButtonColors';
 import { shortcutAria } from 'helpers/hotkeysUtils';
 import { getIconDOMElement } from 'helpers/itemToFlyoutHelper';
 import FlyoutItemContainer from '../FlyoutItemContainer';
@@ -56,7 +55,6 @@ const ToolButton = forwardRef((props, ref) => {
   const signatureListPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL), shallowEqual);
   const isSignatureListFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, signatureListPanelInFlyout?.dataElement));
   const isRubberStampPanelInFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, rubberStampPanelInFlyout?.dataElement));
-
   const dispatch = useDispatch();
 
   const [isButtonActive, setIsButtonActive] = useState(activeToolName === toolName);
@@ -150,20 +148,13 @@ const ToolButton = forwardRef((props, ref) => {
 
   const icon = img || toolButtonObject?.img;
   const toolTipTitle = title || toolButtonObject?.title;
-  let color = '';
-  let fillColor = '';
-  let strokeColor = '';
   const showColor = customOverrides?.showColor || toolButtonObject?.showColor;
-  if (showColor === 'always' || (showColor === 'active' && isButtonActive)) {
-    const toolStyles = getToolStyles(toolName);
-    color = toolStyles?.[iconColorKey]?.toHexString?.();
-    fillColor = getColor(toolStyles?.FillColor);
-    strokeColor = getColor(toolStyles?.StrokeColor);
-    if (toolName.indexOf(ToolNames.FREETEXT) > -1 && toolStyles?.StrokeThickness === 0) {
-      // transparent
-      strokeColor = 'ff000000';
-    }
-  }
+  const { color, fillColor, strokeColor } = getToolButtonColors({
+    toolName,
+    showColor,
+    isActive: isButtonActive,
+    iconColorKey,
+  });
 
   let forceTooltipPosition;
 

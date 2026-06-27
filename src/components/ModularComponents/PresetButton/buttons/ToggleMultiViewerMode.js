@@ -19,16 +19,15 @@ const ToggleMultiViewerMode = forwardRef((props, ref) => {
   const { isFlyoutItem, dataElement, className, style, buttonType } = props;
 
   const store = useStore();
-  const isMultiTab = useSelector(selectors.getIsMultiTab);
   const isMultiViewerModeAvailable = useSelector(selectors.getIsMultiViewerModeAvailable);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
 
-  const shouldShow = !isIE11 && !isMultiTab && isMultiViewerModeAvailable;
+  const shouldShow = !isIE11 && isMultiViewerModeAvailable;
 
   const icon = 'icon-header-compare';
   const label = 'action.comparePages';
   const title = 'action.comparePages';
-  const onClick = () => isMultiViewerMode ? cleanUpMultiViewer(store) : setupMultiViewer(store);
+  const onClick = async () => isMultiViewerMode ? await cleanUpMultiViewer(store) : setupMultiViewer(store);
   const isActive = isMultiViewerMode;
 
   if (!shouldShow) {

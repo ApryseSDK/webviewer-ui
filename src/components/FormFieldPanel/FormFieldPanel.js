@@ -9,8 +9,9 @@ import Button from '../Button';
 import getToolStyles from 'helpers/getToolStyles';
 import useCore from 'hooks/useCore';
 import TextInput from 'components/TextInput';
+import Dropdown from 'components/Dropdown';
 import SignatureOptionsDropdown
-  from 'components/FormFieldEditPopup/FormFieldEditSignaturePopup/SignatureOptionsDropdown';
+  from './SignatureOptionsDropdown';
 import FormFieldEditPanelIndicator from './FormFieldEditPanelIndicator';
 import './FormFieldPanel.scss';
 
@@ -36,6 +37,7 @@ const FormFieldPanel = ({
   onRadioFieldNameChange,
   isMultiViewerMode,
 }) => {
+  const DEFAULT_DATE_PICKER_FORMAT = 'm/d/yy';
   const { core } = useCore();
   const { t } = useTranslation();
 
@@ -44,6 +46,9 @@ const FormFieldPanel = ({
     if (isSignatureAnnotation) {
       const formFieldCreationManager = core.getFormFieldCreationManager();
       return t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${formFieldCreationManager.getSignatureOption(annotation)}`);
+    }
+    if (annotation instanceof window.Core.Annotations.DatePickerWidgetAnnotation) {
+      return t('formField.formFieldPopup.indicatorPlaceHolders.DatePickerFormField');
     }
     return t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getField().getFieldType()}`);
   });
@@ -127,6 +132,27 @@ const FormFieldPanel = ({
     return <SignatureOptionsDropdown onChangeHandler={onOptionChange} initialOption={field.value} />;
   };
 
+  const renderDateFormatInput = (field) => {
+    const { label, value, onChange, options = [] } = field;
+    const selected = value === undefined || value === '' ? DEFAULT_DATE_PICKER_FORMAT : value;
+    return (
+      <div className="field-date-format-input">
+        <label id="form-field-date-format-label">
+          {t(label)}:
+        </label>
+        <Dropdown
+          id="form-field-date-format-dropdown"
+          labelledById="form-field-date-format-label"
+          items={options}
+          currentSelectionKey={selected}
+          onClickItem={onChange}
+          maxHeight={200}
+          ariaLabel={`${t(label)} - ${selected}`}
+        />
+      </div>
+    );
+  };
+
   const renderFieldInput = (field) => {
     switch (field.type) {
       case 'text':
@@ -135,6 +161,8 @@ const FormFieldPanel = ({
         return renderSelectInput(field);
       case 'signatureOption':
         return renderSignatureOption(field);
+      case 'dateFormat':
+        return renderDateFormatInput(field);
       default:
         return null;
     }

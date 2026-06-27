@@ -40,4 +40,12 @@ describe('Tab', () => {
     expect(element).toHaveAttribute('aria-label', 'testfile');
     expect(element).toHaveAttribute('aria-selected', 'true');
   });
+
+  it('Component should keep the compare icon visible for multi-viewer tabs', () => {
+    render(<TestTab tab={{ ...tabObject, isMultiViewer: true }} />);
+
+    const element = screen.getByRole('tab', { name: 'testfile' });
+    expect(element).toHaveClass('tab-compare-button');
+    expect(element.querySelector('.tab-compare-icon')).toBeInTheDocument();
+  });
 });

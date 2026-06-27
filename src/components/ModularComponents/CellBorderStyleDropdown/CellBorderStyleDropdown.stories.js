@@ -21,7 +21,7 @@ const createMockStore = (borderStyles = null) => {
   };
 
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: {
       spreadsheetEditor: {
         cellProperties: {

@@ -11,11 +11,14 @@ import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import useDidUpdate from 'hooks/useDidUpdate';
+import useReplyAutosave from 'hooks/useReplyAutosave/useReplyAutosave'; // Only used for non-office annotations
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobile } from 'src/helpers/device';
 import DataElements from 'src/constants/dataElement';
+import Events from 'constants/events';
 import { OFFICE_EDITOR_COMMENT_KEY, OfficeEditorEditMode } from 'src/constants/officeEditor';
+import fireEvent from 'helpers/fireEvent';
 
 import './ReplyArea.scss';
 
@@ -37,6 +40,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isInlineCommentOpen,
     activeDocumentViewerKey,
     officeEditorEditMode,
+    autosaveEnabled,
   ] = useSelector(
     (state) => [
       selectors.getAutoFocusNoteOnAnnotationSelection(state),
@@ -49,6 +53,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       selectors.isElementOpen(state, DataElements.INLINE_COMMENT_POPUP),
       selectors.getActiveDocumentViewerKey(state),
       selectors.getOfficeEditorEditMode(state),
+      selectors.getAutosaveEnabled(state),
     ],
     shallowEqual
   );
@@ -70,8 +75,27 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const textareaRef = useRef();
   const autoFocusNoteOnAnnotationSelection =
     autoFocusNoteOnAnnotationSelectionEnabled && (!isOfficeEditorCommentAnnotation || isNoteEditingTriggeredByAnnotationPopup);
+  // State for non-office comments (with autosave)
+  const {
+    localReplyValue,
+    setLocalReplyValue,
+    showAutosaved,
+    isSubmitClickRef,
+    clearDraft,
+  } = useReplyAutosave({ annotation, textareaRef });
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
+  // Only dispatch autosave event for non-office comments
+  useEffect(() => {
+    if (isOfficeEditorCommentAnnotation) {
+      return;
+    }
+    if (!autosaveEnabled || !showAutosaved) {
+      return;
+    }
+    fireEvent(Events.NOTE_AUTOSAVED, { annotationId: annotation.Id });
+  }, [annotation.Id, autosaveEnabled, showAutosaved, isOfficeEditorCommentAnnotation]);
+
   useDidUpdate(() => {
     if (!isFocused) {
       dispatch(actions.finishNoteEditing());
@@ -113,57 +137,71 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         return;
       }
 
-      const editor = textareaRef.current.getEditor();
-      const lastNewLineCharacterLength = 1;
-      const textLength = editor.getLength() - lastNewLineCharacterLength;
       setTimeout(() => {
-        if (textareaRef.current) {
-          textareaRef.current.editor.setSelection(textLength, textLength);
+        const editor = textareaRef.current?.getEditor?.();
+        if (!editor) {
+          return;
         }
+        const lastNewLineCharacterLength = 1;
+        const textLength = Math.max(editor.getLength() - lastNewLineCharacterLength, 0);
+        editor.setSelection(textLength, 0);
       }, 100);
     }
   }, []);
 
   const postReply = async (e) => {
-    // prevent the textarea from blurring out
     e.preventDefault();
     e.stopPropagation();
-
-    const editor = textareaRef.current.getEditor();
-    const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
-
-    if (!replyText.trim()) {
-      return;
-    }
-
     if (isOfficeEditorCommentAnnotation) {
-      const officeEditorCommentId = annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY);
-      const resolvedCommentId = parseInt(officeEditorCommentId, 10);
-      if (isNaN(resolvedCommentId)) {
-        console.warn('Failed to post reply to office editor comment', new Error('Invalid comment id'));
+      const editor = textareaRef.current.getEditor();
+      const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+      if (!replyText.trim()) {
         return;
       }
-
-      await core.getOfficeEditor().getCommentManager().addCommentReply(resolvedCommentId, replyText);
-      setPendingReply('', annotation.Id);
-      clearAttachments(annotation.Id);
+      try {
+        const officeEditorCommentId = annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY);
+        const resolvedCommentId = parseInt(officeEditorCommentId, 10);
+        if (isNaN(resolvedCommentId)) {
+          console.warn('Failed to post reply to office editor comment', new Error('Invalid comment id'));
+          return;
+        }
+        await core.getOfficeEditor().getCommentManager().addCommentReply(resolvedCommentId, replyText);
+        setPendingReply('', annotation.Id);
+        clearAttachments(annotation.Id);
+      } catch (error) {
+        console.warn('Failed to post reply', error);
+      }
       return;
     }
-
-    if (isMentionEnabled) {
-      const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
-      setAnnotationRichTextStyle(editor, replyAnnotation);
-      await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
-      core.addAnnotations([replyAnnotation], activeDocumentViewerKey);
-    } else {
-      const replyAnnotation = core.createAnnotationReply(annotation, replyText);
-      setAnnotationRichTextStyle(editor, replyAnnotation);
-      await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
-      core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
+    // Non-office: autosave logic
+    isSubmitClickRef.current = true;
+    const editor = textareaRef.current.getEditor();
+    const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+    if (!replyText.trim()) {
+      isSubmitClickRef.current = false;
+      return;
     }
-
-    setPendingReply('', annotation.Id);
-    clearAttachments(annotation.Id);
+    try {
+      if (isMentionEnabled) {
+        const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.addAnnotations([replyAnnotation], activeDocumentViewerKey);
+      } else {
+        const replyAnnotation = core.createAnnotationReply(annotation, replyText);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
+      }
+      clearDraft();
+      setPendingReply('', annotation.Id);
+      textareaRef.current?.getEditor()?.setText('');
+      clearAttachments(annotation.Id);
+    } catch (error) {
+      console.warn('Failed to post reply', error);
+    } finally {
+      isSubmitClickRef.current = false;
+    }
   };
 
   const isOfficeEditorViewOnly = isOfficeEditorCommentAnnotation && (
@@ -183,11 +221,27 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   });
 
   const handleNoteTextareaChange = (value) => {
-    setPendingReply(value, annotation.Id);
-    onPendingReplyChange && onPendingReplyChange();
+    if (isOfficeEditorCommentAnnotation) {
+      setPendingReply(value, annotation.Id);
+      onPendingReplyChange?.();
+      return;
+    }
+    // Non-office
+    if (isSubmitClickRef.current) {
+      return;
+    }
+    const editor = textareaRef.current?.getEditor?.();
+    const pendingReplyText = editor
+      ? mentionsManager.getFormattedTextFromDeltas(editor.getContents())
+      : value;
+    const normalizedPendingReplyText = pendingReplyText.trim().length ? pendingReplyText : '';
+    setLocalReplyValue(value);
+    setPendingReply(normalizedPendingReplyText, annotation.Id);
+    onPendingReplyChange?.();
   };
 
   const onBlur = () => {
+    // Commit is intentionally handled on unmount (e.g. panel exit), not generic blur.
     setIsFocused(false);
     setCurAnnotId(undefined);
   };
@@ -219,20 +273,40 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
             ref={(el) => {
               textareaRef.current = el;
             }}
-            value={pendingReplyMap[annotation.Id]}
-            onChange={(value) => handleNoteTextareaChange(value)}
+            value={isOfficeEditorCommentAnnotation ? pendingReplyMap[annotation.Id] : localReplyValue}
+            onChange={handleNoteTextareaChange}
             onSubmit={postReply}
             onBlur={onBlur}
             onFocus={onFocus}
             isReply
           />
         </div>
-        <div className="reply-button-container">
+        <div
+          className="reply-button-container"
+          role="none"
+          onMouseDownCapture={() => {
+            if (!isOfficeEditorCommentAnnotation) {
+              if (localReplyValue) {
+                isSubmitClickRef.current = true;
+              }
+            }
+          }}
+          onMouseUp={() => {
+            if (!isOfficeEditorCommentAnnotation) {
+              isSubmitClickRef.current = false;
+            }
+          }}
+          onMouseLeave={() => {
+            if (!isOfficeEditorCommentAnnotation) {
+              isSubmitClickRef.current = false;
+            }
+          }}
+        >
           <Button
             img="icon-post-reply"
             className='reply-button'
             title={'action.submit'}
-            disabled={!pendingReplyMap[annotation.Id]}
+            disabled={isOfficeEditorCommentAnnotation ? !pendingReplyMap[annotation.Id] : !localReplyValue}
             onClick={postReply}
             isSubmitType
           />

@@ -5,10 +5,14 @@ import { focusableElementDomString } from 'constants/focusableElementDomString';
 import getRootNode from 'helpers/getRootNode';
 import core from 'core';
 
-export default function useTabFocus() {
+export default function useTabFocus(enabled = true) {
   const pageNumber = useSelector(selectors.getCurrentPage);
 
   useEffect(() => {
+    if (!enabled) {
+      return undefined;
+    }
+
     const getNextFocusableElement = (currentElement, direction) => {
       const focusable = getRootNode().querySelectorAll(focusableElementDomString);
       const focusableArray = Array.from(focusable);
@@ -63,5 +67,5 @@ export default function useTabFocus() {
 
     window.addEventListener('keydown', keydownListener);
     return () => window.removeEventListener('keydown', keydownListener);
-  }, [pageNumber]);
+  }, [enabled, pageNumber]);
 }

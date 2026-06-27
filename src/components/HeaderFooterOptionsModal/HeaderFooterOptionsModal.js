@@ -133,6 +133,7 @@ const HeaderFooterOptionsModal = () => {
       <ModalWrapper
         isOpen={isOpen}
         title={t('officeEditor.headerFooterOptionsModal.title')}
+        modalDataElement={DataElements.HEADER_FOOTER_OPTIONS_MODAL}
         closehandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose

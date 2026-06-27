@@ -22,7 +22,7 @@ describe('OfficeEditorColumnsModal', () => {
   beforeEach(() => {
     const initialState = rootReducer(undefined, { type: '@@INIT' });
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       preloadedState: {
         ...initialState,
         officeEditor: {

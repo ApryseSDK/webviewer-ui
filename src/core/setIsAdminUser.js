@@ -5,8 +5,10 @@ import core from 'core';
  * @fires updateAnnotationPermission on AnnotationManager
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:updateAnnotationPermission__anchor
  */
-export default (isAdmin) => {
-  const documentViewers = core.getDocumentViewers();
+export default (isAdmin, documentViewerKey) => {
+  const documentViewers = documentViewerKey
+    ? [core.getDocumentViewer(documentViewerKey)]
+    : core.getDocumentViewers();
   if (isAdmin) {
     documentViewers.forEach((documentViewer) => documentViewer.getAnnotationManager().promoteUserToAdmin());
   } else {

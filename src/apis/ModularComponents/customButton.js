@@ -43,7 +43,7 @@ class CustomButton extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function customButtonFactory(props) {
   const propsWithStore = { ...props, store };
   return new CustomButton(propsWithStore);
 };

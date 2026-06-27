@@ -14,7 +14,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
-import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES } from 'constants/sortStrategies';
+import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES, NotesPanelSortStrategy } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
@@ -50,18 +50,18 @@ function NotesPanelHeader({
     isSortContainerDisabled,
     customHeaderOptions,
     annotationFilters,
+    isAnnotationNumberingEnabled,
     isOfficeEditorMode,
     officeEditorEditMode,
-    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT),
       selectors.getNotesPanelCustomHeaderOptions(state),
       selectors.getAnnotationFilters(state),
+      selectors.isAnnotationNumberingEnabled(state),
       selectors.getIsOfficeEditorMode(state),
       selectors.getOfficeEditorEditMode(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -80,8 +80,7 @@ function NotesPanelHeader({
       setFilterEnabled(true);
     }
 
-    const toggleFilterStyle = (e) => {
-      const { types, authors, colors, statuses } = e.detail;
+    const toggleFilterStyle = (types, authors, colors, statuses) => {
       if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
         setFilterEnabled(true);
       } else {
@@ -118,7 +117,20 @@ function NotesPanelHeader({
     setSearchInputHandler(value);
   }, 500);
 
-  const sortStrategyItems = isOfficeEditorMode ? OFFICE_EDITOR_SORT_STRATEGIES : BASE_SORT_STRATEGIES;
+
+  const getNotesPanelSortStrategies = ({ isOfficeEditorMode, isAnnotationNumberingEnabled }) => {
+    if (isOfficeEditorMode) {
+      return OFFICE_EDITOR_SORT_STRATEGIES;
+    }
+
+    if (isAnnotationNumberingEnabled) {
+      return [...BASE_SORT_STRATEGIES, NotesPanelSortStrategy.NUMBER];
+    }
+
+    return BASE_SORT_STRATEGIES;
+  };
+
+  const sortStrategyItems = getNotesPanelSortStrategies({ isOfficeEditorMode, isAnnotationNumberingEnabled });
 
   useEffect(() => {
     if (!sortStrategyItems.includes(sortStrategy)) {
@@ -150,25 +162,18 @@ function NotesPanelHeader({
 
   const originalHeaderElement = (
     <DataElementWrapper
-      className={
-        classNames({
-          'header': true,
-          'modular-ui-header': customizableUI,
-        })}
+      className="header"
       dataElement="notesPanelHeader"
     >
       <DataElementWrapper
-        className={classNames({
-          'input-container': true,
-          'modular-ui-input': customizableUI,
-        })}
+        className="input-container"
         dataElement={DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}
       >
-        {customizableUI && <Icon glyph="icon-header-search" />}
+        <Icon glyph="icon-header-search" />
         <input
           disabled={isPreviewingTrackedChanges}
           type="text"
-          placeholder={customizableUI ? '' : placeholderText}
+          placeholder={''}
           aria-label={placeholderText}
           onChange={handleInputChange}
           id="NotesPanel__input"

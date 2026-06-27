@@ -43,7 +43,7 @@ class PresetButton extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function presetButtonFactory(props) {
   const propsWithStore = { ...props, store };
   return new PresetButton(propsWithStore);
 };

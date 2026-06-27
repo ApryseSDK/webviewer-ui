@@ -188,6 +188,7 @@ const SignatureModal = () => {
     >
       <ModalWrapper
         title={t('option.signatureModal.modalName')}
+        modalDataElement={DataElements.SIGNATURE_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         isOpen={isOpen}

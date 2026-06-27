@@ -4,6 +4,16 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
+const setToolModeForKey = (toolName, key) => {
+  if (core.getMultiViewerModeActive?.()) {
+    core.setToolMode(toolName);
+    return;
+  }
+
+  const documentViewer = core.getDocumentViewer(key);
+  documentViewer?.setToolMode?.(documentViewer.getTool(toolName));
+};
+
 export const createWrappedCore = (key) => ({
   ...core,
   getFormFieldCreationManager: () => core.getFormFieldCreationManager(key),
@@ -14,6 +24,7 @@ export const createWrappedCore = (key) => ({
   addEventListener: (event, handler, options) => core.addEventListener(event, handler, options, key),
   removeEventListener: (event, handler) => core.removeEventListener(event, handler, key),
   getDocument: () => core.getDocument(key),
+  closeDocument: () => core.closeDocument(key),
   getCurrentPage: () => core.getCurrentPage(key),
   setCurrentPage: (pageNum) => core.setCurrentPage(pageNum, key),
   getDisplayAuthor: (author) => core.getDisplayAuthor(author, key),
@@ -21,6 +32,7 @@ export const createWrappedCore = (key) => ({
   getSelectedText: () => core.getSelectedText(key),
   getAnnotationsList: () => core.getAnnotationsList(key),
   getAnnotationsLoadedPromise: () => core.getAnnotationsLoadedPromise(key),
+  exportAnnotations: (options) => core.exportAnnotations(options, key),
   getPrintablePDF: () => core.getPrintablePDF(key),
   getScrollViewElement: () => core.getScrollViewElement(key),
   getAnnotationById: (id) => core.getAnnotationById(id, key),
@@ -39,11 +51,13 @@ export const createWrappedCore = (key) => ({
   groupAnnotations: (annotation, annotations) => core.groupAnnotations(annotation, annotations, key),
   ungroupAnnotations: (annotations) => core.ungroupAnnotations(annotations, key),
   getTool: (toolName) => core.getTool(toolName, key),
-  setToolMode: (toolName) => core.setToolMode(toolName),
+  setToolMode: (toolName) => setToolModeForKey(toolName, key),
   getOfficeEditor: () => core.getOfficeEditor(key),
+  getTrackedChangeManager: () => core.getTrackedChangeManager(key),
   getDocumentViewer: () => core.getDocumentViewer(key),
   getTotalPages: () => core.getTotalPages(key),
   getZoom: () => core.getZoom(key),
+  zoomTo: (zoomFactor, x, y) => core.zoomTo(zoomFactor, x, y, key),
   fitToWidth: () => core.fitToWidth(key),
   fitToPage: () => core.fitToPage(key),
   fitToHeight: () => core.fitToHeight(key),

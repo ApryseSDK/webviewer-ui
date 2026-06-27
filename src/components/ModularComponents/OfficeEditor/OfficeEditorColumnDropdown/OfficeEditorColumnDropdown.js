@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import selectors from 'selectors';
 import classNames from 'classnames';
 import actions from 'actions';
 import PropTypes from 'prop-types';
@@ -51,8 +50,6 @@ const OfficeEditorColumnDropdown = ({
   const dispatch = useDispatch();
   const [activeColumnOption, setActiveColumnOption] = useState('');
 
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
-
   const onOpened = async () => {
     const sectionColumns = await core.getOfficeEditor().getSectionColumns(LAYOUT_UNITS.CM);
     const columnAmount = Math.ceil(sectionColumns.length / 2);
@@ -82,7 +79,6 @@ const OfficeEditorColumnDropdown = ({
       className={classNames({
         'office-editor-column-dropdown': true,
         'dropdown-text-icon': true,
-        'modular-ui': customizableUI,
         'flyout-item': isFlyoutItem,
       })}
       width={'auto'}

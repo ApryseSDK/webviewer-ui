@@ -339,13 +339,13 @@ describe('SearchPanelContainer', () => {
 
 describe('adjustSpreadsheetTableWidth', () => {
   let isSpreadsheetEditorModeMock;
-  let getDocumentMock;
   let editorWrapper;
-  let spreadsheetEditorMock;
+  let spreadsheetEditorManagerMock;
 
   beforeEach(() => {
     jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => { });
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(false);
+    useCore.mockReturnValue({ core });
     useSearch.mockReturnValue({
       searchStatus: 'SEARCH_NOT_INITIATED',
       searchResults: [],
@@ -360,12 +360,9 @@ describe('adjustSpreadsheetTableWidth', () => {
     };
     document.getElementById = jest.fn(() => editorWrapper);
 
-    spreadsheetEditorMock = { onSizeChanged: jest.fn() };
-    getDocumentMock = jest.spyOn(require('src/core/getDocument'), 'default');
-    getDocumentMock.mockReturnValue({
-      getSpreadsheetEditorDocument: () => ({
-        getEditor: () => spreadsheetEditorMock,
-      }),
+    spreadsheetEditorManagerMock = { onEditorSizeChanged: jest.fn() };
+    core.getDocumentViewer.mockReturnValue({
+      getSpreadsheetEditorManager: () => spreadsheetEditorManagerMock,
     });
   });
 
@@ -377,14 +374,14 @@ describe('adjustSpreadsheetTableWidth', () => {
     render(<SearchPanel currentWidth={200} />);
     expect(document.getElementById).toHaveBeenCalledWith('editorWrapper');
     expect(editorWrapper.style.width).toBe('824px');
-    expect(spreadsheetEditorMock.onSizeChanged).toHaveBeenCalled();
+    expect(spreadsheetEditorManagerMock.onEditorSizeChanged).toHaveBeenCalled();
   });
 
   it('should not adjust container width if not in spreadsheet editor', () => {
     isSpreadsheetEditorModeMock.mockReturnValue(false);
     render(<SearchPanel currentWidth={100} />);
     expect(document.getElementById).not.toHaveBeenCalled();
-    expect(spreadsheetEditorMock.onSizeChanged).not.toHaveBeenCalled();
+    expect(spreadsheetEditorManagerMock.onEditorSizeChanged).not.toHaveBeenCalled();
   });
 
   it('should adjust container width back to original on component unmount', () => {

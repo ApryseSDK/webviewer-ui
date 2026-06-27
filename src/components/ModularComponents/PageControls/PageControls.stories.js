@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { MockDocumentContainer, oePartialState } from 'helpers/storybookHelper';
 import PageControlsContainer from './PageControlsContainer';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import actions from 'actions';
@@ -8,7 +9,6 @@ import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
 import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
-import { MockDocumentContainer, oePartialState, createStore } from 'helpers/storybookHelper';
 import { expect, within, userEvent } from 'storybook/test';
 import PropTypes from 'prop-types';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -203,7 +203,19 @@ export const PageControlsInFlyout = () => {
   );
 };
 
-const docxStore = createStore(initialState);
+const docxReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'SET_PAGE_LABELS':
+      return { ...state, viewer: { ...state.viewer, pageLabels: { ...state.viewer.pageLabels, 1: action.payload.pageLabels } } };
+    case 'SET_TOTAL_PAGES':
+      // PageControlsInput reads total pages through: selectors.getTotalPages(state, activeDocumentViewerKey). That selector uses state.document.totalPages, not state.viewer.totalPages. In the story, SET_TOTAL_PAGES was only updating viewer.totalPages, so the displayed total stayed at the original document.totalPages[1] === 9.
+      return { ...state, viewer: { ...state.viewer, totalPages: { ...state.viewer.totalPages, [action.payload.documentViewerKey]: action.payload.totalPages } }, document: { ...state.document, totalPages: { ...state.document.totalPages, [action.payload.documentViewerKey]: action.payload.totalPages } } };
+    default:
+      return state;
+  }
+};
+
+const docxStore = configureStore({ reducer: docxReducer });
 
 export const PageControlsInputDocx = (storyProps) => {
   return <PageControlsStory store={docxStore} storyProps={storyProps} />;

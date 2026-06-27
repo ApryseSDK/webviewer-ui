@@ -161,13 +161,7 @@ const FilterAnnotModal = ({ isInFormBuilderMode }) => {
     core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().drawAnnotationsFromList(redrawList));
     fireEvent(
       Events.ANNOTATION_FILTER_CHANGED,
-      {
-        types: typesFilter,
-        authors: authorFilter,
-        colors: colorFilter,
-        statuses: statusFilter,
-        checkRepliesForAuthorFilter
-      }
+      [typesFilter, authorFilter, colorFilter, statusFilter, checkRepliesForAuthorFilter]
     );
     closeModal();
   };
@@ -423,6 +417,7 @@ const FilterAnnotModal = ({ isInFormBuilderMode }) => {
       <ModalWrapper
         isOpen={isOpen}
         title={`${t('option.filterAnnotModal.filters')} (${filterCount})`}
+        modalDataElement={DataElements.FILTER_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line custom/use-core-hook-in-components
 import selectors from 'selectors';
 import actions from 'actions';
-import sizeManager from 'helpers/responsivenessHelper';
+import { getSizeManager } from 'helpers/responsivenessHelper';
 import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
 import PageControls from './PageControls';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,8 +26,9 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
   const elementRef = useRef();
 
   useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
+    const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+    localSizeManager[dataElement] = {
+      ...(localSizeManager[dataElement] ? localSizeManager[dataElement] : {}),
       canGrow: size === 1,
       canShrink: size === 0,
       grow: () => {
@@ -39,12 +40,12 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
       size: size,
     };
     if (elementRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
+      localSizeManager[dataElement].sizeToWidth = {
+        ...(localSizeManager[dataElement].sizeToWidth ? localSizeManager[dataElement].sizeToWidth : {}),
         [size]: elementRef.current.clientWidth,
       };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
+      localSizeManager[dataElement].sizeToHeight = {
+        ...(localSizeManager[dataElement].sizeToHeight ? localSizeManager[dataElement].sizeToHeight : {}),
         [size]: elementRef.current.clientHeight,
       };
     }
@@ -78,7 +79,6 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     if (!shouldFadePageNavigationComponent) {
       dispatch(actions.setOpacityOfItem(DataElements.PAGE_NAV_FLOATING_HEADER, OPACITY_LEVELS.FULL));
     }
-    dispatch(actions.disableElement('pageNavOverlay'));
   }, []);
 
   const previousPageButton = {

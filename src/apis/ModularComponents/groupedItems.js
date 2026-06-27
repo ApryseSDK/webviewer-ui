@@ -234,7 +234,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function groupedItemsFactory(props) {
   const propsWithStore = { ...props, store };
   return new GroupedItems(propsWithStore);
 };

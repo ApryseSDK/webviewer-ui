@@ -1,5 +1,5 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import FileInputPanel from './FileInputPanel';
 import { within, expect, userEvent } from 'storybook/test';
@@ -26,7 +26,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 export function Basic() {
   const props = {};

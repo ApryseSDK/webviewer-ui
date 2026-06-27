@@ -10,7 +10,7 @@ import { DEFAULT_GAP, ITEM_TYPE, PRESET_BUTTON_TYPES, PRESET_BUTTONS_MODAL_TOGGL
 import DataElements from 'constants/dataElement';
 import ZoomText from './flyoutHelpers/ZoomText';
 import getRootNode from 'helpers/getRootNode';
-import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
+import { getFlyoutPositionOnElement, isToggleScrolledOutOfAncestor } from 'helpers/flyoutHelper';
 import { getFlyoutItemType } from 'helpers/itemToFlyoutHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { getElementToFocusOnIndex } from 'helpers/keyboardNavigationHelper';
@@ -33,7 +33,6 @@ const Flyout = () => {
   const toggleElement = useSelector(selectors.getFlyoutToggleElement);
   const topHeadersHeight = useSelector(selectors.getTopHeadersHeight);
   const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
-  const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
   const currentPage = useSelector(selectors.getCurrentPage);
   const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
   const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
@@ -61,13 +60,21 @@ const Flyout = () => {
   const itemsToRender = items.filter((item) => !item.hidden);
   const activeChildren = activeItem ? activeItem.children.filter((child) => !child.hidden) : [];
 
+  // Resolve the per-instance root from the flyout element itself. The module- level `rootNode` singleton in helpers/getRootNode.js is overwritten by whichever WebComponent called setRootNode last, so in multi-WC mode a keyless `getRootNode().querySelector(...)` returns the wrong instance's node and flyouts position themselves against the sibling instance.
+  const getLocalRoot = () => flyoutRef.current?.getRootNode?.() || getRootNode();
+
   const getElementDOMRef = (dataElement) => {
-    return getRootNode().querySelector(`[data-element="${dataElement}"]`);
+    return getLocalRoot().querySelector(`[data-element="${dataElement}"]`);
   };
 
   const getFocusableElements = () => {
     return flyoutRef.current.querySelectorAll('button:not([disabled]), input:not([disabled]), div[role="combobox"]:not([disabled])');
   };
+
+  const closeFlyout = useFocusOnClose(useCallback(() => {
+    dispatch(actions.closeElements([activeFlyout]));
+    setActivePath([]);
+  }, [dispatch, activeFlyout]));
 
   useLayoutEffect(() => {
     const tempRefElement = getElementDOMRef(toggleElement);
@@ -79,7 +86,7 @@ const Flyout = () => {
 
     const calculateAndMaybeSetPosition = () => {
       const refEl = getElementDOMRef(toggleElement);
-      const app = getAppRect();
+      const app = getAppRect(getLocalRoot());
       // Keep max height in sync with the exact app rect used for positioning
       setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
       const next = { x: position.x, y: position.y };
@@ -93,13 +100,13 @@ const Flyout = () => {
       const flyoutRect = flyoutRef.current?.getBoundingClientRect();
       if (flyoutRect && app) {
         const PADDING = 5;
-        const widthOverflow = next.x + flyoutRect.width + PADDING - app.right;
-        const heightOverflow = next.y + flyoutRect.height + PADDING - app.bottom;
-        if (widthOverflow > 0) {
-          next.x -= widthOverflow;
+        const maxX = app.width - flyoutRect.width - PADDING;
+        const maxY = app.height - flyoutRect.height - PADDING;
+        if (next.x > maxX) {
+          next.x = maxX;
         }
-        if (heightOverflow > 0) {
-          next.y -= heightOverflow;
+        if (next.y > maxY) {
+          next.y = maxY;
         }
         if (next.x < PADDING) {
           next.x = PADDING;
@@ -132,15 +139,34 @@ const Flyout = () => {
       resizeObserver.observe(flyoutRef.current);
     }
 
+    // Reposition the flyout when something inside the WebViewer scrolls (e.g. Notes Panel scrolling through comments)
+    const localRoot = getLocalRoot();
+    const onScroll = (e) => {
+      const target = e.target;
+      // Ignore the flyout's own overflow menu scrolling itself
+      if (target?.nodeType === 1 && flyoutRef.current?.contains(target)) {
+        return;
+      }
+      // Close the flyout if the toggle button has scrolled out of view of its scrolling ancestor (e.g. it scrolled behind the NotesPanelHeader)
+      const toggle = getElementDOMRef(toggleElement);
+      if (toggle && isToggleScrolledOutOfAncestor(toggle, target)) {
+        closeFlyout();
+        return;
+      }
+      calculateAndMaybeSetPosition();
+    };
+    localRoot?.addEventListener('scroll', onScroll, true);
+
     return () => {
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
+      localRoot?.removeEventListener('scroll', onScroll, true);
     };
-  }, [activePath, position, items, inputValue, isFlyoutOpen]);
+  }, [activePath, position, items, inputValue, isFlyoutOpen, toggleElement, closeFlyout]);
 
   useLayoutEffect(() => {
-    const appRect = getAppRect();
+    const appRect = getAppRect(getLocalRoot());
     const flyoutRect = flyoutRef.current?.getBoundingClientRect();
     let isChildOverflowing = false;
     const flyoutChildren = flyoutRef?.current?.firstChild?.children;
@@ -159,7 +185,7 @@ const Flyout = () => {
     if (flyoutRef.current) {
       const focusableElements = getFocusableElements();
       if (focusableElements.length) {
-        focusableElements[0].focus();
+        focusableElements[0].focus({ preventScroll: true });
         setCurrentFocusIndex(0);
         setFocusableElements(focusableElements);
       }
@@ -176,16 +202,11 @@ const Flyout = () => {
       // If the current focused element is disabled, we need to find the next focusable element to focus on
       if (focusableElements[currentFocusIndex] !== newFocusableElements[currentFocusIndex]) {
         const newCurrentFocusIndex = getElementToFocusOnIndex(newFocusableElements, focusableElements, currentFocusIndex);
-        newFocusableElements[newCurrentFocusIndex].focus();
+        newFocusableElements[newCurrentFocusIndex].focus({ preventScroll: true });
         setCurrentFocusIndex(newCurrentFocusIndex);
       }
     }
   }, [currentPage]);
-
-  const closeFlyout = useFocusOnClose(useCallback(() => {
-    dispatch(actions.closeElements([activeFlyout]));
-    setActivePath([]);
-  }, [dispatch, activeFlyout]));
 
   const isPlacingSignatureOnDocument = (e) => {
     const toolMode = core.getToolMode();
@@ -378,7 +399,6 @@ const Flyout = () => {
       <div
         className={classNames({
           'Flyout': true,
-          'legacy-ui': !customizableUI,
           'mobile': shouldUseMobileFlyout,
         })}
         data-element={dataElement}

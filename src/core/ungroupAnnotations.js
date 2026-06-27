@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default (annotations, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getAnnotationManager().ungroupAnnotations(annotations);
+export default (annotations, documentViewerKey) => core.getDocumentViewer(documentViewerKey).getAnnotationManager().ungroupAnnotations(annotations);

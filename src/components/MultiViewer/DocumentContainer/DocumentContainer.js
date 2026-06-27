@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import loadDocument from 'helpers/loadDocument';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
@@ -13,6 +13,7 @@ import useCore from 'hooks/useCore';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import getRootNode from 'helpers/getRootNode';
 import { createTouchEventManager } from 'helpers/TouchEventManager';
+import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
 import { css } from '@emotion/react';
 
 import './DocumentContainer.scss';
@@ -35,11 +36,11 @@ const DocumentContainer = ({
   const dispatch = useDispatch();
   const document = useRef();
   const touchManagerRef = useRef(null);
-  const [
-    isMouseWheelZoomEnabled,
-  ] = useSelector((state) => [
-    selectors.getEnableMouseWheelZoom(state),
-  ]);
+  const isMouseWheelZoomEnabled = useSelector(selectors.getEnableMouseWheelZoom);
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
+  const TabManager = useSelector(selectors.getTabManager, shallowEqual);
+  const activeTab = useSelector(selectors.getActiveTab);
+  const tabs = useSelector(selectors.getTabs);
 
   useEffect(() => {
     if (!touchManagerRef.current) {
@@ -66,11 +67,24 @@ const DocumentContainer = ({
   }, []);
 
   const preventDefault = (e) => e.preventDefault();
-  const onDrop = (e) => {
+  const onDrop = async (e) => {
     e.preventDefault();
     const { files } = e.dataTransfer;
     if (files.length) {
-      loadDocument(dispatch, files[0], {}, documentViewerKey);
+      if (isMultiTab) {
+        const targetTabId = getTargetTabId(activeTab, tabs);
+        if (!(targetTabId || targetTabId === 0)) {
+          return;
+        }
+        TabManager.updateTab(targetTabId, buildTabUpdateForViewer({
+          documentViewerKey: documentViewerKey,
+          src: files[0],
+          options: {},
+          isMultiViewerMode: true,
+        }));
+      } else {
+        loadDocument(dispatch, files[0], {}, documentViewerKey);
+      }
     }
   };
   const handleScroll = () => {

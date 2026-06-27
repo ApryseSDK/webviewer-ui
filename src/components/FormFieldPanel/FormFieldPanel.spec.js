@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, getByText, getByDisplayValue, screen } from '@testing-library/react';
 import FormFieldPanel from './FormFieldPanel';
 import { Basic } from './FormFieldPanel.stories';
-import { inputFields, selectField, sampleFlags, indicator, INDICATOR_TEXT, createMockAnnotation } from '../FormFieldEditPopup/FormFieldEditPopup.spec';
+import { inputFields, selectField, sampleFlags, indicator, INDICATOR_TEXT, createMockAnnotation } from './FormFieldPanel.testFixtures';
 
 const BasicFormFieldEditPanelStory = withI18n(Basic);
 const TestFormFieldEditPanel = withProviders(FormFieldPanel);
@@ -69,6 +69,33 @@ describe('FormFieldPanel', () => {
         />,
       );
       expect(container.querySelectorAll('.radio-group-label')).toHaveLength(selectField.length);
+    });
+
+    it('renders date format dropdown for date picker field', () => {
+      const dateFormatField = [{
+        label: 'option.customStampModal.dateFormat',
+        onChange: jest.fn(),
+        value: 'm/d/yy',
+        options: ['m/d/yy', 'dd/mm/yyyy'],
+        type: 'dateFormat',
+      }];
+
+      render(
+        <TestFormFieldEditPanel
+          fields={dateFormatField}
+          flags={sampleFlags}
+          closeFormFieldEditPanel={noop}
+          isOpen
+          isValid
+          annotation={createMockAnnotation()}
+          redrawAnnotation={noop}
+          getPageHeight={noop}
+          getPageWidth={noop}
+          indicator={indicator}
+        />,
+      );
+
+      expect(screen.getByRole('combobox', { name: /Date format/i })).toBeInTheDocument();
     });
 
     it('Should call handler to close panel when OK button is clicked', () => {

@@ -20,13 +20,14 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const setPrintHandler = eventListeners.setPrintHandler(store, documentViewerKey);
   const toggleAnnotations = eventListeners.toggleAnnotations();
   const setServerProperties = eventListeners.setServerProperties();
-  const checkDocumentForTools = eventListeners.checkDocumentForTools(dispatch);
+  const checkDocumentForTools = eventListeners.checkDocumentForTools(dispatch, documentViewerKey);
   const updateOutlines = eventListeners.updateOutlines(dispatch, documentViewerKey);
   const updatePortfolio = eventListeners.updatePortfolio(store, documentViewerKey);
-  const configureEditorMode = eventListeners.configureEditorMode(store);
+  const configureEditorMode = eventListeners.configureEditorMode(store, documentViewerKey);
   const setupCompositionInput = eventListeners.setupCompositionInput(documentViewerKey);
   const syncDisplayModeMultiviewer = eventListeners.syncDisplayModeMultiviewer(documentViewerKey);
   const onDocumentUnloaded = eventListeners.onDocumentUnloaded(store, documentViewerKey);
+  const onAnnotationNumberingUpdated = eventListeners.onAnnotationNumberingUpdated(dispatch);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
   const onToolUpdated = eventListeners.onToolUpdated(dispatch);
@@ -45,7 +46,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch, documentViewerKey);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(documentViewerKey, dispatch, store);
   const onRubberStampsUpdated = eventListeners.onRubberStampsUpdated(dispatch);
-  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(dispatch, store);
   const onPageComplete = eventListeners.onPageComplete(store, documentViewerKey);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded();
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable();
@@ -71,15 +71,28 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onUserBookmarksChanged = eventListeners.onUserBookmarksChanged(dispatch, documentViewerKey);
   const onSpreadsheetEditorSelectionChanged = eventListeners.onSpreadsheetEditorSelectionChanged(dispatch);
   const onSpreadsheetEditorEditModeChanged = eventListeners.onSpreadsheetEditorEditModeChanged(dispatch);
+  const onSpreadsheetEditorHistoryChanged = eventListeners.onSpreadsheetEditorHistoryChanged(dispatch, documentViewerKey);
   const openSpreadsheetEditorLoadingModal = eventListeners.openSpreadsheetEditorLoadingModal(dispatch);
   const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch, store);
   const onWidgetHighlightingChanged = eventListeners.onWidgetHighlightingChanged(dispatch, store);
   const onSelectedRangeStyleChanged = eventListeners.onSelectedRangeStyleChanged(dispatch);
   const initializeLayersVisibility = eventListeners.initializeLayersVisibility(store, documentViewerKey);
 
+  // `removeEventHandlers` can be called by both Web Component disposal and React effect cleanup.
+  let _removed = false;
+
+  // Mirrors the editor-feature registration path during cleanup.
+  let _editorEventsRegistered = false;
+
   return {
     addEventHandlers: () => {
-      if (documentViewerKey === 1) {
+      _removed = false;
+      // Register editor-feature handlers for the primary DocumentViewer of this instance.
+      const isPrimaryEventHandler =
+        documentViewerKey === 1 ||
+        (window.isApryseWebViewerWebComponent && !core.getMultiViewerModeActive());
+      if (isPrimaryEventHandler) {
+        _editorEventsRegistered = true;
         // ContentEdit Not supported for MultiViewerMode
         core.addEventListener('contentEditModeStarted', onContentEditModeStarted, undefined, documentViewerKey);
         core.addEventListener('contentEditDocumentDigitallySigned', onContentEditDocumentDigitalSigned, undefined, documentViewerKey);
@@ -93,6 +106,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged, undefined, documentViewerKey);
         core.addEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal, undefined, documentViewerKey);
         core.addEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal, undefined, documentViewerKey);
+        core.addEventListener('spreadsheetEditorHistoryChanged', onSpreadsheetEditorHistoryChanged, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', setupCompositionInput, undefined, documentViewerKey);
         core.addEventListener('documentLoaded', configureEditorMode, undefined, documentViewerKey);
         // Only need one of these event listeners (state is synced for both sides)
@@ -112,7 +126,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('fitModeUpdated', onFitModeUpdated, undefined, documentViewerKey);
         // Legacy UI listeners will be deprecated soon
         core.addEventListener('documentLoaded', checkDocumentForTools, undefined, documentViewerKey);
-        core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged, undefined, documentViewerKey);
         core.addEventListener('rotationUpdated', onRotationUpdated, undefined, documentViewerKey);
         core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, undefined, documentViewerKey);
         // Accessible Reading order mode not support by MultiViewer
@@ -150,6 +163,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.addEventListener('displayModeUpdated', onDisplayModeUpdated, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', onDocumentLoaded, undefined, documentViewerKey);
       core.addEventListener('documentUnloaded', onDocumentUnloaded, undefined, documentViewerKey);
+      core.addEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated, undefined, documentViewerKey);
       core.addEventListener('zoomUpdated', onZoomUpdated, undefined, documentViewerKey);
       core.addEventListener('annotationChanged', onAnnotationChanged, undefined, documentViewerKey);
       core.addEventListener('historyChanged', onHistoryChanged, undefined, documentViewerKey);
@@ -169,7 +183,11 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.getTool(ToolNames.FORM_FILL_CHECKMARK, documentViewerKey).addEventListener('annotationAdded', onCheckStampAnnotationAdded);
     },
     removeEventHandlers: () => {
-      if (documentViewerKey === 1) {
+      if (_removed) {
+        return;
+      }
+      _removed = true;
+      if (_editorEventsRegistered) {
         // ContentEdit Not supported for MultiViewerMode
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted, documentViewerKey);
         core.removeEventListener('contentEditDocumentDigitallySigned', onContentEditDocumentDigitalSigned, documentViewerKey);
@@ -181,6 +199,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('selectionChanged', onSpreadsheetEditorSelectionChanged, documentViewerKey);
         core.removeEventListener('selectedRangeStyleChanged', onSelectedRangeStyleChanged, documentViewerKey);
         core.removeEventListener('spreadsheetEditorEditModeChanged', onSpreadsheetEditorEditModeChanged, documentViewerKey);
+        core.removeEventListener('spreadsheetEditorHistoryChanged', onSpreadsheetEditorHistoryChanged, documentViewerKey);
         core.removeEventListener('spreadsheetEditorLoaded', openSpreadsheetEditorLoadingModal, documentViewerKey);
         core.removeEventListener('spreadsheetEditorReady', closeSpreadsheetEditorLoadingModal, documentViewerKey);
         core.removeEventListener('documentLoaded', setupCompositionInput, documentViewerKey);
@@ -202,7 +221,6 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('fitModeUpdated', onFitModeUpdated, documentViewerKey);
         // Legacy UI listeners will be deprecated soon
         core.removeEventListener('documentLoaded', checkDocumentForTools, documentViewerKey);
-        core.removeEventListener('readOnlyModeChanged', onReadOnlyModeChanged, documentViewerKey);
         core.removeEventListener('rotationUpdated', onRotationUpdated, documentViewerKey);
         core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, documentViewerKey);
         // Accessible Reading order mode not support by MultiViewer
@@ -240,6 +258,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.removeEventListener('displayModeUpdated', onDisplayModeUpdated, documentViewerKey);
       core.removeEventListener('documentLoaded', onDocumentLoaded, documentViewerKey);
       core.removeEventListener('documentUnloaded', onDocumentUnloaded, documentViewerKey);
+      core.removeEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated, documentViewerKey);
       core.removeEventListener('zoomUpdated', onZoomUpdated, documentViewerKey);
       core.removeEventListener('annotationChanged', onAnnotationChanged, documentViewerKey);
       core.removeEventListener('historyChanged', onHistoryChanged, documentViewerKey);

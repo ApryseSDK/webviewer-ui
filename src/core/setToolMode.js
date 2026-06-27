@@ -1,4 +1,5 @@
 import core from 'core';
+import { getMultiInstanceActiveKey, getMultiViewerModeActive } from './documentViewers';
 
 /**
  * Set the tool that a user will be using
@@ -7,5 +8,20 @@ import core from 'core';
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:toolModeUpdated__anchor
  */
 export default (toolName) => {
+  if (getMultiViewerModeActive()) {
+    core.getDocumentViewers().forEach((docViewer) => docViewer.setToolMode(docViewer.getTool(toolName)));
+    return;
+  }
+
+  const key = getMultiInstanceActiveKey();
+  if (key) {
+    const docViewer = core.getDocumentViewer(key);
+    if (docViewer) {
+      docViewer.setToolMode(docViewer.getTool(toolName));
+    }
+    return;
+  }
+
   core.getDocumentViewers().forEach((docViewer) => docViewer.setToolMode(docViewer.getTool(toolName)));
 };
+

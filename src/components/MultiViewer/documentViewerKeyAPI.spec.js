@@ -89,10 +89,7 @@ describe('Document Viewer Key APIs', () => {
         'UI.setActiveDocumentViewerKey'
       );
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'SET_ACTIVE_VIEWER', payload: 2 });
-      expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, {
-        activeDocumentViewerKey: 2,
-        previousDocumentViewerKey: 1,
-      });
+      expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, [2, 1]);
     });
 
     it('should not dispatch or fire event when setting the same viewer key', () => {
@@ -122,10 +119,7 @@ describe('Document Viewer Key APIs', () => {
       const setActiveDocumentViewerKey = setActiveDocumentViewerKeyAPI(mockStore);
       setActiveDocumentViewerKey(1);
 
-      expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, {
-        activeDocumentViewerKey: 1,
-        previousDocumentViewerKey: 2,
-      });
+      expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, [1, 2]);
     });
 
     it('should validate input with checkTypes accepting 1, 2', () => {

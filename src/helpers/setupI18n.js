@@ -37,9 +37,13 @@ const requestWithXmlHttpRequest = (options, url, payload, callback) => {
   }
 };
 
-export default (state) => {
+export default (state, i18n) => {
+  // Use per-instance i18n if provided, otherwise fall back to global singleton
+  const i18nInstance = i18n || i18next;
+  i18nInstance.languages = getAvailableLanguages();
   const options = {
     fallbackLng: 'en',
+    nsSeparator: false,
     react: {
       useSuspense: false,
     },
@@ -55,7 +59,7 @@ export default (state) => {
 
     window.Core.Tools.CalloutCreateTool.setTextHandler(() => t('message.insertTextHere'));
 
-    window.Core.Tools.ArcMeasurementCreateTool.setMeasurementLabelsHandler(() => {
+    window.Core.Tools.ArcMeasurementCreateTool?.setMeasurementLabelsHandler?.(() => {
       return {
         length: t('option.measurementOverlay.length'),
         radius: t('option.measurementOverlay.radius'),
@@ -64,29 +68,42 @@ export default (state) => {
     });
   };
 
+  const i18nURL = window.isApryseWebViewerWebComponent
+    ? `${window.webViewerPath || './'}ui/i18n/{{ns}}-{{lng}}.json`
+    : './i18n/{{ns}}-{{lng}}.json';
+  const backendOptions = {
+    ...options,
+    backend: {
+      loadPath: i18nURL,
+      request: requestWithXmlHttpRequest,
+    },
+  };
+
   if (state.advanced.disableI18n) {
-    i18next.init(options, callback);
+    i18nInstance.init(options, callback);
   } else {
-    // eslint-disable-next-line no-undef, camelcase
-    const i18nURL = `${window.isApryseWebViewerWebComponent ? __webpack_public_path__ : './'}i18n/{{ns}}-{{lng}}.json`;
-    i18next.use(HttpApi).init(
-      {
-        ...options,
-        backend: {
-          loadPath: i18nURL,
-          request: requestWithXmlHttpRequest,
-        },
-      },
-      callback,
-    );
+    i18nInstance.use(HttpApi).init(backendOptions, callback);
+  }
+
+  // In multi-instance mode, also initialize the global i18next singleton so that
+  // legacy code importing `i18next` directly (e.g. i18next.t(), i18next.getFixedT())
+  // doesn't crash.  The per-instance i18n from I18nextProvider is still used for
+  // language isolation; the global just acts as a shared fallback.
+  if (i18n && i18n !== i18next && !i18next.isInitialized && !i18next.isInitializing) {
+    i18next.languages = getAvailableLanguages();
+    if (state.advanced.disableI18n) {
+      i18next.init(options);
+    } else {
+      i18next.use(HttpApi).init(backendOptions);
+    }
   }
 
   // set custom rules. since i18next doesn't support (i.e 'zh-ch', 'zh-tw', or 'pt-br')
   // have to look inside the i18n source code "getRule" function to see what rule we can copy
   Object.keys(languageRules).forEach((lang) => {
     if (languageRules[lang].i18next) {
-      const rule = i18next.services.pluralResolver.getRule(languageRules[lang].i18next);
-      i18next.services.pluralResolver.addRule(lang, rule);
+      const rule = i18nInstance.services.pluralResolver.getRule(languageRules[lang].i18next);
+      i18nInstance.services.pluralResolver.addRule(lang, rule);
     }
   });
 };

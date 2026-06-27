@@ -3,15 +3,15 @@ import { Provider } from 'react-redux';
 import OutlinesPanel from './OutlinesPanel';
 import core from 'core';
 import { getDefaultOutlines , createOutlines } from '../Outline/Outline.stories';
-import '../LeftPanel/LeftPanel.scss';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { workerTypes } from '../../constants/types';
-import { expect, within, userEvent, waitFor } from 'storybook/test';
+import { within, userEvent } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import Panel from 'components/Panel';
 
 export default {
   title: 'Components/OutlinesPanel',
@@ -22,7 +22,7 @@ core.isFullPDFEnabled = () => true;
 
 const MockApp = ({ initialState, width, height }) => {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: initialState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false,
@@ -32,13 +32,11 @@ const MockApp = ({ initialState, width, height }) => {
   });
   setItemToFlyoutStore(store);
   return (
-    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-      <div className='left-panel-container' style={{ minWidth: '330px' }}>
-        <Provider store={store}>
-          <OutlinesPanel isTest/>
-        </Provider>
-      </div>
-    </div>
+    <Provider store={store}>
+      <Panel dataElement="outlinesPanel" location="left">
+        <OutlinesPanel isTest/>
+      </Panel>
+    </Provider>
   );
 };
 
@@ -59,7 +57,9 @@ const Template = (args) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       pageLabels: { 1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
@@ -67,8 +67,16 @@ const Template = (args) => {
       },
       activeFlyout: 'bookmarkOutlineFlyout',
       openElements: {
+        outlinesPanel: true,
         'bookmarkOutlineFlyout': true,
       },
+      panelWidths: {
+        ...initialState.viewer.panelWidths,
+        outlinesPanel: 330,
+      },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
       activeToolName: args.activeToolName || 'AnnotationCreateTextUnderline',
       ...argsViewer,
     },

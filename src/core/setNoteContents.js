@@ -5,6 +5,6 @@ import core from 'core';
  * @fires annotationChanged(Modify) on AnnotationManager
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  */
-export default (annotation, content, documentViewerKey = 1) => {
+export default (annotation, content, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().setNoteContents(annotation, content);
 };

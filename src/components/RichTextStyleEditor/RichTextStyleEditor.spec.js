@@ -35,7 +35,7 @@ describe('RichTextStyleEditor', () => {
       documentViewer: {},
     });
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
     });
   });
@@ -124,7 +124,7 @@ describe('RichTextStyleEditor', () => {
         documentViewer: {},
       });
       store = configureStore({
-        reducer: rootReducer,
+        reducer: rootReducer(),
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
       });
       store.dispatch(actions.setIsMultiViewerMode(true));

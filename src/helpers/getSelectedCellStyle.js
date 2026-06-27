@@ -1,7 +1,7 @@
 import core from 'core';
 
 function getSelectedCellStyle() {
-  if (!core.getDocumentViewer()) {
+  if (!core.hasDocumentViewer()) {
     return;
   }
   const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();

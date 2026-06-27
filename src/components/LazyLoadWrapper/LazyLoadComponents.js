@@ -4,7 +4,6 @@ import { lazy } from 'react';
 const ScaleOverlayContainer = lazy(() => import('components/ScaleOverlay/ScaleOverlayContainer'));
 const MeasurementOverlay = lazy(() => import('components/MeasurementOverlay'));
 const ViewControlsOverlay = lazy(() => import('components/ViewControlsOverlay'));
-const MenuOverlay = lazy(() => import('components/MenuOverlay'));
 const ZoomOverlay = lazy(() => import('components/ZoomOverlay'));
 const PageManipulationOverlay = lazy(() => import('components/PageManipulationOverlay'));
 const AnnotationContentOverlay = lazy(() => import('components/AnnotationContentOverlay'));
@@ -14,13 +13,8 @@ const HeaderFooterControlsOverlay = lazy(() => import('components/HeaderFooterCo
 
 // Popups
 const AnnotationPopup = lazy(() => import('components/AnnotationPopup'));
-const FormFieldEditPopup = lazy(() => import('components/FormFieldEditPopup'));
 const TextPopup = lazy(() => import('components/TextPopup'));
 const ContextMenuPopup = lazy(() => import('components/ContextMenuPopup'));
-const RichTextPopup = lazy(() => import('components/RichTextPopup'));
-const RichTextStyleEditor = lazy(() => import('components/RichTextStyleEditor'));
-const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
-const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
 const LinkAnnotationPopup = lazy(() => import('components/LinkAnnotationPopup'));
 const AlignmentPopup = lazy(() => import('components/AlignmentPopup'));
@@ -42,7 +36,6 @@ const SettingsModal = lazy(() => import('components/SettingsModal'));
 const SaveModal = lazy(() => import('components/SaveModal'));
 const InsertPageModal = lazy(() => import('components/InsertPageModal'));
 const LoadingModal = lazy(() => import('components/LoadingModal'));
-const ProgressModal = lazy(() => import('components/ProgressModal'));
 const WarningModal = lazy(() => import('components/WarningModal'));
 const ColorPickerModal = lazy(() => import('components/ColorPickerModal'));
 const OpenFileModal = lazy(() => import('components/OpenFileModal'));
@@ -64,7 +57,6 @@ const NotesPanel = lazy(() => import('components/NotesPanel'));
 const SearchPanel = lazy(() => import('components/SearchPanel'));
 const TabPanel = lazy(() => import('components/ModularComponents/TabPanel'));
 const SignatureListPanel = lazy(() => import('components/SignatureListPanel'));
-const LeftPanel = lazy(() => import('components/LeftPanel'));
 const RubberStampPanel = lazy(() => import('components/RubberStampPanel'));
 const RedactionPanel = lazy(() => import('components/RedactionPanel'));
 const PortfolioPanel = lazy(() => import('components/PortfolioPanel'));
@@ -75,23 +67,15 @@ const IndexPanel = lazy(() => import('src/components/ModularComponents/IndexPane
 const FormulaBar = lazy(() => import('components/FormulaBar'));
 const SpreadsheetSwitcher = lazy(() => import('components/ModularComponents/SpreadsheetEditor/SpreadsheetSwitcher'));
 
-const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
-
 const LazyLoadComponents = {
   AnnotationPopup,
-  FormFieldEditPopup,
   TextPopup,
   ContextMenuPopup,
   InlineCommentingPopup,
-  RichTextPopup,
-  RichTextStyleEditor,
-  AudioPlaybackPopup,
   AlignmentPopup,
-  DocumentCropPopup,
   MeasurementOverlay,
   ScaleOverlayContainer,
   ViewControlsOverlay,
-  MenuOverlay,
   ZoomOverlay,
   PageManipulationOverlay,
   AnnotationContentOverlay,
@@ -115,7 +99,6 @@ const LazyLoadComponents = {
   IndexPanel,
   InsertPageModal,
   LoadingModal,
-  ProgressModal,
   WarningModal,
   ColorPickerModal,
   OpenFileModal,
@@ -130,10 +113,8 @@ const LazyLoadComponents = {
   NotesPanel,
   SearchPanel,
   TabPanel,
-  LeftPanel,
   RedactionPanel,
   PortfolioPanel,
-  OfficeEditorToolsHeader,
   CreatePortfolioModal,
   LinkAnnotationPopup,
   SignatureListPanel,

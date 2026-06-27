@@ -1,3 +1,4 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import App from 'components/App';
@@ -85,6 +86,53 @@ export const MultiTabWithMarginOffset = (_, context) => {
       </div>
     </Provider>
   );
+};
+
+export const MultiTabWithMultiViewerTab = (_, context) => {
+  const { addonRtl } = context.globals;
+
+  const multiViewerTabState = {
+    ...state,
+    viewer: {
+      ...state.viewer,
+      isMultiViewerMode: true,
+      isMultiViewerReady: true,
+      tabs: [
+        { id: 6, src: 'file6.pptx', options: { filename: 'Title E.pdf' }, },
+        {
+          id: 7,
+          src: 'file7.pdf',
+          options: { filename: 'Compare View.pdf' },
+          isMultiViewer: true,
+          viewerDocuments: {
+            2: { id: 8, src: 'file8.pdf', options: { filename: 'Compare View (2).pdf' }, isSecond: true, viewerKey: 2 },
+          },
+        },
+      ],
+      activeTab: 7,
+    },
+    document: {
+      ...initialState.document,
+      documentLoadedMap: {
+        1: true,
+        2: true
+      },
+    }
+  };
+
+  const store = createStore(multiViewerTabState);
+  setItemToFlyoutStore(store);
+
+  return (
+    <Provider store={store}>
+      <App removeEventHandlers={noop} initialDirection={addonRtl} />
+    </Provider>
+  );
+};
+
+MultiTabWithMultiViewerTab.parameters = {
+  layout: 'fullscreen',
+  customizableUI: true,
 };
 
 export const MultiTabWithNameHandler = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents, isMultiTab: true });

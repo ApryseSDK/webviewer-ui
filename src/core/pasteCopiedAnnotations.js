@@ -10,6 +10,6 @@ import core from 'core';
  * it will be fired with deselect action if you selected any annotations before paste
  * it will be fired with select action after the annotation is pasted
  */
-export default (documentViewerKey = 1) => {
+export default (documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().pasteCopiedAnnotations();
 };

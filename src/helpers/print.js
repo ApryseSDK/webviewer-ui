@@ -1,5 +1,5 @@
 /* eslint-disable no-unsanitized/property */
-import i18n from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import actions from 'actions';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
@@ -264,7 +264,7 @@ const pagesToPrintPageArray = (core, pagesToPrint) => {
 const serverPrint = (bbURLPromise) => {
   const printPage = window.open('', '_blank');
   // eslint-disable-next-line no-unsanitized/method
-  printPage.document.write(i18n.t('message.preparingToPrint'));
+  printPage.document.write(getCurrentT()('message.preparingToPrint'));
   bbURLPromise.then((result) => {
     printPage.location.href = result.url;
   });

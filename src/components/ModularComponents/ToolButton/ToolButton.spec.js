@@ -20,7 +20,7 @@ describe('ToolButton', () => {
   const toolName = 'Pan';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     render(
       <Provider store={store}>
         <ToolButton
@@ -37,7 +37,7 @@ describe('ToolButton', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createToolButton = createToolButtonAPI(store);
 
     const toolButton = createToolButton({

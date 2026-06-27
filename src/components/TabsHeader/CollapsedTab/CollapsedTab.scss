@@ -22,13 +22,17 @@
   cursor: pointer;
 
   .file-text {
+    flex: 1 1 auto;
     max-width: calc(100% - 30px);
     padding-inline-start: 8px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    min-width: 0;
+    overflow: hidden;
 
     p {
+      min-width: 0;
       font-size: var(--font-size-default);
       white-space: nowrap;
       overflow: hidden;

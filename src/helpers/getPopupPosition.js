@@ -89,6 +89,7 @@ export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentVie
     getPopupDimensions(popup),
     documentViewerKey,
     gap,
+    popup?.current,
   );
 
   if (!Number.isFinite(left) || !Number.isFinite(top)) {
@@ -108,6 +109,7 @@ export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey =
     selectedTextPosition,
     getPopupDimensions(popup),
     documentViewerKey,
+    popup?.current,
   );
 
   if (!Number.isFinite(left) || !Number.isFinite(top)) {
@@ -341,24 +343,25 @@ const getPopupDimensions = (popup) => {
   return { width, height };
 };
 
-const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey, gap) => {
+const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey, gap, anchorNode) => {
   const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey, gap);
-  const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey, anchorNode);
 
   return { left, top };
 };
 
-const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentViewerKey) => {
+const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentViewerKey, anchorNode) => {
   const top = calcPopupTop(selectedTextPosition, popupDimension, documentViewerKey);
-  const left = calcPopupLeft(selectedTextPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(selectedTextPosition, popupDimension, documentViewerKey, anchorNode);
 
   return { left, top };
 };
 
 /** @ignore */
-const getContainingBlockDocOffset = () => {
+const getContainingBlockDocOffset = (anchorNode) => {
   const { scrollX, scrollY } = getWindowScroll();
-  const hostContainer = window.isApryseWebViewerWebComponent ? getRootNode()?.host : null;
+  const localRoot = anchorNode?.getRootNode?.();
+  const hostContainer = window.isApryseWebViewerWebComponent ? (localRoot?.host || getRootNode()?.host) : null;
   if (!hostContainer || typeof hostContainer.getBoundingClientRect !== 'function') {
     return { top: scrollY, left: scrollX };
   }
@@ -369,14 +372,14 @@ const getContainingBlockDocOffset = () => {
   };
 };
 
-export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey) => {
+export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey, anchorNode) => {
   if (!hasValidBounds({ topLeft, bottomRight })) {
     return fallbackPosition.left;
   }
 
   const scrollViewElement = core.getScrollViewElement(documentViewerKey);
   const scrollLeft = scrollViewElement ? getRtlSafeScrollLeft(scrollViewElement) : 0;
-  const containingBlockLeft = getContainingBlockDocOffset().left;
+  const containingBlockLeft = getContainingBlockDocOffset(anchorNode).left;
 
   const annotCenter = (topLeft.x + bottomRight.x) / 2;
   const scaledWidth = width / getSafeScale().scaleX;

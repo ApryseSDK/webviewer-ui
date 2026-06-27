@@ -3,7 +3,6 @@ import React from 'react';
 import BookmarksPanel from './BookmarksPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import '../LeftPanel/LeftPanel.scss';
 import initialState from 'src/redux/initialState';
 import { createTemplate, MockApp } from 'helpers/storybookHelper';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
@@ -11,11 +10,20 @@ import { expect, within } from 'storybook/test';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+import Panel from 'components/Panel';
 
 export default {
   title: 'Components/BookmarksPanel',
   component: BookmarksPanel,
 };
+
+const renderInBookmarksPanel = (state) => (
+  <Provider store={configureStore({ reducer: () => state })}>
+    <Panel dataElement="bookmarksPanel" location="left">
+      <BookmarksPanel />
+    </Panel>
+  </Provider>
+);
 
 const pageLabels = {
   1: [
@@ -33,9 +41,11 @@ const pageLabels = {
 };
 
 export const Basic = () => {
-  const initialState = {
+  const state = {
     viewer: {
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
       pageLabels: pageLabels,
       currentPage: { 1: 3 },
@@ -49,7 +59,12 @@ export const Basic = () => {
       activeFlyout: 'bookmarkFlyout-outlinePath',
       openElements: {
         'bookmarkFlyout-outlinePath': true,
+        bookmarksPanel: true,
       },
+      panelWidths: { bookmarksPanel: 330 },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
     },
     lastActiveToolForRibbon: {},
     document: {
@@ -65,29 +80,28 @@ export const Basic = () => {
     }
   };
 
-  return (
-    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-      <div className='left-panel-container' style={{ minWidth: '330px' }}>
-        <Provider store={configureStore({ reducer: () => initialState })}>
-          <BookmarksPanel />
-        </Provider>
-      </div>
-    </div>
-  );
+  return renderInBookmarksPanel(state);
 };
 
 Basic.parameters = disableRtlModeParameters;
 
 export const NoBookmarks = () => {
-  const initialState = {
+  const state = {
     viewer: {
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
       pageLabels: pageLabels,
       currentPage: { 1: 3 },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-View',
+      openElements: { bookmarksPanel: true },
+      panelWidths: { bookmarksPanel: 330 },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
     },
     document: {
       bookmarks: {},
@@ -97,15 +111,7 @@ export const NoBookmarks = () => {
     },
   };
 
-  return (
-    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-      <div className='left-panel-container' style={{ minWidth: '330px' }}>
-        <Provider store={configureStore({ reducer: () => initialState })}>
-          <BookmarksPanel />
-        </Provider>
-      </div>
-    </div>
-  );
+  return renderInBookmarksPanel(state);
 };
 
 NoBookmarks.parameters = disableRtlModeParameters;

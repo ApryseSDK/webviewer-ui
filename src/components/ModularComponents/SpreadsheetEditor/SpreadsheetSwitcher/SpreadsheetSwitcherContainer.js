@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import useCore from 'hooks/useCore';
 import SpreadsheetSwitcher from './SpreadsheetSwitcher';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 import { useTranslation } from 'react-i18next';
 import useFocusOnClose from 'src/hooks/useFocusOnClose';
 import { isSheetNameDuplicated } from 'helpers/spreadsheetSwitchContainerHelpers';
+import actions from 'actions';
 
 const ERROR = 'SpreadsheetEditorDocument is not loaded';
 let NEW_SPREADSHEET_NUMBER = 1;
 
 function SpreadsheetSwitcherContainer(props) {
   const { core } = useCore();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [sheets, setSheets] = useState([]);
   const [activeSheetIndex, setActiveSheetIndex] = useState(0);
@@ -29,9 +32,17 @@ function SpreadsheetSwitcherContainer(props) {
   };
 
   useEffect(() => {
+    const refreshUndoRedoState = () => {
+      const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
+      const spreadsheetEditorHistoryManager = spreadsheetEditorManager.getSpreadsheetEditorHistoryManager();
+      dispatch(actions.setSpreadsheetEditorCanUndo(spreadsheetEditorHistoryManager.canUndo()));
+      dispatch(actions.setSpreadsheetEditorCanRedo(spreadsheetEditorHistoryManager.canRedo()));
+    };
+
     const onSpreadsheetEditorSheetStateChanged = (event) => {
       setSheets(event.getVisibleSheets());
       setActiveSheetIndex(event.getActiveSheetIndex());
+      refreshUndoRedoState();
     };
 
     const onSpreadsheetEditorSheetChanged = (event) => {
@@ -40,8 +51,8 @@ function SpreadsheetSwitcherContainer(props) {
 
     const onSpreadsheetEditorReady = () => {
       const documentViewer = core.getDocumentViewer();
-      const doc = documentViewer.getDocument().getSpreadsheetEditorDocument();
-      const workbookInstance = doc.getWorkbook();
+      const spreadsheetEditorManager = documentViewer.getSpreadsheetEditorManager();
+      const workbookInstance = spreadsheetEditorManager.getWorkbook();
       if (workbookInstance) {
         setSheets(getVisibleSheetsFromWorkbook(workbookInstance));
       }
@@ -55,7 +66,7 @@ function SpreadsheetSwitcherContainer(props) {
       core.removeEventListener('spreadsheetEditorReady', onSpreadsheetEditorReady);
       core.removeEventListener('activeSheetChanged', onSpreadsheetEditorSheetChanged);
     };
-  }, []);
+  }, [core, dispatch]);
 
   const handleDocumentUnloaded = useCallback(() => {
     setSheets([]);
@@ -64,7 +75,7 @@ function SpreadsheetSwitcherContainer(props) {
   useOnDocumentUnloaded(handleDocumentUnloaded);
 
   const setActiveSheet = (name, index) => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     if (!workbook) {
       return console.error(ERROR);
     }
@@ -76,7 +87,7 @@ function SpreadsheetSwitcherContainer(props) {
   };
 
   const createNewSheet = () => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     if (!workbook) {
       return console.error(ERROR);
     }
@@ -89,7 +100,7 @@ function SpreadsheetSwitcherContainer(props) {
   };
 
   const deleteSheet = useFocusOnClose((name) => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     if (!workbook) {
       return console.error(ERROR);
     }
@@ -100,7 +111,7 @@ function SpreadsheetSwitcherContainer(props) {
   }, 'addTabButton');
 
   const renameSheet = (oldName, newName) => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     if (!workbook) {
       return console.error(ERROR);
     }
@@ -112,7 +123,7 @@ function SpreadsheetSwitcherContainer(props) {
   };
 
   const checkIsSheetNameDuplicated = (newName) => {
-    const workbook = core.getDocument()?.getSpreadsheetEditorDocument()?.getWorkbook();
+    const workbook = core.getDocumentViewer().getSpreadsheetEditorManager()?.getWorkbook();
     if (!workbook) {
       console.error(ERROR);
       return false;

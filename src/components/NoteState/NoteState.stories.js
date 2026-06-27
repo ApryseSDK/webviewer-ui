@@ -58,7 +58,7 @@ const initialState = {
 
 const store = configureStore({
   preloadedState: initialState,
-  reducer: rootReducer,
+  reducer: rootReducer(),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 

@@ -72,7 +72,7 @@ const createMockStore = (isSingleCell, borderStyles = null) => {
   };
 
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer(),
     preloadedState: {
       spreadsheetEditor: {
         cellProperties: {

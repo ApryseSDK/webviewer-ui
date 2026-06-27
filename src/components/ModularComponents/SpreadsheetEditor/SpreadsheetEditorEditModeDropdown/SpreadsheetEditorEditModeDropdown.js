@@ -52,7 +52,7 @@ const SpreadsheetEditorEditModeDropdown = (props) => {
 
   return (
     <div className={classNames({
-      'track-change-overlay': true,
+      'spreadsheet-editor-edit-mode-dropdown': true,
       'flyout-item': isFlyoutItem,
       'header-item': !isFlyoutItem,
     })}>

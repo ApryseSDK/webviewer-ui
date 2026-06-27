@@ -5,7 +5,10 @@ function performClipboardActionOnCells(actionType) {
     return;
   }
 
-  const clipboard = core.getDocumentViewer().getDocument().getSpreadsheetEditorDocument().getClipboard();
+  const clipboard = core.getDocumentViewer().getSpreadsheetEditorManager().getSpreadsheetEditorClipboard();
+  if (!clipboard) {
+    return;
+  }
 
   switch (actionType) {
     case 'copy':

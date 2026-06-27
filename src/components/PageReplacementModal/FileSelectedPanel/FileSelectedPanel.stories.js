@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import FileSelectedPanel from './FileSelectedPanel';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { mobileStoryParameters } from 'helpers/storybookParams';
 
@@ -25,7 +25,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const mockDocument = {
   getPageCount: () => 10,

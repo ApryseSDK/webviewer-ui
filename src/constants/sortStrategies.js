@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import dayjs from 'dayjs';
 // eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
@@ -7,8 +6,23 @@ import { rotateRad } from 'helpers/rotate';
 import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import getCurrentT from 'helpers/getCurrentT';
 import { COMMON_COLORS } from './commonColors';
 import './sortStrategies.scss';
+
+function normalizeSortOptions(optionsOrDocumentViewerKey = {}) {
+  if (typeof optionsOrDocumentViewerKey === 'number') {
+    return { documentViewerKey: optionsOrDocumentViewerKey };
+  }
+  return {
+    ...optionsOrDocumentViewerKey,
+    documentViewerKey: optionsOrDocumentViewerKey.documentViewerKey || 1,
+  };
+}
+
+function getTranslator(options = {}) {
+  return options.t || getCurrentT();
+}
 
 function getDocumentCenter(pageNumber, documentViewerKey = 1) {
   let result;
@@ -81,57 +95,59 @@ function getFirstQuadPosition(note) {
 }
 
 const linePositionSortStrategy = {
-  getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
-    if (a.PageNumber !== b.PageNumber) {
-      return a.PageNumber - b.PageNumber;
-    }
-    const boundsA = getRotatedBounds(a, documentViewerKey);
-    const boundsB = getRotatedBounds(b, documentViewerKey);
+  getSortedNotes: (notes, optionsOrDocumentViewerKey = {}) => {
+    const { documentViewerKey } = normalizeSortOptions(optionsOrDocumentViewerKey);
+    return notes.sort((a, b) => {
+      if (a.PageNumber !== b.PageNumber) {
+        return a.PageNumber - b.PageNumber;
+      }
+      const boundsA = getRotatedBounds(a, documentViewerKey);
+      const boundsB = getRotatedBounds(b, documentViewerKey);
 
-    const overlapsY = boundsA.maxY >= boundsB.minY && boundsB.maxY >= boundsA.minY;
+      const overlapsY = boundsA.maxY >= boundsB.minY && boundsB.maxY >= boundsA.minY;
 
-    if (!overlapsY) {
-      return boundsA.minY - boundsB.minY;
-    }
+      if (!overlapsY) {
+        return boundsA.minY - boundsB.minY;
+      }
 
-    const quadA = getFirstQuadPosition(a);
-    const quadB = getFirstQuadPosition(b);
+      const quadA = getFirstQuadPosition(a);
+      const quadB = getFirstQuadPosition(b);
 
-    if (!quadA || !quadB) {
-      return boundsA.minX - boundsB.minX;
-    }
+      if (!quadA || !quadB) {
+        return boundsA.minX - boundsB.minX;
+      }
 
-    const rotation = getRotationRad(a.PageNumber, documentViewerKey);
-    const center = getDocumentCenter(a.PageNumber, documentViewerKey);
-    const rotatedA = rotateRad(center.x, center.y, quadA.x1, quadA.y1, rotation);
-    const rotatedB = rotateRad(center.x, center.y, quadB.x1, quadB.y1, rotation);
+      const rotation = getRotationRad(a.PageNumber, documentViewerKey);
+      const center = getDocumentCenter(a.PageNumber, documentViewerKey);
+      const rotatedA = rotateRad(center.x, center.y, quadA.x1, quadA.y1, rotation);
+      const rotatedB = rotateRad(center.x, center.y, quadB.x1, quadB.y1, rotation);
 
-    return rotatedA.x - rotatedB.x;
-  }),
+      return rotatedA.x - rotatedB.x;
+    });
+  },
   shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-  getSeparatorContent: (_prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
+  getSeparatorContent: (_prevNote, currNote, options = {}) => `${getTranslator(options)('option.shared.page')} ${options.pageLabels[currNote.PageNumber - 1]}`,
 };
 
 const sortStrategies = {
   position: {
-    getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
-      if (a.PageNumber === b.PageNumber) {
-        const boundsA = getRotatedBounds(a, documentViewerKey);
-        const boundsB = getRotatedBounds(b, documentViewerKey);
-        return boundsA.minY - boundsB.minY;
-      }
-      return a.PageNumber - b.PageNumber;
-    }),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => currNote.PageNumber !== prevNote.PageNumber,
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (_prevNote, currNote, { pageLabels }, _documentViewerKey = 1) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
+    getSortedNotes: (notes, optionsOrDocumentViewerKey = {}) => {
+      const { documentViewerKey } = normalizeSortOptions(optionsOrDocumentViewerKey);
+      return notes.sort((a, b) => {
+        if (a.PageNumber === b.PageNumber) {
+          const boundsA = getRotatedBounds(a, documentViewerKey);
+          const boundsB = getRotatedBounds(b, documentViewerKey);
+          return boundsA.minY - boundsB.minY;
+        }
+        return a.PageNumber - b.PageNumber;
+      });
+    },
+    shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
+    getSeparatorContent: (_prevNote, currNote, options = {}) => `${getTranslator(options)('option.shared.page')} ${options.pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    // eslint-disable-next-line no-unused-vars
-    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    getSortedNotes: (notes) => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
       if (prevNoteDate && currNoteDate) {
@@ -145,8 +161,8 @@ const sortStrategies = {
 
       return true;
     },
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    getSeparatorContent: (prevNote, currNote, options = {}) => {
+      const t = getTranslator(options);
       const createdDate = currNote.DateCreated;
       if (createdDate) {
         const dayFormat = 'MMM D, YYYY';
@@ -155,22 +171,20 @@ const sortStrategies = {
         const createdDateString = dayjs(new Date(createdDate)).format(dayFormat);
 
         if (createdDateString === today) {
-          return i18next.t('option.notesPanel.separator.today');
+          return t('option.notesPanel.separator.today');
         }
         if (createdDateString === yesterday) {
-          return i18next.t('option.notesPanel.separator.yesterday');
+          return t('option.notesPanel.separator.yesterday');
         }
         return createdDateString;
       }
 
-      return i18next.t('option.notesPanel.separator.unknown');
+      return t('option.notesPanel.separator.unknown');
     },
   },
   modifiedDate: {
-    // eslint-disable-next-line no-unused-vars
-    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    getSortedNotes: (notes) => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = getLatestActivityDate(prevNote);
       const currNoteDate = getLatestActivityDate(currNote);
       if (prevNoteDate && currNoteDate) {
@@ -184,8 +198,8 @@ const sortStrategies = {
 
       return true;
     },
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    getSeparatorContent: (prevNote, currNote, options = {}) => {
+      const t = getTranslator(options);
       const latestActivityDate = getLatestActivityDate(currNote);
       if (latestActivityDate) {
         const dayFormat = 'MMM D, YYYY';
@@ -194,94 +208,113 @@ const sortStrategies = {
         const latestActivityDay = dayjs(latestActivityDate).format(dayFormat);
 
         if (latestActivityDay === today) {
-          return i18next.t('option.notesPanel.separator.today');
+          return t('option.notesPanel.separator.today');
         }
         if (latestActivityDay === yesterday) {
-          return i18next.t('option.notesPanel.separator.yesterday');
+          return t('option.notesPanel.separator.yesterday');
         }
         return latestActivityDay;
       }
 
-      return i18next.t('option.notesPanel.separator.unknown');
+      return t('option.notesPanel.separator.unknown');
     },
   },
   status: {
-    // eslint-disable-next-line no-unused-vars
-    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => {
-      const statusA =
+    getSortedNotes: (notes, options = {}) => {
+      const t = getTranslator(options);
+      return notes.sort((a, b) => {
+        const statusA =
           a.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
-      const statusB =
+            ? t('option.state.none').toUpperCase()
+            : t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
+        const statusB =
           b.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
-      return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
-    }),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => prevNote.getStatus() !== currNote.getStatus(),
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+            ? t('option.state.none').toUpperCase()
+            : t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
+        return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
+      });
+    },
+    shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
+    getSeparatorContent: (prevNote, currNote, options = {}) => {
+      const t = getTranslator(options);
       return currNote.getStatus() === ''
-        ? i18next.t('option.state.none')
-        : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
+        ? t('option.state.none')
+        : t(`option.state.${currNote.getStatus().toLowerCase()}`);
     },
   },
   author: {
-    getSortedNotes: (notes, documentViewerKey = 1) => notes.sort((a, b) => {
-      const authorA = core.getDisplayAuthor(a['Author'], documentViewerKey)?.toUpperCase();
-      const authorB = core.getDisplayAuthor(b['Author'], documentViewerKey)?.toUpperCase();
-      return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
-    }),
-    shouldRenderSeparator: (prevNote, currNote, _options, documentViewerKey = 1) => core.getDisplayAuthor(prevNote['Author'], documentViewerKey) !== core.getDisplayAuthor(currNote['Author'], documentViewerKey),
-    getSeparatorContent: (_prevNote, currNote, _options, documentViewerKey = 1) => {
+    getSortedNotes: (notes, optionsOrDocumentViewerKey = {}) => {
+      const { documentViewerKey } = normalizeSortOptions(optionsOrDocumentViewerKey);
+      return notes.sort((a, b) => {
+        const authorA = core.getDisplayAuthor(a['Author'], documentViewerKey)?.toUpperCase();
+        const authorB = core.getDisplayAuthor(b['Author'], documentViewerKey)?.toUpperCase();
+        return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
+      });
+    },
+    shouldRenderSeparator: (prevNote, currNote, options = {}, documentViewerKey = normalizeSortOptions(options).documentViewerKey) => core.getDisplayAuthor(prevNote['Author'], documentViewerKey) !== core.getDisplayAuthor(currNote['Author'], documentViewerKey),
+    getSeparatorContent: (_prevNote, currNote, options = {}, documentViewerKey = normalizeSortOptions(options).documentViewerKey) => {
       return core.getDisplayAuthor(currNote['Author'], documentViewerKey);
     },
   },
   type: {
-    // eslint-disable-next-line no-unused-vars
-    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((a, b) => {
+    getSortedNotes: (notes) => notes.sort((a, b) => {
       const typeA = getAnnotationClass(a);
       const typeB = getAnnotationClass(b);
       return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
     }),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    shouldRenderSeparator: (prevNote, currNote) => {
       return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
     },
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
-      return i18next.t(`option.type.${getAnnotationClass(currNote)}`);
+    getSeparatorContent: (prevNote, currNote, options = {}) => {
+      const t = getTranslator(options);
+      return t(`option.type.${getAnnotationClass(currNote)}`);
     },
   },
   color: {
-    // eslint-disable-next-line no-unused-vars
-    getSortedNotes: (notes, _documentViewerKey = 1) => notes.sort((prevNote, currNote) => {
+    getSortedNotes: (notes) => notes.sort((prevNote, currNote) => {
       const colorA = getNoteColor(currNote);
       const colorB = getNoteColor(prevNote);
 
       return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
     }),
-    // eslint-disable-next-line no-unused-vars
-    shouldRenderSeparator: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    shouldRenderSeparator: (prevNote, currNote) => {
       const colorA = getNoteColor(currNote);
       const colorB = getNoteColor(prevNote);
 
       return colorA !== colorB;
     },
-    // eslint-disable-next-line no-unused-vars
-    getSeparatorContent: (prevNote, currNote, _options, _documentViewerKey = 1) => {
+    getSeparatorContent: (prevNote, currNote, options = {}) => {
+      const t = getTranslator(options);
       const color = getNoteColor(currNote);
 
       return (
         <div className="sort-separator-color">
-          {i18next.t('option.notesOrder.color')}
+          {t('option.notesOrder.color')}
           <div
             className="sort-separator-color__swatch"
             css={{ background: color }}
           ></div>
         </div>
       );
+    },
+  },
+  number: {
+    getSortedNotes: (notes, optionsOrDocumentViewerKey = {}) => {
+      const { documentViewerKey } = normalizeSortOptions(optionsOrDocumentViewerKey);
+      return notes.sort((a, b) => {
+        const numA = a.getCustomData('trn-associated-number', documentViewerKey) || 0;
+        const numB = b.getCustomData('trn-associated-number', documentViewerKey) || 0;
+        return numA - numB;
+      });
+    },
+    shouldRenderSeparator: (prevNote, currNote, options = {}, documentViewerKey = normalizeSortOptions(options).documentViewerKey) => {
+      const numA = prevNote.getCustomData('trn-associated-number', documentViewerKey) || 0;
+      const numB = currNote.getCustomData('trn-associated-number', documentViewerKey) || 0;
+      return numA !== numB;
+    },
+    // eslint-disable-next-line no-unused-vars
+    getSeparatorContent: () => {
+      return;
     },
   },
 };
@@ -312,6 +345,7 @@ export const addSortStrategy = (newStrategy) => {
  * @property {string} AUTHOR Sort notes by the author.
  * @property {string} TYPE Sort notes by type.
  * @property {string} COLOR Sort notes by color.
+ * @property {string} NUMBER Sort notes by annotation number.
  *
  * @example
 WebViewer(...)
@@ -327,12 +361,16 @@ export const NotesPanelSortStrategy = {
   STATUS: 'status',
   AUTHOR: 'author',
   TYPE: 'type',
-  COLOR: 'color'
+  COLOR: 'color',
+  NUMBER: 'number',
 };
+
+// eslint-disable-next-line no-unused-vars
+const { NUMBER, ...baseStrategies } = NotesPanelSortStrategy;
 
 export const OfficeEditorNotesPanelSortStrategy = {
   LINE_POSITION: 'linePosition',
 };
 
-export const BASE_SORT_STRATEGIES = Object.values(NotesPanelSortStrategy);
+export const BASE_SORT_STRATEGIES = Object.values(baseStrategies);
 export const OFFICE_EDITOR_SORT_STRATEGIES = [OfficeEditorNotesPanelSortStrategy.LINE_POSITION, NotesPanelSortStrategy.CREATED_DATE, NotesPanelSortStrategy.AUTHOR];

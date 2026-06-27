@@ -5,6 +5,7 @@ const { Annotations, Tools } = window.Core;
 export const defaultProperties = {
   name: '',
   defaultValue: '',
+  dateFormat: '',
   radioButtonGroups: [],
 };
 
@@ -41,7 +42,9 @@ export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdo
   }
 
   const noneSelected = !annotation;
-  const isTextWidgetSelected = annotation instanceof Annotations.TextWidgetAnnotation;
+  const isDatePickerWidgetSelected = annotation instanceof Annotations.DatePickerWidgetAnnotation;
+  const isTextWidgetSelected = annotation instanceof Annotations.TextWidgetAnnotation && !isDatePickerWidgetSelected;
+  const isDatePickerFormFieldToolSelected = currentTool instanceof Tools.DatePickerFormFieldCreateTool;
   const isTextFormFieldToolSelected = currentTool instanceof Tools.TextFormFieldCreateTool;
 
   const showDefaultValueInput = (
@@ -55,6 +58,15 @@ export const handleFieldCreation = (annotation, fields, isSignatureOptionsDropdo
     panelFields.push(fields['DEFAULT_VALUE']);
   }
 
+  const showDateFormatInput = (
+    isDatePickerWidgetSelected ||
+    (isDatePickerFormFieldToolSelected && noneSelected)
+  );
+
+  if (showDateFormatInput) {
+    panelFields.push(fields['DATE_FORMAT']);
+  }
+
   return panelFields;
 };
 
@@ -63,7 +75,7 @@ export const handleFlagsCreation = (annotation, flags, core) => {
   const currentTool = core.getToolMode();
 
   switch (true) {
-    case annotation instanceof Annotations.TextWidgetAnnotation:
+    case annotation instanceof Annotations.TextWidgetAnnotation && !(annotation instanceof Annotations.DatePickerWidgetAnnotation):
     case currentTool instanceof Tools.TextFormFieldCreateTool:
       fieldFlags.push(flags['MULTI_LINE']);
       break;
@@ -143,7 +155,17 @@ export const createFlags = (handleFlagChange, fieldFlags) => {
 };
 
 export const createFields = (options, core) => {
-  const { onFieldNameChange, onFieldValueChange, fieldProperties, onSignatureOptionChange, getSignatureOption, annotation } = options;
+  const {
+    onFieldNameChange,
+    onFieldValueChange,
+    onDateFormatChange,
+    dateFormatOptions,
+    fieldProperties,
+    onSignatureOptionChange,
+    getSignatureOption,
+    annotation,
+  } = options;
+
   return {
     NAME: {
       label: 'formField.formFieldPopup.fieldName',
@@ -158,6 +180,13 @@ export const createFields = (options, core) => {
       onChange: (e) => onFieldValueChange(e, core),
       value: fieldProperties.defaultValue,
       type: 'text',
+    },
+    DATE_FORMAT: {
+      label: 'option.customStampModal.dateFormat',
+      onChange: (value) => onDateFormatChange(value, core),
+      value: fieldProperties.dateFormat,
+      options: dateFormatOptions,
+      type: 'dateFormat',
     },
     RADIO_GROUP: {
       label: 'formField.formFieldPopup.fieldName',

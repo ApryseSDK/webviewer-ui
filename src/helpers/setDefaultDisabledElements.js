@@ -5,9 +5,6 @@ import { isIOS, isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_TWO, PRIORITY_ONE } from 'constants/actionPriority';
 import Feature from 'constants/feature';
 import actions from 'actions';
-import selectors from 'selectors';
-
-const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
 
 export default (store) => {
   const { dispatch, getState } = store;
@@ -120,25 +117,16 @@ export default (store) => {
   dispatch(actions.disableElements(['contentEditButton', 'searchAndReplace'], PRIORITY_TWO));
 
   dispatch(
-    actions.disableElements(
-      getIsCustomUIEnabled(store) ? [
-        'wildCardSearchOption',
-        'readerPageTransitionButton',
-        'mathSymbolsButton',
-        'attachmentPanelButton',
-        'signatureOptionsDropdown',
-        'savedSignatureAndInitialsTabs',
-      ] : [
-        'bookmarksPanel',
-        'bookmarksPanelButton',
-        'wildCardSearchOption',
-        'readerPageTransitionButton',
-        'mathSymbolsButton',
-        'attachmentPanelButton',
-        'signatureOptionsDropdown',
-        'savedSignatureAndInitialsTabs',
-      ],
-      PRIORITY_ONE,
+    actions.disableElements([
+      'wildCardSearchOption',
+      'readerPageTransitionButton',
+      'mathSymbolsButton',
+      'threeDToolGroupButton',
+      'attachmentPanelButton',
+      'signatureOptionsDropdown',
+      'savedSignatureAndInitialsTabs',
+    ],
+    PRIORITY_ONE,
     ),
   );
 

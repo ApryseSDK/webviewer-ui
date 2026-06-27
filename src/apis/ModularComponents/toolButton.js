@@ -41,7 +41,7 @@ class ToolButton extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function toolButtonFactory(props) {
   const propsWithStore = { ...props, store };
   return new ToolButton(propsWithStore);
 };

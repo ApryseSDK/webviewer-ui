@@ -19,7 +19,7 @@ describe('RibbonItem', () => {
   const dataElement = 'ribbon1';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     render(
       <Provider store={store}>
         <RibbonItem
@@ -35,7 +35,7 @@ describe('RibbonItem', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createRibbonItem = createRibbonItemAPI(store);
 
     const ribbonItem = createRibbonItem({

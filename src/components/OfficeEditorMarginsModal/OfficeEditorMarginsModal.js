@@ -153,6 +153,7 @@ const OfficeEditorMarginsModal = () => {
     <div className='OfficeEditorMarginsModal' data-element={DataElements.OFFICE_EDITOR_MARGINS_MODAL}>
       <ModalWrapper
         title={t(`${OFFICE_EDITOR_TRANSLATION_PREFIX}marginsModal.title`)}
+        modalDataElement={DataElements.OFFICE_EDITOR_MARGINS_MODAL}
         closehandler={closeModalAndFocus}
         onCloseClick={closeModalAndFocus}
         swipeToClose

@@ -90,20 +90,15 @@ const NotesPanel = ({
   const VIRTUALIZATION_THRESHOLD = enableNotesPanelVirtualizedList ? (isIE ? 25 : 100) : Infinity;
 
   useEffect(() => {
-    const onAnnotationNumberingUpdated = (isEnabled) => {
-      dispatch(actions.setAnnotationNumbering(isEnabled));
-    };
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected') {
         setCurAnnotId(annotations[0].Id);
       }
     };
 
-    core.addEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
     core.addEventListener('annotationSelected', onAnnotationSelected);
 
     return () => {
-      core.removeEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
       core.removeEventListener('annotationSelected', onAnnotationSelected);
     };
   }, []);
@@ -117,16 +112,60 @@ const NotesPanel = ({
     dispatch(actions.closeElement('annotationNoteConnectorLine'));
   };
 
+  const noteMatchesSearchNumber = (note, searchedNumber) => {
+    const annotationNumber = note.getCustomData('trn-associated-number', activeDocumentViewerKey);
+
+    if (
+      annotationNumber === null ||
+      annotationNumber === undefined ||
+      (typeof annotationNumber === 'string' && annotationNumber.trim() === '')
+    ) {
+      return false;
+    }
+
+    const parsedAnnotationNumber = Number(annotationNumber);
+
+    return !Number.isNaN(parsedAnnotationNumber) && parsedAnnotationNumber === searchedNumber;
+  };
+
+  const prioritizeNotesBySearchedNumber = (notes) => {
+    if (!showAnnotationNumbering) {
+      return notes;
+    }
+
+    const normalizedSearchInput = String(searchInput ?? '').trim();
+    if (normalizedSearchInput === '') {
+      return notes;
+    }
+
+    const searchedNumber = Number(normalizedSearchInput);
+    if (Number.isNaN(searchedNumber)) {
+      return notes;
+    }
+
+    const matched = [];
+    const unmatched = [];
+
+    for (const note of notes) {
+      (noteMatchesSearchNumber(note, searchedNumber) ? matched : unmatched).push(note);
+    }
+
+    return [...matched, ...unmatched];
+  };
+
   const filterNotesWithSearch = (note) => {
     const content = note.getContents();
     const authorName = core.getDisplayAuthor(note['Author']);
     const annotationPreview = note.getCustomData('trn-annot-preview');
+    const annotationNumber = note.getCustomData('trn-associated-number', activeDocumentViewerKey);
+    const annotationNumberText = annotationNumber === null || annotationNumber === undefined ? '' : String(annotationNumber);
 
     // didn't use regex here because the search input may form an invalid regex, e.g. *
     return (
       content?.toLowerCase().includes(searchInput.toLowerCase()) ||
       authorName?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase())
+      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase()) ||
+      annotationNumberText.toLowerCase().includes(searchInput.toLowerCase())
     );
   };
 
@@ -153,7 +192,10 @@ const NotesPanel = ({
   };
 
   const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
-  const notesToRender = activeSortStrategy.getSortedNotes(notes, activeDocumentViewerKey).filter(filterNote);
+  const sortOptions = { pageLabels, t, documentViewerKey: activeDocumentViewerKey };
+  const notesToRender = prioritizeNotesBySearchedNumber(
+    activeSortStrategy.getSortedNotes(notes, sortOptions).filter(filterNote)
+  );
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -253,8 +295,7 @@ const NotesPanel = ({
   const renderChild = (
     notes,
     index,
-    // when we are virtualizing the notes, all of them will be absolutely positioned
-    // this function needs to be called by a Note component whenever its height changes
+    // when we are virtualizing the notes, all of them will be absolutely positioned this function needs to be called by a Note component whenever its height changes
     // to clear the cache(used by react-virtualized) and recompute the height so that each note
     // can have the correct position
     resize = () => { },
@@ -264,8 +305,8 @@ const NotesPanel = ({
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, { pageLabels }, activeDocumentViewerKey))) {
-      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels }, activeDocumentViewerKey)} />;
+    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, sortOptions, activeDocumentViewerKey))) {
+      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, sortOptions, activeDocumentViewerKey)} />;
     }
 
     // Collapse an expanded note when the top non-reply NoteContent is clicked

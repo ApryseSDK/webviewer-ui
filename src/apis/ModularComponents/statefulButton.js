@@ -66,7 +66,7 @@ class StatefulButton extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function statefulButtonFactory(props) {
   const propsWithStore = { ...props, store };
   return new StatefulButton(propsWithStore);
 };

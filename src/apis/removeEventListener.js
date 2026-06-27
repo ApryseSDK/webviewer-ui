@@ -6,9 +6,8 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    const listener = e => {
-      const { types, authors, colors } = e.detail;
-      console.log(types, authors, colors);
+    const listener = (types, authors, colors, statuses, checkRepliesForAuthorFilter) => {
+      console.log(types, authors, colors, statuses, checkRepliesForAuthorFilter);
 
       instance.UI.removeEventListener(instance.UI.Events.ANNOTATION_FILTER_CHANGED, listener);
     };

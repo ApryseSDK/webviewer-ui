@@ -17,9 +17,10 @@ import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine'
 import useDidUpdate from 'hooks/useDidUpdate';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
-import { getOfficeEditorCommentId } from 'helpers/officeEditorCommentHelper';
-import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
+import { parseRecordId } from 'helpers/officeEditorCommentHelper';
+import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY, OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
 
 import './Note.scss';
 import { isAnnotationRenderedInDisplayMode } from 'src/helpers/isAnnotationRenderedInDisplayMode';
@@ -102,19 +103,29 @@ const Note = ({
     ],
     shallowEqual,
   );
+  const isOfficeEditorCommentAnnotation = mapAnnotationToKey(annotation) === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+  const canModifyAnnotation = core.canModify(annotation, documentViewerKey);
+  const canModifyAnnotationContents = core.canModifyContents(annotation, documentViewerKey);
 
   const setIsEditing = useCallback(
     (isEditing, editingKey) => {
-      setIsEditingMap((map) => ({
-        ...map,
-        [editingKey]: isEditing,
-      }));
+      setIsEditingMap((map) => {
+        if (map[editingKey] === isEditing) {
+          return map;
+        }
+
+        return {
+          ...map,
+          [editingKey]: isEditing,
+        };
+      });
     },
     [setIsEditingMap],
   );
 
   const replies = annotation
     .getReplies()
+    .filter((reply) => !isAutosaveDraftReply(reply))
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   replies.filter((r) => unreadAnnotationIdSet.has(r.Id)).forEach((r) => unreadReplyIdSet.add(r.Id));
@@ -184,16 +195,21 @@ const Note = ({
   useEffect(() => {
     // If this is not a new one, rebuild the isEditing map
     const pendingText = pendingEditTextMap[annotation.Id];
-    if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
+    const canEditAnnotation = canModifyAnnotation || isOfficeEditorCommentAnnotation;
+    const shouldEnterEditMode = !isMultiSelectMode && pendingText !== '' && isContentEditable && canEditAnnotation && !isDocumentReadOnly;
+    if (shouldEnterEditMode && !isEditingMap[annotation.Id]) {
       setIsEditing(true, annotation.Id);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation, isMultiSelectMode]);
-
+  }, [isDocumentReadOnly, isContentEditable, canModifyAnnotation, setIsEditing, annotation, isMultiSelectMode, pendingEditTextMap, isEditingMap, isOfficeEditorCommentAnnotation]);
+  const isNoteCurrentlyEditing = Boolean(isEditingMap[annotation.Id]);
   useDidUpdate(() => {
-    if (isDocumentReadOnly || !isContentEditable) {
+    const canEditAnnotation = canModifyAnnotation || isOfficeEditorCommentAnnotation;
+    const canEditAnnotationContents = canModifyAnnotationContents || isOfficeEditorCommentAnnotation;
+    const shouldExitEditMode = isDocumentReadOnly || !canEditAnnotation || !canEditAnnotationContents;
+    if (shouldExitEditMode && isNoteCurrentlyEditing) {
       setIsEditing(false, annotation.Id);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing]);
+  }, [isDocumentReadOnly, canModifyAnnotation, canModifyAnnotationContents, setIsEditing, isNoteCurrentlyEditing, isOfficeEditorCommentAnnotation, annotation]);
 
   const handleNoteClick = async (e) => {
     // stop bubbling up otherwise the note will be closed
@@ -224,7 +240,9 @@ const Note = ({
     if (isInNotesPanel && !isOfficeEditorViewOnly) {
       core.selectAnnotation(annotation, documentViewerKey);
       setCurAnnotId(annotation.Id);
-      core.jumpToAnnotation(annotation, documentViewerKey);
+      if (!isOfficeEditorMode) {
+        core.jumpToAnnotation(annotation, documentViewerKey);
+      }
       dispatch(actions.triggerNoteEditing());
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
@@ -232,12 +250,12 @@ const Note = ({
       if (!isOfficeEditorMode) {
         return;
       }
-      const trackedChangeId = annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-      if (trackedChangeId) {
-        await core.getOfficeEditor().moveCursorToTrackedChange(trackedChangeId);
+      const trackedChangeId = parseRecordId(annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY));
+      if (trackedChangeId !== null) {
+        await core.getTrackedChangeManager().navigateToTrackedChange(trackedChangeId);
         return;
       }
-      const commentId = getOfficeEditorCommentId(annotation);
+      const commentId = parseRecordId(annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY));
       if (commentId !== null) {
         await core.getOfficeEditor().getCommentManager().moveCursorToComment(commentId);
       }

@@ -5,11 +5,12 @@ import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
 import { JUSTIFY_CONTENT, ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 import actions from 'actions';
-import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
+import { getSizeManager, useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
 import useCore from 'hooks/useCore';
+import useSyncHiddenToolGroupVisibility from 'hooks/useSyncHiddenToolGroupVisibility';
 const GroupedItems = (props) => {
   const { core } = useCore();
   const {
@@ -37,6 +38,14 @@ const GroupedItems = (props) => {
   const activeToolName = useSelector(selectors.getActiveToolName);
   const alwaysVisibleGroupedItems = useSelector(selectors.getAlwaysVisibleGroupedItems);
   const flyoutItems = useSelector((state) => selectors.getFlyoutMap(state)[flyoutDataElement]?.items);
+  const isElementDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
+  const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
+
+  useSyncHiddenToolGroupVisibility({
+    items: validItems,
+    size,
+    activeToolName,
+  });
 
   const moreButtonDefaultIcon = 'icon-tools-more';
   const moreButtonActiveIcon = 'icon-tools-more-active';
@@ -77,11 +86,11 @@ const GroupedItems = (props) => {
   }, []);
 
   const elementRef = useRef();
-  const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   useEffect(() => {
     const responsiveItems = validItems.filter((item) => item.type !== ITEM_TYPE.DIVIDER);
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
+    const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+    localSizeManager[dataElement] = {
+      ...(localSizeManager[dataElement] ? localSizeManager[dataElement] : {}),
       canGrow: size > 0,
       canShrink: size < validItems.length - 1 && responsiveItems.length > 2,
       grow: () => {
@@ -134,6 +143,10 @@ const GroupedItems = (props) => {
         groupedItem={dataElement}/>;
     });
   }, [validItems, size]);
+
+  if (isElementDisabled) {
+    return null;
+  }
 
   if (validItems && validItems.length) {
     return (

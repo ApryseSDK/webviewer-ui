@@ -134,7 +134,7 @@ KeyboardNavigation.play = async ({ canvasElement }) => {
 };
 
 
-const editStore = configureStore({ reducer: rootReducer });
+const editStore = configureStore({ reducer: rootReducer() });
 editStore.dispatch(actions.setSpreadsheetEditorEditMode(true));
 export const Edit = () => {
   const [activeSheetIndex, setActiveSheetIndex] = useState(1);

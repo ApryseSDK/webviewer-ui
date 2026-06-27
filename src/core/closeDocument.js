@@ -5,4 +5,4 @@ import core from 'core';
  * @fires documentUnloaded on DocumentViewer
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:documentUnloaded__anchor
  */
-export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).closeDocument();
+export default (documentViewerKey) => core.getDocumentViewer(documentViewerKey).closeDocument();

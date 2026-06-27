@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import { default as mockAppState } from 'src/redux/initialState';
 import CustomModal from './CustomModal';
 import { within, expect } from 'storybook/test';
@@ -33,7 +32,7 @@ function rootReducer(state = initialState) {
   return state;
 }
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 export default {
   title: 'Components/CustomModal',

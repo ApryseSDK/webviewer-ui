@@ -7,7 +7,7 @@
     font-size: 13px;
   }
 
-  &.modular-ui.flyout-item {
+  &.flyout-item {
     @include oe-modular-flyout-dropdown;
   }
 }

@@ -1,8 +1,8 @@
 import actions from 'actions';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 
 export default (dispatch) => () => {
-  const boundTranslator = i18next.t.bind(i18next);
+  const boundTranslator = getCurrentT();
   dispatch(actions.setStandardStamps(boundTranslator));
   dispatch(actions.setCustomStamps(boundTranslator));
 };

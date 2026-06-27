@@ -197,10 +197,20 @@ export default (store) => () => {
   };
 
   const validateHeaders = (modularHeaders) => {
+    // IMPORTANT: do NOT mutate the live Redux state's header objects. The
+    // header values stored in `state.viewer.modularHeaders` are the same
+    // references as the module-level `initialState.modularHeaders` entries
+    // until a reducer replaces them. Previous versions of this function
+    // assigned and then `delete`d a `dataElement` property on each header
+    // in place, which permanently stripped `dataElement` off the shared
+    // initial-state objects. The next WebViewer instance to be created
+    // (e.g. the next test's fresh WC instance, or any second instance in a
+    // multi-instance app) would then boot with headers missing their
+    // dataElement, causing `getModularHeader(...).setItems(...)` to dispatch
+    // with an undefined header key and silently no-op.
+    const out = {};
     for (const key in modularHeaders) {
-      const header = modularHeaders[key];
-      // Ensure headers have a dataElement so disabled flags can be added when exporting
-      header.dataElement = header.dataElement || key;
+      const header = { ...modularHeaders[key], dataElement: modularHeaders[key].dataElement || key };
       if (header.items && Array.isArray(header.items)) {
         header.items = header.items.filter((item) => {
           if (item === null || item === undefined) {
@@ -212,8 +222,9 @@ export default (store) => () => {
       }
       shouldAddDisabledFlag(header);
       delete header.dataElement;
+      out[key] = header;
     }
-    return modularHeaders;
+    return out;
   };
 
   const modularComponents = validateComponents(state.viewer.modularComponents);

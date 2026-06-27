@@ -280,11 +280,7 @@ const OutlineNested = DropTarget(
           break;
       }
       fireEvent(Events.DRAG_OUTLINE,
-        {
-          targetOutline: dropOutline,
-          draggedOutline: dragObject.dragOutline,
-          dropLocation: dragObject.dropLocation
-        }
+        [dropOutline, dragObject.dragOutline, dragObject.dropLocation]
       );
     },
     drop(props, dropTargetMonitor, dropTargetContainer) {
@@ -315,11 +311,7 @@ const OutlineNested = DropTarget(
 
       dropTargetNode.classList.remove('isNesting');
       fireEvent(Events.DROP_OUTLINE,
-        {
-          targetOutline: dropOutline,
-          draggedOutline: dragOutline,
-          dropLocation: dragObject.dropLocation
-        }
+        [dropOutline, dragOutline, dragObject.dropLocation]
       );
       dragObject.dropLocation = DropLocation.INITIAL;
     }

@@ -27,7 +27,7 @@ export const disableElement = (dataElement, priority) => (
     dispatch(disableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
-      disableElements(['toolStylePopup', 'annotationStylePopup'], priority),
+      disableElements(['annotationStylePopup'], priority),
     );
   } else {
     const currentPriority = selectors.getDisabledElementPriority(
@@ -82,7 +82,7 @@ export const enableElement = (dataElement, priority) => (
     dispatch(enableElements([DataElements.LEFT_PANEL, DataElements.LEFT_PANEL_BUTTON], priority));
   } else if (dataElement === 'stylePopup') {
     dispatch(
-      enableElements(['toolStylePopup', 'annotationStylePopup'], priority),
+      enableElements(['annotationStylePopup'], priority),
     );
   } else {
     const currentPriority = selectors.getDisabledElementPriority(
@@ -264,19 +264,12 @@ export const setActiveTabInPanel = (tabPanel, wrapperPanel) => (dispatch, getSta
 
 export const openRedactionPanel = () => (dispatch, getState) => {
   const state = getState();
-  const featureFlags = selectors.getFeatureFlags(state);
-  const { customizableUI } = featureFlags;
-
-  if (customizableUI) {
-    // is the panel inside a tab panel or a standalone panel?
-    const tabPanels = selectors.getGenericPanels(state).filter((panel) => panel.dataElement === panelNames.TABS);
-    const tabPanelWithRedaction = tabPanels.find((panel) => panel.panelsList.some((panel) => panel.render === panelNames.REDACTION));
-    if (tabPanelWithRedaction) {
-      dispatch(setActiveTabInPanel(panelNames.REDACTION, tabPanelWithRedaction.dataElement));
-      dispatch(openElement(tabPanelWithRedaction.dataElement));
-    } else {
-      dispatch(openElement(panelNames.REDACTION));
-    }
+  // is the panel inside a tab panel or a standalone panel?
+  const tabPanels = selectors.getGenericPanels(state).filter((panel) => panel.dataElement === panelNames.TABS);
+  const tabPanelWithRedaction = tabPanels.find((panel) => panel.panelsList.some((panel) => panel.render === panelNames.REDACTION));
+  if (tabPanelWithRedaction) {
+    dispatch(setActiveTabInPanel(panelNames.REDACTION, tabPanelWithRedaction.dataElement));
+    dispatch(openElement(tabPanelWithRedaction.dataElement));
   } else {
     dispatch(openElement(panelNames.REDACTION));
   }
@@ -339,10 +332,6 @@ export const unregisterTool = (toolName) => ({
 export const setToolButtonObjects = (toolButtonObjects) => ({
   type: 'SET_TOOL_BUTTON_OBJECTS',
   payload: { toolButtonObjects },
-});
-export const setHeaderItems = (header, headerItems) => ({
-  type: 'SET_HEADER_ITEMS',
-  payload: { header, headerItems },
 });
 export const setCustomHeadersAdditionalProperties = (customHeader, additionalProperties) => ({
   type: 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES',
@@ -452,10 +441,15 @@ export const setFonts = (fonts = []) => ({
   type: 'SET_FONTS',
   payload: { fonts },
 });
-export const setIsMultiViewerMode = (isMultiViewerMode) => ({
-  type: 'SET_IS_MULTI_VIEWER_MODE',
-  payload: { isMultiViewerMode },
-});
+export const setIsMultiViewerMode = (isMultiViewerMode) => {
+  if (typeof core.setMultiViewerModeActive === 'function') {
+    core.setMultiViewerModeActive(isMultiViewerMode);
+  }
+  return {
+    type: 'SET_IS_MULTI_VIEWER_MODE',
+    payload: { isMultiViewerMode },
+  };
+};
 export const setIsMultiViewerReady = (isMultiViewerReady) => ({
   type: 'SET_IS_MULTI_VIEWER_READY',
   payload: { isMultiViewerReady },

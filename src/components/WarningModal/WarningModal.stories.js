@@ -43,7 +43,7 @@ export const DefaultWarningModal = Basic;
 export const DefaultWarningModalMobile = Basic;
 DefaultWarningModalMobile.parameters = mobileStoryParameters;
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 export const SecondaryButtonModal = () => {
   return (

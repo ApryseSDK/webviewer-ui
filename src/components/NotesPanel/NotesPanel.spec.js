@@ -9,6 +9,7 @@ import core from 'core';
 import selectors from 'selectors';
 import userEvent from '@testing-library/user-event';
 import { getExtendedSortStrategies } from 'src/constants/sortStrategies';
+import onAnnotationNumberingUpdated from 'src/event-listeners/onAnnotationNumberingUpdated';
 
 jest.mock('components/MultiSelectControls', () => {
   const MockMultiSelectControls = () => <div data-testid="multi-select-controls" />;
@@ -81,6 +82,8 @@ jest.mock('dayjs', () => {
 
 describe('NotesPanel', () => {
   beforeEach(() => {
+    core.canModify = () => true;
+    core.canModifyContents = () => true;
     core.getDocumentViewer = () => ({
       addEventListener: noop,
       removeEventListener: noop,
@@ -93,12 +96,15 @@ describe('NotesPanel', () => {
       getPageCount: () => 2,
       getAnnotationManager: () => {
         return {
-          getEditBoxManager: noop,
+          getEditBoxManager: () => ({
+            getEditor: () => null,
+          }),
           getFormFieldCreationManager: noop,
           addEventListener: noop,
           getSelectedAnnotations: () => [],
           getAnnotationsList: () => [],
           removeEventListener: noop,
+          canModify: () => true,
           canModifyContents: noop,
           getGroupAnnotations: () => [],
           getDisplayAuthor: () => 'Guest',
@@ -162,7 +168,7 @@ describe('NotesPanel', () => {
 
       const defaultEmptyContentMessage = 'Start making annotations to leave a comment.';
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       screen.getByText('Sort:');
       screen.getByText('Comments (0)');
       screen.getByText(defaultEmptyContentMessage);
@@ -183,7 +189,7 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       screen.getByText('Sort:');
       screen.getByText('Comments (0)');
       screen.getByText(message);
@@ -207,7 +213,7 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      screen.getByPlaceholderText('Search comments');
+      screen.getByLabelText('Search comments');
       screen.getByText('Sort:');
       screen.getByText('Comments (0)');
       screen.getByText(message);
@@ -295,7 +301,293 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      expect(mockGetSortedNotes).toHaveBeenCalledWith([],2);
+      expect(mockGetSortedNotes).toHaveBeenCalledWith([], expect.objectContaining({
+        pageLabels: [],
+        t: expect.any(Function),
+        documentViewerKey: 2,
+      }));
+    });
+
+    const createSearchableNote = ({
+      id,
+      dateCreated,
+      content,
+      associatedNumber,
+    }) => {
+      const note = new window.Core.Annotations.StickyAnnotation();
+      note.Id = id;
+      note.Author = 'Guest';
+      note.DateCreated = dateCreated;
+      note.getContents = () => content;
+      note.getReplies = () => [];
+      note.getAssociatedNumber = () => associatedNumber;
+      note.getCustomData = (key) => {
+        if (key === 'trn-associated-number') {
+          return associatedNumber;
+        }
+
+        return '';
+      };
+
+      return note;
+    };
+
+    it('should respect annotation numbering state set before NotesPanel mount', () => {
+      const noteWithPartialMatch = createSearchableNote({
+        id: 'note-112',
+        dateCreated: 1,
+        content: 'Partial number 12 in content',
+        associatedNumber: 112,
+      });
+      const noteWithExactMatch = createSearchableNote({
+        id: 'note-12',
+        dateCreated: 2,
+        content: 'Exact number 12 in content',
+        associatedNumber: 12,
+      });
+
+      const reducer = (state = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isAnnotationNumberingEnabled: false,
+          sortStrategy: 'createdDate',
+        },
+      }, action) => {
+        if (action.type === 'SET_ANNOTATION_NUMBERING') {
+          return {
+            ...state,
+            viewer: {
+              ...state.viewer,
+              isAnnotationNumberingEnabled: action.payload.isAnnotationNumberingEnabled,
+            },
+          };
+        }
+
+        return state;
+      };
+
+      const testStore = configureStore({ reducer });
+
+      const listener = onAnnotationNumberingUpdated(testStore.dispatch);
+      listener(true);
+
+      expect(testStore.getState().viewer.isAnnotationNumberingEnabled).toBe(true);
+
+      render(
+        <Provider store={testStore}>
+          <NotesPanel
+            notes={[noteWithPartialMatch, noteWithExactMatch]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={'12'}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const noteItems = screen.getAllByRole('listitem');
+      expect(noteItems[0]).toHaveTextContent('Exact number 12 in content');
+      expect(noteItems[1]).toHaveTextContent('Partial number 12 in content');
+    });
+
+    it('should not prioritize matching annotation number when numbering is disabled', () => {
+      const noteWithEarlierDate = createSearchableNote({
+        id: 'note-112',
+        dateCreated: 1,
+        content: 'First note contains 12',
+        associatedNumber: 112,
+      });
+      const noteWithMatchingNumber = createSearchableNote({
+        id: 'note-12',
+        dateCreated: 2,
+        content: 'Second note contains 12',
+        associatedNumber: 12,
+      });
+
+      const testInitialState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isAnnotationNumberingEnabled: false,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => testInitialState })}>
+          <NotesPanel
+            notes={[noteWithEarlierDate, noteWithMatchingNumber]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={'12'}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const noteItems = screen.getAllByRole('listitem');
+      expect(noteItems[0]).toHaveTextContent('First note contains 12');
+      expect(noteItems[1]).toHaveTextContent('Second note contains 12');
+    });
+
+    it('should not prioritize notes when search input is non-numeric', () => {
+      const noteWithEarlierDate = createSearchableNote({
+        id: 'note-112',
+        dateCreated: 1,
+        content: 'First note contains abc',
+        associatedNumber: 112,
+      });
+      const noteWithMatchingNumber = createSearchableNote({
+        id: 'note-12',
+        dateCreated: 2,
+        content: 'Second note contains abc',
+        associatedNumber: 12,
+      });
+
+      const testInitialState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isAnnotationNumberingEnabled: true,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => testInitialState })}>
+          <NotesPanel
+            notes={[noteWithEarlierDate, noteWithMatchingNumber]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={'abc'}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const noteItems = screen.getAllByRole('listitem');
+      expect(noteItems[0]).toHaveTextContent('First note contains abc');
+      expect(noteItems[1]).toHaveTextContent('Second note contains abc');
+    });
+
+    it('should not treat empty associated number as a match for numeric searches', () => {
+      const noteWithAssociatedNumber = createSearchableNote({
+        id: 'note-5',
+        dateCreated: 1,
+        content: 'First note contains 0',
+        associatedNumber: 5,
+      });
+      const noteWithEmptyAssociatedNumber = createSearchableNote({
+        id: 'note-empty',
+        dateCreated: 2,
+        content: 'Second note contains 0',
+        associatedNumber: '',
+      });
+
+      const testInitialState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isAnnotationNumberingEnabled: true,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => testInitialState })}>
+          <NotesPanel
+            notes={[noteWithAssociatedNumber, noteWithEmptyAssociatedNumber]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={'0'}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const noteItems = screen.getAllByRole('listitem');
+      expect(noteItems[0]).toHaveTextContent('First note contains 0');
+      expect(noteItems[1]).toHaveTextContent('Second note contains 0');
+    });
+
+    it('should prioritize notes with matching annotation number when searching a number and numbering is enabled', () => {
+      const noteWithPartialMatch = new window.Core.Annotations.StickyAnnotation();
+      noteWithPartialMatch.Id = 'partial-number-note';
+      noteWithPartialMatch.Author = 'Guest';
+      noteWithPartialMatch.DateCreated = 1;
+      noteWithPartialMatch.getContents = () => 'Contains 12 in body';
+      noteWithPartialMatch.getReplies = () => [];
+      noteWithPartialMatch.getAssociatedNumber = () => 112;
+      noteWithPartialMatch.getCustomData = (key) => {
+        if (key === 'trn-associated-number') {
+          return 112;
+        }
+        return '';
+      };
+
+      const noteWithExactMatch = new window.Core.Annotations.StickyAnnotation();
+      noteWithExactMatch.Id = 'exact-number-note';
+      noteWithExactMatch.Author = 'Guest';
+      noteWithExactMatch.DateCreated = 2;
+      noteWithExactMatch.getContents = () => 'Contains 12 in body';
+      noteWithExactMatch.getReplies = () => [];
+      noteWithExactMatch.getAssociatedNumber = () => 12;
+      noteWithExactMatch.getCustomData = (key) => {
+        if (key === 'trn-associated-number') {
+          return 12;
+        }
+        return '';
+      };
+
+      const testInitialState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isAnnotationNumberingEnabled: true,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => testInitialState })}>
+          <NotesPanel
+            notes={[noteWithPartialMatch, noteWithExactMatch]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={'12'}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const note1Number = '#12 -';
+      const note2Number = `#${[1, 1, 2].join('')} -`;
+      const noteItems = screen.getAllByRole('listitem');
+      expect(noteItems[0]).toHaveTextContent('Contains 12 in body');
+      expect(noteItems[0].querySelector('.annotation-number')).toHaveTextContent(note1Number);
+      expect(noteItems[1]).toHaveTextContent('Contains 12 in body');
+      expect(noteItems[1].querySelector('.annotation-number')).toHaveTextContent(note2Number);
     });
 
     describe('multi-select footer', () => {

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
-import classNames from 'classnames';
 import useCore from 'hooks/useCore';
 import ActionButton from 'components/ActionButton';
 import Dropdown from 'components/Dropdown';
@@ -20,11 +19,9 @@ const propTypes = {
 const ListToggleButton = (props) => {
   const [
     activeListType,
-    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getActiveListType(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual,
   );
@@ -54,10 +51,7 @@ const ListToggleButton = (props) => {
   };
 
   return (
-    <div className={classNames({
-      'office-editor-number-list-wrapper': true,
-      'modular-ui': customizableUI,
-    })}>
+    <div className='office-editor-number-list-wrapper list-toggle-button-wrapper'>
       <ActionButton
         isActive={activeListType === listType}
         dataElement={dataElement}

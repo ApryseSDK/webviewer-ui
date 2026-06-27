@@ -40,8 +40,5 @@ export default function fireActiveDocumentViewerChanged(previousDocumentViewerKe
   const documentViewers = core.getDocumentViewers();
   deselectAnnotationsInOtherViewers(documentViewers, activeDocumentViewerKey);
 
-  fireEvent(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, {
-    activeDocumentViewerKey,
-    previousDocumentViewerKey
-  });
+  fireEvent(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, [activeDocumentViewerKey, previousDocumentViewerKey]);
 }

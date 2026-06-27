@@ -1,12 +1,12 @@
 import React from 'react';
 import TabPanel from './TabPanel';
 import { configureStore } from '@reduxjs/toolkit';
+import { MockApp } from 'helpers/storybookHelper';
 import { Provider } from 'react-redux';
 import { panelMinWidth, panelNames } from 'constants/panel';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore } from 'helpers/storybookHelper';
 import { expect, within, userEvent } from 'storybook/test';
 import viewOnlyWhitelist from 'src/redux/viewOnlyWhitelist';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -258,10 +258,8 @@ const storeThumbnailsOnly = configureStore({ reducer: () => initialStateThumbnai
 
 export const TabPanelWithThumbnailPanelMinWidth = () => (
   <Provider store={storeThumbnailsOnly}>
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: `${panelMinWidth}px`, height: '75%' }}>
-        <TabPanel dataElement="tabPanelIconsAndLabels"/>
-      </div>
+    <div style={{ display: 'flex', width: `${panelMinWidth}px`, height: '75%' }}>
+      <TabPanel dataElement="tabPanelIconsAndLabels"/>
     </div>
   </Provider>
 );
@@ -278,10 +276,8 @@ const initialStateThumbnailsOnlyMaxWidth = {
 const storeThumbnailsOnlyMaxWidth = configureStore({ reducer: () => initialStateThumbnailsOnlyMaxWidth });
 export const TabPanelWithThumbnailPanelMaxWidth = () => (
   <Provider store={storeThumbnailsOnlyMaxWidth}>
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: '600px', height: '75%' }}>
-        <TabPanel dataElement="tabPanelIconsAndLabels"/>
-      </div>
+    <div style={{ display: 'flex', width: '600px', height: '75%' }}>
+      <TabPanel dataElement="tabPanelIconsAndLabels"/>
     </div>
   </Provider>
 );
@@ -364,7 +360,7 @@ const TabPanelInApp = (context, location, activePanel, panelWidth) => {
       customizableUI: true,
     },
   };
-  const store = createStore(appMockState);
+  const store = configureStore({ reducer: () => appMockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={appMockState} initialDirection={addonRtl} />;

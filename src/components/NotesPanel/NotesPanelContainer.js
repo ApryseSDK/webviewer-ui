@@ -7,7 +7,6 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
-import NotesPanelErrorBoundary from './NotesPanelErrorBoundary';
 
 const getPanelDataElement = ({ parentDataElement, dataElement }) => parentDataElement || dataElement || DataElements.NOTES_PANEL;
 
@@ -35,6 +34,15 @@ function NotesPanelContainer(props) {
   const [searchInput, setSearchInput] = useState('');
   const [isMultiSelectMode, setMultiSelectMode] = useState(false);
   const [scrollToSelectedAnnot, setScrollToSelectedAnnot] = useState(false);
+
+  // The "primary" pane key for this NotesPanel. In compare/multi-viewer mode
+  // the primary pane is always DV1 and the secondary is DV2 (both belong to
+  // the same UI instance / store). In single-viewer mode (including multi-WC,
+  // where each WC instance has its own store and its own owned DV key), the
+  // primary pane is whichever DV key this instance's store owns
+  // (`activeDocumentViewerKey`). Hardcoding `1` here would make instance 2's
+  // notes panel listen to DV1's annotation list and show nothing.
+  const primaryKey = isMultiViewerMode ? 1 : activeDocumentViewerKey;
 
   const [noteMap, setNoteMap] = useState({ 1: [], 2: [] });
   const setNotes = useCallback((notes, documentViewerKey = activeDocumentViewerKey) => {
@@ -113,12 +121,12 @@ function NotesPanelContainer(props) {
       );
     };
 
-    const setDocumentUnloaded1 = onDocumentUnloaded(1);
-    core.addEventListener('documentUnloaded', setDocumentUnloaded1);
-    const setNotes1 = _setNotes(1);
-    core.addEventListener('annotationChanged', setNotes1);
-    core.addEventListener('annotationHidden', setNotes1);
-    core.addEventListener('updateAnnotationPermission', setNotes1);
+    const setDocumentUnloaded1 = onDocumentUnloaded(primaryKey);
+    core.addEventListener('documentUnloaded', setDocumentUnloaded1, undefined, primaryKey);
+    const setNotes1 = _setNotes(primaryKey);
+    core.addEventListener('annotationChanged', setNotes1, undefined, primaryKey);
+    core.addEventListener('annotationHidden', setNotes1, undefined, primaryKey);
+    core.addEventListener('updateAnnotationPermission', setNotes1, undefined, primaryKey);
     setNotes1();
 
     let setDocumentUnloaded2;
@@ -140,12 +148,12 @@ function NotesPanelContainer(props) {
         core.removeEventListener('annotationHidden', setNotes2, 2);
         core.removeEventListener('updateAnnotationPermission', setNotes2, 2);
       }
-      core.removeEventListener('documentUnloaded', setDocumentUnloaded1);
-      core.removeEventListener('annotationChanged', setNotes1);
-      core.removeEventListener('annotationHidden', setNotes1);
-      core.removeEventListener('updateAnnotationPermission', setNotes1);
+      core.removeEventListener('documentUnloaded', setDocumentUnloaded1, primaryKey);
+      core.removeEventListener('annotationChanged', setNotes1, primaryKey);
+      core.removeEventListener('annotationHidden', setNotes1, primaryKey);
+      core.removeEventListener('updateAnnotationPermission', setNotes1, primaryKey);
     };
-  }, [isMultiViewerMode, isOfficeEditorMode]);
+  }, [isMultiViewerMode, isOfficeEditorMode, primaryKey]);
 
   useEffect(() => {
     const onAnnotationSelected = (documentViewerKey = activeDocumentViewerKey) => (annotations, action) => {
@@ -176,9 +184,9 @@ function NotesPanelContainer(props) {
         setMultiSelectedMap({ ...multiSelectedMap }, documentViewerKey);
       }
     };
-    const onAnnotationSelected1 = onAnnotationSelected(1);
+    const onAnnotationSelected1 = onAnnotationSelected(primaryKey);
     onAnnotationSelected1();
-    core.addEventListener('annotationSelected', onAnnotationSelected1);
+    core.addEventListener('annotationSelected', onAnnotationSelected1, undefined, primaryKey);
     let onAnnotationSelected2;
     if (isMultiViewerMode) {
       onAnnotationSelected2 = onAnnotationSelected(2);
@@ -186,12 +194,12 @@ function NotesPanelContainer(props) {
       core.addEventListener('annotationSelected', onAnnotationSelected2, undefined, 2);
     }
     return () => {
-      core.removeEventListener('annotationSelected', onAnnotationSelected1);
+      core.removeEventListener('annotationSelected', onAnnotationSelected1, primaryKey);
       if (isMultiViewerMode) {
         core.removeEventListener('annotationSelected', onAnnotationSelected2, 2);
       }
     };
-  }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, multiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
+  }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, multiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode, primaryKey]);
 
   // Exit multi-select mode when multi-select is disabled via API
   useEffect(() => {
@@ -235,17 +243,9 @@ function NotesPanelContainer(props) {
 }
 
 function NotesPanelWrapper(props) {
-  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
-  const panelDataElement = getPanelDataElement(props);
-  const boundaryResetKey = `${activeDocumentViewerKey}-${panelDataElement}`;
-
   return (
     <MultiViewerWrapper wrapOnlyInMultiViewerMode>
-      <NotesPanelErrorBoundary
-        resetKey={boundaryResetKey}
-      >
-        <NotesPanelContainer {...props}/>
-      </NotesPanelErrorBoundary>
+      <NotesPanelContainer {...props}/>
     </MultiViewerWrapper>
   );
 }

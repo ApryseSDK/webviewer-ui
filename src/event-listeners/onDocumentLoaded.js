@@ -8,7 +8,7 @@ import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import hotkeys from 'hotkeys-js';
 import hotkeysManager, { defaultHotkeysScope } from 'helpers/hotkeysManager';
 import { ShortcutKeys, Shortcuts } from 'helpers/hotkeysUtils';
@@ -30,17 +30,14 @@ import {
   ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
   SpreadsheetEditorEditMode
 } from 'src/constants/spreadsheetEditor';
+import normalizeInitialEditMode from 'helpers/normalizeInitialEditMode';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
-import FeatureFlags from 'constants/featureFlags';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 let notesInLeftPanel = getHashParameters('notesInLeftPanel', false);
 
-const getIsCustomUIEnabled = (store) => selectors.getIsCustomUIEnabled(store.getState());
-
 export default (store, documentViewerKey) => async () => {
   const { dispatch } = store;
-  dispatch(actions.openElement('pageNavOverlay'));
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom(documentViewerKey), documentViewerKey));
   dispatch(actions.setThumbnailSelectingPages(false));
@@ -107,7 +104,7 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
           totalPageCount = await pdfDoc.getPageCount();
           const displayedPageCount = core.getTotalPages(documentViewerKey);
           if (totalPageCount !== displayedPageCount) {
-            const errorLoadingDocument = i18next.t('message.errorLoadingDocument', {
+            const errorLoadingDocument = getCurrentT()('message.errorLoadingDocument', {
               totalPageCount,
               displayedPageCount
             });
@@ -199,8 +196,11 @@ export const setServerProperties = () => () => {
   getInstanceNode().instance.UI.serverFailed = false;
 };
 
-export const checkDocumentForTools = (dispatch) => () => {
-  const doc = core.getDocument();
+export const checkDocumentForTools = (dispatch, documentViewerKey) => () => {
+  const doc = core.getDocument(documentViewerKey);
+  if (!doc) {
+    return;
+  }
   const docType = doc.getType();
   if (docType === workerTypes.PDF || (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
     dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
@@ -278,20 +278,26 @@ export const setupCompositionInput = (documentViewerKey) => async () => {
 };
 
 export const syncDisplayModeMultiviewer = (documentViewerKey) => () => {
-  if (core.getDocumentViewers().length > 1) {
-    if (documentViewerKey === 1) {
-      core.setDisplayMode(core.getDisplayMode(2), documentViewerKey);
-    } else {
-      core.setDisplayMode(core.getDisplayMode(1), documentViewerKey);
-    }
+  // Multiple independent Web Component instances can register multiple DocumentViewers, but display mode syncing should only happen for true MultiViewer mode.
+  if (!core.getMultiViewerModeActive()) {
+    return;
   }
+
+  const sourceDocumentViewerKey = documentViewerKey === 1 ? 2 : 1;
+  if (!core.hasDocumentViewer(documentViewerKey) || !core.hasDocumentViewer(sourceDocumentViewerKey)) {
+    return;
+  }
+
+  core.setDisplayMode(core.getDisplayMode(sourceDocumentViewerKey), documentViewerKey);
 };
 
-export const configureEditorMode = (store) => () => {
+export const configureEditorMode = (store, documentViewerKey) => () => {
   const { getState, dispatch } = store;
-  const doc = core.getDocument();
+  const doc = core.getDocument(documentViewerKey);
+  if (!doc) {
+    return;
+  }
   const contentSelectTool = core.getTool('OfficeEditorContentSelect');
-  const isCustomUIEnabled = getIsCustomUIEnabled(store);
 
   const swapUIConfiguration = (newUIConfiguration) => {
     const currentUIConfiguration = selectors.getUIConfiguration(getState());
@@ -305,20 +311,16 @@ export const configureEditorMode = (store) => () => {
   const updateOfficeEditorEditMode = (editMode) => {
     dispatch(actions.setOfficeEditorEditMode(editMode));
     if (editMode === OfficeEditorEditMode.VIEW_ONLY || editMode === OfficeEditorEditMode.PREVIEW) {
-      isCustomUIEnabled ?
-        dispatch(actions.disableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
-        dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+      dispatch(actions.disableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO));
       dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON, DataElements.SEARCH_PANEL_REPLACE_CONTAINER], PRIORITY_TWO));
     } else {
-      isCustomUIEnabled ?
-        dispatch(actions.enableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO)) :
-        dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+      dispatch(actions.enableElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER, PRIORITY_TWO));
       dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON, DataElements.SEARCH_PANEL_REPLACE_CONTAINER], PRIORITY_TWO));
     }
     if (editMode === OfficeEditorEditMode.REVIEWING || editMode === OfficeEditorEditMode.PREVIEW) {
-      dispatch(actions.openElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      dispatch(actions.openElement(DataElements.OFFICE_EDITOR_REVIEW_PANEL));
     } else {
-      dispatch(actions.closeElement(isCustomUIEnabled ? DataElements.OFFICE_EDITOR_REVIEW_PANEL : DataElements.LEFT_PANEL));
+      dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_REVIEW_PANEL));
     }
   };
 
@@ -402,17 +404,16 @@ export const configureEditorMode = (store) => () => {
   };
 
   const configureSpreadsheetEditorMode = () => {
-    if (!isCustomUIEnabled) {
-      console.warn('Spreadsheet Editor requires Modular UI. Enabling it now.');
-      dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
-    }
-    const spreadsheetEditorOptions = getHashParameters('spreadsheetEditorOptions', '{}');
+    const spreadsheetEditorManager = core.getDocumentViewer(documentViewerKey)?.getSpreadsheetEditorManager?.();
+    const runtimeSpreadsheetEditorMode = spreadsheetEditorManager?.getEditMode?.();
     const currentSpreadsheetEditorMode = selectors.getSpreadsheetEditorEditMode(getState());
-    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || currentSpreadsheetEditorMode || SpreadsheetEditorEditMode.VIEW_ONLY;
-    if (!Object.values(SpreadsheetEditorEditMode).includes(onLoadEditMode)) {
-      console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to view mode.`);
-      onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;
-    }
+    const onLoadEditMode = normalizeInitialEditMode(
+      runtimeSpreadsheetEditorMode || currentSpreadsheetEditorMode,
+      Object.values(SpreadsheetEditorEditMode),
+      SpreadsheetEditorEditMode.EDITING,
+      SpreadsheetEditorEditMode.EDITING,
+    );
+    dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
     dispatch(actions.setSpreadsheetEditorEditMode(onLoadEditMode));
     if (onLoadEditMode === SpreadsheetEditorEditMode.VIEW_ONLY) {
       dispatch(
@@ -444,8 +445,7 @@ export const configureEditorMode = (store) => () => {
     dispatch(actions.setUIConfiguration(VIEWER_CONFIGURATIONS.DEFAULT));
     dispatch(actions.disableSpreadsheetEditorMode());
 
-    const currentGenericPanels = selectors.getGenericPanels(getState());
-    const panels = isCustomUIEnabled ? currentGenericPanels : [];
+    const panels = selectors.getGenericPanels(getState());
     dispatch(actions.setGenericPanels(panels));
 
     doc.removeEventListener('editModeUpdated', updateOfficeEditorEditMode);

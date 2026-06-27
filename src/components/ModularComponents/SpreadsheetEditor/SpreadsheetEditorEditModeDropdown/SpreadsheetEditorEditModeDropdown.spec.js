@@ -32,7 +32,7 @@ jest.mock('selectors', () => ({
 }));
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducer(),
 });
 
 describe('SpreadsheetEditorEditModeDropdown', () => {

@@ -24,13 +24,11 @@ const BookmarksPanel = ({ panelSelector }) => {
   const currentPageIndex = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey) - 1);
   const pageLabels = useSelector((state) => selectors.getPageLabels(state, activeDocumentViewerKey), shallowEqual);
   const isBookmarkIconShortcutVisible = useSelector(selectors.isBookmarkIconShortcutVisible);
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state), shallowEqual);
   const isViewOnly = useSelector(selectors.isViewOnly);
 
   const [isAddingNewBookmark, setIsAddingNewBookmark] = useState(false);
   const [isMultiSelectionMode, setIsMultiSelectionMode] = useState(false);
   const [selectingBookmarks, setSelectingBookmarks] = useState([]);
-  const customizableUI = featureFlags.customizableUI;
   const canEditBookmarks = !isViewOnly;
 
   const [t] = useTranslation();
@@ -93,7 +91,7 @@ const BookmarksPanel = ({ panelSelector }) => {
         'BookmarksPanel': true,
         'bookmark-outline-panel': true,
         [panelSelector]: true,
-        'modular-ui-panel': customizableUI,
+        'modular-ui-panel': true,
       })}
       data-element={DataElements.BOOKMARK_PANEL}
     >

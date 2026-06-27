@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import ReplyAttachmentList from './ReplyAttachmentList';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
@@ -19,7 +19,7 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   return state;
 }
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 const files = [
   {

@@ -35,7 +35,7 @@ class ToggleElementButton extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function toggleElementButtonFactory(props) {
   const propsWithStore = { ...props, store };
   return new ToggleElementButton(propsWithStore);
 };

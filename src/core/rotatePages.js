@@ -5,4 +5,4 @@ import core from 'core';
  * @fires pagesUpdated on DocumentViewer
  * @see https://docs.apryse.com/api/web/Core.html#event:pagesUpdated__anchor
  */
-export default (arr, rotation, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getDocument().rotatePages(arr, rotation);
+export default (arr, rotation, documentViewerKey) => core.getDocumentViewer(documentViewerKey).getDocument().rotatePages(arr, rotation);

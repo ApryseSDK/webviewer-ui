@@ -5,7 +5,13 @@ import packageConfig from '../../package.json';
 export default () => {
   // log UI and Core versions and warn/error if necessary
   const coreVersion = window.Core.getVersion();
-  const coreBuild = atob(window.Core.getBuild());
+  // Source Core builds can still return the unreplaced `$$BUILD$$` placeholder, which is not valid base64.
+  let coreBuild = '';
+  try {
+    coreBuild = atob(window.Core.getBuild());
+  } catch {
+    coreBuild = '(unavailable)';
+  }
   const uiVersion = packageConfig.version;
   const webViewerJSVersion = getHashParameters('webViewerJSVersion', null);
   const wvServer = !!getHashParameters('webviewerServerURL', null);

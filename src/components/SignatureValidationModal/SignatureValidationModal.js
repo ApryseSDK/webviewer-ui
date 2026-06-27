@@ -9,7 +9,6 @@ import ModalWrapper from 'components/ModalWrapper';
 
 import {
   renderPermissionStatus,
-  Spinner,
 } from 'components/SignaturePanel';
 import SignatureIcon from 'components/SignaturePanel/SignatureIcon';
 
@@ -412,7 +411,7 @@ const SignatureValidationModal = () => {
     if (typeof verificationStatus === 'undefined') {
       return (
         <div className="center">
-          <Spinner />
+          ⌛
         </div>
       );
     }
@@ -471,6 +470,7 @@ const SignatureValidationModal = () => {
     >
       <ModalWrapper
         title={renderHeaderTitle()}
+        modalDataElement={DataElements.SIGNATURE_VALIDATION_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         isOpen={isOpen}

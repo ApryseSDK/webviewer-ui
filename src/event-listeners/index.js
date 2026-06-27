@@ -23,7 +23,6 @@ import onLocationSelected from './onLocationSelected';
 import onDotStampAnnotationAdded from './onDotStampAnnotationAdded';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
 import onRubberStampsUpdated from './onRubberStampsUpdated';
-import onReadOnlyModeChanged from './onReadOnlyModeChanged';
 import onPageComplete from './onPageComplete';
 import onFileAttachmentDataAvailable from './onFileAttachmentDataAvailable';
 import onSignatureSaved from './onSignatureSaved';
@@ -46,6 +45,7 @@ import onAccessibleReadingOrderModeReady from './onAccessibleReadingOrderModeRea
 import onAccessibleReadingOrderModeEnded from './onAccessibleReadingOrderModeEnded';
 import onAccessibleReadingOrderModeNoStructure from './onAccessibleReadingOrderModeNoStructure';
 import onUserBookmarksChanged from './onUserBookmarksChanged';
+import onAnnotationNumberingUpdated from './onAnnotationNumberingUpdated';
 import onDocumentLoaded, {
   enableRedactionElements,
   syncDisplayModeMultiviewer,
@@ -64,6 +64,7 @@ import onDocumentLoaded, {
 } from './onDocumentLoaded';
 import onSpreadsheetEditorSelectionChanged from './onSpreadsheetEditorSelectionChanged';
 import onSpreadsheetEditorEditModeChanged from './onSpreadsheetEditorEditModeChanged';
+import onSpreadsheetEditorHistoryChanged from './onSpreadsheetEditorHistoryChanged';
 import { openSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorLoaded';
 import { closeSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorReady';
 import onWidgetHighlightingChanged from './onWidgetHighlightingChanged';
@@ -98,7 +99,6 @@ export {
   onDotStampAnnotationAdded,
   onRubberStampAnnotationAdded,
   onRubberStampsUpdated,
-  onReadOnlyModeChanged,
   onPageComplete,
   onFileAttachmentAnnotationAdded,
   onFileAttachmentDataAvailable,
@@ -119,6 +119,7 @@ export {
   onAccessibleReadingOrderModeReady,
   onAccessibleReadingOrderModeEnded,
   onAccessibleReadingOrderModeNoStructure,
+  onAnnotationNumberingUpdated,
   onUserBookmarksChanged,
   enableRedactionElements,
   syncDisplayModeMultiviewer,
@@ -133,6 +134,7 @@ export {
   updatePortfolio,
   configureEditorMode,
   setupCompositionInput,
+  onSpreadsheetEditorHistoryChanged,
   onSpreadsheetEditorSelectionChanged,
   onSpreadsheetEditorEditModeChanged,
   openSpreadsheetEditorLoadingModal,

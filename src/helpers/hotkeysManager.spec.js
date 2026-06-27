@@ -44,6 +44,12 @@ describe('hotkeysManager', () => {
     });
     selectors.getShortcutKeyMap = jest.fn((state) => (state.shortcutKeyMap || {}));
     core.getToolModeMap = jest.fn(() => ({ 'AnnotationCreateRectangle': getTool() }));
+    core.getAnnotationManager = jest.fn().mockReturnValue({
+      getEditBoxManager: jest.fn().mockReturnValue({
+        getEditor: jest.fn().mockReturnValue(null),
+      }),
+    });
+    core.getAnnotationsList = jest.fn().mockReturnValue([]);
     hotkeysManager.initialize(mockStore);
   });
   afterEach(() => {

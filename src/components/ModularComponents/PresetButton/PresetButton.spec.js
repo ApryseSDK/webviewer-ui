@@ -19,7 +19,7 @@ describe('PresetButton', () => {
   const dataElement = 'settingsPresetButton';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     render(
       <Provider store={store}>
         <PresetButton
@@ -34,7 +34,7 @@ describe('PresetButton', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createPresetButton = createPresetButtonAPI(store);
 
     const presetButton = createPresetButton({

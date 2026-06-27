@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import ToolButton from 'components/ToolButton';
-import ToolGroupButton from 'components/ToolGroupButton';
-import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
-import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
 
 /** Modular Components */
@@ -30,7 +26,7 @@ const CustomizablePopup = ({ dataElement, children, childrenClassName }) => {
     (state) => selectors.getPopupItems(state, dataElement),
     shallowEqual,
   );
-  const isModularUIEnabled = useSelector(selectors.getIsCustomUIEnabled);
+
   const childrenArray = React.Children.toArray(children);
 
   if (process.env.NODE_ENV !== 'production') {
@@ -68,34 +64,27 @@ const CustomizablePopup = ({ dataElement, children, childrenClassName }) => {
       (child) => child.props.dataElement === dataElement,
     );
 
-    // When we remove the legacy UI we can simplify this logic as we won't need to check for modular UI
     if (!component) {
       const props = { ...item, mediaQueryClassName, className: childrenClassName };
 
       if (type === ITEM_TYPE.TOOL_BUTTON) {
-        if (isModularUIEnabled) {
-          component = <ToolButtonModular {...props} />;
-        } else {
-          component = <ToolButton {...props} />;
-        }
+        component = <ToolButtonModular {...props} />;
       }
 
       if (type === 'toolGroupButton') {
-        if (isModularUIEnabled) {
+        if (process.env.NODE_ENV !== 'production') {
           console.warn('ToolGroupButton is not supported in modular UI. Please use ToolButton instead.');
-        } else {
-          component = <ToolGroupButton {...props} />;
         }
       }
 
       // Legacy UI uses toggleElementButton but modular UI uses toggleButton
       if (type === 'toggleElementButton') {
-        component = <ToggleElementButton {...props} />;
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn('toggleElementButton is not supported in modular UI. Please use toggleButton instead.');
+        }
       }
       if (type === ITEM_TYPE.TOGGLE_BUTTON) {
-        if (isModularUIEnabled) {
-          component = <ToggleElementButtonModular {...props} />;
-        }
+        component = <ToggleElementButtonModular {...props} />;
       }
 
       if (type === 'actionButton') {
@@ -103,19 +92,11 @@ const CustomizablePopup = ({ dataElement, children, childrenClassName }) => {
       }
 
       if (type === ITEM_TYPE.BUTTON) {
-        if (isModularUIEnabled) {
-          component = <CustomButtonModular {...props} />;
-        } else {
-          console.warn('customButton is not supported in Legacy UI. Please use customElement instead.');
-        }
+        component = <CustomButtonModular {...props} />;
       }
 
       if (type === ITEM_TYPE.STATEFUL_BUTTON) {
-        if (isModularUIEnabled) {
-          component = <StatefulButtonModular {...props} />;
-        } else {
-          component = <StatefulButton {...props} />;
-        }
+        component = <StatefulButtonModular {...props} />;
       }
 
       if (type === ITEM_TYPE.CUSTOM_ELEMENT) {

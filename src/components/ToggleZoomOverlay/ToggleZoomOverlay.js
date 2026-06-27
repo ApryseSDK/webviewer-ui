@@ -15,19 +15,27 @@ import DataElements from 'constants/dataElement';
 import './ToggleZoomOverlay.scss';
 import { useTranslation } from 'react-i18next';
 
-const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
-  const { core } = useCore(documentViewerKey);
+const ToggleZoomOverlay = ({ documentViewerKey: documentViewerKeyProp = undefined }) => {
+  const { core } = useCore(documentViewerKeyProp);
   const [t] = useTranslation();
 
-  const elementName = documentViewerKey ? `zoomOverlay${documentViewerKey}` : DataElements.ZOOM_OVERLAY;
-  const buttonName = documentViewerKey ? `zoomOverlayButton${documentViewerKey}` : DataElements.ZOOM_OVERLAY_BUTTON;
+  const elementName = documentViewerKeyProp ? `zoomOverlay${documentViewerKeyProp}` : DataElements.ZOOM_OVERLAY;
+  const buttonName = documentViewerKeyProp ? `zoomOverlayButton${documentViewerKeyProp}` : DataElements.ZOOM_OVERLAY_BUTTON;
 
   const isMobile = isMobileSize();
 
-  const [isActive, isMultiViewerMode] = useSelector(
-    (state) => [selectors.isElementOpen(state, elementName), selectors.isMultiViewerMode(state)],
+  const [isActive, isMultiViewerMode, activeDocumentViewerKey] = useSelector(
+    (state) => [
+      selectors.isElementOpen(state, elementName),
+      selectors.isMultiViewerMode(state),
+      selectors.getActiveDocumentViewerKey(state),
+    ],
     shallowEqual,
   );
+  // In compare/multi-viewer mode the prop pins this overlay to a specific pane (1 or 2).
+  // In single-viewer mode (incl. multi-WC where each instance has its own store), the prop
+  // is undefined and we fall back to the per-instance active key from Redux.
+  const documentViewerKey = documentViewerKeyProp ?? activeDocumentViewerKey;
   const dispatch = useDispatch();
   const [value, setValue] = useState('100');
 
@@ -81,7 +89,7 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
       setValue(zoom);
     } else {
       setValue(Number(e.target.value).toString());
-      zoomTo(e.target.value / 100, documentViewerKey);
+      zoomTo(e.target.value / 100, isMultiViewerMode, documentViewerKey);
     }
   };
 

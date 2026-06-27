@@ -1,10 +1,10 @@
 import React from 'react';
-import { legacy_createStore as createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import OutlineContent from './OutlineContent';
 import OutlineContext from '../Outline/Context';
 import { menuItems } from 'helpers/outlineFlyoutHelper';
-import '../LeftPanel/LeftPanel.scss';
+import Panel from 'components/Panel';
 
 const NOOP = () => { };
 
@@ -16,9 +16,21 @@ export default {
 const reducer = () => {
   return {
     viewer: {
-      disabledElements: {},
+      disabledElements: {
+        logoBar: { disabled: true },
+      },
       customElementOverrides: {},
       isOutlineEditingEnabled: true,
+      openElements: {
+        outlinesPanel: true,
+        'bookmarkOutlineFlyout-': true,
+      },
+      panelWidths: {
+        outlinesPanel: 330,
+      },
+      sortStrategy: 'position',
+      isInDesktopOnlyMode: true,
+      modularHeaders: {},
       flyoutMap: {
         'bookmarkOutlineFlyout-': {
           dataElement: 'bookmarkOutlineFlyout-',
@@ -26,9 +38,6 @@ const reducer = () => {
         }
       },
       activeFlyout: 'bookmarkOutlineFlyout-',
-      openElements: {
-        'bookmarkOutlineFlyout-': true,
-      }
     },
     document: {
       outlines: {},
@@ -38,6 +47,14 @@ const reducer = () => {
     },
   };
 };
+
+const renderInOutlinesPanel = (store, children) => (
+  <ReduxProvider store={store}>
+    <Panel dataElement="outlinesPanel" location="left">
+      {children}
+    </Panel>
+  </ReduxProvider>
+);
 
 const changingDestReducer = () => {
   return {
@@ -54,162 +71,132 @@ const changingDestReducer = () => {
 };
 
 export const Basic = () => {
-  return (
-    <ReduxProvider store={createStore(changingDestReducer)}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container default'>
-            <OutlineContext.Provider
-              value={{
-                isMultiSelectMode: false,
-                isOutlineEditable: true,
-                addNewOutline: NOOP,
-                renameOutline: NOOP,
-                removeOutlines: NOOP,
-                outlineScrollParentRef: { current: null },
-              }}
-            >
-              <OutlineContent
-                outlinePath='0'
-                text='A test outline'
-                setIsHovered={NOOP}
-                onCancel={NOOP}
-                isChangingDest={true}
-              />
-            </OutlineContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInOutlinesPanel(configureStore({ reducer: changingDestReducer }),
+    <div className='bookmark-outline-single-container default'>
+      <OutlineContext.Provider
+        value={{
+          isMultiSelectMode: false,
+          isOutlineEditable: true,
+          addNewOutline: NOOP,
+          renameOutline: NOOP,
+          removeOutlines: NOOP,
+          outlineScrollParentRef: { current: null },
+        }}
+      >
+        <OutlineContent
+          outlinePath='0'
+          text='A test outline'
+          setIsHovered={NOOP}
+          onCancel={NOOP}
+          isChangingDest={true}
+        />
+      </OutlineContext.Provider>
+    </div>
   );
 };
 
 export const Adding = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <OutlineContext.Provider
-              value={{
-                currentDestPage: 1,
-                currentDestText: 'Full Page',
-                isMultiSelectMode: false,
-                isOutlineEditable: true,
-                addNewOutline: NOOP,
-                renameOutline: NOOP,
-                removeOutlines: NOOP,
-                outlineScrollParentRef: { current: null },
-              }}
-            >
-              <OutlineContent
-                outlinePath='0'
-                text=''
-                isAdding={true}
-                setIsHovered={NOOP}
-                isRenaming={false}
-                onCancel={NOOP}
-              />
-            </OutlineContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInOutlinesPanel(configureStore({ reducer: reducer }),
+    <div className='bookmark-outline-single-container editing'>
+      <OutlineContext.Provider
+        value={{
+          currentDestPage: 1,
+          currentDestText: 'Full Page',
+          isMultiSelectMode: false,
+          isOutlineEditable: true,
+          addNewOutline: NOOP,
+          renameOutline: NOOP,
+          removeOutlines: NOOP,
+          outlineScrollParentRef: { current: null },
+        }}
+      >
+        <OutlineContent
+          outlinePath='0'
+          text=''
+          isAdding={true}
+          setIsHovered={NOOP}
+          isRenaming={false}
+          onCancel={NOOP}
+        />
+      </OutlineContext.Provider>
+    </div>
   );
 };
 
 export const Renaming = () => {
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <OutlineContext.Provider
-              value={{
-                isMultiSelectMode: false,
-                isOutlineEditable: true,
-                addNewOutline: NOOP,
-                renameOutline: NOOP,
-                removeOutlines: NOOP,
-                outlineScrollParentRef: { current: null },
-              }}
-            >
-              <OutlineContent
-                outlinePath='0'
-                text='A test outline'
-                setIsHovered={NOOP}
-                isRenaming={true}
-                onCancel={NOOP}
-              />
-            </OutlineContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInOutlinesPanel(configureStore({ reducer: reducer }),
+    <div className='bookmark-outline-single-container editing'>
+      <OutlineContext.Provider
+        value={{
+          isMultiSelectMode: false,
+          isOutlineEditable: true,
+          addNewOutline: NOOP,
+          renameOutline: NOOP,
+          removeOutlines: NOOP,
+          outlineScrollParentRef: { current: null },
+        }}
+      >
+        <OutlineContent
+          outlinePath='0'
+          text='A test outline'
+          setIsHovered={NOOP}
+          isRenaming={true}
+          onCancel={NOOP}
+        />
+      </OutlineContext.Provider>
+    </div>
   );
 };
 
 export const ChangingDestination = () => {
-  return (
-    <ReduxProvider store={createStore(changingDestReducer)}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container editing'>
-            <OutlineContext.Provider
-              value={{
-                isMultiSelectMode: false,
-                isOutlineEditable: true,
-                addNewOutline: NOOP,
-                renameOutline: NOOP,
-                removeOutlines: NOOP,
-                currentDestPage: 1,
-                currentDestText: 'Area Selection',
-                outlineScrollParentRef: { current: null },
-              }}
-            >
-              <OutlineContent
-                outlinePath='0'
-                text='A test outline'
-                setIsHovered={NOOP}
-                onCancel={NOOP}
-                isChangingDest={true}
-              />
-            </OutlineContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInOutlinesPanel(configureStore({ reducer: changingDestReducer }),
+    <div className='bookmark-outline-single-container editing'>
+      <OutlineContext.Provider
+        value={{
+          isMultiSelectMode: false,
+          isOutlineEditable: true,
+          addNewOutline: NOOP,
+          renameOutline: NOOP,
+          removeOutlines: NOOP,
+          currentDestPage: 1,
+          currentDestText: 'Area Selection',
+          outlineScrollParentRef: { current: null },
+        }}
+      >
+        <OutlineContent
+          outlinePath='0'
+          text='A test outline'
+          setIsHovered={NOOP}
+          onCancel={NOOP}
+          isChangingDest={true}
+        />
+      </OutlineContext.Provider>
+    </div>
   );
 };
 
 export const ColoredOutline = () => {
-  return (
-    <ReduxProvider store={createStore(changingDestReducer)}>
-      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-        <div className='left-panel-container' style={{ minWidth: '330px' }}>
-          <div className='bookmark-outline-single-container default'>
-            <OutlineContext.Provider
-              value={{
-                isMultiSelectMode: false,
-                isOutlineEditable: true,
-                addNewOutline: NOOP,
-                renameOutline: NOOP,
-                removeOutlines: NOOP,
-                outlineScrollParentRef: { current: null },
-              }}
-            >
-              <OutlineContent
-                outlinePath='0'
-                text='A colored outline'
-                isChangingDest={true}
-                setIsHovered={NOOP}
-                textColor="rgb(213, 42, 42)"
-                onCancel={NOOP}
-              />
-            </OutlineContext.Provider>
-          </div>
-        </div>
-      </div>
-    </ReduxProvider>
+  return renderInOutlinesPanel(configureStore({ reducer: changingDestReducer }),
+    <div className='bookmark-outline-single-container default'>
+      <OutlineContext.Provider
+        value={{
+          isMultiSelectMode: false,
+          isOutlineEditable: true,
+          addNewOutline: NOOP,
+          renameOutline: NOOP,
+          removeOutlines: NOOP,
+          outlineScrollParentRef: { current: null },
+        }}
+      >
+        <OutlineContent
+          outlinePath='0'
+          text='A colored outline'
+          isChangingDest={true}
+          setIsHovered={NOOP}
+          textColor="rgb(213, 42, 42)"
+          onCancel={NOOP}
+        />
+      </OutlineContext.Provider>
+    </div>
   );
 };

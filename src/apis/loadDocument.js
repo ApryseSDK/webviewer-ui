@@ -3,6 +3,7 @@
  * @method UI.loadDocument
  * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
  * @param {UI.loadDocumentOptions} [options] Additional options.
+ * @param {number} [documentViewerKey] The document viewer key to load into. Defaults to the currently active document viewer.
  * @returns {Promise<void>} A promise that resolves when the document has been created.
  * @example
 WebViewer(...)
@@ -15,17 +16,54 @@ WebViewer(...)
  */
 
 import loadDocument from 'helpers/loadDocument';
+import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
 import selectors from 'selectors';
 
-export default (store) => async (src, options) => {
+const VALID_DOCUMENT_VIEWER_KEYS = new Set([1, 2]);
+
+export default (store) => async (src, options, documentViewerKey) => {
   const state = store.getState();
+
+  if (documentViewerKey !== undefined) {
+    if (!VALID_DOCUMENT_VIEWER_KEYS.has(documentViewerKey)) {
+      console.error(`Invalid documentViewerKey: ${documentViewerKey}. Must be 1 or 2.`);
+      return;
+    }
+    if (documentViewerKey === 2 && !selectors.isMultiViewerMode(state)) {
+      console.error('documentViewerKey 2 is only valid when multi-viewer mode is active.');
+      return;
+    }
+  }
+
   const isMultiTab = selectors.getIsMultiTab(state);
   const tabManager = selectors.getTabManager(state);
-  const activeTab = selectors.getActiveTab(state);
-  if (isMultiTab && tabManager && (activeTab || activeTab === 0)) {
-    return tabManager.updateTab(activeTab, { src, options });
+  const targetDocumentViewerKey = documentViewerKey ?? selectors.getActiveDocumentViewerKey(state) ?? 1;
+  const canUseTabManager = isMultiTab && !!tabManager;
+
+  if (!canUseTabManager) {
+    return loadDocument(store.dispatch, src, options, targetDocumentViewerKey);
   }
-  return loadDocument(store.dispatch, src, options);
+
+  const activeTab = selectors.getActiveTab(state);
+  const tabs = selectors.getTabs(state);
+  const targetTabId = getTargetTabId(activeTab, tabs);
+
+  if (targetTabId || targetTabId === 0) {
+    const updateProperties = buildTabUpdateForViewer({
+      documentViewerKey: targetDocumentViewerKey,
+      src,
+      options,
+      isMultiViewerMode: selectors.isMultiViewerMode(state),
+    });
+
+    return tabManager.updateTab(targetTabId, updateProperties);
+  }
+
+  return tabManager.addTab(src, {
+    ...(options),
+    setActive: true,
+    saveCurrentActiveTabState: true,
+  });
 };
 
 /**

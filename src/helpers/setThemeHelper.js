@@ -9,8 +9,6 @@ import getRootNode from 'helpers/getRootNode';
  * @property {string} LIGHT The light theme
  * @property {string} DARK_MODULAR The dark theme when customizable UI is enabled
  * @property {string} LIGHT_MODULAR The light theme when customizable UI is enabled
- * @property {string} DARK_HIGH_CONTRAST The dark theme when high contrast is enabled
- * @property {string} LIGHT_HIGH_CONTRAST The light theme when high contrast is enabled
  * @ignore
  */
 export const InternalTheme = {
@@ -18,27 +16,22 @@ export const InternalTheme = {
   LIGHT: 'light',
   DARK_MODULAR: 'dark-modular',
   LIGHT_MODULAR: 'light-modular',
-  DARK_HIGH_CONTRAST: 'dark-high-contrast',
-  LIGHT_HIGH_CONTRAST: 'light-high-contrast',
 };
 
 /**
  * Maps each flag combination to its corresponding internal theme string
  * @param {UI.Theme} activeTheme The active theme (light or dark)
- * @param {boolean} isHighContrastMode Whether high contrast mode is enabled
  * @param {boolean} isCustomizableUI Whether customizable UI is enabled
  * @returns {InternalTheme} The internal theme string corresponding to the given theme flags
  * @ignore
  */
-export const getInternalTheme = (activeTheme, isHighContrastMode, isCustomizableUI) => {
+export const getInternalTheme = (activeTheme, isCustomizableUI) => {
   if (activeTheme !== Theme.LIGHT && activeTheme !== Theme.DARK) {
     throw new Error(`Invalid theme: ${activeTheme}`);
   }
   const isThemeLight = activeTheme === Theme.LIGHT;
   if (isCustomizableUI) {
     return isThemeLight ? InternalTheme.LIGHT_MODULAR : InternalTheme.DARK_MODULAR;
-  } else if (isHighContrastMode) {
-    return isThemeLight ? InternalTheme.LIGHT_HIGH_CONTRAST : InternalTheme.DARK_HIGH_CONTRAST;
   } else {
     return isThemeLight ? InternalTheme.LIGHT : InternalTheme.DARK;
   }
@@ -117,10 +110,6 @@ export const importTheme = async (internalTheme) => {
     await import(/* webpackChunkName: "theme-light-modular" */ '../components/App/App.scss?theme-light-modular');
   } else if (internalTheme === InternalTheme.DARK_MODULAR) {
     await import(/* webpackChunkName: "theme-dark-modular" */ '../components/App/App.scss?theme-dark-modular');
-  } else if (internalTheme === InternalTheme.LIGHT_HIGH_CONTRAST) {
-    await import(/* webpackChunkName: "theme-light-high-contrast" */ '../components/App/App.scss?theme-light-high-contrast');
-  } else if (internalTheme === InternalTheme.DARK_HIGH_CONTRAST) {
-    await import(/* webpackChunkName: "theme-dark-high-contrast" */ '../components/App/App.scss?theme-dark-high-contrast');
   } else {
     throw new Error(`Invalid theme: ${internalTheme}`);
   }

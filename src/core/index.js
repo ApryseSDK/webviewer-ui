@@ -124,7 +124,7 @@ import createDocument from './createDocument';
 import performDocumentCreationChecks from './performDocumentCreationChecks';
 import getContentEditManager from './getContentEditManager';
 import getTool from './getTool';
-import { getDocumentViewer, setDocumentViewer, getDocumentViewers, deleteDocumentViewer } from './documentViewers';
+import { getDocumentViewer, setDocumentViewer, getDocumentViewers, deleteDocumentViewer, setMultiInstanceActiveKey, getMultiInstanceActiveKey, setMultiViewerModeActive, getMultiViewerModeActive, hasDocumentViewer } from './documentViewers';
 import getUserBookmarks from './getUserBookmarks';
 import setUserBookmarks from './setUserBookmarks';
 import addUserBookmark from './addUserBookmark';
@@ -140,6 +140,7 @@ import enableAnnotationNumbering from './enableAnnotationNumbering';
 import getSemanticDiffAnnotations from './getSemanticDiffAnnotations';
 import loadBlankOfficeEditorDocument from './loadBlankOfficeEditorDocument';
 import getOfficeEditor from './getOfficeEditor';
+import getTrackedChangeManager from './getTrackedChangeManager';
 import isValidURI from './isValidURI';
 import openURI from './openURI';
 import getAllowedFileExtensions from './getAllowedFileExtensions';
@@ -150,8 +151,13 @@ export default {
   getSemanticDiffAnnotations,
   getDocumentViewers,
   getDocumentViewer,
+  hasDocumentViewer,
   setDocumentViewer,
   deleteDocumentViewer,
+  setMultiInstanceActiveKey,
+  getMultiInstanceActiveKey,
+  setMultiViewerModeActive,
+  getMultiViewerModeActive,
   setToolMode,
   getToolMode,
   getTool,
@@ -292,6 +298,7 @@ export default {
   getScalePrecision,
   enableAnnotationNumbering,
   getOfficeEditor,
+  getTrackedChangeManager,
   loadBlankOfficeEditorDocument,
   isValidURI,
   openURI,

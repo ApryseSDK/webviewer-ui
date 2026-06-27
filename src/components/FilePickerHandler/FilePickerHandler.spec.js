@@ -114,5 +114,26 @@ describe('FilePickerHandler', () => {
       fireEvent.change(fileInput, { target: { files: [] } });
       expect(mockTabManager.addTab).not.toHaveBeenCalled();
     });
+
+    it('updates document2 when active document viewer key is 2', () => {
+      const updateTab = jest.fn().mockResolvedValue(undefined);
+      const fileInput = renderFilePickerHandler(createMockState({
+        viewer: {
+          isMultiTab: true,
+          isMultiViewerMode: true,
+          TabManager: {
+            addTab: jest.fn(),
+            updateTab,
+          },
+          activeTab: 13,
+          activeDocumentViewerKey: 2,
+        },
+      }));
+
+      selectFile(fileInput, mockFile);
+
+      expect(updateTab).toHaveBeenCalledWith(13, { document2: { src: mockFile } });
+      expect(loadDocumentHelper).not.toHaveBeenCalled();
+    });
   });
 });

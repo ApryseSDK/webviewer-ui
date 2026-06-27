@@ -14,6 +14,7 @@ import ModalWrapper from '../../ModalWrapper';
 
 import DataElementWrapper from 'src/components/DataElementWrapper';
 import Dropdown from 'src/components/Dropdown';
+import DataElements from 'constants/dataElement';
 
 import { isMobile } from 'helpers/device';
 import { css } from '@emotion/react';
@@ -81,7 +82,6 @@ class WatermarkModal extends React.PureComponent {
     modalClosed: PropTypes.func,
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
-    isCustomizableUI: PropTypes.bool,
   };
 
   constructor(props) {
@@ -399,7 +399,7 @@ class WatermarkModal extends React.PureComponent {
       return null;
     }
 
-    const { t, isCustomizableUI } = this.props;
+    const { t } = this.props;
 
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
@@ -410,10 +410,11 @@ class WatermarkModal extends React.PureComponent {
       <DataElementWrapper
         className={'Modal Watermark'}
         id="watermarkModal"
-        data-element="watermarkModal"
+        data-element={DataElements.WATERMARK_MODAL}
       >
         <ModalWrapper
           isOpen={this.state.lockFocus} title={'option.watermark.addWatermark'}
+          modalDataElement={DataElements.WATERMARK_MODAL}
           closeButtonDataElement={'watermarkModalCloseButton'}
           onCloseClick={this.closeModal}
           swipeToClose
@@ -496,7 +497,7 @@ class WatermarkModal extends React.PureComponent {
                     step={1}
                     value={formInfo[FORM_FIELD_KEYS.opacity]}
                     getDisplayValue={(opacity) => `${Math.round(opacity)}%`}
-                    withInputField={isCustomizableUI}
+                    withInputField={true}
                     inputFieldType={'number'}
                     onSliderChange={(_, value) => this.handleInputChange(
                       FORM_FIELD_KEYS.opacity,

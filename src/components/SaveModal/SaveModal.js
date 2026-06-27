@@ -205,6 +205,7 @@ const SaveModal = () => {
       <ModalWrapper
         isOpen={isOpen}
         title={t('saveModal.saveAs')}
+        modalDataElement={DataElements.SAVE_MODAL}
         closeHandler={closeModal}
         onCloseClick={closeModal}
         swipeToClose>

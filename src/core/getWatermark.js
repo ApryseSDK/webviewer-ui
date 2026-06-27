@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getWatermark();
+export default (documentViewerKey) => core.getDocumentViewer(documentViewerKey).getWatermark();

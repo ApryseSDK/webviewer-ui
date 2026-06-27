@@ -22,7 +22,7 @@ describe('Panel', () => {
 
     beforeEach(() => {
       store = configureStore({
-        reducer: rootReducer,
+        reducer: rootReducer(),
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
       });
       global.ResizeObserver = jest.fn().mockImplementation(() => ({

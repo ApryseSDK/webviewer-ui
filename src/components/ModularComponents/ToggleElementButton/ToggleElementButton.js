@@ -29,7 +29,6 @@ const ToggleElementButton = (props) => {
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
   const isToggleElementDisabled = useSelector((state) => selectors.isElementDisabled(state, toggleElement));
   const isButtonDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement) || selectors.isDisabledViewOnly(state, toggleElement));
-  const customizableUI = useSelector(selectors.getFeatureFlags)?.customizableUI;
 
   const [isElementActive, setIsElementActive] = useState(isActive);
   const [isElementDisabled, setIsElementDisabled] = useState(disabled);
@@ -72,7 +71,6 @@ const ToggleElementButton = (props) => {
   return (
     <div className={classNames({
       'ToggleElementButton': true,
-      'legacy-ui': !customizableUI,
       'is-mobile': isMobile,
     })} ref={buttonRef}>
       <Button

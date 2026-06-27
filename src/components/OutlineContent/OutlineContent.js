@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import useCore from 'hooks/useCore';
 import selectors from 'selectors';
@@ -123,8 +123,6 @@ const OutlineContent = ({
   const outlineScrollParentRef = outlineContext?.outlineScrollParentRef;
 
   const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state), shallowEqual);
-  const customizableUI = featureFlags.customizableUI;
   const TOOL_NAME = 'OutlineDestinationCreateTool';
 
   const [outlineText, setOutlineText] = useState(text);
@@ -345,7 +343,6 @@ const OutlineContent = ({
           name="outline"
           ref={inputRef}
           className="bookmark-outline-input"
-          placeholder={customizableUI ? '' : t('component.outlineTitle')}
           aria-label={t('component.newOutlineTitle')}
           value={outlineText}
           onKeyDown={handleKeyDown}

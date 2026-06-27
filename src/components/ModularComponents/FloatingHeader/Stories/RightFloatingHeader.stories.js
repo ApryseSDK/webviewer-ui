@@ -35,7 +35,7 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
   };
   return (
     <Provider store={configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       preloadedState: state,
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
     })}>

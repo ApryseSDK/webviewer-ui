@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
@@ -33,6 +33,7 @@ import {
   triggerAnnotationChangedEventWithModify
 } from './utils';
 import useCore from 'hooks/useCore';
+import {  getDatePickerDateFormats, DEFAULT_DATE_PICKER_FORMAT } from 'helpers/datePickerHelper';
 
 const { Annotations, Tools } = window.Core;
 
@@ -48,13 +49,12 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const isSignatureOptionsDropdownDisabled = useSelector((state) => selectors.isElementDisabled(state, 'signatureOptionsDropdown'));
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
+  const dateTimeFormats = useSelector(selectors.getDateTimeFormats, shallowEqual);
 
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const isMobile = isMobileSize();
-  const customizableUI = featureFlags.customizableUI;
   const isRTL = useIsRTL();
 
   const [fieldProperties, setFieldProperties] = useState(defaultProperties);
@@ -73,6 +73,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const [toolOptions, setToolOptions] = useState(isUsingDefaultOptions ? currentTool.defaults.options : []);
   const [fieldOptions, setFieldOptions] = useState(annotation?.getFieldOptions() ?? []);
   const [panelTitle, setPanelTitle] = useState();
+  const dateFormatOptions = useMemo(() => getDatePickerDateFormats(dateTimeFormats), [dateTimeFormats]);
   function closeAndReset() {
     dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_TWO));
     dispatch(actions.closeElement(DataElements.FORM_FIELD_PANEL));
@@ -100,8 +101,25 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
 
   const handleToolModeChange = useCallback((newTool) => {
     if (newTool instanceof Tools.FormFieldCreateTool) {
-      const { options , flags, Width: width = 0, Height: height = 0, defaultValue = '', indicatorText = '', showIndicator = false } = getToolStyles(newTool.name) || {};
-      setFieldProperties((prev) => ({ ...prev, defaultValue }));
+      const toolStyles = getToolStyles(newTool.name) || {};
+      const { options , flags, Width: width = 0, Height: height = 0, defaultValue = '', indicatorText = '', showIndicator = false } = toolStyles;
+      const isDatePickerTool = newTool instanceof Tools.DatePickerFormFieldCreateTool;
+      const dateFormat = toolStyles.dateFormat || dateFormatOptions[0] || DEFAULT_DATE_PICKER_FORMAT;
+      const normalizedDefaultValue = isDatePickerTool ? '' : defaultValue;
+
+      setFieldProperties((prev) => ({
+        ...prev,
+        defaultValue: normalizedDefaultValue,
+        dateFormat: isDatePickerTool ? dateFormat : prev.dateFormat,
+      }));
+
+      if (isDatePickerTool && !toolStyles.dateFormat) {
+        setToolStyles(newTool.name, 'dateFormat', dateFormat);
+      }
+      if (isDatePickerTool && toolStyles.defaultValue) {
+        setToolStyles(newTool.name, 'defaultValue', '');
+      }
+
       setFieldDimension({ width, height });
       setFieldFlags({
         ReadOnly: flags?.READ_ONLY || false,
@@ -115,7 +133,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     } else {
       closeAndReset();
     }
-  }, [toolButtonObject, i18n.language, core]);
+  }, [toolButtonObject, i18n.language, core, dateFormatOptions]);
 
   useEffect(() => {
     const currentTool = core.getToolMode();
@@ -210,7 +228,8 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       name: fieldName,
       // Are there repercussions with this?
       // Expected result for TextField but what about other fields?
-      defaultValue: field.defaultValue,
+      defaultValue: annotation instanceof Annotations.DatePickerWidgetAnnotation ? '' : field.defaultValue,
+      dateFormat: annotation instanceof Annotations.DatePickerWidgetAnnotation ? annotation.pdfDateFormat : prev.dateFormat,
       radioButtonGroups: [...new Set([...radioButtons, ...formFieldCreationManager.getRadioButtonGroups()])]
     }));
     setFieldFlags({
@@ -223,7 +242,10 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       showIndicator: formFieldCreationManager.getShowIndicator(annotation),
       indicatorText: formFieldCreationManager.getIndicatorText(annotation),
     });
-    setPanelTitle(t(`formField.formFieldPanel.${field.getFieldType()}`));
+    const panelType = annotation instanceof Annotations.DatePickerWidgetAnnotation
+      ? 'DatePickerFormField'
+      : field.getFieldType();
+    setPanelTitle(t(`formField.formFieldPanel.${panelType}`));
     setValidationMessage(validationMessage);
   }, [isOpen, annotation, isRTL, i18n.language, core]);
 
@@ -283,6 +305,25 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const onFieldOptionsChange = useCallback((options) => {
     annotation.setFieldOptions(options);
   }, [fieldOptions, annotation]);
+
+  const onDateFormatChange = useCallback((dateFormat) => {
+    setFieldProperties((previousFieldProperties) => ({
+      ...previousFieldProperties,
+      dateFormat,
+    }));
+
+    if (annotation && annotation instanceof Annotations.DatePickerWidgetAnnotation) {
+      const datePickerCreateTool = core.getTool('DatePickerFormFieldCreateTool');
+      datePickerCreateTool?.setDateFormat(annotation, dateFormat);
+      triggerAnnotationChangedEventWithModify([annotation], core);
+      return;
+    }
+
+    const currentTool = core.getToolMode();
+    if (currentTool instanceof Tools.DatePickerFormFieldCreateTool) {
+      setToolStyles(currentTool.name, 'dateFormat', dateFormat);
+    }
+  }, [annotation, core]);
 
   const onToolOptionsChange = useCallback((options) => {
     const currentTool = core.getToolMode();
@@ -403,7 +444,16 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
     );
   };
 
-  const options = { onFieldNameChange, onFieldValueChange, fieldProperties, onSignatureOptionChange, getSignatureOption, annotation };
+  const options = {
+    onFieldNameChange,
+    onFieldValueChange,
+    onDateFormatChange,
+    dateFormatOptions,
+    fieldProperties,
+    onSignatureOptionChange,
+    getSignatureOption,
+    annotation,
+  };
   const fields = createFields(options, core);
   const flags = createFlags(handleFlagChange, fieldFlags);
 
@@ -454,7 +504,7 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
         'Panel': true,
         'FormFieldPanel': true,
         [mobilePanelSize]: isMobile,
-        'modular-ui-panel': customizableUI,
+        'modular-ui-panel': true,
       })
     }>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}

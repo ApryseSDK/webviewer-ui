@@ -2,11 +2,11 @@ import React from 'react';
 import SearchPanelContainer from './SearchPanelContainer';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { MockApp } from 'helpers/storybookHelper';
 import Panel from 'components/Panel';
 import core from 'core';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore } from 'helpers/storybookHelper';
 import { default as mockAppInitialState } from 'src/redux/initialState';
 import { within, expect } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -194,7 +194,7 @@ const SearchPanelInApp = (context, location, panelSize) => {
     },
   };
 
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} />;

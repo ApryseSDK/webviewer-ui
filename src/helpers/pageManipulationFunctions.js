@@ -2,7 +2,7 @@ import extractPagesWithAnnotations from 'helpers/extractPagesWithAnnotations';
 import core from 'core';
 import { saveAs } from 'file-saver';
 import actions from 'actions';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 import { workerTypes } from 'constants/types';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import DataElements from 'constants/dataElement';
@@ -48,12 +48,14 @@ const rotatePages = (pageNumbers, counterClockwise, documentViewerKey = 1) => {
 
 const rotateClockwise = (pageNumbers, documentViewerKey = 1) => {
   rotatePages(pageNumbers, false, documentViewerKey);
-  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.rotatedClockwise')} ${i18next.t('action.rotationIs')} ${(core.getDocument(documentViewerKey).getPageRotation(core.getCurrentPage(documentViewerKey)) + 90) % 360} degrees`);
+  const t = getCurrentT();
+  createAnnouncement(`${t('action.page')} ${pageNumbers} ${t('action.rotatedClockwise')} ${t('action.rotationIs')} ${(core.getDocument(documentViewerKey).getPageRotation(core.getCurrentPage(documentViewerKey)) + 90) % 360} degrees`);
 };
 
 const rotateCounterClockwise = (pageNumbers, documentViewerKey = 1) => {
   rotatePages(pageNumbers, true, documentViewerKey);
-  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.rotatedCounterClockwise')} ${i18next.t('action.rotationIs')} ${(core.getDocument(documentViewerKey).getPageRotation(core.getCurrentPage(documentViewerKey)) + 270) % 360} degrees`);
+  const t = getCurrentT();
+  createAnnouncement(`${t('action.page')} ${pageNumbers} ${t('action.rotatedCounterClockwise')} ${t('action.rotationIs')} ${(core.getDocument(documentViewerKey).getPageRotation(core.getCurrentPage(documentViewerKey)) + 270) % 360} degrees`);
 };
 
 const insertAbove = (pageNumbers, width, height, documentViewerKey = 1) => {
@@ -70,12 +72,13 @@ const replace = (dispatch) => {
 };
 
 const extractPages = (pageNumbers, dispatch, documentViewerKey = 1) => {
-  const message = i18next.t('warning.extractPage.message');
-  const title = i18next.t('warning.extractPage.title');
-  const confirmBtnText = i18next.t('warning.extractPage.confirmBtn');
-  const secondaryBtnText = i18next.t('warning.extractPage.secondaryBtn');
-  const extractAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.extracted')}`;
-  const deleteAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.deleted')}`;
+  const t = getCurrentT();
+  const message = t('warning.extractPage.message');
+  const title = t('warning.extractPage.title');
+  const confirmBtnText = t('warning.extractPage.confirmBtn');
+  const secondaryBtnText = t('warning.extractPage.secondaryBtn');
+  const extractAnnouncement = `${t('action.page')} ${pageNumbers} ${t('action.extracted')}`;
+  const deleteAnnouncement = `${t('action.page')} ${pageNumbers} ${t('action.deleted')}`;
 
   const warning = {
     message,
@@ -101,11 +104,12 @@ const extractPages = (pageNumbers, dispatch, documentViewerKey = 1) => {
 };
 
 const deletePages = (pageNumbers, dispatch, isModalEnabled = true, documentViewerKey = 1) => {
-  const deleteAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.deleted')}`;
+  const t = getCurrentT();
+  const deleteAnnouncement = `${t('action.page')} ${pageNumbers} ${t('action.deleted')}`;
   if (isModalEnabled) {
-    let message = i18next.t('warning.deletePage.deleteMessage');
-    const title = i18next.t('warning.deletePage.deleteTitle');
-    const confirmBtnText = i18next.t('action.ok');
+    let message = t('warning.deletePage.deleteMessage');
+    const title = t('warning.deletePage.deleteTitle');
+    const confirmBtnText = t('action.ok');
 
     let warning = {
       message,
@@ -119,7 +123,7 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true, documentViewe
     };
 
     if (core.getDocumentViewer(documentViewerKey).getPageCount() === pageNumbers.length) {
-      message = i18next.t('warning.deletePage.deleteLastPageMessage');
+      message = t('warning.deletePage.deleteLastPageMessage');
 
       warning = {
         message,
@@ -141,19 +145,22 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true, documentViewe
 
 const movePagesToBottom = (pageNumbers, documentViewerKey = 1) => {
   core.movePages(pageNumbers, core.getTotalPages(documentViewerKey) + 1, documentViewerKey);
-  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.movedToBottomOfDocument')}`);
+  const t = getCurrentT();
+  createAnnouncement(`${t('action.page')} ${pageNumbers} ${t('action.movedToBottomOfDocument')}`);
 };
 
 const movePagesToTop = (pageNumbers, documentViewerKey = 1) => {
   core.movePages(pageNumbers, 0, documentViewerKey);
-  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.movedToTopofDocument')}`);
+  const t = getCurrentT();
+  createAnnouncement(`${t('action.page')} ${pageNumbers} ${t('action.movedToTopofDocument')}`);
 };
 
 const noPagesSelectedWarning = (pageNumbers, dispatch) => {
   if (pageNumbers.length === 0) {
-    const title = i18next.t('warning.selectPage.selectTitle');
-    const message = i18next.t('warning.selectPage.selectMessage');
-    const confirmBtnText = i18next.t('action.ok');
+    const t = getCurrentT();
+    const title = t('warning.selectPage.selectTitle');
+    const message = t('warning.selectPage.selectMessage');
+    const confirmBtnText = t('action.ok');
 
     const warning = {
       message,
@@ -170,9 +177,10 @@ const noPagesSelectedWarning = (pageNumbers, dispatch) => {
 };
 
 const exitPageInsertionWarning = (closeModal, dispatch) => {
-  const title = i18next.t('insertPageModal.warning.title');
-  const message = i18next.t('insertPageModal.warning.message');
-  const confirmBtnText = i18next.t('action.ok');
+  const t = getCurrentT();
+  const title = t('insertPageModal.warning.title');
+  const message = t('insertPageModal.warning.message');
+  const confirmBtnText = t('action.ok');
 
   const warning = {
     message,
@@ -186,9 +194,10 @@ const exitPageInsertionWarning = (closeModal, dispatch) => {
 };
 
 const exitPageReplacementWarning = (closeModal, dispatch) => {
-  const title = i18next.t('option.pageReplacementModal.warning.title');
-  const message = i18next.t('option.pageReplacementModal.warning.message');
-  const confirmBtnText = i18next.t('action.ok');
+  const t = getCurrentT();
+  const title = t('option.pageReplacementModal.warning.title');
+  const message = t('option.pageReplacementModal.warning.message');
+  const confirmBtnText = t('action.ok');
 
   const warning = {
     message,

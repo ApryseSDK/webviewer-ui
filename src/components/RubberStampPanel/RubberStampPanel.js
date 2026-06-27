@@ -33,10 +33,8 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
   const customStamps = useSelector(selectors.getCustomStamps, shallowEqual);
   const selectedStampIndex = useSelector(selectors.getSelectedStampIndex);
   const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
 
   const store = useStore();
-  const customizableUI = featureFlags.customizableUI;
 
   const setSelectedRubberStamp = useCallback(async (annotation, index) => {
     core.setToolMode(TOOL_NAME);
@@ -57,10 +55,9 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
   }, []);
 
   useEffect(() => {
-    const onVisibilityChanged = (e) => {
+    const onVisibilityChanged = (element, isVisible) => {
       const activeTool = core.getToolMode();
       const activeToolName = activeTool?.name;
-      const { element, isVisible } = e.detail;
       if (element === panelNames.RUBBER_STAMP && !isVisible) {
         if (activeToolName === TOOL_NAME || activeToolName === defaultTool) {
           setToolModeAndGroup(store, defaultTool);
@@ -79,7 +76,7 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
       'Panel': true,
       'RubberStampPanel': true,
       [mobilePanelSize]: isMobile,
-      'modular-ui-panel': customizableUI,
+      'modular-ui-panel': true,
       'isFlyout': isFlyout,
     })}>
       <h1 className='rubber-stamp-panel-header'>

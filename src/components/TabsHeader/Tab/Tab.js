@@ -50,12 +50,15 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
         ariaSelected={isActive}
         ariaLabel={labelName}
         tabIndex={isActive ? 0 : -1}
-        className={classNames({ Tab: true })}
+        className={classNames({ Tab: true, 'tab-compare-button': tab.isMultiViewer })}
         onClick={setActive}
+        img={tab.isMultiViewer ? 'icon-header-compare' : ''}
+        iconClassName={tab.isMultiViewer ? 'tab-compare-icon' : undefined}
         title={untitledLabelName || labelName}
-        label={tabLabel}
         useI18String={false}
-      />
+      >
+        {tabLabel}
+      </Button>
       <div className={'close-button-wrapper'}>
         <Button
           img="icon-close"

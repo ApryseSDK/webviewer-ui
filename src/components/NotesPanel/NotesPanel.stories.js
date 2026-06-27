@@ -1,14 +1,13 @@
 /* eslint-disable no-unsanitized/property */
 import React, { useEffect, useState } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
+import { MockApp, setupNotesPanelCoreMocks } from 'helpers/storybookHelper';
 import { Provider } from 'react-redux';
 import NotesPanel from './NotesPanelContainer';
-import RightPanel from '../RightPanel';
 import Panel from 'components/Panel';
 import { default as mockAppState } from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore, setupNotesPanelCoreMocks } from 'helpers/storybookHelper';
 import core from 'core';
 import { userEvent, within, expect, waitFor, fn } from 'storybook/test';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
@@ -64,6 +63,15 @@ const initialState = {
   },
 };
 
+const createStoryState = (viewerOverrides = {}, stateOverrides = {}) => ({
+  ...initialState,
+  ...stateOverrides,
+  viewer: {
+    ...initialState.viewer,
+    ...viewerOverrides,
+  },
+});
+
 const createCustomStore = (customState, context) => {
   const baseState = {
     ...mockAppState,
@@ -91,21 +99,21 @@ const createCustomStore = (customState, context) => {
   });
 };
 
+const renderInNotesPanel = (store) => (
+  <Provider store={store}>
+    <Panel location={'right'} dataElement={'notesPanel'}>
+      <NotesPanel isCustomPanelOpen={true} isCustomPanel={true} />
+    </Panel>
+  </Provider>
+);
+
 export function Basic() {
-  initialState.viewer.notesPanelCustomEmptyPanel = undefined;
-  const store = configureStore({ reducer: () => initialState });
-  return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
-  );
+  const store = configureStore({ reducer: () => createStoryState({ notesPanelCustomEmptyPanel: undefined }) });
+  return renderInNotesPanel(store);
 }
 
 export function BasicInGenericPanel() {
-  initialState.viewer.notesPanelCustomEmptyPanel = undefined;
-  const store = configureStore({ reducer: () => initialState });
+  const store = configureStore({ reducer: () => createStoryState({ notesPanelCustomEmptyPanel: undefined }) });
   return (
     <Provider store={store}>
       <Panel location={'right'} dataElement={'notesPanel'}>
@@ -117,8 +125,7 @@ export function BasicInGenericPanel() {
 BasicInGenericPanel.parameters = disableRtlModeParameters;
 
 export function BasicInGenericPanelOnLeft() {
-  initialState.viewer.notesPanelCustomEmptyPanel = undefined;
-  const store = configureStore({ reducer: () => initialState });
+  const store = configureStore({ reducer: () => createStoryState({ notesPanelCustomEmptyPanel: undefined }) });
   return (
     <Provider store={store}>
       <Panel location={'left'} dataElement={'notesPanel'}>
@@ -130,66 +137,41 @@ export function BasicInGenericPanelOnLeft() {
 BasicInGenericPanelOnLeft.parameters = disableRtlModeParameters;
 
 export function EmptyWithCustomIconAndMessage() {
-  initialState.viewer.notesPanelCustomEmptyPanel = {
+  const state = createStoryState({
+    notesPanelCustomEmptyPanel: {
     // eslint-disable-next-line custom/no-hex-colors
-    icon: '<svg width="75" height="62" viewBox="0 0 75 62" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.8558 32.4497C18.8558 30.6273 18.8558 28.8136 18.8558 26.9912C18.8558 24.0944 18.8558 21.189 18.8558 18.2922C18.8558 17.6217 18.8558 16.9598 18.8558 16.2893C17.9632 17.1489 17.0705 18.0085 16.1779 18.8681C18.0792 18.8681 19.9895 18.8681 21.8909 18.8681C24.908 18.8681 27.9341 18.8681 30.9513 18.8681C31.6476 18.8681 32.3438 18.8681 33.0401 18.8681C34.4416 18.8681 35.7806 17.6819 35.7181 16.2893C35.6556 14.8882 34.5398 13.7105 33.0401 13.7105C31.1388 13.7105 29.2285 13.7105 27.3271 13.7105C24.3099 13.7105 21.2839 13.7105 18.2667 13.7105C17.5704 13.7105 16.8741 13.7105 16.1779 13.7105C14.7318 13.7105 13.4999 14.8882 13.4999 16.2893C13.4999 18.1116 13.4999 19.9254 13.4999 21.7477C13.4999 24.6446 13.4999 27.55 13.4999 30.4468C13.4999 31.1173 13.4999 31.7792 13.4999 32.4497C13.4999 33.7992 14.7318 35.0886 16.1779 35.0284C17.6329 34.9683 18.8558 33.8938 18.8558 32.4497Z" fill="#CFD4DA"/><path d="M55.5805 28.9452C55.5805 30.7675 55.5805 32.5812 55.5805 34.4035C55.5805 37.3004 55.5805 40.2058 55.5805 43.1026C55.5805 43.7731 55.5805 44.4349 55.5805 45.1054C56.4742 44.2458 57.3679 43.3862 58.2616 42.5267C56.3581 42.5267 54.4456 42.5267 52.542 42.5267C49.5213 42.5267 46.4917 42.5267 43.471 42.5267C42.7739 42.5267 42.0769 42.5267 41.3798 42.5267C39.9767 42.5267 38.6361 43.7129 38.6987 45.1054C38.7613 46.5065 39.8784 47.6842 41.3798 47.6842C43.2833 47.6842 45.1958 47.6842 47.0994 47.6842C50.1201 47.6842 53.1497 47.6842 56.1704 47.6842C56.8675 47.6842 57.5645 47.6842 58.2616 47.6842C59.7094 47.6842 60.9427 46.5065 60.9427 45.1054C60.9427 43.2831 60.9427 41.4694 60.9427 39.647C60.9427 36.7502 60.9427 33.8448 60.9427 30.948C60.9427 30.2775 60.9427 29.6156 60.9427 28.9452C60.9427 27.5956 59.7094 26.3062 58.2616 26.3664C56.8049 26.4266 55.5805 27.5011 55.5805 28.9452Z" fill="#CFD4DA"/><path d="M67.5 0.711227H7.5C3.36375 0.711227 0 3.95039 0 7.93345V54.1557C0 58.1387 3.36375 61.3779 7.5 61.3779H67.5C71.6362 61.3779 75 58.1387 75 54.1557L75 7.93345C75 3.95039 71.6362 0.711227 67.5 0.711227ZM7.5 54.1557V7.93345H67.5L67.5075 54.1557H7.5Z" fill="#CFD4DA"/></svg>',
-    message: 'Custom empty panel message.'
-  };
+      icon: '<svg width="75" height="62" viewBox="0 0 75 62" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.8558 32.4497C18.8558 30.6273 18.8558 28.8136 18.8558 26.9912C18.8558 24.0944 18.8558 21.189 18.8558 18.2922C18.8558 17.6217 18.8558 16.9598 18.8558 16.2893C17.9632 17.1489 17.0705 18.0085 16.1779 18.8681C18.0792 18.8681 19.9895 18.8681 21.8909 18.8681C24.908 18.8681 27.9341 18.8681 30.9513 18.8681C31.6476 18.8681 32.3438 18.8681 33.0401 18.8681C34.4416 18.8681 35.7806 17.6819 35.7181 16.2893C35.6556 14.8882 34.5398 13.7105 33.0401 13.7105C31.1388 13.7105 29.2285 13.7105 27.3271 13.7105C24.3099 13.7105 21.2839 13.7105 18.2667 13.7105C17.5704 13.7105 16.8741 13.7105 16.1779 13.7105C14.7318 13.7105 13.4999 14.8882 13.4999 16.2893C13.4999 18.1116 13.4999 19.9254 13.4999 21.7477C13.4999 24.6446 13.4999 27.55 13.4999 30.4468C13.4999 31.1173 13.4999 31.7792 13.4999 32.4497C13.4999 33.7992 14.7318 35.0886 16.1779 35.0284C17.6329 34.9683 18.8558 33.8938 18.8558 32.4497Z" fill="#CFD4DA"/><path d="M55.5805 28.9452C55.5805 30.7675 55.5805 32.5812 55.5805 34.4035C55.5805 37.3004 55.5805 40.2058 55.5805 43.1026C55.5805 43.7731 55.5805 44.4349 55.5805 45.1054C56.4742 44.2458 57.3679 43.3862 58.2616 42.5267C56.3581 42.5267 54.4456 42.5267 52.542 42.5267C49.5213 42.5267 46.4917 42.5267 43.471 42.5267C42.7739 42.5267 42.0769 42.5267 41.3798 42.5267C39.9767 42.5267 38.6361 43.7129 38.6987 45.1054C38.7613 46.5065 39.8784 47.6842 41.3798 47.6842C43.2833 47.6842 45.1958 47.6842 47.0994 47.6842C50.1201 47.6842 53.1497 47.6842 56.1704 47.6842C56.8675 47.6842 57.5645 47.6842 58.2616 47.6842C59.7094 47.6842 60.9427 46.5065 60.9427 45.1054C60.9427 43.2831 60.9427 41.4694 60.9427 39.647C60.9427 36.7502 60.9427 33.8448 60.9427 30.948C60.9427 30.2775 60.9427 29.6156 60.9427 28.9452C60.9427 27.5956 59.7094 26.3062 58.2616 26.3664C56.8049 26.4266 55.5805 27.5011 55.5805 28.9452Z" fill="#CFD4DA"/><path d="M67.5 0.711227H7.5C3.36375 0.711227 0 3.95039 0 7.93345V54.1557C0 58.1387 3.36375 61.3779 7.5 61.3779H67.5C71.6362 61.3779 75 58.1387 75 54.1557L75 7.93345C75 3.95039 71.6362 0.711227 67.5 0.711227ZM7.5 54.1557V7.93345H67.5L67.5075 54.1557H7.5Z" fill="#CFD4DA"/></svg>',
+      message: 'Custom empty panel message.'
+    } });
+  const store = configureStore({ reducer: () => state });
 
-  const store = configureStore({ reducer: () => initialState });
-
-  return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
-  );
+  return renderInNotesPanel(store);
 }
 export function EmptyWithMultiSelectEnabled() {
-  initialState.viewer.isNotesPanelMultiSelectEnabled = true;
-  const store = configureStore({ reducer: () => initialState });
-  return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
-  );
+  const store = configureStore({ reducer: () => createStoryState({ isNotesPanelMultiSelectEnabled: true }) });
+  return renderInNotesPanel(store);
 }
 
 export function EmptyWithMultiSelectDisabled() {
-  initialState.viewer.isNotesPanelMultiSelectEnabled = false;
-  const store = configureStore({ reducer: () => initialState });
-  return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
-  );
+  const store = configureStore({ reducer: () => createStoryState({ isNotesPanelMultiSelectEnabled: false }) });
+  return renderInNotesPanel(store);
 }
 
 export function EmptyWithCustomRenderCallback() {
-  initialState.viewer.notesPanelCustomEmptyPanel = {
-    render: () => {
-      const div = document.createElement('div');
-      const header = document.createElement('h2');
-      header.innerHTML = 'Custom empty content goes here!';
-      div.appendChild(header);
-      return div;
+  const state = createStoryState({
+    notesPanelCustomEmptyPanel: {
+      render: () => {
+        const div = document.createElement('div');
+        const header = document.createElement('h2');
+        header.innerHTML = 'Custom empty content goes here!';
+        div.appendChild(header);
+        return div;
+      }
     }
-  };
+  });
+  const store = configureStore({ reducer: () => state });
 
-  const store = configureStore({ reducer: () => initialState });
-
-  return (
-    <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
-        <NotesPanel />
-      </RightPanel>
-    </Provider>
-  );
+  return renderInNotesPanel(store);
 }
 
 const NotesPanelInApp = (context, location, panelSize) => {
@@ -222,7 +204,7 @@ const NotesPanelInApp = (context, location, panelSize) => {
     mockState.viewer.mobilePanelSize = panelSize;
   }
 
-  const store = createStore(mockState);
+  const store = configureStore({ reducer: () => mockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={mockState} initialDirection={addonRtl} />;
@@ -262,9 +244,9 @@ export function NotesPanelWithNotes(args, context) {
 
   return (
     <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
+      <Panel location="right" dataElement="notesPanel">
         <NotesPanel />
-      </RightPanel>
+      </Panel>
     </Provider>
   );
 }
@@ -454,9 +436,9 @@ export function NotesPanelWithNotesInFormFieldMode(args, context) {
 
   return shouldRender ? (
     <Provider store={store}>
-      <RightPanel dataElement="notesPanel" onResize={noop}>
+      <Panel location="right" dataElement="notesPanel">
         <NotesPanel />
-      </RightPanel>
+      </Panel>
     </Provider>
   ) : <>Loading...</>;
 }
@@ -578,4 +560,116 @@ NotesPanelMultiSelectToggle.play = async ({ canvasElement }) => {
   // Confirms checkboxes are not present (shouldn't be as multi select is off)
   checkboxes = await canvas.queryByRole('checkbox');
   expect(checkboxes).toBeNull();
+};
+
+const MENTION_ID = 'johndoe@gmail.com';
+const MENTION_PLAIN_TEXT = '@John Doe please review this';
+const MENTION_MARKUP = `@[John Doe](${MENTION_ID}) please review this`;
+
+const createSavedMentionAnnotation = () => {
+  const rectangle = new window.Core.Annotations.RectangleAnnotation();
+  rectangle.Listable = true;
+  rectangle.Id = 'mention-note-1';
+  rectangle.PageNumber = 1;
+  rectangle.ToolName = 'AnnotationCreateRectangle';
+  rectangle.Author = 'Mikel Landa';
+  rectangle.isReply = () => false;
+  rectangle.getReplies = () => [];
+  rectangle.getStatus = () => '';
+  rectangle.getAttachments = () => [];
+  rectangle.getContents = () => MENTION_PLAIN_TEXT;
+  rectangle.getRichTextStyle = () => ({});
+  rectangle.getCustomData = (key) => {
+    const customData = {
+      'trn-mention': JSON.stringify({ contents: MENTION_MARKUP, ids: [MENTION_ID] }),
+      'trn-annot-preview': '',
+    };
+    return customData[key];
+  };
+  return rectangle;
+};
+
+export const NotesPanelEditSavedMention = (args, context) => {
+  const { addonRtl } = context.globals;
+  const mockState = {
+    ...mockAppState,
+    viewer: {
+      ...mockAppState.viewer,
+      openElements: {
+        notesPanel: true,
+      },
+      activeTheme: context.globals.theme,
+      selectedScale: undefined,
+      userData: [{ value: 'John Doe', id: MENTION_ID, email: MENTION_ID }],
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  const store = configureStore({
+    reducer: () => mockState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  });
+
+  const rectangle = createSavedMentionAnnotation();
+  setupNotesPanelCoreMocks(core, [], []);
+  core.getAnnotationsList = () => [rectangle];
+  core.getSelectedAnnotations = () => [rectangle];
+
+  return (
+    <MockApp initialState={mockState} store={store} initialDirection={addonRtl} />
+  );
+};
+
+NotesPanelEditSavedMention.parameters = disableRtlModeParameters;
+
+NotesPanelEditSavedMention.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const doc = canvasElement.ownerDocument;
+
+  const note = await canvas.findByText(MENTION_PLAIN_TEXT);
+  await userEvent.click(note);
+
+  const markupSightings = [];
+  const containsMarkup = (text = '') => text.includes('@[John Doe]') || text.includes(`](${MENTION_ID})`);
+  const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (containsMarkup(node.textContent)) {
+          markupSightings.push(node.textContent);
+        }
+      }
+      if (record.type === 'characterData' && containsMarkup(record.target.textContent)) {
+        markupSightings.push(record.target.textContent);
+      }
+    }
+  });
+  observer.observe(canvasElement, { childList: true, subtree: true, characterData: true });
+
+  try {
+    const optionsButton = await canvas.findByRole('button', {
+      name: getTranslatedText('formField.formFieldPopup.options'),
+    });
+    await userEvent.click(optionsButton);
+
+    const editButton = await waitFor(() => {
+      const button = doc.querySelector('[data-element="notePopupEdit"]');
+      expect(button).toBeInTheDocument();
+      return button;
+    });
+    await userEvent.click(editButton);
+
+    await waitFor(() => {
+      const editor = canvasElement.querySelector('.ql-editor');
+      expect(editor).toBeInTheDocument();
+      expect(editor).toHaveTextContent(MENTION_PLAIN_TEXT);
+    });
+
+    await waitFor(() => {
+      expect(markupSightings).toHaveLength(0);
+    });
+    expect(canvasElement.textContent).not.toContain('@[John Doe]');
+  } finally {
+    observer.disconnect();
+  }
 };

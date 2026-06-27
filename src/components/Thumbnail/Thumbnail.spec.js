@@ -1,6 +1,7 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
 import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import getRootNode from 'src/helpers/getRootNode';
 
 const TestThumbnail = withProviders(Thumbnail);
 
@@ -603,6 +604,73 @@ describe('Thumbnail', () => {
 
       // No duplicate load — the thumbnail is already loaded
       expect(mockDocument.loadCanvas).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Multi-instance container resolution', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+      mockDocument.loadCanvas.mockClear();
+      loadCanvasCallback = null;
+      loadCanvasIdCounter = 1;
+      autoResolveDrawComplete = true;
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+      // Restore the default singleton getRootNode mock implementation so this override does not leak into other describe blocks.
+      getRootNode.mockReset();
+      getRootNode.mockImplementation(() => ({
+        querySelector: jest.fn(() => ({
+          getAttribute: (k) => (k === 'dir' ? 'ltr' : null),
+          appendChild: jest.fn(),
+          querySelector: jest.fn(() => null),
+        }))
+      }));
+    });
+
+    it('renders the thumbnail into its own instance DOM tree, not the shared singleton root', async () => {
+      // Simulate a second WebViewer instance owning the singleton root: any lookup through the singleton helper resolves to the WRONG panel.
+      const wrongThumb = document.createElement('div');
+      const wrongAppendChild = jest.spyOn(wrongThumb, 'appendChild');
+      getRootNode.mockReturnValue({ querySelector: () => wrongThumb });
+
+      // This instance's own panel, attached to the real DOM. The rendered Thumbnail lives inside it, so the ref's native getRootNode() resolves the container here.
+      const ownPanel = document.createElement('div');
+      ownPanel.className = 'ThumbnailsPanel panel1';
+      document.body.appendChild(ownPanel);
+
+      render(
+        <TestThumbnail
+          dispatch={noop}
+          shiftKeyThumbnailPivotIndex={null}
+          isThumbnailMultiselectEnabled={false}
+          isReaderModeOrReadOnly={false}
+          selectedPageIndexes={[]}
+          actions={{}}
+          index={0}
+          currentPage={1}
+          canLoad={true}
+          onFinishLoading={noop}
+          onLoad={noop}
+          onRemove={noop}
+          panelSelector="panel1"
+        />,
+        { container: ownPanel }
+      );
+
+      await act(async () => {
+        jest.advanceTimersByTime(100);
+        await Promise.resolve();
+      });
+
+      // The rendered thumbnail canvas was appended into THIS instance's panel.
+      const ownThumb = ownPanel.querySelector('#pageThumb0');
+      expect(ownThumb.querySelector('canvas.page-image')).toBeTruthy();
+      // And never into the wrong instance's container via the singleton helper.
+      expect(wrongAppendChild).not.toHaveBeenCalled();
+
+      document.body.removeChild(ownPanel);
     });
   });
 });

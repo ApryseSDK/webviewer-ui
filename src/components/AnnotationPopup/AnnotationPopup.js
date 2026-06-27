@@ -5,12 +5,9 @@ import PropTypes from 'prop-types';
 import FocusTrap from 'components/FocusTrap';
 
 import ActionButton from 'components/ActionButton';
-import AnnotationStylePopup from 'components/AnnotationStylePopup';
 import DatePicker from 'components/DatePicker';
 import CustomizablePopup from 'components/CustomizablePopup';
 import CalibrationPopup from 'components/CalibrationPopup';
-
-import { getDataWithKey, mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 
 import DataElements from 'constants/dataElement';
 
@@ -44,13 +41,6 @@ const propTypes = {
   isCalibrationPopupOpen: PropTypes.bool,
 
   showEditStyleButton: PropTypes.bool,
-  isStylePopupOpen: PropTypes.bool,
-  hideSnapModeCheckbox: PropTypes.bool,
-  openEditStylePopup: PropTypes.func,
-  closeEditStylePopup: PropTypes.func,
-  annotationStyle: PropTypes.object,
-  onResize: PropTypes.func,
-
   showContentEditButton: PropTypes.bool,
   onEditContent: PropTypes.func,
   openContentEditDeleteWarningModal: PropTypes.func,
@@ -88,7 +78,6 @@ const propTypes = {
   showAlignButton: PropTypes.bool,
   onOpenAlignmentModal: PropTypes.func,
 
-  customizableUI: PropTypes.bool,
   toggleStylePanel: PropTypes.func,
 };
 
@@ -120,13 +109,6 @@ const AnnotationPopup = ({
   isCalibrationPopupOpen,
 
   showEditStyleButton,
-  isStylePopupOpen,
-  hideSnapModeCheckbox,
-  openEditStylePopup,
-  closeEditStylePopup,
-  annotationStyle,
-  onResize,
-
   showContentEditButton,
   onEditContent,
   openContentEditDeleteWarningModal,
@@ -164,99 +146,21 @@ const AnnotationPopup = ({
   showAlignButton,
   onOpenAlignmentModal,
 
-  customizableUI,
   toggleStylePanel,
 }) => {
 
   const commentButtonLabel = isDateFreeTextCanEdit ? 'action.changeDate' : 'action.comment';
   const commentButtonImg = isDateFreeTextCanEdit ? 'icon-tool-fill-and-sign-calendar' : 'icon-header-chat-line';
-  const isRectangle = focusedAnnotation instanceof window.Core.Annotations.RectangleAnnotation;
-  const isEllipse = focusedAnnotation instanceof window.Core.Annotations.EllipseAnnotation;
-  const isPolygon = focusedAnnotation instanceof window.Core.Annotations.PolygonAnnotation;
   const isFreeText =
     focusedAnnotation instanceof window.Core.Annotations.FreeTextAnnotation &&
     (focusedAnnotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeText ||
       focusedAnnotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeTextCallout);
-  const isRedaction = focusedAnnotation instanceof window.Core.Annotations.RedactionAnnotation;
-  const colorMapKey = mapAnnotationToKey(focusedAnnotation);
-  const isMeasure = !!focusedAnnotation.Measure;
-  const showLineStyleOptions = getDataWithKey(mapToolNameToKey(focusedAnnotation.ToolName)).hasLineEndings;
   const isInstanceActive = !window.isApryseWebViewerWebComponent || document.activeElement?.shadowRoot === getRootNode();
-  let StrokeStyle = 'solid';
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
   const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
-  try {
-    StrokeStyle = (focusedAnnotation['Style'] === 'dash')
-      ? `${focusedAnnotation['Style']},${focusedAnnotation['Dashes']}`
-      : focusedAnnotation['Style'];
-  } catch (err) {
-    console.error(err);
-  }
-  let properties = {};
-  if (showLineStyleOptions) {
-    properties = {
-      StartLineStyle: focusedAnnotation.getStartStyle(),
-      EndLineStyle: focusedAnnotation.getEndStyle(),
-      StrokeStyle,
-    };
-  }
-
-  if (isRectangle || isEllipse || isPolygon) {
-    properties = {
-      StrokeStyle,
-    };
-  }
-
-  if (isFreeText) {
-    const richTextStyles = focusedAnnotation.getRichTextStyle();
-    const isAutoSizeFont = focusedAnnotation.isAutoSizeFont();
-    const calculatedFontSize = focusedAnnotation.getCalculatedFontSize();
-
-    properties = {
-      Font: focusedAnnotation.Font,
-      FontSize: focusedAnnotation.FontSize,
-      TextAlign: focusedAnnotation.TextAlign,
-      TextVerticalAlign: focusedAnnotation.TextVerticalAlign,
-      bold: richTextStyles?.[0]?.['font-weight'] === 'bold' ?? false,
-      italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
-      underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
-      strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
-      StrokeStyle,
-      isAutoSizeFont,
-      calculatedFontSize,
-    };
-  }
-
-  if (isRedaction) {
-    properties = {
-      OverlayText: focusedAnnotation['OverlayText'],
-      Font: focusedAnnotation['Font'],
-      FontSize: focusedAnnotation['FontSize'],
-      TextAlign: focusedAnnotation['TextAlign']
-    };
-  }
 
   const renderPopup = () => {
     switch (true) {
-      case isStylePopupOpen:
-        return (
-          <AnnotationStylePopup
-            annotations={[focusedAnnotation]}
-            annotationStyle={annotationStyle}
-            isOpen={isOpen}
-            onResize={onResize}
-            isFreeText={isFreeText}
-            isEllipse={isEllipse}
-            isRedaction={isRedaction}
-            isMeasure={isMeasure}
-            colorMapKey={colorMapKey}
-            showLineStyleOptions={showLineStyleOptions}
-            properties={properties}
-            hideSnapModeCheckbox={hideSnapModeCheckbox}
-            hasBackToMenu={isRightClickMenu}
-            onBackToMenu={closeEditStylePopup}
-          />
-        );
       case isDatePickerOpen:
         return (
           <DatePicker onClick={handleDateChange} annotation={focusedAnnotation} onDatePickerShow={onDatePickerShow} />
@@ -300,7 +204,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.style' : ''}
                     title={!isRightClickMenu ? 'action.style' : ''}
                     img="icon-menu-style-line"
-                    onClick={customizableUI ? toggleStylePanel : openEditStylePopup}
+                    onClick={ toggleStylePanel }
                   />
                 )}
                 {showContentEditButton && (
@@ -438,7 +342,6 @@ const AnnotationPopup = ({
         AnnotationPopup: true,
         open: isOpen,
         closed: !isOpen,
-        stylePopupOpen: isStylePopupOpen,
         'is-vertical': isRightClickMenu,
         'is-horizontal': !isRightClickMenu,
         'is-hidden': isVisible === false,

@@ -5,4 +5,4 @@ import core from 'core';
  * Note that getDisplayMode returns an object and this function returns mode property of that object.
  * If you want to get the object please use getDisplayModeObject
  */
-export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey)?.getDisplayModeManager().getDisplayMode().mode;
+export default (documentViewerKey) => core.getDocumentViewer(documentViewerKey).getDisplayModeManager().getDisplayMode().mode;

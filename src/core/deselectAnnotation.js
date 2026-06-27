@@ -5,6 +5,6 @@ import core from 'core';
  * @fires annotationSelected on AnnotationManager
  * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:annotationSelected__anchor
  */
-export default (annotation, documentViewerKey = 1) => {
+export default (annotation, documentViewerKey) => {
   core.getDocumentViewer(documentViewerKey).getAnnotationManager().deselectAnnotation(annotation);
 };

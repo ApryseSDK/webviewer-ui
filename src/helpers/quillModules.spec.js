@@ -65,4 +65,44 @@ describe('BlurInputModule', () => {
     expect(document.activeElement).toBe(previousButton);
     expect(moveFocusMock).toHaveBeenCalled();
   });
+
+  test('should skip internal note button and focus next external button on Tab', () => {
+    const internalButton = document.createElement('button');
+    internalButton.className = 'note-button';
+    noteContainer.insertBefore(internalButton, nextButton);
+
+    fireEvent.keyDown(noteContainer, { key: 'Escape' });
+    fireEvent.keyDown(noteContainer, { key: 'Tab' });
+
+    expect(document.activeElement).toBe(nextButton);
+  });
+
+  test('should stop at the first button even when it is disabled', () => {
+    nextButton.disabled = true;
+    const thirdButton = document.createElement('button');
+    thirdButton.className = 'modular-ui';
+    noteContainer.appendChild(thirdButton);
+
+    fireEvent.keyDown(noteContainer, { key: 'Escape' });
+    fireEvent.keyDown(noteContainer, { key: 'Tab' });
+
+    expect(document.activeElement).not.toBe(thirdButton);
+  });
+
+  test('should prevent tab default after attempting focus movement', () => {
+    previousButton.disabled = true;
+    nextButton.disabled = true;
+
+    fireEvent.keyDown(noteContainer, { key: 'Escape' });
+
+    const tabEvent = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    noteContainer.dispatchEvent(tabEvent);
+
+    expect(tabEvent.defaultPrevented).toBe(true);
+  });
 });

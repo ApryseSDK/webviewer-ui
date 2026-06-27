@@ -4,14 +4,17 @@ import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import StylePopup from '.';
 import core from 'core';
-import { createStore } from 'helpers/storybookHelper';
-import '../HeaderItems/HeaderItems.scss';
 import { within, expect, userEvent } from 'storybook/test';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {
   title: 'Components/StylePopup',
   component: StylePopup,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
 // Mock some state to show the style popups
@@ -149,9 +152,7 @@ export const StylePopupForRedactionToolInHeaderItem = () => {
 
   return (
     <Provider store={store}>
-      <div className="HeaderItems">
-        <StylePopup {...props} />
-      </div>
+      <StylePopup {...props} />
     </Provider>
   );
 };
@@ -270,23 +271,57 @@ export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
         opacityContainer: true,
         richTextStyleContainer: true,
       },
+      activeToolName: props.toolName,
+      snapMode: {
+        [props.toolName]: true,
+      },
     },
     featureFlags: {
       customizableUI: true,
     },
   };
 
-  const mockStore = createStore(basicMockState);
+  const mockReducer = (state = basicMockState, action) => {
+    if (action.type === 'SET_ENABLE_SNAP_MODE') {
+      return {
+        ...state,
+        viewer: {
+          ...state.viewer,
+          snapMode: {
+            ...state.viewer.snapMode,
+            [action.payload.toolName]: action.payload.isEnabled,
+          },
+        },
+      };
+    }
+    return state;
+  };
+
+  const mockStore = configureStore({
+    reducer: mockReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+  });
 
   useEffect(() => {
     const oldGetToolMode = core.getToolMode;
     const oldGetToolModeMap = core.getToolModeMap;
+    // eslint-disable-next-line camelcase
+    const snapModes = { e_DefaultSnapMode: 1, POINT_ON_LINE: 2 };
+    const defaultSnapMode = snapModes.e_DefaultSnapMode | snapModes.POINT_ON_LINE;
     const newTool = new window.Core.Tools.DistanceMeasurementCreateTool();
     newTool.name = props.toolName;
     newTool.defaults = props.style;
+    newTool.Measure = true;
+    newTool.getSnapMode = () => defaultSnapMode;
+    newTool.setSnapMode = (mode) => {
+      newTool.getSnapMode = () => mode;
+    };
 
     core.getToolMode = () => newTool;
     core.getToolModeMap = () => ({ [props.toolName]: newTool });
+    core.isFullPDFEnabled = () => true;
+    core.getDocumentViewers = () => [{ getToolMode: () => newTool }];
+    core.getDocumentViewer = () => ({ SnapMode: snapModes });
 
     const oldGetTool = core.getTool;
     core.getTool = () => newTool;
@@ -299,16 +334,10 @@ export const StylePopupForDistanceMeasurementToolInHeaderItem = () => {
     };
   }, []);
 
-  mockStore.dispatch({
-    type: 'SET_ACTIVE_TOOL_NAME',
-    payload: { toolName: props.toolName },
-  });
   return shouldRender ?
     (
       <Provider store={mockStore}>
-        <div className="HeaderItems">
-          <StylePopup {...props} />
-        </div>
+        <StylePopup {...props} />
       </Provider>
     ) : <>Loading...</>;
 };
@@ -377,9 +406,7 @@ export const StylePopupForFreeTextToolInHeaderItem = () => {
 
   return (
     <Provider store={store}>
-      <div className="HeaderItems">
-        <StylePopup {...props} />
-      </div>
+      <StylePopup {...props} />
     </Provider>
   );
 };

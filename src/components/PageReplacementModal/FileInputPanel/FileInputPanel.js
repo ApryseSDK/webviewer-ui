@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import './FileInputPanel.scss';
 import Dropdown from 'components/Dropdown';
@@ -10,7 +8,6 @@ import PropTypes from 'prop-types';
 const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, setExtension, error }) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(defaultValue || '');
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -36,7 +33,7 @@ const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, 
           }
           value={value}
           onChange={onChange}
-          placeholder={(customizableUI) ? '' : t('link.urlLink')}
+          placeholder={''}
           aria-describedby={error ? 'urlInputError' : undefined}
         />
         {error && <Icon glyph='icon-alert' />}

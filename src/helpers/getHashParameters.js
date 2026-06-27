@@ -22,8 +22,11 @@ const paramCorrections = {
 const paramsRequiringJSONFormat = new Set(['initialDoc']);
 
 const getAttributeValue = (param) => {
+  return getAttributeValueFromNode(param, getInstanceNode());
+};
+
+const getAttributeValueFromNode = (param, instanceNode) => {
   const correctedParam = paramCorrections[param] ? paramCorrections[param] : param;
-  const instanceNode = getInstanceNode();
   if (!instanceNode) {
     return undefined;
   }
@@ -33,9 +36,8 @@ const getAttributeValue = (param) => {
   return normalizeAttributeValue(attributeValue, correctedParam);
 };
 
-export default window.isApryseWebViewerWebComponent ? (param, defaultValue = false) => {
+const resolveHashParameter = (val, defaultValue) => {
   const defaultType = typeof defaultValue;
-  let val = getAttributeValue(param);
 
   if (defaultType === 'boolean' && !isUndefined(val)) {
     const value = val;
@@ -47,6 +49,20 @@ export default window.isApryseWebViewerWebComponent ? (param, defaultValue = fal
     }
   }
   return val || defaultValue;
+};
+
+/**
+ * Reads a hash-style parameter directly from the supplied WebComponent host element (instead of resolving through the global `getInstanceNode()` singleton). Use this whenever the call may execute asynchronously (e.g. inside a setTimeout, microtask, or Promise) where the singleton may have already been flipped to a more recently created instance.
+ * Falls back to `getHashParameters` for non-WC builds.
+ *
+ * @ignore
+ */
+export const getHashParameterFromHost = window.isApryseWebViewerWebComponent
+  ? (instanceNode, param, defaultValue = false) => resolveHashParameter(getAttributeValueFromNode(param, instanceNode), defaultValue)
+  : (_instanceNode, param, defaultValue = false) => window.Core.getHashParameter(param, defaultValue);
+
+export default window.isApryseWebViewerWebComponent ? (param, defaultValue = false) => {
+  return resolveHashParameter(getAttributeValue(param), defaultValue);
 } : window.Core.getHashParameter;
 
 function normalizeAttributeValue(value, param) {

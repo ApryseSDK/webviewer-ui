@@ -1,7 +1,6 @@
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
-import DataElements from 'constants/dataElement';
 
 export default (dispatch, store) => (newTool, oldTool) => {
   const { ToolNames } = window.Core.Tools;
@@ -73,15 +72,5 @@ export default (dispatch, store) => (newTool, oldTool) => {
     }
   }
 
-  setActiveToolGroupAndToolsOverlay(store, group);
-};
-
-const setActiveToolGroupAndToolsOverlay = (store, group) => {
-  if (!group) {
-    store.dispatch(actions.setActiveToolGroup(''));
-    store.dispatch(actions.closeElement(DataElements.TOOLS_OVERLAY));
-  } else {
-    store.dispatch(actions.setActiveToolGroup(group));
-    store.dispatch(actions.openElement(DataElements.TOOLS_OVERLAY));
-  }
+  store.dispatch(actions.setActiveToolGroup(group || ''));
 };

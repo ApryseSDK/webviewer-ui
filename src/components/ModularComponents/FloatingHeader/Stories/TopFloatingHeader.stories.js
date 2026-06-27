@@ -35,7 +35,7 @@ const MockAppWrapperWithTopheader = ({ modularHeaders }) => {
   };
   const store = configureStore({
     preloadedState: state,
-    reducer: rootReducer,
+    reducer: rootReducer(),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
   });
   return (

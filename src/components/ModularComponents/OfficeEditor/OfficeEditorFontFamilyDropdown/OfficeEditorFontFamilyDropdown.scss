@@ -1,5 +1,5 @@
 @import '../../../../constants/officeEditor.scss';
 
-.OfficeEditorFontFamilyDropdown.Dropdown__wrapper.modular-ui.flyout-item {
+.OfficeEditorFontFamilyDropdown.Dropdown__wrapper.flyout-item {
   @include oe-modular-flyout-dropdown;
 }

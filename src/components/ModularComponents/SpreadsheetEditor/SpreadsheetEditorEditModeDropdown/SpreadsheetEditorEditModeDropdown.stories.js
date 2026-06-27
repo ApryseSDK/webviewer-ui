@@ -11,7 +11,7 @@ export default {
   component: SpreadsheetEditorEditModeDropdown,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 export function ModeChangingDropdown() {
   return (

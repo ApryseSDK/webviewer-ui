@@ -1,5 +1,5 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import ZoomOverlay from './ZoomOverlay';
 import { BASIC_PALETTE } from 'constants/commonColors';
@@ -22,7 +22,7 @@ const initialState = {
 function rootReducer(state = initialState) {
   return state;
 }
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 
 function onClickZoomLevelOption() {
   console.log('onClickZoomLevelOption');

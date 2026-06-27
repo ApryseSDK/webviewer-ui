@@ -5,13 +5,18 @@ import multiViewerHelper from 'helpers/multiViewerHelper';
 import Events from 'constants/events';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import fireEvent from 'helpers/fireEvent';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 
 export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount) => {
   const state = store.getState();
   const { isComparisonOverlayEnabled, multiViewerSyncScrollMode } = state.viewer;
 
   const updatePanelItems = (doc1Annotations, doc2Annotations, diffCount) => {
+    const t = getCurrentT();
+    const buildTypeLabel = (textDiffType) => {
+      const typeKey = `multiViewer.comparePanel.${textDiffType}`;
+      return `${t('multiViewer.comparePanel.textContent')} - ${t(typeKey)}`;
+    };
     dispatch(actions.setIsCompareStarted(true));
     dispatch(actions.enableElement('comparePanelToggleButton'));
     dispatch(actions.openElement(DataElements.LOADING_MODAL));
@@ -105,7 +110,7 @@ export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount
         old: annotation,
         oldText: annotation?.Author,
         oldCount: annotation?.Author?.length,
-        type: `${i18next.t('multiViewer.comparePanel.textContent')} - ${i18next.t(`multiViewer.comparePanel.${type}`)}`,
+        type: buildTypeLabel(type),
       });
       if (otherAnnotations.length > 1) {
         for (const i in otherAnnotations) {
@@ -119,7 +124,7 @@ export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount
             old: annotation,
             oldText: annotation?.Author,
             oldCount: annotation?.Author?.length,
-            type: `${i18next.t('multiViewer.comparePanel.textContent')} - ${i18next.t(`multiViewer.comparePanel.${type}`)}`,
+            type: buildTypeLabel(type),
           });
         }
       }
@@ -134,7 +139,7 @@ export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount
         old: annotation,
         oldText: annotation?.Author,
         oldCount: annotation?.Author?.length,
-        type: `${i18next.t('multiViewer.comparePanel.textContent')} - ${i18next.t(`multiViewer.comparePanel.${annotation.getCustomData('TextDiffType')}`)}`,
+        type: buildTypeLabel(annotation.getCustomData('TextDiffType')),
       });
     }
     for (const annotation of unmatchedAnnotations2) {
@@ -145,7 +150,7 @@ export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount
         new: annotation,
         newText: annotation?.Author,
         newCount: annotation?.Author?.length,
-        type: `${i18next.t('multiViewer.comparePanel.textContent')} - ${i18next.t(`multiViewer.comparePanel.${annotation.getCustomData('TextDiffType')}`)}`,
+        type: buildTypeLabel(annotation.getCustomData('TextDiffType')),
       });
     }
     for (const pageNumber of Object.keys(annotMap)) {
@@ -162,7 +167,7 @@ export default (dispatch, store) => (doc1Annotations, doc2Annotations, diffCount
       });
     }
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-    fireEvent(Events.COMPARE_ANNOTATIONS_LOADED, { annotMap, diffCount });
+    fireEvent(Events.COMPARE_ANNOTATIONS_LOADED, [annotMap, diffCount]);
     if (!isComparisonOverlayEnabled) {
       core.hideAnnotations(core.getSemanticDiffAnnotations(1), 1);
       core.hideAnnotations(core.getSemanticDiffAnnotations(2), 2);

@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
@@ -79,16 +79,17 @@ const getNoteInfo = (core, annotation, dateFormat, language, timezone) => {
   }
 
   info.className = 'note__info';
+  const t = getCurrentT();
   if (annotation.Subject === '' || annotation.Subject === null || annotation.Subject === undefined) {
     info.textContent = `
-      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''}
-      ${i18n.t('option.printInfo.date')}: ${date}
+      ${t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''}
+      ${t('option.printInfo.date')}: ${date}
     `;
   } else {
     info.textContent = `
-      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''}
-      ${i18n.t('option.printInfo.subject')}: ${annotation.Subject}
-      ${i18n.t('option.printInfo.date')}: ${date}
+      ${t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''}
+      ${t('option.printInfo.subject')}: ${annotation.Subject}
+      ${t('option.printInfo.date')}: ${date}
     `;
   }
 
@@ -124,7 +125,9 @@ const getNoteIcon = (annotation) => {
       const isInlineSvg = icon.indexOf('<svg') === 0;
       /* eslint-disable global-require */
       // eslint-disable-next-line import/no-dynamic-require
-      innerHTML = isInlineSvg ? icon : require(`../../assets/icons/${icon}.svg`);
+      const iconResult = isInlineSvg ? icon : require(`../../assets/icons/${icon}.svg`);
+      // esbuild ESM wraps CJS as { default: ... }, webpack returns the string directly
+      innerHTML = (iconResult && typeof iconResult === 'object' && iconResult.default) ? iconResult.default : iconResult;
     } else {
       innerHTML = annotation.Subject;
     }
@@ -150,7 +153,7 @@ export const creatingNotesPage = (core, annotations, pageNumber, dateFormat, lan
 
   const header = document.createElement('div');
   header.className = 'page__header';
-  header.textContent = `${i18n.t('option.shared.page')} ${pageNumber}`;
+  header.textContent = `${getCurrentT()('option.shared.page')} ${pageNumber}`;
 
   container.appendChild(header);
   annotations.forEach((annotation) => {

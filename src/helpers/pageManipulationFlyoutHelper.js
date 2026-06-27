@@ -12,7 +12,7 @@ import {
 import { isMobile } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 import actions from 'actions';
-import i18next from 'i18next';
+import getCurrentT from 'helpers/getCurrentT';
 
 
 export const getPageAdditionalControls = (store, warn = false) => {
@@ -88,7 +88,7 @@ export const getPageRotationControls = (store, warn = false) => {
 };
 
 export const getPageManipulationControls = (store, warn = false) => {
-  const t = i18next.getFixedT();
+  const t = getCurrentT();
   const dispatch = store.dispatch;
   const documentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
   return [

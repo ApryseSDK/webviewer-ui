@@ -300,12 +300,21 @@ export const useMultiViewerSync = (container, container2) => {
 let removeHandlers;
 let isSetup;
 
-export const setupMultiViewer = (store) => {
+export const finalizeMultiViewerSetup = (store) => {
+  const { dispatch } = store;
+  dispatch(actions.setIsMultiViewerReady(true));
+  fireEvent(Events.MULTI_VIEWER_READY);
+};
+
+export const setupMultiViewer = (store, isAlreadyMultiTab = false, deferReady = false) => {
   if (isSetup) {
     return;
   }
   const { dispatch, getState } = store;
   const state = getState();
+  if (selectors.getIsMultiTab(state) && selectors.getTabs(state)?.length === 0) {
+    return;
+  }
   const activeToolbarGroup = selectors.getCurrentToolbarGroup(state);
   const activeToolName = selectors.getActiveToolName(state);
   const isComparisonDisabled = selectors.isComparisonDisabled(state);
@@ -325,29 +334,44 @@ export const setupMultiViewer = (store) => {
   setupFormSubmissionHandler(newDocViewer, store);
 
   syncDocumentViewers(1, 2);
+  // Flip the MultiViewer-mode mirror before registering the second pane's event handlers.
+  dispatch(actions.setIsMultiViewerMode(true));
   const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
   removeHandlers = removeEventHandlers;
   addEventHandlers();
   !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems(store);
   isSetup = true;
 
-  dispatch(actions.setIsMultiViewerMode(true));
-  dispatch(actions.setIsMultiViewerReady(true));
-  fireEvent(Events.MULTI_VIEWER_READY);
+  if (!isAlreadyMultiTab && selectors.getIsMultiTab(store.getState())) {
+    const tabManager = selectors.getTabManager(store.getState());
+    const activeTab = selectors.getActiveTab(store.getState());
+    tabManager.updateTab(activeTab, { isMultiViewer: true });
+  }
+
+  if (!deferReady) {
+    dispatch(actions.setIsMultiViewerReady(true));
+    fireEvent(Events.MULTI_VIEWER_READY);
+  }
 };
 
-export const cleanUpMultiViewer = (store) => {
+export const cleanUpMultiViewer = async (store) => {
+  const { dispatch, getState } = store;
+  const state = getState();
+  if (selectors.getActiveDocumentViewerKey(state) !== 1) {
+    dispatch(actions.setActiveDocumentViewerKey(1));
+  }
+
   if (!isSetup) {
     return;
   }
-  const { dispatch, getState } = store;
-  const state = getState();
   const isComparisonDisabled = selectors.isComparisonDisabled(state);
   const coreLeftViewer = createWrappedCore(1);
 
   dispatch(actions.setIsMultiViewerReady(false));
   removeHandlers && removeHandlers();
   removeHandlers = null;
+  // Reset the active document viewer back to the primary viewer BEFORE turning off MultiViewer mode. exitMultiViewerMode() is called outside React, so each dispatch re-renders synchronously (React 17 legacy batching). Flipping isMultiViewerMode to false remounts the single <DocumentContainer />, whose componentDidMount registers its DOM element as the scroll/viewer element for props.activeDocumentViewerKey. If the second viewer was selected, that key is still 2 (in WebComponent mode the selector returns the raw key regardless of mode), so the container would bind to the now-removed viewer 2 and the primary viewer would render blank. Resetting to 1 first guarantees the remounted container binds to viewer 1.
+  dispatch(actions.setActiveDocumentViewerKey(1));
   dispatch(actions.setIsMultiViewerMode(false));
   dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
   core.setToolMode(defaultTool);
@@ -366,6 +390,23 @@ export const cleanUpMultiViewer = (store) => {
   coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
   !isComparisonDisabled && resetHeaderItems(store);
   isSetup = false;
+
+  const freshState = getState();
+  const isMultiTab = selectors.getIsMultiTab(freshState);
+  const tabManager = selectors.getTabManager(freshState);
+  const activeTab = selectors.getActiveTab(freshState);
+  const tabs = selectors.getTabs(freshState);
+  const activeTabObject = tabs?.find((tab) => tab.id === activeTab);
+  if (isMultiTab && tabManager && (activeTab || activeTab === 0) && activeTabObject?.isMultiViewer) {
+    for (const documentViewerKey of documentViewerKeys) {
+      if (documentViewerKey !== 1) {
+        await tabManager.updateTab(activeTab, {
+          isMultiViewer: false,
+          clearDocumentForViewerKey: documentViewerKey,
+        });
+      }
+    }
+  }
 };
 
 // TODO: Remove the two legacy header functions below when legacy UI is removed
@@ -402,14 +443,13 @@ export const addHeaderItems = (store) => {
       hidden: ['small-mobile'],
     });
   }
-  dispatch(actions.setHeaderItems('default', [...headerItems]));
   dispatch(actions.disableElement('comparePanelToggleButton'));
 };
 export const resetHeaderItems = (store) => {
   if (!oldHeaderItems) {
     return;
   }
-  const { dispatch, getState } = store;
+  const { getState } = store;
   if (selectors.getFeatureFlags(getState()).customizableUI) {
     return;
   }
@@ -425,5 +465,4 @@ export const resetHeaderItems = (store) => {
   }
   const indexOfButton = headerItems.indexOf(headerItems.find((item) => item?.dataElement === 'comparePanelToggleButton'));
   indexOfButton !== -1 && headerItems.splice(indexOfButton, 1);
-  dispatch(actions.setHeaderItems('default', [...headerItems]));
 };

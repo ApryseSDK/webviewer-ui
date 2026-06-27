@@ -327,7 +327,7 @@ describe('Multiviewer mode', () => {
     mockCore2 = createMockCore('SINGLE_PAGE');
 
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
     });
 

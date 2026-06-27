@@ -4,6 +4,7 @@ import DocumentContainer, { UnconnectedDocumentContainer } from './DocumentConta
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import core from 'core';
+import loadDocument from 'helpers/loadDocument';
 
 jest.mock('core', () => ({
   scrollViewUpdated: jest.fn(),
@@ -17,6 +18,8 @@ jest.mock('core', () => ({
   isScrollableDisplayMode: jest.fn(() => true),
 }));
 
+jest.mock('helpers/loadDocument', () => jest.fn());
+
 jest.mock('react-redux', () => ({
   connect: () => (Component) => Component,
   Provider: ({ children }) => children,
@@ -26,16 +29,6 @@ jest.mock('react-measure', () => {
   return ({ children }) => children({ measureRef: () => { } });
 });
 
-jest.mock('components/PageNavOverlay', () => {
-  const PageNavOverlayMock = () => <div data-testid="page-nav-overlay">PageNavOverlay</div>;
-  PageNavOverlayMock.displayName = 'PageNavOverlay';
-  return PageNavOverlayMock;
-});
-jest.mock('components/ToolsOverlay', () => {
-  const ToolsOverlayMock = () => <div>ToolsOverlay</div>;
-  ToolsOverlayMock.displayName = 'ToolsOverlay';
-  return ToolsOverlayMock;
-});
 jest.mock('components/ReaderModeViewer', () => {
   const ReaderModeViewerMock = () => <div>ReaderModeViewer</div>;
   ReaderModeViewerMock.displayName = 'ReaderModeViewer';
@@ -104,6 +97,11 @@ describe('DocumentContainer', () => {
     isMultiTabEmptyPageOpen: false,
     isMobile: false,
     isSpreadsheetEditorModeEnabled: false,
+    isMultiTab: false,
+    documentViewerKey: 1,
+    tabManager: {
+      updateTab: jest.fn(),
+    },
   };
 
   beforeEach(() => {
@@ -183,6 +181,56 @@ describe('DocumentContainer', () => {
         mainElement.focus();
 
         expect(document.activeElement).toBe(mainElement);
+      });
+    });
+  });
+
+  describe('onDrop method', () => {
+    test('should load document into current viewer in single-tab mode', async () => {
+      const dispatch = jest.fn();
+      const componentInstance = new UnconnectedDocumentContainer({
+        ...defaultProps,
+        dispatch,
+        isMultiTab: false,
+        documentViewerKey: 2,
+      });
+      const file = new File(['x'], 'single-tab.pdf', { type: 'application/pdf' });
+      const event = {
+        preventDefault: jest.fn(),
+        dataTransfer: {
+          files: [file],
+        },
+      };
+
+      await componentInstance.onDrop(event);
+
+      expect(loadDocument).toHaveBeenCalledWith(dispatch, file, {}, 2);
+    });
+
+    test('should update document2 for active tab in multi-tab secondary viewer', async () => {
+      const updateTab = jest.fn();
+      const componentInstance = new UnconnectedDocumentContainer({
+        ...defaultProps,
+        isMultiTab: true,
+        activeDocumentViewerKey: 2,
+        activeTab: 7,
+        tabManager: { updateTab },
+      });
+      const file = new File(['y'], 'secondary.pdf', { type: 'application/pdf' });
+      const event = {
+        preventDefault: jest.fn(),
+        dataTransfer: {
+          files: [file],
+        },
+      };
+
+      await componentInstance.onDrop(event);
+
+      expect(updateTab).toHaveBeenCalledWith(7, {
+        document2: {
+          src: file,
+          options: {},
+        },
       });
     });
   });

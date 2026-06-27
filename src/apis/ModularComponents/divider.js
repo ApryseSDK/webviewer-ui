@@ -36,7 +36,7 @@ class Divider extends Item {
   }
 }
 
-export default (store) => (props) => {
+export default (store) => function dividerFactory(props) {
   const propsWithStore = { ...props, store };
   return new Divider(propsWithStore);
 };

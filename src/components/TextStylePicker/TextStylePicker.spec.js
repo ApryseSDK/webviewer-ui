@@ -48,7 +48,8 @@ describe('TextStylePicker Component', () => {
     render(<TextStylePickerWithRedux {...props} />);
   });
 
-  it('should render a warning if you enter an invalid font size', async () => {
+  it('should render a warning if you enter an invalid font size', () => {
+    jest.useFakeTimers();
     const mockOnPropertyChange = jest.fn();
     const props = {
       onPropertyChange: mockOnPropertyChange
@@ -66,10 +67,11 @@ describe('TextStylePicker Component', () => {
     userEvent.type(fontSizeInput, '9999999');
     userEvent.type(fontSizeInput, '{enter}');
 
-    // Assert that a warning exists
-    await new Promise((r) => setTimeout(r, DEBOUNCE_TIME + 5));
+    // Advance past the debounce
+    jest.advanceTimersByTime(DEBOUNCE_TIME + 5);
     // Since we input an invalid value we got back to the default
     expect(comboBox).toHaveTextContent('12');
+    jest.useRealTimers();
   });
   it('should disable vertical alignment when isFreeTextAutoSize is true', () => {
     const props = {

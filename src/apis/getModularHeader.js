@@ -14,14 +14,18 @@ import selectors from 'selectors';
 import ModularHeader from './ModularComponents/modularHeader';
 import createModularInstance from './ModularComponents/createModularInstance';
 
-export default (store) => (dataElement) => {
-  const hydratedHeader = selectors.getHydratedHeader(store.getState(), dataElement);
+export default (store) => {
+  const modularHeaderFactory = ModularHeader(store);
 
-  if (!hydratedHeader) {
-    console.warn(`There is no header with dataElement ${dataElement}`);
-    return null;
-  }
+  return (dataElement) => {
+    const hydratedHeader = selectors.getHydratedHeader(store.getState(), dataElement);
 
-  const nestedItems = hydratedHeader.items.map((item) => createModularInstance(item, store));
-  return new ModularHeader(store)({ ...hydratedHeader, items: nestedItems });
+    if (!hydratedHeader) {
+      console.warn(`There is no header with dataElement ${dataElement}`);
+      return null;
+    }
+
+    const nestedItems = hydratedHeader.items.map((item) => createModularInstance(item, store));
+    return modularHeaderFactory({ ...hydratedHeader, items: nestedItems });
+  };
 };

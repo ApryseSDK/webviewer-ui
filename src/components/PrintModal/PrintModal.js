@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import actions from 'actions';
-import selectors from 'selectors';
 import classNames from 'classnames';
 import useCore from 'hooks/useCore';
 import PropTypes from 'prop-types';
@@ -9,7 +8,7 @@ import LayoutMode from 'constants/layoutMode';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 import Choice from 'components/Choice';
 import ModalWrapper from 'components/ModalWrapper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
@@ -102,8 +101,6 @@ const PrintModal = ({
   const includeCommentsRef = useRef();
   const [embedPrintValid, setEmbedPrintValid] = useState(false);
   const isPrintDisabled = isPrinting || (pageRange === PAGE_RANGES.SPECIFY && (hasPageNumberError || !hasSpecifiedPages));
-
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   const printQualityOptions = {
     1: `${t('option.print.qualityNormal')}`,
@@ -241,7 +238,6 @@ const PrintModal = ({
         modalClosed={setWatermarkModalVisibility}
         formSubmitted={submitWatermarkModalOptions}
         watermarkLocations={watermarkModalOptions}
-        isCustomizableUI={customizableUI}
       />
       <div
         className={className}
@@ -249,6 +245,7 @@ const PrintModal = ({
       >
         <ModalWrapper
           isOpen={isOpen && !isWatermarkModalVisible} title={'option.print.printSettings'}
+          modalDataElement={DataElements.PRINT_MODAL}
           containerOnClick={(e) => e.stopPropagation()} onCloseClick={closePrintModal}
           closeButtonDataElement={'printModalCloseButton'}
           swipeToClose

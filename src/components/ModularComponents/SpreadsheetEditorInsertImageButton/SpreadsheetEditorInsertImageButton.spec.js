@@ -17,7 +17,6 @@ describe('SpreadsheetEditorInsertImageButton', () => {
   let addImage;
   let mockActiveSheet;
   let mockWorkbook;
-  let mockDocument;
   let mockDocumentViewer;
 
   beforeEach(() => {
@@ -27,13 +26,10 @@ describe('SpreadsheetEditorInsertImageButton', () => {
       activeSheetIndex: 0,
       getSheetAt: jest.fn(() => mockActiveSheet)
     };
-    mockDocument = {
-      getSpreadsheetEditorDocument: jest.fn(() => ({
+    mockDocumentViewer = {
+      getSpreadsheetEditorManager: jest.fn(() => ({
         getWorkbook: jest.fn(() => mockWorkbook)
       }))
-    };
-    mockDocumentViewer = {
-      getDocument: jest.fn(() => mockDocument)
     };
 
     core.getDocumentViewer.mockReturnValue(mockDocumentViewer);

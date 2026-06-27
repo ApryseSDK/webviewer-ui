@@ -6,7 +6,7 @@ import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionType
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 const RedactionPageGroupWithRedux = (props) => {
   const context = {

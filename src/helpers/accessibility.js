@@ -42,11 +42,15 @@ export function createAnnouncement(onClickAnnouncement) {
     parent.appendChild(el);
 
     window.setTimeout(function() {
-      getRootNode().getElementById(id).innerText = onClickAnnouncement;
+      const node = getRootNode()?.getElementById(id);
+      if (node) {
+        node.innerText = onClickAnnouncement;
+      }
     }, 100);
 
     window.setTimeout(function() {
-      parent.removeChild(getRootNode().getElementById(id));
+      const node = getRootNode()?.getElementById(id);
+      node?.remove();
     }, 1000);
   }
 }

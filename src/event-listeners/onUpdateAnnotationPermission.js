@@ -19,9 +19,8 @@ export default (store) => () => {
   const { dispatch } = store;
   const isReadOnly = core.getIsReadOnly();
   const isViewOnly = selectors.isViewOnly(store.getState());
-  const isCustomUI = selectors.getIsCustomUIEnabled(store.getState());
 
-  if (isReadOnly || (isViewOnly && !isCustomUI)) {
+  if (isReadOnly) {
     const state = store.getState();
     const enabledTools = getEnabledTools(state);
     const enabledToolsStash = state.viewer.enabledToolsStash;
@@ -34,9 +33,7 @@ export default (store) => () => {
     disableFeatures(store)([Feature.Annotating]);
     core.setToolMode(defaultTool);
     dispatch(actions.setActiveToolGroup(''));
-    if (isReadOnly) {
-      dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
-    }
+    dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
   } else {
     const state = store.getState();
     const enabledToolsStash = state.viewer.enabledToolsStash;

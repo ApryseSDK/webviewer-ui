@@ -1,12 +1,13 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import { Provider } from 'react-redux';
 import TextEditingPanel from './TextEditingPanel';
-import RightPanel from 'components/RightPanel';
 import initialState from 'src/redux/initialState';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import { MockApp, createStore } from 'helpers/storybookHelper';
 import { mobileStoryParameters } from 'helpers/storybookParams';
+import Panel from 'components/Panel';
 
 const noop = () => { };
 
@@ -20,6 +21,9 @@ const textEditingPanelInitialState = {
   ...initialState,
   viewer: {
     ...initialState.viewer,
+    disabledElements: {
+      logoBar: { disabled: true },
+    },
     openElements: {
       header: true,
       textEditingPanel: true,
@@ -27,6 +31,9 @@ const textEditingPanelInitialState = {
     panelWidths: {
       textEditingPanel: 330,
     },
+    sortStrategy: 'position',
+    isInDesktopOnlyMode: true,
+    modularHeaders: {},
     activeGroupedItems: ['annotateGroupedItems'],
   },
   featureFlags: {
@@ -57,9 +64,9 @@ const basicProps = {
 export const TextEditingPanelStoryWrapper = ({ children }) => {
   return (
     <Provider store={createStore(textEditingPanelInitialState)}>
-      <RightPanel dataElement="textEditingPanel" onResize={noop}>
+      <Panel dataElement="textEditingPanel" location="right">
         {children}
-      </RightPanel>
+      </Panel>
     </Provider>
   );
 };
@@ -67,7 +74,7 @@ export const TextEditingPanelStoryWrapper = ({ children }) => {
 export const Basic = () => {
   return (
     <TextEditingPanelStoryWrapper>
-      <div className="Panel TextEditingPanel" style={{ width: '330px', minWidth: '330px' }}>
+      <div className="TextEditingPanel">
         <TextEditingPanel {...basicProps} />
       </div>
     </TextEditingPanelStoryWrapper>
@@ -101,7 +108,7 @@ export const TextEditingUndoRedo = () => {
 
   return (
     <TextEditingPanelStoryWrapper>
-      <div className="Panel TextEditingPanel" style={{ width: '330px', minWidth: '330px' }}>
+      <div className="TextEditingPanel">
         <TextEditingPanel {...undoRedoProps} />
       </div>
     </TextEditingPanelStoryWrapper>
@@ -138,7 +145,7 @@ const TextEditingPanelInApp = (context, dataElement, location) => {
       customizableUI: true,
     },
   };
-  const store = createStore(appMockState);
+  const store = configureStore({ reducer: () => appMockState });
   setItemToFlyoutStore(store);
 
   return <MockApp initialState={appMockState} initialDirection={addonRtl}/>;

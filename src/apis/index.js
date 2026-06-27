@@ -20,7 +20,6 @@ import contextMenuPopup from './contextMenuPopup';
 import disableElement from './disableElement';
 import disableElements from './disableElements';
 import disableFeatures from './disableFeatures';
-import disableHighContrastMode from './disableHighContrastMode';
 import disableNativeScrolling from './disableNativeScrolling';
 import disableNoteSubmissionWithEnter from './disableNoteSubmissionWithEnter';
 import disableTool from './disableTool';
@@ -30,7 +29,6 @@ import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
-import enableHighContrastMode from './enableHighContrastMode';
 import enableFeatures from './enableFeatures';
 import enableNativeScrolling from './enableNativeScrolling';
 import enableTool from './enableTool';
@@ -48,7 +46,6 @@ import getMinZoomLevel from './getMinZoomLevel';
 import hotkeys from './hotkeys';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
-import isHighContrastModeEnabled from './isHighContrastModeEnabled';
 import isToolDisabled from './isToolDisabled';
 import isFullscreen from './isFullscreen';
 import loadDocument from './loadDocument';
@@ -77,7 +74,6 @@ import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
 import setEmbeddedJSPopupStyle from './setEmbeddedJSPopupStyle';
 import setFitMode from './setFitMode';
-import setHeaderItems from './setHeaderItems';
 import setIconColor from './setIconColor';
 import setLanguage from './setLanguage';
 import setTranslations from './setTranslations';
@@ -97,7 +93,6 @@ import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
 import setToolbarGroup from './setToolbarGroup';
-import createToolbarGroup from './createToolbarGroup';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
@@ -131,7 +126,6 @@ import setSearchResults from './setSearchResults';
 import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from './overrideSearchExecution';
-import reactElements from './reactElements';
 import {
   addTrustedCertificates,
   loadTrustList,
@@ -222,22 +216,23 @@ import setGroupedItemsGrow from './setGroupedItemsGrow';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
 import Item from './ModularComponents/item';
-import Divider from './ModularComponents/divider';
-import Label from './ModularComponents/label';
-import GroupedItems from './ModularComponents/groupedItems';
-import ModularHeader from './ModularComponents/modularHeader';
-import CustomButton from './ModularComponents/customButton';
-import ToolButton from './ModularComponents/toolButton';
-import RibbonItem from './ModularComponents/ribbonItem';
-import RibbonGroup from './ModularComponents/ribbonGroup';
-import ToggleElementButton from './ModularComponents/toggleElementButton';
+import createDividerFactory from './ModularComponents/divider';
+import createLabelFactory from './ModularComponents/label';
+import createGroupedItemsFactory from './ModularComponents/groupedItems';
+import createModularHeaderFactory from './ModularComponents/modularHeader';
+import createCustomButtonFactory from './ModularComponents/customButton';
+import createToolButtonFactory from './ModularComponents/toolButton';
+import createToolGroupToggleButtonFactory from './ModularComponents/toolGroupToggleButton';
+import createRibbonItemFactory from './ModularComponents/ribbonItem';
+import createRibbonGroupFactory from './ModularComponents/ribbonGroup';
+import createToggleElementButtonFactory from './ModularComponents/toggleElementButton';
 import Zoom from './ModularComponents/zoom';
-import Flyout from './ModularComponents/flyout';
-import PresetButton from './ModularComponents/presetButton';
-import StatefulButton from './ModularComponents/statefulButton';
+import createFlyoutFactory from './ModularComponents/flyout';
+import createPresetButtonFactory from './ModularComponents/presetButton';
+import createStatefulButtonFactory from './ModularComponents/statefulButton';
 import ViewControls from './ModularComponents/viewControls';
 import PageControls from './ModularComponents/pageControls';
-import MainMenu from './ModularComponents/menu';
+import createMainMenuFactory from './ModularComponents/menu';
 import TabPanel from './ModularComponents/tabPanel';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 import setTextSignatureQuality from './setTextSignatureQuality';
@@ -281,7 +276,10 @@ import startTextComparison from './startTextComparison';
 import stopTextComparison from './stopTextComparison';
 import setActiveTabInPanel from './setActiveTabInPanel';
 import setActiveGroupedItems from './setActiveGroupedItems';
-import CustomElement from 'src/apis/ModularComponents/customElement';
+import enableAutosave from './enableAutosave';
+import disableAutosave from './disableAutosave';
+import setAutosaveInterval from './setAutosaveInterval';
+import createCustomElementFactory from 'src/apis/ModularComponents/customElement';
 import {
   enableViewOnlyMode,
   disableViewOnlyMode,
@@ -295,7 +293,7 @@ import {
 import { Shortcuts } from 'helpers/hotkeysUtils';
 import setReaderPageMode from './setReaderPageMode';
 
-export default (store) => {
+export default (store, instanceDocViewerKey, instanceI18n) => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
@@ -329,7 +327,6 @@ export default (store) => {
     disableTools: disableTools(store),
     disableReplyForAnnotations: disableReplyForAnnotations(store),
     displayErrorMessage: displayErrorMessage(store),
-    disableHighContrastMode: disableHighContrastMode(store),
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
     enableFeatures: enableFeatures(store),
@@ -345,7 +342,6 @@ export default (store) => {
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
-    isHighContrastModeEnabled: isHighContrastModeEnabled(store),
     isFullscreen,
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
@@ -375,9 +371,8 @@ export default (store) => {
     importBookmarks: importBookmarks(store),
     setEmbeddedJSPopupStyle: setEmbeddedJSPopupStyle(store),
     setFitMode,
-    setHeaderItems: setHeaderItems(store),
     setIconColor: setIconColor(store),
-    setLanguage: setLanguage(store),
+    setLanguage: setLanguage(store, instanceI18n),
     setTranslations,
     setLayoutMode,
     setMaxZoomLevel: setMaxZoomLevel(store),
@@ -394,7 +389,6 @@ export default (store) => {
     setSwipeOrientation,
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
-    createToolbarGroup: createToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
     setCustomApplyRedactionsHandler: setCustomApplyRedactionsHandler(store),
@@ -415,7 +409,7 @@ export default (store) => {
     useEmbeddedPrint: useEmbeddedPrint(store),
     willUseEmbeddedPrinting: willUseEmbeddedPrinting(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
-    mentions: mentions(store),
+    mentions: mentions(store, instanceDocViewerKey),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
@@ -425,6 +419,10 @@ export default (store) => {
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
 
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
+
+    enableAutosave: enableAutosave(store),
+    disableAutosave: disableAutosave(store),
+    setAutosaveInterval: setAutosaveInterval(store),
 
     setReaderPageMode: setReaderPageMode(store),
     VerificationOptions: {
@@ -480,34 +478,34 @@ export default (store) => {
     getPanels: getPanels(store),
     Components: {
       Item,
-      GroupedItems: GroupedItems(store),
-      ModularHeader: ModularHeader(store),
-      TopHeader: ModularHeader(store),
-      BottomHeader: ModularHeader(store),
-      LeftHeader: ModularHeader(store),
-      RightHeader: ModularHeader(store),
-      CustomButton: CustomButton(store),
-      ToolButton: ToolButton(store),
-      ToggleElementButton: ToggleElementButton(store),
-      RibbonItem: RibbonItem(store),
-      RibbonGroup: RibbonGroup(store),
+      GroupedItems: createGroupedItemsFactory(store),
+      ModularHeader: createModularHeaderFactory(store),
+      TopHeader: createModularHeaderFactory(store),
+      BottomHeader: createModularHeaderFactory(store),
+      LeftHeader: createModularHeaderFactory(store),
+      RightHeader: createModularHeaderFactory(store),
+      CustomButton: createCustomButtonFactory(store),
+      ToolButton: createToolButtonFactory(store),
+      ToolGroupToggleButton: createToolGroupToggleButtonFactory(store),
+      ToggleElementButton: createToggleElementButtonFactory(store),
+      RibbonItem: createRibbonItemFactory(store),
+      RibbonGroup: createRibbonGroupFactory(store),
       Zoom,
-      Flyout: Flyout(store),
-      PresetButton: PresetButton(store),
-      StatefulButton : StatefulButton(store),
+      Flyout: createFlyoutFactory(store),
+      PresetButton: createPresetButtonFactory(store),
+      StatefulButton: createStatefulButtonFactory(store),
       ViewControls,
       PageControls,
-      MainMenu: MainMenu(store),
+      MainMenu: createMainMenuFactory(store),
       TabPanel,
-      Label: Label(store),
-      Divider: Divider(store),
-      CustomElement: CustomElement(store),
+      Label: createLabelFactory(store),
+      Divider: createDividerFactory(store),
+      CustomElement: createCustomElementFactory(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     disableElement: disableElement(store),
     disableNoteSubmissionWithEnter: disableNoteSubmissionWithEnter(store),
     enableElement: enableElement(store),
-    enableHighContrastMode: enableHighContrastMode(store),
     enableNoteSubmissionWithEnter: enableNoteSubmissionWithEnter(store),
     enableTool: enableTool(store),
     enableNativeScrolling,
@@ -561,7 +559,7 @@ export default (store) => {
     isMultiViewerSyncing: isMultiViewerSyncing(store),
     setCustomSettings: setCustomSettings(store),
     exportUserSettings: exportUserSettings(store),
-    importUserSettings: importUserSettings(store),
+    importUserSettings: importUserSettings(store, instanceI18n),
     setGrayscaleDarknessFactor,
     setSideWindowVisibility: setSideWindowVisibility(store),
     setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
@@ -590,7 +588,6 @@ export default (store) => {
     i18n: i18next,
     showWarningMessage: showWarningMessage(store),
     selectors: getSelectors(store),
-    reactElements,
     enableClearSearchOnPanelClose: enableClearSearchOnPanelClose(store),
     disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store),
     disableNativeScrolling,
@@ -618,7 +615,8 @@ export default (store) => {
     stopTextComparison,
     closeTooltip,
   };
-  const documentViewer = core.getDocumentViewer(1);
+  const documentViewerKey = instanceDocViewerKey || store.getState().advanced.documentViewerKey || 1;
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
 
   getInstanceNode().instance = {
     // keys needed for webviewer.js

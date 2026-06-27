@@ -52,6 +52,9 @@ CellAdjustmentItems.play = async ({ canvasElement }) => {
   };
   docViewerObject.getSpreadsheetEditorManager = () => ({
     getSelectedCellRange: () => mockCellRange,
+    getWorkbook: () => ({
+      getSheetAt: () => mockFunctions,
+    }),
   });
   const mockFunctions = {
     createColumns: fn().mockName('createColumns'),
@@ -59,11 +62,6 @@ CellAdjustmentItems.play = async ({ canvasElement }) => {
     removeRows: fn().mockName('removeRows'),
     removeColumns: fn().mockName('removeColumns'),
   };
-  documentObject.getSpreadsheetEditorDocument = () => ({
-    getWorkbook: () => ({
-      getSheetAt: () => mockFunctions,
-    }),
-  });
 
   const canvas = await within(canvasElement);
   // Have to do this to ensure UI config has switched and loaded the buttons

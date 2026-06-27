@@ -24,11 +24,23 @@
 
   .icon-grid {
     .row {
+      display: flex;
       flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 8px;
 
       .border-button {
         width: 32px !important;
         height: 32px !important;
+
+        .Icon {
+          width: 26px;
+          height: 26px;
+        }
+
+        &.active .Icon {
+          color: var(--button-icon-color-active);
+        }
       }
     }
   }

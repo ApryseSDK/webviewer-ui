@@ -10,7 +10,7 @@ export default {
 };
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducer(),
 });
 
 export const Empty = () => {

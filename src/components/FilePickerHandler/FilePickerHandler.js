@@ -3,6 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import getHashParameters from 'helpers/getHashParameters';
 import loadDocument from 'helpers/loadDocument';
+import { buildTabUpdateForViewer } from 'helpers/multiViewerTabUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
@@ -13,6 +14,8 @@ const FilePickerHandler = () => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'filePickerHandler'));
   const isMultiTab = useSelector(selectors.getIsMultiTab);
   const TabManager = useSelector(selectors.getTabManager, shallowEqual);
+  const activeTab = useSelector(selectors.getActiveTab);
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
 
   const dispatch = useDispatch();
@@ -23,7 +26,15 @@ const FilePickerHandler = () => {
       dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
       dispatch(actions.closeElement(DataElements.MENU_OVERLAY));
       if (isMultiTab) {
-        await TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
+        if (isMultiViewerMode) {
+          await TabManager.updateTab(activeTab, buildTabUpdateForViewer({
+            documentViewerKey: activeDocumentViewerKey,
+            src: file,
+            isMultiViewerMode: true,
+          }));
+        } else {
+          await TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
+        }
       } else {
         await loadDocument(dispatch, file, {}, activeDocumentViewerKey);
       }

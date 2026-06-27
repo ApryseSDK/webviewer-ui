@@ -36,7 +36,7 @@
   }
 
   &.is-mobile {
-    .Button.modular-ui.icon-only {
+    .Button.icon-only {
       &:hover:not(:disabled):not(.active) {
         background-color: initial;
         color: initial;

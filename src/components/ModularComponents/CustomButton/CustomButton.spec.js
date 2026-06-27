@@ -22,7 +22,7 @@ const StoreConnectedCustomButton = ({ dataElement }) => {
 
 describe('CustomButton', () => {
   it('should apply initial style to the button', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
 
     render(
       <Provider store={store}>
@@ -45,7 +45,7 @@ describe('CustomButton', () => {
   });
 
   it('should update the rendered button style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createButton = createCustomButtonAPI(store);
 
     // Create the component via API

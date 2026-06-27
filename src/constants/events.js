@@ -31,12 +31,12 @@
  * @property {string} MODULAR_UI_IMPORTED {@link UI#event:modularUIImported UI.Events.modularUIImported}
  * @property {string} TOOLTIP_OPENED {@link UI#event:tooltipOpened UI.Events.tooltipOpened}
  * @property {string} ACTIVE_DOCUMENT_VIEWER_CHANGED {@link UI#event:activeDocumentViewerChanged UI.Events.activeDocumentViewerChanged}
+ * @property {string} NOTE_AUTOSAVED {@link UI#event:noteAutosaved UI.Events.noteAutosaved}
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
-    instance.UI.addEventListener(UIEvents.ANNOTATION_FILTER_CHANGED, e => {
-      const { types, authors, colors } = e.detail;
-      console.log(types, authors, colors);
+    instance.UI.addEventListener(UIEvents.ANNOTATION_FILTER_CHANGED, (types, authors, colors, statuses, checkRepliesForAuthorFilter) => {
+      console.log(types, authors, colors, statuses);
     });
   });
  */
@@ -71,7 +71,8 @@ export default {
   'TAB_MANAGER_READY': 'onTabManagerReady',
   'MODULAR_UI_IMPORTED': 'modularUIImported',
   'TOOLTIP_OPENED': 'tooltipOpened',
-  'ACTIVE_DOCUMENT_VIEWER_CHANGED': 'activeDocumentViewerChanged'
+  'ACTIVE_DOCUMENT_VIEWER_CHANGED': 'activeDocumentViewerChanged',
+  'NOTE_AUTOSAVED': 'wv-note-autosaved'
 };
 
 /**
@@ -88,18 +89,19 @@ export default {
  * Returns empty arrays if the filter is cleared.
  * @name UI#annotationFilterChanged
  * @event
- * @property {string[]} types Types filter.
- * @property {string[]} authors Author filter.
- * @property {string[]} colors Color filter.
- * @property {string[]} statuses Status filter.
+ * @param {string[]} types Types filter.
+ * @param {string[]} authors Author filter.
+ * @param {string[]} colors Color filter.
+ * @param {string[]} statuses Status filter.
+ * @param {boolean} checkRepliesForAuthorFilter Whether replies are also checked when filtering by author.
  */
 
 /**
 * Triggered when a new document has been merged into the thumbnails panel.
 * @name UI#documentMerged
 * @event
-* @property {string} filename File name.
-* @property {number[]} pages Page numbers.
+* @param {string} filename File name.
+* @param {number[]} pages Page numbers.
 */
 
 /**
@@ -112,7 +114,7 @@ export default {
 * Triggered when there is an error loading the document.
 * @name UI#loaderror
 * @event
-* @property {object} err The error.
+* @param {object} err The error.
 */
 
 /**
@@ -131,29 +133,29 @@ export default {
 * Triggered when the panels are resized.
 * @name UI#panelResized
 * @event
-* @property {string} element DataElement name.
-* @property {number} width New panel width.
+* @param {string} element DataElement name.
+* @param {number} width New panel width.
 */
 
 /**
 * Triggered when the UI theme has changed.
 * @name UI#themeChanged
 * @event
-* @property {string} theme The new UI theme.
+* @param {string} theme The new UI theme.
 */
 
 /**
 * Triggered when the toolbar group has changed.
 * @name UI#toolbarGroupChanged
 * @event
-* @property {string} toolbarGroup The new toolbar group.
+* @param {string} toolbarGroup The new toolbar group.
 */
 
 /**
 * Triggered when the selected thumbnail changed.
 * @name UI#selectedThumbnailChanged
 * @event
-* @property {number[]} selectedThumbnailPageIndexes The array of indexes of currently selected thumbnails.
+* @param {number[]} selectedThumbnailPageIndexes The array of indexes of currently selected thumbnails.
 */
 
 /**
@@ -166,23 +168,23 @@ export default {
 * Triggered when dragged thumbnail(s) are dropped to a new location in the thumbnail panel.
 * @name UI#thumbnailDropped
 * @event
-* @property {number[]} pageNumbersBeforeMove The array of page numbers to be moved.
-* @property {number[]} pageNumbersAfterMove The array of page numbers of where thumbnails are being dropped.
-* @property {number} numberOfPagesMoved Number of pages being moved.
+* @param {number[]} pageNumbersBeforeMove The array of page numbers to be moved.
+* @param {number[]} pageNumbersAfterMove The array of page numbers of where thumbnails are being dropped.
+* @param {number} numberOfPagesMoved Number of pages being moved.
 */
 
 /**
 * Triggered when user bookmarks have changed.
 * @name UI#userBookmarksChanged
 * @event
-* @property {Core.Bookmark[]} bookmarks The new bookmarks.
+* @param {Core.Bookmark[]} bookmarks The new bookmarks.
 */
 
 /**
 * Triggered when outline bookmarks have changed.
 * @name UI#outlineBookmarksChanged
 * @event
-* @property {UI.OutlineBookmarkData} bookmarkData The bookmark data.
+* @param {UI.OutlineBookmarkData} bookmarkData The bookmark data.
 */
 
 /**
@@ -195,28 +197,27 @@ export default {
 * Triggered when the visibility of an element has changed.
 * @name UI#visibilityChanged
 * @event
-* @property {object} detail
-* @property {string} detail.element DataElement name.
-* @property {boolean} detail.isVisible The new visibility.
+* @param {string} element The DataElement name.
+* @param {boolean} isVisible The new visibility.
 */
 
 /**
 * Triggered when fullscreen mode is toggled.
 * @name UI#fullscreenModeToggled
 * @event
-* @property {boolean} isInFullscreen Whether in fullscreen mode or not.
+* @param {boolean} isInFullscreen Whether in fullscreen mode or not.
 */
 
 /**
 * Triggered before the UI switches tabs.
 * @name UI#beforeTabChanged
 * @event
-* @property {object|null} currentTab An object containing the properties for the currently active tab (null if no currently active tab).
+* @param {object|null} currentTab An object containing the properties for the currently active tab (null if no currently active tab).
 * @property {number} currentTab.id The id of the tab being switched to.
 * @property {string} currentTab.src Source of current tab.
 * @property {UI.loadDocumentOptions} currentTab.options Tab load options.
 * @property {boolean} currentTab.annotationsChanged True if the annotations have been changed since loading the tab.
-* @property {object} nextTab An object containing the properties for the tab being switched to.
+* @param {object} nextTab An object containing the properties for the tab being switched to.
 * @property {number} nextTab.id The id of the tab being switched to.
 * @property {string} nextTab.src Source of current tab.
 * @property {UI.loadDocumentOptions} nextTab.options Tab load options.
@@ -226,7 +227,7 @@ export default {
  * Triggered after the UI switches tabs.
  * @name UI#afterTabChanged
  * @event
- * @property {object|null} currentTab An object containing the properties for the currently active tab (null if no currently active tab).
+ * @param {object|null} currentTab An object containing the properties for the currently active tab (null if no currently active tab).
  * @property {number} currentTab.id The id of the tab being switched to.
  * @property {string} currentTab.src Source of current tab.
  * @property {UI.loadDocumentOptions} currentTab.options Tab load options.
@@ -237,46 +238,46 @@ export default {
 * Triggered when a Tab is deleted.
 * @name UI#tabDeleted
 * @event
-* @property {number} id The id of the tab being deleted.
-* @property {string} src Source of current tab.
-* @property {UI.loadDocumentOptions} options Tab load options.
+* @param {number} id The id of the tab being deleted.
+* @param {string} src Source of current tab.
+* @param {UI.loadDocumentOptions} options Tab load options.
 */
 
 /**
 * Triggered before a Tab is deleted.
 * @name UI#beforeTabDeleted
 * @event
-* @property {number} id The id of the tab being deleted.
-* @property {string} src Source of current tab.
-* @property {UI.loadDocumentOptions} options Tab load options.
+* @param {number} id The id of the tab being deleted.
+* @param {string} src Source of current tab.
+* @param {UI.loadDocumentOptions} options Tab load options.
 */
 
 /**
 * Triggered when a Tab is added.
 * @name UI#tabAdded
 * @event
-* @property {number} id The id of the tab being added.
-* @property {string} src Source of current tab.
-* @property {UI.loadDocumentOptions} options Tab load options.
+* @param {number} id The id of the tab being added.
+* @param {string} src Source of current tab.
+* @param {UI.loadDocumentOptions} options Tab load options.
 */
 
 /**
 * Triggered when a Tab is moved.
 * @name UI#tabMoved
 * @event
-* @property {number} id The id of the tab being moved.
-* @property {string} src Source of moved tab.
-* @property {UI.loadDocumentOptions} options Tab load options.
-* @property {number} prevIndex Previous index of tab.
-* @property {number} newIndex New index of tab.
+* @param {number} id The id of the tab being moved.
+* @param {string} src Source of moved tab.
+* @param {UI.loadDocumentOptions} options Tab load options.
+* @param {number} prevIndex Previous index of tab.
+* @param {number} newIndex New index of tab.
 */
 
 /**
 * Triggered when the language changes in WebViewer via [setLanguage]{@link UI#setLanguage UI.setLanguage}.
 * @name UI#languageChanged
 * @event
-* @property {string} prev The previous language.
-* @property {string} next The new language that was just set.
+* @param {string} prev The previous language.
+* @param {string} next The new language that was just set.
 */
 
 /**
@@ -289,6 +290,8 @@ export default {
  * Triggered when the compare annotations are loaded.
  * @name UI#compareAnnotationsLoaded
  * @event
+ * @param {object} annotMap Map of matched annotations grouped by page number.
+ * @param {number} diffCount Number of detected differences.
  */
 
 /**
@@ -301,7 +304,7 @@ export default {
  * Triggered when a Modular UI JSON configuration is imported.
  * @name UI#modularUIImported
  * @event
- * @property {UI.ModularComponentsData} importedComponents The imported modular components configuration that was passed to {@link UI.importModularComponents importModularComponents}.
+ * @param {UI.ModularComponentsData} importedComponents The imported modular components configuration that was passed to {@link UI.importModularComponents importModularComponents}.
  */
 
 /**
@@ -314,6 +317,13 @@ export default {
  * Triggered when the active document viewer changes in Multi-Viewer Mode.
  * @name UI#activeDocumentViewerChanged
  * @event
- * @property {number} activeDocumentViewerKey The key of the newly active document viewer.
- * @property {number} previousDocumentViewerKey The key of the previously active document viewer.
+ * @param {number} activeDocumentViewerKey The key of the newly active document viewer.
+ * @param {number} previousDocumentViewerKey The key of the previously active document viewer.
+ */
+
+/**
+ * Triggered when a note is autosaved.
+ * @name UI#noteAutosaved
+ * @event
+ * @property {string} annotationId The id of the annotation whose note was autosaved.
  */

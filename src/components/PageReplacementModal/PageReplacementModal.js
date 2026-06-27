@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import selectors from 'selectors';
 import useCore from 'hooks/useCore';
 import { useTranslation } from 'react-i18next';
 import FileListPanel from './FileListPanel';
@@ -10,8 +9,9 @@ import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import FileSelectedPanel from './FileSelectedPanel';
 import { exitPageReplacementWarning } from 'helpers/pageManipulationFunctions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ModalWrapper from '../ModalWrapper';
+import DataElements from 'constants/dataElement';
 import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
 import './PageReplacementModal.scss';
@@ -37,7 +37,6 @@ const PageReplacementModal = ({
   const fileInputId = 'pageReplacementFileInputId';
 
   const dispatch = useDispatch();
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useEffect(() => {
     if (isOpen && selectedTabInternal !== selectedTab) {
@@ -64,7 +63,6 @@ const PageReplacementModal = ({
     PageReplacementModal: true,
     open: isOpen,
     closed: !isOpen,
-    'modular-ui': customizableUI,
   });
 
   const srcString = source[selectedTabInternal];
@@ -136,6 +134,7 @@ const PageReplacementModal = ({
         <ModalWrapper
           isOpen={isOpen}
           title={t('component.pageReplaceModalTitle')}
+          modalDataElement={DataElements.PAGE_REPLACEMENT_MODAL}
           closeButtonDataElement={'pageReplacementModalClose'}
           onCloseClick={closeThisModal}
           swipeToClose

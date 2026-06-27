@@ -3,7 +3,11 @@ import getRootNode from './getRootNode';
 
 export default () => {
   const freetextAnnots = core.getAnnotationsList().filter((annot) => annot instanceof window.Core.Annotations.FreeTextAnnotation);
-  const isEditingFreetext = freetextAnnots.some((annot) => annot.getEditor()?.hasFocus());
+  const editBoxManager = core.getAnnotationManager().getEditBoxManager();
+  const isEditingFreetext = freetextAnnots.some((annot) => {
+    const editor = editBoxManager.getExistingEditor(annot);
+    return editor ? editor.hasFocus() : false;
+  });
   const { activeElement } = getRootNode();
 
   return (activeElement && (

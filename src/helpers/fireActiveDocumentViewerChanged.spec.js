@@ -65,10 +65,7 @@ describe('fireActiveDocumentViewerChanged', () => {
     expect(mockDeselectAllAnnotations3).not.toHaveBeenCalled();
 
     // Event should be fired
-    expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, {
-      activeDocumentViewerKey: 3,
-      previousDocumentViewerKey: 1,
-    });
+    expect(fireEvent).toHaveBeenCalledWith(Events.ACTIVE_DOCUMENT_VIEWER_CHANGED, [3, 1]);
   });
 
   it('should reset crop and snipping tools in inactive viewers when switching', () => {

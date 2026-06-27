@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import Panel from 'components/Panel';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import initialState from 'src/redux/initialState';
-import { createStore } from 'src/helpers/storybookHelper';
 import { userEvent, within, expect } from 'storybook/test';
 import rootReducer from 'reducers/rootReducer';
 import { configureStore } from '@reduxjs/toolkit';
@@ -50,7 +49,7 @@ const myState = {
 
 export const Thumbnails = () => {
   return (
-    <Provider store={createStore(myState)}>
+    <Provider store={configureStore({ reducer: () => myState })}>
       <Panel dataElement="thumbnailsPanel">
         <ThumbnailsPanel />
       </Panel>
@@ -99,7 +98,7 @@ export const ThumbnailsMultiSelect = () => {
   };
 
   return (
-    <Provider store={createStore(state)}>
+    <Provider store={configureStore({ reducer: () => state })}>
       <Panel dataElement="thumbnailsPanel">
         <ThumbnailsPanel/>
       </Panel>
@@ -161,7 +160,7 @@ const state = {
     selectedThumbnailPageIndexes: [1, 2, 4],
   },
 };
-const store = configureStore({ reducer: rootReducer, preloadedState: state });
+const store = configureStore({ reducer: rootReducer(), preloadedState: state });
 export const ThumbnailsMultiSelectCustomItems = () => {
   return (
     <Provider store={store}>

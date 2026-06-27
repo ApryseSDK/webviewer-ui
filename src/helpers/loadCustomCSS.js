@@ -1,6 +1,6 @@
 import getRootNode from 'helpers/getRootNode';
 
-export default (CSSFile) => {
+export default (CSSFile, rootOverride) => {
   if (CSSFile) {
     const link = document.createElement('link');
 
@@ -8,7 +8,7 @@ export default (CSSFile) => {
     link.type = 'text/css';
     link.href = CSSFile;
     if (window.isApryseWebViewerWebComponent) {
-      getRootNode().appendChild(link);
+      (rootOverride || getRootNode()).appendChild(link);
     } else {
       document.getElementsByTagName('head')[0].appendChild(link);
     }

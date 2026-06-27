@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { getCurrentFreeSpace, findItemToResize, ResizingPromises } from 'helpers/responsivenessHelper';
+import { getCurrentFreeSpace, findItemToResize, getResizingPromises } from 'helpers/responsivenessHelper';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 
 const propTypes = {
@@ -21,6 +21,7 @@ const ResponsiveContainer = ({
 }) => {
   const animationRequest = useRef(null);
   const isResizingRef = useRef(false);
+  const store = useStore();
   const isViewOnly = useSelector((state) => selectors.isViewOnly(state));
   const enabledItems = useSelector((state) => items.map((item) => {
     if (selectors.isElementDisabled(state, item.dataElement) || selectors.isDisabledViewOnly(state, item.dataElement)) {
@@ -38,13 +39,20 @@ const ResponsiveContainer = ({
       animationRequest.current = null;
       let retry = false;
       try {
-        if (ResizingPromises[parentDataElement]) {
-          await ResizingPromises[parentDataElement].promise;
+        // Resolve the per-instance root from the observed element so that
+        // multi-WebComponent setups read/write the correct bucket inside
+        // responsivenessHelper. The previous singleton-keyed maps caused
+        // sibling instances to dispatch shrink/grow into each other's
+        // Redux stores in an infinite loop.
+        const instanceRoot = elementRef.current?.getRootNode?.();
+        const resizingPromises = getResizingPromises(instanceRoot);
+        if (resizingPromises[parentDataElement]) {
+          await resizingPromises[parentDataElement].promise;
         }
         for (let item of items) {
           const { dataElement } = item;
-          if (ResizingPromises[dataElement]) {
-            await ResizingPromises[dataElement].promise;
+          if (resizingPromises[dataElement]) {
+            await resizingPromises[dataElement].promise;
           }
         }
         const propertyToCheck = headerDirection === 'column' ? 'height' : 'width';
@@ -58,6 +66,8 @@ const ResponsiveContainer = ({
           freeSpace,
           headerDirection,
           parentDataElement,
+          instanceRoot,
+          state: store.getState(),
         });
         if (itemToResizeFunc) {
           itemToResizeFunc();

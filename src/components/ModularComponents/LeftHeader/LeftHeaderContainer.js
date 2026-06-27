@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 
 function LeftHeaderContainer() {
 
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const leftPanelOpen = useSelector((state) => selectors.getOpenGenericPanel(state, PLACEMENT.LEFT));
   const leftPanelWidth = useSelector((state) => selectors.getPanelWidth(state, leftPanelOpen));
   const leftHeaders = useSelector(selectors.getLeftHeader, shallowEqual);
@@ -19,7 +18,6 @@ function LeftHeaderContainer() {
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { customizableUI } = featureFlags;
 
   const [floatingHeaders, leftHeader] = useMemo(() => {
     const floatingHeaders = [];
@@ -55,7 +53,7 @@ function LeftHeaderContainer() {
     }
   }, [leftHeader, headerWrapperStyle]);
 
-  if (!customizableUI || !leftHeaders.length) {
+  if (!leftHeaders.length) {
     return null;
   }
 

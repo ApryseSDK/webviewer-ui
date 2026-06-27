@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isMobileSize } from 'helpers/getDeviceSize';
 import { connect } from 'react-redux';
 import Measure from 'react-measure';
 import throttle from 'lodash/throttle';
-import debounce from 'lodash/debounce';
 /* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import { isIE, isIE11 } from 'helpers/device';
@@ -19,15 +17,12 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import { getStep, zoomIn, zoomOut } from 'helpers/zoom';
 import { removeFileNameExtension } from 'helpers/TabManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
-import PageNavOverlay from 'components/PageNavOverlay';
-import ToolsOverlay from 'components/ToolsOverlay';
 import ReaderModeViewer from 'components/ReaderModeViewer';
-import i18next from 'i18next';
+import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
+import { withTranslation } from 'react-i18next';
 
 import './DocumentContainer.scss';
 import DataElements from 'src/constants/dataElement';
-
-const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
@@ -52,15 +47,19 @@ class DocumentContainer extends React.PureComponent {
     isInDesktopOnlyMode: PropTypes.bool,
     isRedactionPanelOpen: PropTypes.bool,
     isTextEditingPanelOpen: PropTypes.bool,
-    featureFlags: PropTypes.object,
     bottomHeaderHeight: PropTypes.number,
     activeDocumentViewerKey: PropTypes.number,
-    isLogoBarEnabled: PropTypes.bool,
     currentTabs: PropTypes.array,
     activeTab: PropTypes.number,
     isSpreadsheetEditorModeEnabled: PropTypes.bool,
     documentContainerRightMargin: PropTypes.number,
     documentContainerLeftMargin: PropTypes.number,
+    isMultiTab: PropTypes.bool,
+    documentViewerKey: PropTypes.number,
+    tabManager: PropTypes.shape({
+      updateTab: PropTypes.func,
+    }),
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -72,13 +71,6 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToZoom = throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = throttle(this.handleResize.bind(this), 200);
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
-    this.debouncedHidePageNavigationOverlay = debounce(
-      this.hidePageNavigationOverlay,
-      PAGE_NAVIGATION_OVERLAY_FADEOUT,
-    );
-    this.state = {
-      showNavOverlay: true,
-    };
   }
 
   componentDidUpdate(prevProps) {
@@ -89,8 +81,8 @@ class DocumentContainer extends React.PureComponent {
 
   componentDidMount() {
     touchEventManager.initialize(this.document.current, this.container.current);
-    core.setScrollViewElement(this.container.current);
-    core.setViewerElement(this.document.current);
+    core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
+    core.setViewerElement(this.document.current, this.props.activeDocumentViewerKey);
     this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
 
     if (isIE) {
@@ -104,10 +96,16 @@ class DocumentContainer extends React.PureComponent {
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     this.updateContainerSize();
-    core.addEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
   }
 
   componentWillUnmount() {
+    // Cancel pending throttled/debounced callbacks BEFORE the React refs are nulled out. Otherwise the trailing edge of handleResize (200 ms) can fire after unmount and crash on `this.container.current.clientWidth` when the WC has been removed from the DOM (e.g. test teardown).
+    if (this.handleResize && typeof this.handleResize.cancel === 'function') {
+      this.handleResize.cancel();
+    }
+    if (this.debouncedHidePageNavigationOverlay && typeof this.debouncedHidePageNavigationOverlay.cancel === 'function') {
+      this.debouncedHidePageNavigationOverlay.cancel();
+    }
     touchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
@@ -119,18 +117,30 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
-    core.removeEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
     this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
   }
 
   preventDefault = (e) => e.preventDefault();
 
-  onDrop = (e) => {
+  onDrop = async (e) => {
     e.preventDefault();
-
+    const { isMultiTab, activeDocumentViewerKey, tabManager, activeTab, currentTabs } = this.props;
     const { files } = e.dataTransfer;
     if (files.length) {
-      loadDocument(this.props.dispatch, files[0]);
+      if (isMultiTab) {
+        const targetTabId = getTargetTabId(activeTab, currentTabs);
+        if (!(targetTabId || targetTabId === 0)) {
+          return;
+        }
+        tabManager.updateTab(targetTabId, buildTabUpdateForViewer({
+          documentViewerKey: activeDocumentViewerKey,
+          src: files[0],
+          options: {},
+          isMultiViewerMode: true,
+        }));
+      } else {
+        loadDocument(this.props.dispatch, files[0], {}, this.props.documentViewerKey);
+      }
     }
   };
 
@@ -181,9 +191,6 @@ class DocumentContainer extends React.PureComponent {
     } else if (shouldGoDown) {
       this.pageDown();
     }
-
-    this.showPageNavigationOverlay();
-    this.debouncedHidePageNavigationOverlay();
   };
 
   pageUp = () => {
@@ -203,7 +210,7 @@ class DocumentContainer extends React.PureComponent {
   wheelToZoom = (e) => {
     const { zoom: currentZoomFactor, activeDocumentViewerKey, isSpreadsheetEditorModeEnabled } = this.props;
     if (isSpreadsheetEditorModeEnabled) {
-      e.deltaY < 0 ? zoomIn() : zoomOut();
+      e.deltaY < 0 ? zoomIn(false, activeDocumentViewerKey) : zoomOut(false, activeDocumentViewerKey);
       return;
     }
     let newZoomFactor = currentZoomFactor;
@@ -217,31 +224,6 @@ class DocumentContainer extends React.PureComponent {
 
   handleScroll = () => {
     this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine']);
-
-    // Show overlay and then hide it, but the hide call is debounced
-    this.showPageNavigationOverlay();
-    this.debouncedHidePageNavigationOverlay();
-  };
-
-  showAndFadeNavigationOverlay = () => {
-    this.showPageNavigationOverlay();
-    setTimeout(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
-  };
-
-  hidePageNavigationOverlay = () => {
-    this.setState({ showNavOverlay: false });
-  };
-
-  showPageNavigationOverlay = () => {
-    this.setState({ showNavOverlay: true });
-  };
-
-  pageNavOnMouseEnter = () => {
-    this.showPageNavigationOverlay();
-  };
-
-  pageNavOnMouseLeave = () => {
-    this.hidePageNavigationOverlay();
   };
 
   getClassName = () => {
@@ -260,13 +242,18 @@ class DocumentContainer extends React.PureComponent {
 
     if (!this.props.isReaderMode) {
       // Skip when in reader mode, otherwise will cause error.
-      core.setScrollViewElement(this.container.current);
-      core.scrollViewUpdated();
+      core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
+      core.scrollViewUpdated(this.props.activeDocumentViewerKey);
     }
   }
 
   updateContainerSize() {
-    const { clientWidth, clientHeight } = this.container.current;
+    // Defensive null-guard: even with cancel() in componentWillUnmount, a pending react-measure ResizeObserver callback can still fire after the container ref is detached (e.g. WC removal during dispose).
+    const container = this.container?.current;
+    if (!container) {
+      return;
+    }
+    const { clientWidth, clientHeight } = container;
     this.props.setDocumentContainerWidth(clientWidth);
     this.props.setDocumentContainerHeight(clientHeight);
   }
@@ -294,24 +281,21 @@ class DocumentContainer extends React.PureComponent {
       // Note Update after fading page nav was added:
       // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
       // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
-      core.scrollViewUpdated();
+      core.scrollViewUpdated(this.props.activeDocumentViewerKey);
     }
   }
 
   render() {
     const {
       isMultiTabEmptyPageOpen,
-      isMobile,
       documentContentContainerWidthStyle,
-      totalPages,
-      isInDesktopOnlyMode,
-      featureFlags,
       bottomHeaderHeight,
       leftHeaderWidth,
       documentContainerLeftMargin,
       documentContainerRightMargin,
       currentTabs,
-      activeTab
+      activeTab,
+      t,
     } = this.props;
 
     const style = {
@@ -329,17 +313,13 @@ class DocumentContainer extends React.PureComponent {
     const document = core.getDocument();
     const fileName = document ? removeFileNameExtension(document.filename) : '';
 
-    const { customizableUI } = featureFlags;
-    const showPageNav = totalPages > 1 && !customizableUI;
     const footerStyle = {
       ...style,
-      left: customizableUI ? `${leftHeaderWidth}px` : undefined,
-      bottom: `${customizableUI ? bottomHeaderHeight : 0}px`,
+      left: `${leftHeaderWidth}px`,
+      bottom: `${bottomHeaderHeight}px`,
     };
     // Calculating its height according to the existing horizontal modular headers
-    if (customizableUI) {
-      style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
-    }
+    style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
 
     const ariaLabelledById = currentTabs.length > 0 ? `tab-${fileName}-${activeTab}` : undefined;
     return (
@@ -362,7 +342,7 @@ class DocumentContainer extends React.PureComponent {
                 ref={this.container}
                 data-element="documentContainer"
                 onScroll={this.handleScroll}
-                aria-label={i18next.t('accessibility.landmarks.documentContent')}
+                aria-label={t('accessibility.landmarks.documentContent')}
                 tabIndex="-1"
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
@@ -373,16 +353,6 @@ class DocumentContainer extends React.PureComponent {
                 className="footer"
                 css={ footerStyle }
               >
-                {showPageNav && (
-                  <PageNavOverlay
-                    showNavOverlay={this.state.showNavOverlay}
-                    onMouseEnter={this.pageNavOnMouseEnter}
-                    onMouseLeave={this.pageNavOnMouseLeave}
-                    isLogoBarEnabled={this.props.isLogoBarEnabled}
-                  />
-                )}
-
-                {isMobile && !isInDesktopOnlyMode && <ToolsOverlay />}
               </div>
             </div>
           )}
@@ -399,6 +369,7 @@ const mapStateToProps = (state) => ({
   documentContainerRightMargin: selectors.getDocumentContainerRightMargin(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
+  isMultiTab: selectors.getIsMultiTab(state),
   isSearchOverlayOpen: selectors.isElementOpen(state, DataElements.SEARCH_OVERLAY),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
@@ -412,14 +383,13 @@ const mapStateToProps = (state) => ({
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
   isTextEditingPanelOpen: selectors.isElementOpen(state, 'textEditingPanel'),
-  featureFlags: selectors.getFeatureFlags(state),
   bottomHeaderHeight: selectors.getBottomHeadersHeight(state),
   activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
-  isLogoBarEnabled: !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
   leftHeaderWidth: selectors.getLeftHeaderWidth(state),
   currentTabs: selectors.getTabs(state),
   activeTab: selectors.getActiveTab(state),
   isSpreadsheetEditorModeEnabled: selectors.isSpreadsheetEditorModeEnabled(state),
+  tabManager: selectors.getTabManager(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -430,24 +400,10 @@ const mapDispatchToProps = (dispatch) => ({
   setDocumentContainerHeight: (height) => dispatch(actions.setDocumentContainerHeight(height)),
 });
 
-const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(DocumentContainer));
 
 const ConnectedComponent = (props) => {
-  const [isMobile, setIsMobile] = useState(isMobileSize());
-
-  useEffect(() => {
-    const onDocumentLoaded = () => {
-      if (window.isApryseWebViewerWebComponent) {
-        // For the 2nd viewer in multi-webcomponents, we need to delay updating isMobile until the document is loaded
-        // A better solution is to elevate useMedia hook but that requires refactoring DocumentContainer into a functional component
-        setIsMobile(isMobileSize());
-      }
-    };
-    core.addEventListener('documentLoaded', onDocumentLoaded);
-    return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
-  }, []);
-
-  return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
+  return <ConnectedDocumentContainer {...props} />;
 };
 
 export { DocumentContainer as UnconnectedDocumentContainer };

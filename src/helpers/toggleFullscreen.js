@@ -16,7 +16,7 @@ export default () => {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
-    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, { isInFullscreen: false });
+    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, false);
   } else {
     if (targetElement.requestFullscreen) {
       targetElement.requestFullscreen();
@@ -32,6 +32,6 @@ export default () => {
         }
       }, 200);
     }
-    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, { isInFullscreen: true });
+    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, true);
   }
 };

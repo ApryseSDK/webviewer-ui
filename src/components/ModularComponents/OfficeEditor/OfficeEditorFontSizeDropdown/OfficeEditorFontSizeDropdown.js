@@ -20,16 +20,12 @@ const OfficeEditorFontSizeDropdown = (props) => {
   const { core } = useCore();
   const { isFlyoutItem, activeFlyout, onKeyDownHandler } = props;
   const dispatch = useDispatch();
-  const [
-    pointSizeSelectionKey,
-    customizableUI,
-  ] = useSelector(
-    (state) => [
-      selectors.getPointSizeSelectionKey(state),
-      selectors.getFeatureFlags(state)?.customizableUI,
-    ],
-    shallowEqual
-  );
+  const pointSizeSelectionKey =
+    useSelector(
+      (state) =>
+        selectors.getPointSizeSelectionKey(state),
+      shallowEqual
+    );
 
   return (
     <Dropdown
@@ -38,7 +34,6 @@ const OfficeEditorFontSizeDropdown = (props) => {
         'OfficeEditorFontSizeDropdown': true,
         'text-left': true,
         'flyout-item': isFlyoutItem,
-        'modular-ui': customizableUI,
       })}
       items={AVAILABLE_POINT_SIZES}
       onClickItem={async (pointSize) => {

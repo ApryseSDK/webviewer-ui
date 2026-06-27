@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
-import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
 import OfficeEditorCreateTablePopup from 'components/OfficeEditorCreateTablePopup';
 import DataElement from 'constants/dataElement';
@@ -26,17 +23,13 @@ const TableButton = (isOpen) => {
 };
 
 const CreateTableDropdown = () => {
-  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dropdown
       id={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
       dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
-      className={classNames({
-        'dropdown-text-icon': true,
-        'modular-ui': customizableUI,
-      })}
+      className='dropdown-text-icon'
       displayButton={TableButton}
       width={136}
       onOpened={() => setIsOpen(true)}

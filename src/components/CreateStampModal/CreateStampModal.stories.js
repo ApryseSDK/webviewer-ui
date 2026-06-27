@@ -1,6 +1,6 @@
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import CreateStampModal from './CreateStampModal';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import defaultFonts from 'constants/defaultFonts';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
@@ -35,7 +35,7 @@ const props = {
   isOpen: true
 };
 
-const store = createStore(rootReducer);
+const store = configureStore({ reducer: rootReducer });
 export const Basic = () => (
   <Provider store={store}>
     <CreateStampModal {...props} />

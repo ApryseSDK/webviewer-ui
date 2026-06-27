@@ -1,6 +1,5 @@
 @import '../../../constants/styles';
 @import '../../../constants/overlay';
-@import '../../../constants/lightWCAG';
 
 .Flyout {
   z-index: 90;
@@ -230,23 +229,6 @@
     .flyout-label {
       padding: 8px 18px 8px 12px;
       font-weight: bold;
-    }
-  }
-
-  &.legacy-ui {
-    .flyout-item-container {
-      &:hover:not([disabled]):not(.disabled) {
-        background-color: var(--popup-button-hover);
-
-        .flyout-item-label,
-        .secondary-label {
-          color: var(--text-color);
-        }
-
-        .Icon svg * {
-          color: var(--icon-color);
-        }
-      }
     }
   }
 

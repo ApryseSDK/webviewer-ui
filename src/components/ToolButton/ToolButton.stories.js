@@ -1,5 +1,5 @@
 import React from 'react';
-import { combineReducers, createStore } from 'redux';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ToolButtonComponent from './index';
 import initialState from 'src/redux/initialState';
@@ -11,7 +11,7 @@ const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer)
 });
 
-const store = createStore(reducer);
+const store = configureStore({ reducer: reducer });
 
 const BasicComponent = (props) => {
   return (

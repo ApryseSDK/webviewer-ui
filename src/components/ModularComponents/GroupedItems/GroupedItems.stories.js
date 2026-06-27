@@ -68,7 +68,7 @@ const groupedItem = {
   items,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 store.dispatch(actions.setModularHeaderItems('default-top-header', [groupedItem]));
 store.dispatch(actions.setCustomElementSize('grouped-item', 5));
 

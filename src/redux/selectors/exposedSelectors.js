@@ -2,11 +2,9 @@ import { isAndroid, isMobile } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE, PANEL_LOCATION } from 'constants/customizationVariables';
-import DataElements from 'constants/dataElement';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import { getBasicItemsFromGroupedItems } from 'helpers/modularUIHelpers';
 import * as exposedOfficeEditorSelectors from './officeEditorSelectors';
-import getHashParameters from 'helpers/getHashParameters';
 import { createSelector } from 'reselect';
 import { isEquivalentPanelLocation } from 'src/helpers/rightToLeft';
 // OE selectors
@@ -185,7 +183,14 @@ export const getSyncViewer = (state) => state.viewer.syncViewer;
 export const isCompareStarted = (state) => state.viewer.isCompareStarted;
 export const isComparisonDisabled = (state) => state.advanced.disableMultiViewerComparison;
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
-export const getActiveDocumentViewerKey = (state) => (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey ? state.viewer.activeDocumentViewerKey : 1);
+export const getActiveDocumentViewerKey = (state) => {
+  if (window.isApryseWebViewerWebComponent && state.viewer.activeDocumentViewerKey) {
+    return state.viewer.activeDocumentViewerKey;
+  }
+  return (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey
+    ? state.viewer.activeDocumentViewerKey
+    : 1);
+};
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const isMultiViewerReady = (state) => state.viewer.isMultiViewerReady;
 export const getGenericPanels = (state, location) => {
@@ -207,7 +212,6 @@ export const getActiveTab = (state) => state.viewer.activeTab;
 export const getIsMultiTab = (state) => state.viewer.isMultiTab;
 export const getTabManager = (state) => state.viewer.TabManager;
 export const getTabNameHandler = (state) => state.viewer.tabNameHandler;
-export const getIsHighContrastMode = (state) => state.viewer.highContrastMode;
 export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = (state) => state.viewer.standardStamps;
 export const getCustomStamps = (state) => state.viewer.customStamps;
@@ -255,40 +259,11 @@ export const getSearchPanelWidthWithResizeBar = (state) => state.viewer.panelWid
 export const getNotesPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
 export const getComparePanelWidthWithResizeBar = (state) => state.viewer.panelWidths.comparePanel + RESIZE_BAR_WIDTH;
 export const getDocumentContentContainerWidthStyle = (state) => {
-  const notesPanelWidth = getNotesPanelWidthWithResizeBar(state);
-  const searchPanelWidth = getSearchPanelWidthWithResizeBar(state);
-  const leftPanelWidth = getLeftPanelWidthWithResizeBar(state);
-  const textEditingPanelWidth = getTextEditingPanelWidth(state);
-  const comparePanelWidth = getComparePanelWidthWithResizeBar(state);
-  const redactionPanelWidth = getRedactionPanelWidth(state);
-  const notesInLeftPanel = getNotesInLeftPanel(state);
-
-  const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
-  const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
-  const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
-  const isRedactionPanelOpen = isElementOpen(state, 'redactionPanel');
-  const isTextEditingPanelOpen = isElementOpen(state, 'textEditingPanel');
-  const isComparePanelOpen = isElementOpen(state, 'comparePanel');
-
   const genericPanelOnLeft = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
   const genericPanelOnRight = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
-
-  const { customizableUI } = getFeatureFlags(state);
-
   const spaceTakenUpByPanels =
-    0 +
-    (!customizableUI &&
-      (isLeftPanelOpen ? leftPanelWidth : 0) +
-      (isNotesPanelOpen && !notesInLeftPanel ? notesPanelWidth : 0) +
-      (isSearchPanelOpen ? searchPanelWidth : 0) +
-      (isRedactionPanelOpen ? redactionPanelWidth : 0) +
-      (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
-      (isComparePanelOpen ? comparePanelWidth : 0)
-    )
-    +
-    (customizableUI &&
-      (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
-      (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0));
+    (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
+    (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0);
 
   // Do not count headers without items
   const activeRightHeaderWidth = getActiveRightHeaderWidth(state);
@@ -312,32 +287,18 @@ export const getOpenGenericPanel = (state, location) => {
 };
 
 export const getGenericPanelsOnTheSameLocation = (state, dataElement) => {
-  if (getIsCustomUIEnabled(state)) {
-    const genericPanels = getGenericPanels(state);
-    const genericPanel = genericPanels.find((item) => dataElement === item.dataElement);
-    const genericPanelsInSameLocation = genericPanels.filter((item) => isEquivalentPanelLocation(genericPanel?.location, item.location) && item.dataElement !== genericPanel?.dataElement);
-    return genericPanelsInSameLocation;
-  }
-
-  return [];
+  const genericPanels = getGenericPanels(state);
+  const genericPanel = genericPanels.find((item) => dataElement === item.dataElement);
+  return genericPanels.filter((item) => isEquivalentPanelLocation(genericPanel?.location, item.location) && item.dataElement !== genericPanel?.dataElement);
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
-  const isCustomUI = getIsCustomUIEnabled(state);
-  if (isCustomUI) {
-    const openLeftPanel = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
-    return openLeftPanel ? getPanelWidth(state, openLeftPanel) : 0;
-  } else {
-    return 0 + (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0);
-  }
+  const openLeftPanel = getOpenGenericPanel(state, PANEL_LOCATION.LEFT);
+  return openLeftPanel ? getPanelWidth(state, openLeftPanel) : 0;
 };
 export const getDocumentContainerRightMargin = (state) => {
-  const isCustomUI = getIsCustomUIEnabled(state);
-  if (isCustomUI) {
-    const openRightPanel = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
-    return openRightPanel ? getPanelWidth(state, openRightPanel) : 0;
-  }
-  return 0;
+  const openRightPanel = getOpenGenericPanel(state, PANEL_LOCATION.RIGHT);
+  return openRightPanel ? getPanelWidth(state, openRightPanel) : 0;
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -533,6 +494,14 @@ export const getFirstToolForGroupedItems = (state, group) => {
     return false;
   });
   return firstTool;
+};
+
+export const getAllToolNamesForGroupedItems = (state, groupedItems) => {
+  const modularComponents = state.viewer.modularComponents;
+  return getBasicItemsFromGroupedItems(state, groupedItems)
+    .map((item) => modularComponents[item])
+    .filter((item) => item?.type === ITEM_TYPE.TOOL_BUTTON && item.toolName)
+    .map((item) => item.toolName);
 };
 
 export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
@@ -1230,28 +1199,8 @@ export const isLeftPanelOpen = (state) => {
 };
 
 export const getOpenRightPanelWidth = (state) => {
-  const isCustomUI = getIsCustomUIEnabled(state);
-
-  if (isCustomUI) {
-    const isRightPanelVisible = isRightPanelOpen(state);
-    return isRightPanelVisible ? getDocumentContainerRightMargin(state) : 0;
-  }
-
-  const panelMap = [
-    { name: DataElements.NOTES_PANEL, isOpen: isElementOpen, getWidth: getNotesPanelWidthWithResizeBar },
-    { name: DataElements.SEARCH_PANEL, isOpen: isElementOpen, getWidth: getSearchPanelWidthWithResizeBar },
-    { name: DataElements.TEXT_EDITING_PANEL, isOpen: isElementOpen, getWidth: getTextEditingPanelWidth },
-    { name: DataElements.COMPARE_PANEL, isOpen: isElementOpen, getWidth: getComparePanelWidthWithResizeBar },
-    { name: DataElements.REDACTION_PANEL, isOpen: isElementOpen, getWidth: getRedactionPanelWidth },
-  ];
-
-  for (const panel of panelMap) {
-    if (panel.isOpen(state, panel.name)) {
-      return panel.getWidth(state);
-    }
-  }
-
-  return 0; // return 0 if no panel is open
+  const isRightPanelVisible = isRightPanelOpen(state);
+  return isRightPanelVisible ? getDocumentContainerRightMargin(state) : 0;
 };
 
 export const getIsShowComparisonButtonEnabled = (state) => {
@@ -1282,10 +1231,6 @@ export const spreadsheetEditorCanUndo = (state) => {
 
 export const spreadsheetEditorCanRedo = (state) => {
   return state.spreadsheetEditor.canRedo;
-};
-
-export const getIsCustomUIEnabled = (state) => {
-  return getHashParameters('ui', 'default') != 'legacy' || getFeatureFlags(state).customizableUI;
 };
 
 export const getIsOfficeEditorHeaderEnabled = (state) => {
@@ -1366,6 +1311,10 @@ export const getIsPanelInFlyout = (state, panelType, flyoutsToExclude = []) => {
 
   return null;
 };
+
+export const getAutosaveEnabled = (state) => state.viewer.autosaveEnabled;
+
+export const getAutosaveInterval = (state) => state.viewer.autosaveInterval;
 
 export const getReaderPageMode = (state) => {
   return state.viewer.readerPageMode;

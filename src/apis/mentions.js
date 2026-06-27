@@ -8,8 +8,8 @@ import mentionsManager from 'helpers/MentionsManager';
  * @type {UI.MentionsManager}
  */
 
-export default (store) => {
-  mentionsManager.initialize(store, core.getAnnotationManager());
+export default (store, documentViewerKey) => {
+  mentionsManager.initialize(store, core.getAnnotationManager(documentViewerKey));
 
   return expose(mentionsManager, [
     'setUserData',

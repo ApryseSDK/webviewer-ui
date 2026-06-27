@@ -87,7 +87,7 @@ const UndoRedoButton = forwardRef((props, ref) => {
     (isOfficeEditorMode && !isOfficeEditorActionEnabled) ||
     (isSpreadsheetEditorMode && !spreadsheetEditorCanPerformAction);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isOfficeEditorMode) {
       const officeEditor = core.getOfficeEditor();
       return config.handlers.officeEditor(officeEditor);
@@ -97,7 +97,7 @@ const UndoRedoButton = forwardRef((props, ref) => {
       const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
       const historyManager = spreadsheetEditorManager.getSpreadsheetEditorHistoryManager();
 
-      config.handlers.spreadsheetEditor(historyManager);
+      await config.handlers.spreadsheetEditor(historyManager);
       triggerSelectedRangeStyleChangedWithLatestStyle(spreadsheetEditorManager);
       return;
     }

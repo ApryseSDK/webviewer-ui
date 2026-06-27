@@ -45,6 +45,7 @@ export const annotationMapKeys = {
   FILE_ATTACHMENT: 'fileattachment',
   SOUND: 'sound',
   TEXT_FIELD: 'textField',
+  DATE_PICKER_FIELD: 'datePickerField',
   SIGNATURE_FORM_FIELD: 'signatureFormField',
   CHECK_BOX_FORM_FIELD: 'checkBoxFormField',
   RADIO_BUTTON_FORM_FIELD: 'radioButtonFormField',
@@ -678,7 +679,18 @@ const map = {
       'TextFormFieldCreateTool3',
       'TextFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextWidgetAnnotation
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextWidgetAnnotation && !(annotation instanceof window.Core.Annotations.DatePickerWidgetAnnotation)
+  },
+  [annotationMapKeys.DATE_PICKER_FIELD]: {
+    icon: 'icon-tool-fill-and-sign-calendar',
+    iconColor: 'StrokeColor',
+    validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
+    currentStyleTab: 'TextColor',
+    styleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'DatePickerFormFieldCreateTool',
+    ],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.DatePickerWidgetAnnotation
   },
   [annotationMapKeys.SIGNATURE_FORM_FIELD]: {
     icon: 'icon-form-field-signature',
@@ -908,6 +920,7 @@ export const updateAnnotationStylePopupTabs = (annotationKey, newAnnotationStyle
  * @property {string} FILE_ATTACHMENT The key represents the file attachment annotation.
  * @property {string} SOUND The key represents the sound annotation.
  * @property {string} TEXT_FIELD The key represents the text field annotation.
+ * @property {string} DATE_PICKER_FORM_FIELD The key represents the date picker form field annotation.
  * @property {string} SIGNATURE_FORM_FIELD The key represents the signature form field annotation.
  * @property {string} CHECK_BOX_FORM_FIELD The key represents the check box form field annotation.
  * @property {string} RADIO_BUTTON_FORM_FIELD The key represents the radio button form field annotation.
@@ -957,6 +970,7 @@ export const AnnotationKeys = {
   FILE_ATTACHMENT: 'fileAttachment',
   SOUND: 'sound',
   TEXT_FIELD: 'textField',
+  DATE_PICKER_FORM_FIELD: 'datePickerFormField',
   SIGNATURE_FORM_FIELD: 'signatureFormField',
   CHECK_BOX_FORM_FIELD: 'checkBoxFormField',
   RADIO_BUTTON_FORM_FIELD: 'radioButtonFormField',

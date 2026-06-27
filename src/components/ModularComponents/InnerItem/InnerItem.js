@@ -33,6 +33,7 @@ import FontSizeDropdownContainer from '../EditorSwitchers/FontSizeDropdown/FontS
 import FontFamilyDropdownContainer from '../EditorSwitchers/FontFamilyDropdown/FontFamilyDropdownContainer';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
+import ToolGroupToggleButton from '../ToolGroupToggleButton/ToolGroupToggleButton';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -61,6 +62,8 @@ const InnerItem = (props) => {
       return <ZoomControls {...props} />;
     case ITEM_TYPE.TOOL_BUTTON:
       return <ToolButton key={key} {...props} />;
+    case ITEM_TYPE.TOOL_GROUP_TOGGLE_BUTTON:
+      return <ToolGroupToggleButton key={key} {...props} />;
     case ITEM_TYPE.PAGE_CONTROLS:
       return <PageControls {...props} headerDirection={headerDirection} />;
     case ITEM_TYPE.PRESET_BUTTON:

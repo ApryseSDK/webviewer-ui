@@ -19,7 +19,7 @@ describe('ToggleElementButton', () => {
   const dataElement = 'myToggleButton';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     render(
       <Provider store={store}>
         <ToggleElementButton
@@ -36,7 +36,7 @@ describe('ToggleElementButton', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createToggleButton = createToggleElementButtonAPI(store);
 
     const toggleButton = createToggleButton({

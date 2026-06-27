@@ -60,7 +60,7 @@ describe('TextStylePanel', () => {
       name: 'AnnotationCreateFreeText',
     };
     const store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
     });
     render(
@@ -109,7 +109,7 @@ describe('TextStylePanel', () => {
 
     // Render the panel
     const store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
       middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
     });
     const { container, getByRole } = render(

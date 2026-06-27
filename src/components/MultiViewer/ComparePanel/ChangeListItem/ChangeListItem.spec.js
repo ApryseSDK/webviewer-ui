@@ -15,7 +15,7 @@ describe('ChangeListItem', () => {
 
   beforeEach(() => {
     store = configureStore({
-      reducer: rootReducer,
+      reducer: rootReducer(),
     });
     jest.clearAllMocks();
   });

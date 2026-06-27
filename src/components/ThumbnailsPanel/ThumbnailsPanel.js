@@ -20,7 +20,6 @@ import DataElements from 'constants/dataElement';
 import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
-import getRootNode from 'helpers/getRootNode';
 import { useTranslation } from 'react-i18next';
 import useIsRTL from 'hooks/useIsRTL';
 import useDidUpdate from 'src/hooks/useDidUpdate';
@@ -29,7 +28,6 @@ import { css } from '@emotion/react';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
-const ZOOM_RANGE_MIN = '100';
 const ZOOM_RANGE_MAX = '1000';
 const ZOOM_RANGE_STEP = '50';
 const MAX_COLUMNS = 16;
@@ -39,7 +37,6 @@ const hoverAreaHeight = 25;
 const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const { core } = useCore();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
-  const isLeftPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'leftPanel'));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailsPanel'));
   const totalPages = useSelector((state) => selectors.getTotalPages(state, activeDocumentViewerKey));
   const currentPage = useSelector((state) => selectors.getCurrentPage(state, activeDocumentViewerKey));
@@ -53,13 +50,13 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const isViewOnly = useSelector(selectors.isViewOnly);
   const isDocumentReadOnly = useSelector(selectors.isDocumentReadOnly);
   const isRightClickEnabled = useSelector(selectors.openingPageManipulationOverlayByRightClickEnabled);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
 
   const [t] = useTranslation();
   const isRightToLeft = useIsRTL();
 
   const listRef = useRef();
+  const panelRootRef = useRef(null);
   const pendingThumbs = useRef([]);
   const thumbs = useRef([]);
   const afterMovePageNumber = useRef(null);
@@ -80,7 +77,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const [thumbnailSize, setThumbnailSize] = useState(150);
   const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
   const [globalIndex, setGlobalIndex] = useState(0);
-  const customizableUI = featureFlags?.customizableUI;
   const shouldShowControls = !(isReaderMode || isDocumentReadOnly || isViewOnly || isContentEditingEnabled);
 
   const dispatch = useDispatch();
@@ -415,8 +411,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     }
   }, [isReaderMode, isDocumentReadOnly]);
 
-  // if disabled, or is office editor or left panel is not open when we are not in customize mode, return
-  if (isDisabled || isOfficeEditor || (!isLeftPanelOpen && !panelSelector && !customizableUI)) {
+  if (isDisabled || isOfficeEditor) {
     return null;
   }
   const onDragEnd = () => {
@@ -451,7 +446,10 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
     }
 
     setDraggingOverPageIndex(index);
-    const virtualizedThumbnailContainerElement = getRootNode().querySelector('#virtualized-thumbnails-container');
+    const virtualizedThumbnailContainerElement = panelRootRef.current;
+    if (!virtualizedThumbnailContainerElement) {
+      return;
+    }
     const { y, bottom } = virtualizedThumbnailContainerElement.getBoundingClientRect();
 
     if (e.pageY < y + hoverAreaHeight * 4) {
@@ -470,7 +468,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
 
   const getContextElementId = () => {
     if (window.isApryseWebViewerWebComponent) {
-      return getRootNode().host.id;
+      return panelRootRef.current?.getRootNode?.().host?.id;
     } else {
       return window.frameElement.id;
     }
@@ -536,7 +534,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
         for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
           updatedPagesNumbers.push(afterMovePageNumber.current + offset);
         }
-        fireEvent(Events.THUMBNAIL_DROPPED, { pageNumbersBeforeMove: pageNumbersToMove, pagesNumbersAfterMove: updatedPagesNumbers, numberOfPagesMoved: updatedPagesNumbers.length });
+        fireEvent(Events.THUMBNAIL_DROPPED, [pageNumbersToMove, updatedPagesNumbers, updatedPagesNumbers.length]);
       }
     }
     setDraggingOverPageIndex(null);
@@ -718,7 +716,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
           }}
           dataElement="zoomThumbOutButton"
         />
-        {customizableUI &&
+        {
           <Slider
             dataElement={'thumbnailsSizeSlider'}
             property={'zoom'}
@@ -731,26 +729,6 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
             onSliderChange={onSliderChange}
             shouldHideSliderTitle={true}
             shouldHideSliderValue={true}
-          />
-        }
-        {!customizableUI &&
-          <input
-            role='slider'
-            type="range"
-            aria-label='thumbnail size slider'
-            min={ZOOM_RANGE_MIN}
-            max={ZOOM_RANGE_MAX}
-            value={thumbnailSize}
-            aria-valuemin={ZOOM_RANGE_MIN}
-            aria-valuemax={ZOOM_RANGE_MAX}
-            aria-valuenow={thumbnailSize}
-            onChange={(e) => {
-              setThumbnailSize(Number(e.target.value));
-              updateNumberOfColumns();
-            }}
-            step={ZOOM_RANGE_STEP}
-            className="thumbnail-slider"
-            id="thumbnailSize"
           />
         }
         <Button
@@ -768,7 +746,16 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       </div>}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
-          <div className={`Panel ThumbnailsPanel ${panelSelector}`} id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
+          <div
+            className={`Panel ThumbnailsPanel ${panelSelector}`}
+            id="virtualized-thumbnails-container"
+            data-element="thumbnailsPanel"
+            onDrop={onDrop}
+            ref={(element) => {
+              panelRootRef.current = element;
+              measureRef(element);
+            }}
+          >
             <div className="virtualized-thumbnails-container">
               {isDragging ?
                 <div className="thumbnailAutoScrollArea" onDragOver={scrollUp} css={ thumbnailAutoScrollAreaStyle }></div> : ''

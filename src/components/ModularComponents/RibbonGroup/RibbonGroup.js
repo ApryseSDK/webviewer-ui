@@ -9,7 +9,7 @@ import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
-import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
+import { getSizeManager, useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import Icon from 'components/Icon';
 import useRibbonActions from 'hooks/useRibbonActions';
@@ -69,8 +69,9 @@ const RibbonGroup = (props) => {
 
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
+    const localSizeManager = getSizeManager(elementRef.current?.getRootNode?.());
+    localSizeManager[dataElement] = {
+      ...(localSizeManager[dataElement] ? localSizeManager[dataElement] : {}),
       canGrow: size > 0,
       canShrink: size < MIN_SIZE,
       grow: () => {

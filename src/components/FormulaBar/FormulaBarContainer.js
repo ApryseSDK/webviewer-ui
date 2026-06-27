@@ -25,9 +25,9 @@ export const FormulaBarContainer = () => {
     if (event.key === 'Enter') {
       try {
         const documentViewer = core.getDocumentViewer();
-        const spreadsheetEditorDocument = documentViewer.getDocument().getSpreadsheetEditorDocument();
+        const spreadsheetEditorManager = documentViewer.getSpreadsheetEditorManager();
         const cellRange = core.getCellRange(event.target.value);
-        spreadsheetEditorDocument.selectCellRange(cellRange);
+        spreadsheetEditorManager.selectCellRange(cellRange);
       } catch (e) {
         setRangeInputValue(activeCellRange);
         console.error(e);

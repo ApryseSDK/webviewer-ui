@@ -16,7 +16,6 @@ export default (store, documentViewerKey) => () => {
 
   dispatch(
     actions.closeElements([
-      'pageNavOverlay',
       'notesPanel',
       'searchPanel',
       'leftPanel',

@@ -23,8 +23,8 @@ export default (handler) => {
       const clickedOnTextarea = tagName === 'TEXTAREA';
       const clickedOnFreeTextarea = !!((
         e.target.className === 'ql-editor'
-        || e.target.parentNode.className === 'ql-editor'
-        || e.target.parentNode.parentNode.className === 'ql-editor'
+        || e.target.parentNode?.className === 'ql-editor'
+        || e.target.parentNode?.parentNode?.className === 'ql-editor'
       ));
 
       const documentContainer =

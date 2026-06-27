@@ -9,7 +9,7 @@ export default {
   component: CustomElement,
 };
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: rootReducer() });
 
 const defaultProps = {
   dataElement: 'test',

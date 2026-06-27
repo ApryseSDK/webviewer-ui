@@ -16,7 +16,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
-import { PRIORITY_TWO, PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 import getRootNode from 'helpers/getRootNode';
 import { ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 import AnnotationPopup from './AnnotationPopup';
@@ -32,16 +32,12 @@ const propTypes = {
   selectedMultipleAnnotations: PropTypes.bool,
   canModify: PropTypes.bool,
   focusedAnnotationStyle: PropTypes.object,
-  isStylePopupOpen: PropTypes.bool,
-  setIsStylePopupOpen: PropTypes.func,
   isDatePickerOpen: PropTypes.bool,
   setDatePickerOpen: PropTypes.func,
   isDatePickerMount: PropTypes.bool,
   setDatePickerMount: PropTypes.func,
   hasAssociatedLink: PropTypes.bool,
   includesFormFieldAnnotation: PropTypes.bool,
-  stylePopupRepositionFlag: PropTypes.bool,
-  setStylePopupRepositionFlag: PropTypes.func,
   closePopup: PropTypes.func,
   widgetThatOpenedPopupRef: PropTypes.object,
 };
@@ -51,16 +47,12 @@ const AnnotationPopupContainer = ({
   selectedMultipleAnnotations,
   canModify,
   focusedAnnotationStyle,
-  isStylePopupOpen,
-  setIsStylePopupOpen,
   isDatePickerOpen,
   setDatePickerOpen,
   isDatePickerMount,
   setDatePickerMount,
   hasAssociatedLink,
   includesFormFieldAnnotation,
-  stylePopupRepositionFlag,
-  setStylePopupRepositionFlag,
   closePopup,
   widgetThatOpenedPopupRef,
 }) => {
@@ -70,7 +62,6 @@ const AnnotationPopupContainer = ({
   const isContextMenuPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
   const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
   const isNotesPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NOTES_PANEL));
-  const isAnnotationStylePopupDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.ANNOTATION_STYLE_POPUP));
   const isInlineCommentingDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.INLINE_COMMENT_POPUP));
   const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
   const isLinkModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.LINK_MODAL));
@@ -84,7 +75,6 @@ const AnnotationPopupContainer = ({
   const activeLeftPanel = useSelector(selectors.getActiveLeftPanel);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isAnyCustomPanelOpen = useSelector(selectors.isAnyCustomPanelOpen);
-  const featureFlags = useSelector(selectors.getFeatureFlags);
   const isStylePanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.STYLE_PANEL));
   const isStylePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.STYLE_PANEL));
   const stylePanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.STYLE_PANEL, [DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT]));
@@ -100,8 +90,6 @@ const AnnotationPopupContainer = ({
   const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
   const sixtyFramesPerSecondIncrement = 16;
   // on tablet, the behaviour will be like on desktop, including being draggable
-
-  const { customizableUI } = featureFlags;
 
   const toggleStylePanel = () => {
     if (!isStylePanelOpen && !isStylePanelDisabled && !stylePanelInFlyout) {
@@ -182,13 +170,13 @@ const AnnotationPopupContainer = ({
 
   // useLayoutEffect here to avoid flashing issue when popup is close and open on scroll
   useLayoutEffect(() => {
-    if (focusedAnnotation || isStylePopupOpen || isDatePickerMount) {
+    if (focusedAnnotation || isDatePickerMount) {
       handleResize();
       setIsVisible(false);
       handleVisibility();
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
-  }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
+  }, [focusedAnnotation, isDatePickerMount, canModify, activeDocumentViewerKey]);
 
   useEffect(() => {
     if (focusedAnnotation && focusedAnnotation.ToolName === ToolNames.CALIBRATION_MEASUREMENT) {
@@ -346,19 +334,13 @@ const AnnotationPopupContainer = ({
   const showEditStyleButton = (
     canModify
     && hasStyle
-    && (!isAnnotationStylePopupDisabled || customizableUI)
+    && (stylePanelInFlyout || !isStylePanelDisabled)
     && (!multipleAnnotationsSelected || canUngroup || (multipleAnnotationsSelected && !isFocusedAnnotationSelected))
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
     && !focusedAnnotation.isContentEditPlaceholder()
     && !isAppearanceSignature
     && !(focusedAnnotation instanceof Annotations.PushButtonWidgetAnnotation)
   );
-
-  const hideSnapModeCheckbox = focusedAnnotation instanceof Annotations.EllipseAnnotation || !core.isFullPDFEnabled();
-
-  const onResize = () => {
-    setStylePopupRepositionFlag(!stylePopupRepositionFlag);
-  };
 
   /* EDIT CONTENT */
   const showContentEditButton =
@@ -415,12 +397,8 @@ const AnnotationPopupContainer = ({
     closePopup();
     // We disable it while the form field popup is open to prevent having both open
     // at the same time. We re-enable it when the form field popup is closed.
-    if (customizableUI) {
-      dispatch(actions.disableElement(PRIORITY_THREE));
-      dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
-    } else {
-      dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_TWO));
-    }
+    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
+    dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
     dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
   };
@@ -565,13 +543,6 @@ const AnnotationPopupContainer = ({
       isCalibrationPopupOpen={isCalibrationPopupOpen}
 
       showEditStyleButton={showEditStyleButton}
-      isStylePopupOpen={isStylePopupOpen}
-      hideSnapModeCheckbox={hideSnapModeCheckbox}
-      openEditStylePopup={() => setIsStylePopupOpen(true)}
-      closeEditStylePopup={() => setIsStylePopupOpen(false)}
-      annotationStyle={focusedAnnotationStyle}
-      onResize={onResize}
-
       showContentEditButton={showContentEditButton}
       onEditContent={onEditContent}
       openContentEditDeleteWarningModal={openContentEditDeleteWarningModal}
@@ -606,7 +577,6 @@ const AnnotationPopupContainer = ({
       showCalibrateButton={showCalibrateButton}
       onOpenCalibration={onOpenCalibration}
 
-      customizableUI={customizableUI}
       toggleStylePanel={toggleStylePanel}
       isStylePanelOpen={isStylePanelOpen}
 

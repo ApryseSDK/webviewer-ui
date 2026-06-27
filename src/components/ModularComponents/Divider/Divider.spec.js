@@ -19,7 +19,7 @@ describe('Divider', () => {
   const dataElement = 'divider1';
 
   it('should apply initial style', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const { container } = render(
       <Provider store={store}>
         <Divider
@@ -33,7 +33,7 @@ describe('Divider', () => {
   });
 
   it('should update style when setStyle is called', () => {
-    const store = configureStore({ reducer: rootReducer });
+    const store = configureStore({ reducer: rootReducer() });
     const createDivider = createDividerAPI(store);
 
     const divider = createDivider({

@@ -38,7 +38,7 @@ describe('ResizeBar', () => {
     fireEvent.mouseDown(resizeBar, { clientX: 100 });
     fireEvent.mouseMove(document, { clientX: 300 });
     jest.runAllTimers();
-    expect(triggerEvent).toBeCalledWith('panelResized', { element: dataElement, width: 450 });
+    expect(triggerEvent).toBeCalledWith('panelResized', [dataElement, 450]);
     fireEvent.mouseUp(document);
     jest.useRealTimers();
   });

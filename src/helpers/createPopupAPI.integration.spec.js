@@ -13,7 +13,7 @@ describe('createPopupAPI + Redux integration', () => {
   let store;
 
   beforeEach(() => {
-    store = configureStore({ reducer: rootReducer });
+    store = configureStore({ reducer: rootReducer() });
   });
 
   const itemsOfPopup = () => selectors.getPopupItems(store.getState(), popup);
