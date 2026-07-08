@@ -114,4 +114,46 @@ describe('ResizeBar', () => {
     });
   });
 
+  describe('Resize bar with multiple instances', () => {
+    const MIN_WIDTH = 100;
+    const MOCK_HOST_RECT = { left: 50, right: 600 };
+    const MOUSE_MOVEMENT_DISTANCE = 400;
+
+    beforeAll(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+      jest.clearAllTimers();
+      jest.restoreAllMocks();
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+    });
+
+    const setupResizeBar = ({ instanceRect = MOCK_HOST_RECT } = {}) => {
+      jest.spyOn(getRootNodeModule, 'getInstanceRect').mockReturnValue(instanceRect);
+      const onResize = jest.fn();
+      const { container } = render(
+        <TestResizeBar onResize={onResize} minWidth={MIN_WIDTH} dataElement="resize-bar" />
+      );
+      const bar = container.querySelector('.resize-bar');
+      return { bar, onResize };
+    };
+
+    it('should use local host rect for a panel resize', () => {
+      const expectedDisplacement = MOUSE_MOVEMENT_DISTANCE - MOCK_HOST_RECT.left;
+      const { bar, onResize } = setupResizeBar();
+
+      fireEvent.mouseDown(bar);
+      fireEvent.mouseMove(document, { clientX: MOUSE_MOVEMENT_DISTANCE });
+      jest.runAllTimers();
+
+      expect(onResize).toHaveBeenCalledWith(expectedDisplacement);
+      expect(getRootNodeModule.getInstanceRect).toHaveBeenCalledWith(bar);
+      fireEvent.mouseUp(document);
+    });
+  });
 });

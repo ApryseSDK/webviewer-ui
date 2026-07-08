@@ -15,6 +15,7 @@
     "close": "닫기",
     "undo": "되돌리기",
     "redo": "다시실행",
+    "reload": "재장전",
     "comment": "코멘트",
     "reply": "댓글",
     "copy": "복사",
@@ -194,6 +195,7 @@
     "note": "노트",
     "textField": "텍스트상자",
     "signatureFormField": "서명",
+    "datePickerFormField": "날짜 선택 필드",
     "checkBoxFormField": "체크박스",
     "radioButtonFormField": "라디오 버튼 필드",
     "listBoxFormField": "목록상자",
@@ -328,6 +330,7 @@
     "sortBy": "정렬기준",
     "emptyCustomStampInput": "텍스트르 입력하세요.",
     "unpostedComment": "게시되지 않은 댓글",
+    "saved": "저장됨",
     "lockedLayer": "레이어가 잠겨 있습니다.",
     "layerVisibilityNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "noLayers": "이 문서에는 레이어가 없습니다.",
@@ -354,7 +357,15 @@
     "refreshPage": "네트워크 연결을 확인하고 페이지를 새로고침하세요.",
     "renderErrors": {
       "error": "여기서 뭔가 잘못됐어요.",
-      "refreshPanel": "계속 작업하셔도 됩니다. 패널을 다시 열어보세요."
+      "toFixIssue": "이 문제를 해결하려면 {{componentType}}을 다시 열어보세요.",
+      "componentType": {
+        "component": "요소",
+        "panel": "패널",
+        "modal": "수도",
+        "flyout": "플라이아웃",
+        "dropdown": "드롭다운",
+        "popup": "팝업"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "작성자",
       "type": "유형",
       "color": "색상",
+      "number": "숫자",
       "createdDate": "작성일",
       "modifiedDate": "수정일"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "필드 표시기 포함",
       "indicatorPlaceHolders": {
         "TextFormField": "여기에 텍스트 삽입",
+        "DatePickerFormField": "날짜를 선택하세요",
         "CheckBoxFormField": "확인하다",
         "RadioButtonFormField": "채우다",
         "ListBoxFormField": "고르다",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "라디오 버튼 필드 주석",
       "ListBoxFormField": "목록 상자 필드 주석",
       "ComboBoxFormField": "콤보 상자 필드 주석",
+      "DatePickerFormField": "날짜 선택기 필드 주석",
       "TextFormField": "텍스트 필드 주석"
     },
     "apply": "적용",

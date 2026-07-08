@@ -30,7 +30,6 @@ import {
   ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR,
   SpreadsheetEditorEditMode
 } from 'src/constants/spreadsheetEditor';
-import normalizeInitialEditMode from 'helpers/normalizeInitialEditMode';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
@@ -404,15 +403,13 @@ export const configureEditorMode = (store, documentViewerKey) => () => {
   };
 
   const configureSpreadsheetEditorMode = () => {
-    const spreadsheetEditorManager = core.getDocumentViewer(documentViewerKey)?.getSpreadsheetEditorManager?.();
-    const runtimeSpreadsheetEditorMode = spreadsheetEditorManager?.getEditMode?.();
+    const spreadsheetEditorOptions = getHashParameters('spreadsheetEditorOptions', '{}');
     const currentSpreadsheetEditorMode = selectors.getSpreadsheetEditorEditMode(getState());
-    const onLoadEditMode = normalizeInitialEditMode(
-      runtimeSpreadsheetEditorMode || currentSpreadsheetEditorMode,
-      Object.values(SpreadsheetEditorEditMode),
-      SpreadsheetEditorEditMode.EDITING,
-      SpreadsheetEditorEditMode.EDITING,
-    );
+    let onLoadEditMode = JSON.parse(spreadsheetEditorOptions).initialEditMode || currentSpreadsheetEditorMode || SpreadsheetEditorEditMode.VIEW_ONLY;
+    if (!Object.values(SpreadsheetEditorEditMode).includes(onLoadEditMode)) {
+      console.warn(`Invalid initialEditMode parameter: ${onLoadEditMode}. Default to view mode.`);
+      onLoadEditMode = SpreadsheetEditorEditMode.VIEW_ONLY;
+    }
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
     dispatch(actions.setSpreadsheetEditorEditMode(onLoadEditMode));
     if (onLoadEditMode === SpreadsheetEditorEditMode.VIEW_ONLY) {

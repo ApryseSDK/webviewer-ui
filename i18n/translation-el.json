@@ -15,6 +15,7 @@
     "close": "Κλείσε",
     "undo": "Ξεκάνω",
     "redo": "Ετοιμος",
+    "reload": "Γεμίζω πάλι",
     "comment": "Σχόλιο",
     "reply": "Προσθήκη απάντησης",
     "copy": "αντίγραφο",
@@ -194,6 +195,7 @@
     "note": "Σημείωση",
     "textField": "Πεδίο κειμένου",
     "signatureFormField": "Πεδίο υπογραφής",
+    "datePickerFormField": "Πεδίο επιλογής ημερομηνίας",
     "checkBoxFormField": "Πεδίο πλαισίου ελέγχου",
     "radioButtonFormField": "Πεδίο κουμπιού ραδιοφώνου",
     "listBoxFormField": "Πεδίο πλαισίου λίστας",
@@ -328,6 +330,7 @@
     "sortBy": "Είδος",
     "emptyCustomStampInput": "Το κείμενο σφραγίδας δεν μπορεί να είναι κενό",
     "unpostedComment": "Μη αναρτημένο σχόλιο",
+    "saved": "Αποθηκεύτηκε",
     "lockedLayer": "Το στρώμα είναι κλειδωμένο",
     "layerVisibilityNoChange": "Η ορατότητα του στρώματος δεν μπορεί να αλλάξει",
     "noLayers": "Αυτό το έγγραφο δεν έχει επίπεδα.",
@@ -354,7 +357,15 @@
     "refreshPage": "Ελέγξτε τη σύνδεση δικτύου σας και ανανεώστε τη σελίδα.",
     "renderErrors": {
       "error": "Κάτι πήγε στραβά εδώ.",
-      "refreshPanel": "Μπορείτε να συνεχίσετε να εργάζεστε. Δοκιμάστε να ανοίξετε ξανά τον πίνακα."
+      "toFixIssue": "Για να διορθώσετε το πρόβλημα, δοκιμάστε να ανοίξετε ξανά το {{componentType}}.",
+      "componentType": {
+        "component": "συστατικό",
+        "panel": "πίνακας",
+        "modal": "κεφάλαιο",
+        "flyout": "αναδυόμενο παράθυρο",
+        "dropdown": "αναπτυσσόμενο μενού",
+        "popup": "αναδυόμενο παράθυρο"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Συγγραφέας",
       "type": "Τύπος",
       "color": "Χρώμα",
+      "number": "Αριθμός",
       "createdDate": "Ημερομηνία δημιουργίας",
       "modifiedDate": "Τροποποιημένη ημερομηνία"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Συμπεριλάβετε την ένδειξη πεδίου",
       "indicatorPlaceHolders": {
         "TextFormField": "Εισαγωγή κειμένου εδώ",
+        "DatePickerFormField": "Επιλογή ημερομηνίας",
         "CheckBoxFormField": "Ελεγχος",
         "RadioButtonFormField": "Γέμισμα",
         "ListBoxFormField": "Επιλέγω",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Σχολιασμός πεδίου κουμπιού ραδιοφώνου",
       "ListBoxFormField": "Σχολιασμός πεδίου πλαισίου λίστας",
       "ComboBoxFormField": "Σχολιασμός πεδίου Combo Box",
+      "DatePickerFormField": "Σχόλιο πεδίου επιλογής ημερομηνίας",
       "TextFormField": "Σχολιασμός πεδίου κειμένου"
     },
     "apply": "Πεδία εφαρμογής",

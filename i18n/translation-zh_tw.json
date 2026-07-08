@@ -15,6 +15,7 @@
     "close": "關閉",
     "undo": "撤消",
     "redo": "準備",
+    "reload": "重新載入",
     "comment": "評論",
     "reply": "回覆",
     "copy": "複製",
@@ -194,6 +195,7 @@
     "note": "注意",
     "textField": "文本域",
     "signatureFormField": "簽名欄",
+    "datePickerFormField": "日期選擇器字段",
     "checkBoxFormField": "複選框字段",
     "radioButtonFormField": "單選按鈕字段",
     "listBoxFormField": "列錶框字段",
@@ -328,6 +330,7 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
     "unpostedComment": "未發布評論",
+    "saved": "已儲存",
     "lockedLayer": "圖層已鎖定",
     "layerVisibilityNoChange": "圖層可見性無法更改",
     "noLayers": "該文件沒有圖層。",
@@ -354,7 +357,15 @@
     "refreshPage": "請檢查您的網路連線並重新整理頁面。",
     "renderErrors": {
       "error": "這裡出問題了。",
-      "refreshPanel": "您可以繼續工作。請嘗試重新打開面板。"
+      "toFixIssue": "若要解決此問題，請嘗試重新開啟 {{componentType}}。",
+      "componentType": {
+        "component": "成分",
+        "panel": "控制板",
+        "modal": "首都",
+        "flyout": "飛出",
+        "dropdown": "下拉式選單",
+        "popup": "彈出視窗"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "作者",
       "type": "類型",
       "color": "顏色",
+      "number": "數位",
       "createdDate": "創建日期",
       "modifiedDate": "修改日期"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "包括字段指示器",
       "indicatorPlaceHolders": {
         "TextFormField": "在此處插入文本",
+        "DatePickerFormField": "選擇日期",
         "CheckBoxFormField": "查看",
         "RadioButtonFormField": "充滿",
         "ListBoxFormField": "選擇",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "單選按鈕欄位註釋",
       "ListBoxFormField": "列錶框字段註釋",
       "ComboBoxFormField": "組合框字段註釋",
+      "DatePickerFormField": "日期選擇器欄位註釋",
       "TextFormField": "文字欄位註釋"
     },
     "apply": "套用欄位",

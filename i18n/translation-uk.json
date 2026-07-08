@@ -15,6 +15,7 @@
     "close": "Закрити",
     "undo": "Скасувати",
     "redo": "Готовий",
+    "reload": "Перезавантажити",
     "comment": "Коментар",
     "reply": "Додати відповідь",
     "copy": "Копія",
@@ -194,6 +195,7 @@
     "note": "Примітка",
     "textField": "Текстове поле",
     "signatureFormField": "Поле підпису",
+    "datePickerFormField": "Поле вибору дати",
     "checkBoxFormField": "Поле прапорця",
     "radioButtonFormField": "Поле перемикача",
     "listBoxFormField": "Поле списку",
@@ -328,6 +330,7 @@
     "sortBy": "Сортувати",
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
     "unpostedComment": "Неопублікований коментар",
+    "saved": "Збережено",
     "lockedLayer": "Шар заблокований",
     "layerVisibilityNoChange": "Видимість шару не можна змінити",
     "noLayers": "Цей документ не має шарів.",
@@ -354,7 +357,15 @@
     "refreshPage": "Будь ласка, перевірте підключення до мережі та оновіть сторінку.",
     "renderErrors": {
       "error": "Тут щось пішло не так.",
-      "refreshPanel": "Ви можете продовжувати роботу. Спробуйте знову відкрити панель."
+      "toFixIssue": "Щоб вирішити проблему, спробуйте знову відкрити {{componentType}}.",
+      "componentType": {
+        "component": "компонент",
+        "panel": "панель",
+        "modal": "капітал",
+        "flyout": "спливаюче меню",
+        "dropdown": "випадаючий список",
+        "popup": "спливаюче вікно"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Автор",
       "type": "Тип",
       "color": "Колір",
+      "number": "Номер",
       "createdDate": "Дата створення",
       "modifiedDate": "Дата зміни"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Включити індикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставте текст тут",
+        "DatePickerFormField": "Виберіть дату",
         "CheckBoxFormField": "Перевірте",
         "RadioButtonFormField": "Заповнити",
         "ListBoxFormField": "Виберіть",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Анотація поля радіокнопки",
       "ListBoxFormField": "Анотація до поля списку",
       "ComboBoxFormField": "Анотація поля зі списком",
+      "DatePickerFormField": "Анотація поля вибору дати",
       "TextFormField": "Анотація текстового поля"
     },
     "apply": "Застосувати поля",

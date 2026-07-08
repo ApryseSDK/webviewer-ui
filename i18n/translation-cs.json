@@ -15,6 +15,7 @@
     "close": "Zavřít",
     "undo": "vrátit",
     "redo": "Předělat",
+    "reload": "Znovu načíst",
     "comment": "Komentář",
     "reply": "Přidat odpověď",
     "copy": "kopírovat",
@@ -194,6 +195,7 @@
     "note": "Poznámka",
     "textField": "Textové pole",
     "signatureFormField": "Pole podpisu",
+    "datePickerFormField": "Pole pro výběr data",
     "checkBoxFormField": "Pole zaškrtávacího políčka",
     "radioButtonFormField": "Pole přepínače",
     "listBoxFormField": "Pole seznamu",
@@ -328,6 +330,7 @@
     "sortBy": "Seřadit",
     "emptyCustomStampInput": "Text razítka nemůže být prázdný",
     "unpostedComment": "Nezveřejněný komentář",
+    "saved": "Uloženo",
     "lockedLayer": "Vrstva je uzamčena",
     "layerVisibilityNoChange": "Viditelnost vrstvy nelze změnit",
     "noLayers": "Tento dokument nemá žádné vrstvy.",
@@ -354,7 +357,15 @@
     "refreshPage": "Zkontrolujte prosím připojení k síti a obnovte stránku.",
     "renderErrors": {
       "error": "Něco se tu pokazilo.",
-      "refreshPanel": "Můžete pokračovat v práci. Zkuste panel znovu otevřít."
+      "toFixIssue": "Chcete-li problém vyřešit, zkuste znovu otevřít {{componentType}}.",
+      "componentType": {
+        "component": "komponent",
+        "panel": "panel",
+        "modal": "kapitál",
+        "flyout": "rozbalovací nabídka",
+        "dropdown": "rozbalovací nabídka",
+        "popup": "vyskakovací okno"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autor",
       "type": "Typ",
       "color": "Barva",
+      "number": "Číslo",
       "createdDate": "Datum vytvoření",
       "modifiedDate": "Upravené datum"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Zahrnout indikátor pole",
       "indicatorPlaceHolders": {
         "TextFormField": "Sem vložte text",
+        "DatePickerFormField": "Vyberte datum",
         "CheckBoxFormField": "Šek",
         "RadioButtonFormField": "Vyplnit",
         "ListBoxFormField": "Vybrat",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Anotace pole přepínače",
       "ListBoxFormField": "Anotace pole seznamu",
       "ComboBoxFormField": "Combo Box Field Anotace",
+      "DatePickerFormField": "Anotace pole pro výběr data",
       "TextFormField": "Anotace textového pole"
     },
     "apply": "Použít pole",

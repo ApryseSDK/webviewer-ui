@@ -15,6 +15,7 @@
     "close": "閉じる",
     "undo": "元に戻す",
     "redo": "やり直し",
+    "reload": "リロード",
     "comment": "コメント",
     "reply": "返信する",
     "copy": "コピー",
@@ -194,6 +195,7 @@
     "note": "注釈",
     "textField": "テキストフィールド",
     "signatureFormField": "署名フィールド",
+    "datePickerFormField": "日付選択フィールド",
     "checkBoxFormField": "チェックボックスフィールド",
     "radioButtonFormField": "ラジオボタンフィールド",
     "listBoxFormField": "リストボックスフィールド",
@@ -328,6 +330,7 @@
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
     "unpostedComment": "未投稿のコメント",
+    "saved": "保存済み",
     "lockedLayer": "レイヤーがロックされています",
     "layerVisibilityNoChange": "レイヤーの可視性は変更できません",
     "noLayers": "このドキュメントにはレイヤーがありません。",
@@ -354,7 +357,15 @@
     "refreshPage": "ネットワーク接続を確認し、ページを更新してください。",
     "renderErrors": {
       "error": "問題が発生しました。",
-      "refreshPanel": "作業は続行できます。パネルを再度開いてみてください。"
+      "toFixIssue": "この問題を解決するには、{{componentType}} を再度開いてみてください。",
+      "componentType": {
+        "component": "成分",
+        "panel": "パネル",
+        "modal": "資本",
+        "flyout": "フライアウト",
+        "dropdown": "落ちる",
+        "popup": "ポップアップ"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "作成者",
       "type": "種類",
       "color": "色",
+      "number": "番号",
       "createdDate": "作成日",
       "modifiedDate": "変更日"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "フィールドインジケーターを含める",
       "indicatorPlaceHolders": {
         "TextFormField": "ここにテキストを挿入",
+        "DatePickerFormField": "日付を選択",
         "CheckBoxFormField": "小切手",
         "RadioButtonFormField": "塗りつぶし",
         "ListBoxFormField": "選択する",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "ラジオボタンフィールド注釈",
       "ListBoxFormField": "リスト ボックス フィールド注釈",
       "ComboBoxFormField": "コンボボックスフィールド注釈",
+      "DatePickerFormField": "日付選択フィールドの注釈",
       "TextFormField": "テキストフィールド注釈"
     },
     "apply": "フィールドを適用",

@@ -15,6 +15,7 @@
     "close": "Zamknij",
     "undo": "Cofnij",
     "redo": "Przywróć",
+    "reload": "Przeładować",
     "comment": "Komentarz",
     "reply": "Odpowiedz",
     "copy": "Kopiuj",
@@ -194,6 +195,7 @@
     "note": "Notatka",
     "textField": "Pole tekstowe",
     "signatureFormField": "Pole podpisu",
+    "datePickerFormField": "Pole wyboru daty",
     "checkBoxFormField": "Pole wyboru",
     "radioButtonFormField": "Pole przycisku",
     "listBoxFormField": "Pole listy wartości",
@@ -328,6 +330,7 @@
     "sortBy": "Sortuj",
     "emptyCustomStampInput": "Tekst stempla nie może być pusty",
     "unpostedComment": "Nieopublikowany komentarz",
+    "saved": "Zapisano",
     "lockedLayer": "Warstwa jest zablokowana",
     "layerVisibilityNoChange": "Widoczności warstwy nie można zmienić",
     "noLayers": "Ten dokument nie ma warstw.",
@@ -354,7 +357,15 @@
     "refreshPage": "Sprawdź połączenie sieciowe i odśwież stronę.",
     "renderErrors": {
       "error": "Coś tu poszło nie tak.",
-      "refreshPanel": "Możesz kontynuować pracę. Spróbuj ponownie otworzyć panel."
+      "toFixIssue": "Aby rozwiązać problem, spróbuj ponownie otworzyć {{componentType}}.",
+      "componentType": {
+        "component": "część",
+        "panel": "płyta",
+        "modal": "kapitał",
+        "flyout": "wysuwany",
+        "dropdown": "rozwijana lista",
+        "popup": "wyskakujące okienko"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autor",
       "type": "Rodzaj",
       "color": "Kolor",
+      "number": "Numer",
       "createdDate": "stworz Date",
       "modifiedDate": "Zmieniona data"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Dołącz wskaźnik pola",
       "indicatorPlaceHolders": {
         "TextFormField": "Wstaw tekst tutaj",
+        "DatePickerFormField": "Wybierz datę",
         "CheckBoxFormField": "Wiele z",
         "RadioButtonFormField": "Jeden z",
         "ListBoxFormField": "Wybierz",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Adnotacja pola przycisku radiowego",
       "ListBoxFormField": "Adnotacja pola pola listy",
       "ComboBoxFormField": "Adnotacja pola kombi",
+      "DatePickerFormField": "Adnotacja pola selektora dat",
       "TextFormField": "Adnotacja pola tekstowego"
     },
     "apply": "Zastosuj pola",

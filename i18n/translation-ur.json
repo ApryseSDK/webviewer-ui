@@ -15,6 +15,7 @@
     "close": "بند",
     "undo": "کالعدم",
     "redo": "دوبارہ کریں۔",
+    "reload": "دوبارہ لوڈ کریں۔",
     "comment": "تبصرہ",
     "reply": "جواب شامل کریں۔",
     "copy": "کاپی",
@@ -194,6 +195,7 @@
     "note": "نوٹ",
     "textField": "ٹیکسٹ فیلڈ",
     "signatureFormField": "دستخط کا میدان",
+    "datePickerFormField": "تاریخ چننے والا فیلڈ",
     "checkBoxFormField": "چیک باکس فیلڈ",
     "radioButtonFormField": "ریڈیو بٹن فیلڈ",
     "listBoxFormField": "فہرست باکس فیلڈ",
@@ -328,6 +330,7 @@
     "sortBy": "ترتیب دیں",
     "emptyCustomStampInput": "ڈاک ٹکٹ خالی نہیں ہو سکتا",
     "unpostedComment": "غیر پوسٹ شدہ تبصرہ",
+    "saved": "محفوظ کیا گیا۔",
     "lockedLayer": "پرت مقفل ہے۔",
     "layerVisibilityNoChange": "پرت کی مرئیت کو تبدیل نہیں کیا جا سکتا",
     "noLayers": "اس دستاویز کی کوئی تہہ نہیں ہے۔",
@@ -354,7 +357,15 @@
     "refreshPage": "براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور صفحہ ریفریش کریں۔",
     "renderErrors": {
       "error": "یہاں کچھ غلط ہو گیا۔",
-      "refreshPanel": "آپ کام جاری رکھ سکتے ہیں۔ پینل کو دوبارہ کھولنے کی کوشش کریں۔"
+      "toFixIssue": "مسئلہ حل کرنے کے لیے، براہ کرم {{componentType}} کو دوبارہ کھولنے کی کوشش کریں۔",
+      "componentType": {
+        "component": "جزو",
+        "panel": "پینل",
+        "modal": "سرمایہ",
+        "flyout": "فلائی آؤٹ",
+        "dropdown": "ڈراپ ڈاؤن",
+        "popup": "پاپ اپ"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "مصنف",
       "type": "قسم",
       "color": "رنگ",
+      "number": "نمبر",
       "createdDate": "تخلیق کی تاریخ",
       "modifiedDate": "ترمیم شدہ تاریخ"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "فیلڈ انڈیکیٹر شامل کریں۔",
       "indicatorPlaceHolders": {
         "TextFormField": "یہاں متن داخل کریں۔",
+        "DatePickerFormField": "تاریخ منتخب کریں۔",
         "CheckBoxFormField": "چیک کریں۔",
         "RadioButtonFormField": "بھرنا",
         "ListBoxFormField": "منتخب کریں۔",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "ریڈیو بٹن فیلڈ تشریح",
       "ListBoxFormField": "فہرست باکس فیلڈ تشریح",
       "ComboBoxFormField": "کومبو باکس فیلڈ تشریح",
+      "DatePickerFormField": "تاریخ چنندہ فیلڈ تشریح",
       "TextFormField": "ٹیکسٹ فیلڈ تشریح"
     },
     "apply": "فیلڈز کا اطلاق کریں۔",

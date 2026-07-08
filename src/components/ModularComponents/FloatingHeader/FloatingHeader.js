@@ -47,7 +47,7 @@ const FloatingHeader = (props) => {
       // Cancel any pending debounced setIsVisible to avoid setState-on-unmounted-component warnings.
       hideFloatingHeader.cancel();
     };
-  }, [opacityMode]);
+  }, [opacityMode, scrollViewContainer]);
 
   const className = classNames(
     'FloatingHeader',

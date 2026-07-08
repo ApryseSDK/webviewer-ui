@@ -15,6 +15,7 @@
     "close": "tutup",
     "undo": "Buat asal",
     "redo": "sedia",
+    "reload": "Muat semula",
     "comment": "Komen",
     "reply": "Tambah balasan",
     "copy": "Salinan",
@@ -194,6 +195,7 @@
     "note": "Catatan",
     "textField": "Medan Teks",
     "signatureFormField": "Medan Tandatangan",
+    "datePickerFormField": "Medan Pemilih Tarikh",
     "checkBoxFormField": "Medan Kotak semak",
     "radioButtonFormField": "Medan Butang Radio",
     "listBoxFormField": "Medan Kotak Senarai",
@@ -328,6 +330,7 @@
     "sortBy": "Isih",
     "emptyCustomStampInput": "Teks setem tidak boleh kosong",
     "unpostedComment": "Komen Tidak Disiarkan",
+    "saved": "Disimpan",
     "lockedLayer": "Lapisan dikunci",
     "layerVisibilityNoChange": "Keterlihatan lapisan tidak boleh diubah",
     "noLayers": "Dokumen ini tidak mempunyai lapisan.",
@@ -354,7 +357,15 @@
     "refreshPage": "Sila semak sambungan rangkaian anda dan muat semula halaman.",
     "renderErrors": {
       "error": "Ada sesuatu yang tidak kena di sini.",
-      "refreshPanel": "Anda boleh teruskan kerja. Cuba buka semula panel itu."
+      "toFixIssue": "Untuk menyelesaikan masalah ini, sila cuba buka semula {{componentType}}.",
+      "componentType": {
+        "component": "komponen",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "terbang keluar",
+        "dropdown": "lungsur turun",
+        "popup": "timbul"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Pengarang",
       "type": "taip",
       "color": "Warna",
+      "number": "Nombor",
       "createdDate": "Tarikh Dicipta",
       "modifiedDate": "Tarikh Diubah Suai"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Sertakan Penunjuk Medan",
       "indicatorPlaceHolders": {
         "TextFormField": "Sisipkan Teks Di Sini",
+        "DatePickerFormField": "Pilih Tarikh",
         "CheckBoxFormField": "Semak",
         "RadioButtonFormField": "isi",
         "ListBoxFormField": "Pilih",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Anotasi Medan Butang Radio",
       "ListBoxFormField": "Anotasi Medan Kotak Senarai",
       "ComboBoxFormField": "Anotasi Medan Kotak Kombo",
+      "DatePickerFormField": "Anotasi Medan Pemilih Tarikh",
       "TextFormField": "Anotasi Medan Teks"
     },
     "apply": "Guna Medan",

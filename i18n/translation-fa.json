@@ -15,6 +15,7 @@
     "close": "بستن",
     "undo": "لغو",
     "redo": "از نو انجام دادن",
+    "reload": "بارگیری مجدد",
     "comment": "نظر دهید",
     "reply": "پاسخ اضافه کنید",
     "copy": "کپی",
@@ -194,6 +195,7 @@
     "note": "توجه داشته باشید",
     "textField": "فیلد متنی",
     "signatureFormField": "فیلد امضا",
+    "datePickerFormField": "فیلد انتخاب تاریخ",
     "checkBoxFormField": "فیلد چک باکس",
     "radioButtonFormField": "فیلد دکمه رادیویی",
     "listBoxFormField": "فیلد لیست باکس",
@@ -328,6 +330,7 @@
     "sortBy": "مرتب سازی بر اساس",
     "emptyCustomStampInput": "متن مهر نمی‌تواند خالی باشد",
     "unpostedComment": "نظر ارسال نشده",
+    "saved": "ذخیره شده",
     "lockedLayer": "لایه قفل شده است",
     "layerVisibilityNoChange": "قابلیت مشاهده لایه‌ها قابل تغییر نیست",
     "noLayers": "این سند هیچ لایه‌ای ندارد.",
@@ -354,7 +357,15 @@
     "refreshPage": "لطفاً اتصال شبکه خود را بررسی کرده و صفحه را رفرش کنید.",
     "renderErrors": {
       "error": "اینجا یه مشکلی پیش اومده.",
-      "refreshPanel": "می‌توانید به کار خود ادامه دهید. پنل را دوباره باز کنید."
+      "toFixIssue": "برای رفع مشکل، لطفاً {{componentType}} را دوباره باز کنید.",
+      "componentType": {
+        "component": "جزء",
+        "panel": "پنل",
+        "modal": "سرمایه",
+        "flyout": "پرواز",
+        "dropdown": "منوی کشویی",
+        "popup": "پنجره بازشو"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "نویسنده",
       "type": "نوع",
       "color": "رنگ",
+      "number": "شماره",
       "createdDate": "تاریخ ایجاد",
       "modifiedDate": "تاریخ اصلاح‌شده"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "شامل نشانگر فیلد",
       "indicatorPlaceHolders": {
         "TextFormField": "متن را اینجا وارد کنید",
+        "DatePickerFormField": "تاریخ را انتخاب کنید",
         "CheckBoxFormField": "بررسی",
         "RadioButtonFormField": "پر کردن",
         "ListBoxFormField": "انتخاب کنید",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "حاشیه نویسی فیلد دکمه رادیویی",
       "ListBoxFormField": "حاشیه نویسی فیلدهای لیست باکس",
       "ComboBoxFormField": "حاشیه نویسی فیلدهای کمبو باکس",
+      "DatePickerFormField": "حاشیه نویسی فیلد انتخابگر تاریخ",
       "TextFormField": "حاشیه‌نویسی فیلد متنی"
     },
     "apply": "فیلدهای اعمال شده",

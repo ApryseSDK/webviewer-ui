@@ -15,6 +15,7 @@
     "close": "Menutup",
     "undo": "Membuka",
     "redo": "Siap",
+    "reload": "Muat ulang",
     "comment": "Komentar",
     "reply": "Tambahkan balasan",
     "copy": "Salinan",
@@ -194,6 +195,7 @@
     "note": "Catatan",
     "textField": "Bidang Teks",
     "signatureFormField": "Bidang Tanda Tangan",
+    "datePickerFormField": "Kolom Pemilih Tanggal",
     "checkBoxFormField": "Bidang Kotak Centang",
     "radioButtonFormField": "Bidang Tombol Radio",
     "listBoxFormField": "Bidang Kotak Daftar",
@@ -328,6 +330,7 @@
     "sortBy": "Menyortir",
     "emptyCustomStampInput": "Teks stempel tidak boleh kosong",
     "unpostedComment": "Komentar yang Belum Diposkan",
+    "saved": "Tersimpan",
     "lockedLayer": "Lapisan terkunci",
     "layerVisibilityNoChange": "Visibilitas lapisan tidak dapat diubah",
     "noLayers": "Dokumen ini tidak memiliki lapisan.",
@@ -354,7 +357,15 @@
     "refreshPage": "Silakan periksa koneksi jaringan Anda dan segarkan halaman.",
     "renderErrors": {
       "error": "Terjadi kesalahan di sini.",
-      "refreshPanel": "Anda dapat melanjutkan pekerjaan. Coba buka kembali panelnya."
+      "toFixIssue": "Untuk memperbaiki masalah ini, silakan coba membuka kembali {{componentType}}.",
+      "componentType": {
+        "component": "komponen",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "terbang keluar",
+        "dropdown": "menu tarik-turun",
+        "popup": "popup"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Pengarang",
       "type": "Jenis",
       "color": "Warna",
+      "number": "Nomor",
       "createdDate": "Tanggal Dibuat",
       "modifiedDate": "Tanggal yang diubah"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Sertakan Indikator Lapangan",
       "indicatorPlaceHolders": {
         "TextFormField": "Sisipkan Teks Di Sini",
+        "DatePickerFormField": "Pilih Tanggal",
         "CheckBoxFormField": "Memeriksa",
         "RadioButtonFormField": "Mengisi",
         "ListBoxFormField": "Pilih",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Anotasi Bidang Tombol Radio",
       "ListBoxFormField": "Anotasi Bidang Kotak Daftar",
       "ComboBoxFormField": "Anotasi Bidang Kotak Kombo",
+      "DatePickerFormField": "Anotasi Bidang Pemilih Tanggal",
       "TextFormField": "Anotasi Bidang Teks"
     },
     "apply": "Terapkan Bidang",

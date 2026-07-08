@@ -15,6 +15,7 @@
     "close": "Închide",
     "undo": "Anula",
     "redo": "A reface",
+    "reload": "Reîncărcare",
     "comment": "cometariu",
     "reply": "Adăugați răspuns",
     "copy": "Copie",
@@ -194,6 +195,7 @@
     "note": "Notă",
     "textField": "Câmp text",
     "signatureFormField": "Câmp de semnătură",
+    "datePickerFormField": "Câmp de selecție a datei",
     "checkBoxFormField": "Câmp casetă de selectare",
     "radioButtonFormField": "Câmpul butonului radio",
     "listBoxFormField": "Câmp List Box",
@@ -328,6 +330,7 @@
     "sortBy": "Fel",
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
     "unpostedComment": "Comentariu nepostat",
+    "saved": "Salvat",
     "lockedLayer": "Stratul este blocat",
     "layerVisibilityNoChange": "Vizibilitatea stratului nu poate fi modificată",
     "noLayers": "Acest document nu are straturi.",
@@ -354,7 +357,15 @@
     "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina.",
     "renderErrors": {
       "error": "Ceva nu a mers bine aici.",
-      "refreshPanel": "Puteți continua să lucrați. Încercați să redeschideți panoul."
+      "toFixIssue": "Pentru a remedia problema, încercați să redeschideți {{componentType}}.",
+      "componentType": {
+        "component": "componentă",
+        "panel": "panou",
+        "modal": "capital",
+        "flyout": "iconiță glisantă",
+        "dropdown": "scapă jos",
+        "popup": "pop-up"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autor",
       "type": "Tip",
       "color": "Culoare",
+      "number": "Număr",
       "createdDate": "data creata",
       "modifiedDate": "Data modificata"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Includeți indicatorul de câmp",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserați text aici",
+        "DatePickerFormField": "Selectați data",
         "CheckBoxFormField": "Verifica",
         "RadioButtonFormField": "Completati",
         "ListBoxFormField": "Selectați",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Adnotare câmp cu butonul radio",
       "ListBoxFormField": "Adnotare câmp List Box",
       "ComboBoxFormField": "Adnotare câmp pentru casetă combinată",
+      "DatePickerFormField": "Adnotare câmp selector dată",
       "TextFormField": "Adnotare câmp text"
     },
     "apply": "Aplicați câmpuri",

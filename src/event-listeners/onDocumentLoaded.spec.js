@@ -239,18 +239,13 @@ describe('configureEditorMode', () => {
     const dispatched = [];
     const mockStore = {
       dispatch: (action) => dispatched.push(action),
-      getState: () => ({}),
+      getState: jest.fn().mockReturnValue({}),
     };
 
-    jest.spyOn(core, 'getDocument').mockReturnValue({});
-    jest.spyOn(core, 'getTool').mockReturnValue({
-      addEventListener: () => {},
-      removeEventListener: () => {},
-    });
-    jest.spyOn(core, 'getDocumentViewer').mockReturnValue({
-      getSpreadsheetEditorManager: () => ({
-        getEditMode: () => 'viewOnly',
-      }),
+    core.getDocument = jest.fn().mockReturnValue({});
+    core.getTool = jest.fn().mockReturnValue({
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
     });
 
     jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
@@ -264,36 +259,6 @@ describe('configureEditorMode', () => {
       type: 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED',
       payload: { isOfficeEditorHeaderEnabled: false },
     });
-  });
-
-  it('falls back to editing mode when spreadsheet initialEditMode is invalid', () => {
-    const dispatched = [];
-    const mockStore = {
-      dispatch: (action) => dispatched.push(action),
-      getState: () => ({}),
-    };
-
-    jest.spyOn(core, 'getDocument').mockReturnValue({});
-    jest.spyOn(core, 'getTool').mockReturnValue({
-      addEventListener: () => {},
-      removeEventListener: () => {},
-    });
-    jest.spyOn(core, 'getDocumentViewer').mockReturnValue({
-      getSpreadsheetEditorManager: () => ({
-        getEditMode: () => 'not-a-valid-mode',
-      }),
-    });
-
-    jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
-    jest.spyOn(officeEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
-    jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
-    jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue(undefined);
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-
-    configureEditorMode(mockStore, 1)();
-
-    expect(warnSpy).toHaveBeenCalledWith('Invalid initialEditMode parameter: not-a-valid-mode. Default to Editing mode.');
-    expect(dispatched).toContainEqual(actions.setSpreadsheetEditorEditMode('editing'));
   });
 });
 

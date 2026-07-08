@@ -3,30 +3,12 @@ import core from 'core';
 import { fireError } from 'helpers/fireEvent';
 import getFileExtension from 'helpers/getFileExtension';
 import getHashParameters from 'helpers/getHashParameters';
-import normalizeInitialEditMode from 'helpers/normalizeInitialEditMode';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_SPREADSHEET_EXTENSIONS } from 'constants/customizationVariables';
-import { SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   options = { ...getDefaultOptions(), ...options };
-
-  const normalizedSpreadsheetInitialEditMode = normalizeInitialEditMode(
-    options.spreadsheetEditorOptions?.initialEditMode,
-    Object.values(SpreadsheetEditorEditMode),
-    undefined,
-    SpreadsheetEditorEditMode.EDITING,
-  );
-  if (normalizedSpreadsheetInitialEditMode !== undefined) {
-    options = {
-      ...options,
-      spreadsheetEditorOptions: {
-        ...options.spreadsheetEditorOptions,
-        initialEditMode: normalizedSpreadsheetInitialEditMode,
-      },
-    };
-  }
 
   options.docId = options.docId || options.documentId || null;
   const customLoadingProgressFunction = options.onLoadingProgress;

@@ -15,6 +15,7 @@
     "close": "Đóng",
     "undo": "Hoàn tác",
     "redo": "Làm Lại",
+    "reload": "Tải lại",
     "comment": "Bình Luận",
     "reply": "Thêm trả lời",
     "copy": "Sao chép",
@@ -194,6 +195,7 @@
     "note": "Ghi chú",
     "textField": "Trường Văn Bản",
     "signatureFormField": "Trường Chữ Ký",
+    "datePickerFormField": "Trường chọn ngày",
     "checkBoxFormField": "Trường Hộp Kiểm",
     "radioButtonFormField": "Trường nút radio",
     "listBoxFormField": "Trường Hộp Danh Sách",
@@ -328,6 +330,7 @@
     "sortBy": "Sắp xếp",
     "emptyCustomStampInput": "Văn bản tem không thể trống",
     "unpostedComment": "Nhận Xét Chưa Đăng",
+    "saved": "Đã lưu",
     "lockedLayer": "Lớp bị khóa",
     "layerVisibilityNoChange": "Không thể thay đổi độ hiển thị lớp",
     "noLayers": "Tài liệu này không có lớp.",
@@ -354,7 +357,15 @@
     "refreshPage": "Vui lòng kiểm tra kết nối mạng của bạn và làm mới trang.",
     "renderErrors": {
       "error": "Đã xảy ra lỗi ở đây.",
-      "refreshPanel": "Bạn có thể tiếp tục làm việc. Hãy thử mở lại bảng điều khiển."
+      "toFixIssue": "Để khắc phục sự cố, vui lòng thử mở lại {{componentType}}.",
+      "componentType": {
+        "component": "thành phần",
+        "panel": "bảng",
+        "modal": "thủ đô",
+        "flyout": "bay ra",
+        "dropdown": "menu thả xuống",
+        "popup": "cửa sổ bật lên"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Tác giả",
       "type": "Kiểu",
       "color": "Màu",
+      "number": "Con số",
       "createdDate": "Ngày Tạo",
       "modifiedDate": "Ngày Sửa Đổi"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Bao gồm chỉ báo trường",
       "indicatorPlaceHolders": {
         "TextFormField": "Chèn văn bản tại đây",
+        "DatePickerFormField": "Chọn ngày",
         "CheckBoxFormField": "Kiểm tra",
         "RadioButtonFormField": "Lấp đầy",
         "ListBoxFormField": "Lựa chọn",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Chú thích trường nút radio",
       "ListBoxFormField": "Chú thích trường hộp danh sách",
       "ComboBoxFormField": "Chú thích trường hộp tổ hợp",
+      "DatePickerFormField": "Chú thích trường chọn ngày",
       "TextFormField": "Chú thích trường văn bản"
     },
     "apply": "Áp Dụng Trường",
