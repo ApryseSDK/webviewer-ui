@@ -15,6 +15,7 @@
     "close": "סגור",
     "undo": "בטל",
     "redo": "בצע שוב",
+    "reload": "לִטעוֹן מִחָדָשׁ",
     "comment": "הערה",
     "reply": "הוסף תגובה",
     "copy": "העתק",
@@ -194,6 +195,7 @@
     "note": "הערה",
     "textField": "שדה טקסט",
     "signatureFormField": "שדה חתימה",
+    "datePickerFormField": "שדה בורר תאריכים",
     "checkBoxFormField": "שדה תיבת סימון",
     "radioButtonFormField": "שדה כפתור רדיו",
     "listBoxFormField": "שדה תיבת רשימה",
@@ -328,6 +330,7 @@
     "sortBy": "מיין לפי",
     "emptyCustomStampInput": "טקסט החותמת אינו יכול להיות ריק",
     "unpostedComment": "תגובה שלא פורסמה",
+    "saved": "נשמר",
     "lockedLayer": "השכבה נעולה",
     "layerVisibilityNoChange": "לא ניתן לשנות את נראות השכבה",
     "noLayers": "למסמך זה אין שכבות.",
@@ -354,7 +357,15 @@
     "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
     "renderErrors": {
       "error": "משהו השתבש כאן.",
-      "refreshPanel": "אתה יכול להמשיך לעבוד. נסה לפתוח מחדש את הפאנל."
+      "toFixIssue": "כדי לתקן את הבעיה, אנא נסה לפתוח מחדש את {{componentType}}.",
+      "componentType": {
+        "component": "רְכִיב",
+        "panel": "לוּחַ",
+        "modal": "הוֹן",
+        "flyout": "חלון נפתח",
+        "dropdown": "תפריט נפתח",
+        "popup": "קופץ"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "מחבר",
       "type": "סוג",
       "color": "צבע",
+      "number": "מִספָּר",
       "createdDate": "תאריך יצירה",
       "modifiedDate": "תאריך שינוי"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "כלול מחוון שדה",
       "indicatorPlaceHolders": {
         "TextFormField": "הכנס טקסט כאן",
+        "DatePickerFormField": "בחר תאריך",
         "CheckBoxFormField": "בדוק",
         "RadioButtonFormField": "מלא",
         "ListBoxFormField": "בחר",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "ביאור שדה כפתור רדיו",
       "ListBoxFormField": "ביאור שדה תיבת רשימה",
       "ComboBoxFormField": "ביאור שדה של תיבת קומבו",
+      "DatePickerFormField": "ביאור שדה בורר התאריכים",
       "TextFormField": "ביאור שדה טקסט"
     },
     "apply": "החלת שדות",

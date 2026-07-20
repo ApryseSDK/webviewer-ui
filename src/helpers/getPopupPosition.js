@@ -344,21 +344,21 @@ const getPopupDimensions = (popup) => {
 };
 
 const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey, gap, anchorNode) => {
-  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey, gap);
+  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey, anchorNode, gap);
   const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey, anchorNode);
 
   return { left, top };
 };
 
 const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentViewerKey, anchorNode) => {
-  const top = calcPopupTop(selectedTextPosition, popupDimension, documentViewerKey);
+  const top = calcPopupTop(selectedTextPosition, popupDimension, documentViewerKey, anchorNode, defaultGap);
   const left = calcPopupLeft(selectedTextPosition, popupDimension, documentViewerKey, anchorNode);
 
   return { left, top };
 };
 
 /** @ignore */
-const getContainingBlockDocOffset = (anchorNode) => {
+export const getContainingBlockDocOffset = (anchorNode) => {
   const { scrollX, scrollY } = getWindowScroll();
   const localRoot = anchorNode?.getRootNode?.();
   const hostContainer = window.isApryseWebViewerWebComponent ? (localRoot?.host || getRootNode()?.host) : null;
@@ -400,7 +400,7 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewe
  * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey, gap = defaultGap) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey, anchorNode, gap = defaultGap) => {
   if (!hasValidBounds({ topLeft, bottomRight })) {
     return fallbackPosition.top;
   }
@@ -431,7 +431,7 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewe
     top = visibleRegion.bottom - padding - scaledHeight;
   }
 
-  return Math.round(top - scrollContainer.scrollTop - getContainingBlockDocOffset().top);
+  return Math.round(top - scrollContainer.scrollTop - getContainingBlockDocOffset(anchorNode).top);
 };
 
 export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) => {

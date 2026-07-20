@@ -293,7 +293,7 @@ WebViewer(...)
       },
       [ShortcutKeys[Shortcuts.OPEN_FILE]]: (e) => {
         e.preventDefault();
-        openFilePicker();
+        openFilePicker(e);
       },
       [ShortcutKeys[Shortcuts.SEARCH]]: (e) => {
         e.preventDefault();

@@ -293,7 +293,7 @@ import {
 import { Shortcuts } from 'helpers/hotkeysUtils';
 import setReaderPageMode from './setReaderPageMode';
 
-export default (store, instanceDocViewerKey, instanceI18n) => {
+export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
@@ -387,7 +387,7 @@ export default (store, instanceDocViewerKey, instanceI18n) => {
     setDefaultPrintOptions: setDefaultPrintOptions(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
-    setTheme: setTheme(store),
+    setTheme: setTheme(store, instanceRootNode),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),

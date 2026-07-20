@@ -322,7 +322,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* EDIT STYLE */
-  const hasStyle = Object.keys(focusedAnnotationStyle).length > 0;
+  const hasStyle = !!focusedAnnotationStyle && Object.keys(focusedAnnotationStyle).length > 0;
 
   const toolsWithNoStyling = [
     ToolNames.CROP,

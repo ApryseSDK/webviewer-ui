@@ -15,6 +15,7 @@
     "close": "Sluiten",
     "undo": "Ongedaan maken",
     "redo": "Klaar",
+    "reload": "Herladen",
     "comment": "Opmerking",
     "reply": "Antwoorden",
     "copy": "Kopieer",
@@ -194,6 +195,7 @@
     "note": "Notitie",
     "textField": "Tekstveld",
     "signatureFormField": "Handtekeningveld",
+    "datePickerFormField": "Datumkiezerveld",
     "checkBoxFormField": "Selectievakje veld",
     "radioButtonFormField": "Veld voor keuzerondjes",
     "listBoxFormField": "Keuzelijstveld",
@@ -328,6 +330,7 @@
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
     "unpostedComment": "Niet-geplaatste reactie",
+    "saved": "Opgeslagen",
     "lockedLayer": "Laag is vergrendeld",
     "layerVisibilityNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
     "noLayers": "Dit document heeft geen lagen.",
@@ -354,7 +357,15 @@
     "refreshPage": "Controleer uw netwerkverbinding en vernieuw de pagina.",
     "renderErrors": {
       "error": "Hier is iets misgegaan.",
-      "refreshPanel": "Je kunt gewoon doorwerken. Probeer het paneel opnieuw te openen."
+      "toFixIssue": "Om het probleem op te lossen, kunt u proberen de {{componentType}} opnieuw te openen.",
+      "componentType": {
+        "component": "component",
+        "panel": "paneel",
+        "modal": "hoofdstad",
+        "flyout": "uitvliegen",
+        "dropdown": "dropdown",
+        "popup": "pop-up"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Auteur",
       "type": "Type",
       "color": "Kleur",
+      "number": "Nummer",
       "createdDate": "Aanmaakdatum",
       "modifiedDate": "Aangepaste datum"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Inclusief veldindicator",
       "indicatorPlaceHolders": {
         "TextFormField": "Tekst hier invoegen",
+        "DatePickerFormField": "Selecteer datum",
         "CheckBoxFormField": "Controleren",
         "RadioButtonFormField": "Vullen",
         "ListBoxFormField": "Selecteer",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Annotatie van keuzerondjeveld",
       "ListBoxFormField": "Keuzelijstveldannotatie",
       "ComboBoxFormField": "Veldannotatie met invoervak",
+      "DatePickerFormField": "Datumkiezer veldannotatie",
       "TextFormField": "Annotatie van tekstvelden"
     },
     "apply": "Velden toepassen",

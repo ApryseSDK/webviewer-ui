@@ -1,0 +1,96 @@
+
+> webviewer-ui@11.1.0 build-storybook
+> storybook build --output-dir /var/folders/_v/s9rqtqmx37l_p37f5_12b1kh0000gn/T/chromatic--68459-NIJ0RtgOtUis
+
+@storybook/cli v8.1.0
+
+info => Cleaning outputDir: ../../../../../../../var/folders/_v/s9rqtqmx37l_p37f5_12b1kh0000gn/T/chromatic--68459-NIJ0RtgOtUis
+info => Loading presets
+info => Building manager..
+info => Manager built (140 ms)
+info => Building preview..
+info => Using implicit CSS loaders
+info => Using default Webpack5 setup
+info => Copying static files: .storybook/static at ../../../../../../../var/folders/_v/s9rqtqmx37l_p37f5_12b1kh0000gn/T/chromatic--68459-NIJ0RtgOtUis
+WARN No story files found for the specified pattern: src/**/*.mdx
+WARN Module Warning (from ./node_modules/postcss-loader/src/index.js):
+WARN Warning
+WARN 
+WARN (1:2090) start value has mixed support, consider using flex-start instead
+WARN Module Warning (from ./node_modules/postcss-loader/src/index.js):
+WARN Warning
+WARN 
+WARN (1:52) start value has mixed support, consider using flex-start instead
+WARN Duplicate key "SP" in object literal [duplicate-object-key]
+WARN 
+WARN 4373.569ee852.iframe.bundle.js:55953:14:
+WARN   55953 |               SP,
+WARN 
+WARN Suggestion: 
+WARN 
+WARN Notes:
+WARN [4373.569ee852.iframe.bundle.js:55951:14] The original key "SP" is here:
+WARN Suggestion: 
+WARN Line text:
+WARN               SP,
+WARN 
+WARN Duplicate key "BK" in object literal [duplicate-object-key]
+WARN 
+WARN 4373.569ee852.iframe.bundle.js:55954:14:
+WARN   55954 |               BK,
+WARN 
+WARN Suggestion: 
+WARN 
+WARN Notes:
+WARN [4373.569ee852.iframe.bundle.js:55945:14] The original key "BK" is here:
+WARN Suggestion: 
+WARN Line text:
+WARN               BK,
+WARN 
+WARN Duplicate key "LF" in object literal [duplicate-object-key]
+WARN 
+WARN 4373.569ee852.iframe.bundle.js:55955:14:
+WARN   55955 |               LF,
+WARN 
+WARN Suggestion: 
+WARN 
+WARN Notes:
+WARN [4373.569ee852.iframe.bundle.js:55947:14] The original key "LF" is here:
+WARN Suggestion: 
+WARN Line text:
+WARN               LF,
+WARN 
+WARN Duplicate key "NL" in object literal [duplicate-object-key]
+WARN 
+WARN 4373.569ee852.iframe.bundle.js:55956:14:
+WARN   55956 |               NL,
+WARN 
+WARN Suggestion: 
+WARN 
+WARN Notes:
+WARN [4373.569ee852.iframe.bundle.js:55948:14] The original key "NL" is here:
+WARN Suggestion: 
+WARN Line text:
+WARN               NL,
+WARN 
+WARN asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+WARN This can impact web performance.
+WARN Assets: 
+WARN   main.12a3a88c.iframe.bundle.js (2.11 MiB)
+WARN   components-AudioPlaybackPopup-AudioPlaybackPopup-stories.06899e86.iframe.bundle.js (318 KiB)
+WARN   8609.e5583521.iframe.bundle.js (561 KiB)
+WARN   5622.03be9113.iframe.bundle.js (513 KiB)
+WARN   253.0aa3f264.iframe.bundle.js (367 KiB)
+WARN   315.863a56c2.iframe.bundle.js (369 KiB)
+WARN   4373.5df88d6b.iframe.bundle.js (1.39 MiB)
+WARN   6113.16b1e2c6.iframe.bundle.js (312 KiB)
+WARN   5483.b47746eb.iframe.bundle.js (749 KiB)
+WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+WARN Entrypoints:
+WARN   main (2.49 MiB)
+WARN       runtime~main.ff684797.iframe.bundle.js
+WARN       315.863a56c2.iframe.bundle.js
+WARN       main.12a3a88c.iframe.bundle.js
+WARN 
+info => Preview built (18 s)
+info => Output directory: /var/folders/_v/s9rqtqmx37l_p37f5_12b1kh0000gn/T/chromatic--68459-NIJ0RtgOtUis

@@ -15,6 +15,7 @@
     "close": "Fermer",
     "undo": "Défaire",
     "redo": "Refaire",
+    "reload": "Recharger",
     "comment": "Commenter",
     "reply": "Répondre",
     "copy": "Copier",
@@ -194,6 +195,7 @@
     "note": "Remarque",
     "textField": "Champ de texte",
     "signatureFormField": "Champ de signature",
+    "datePickerFormField": "Champ de sélection de date",
     "checkBoxFormField": "Champ de case à cocher",
     "radioButtonFormField": "Champ de bouton radio",
     "listBoxFormField": "Champ de zone de liste",
@@ -328,6 +330,7 @@
     "sortBy": "Trier par",
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
     "unpostedComment": "Commentaire non publié",
+    "saved": "Enregistré",
     "lockedLayer": "Le calque est verrouillé",
     "layerVisibilityNoChange": "La visibilité de la couche ne peut pas être modifiée",
     "noLayers": "Ce document ne comporte aucun calque.",
@@ -354,7 +357,15 @@
     "refreshPage": "Veuillez vérifier votre connexion réseau et actualiser la page.",
     "renderErrors": {
       "error": "Quelque chose a mal tourné.",
-      "refreshPanel": "Vous pouvez continuer à travailler. Essayez de rouvrir le panneau."
+      "toFixIssue": "Pour résoudre ce problème, veuillez essayer de rouvrir le {{componentType}}.",
+      "componentType": {
+        "component": "composant",
+        "panel": "panneau",
+        "modal": "modal",
+        "flyout": "menu volant",
+        "dropdown": "menu déroulant",
+        "popup": "fenêtre contextuelle"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Auteur",
       "type": "Type",
       "color": "Couleur",
+      "number": "Nombre",
       "createdDate": "Date de création",
       "modifiedDate": "Date modifiée"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Inclure l'indicateur de champ",
       "indicatorPlaceHolders": {
         "TextFormField": "Insérer le texte ici",
+        "DatePickerFormField": "Sélectionner une date",
         "CheckBoxFormField": "Vérifier",
         "RadioButtonFormField": "Remplir",
         "ListBoxFormField": "Sélectionner",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Annotation du champ du bouton radio",
       "ListBoxFormField": "Annotation du champ de la zone de liste",
       "ComboBoxFormField": "Annotation des champs de la zone de liste déroulante",
+      "DatePickerFormField": "Annotation du champ de sélection de date",
       "TextFormField": "Annotation du champ de texte"
     },
     "apply": "Appliquer les champs",

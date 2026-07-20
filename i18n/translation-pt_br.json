@@ -15,6 +15,7 @@
     "close": "Fechar",
     "undo": "Desfazer",
     "redo": "pronto",
+    "reload": "Recarregar",
     "comment": "Novo comentário",
     "reply": "Responder",
     "copy": "Copiar",
@@ -194,6 +195,7 @@
     "note": "Nota",
     "textField": "Campo de texto",
     "signatureFormField": "Campo de Assinatura",
+    "datePickerFormField": "Campo de seleção de data",
     "checkBoxFormField": "Campo de caixa de seleção",
     "radioButtonFormField": "Campo do botão de rádio",
     "listBoxFormField": "Campo de lista de seleção",
@@ -328,6 +330,7 @@
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
     "unpostedComment": "Comentário Não Postado",
+    "saved": "Salvo",
     "lockedLayer": "Camada está bloqueada",
     "layerVisibilityNoChange": "A visibilidade da camada não pode ser alterada",
     "noLayers": "Este documento não possui camadas.",
@@ -354,7 +357,15 @@
     "refreshPage": "Verifique sua conexão de rede e atualize a página.",
     "renderErrors": {
       "error": "Algo deu errado aqui.",
-      "refreshPanel": "Você pode continuar trabalhando. Tente reabrir o painel."
+      "toFixIssue": "Para corrigir o problema, tente reabrir o {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "painel",
+        "modal": "capital",
+        "flyout": "flyout",
+        "dropdown": "suspenso",
+        "popup": "Aparecer"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autor",
       "type": "Tipo",
       "color": "Cor",
+      "number": "Número",
       "createdDate": "Data de criação",
       "modifiedDate": "Data modificada"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Incluir indicador de campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserir texto aqui",
+        "DatePickerFormField": "Selecione a data",
         "CheckBoxFormField": "Verificar",
         "RadioButtonFormField": "Encher",
         "ListBoxFormField": "Selecionar",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Anotação de campo de botão de opção",
       "ListBoxFormField": "Anotação de campo de caixa de listagem",
       "ComboBoxFormField": "Anotação de campo de caixa de combinação",
+      "DatePickerFormField": "Anotação do campo de seleção de data",
       "TextFormField": "Anotação de campo de texto"
     },
     "apply": "Aplicar Campos",

@@ -15,6 +15,7 @@
     "close": "Stänga",
     "undo": "Ångra",
     "redo": "Göra om",
+    "reload": "Ladda om",
     "comment": "Kommentar",
     "reply": "Lägg till svar",
     "copy": "Kopiera",
@@ -194,6 +195,7 @@
     "note": "Notera",
     "textField": "Textfält",
     "signatureFormField": "Signaturfält",
+    "datePickerFormField": "Datumväljarfält",
     "checkBoxFormField": "Kryssruta Fält",
     "radioButtonFormField": "Radioknappfält",
     "listBoxFormField": "Listboxfält",
@@ -328,6 +330,7 @@
     "sortBy": "Sortera",
     "emptyCustomStampInput": "Stämpeltexten får inte vara tom",
     "unpostedComment": "Ej postad kommentar",
+    "saved": "Sparad",
     "lockedLayer": "Lagret är låst",
     "layerVisibilityNoChange": "Lagrets synlighet kan inte ändras",
     "noLayers": "Detta dokument har inga lager.",
@@ -354,7 +357,15 @@
     "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan.",
     "renderErrors": {
       "error": "Något gick fel här.",
-      "refreshPanel": "Du kan fortsätta arbeta. Försök öppna panelen igen."
+      "toFixIssue": "För att åtgärda problemet, försök att öppna {{componentType}} igen.",
+      "componentType": {
+        "component": "komponent",
+        "panel": "panel",
+        "modal": "kapital",
+        "flyout": "utfällbar vy",
+        "dropdown": "rullgardinsmeny",
+        "popup": "popup-meny"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Författare",
       "type": "Typ",
       "color": "Färg",
+      "number": "Antal",
       "createdDate": "Skapat Datum",
       "modifiedDate": "Ändrat datum"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Inkludera fältindikator",
       "indicatorPlaceHolders": {
         "TextFormField": "Infoga text här",
+        "DatePickerFormField": "Välj datum",
         "CheckBoxFormField": "Kolla upp",
         "RadioButtonFormField": "Fylla",
         "ListBoxFormField": "Välj",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Radioknapp Fältanteckning",
       "ListBoxFormField": "Fältkommentar för listruta",
       "ComboBoxFormField": "Fältkommentar med kombinationsruta",
+      "DatePickerFormField": "Annotering av datumväljarfält",
       "TextFormField": "Textfältsanteckning"
     },
     "apply": "Använd fält",

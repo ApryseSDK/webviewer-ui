@@ -15,6 +15,7 @@
     "close": "إغلاق",
     "undo": "تراجع",
     "redo": "إعادة",
+    "reload": "أعد تحميل الصفحة",
     "comment": "تعليق",
     "reply": "إضافة رد",
     "copy": "نسخ",
@@ -194,6 +195,7 @@
     "note": "ملحوظة",
     "textField": "حقل نص",
     "signatureFormField": "حقل توقيع",
+    "datePickerFormField": "حقل اختيار التاريخ",
     "checkBoxFormField": "حقل مربع اختيار",
     "radioButtonFormField": "حقل زر اختيار",
     "listBoxFormField": "حقل مربع قائمة",
@@ -328,6 +330,7 @@
     "sortBy": "فرز حسب",
     "emptyCustomStampInput": "لا يمكن أن يكون نص الختم فارغًا",
     "unpostedComment": "تعليق غير منشور",
+    "saved": "أنقذ",
     "lockedLayer": "الطبقة مقفلة",
     "layerVisibilityNoChange": "لا يمكن تغيير مستوى رؤية الطبقة",
     "noLayers": "هذا المستند لا يحتوي على طبقات.",
@@ -354,7 +357,15 @@
     "refreshPage": "يرجى التحقق من اتصالك بالشبكة وتحديث الصفحة.",
     "renderErrors": {
       "error": "حدث خطأ ما هنا.",
-      "refreshPanel": "يمكنك متابعة العمل. حاول إعادة فتح اللوحة."
+      "toFixIssue": "لحل المشكلة، يرجى محاولة إعادة فتح {{componentType}}.",
+      "componentType": {
+        "component": "عنصر",
+        "panel": "لوحة",
+        "modal": "عاصمة",
+        "flyout": "رحلة جوية",
+        "dropdown": "اسقاط",
+        "popup": "يظهر فجأة"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "مؤلف",
       "type": "نوع",
       "color": "لون",
+      "number": "رقم",
       "createdDate": "تاريخ الإنشاء",
       "modifiedDate": "تاريخ التعديل"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "تضمين مؤشر الحقل",
       "indicatorPlaceHolders": {
         "TextFormField": "أدخل النص هنا",
+        "DatePickerFormField": "حدد التاريخ",
         "CheckBoxFormField": "تأشير",
         "RadioButtonFormField": "ملء",
         "ListBoxFormField": "اختيار",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "أداة حقل زر الاختيار",
       "ListBoxFormField": "أداة حقل مربع القائمة",
       "ComboBoxFormField": "أداة حقل مربع تحرير وسرد",
+      "DatePickerFormField": "شرح حقل منتقي التاريخ",
       "TextFormField": "أداة حقل النص"
     },
     "apply": "تطبيق الحقول",

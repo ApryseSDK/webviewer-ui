@@ -15,6 +15,7 @@
     "close": "বন্ধ",
     "undo": "পূর্বাবস্থায় ফেরান",
     "redo": "প্রস্তুত",
+    "reload": "পুনরায় লোড করুন",
     "comment": "মন্তব্য করুন",
     "reply": "উত্তর যোগ করুন",
     "copy": "কপি",
@@ -194,6 +195,7 @@
     "note": "বিঃদ্রঃ",
     "textField": "টেক্সট ক্ষেত্রের",
     "signatureFormField": "স্বাক্ষর ক্ষেত্র",
+    "datePickerFormField": "তারিখ বাছাই ক্ষেত্র",
     "checkBoxFormField": "চেকবক্স ক্ষেত্র",
     "radioButtonFormField": "রেডিও বোতাম ক্ষেত্র",
     "listBoxFormField": "তালিকা বক্স ক্ষেত্র",
@@ -328,6 +330,7 @@
     "sortBy": "সাজান",
     "emptyCustomStampInput": "স্ট্যাম্প টেক্সট খালি হতে পারে না",
     "unpostedComment": "পোস্ট না করা মন্তব্য",
+    "saved": "সংরক্ষিত",
     "lockedLayer": "স্তর লক করা আছে",
     "layerVisibilityNoChange": "স্তর দৃশ্যমানতা পরিবর্তন করা যাবে না",
     "noLayers": "এই নথিতে কোন স্তর নেই।",
@@ -354,7 +357,15 @@
     "refreshPage": "আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন এবং পৃষ্ঠাটি রিফ্রেশ করুন।",
     "renderErrors": {
       "error": "এখানে কিছু ভুল হয়েছে।",
-      "refreshPanel": "তুমি কাজ চালিয়ে যেতে পারো। প্যানেলটি আবার খোলার চেষ্টা করো।"
+      "toFixIssue": "সমস্যাটি সমাধান করতে, অনুগ্রহ করে {{componentType}} পুনরায় খোলার চেষ্টা করুন।",
+      "componentType": {
+        "component": "উপাদান",
+        "panel": "প্যানেল",
+        "modal": "মূলধন",
+        "flyout": "ফ্লাইআউট",
+        "dropdown": "ড্রপডাউন",
+        "popup": "পপআপ"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "লেখক",
       "type": "টাইপ",
       "color": "রঙ",
+      "number": "সংখ্যা",
       "createdDate": "তৈরীর তারিখ",
       "modifiedDate": "পরিবর্তিত তারিখ"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "ক্ষেত্র নির্দেশক অন্তর্ভুক্ত করুন",
       "indicatorPlaceHolders": {
         "TextFormField": "এখানে পাঠ্য সন্নিবেশ করুন",
+        "DatePickerFormField": "তারিখ নির্বাচন করুন",
         "CheckBoxFormField": "চেক করুন",
         "RadioButtonFormField": "ভরাট",
         "ListBoxFormField": "নির্বাচন করুন",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "রেডিও বোতাম ফিল্ড টীকা",
       "ListBoxFormField": "লিস্ট বক্স ফিল্ড টীকা",
       "ComboBoxFormField": "কম্বো বক্স ফিল্ড টীকা",
+      "DatePickerFormField": "তারিখ বাছাই ক্ষেত্রের টীকা",
       "TextFormField": "টেক্সট ফিল্ড টীকা"
     },
     "apply": "ক্ষেত্র প্রয়োগ করুন",

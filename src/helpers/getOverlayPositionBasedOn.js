@@ -1,10 +1,33 @@
 import getRootNode from 'helpers/getRootNode';
 
-export default (element, overlay, isTabletAndMobile, selector = 'data-element') => {
+const getLeftPosition = (relativeButtonLeft, overlayWidth, innerWidth) => {
+  if (relativeButtonLeft + overlayWidth <= innerWidth) {
+    return relativeButtonLeft;
+  }
+
+  const rightMargin = 6;
+  return innerWidth - rightMargin - overlayWidth;
+};
+
+const getTopPosition = (relativeButtonBottom, overlayHeight, innerHeight, verticalGap) => {
+  let top = relativeButtonBottom + verticalGap;
+  const canShiftUp = relativeButtonBottom > 100 && relativeButtonBottom + overlayHeight > innerHeight;
+
+  if (canShiftUp) {
+    const calculatedTop = innerHeight - overlayHeight - verticalGap;
+    top = calculatedTop > 0 ? calculatedTop : 0;
+  }
+
+  return top;
+};
+
+export default (element, overlay, isTabletAndMobile, rootNodeOverride, selector = 'data-element') => {
   const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
-  const innerWidth = isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
-  const innerHeight = isApryseWebViewerWebComponent ? getRootNode().host.clientHeight : window.innerHeight;
-  const button = getRootNode().querySelector(`[${selector}="${element}"]`);
+  const rootNode = rootNodeOverride || getRootNode();
+  const host = isApryseWebViewerWebComponent ? rootNode?.host : null;
+  const innerWidth = host ? host.clientWidth : window.innerWidth;
+  const innerHeight = host ? host.clientHeight : window.innerHeight;
+  const button = rootNode?.querySelector(`[${selector}="${element}"]`);
 
   let left = 0;
   let right = 'auto';
@@ -20,30 +43,17 @@ export default (element, overlay, isTabletAndMobile, selector = 'data-element') 
     bottom: buttonBottom,
     left: buttonLeft,
   } = button.getBoundingClientRect();
-  const rootLeft = isApryseWebViewerWebComponent ? getRootNode().host.getBoundingClientRect().left : 0;
-  const rootTop = isApryseWebViewerWebComponent ? getRootNode().host.getBoundingClientRect().top : 0;
+  const rootLeft = host ? host.getBoundingClientRect().left : 0;
+  const rootTop = host ? host.getBoundingClientRect().top : 0;
   const relativeButtonBottom = buttonBottom - rootTop;
   const relativeButtonLeft = buttonLeft - rootLeft;
 
   const { width: overlayWidth, height: overlayHeight } = overlay.current.getBoundingClientRect();
-  if (relativeButtonLeft + overlayWidth > innerWidth) {
-    const rightMargin = 6;
-    left = innerWidth - rightMargin - overlayWidth;
-    right = 'auto';
-  } else {
-    left = relativeButtonLeft;
-    right = 'auto';
-  }
+  left = getLeftPosition(relativeButtonLeft, overlayWidth, innerWidth);
 
   const verticalGap = isTabletAndMobile ? 14 : 6;
-  let top = relativeButtonBottom + verticalGap;
-  if (relativeButtonBottom > 100) {
-    // if the buttons are not on the top of the page, the popup can adjust its position to "pass" them, otherwise the popup should always be below them
-    if (relativeButtonBottom + overlayHeight > innerHeight) {
-      const calculatedTop = innerHeight - overlayHeight - verticalGap;
-      top = calculatedTop > 0 ? calculatedTop : 0;
-    }
-  }
+  // if the buttons are not on the top of the page, the popup can adjust its position to "pass" them, otherwise the popup should always be below them
+  const top = getTopPosition(relativeButtonBottom, overlayHeight, innerHeight, verticalGap);
 
   return {
     left: !isNaN(left) ? Math.max(left, 0) : left,

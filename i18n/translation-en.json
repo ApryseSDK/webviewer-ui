@@ -15,6 +15,7 @@
     "close": "Close",
     "undo": "Undo",
     "redo": "Redo",
+    "reload": "Reload",
     "comment": "Comment",
     "reply": "Add reply",
     "copy": "Copy",
@@ -194,6 +195,7 @@
     "note": "Note",
     "textField": "Text Field",
     "signatureFormField": "Signature Field",
+    "datePickerFormField": "Date Picker Field",
     "checkBoxFormField": "Checkbox Field",
     "radioButtonFormField": "Radio Button Field",
     "listBoxFormField": "List Box Field",
@@ -328,6 +330,7 @@
     "sortBy": "Sort by",
     "emptyCustomStampInput": "Stamp text cannot be empty",
     "unpostedComment": "Unposted Comment",
+    "saved": "Saved",
     "lockedLayer": "Layer is locked",
     "layerVisibilityNoChange": "Layer visibility can't be changed",
     "noLayers": "This document has no layers.",
@@ -354,7 +357,15 @@
     "refreshPage": "Please check your network connection and refresh the page.",
     "renderErrors": {
       "error": "Something went wrong here.",
-      "refreshPanel": "You can continue working. Try reopening the panel."
+      "toFixIssue": "To fix the issue, please try reopening the {{componentType}}.",
+      "componentType": {
+        "component": "component",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "flyout",
+        "dropdown": "dropdown",
+        "popup": "popup"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Author",
       "type": "Type",
       "color": "Color",
+      "number": "Number",
       "createdDate": "Created Date",
       "modifiedDate": "Modified Date"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Include Field Indicator",
       "indicatorPlaceHolders": {
         "TextFormField": "Insert Text Here",
+        "DatePickerFormField": "Select Date",
         "CheckBoxFormField": "Check",
         "RadioButtonFormField": "Fill",
         "ListBoxFormField": "Select",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Radio Button Field Annotation",
       "ListBoxFormField": "List Box Field Annotation",
       "ComboBoxFormField": "Combo Box Field Annotation",
+      "DatePickerFormField": "Date Picker Field Annotation",
       "TextFormField": "Text Field Annotation"
     },
     "apply": "Apply Fields",

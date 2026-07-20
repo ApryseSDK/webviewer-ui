@@ -216,7 +216,7 @@ const drawAnnotationsOnCanvas = async (core, canvas, pageNumber, isGrayscale) =>
   adjustListBoxForPrint(widgetContainer);
   document.body.appendChild(widgetContainer);
 
-  const { default: html2canvas } = await import(/* webpackChunkName: 'html2canvas' */ 'html2canvas');
+  const { default: html2canvas } = await import(/* webpackChunkName: 'html2canvas' */ '@pdftron/html2canvas');
 
   await html2canvas(widgetContainer, {
     canvas,

@@ -15,6 +15,7 @@
     "close": "Закрыть",
     "undo": "Отменить",
     "redo": "готов",
+    "reload": "Перезагрузка",
     "comment": "Откомментировать",
     "reply": "Ответить",
     "copy": "Скопировать",
@@ -194,6 +195,7 @@
     "note": "Заметка",
     "textField": "Текстовое поле",
     "signatureFormField": "Поле для подписи",
+    "datePickerFormField": "Поле выбора даты",
     "checkBoxFormField": "Поле флажка",
     "radioButtonFormField": "Поле переключателя",
     "listBoxFormField": "Поле списка",
@@ -328,6 +330,7 @@
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
+    "saved": "Сохранено",
     "lockedLayer": "Слой заблокирован",
     "layerVisibilityNoChange": "Видимость слоя не может быть изменена",
     "noLayers": "В этом документе нет слоев.",
@@ -354,7 +357,15 @@
     "refreshPage": "Проверьте сетевое подключение и обновите страницу.",
     "renderErrors": {
       "error": "Здесь что-то пошло не так.",
-      "refreshPanel": "Вы можете продолжить работу. Попробуйте снова открыть панель."
+      "toFixIssue": "Чтобы исправить проблему, попробуйте снова открыть {{componentType}}.",
+      "componentType": {
+        "component": "компонент",
+        "panel": "панель",
+        "modal": "капитал",
+        "flyout": "вылет",
+        "dropdown": "падать",
+        "popup": "неожиданно возникнуть"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Автор",
       "type": "Тип",
       "color": "Цвет",
+      "number": "Число",
       "createdDate": "Дата создания",
       "modifiedDate": "Дата изменения"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Включить индикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставьте текст сюда",
+        "DatePickerFormField": "Выберите дату",
         "CheckBoxFormField": "Проверять",
         "RadioButtonFormField": "Наполнять",
         "ListBoxFormField": "Выбирать",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Аннотация поля переключателя",
       "ListBoxFormField": "Аннотация поля списка",
       "ComboBoxFormField": "Аннотация поля поля со списком",
+      "DatePickerFormField": "Аннотация поля выбора даты",
       "TextFormField": "Аннотация текстового поля"
     },
     "apply": "Применить поля",

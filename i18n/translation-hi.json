@@ -15,6 +15,7 @@
     "close": "बंद करना",
     "undo": "पूर्ववत",
     "redo": "तैयार",
+    "reload": "पुनः लोड करें",
     "comment": "टिप्पणी",
     "reply": "उत्तर जोड़ें",
     "copy": "प्रतिलिपि",
@@ -194,6 +195,7 @@
     "note": "ध्यान दें",
     "textField": "पाठ का क्षेत्र",
     "signatureFormField": "सिग्नेचर फील्ड",
+    "datePickerFormField": "दिनांक चयनकर्ता फ़ील्ड",
     "checkBoxFormField": "चेकबॉक्स फ़ील्ड",
     "radioButtonFormField": "रेडियो बटन फील्ड",
     "listBoxFormField": "सूची बॉक्स फ़ील्ड",
@@ -328,6 +330,7 @@
     "sortBy": "तरह",
     "emptyCustomStampInput": "स्टाम्प टेक्स्ट खाली नहीं हो सकता",
     "unpostedComment": "पोस्ट नहीं की गई टिप्पणी",
+    "saved": "सहेजा गया",
     "lockedLayer": "परत बंद है",
     "layerVisibilityNoChange": "परत दृश्यता को बदला नहीं जा सकता",
     "noLayers": "इस दस्तावेज़ में कोई परतें नहीं हैं.",
@@ -354,7 +357,15 @@
     "refreshPage": "कृपया अपना नेटवर्क कनेक्शन जांचें और पेज को रीफ्रेश करें।",
     "renderErrors": {
       "error": "यहां कुछ गड़बड़ हो गई।",
-      "refreshPanel": "आप काम जारी रख सकते हैं। पैनल को दोबारा खोलने का प्रयास करें।"
+      "toFixIssue": "इस समस्या को ठीक करने के लिए, कृपया {{componentType}} को दोबारा खोलने का प्रयास करें।",
+      "componentType": {
+        "component": "अवयव",
+        "panel": "पैनल",
+        "modal": "पूंजी",
+        "flyout": "बहार उड़",
+        "dropdown": "ड्रॉप डाउन",
+        "popup": "पॉप अप"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "लेखक",
       "type": "प्रकार",
       "color": "रंग",
+      "number": "संख्या",
       "createdDate": "रचना तिथि",
       "modifiedDate": "संशोधित तिथि"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "फ़ील्ड संकेतक शामिल करें",
       "indicatorPlaceHolders": {
         "TextFormField": "यहां टेक्स्ट डालें",
+        "DatePickerFormField": "तारीख़ चुनें",
         "CheckBoxFormField": "जांच",
         "RadioButtonFormField": "भरना",
         "ListBoxFormField": "चुनना",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "रेडियो बटन फ़ील्ड एनोटेशन",
       "ListBoxFormField": "सूची बॉक्स फ़ील्ड एनोटेशन",
       "ComboBoxFormField": "कॉम्बो बॉक्स फ़ील्ड एनोटेशन",
+      "DatePickerFormField": "दिनांक चयनकर्ता फ़ील्ड एनोटेशन",
       "TextFormField": "टेक्स्ट फ़ील्ड एनोटेशन"
     },
     "apply": "फ़ील्ड लागू करें",

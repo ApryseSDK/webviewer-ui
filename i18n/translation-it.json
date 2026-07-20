@@ -15,6 +15,7 @@
     "close": "Vicino",
     "undo": "Disfare",
     "redo": "Pronto",
+    "reload": "Ricaricare",
     "comment": "Commento",
     "reply": "rispondere",
     "copy": "copia",
@@ -194,6 +195,7 @@
     "note": "Nota",
     "textField": "Campo di testo",
     "signatureFormField": "Campo firma",
+    "datePickerFormField": "Campo di selezione data",
     "checkBoxFormField": "Campo casella di controllo",
     "radioButtonFormField": "Campo del pulsante di opzione",
     "listBoxFormField": "Campo casella di riepilogo",
@@ -328,6 +330,7 @@
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
+    "saved": "Salvato",
     "lockedLayer": "Il livello è bloccato",
     "layerVisibilityNoChange": "La visibilità del livello non può essere modificata",
     "noLayers": "Questo documento non ha livelli.",
@@ -354,7 +357,15 @@
     "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina.",
     "renderErrors": {
       "error": "Qualcosa è andato storto.",
-      "refreshPanel": "Puoi continuare a lavorare. Prova a riaprire il pannello."
+      "toFixIssue": "Per risolvere il problema, prova a riaprire il {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "pannello",
+        "modal": "capitale",
+        "flyout": "volo fuori",
+        "dropdown": "cadere in picchiata",
+        "popup": "apparire"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autore",
       "type": "genere",
       "color": "Colore",
+      "number": "Numero",
       "createdDate": "Data di Creazione",
       "modifiedDate": "Data modificata"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Includi indicatore di campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserisci qui il testo",
+        "DatePickerFormField": "Seleziona la data",
         "CheckBoxFormField": "Dai un'occhiata",
         "RadioButtonFormField": "Riempire",
         "ListBoxFormField": "Selezionare",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Annotazione del campo del pulsante di opzione",
       "ListBoxFormField": "Annotazione del campo della casella di riepilogo",
       "ComboBoxFormField": "Annotazione del campo della casella combinata",
+      "DatePickerFormField": "Annotazione del campo Selettore data",
       "TextFormField": "Annotazione del campo di testo"
     },
     "apply": "Applica campi",

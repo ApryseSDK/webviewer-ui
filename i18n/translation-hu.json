@@ -15,6 +15,7 @@
     "close": "Bezárás",
     "undo": "Visszavonás",
     "redo": "Újra",
+    "reload": "Újratöltés",
     "comment": "Megjegyzés",
     "reply": "Válasz hozzáadása",
     "copy": "Másolat",
@@ -194,6 +195,7 @@
     "note": "jegyzet",
     "textField": "Szövegmező",
     "signatureFormField": "Aláírási mező",
+    "datePickerFormField": "Dátumválasztó mező",
     "checkBoxFormField": "Jelölőnégyzet Mező",
     "radioButtonFormField": "Rádiógomb mező",
     "listBoxFormField": "Listadoboz mező",
@@ -328,6 +330,7 @@
     "sortBy": "Fajta",
     "emptyCustomStampInput": "A bélyegző szövege nem lehet üres",
     "unpostedComment": "Nem közzétett megjegyzés",
+    "saved": "Mentett",
     "lockedLayer": "A réteg zárolva van",
     "layerVisibilityNoChange": "A réteg láthatósága nem módosítható",
     "noLayers": "Ennek a dokumentumnak nincsenek rétegei.",
@@ -354,7 +357,15 @@
     "refreshPage": "Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt.",
     "renderErrors": {
       "error": "Valami itt félrement.",
-      "refreshPanel": "Folytathatja a munkát. Próbálja meg újra megnyitni a panelt."
+      "toFixIssue": "A probléma megoldásához próbálja meg újra megnyitni a(z) {{componentType}} elemet.",
+      "componentType": {
+        "component": "összetevő",
+        "panel": "panel",
+        "modal": "tőke",
+        "flyout": "kiugró ablak",
+        "dropdown": "legördülő menü",
+        "popup": "felugró ablak"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Szerző",
       "type": "típus",
       "color": "Szín",
+      "number": "Szám",
       "createdDate": "Létrehozás dátuma",
       "modifiedDate": "Módosított dátum"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Tartalmazza a mezőjelzőt",
       "indicatorPlaceHolders": {
         "TextFormField": "Szöveg beszúrása ide",
+        "DatePickerFormField": "Dátum kiválasztása",
         "CheckBoxFormField": "Jelölje be",
         "RadioButtonFormField": "Tölt",
         "ListBoxFormField": "Válassza ki",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Rádiógomb mező megjegyzés",
       "ListBoxFormField": "Listadoboz mező megjegyzése",
       "ComboBoxFormField": "Kombinált mező mező megjegyzése",
+      "DatePickerFormField": "Dátumválasztó mező megjegyzése",
       "TextFormField": "Szövegmező megjegyzés"
     },
     "apply": "Mezők alkalmazása",

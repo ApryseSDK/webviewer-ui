@@ -15,6 +15,7 @@
     "close": "ปิด I",
     "undo": "เลิกทำ",
     "redo": "ทำซ้ำ",
+    "reload": "โหลดซ้ำ",
     "comment": "ความคิดเห็น",
     "reply": "เพิ่มคำตอบ",
     "copy": "สำเนา",
@@ -194,6 +195,7 @@
     "note": "บันทึก",
     "textField": "ช่องข้อความ",
     "signatureFormField": "ลายเซ็นฟิลด์",
+    "datePickerFormField": "ช่องเลือกวันที่",
     "checkBoxFormField": "ช่องทำเครื่องหมาย",
     "radioButtonFormField": "ฟิลด์ปุ่มตัวเลือก",
     "listBoxFormField": "ช่องรายการช่อง",
@@ -328,6 +330,7 @@
     "sortBy": "เรียงลำดับ",
     "emptyCustomStampInput": "ข้อความประทับตราต้องไม่เว้นว่างไว้",
     "unpostedComment": "ความคิดเห็นที่ยังไม่ได้โพสต์",
+    "saved": "บันทึกแล้ว",
     "lockedLayer": "เลเยอร์ถูกล็อค",
     "layerVisibilityNoChange": "ระดับการมองเห็นไม่สามารถเปลี่ยนแปลงได้",
     "noLayers": "เอกสารนี้ไม่มีเลเยอร์",
@@ -354,7 +357,15 @@
     "refreshPage": "โปรดตรวจสอบการเชื่อมต่อเครือข่ายของคุณและรีเฟรชหน้า",
     "renderErrors": {
       "error": "เกิดข้อผิดพลาดบางอย่างขึ้นที่นี่",
-      "refreshPanel": "คุณสามารถทำงานต่อได้ ลองเปิดแผงควบคุมอีกครั้ง"
+      "toFixIssue": "เพื่อแก้ไขปัญหานี้ โปรดลองเปิด {{componentType}} อีกครั้ง",
+      "componentType": {
+        "component": "ส่วนประกอบ",
+        "panel": "แผง",
+        "modal": "เมืองหลวง",
+        "flyout": "บินออกไป",
+        "dropdown": "ดรอปดาวน์",
+        "popup": "ป๊อปอัพ"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "ผู้เขียน",
       "type": "พิมพ์",
       "color": "สี",
+      "number": "ตัวเลข",
       "createdDate": "วันที่สร้าง",
       "modifiedDate": "แก้ไขวันที่"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "รวมตัวบ่งชี้ฟิลด์",
       "indicatorPlaceHolders": {
         "TextFormField": "ใส่ข้อความที่นี่",
+        "DatePickerFormField": "เลือกวันที่",
         "CheckBoxFormField": "ตรวจสอบ",
         "RadioButtonFormField": "เติม",
         "ListBoxFormField": "เลือก",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "คำอธิบายประกอบฟิลด์ปุ่มตัวเลือก",
       "ListBoxFormField": "คำอธิบายประกอบฟิลด์กล่องรายการ",
       "ComboBoxFormField": "คำอธิบายประกอบฟิลด์กล่องคำสั่งผสม",
+      "DatePickerFormField": "คำอธิบายประกอบช่องเลือกวันที่",
       "TextFormField": "คำอธิบายประกอบช่องข้อความ"
     },
     "apply": "สมัครฟิลด์",

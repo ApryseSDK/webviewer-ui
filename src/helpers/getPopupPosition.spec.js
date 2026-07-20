@@ -4,6 +4,7 @@ import {
   calcPopupTop,
   getAnnotationPopupPositionBasedOn,
   getAnnotationPosition,
+  getContainingBlockDocOffset,
   getTextPopupPositionBasedOn,
   isAnnotationInView,
 } from './getPopupPosition';
@@ -132,6 +133,56 @@ describe('getPopupPosition', () => {
     core.getScrollViewElement.mockReturnValue(null);
     const top = calcPopupTop({ topLeft: { x: 10, y: 20 }, bottomRight: { x: 30, y: 40 } }, { height: 80 }, 1);
     expect(top).toBe(0);
+  });
+
+  it('calcPopupTop uses the anchor node Web Component host offset', () => {
+    const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+    window.isApryseWebViewerWebComponent = true;
+    core.getScrollViewElement.mockReturnValue({
+      scrollLeft: 0,
+      scrollTop: 0,
+      getBoundingClientRect: () => ({ top: 0, left: 0, width: 800, height: 600 }),
+    });
+    const anchorNode = {
+      getRootNode: () => ({
+        host: {
+          getBoundingClientRect: () => ({ top: 30, left: 40 }),
+        },
+      }),
+    };
+
+    try {
+      const top = calcPopupTop(
+        { topLeft: { x: 10, y: 100 }, bottomRight: { x: 30, y: 120 } },
+        { height: 20 },
+        1,
+        anchorNode,
+        17,
+      );
+
+      expect(top).toBe(107);
+    } finally {
+      window.isApryseWebViewerWebComponent = originalIsWebComponent;
+    }
+  });
+
+  it('returns the Web Component containing block document offset', () => {
+    window.isApryseWebViewerWebComponent = true;
+    Object.defineProperty(window, 'pageXOffset', { configurable: true, value: 15 });
+    Object.defineProperty(window, 'pageYOffset', { configurable: true, value: 25 });
+    const anchorNode = {
+      getRootNode: () => ({
+        host: {
+          getBoundingClientRect: () => ({ top: 30, left: 40 }),
+        },
+      }),
+    };
+
+    expect(getContainingBlockDocOffset(anchorNode)).toEqual({ top: 55, left: 55 });
+
+    window.isApryseWebViewerWebComponent = false;
+    Object.defineProperty(window, 'pageXOffset', { configurable: true, value: 0 });
+    Object.defineProperty(window, 'pageYOffset', { configurable: true, value: 0 });
   });
 
   it('calcPopupLeft tolerates invalid scaleX values', () => {

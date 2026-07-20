@@ -15,6 +15,7 @@
     "close": "Schliessen",
     "undo": "Rückgängig",
     "redo": "Wiederherstellen",
+    "reload": "Neu laden",
     "comment": "Kommentar",
     "reply": "Antwort",
     "copy": "Kopieren",
@@ -194,6 +195,7 @@
     "note": "Hinweis",
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
+    "datePickerFormField": "Datumsauswahlfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
     "radioButtonFormField": "Radio-Button-Feld",
     "listBoxFormField": "Listenfeld",
@@ -328,6 +330,7 @@
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unveröffentlichter Kommentar",
+    "saved": "Gespeichert",
     "lockedLayer": "Ebene ist gesperrt",
     "layerVisibilityNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
     "noLayers": "Dieses Dokument hat keine Ebenen.",
@@ -354,7 +357,15 @@
     "refreshPage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite.",
     "renderErrors": {
       "error": "Hier ist etwas schiefgelaufen.",
-      "refreshPanel": "Sie können weiterarbeiten. Versuchen Sie, das Bedienfeld erneut zu öffnen."
+      "toFixIssue": "Um das Problem zu beheben, versuchen Sie bitte, {{componentType}} erneut zu öffnen.",
+      "componentType": {
+        "component": "Komponente",
+        "panel": "Panel",
+        "modal": "Hauptstadt",
+        "flyout": "Flyout",
+        "dropdown": "runterfallen",
+        "popup": "Popup"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Autor",
       "type": "Art",
       "color": "Farbe",
+      "number": "Nummer",
       "createdDate": "Erstellungsdatum",
       "modifiedDate": "Geändertes Datum"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Indikator „Feld einschließen“",
       "indicatorPlaceHolders": {
         "TextFormField": "Text hier einfügen",
+        "DatePickerFormField": "Datum auswählen",
         "CheckBoxFormField": "Prüfen",
         "RadioButtonFormField": "Füllen",
         "ListBoxFormField": "Auswählen",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Anmerkung zum Optionsfeldfeld",
       "ListBoxFormField": "Anmerkungen zu Listenfeldfeldern",
       "ComboBoxFormField": "Kombinationsfeld-Feldanmerkung",
+      "DatePickerFormField": "Datumsauswahlfeld-Anmerkung",
       "TextFormField": "Textfeldanmerkung"
     },
     "apply": "Felder anwenden",

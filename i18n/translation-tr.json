@@ -15,6 +15,7 @@
     "close": "Kapat",
     "undo": "Geri alma",
     "redo": "Hazır",
+    "reload": "Yeniden yükle",
     "comment": "Yorum",
     "reply": "Cevap ekle",
     "copy": "kopyala",
@@ -194,6 +195,7 @@
     "note": "Not",
     "textField": "Metin alanı",
     "signatureFormField": "İmza Alanı",
+    "datePickerFormField": "Tarih Seçici Alanı",
     "checkBoxFormField": "Onay Kutusu Alanı",
     "radioButtonFormField": "Radyo Düğmesi Alanı",
     "listBoxFormField": "Liste Kutusu Alanı",
@@ -328,6 +330,7 @@
     "sortBy": "Çeşit",
     "emptyCustomStampInput": "Damga metni boş olamaz",
     "unpostedComment": "Yayınlanmamış Yorum",
+    "saved": "Kaydedildi",
     "lockedLayer": "Katman kilitli",
     "layerVisibilityNoChange": "Katman görünürlüğü değiştirilemez",
     "noLayers": "Bu belgenin katmanı yok.",
@@ -354,7 +357,15 @@
     "refreshPage": "Lütfen ağ bağlantınızı kontrol edin ve sayfayı yenileyin.",
     "renderErrors": {
       "error": "Burada bir sorun oluştu.",
-      "refreshPanel": "Çalışmaya devam edebilirsiniz. Paneli yeniden açmayı deneyin."
+      "toFixIssue": "Sorunu düzeltmek için lütfen {{componentType}} bileşenini yeniden açmayı deneyin.",
+      "componentType": {
+        "component": "bileşen",
+        "panel": "panel",
+        "modal": "başkent",
+        "flyout": "uçuş",
+        "dropdown": "yıkılmak",
+        "popup": "aniden belirmek"
+      }
     }
   },
   "option": {
@@ -391,6 +402,7 @@
       "author": "Yazar",
       "type": "Tip",
       "color": "Renk",
+      "number": "Sayı",
       "createdDate": "Oluşturulma Tarihi",
       "modifiedDate": "Değiştirilme Tarihi"
     },
@@ -1058,6 +1070,7 @@
       "includeFieldIndicator": "Alan Göstergesini Ekle",
       "indicatorPlaceHolders": {
         "TextFormField": "Buraya Metin Ekle",
+        "DatePickerFormField": "Tarih Seçin",
         "CheckBoxFormField": "Kontrol",
         "RadioButtonFormField": "Doldurmak",
         "ListBoxFormField": "Seçme",
@@ -1081,6 +1094,7 @@
       "RadioButtonFormField": "Radyo Düğmesi Alanı Açıklaması",
       "ListBoxFormField": "Liste Kutusu Alanı Açıklaması",
       "ComboBoxFormField": "Açılan Kutu Alanı Açıklaması",
+      "DatePickerFormField": "Tarih Seçici Alanı Açıklaması",
       "TextFormField": "Metin Alanı Açıklaması"
     },
     "apply": "Alanları Uygula",
