@@ -84,9 +84,10 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
   initialDirection: PropTypes.oneOf(['ltr','rtl']),
+  instanceRootNode: PropTypes.object,
 };
 
-const App = ({ removeEventHandlers, initialDirection }) => {
+const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
   const { core } = useCore();
   const store = useStore();
   const dispatch = useDispatch();
@@ -192,15 +193,10 @@ const App = ({ removeEventHandlers, initialDirection }) => {
   }, []);
 
   useEffect(() => {
-    // Capture the WC host element ONCE at mount. In multi-WC mode the
-    // module-level `getInstanceNode()` singleton is overwritten as each new
-    // instance mounts, so any async caller (the 500ms fallback timer below,
-    // postMessage handler, etc.) that resolves attributes through the
-    // singleton at fire-time would read the most-recently-mounted instance's
-    // attributes (e.g. another viewer's `initialDoc`) instead of THIS
-    // instance's. Pin the host element here so all the closures below read
-    // attributes from this instance only.
-    const wcHost = window.isApryseWebViewerWebComponent ? getInstanceNode() : null;
+    // Capture the WC host element ONCE at mount (preferring the per-instance root from renderInstanceApp, falling back to the singleton for iframe/legacy), since the module-level getInstanceNode() singleton flips as each new instance mounts and would otherwise leak another viewer's attributes into async callers here.
+    const wcHost = window.isApryseWebViewerWebComponent
+      ? (instanceRootNode?.host || getInstanceNode())
+      : null;
     const readHashParam = wcHost
       ? (param, defaultValue) => getHashParameterFromHost(wcHost, param, defaultValue)
       : getHashParameters;

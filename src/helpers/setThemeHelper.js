@@ -41,10 +41,11 @@ export const getInternalTheme = (activeTheme, isCustomizableUI) => {
  * Searches the DOM for <style> or <link> elements corresponding to the given internal theme and adds them to the loadedThemes object
  * @param {InternalTheme} internalTheme The internal theme string
  * @param {object} loadedThemes An object mapping internal theme strings to arrays of the corresponding DOM <style> or <link> elements that have been loaded
+ * @param {ShadowRoot|Document} [rootNodeOverride] The root to search within. In multi-instance WebComponent mode this should be the CALLING instance's own root (its ShadowRoot), not the module-level getRootNode() singleton, which points to whichever instance was most recently registered and would cause a setTheme() call on one instance to toggle another instance's theme styles. Falls back to getRootNode() for backward compatibility (single-instance / iframe mode).
  * @ignore
  */
-export const searchForThemeElements = (internalTheme, loadedThemes) => {
-  let root = getRootNode();
+export const searchForThemeElements = (internalTheme, loadedThemes, rootNodeOverride) => {
+  let root = rootNodeOverride || getRootNode();
   if (root === document) {
     root = document.head;
   }
@@ -93,6 +94,46 @@ export const disableThemeElements = (internalTheme, loadedThemes) => {
       el.media = 'not all';
     }
   }
+};
+
+/**
+ * Returns a promise that resolves once the <link> for the given internal theme
+ * has been fully loaded by the browser (i.e. its stylesheet is parsed and
+ * available). This is needed because webpack's dynamic import() resolves when
+ * the *JS* chunk runs and inserts the <link> element, not when the browser
+ * has actually fetched and applied the CSS file.
+ *
+ * Falls back to a 5 s timeout so a slow/failed network load never blocks
+ * rendering indefinitely.
+ * @param {InternalTheme} internalTheme
+ * @param {ShadowRoot|Document} [rootNodeOverride] The calling instance's own root to search within (see searchForThemeElements for why this must not default to the getRootNode() singleton in multi-instance WebComponent mode).
+ * @ignore
+ */
+export const waitForThemeLinkLoad = (internalTheme, rootNodeOverride) => {
+  if (typeof internalTheme !== 'string') {
+    return Promise.resolve();
+  }
+  let root = rootNodeOverride || getRootNode();
+  if (!root || root === document) {
+    root = document.head;
+  }
+  const link = root.querySelector(`link[href*="theme-${internalTheme}.chunk.css"]`);
+  if (!link) {
+    return Promise.resolve();
+  }
+  // sheet is non-null once the browser has parsed the CSS.
+  if (link.sheet) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    const fallback = setTimeout(resolve, 5000);
+    const finish = () => {
+      clearTimeout(fallback);
+      resolve();
+    };
+    link.addEventListener('load', finish, { once: true });
+    link.addEventListener('error', finish, { once: true });
+  });
 };
 
 /**

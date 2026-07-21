@@ -86,6 +86,31 @@ describe('setThemeHelper', () => {
       expect(lightThemes).toContain(lightLinkElement);
       expect(darkThemes).toContain(darkLinkElement);
     });
+
+    it('should search within a rootNodeOverride instead of the document when provided (multi-instance scoping)', () => {
+      const loadedThemes = {};
+
+      // Elements outside the override root (simulating a SIBLING instance's theme elements) must never be picked up.
+      const otherInstanceDarkLink = document.createElement('link');
+      otherInstanceDarkLink.rel = 'stylesheet';
+      otherInstanceDarkLink.href = 'chunks/theme-dark.chunk.css';
+      document.head.appendChild(otherInstanceDarkLink);
+
+      // A fake per-instance root (stands in for a WebComponent's ShadowRoot) containing THIS instance's own theme element.
+      const ownInstanceRoot = document.createElement('div');
+      const ownInstanceDarkLink = document.createElement('link');
+      ownInstanceDarkLink.rel = 'stylesheet';
+      ownInstanceDarkLink.href = 'chunks/theme-dark.chunk.css';
+      ownInstanceRoot.appendChild(ownInstanceDarkLink);
+
+      const darkThemes = searchForThemeElements('dark', loadedThemes, ownInstanceRoot);
+
+      expect(darkThemes).toContain(ownInstanceDarkLink);
+      expect(darkThemes).not.toContain(otherInstanceDarkLink);
+      expect(darkThemes.length).toBe(1);
+
+      document.head.removeChild(otherInstanceDarkLink);
+    });
   });
 
   describe('enableThemeElements', () => {
