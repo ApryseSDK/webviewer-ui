@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Measure from 'react-measure';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import ColorPalette from 'components/ColorPalette';
 import Dropdown from 'components/Dropdown';
 import SignatureModes from 'constants/signatureModes';
 import useCore from 'hooks/useCore';
+import getSignatureTools from 'components/SignatureModal/getSignatureTools';
 import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
 import classNames from 'classnames';
 
@@ -24,6 +25,7 @@ const propTypes = {
   disableCreateButton: PropTypes.func,
   enableCreateButton: PropTypes.func,
   isInitialsModeEnabled: PropTypes.bool,
+  isMultiViewerMode: PropTypes.bool,
 };
 
 const InkSignature = ({
@@ -31,13 +33,15 @@ const InkSignature = ({
   isTabPanelSelected,
   disableCreateButton,
   enableCreateButton,
-  isInitialsModeEnabled = false
+  isInitialsModeEnabled = false,
+  isMultiViewerMode = false,
 }) => {
-  // useCore must be called with 1 so that InkSignature always uses the
-  // viewer-1 signature tool. In MultiViewer, the active viewer key may be 2,
-  // but the signature tool of viewer 1 controls the shared signature list
-  // panel and propagates annotation state to all viewers.
-  const { core } = useCore(1);
+  const { core, documentViewer } = useCore();
+  const signatureToolArray = useMemo(
+    () => getSignatureTools(core, documentViewer, isMultiViewerMode),
+    [core, documentViewer, isMultiViewerMode]
+  );
+  const signatureTool = signatureToolArray[0];
   const fullSignatureCanvas = useRef();
   const initialsCanvas = useRef();
   // the ref holds the path points of the underlying freehand annotation
@@ -54,7 +58,6 @@ const InkSignature = ({
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = fullSignatureCanvas.current;
 
     signatureTool.setSignatureCanvas(canvas);
@@ -65,7 +68,7 @@ const InkSignature = ({
     const secondCanvas = initialsCanvas.current;
     signatureTool.setInitialsCanvas(secondCanvas);
     secondCanvas.getContext('2d').scale(multiplier, multiplier);
-  }, []);
+  }, [signatureTool]);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -77,7 +80,6 @@ const InkSignature = ({
   useEffect(() => {
     async function resizeFullSignatureCanvas() {
       if (isModalOpen && isTabPanelSelected) {
-        const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
         for (const signatureTool of signatureToolArray) {
           signatureTool.setSignature(fullSignaturePathsRef.current);
           signatureTool.setInitials(initialsPathsRef.current);
@@ -90,7 +92,6 @@ const InkSignature = ({
 
     async function resizeInitialsCanvas() {
       if (isModalOpen && isTabPanelSelected && isInitialsModeEnabled) {
-        const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
         for (const signatureTool of signatureToolArray) {
           signatureTool.setInitials(initialsPathsRef.current);
           await signatureTool.resizeCanvas(SignatureModes.INITIALS);
@@ -114,7 +115,6 @@ const InkSignature = ({
   useEffect(() => {
     async function resizeCanvasAsyncCall() {
       if (dimension.height && dimension.width) {
-        const signatureTool = core.getTool('AnnotationCreateSignature');
         await signatureTool.resizeCanvas();
 
         if (isInitialsModeEnabled) {
@@ -123,7 +123,7 @@ const InkSignature = ({
       }
     }
     resizeCanvasAsyncCall();
-  }, [dimension, isInitialsModeEnabled]);
+  }, [dimension, isInitialsModeEnabled, signatureTool]);
 
   useEffect(() => {
     if (fullSignatureDrawn && (!isInitialsModeEnabled || initialsDrawn)) {
@@ -134,21 +134,18 @@ const InkSignature = ({
   }, [initialsDrawn, fullSignatureDrawn, isInitialsModeEnabled]);
 
   const clearFullSignatureCanvas = useCallback(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearSignatureCanvas();
     fullSignaturePathsRef.current = null;
     setFullSignatureDrawn(false);
-  }, []);
+  }, [signatureTool]);
 
   const clearInitialsCanvas = useCallback(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearInitialsCanvas();
     initialsPathsRef.current = null;
     setInitialsDrawn(false);
-  }, []);
+  }, [signatureTool]);
 
   const handleFinishDrawingFullSignature = async () => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     if (!(await signatureTool.isEmptySignature())) {
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document
@@ -159,7 +156,6 @@ const InkSignature = ({
   };
 
   const handleFinishDrawingInitials = async () => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     const initialsAnnotation = signatureTool.getInitialsAnnotation();
     if (initialsAnnotation) {
       // need to deep copy the paths because it will be modified
@@ -172,7 +168,6 @@ const InkSignature = ({
 
   const handleColorInputChange = async (property, value) => {
     setToolStyles('AnnotationCreateSignature', property, value);
-    const signatureTool = core.getTool('AnnotationCreateSignature');
     try {
       if (signatureTool.getFullSignatureAnnotation()) {
         signatureTool.getFullSignatureAnnotation().StrokeColor = value;
@@ -202,7 +197,6 @@ const InkSignature = ({
     return pathsCopy;
   };
 
-  const signatureTool = core.getTool('AnnotationCreateSignature');
   const toolStyles = signatureTool.defaults;
 
   return (

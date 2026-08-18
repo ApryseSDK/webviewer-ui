@@ -15,6 +15,7 @@
     "close": "Menutup",
     "undo": "Membuka",
     "redo": "Siap",
+    "reload": "Muat ulang",
     "comment": "Komentar",
     "reply": "Tambahkan balasan",
     "copy": "Salinan",
@@ -194,6 +195,7 @@
     "note": "Catatan",
     "textField": "Bidang Teks",
     "signatureFormField": "Bidang Tanda Tangan",
+    "datePickerFormField": "Kolom Pemilih Tanggal",
     "checkBoxFormField": "Bidang Kotak Centang",
     "radioButtonFormField": "Bidang Tombol Radio",
     "listBoxFormField": "Bidang Kotak Daftar",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Tampilan Zoom",
     "textPopup": "Munculan Teks",
     "createStampButton": "Buat Stempel Baru",
+    "addStampButton": "Tambahkan Stempel",
     "filter": "Saring",
     "multiSelectButton": "Banyak Pilihan",
     "pageReplaceModalTitle": "Ganti Halaman",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Gagal memuat dokumen terenkripsi. Entri kata sandi dibatalkan.",
     "enterPassword": "Dokumen ini dilindungi kata sandi. Silakan masukkan kata sandi",
     "incorrectPassword": "Sandi salah, upaya tersisa: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Tambahkan komentar untuk memulai diskusi.",
     "noAnnotations": "Mulailah membuat anotasi untuk meninggalkan komentar.",
     "noAnnotationsReadOnly": "Dokumen ini tidak memiliki anotasi.",
     "noAnnotationsFilter": "Mulai membuat anotasi dan filter akan muncul di sini.",
@@ -328,6 +332,7 @@
     "sortBy": "Menyortir",
     "emptyCustomStampInput": "Teks stempel tidak boleh kosong",
     "unpostedComment": "Komentar yang Belum Diposkan",
+    "saved": "Tersimpan",
     "lockedLayer": "Lapisan terkunci",
     "layerVisibilityNoChange": "Visibilitas lapisan tidak dapat diubah",
     "noLayers": "Dokumen ini tidak memiliki lapisan.",
@@ -354,7 +359,15 @@
     "refreshPage": "Silakan periksa koneksi jaringan Anda dan segarkan halaman.",
     "renderErrors": {
       "error": "Terjadi kesalahan di sini.",
-      "refreshPanel": "Anda dapat melanjutkan pekerjaan. Coba buka kembali panelnya."
+      "toFixIssue": "Untuk memperbaiki masalah ini, silakan coba membuka kembali {{componentType}}.",
+      "componentType": {
+        "component": "komponen",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "terbang keluar",
+        "dropdown": "menu tarik-turun",
+        "popup": "popup"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Pengarang",
       "type": "Jenis",
       "color": "Warna",
+      "number": "Nomor",
       "createdDate": "Tanggal Dibuat",
       "modifiedDate": "Tanggal yang diubah"
     },
@@ -617,10 +631,7 @@
         "irreversible": "ireversibel",
         "willDeleteMeasurement": "dan akan menghapus pengukuran terkait.",
         "confirmDelete": "Anda yakin ingin menghapus skala ini?",
-        "thisCantBeUndone": " Hal ini tidak dapat dibatalkan.",
-        "ifChangeScale": "Jika Anda mengubah skala untuk pengukuran atau alat yang dipilih, skala",
-        "notUsedWillDelete": " tidak akan lagi digunakan oleh pengukuran atau alat apa pun dan akan dihapus. Penghapusan tidak dapat diubah.",
-        "ifToContinue": "Anda yakin ingin melanjutkan?"
+        "thisCantBeUndone": " Hal ini tidak dapat dibatalkan."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Warna teks",
       "backgroundColor": "Warna latar belakang",
       "dateToolTipLabel": "Info lebih lanjut tentang format tanggal",
-      "previewCustomStamp": "Pratinjau dari"
+      "previewCustomStamp": "Pratinjau dari",
+      "category": "Kategori",
+      "categoryInstructions": "Ketik untuk memberi nama kategori baru",
+      "customStamp": "Stempel Kustom"
     },
     "pageRedactModal": {
       "addMark": "Tambahkan Tandai",
@@ -754,6 +768,8 @@
       "annotations": "Anotasi",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Nonaktifkan Pembaruan Gaya Default Alat Dari Popup Anotasi",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Menonaktifkan sinkronisasi pembaruan gaya anotasi ke alat terkait yang membuat anotasi. Jadi, jika gaya anotasi diubah, gaya default alat tidak akan diperbarui.",
+      "enableViewportRelativePositioning": "Aktifkan Pemosisian Anotasi Relatif Viewport",
+      "enableViewportRelativePositioningDesc": "Saat diaktifkan, memindahkan anotasi antar halaman dengan rotasi berbeda akan mempertahankan posisi dan orientasi visualnya.",
       "notesPanel": "Panel Catatan",
       "disableNoteSubmissionWithEnter": "Nonaktifkan Pengiriman Catatan Dengan Enter",
       "disableNoteSubmissionWithEnterDesc": "Nonaktifkan kemampuan untuk mengirimkan catatan dengan hanya menekan Enter jika sebelumnya telah diaktifkan. Ini akan mengembalikan pengiriman catatan ke default yaitu Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Sertakan Indikator Lapangan",
       "indicatorPlaceHolders": {
         "TextFormField": "Sisipkan Teks Di Sini",
+        "DatePickerFormField": "Pilih Tanggal",
         "CheckBoxFormField": "Memeriksa",
         "RadioButtonFormField": "Mengisi",
         "ListBoxFormField": "Pilih",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Anotasi Bidang Tombol Radio",
       "ListBoxFormField": "Anotasi Bidang Kotak Daftar",
       "ComboBoxFormField": "Anotasi Bidang Kotak Kombo",
+      "DatePickerFormField": "Anotasi Bidang Pemilih Tanggal",
       "TextFormField": "Anotasi Bidang Teks"
     },
     "apply": "Terapkan Bidang",
@@ -1311,6 +1329,7 @@
     "underline": "Menggarisbawahi",
     "strikeout": "Coretan",
     "textColor": "Warna teks",
+    "highlightColor": "Warna sorotan",
     "leftAlign": "Rata kiri",
     "centerAlign": "Rata tengah",
     "rightAlign": "Rata kanan",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Perangko",
-    "standard": "Perangko Standar"
+    "standard": "Perangko Standar",
+    "preset": "Pengaturan Awal",
+    "custom": "Kustom"
   },
   "colorPickerModal": {
     "modalTitle": "Pemilih Warna"

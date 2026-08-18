@@ -15,6 +15,7 @@
     "close": "Zamknij",
     "undo": "Cofnij",
     "redo": "Przywróć",
+    "reload": "Przeładować",
     "comment": "Komentarz",
     "reply": "Odpowiedz",
     "copy": "Kopiuj",
@@ -194,6 +195,7 @@
     "note": "Notatka",
     "textField": "Pole tekstowe",
     "signatureFormField": "Pole podpisu",
+    "datePickerFormField": "Pole wyboru daty",
     "checkBoxFormField": "Pole wyboru",
     "radioButtonFormField": "Pole przycisku",
     "listBoxFormField": "Pole listy wartości",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Powiększanie nakładki",
     "textPopup": "Wyskakujące okienko tekstowe",
     "createStampButton": "Utwórz nowy stempel",
+    "addStampButton": "Dodaj znaczek",
     "filter": "Filtr",
     "multiSelectButton": "Wielokrotny wybór",
     "pageReplaceModalTitle": "Zamień stronę",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Nie udało się wczytać zaszyfrowanego dokumentu. Wprowadzanie hasła zostało anulowane.",
     "enterPassword": "Ten dokument jest chroniony hasłem. proszę wprowadzić hasło",
     "incorrectPassword": "Nieprawidłowe hasło, pozostałe próby: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Dodaj komentarz, aby rozpocząć dyskusję.",
     "noAnnotations": "Zacznij tworzyć adnotacje, aby zostawić komentarz.",
     "noAnnotationsReadOnly": "Ten dokument nie zawiera adnotacji.",
     "noAnnotationsFilter": "Rozpocznij tworzenie adnotacji, a pojawią się tutaj filtry.",
@@ -328,6 +332,7 @@
     "sortBy": "Sortuj",
     "emptyCustomStampInput": "Tekst stempla nie może być pusty",
     "unpostedComment": "Nieopublikowany komentarz",
+    "saved": "Zapisano",
     "lockedLayer": "Warstwa jest zablokowana",
     "layerVisibilityNoChange": "Widoczności warstwy nie można zmienić",
     "noLayers": "Ten dokument nie ma warstw.",
@@ -354,7 +359,15 @@
     "refreshPage": "Sprawdź połączenie sieciowe i odśwież stronę.",
     "renderErrors": {
       "error": "Coś tu poszło nie tak.",
-      "refreshPanel": "Możesz kontynuować pracę. Spróbuj ponownie otworzyć panel."
+      "toFixIssue": "Aby rozwiązać problem, spróbuj ponownie otworzyć {{componentType}}.",
+      "componentType": {
+        "component": "część",
+        "panel": "płyta",
+        "modal": "kapitał",
+        "flyout": "wysuwany",
+        "dropdown": "rozwijana lista",
+        "popup": "wyskakujące okienko"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Autor",
       "type": "Rodzaj",
       "color": "Kolor",
+      "number": "Numer",
       "createdDate": "stworz Date",
       "modifiedDate": "Zmieniona data"
     },
@@ -617,10 +631,7 @@
         "irreversible": "nieodwracalny",
         "willDeleteMeasurement": "i usunie powiązane pomiary.",
         "confirmDelete": "Czy na pewno chcesz usunąć tę skalę?",
-        "thisCantBeUndone": " Tego nie można cofnąć.",
-        "ifChangeScale": "Jeśli zmienisz skalę dla wybranego pomiaru lub narzędzia, skala",
-        "notUsedWillDelete": " nie będą już używane przez żadne pomiary ani narzędzia i zostaną usunięte. Usunięcie jest nieodwracalne.",
-        "ifToContinue": "Czy na pewno chcesz kontynuować?"
+        "thisCantBeUndone": " Tego nie można cofnąć."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Kolor tekstu",
       "backgroundColor": "Kolor tła",
       "dateToolTipLabel": "Więcej informacji o formacie daty",
-      "previewCustomStamp": "Podgląd"
+      "previewCustomStamp": "Podgląd",
+      "category": "Kategoria",
+      "categoryInstructions": "Wpisz nazwę nowej kategorii",
+      "customStamp": "Znaczek niestandardowy"
     },
     "pageRedactModal": {
       "addMark": "Dodaj znak",
@@ -754,6 +768,8 @@
       "annotations": "Adnotacje",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Wyłącz aktualizację domyślnego stylu narzędzia z wyskakującego okienka adnotacji",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Wyłącza synchronizację aktualizacji stylu adnotacji z powiązanym narzędziem, które utworzyło adnotację. Jeśli więc styl adnotacji zostanie zmieniony, domyślne style narzędzia nie zostaną zaktualizowane.",
+      "enableViewportRelativePositioning": "Włącz pozycjonowanie adnotacji względem widoku",
+      "enableViewportRelativePositioningDesc": "Po włączeniu tej opcji, przesuwanie adnotacji pomiędzy stronami przy różnym obrocie zachowuje ich wizualną pozycję i orientację.",
       "notesPanel": "Panel notatek",
       "disableNoteSubmissionWithEnter": "Wyłącz przesyłanie notatek za pomocą Enter",
       "disableNoteSubmissionWithEnterDesc": "Wyłącz możliwość przesyłania notatek, naciskając tylko klawisz Enter, jeśli był wcześniej włączony. Spowoduje to przywrócenie ustawień domyślnych przesyłania notatek, czyli Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Dołącz wskaźnik pola",
       "indicatorPlaceHolders": {
         "TextFormField": "Wstaw tekst tutaj",
+        "DatePickerFormField": "Wybierz datę",
         "CheckBoxFormField": "Wiele z",
         "RadioButtonFormField": "Jeden z",
         "ListBoxFormField": "Wybierz",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Adnotacja pola przycisku radiowego",
       "ListBoxFormField": "Adnotacja pola pola listy",
       "ComboBoxFormField": "Adnotacja pola kombi",
+      "DatePickerFormField": "Adnotacja pola selektora dat",
       "TextFormField": "Adnotacja pola tekstowego"
     },
     "apply": "Zastosuj pola",
@@ -1311,6 +1329,7 @@
     "underline": "Podkreślać",
     "strikeout": "Wykreślić",
     "textColor": "Kolor tekstu",
+    "highlightColor": "Podświetl kolor",
     "leftAlign": "Wyrównaj do lewej",
     "centerAlign": "Wyrównaj do środka",
     "rightAlign": "Wyrównaj do prawej",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Znaczki",
-    "standard": "Standardowe znaczki"
+    "standard": "Standardowe znaczki",
+    "preset": "Ustawienie wstępne",
+    "custom": "Niestandardowe"
   },
   "colorPickerModal": {
     "modalTitle": "Wybór koloru"

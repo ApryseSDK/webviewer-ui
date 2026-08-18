@@ -15,6 +15,7 @@
     "close": "Закрити",
     "undo": "Скасувати",
     "redo": "Готовий",
+    "reload": "Перезавантажити",
     "comment": "Коментар",
     "reply": "Додати відповідь",
     "copy": "Копія",
@@ -194,6 +195,7 @@
     "note": "Примітка",
     "textField": "Текстове поле",
     "signatureFormField": "Поле підпису",
+    "datePickerFormField": "Поле вибору дати",
     "checkBoxFormField": "Поле прапорця",
     "radioButtonFormField": "Поле перемикача",
     "listBoxFormField": "Поле списку",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Накладання масштабу",
     "textPopup": "Текстове спливаюче вікно",
     "createStampButton": "Створити новий штамп",
+    "addStampButton": "Додати штамп",
     "filter": "Фільтр",
     "multiSelectButton": "Multi Select",
     "pageReplaceModalTitle": "Замінити сторінку",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Не вдалося завантажити зашифрований документ. Введення пароля скасовано.",
     "enterPassword": "Цей документ захищений паролем. Будь ласка, введіть пароль",
     "incorrectPassword": "Неправильний пароль, залишилося спроб: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Додайте коментар, щоб розпочати обговорення.",
     "noAnnotations": "Почніть робити анотації, щоб залишити коментар.",
     "noAnnotationsReadOnly": "Цей документ не має анотацій.",
     "noAnnotationsFilter": "Почніть створювати анотації, і тут з’являться фільтри.",
@@ -328,6 +332,7 @@
     "sortBy": "Сортувати",
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
     "unpostedComment": "Неопублікований коментар",
+    "saved": "Збережено",
     "lockedLayer": "Шар заблокований",
     "layerVisibilityNoChange": "Видимість шару не можна змінити",
     "noLayers": "Цей документ не має шарів.",
@@ -354,7 +359,15 @@
     "refreshPage": "Будь ласка, перевірте підключення до мережі та оновіть сторінку.",
     "renderErrors": {
       "error": "Тут щось пішло не так.",
-      "refreshPanel": "Ви можете продовжувати роботу. Спробуйте знову відкрити панель."
+      "toFixIssue": "Щоб вирішити проблему, спробуйте знову відкрити {{componentType}}.",
+      "componentType": {
+        "component": "компонент",
+        "panel": "панель",
+        "modal": "капітал",
+        "flyout": "спливаюче меню",
+        "dropdown": "випадаючий список",
+        "popup": "спливаюче вікно"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Автор",
       "type": "Тип",
       "color": "Колір",
+      "number": "Номер",
       "createdDate": "Дата створення",
       "modifiedDate": "Дата зміни"
     },
@@ -617,10 +631,7 @@
         "irreversible": "незворотні",
         "willDeleteMeasurement": "і видалить пов’язані вимірювання.",
         "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?",
-        "thisCantBeUndone": " Цю дію не можна скасувати.",
-        "ifChangeScale": "Якщо ви змінюєте масштаб для вибраного вимірювання або інструменту, масштабуйте",
-        "notUsedWillDelete": " більше не використовуватимуться для вимірювань чи інструментів і будуть видалені. Видалення незворотне.",
-        "ifToContinue": "Ви впевнені, що бажаєте продовжити?"
+        "thisCantBeUndone": " Цю дію не можна скасувати."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Колір тексту",
       "backgroundColor": "Колір фону",
       "dateToolTipLabel": "Докладніше про формат дати",
-      "previewCustomStamp": "Попередній перегляд"
+      "previewCustomStamp": "Попередній перегляд",
+      "category": "Категорія",
+      "categoryInstructions": "Введіть назву нової категорії",
+      "customStamp": "Спеціальний штамп"
     },
     "pageRedactModal": {
       "addMark": "Додайте позначку",
@@ -754,6 +768,8 @@
       "annotations": "Анотації",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Вимкнути оновлення стилю інструмента за замовчуванням зі спливаючого вікна анотації",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Вимикає синхронізацію оновлень стилю анотації з пов’язаним інструментом, який створив анотацію. Отже, якщо стиль анотації змінено, стандартні стилі інструмента не оновлюватимуться.",
+      "enableViewportRelativePositioning": "Увімкнути позиціонування анотацій відносно вікна перегляду",
+      "enableViewportRelativePositioningDesc": "Якщо цю функцію ввімкнено, переміщення анотацій між сторінками з різними поворотами зберігає їхнє візуальне положення та орієнтацію.",
       "notesPanel": "Панель приміток",
       "disableNoteSubmissionWithEnter": "Вимкніть надсилання приміток за допомогою Enter",
       "disableNoteSubmissionWithEnterDesc": "Вимкніть можливість подавати нотатки, лише натиснувши клавішу Enter, якщо її було ввімкнено раніше. Це поверне подання нотаток до типового значення, яке є Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Включити індикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставте текст тут",
+        "DatePickerFormField": "Виберіть дату",
         "CheckBoxFormField": "Перевірте",
         "RadioButtonFormField": "Заповнити",
         "ListBoxFormField": "Виберіть",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Анотація поля радіокнопки",
       "ListBoxFormField": "Анотація до поля списку",
       "ComboBoxFormField": "Анотація поля зі списком",
+      "DatePickerFormField": "Анотація поля вибору дати",
       "TextFormField": "Анотація текстового поля"
     },
     "apply": "Застосувати поля",
@@ -1311,6 +1329,7 @@
     "underline": "Підкреслити",
     "strikeout": "Закреслення",
     "textColor": "Колір тексту",
+    "highlightColor": "Колір виділення",
     "leftAlign": "Вирівняти по лівому краю",
     "centerAlign": "Вирівнювання по центру",
     "rightAlign": "Вирівняти по правому краю",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Марки",
-    "standard": "Стандартні штампи"
+    "standard": "Стандартні штампи",
+    "preset": "Попередньо налаштовано",
+    "custom": "Користувацька"
   },
   "colorPickerModal": {
     "modalTitle": "Палітра кольорів"

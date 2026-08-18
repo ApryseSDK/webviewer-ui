@@ -16,11 +16,12 @@ import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
 import ModalWrapper from 'components/ModalWrapper';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import getSignatureTools from 'components/SignatureModal/getSignatureTools';
 
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const { core } = useCore();
+  const { core, documentViewer } = useCore();
   const [
     isDisabled,
     isOpen,
@@ -32,6 +33,7 @@ const SignatureModal = () => {
     selectedTab,
     displayedSignatures,
     savedInitials,
+    isMultiViewerMode,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SIGNATURE_MODAL),
     selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL),
@@ -43,9 +45,10 @@ const SignatureModal = () => {
     selectors.getSelectedTab(state, DataElements.SIGNATURE_MODAL),
     selectors.getDisplayedSignatures(state),
     selectors.getSavedInitials(state),
+    selectors.isMultiViewerMode(state),
   ]);
 
-  const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
+  const signatureToolArray = getSignatureTools(core, documentViewer, isMultiViewerMode);
   const [createButtonDisabled, setCreateButtonDisabled] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -239,6 +242,7 @@ const SignatureModal = () => {
                 enableCreateButton={enableCreateButton}
                 disableCreateButton={disableCreateButton}
                 isInitialsModeEnabled={isInitialsModeEnabled}
+                isMultiViewerMode={isMultiViewerMode}
               />
             </TabPanel>
             <TabPanel dataElement="textSignaturePanel">

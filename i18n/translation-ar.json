@@ -15,6 +15,7 @@
     "close": "إغلاق",
     "undo": "تراجع",
     "redo": "إعادة",
+    "reload": "أعد تحميل الصفحة",
     "comment": "تعليق",
     "reply": "إضافة رد",
     "copy": "نسخ",
@@ -194,6 +195,7 @@
     "note": "ملحوظة",
     "textField": "حقل نص",
     "signatureFormField": "حقل توقيع",
+    "datePickerFormField": "حقل اختيار التاريخ",
     "checkBoxFormField": "حقل مربع اختيار",
     "radioButtonFormField": "حقل زر اختيار",
     "listBoxFormField": "حقل مربع قائمة",
@@ -259,6 +261,7 @@
     "zoomOverlay": "تراكب التكبير",
     "textPopup": "نافذة نصية منبثقة",
     "createStampButton": "إنشاء ختم جديد",
+    "addStampButton": "إضافة طابع بريدي",
     "filter": "عامل تصفية",
     "multiSelectButton": "اختيار متعدد",
     "pageReplaceModalTitle": "استبدال الصفحة",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "تعذّر تحميل المستند المشفّر. تم إلغاء إدخال كلمة المرور.",
     "enterPassword": "هذا المستند محمي بكلمة مرور. يُرجى إدخال كلمة المرور.",
     "incorrectPassword": "كلمة المرور غير صحيحة، المحاولات المتبقية: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "أضف تعليقًا لبدء مناقشة.",
     "noAnnotations": "ابدأ بإضافة الأدوات التوضيحية لترك تعليق.",
     "noAnnotationsReadOnly": "لا يوجد أي أدوات توضيحية على هذا المستند.",
     "noAnnotationsFilter": "ابدأ في إنشاء الأدوات التوضيحية وسوف تظهر عوامل التصفية هنا.",
@@ -328,6 +332,7 @@
     "sortBy": "فرز حسب",
     "emptyCustomStampInput": "لا يمكن أن يكون نص الختم فارغًا",
     "unpostedComment": "تعليق غير منشور",
+    "saved": "أنقذ",
     "lockedLayer": "الطبقة مقفلة",
     "layerVisibilityNoChange": "لا يمكن تغيير مستوى رؤية الطبقة",
     "noLayers": "هذا المستند لا يحتوي على طبقات.",
@@ -354,7 +359,15 @@
     "refreshPage": "يرجى التحقق من اتصالك بالشبكة وتحديث الصفحة.",
     "renderErrors": {
       "error": "حدث خطأ ما هنا.",
-      "refreshPanel": "يمكنك متابعة العمل. حاول إعادة فتح اللوحة."
+      "toFixIssue": "لحل المشكلة، يرجى محاولة إعادة فتح {{componentType}}.",
+      "componentType": {
+        "component": "عنصر",
+        "panel": "لوحة",
+        "modal": "عاصمة",
+        "flyout": "رحلة جوية",
+        "dropdown": "اسقاط",
+        "popup": "يظهر فجأة"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "مؤلف",
       "type": "نوع",
       "color": "لون",
+      "number": "رقم",
       "createdDate": "تاريخ الإنشاء",
       "modifiedDate": "تاريخ التعديل"
     },
@@ -617,10 +631,7 @@
         "irreversible": "لا رجعة فيه",
         "willDeleteMeasurement": "وسوف يتم حذف القياسات المرتبطة.",
         "confirmDelete": "هل أنت متأكد أنك تريد حذف هذا المقياس؟",
-        "thisCantBeUndone": "لا يمكن التراجع عن هذا.",
-        "ifChangeScale": "إذا قمت بتغيير المقياس للقياس أو الأداة المحددة، فإن المقياس",
-        "notUsedWillDelete": "لن يُستخدم بعد الآن في أي قياسات أو أدوات، وسيتم حذفه. الحذف لا رجعة فيه.",
-        "ifToContinue": "هل أنت متأكد أنك تريد الاستمرار؟"
+        "thisCantBeUndone": "لا يمكن التراجع عن هذا."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "لون النص",
       "backgroundColor": "لون الخلفية",
       "dateToolTipLabel": "مزيد من المعلومات حول تنسيق التاريخ",
-      "previewCustomStamp": "معاينة"
+      "previewCustomStamp": "معاينة",
+      "category": "فئة",
+      "categoryInstructions": "اكتب لتسمية فئة جديدة",
+      "customStamp": "طابع مخصص"
     },
     "pageRedactModal": {
       "addMark": "إضافة علامة",
@@ -754,6 +768,8 @@
       "annotations": "الأدوات التوضيحية",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "تعطيل تحديث نمط الأداة الافتراضي من نافذة الأدوات التوضيحية",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "تعطيل مزامنة تحديثات نمط الأدوات التوضيحية مع الأداة المُرتبطة بها التي أنشأتها. لذا، في حال تغيير نمط الأداة التوضيحية، فلن يتم تحديث الأنماط الافتراضية للأداة.",
+      "enableViewportRelativePositioning": "تفعيل تحديد موضع التعليقات التوضيحية بالنسبة إلى منفذ العرض",
+      "enableViewportRelativePositioningDesc": "عند التفعيل، يحافظ تحريك التعليقات التوضيحية عبر الصفحات ذات الدورانات المختلفة على موضعها المرئي واتجاهها.",
       "notesPanel": "لوحة الملاحظات",
       "disableNoteSubmissionWithEnter": "تعطيل إرسال الملاحظات باستخدام Enter",
       "disableNoteSubmissionWithEnterDesc": "تعطيل إمكانية إرسال الملاحظات بالضغط على زر الإدخال فقط إذا كانت مُفعّلة سابقًا. سيؤدي هذا إلى إعادة إرسال الملاحظات إلى الوضع الافتراضي، وهو Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "تضمين مؤشر الحقل",
       "indicatorPlaceHolders": {
         "TextFormField": "أدخل النص هنا",
+        "DatePickerFormField": "حدد التاريخ",
         "CheckBoxFormField": "تأشير",
         "RadioButtonFormField": "ملء",
         "ListBoxFormField": "اختيار",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "أداة حقل زر الاختيار",
       "ListBoxFormField": "أداة حقل مربع القائمة",
       "ComboBoxFormField": "أداة حقل مربع تحرير وسرد",
+      "DatePickerFormField": "شرح حقل منتقي التاريخ",
       "TextFormField": "أداة حقل النص"
     },
     "apply": "تطبيق الحقول",
@@ -1311,6 +1329,7 @@
     "underline": "تسطير",
     "strikeout": "خط يتوسط النص",
     "textColor": "لون النص",
+    "highlightColor": "لون مميز",
     "leftAlign": "محاذاة إلى اليسار",
     "centerAlign": "محاذاة المركز",
     "rightAlign": "محاذاة إلى اليمين",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "الأختام",
-    "standard": "الأختام الجاهزة"
+    "standard": "الأختام الجاهزة",
+    "preset": "إعدادات مسبقة",
+    "custom": "مخصص"
   },
   "colorPickerModal": {
     "modalTitle": "أداة اختيار الألوان"

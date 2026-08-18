@@ -15,6 +15,7 @@
     "close": "Vicino",
     "undo": "Disfare",
     "redo": "Pronto",
+    "reload": "Ricaricare",
     "comment": "Commento",
     "reply": "rispondere",
     "copy": "copia",
@@ -194,6 +195,7 @@
     "note": "Nota",
     "textField": "Campo di testo",
     "signatureFormField": "Campo firma",
+    "datePickerFormField": "Campo di selezione data",
     "checkBoxFormField": "Campo casella di controllo",
     "radioButtonFormField": "Campo del pulsante di opzione",
     "listBoxFormField": "Campo casella di riepilogo",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Sovrapposizione zoom",
     "textPopup": "Popup di testo",
     "createStampButton": "Crea nuovo timbro",
+    "addStampButton": "Aggiungi timbro",
     "filter": "Filtro",
     "multiSelectButton": "Selezione multipla",
     "pageReplaceModalTitle": "Sostituisci pagina",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Caricamento del documento crittografato non riuscito. Inserimento password annullato.",
     "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
     "incorrectPassword": "Password errata, tentativi rimasti: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Aggiungi un commento per iniziare una discussione.",
     "noAnnotations": "Inizia a fare annotazioni per lasciare un commento.",
     "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
@@ -328,6 +332,7 @@
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
+    "saved": "Salvato",
     "lockedLayer": "Il livello è bloccato",
     "layerVisibilityNoChange": "La visibilità del livello non può essere modificata",
     "noLayers": "Questo documento non ha livelli.",
@@ -354,7 +359,15 @@
     "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina.",
     "renderErrors": {
       "error": "Qualcosa è andato storto.",
-      "refreshPanel": "Puoi continuare a lavorare. Prova a riaprire il pannello."
+      "toFixIssue": "Per risolvere il problema, prova a riaprire il {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "pannello",
+        "modal": "capitale",
+        "flyout": "volo fuori",
+        "dropdown": "cadere in picchiata",
+        "popup": "apparire"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Autore",
       "type": "genere",
       "color": "Colore",
+      "number": "Numero",
       "createdDate": "Data di Creazione",
       "modifiedDate": "Data modificata"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irreversibile",
         "willDeleteMeasurement": "e cancellerà le misurazioni associate.",
         "confirmDelete": "Sei sicuro di voler eliminare questa scala?",
-        "thisCantBeUndone": " L'operazione non può essere annullata.",
-        "ifChangeScale": "Se si modifica la scala per la misurazione o lo strumento selezionato, scalare",
-        "notUsedWillDelete": " non sarà più utilizzato da alcuna misura o strumento e sarà cancellato. La cancellazione è irreversibile.",
-        "ifToContinue": "Sei sicuro di voler continuare?"
+        "thisCantBeUndone": " L'operazione non può essere annullata."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Colore del testo",
       "backgroundColor": "Colore di sfondo",
       "dateToolTipLabel": "Ulteriori informazioni sul formato della data",
-      "previewCustomStamp": "Anteprima di"
+      "previewCustomStamp": "Anteprima di",
+      "category": "Categoria",
+      "categoryInstructions": "Digita per assegnare un nome a una nuova categoria",
+      "customStamp": "Timbro personalizzato"
     },
     "pageRedactModal": {
       "addMark": "Aggiungi Marco",
@@ -754,6 +768,8 @@
       "annotations": "Annotazioni",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Disattiva l'aggiornamento dello stile predefinito dello strumento dal popup di annotazione",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Disabilita la sincronizzazione degli aggiornamenti dello stile di annotazione con lo strumento associato che ha creato l'annotazione. Quindi, se lo stile di un'annotazione viene modificato, gli stili predefiniti dello strumento non verranno aggiornati.",
+      "enableViewportRelativePositioning": "Abilita il posizionamento delle annotazioni rispetto alla finestra di visualizzazione",
+      "enableViewportRelativePositioningDesc": "Quando questa opzione è abilitata, lo spostamento delle annotazioni tra pagine con rotazioni diverse ne preserva la posizione e l'orientamento visivi.",
       "notesPanel": "Pannello Note",
       "disableNoteSubmissionWithEnter": "Disabilita l'invio delle note con Invio",
       "disableNoteSubmissionWithEnterDesc": "Disabilita la possibilità di inviare note premendo Invio solo se precedentemente era stato abilitato. Questo ripristinerà l'invio delle note all'impostazione predefinita che è Ctrl/Cmd + Invio.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Includi indicatore di campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserisci qui il testo",
+        "DatePickerFormField": "Seleziona la data",
         "CheckBoxFormField": "Dai un'occhiata",
         "RadioButtonFormField": "Riempire",
         "ListBoxFormField": "Selezionare",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Annotazione del campo del pulsante di opzione",
       "ListBoxFormField": "Annotazione del campo della casella di riepilogo",
       "ComboBoxFormField": "Annotazione del campo della casella combinata",
+      "DatePickerFormField": "Annotazione del campo Selettore data",
       "TextFormField": "Annotazione del campo di testo"
     },
     "apply": "Applica campi",
@@ -1311,6 +1329,7 @@
     "underline": "Sottolineare",
     "strikeout": "Barrato",
     "textColor": "Colore del testo",
+    "highlightColor": "Colore di evidenziazione",
     "leftAlign": "Allineamento a sinistra",
     "centerAlign": "Allineamento al centro",
     "rightAlign": "Allineamento a destra",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Francobolli",
-    "standard": "Francobolli standard"
+    "standard": "Francobolli standard",
+    "preset": "Preimpostazione",
+    "custom": "Personalizzato"
   },
   "colorPickerModal": {
     "modalTitle": "Selettore colore"

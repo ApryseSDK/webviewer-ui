@@ -15,6 +15,7 @@
     "close": "Schliessen",
     "undo": "Rückgängig",
     "redo": "Wiederherstellen",
+    "reload": "Neu laden",
     "comment": "Kommentar",
     "reply": "Antwort",
     "copy": "Kopieren",
@@ -194,6 +195,7 @@
     "note": "Hinweis",
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
+    "datePickerFormField": "Datumsauswahlfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
     "radioButtonFormField": "Radio-Button-Feld",
     "listBoxFormField": "Listenfeld",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Zoom-Overlay",
     "textPopup": "Text Popup",
     "createStampButton": "Neuen Stempel erstellen",
+    "addStampButton": "Briefmarke hinzufügen",
     "filter": "Filter",
     "multiSelectButton": "Mehrfachauswahl",
     "pageReplaceModalTitle": "Seite Ersetzen",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Fehler beim Laden des verschlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
     "enterPassword": "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie ein Passwort ein",
     "incorrectPassword": "Falsches Passwort, verbleibende Versuche: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Fügen Sie einen Kommentar hinzu, um eine Diskussion zu starten.",
     "noAnnotations": "Keine Kommentare gefunden.",
     "noAnnotationsReadOnly": "Dieses Dokument erlaubt keine Kommentare.",
     "noAnnotationsFilter": "Beginnen Sie hier mit der Erstellung von Anmerkungen und Filtern.",
@@ -328,6 +332,7 @@
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unveröffentlichter Kommentar",
+    "saved": "Gespeichert",
     "lockedLayer": "Ebene ist gesperrt",
     "layerVisibilityNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
     "noLayers": "Dieses Dokument hat keine Ebenen.",
@@ -354,7 +359,15 @@
     "refreshPage": "Bitte überprüfen Sie Ihre Netzwerkverbindung und aktualisieren Sie die Seite.",
     "renderErrors": {
       "error": "Hier ist etwas schiefgelaufen.",
-      "refreshPanel": "Sie können weiterarbeiten. Versuchen Sie, das Bedienfeld erneut zu öffnen."
+      "toFixIssue": "Um das Problem zu beheben, versuchen Sie bitte, {{componentType}} erneut zu öffnen.",
+      "componentType": {
+        "component": "Komponente",
+        "panel": "Panel",
+        "modal": "Hauptstadt",
+        "flyout": "Flyout",
+        "dropdown": "runterfallen",
+        "popup": "Popup"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Autor",
       "type": "Art",
       "color": "Farbe",
+      "number": "Nummer",
       "createdDate": "Erstellungsdatum",
       "modifiedDate": "Geändertes Datum"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "und löscht die zugehörigen Messungen.",
         "confirmDelete": "Möchten Sie diese Skala wirklich löschen?",
-        "thisCantBeUndone": "Dies kann nicht rückgängig gemacht werden.",
-        "ifChangeScale": "Wenn Sie den Maßstab für die ausgewählte Messung oder das ausgewählte Werkzeug ändern, skalieren Sie",
-        "notUsedWillDelete": " werden von keinen Messungen oder Werkzeugen mehr verwendet und gelöscht. Die Löschung ist irreversibel.",
-        "ifToContinue": "Möchten Sie wirklich fortfahren?"
+        "thisCantBeUndone": "Dies kann nicht rückgängig gemacht werden."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Textfarbe",
       "backgroundColor": "Hintergrundfarbe",
       "dateToolTipLabel": "Weitere Informationen zum Datumsformat",
-      "previewCustomStamp": "Vorschau von"
+      "previewCustomStamp": "Vorschau von",
+      "category": "Kategorie",
+      "categoryInstructions": "Geben Sie einen Namen für eine neue Kategorie ein.",
+      "customStamp": "Individueller Stempel"
     },
     "pageRedactModal": {
       "addMark": "Markieren hinzufügen",
@@ -754,6 +768,8 @@
       "annotations": "Anmerkungen",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Deaktivieren Sie die Aktualisierung des Werkzeug-Standardstils aus dem Anmerkungs-Popup",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Deaktiviert die Synchronisierung von Anmerkungsstilaktualisierungen mit dem zugeordneten Werkzeug, das die Anmerkung erstellt hat. Wenn also der Stil einer Anmerkung geändert wird, werden die Standardstile des Werkzeugs nicht aktualisiert.",
+      "enableViewportRelativePositioning": "Ansichtsfenster-relative Anmerkungspositionierung aktivieren",
+      "enableViewportRelativePositioningDesc": "Wenn diese Option aktiviert ist, bleiben beim Verschieben von Anmerkungen über Seiten mit unterschiedlicher Ausrichtung deren visuelle Position und Orientierung erhalten.",
       "notesPanel": "Notizenbereich",
       "disableNoteSubmissionWithEnter": "Deaktivieren Sie das Senden von Notizen mit der Eingabetaste",
       "disableNoteSubmissionWithEnterDesc": "Deaktivieren Sie die Möglichkeit, Notizen zu senden, indem Sie nur die Eingabetaste drücken, wenn sie zuvor aktiviert war. Dadurch wird das Senden von Notizen auf die Standardeinstellung zurückgesetzt, die Strg/Befehl + Eingabetaste ist.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Indikator „Feld einschließen“",
       "indicatorPlaceHolders": {
         "TextFormField": "Text hier einfügen",
+        "DatePickerFormField": "Datum auswählen",
         "CheckBoxFormField": "Prüfen",
         "RadioButtonFormField": "Füllen",
         "ListBoxFormField": "Auswählen",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Anmerkung zum Optionsfeldfeld",
       "ListBoxFormField": "Anmerkungen zu Listenfeldfeldern",
       "ComboBoxFormField": "Kombinationsfeld-Feldanmerkung",
+      "DatePickerFormField": "Datumsauswahlfeld-Anmerkung",
       "TextFormField": "Textfeldanmerkung"
     },
     "apply": "Felder anwenden",
@@ -1311,6 +1329,7 @@
     "underline": "Unterstreichen",
     "strikeout": "Durchgestrichen",
     "textColor": "Textfarbe",
+    "highlightColor": "Hervorhebungsfarbe",
     "leftAlign": "Links ausrichten",
     "centerAlign": "Zentrieren",
     "rightAlign": "Rechts ausrichten",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Briefmarken",
-    "standard": "Standardstempel"
+    "standard": "Standardstempel",
+    "preset": "Voreinstellung",
+    "custom": "Benutzerdefiniert"
   },
   "colorPickerModal": {
     "modalTitle": "Farbwähler"

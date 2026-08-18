@@ -11,8 +11,23 @@ jest.mock('core', () => ({
     getBoundingClientRect: () => ({}),
   }),
   getDocumentViewer: () => ({
-    getTool: noop,
+    getTool: () => ({
+      defaults: {},
+      setSignatureCanvas: noop,
+      setInitialsCanvas: noop,
+      clearSignatureCanvas: noop,
+      clearInitialsCanvas: noop,
+    }),
   }),
+  getDocumentViewers: () => [{
+    getTool: () => ({
+      defaults: {},
+      setSignatureCanvas: noop,
+      setInitialsCanvas: noop,
+      clearSignatureCanvas: noop,
+      clearInitialsCanvas: noop,
+    }),
+  }],
   getToolsFromAllDocumentViewers: () => [
     {
       ACCEPTED_FILE_SIZE: 10485760,

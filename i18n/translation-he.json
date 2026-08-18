@@ -15,6 +15,7 @@
     "close": "סגור",
     "undo": "בטל",
     "redo": "בצע שוב",
+    "reload": "לִטעוֹן מִחָדָשׁ",
     "comment": "הערה",
     "reply": "הוסף תגובה",
     "copy": "העתק",
@@ -194,6 +195,7 @@
     "note": "הערה",
     "textField": "שדה טקסט",
     "signatureFormField": "שדה חתימה",
+    "datePickerFormField": "שדה בורר תאריכים",
     "checkBoxFormField": "שדה תיבת סימון",
     "radioButtonFormField": "שדה כפתור רדיו",
     "listBoxFormField": "שדה תיבת רשימה",
@@ -259,6 +261,7 @@
     "zoomOverlay": "שכבת-על של זום",
     "textPopup": "חלון קופץ טקסט",
     "createStampButton": "צור חותמת חדשה",
+    "addStampButton": "הוסף בול",
     "filter": "לסנן",
     "multiSelectButton": "בחירה מרובה",
     "pageReplaceModalTitle": "החלפת עמוד",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "טעינת המסמך המוצפן נכשלה. הזנת הסיסמה בוטלה.",
     "enterPassword": "מסמך זה מוגן בסיסמה. אנא הזן סיסמה",
     "incorrectPassword": "סיסמה שגויה, ניסיונות שנותרו: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "הוסף תגובה כדי להתחיל דיון.",
     "noAnnotations": "התחל לרשום הערות כדי להשאיר תגובה.",
     "noAnnotationsReadOnly": "למסמך זה אין הערות.",
     "noAnnotationsFilter": "התחל ליצור הערות ומסננים יופיעו כאן.",
@@ -328,6 +332,7 @@
     "sortBy": "מיין לפי",
     "emptyCustomStampInput": "טקסט החותמת אינו יכול להיות ריק",
     "unpostedComment": "תגובה שלא פורסמה",
+    "saved": "נשמר",
     "lockedLayer": "השכבה נעולה",
     "layerVisibilityNoChange": "לא ניתן לשנות את נראות השכבה",
     "noLayers": "למסמך זה אין שכבות.",
@@ -354,7 +359,15 @@
     "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
     "renderErrors": {
       "error": "משהו השתבש כאן.",
-      "refreshPanel": "אתה יכול להמשיך לעבוד. נסה לפתוח מחדש את הפאנל."
+      "toFixIssue": "כדי לתקן את הבעיה, אנא נסה לפתוח מחדש את {{componentType}}.",
+      "componentType": {
+        "component": "רְכִיב",
+        "panel": "לוּחַ",
+        "modal": "הוֹן",
+        "flyout": "חלון נפתח",
+        "dropdown": "תפריט נפתח",
+        "popup": "קופץ"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "מחבר",
       "type": "סוג",
       "color": "צבע",
+      "number": "מִספָּר",
       "createdDate": "תאריך יצירה",
       "modifiedDate": "תאריך שינוי"
     },
@@ -617,10 +631,7 @@
         "irreversible": "בלתי הפיכה",
         "willDeleteMeasurement": "ותמחק את המידות הקשורות.",
         "confirmDelete": "האם אתה בטוח שאתה רוצה למחוק את קנה המידה הזה?",
-        "thisCantBeUndone": "לא ניתן לבטל את זה.",
-        "ifChangeScale": "אם תשנה את קנה המידה עבור המדידה או הכלי שנבחרו, קנה המידה",
-        "notUsedWillDelete": "לא ישמש עוד אף מדידה או כלי ויימחק. המחיקה אינה הפיכה.",
-        "ifToContinue": "האם אתה בטוח שאתה רוצה להמשיך?"
+        "thisCantBeUndone": "לא ניתן לבטל את זה."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "צבע הטקסט",
       "backgroundColor": "צבע רקע",
       "dateToolTipLabel": "מידע נוסף על פורמט תאריך",
-      "previewCustomStamp": "תצוגה מקדימה של"
+      "previewCustomStamp": "תצוגה מקדימה של",
+      "category": "קָטֵגוֹרִיָה",
+      "categoryInstructions": "הקלד כדי לתת שם לקטגוריה חדשה",
+      "customStamp": "חותמת מותאמת אישית"
     },
     "pageRedactModal": {
       "addMark": "הוסף סימן",
@@ -754,6 +768,8 @@
       "annotations": "ביאורים",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "השבת עדכון סגנון ברירת מחדל של הכלי מחלון קופץ של ביאור",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "מבטל סנכרון של עדכוני סגנונות ביאור לכלי המשויך שיצר את הביאור. לכן, אם סגנון של ביאור משתנה, סגנונות ברירת המחדל של הכלי לא יעודכנו.",
+      "enableViewportRelativePositioning": "הפעל מיקום ביאורים יחסי לחלון התצוגה",
+      "enableViewportRelativePositioningDesc": "כאשר אפשרות זו מופעלת, העברת ביאורים בין עמודים עם סיבובים שונים שומרת על מיקומם החזותי והכיוון שלהם.",
       "notesPanel": "לוח הערות",
       "disableNoteSubmissionWithEnter": "השבת שליחת הערות באמצעות Enter",
       "disableNoteSubmissionWithEnterDesc": "השבת את היכולת לשלוח הערות על ידי לחיצה על Enter רק אם היא הייתה מופעלת בעבר. פעולה זו תחזיר את שליחת ההערות לברירת המחדל שהיא Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "כלול מחוון שדה",
       "indicatorPlaceHolders": {
         "TextFormField": "הכנס טקסט כאן",
+        "DatePickerFormField": "בחר תאריך",
         "CheckBoxFormField": "בדוק",
         "RadioButtonFormField": "מלא",
         "ListBoxFormField": "בחר",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "ביאור שדה כפתור רדיו",
       "ListBoxFormField": "ביאור שדה תיבת רשימה",
       "ComboBoxFormField": "ביאור שדה של תיבת קומבו",
+      "DatePickerFormField": "ביאור שדה בורר התאריכים",
       "TextFormField": "ביאור שדה טקסט"
     },
     "apply": "החלת שדות",
@@ -1311,6 +1329,7 @@
     "underline": "קו תחתי",
     "strikeout": "סטרייקאאוט",
     "textColor": "צבע הטקסט",
+    "highlightColor": "צבע ההדגשה",
     "leftAlign": "יישור שמאלה",
     "centerAlign": "יישור מרכז",
     "rightAlign": "יישור ימינה",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "חותמת",
-    "standard": "חותמות סטנדרטיות"
+    "standard": "חותמות סטנדרטיות",
+    "preset": "הגדרה מראש",
+    "custom": "מותאם אישית"
   },
   "colorPickerModal": {
     "modalTitle": "בורר צבעים"

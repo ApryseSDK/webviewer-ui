@@ -15,6 +15,7 @@
     "close": "Stänga",
     "undo": "Ångra",
     "redo": "Göra om",
+    "reload": "Ladda om",
     "comment": "Kommentar",
     "reply": "Lägg till svar",
     "copy": "Kopiera",
@@ -194,6 +195,7 @@
     "note": "Notera",
     "textField": "Textfält",
     "signatureFormField": "Signaturfält",
+    "datePickerFormField": "Datumväljarfält",
     "checkBoxFormField": "Kryssruta Fält",
     "radioButtonFormField": "Radioknappfält",
     "listBoxFormField": "Listboxfält",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Zoomöverlägg",
     "textPopup": "Text popup",
     "createStampButton": "Skapa ny stämpel",
+    "addStampButton": "Lägg till stämpel",
     "filter": "Filtrera",
     "multiSelectButton": "Flera val",
     "pageReplaceModalTitle": "Ersätt sida",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Det gick inte att läsa in krypterade dokument. Lösenordsinmatningen avbröts.",
     "enterPassword": "Detta dokument är lösenordsskyddat. Vänligen ange ett lösenord",
     "incorrectPassword": "Felaktigt lösenord, försök kvar: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Lägg till en kommentar för att starta en diskussion.",
     "noAnnotations": "Börja göra anteckningar för att lämna en kommentar.",
     "noAnnotationsReadOnly": "Detta dokument har inga kommentarer.",
     "noAnnotationsFilter": "Börja göra kommentarer och filter visas här.",
@@ -328,6 +332,7 @@
     "sortBy": "Sortera",
     "emptyCustomStampInput": "Stämpeltexten får inte vara tom",
     "unpostedComment": "Ej postad kommentar",
+    "saved": "Sparad",
     "lockedLayer": "Lagret är låst",
     "layerVisibilityNoChange": "Lagrets synlighet kan inte ändras",
     "noLayers": "Detta dokument har inga lager.",
@@ -354,7 +359,15 @@
     "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan.",
     "renderErrors": {
       "error": "Något gick fel här.",
-      "refreshPanel": "Du kan fortsätta arbeta. Försök öppna panelen igen."
+      "toFixIssue": "För att åtgärda problemet, försök att öppna {{componentType}} igen.",
+      "componentType": {
+        "component": "komponent",
+        "panel": "panel",
+        "modal": "kapital",
+        "flyout": "utfällbar vy",
+        "dropdown": "rullgardinsmeny",
+        "popup": "popup-meny"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Författare",
       "type": "Typ",
       "color": "Färg",
+      "number": "Antal",
       "createdDate": "Skapat Datum",
       "modifiedDate": "Ändrat datum"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "och raderar associerade mätningar.",
         "confirmDelete": "Är du säker på att du vill ta bort den här skalan?",
-        "thisCantBeUndone": " Detta kan inte ångras.",
-        "ifChangeScale": "Om du ändrar skalan för den valda mätningen eller verktyget, skala",
-        "notUsedWillDelete": " kommer inte längre att användas av några mått eller verktyg och kommer att raderas. Radering är oåterkallelig.",
-        "ifToContinue": "Är du säker på att du vill fortsätta?"
+        "thisCantBeUndone": " Detta kan inte ångras."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Text färg",
       "backgroundColor": "Bakgrundsfärg",
       "dateToolTipLabel": "Mer information om datumformat",
-      "previewCustomStamp": "Förhandsvisning av"
+      "previewCustomStamp": "Förhandsvisning av",
+      "category": "Kategori",
+      "categoryInstructions": "Skriv för att namnge en ny kategori",
+      "customStamp": "Anpassad stämpel"
     },
     "pageRedactModal": {
       "addMark": "Lägg till Mark",
@@ -754,6 +768,8 @@
       "annotations": "Anteckningar",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Inaktivera verktygets standardformatuppdatering från anteckningspopup",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Inaktiverar synkronisering av uppdateringar av anteckningsstil till det associerade verktyget som skapade anteckningen. Så om en kommentars stil ändras kommer verktygets standardstilar inte att uppdateras.",
+      "enableViewportRelativePositioning": "Aktivera Viewport-relativ annoteringspositionering",
+      "enableViewportRelativePositioningDesc": "När funktionen är aktiverad bevaras annoteringars visuella position och orientering när de flyttas mellan sidor med olika rotationer.",
       "notesPanel": "Anteckningspanel",
       "disableNoteSubmissionWithEnter": "Inaktivera anteckningsinlämning med Enter",
       "disableNoteSubmissionWithEnterDesc": "Inaktivera möjligheten att skicka anteckningar genom att endast trycka på Enter om det tidigare varit aktiverat. Detta kommer att återställa anteckningsinlämning till standarden som är Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Inkludera fältindikator",
       "indicatorPlaceHolders": {
         "TextFormField": "Infoga text här",
+        "DatePickerFormField": "Välj datum",
         "CheckBoxFormField": "Kolla upp",
         "RadioButtonFormField": "Fylla",
         "ListBoxFormField": "Välj",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Radioknapp Fältanteckning",
       "ListBoxFormField": "Fältkommentar för listruta",
       "ComboBoxFormField": "Fältkommentar med kombinationsruta",
+      "DatePickerFormField": "Annotering av datumväljarfält",
       "TextFormField": "Textfältsanteckning"
     },
     "apply": "Använd fält",
@@ -1311,6 +1329,7 @@
     "underline": "Understrykning",
     "strikeout": "Överstrykning",
     "textColor": "Text färg",
+    "highlightColor": "Markeringsfärg",
     "leftAlign": "Vänsterjustera",
     "centerAlign": "Centrera",
     "rightAlign": "Högerjustera",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Frimärken",
-    "standard": "Standardstämplar"
+    "standard": "Standardstämplar",
+    "preset": "Förinställning",
+    "custom": "Anpassad"
   },
   "colorPickerModal": {
     "modalTitle": "Färgväljare"

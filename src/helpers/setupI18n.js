@@ -37,7 +37,7 @@ const requestWithXmlHttpRequest = (options, url, payload, callback) => {
   }
 };
 
-export default (state, i18n) => {
+export default (state, i18n, documentViewer) => {
   // Use per-instance i18n if provided, otherwise fall back to global singleton
   const i18nInstance = i18n || i18next;
   i18nInstance.languages = getAvailableLanguages();
@@ -59,13 +59,18 @@ export default (state, i18n) => {
 
     window.Core.Tools.CalloutCreateTool.setTextHandler(() => t('message.insertTextHere'));
 
-    window.Core.Tools.ArcMeasurementCreateTool?.setMeasurementLabelsHandler?.(() => {
+    // Use `setDefaultMeasurementLabelsHandler` (not the public `setMeasurementLabelsHandler`)
+    // to register these translated defaults. This call always runs per DocumentViewer at init,
+    // so if it shared the same tier as the public API it would permanently shadow a customer's
+    // legacy global `setMeasurementLabelsHandler(handler)` call made after init. See
+    // ArcMeasurementCreateTool.ts for the full priority order.
+    window.Core.Tools.ArcMeasurementCreateTool?.setDefaultMeasurementLabelsHandler?.(() => {
       return {
         length: t('option.measurementOverlay.length'),
         radius: t('option.measurementOverlay.radius'),
         angle: t('option.measurementOverlay.angle'),
       };
-    });
+    }, documentViewer);
   };
 
   const i18nURL = window.isApryseWebViewerWebComponent

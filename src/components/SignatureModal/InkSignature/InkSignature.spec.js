@@ -47,8 +47,10 @@ const createMockSignatureTool = () => ({
 
 const createMockCore = () => {
   const signatureTool = createMockSignatureTool();
+  const documentViewer = { getTool: jest.fn(() => signatureTool) };
   return {
     getTool: jest.fn(() => signatureTool),
+    getDocumentViewer: jest.fn(() => documentViewer),
     getToolsFromAllDocumentViewers: jest.fn(() => [signatureTool]),
   };
 };
@@ -58,7 +60,8 @@ describe('InkSignature', () => {
 
   beforeEach(() => {
     capturedOnStyleChange = null;
-    mockUseCore = jest.fn().mockReturnValue({ core: createMockCore() });
+    const core = createMockCore();
+    mockUseCore = jest.fn().mockReturnValue({ core, documentViewer: core.getDocumentViewer() });
     useCore.mockImplementation(mockUseCore);
   });
 
@@ -66,7 +69,16 @@ describe('InkSignature', () => {
     jest.clearAllMocks();
   });
 
-  it('always calls useCore with viewer key 1 regardless of the active viewer', () => {
+  it('sets canvases on the current instance tool when another instance is globally active', () => {
+    const currentInstanceTool = createMockSignatureTool();
+    const otherInstanceTool = createMockSignatureTool();
+    const currentDocumentViewer = { getTool: jest.fn(() => currentInstanceTool) };
+    const mockCore = createMockCore();
+    mockCore.getToolsFromAllDocumentViewers.mockReturnValue([otherInstanceTool]);
+
+    mockUseCore = jest.fn().mockReturnValue({ core: mockCore, documentViewer: currentDocumentViewer });
+    useCore.mockImplementation(mockUseCore);
+
     render(
       <InkSignature
         isModalOpen={false}
@@ -76,7 +88,38 @@ describe('InkSignature', () => {
       />
     );
 
-    expect(mockUseCore).toHaveBeenCalledWith(1);
+    expect(mockUseCore).toHaveBeenCalledWith();
+    expect(currentDocumentViewer.getTool).toHaveBeenCalledWith('AnnotationCreateSignature');
+    expect(currentInstanceTool.setSignatureCanvas).toHaveBeenCalled();
+    expect(currentInstanceTool.setInitialsCanvas).toHaveBeenCalled();
+    expect(otherInstanceTool.setSignatureCanvas).not.toHaveBeenCalled();
+    expect(otherInstanceTool.setInitialsCanvas).not.toHaveBeenCalled();
+  });
+
+  it('sets canvases on the first viewer tool in MultiViewer mode', () => {
+    const firstViewerTool = createMockSignatureTool();
+    const secondViewerTool = createMockSignatureTool();
+    const mockCore = createMockCore();
+    mockCore.getToolsFromAllDocumentViewers.mockReturnValue([firstViewerTool, secondViewerTool]);
+
+    mockUseCore = jest.fn().mockReturnValue({ core: mockCore, documentViewer: mockCore.getDocumentViewer() });
+    useCore.mockImplementation(mockUseCore);
+
+    render(
+      <InkSignature
+        isModalOpen={false}
+        isTabPanelSelected={false}
+        disableCreateButton={noop}
+        enableCreateButton={noop}
+        isMultiViewerMode
+      />
+    );
+
+    expect(mockCore.getToolsFromAllDocumentViewers).toHaveBeenCalledWith('AnnotationCreateSignature');
+    expect(firstViewerTool.setSignatureCanvas).toHaveBeenCalled();
+    expect(firstViewerTool.setInitialsCanvas).toHaveBeenCalled();
+    expect(secondViewerTool.setSignatureCanvas).not.toHaveBeenCalled();
+    expect(secondViewerTool.setInitialsCanvas).not.toHaveBeenCalled();
   });
 
   it('calls resizeCanvas with INITIALS type when changing color with only initials drawn', async () => {
@@ -88,7 +131,7 @@ describe('InkSignature', () => {
     signatureTool.getFullSignatureAnnotation.mockReturnValue(null);
     signatureTool.getInitialsAnnotation.mockReturnValue(mockInitialsAnnotation);
 
-    mockUseCore = jest.fn().mockReturnValue({ core: mockCore });
+    mockUseCore = jest.fn().mockReturnValue({ core: mockCore, documentViewer: mockCore.getDocumentViewer() });
     useCore.mockImplementation(mockUseCore);
 
     render(
@@ -118,7 +161,7 @@ describe('InkSignature', () => {
     signatureTool.getFullSignatureAnnotation.mockReturnValue(mockFullAnnotation);
     signatureTool.getInitialsAnnotation.mockReturnValue(mockInitialsAnnotation);
 
-    mockUseCore = jest.fn().mockReturnValue({ core: mockCore });
+    mockUseCore = jest.fn().mockReturnValue({ core: mockCore, documentViewer: mockCore.getDocumentViewer() });
     useCore.mockImplementation(mockUseCore);
 
     render(
@@ -161,7 +204,7 @@ describe('InkSignature', () => {
       });
     });
 
-    mockUseCore = jest.fn().mockReturnValue({ core: mockCore });
+    mockUseCore = jest.fn().mockReturnValue({ core: mockCore, documentViewer: mockCore.getDocumentViewer() });
     useCore.mockImplementation(mockUseCore);
 
     render(

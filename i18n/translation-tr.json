@@ -15,6 +15,7 @@
     "close": "Kapat",
     "undo": "Geri alma",
     "redo": "Hazır",
+    "reload": "Yeniden yükle",
     "comment": "Yorum",
     "reply": "Cevap ekle",
     "copy": "kopyala",
@@ -194,6 +195,7 @@
     "note": "Not",
     "textField": "Metin alanı",
     "signatureFormField": "İmza Alanı",
+    "datePickerFormField": "Tarih Seçici Alanı",
     "checkBoxFormField": "Onay Kutusu Alanı",
     "radioButtonFormField": "Radyo Düğmesi Alanı",
     "listBoxFormField": "Liste Kutusu Alanı",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Yakınlaştırma Yerleşimi",
     "textPopup": "Metin Açılır Penceresi",
     "createStampButton": "Yeni Damga Oluştur",
+    "addStampButton": "Pul Ekle",
     "filter": "filtre",
     "multiSelectButton": "Çoklu seçim",
     "pageReplaceModalTitle": "Sayfayı Değiştir",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Şifreli belge yüklenemedi. Şifre girişi iptal edildi.",
     "enterPassword": "Bu belge parola korumalıdır. lütfen bir şifre girin",
     "incorrectPassword": "Yanlış şifre, kalan deneme sayısı: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Bir tartışma başlatmak için yorum ekleyin.",
     "noAnnotations": "Yorum bırakmak için ek açıklamalar yapmaya başlayın.",
     "noAnnotationsReadOnly": "Bu belgede ek açıklama yok.",
     "noAnnotationsFilter": "Ek açıklamalar yapmaya başlayın ve filtreler burada görünecektir.",
@@ -328,6 +332,7 @@
     "sortBy": "Çeşit",
     "emptyCustomStampInput": "Damga metni boş olamaz",
     "unpostedComment": "Yayınlanmamış Yorum",
+    "saved": "Kaydedildi",
     "lockedLayer": "Katman kilitli",
     "layerVisibilityNoChange": "Katman görünürlüğü değiştirilemez",
     "noLayers": "Bu belgenin katmanı yok.",
@@ -354,7 +359,15 @@
     "refreshPage": "Lütfen ağ bağlantınızı kontrol edin ve sayfayı yenileyin.",
     "renderErrors": {
       "error": "Burada bir sorun oluştu.",
-      "refreshPanel": "Çalışmaya devam edebilirsiniz. Paneli yeniden açmayı deneyin."
+      "toFixIssue": "Sorunu düzeltmek için lütfen {{componentType}} bileşenini yeniden açmayı deneyin.",
+      "componentType": {
+        "component": "bileşen",
+        "panel": "panel",
+        "modal": "başkent",
+        "flyout": "uçuş",
+        "dropdown": "yıkılmak",
+        "popup": "aniden belirmek"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Yazar",
       "type": "Tip",
       "color": "Renk",
+      "number": "Sayı",
       "createdDate": "Oluşturulma Tarihi",
       "modifiedDate": "Değiştirilme Tarihi"
     },
@@ -617,10 +631,7 @@
         "irreversible": "geri döndürülemez",
         "willDeleteMeasurement": "ve ilişkili ölçümleri siler.",
         "confirmDelete": "Bu ölçeği silmek istediğinizden emin misiniz?",
-        "thisCantBeUndone": " Bu geri alınamaz.",
-        "ifChangeScale": "Seçilen ölçüm veya araç için ölçeği değiştirirseniz, ölçek",
-        "notUsedWillDelete": " artık herhangi bir ölçüm veya araç tarafından kullanılmayacak ve silinecektir. Silme işlemi geri döndürülemez.",
-        "ifToContinue": "Devam etmek istediğinizden emin misiniz?"
+        "thisCantBeUndone": " Bu geri alınamaz."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Metin rengi",
       "backgroundColor": "Arka plan rengi",
       "dateToolTipLabel": "Tarih biçimi hakkında daha fazla bilgi",
-      "previewCustomStamp": "Önizleme"
+      "previewCustomStamp": "Önizleme",
+      "category": "Kategori",
+      "categoryInstructions": "Yeni bir kategoriye ad vermek için yazın.",
+      "customStamp": "Özel Damga"
     },
     "pageRedactModal": {
       "addMark": "İşaret Ekle",
@@ -754,6 +768,8 @@
       "annotations": "Ek açıklamalar",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Açıklama Açılır Penceresinden Araç Varsayılan Stil Güncellemesini Devre Dışı Bırak",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Detaylandırma stili güncellemelerinin, detaylandırmayı oluşturan ilişkili araca eşitlenmesini devre dışı bırakır. Bu nedenle, bir detaylandırmanın stili değiştirilirse, araç varsayılan stilleri güncellenmeyecektir.",
+      "enableViewportRelativePositioning": "Görünüm Alanına Göre Açıklama Konumlandırmayı Etkinleştir",
+      "enableViewportRelativePositioningDesc": "Etkinleştirildiğinde, farklı döndürme açılarına sahip sayfalar arasında açıklamaları taşırken görsel konum ve yönelimleri korunur.",
       "notesPanel": "Notlar Paneli",
       "disableNoteSubmissionWithEnter": "Enter ile Not Göndermeyi Devre Dışı Bırak",
       "disableNoteSubmissionWithEnterDesc": "Daha önce etkinleştirilmişse, yalnızca Enter tuşuna basarak not gönderme özelliğini devre dışı bırakın. Bu, not gönderimini Ctrl/Cmd + Enter olan varsayılana döndürür.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Alan Göstergesini Ekle",
       "indicatorPlaceHolders": {
         "TextFormField": "Buraya Metin Ekle",
+        "DatePickerFormField": "Tarih Seçin",
         "CheckBoxFormField": "Kontrol",
         "RadioButtonFormField": "Doldurmak",
         "ListBoxFormField": "Seçme",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Radyo Düğmesi Alanı Açıklaması",
       "ListBoxFormField": "Liste Kutusu Alanı Açıklaması",
       "ComboBoxFormField": "Açılan Kutu Alanı Açıklaması",
+      "DatePickerFormField": "Tarih Seçici Alanı Açıklaması",
       "TextFormField": "Metin Alanı Açıklaması"
     },
     "apply": "Alanları Uygula",
@@ -1311,6 +1329,7 @@
     "underline": "Altını çizmek",
     "strikeout": "Vuruş",
     "textColor": "metin rengi",
+    "highlightColor": "Vurgu rengi",
     "leftAlign": "Sola hizala",
     "centerAlign": "Ortaya hizala",
     "rightAlign": "sağa hizala",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Pullar",
-    "standard": "Standart Pullar"
+    "standard": "Standart Pullar",
+    "preset": "Önceden ayarlanmış",
+    "custom": "Özel"
   },
   "colorPickerModal": {
     "modalTitle": "Renk Seçici"

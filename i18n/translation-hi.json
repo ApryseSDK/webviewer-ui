@@ -15,6 +15,7 @@
     "close": "बंद करना",
     "undo": "पूर्ववत",
     "redo": "तैयार",
+    "reload": "पुनः लोड करें",
     "comment": "टिप्पणी",
     "reply": "उत्तर जोड़ें",
     "copy": "प्रतिलिपि",
@@ -194,6 +195,7 @@
     "note": "ध्यान दें",
     "textField": "पाठ का क्षेत्र",
     "signatureFormField": "सिग्नेचर फील्ड",
+    "datePickerFormField": "दिनांक चयनकर्ता फ़ील्ड",
     "checkBoxFormField": "चेकबॉक्स फ़ील्ड",
     "radioButtonFormField": "रेडियो बटन फील्ड",
     "listBoxFormField": "सूची बॉक्स फ़ील्ड",
@@ -259,6 +261,7 @@
     "zoomOverlay": "ज़ूम ओवरले",
     "textPopup": "टेक्स्ट पॉपअप",
     "createStampButton": "नया स्टाम्प बनाएं",
+    "addStampButton": "स्टाम्प जोड़ें",
     "filter": "फ़िल्टर",
     "multiSelectButton": "बहु का चयन",
     "pageReplaceModalTitle": "पृष्ठ बदलें",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "एन्क्रिप्टेड दस्तावेज़ लोड करने में विफल. पासवर्ड प्रविष्टि रद्द की गई।",
     "enterPassword": "यह दस्तावेज़ पासवर्ड से सुरक्षित है। कृपया पासवर्ड दर्ज करें",
     "incorrectPassword": "गलत पासवर्ड, प्रयास शेष: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "चर्चा शुरू करने के लिए एक टिप्पणी जोड़ें।",
     "noAnnotations": "टिप्पणी करने के लिए टिप्पणियां करना प्रारंभ करें।",
     "noAnnotationsReadOnly": "इस दस्तावेज़ में कोई टिप्पणी नहीं है।",
     "noAnnotationsFilter": "एनोटेशन बनाना शुरू करें और फिल्टर यहां दिखाई देंगे।",
@@ -328,6 +332,7 @@
     "sortBy": "तरह",
     "emptyCustomStampInput": "स्टाम्प टेक्स्ट खाली नहीं हो सकता",
     "unpostedComment": "पोस्ट नहीं की गई टिप्पणी",
+    "saved": "सहेजा गया",
     "lockedLayer": "परत बंद है",
     "layerVisibilityNoChange": "परत दृश्यता को बदला नहीं जा सकता",
     "noLayers": "इस दस्तावेज़ में कोई परतें नहीं हैं.",
@@ -354,7 +359,15 @@
     "refreshPage": "कृपया अपना नेटवर्क कनेक्शन जांचें और पेज को रीफ्रेश करें।",
     "renderErrors": {
       "error": "यहां कुछ गड़बड़ हो गई।",
-      "refreshPanel": "आप काम जारी रख सकते हैं। पैनल को दोबारा खोलने का प्रयास करें।"
+      "toFixIssue": "इस समस्या को ठीक करने के लिए, कृपया {{componentType}} को दोबारा खोलने का प्रयास करें।",
+      "componentType": {
+        "component": "अवयव",
+        "panel": "पैनल",
+        "modal": "पूंजी",
+        "flyout": "बहार उड़",
+        "dropdown": "ड्रॉप डाउन",
+        "popup": "पॉप अप"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "लेखक",
       "type": "प्रकार",
       "color": "रंग",
+      "number": "संख्या",
       "createdDate": "रचना तिथि",
       "modifiedDate": "संशोधित तिथि"
     },
@@ -617,10 +631,7 @@
         "irreversible": "अचल",
         "willDeleteMeasurement": "और संबंधित माप हटा देगा।",
         "confirmDelete": "क्या आप वाकई इस पैमाने को हटाना चाहते हैं?",
-        "thisCantBeUndone": "इसे पूर्ववत नहीं किया जा सकता.",
-        "ifChangeScale": "यदि आप चयनित माप या उपकरण के लिए पैमाना बदलते हैं, तो पैमाना",
-        "notUsedWillDelete": " अब किसी भी माप या उपकरण द्वारा उपयोग नहीं किया जाएगा और हटा दिया जाएगा। हटाना अपरिवर्तनीय है।",
-        "ifToContinue": "क्या आप वाकई जारी रखना चाहते हैं?"
+        "thisCantBeUndone": "इसे पूर्ववत नहीं किया जा सकता."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "लिखावट का रंग",
       "backgroundColor": "पीछे का रंग",
       "dateToolTipLabel": "दिनांक प्रारूप के बारे में अधिक जानकारी",
-      "previewCustomStamp": "का पूर्वावलोकन"
+      "previewCustomStamp": "का पूर्वावलोकन",
+      "category": "वर्ग",
+      "categoryInstructions": "नई श्रेणी का नाम देने के लिए टाइप करें",
+      "customStamp": "कस्टम स्टाम्प"
     },
     "pageRedactModal": {
       "addMark": "मार्क जोड़ें",
@@ -754,6 +768,8 @@
       "annotations": "एनोटेशन",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "एनोटेशन पॉपअप से टूल डिफॉल्ट स्टाइल अपडेट अक्षम करें",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "एनोटेशन बनाने वाले संबंधित टूल में एनोटेशन स्टाइल अपडेट के सिंकिंग को अक्षम करता है। इसलिए यदि किसी एनोटेशन की शैली बदल दी जाती है तो टूल डिफ़ॉल्ट शैलियों को अपडेट नहीं किया जाएगा।",
+      "enableViewportRelativePositioning": "व्यूपोर्ट-रिलेटिव एनोटेशन पोजिशनिंग को सक्षम करें",
+      "enableViewportRelativePositioningDesc": "सक्षम होने पर, अलग-अलग घुमावों वाले पृष्ठों पर एनोटेशन को स्थानांतरित करने से उनकी दृश्य स्थिति और अभिविन्यास संरक्षित रहता है।",
       "notesPanel": "नोट्स पैनल",
       "disableNoteSubmissionWithEnter": "एंटर के साथ नोट सबमिशन अक्षम करें",
       "disableNoteSubmissionWithEnterDesc": "केवल एंटर दबाकर नोट्स सबमिट करने की क्षमता को अक्षम करें यदि इसे पहले सक्षम किया गया था। यह नोट सबमिशन को डिफ़ॉल्ट पर वापस कर देगा जो कि Ctrl/Cmd + Enter है।",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "फ़ील्ड संकेतक शामिल करें",
       "indicatorPlaceHolders": {
         "TextFormField": "यहां टेक्स्ट डालें",
+        "DatePickerFormField": "तारीख़ चुनें",
         "CheckBoxFormField": "जांच",
         "RadioButtonFormField": "भरना",
         "ListBoxFormField": "चुनना",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "रेडियो बटन फ़ील्ड एनोटेशन",
       "ListBoxFormField": "सूची बॉक्स फ़ील्ड एनोटेशन",
       "ComboBoxFormField": "कॉम्बो बॉक्स फ़ील्ड एनोटेशन",
+      "DatePickerFormField": "दिनांक चयनकर्ता फ़ील्ड एनोटेशन",
       "TextFormField": "टेक्स्ट फ़ील्ड एनोटेशन"
     },
     "apply": "फ़ील्ड लागू करें",
@@ -1311,6 +1329,7 @@
     "underline": "रेखांकन",
     "strikeout": "मिटाना",
     "textColor": "पाठ का रंग",
+    "highlightColor": "हाइलाइट रंग",
     "leftAlign": "बाएं संरेखित करें",
     "centerAlign": "केंद्र संरेखित करें",
     "rightAlign": "सही संरेखित करें",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "टिकटों",
-    "standard": "मानक टिकटें"
+    "standard": "मानक टिकटें",
+    "preset": "प्रीसेट",
+    "custom": "कस्टम"
   },
   "colorPickerModal": {
     "modalTitle": "रंग चुनने वाली मशीन"

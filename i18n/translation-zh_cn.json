@@ -15,6 +15,7 @@
     "close": "关闭",
     "undo": "撤消",
     "redo": "准备",
+    "reload": "重新加载",
     "comment": "注释",
     "reply": "回复",
     "copy": "复制",
@@ -194,6 +195,7 @@
     "note": "注意",
     "textField": "文本域",
     "signatureFormField": "签名栏",
+    "datePickerFormField": "日期选择器字段",
     "checkBoxFormField": "复选框字段",
     "radioButtonFormField": "单选按钮字段",
     "listBoxFormField": "列表框字段",
@@ -259,6 +261,7 @@
     "zoomOverlay": "缩放叠加",
     "textPopup": "文字弹出",
     "createStampButton": "创建新图章",
+    "addStampButton": "添加印章",
     "filter": "过滤",
     "multiSelectButton": "多选",
     "pageReplaceModalTitle": "替换页面",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "无法加载加密文档，密码输入已取消。",
     "enterPassword": "此文档已被加密。请输入密码。",
     "incorrectPassword": "密码错误，剩余输入机会：{{remainingAttempts}}",
+    "commentsPanelEmpty": "添加评论以开始讨论。",
     "noAnnotations": "开始制作注释以发表评论。",
     "noAnnotationsReadOnly": "此文档没有注释。",
     "noAnnotationsFilter": "开始制作注释，过滤器将显示在此处。",
@@ -328,6 +332,7 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能为空",
     "unpostedComment": "未发布评论",
+    "saved": "已保存",
     "lockedLayer": "图层已锁定",
     "layerVisibilityNoChange": "图层可见性无法更改",
     "noLayers": "该文档没有图层。",
@@ -354,7 +359,15 @@
     "refreshPage": "请检查您的网络连接并刷新页面。",
     "renderErrors": {
       "error": "这里出问题了。",
-      "refreshPanel": "您可以继续工作。请尝试重新打开面板。"
+      "toFixIssue": "要解决此问题，请尝试重新打开 {{componentType}}。",
+      "componentType": {
+        "component": "成分",
+        "panel": "控制板",
+        "modal": "首都",
+        "flyout": "飞出",
+        "dropdown": "下拉菜单",
+        "popup": "弹出窗口"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "作者",
       "type": "类型",
       "color": "颜色",
+      "number": "数字",
       "createdDate": "创建日期",
       "modifiedDate": "修改日期"
     },
@@ -617,10 +631,7 @@
         "irreversible": "不可逆转",
         "willDeleteMeasurement": "并将删除相关的测量。",
         "confirmDelete": "确定要删除此比例吗？",
-        "thisCantBeUndone": "这无法撤消。",
-        "ifChangeScale": "如果您更改所选测量或工具的比例，请按比例",
-        "notUsedWillDelete": " 将不再被任何测量或工具使用，并将被删除。删除是不可逆的。",
-        "ifToContinue": "您确定要继续吗？"
+        "thisCantBeUndone": "这无法撤消。"
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "文字颜色",
       "backgroundColor": "背景颜色",
       "dateToolTipLabel": "有关日期格式的更多信息",
-      "previewCustomStamp": "预览"
+      "previewCustomStamp": "预览",
+      "category": "类别",
+      "categoryInstructions": "输入以命名新类别",
+      "customStamp": "定制印章"
     },
     "pageRedactModal": {
       "addMark": "添加标记",
@@ -754,6 +768,8 @@
       "annotations": "注释",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "从注释弹出窗口禁用工具默认样式更新",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "禁用将注释样式更新同步到创建注释的关联工具。因此，如果注释的样式发生更改，工具默认样式将不会更新。",
+      "enableViewportRelativePositioning": "启用视口相对注释定位",
+      "enableViewportRelativePositioningDesc": "启用此功能后，在不同旋转角度的页面之间移动注释时，会保持其视觉位置和方向不变。",
       "notesPanel": "笔记面板",
       "disableNoteSubmissionWithEnter": "使用 Enter 禁用注释提交",
       "disableNoteSubmissionWithEnterDesc": "如果之前已启用，则仅按 Enter 即可禁用提交注释的功能。这会将笔记提交恢复为默认值，即 Ctrl/Cmd + Enter。",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "包含字段指示符",
       "indicatorPlaceHolders": {
         "TextFormField": "在此处插入文本",
+        "DatePickerFormField": "选择日期",
         "CheckBoxFormField": "查看",
         "RadioButtonFormField": "充满",
         "ListBoxFormField": "选择",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "单选按钮字段注释",
       "ListBoxFormField": "列表框字段注释",
       "ComboBoxFormField": "组合框字段注释",
+      "DatePickerFormField": "日期选择器字段注释",
       "TextFormField": "文本字段注释"
     },
     "apply": "套用栏位",
@@ -1311,6 +1329,7 @@
     "underline": "强调",
     "strikeout": "删除线",
     "textColor": "文字颜色",
+    "highlightColor": "高亮颜色",
     "leftAlign": "左对齐",
     "centerAlign": "居中对齐",
     "rightAlign": "右对齐",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "邮票",
-    "standard": "标准邮票"
+    "standard": "标准邮票",
+    "preset": "预设",
+    "custom": "自定义"
   },
   "colorPickerModal": {
     "modalTitle": "颜色选择器"

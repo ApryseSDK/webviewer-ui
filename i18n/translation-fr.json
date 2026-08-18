@@ -15,6 +15,7 @@
     "close": "Fermer",
     "undo": "Défaire",
     "redo": "Refaire",
+    "reload": "Recharger",
     "comment": "Commenter",
     "reply": "Répondre",
     "copy": "Copier",
@@ -185,15 +186,16 @@
     "signature": "Signature",
     "snipping": "Outil de Découpage",
     "squiggly": "Ligne ondulée",
-    "stamp": "Tampon",
+    "stamp": "Image",
     "stickyNote": "Note collante",
     "strikeout": "Rayer",
     "underline": "Soulignement",
     "custom": "Personnalisation",
-    "rubberStamp": "Estampille",
+    "rubberStamp": "Tampon",
     "note": "Remarque",
     "textField": "Champ de texte",
     "signatureFormField": "Champ de signature",
+    "datePickerFormField": "Champ de sélection de date",
     "checkBoxFormField": "Champ de case à cocher",
     "radioButtonFormField": "Champ de bouton radio",
     "listBoxFormField": "Champ de zone de liste",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Superposition de zoom",
     "textPopup": "Popup texte",
     "createStampButton": "Créer un nouveau tampon",
+    "addStampButton": "Ajouter un timbre",
     "filter": "Filtre",
     "multiSelectButton": "Sélection multiple",
     "pageReplaceModalTitle": "Remplacer la page",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Échec du chargement du document chiffré. Saisie du mot de passe annulée.",
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
     "incorrectPassword": "Mot de passe incorrect. Tentatives restantes: {{remainingAttempts}}",
+    "commentsPanelEmpty": "Ajoutez un commentaire pour démarrer une discussion.",
     "noAnnotations": "Ce document n'a pas d'annotations.",
     "noAnnotationsReadOnly": "Ce document n'a pas d'annotations.",
     "noAnnotationsFilter": "Commencez à créer des annotations et des filtres apparaîtront ici.",
@@ -328,6 +332,7 @@
     "sortBy": "Trier par",
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
     "unpostedComment": "Commentaire non publié",
+    "saved": "Enregistré",
     "lockedLayer": "Le calque est verrouillé",
     "layerVisibilityNoChange": "La visibilité de la couche ne peut pas être modifiée",
     "noLayers": "Ce document ne comporte aucun calque.",
@@ -354,7 +359,15 @@
     "refreshPage": "Veuillez vérifier votre connexion réseau et actualiser la page.",
     "renderErrors": {
       "error": "Quelque chose a mal tourné.",
-      "refreshPanel": "Vous pouvez continuer à travailler. Essayez de rouvrir le panneau."
+      "toFixIssue": "Pour résoudre ce problème, veuillez essayer de rouvrir le {{componentType}}.",
+      "componentType": {
+        "component": "composant",
+        "panel": "panneau",
+        "modal": "modal",
+        "flyout": "menu volant",
+        "dropdown": "menu déroulant",
+        "popup": "fenêtre contextuelle"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Auteur",
       "type": "Type",
       "color": "Couleur",
+      "number": "Nombre",
       "createdDate": "Date de création",
       "modifiedDate": "Date modifiée"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irréversible",
         "willDeleteMeasurement": "et supprimera les mesures associées.",
         "confirmDelete": "Voulez-vous vraiment supprimer cette échelle ?",
-        "thisCantBeUndone": " Cela ne peut pas être annulé.",
-        "ifChangeScale": "Si vous modifiez l'échelle de la mesure ou de l'outil sélectionné, l'échelle",
-        "notUsedWillDelete": " ne sera plus utilisé par aucune mesure ou outil et sera supprimé. La suppression est irréversible.",
-        "ifToContinue": "Voulez-vous vraiment continuer ?"
+        "thisCantBeUndone": " Cela ne peut pas être annulé."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Couleur du texte",
       "backgroundColor": "Couleur de l'arrière plan",
       "dateToolTipLabel": "Plus d'informations sur le format de date",
-      "previewCustomStamp": "Aperçu de"
+      "previewCustomStamp": "Aperçu de",
+      "category": "Catégorie",
+      "categoryInstructions": "Saisissez un nom pour une nouvelle catégorie",
+      "customStamp": "Tampon personnalisé"
     },
     "pageRedactModal": {
       "addMark": "Ajouter une marque",
@@ -754,6 +768,8 @@
       "annotations": "Remarques",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Désactiver la mise à jour du style par défaut de l'outil à partir de la fenêtre contextuelle d'annotation",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Désactive la synchronisation des mises à jour de style d'annotation avec l'outil associé qui a créé l'annotation. Ainsi, si le style d'une annotation est modifié, les styles par défaut de l'outil ne seront pas mis à jour.",
+      "enableViewportRelativePositioning": "Activer le positionnement des annotations par rapport à la fenêtre d'affichage",
+      "enableViewportRelativePositioningDesc": "Lorsque cette option est activée, le déplacement des annotations entre les pages présentant des rotations différentes préserve leur position visuelle et leur orientation.",
       "notesPanel": "Panneau de commentaires",
       "disableNoteSubmissionWithEnter": "Désactiver la soumission de notes avec Entrée",
       "disableNoteSubmissionWithEnterDesc": "Désactivez la possibilité de soumettre des notes en appuyant uniquement sur Entrée si elle avait déjà été activée. Cela rétablira la soumission de note à la valeur par défaut qui est Ctrl/Cmd + Entrée.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Inclure l'indicateur de champ",
       "indicatorPlaceHolders": {
         "TextFormField": "Insérer le texte ici",
+        "DatePickerFormField": "Sélectionner une date",
         "CheckBoxFormField": "Vérifier",
         "RadioButtonFormField": "Remplir",
         "ListBoxFormField": "Sélectionner",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Annotation du champ du bouton radio",
       "ListBoxFormField": "Annotation du champ de la zone de liste",
       "ComboBoxFormField": "Annotation des champs de la zone de liste déroulante",
+      "DatePickerFormField": "Annotation du champ de sélection de date",
       "TextFormField": "Annotation du champ de texte"
     },
     "apply": "Appliquer les champs",
@@ -1310,7 +1328,8 @@
     "italic": "Italique",
     "underline": "Souligner",
     "strikeout": "Retrait sur trois prises",
-    "textColor": "Couleur du texte",
+    "textColor": "Couleur de police",
+    "highlightColor": "Couleur de surlignage",
     "leftAlign": "Alignement à gauche",
     "centerAlign": "Aligner au centre",
     "rightAlign": "Alignement à droite",
@@ -1677,8 +1696,10 @@
     }
   },
   "rubberStampPanel": {
-    "header": "Timbres",
-    "standard": "Timbres standards"
+    "header": "Tampon",
+    "standard": "Tampons standards",
+    "preset": "Préréglage",
+    "custom": "Personnalisé"
   },
   "colorPickerModal": {
     "modalTitle": "Sélecteur de couleurs"

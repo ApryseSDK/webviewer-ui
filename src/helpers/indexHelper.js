@@ -626,7 +626,7 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
   const { documentViewer, instanceDocViewerKey } = createInstanceDocumentViewer(store, instanceI18n, resolvedRootNode);
 
   const removeActivationHandlers = setupMultiInstanceActivation(instanceDocViewerKey);
-  setupI18n(state, instanceI18n);
+  setupI18n(state, instanceI18n, documentViewer);
   setEnableAnnotationNumbering(state);
   setUserPermission(state, instanceDocViewerKey);
   setAutoSwitch();

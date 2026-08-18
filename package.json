@@ -34,7 +34,7 @@
     "autolinker": "^3.16.2",
     "classnames": "^2.5.1",
     "dayjs": "^1.8.19",
-    "dompurify": "^3.4.12",
+    "dompurify": "^3.4.13",
     "file-saver": "^2.0.5",
     "hotkeys-js": "^3.13.15",
     "i18next": "^19.9.2",

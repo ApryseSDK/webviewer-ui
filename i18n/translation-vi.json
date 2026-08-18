@@ -15,6 +15,7 @@
     "close": "Đóng",
     "undo": "Hoàn tác",
     "redo": "Làm Lại",
+    "reload": "Tải lại",
     "comment": "Bình Luận",
     "reply": "Thêm trả lời",
     "copy": "Sao chép",
@@ -194,6 +195,7 @@
     "note": "Ghi chú",
     "textField": "Trường Văn Bản",
     "signatureFormField": "Trường Chữ Ký",
+    "datePickerFormField": "Trường chọn ngày",
     "checkBoxFormField": "Trường Hộp Kiểm",
     "radioButtonFormField": "Trường nút radio",
     "listBoxFormField": "Trường Hộp Danh Sách",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Lớp Phủ Zoom",
     "textPopup": "Bật Lên Văn Bản",
     "createStampButton": "Tạo Tem Mới",
+    "addStampButton": "Thêm tem",
     "filter": "Lọc",
     "multiSelectButton": "Nhiều lựa chọn",
     "pageReplaceModalTitle": "Thay Thế Trang",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Không thể tải được tài liệu mã hóa. Đã hủy nhập mật khẩu.",
     "enterPassword": "Tài liệu này được bảo vệ bằng mật khẩu. Vui lòng nhập mật khẩu",
     "incorrectPassword": "Mật khẩu không chính xác, số lần thử còn lại: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Thêm bình luận để bắt đầu thảo luận.",
     "noAnnotations": "Bắt đầu tạo chú thích để lưu lại bình luận.",
     "noAnnotationsReadOnly": "Tài liệu này không có chú thích nào.",
     "noAnnotationsFilter": "Bắt đầu tạo chú thích và bộ lọc sẽ xuất hiện ở đây.",
@@ -328,6 +332,7 @@
     "sortBy": "Sắp xếp",
     "emptyCustomStampInput": "Văn bản tem không thể trống",
     "unpostedComment": "Nhận Xét Chưa Đăng",
+    "saved": "Đã lưu",
     "lockedLayer": "Lớp bị khóa",
     "layerVisibilityNoChange": "Không thể thay đổi độ hiển thị lớp",
     "noLayers": "Tài liệu này không có lớp.",
@@ -354,7 +359,15 @@
     "refreshPage": "Vui lòng kiểm tra kết nối mạng của bạn và làm mới trang.",
     "renderErrors": {
       "error": "Đã xảy ra lỗi ở đây.",
-      "refreshPanel": "Bạn có thể tiếp tục làm việc. Hãy thử mở lại bảng điều khiển."
+      "toFixIssue": "Để khắc phục sự cố, vui lòng thử mở lại {{componentType}}.",
+      "componentType": {
+        "component": "thành phần",
+        "panel": "bảng",
+        "modal": "thủ đô",
+        "flyout": "bay ra",
+        "dropdown": "menu thả xuống",
+        "popup": "cửa sổ bật lên"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Tác giả",
       "type": "Kiểu",
       "color": "Màu",
+      "number": "Con số",
       "createdDate": "Ngày Tạo",
       "modifiedDate": "Ngày Sửa Đổi"
     },
@@ -617,10 +631,7 @@
         "irreversible": "không thể thay đổi",
         "willDeleteMeasurement": "và sẽ xóa các phép đo liên quan.",
         "confirmDelete": "Bạn có chắc chắn muốn xóa thang đo này không?",
-        "thisCantBeUndone": " Không thể hoàn tác việc này.",
-        "ifChangeScale": "Nếu bạn thay đổi thang đo cho phép đo hoặc công cụ đã chọn, hãy chia tỷ lệ",
-        "notUsedWillDelete": " sẽ không còn được sử dụng bởi bất kỳ phép đo hoặc công cụ nào nữa và sẽ bị xóa. Việc xóa là không thể hoàn tác.",
-        "ifToContinue": "Bạn có chắc chắn muốn tiếp tục không?"
+        "thisCantBeUndone": " Không thể hoàn tác việc này."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Văn bản màu",
       "backgroundColor": "Màu nền",
       "dateToolTipLabel": "Thông tin thêm về định dạng ngày tháng",
-      "previewCustomStamp": "Xem trước của"
+      "previewCustomStamp": "Xem trước của",
+      "category": "Loại",
+      "categoryInstructions": "Nhập tên cho danh mục mới",
+      "customStamp": "Con dấu tùy chỉnh"
     },
     "pageRedactModal": {
       "addMark": "Thêm dấu",
@@ -754,6 +768,8 @@
       "annotations": "Chú thích",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Tắt cập nhật kiểu mặc định của công cụ từ cửa sổ bật lên chú thích",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Tắt đồng bộ hóa các cập nhật kiểu chú thích với công cụ được liên kết đã tạo chú thích. Vì vậy, nếu kiểu của chú thích bị thay đổi, kiểu mặc định của công cụ sẽ không được cập nhật.",
+      "enableViewportRelativePositioning": "Cho phép định vị chú thích tương đối so với khung nhìn",
+      "enableViewportRelativePositioningDesc": "Khi được bật, việc di chuyển chú thích giữa các trang với các góc xoay khác nhau sẽ giữ nguyên vị trí và hướng hiển thị của chúng.",
       "notesPanel": "Bảng ghi chú",
       "disableNoteSubmissionWithEnter": "Tắt tính năng gửi ghi chú bằng phím Enter",
       "disableNoteSubmissionWithEnterDesc": "Vô hiệu hóa khả năng gửi ghi chú bằng cách chỉ nhấn Enter nếu nó đã được bật trước đó. Thao tác này sẽ hoàn nguyên việc gửi ghi chú về mặc định là Ctrl / Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Bao gồm chỉ báo trường",
       "indicatorPlaceHolders": {
         "TextFormField": "Chèn văn bản tại đây",
+        "DatePickerFormField": "Chọn ngày",
         "CheckBoxFormField": "Kiểm tra",
         "RadioButtonFormField": "Lấp đầy",
         "ListBoxFormField": "Lựa chọn",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Chú thích trường nút radio",
       "ListBoxFormField": "Chú thích trường hộp danh sách",
       "ComboBoxFormField": "Chú thích trường hộp tổ hợp",
+      "DatePickerFormField": "Chú thích trường chọn ngày",
       "TextFormField": "Chú thích trường văn bản"
     },
     "apply": "Áp Dụng Trường",
@@ -1310,7 +1328,8 @@
     "italic": "chữ nghiêng",
     "underline": "gạch dưới",
     "strikeout": "Strikeout",
-    "textColor": "Văn bản màu",
+    "textColor": "Màu chữ",
+    "highlightColor": "Màu nền",
     "leftAlign": "Căn trái",
     "centerAlign": "Căn giữa",
     "rightAlign": "Căn phải",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Tem",
-    "standard": "Tem tiêu chuẩn"
+    "standard": "Tem tiêu chuẩn",
+    "preset": "Cài đặt sẵn",
+    "custom": "Tùy chỉnh"
   },
   "colorPickerModal": {
     "modalTitle": "Bộ chọn màu"

@@ -15,6 +15,7 @@
     "close": "Bezárás",
     "undo": "Visszavonás",
     "redo": "Újra",
+    "reload": "Újratöltés",
     "comment": "Megjegyzés",
     "reply": "Válasz hozzáadása",
     "copy": "Másolat",
@@ -194,6 +195,7 @@
     "note": "jegyzet",
     "textField": "Szövegmező",
     "signatureFormField": "Aláírási mező",
+    "datePickerFormField": "Dátumválasztó mező",
     "checkBoxFormField": "Jelölőnégyzet Mező",
     "radioButtonFormField": "Rádiógomb mező",
     "listBoxFormField": "Listadoboz mező",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Zoom Overlay",
     "textPopup": "Szöveg felugró ablak",
     "createStampButton": "Új bélyegző létrehozása",
+    "addStampButton": "Bélyegző hozzáadása",
     "filter": "Szűrő",
     "multiSelectButton": "Többszörös választás",
     "pageReplaceModalTitle": "Oldal cseréje",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Nem sikerült betölteni a titkosított dokumentumot. A jelszó megadása megszakítva.",
     "enterPassword": "Ez a dokumentum jelszóval védett. Adjon meg egy jelszót",
     "incorrectPassword": "Hibás jelszó, próbálkozások maradt: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Adjon hozzá egy megjegyzést a beszélgetés megkezdéséhez.",
     "noAnnotations": "Ha megjegyzést szeretnél írni, kezdj el megjegyzéseket készíteni.",
     "noAnnotationsReadOnly": "Ez a dokumentum nem tartalmaz megjegyzéseket.",
     "noAnnotationsFilter": "Kezdje el a megjegyzések készítését, és itt jelennek meg a szűrők.",
@@ -328,6 +332,7 @@
     "sortBy": "Fajta",
     "emptyCustomStampInput": "A bélyegző szövege nem lehet üres",
     "unpostedComment": "Nem közzétett megjegyzés",
+    "saved": "Mentett",
     "lockedLayer": "A réteg zárolva van",
     "layerVisibilityNoChange": "A réteg láthatósága nem módosítható",
     "noLayers": "Ennek a dokumentumnak nincsenek rétegei.",
@@ -354,7 +359,15 @@
     "refreshPage": "Kérjük, ellenőrizze a hálózati kapcsolatot, és frissítse az oldalt.",
     "renderErrors": {
       "error": "Valami itt félrement.",
-      "refreshPanel": "Folytathatja a munkát. Próbálja meg újra megnyitni a panelt."
+      "toFixIssue": "A probléma megoldásához próbálja meg újra megnyitni a(z) {{componentType}} elemet.",
+      "componentType": {
+        "component": "összetevő",
+        "panel": "panel",
+        "modal": "tőke",
+        "flyout": "kiugró ablak",
+        "dropdown": "legördülő menü",
+        "popup": "felugró ablak"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Szerző",
       "type": "típus",
       "color": "Szín",
+      "number": "Szám",
       "createdDate": "Létrehozás dátuma",
       "modifiedDate": "Módosított dátum"
     },
@@ -486,7 +500,7 @@
     "searchPanel": {
       "searchResults": "Keresési eredmények",
       "caseSensitive": "Kis-nagybetű érzékeny",
-      "wholeWordOnly": "Egész világ",
+      "wholeWordOnly": "Teljes szó egyezés",
       "wildcard": "Helyettesítő karakter",
       "replace": "Cserélje ki",
       "replaceAll": "Cserélje ki az összeset",
@@ -617,10 +631,7 @@
         "irreversible": "visszafordíthatatlan",
         "willDeleteMeasurement": "és törli a kapcsolódó méréseket.",
         "confirmDelete": "Biztosan törli ezt a skálát?",
-        "thisCantBeUndone": " Ezt nem lehet visszavonni.",
-        "ifChangeScale": "Ha módosítja a skálát a kiválasztott méréshez vagy szerszámhoz, skálázza",
-        "notUsedWillDelete": " a továbbiakban semmilyen mérés vagy eszköz nem fogja használni, és törlésre kerül. A törlés visszafordíthatatlan.",
-        "ifToContinue": "Biztos, hogy folytatni szeretnéd?"
+        "thisCantBeUndone": " Ezt nem lehet visszavonni."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Szöveg szín",
       "backgroundColor": "Háttérszín",
       "dateToolTipLabel": "További információ a dátumformátumról",
-      "previewCustomStamp": "Előnézet a"
+      "previewCustomStamp": "Előnézet a",
+      "category": "Kategória",
+      "categoryInstructions": "Írjon be egy új kategória elnevezéséhez",
+      "customStamp": "Egyedi bélyegző"
     },
     "pageRedactModal": {
       "addMark": "Jelölés hozzáadása",
@@ -754,6 +768,8 @@
       "annotations": "Annotációk",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Az eszköz alapértelmezett stílusfrissítésének letiltása a megjegyzés előugró ablakból",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Letiltja a megjegyzésstílus-frissítések szinkronizálását a megjegyzést létrehozó társított eszközzel. Tehát ha egy megjegyzés stílusa megváltozik, az eszköz alapértelmezett stílusai nem frissülnek.",
+      "enableViewportRelativePositioning": "Nézetablak-relatív annotációpozicionálás engedélyezése",
+      "enableViewportRelativePositioningDesc": "Ha engedélyezve van, a különböző forgatásokkal rendelkező oldalak közötti annotációk áthelyezése megőrzi vizuális pozíciójukat és tájolásukat.",
       "notesPanel": "Jegyzetek panel",
       "disableNoteSubmissionWithEnter": "A jegyzetküldés letiltása az Enter billentyűvel",
       "disableNoteSubmissionWithEnterDesc": "Tiltsa le a jegyzetek küldésének lehetőségét az Enter megnyomásával, ha korábban engedélyezte. Ezzel visszaállítja a jegyzetbeküldést az alapértelmezettre, amely a Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Tartalmazza a mezőjelzőt",
       "indicatorPlaceHolders": {
         "TextFormField": "Szöveg beszúrása ide",
+        "DatePickerFormField": "Dátum kiválasztása",
         "CheckBoxFormField": "Jelölje be",
         "RadioButtonFormField": "Tölt",
         "ListBoxFormField": "Válassza ki",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Rádiógomb mező megjegyzés",
       "ListBoxFormField": "Listadoboz mező megjegyzése",
       "ComboBoxFormField": "Kombinált mező mező megjegyzése",
+      "DatePickerFormField": "Dátumválasztó mező megjegyzése",
       "TextFormField": "Szövegmező megjegyzés"
     },
     "apply": "Mezők alkalmazása",
@@ -1311,6 +1329,7 @@
     "underline": "Aláhúzás",
     "strikeout": "Áthúzni",
     "textColor": "Szöveg szín",
+    "highlightColor": "Kiemelő szín",
     "leftAlign": "Balra igazítás",
     "centerAlign": "Középre igazítás",
     "rightAlign": "Jobbra igazítás",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Bélyegek",
-    "standard": "Szabványos bélyegek"
+    "standard": "Szabványos bélyegek",
+    "preset": "Előbeállítás",
+    "custom": "Egyéni"
   },
   "colorPickerModal": {
     "modalTitle": "Színválasztó"

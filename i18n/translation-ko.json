@@ -15,6 +15,7 @@
     "close": "닫기",
     "undo": "되돌리기",
     "redo": "다시실행",
+    "reload": "재장전",
     "comment": "코멘트",
     "reply": "댓글",
     "copy": "복사",
@@ -194,6 +195,7 @@
     "note": "노트",
     "textField": "텍스트상자",
     "signatureFormField": "서명",
+    "datePickerFormField": "날짜 선택 필드",
     "checkBoxFormField": "체크박스",
     "radioButtonFormField": "라디오 버튼 필드",
     "listBoxFormField": "목록상자",
@@ -259,6 +261,7 @@
     "zoomOverlay": "줌 오버레이",
     "textPopup": "텍스트 팝업",
     "createStampButton": "스탬프 생성",
+    "addStampButton": "스탬프 추가",
     "filter": "필터",
     "multiSelectButton": "다중 선택",
     "pageReplaceModalTitle": "페이지 바꾸기",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "비밀번호 입력을 취소하여 암호화 문서를 불러오지 못했습니다.",
     "enterPassword": "비밀번호를 입력하세요",
     "incorrectPassword": "비밀번호를 다시 입력하세요. 남은 시도: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "토론을 시작하려면 댓글을 추가하세요.",
     "noAnnotations": "주석에 대한 댓글입니다.",
     "noAnnotationsReadOnly": "주석이 없습니다.",
     "noAnnotationsFilter": "주석 필터가 없습니다.",
@@ -328,6 +332,7 @@
     "sortBy": "정렬기준",
     "emptyCustomStampInput": "텍스트르 입력하세요.",
     "unpostedComment": "게시되지 않은 댓글",
+    "saved": "저장됨",
     "lockedLayer": "레이어가 잠겨 있습니다.",
     "layerVisibilityNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "noLayers": "이 문서에는 레이어가 없습니다.",
@@ -354,7 +359,15 @@
     "refreshPage": "네트워크 연결을 확인하고 페이지를 새로고침하세요.",
     "renderErrors": {
       "error": "여기서 뭔가 잘못됐어요.",
-      "refreshPanel": "계속 작업하셔도 됩니다. 패널을 다시 열어보세요."
+      "toFixIssue": "이 문제를 해결하려면 {{componentType}}을 다시 열어보세요.",
+      "componentType": {
+        "component": "요소",
+        "panel": "패널",
+        "modal": "수도",
+        "flyout": "플라이아웃",
+        "dropdown": "드롭다운",
+        "popup": "팝업"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "작성자",
       "type": "유형",
       "color": "색상",
+      "number": "숫자",
       "createdDate": "작성일",
       "modifiedDate": "수정일"
     },
@@ -617,10 +631,7 @@
         "irreversible": "뒤집을 수 없는",
         "willDeleteMeasurement": "관련 측정을 삭제합니다.",
         "confirmDelete": "이 척도를 삭제하시겠습니까?",
-        "thisCantBeUndone": " 이 작업은 취소할 수 없습니다.",
-        "ifChangeScale": "선택한 측정 또는 도구의 눈금을 변경하면 눈금이",
-        "notUsedWillDelete": " 더 이상 측정이나 도구에서 사용되지 않으며 삭제됩니다. 삭제는 되돌릴 수 없습니다.",
-        "ifToContinue": "계속하시겠습니까?"
+        "thisCantBeUndone": " 이 작업은 취소할 수 없습니다."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "텍스트 색상",
       "backgroundColor": "배경색",
       "dateToolTipLabel": "날짜 형식에 대한 자세한 정보",
-      "previewCustomStamp": "미리보기"
+      "previewCustomStamp": "미리보기",
+      "category": "범주",
+      "categoryInstructions": "새 카테고리 이름을 입력하세요",
+      "customStamp": "맞춤형 스탬프"
     },
     "pageRedactModal": {
       "addMark": "마크 추가",
@@ -754,6 +768,8 @@
       "annotations": "주석",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "주석 팝업에서 도구 기본 스타일 업데이트 비활성화",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "주석을 생성한 관련 도구에 대한 주석 스타일 업데이트의 동기화를 비활성화합니다. 따라서 주석의 스타일이 변경되면 도구 기본 스타일은 업데이트되지 않습니다.",
+      "enableViewportRelativePositioning": "뷰포트 기준 주석 위치 지정을 활성화합니다",
+      "enableViewportRelativePositioningDesc": "이 기능을 활성화하면 회전 각도가 다른 페이지 간에 주석을 이동할 때 시각적 위치와 방향이 유지됩니다.",
       "notesPanel": "노트 패널",
       "disableNoteSubmissionWithEnter": "Enter 키를 사용하여 메모 제출 비활성화",
       "disableNoteSubmissionWithEnterDesc": "이전에 활성화된 경우에만 Enter 키를 눌러 메모 제출 기능을 비활성화합니다. 이렇게 하면 메모 제출이 Ctrl/Cmd + Enter의 기본값으로 되돌아갑니다.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "필드 표시기 포함",
       "indicatorPlaceHolders": {
         "TextFormField": "여기에 텍스트 삽입",
+        "DatePickerFormField": "날짜를 선택하세요",
         "CheckBoxFormField": "확인하다",
         "RadioButtonFormField": "채우다",
         "ListBoxFormField": "고르다",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "라디오 버튼 필드 주석",
       "ListBoxFormField": "목록 상자 필드 주석",
       "ComboBoxFormField": "콤보 상자 필드 주석",
+      "DatePickerFormField": "날짜 선택기 필드 주석",
       "TextFormField": "텍스트 필드 주석"
     },
     "apply": "적용",
@@ -1311,6 +1329,7 @@
     "underline": "밑줄",
     "strikeout": "스트라이크아웃",
     "textColor": "텍스트 색상",
+    "highlightColor": "강조 색상",
     "leftAlign": "왼쪽 정렬",
     "centerAlign": "중앙 정렬",
     "rightAlign": "오른쪽 정렬",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "우표",
-    "standard": "표준 스탬프"
+    "standard": "표준 스탬프",
+    "preset": "사전 설정",
+    "custom": "사용자 지정"
   },
   "colorPickerModal": {
     "modalTitle": "색상 선택기"

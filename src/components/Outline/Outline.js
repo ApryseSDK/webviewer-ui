@@ -201,7 +201,6 @@ const Outline = forwardRef(
             textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
             setMultiSelected={setMultiSelected}
             childrenCount={outline.getChildren()?.length || 0}
-            nestingLevel={resolvedNestingLevel}
           />
         </DataElementWrapper>
 

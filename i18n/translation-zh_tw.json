@@ -15,6 +15,7 @@
     "close": "關閉",
     "undo": "撤消",
     "redo": "準備",
+    "reload": "重新載入",
     "comment": "評論",
     "reply": "回覆",
     "copy": "複製",
@@ -194,6 +195,7 @@
     "note": "注意",
     "textField": "文本域",
     "signatureFormField": "簽名欄",
+    "datePickerFormField": "日期選擇器字段",
     "checkBoxFormField": "複選框字段",
     "radioButtonFormField": "單選按鈕字段",
     "listBoxFormField": "列錶框字段",
@@ -259,6 +261,7 @@
     "zoomOverlay": "縮放疊加",
     "textPopup": "文字彈出",
     "createStampButton": "創建新圖章",
+    "addStampButton": "添加印章",
     "filter": "過濾",
     "multiSelectButton": "多選",
     "pageReplaceModalTitle": "替換頁面",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "無法載入加密文件。已取消密碼輸入。",
     "enterPassword": "文件有密碼保護。請輸入密碼",
     "incorrectPassword": "密碼不正確，剩下 {{ remainingAttempts }} 次嘗試機會",
+    "commentsPanelEmpty": "新增評論以開始討論。",
     "noAnnotations": "開始製作註釋以發表評論。",
     "noAnnotationsReadOnly": "此文件沒有註釋。",
     "noAnnotationsFilter": "開始製作註釋，過濾器將顯示在此處。",
@@ -328,6 +332,7 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
     "unpostedComment": "未發布評論",
+    "saved": "已儲存",
     "lockedLayer": "圖層已鎖定",
     "layerVisibilityNoChange": "圖層可見性無法更改",
     "noLayers": "該文件沒有圖層。",
@@ -354,7 +359,15 @@
     "refreshPage": "請檢查您的網路連線並重新整理頁面。",
     "renderErrors": {
       "error": "這裡出問題了。",
-      "refreshPanel": "您可以繼續工作。請嘗試重新打開面板。"
+      "toFixIssue": "若要解決此問題，請嘗試重新開啟 {{componentType}}。",
+      "componentType": {
+        "component": "成分",
+        "panel": "控制板",
+        "modal": "首都",
+        "flyout": "飛出",
+        "dropdown": "下拉式選單",
+        "popup": "彈出視窗"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "作者",
       "type": "類型",
       "color": "顏色",
+      "number": "數位",
       "createdDate": "創建日期",
       "modifiedDate": "修改日期"
     },
@@ -617,10 +631,7 @@
         "irreversible": "不可逆轉",
         "willDeleteMeasurement": "並將刪除相關的測量。",
         "confirmDelete": "確定要刪除此比例嗎？",
-        "thisCantBeUndone": " 這無法撤消。",
-        "ifChangeScale": "如果您更改所選測量或工具的比例，請按比例",
-        "notUsedWillDelete": " 將不再被任何測量或工具使用，並將被刪除。刪除是不可逆的。",
-        "ifToContinue": "您確定要繼續嗎？"
+        "thisCantBeUndone": " 這無法撤消。"
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "文字顏色",
       "backgroundColor": "背景顏色",
       "dateToolTipLabel": "有關日期格式的更多信息",
-      "previewCustomStamp": "預覽"
+      "previewCustomStamp": "預覽",
+      "category": "類別",
+      "categoryInstructions": "輸入以命名新類別",
+      "customStamp": "客製化印章"
     },
     "pageRedactModal": {
       "addMark": "添加標記",
@@ -754,6 +768,8 @@
       "annotations": "註釋",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "從註釋彈出窗口禁用工具默認樣式更新",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "禁用將註釋樣式更新同步到創建註釋的關聯工具。因此，如果註釋的樣式發生更改，工具默認樣式將不會更新。",
+      "enableViewportRelativePositioning": "啟用視窗相對註釋定位",
+      "enableViewportRelativePositioningDesc": "啟用此功能後，在不同旋轉角度的頁面之間移動註釋時，註釋的視覺位置和方向將保持不變。",
       "notesPanel": "筆記面板",
       "disableNoteSubmissionWithEnter": "使用 Enter 禁用註釋提交",
       "disableNoteSubmissionWithEnterDesc": "如果之前已啟用，則僅按 Enter 即可禁用提交註釋的功能。這會將筆記提交恢復為默認值，即 Ctrl/Cmd + Enter。",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "包括字段指示器",
       "indicatorPlaceHolders": {
         "TextFormField": "在此處插入文本",
+        "DatePickerFormField": "選擇日期",
         "CheckBoxFormField": "查看",
         "RadioButtonFormField": "充滿",
         "ListBoxFormField": "選擇",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "單選按鈕欄位註釋",
       "ListBoxFormField": "列錶框字段註釋",
       "ComboBoxFormField": "組合框字段註釋",
+      "DatePickerFormField": "日期選擇器欄位註釋",
       "TextFormField": "文字欄位註釋"
     },
     "apply": "套用欄位",
@@ -1311,6 +1329,7 @@
     "underline": "強調",
     "strikeout": "刪除線",
     "textColor": "文字顏色",
+    "highlightColor": "高亮顏色",
     "leftAlign": "左對齊",
     "centerAlign": "居中對齊",
     "rightAlign": "右對齊",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "郵票",
-    "standard": "標準郵票"
+    "standard": "標準郵票",
+    "preset": "預設",
+    "custom": "自訂"
   },
   "colorPickerModal": {
     "modalTitle": "顏色選擇器"

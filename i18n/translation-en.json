@@ -15,6 +15,7 @@
     "close": "Close",
     "undo": "Undo",
     "redo": "Redo",
+    "reload": "Reload",
     "comment": "Comment",
     "reply": "Add reply",
     "copy": "Copy",
@@ -194,6 +195,7 @@
     "note": "Note",
     "textField": "Text Field",
     "signatureFormField": "Signature Field",
+    "datePickerFormField": "Date Picker Field",
     "checkBoxFormField": "Checkbox Field",
     "radioButtonFormField": "Radio Button Field",
     "listBoxFormField": "List Box Field",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Zoom Overlay",
     "textPopup": "Text Popup",
     "createStampButton": "Create New Stamp",
+    "addStampButton": "Add Stamp",
     "filter": "Filter",
     "multiSelectButton": "Multi Select",
     "pageReplaceModalTitle": "Replace Page",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Add a comment to start a discussion.",
     "noAnnotations": "Start making annotations to leave a comment.",
     "noAnnotationsReadOnly": "This document has no annotations.",
     "noAnnotationsFilter": "Start making annotations and filters will appear here.",
@@ -328,6 +332,7 @@
     "sortBy": "Sort by",
     "emptyCustomStampInput": "Stamp text cannot be empty",
     "unpostedComment": "Unposted Comment",
+    "saved": "Saved",
     "lockedLayer": "Layer is locked",
     "layerVisibilityNoChange": "Layer visibility can't be changed",
     "noLayers": "This document has no layers.",
@@ -354,7 +359,15 @@
     "refreshPage": "Please check your network connection and refresh the page.",
     "renderErrors": {
       "error": "Something went wrong here.",
-      "refreshPanel": "You can continue working. Try reopening the panel."
+      "toFixIssue": "To fix the issue, please try reopening the {{componentType}}.",
+      "componentType": {
+        "component": "component",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "flyout",
+        "dropdown": "dropdown",
+        "popup": "popup"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Author",
       "type": "Type",
       "color": "Color",
+      "number": "Number",
       "createdDate": "Created Date",
       "modifiedDate": "Modified Date"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irreversible",
         "willDeleteMeasurement": "and will delete the associated measurements.",
         "confirmDelete": "Are you sure you want to delete this scale?",
-        "thisCantBeUndone": " This can't be undone.",
-        "ifChangeScale": "If you change the scale for the selected measurement or tool, scale ",
-        "notUsedWillDelete": " will no longer be used by any measurements or tools and will be deleted. Deletion is irreversible.",
-        "ifToContinue": "Are you sure you'd like to continue?"
+        "thisCantBeUndone": " This can't be undone."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Text color",
       "backgroundColor": "Background color",
       "dateToolTipLabel": "More info about date format",
-      "previewCustomStamp": "Preview of"
+      "previewCustomStamp": "Preview of",
+      "category": "Category",
+      "categoryInstructions": "Type to name a new category",
+      "customStamp": "Custom Stamp"
     },
     "pageRedactModal": {
       "addMark": "Add Mark",
@@ -754,6 +768,8 @@
       "annotations": "Annotations",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Disable Tool Default Style Update From Annotation Popup",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Disables syncing of annotation style updates to the associated tool that created the annotation. So if an annotation's style is changed the tool default styles will not be updated.",
+      "enableViewportRelativePositioning": "Enable Viewport-Relative Annotation Positioning",
+      "enableViewportRelativePositioningDesc": "When enabled, moving annotations across pages with different rotations preserves their visual position and orientation.",
       "notesPanel": "Notes Panel",
       "disableNoteSubmissionWithEnter": "Disable Note Submission With Enter",
       "disableNoteSubmissionWithEnterDesc": "Disable the ability to submit notes by only pressing Enter if it had previously been enabled. This will revert note submission to the default which is Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Include Field Indicator",
       "indicatorPlaceHolders": {
         "TextFormField": "Insert Text Here",
+        "DatePickerFormField": "Select Date",
         "CheckBoxFormField": "Check",
         "RadioButtonFormField": "Fill",
         "ListBoxFormField": "Select",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Radio Button Field Annotation",
       "ListBoxFormField": "List Box Field Annotation",
       "ComboBoxFormField": "Combo Box Field Annotation",
+      "DatePickerFormField": "Date Picker Field Annotation",
       "TextFormField": "Text Field Annotation"
     },
     "apply": "Apply Fields",
@@ -1311,6 +1329,7 @@
     "underline": "Underline",
     "strikeout": "Strikeout",
     "textColor": "Text color",
+    "highlightColor": "Highlight color",
     "leftAlign": "Left align",
     "centerAlign": "Center align",
     "rightAlign": "Right align",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Stamps",
-    "standard": "Standard Stamps"
+    "standard": "Standard Stamps",
+    "preset": "Preset",
+    "custom": "Custom"
   },
   "colorPickerModal": {
     "modalTitle": "Color Picker"

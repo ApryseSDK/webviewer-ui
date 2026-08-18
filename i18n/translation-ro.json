@@ -15,6 +15,7 @@
     "close": "Închide",
     "undo": "Anula",
     "redo": "A reface",
+    "reload": "Reîncărcare",
     "comment": "cometariu",
     "reply": "Adăugați răspuns",
     "copy": "Copie",
@@ -194,6 +195,7 @@
     "note": "Notă",
     "textField": "Câmp text",
     "signatureFormField": "Câmp de semnătură",
+    "datePickerFormField": "Câmp de selecție a datei",
     "checkBoxFormField": "Câmp casetă de selectare",
     "radioButtonFormField": "Câmpul butonului radio",
     "listBoxFormField": "Câmp List Box",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Suprapunere zoom",
     "textPopup": "Popup text",
     "createStampButton": "Creați o ștampilă nouă",
+    "addStampButton": "Adăugați ștampilă",
     "filter": "Filtru",
     "multiSelectButton": "Selectare multipla",
     "pageReplaceModalTitle": "Înlocuiește pagina",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Nu s-a încărcat documentul criptat. Introducerea parolei a fost anulată.",
     "enterPassword": "Acest document este protejat prin parolă. Vă rugăm să introduceți o parolă",
     "incorrectPassword": "Parolă incorectă, încercări rămase: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Adăugați un comentariu pentru a începe o discuție.",
     "noAnnotations": "Începeți să faceți adnotări pentru a lăsa un comentariu.",
     "noAnnotationsReadOnly": "Acest document nu are adnotări.",
     "noAnnotationsFilter": "Începeți să faceți adnotări și filtrele vor apărea aici.",
@@ -328,6 +332,7 @@
     "sortBy": "Fel",
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
     "unpostedComment": "Comentariu nepostat",
+    "saved": "Salvat",
     "lockedLayer": "Stratul este blocat",
     "layerVisibilityNoChange": "Vizibilitatea stratului nu poate fi modificată",
     "noLayers": "Acest document nu are straturi.",
@@ -354,7 +359,15 @@
     "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina.",
     "renderErrors": {
       "error": "Ceva nu a mers bine aici.",
-      "refreshPanel": "Puteți continua să lucrați. Încercați să redeschideți panoul."
+      "toFixIssue": "Pentru a remedia problema, încercați să redeschideți {{componentType}}.",
+      "componentType": {
+        "component": "componentă",
+        "panel": "panou",
+        "modal": "capital",
+        "flyout": "iconiță glisantă",
+        "dropdown": "scapă jos",
+        "popup": "pop-up"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Autor",
       "type": "Tip",
       "color": "Culoare",
+      "number": "Număr",
       "createdDate": "data creata",
       "modifiedDate": "Data modificata"
     },
@@ -617,10 +631,7 @@
         "irreversible": "ireversibil",
         "willDeleteMeasurement": "și va șterge măsurătorile asociate.",
         "confirmDelete": "Sigur doriți să ștergeți această scală?",
-        "thisCantBeUndone": " Acest lucru nu poate fi anulat.",
-        "ifChangeScale": "Dacă schimbați scara pentru măsurarea sau instrumentul selectat, scalați",
-        "notUsedWillDelete": " nu vor mai fi folosite de nicio măsurătoare sau instrumente și vor fi șterse. Ștergerea este ireversibilă.",
-        "ifToContinue": "Sunteți sigur că doriți să continuați?"
+        "thisCantBeUndone": " Acest lucru nu poate fi anulat."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Culoarea textului",
       "backgroundColor": "Culoare de fundal",
       "dateToolTipLabel": "Mai multe informații despre formatul datei",
-      "previewCustomStamp": "Previzualizare a"
+      "previewCustomStamp": "Previzualizare a",
+      "category": "Categorie",
+      "categoryInstructions": "Tastați pentru a denumi o categorie nouă",
+      "customStamp": "Ștampilă personalizată"
     },
     "pageRedactModal": {
       "addMark": "Adăugați Mark",
@@ -754,6 +768,8 @@
       "annotations": "Adnotări",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Dezactivați actualizarea stilului implicit al instrumentului din popup-ul de adnotare",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Dezactivează sincronizarea actualizărilor stilului de adnotare cu instrumentul asociat care a creat adnotarea. Deci, dacă stilul unei adnotări este schimbat, stilurile implicite ale instrumentului nu vor fi actualizate.",
+      "enableViewportRelativePositioning": "Activează poziționarea adnotărilor relative la Viewport",
+      "enableViewportRelativePositioningDesc": "Când este activată, mutarea adnotărilor pe pagini cu rotații diferite păstrează poziția și orientarea vizuală a acestora.",
       "notesPanel": "Panoul de note",
       "disableNoteSubmissionWithEnter": "Dezactivați trimiterea notiței cu Enter",
       "disableNoteSubmissionWithEnterDesc": "Dezactivați capacitatea de a trimite note apăsând pe Enter numai dacă a fost activată anterior. Acest lucru va reveni la valoarea prestabilită, care este Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Includeți indicatorul de câmp",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserați text aici",
+        "DatePickerFormField": "Selectați data",
         "CheckBoxFormField": "Verifica",
         "RadioButtonFormField": "Completati",
         "ListBoxFormField": "Selectați",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Adnotare câmp cu butonul radio",
       "ListBoxFormField": "Adnotare câmp List Box",
       "ComboBoxFormField": "Adnotare câmp pentru casetă combinată",
+      "DatePickerFormField": "Adnotare câmp selector dată",
       "TextFormField": "Adnotare câmp text"
     },
     "apply": "Aplicați câmpuri",
@@ -1311,6 +1329,7 @@
     "underline": "Subliniați",
     "strikeout": "Strikeout",
     "textColor": "Culoarea textului",
+    "highlightColor": "Culoare de evidențiere",
     "leftAlign": "Aliniere la stânga",
     "centerAlign": "Alinierea la centru",
     "rightAlign": "Aliniați la dreapta",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Timbre",
-    "standard": "Timbre standard"
+    "standard": "Timbre standard",
+    "preset": "Presetare",
+    "custom": "Personalizat"
   },
   "colorPickerModal": {
     "modalTitle": "Selector de culoare"

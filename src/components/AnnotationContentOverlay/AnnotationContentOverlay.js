@@ -11,7 +11,7 @@ import DataElements from 'constants/dataElement';
 import CustomElement from '../CustomElement';
 import FormFieldWidgetOverlay from './FormFieldWidgetOverlay';
 import './AnnotationContentOverlay.scss';
-import getRootNode from 'src/helpers/getRootNode';
+import { getShadowRootFromNode } from 'src/helpers/getRootNode';
 
 const MAX_CHARACTERS = 100;
 
@@ -46,6 +46,15 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
   // so that the underlying annotation will always be hovered
   const gap = 20;
 
+  // This component repositions on every mouse move while hovering an annotation (see
+  // useOnAnnotationContentOverlayOpen), so fitWindowSize runs very frequently. Resolving the
+  // shadow root on the WC host on every single move is avoidable overhead: the host element
+  // itself doesn't change for the life of this mounted component. Its bounding rect, however,
+  // can change for reasons other than window resize/scroll (e.g. sibling content on the
+  // consuming page reflowing) while a tooltip stays continuously open, so it's recomputed on
+  // every reposition rather than cached.
+  const hostRef = useRef(null);
+
   const fitWindowSize = useCallback((clientX, clientY, left, top) => {
     const overlayRect = overlayRef.current.getBoundingClientRect();
 
@@ -62,9 +71,23 @@ const AnnotationContentOverlay = ({ annotation, clientXY }) => {
     }
 
     if (window.isApryseWebViewerWebComponent) {
-      const host = getRootNode()?.host;
-      const hostBoundingRect = host?.getBoundingClientRect();
-      if (hostBoundingRect) {
+      // Derive the root strictly from this rendered overlay's own DOM position. Do NOT fall
+      // back to the module-level getRootNode() singleton here: it only reflects whichever WC
+      // instance was constructed most recently, so if it were used as a fallback it could
+      // silently apply another instance's host offsets whenever getShadowRootFromNode can't
+      // resolve a root (e.g. timing quirks during mount/unmount). It's safer to skip the
+      // host-offset adjustment entirely than to risk shifting the overlay using the wrong
+      // instance's bounding rect.
+      // The host itself doesn't change for the life of this mounted component, so only resolve
+      // it once and cache it in a ref.
+      if (!hostRef.current) {
+        const instanceRoot = getShadowRootFromNode(overlayRef.current);
+        hostRef.current = instanceRoot?.host || null;
+      }
+
+      const host = hostRef.current;
+      if (host) {
+        const hostBoundingRect = host.getBoundingClientRect();
         left -= hostBoundingRect.left;
         top -= hostBoundingRect.top;
 

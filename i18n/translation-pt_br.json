@@ -15,6 +15,7 @@
     "close": "Fechar",
     "undo": "Desfazer",
     "redo": "pronto",
+    "reload": "Recarregar",
     "comment": "Novo comentário",
     "reply": "Responder",
     "copy": "Copiar",
@@ -194,6 +195,7 @@
     "note": "Nota",
     "textField": "Campo de texto",
     "signatureFormField": "Campo de Assinatura",
+    "datePickerFormField": "Campo de seleção de data",
     "checkBoxFormField": "Campo de caixa de seleção",
     "radioButtonFormField": "Campo do botão de rádio",
     "listBoxFormField": "Campo de lista de seleção",
@@ -259,6 +261,7 @@
     "zoomOverlay": "Sobreposição de zoom",
     "textPopup": "Texto Popup",
     "createStampButton": "Criar novo carimbo",
+    "addStampButton": "Adicionar carimbo",
     "filter": "Filtro",
     "multiSelectButton": "Seleção múltipla",
     "pageReplaceModalTitle": "Substituir página",
@@ -284,6 +287,7 @@
     "encryptedUserCancelled": "Falha ao carregar documento criptografado. Digitação de senha cancelada.",
     "enterPassword": "Esse documento é protegido por senha. Digite uma senha",
     "incorrectPassword": "Senha incorreta. Tentativas restantes: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Adicione um comentário para iniciar uma discussão.",
     "noAnnotations": "Comece a fazer anotações para deixar um comentário.",
     "noAnnotationsReadOnly": "Esse documento não tem anotações.",
     "noAnnotationsFilter": "Comece a fazer anotações e filtros aparecerão aqui.",
@@ -328,6 +332,7 @@
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
     "unpostedComment": "Comentário Não Postado",
+    "saved": "Salvo",
     "lockedLayer": "Camada está bloqueada",
     "layerVisibilityNoChange": "A visibilidade da camada não pode ser alterada",
     "noLayers": "Este documento não possui camadas.",
@@ -354,7 +359,15 @@
     "refreshPage": "Verifique sua conexão de rede e atualize a página.",
     "renderErrors": {
       "error": "Algo deu errado aqui.",
-      "refreshPanel": "Você pode continuar trabalhando. Tente reabrir o painel."
+      "toFixIssue": "Para corrigir o problema, tente reabrir o {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "painel",
+        "modal": "capital",
+        "flyout": "flyout",
+        "dropdown": "suspenso",
+        "popup": "Aparecer"
+      }
     }
   },
   "option": {
@@ -391,6 +404,7 @@
       "author": "Autor",
       "type": "Tipo",
       "color": "Cor",
+      "number": "Número",
       "createdDate": "Data de criação",
       "modifiedDate": "Data modificada"
     },
@@ -617,10 +631,7 @@
         "irreversible": "irreversível",
         "willDeleteMeasurement": "e excluirá as medições associadas.",
         "confirmDelete": "Tem certeza de que deseja excluir esta escala?",
-        "thisCantBeUndone": " Isso não pode ser desfeito.",
-        "ifChangeScale": "Se você alterar a escala da medida ou ferramenta selecionada, a escala",
-        "notUsedWillDelete": " não será mais usado por nenhuma medida ou ferramenta e será excluído. A exclusão é irreversível.",
-        "ifToContinue": "Tem certeza de que deseja continuar?"
+        "thisCantBeUndone": " Isso não pode ser desfeito."
       }
     },
     "contentEdit": {
@@ -722,7 +733,10 @@
       "textColor": "Cor do texto",
       "backgroundColor": "Cor de fundo",
       "dateToolTipLabel": "Mais informações sobre o formato de data",
-      "previewCustomStamp": "Prévia de"
+      "previewCustomStamp": "Prévia de",
+      "category": "Categoria",
+      "categoryInstructions": "Digite para nomear uma nova categoria",
+      "customStamp": "Carimbo personalizado"
     },
     "pageRedactModal": {
       "addMark": "Adicionar marca",
@@ -754,6 +768,8 @@
       "annotations": "Anotações",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Desativar a atualização de estilo padrão da ferramenta do pop-up de anotação",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Desativa a sincronização de atualizações de estilo de anotação para a ferramenta associada que criou a anotação. Portanto, se o estilo de uma anotação for alterado, os estilos padrão da ferramenta não serão atualizados.",
+      "enableViewportRelativePositioning": "Ativar o posicionamento de anotações relativo à viewport",
+      "enableViewportRelativePositioningDesc": "Quando ativada, a movimentação de anotações entre páginas com diferentes rotações preserva sua posição e orientação visual.",
       "notesPanel": "Painel de notas",
       "disableNoteSubmissionWithEnter": "Desabilitar o envio de notas com Enter",
       "disableNoteSubmissionWithEnterDesc": "Desative a capacidade de enviar notas pressionando Enter apenas se tiver sido ativado anteriormente. Isso reverterá o envio de notas para o padrão, que é Ctrl/Cmd + Enter.",
@@ -1058,6 +1074,7 @@
       "includeFieldIndicator": "Incluir indicador de campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserir texto aqui",
+        "DatePickerFormField": "Selecione a data",
         "CheckBoxFormField": "Verificar",
         "RadioButtonFormField": "Encher",
         "ListBoxFormField": "Selecionar",
@@ -1081,6 +1098,7 @@
       "RadioButtonFormField": "Anotação de campo de botão de opção",
       "ListBoxFormField": "Anotação de campo de caixa de listagem",
       "ComboBoxFormField": "Anotação de campo de caixa de combinação",
+      "DatePickerFormField": "Anotação do campo de seleção de data",
       "TextFormField": "Anotação de campo de texto"
     },
     "apply": "Aplicar Campos",
@@ -1311,6 +1329,7 @@
     "underline": "Sublinhado",
     "strikeout": "Eliminação",
     "textColor": "Cor do texto",
+    "highlightColor": "Cor de destaque",
     "leftAlign": "alinhar à esquerda",
     "centerAlign": "Alinhar ao centro",
     "rightAlign": "alinhar à direita",
@@ -1678,7 +1697,9 @@
   },
   "rubberStampPanel": {
     "header": "Selos",
-    "standard": "Selos padrão"
+    "standard": "Selos padrão",
+    "preset": "Predefinido",
+    "custom": "Personalizado"
   },
   "colorPickerModal": {
     "modalTitle": "Seletor de cores"
